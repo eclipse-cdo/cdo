@@ -8,10 +8,12 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 /**
  * @author Simon McDuff
@@ -19,7 +21,17 @@ import org.eclipse.emf.cdo.common.id.CDOID;
  */
 public interface CDOContainerFeatureDelta extends CDOFeatureDelta
 {
-  public CDOID getContainerID();
+  /**
+   * @since 2.0
+   */
+  public static final CDOFeature CONTAINER_FEATURE = new org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl.ContainerFeature();
+
+  /**
+   * @since 2.0
+   */
+  public CDOID getResourceID();
+
+  public Object getContainerID();
 
   public int getContainerFeatureID();
 }

@@ -142,7 +142,8 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     // assertEquals(null, object.cdoID());
     // assertEquals(null, object.cdoRevision());
     // assertEquals(null, object.cdoView());
-    assertEquals(object.eResource(), object.cdoResource());
+    //assertEquals(bject.eResource(), object.cdoResource());
+    //assertEquals(null, object.cdoResource());
   }
 
   protected static void assertNotTransient(CDOObject object, CDOView view)
@@ -151,9 +152,9 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     assertNotNull(object.cdoID());
     assertNotNull(object.cdoRevision());
     assertNotNull(object.cdoView());
-    assertNotNull(object.cdoResource());
+    //assertNotNull(object.cdoResource());
     assertNotNull(object.eResource());
-    assertEquals(object.eResource(), object.cdoResource());
+    //assertEquals(object.eResource(), object.cdoResource());
     assertEquals(view, object.cdoView());
     assertEquals(object, view.getObject(object.cdoID(), false));
   }
@@ -190,10 +191,10 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   protected static void assertContent(CDOObject container, CDOObject contained)
   {
     assertEquals(container.eResource(), contained.eResource());
-    assertEquals(container.cdoResource(), contained.cdoResource());
     assertTrue(container.eContents().contains(contained));
     if (container instanceof CDOResource)
     {
+      assertEquals(container.eResource(), container.cdoResource());
       assertEquals(null, contained.eContainer());
       assertTrue(((CDOResource)container).getContents().contains(contained));
     }

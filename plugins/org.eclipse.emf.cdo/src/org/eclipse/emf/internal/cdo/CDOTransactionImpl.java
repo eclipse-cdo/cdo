@@ -11,17 +11,19 @@
  *    Simon McDuff - http://bugs.eclipse.org/233314
  *    Simon McDuff - http://bugs.eclipse.org/215688    
  *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - http://bugs.eclipse.org/246620
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
+import org.eclipse.emf.cdo.CDOViewResourcesEvent;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -30,27 +32,22 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.collection.MultiMap;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -69,12 +66,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
  */
-public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
+public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransaction
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSCTION, CDOTransactionImpl.class);
 
@@ -82,8 +78,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
    * TODO Optimize by storing an array. See {@link Notifier}.
    */
   private List<CDOTransactionHandler> handlers = new ArrayList<CDOTransactionHandler>(0);
-
-  private List<CDOPackage> newPackages;
 
   private CDOSavepointImpl lastSavepoint = new CDOSavepointImpl(this, null);
 
@@ -96,6 +90,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   private long commitTimeout;
 
   private int lastTemporaryID;
+
+  private CDOTransactionStrategy transactionStrategy;
 
   public CDOTransactionImpl(int id, CDOSessionImpl session)
   {
@@ -162,11 +158,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     commitTimeout = timeout;
   }
 
-  public List<CDOPackage> getNewPackages()
-  {
-    return Collections.unmodifiableList(newPackages);
-  }
-
   public CDOIDTemp getNextTemporaryID()
   {
     return CDOIDUtil.createTempObject(++lastTemporaryID);
@@ -174,7 +165,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public CDOResource createResource(String path)
   {
-    URI createURI = CDOUtil.createResourceURI(path);
+    URI createURI = CDOURIUtil.createResourceURI(this, path);
     return (CDOResource)getResourceSet().createResource(createURI);
   }
 
@@ -185,10 +176,46 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     {
       return createResource(path);
     }
-    else
+
+    return (CDOResource)getObject(id);
+  }
+
+  /**
+   * @since 2.0
+   */
+
+  public void attach(CDOResourceImpl cdoResource)
+  {
+    try
     {
-      return addResource(id, path);
+      CDOStateMachine.INSTANCE.attach(cdoResource, this);
+      fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.ADDED));
     }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+
+      try
+      {
+        ((InternalCDOObject)cdoResource).cdoInternalSetState(CDOState.NEW);
+        getResourceSet().getResources().remove(cdoResource);
+      }
+      catch (RuntimeException ignore)
+      {
+      }
+
+      throw ex;
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+
+  public void detach(CDOResourceImpl cdoResource)
+  {
+    CDOStateMachine.INSTANCE.detach(cdoResource);
+    fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
   }
 
   /**
@@ -199,85 +226,71 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return lastSavepoint;
   }
 
+  /**
+   * @since 2.0
+   */
+  public CDOTransactionStrategy getTransactionStrategy()
+  {
+    if (transactionStrategy == null)
+    {
+      transactionStrategy = CDOTransactionStrategy.DEFAULT;
+      transactionStrategy.setTarget(this);
+    }
+
+    return transactionStrategy;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setTransactionStrategy(CDOTransactionStrategy transactionStrategy)
+  {
+    if (this.transactionStrategy != null)
+    {
+      this.transactionStrategy.unsetTarget(this);
+    }
+
+    this.transactionStrategy = transactionStrategy;
+
+    if (this.transactionStrategy != null)
+    {
+      this.transactionStrategy.setTarget(this);
+    }
+  }
+
+  @Override
+  public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
+  {
+    if (lastSavepoint.getSharedDetachedObjects().contains(id))
+    {
+      throw new IllegalArgumentException("Cannot access object with id " + id
+          + " anymore. It was removed from this view.");
+    }
+
+    return super.getObject(id, loadOnDemand);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOCommitContext createCommitContext()
+  {
+    return new CDOCommitContextImpl();
+  }
+
   public void commit() throws TransactionException
   {
-    if (dirty)
+    try
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("commit()");
-      }
-
-      for (CDOTransactionHandler handler : getHandlers())
-      {
-        handler.committingTransaction(this);
-      }
-
-      try
-      {
-        newPackages = analyzeNewPackages();
-        Collection<CDORevisionDelta> deltas = getRevisionDeltas().values();
-
-        for (CDOSavepointImpl savepoint = lastSavepoint; savepoint != null; savepoint = savepoint
-            .getPreviousSavepoint())
-        {
-          preCommit(savepoint.getNewObjects());
-          preCommit(savepoint.getDirtyObjects());
-        }
-
-        CDOSessionImpl session = getSession();
-        IChannel channel = session.getChannel();
-        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-        CommitTransactionRequest request = new CommitTransactionRequest(channel, this);
-
-        CommitTransactionResult result = failOverStrategy.send(request, commitTimeout);
-        String rollbackMessage = result.getRollbackMessage();
-        if (rollbackMessage != null)
-        {
-          throw new TransactionException(rollbackMessage);
-        }
-
-        for (CDOSavepointImpl savepoint = lastSavepoint; savepoint != null; savepoint = savepoint
-            .getPreviousSavepoint())
-        {
-          postCommit(savepoint.getNewResources(), result);
-          postCommit(savepoint.getNewObjects(), result);
-          postCommit(savepoint.getDirtyObjects(), result);
-        }
-
-        for (CDOPackage newPackage : newPackages)
-        {
-          ((InternalCDOPackage)newPackage).setPersistent(true);
-        }
-
-        getChangeSubscriptionManager().notifyDirtyObjects();
-
-        Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
-        if (!dirtyObjects.isEmpty())
-        {
-          Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
-          for (CDOObject dirtyObject : dirtyObjects.values())
-          {
-            CDORevision revision = dirtyObject.cdoRevision();
-            CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
-            dirtyIDs.add(dirtyID);
-          }
-
-          session.handleCommitNotification(result.getTimeStamp(), dirtyIDs, deltas, this);
-        }
-
-        cleanUp();
-        Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
-        fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new TransactionException(ex);
-      }
+      getTransactionStrategy().commit(this);
+    }
+    catch (TransactionException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransactionException(ex);
     }
   }
 
@@ -360,9 +373,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       Map<CDOID, CDOObject> dirtyObjects = itrSavepoint.getDirtyObjects();
       if (!dirtyObjects.isEmpty())
       {
-        for (CDOObject dirtyObject : dirtyObjects.values())
+        for (Entry<CDOID, CDOObject> entryDirty : dirtyObjects.entrySet())
         {
-          CDOStateMachine.INSTANCE.rollback((InternalCDOObject)dirtyObject, remote);
+          InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirty.getValue();
+          cleanObject(internalDirtyObject, getRevision(entryDirty.getKey(), true));
         }
       }
 
@@ -377,10 +391,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   private void loadSavepoint(CDOSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
   {
+    lastSavepoint.getSharedDetachedObjects().clear();
+
     Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
     Map<CDOID, CDOObject> newObjMaps = getNewObjects();
     Map<CDOID, CDOResource> newResources = getNewResources();
     Map<CDOID, CDORevision> newBaseRevision = getBaseNewObjects();
+    Set<CDOID> detachedObjects = getDetachedObjects();
 
     // Reload the objects (NEW) with their base.
     for (CDOID id : idsOfNewObjectWithDeltas)
@@ -395,9 +412,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       if (revision != null)
       {
         object.cdoInternalSetRevision(CDORevisionUtil.copy(revision));
+        object.cdoInternalSetState(CDOState.NEW);
 
         // Load the object from revision to EObject
         object.cdoInternalPostLoad();
+      }
+    }
+
+    // We need to register back new objects that are not removed anymore there.
+    for (Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
+    {
+      if (!isObjectRegistered(entryNewObject.getKey()))
+      {
+        // Go back to the previous state
+        InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
+        cleanObject(object, (InternalCDORevision)object.cdoRevision());
+        object.cdoInternalSetState(CDOState.NEW);
+        registerObject(object);
       }
     }
 
@@ -407,6 +438,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       CDOObjectMerger merger = new CDOObjectMerger();
       for (CDORevisionDelta delta : itrSavepoint.getRevisionDeltas().values())
       {
+        if (delta.getID().isTemporary() && !idsOfNewObjectWithDeltas.contains(delta.getID()))
+        {
+          continue;
+        }
+
         Map<CDOID, CDOObject> map = delta.getID().isTemporary() ? newObjMaps : dirtyObjects;
         InternalCDOObject object = (InternalCDOObject)map.get(delta.getID());
         if (object == null)
@@ -422,7 +458,50 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
       }
     }
 
+    // Put persistent objects that we removed in a savepoint to transient
+    for (CDOID id : detachedObjects)
+    {
+      if (!id.isTemporary())
+      {
+        InternalCDOObject object = getObject(id, true);
+        object.cdoInternalPostDetach();
+        object.cdoInternalSetState(CDOState.TRANSIENT);
+      }
+
+      // Recalculate HashSet
+      lastSavepoint.getSharedDetachedObjects().add(id);
+    }
+
     dirty = ((CDOSavepointImpl)savepoint).isDirty();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void detachObject(InternalCDOObject object)
+  {
+    if (object.cdoState() == CDOState.NEW)
+    {
+      Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? getLastSavepoint().getNewResources()
+          : getLastSavepoint().getNewObjects();
+
+      // Determine when we added object
+      if (map.containsKey(object.cdoID()))
+      {
+        map.remove(object.cdoID());
+      }
+      else
+      {
+        getLastSavepoint().getDetachedObjects().add(object.cdoID());
+      }
+
+      // deregister object
+      deregisterObject(object);
+    }
+    else
+    {
+      getLastSavepoint().getDetachedObjects().add(object.cdoID());
+    }
   }
 
   /**
@@ -430,19 +509,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
    */
   public void rollback(CDOSavepoint savepoint, boolean remote)
   {
+    getTransactionStrategy().rollback(this, savepoint, remote);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleRollback(CDOSavepoint savepoint, boolean remote)
+  {
     if (savepoint == null)
     {
       throw new IllegalArgumentException("Save point is null");
     }
 
-    if (savepoint.getTransaction() != this)
+    if (savepoint.getUserTransaction() != this)
     {
       throw new IllegalArgumentException("Save point to rollback doesn't belong to this transaction: " + savepoint);
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("commit()");
+      TRACER.trace("handleRollback()");
     }
 
     try
@@ -491,7 +578,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
   /**
    * @since 2.0
    */
-  public CDOSavepoint setSavepoint()
+  public CDOSavepoint handleSetSavepoint()
   {
     // Take a copy of all new objects for the current save point
     addToBase(lastSavepoint.getNewObjects());
@@ -499,6 +586,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
     lastSavepoint = new CDOSavepointImpl(this, lastSavepoint);
     return lastSavepoint;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOSavepoint setSavepoint()
+  {
+    return getTransactionStrategy().setSavepoint(this);
   }
 
   private void addToBase(Map<CDOID, ? extends CDOObject> objects)
@@ -673,36 +768,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     return newPackages;
   }
 
-  @SuppressWarnings("unchecked")
-  private void preCommit(Map objects)
-  {
-    if (!objects.isEmpty())
-    {
-      for (Object object : objects.values())
-      {
-        ((InternalCDOObject)object).cdoInternalPreCommit();
-      }
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  private void postCommit(Map objects, CommitTransactionResult result)
-  {
-    if (!objects.isEmpty())
-    {
-      for (Object object : objects.values())
-      {
-        CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
-      }
-    }
-  }
-
   private void cleanUp()
   {
-    newPackages = null;
     lastSavepoint = firstSavepoint;
     firstSavepoint.clear();
     firstSavepoint.setNextSavepoint(null);
+    firstSavepoint.getSharedDetachedObjects().clear();
     dirty = false;
     conflict = false;
     lastTemporaryID = 0;
@@ -710,50 +781,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
 
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
-    if (lastSavepoint.getPreviousSavepoint() == null)
-    {
-      return lastSavepoint.getDirtyObjects();
-    }
-
-    MultiMap.ListBased<CDOID, CDOObject> dirtyObjects = new MultiMap.ListBased<CDOID, CDOObject>();
-    for (CDOSavepointImpl savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-    {
-      dirtyObjects.getDelegates().add(savepoint.getDirtyObjects());
-    }
-
-    return dirtyObjects;
+    return lastSavepoint.getAllDirtyObjects();
   }
 
   public Map<CDOID, CDOObject> getNewObjects()
   {
-    if (lastSavepoint.getPreviousSavepoint() == null)
-    {
-      return Collections.unmodifiableMap(lastSavepoint.getNewObjects());
-    }
-
-    MultiMap.ListBased<CDOID, CDOObject> newObjects = new MultiMap.ListBased<CDOID, CDOObject>();
-    for (CDOSavepointImpl savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-    {
-      newObjects.getDelegates().add(savepoint.getNewObjects());
-    }
-
-    return newObjects;
+    return lastSavepoint.getAllNewObjects();
   }
 
   public Map<CDOID, CDOResource> getNewResources()
   {
-    if (lastSavepoint.getPreviousSavepoint() == null)
-    {
-      return Collections.unmodifiableMap(lastSavepoint.getNewResources());
-    }
-
-    MultiMap.ListBased<CDOID, CDOResource> newResources = new MultiMap.ListBased<CDOID, CDOResource>();
-    for (CDOSavepointImpl savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-    {
-      newResources.getDelegates().add(savepoint.getNewResources());
-    }
-
-    return newResources;
+    return lastSavepoint.getAllNewResources();
   }
 
   /**
@@ -761,65 +799,194 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
    */
   public Map<CDOID, CDORevision> getBaseNewObjects()
   {
-    if (lastSavepoint.getPreviousSavepoint() == null)
-    {
-      return Collections.unmodifiableMap(lastSavepoint.getBaseNewObjects());
-    }
-
-    MultiMap.ListBased<CDOID, CDORevision> newObjects = new MultiMap.ListBased<CDOID, CDORevision>();
-    for (CDOSavepointImpl savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-    {
-      newObjects.getDelegates().add(savepoint.getBaseNewObjects());
-    }
-
-    return newObjects;
+    return lastSavepoint.getAllBaseNewObjects();
   }
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
-    if (lastSavepoint.getPreviousSavepoint() == null)
+    return lastSavepoint.getAllRevisionDeltas();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Set<CDOID> getDetachedObjects()
+  {
+    return lastSavepoint.getAllDetachedObjects();
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private class CDOCommitContextImpl implements CDOCommitContext
+  {
+    private Map<CDOID, CDOResource> newResources;
+
+    private Map<CDOID, CDOObject> newObjects;
+
+    private Map<CDOID, CDOObject> dirtyObjects;
+
+    private Map<CDOID, CDORevisionDelta> revisionDeltas;
+
+    private Set<CDOID> detachedObjects;
+
+    private List<CDOPackage> newPackages;
+
+    public CDOCommitContextImpl()
     {
-      return lastSavepoint.getRevisionDeltas();
+      newResources = getTransaction().getNewResources();
+      newObjects = getTransaction().getNewObjects();
+      dirtyObjects = getTransaction().getDirtyObjects();
+      detachedObjects = getTransaction().getDetachedObjects();
+      revisionDeltas = getTransaction().getRevisionDeltas();
+      newPackages = getTransaction().analyzeNewPackages();
     }
 
-    // We need to combined the result for all delta in different Savepoint
-    Map<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
-    for (CDOSavepointImpl savepoint = firstSavepoint; savepoint != null; savepoint = savepoint.getNextSavepoint())
+    public Map<CDOID, CDOObject> getDirtyObjects()
     {
-      for (Entry<CDOID, CDORevisionDelta> entry : savepoint.getRevisionDeltas().entrySet())
+      return dirtyObjects;
+    }
+
+    public Map<CDOID, CDOObject> getNewObjects()
+    {
+      return newObjects;
+    }
+
+    public List<CDOPackage> getNewPackages()
+    {
+      return newPackages;
+    }
+
+    public Map<CDOID, CDOResource> getNewResources()
+    {
+      return newResources;
+    }
+
+    public Set<CDOID> getDetachedObjects()
+    {
+      return detachedObjects;
+    }
+
+    public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
+    {
+      return revisionDeltas;
+    }
+
+    public CDOTransactionImpl getTransaction()
+    {
+      return CDOTransactionImpl.this;
+    }
+
+    public void preCommit()
+    {
+      if (getTransaction().isDirty())
       {
-        // Skipping temporary
-        if (entry.getKey().isTemporary())
+        if (TRACER.isEnabled())
         {
-          continue;
+          TRACER.trace("commit()");
         }
 
-        CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(entry.getKey());
-        if (revisionDelta == null)
+        for (CDOTransactionHandler handler : getTransaction().getHandlers())
         {
-          revisionDeltas.put(entry.getKey(), entry.getValue());
+          handler.committingTransaction(getTransaction());
         }
-        else
+
+        try
         {
-          for (CDOFeatureDelta delta : entry.getValue().getFeatureDeltas())
-          {
-            if (delta instanceof CDOListFeatureDelta)
-            {
-              for (CDOFeatureDelta subDelta : ((CDOListFeatureDelta)delta).getListChanges())
-              {
-                revisionDelta.addFeatureDelta(subDelta);
-              }
-            }
-            else
-            {
-              revisionDelta.addFeatureDelta(delta);
-            }
-          }
+          preCommit(getNewResources());
+          preCommit(getNewObjects());
+          preCommit(getDirtyObjects());
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw new TransactionException(ex);
         }
       }
     }
 
-    return revisionDeltas;
+    public void postCommit(CommitTransactionResult result)
+    {
+      if (getTransaction().isDirty())
+      {
+        try
+        {
+          Collection<CDORevisionDelta> deltas = getRevisionDeltas().values();
+
+          postCommit(getNewResources(), result);
+          postCommit(getNewObjects(), result);
+          postCommit(getDirtyObjects(), result);
+
+          for (CDOID id : getDetachedObjects())
+          {
+            removeObject(id);
+          }
+
+          CDOSessionImpl session = getTransaction().getSession();
+
+          for (CDOPackage newPackage : newPackages)
+          {
+            ((InternalCDOPackage)newPackage).setPersistent(true);
+          }
+
+          getTransaction().getChangeSubscriptionManager().notifyDirtyObjects();
+
+          Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
+          if (!dirtyObjects.isEmpty())
+          {
+            Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
+            for (CDOObject dirtyObject : dirtyObjects.values())
+            {
+              CDORevision revision = dirtyObject.cdoRevision();
+              CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
+              dirtyIDs.add(dirtyID);
+            }
+
+            session.handleCommitNotification(result.getTimeStamp(), dirtyIDs, getDetachedObjects(), deltas,
+                getTransaction());
+          }
+
+          getTransaction().cleanUp();
+          Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
+          getTransaction().fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw new TransactionException(ex);
+        }
+      }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void preCommit(Map objects)
+    {
+      if (!objects.isEmpty())
+      {
+        for (Object object : objects.values())
+        {
+          ((InternalCDOObject)object).cdoInternalPreCommit();
+        }
+      }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void postCommit(Map objects, CommitTransactionResult result)
+    {
+      if (!objects.isEmpty())
+      {
+        for (Object object : objects.values())
+        {
+          CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
+        }
+      }
+    }
   }
 
   /**
@@ -907,6 +1074,40 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
     {
       return MessageFormat.format("CDOTransactionConflictEvent[source={0}, conflictingObject={1}, firstConflict={2}]",
           getSource(), getConflictingObject(), isFirstConflict());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ResourcesEvent extends Event implements CDOViewResourcesEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private String resourcePath;
+
+    private Kind kind;
+
+    public ResourcesEvent(String resourcePath, Kind kind)
+    {
+      this.resourcePath = resourcePath;
+      this.kind = kind;
+    }
+
+    public String getResourcePath()
+    {
+      return resourcePath;
+    }
+
+    public Kind getKind()
+    {
+      return kind;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind);
     }
   }
 }

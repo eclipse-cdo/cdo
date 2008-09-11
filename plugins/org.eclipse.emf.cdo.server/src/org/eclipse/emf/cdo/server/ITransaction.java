@@ -7,11 +7,11 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 
 /**
  * @author Eike Stepper
@@ -23,14 +23,4 @@ public interface ITransaction extends IView
    * Returns the ID of this transactional view. Same as {@link CDOProtocolView#getViewID() getViewID()}.
    */
   public int getTransactionID();
-
-  /**
-   * Returns the temporary, transactional package manager associated with this ITransaction during the process of a
-   * commit operation. In addition to the packages registered with the session {@link IRepository#getPackageManager()
-   * package manager} this package manager also contains the new packages that are part of the commit operation.
-   * 
-   * @return a temporary, transactional package manager if this ITransaction is in the process of a commit operation,
-   *         <code>null</code> otherwise.
-   */
-  public CDOPackageManager getPackageManager();
 }

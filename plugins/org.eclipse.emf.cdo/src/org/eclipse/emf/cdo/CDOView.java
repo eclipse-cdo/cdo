@@ -10,6 +10,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/201997
  *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
  **************************************************************************/
 package org.eclipse.emf.cdo;
@@ -39,6 +40,11 @@ public interface CDOView extends CDOProtocolView, INotifier
   public static final int NO_PRELOAD = 1;
 
   public CDOSession getSession();
+
+  /**
+   * @since 2.0
+   */
+  public CDOViewSet getViewSet();
 
   public ResourceSet getResourceSet();
 
@@ -110,6 +116,12 @@ public interface CDOView extends CDOProtocolView, INotifier
   public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize);
 
   public boolean hasResource(String path);
+
+  /**
+   * @see ResourceSet#getResource(URI, boolean)
+   * @since 2.0
+   */
+  public CDOResource getResource(String path, boolean loadInDemand);
 
   /**
    * @see ResourceSet#getResource(URI, boolean)

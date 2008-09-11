@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -627,5 +628,64 @@ public class InvalidationTest extends AbstractCDOTest
 
     assertEquals(false, timeOuterB_2.timedOut());
     assertEquals(false, timeOuterC_2.timedOut());
+  }
+  
+  
+  public void testDetach() throws Exception
+  {
+    msg("Creating category1");
+    final Category categoryA = Model1Factory.eINSTANCE.createCategory();
+    categoryA.setName("category1");
+
+    msg("Opening sessionA");
+    final CDOSession sessionA = openModel1Session();
+
+    msg("Attaching transaction");
+    final CDOTransaction transaction = sessionA.openTransaction();
+
+    msg("Creating resource");
+    final CDOResource resourceA = transaction.createResource("/test1");
+
+    msg("Adding company");
+    resourceA.getContents().add(categoryA);
+
+    msg("Committing");
+    transaction.commit();
+
+    // ************************************************************* //
+
+    msg("Opening sessionB");
+    final CDOSession sessionB = openModel1Session();
+
+    msg("Attaching viewB");
+    final CDOView viewB = sessionB.openTransaction();
+
+    msg("Loading resource");
+    final CDOResource resourceB = viewB.getResource("/test1");
+    assertProxy(resourceB);
+
+    EList<EObject> contents = resourceB.getContents();
+    final Category categoryB = (Category)contents.get(0);
+
+    // ************************************************************* //
+
+    resourceA.getContents().remove(categoryA);
+    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return FSMUtil.isTransient(categoryB);
+      }
+    };
+
+    msg("Checking before commit");
+    assertEquals(true, timeOuter.timedOut());
+
+    msg("Committing");
+    transaction.commit();
+
+    msg("Checking after commit");
+    assertEquals(false, timeOuter.timedOut());
   }
 }

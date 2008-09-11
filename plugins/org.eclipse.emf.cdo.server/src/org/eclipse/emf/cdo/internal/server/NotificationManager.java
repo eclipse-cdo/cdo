@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -35,24 +36,37 @@ public class NotificationManager extends Lifecycle implements INotificationManag
     this.repository = repository;
   }
 
+  public Repository getRepository()
+  {
+    return repository;
+  }
+
   public void notifyCommit(Session session, CommitContext commitContext)
   {
-    CDORevisionDelta[] dirtyID = commitContext.getDirtyObjectDeltas();
-    int modifications = dirtyID == null ? 0 : dirtyID.length;
-    if (modifications > 0)
+    CDORevisionDelta[] arrayOfDeltas = commitContext.getDirtyObjectDeltas();
+    CDOID[] arrayOfDetachedObjects = commitContext.getDetachedObjects();
+    
+    int dirtyIDSize = arrayOfDeltas == null ? 0 : arrayOfDeltas.length;
+    int detachedObjectsSize = arrayOfDetachedObjects == null ? 0 : arrayOfDetachedObjects.length;
+    
+    if (dirtyIDSize > 0 || detachedObjectsSize > 0)
     {
-      List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(modifications);
-      List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(modifications);
-      for (int i = 0; i < modifications; i++)
+      List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(dirtyIDSize);
+      List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(dirtyIDSize);
+      for (int i = 0; i < dirtyIDSize; i++)
       {
-        CDORevisionDelta delta = dirtyID[i];
+        CDORevisionDelta delta = arrayOfDeltas[i];
         CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getOriginVersion());
         dirtyIDs.add(dirtyIDAndVersion);
         deltas.add(delta);
       }
-
+      List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
+      for (int i = 0; i < detachedObjectsSize; i++)
+      {
+        detachedObjects.add(arrayOfDetachedObjects[i]);
+      }
       SessionManager sessionManager = repository.getSessionManager();
-      sessionManager.handleCommitNotification(commitContext.getTimeStamp(), dirtyIDs, deltas, session);
+      sessionManager.handleCommitNotification(commitContext.getTimeStamp(), dirtyIDs, detachedObjects, deltas, session);
     }
   }
 }

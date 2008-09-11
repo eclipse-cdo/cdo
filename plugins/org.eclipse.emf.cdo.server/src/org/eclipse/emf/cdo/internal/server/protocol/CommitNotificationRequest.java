@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -37,14 +38,17 @@ public class CommitNotificationRequest extends CDOServerRequest
   private List<CDOIDAndVersion> dirtyIDs;
 
   private List<CDORevisionDelta> deltas;
+  
+  private List<CDOID> detachedObjects;
 
   public CommitNotificationRequest(IChannel channel, long timeStamp, List<CDOIDAndVersion> dirtyIDs,
-      List<CDORevisionDelta> deltas)
+      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
     super(channel);
     this.timeStamp = timeStamp;
     this.dirtyIDs = dirtyIDs;
     this.deltas = deltas;
+    this.detachedObjects = detachedObjects;
   }
 
   @Override
@@ -82,6 +86,12 @@ public class CommitNotificationRequest extends CDOServerRequest
     for (CDORevisionDelta delta : deltas)
     {
       out.writeCDORevisionDelta(delta);
+    }
+
+    out.writeInt(detachedObjects == null ? 0 : detachedObjects.size());
+    for (CDOID id : detachedObjects)
+    {
+      out.writeCDOID(id);
     }
   }
 }

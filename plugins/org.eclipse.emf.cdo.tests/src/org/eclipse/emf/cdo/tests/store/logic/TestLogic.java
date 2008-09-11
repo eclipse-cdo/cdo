@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.store.logic;
 
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -26,7 +27,8 @@ import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.Transaction;
-import org.eclipse.emf.cdo.internal.server.Transaction.TransactionPackageManager;
+import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
@@ -181,19 +183,21 @@ public abstract class TestLogic extends AbstractOMTest
   {
     private int viewID;
 
-    private long timeStamp;
-
     private CDOServerProtocol protocol;
 
     private Session session;
 
     private Transaction transaction;
 
+    private InternalCommitContext transactionCommitContext;
+
     private List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
 
     private List<CDORevision> newObjects = new ArrayList<CDORevision>();
 
     private List<CDORevisionDelta> dirtyObjectDeltas = new ArrayList<CDORevisionDelta>();
+
+    private List<CDOID> detachedObjects = new ArrayList<CDOID>();
 
     public CommitTemplate()
     {
@@ -203,12 +207,12 @@ public abstract class TestLogic extends AbstractOMTest
     public CommitTemplate(int viewID, long timeStamp)
     {
       this.viewID = viewID;
-      this.timeStamp = timeStamp;
       protocol = createProtocol();
       session = repository.getSessionManager().openSession(protocol, true);
       protocol.setInfraStructure(session);
       transaction = createTransaction(session);
-      transaction.preCommit();
+      transactionCommitContext = transaction.createCommitContext(timeStamp);
+      transactionCommitContext.preCommit();
     }
 
     public Session getSession()
@@ -218,8 +222,13 @@ public abstract class TestLogic extends AbstractOMTest
 
     public Transaction run() throws Exception
     {
-      transaction.commit(getNewPackages(), getNewObjects(), getDirtyObjectDeltas());
-      transaction.postCommit(true);
+      transactionCommitContext.setNewPackages(getNewPackages());
+      transactionCommitContext.setNewObjects(getNewObjects());
+      transactionCommitContext.setDirtyObjectDeltas(getDirtyObjectDeltas());
+      transactionCommitContext.setDetachedObjects(getDetachedObjects());
+      transactionCommitContext.write();
+      transactionCommitContext.commit();
+      transactionCommitContext.postCommit(true);
       return transaction;
     }
 
@@ -247,7 +256,7 @@ public abstract class TestLogic extends AbstractOMTest
         idRange = CDOSessionImpl.registerEPackage(ePackage, 1, null, null);
       }
 
-      TransactionPackageManager packageManager = transaction.getPackageManager();
+      TransactionPackageManager packageManager = transactionCommitContext.getPackageManager();
       CDOPackage newPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, idRange, parentURI);
       ModelUtil.initializeCDOPackage(ePackage, newPackage);
       packageManager.addPackage(newPackage);
@@ -264,8 +273,10 @@ public abstract class TestLogic extends AbstractOMTest
 
     public Revision addNewObject(int id, EClass eClass)
     {
+
       String uri = eClass.getEPackage().getNsURI();
-      CDOPackage cdoPackage = transaction.getPackageManager().lookupPackage(uri);
+
+      CDOPackage cdoPackage = transactionCommitContext.getPackageManager().lookupPackage(uri);
       CDOClass cdoClass = cdoPackage.lookupClass(eClass.getClassifierID());
       return addRevision(id, cdoClass);
     }
@@ -290,7 +301,7 @@ public abstract class TestLogic extends AbstractOMTest
 
     protected Transaction createTransaction(Session session)
     {
-      return session.openTransaction(viewID, timeStamp);
+      return (Transaction)session.openView(viewID, CDOProtocolView.Type.TRANSACTION);
     }
 
     private CDOPackage[] getNewPackages()
@@ -306,6 +317,11 @@ public abstract class TestLogic extends AbstractOMTest
     private CDORevisionDelta[] getDirtyObjectDeltas()
     {
       return dirtyObjectDeltas.toArray(new CDORevisionDelta[dirtyObjectDeltas.size()]);
+    }
+
+    private CDOID[] getDetachedObjects()
+    {
+      return detachedObjects.toArray(new CDOID[detachedObjects.size()]);
     }
   }
 

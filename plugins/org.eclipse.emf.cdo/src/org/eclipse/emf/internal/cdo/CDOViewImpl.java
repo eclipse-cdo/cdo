@@ -13,6 +13,8 @@
  *    Simon McDuff - http://bugs.eclipse.org/202064
  *    Simon McDuff - http://bugs.eclipse.org/230832
  *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - http://bugs.eclipse.org/204890
  *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
@@ -22,7 +24,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
-import org.eclipse.emf.cdo.CDOViewResourcesEvent;
+import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -30,6 +32,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
@@ -37,11 +40,10 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.query.CDOQuery;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -59,15 +61,12 @@ import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -85,8 +84,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implements CDOView, CDOIDProvider,
-    Adapter.Internal
+public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implements CDOView, CDOIDProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -94,7 +92,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private CDOSessionImpl session;
 
-  private ResourceSet resourceSet;
+  private CDOViewSet viewSet;
 
   private boolean uniqueResourceContents = true;
 
@@ -146,7 +144,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public ResourceSet getResourceSet()
   {
-    return resourceSet;
+    return viewSet.getResourceSet();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOViewSet getViewSet()
+  {
+    return viewSet;
   }
 
   public CDOSessionImpl getSession()
@@ -258,6 +264,12 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     try
     {
+      CDOResource resource = getResource(path, false);
+      if (resource != null && resource.cdoID() != null)
+      {
+        return resource.cdoID();
+      }
+
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), path);
       return failOverStrategy.send(request);
@@ -279,10 +291,21 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOResource getResource(String path)
   {
-    URI uri = CDOUtil.createResourceURI(path);
-    return (CDOResource)getResourceSet().getResource(uri, true);
+    return getResource(path, true);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOResource getResource(String path, boolean loadInDemand)
+  {
+    URI uri = CDOURIUtil.createResourceURI(this, path);
+    return (CDOResource)getResourceSet().getResource(uri, loadInDemand);
   }
 
   /**
@@ -298,22 +321,13 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     if (resourceID == null || resourceID.isNull())
     {
-      throw new IllegalArgumentException("resourceID == null || resourceID == CDOID.NULL");
+      throw new IllegalArgumentException("resourceID == null || resourceID.isNull()");
     }
 
-    // TODO What about simply looking in the objects cache of this view as well?
-    ResourceSet resourceSet = getResourceSet();
-    EList<Resource> resources = resourceSet.getResources();
-    for (Resource resource : resources)
+    CDOResourceImpl resource = (CDOResourceImpl)getObject(resourceID);
+    if (resource != null)
     {
-      if (resource instanceof CDOResourceImpl)
-      {
-        CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
-        if (resourceID.equals(cdoResource.cdoID()))
-        {
-          return cdoResource;
-        }
-      }
+      return resource;
     }
 
     try
@@ -335,8 +349,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public CDOResourceImpl addResource(CDOID id, String path)
   {
-    CDOResourceImpl resource = (CDOResourceImpl)EresourceFactory.eINSTANCE.createCDOResource();
-    resource.setPath(path);
+    URI createURI = CDOURIUtil.createResourceURI(this, path);
+    CDOResourceImpl resource = (CDOResourceImpl)viewSet.getResourceFactory().createResource(createURI);
+    resource.setURI(createURI);
 
     InternalCDOObject resourceObject = resource;
     resourceObject.cdoInternalSetID(id);
@@ -377,6 +392,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return getObject(id, false);
   }
 
+  /**
+   * Support recursivity and concurrency.
+   */
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     if (id == null || id.isNull())
@@ -391,29 +409,31 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         return lastLookupObject;
       }
 
-      lastLookupID = id;
-      lastLookupObject = objects.get(id);
-      if (lastLookupObject == null)
+      // Needed for recursive call to getObject. (from createObject/cleanObject/getResource/getObject)
+      InternalCDOObject localLookupObject = objects.get(id);
+      if (localLookupObject == null)
       {
         if (id.isMeta())
         {
-          lastLookupObject = createMetaObject((CDOIDMeta)id);
+          localLookupObject = createMetaObject((CDOIDMeta)id);
         }
         else
         {
           if (loadOnDemand)
           {
-            lastLookupObject = createObject(id);
+            localLookupObject = createObject(id);
           }
           else
           {
-            lastLookupObject = createProxy(id);
+            localLookupObject = createProxy(id);
           }
         }
 
-        registerObject(lastLookupObject);
+        registerObject(localLookupObject);
       }
 
+      lastLookupID = id;
+      lastLookupObject = localLookupObject;
       return lastLookupObject;
     }
   }
@@ -497,6 +517,24 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     InternalCDORevision revision = getRevision(id, true);
     CDOClass cdoClass = revision.getCDOClass();
     InternalCDOObject object = newInstance(cdoClass);
+    cleanObject(object, revision);
+    return object;
+  }
+
+  public void registerProxyResource(CDOResourceImpl resource)
+  {
+    resource.cdoInternalSetResource(resource);
+    resource.cdoInternalSetView(this);
+    resource.cdoInternalSetID(getResourceID(resource.getPath()));
+    resource.cdoInternalSetState(CDOState.PROXY);
+    registerObject(resource);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void cleanObject(InternalCDOObject object, InternalCDORevision revision)
+  {
     if (object instanceof CDOResourceImpl)
     {
       object.cdoInternalSetResource((CDOResourceImpl)object);
@@ -516,7 +554,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
     object.cdoInternalPostLoad();
-    return object;
   }
 
   private InternalCDOObject createProxy(CDOID id)
@@ -571,11 +608,30 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
       return id;
     }
+    else if (idOrObject instanceof InternalEObject)
+    {
+      InternalEObject eObject = (InternalEObject)idOrObject;
+      String uri = EcoreUtil.getURI(eObject).toString();
+      if (eObject instanceof InternalCDOObject)
+      {
+        InternalCDOObject object = (InternalCDOObject)idOrObject;
+        if (object.cdoView() != null && FSMUtil.isNew(object))
+        {
+          return CDOIDUtil.createExternalTemp(uri);
+        }
+      }
+      return CDOIDUtil.createExternal(uri);
+    }
 
     throw new IllegalStateException("Unable to provideCDOID: " + idOrObject.getClass().getName());
   }
 
   public Object convertObjectToID(Object potentialObject)
+  {
+    return convertObjectToID(potentialObject, false);
+  }
+
+  public Object convertObjectToID(Object potentialObject, boolean onlyPersistedID)
   {
     if (potentialObject instanceof CDOID)
     {
@@ -585,17 +641,24 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
     {
       InternalEObject eObject = (InternalEObject)potentialObject;
-      InternalCDOObject adapter = FSMUtil.adapt(eObject, this);
-      if (adapter != null)
+
+      // Only adapt object that are already adapted.
+      // We do not want to create a attach without goign through the normal process.
+      if (EcoreUtil.getAdapter(eObject.eAdapters(), CDOAdapterImpl.class) != null)
       {
-        potentialObject = adapter;
+        InternalCDOObject adapter = FSMUtil.adapt(eObject, this);
+        if (adapter != null)
+        {
+          potentialObject = adapter;
+        }
       }
     }
 
     if (potentialObject instanceof InternalCDOObject)
     {
       InternalCDOObject object = (InternalCDOObject)potentialObject;
-      if (object.cdoView() == this)
+      boolean newOrTransient = FSMUtil.isTransient(object) || FSMUtil.isNew(object);
+      if (object.cdoView() == this && (!onlyPersistedID || !newOrTransient))
       {
         return object.cdoID();
       }
@@ -614,6 +677,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       }
 
       CDOID id = (CDOID)potentialID;
+      if (id.isExternal())
+      {
+        return getResourceSet().getEObject(URI.createURI(id.toURIFragment()), true);
+      }
+
       InternalCDOObject result = getObject(id, true);
       if (result == null)
       {
@@ -690,7 +758,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    *          dirtyOIDs set to be unmodifiable. It does not wrap the set (again).
    * @since 2.0
    */
-  public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs)
+  public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
     List<InternalCDOObject> dirtyObjects = invalidationNotificationsEnabled ? new ArrayList<InternalCDOObject>() : null;
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
@@ -708,6 +776,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       if (dirtyObject != null && dirtyObjects != null && dirtyObject.eNotificationRequired())
       {
         dirtyObjects.add(dirtyObject);
+      }
+    }
+
+    for (CDOID id : detachedObjects)
+    {
+      InternalCDOObject cdoObject = removeObject(id);
+      if (cdoObject != null)
+      {
+        CDOStateMachine.INSTANCE.invalidate(cdoObject, true, timeStamp);
       }
     }
 
@@ -826,160 +903,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public Notifier getTarget()
   {
-    return resourceSet;
+    return getResourceSet();
   }
 
-  public void setTarget(Notifier newTarget)
+  /**
+   * @since 2.0
+   */
+  public void setViewSet(CDOViewSet viewSet)
   {
-    ResourceSet resourceSet = (ResourceSet)newTarget;
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Attaching CDO view to " + resourceSet);
-    }
-
-    this.resourceSet = resourceSet;
-    for (Resource resource : resourceSet.getResources())
-    {
-      if (resource instanceof CDOResourceImpl)
-      {
-        CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
-        notifyAdd(cdoResource);
-      }
-    }
-  }
-
-  public void unsetTarget(Notifier oldTarget)
-  {
-    ResourceSet resourceSet = (ResourceSet)oldTarget;
-    for (Resource resource : resourceSet.getResources())
-    {
-      if (resource instanceof CDOResourceImpl)
-      {
-        CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
-        notifyRemove(cdoResource);
-      }
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Detaching CDO view from " + resourceSet);
-    }
-
-    if (resourceSet == oldTarget)
-    {
-      setTarget(null);
-    }
-  }
-
-  public void notifyChanged(Notification msg)
-  {
-    try
-    {
-      switch (msg.getEventType())
-      {
-      case Notification.ADD:
-        notifyAdd(msg);
-        break;
-
-      case Notification.ADD_MANY:
-        notifyAddMany(msg);
-        break;
-
-      case Notification.REMOVE:
-        notifyRemove(msg);
-        break;
-
-      case Notification.REMOVE_MANY:
-        notifyRemoveMany(msg);
-        break;
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      OM.LOG.error(ex);
-      throw ex;
-    }
-  }
-
-  private void notifyAdd(Notification msg)
-  {
-    if (msg.getNewValue() instanceof CDOResourceImpl)
-    {
-      notifyAdd((CDOResourceImpl)msg.getNewValue());
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  private void notifyAddMany(Notification msg)
-  {
-    EList<Resource> newResources = (EList<Resource>)msg.getNewValue();
-    EList<Resource> oldResources = (EList<Resource>)msg.getOldValue();
-    for (Resource newResource : newResources)
-    {
-      if (newResource instanceof CDOResourceImpl)
-      {
-        if (!oldResources.contains(newResource))
-        {
-          notifyAdd((CDOResourceImpl)newResource);
-        }
-      }
-    }
-  }
-
-  private void notifyAdd(CDOResourceImpl cdoResource)
-  {
-    try
-    {
-      CDOStateMachine.INSTANCE.attach(cdoResource, cdoResource, this);
-      fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.ADDED));
-    }
-    catch (RuntimeException ex)
-    {
-      OM.LOG.error(ex);
-
-      try
-      {
-        ((InternalCDOObject)cdoResource).cdoInternalSetState(CDOState.NEW);
-        resourceSet.getResources().remove(cdoResource);
-      }
-      catch (RuntimeException ignore)
-      {
-      }
-
-      throw ex;
-    }
-  }
-
-  private void notifyRemove(Notification msg)
-  {
-    if (msg.getOldValue() instanceof CDOResourceImpl)
-    {
-      notifyRemove((CDOResourceImpl)msg.getOldValue());
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  private void notifyRemoveMany(Notification msg)
-  {
-    EList<Resource> newResources = (EList<Resource>)msg.getNewValue();
-    EList<Resource> oldResources = (EList<Resource>)msg.getOldValue();
-    for (Resource oldResource : oldResources)
-    {
-      if (oldResource instanceof CDOResourceImpl)
-      {
-        if (!newResources.contains(oldResource))
-        {
-          // TODO Optimize event notification with IContainerEvent
-          notifyRemove((CDOResourceImpl)oldResource);
-        }
-      }
-    }
-  }
-
-  private void notifyRemove(CDOResourceImpl cdoResource)
-  {
-    CDOStateMachine.INSTANCE.detach(cdoResource);
-    fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
+    this.viewSet = viewSet;
   }
 
   /**
@@ -997,40 +929,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     public CDOViewImpl getView()
     {
       return CDOViewImpl.this;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class ResourcesEvent extends Event implements CDOViewResourcesEvent
-  {
-    private static final long serialVersionUID = 1L;
-
-    private String resourcePath;
-
-    private Kind kind;
-
-    public ResourcesEvent(String resourcePath, Kind kind)
-    {
-      this.resourcePath = resourcePath;
-      this.kind = kind;
-    }
-
-    public String getResourcePath()
-    {
-      return resourcePath;
-    }
-
-    public Kind getKind()
-    {
-      return kind;
-    }
-
-    @Override
-    public String toString()
-    {
-      return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind);
     }
   }
 
@@ -1207,4 +1105,5 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       subscribe(eObject, adapter, -1);
     }
   }
+
 }

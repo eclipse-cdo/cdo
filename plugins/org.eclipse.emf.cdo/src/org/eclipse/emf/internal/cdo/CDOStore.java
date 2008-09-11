@@ -8,6 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Eike Stepper & Simon McDuff - http://bugs.eclipse.org/204890 
+ *    Simon McDuff - http://bugs.eclipse.org/246705
+ *    Simon McDuff - http://bugs.eclipse.org/246622
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -47,6 +50,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * CDORevision needs to follow these rules:<br>
+ * - Keep CDOID only when the object (!isNew && !isTransient) // Only when CDOID will not changed.<br>
+ * - Keep EObject for external reference, new, transient and that until commit time.<br>
+ * It is important since these objects could changed and we need to keep a reference to {@link EObject} until the end.
+ * It is the reason why {@link CDOStore} always call {@link CDOViewImpl#convertObjectToID(Object, boolean)} with true.
+ * 
  * @author Eike Stepper
  */
 public final class CDOStore implements EStore
@@ -54,6 +63,13 @@ public final class CDOStore implements EStore
   private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STORE, CDOStore.class);
 
   private CDOViewImpl view;
+
+  // Used for optimization. Often multiple call to CDStore will be sent like size and than add.
+  private EStructuralFeature lastLookupEFeature;
+
+  private CDOFeature lastLookupCDOFeature;
+
+  private Object lock = new Object();
 
   public CDOStore(CDOViewImpl view)
   {
@@ -68,23 +84,22 @@ public final class CDOStore implements EStore
   /**
    * @since 2.0
    */
-  public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newContainer,
+  public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer,
       int newContainerFeatureID)
   {
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("setContainer({0}, {1}, {2}, {3})", cdoObject, newResource, newContainer, newContainerFeatureID);
+      TRACER.format("setContainer({0}, {1}, {2}, {3})", cdoObject, newResource, newEContainer, newContainerFeatureID);
     }
+    Object newContainerID = newEContainer == null ? CDOID.NULL : ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(
+        newEContainer, true);
+    CDOID newResourceID = newResource == null ? CDOID.NULL : newResource.cdoID();
 
-    CDOViewImpl newView = (CDOViewImpl)cdoObject.cdoView();
-    CDOID containerID = (CDOID)newView.convertObjectToID(newContainer);
-    CDOID resourceID = newResource == null ? null : newResource.cdoID();
-
-    CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(containerID, newContainerFeatureID);
+    CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(newResourceID, newContainerID, newContainerFeatureID);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
-    revision.setResourceID(resourceID);
-    revision.setContainerID(containerID);
+    revision.setResourceID(newResourceID);
+    revision.setContainerID(newContainerID);
     revision.setContainingFeatureID(newContainerFeatureID);
   }
 
@@ -97,8 +112,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    CDOID id = revision.getContainerID();
-    return (InternalEObject)((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(id);
+
+    return (InternalEObject)((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(revision.getContainerID());
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -130,9 +145,14 @@ public final class CDOStore implements EStore
 
     view.getFeatureAnalyzer().preTraverseFeature(cdoObject, cdoFeature, index);
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    Object value = get(revision, cdoFeature, index);
+    Object value = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
     {
+      if (value instanceof CDOReferenceProxy)
+      {
+        value = ((CDOReferenceProxy)value).resolve();
+      }
+
       if (cdoFeature.isMany() && value instanceof CDOID)
       {
         CDOID id = (CDOID)value;
@@ -200,7 +220,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -218,7 +238,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -236,7 +256,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -330,22 +350,13 @@ public final class CDOStore implements EStore
       {
         ((CDOReferenceProxy)oldValue).resolve();
       }
-
-      if (cdoFeature.isContainment() && value != null)
-      {
-        handleContainmentAdd(cdoObject, value);
-      }
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
     }
 
     Object oldValue = revision.set(cdoFeature, index, value);
-
     if (cdoFeature.isReference())
     {
       oldValue = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(oldValue);
-      if (cdoFeature.isContainment() && oldValue != null)
-      {
-        handleContainmentRemove(cdoObject, value);
-      }
     }
 
     return oldValue;
@@ -377,12 +388,7 @@ public final class CDOStore implements EStore
 
     if (cdoFeature.isReference())
     {
-      if (cdoFeature.isContainment() && value != null)
-      {
-        handleContainmentAdd(cdoObject, value);
-      }
-
-      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value);
+      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
     }
 
     CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(cdoFeature, index, value);
@@ -410,10 +416,6 @@ public final class CDOStore implements EStore
       }
 
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
-      if (cdoFeature.isContainment() && result != null)
-      {
-        handleContainmentRemove(cdoObject, result);
-      }
     }
 
     return result;
@@ -477,6 +479,14 @@ public final class CDOStore implements EStore
 
   private CDOFeature getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)
   {
+    synchronized (lock)
+    {
+      if (eFeature == lastLookupEFeature)
+      {
+        return lastLookupCDOFeature;
+      }
+    }
+
     CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
     if (view == null)
     {
@@ -484,31 +494,15 @@ public final class CDOStore implements EStore
     }
 
     CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
-    return ModelUtil.getCDOFeature(eFeature, packageManager);
-  }
+    CDOFeature cdoFeature = ModelUtil.getCDOFeature(eFeature, packageManager);
 
-  private void handleContainmentAdd(InternalCDOObject container, Object value)
-  {
-    CDOViewImpl containerView = (CDOViewImpl)container.cdoView();
-    InternalCDOObject contained = getCDOObject(value);
-    FSMUtil.checkLegacySystemAvailability(containerView.getSession(), contained);
-
-    CDOViewImpl containedView = (CDOViewImpl)contained.cdoView();
-    if (containedView != containerView)
+    synchronized (lock)
     {
-      if (containedView != null)
-      {
-        CDOStateMachine.INSTANCE.detach(contained);
-      }
-
-      CDOStateMachine.INSTANCE.attach(contained, container.cdoResource(), containerView);
+      lastLookupEFeature = eFeature;
+      lastLookupCDOFeature = cdoFeature;
     }
-  }
+    return cdoFeature;
 
-  private void handleContainmentRemove(InternalCDOObject container, Object value)
-  {
-    // InternalCDOObject contained = getCDOObject(value);
-    // CDOStateMachine.INSTANCE.detach(contained);
   }
 
   private void loadAhead(InternalCDORevision revision, CDOFeature cdoFeature, CDOID id, int index)
@@ -549,19 +543,6 @@ public final class CDOStore implements EStore
         revisionManager.getRevisions(notRegistered, referenceChunk);
       }
     }
-  }
-
-  private Object get(InternalCDORevision revision, CDOFeature cdoFeature, int index)
-  {
-    Object result = revision.get(cdoFeature, index);
-    if (cdoFeature.isReference())
-    {
-      if (result instanceof CDOReferenceProxy)
-      {
-        result = ((CDOReferenceProxy)result).resolve();
-      }
-    }
-    return result;
   }
 
   private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)

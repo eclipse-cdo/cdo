@@ -69,6 +69,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private NotificationManager notificationManager = createNotificationManager();
 
+  private CommitManager commitManager = createCommitManager();
+
   private IQueryHandlerProvider queryHandlerProvider;
 
   private IRepositoryElement[] elements;
@@ -198,6 +200,14 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   /**
    * @since 2.0
    */
+  public CommitManager getCommitManager()
+  {
+    return commitManager;
+  }
+
+  /**
+   * @since 2.0
+   */
   public IQueryHandlerProvider getQueryHandlerProvider()
   {
     return queryHandlerProvider;
@@ -317,6 +327,14 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return new NotificationManager(this);
   }
 
+  /**
+   * @since 2.0
+   */
+  protected CommitManager createCommitManager()
+  {
+    return new CommitManager(this);
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -341,7 +359,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       throw new IllegalStateException("Store without auditing support");
     }
 
-    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager, store };
+    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager,
+        queryManager, notificationManager, commitManager, store };
   }
 
   @Override
@@ -375,17 +394,20 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(revisionManager);
     LifecycleUtil.activate(queryManager);
     LifecycleUtil.activate(notificationManager);
+    LifecycleUtil.activate(commitManager);
     LifecycleUtil.activate(queryHandlerProvider);
   }
 
   protected void deactivateRepository()
   {
     LifecycleUtil.deactivate(queryHandlerProvider);
+    LifecycleUtil.deactivate(commitManager);
     LifecycleUtil.deactivate(notificationManager);
     LifecycleUtil.deactivate(queryManager);
     LifecycleUtil.deactivate(revisionManager);
     LifecycleUtil.deactivate(resourceManager);
     LifecycleUtil.deactivate(sessionManager);
+
     LifecycleUtil.deactivate(packageManager);
     LifecycleUtil.deactivate(store);
   }

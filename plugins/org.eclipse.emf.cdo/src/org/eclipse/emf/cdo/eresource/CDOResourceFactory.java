@@ -7,10 +7,9 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource;
-
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -19,5 +18,4 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public interface CDOResourceFactory extends Resource.Factory
 {
-  public static final CDOResourceFactory INSTANCE = CDOResourceFactoryImpl.INSTANCE;
 }

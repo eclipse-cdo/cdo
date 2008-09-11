@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
@@ -27,9 +28,22 @@ public interface IStoreWriter extends IStoreReader
 {
   public IView getView();
 
-  public void commit(CommitContext context);
+  /**
+   * Called before committing. An Instance of a storeWriter represents an instance of back-end Transaction. Could be called multiple times before commit it called. 
+   * @since 2.0
+   */
+  public void write(CommitContext context);
 
-  public void rollback(CommitContext context);
+  /**
+   * It will flush to the backend and make available the data for others.
+   * @since 2.0
+   */
+  public void commit();
+
+  /**
+   * @since 2.0
+   */
+  public void rollback();
 
   /**
    * Represents the state of a single, logical commit operation which is driven through multiple calls to several
@@ -82,6 +96,14 @@ public interface IStoreWriter extends IStoreReader
      * <code>CommitContext</code>.
      */
     public CDORevisionDelta[] getDirtyObjectDeltas();
+
+    /**
+     * Returns an array of the removed object that are part of the commit operation represented by this
+     * <code>CommitContext</code>.
+     * 
+     * @since 2.0
+     */
+    public CDOID[] getDetachedObjects();
 
     /**
      * Returns an unmodifiable map from all temporary IDs (meta or not) to their persistent counter parts. It is

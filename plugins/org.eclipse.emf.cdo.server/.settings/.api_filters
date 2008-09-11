@@ -64,6 +64,21 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContextImpl.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl$TransactionPackageManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOPackageManager"/>
+                <message_argument value="TransactionPackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/ResourcesQueryHandler.java" type="org.eclipse.emf.cdo.internal.server.ResourcesQueryHandler">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.ResourcesQueryHandler"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/Transaction.java" type="org.eclipse.emf.cdo.internal.server.Transaction$TransactionPackageManager">
         <filter id="574619656">
             <message_arguments>
@@ -84,6 +99,13 @@
             <message_arguments>
                 <message_argument value="AbstractQueryResult"/>
                 <message_argument value="QueryResult"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/StoreThreadLocal.java" type="org.eclipse.emf.cdo.server.StoreThreadLocal">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.StoreThreadLocal"/>
             </message_arguments>
         </filter>
     </resource>

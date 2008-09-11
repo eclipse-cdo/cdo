@@ -46,7 +46,7 @@ public class StateMachineTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
     assertNew(resource, transaction);
-    assertEquals(URI.createURI("cdo:/test1"), resource.getURI());
+    assertEquals(URI.createURI("cdo://" + session.getRepositoryUUID() + "/test1"), resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
 
     // Attach single object

@@ -23,7 +23,7 @@ public interface CDORevisionData
 
   public CDOID getResourceID();
 
-  public CDOID getContainerID();
+  public Object getContainerID();
 
   public int getContainingFeatureID();
 

@@ -295,7 +295,7 @@ public class RevisionHolderTest extends AbstractOMTest
       throw new UnsupportedOperationException();
     }
 
-    public CDOID getContainerID()
+    public Object getContainerID()
     {
       throw new UnsupportedOperationException();
     }
@@ -370,7 +370,7 @@ public class RevisionHolderTest extends AbstractOMTest
       throw new UnsupportedOperationException();
     }
 
-    public void setContainerID(CDOID containerID)
+    public void setContainerID(Object containerID)
     {
       throw new UnsupportedOperationException();
     }

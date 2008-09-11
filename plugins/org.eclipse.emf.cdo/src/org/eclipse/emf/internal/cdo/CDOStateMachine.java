@@ -9,6 +9,9 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/215688    
+ *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Eike Stepper & Simon McDuff - http://bugs.eclipse.org/204890
+ *    Simon McDuff - http://bugs.eclipse.org/246705
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -24,27 +27,27 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
-import org.eclipse.emf.internal.cdo.protocol.ResourceIDRequest;
 import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -121,8 +124,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
 
-    init(CDOState.PROXY, CDOEvent.PREPARE, new LoadResourceTransition());// Resources start in PROXY instead TRANSIENT
-    init(CDOState.PROXY, CDOEvent.ATTACH, IGNORE);// Resources must not FAIL
+    init(CDOState.PROXY, CDOEvent.PREPARE, FAIL);
+    init(CDOState.PROXY, CDOEvent.ATTACH, FAIL);
     init(CDOState.PROXY, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
     init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
@@ -143,27 +146,44 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
+   * object is already attached in EMF world. It contains all the information needed to know where it will be connected.
+   * We used a mapOfContents only for performance reason.
+   * 
    * @since 2.0
    */
-  public void attach(InternalCDOObject object, CDOResource resource, CDOView view)
+  public void attach(InternalCDOObject object, CDOTransactionImpl transaction)
   {
-    ResourceAndView data = new ResourceAndView(resource, (CDOViewImpl)view);
+    Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents = new HashMap<InternalCDOObject, List<InternalCDOObject>>();
+    attach1(object, new Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>>(transaction,
+        mapOfContents));
+    attach2(object, mapOfContents);
+  }
 
-    // Phase 1: TRANSIENT --> PREPARED
+  /**
+   * Phase 1: TRANSIENT --> PREPARED
+   */
+  private void attach1(InternalCDOObject object,
+      Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>> transactionAndMapOfContents)
+  {
     if (TRACER.isEnabled())
     {
-      TRACER.format("PREPARE: {0} --> {1}", object, view);
+      TRACER.format("PREPARE: {0} --> {1}", object, transactionAndMapOfContents.getElement1());
     }
 
-    process(object, CDOEvent.PREPARE, data);
+    process(object, CDOEvent.PREPARE, transactionAndMapOfContents);
+  }
 
-    // Phase 2: PREPARED --> NEW
+  /**
+   * Phase 2: PREPARED --> NEW
+   */
+  private void attach2(InternalCDOObject object, Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents)
+  {
     if (TRACER.isEnabled())
     {
-      TRACER.format("ATTACH: {0} --> {1}", object, view);
+      TRACER.format("ATTACH: {0} --> {1}", object, mapOfContents);
     }
 
-    process(object, CDOEvent.ATTACH, null);
+    process(object, CDOEvent.ATTACH, mapOfContents);
   }
 
   public void detach(InternalCDOObject object)
@@ -263,12 +283,20 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void invalidate(InternalCDOObject object, long timeStamp)
   {
+    invalidate(object, false, timeStamp);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void invalidate(InternalCDOObject object, boolean detach, long timeStamp)
+  {
     if (TRACER.isEnabled())
     {
       trace(object, CDOEvent.INVALIDATE);
     }
 
-    process(object, CDOEvent.INVALIDATE, timeStamp);
+    process(object, CDOEvent.INVALIDATE, new Pair<Boolean, Long>(detach, timeStamp));
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
@@ -331,28 +359,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
-   * @author Eike Stepper
-   */
-  private static final class ResourceAndView
-  {
-    public CDOResource resource;
-
-    public CDOViewImpl view;
-
-    public ResourceAndView(CDOResource resource, CDOViewImpl view)
-    {
-      this.resource = resource;
-      this.view = view;
-    }
-
-    @Override
-    public String toString()
-    {
-      return MessageFormat.format("ResourceAndView({0}, {1})", resource, view);
-    }
-  }
-
-  /**
    * Prepares a tree of transient objects to be subsequently {@link AttachTransition attached} to a CDOView.
    * <p>
    * Execution is recursive and includes:
@@ -367,37 +373,49 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @see AttachTransition
    * @author Eike Stepper
    */
-  private final class PrepareTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, ResourceAndView>
+  @SuppressWarnings("unchecked")
+  private final class PrepareTransition
+      implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>>>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
+        Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>> transactionAndMapOfContents)
     {
-      CDOTransactionImpl transaction = data.view.toTransaction();
+      CDOTransactionImpl transaction = transactionAndMapOfContents.getElement1();
+      Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents = transactionAndMapOfContents.getElement2();
+
       CDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
 
       // Prepare object
       CDOID id = transaction.getNextTemporaryID();
       object.cdoInternalSetID(id);
-      object.cdoInternalSetResource(data.resource);
-      object.cdoInternalSetView(data.view);
+      object.cdoInternalSetView(transaction);
       changeState(object, CDOState.PREPARED);
 
       // Create new revision
       CDOClass cdoClass = object.cdoClass();
       InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
       revision.setVersion(-1);
-      revision.setResourceID(data.resource.cdoID());
+
       object.cdoInternalSetRevision(revision);
 
       // Register object
-      data.view.registerObject(object);
+      transaction.registerObject(object);
       transaction.registerNew(object);
 
+      // Build a list to access the same object in AttachTransition.
+      // This is an optimization. Accessing object from eStore/getObject takes more time than directly.
+      List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
+
       // Prepare content tree
-      for (Iterator<InternalCDOObject> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
+      for (Iterator<InternalCDOObject> it = FSMUtil.getProperContents(object); it.hasNext();)
       {
         InternalCDOObject content = it.next();
-        INSTANCE.process(content, CDOEvent.PREPARE, data);
+        contents.add(content);
+        INSTANCE.process(content, CDOEvent.PREPARE,
+            new Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>>(transaction, mapOfContents));
       }
+      mapOfContents.put(object, contents.size() == 0 ? Collections.EMPTY_LIST : contents);
     }
   }
 
@@ -419,19 +437,21 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @see PrepareTransition
    * @author Eike Stepper
    */
-  private final class AttachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private final class AttachTransition implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, Map<InternalCDOObject, List<InternalCDOObject>>>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
+        Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents)
     {
-      CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
       object.cdoInternalPostAttach();
       changeState(object, CDOState.NEW);
 
-      // Attach content tree
-      for (Iterator<?> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
+      List<InternalCDOObject> contents = mapOfContents.get(object);
+
+      // Prepare content tree
+      for (InternalCDOObject content : contents)
       {
-        InternalCDOObject content = (InternalCDOObject)it.next();
-        INSTANCE.process(content, CDOEvent.ATTACH, null);
+        INSTANCE.process(content, CDOEvent.ATTACH, mapOfContents);
       }
     }
   }
@@ -444,13 +464,26 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
+
+      transaction.detachObject(object);
+
+      object.cdoInternalPostDetach();
       object.cdoInternalSetState(CDOState.TRANSIENT);
 
-      // Detach content tree
-      for (Iterator<?> it = FSMUtil.iterator(object.eContents(), transaction); it.hasNext();)
+      boolean isResource = object instanceof Resource;
+      // Prepare content tree
+      for (Iterator<EObject> it = object.eContents().iterator(); it.hasNext();)
       {
-        InternalCDOObject content = (InternalCDOObject)it.next();
-        INSTANCE.process(content, CDOEvent.DETACH, null);
+        InternalEObject eObject = (InternalEObject)it.next();
+        boolean isDirectlyConnected = isResource && eObject.eDirectResource() == object;
+        if (isDirectlyConnected || eObject.eDirectResource() == null)
+        {
+          InternalCDOObject content = FSMUtil.adapt(eObject, transaction);
+          if (content != null)
+          {
+            INSTANCE.process(content, CDOEvent.DETACH, object);
+          }
+        }
       }
     }
   }
@@ -571,12 +604,20 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
+  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<Boolean, Long>>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<Boolean, Long> detachAndTimeStamp)
     {
-      reviseObject(object, timeStamp);
-      changeState(object, CDOState.PROXY);
+      if (detachAndTimeStamp.getElement1())
+      {
+        object.cdoInternalPostDetach();
+        object.cdoInternalSetState(CDOState.TRANSIENT);
+      }
+      else
+      {
+        reviseObject(object, detachAndTimeStamp.getElement2());
+        changeState(object, CDOState.PROXY);
+      }
     }
 
     protected void reviseObject(InternalCDOObject object, Long timeStamp)
@@ -592,9 +633,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private final class ConflictTransition extends InvalidateTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<Boolean, Long> detachAndTimeStamp)
     {
-      reviseObject(object, timeStamp);
+      reviseObject(object, detachAndTimeStamp.getElement2());
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
       transaction.setConflict(object);
@@ -626,51 +667,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       if (forWrite)
       {
         INSTANCE.write(object, (CDOFeatureDelta)delta);
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class LoadResourceTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, ResourceAndView>
-  {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, ResourceAndView data)
-    {
-      CDOID id = requestID(data.resource, data.view);
-      if (id.isNull())
-      {
-        throw new ServerException("Resource not available: " + data.resource.getPath());
-      }
-
-      // Prepare object
-      object.cdoInternalSetID(id);
-      object.cdoInternalSetResource(data.resource);
-      object.cdoInternalSetView(data.view);
-
-      // Register object
-      data.view.registerObject(object);
-    }
-
-    private CDOID requestID(CDOResource resource, CDOViewImpl view)
-    {
-      try
-      {
-        String path = CDOUtil.extractResourcePath(resource.getURI());
-        CDOSession session = view.getSession();
-
-        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-        ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), path);
-        return failOverStrategy.send(request);
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new TransportException(ex);
       }
     }
   }

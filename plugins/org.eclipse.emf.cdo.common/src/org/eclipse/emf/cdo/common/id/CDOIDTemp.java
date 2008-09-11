@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
@@ -16,5 +17,4 @@ package org.eclipse.emf.cdo.common.id;
  */
 public interface CDOIDTemp extends CDOID
 {
-  public int getIntValue();
 }

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -155,7 +156,7 @@ public abstract class ClassMapping implements IClassMapping
       builder.append(", ");
       builder.append(CDOIDUtil.getLong(revision.getResourceID()));
       builder.append(", ");
-      builder.append(CDOIDUtil.getLong(revision.getContainerID()));
+      builder.append(CDOIDUtil.getLong((CDOID)revision.getContainerID()));
       builder.append(", ");
       builder.append(revision.getContainingFeatureID());
     }

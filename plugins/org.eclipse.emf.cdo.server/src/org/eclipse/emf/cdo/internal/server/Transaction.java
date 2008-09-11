@@ -8,79 +8,41 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IPackageManager;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class Transaction extends View implements ITransaction, IStoreWriter.CommitContext
+public class Transaction extends View implements ITransaction
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, Transaction.class);
-
-  private IRepository repository;
-
-  private IPackageManager repositoryPackageManager;
-
-  private TransactionPackageManager packageManager;
-
-  private IStoreWriter storeWriter;
-
-  private long timeStamp;
-
-  private CDOPackage[] newPackages;
-
-  private CDORevision[] newObjects;
-
-  private CDORevision[] dirtyObjects;
-
-  private CDORevisionDelta[] dirtyObjectDeltas;
-
-  private List<CDOIDMetaRange> metaIDRanges = new ArrayList<CDOIDMetaRange>();
-
-  private ConcurrentMap<CDOIDTemp, CDOID> idMappings = new ConcurrentHashMap<CDOIDTemp, CDOID>();
-
-  private String rollbackMessage;
+  private Repository repository;
 
   public Transaction(Session session, int viewID)
   {
     super(session, viewID, Type.TRANSACTION);
     repository = session.getSessionManager().getRepository();
-    repositoryPackageManager = repository.getPackageManager();
-    packageManager = new TransactionPackageManager();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Repository getRepository()
+  {
+    return repository;
   }
 
   public int getTransactionID()
@@ -88,360 +50,59 @@ public class Transaction extends View implements ITransaction, IStoreWriter.Comm
     return getViewID();
   }
 
-  public long getTimeStamp()
+  /**
+   * @since 2.0
+   */
+  public InternalCommitContext createCommitContext()
   {
-    return timeStamp;
-  }
-
-  public TransactionPackageManager getPackageManager()
-  {
-    return packageManager;
-  }
-
-  public CDOPackage[] getNewPackages()
-  {
-    return newPackages;
-  }
-
-  public CDORevision[] getNewObjects()
-  {
-    return newObjects;
-  }
-
-  public CDORevision[] getDirtyObjects()
-  {
-    return dirtyObjects;
-  }
-
-  public CDORevisionDelta[] getDirtyObjectDeltas()
-  {
-    return dirtyObjectDeltas;
-  }
-
-  public List<CDOIDMetaRange> getMetaIDRanges()
-  {
-    return Collections.unmodifiableList(metaIDRanges);
-  }
-
-  public Map<CDOIDTemp, CDOID> getIDMappings()
-  {
-    return Collections.unmodifiableMap(idMappings);
-  }
-
-  public void addIDMapping(CDOIDTemp oldID, CDOID newID)
-  {
-    if (newID == null || newID.isNull() || newID.isTemporary())
-    {
-      throw new IllegalStateException("newID=" + newID);
-    }
-
-    CDOID previousMapping = idMappings.putIfAbsent(oldID, newID);
-    if (previousMapping != null)
-    {
-      throw new IllegalStateException("previousMapping != null");
-    }
-  }
-
-  public void applyIDMappings()
-  {
-    applyIDMappings(newObjects);
-    applyIDMappings(dirtyObjects);
-    for (CDORevisionDelta dirtyObjectDelta : dirtyObjectDeltas)
-    {
-      ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMappings);
-    }
-  }
-
-  public String getRollbackMessage()
-  {
-    return rollbackMessage;
-  }
-
-  public void preCommit()
-  {
-    // Allocate a store writer
-    storeWriter = repository.getStore().getWriter(this);
-
-    // Make the store writer available in a ThreadLocal variable
-    StoreThreadLocal.setStoreReader(storeWriter);
-  }
-
-  public void commit(CDOPackage[] newPackages, CDORevision[] newObjects, CDORevisionDelta[] dirtyObjectDeltas)
-  {
-    timeStamp = createTimeStamp();
-    this.newPackages = newPackages;
-    this.newObjects = newObjects;
-    this.dirtyObjectDeltas = dirtyObjectDeltas;
-    dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
-
-    try
-    {
-      adjustMetaRanges();
-      adjustTimeStamps();
-      computeDirtyObjects(!repository.isSupportingRevisionDeltas());
-
-      storeWriter.commit(this);
-      updateInfraStructure();
-    }
-    catch (RuntimeException ex)
-    {
-      OM.LOG.error(ex);
-      String storeClass = repository.getStore().getClass().getSimpleName();
-      rollbackMessage = "Rollback in " + storeClass + ": " + ex.getMessage();
-      rollback();
-    }
-  }
-
-  protected long createTimeStamp()
-  {
-    return System.currentTimeMillis();
-  }
-
-  public void postCommit(boolean success)
-  {
-    try
-    {
-      repository.getNotificationManager().notifyCommit(getSession(), this);
-    }
-    finally
-    {
-      StoreThreadLocal.release();
-      storeWriter = null;
-      timeStamp = 0L;
-      packageManager.clear();
-      metaIDRanges.clear();
-      idMappings.clear();
-      rollbackMessage = null;
-      newPackages = null;
-      newObjects = null;
-      dirtyObjectDeltas = null;
-      dirtyObjects = null;
-    }
-  }
-
-  private void adjustTimeStamps()
-  {
-    for (CDORevision newObject : newObjects)
-    {
-      InternalCDORevision revision = (InternalCDORevision)newObject;
-      revision.setCreated(timeStamp);
-    }
-  }
-
-  private void adjustMetaRanges()
-  {
-    for (CDOPackage newPackage : newPackages)
-    {
-      if (newPackage.getParentURI() == null)
-      {
-        adjustMetaRange(newPackage);
-      }
-    }
-  }
-
-  private void adjustMetaRange(CDOPackage newPackage)
-  {
-    CDOIDMetaRange oldRange = newPackage.getMetaIDRange();
-    if (!oldRange.isTemporary())
-    {
-      throw new IllegalStateException("!oldRange.isTemporary()");
-    }
-
-    CDOIDMetaRange newRange = repository.getMetaIDRange(oldRange.size());
-    ((InternalCDOPackage)newPackage).setMetaIDRange(newRange);
-    for (int l = 0; l < oldRange.size(); l++)
-    {
-      CDOIDTemp oldID = (CDOIDTemp)oldRange.get(l);
-      CDOID newID = newRange.get(l);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Mapping meta ID: {0} --> {1}", oldID, newID);
-      }
-
-      idMappings.put(oldID, newID);
-    }
-
-    metaIDRanges.add(newRange);
-  }
-
-  private void computeDirtyObjects(boolean failOnNull)
-  {
-    for (int i = 0; i < dirtyObjectDeltas.length; i++)
-    {
-      dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i], failOnNull);
-      if (dirtyObjects[i] == null && failOnNull)
-      {
-        throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]);
-      }
-    }
-  }
-
-  private CDORevision computeDirtyObject(CDORevisionDelta dirtyObjectDelta, boolean loadOnDemand)
-  {
-    CDOID id = dirtyObjectDelta.getID();
-    int version = dirtyObjectDelta.getOriginVersion();
-
-    CDORevisionResolver revisionResolver = repository.getRevisionManager();
-    CDORevision originObject = revisionResolver.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
-    if (originObject != null)
-    {
-      InternalCDORevision dirtyObject = (InternalCDORevision)CDORevisionUtil.copy(originObject);
-      dirtyObjectDelta.apply(dirtyObject);
-      dirtyObject.setCreated(timeStamp);
-      // dirtyObject.setVersion(originObject.getVersion() + 1);
-      return dirtyObject;
-    }
-
-    return null;
-  }
-
-  private void applyIDMappings(CDORevision[] revisions)
-  {
-    for (CDORevision revision : revisions)
-    {
-      if (revision != null)
-      {
-        InternalCDORevision internal = (InternalCDORevision)revision;
-        CDOID newID = idMappings.get(internal.getID());
-        if (newID != null)
-        {
-          internal.setID(newID);
-        }
-
-        internal.adjustReferences(idMappings);
-      }
-    }
-  }
-
-  private void rollback()
-  {
-    if (storeWriter != null)
-    {
-      try
-      {
-        storeWriter.rollback(this);
-      }
-      catch (RuntimeException ex)
-      {
-        OM.LOG.warn("Problem while rolling back  the transaction", ex);
-      }
-    }
-  }
-
-  private void updateInfraStructure()
-  {
-    try
-    {
-      addNewPackages();
-      addRevisions(newObjects);
-      addRevisions(dirtyObjects);
-    }
-    catch (RuntimeException ex)
-    {
-      // TODO Rethink this case
-      OM.LOG.error("FATAL: Memory infrastructure corrupted after successful commit operation of the store");
-    }
-  }
-
-  private void addNewPackages()
-  {
-    PackageManager packageManager = (PackageManager)repository.getPackageManager();
-    for (int i = 0; i < newPackages.length; i++)
-    {
-      CDOPackage cdoPackage = newPackages[i];
-      packageManager.addPackage(cdoPackage);
-    }
-  }
-
-  private void addRevisions(CDORevision[] revisions)
-  {
-    RevisionManager revisionManager = (RevisionManager)repository.getRevisionManager();
-    for (CDORevision revision : revisions)
-    {
-      if (revision != null)
-      {
-        revisionManager.addCachedRevision((InternalCDORevision)revision);
-      }
-    }
+    return new TransactionCommitContextImpl(this);
   }
 
   /**
-   * @author Eike Stepper
+   * For tests only.
+   * 
+   * @since 2.0
    */
-  public final class TransactionPackageManager implements CDOPackageManager
+  public InternalCommitContext createCommitContext(final long timeStamp)
   {
-    private List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
-
-    public TransactionPackageManager()
+    return new TransactionCommitContextImpl(this)
     {
-    }
-
-    public void addPackage(CDOPackage cdoPackage)
-    {
-      newPackages.add(cdoPackage);
-    }
-
-    public void clear()
-    {
-      newPackages.clear();
-    }
-
-    public CDOIDObjectFactory getCDOIDObjectFactory()
-    {
-      return repositoryPackageManager.getCDOIDObjectFactory();
-    }
-
-    public CDOPackage lookupPackage(String uri)
-    {
-      for (CDOPackage cdoPackage : newPackages)
+      @Override
+      protected long createTimeStamp()
       {
-        if (ObjectUtil.equals(cdoPackage.getPackageURI(), uri))
-        {
-          return cdoPackage;
-        }
+        return timeStamp;
       }
+    };
+  }
 
-      return repositoryPackageManager.lookupPackage(uri);
-    }
+  /**
+   * @author Simon McDuff
+   * @since 2.0
+   */
+  public interface InternalCommitContext extends CommitContext
+  {
+    public Transaction getTransaction();
 
-    public CDOCorePackage getCDOCorePackage()
-    {
-      return repositoryPackageManager.getCDOCorePackage();
-    }
+    public TransactionPackageManager getPackageManager();
 
-    public CDOResourcePackage getCDOResourcePackage()
-    {
-      return repositoryPackageManager.getCDOResourcePackage();
-    }
+    public void preCommit();
 
-    public int getPackageCount()
-    {
-      throw new UnsupportedOperationException();
-    }
+    public void write();
 
-    public CDOPackage[] getPackages()
-    {
-      throw new UnsupportedOperationException();
-    }
+    public void commit();
 
-    public CDOPackage[] getElements()
-    {
-      throw new UnsupportedOperationException();
-    }
+    public void postCommit(boolean success);
 
-    public boolean isEmpty()
-    {
-      throw new UnsupportedOperationException();
-    }
+    public String getRollbackMessage();
 
-    public void addListener(IListener listener)
-    {
-      throw new UnsupportedOperationException();
-    }
+    public List<CDOIDMetaRange> getMetaIDRanges();
 
-    public void removeListener(IListener listener)
-    {
-      throw new UnsupportedOperationException();
-    }
+    public void setNewPackages(CDOPackage[] newPackages);
+
+    public void setNewObjects(CDORevision[] newObjects);
+
+    public void setDirtyObjectDeltas(CDORevisionDelta[] dirtyObjectDeltas);
+
+    public void setDetachedObjects(CDOID[] detachedObjects);
   }
 }

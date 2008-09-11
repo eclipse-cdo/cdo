@@ -8,19 +8,27 @@
  * Contributors: 
  *    Simon McDuff - initial API and implementation 
  *    Eike Stepper - maintenance         
+ *    Simon McDuff - http://bugs.eclipse.org/204890 
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSavepoint;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 
+import org.eclipse.net4j.util.collection.MultiMap;
+
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -28,10 +36,8 @@ import java.util.concurrent.ConcurrentMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOSavepointImpl implements CDOSavepoint
+public class CDOSavepointImpl extends CDOAbstractSavepoint
 {
-  private CDOTransactionImpl transaction;
-
   private Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
 
   private Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
@@ -40,22 +46,43 @@ public class CDOSavepointImpl implements CDOSavepoint
 
   private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
 
+  private Set<CDOID> detachedObjects = new HashSet<CDOID>()
+  {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean add(CDOID key)
+    {
+      sharedDetachedObjects.add(key);
+      dirtyObjects.remove(key);
+      baseNewObjects.remove(key);
+      newObjects.remove(key);
+      newResources.remove(key);
+      return super.add(key);
+    }
+  };
+
   private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
 
-  private CDOSavepointImpl previousSavepoint;
-
-  private CDOSavepointImpl nextSavepoint;
+  /**
+   * Contains all persistent CDOIDs that were removed. The same instance is shared between all save points that belong
+   * to the same transaction.
+   */
+  private Set<CDOID> sharedDetachedObjects;
 
   private boolean isDirty;
 
   public CDOSavepointImpl(CDOTransactionImpl transaction, CDOSavepointImpl lastSavepoint)
   {
-    this.transaction = transaction;
+    super(transaction, lastSavepoint);
     isDirty = transaction.isDirty();
-    previousSavepoint = lastSavepoint;
-    if (previousSavepoint != null)
+    if (getPreviousSavepoint() == null)
     {
-      previousSavepoint.setNextSavepoint(this);
+      sharedDetachedObjects = new HashSet<CDOID>();
+    }
+    else
+    {
+      sharedDetachedObjects = lastSavepoint.getSharedDetachedObjects();
     }
   }
 
@@ -66,6 +93,7 @@ public class CDOSavepointImpl implements CDOSavepoint
     dirtyObjects.clear();
     revisionDeltas.clear();
     baseNewObjects.clear();
+    detachedObjects.clear();
   }
 
   public boolean isDirty()
@@ -83,9 +111,19 @@ public class CDOSavepointImpl implements CDOSavepoint
     return newObjects;
   }
 
+  public Set<CDOID> getDetachedObjects()
+  {
+    return detachedObjects;
+  }
+
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
     return dirtyObjects;
+  }
+
+  public Set<CDOID> getSharedDetachedObjects()
+  {
+    return sharedDetachedObjects;
   }
 
   public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
@@ -98,52 +136,217 @@ public class CDOSavepointImpl implements CDOSavepoint
     return baseNewObjects;
   }
 
-  public CDOSavepointImpl getPreviousSavepoint()
+  /**
+   * Return the list of new objects from this point.
+   */
+  public Map<CDOID, CDOObject> getAllDirtyObjects()
   {
-    return previousSavepoint;
+    if (getPreviousSavepoint() == null)
+    {
+      return getDirtyObjects();
+    }
+
+    MultiMap.ListBased<CDOID, CDOObject> dirtyObjects = new MultiMap.ListBased<CDOID, CDOObject>();
+    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      dirtyObjects.getDelegates().add(savepoint.getDirtyObjects());
+    }
+
+    return dirtyObjects;
   }
 
+  /**
+   * Return the list of new objects from this point without objects that are removed.
+   */
+  public Map<CDOID, CDOObject> getAllNewObjects()
+  {
+    if (getPreviousSavepoint() == null)
+    {
+      return Collections.unmodifiableMap(getNewObjects());
+    }
+
+    if (getSharedDetachedObjects().size() == 0)
+    {
+      MultiMap.ListBased<CDOID, CDOObject> newObjects = new MultiMap.ListBased<CDOID, CDOObject>();
+      for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+      {
+        newObjects.getDelegates().add(savepoint.getNewObjects());
+      }
+
+      return newObjects;
+    }
+
+    Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
+    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      for (CDOObject object : savepoint.getNewObjects().values())
+      {
+        if (!getSharedDetachedObjects().contains(object.cdoID()))
+        {
+          newObjects.put(object.cdoID(), object);
+        }
+      }
+    }
+
+    return newObjects;
+  }
+
+  /**
+   * Return the list of new resources from this point without objects that are removed.
+   */
+  public Map<CDOID, CDOResource> getAllNewResources()
+  {
+    if (getPreviousSavepoint() == null)
+    {
+      return Collections.unmodifiableMap(getNewResources());
+    }
+
+    if (getSharedDetachedObjects().size() == 0)
+    {
+      MultiMap.ListBased<CDOID, CDOResource> newResources = new MultiMap.ListBased<CDOID, CDOResource>();
+      for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+      {
+        newResources.getDelegates().add(savepoint.getNewResources());
+      }
+
+      return newResources;
+    }
+
+    Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
+    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      for (CDOResource resource : savepoint.getNewResources().values())
+      {
+        if (!sharedDetachedObjects.contains(resource.cdoID()))
+        {
+          newResources.put(resource.cdoID(), resource);
+        }
+      }
+    }
+
+    return newResources;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Map<CDOID, CDORevision> getAllBaseNewObjects()
+  {
+    if (getPreviousSavepoint() == null)
+    {
+      return Collections.unmodifiableMap(getBaseNewObjects());
+    }
+
+    MultiMap.ListBased<CDOID, CDORevision> newObjects = new MultiMap.ListBased<CDOID, CDORevision>();
+    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      newObjects.getDelegates().add(savepoint.getBaseNewObjects());
+    }
+
+    return newObjects;
+  }
+
+  /**
+   * Return the list of all deltas without objects that are removed.
+   */
+  public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas()
+  {
+    if (getPreviousSavepoint() == null)
+    {
+      return Collections.unmodifiableMap(getRevisionDeltas());
+    }
+
+    // We need to combined the result for all delta in different Savepoint
+    Map<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
+    for (CDOSavepointImpl savepoint = (CDOSavepointImpl)getFirstSavePoint(); savepoint != null; savepoint = savepoint
+        .getNextSavepoint())
+    {
+      for (Entry<CDOID, CDORevisionDelta> entry : savepoint.getRevisionDeltas().entrySet())
+      {
+        // Skipping temporary
+        if (entry.getKey().isTemporary() || detachedObjects.contains(entry.getKey()))
+        {
+          continue;
+        }
+
+        CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(entry.getKey());
+        if (revisionDelta == null)
+        {
+          revisionDeltas.put(entry.getKey(), entry.getValue());
+        }
+        else
+        {
+          for (CDOFeatureDelta delta : entry.getValue().getFeatureDeltas())
+          {
+            if (delta instanceof CDOListFeatureDelta)
+            {
+              for (CDOFeatureDelta subDelta : ((CDOListFeatureDelta)delta).getListChanges())
+              {
+                revisionDelta.addFeatureDelta(subDelta);
+              }
+            }
+            else
+            {
+              revisionDelta.addFeatureDelta(delta);
+            }
+          }
+        }
+      }
+    }
+
+    return revisionDeltas;
+  }
+
+  public Set<CDOID> getAllDetachedObjects()
+  {
+    if (getPreviousSavepoint() == null)
+    {
+      return Collections.unmodifiableSet(getDetachedObjects());
+    }
+
+    Set<CDOID> detachedObjects = new HashSet<CDOID>();
+    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      for (CDOID id : savepoint.getDetachedObjects())
+      {
+        detachedObjects.add(id);
+      }
+    }
+
+    return detachedObjects;
+  }
+
+  @Override
+  public CDOSavepointImpl getPreviousSavepoint()
+  {
+    return (CDOSavepointImpl)super.getPreviousSavepoint();
+  }
+
+  @Override
   public CDOSavepointImpl getNextSavepoint()
   {
-    return nextSavepoint;
+    return (CDOSavepointImpl)super.getNextSavepoint();
   }
 
   public void setPreviousSavepoint(CDOSavepointImpl previousSavepoint)
   {
-    this.previousSavepoint = previousSavepoint;
+    super.setPreviousSavepoint(previousSavepoint);
   }
 
   public void setNextSavepoint(CDOSavepointImpl nextSavepoint)
   {
-    this.nextSavepoint = nextSavepoint;
+    super.setNextSavepoint(nextSavepoint);
   }
 
-  public CDOTransaction getTransaction()
-  {
-    return transaction;
-  }
-
+  @Override
   public void rollback(boolean remote)
   {
-    getTransaction().rollback(this, remote);
+    getUserTransaction().rollback(this, remote);
   }
 
+  @Override
   public void rollback()
   {
-    getTransaction().rollback(this);
-  }
-
-  public boolean isValid()
-  {
-    CDOSavepoint lastSavepoint = getTransaction().getLastSavepoint();
-    for (CDOSavepoint savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-    {
-      if (savepoint == this)
-      {
-        return true;
-      }
-    }
-
-    return false;
+    getUserTransaction().rollback(this);
   }
 }

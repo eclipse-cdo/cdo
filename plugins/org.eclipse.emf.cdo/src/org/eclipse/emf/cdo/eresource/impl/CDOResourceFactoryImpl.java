@@ -7,11 +7,18 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - http://bugs.eclipse.org/246705
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
+
+import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.CDOViewSetImpl;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -22,20 +29,45 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
  */
 public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFactory
 {
-  // @Singleton
-  public static final CDOResourceFactoryImpl INSTANCE = new CDOResourceFactoryImpl();
-
   private static final String RESOURCE_SET_CLASS_NAME = ResourceSetImpl.class.getName();
 
-  public CDOResourceFactoryImpl()
+  /**
+   * @since 2.0
+   */
+  private CDOViewSetImpl viewSet;
+
+  /**
+   * @since 2.0
+   */
+  public CDOResourceFactoryImpl(CDOViewSet viewSet)
   {
+    this.viewSet = (CDOViewSetImpl)viewSet;
   }
 
   public Resource createResource(URI uri)
   {
+    // URI can be invalid or incomplete.
+    // Extract repo + resource path and build a new URI.
+
+    String repoUUID = CDOURIUtil.extractRepositoryUUID(uri);
+
+    // repoUUID can be null but can be null
+    CDOViewImpl view = viewSet.resolveUUID(repoUUID);
+
+    // Extract path
+    String path = uri.path();
+
+    // Build a new URI with the view and the path
+    URI newURI = CDOURIUtil.createResourceURI(view, path);
+
     CDOResourceImpl resource = (CDOResourceImpl)EresourceFactory.eINSTANCE.createCDOResource();
-    resource.setURI(uri);
+    resource.setURI(newURI);
     resource.setExisting(isExistingResource());
+
+    if (resource.isExisting())
+    {
+      view.registerProxyResource(resource);
+    }
     return resource;
   }
 

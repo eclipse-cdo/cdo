@@ -61,7 +61,7 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
     return null;
   }
 
-  public String asString()
+  public String toURIFragment()
   {
     return "NULL";
   }

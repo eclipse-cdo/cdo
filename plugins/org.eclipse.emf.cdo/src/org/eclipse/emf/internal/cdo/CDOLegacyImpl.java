@@ -91,18 +91,6 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
     return CDOObjectImpl.getCDOClass(this);
   }
 
-  @Override
-  public CDOViewImpl cdoView()
-  {
-    // TODO Why is this lazy?
-    if (view == null)
-    {
-      view = CDOObjectImpl.getCDOView(this);
-    }
-
-    return view;
-  }
-
   public void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);
@@ -358,19 +346,20 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
 
   protected void transferContainmentToInstance(CDOViewImpl view)
   {
-    CDOID containerID = revision.getContainerID();
-    if (containerID.isNull())
-    {
-      CDOID resourceID = revision.getResourceID();
-      Resource.Internal resource = (Resource.Internal)view.getObject(resourceID);
-      transferResourceToInstance(resource);
-    }
-    else
-    {
-      int containingFeatureID = revision.getContainingFeatureID();
-      InternalEObject container = convertPotentialID(view, containerID);
-      ((BasicEObjectImpl)instance).eBasicSetContainer(container, containingFeatureID, null);
-    }
+    // Not supported anymore
+    // Object containerID = revision.getContainerID();
+    // if (containerID.isNull())
+    // {
+    // CDOID resourceID = revision.getResourceID();
+    // Resource.Internal resource = (Resource.Internal)view.getObject(resourceID);
+    // transferResourceToInstance(resource);
+    // }
+    // else
+    // {
+    // int containingFeatureID = revision.getContainingFeatureID();
+    // InternalEObject container = convertPotentialID(view, containerID);
+    // ((BasicEObjectImpl)instance).eBasicSetContainer(container, containingFeatureID, null);
+    // }
   }
 
   public void transferResourceToInstance(Resource.Internal resource)

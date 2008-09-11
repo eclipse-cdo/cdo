@@ -8,10 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Eike Stepper & Simon McDuff - http://bugs.eclipse.org/204890 
+ *    Simon McDuff - http://bugs.eclipse.org/246705
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -32,6 +34,8 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -41,6 +45,8 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
@@ -50,6 +56,7 @@ import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -66,6 +73,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private CDOID id;
 
   private CDOState state;
+
+  private CDOViewImpl cdoView;
 
   private CDOResourceImpl resource;
 
@@ -99,7 +108,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public CDOViewImpl cdoView()
   {
-    return getCDOView(this);
+    return cdoView;
   }
 
   public CDOResourceImpl cdoResource()
@@ -168,11 +177,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public void cdoInternalSetView(CDOView view)
   {
     CDOViewImpl impl = (CDOViewImpl)view;
-    if (this instanceof CDOResourceImpl)
-    {
-      ((CDOResourceImpl)this).cdoSetView(impl);
-    }
-
+    cdoView = impl;
     eSetStore(impl.getStore());
   }
 
@@ -204,13 +209,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     CDOViewImpl view = cdoView();
-    revision.setContainerID(eContainer == null ? CDOID.NULL : ((CDOObjectImpl)eContainer).cdoID());
+    revision.setContainerID(eContainer == null ? CDOID.NULL : cdoView().convertObjectToID(eContainer, true));
     revision.setContainingFeatureID(eContainerFeatureID);
-
-    if (eSettings == null)
+    Resource directResource = eDirectResource();
+    if (directResource instanceof CDOResource)
     {
-      eSettings();
+      CDOResource cdoResource = (CDOResource)directResource;
+      cdoInternalSetResource(cdoResource);
+      revision.setResourceID(cdoResource.cdoID());
     }
+
+    eSettings();
 
     EClass eClass = eClass();
     for (int i = 0; i < eClass.getFeatureCount(); i++)
@@ -257,7 +266,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         {
           if (cdoFeature.isReference())
           {
-            value = view.convertObjectToID(value);
+            value = view.convertObjectToID(value, true);
           }
 
           revision.add(cdoFeature, index++, value);
@@ -268,7 +277,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       if (cdoFeature.isReference())
       {
-        setting = view.convertObjectToID(setting);
+        setting = view.convertObjectToID(setting, true);
       }
       else
       {
@@ -302,22 +311,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     eContainer = null;
     eContainerFeatureID = 0;
 
-    if (eSettings == null)
-    {
-      eSettings();
-    }
+    eSettings();
 
     EClass eClass = eClass();
     for (int i = 0; i < eClass.getFeatureCount(); i++)
     {
-      Object setting = eSettings[i];
-      if (setting != null)
+      EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+      if (!eFeature.isTransient())
       {
-        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-        if (!eFeature.isTransient())
-        {
-          depopulateRevisionFeature(view, revision, eFeature, eSettings, i);
-        }
+        depopulateRevisionFeature(view, revision, eFeature, eSettings, i);
       }
     }
   }
@@ -336,13 +338,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     if (cdoFeature.isMany())
     {
       eSettings[i] = null;
-      EList<Object> setting = (EList<Object>)super.dynamicGet(eFeature.getFeatureID());
-      EList<Object> list = (EList<Object>)revision.getList(cdoFeature);
+      List<Object> setting = (List<Object>)super.dynamicGet(eFeature.getFeatureID());
+      List<Object> list = revision.getList(cdoFeature);
       for (Object value : list)
       {
         if (isReference)
         {
-          value = view.getObject((CDOID)value, true);
+          value = view.convertIDToObject(value);
         }
 
         setting.add(value);
@@ -353,7 +355,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       Object value = revision.getValue(cdoFeature);
       if (isReference)
       {
-        value = view.getObject((CDOID)value, true);
+        value = view.convertIDToObject(value);
       }
       else if (cdoFeature.getType() == CDOType.CUSTOM)
       {
@@ -489,11 +491,36 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   protected void eSetDirectResource(Internal resource)
   {
-    super.eSetDirectResource(resource);
-    if (resource instanceof CDOResourceImpl)
+    if (FSMUtil.isTransient(this))
     {
-      this.resource = (CDOResourceImpl)resource;
+      super.eSetDirectResource(resource);
     }
+    else if (resource instanceof CDOResourceImpl || resource == null)
+    {
+
+      this.resource = (CDOResourceImpl)resource;
+      getStore().setContainer(this, cdoResource(), eInternalContainer(), eContainerFeatureID());
+    }
+    else
+    {
+      throw new IllegalArgumentException("Resource needs to be an instanceof CDOResourceImpl");
+    }
+  }
+
+  @Override
+  public Internal eDirectResource()
+  {
+    if (this instanceof Internal)
+    {
+      return (Internal)this;
+    }
+
+    if (FSMUtil.isTransient(this))
+    {
+      return super.eDirectResource();
+    }
+
+    return cdoResource();
   }
 
   /**
@@ -606,47 +633,169 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return getStore().getContainingFeatureID(this);
   }
 
+  /**
+   * Code took from {@link BasicEObjectImpl#eBasicSetContainer} and modify it to detect when object are moved in the
+   * same context.
+   */
   @Override
-  protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID)
+  public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
+      NotificationChain msgs)
+  {
+    InternalEObject oldContainer = eInternalContainer();
+    Resource.Internal oldResource = eDirectResource();
+    Resource.Internal newResource = null;
+    if (oldResource != null)
+    {
+      if (newContainer != null && !eContainmentFeature(this, newContainer, newContainerFeatureID).isResolveProxies())
+      {
+        msgs = ((InternalEList<?>)oldResource.getContents()).basicRemove(this, msgs);
+        eSetDirectResource(null);
+        newResource = newContainer.eInternalResource();
+      }
+      else
+      {
+        oldResource = null;
+      }
+    }
+    else
+    {
+      if (oldContainer != null)
+      {
+        oldResource = oldContainer.eInternalResource();
+      }
+      if (newContainer != null)
+      {
+        newResource = newContainer.eInternalResource();
+      }
+    }
+    CDOView oldView = cdoView;
+    CDOView newView = newResource != null && newResource instanceof CDOResource ? ((CDOResource)newResource).cdoView()
+        : null;
+
+    boolean moved = oldView != null && oldView == newView;
+
+    if (!moved && oldResource != null)
+    {
+      oldResource.detached(this);
+    }
+
+    int oldContainerFeatureID = eContainerFeatureID();
+    eBasicSetContainer(newContainer, newContainerFeatureID);
+
+    if (!moved && oldResource != newResource && newResource != null)
+    {
+      newResource.attached(this);
+    }
+
+    if (eNotificationRequired())
+    {
+      if (oldContainer != null && oldContainerFeatureID >= 0 && oldContainerFeatureID != newContainerFeatureID)
+      {
+        ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, oldContainerFeatureID,
+            oldContainer, null);
+        if (msgs == null)
+        {
+          msgs = notification;
+        }
+        else
+        {
+          msgs.add(notification);
+        }
+      }
+      if (newContainerFeatureID >= 0)
+      {
+        ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, newContainerFeatureID,
+            oldContainerFeatureID == newContainerFeatureID ? oldContainer : null, newContainer);
+        if (msgs == null)
+        {
+          msgs = notification;
+        }
+        else
+        {
+          msgs.add(notification);
+        }
+      }
+    }
+    return msgs;
+  }
+
+  /**
+   * Code took from {@link BasicEObjectImpl#eSetResource} and modify it to detect when object are moved in the same
+   * context.
+   */
+  @Override
+  public NotificationChain eSetResource(Resource.Internal resource, NotificationChain notifications)
+  {
+    Resource.Internal oldResource = eDirectResource();
+
+    CDOView oldView = cdoView;
+    CDOView newView = resource != null && resource instanceof CDOResource ? ((CDOResource)resource).cdoView() : null;
+
+    boolean isSameView = oldView != null && oldView == newView;
+
+    if (oldResource != null)
+    {
+      notifications = ((InternalEList<?>)oldResource.getContents()).basicRemove(this, notifications);
+
+      // When setting the resource to null we assume that detach has already been called in the resource implementation
+      //
+
+      if (!isSameView && resource != null)
+      {
+        oldResource.detached(this);
+      }
+    }
+
+    InternalEObject oldContainer = eInternalContainer();
+    if (oldContainer != null && !isSameView)
+    {
+      if (eContainmentFeature().isResolveProxies())
+      {
+        Resource.Internal oldContainerResource = oldContainer.eInternalResource();
+        if (oldContainerResource != null)
+        {
+          // If we're not setting a new resource, attach it to the old container's resource.
+          if (resource == null)
+          {
+            oldContainerResource.attached(this);
+          }
+          // If we didn't detach it from an old resource already, detach it from the old container's resource.
+          //
+          else if (oldResource == null)
+          {
+            oldContainerResource.detached(this);
+          }
+        }
+      }
+      else
+      {
+        notifications = eBasicRemoveFromContainer(notifications);
+        notifications = eBasicSetContainer(null, -1, notifications);
+      }
+    }
+
+    eSetDirectResource(resource);
+
+    return notifications;
+  }
+
+  @Override
+  protected void eBasicSetContainer(InternalEObject newEContainer, int newContainerFeatureID)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting container: {0}, featureID={1}", newContainer, newContainerFeatureID);
+      TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID);
     }
 
     if (FSMUtil.isTransient(this))
     {
-      super.eBasicSetContainer(newContainer, newContainerFeatureID);
+      super.eBasicSetContainer(newEContainer, newContainerFeatureID);
+
     }
     else
     {
-      CDOResource newResource = null;
-      if (newContainer instanceof CDOObject)
-      {
-        newResource = ((CDOObject)newContainer).cdoResource();
-      }
-
-      // Delegate to CDOStore
-      getStore().setContainer(this, newResource, newContainer, newContainerFeatureID);
-
-      resource = (CDOResourceImpl)newResource;
-      if (newContainer instanceof Resource.Internal)
-      {
-        eSetDirectResource((Resource.Internal)newContainer);
-      }
+      getStore().setContainer(this, cdoResource(), newEContainer, newContainerFeatureID);
     }
-  }
-
-  @Override
-  public Resource eResource()
-  {
-    Resource resource = cdoResource();
-    if (resource == null && FSMUtil.isTransient(this))
-    {
-      resource = super.eResource();
-    }
-
-    return resource;
   }
 
   /**
@@ -676,15 +825,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return ModelUtil.getCDOClass(cdoObject.eClass(), packageManager);
   }
 
-  static CDOViewImpl getCDOView(InternalCDOObject cdoObject)
-  {
-    CDOResource resource = cdoObject.cdoResource();
-    return resource != null ? (CDOViewImpl)cdoObject.cdoResource().cdoView() : null;
-  }
-
   private CDOStore getStore()
   {
-    return cdoView().getStore();
+    return (CDOStore)eStore();
   }
 
   /**
@@ -699,12 +842,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     public CDOStoreEList(EStructuralFeature eStructuralFeature)
     {
       super(CDOObjectImpl.this, eStructuralFeature);
-    }
-
-    @Override
-    protected boolean hasProxies()
-    {
-      return true;
     }
 
     @Override
@@ -913,12 +1050,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     public CDOStoreFeatureMap(EStructuralFeature eStructuralFeature)
     {
       super(CDOObjectImpl.this, eStructuralFeature);
-    }
-
-    @Override
-    protected boolean hasProxies()
-    {
-      return true;
     }
 
     @Override

@@ -7,23 +7,28 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.CDOViewSet;
+import org.eclipse.emf.cdo.CDOXATransaction;
 
 import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.CDOViewSetImpl;
+import org.eclipse.emf.internal.cdo.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.LegacySupportEnabler;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -36,8 +41,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -74,62 +80,95 @@ public final class CDOUtil
     return new CDOPackageRegistryImpl.DemandPopulating();
   }
 
-  public static CDOView getView(ResourceSet resourceSet)
+  /**
+   * @since 2.0
+   */
+  public static CDOXATransaction createXATransaction(CDOViewSet viewSet)
+  {
+    CDOXATransaction xaTransaction = new CDOXATransactionImpl();
+    if (viewSet != null)
+    {
+      xaTransaction.add(viewSet);
+    }
+    return xaTransaction;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOXATransaction createXATransaction()
+  {
+    return createXATransaction(null);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOXATransaction getXATransaction(CDOViewSet viewSet)
+  {
+    EList<Adapter> adapters = viewSet.eAdapters();
+    for (Adapter adapter : adapters)
+    {
+      if (adapter instanceof CDOXATransactionImpl.CDOXAInternalAdapter)
+      {
+        return ((CDOXATransactionImpl.CDOXAInternalAdapter)adapter).getCDOXA();
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOViewSet getViewSet(ResourceSet resourceSet)
   {
     EList<Adapter> adapters = resourceSet.eAdapters();
     for (Adapter adapter : adapters)
     {
-      if (adapter instanceof CDOView)
+      if (adapter instanceof CDOViewSet)
       {
-        return (CDOView)adapter;
+        return (CDOViewSet)adapter;
       }
     }
-
     return null;
   }
 
-  public static void prepareResourceSet(ResourceSet resourceSet)
+  /**
+   * @since 2.0
+   */
+  public static CDOViewSet prepareResourceSet(ResourceSet resourceSet)
   {
-    CDOResourceFactory factory = CDOResourceFactory.INSTANCE;
-    Registry registry = resourceSet.getResourceFactoryRegistry();
-    Map<String, Object> map = registry.getProtocolToFactoryMap();
-    map.put(CDOProtocolConstants.PROTOCOL_NAME, factory);
+    CDOViewSetImpl viewSet = null;
+
+    synchronized (resourceSet)
+    {
+      viewSet = (CDOViewSetImpl)getViewSet(resourceSet);
+
+      if (viewSet == null)
+      {
+        if (resourceSet instanceof ResourceSetImpl)
+        {
+          Map<URI, Resource> resourceMap = null;
+          ResourceSetImpl rs = (ResourceSetImpl)resourceSet;
+          resourceMap = rs.getURIResourceMap();
+          rs.setURIResourceMap(new ProxyResolverURIResourceMap(null, resourceMap));
+        }
+        else
+        {
+          throw new ImplementationError("Not a " + ResourceSetImpl.class.getName() + ": "
+              + resourceSet.getClass().getName());
+        }
+        viewSet = new CDOViewSetImpl();
+        resourceSet.eAdapters().add(viewSet);
+      }
+    }
+    return viewSet;
   }
 
   public static void prepareContainer(IManagedContainer container, boolean legacySupportEnabled)
   {
     container.registerFactory(new CDOClientProtocolFactory());
     container.addPostProcessor(new LegacySupportEnabler(legacySupportEnabled));
-  }
-
-  public static String extractResourcePath(URI uri)
-  {
-    if (!CDOProtocolConstants.PROTOCOL_NAME.equals(uri.scheme()))
-    {
-      return null;
-    }
-
-    if (uri.hasAuthority())
-    {
-      return null;
-    }
-
-    if (!uri.isHierarchical())
-    {
-      return null;
-    }
-
-    if (!uri.hasAbsolutePath())
-    {
-      return null;
-    }
-
-    return uri.path();
-  }
-
-  public static URI createResourceURI(String path)
-  {
-    return URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":" + path);
   }
 
   public static EPackage createEPackage(String name, String nsPrefix, String nsURI)

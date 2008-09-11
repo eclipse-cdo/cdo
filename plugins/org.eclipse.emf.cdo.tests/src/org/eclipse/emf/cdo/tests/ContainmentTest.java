@@ -17,12 +17,26 @@ import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 /**
  * @author Eike Stepper
@@ -324,5 +338,143 @@ public class ContainmentTest extends AbstractCDOTest
     // assertTransient(address);
     assertContent(resource, order);
     assertNull(order.getShippingAddress());
+  }
+  
+  public void testObjectNotSameResourceThanItsContainer() throws Exception
+  {
+    {
+      ResourceSet resourceSet = new ResourceSetImpl();
+
+      CDOSession session = openSession();
+
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+
+      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
+
+      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      Resource resource1 = resourceSet.createResource(URI.createFileURI("c:\\1.xml"));
+      Resource resource2 = transaction.createResource("test");
+
+      EPackage packageObject = createDynamicEPackage();
+      EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
+
+      EObject container = packageObject.getEFactoryInstance().create(eClass);
+      Order contained = Model1Factory.eINSTANCE.createOrder();
+
+      resource1.getContents().add(container);
+      resource2.getContents().add(contained);
+
+      container.eSet(container.eClass().getEStructuralFeature("proxyElement"), contained);
+
+      assertEquals(resource1, container.eResource());
+      assertEquals(resource2, contained.eResource());
+
+      // If the relationship is define has resolveProxy this is true if not.. this is false.
+      assertEquals(container, contained.eContainer());
+
+      resource1.save(null);
+      transaction.commit();
+    }
+    {
+      EPackage packageObject = createDynamicEPackage();
+      ResourceSet resourceSet = new ResourceSetImpl();
+      resourceSet.getPackageRegistry().put(packageObject.getNsURI(), packageObject);
+      CDOSession session = openSession();
+
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+
+      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
+      
+      Resource resource = transaction.getResource("test");
+      
+      Order order = (Order)resource.getContents().get(0);
+      
+      Resource resourceXMI = resourceSet.getResource(URI.createFileURI("c:\\1.xml"), true);
+      
+      assertEquals(resourceXMI.getContents().get(0), order.eContainer());
+    }
+
+  }
+  
+  public void testObjectNotSameResourceThanItsContainer_WithoutCDO() throws Exception
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
+
+    Resource resource1 = resourceSet.createResource(URI.createFileURI("c:\\1.xml"));
+    Resource resource2 = resourceSet.createResource(URI.createFileURI("c:\\2.xml"));
+    EPackage packageObject = createDynamicEPackage();
+    EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
+
+    EObject container = packageObject.getEFactoryInstance().create(eClass);
+    EObject contained = packageObject.getEFactoryInstance().create(eClass);
+
+    resource1.getContents().add(container);
+    resource2.getContents().add(contained);
+
+    container.eSet(container.eClass().getEStructuralFeature("proxyElement"), contained);
+    // resource1.getContents().add(container);
+
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, contained.eResource());
+
+    // If the relationship is define has resolveProxy this is true if not.. this is false.
+    assertEquals(container, contained.eContainer());
+  }
+  
+  // Do not support legacy system
+  public void _testBug246540() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource = transaction.createResource("/my/resource1");
+
+    for (EClassifier eClassifier : EcorePackage.eINSTANCE.getEClassifiers())
+    {
+      resource.getContents().add(eClassifier);
+    }
+
+    transaction.commit();
+    session.close();
+  }
+
+  private EPackage createDynamicEPackage()
+  {
+    final EcoreFactory efactory = EcoreFactory.eINSTANCE;
+    final EcorePackage epackage = EcorePackage.eINSTANCE;
+
+    EClass schoolBookEClass = efactory.createEClass();
+    schoolBookEClass.setName("SchoolBook");
+
+    // create a new attribute for this EClass
+    EAttribute level = efactory.createEAttribute();
+    level.setName("level");
+    level.setEType(epackage.getEInt());
+    schoolBookEClass.getEStructuralFeatures().add(level);
+
+    EReference proxyElement = efactory.createEReference();
+    proxyElement.setName("proxyElement");
+    proxyElement.setEType(epackage.getEObject());
+    proxyElement.setResolveProxies(true);
+    proxyElement.setContainment(true);
+    schoolBookEClass.getEStructuralFeatures().add(proxyElement);
+
+    EReference element = efactory.createEReference();
+    element.setName("element");
+    element.setEType(epackage.getEObject());
+    element.setContainment(true);
+    element.setResolveProxies(false);
+    schoolBookEClass.getEStructuralFeatures().add(element);
+
+    // Create a new EPackage and add the new EClasses
+    EPackage schoolPackage = efactory.createEPackage();
+    schoolPackage.setName("elv");
+    schoolPackage.setNsPrefix("elv");
+    schoolPackage.setNsURI("http:///www.elver.org/School");
+    schoolPackage.getEClassifiers().add(schoolBookEClass);
+    return schoolPackage;
+
   }
 }

@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
@@ -86,6 +87,17 @@ public class CommitNotificationIndication extends CDOClientIndication
       deltas.add(revisionDelta);
     }
 
-    session.handleCommitNotification(timeStamp, dirtyOIDs, deltas, null);
+    size = in.readInt();
+    if (PROTOCOL_TRACER.isEnabled())
+    {
+      PROTOCOL_TRACER.format("Reading {0} Detach Objects", size);
+    }
+    List<CDOID> detachedObjects = new ArrayList<CDOID>();
+    for (int i = 0; i < size; i++)
+    {
+      detachedObjects.add(in.readCDOID());
+    }
+
+    session.handleCommitNotification(timeStamp, dirtyOIDs, detachedObjects, deltas, null);
   }
 }

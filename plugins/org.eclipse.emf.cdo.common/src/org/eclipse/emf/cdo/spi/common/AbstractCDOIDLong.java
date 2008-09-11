@@ -48,7 +48,7 @@ public abstract class AbstractCDOIDLong extends AbstractCDOID implements Compara
   /**
    * @since 2.0
    */
-  public String asString()
+  public String toURIFragment()
   {
     return String.valueOf(value);
   }

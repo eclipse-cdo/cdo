@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common;
 
@@ -31,6 +32,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
@@ -284,6 +287,12 @@ public abstract class CDODataInputImpl implements CDODataInput
     case META:
       return new CDOIDMetaImpl(readLong());
 
+    case EXTERNAL_OBJECT:
+      return new CDOIDExternalImpl(readString());
+
+    case EXTERNAL_TEMP_OBJECT:
+      return new CDOIDExternalTempImpl(readString());
+    
     case OBJECT:
     {
       CDOIDObject id = getIDFactory().createCDOIDObject(this);

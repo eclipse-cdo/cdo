@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/215688
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
@@ -27,8 +28,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.emf.internal.cdo.CDOCommitContext;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
 
@@ -49,12 +50,12 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionRequest.class);
 
-  private CDOTransactionImpl transaction;
+  protected CDOCommitContext commitContext;
 
-  public CommitTransactionRequest(IChannel channel, final CDOTransactionImpl transaction)
+  public CommitTransactionRequest(IChannel channel, CDOCommitContext commitContext)
   {
     super(channel);
-    this.transaction = transaction;
+    this.commitContext = commitContext;
   }
 
   @Override
@@ -63,24 +64,55 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION;
   }
 
+  protected CDOCommitContext getCommitContext()
+  {
+    return commitContext;
+  }
+
   @Override
   protected CDOIDProvider getIDProvider()
   {
-    return transaction;
+    return commitContext.getTransaction();
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    List<CDOPackage> newPackages = transaction.getNewPackages();
-    Collection<CDOResource> newResources = transaction.getNewResources().values();
-    Collection<CDOObject> newObjects = transaction.getNewObjects().values();
-    Collection<CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas().values();
+    requestingTransactionInfo(out);
+    requestingCommit(out);
+  }
 
-    out.writeInt(transaction.getViewID());
+  @Override
+  protected CommitTransactionResult confirming(CDODataInput in) throws IOException
+  {
+    CommitTransactionResult result = confirmingCheckError(in);
+    if (result != null)
+    {
+      return result;
+    }
+    result = confirmingTransactionResult(in);
+    confirmingNewPackage(in, result);
+    confirmingIdMapping(in, result);
+    return result;
+  }
+
+  protected void requestingTransactionInfo(CDODataOutput out) throws IOException
+  {
+    out.writeInt(commitContext.getTransaction().getViewID());
+  }
+
+  protected void requestingCommit(CDODataOutput out) throws IOException
+  {
+    List<CDOPackage> newPackages = commitContext.getNewPackages();
+    Collection<CDOResource> newResources = commitContext.getNewResources().values();
+    Collection<CDOObject> newObjects = commitContext.getNewObjects().values();
+    Collection<CDORevisionDelta> revisionDeltas = commitContext.getRevisionDeltas().values();
+    Collection<CDOID> detachedObjects = commitContext.getDetachedObjects();
+
     out.writeInt(newPackages.size());
     out.writeInt(newResources.size() + newObjects.size());
     out.writeInt(revisionDeltas.size());
+    out.writeInt(detachedObjects.size());
 
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -110,8 +142,8 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       PROTOCOL_TRACER.format("Writing {0} dirty objects", revisionDeltas.size());
     }
 
-    Map<CDOID, CDOObject> dirtyObjects = transaction.getDirtyObjects();
-    RevisionAdjuster revisionAdjuster = new RevisionAdjuster(transaction);
+    Map<CDOID, CDOObject> dirtyObjects = commitContext.getDirtyObjects();
+    RevisionAdjuster revisionAdjuster = new RevisionAdjuster(getIDProvider());
     for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
       out.writeCDORevisionDelta(revisionDelta);
@@ -119,10 +151,15 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revisionAdjuster.adjustRevision(revision, revisionDelta);
     }
+
+    for (CDOID id : detachedObjects)
+    {
+      out.writeCDOID(id);
+    }
+
   }
 
-  @Override
-  protected CommitTransactionResult confirming(CDODataInput in) throws IOException
+  protected CommitTransactionResult confirmingCheckError(CDODataInput in) throws IOException
   {
     boolean success = in.readBoolean();
     if (!success)
@@ -131,12 +168,20 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       OM.LOG.error(rollbackMessage);
       return new CommitTransactionResult(rollbackMessage);
     }
+    return null;
+  }
 
+  protected CommitTransactionResult confirmingTransactionResult(CDODataInput in) throws IOException
+  {
     long timeStamp = in.readLong();
     CommitTransactionResult result = new CommitTransactionResult(timeStamp);
+    return result;
+  }
 
-    CDOSessionImpl session = transaction.getSession();
-    List<CDOPackage> newPackages = transaction.getNewPackages();
+  protected void confirmingNewPackage(CDODataInput in, CommitTransactionResult result) throws IOException
+  {
+    CDOSessionImpl session = (CDOSessionImpl)commitContext.getTransaction().getSession();
+    List<CDOPackage> newPackages = commitContext.getNewPackages();
     for (CDOPackage newPackage : newPackages)
     {
       if (newPackage.getParentURI() == null)
@@ -153,7 +198,13 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
         }
       }
     }
+  }
 
+  /*
+   * Write ids that are needed
+   */
+  public void confirmingIdMapping(CDODataInput in, CommitTransactionResult result) throws IOException
+  {
     for (;;)
     {
       CDOIDTemp oldID = (CDOIDTemp)in.readCDOID();
@@ -165,20 +216,6 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       CDOID newID = in.readCDOID();
       result.addIDMapping(oldID, newID);
     }
-
-    return result;
-  }
-
-  @SuppressWarnings("unused")
-  private void writeDirtyObjects(CDODataOutput out) throws IOException
-  {
-    Collection<CDOObject> dirtyObjects = transaction.getDirtyObjects().values();
-    if (PROTOCOL_TRACER.isEnabled())
-    {
-      PROTOCOL_TRACER.format("Writing {0} dirty objects", dirtyObjects.size());
-    }
-
-    writeRevisions(out, dirtyObjects);
   }
 
   private void writeRevisions(CDODataOutput out, Collection<?> objects) throws IOException
@@ -190,4 +227,5 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       out.writeCDORevision(revision, CDORevision.UNCHUNKED);
     }
   }
+
 }

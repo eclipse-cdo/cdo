@@ -14,6 +14,11 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDOViewImpl.java" type="org.eclipse.emf.internal.cdo.CDOViewImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOViewImpl"/>
+            </message_arguments>
+        </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOIDProvider"/>
@@ -42,10 +47,38 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionCommitContext.java" type="org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXATransactionCommitContext"/>
+                <message_argument value="setResult(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXATransactionCommitContext"/>
+                <message_argument value="postCommit(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXATransactionCommitContext"/>
+                <message_argument value="getResult()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOResourceFactoryImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl">
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CDOResourceFactoryImpl(CDOViewSet)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -81,6 +114,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOCommitContext.java" type="org.eclipse.emf.internal.cdo.CDOCommitContext">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOCommitContext"/>
+                <message_argument value="postCommit(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDOStateMachine.java" type="org.eclipse.emf.internal.cdo.CDOStateMachine">
         <filter id="643846161">
             <message_arguments>
@@ -98,6 +140,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionImpl.java" type="org.eclipse.emf.internal.cdo.CDOXATransactionImpl$CDOXAState">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXAState"/>
+                <message_argument value="check_result(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOAuditImpl.java" type="org.eclipse.emf.internal.cdo.CDOAuditImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOAuditImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/CDORevisionManager.java" type="org.eclipse.emf.cdo.CDORevisionManager">
         <filter id="574619656">
             <message_arguments>
@@ -110,6 +168,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="prepareResourceSet(ResourceSet)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.util.CDOUtil"/>
             </message_arguments>
         </filter>
     </resource>

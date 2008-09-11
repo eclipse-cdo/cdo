@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
@@ -34,7 +35,7 @@ import java.util.concurrent.Future;
  * @author Simon McDuff
  * @since 2.0
  */
-public class QueryManager extends Lifecycle
+public class QueryManager extends Lifecycle implements IRepositoryElement
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, QueryManager.class);
 

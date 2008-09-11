@@ -111,11 +111,62 @@ xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>CDO - New Features</TITLE>
     <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
       <P align=right><b>Support getURIFragment and getEObject</b></P></TD>
     <TD vAlign=top>
-      <P align=left>CDOResource now supports getURIFragment and getEObject. </P>
+      <P align=left>CDOResource now supports the getURIFragment and getEObject methods. </P>
 		<P align=left><b>Note:</b> The URIs of temporary objects will 
-		change when the <i>CDOTransaction</i> is committed . Objects will no 
-		longer be accessible using their temporary URI once <i>the CDOTransaction</i> is 
+		change when the <i>CDOTransaction</i> is committed. Objects will no 
+		longer be accessible using their temporary URI once the <i>CDOTransaction</i> is 
 		committed.</P></TD></TR>
+  </TBODY></TABLE>
+  <HR>
+	
+<TABLE id=table418 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
+      <P align=right><b>Support external references</b></P></TD>
+    <TD vAlign=top>
+    	<p>CDO supports many resources from different sources in the same resource set. Objects can refer to each other even if they are not from the same store or source.</p>
+    	<ul>
+    		<li>An object from XMIResource can refer to objects from CDOResource.</li>
+    		<li>An object from CDOResource can refer to objects from XMIResource.</li>
+    		<li>An object from CDOResourceA (repositoryA) can refer to objects from another CDOResourceB(repositoryB)</li>
+    	</ul>
+    	<p>Each resource set has a CDOViewSet. A CDOViewSet could have many CDOViews but each CDOView refers to one CDOViewSet only.</p>
+    	<p>To use that feature, the same resource set must be used when opening CDOView.</p>
+    	<p>e.g.:
+    		<i>ResourceSet resourceSet = new ResourceSetImpl();</i><br>
+      		<i>CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);</i><br>
+      		<i>CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);</i>
+      	</p>
+      	<p><b>Note:</b> Two CDOViews from the same repository cannot belong to the same resource set.</p></TD></TR>
+  </TBODY></TABLE>
+  <HR>
+	
+<TABLE id=table418 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
+      <P align=right><b>XATransaction</b></P></TD>
+    <TD vAlign=top></i><p>This feature provides the ability to use many transactions from many repositories as a whole instead of individually. Its three-phase commit allows the clients to commit circular graphs and complex graphs that are from multiple repositories or CDOTransactions.</p>
+    <p>e.g.:<br>
+    	<i>CDOXATransaction xaTransaction = CDOUtil.createXATransaction();</i><br>
+    	<i>CDOUtil.prepareResourceSet(resourceSet);</i><br>
+    	<i>xaTransaction.add(CDOUtil.getViewSet(resourceSet));</i><br>
+    	<i>xaTransaction.setSavepoint();</i><br>
+    	<i>xaTransaction.rollback();</i><br>
+    	<i>xaTransaction.commit();</i>
+</TD></TR>
+  </TBODY></TABLE>
+  <HR>
+	
+<TABLE id=table418 cellSpacing=0 cellPadding=10>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left width="200" bgColor=#e0d0e6>
+      <P align=right><b>Support containment proxies</b></P></TD>
+    <TD vAlign=top></i><p>This feature provides the ability to have an object that is in resourceA and its container could be  in another resource. The object and container are in different  resource and it does support external references as wellThis is to be in line with EMF. However, it needs to be define in your model.</p>
+    <p>
+</TD></TR>
   </TBODY></TABLE>
 </BODY>
 </HTML>

@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/204890 
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
@@ -71,9 +72,11 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     CDORevisionData originData = originRevision.getData();
     CDORevisionData dirtyData = dirtyRevision.getData();
     if (!compare(originData.getContainerID(), dirtyData.getContainerID())
-        || !compare(originData.getContainingFeatureID(), dirtyData.getContainingFeatureID()))
+        || !compare(originData.getContainingFeatureID(), dirtyData.getContainingFeatureID())
+            || !compare(originData.getResourceID(), dirtyData.getResourceID()))
     {
-      addFeatureDelta(new CDOContainerFeatureDeltaImpl(dirtyData.getContainerID(), dirtyData.getContainingFeatureID()));
+      addFeatureDelta(new CDOContainerFeatureDeltaImpl(dirtyData.getResourceID(), dirtyData.getContainerID(), dirtyData
+          .getContainingFeatureID()));
     }
 
   }

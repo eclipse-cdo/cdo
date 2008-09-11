@@ -8,11 +8,12 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
 /**
- * Creates a save point in a {@link CDOTransaction} that can be used to roll back a part of the transaction.
+ * Creates a save point in a {@link CDOUserTransaction} that can be used to roll back a part of the transaction.
  * <p>
  * <b>Note:</b> Save points do not flush to disk. Everything is done in memory on the client side.
  * 
@@ -21,7 +22,7 @@ package org.eclipse.emf.cdo;
  */
 public interface CDOSavepoint
 {
-  public CDOTransaction getTransaction();
+  public CDOUserTransaction getUserTransaction();
 
   public CDOSavepoint getNextSavepoint();
 

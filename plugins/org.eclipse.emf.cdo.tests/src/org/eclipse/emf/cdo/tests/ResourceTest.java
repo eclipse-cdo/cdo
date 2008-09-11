@@ -1,6 +1,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -10,11 +11,20 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Product;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import junit.framework.Assert;
 
 public class ResourceTest extends AbstractCDOTest
 {
@@ -53,6 +63,151 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(1, size);
     session.close();
   }
+
+  public void testCreateResource_FromResourceSet() throws Exception
+  {
+    final URI uri = URI.createURI("cdo:/test1");
+
+    msg("Creating resourceSet");
+    ResourceSet resourceSet = new ResourceSetImpl();
+
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+
+    msg("Creating resource");
+    CDOResource resource = (CDOResource)resourceSet.createResource(uri);
+    assertActive(resource);
+
+    msg("Verifying resource");
+    assertNew(resource, transaction);
+    assertEquals(CDOURIUtil.createResourceURI(session, "test1"), resource.getURI());
+    assertEquals(transaction.getResourceSet(), resource.getResourceSet());
+  }
+
+  public void testCreateResource_FromTransaction() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+    assertActive(resource);
+    CDOResource resourceCopy = transaction.getOrCreateResource("/test1");
+    assertEquals(resource, resourceCopy);
+
+    msg("Verifying resource");
+    assertNew(resource, transaction);
+    assertEquals(CDOURIUtil.createResourceURI(session, "test1"), resource.getURI());
+    assertEquals(transaction.getResourceSet(), resource.getResourceSet());
+  }
+  
+  public void testRemoveResourceWithCloseView() throws Exception
+  {
+    {
+      msg("Opening session");
+      CDOSession session = openModel1Session();
+
+      msg("Opening transaction");
+      CDOTransaction transaction = session.openTransaction();
+      ResourceSet rset = transaction.getResourceSet();
+      msg("Creating resource");
+      CDOResource resource = transaction.createResource("/test1");
+      assertActive(resource);
+      transaction.commit();
+
+      Assert.assertEquals(1, rset.getResources().size());
+      Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
+
+      transaction.close();
+
+      Assert.assertEquals(0, CDOUtil.getViewSet(rset).getViews().length);
+      Assert.assertEquals(0, rset.getResources().size());
+      session.close();
+    }
+    {
+      CDOSession session = openModel1Session();
+      msg("Opening transaction");
+      CDOTransaction transaction = session.openTransaction();
+
+      msg("Getting resource");
+      CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(
+          CDOURIUtil.createResourceURI(transaction, "/test1"), true);
+      assertNotNull(resource);
+      assertEquals(transaction.getResourceSet(), resource.getResourceSet());
+      assertEquals(1, transaction.getResourceSet().getResources().size());
+      assertEquals(CDOState.PROXY, resource.cdoState());
+      assertEquals(transaction, resource.cdoView());
+      assertNull(resource.cdoRevision());
+    }
+  }
+
+  public void testAttachManyResources() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource2 = transaction.createResource("/my/resource2");
+    CDOResource resource3 = transaction.createResource("/my/resource3");
+
+    List<Resource> tobeRemoved = new ArrayList<Resource>();
+    tobeRemoved.add(resource1);
+    tobeRemoved.add(resource3);
+
+    assertEquals(3, transaction.getResourceSet().getResources().size());
+
+    transaction.getResourceSet().getResources().removeAll(tobeRemoved);
+
+    assertEquals(1, transaction.getResourceSet().getResources().size());
+    assertEquals(null, transaction.getResourceSet().getResource(resource1.getURI(), false));
+    assertEquals(resource2, transaction.getResourceSet().getResource(resource2.getURI(), false));
+    assertEquals(null, transaction.getResourceSet().getResource(resource3.getURI(), false));
+
+    transaction.getResourceSet().getResources().addAll(tobeRemoved);
+
+    assertEquals(3, transaction.getResourceSet().getResources().size());
+    assertEquals(resource1, transaction.getResourceSet().getResource(resource1.getURI(), false));
+    assertEquals(resource2, transaction.getResourceSet().getResource(resource2.getURI(), false));
+    assertEquals(resource3, transaction.getResourceSet().getResource(resource3.getURI(), false));
+
+    transaction.commit();
+
+    session.close();
+  }
+
+  public void testDetachManyResources() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource2 = transaction.createResource("/my/resource2");
+    CDOResource resource3 = transaction.createResource("/my/resource3");
+
+    List<Resource> tobeRemoved = new ArrayList<Resource>();
+    tobeRemoved.add(resource1);
+    tobeRemoved.add(resource3);
+
+    assertEquals(3, transaction.getResourceSet().getResources().size());
+
+    transaction.getResourceSet().getResources().removeAll(tobeRemoved);
+
+    assertEquals(1, transaction.getResourceSet().getResources().size());
+    assertEquals(null, transaction.getResourceSet().getResource(resource1.getURI(), false));
+    assertEquals(resource2, transaction.getResourceSet().getResource(resource2.getURI(), false));
+    assertEquals(null, transaction.getResourceSet().getResource(resource3.getURI(), false));
+
+    transaction.commit();
+    session.close();
+  }
+
+
 
   /**
    * http://bugs.eclipse.org/208689
@@ -198,4 +353,5 @@ public class ResourceTest extends AbstractCDOTest
 
     assertEquals(expected, resources.size());
   }
+
 }

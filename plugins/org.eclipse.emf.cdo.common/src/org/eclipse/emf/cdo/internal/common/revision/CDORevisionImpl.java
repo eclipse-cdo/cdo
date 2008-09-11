@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/212958
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision;
 
@@ -66,7 +67,7 @@ public class CDORevisionImpl implements InternalCDORevision
 
   private CDOID resourceID;
 
-  private CDOID containerID;
+  private Object containerID;
 
   private int containingFeatureID;
 
@@ -145,7 +146,8 @@ public class CDORevisionImpl implements InternalCDORevision
     out.writeLong(created);
     out.writeLong(revised);
     out.writeCDOID(resourceID);
-    out.writeCDOID(containerID);
+    containerID = out.getIDProvider().provideCDOID(containerID);
+    out.writeCDOID((CDOID)containerID);
     out.writeInt(containingFeatureID);
     writeValues(out, referenceChunk);
     WRITING.stop(this);
@@ -298,12 +300,12 @@ public class CDORevisionImpl implements InternalCDORevision
     this.resourceID = resourceID;
   }
 
-  public CDOID getContainerID()
+  public Object getContainerID()
   {
     return containerID;
   }
 
-  public void setContainerID(CDOID containerID)
+  public void setContainerID(Object containerID)
   {
     if (TRACER.isEnabled())
     {

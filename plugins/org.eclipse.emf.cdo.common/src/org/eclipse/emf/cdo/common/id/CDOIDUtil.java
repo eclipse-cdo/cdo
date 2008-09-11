@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778    
+ *    Simon McDuff - http://bugs.eclipse.org/213402   
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
@@ -16,6 +17,8 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
@@ -32,6 +35,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public final class CDOIDUtil
 {
@@ -83,7 +87,23 @@ public final class CDOIDUtil
   {
     return new CDOIDTempObjectImpl(value);
   }
+  
+  /**
+   * @since 2.0
+   */
+  public static CDOIDExternal createExternal(String uri)
+  {
+    return new CDOIDExternalImpl(uri);
+  }
 
+  /**
+   * @since 2.0
+   */
+  public static CDOIDExternal createExternalTemp(String uri)
+  {
+    return new CDOIDExternalTempImpl(uri);
+  }
+  
   public static CDOID createLong(long value)
   {
     if (value == 0L)
@@ -134,6 +154,12 @@ public final class CDOIDUtil
 
     case META:
       return new CDOIDMetaImpl(Long.valueOf(fragment));
+
+    case EXTERNAL_OBJECT:
+      return new CDOIDExternalImpl(fragment);
+
+    case EXTERNAL_TEMP_OBJECT:
+      return new CDOIDExternalTempImpl(fragment);
 
     case OBJECT:
     {
@@ -205,7 +231,7 @@ public final class CDOIDUtil
       throw new ImplementationError();
     }
 
-    builder.append("/" + id.asString());
+    builder.append("/" + id.toURIFragment());
   }
 
   public static CDOIDMeta createMeta(long value)

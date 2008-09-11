@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.common" version="2">
+    <resource path="src/org/eclipse/emf/cdo/common/model/CDOType.java" type="org.eclipse.emf.cdo.common.model.CDOType">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.model.CDOType"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/CDODataOutput.java" type="org.eclipse.emf.cdo.common.CDODataOutput">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.CDODataOutput"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/revision/CDORevisionData.java" type="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/analyzer/CDOFetchRule.java" type="org.eclipse.emf.cdo.common.analyzer.CDOFetchRule">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.analyzer.CDOFetchRule"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/InternalCDOModelElement.java" type="org.eclipse.emf.cdo.spi.common.InternalCDOModelElement">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.InternalCDOModelElement"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/CDODataInput.java" type="org.eclipse.emf.cdo.common.CDODataInput">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.CDODataInput"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/InternalCDORevision.java" type="org.eclipse.emf.cdo.spi.common.InternalCDORevision">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.common.InternalCDORevision"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/revision/delta/CDOContainerFeatureDelta.java" type="org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

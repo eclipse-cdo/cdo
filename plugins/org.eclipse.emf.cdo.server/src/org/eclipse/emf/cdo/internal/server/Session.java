@@ -10,6 +10,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/230832
  *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -170,25 +171,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return view;
   }
 
-  /**
-   * For tests only.
-   */
-  public Transaction openTransaction(int viewID, final long timeStamp)
-  {
-    Transaction transaction = new Transaction(this, viewID)
-    {
-      @Override
-      protected long createTimeStamp()
-      {
-        return timeStamp;
-      }
-    };
-
-    views.put(viewID, transaction);
-    fireElementAddedEvent(transaction);
-    return transaction;
-  }
-
   private IView createView(int viewID, CDOProtocolView.Type type)
   {
     if (type == CDOProtocolView.Type.TRANSACTION)
@@ -202,11 +184,12 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDORevisionDelta> deltas)
+  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
     if (!isPassiveUpdateEnabled())
     {
       dirtyIDs = Collections.emptyList();
+      detachedObjects = Collections.emptyList();
     }
 
     // Look if someone needs to know something about modified objects
@@ -225,9 +208,9 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
     try
     {
-      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty())
+      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || detachedObjects.isEmpty())
       {
-        new CommitNotificationRequest(protocol.getChannel(), timeStamp, dirtyIDs, newDeltas).send();
+        new CommitNotificationRequest(protocol.getChannel(), timeStamp, dirtyIDs, detachedObjects, newDeltas).send();
       }
     }
     catch (Exception ex)

@@ -89,7 +89,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().getCDOClass();
   }
 
-  public CDOID getContainerID()
+  public Object getContainerID()
   {
     return li.getRevision().getContainerID();
   }
@@ -219,7 +219,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().set(feature, index, value);
   }
 
-  public void setContainerID(CDOID containerID)
+  public void setContainerID(Object containerID)
   {
     li.getRevision().setContainerID(containerID);
   }

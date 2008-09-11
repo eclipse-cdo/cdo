@@ -61,7 +61,7 @@ public interface IStore extends IRepositoryElement
   /**
    * Returns if this store supports the storage of concurrent newRevisions in separate branches.
    * <p>
-   * Note: This is reserved for future use by the framework. There is currently no support for branching in the
+   * <b>Note:</b> This is reserved for future use by the framework. There is currently no support for branching in the
    * framework!
    * 
    * @return <code>true</code> if this store supports the storage of concurrent newRevisions in separate branches,

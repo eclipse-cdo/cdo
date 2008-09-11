@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
@@ -34,6 +35,7 @@ public abstract class AbstractCDOID implements CDOID
     {
     case NULL:
       return true;
+
     default:
       return false;
     }
@@ -47,6 +49,7 @@ public abstract class AbstractCDOID implements CDOID
     case LEGACY_OBJECT:
     case TEMP_OBJECT:
       return true;
+
     default:
       return false;
     }
@@ -58,6 +61,7 @@ public abstract class AbstractCDOID implements CDOID
     {
     case LEGACY_OBJECT:
       return true;
+
     default:
       return false;
     }
@@ -70,6 +74,7 @@ public abstract class AbstractCDOID implements CDOID
     case META:
     case TEMP_META:
       return true;
+
     default:
       return false;
     }
@@ -81,14 +86,32 @@ public abstract class AbstractCDOID implements CDOID
     {
     case TEMP_OBJECT:
     case TEMP_META:
+    case EXTERNAL_TEMP_OBJECT:
       return true;
+
     default:
       return false;
     }
   }
 
   /**
-   * CDOID.asString and AbstractCDOID.read(String) need to match
+   * @since 2.0
+   */
+  public boolean isExternal()
+  {
+    switch (getType())
+    {
+    case EXTERNAL_TEMP_OBJECT:
+    case EXTERNAL_OBJECT:
+      return true;
+
+    default:
+      return false;
+    }
+  }
+
+  /**
+   * <b>Note:</b> {@link CDOID#toURIFragment()} and {@link AbstractCDOID#read(String)} need to match.
    * 
    * @since 2.0
    */

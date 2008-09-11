@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
@@ -78,6 +79,7 @@ public class CDORevisionMerger extends CDOFeatureDeltaVisitorImpl
   @Override
   public void visit(CDOContainerFeatureDelta delta)
   {
+    revision.setResourceID(delta.getResourceID());
     revision.setContainerID(delta.getContainerID());
     revision.setContainingFeatureID(delta.getContainerFeatureID());
   }

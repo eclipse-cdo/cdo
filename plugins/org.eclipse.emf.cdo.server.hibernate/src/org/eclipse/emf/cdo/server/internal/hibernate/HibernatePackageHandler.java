@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
@@ -80,9 +81,9 @@ public class HibernatePackageHandler extends Lifecycle
     if (HibernateThreadContext.isHibernateCommitContextSet())
     {
       CommitContext cc = HibernateThreadContext.getHibernateCommitContext().getCommitContext();
-      if (cc instanceof org.eclipse.emf.cdo.internal.server.Transaction)
+      if (cc instanceof TransactionCommitContextImpl)
       {
-        org.eclipse.emf.cdo.internal.server.Transaction tx = (org.eclipse.emf.cdo.internal.server.Transaction)cc;
+        TransactionCommitContextImpl tx = (TransactionCommitContextImpl)cc;
         for (CDOPackage cdoPackage : tx.getNewPackages())
         {
           cdoPackages.add(cdoPackage);

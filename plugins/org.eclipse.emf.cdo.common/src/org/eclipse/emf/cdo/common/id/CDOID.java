@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.common.id;
 
@@ -36,13 +37,28 @@ public interface CDOID extends Serializable
   /**
    * @since 2.0
    */
-  public String asString();
+  public boolean isExternal();
+
+  /**
+   * @since 2.0
+   */
+  public String toURIFragment();
 
   /**
    * @author Eike Stepper
    */
   public enum Type
   {
-    NULL, OBJECT, LEGACY_OBJECT, TEMP_OBJECT, META, TEMP_META
+    NULL, OBJECT,
+
+    /**
+     * @since 2.0
+     */
+    EXTERNAL_OBJECT,
+
+    /**
+     * @since 2.0
+     */
+    EXTERNAL_TEMP_OBJECT, LEGACY_OBJECT, TEMP_OBJECT, META, TEMP_META
   }
 }

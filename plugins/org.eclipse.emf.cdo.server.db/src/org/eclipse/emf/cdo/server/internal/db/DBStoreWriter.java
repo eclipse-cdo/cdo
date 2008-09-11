@@ -47,9 +47,9 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
   }
 
   @Override
-  public void commit(CommitContext context)
+  public void commit()
   {
-    super.commit(context);
+    super.commit();
 
     try
     {

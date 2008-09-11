@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/230832    
  *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.common;
 
@@ -72,6 +73,26 @@ public interface CDOProtocolConstants
    * @since 2.0
    */
   public static final short SIGNAL_CHANGE_SUBSCRIPTION = 19;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE1 = 20;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE2 = 21;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_COMMIT_TRANSACTION_PHASE3 = 22;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_COMMIT_TRANSACTION_CANCEL = 23;
 
   public static final int ERROR_REPOSITORY_NOT_FOUND = -1;
 

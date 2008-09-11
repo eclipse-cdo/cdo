@@ -9,29 +9,27 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/215688    
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOTransaction extends CDOView
+public interface CDOTransaction extends CDOView, CDOUserTransaction
 {
   public static final long DEFAULT_COMMIT_TIMEOUT = 100000L;
 
@@ -50,47 +48,11 @@ public interface CDOTransaction extends CDOView
 
   public CDOObject newInstance(CDOClass cdoClass);
 
-  public void commit() throws TransactionException;
-
-  public void rollback(boolean remote);
-
-  /**
-   * @since 2.0
-   */
-  public void rollback();
-
-  /**
-   * @since 2.0
-   */
-  public void rollback(CDOSavepoint savepoint, boolean remote);
-
-  /**
-   * @since 2.0
-   */
-  public void rollback(CDOSavepoint savepoint);
-
-  /**
-   * Creates a save point in the {@link CDOTransaction} that can be used to roll back a part of the transaction
-   * <p>
-   * Save points do not involve the server side, everything is done on the client side.
-   * <p>
-   * 
-   * @since 2.0
-   */
-  public CDOSavepoint setSavepoint();
-
-  /**
-   * @since 2.0
-   */
-  public CDOSavepoint getLastSavepoint();
-
   public void addHandler(CDOTransactionHandler handler);
 
   public void removeHandler(CDOTransactionHandler handler);
 
   public CDOTransactionHandler[] getHandlers();
-
-  public List<CDOPackage> getNewPackages();
 
   public Map<CDOID, CDOResource> getNewResources();
 
@@ -99,4 +61,10 @@ public interface CDOTransaction extends CDOView
   public Map<CDOID, CDOObject> getDirtyObjects();
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
+
+  /**
+   * @since 2.0
+   */
+  public Set<CDOID> getDetachedObjects();
+
 }

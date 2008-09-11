@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
@@ -21,7 +22,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.Transaction;
-import org.eclipse.emf.cdo.internal.server.Transaction.TransactionPackageManager;
+import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IView;
 
@@ -40,7 +42,7 @@ public class CommitTransactionIndication extends CDOServerIndication
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionIndication.class);
 
-  private Transaction transaction;
+  protected InternalCommitContext commitContext;
 
   public CommitTransactionIndication()
   {
@@ -52,22 +54,68 @@ public class CommitTransactionIndication extends CDOServerIndication
     return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION;
   }
 
-  @Override
+   @Override
   protected TransactionPackageManager getPackageManager()
   {
-    return transaction.getPackageManager();
+    return commitContext.getPackageManager();
+  }
+ @Override
+  protected void indicating(CDODataInput in) throws IOException  
+  {
+    try
+    {
+      indicatingCommit(in);
+      indicatingCommit();
+    }
+    catch (IOException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   @Override
-  protected void indicating(CDODataInput in) throws IOException
+  protected void responding(CDODataOutput out) throws IOException
+  {
+    boolean success = false;
+
+    try
+    {
+      success = respondingException(out, commitContext.getRollbackMessage());
+      if (success)
+      {
+        respondingTimestamp(out);
+        respondingMappingNewPackages(out);
+        respondingMappingNewObjects(out);
+      }
+    }
+    finally
+    {
+      commitContext.postCommit(success);
+    }
+  }
+
+  protected void indicationTransaction(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    transaction = getTransaction(viewID);
-    transaction.preCommit();
+    commitContext = getTransaction(viewID).createCommitContext();
+  }
 
+  protected void indicatingCommit(CDODataInput in) throws IOException
+  {
+    // Create transaction context
+    indicationTransaction(in);
+
+    commitContext.preCommit();
+
+    TransactionPackageManager packageManager = commitContext.getPackageManager();
     CDOPackage[] newPackages = new CDOPackage[in.readInt()];
     CDORevision[] newObjects = new CDORevision[in.readInt()];
     CDORevisionDelta[] dirtyObjectDeltas = new CDORevisionDelta[in.readInt()];
+    CDOID[] detachedObjects = new CDOID[in.readInt()];
 
     // New packages
     if (PROTOCOL_TRACER.isEnabled())
@@ -75,7 +123,6 @@ public class CommitTransactionIndication extends CDOServerIndication
       PROTOCOL_TRACER.format("Reading {0} new packages", newPackages.length);
     }
 
-    TransactionPackageManager packageManager = transaction.getPackageManager();
     for (int i = 0; i < newPackages.length; i++)
     {
       newPackages[i] = in.readCDOPackage();
@@ -104,57 +151,67 @@ public class CommitTransactionIndication extends CDOServerIndication
       dirtyObjectDeltas[i] = in.readCDORevisionDelta();
     }
 
-    transaction.commit(newPackages, newObjects, dirtyObjectDeltas);
+    for (int i = 0; i < detachedObjects.length; i++)
+    {
+      detachedObjects[i] = in.readCDOID();
+    }
+
+    commitContext.setNewPackages(newPackages);
+    commitContext.setNewObjects(newObjects);
+    commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
+    commitContext.setDetachedObjects(detachedObjects);
   }
 
-  @Override
-  protected void responding(CDODataOutput out) throws IOException
+  protected void indicatingCommit()
   {
-    boolean success = false;
+    commitContext.write();
+    commitContext.commit();
+  }
 
-    try
+  protected boolean respondingException(CDODataOutput out, String rollbackMessage) throws IOException
+  {
+    boolean success = rollbackMessage == null;
+    out.writeBoolean(success);
+    if (!success)
     {
-      String rollbackMessage = transaction.getRollbackMessage();
-      success = rollbackMessage == null;
-      out.writeBoolean(success);
-      if (success)
-      {
-        out.writeLong(transaction.getTimeStamp());
-
-        // Meta ID ranges
-        List<CDOIDMetaRange> metaRanges = transaction.getMetaIDRanges();
-        for (CDOIDMetaRange metaRange : metaRanges)
-        {
-          out.writeCDOIDMetaRange(metaRange);
-        }
-
-        // ID mappings
-        Map<CDOIDTemp, CDOID> idMappings = transaction.getIDMappings();
-        for (Entry<CDOIDTemp, CDOID> entry : idMappings.entrySet())
-        {
-          CDOIDTemp oldID = entry.getKey();
-          if (!oldID.isMeta())
-          {
-            CDOID newID = entry.getValue();
-            out.writeCDOID(oldID);
-            out.writeCDOID(newID);
-          }
-        }
-
-        out.writeCDOID(CDOID.NULL);
-      }
-      else
-      {
-        out.writeString(rollbackMessage);
-      }
+      out.writeString(rollbackMessage);
     }
-    finally
+    return success;
+  }
+
+  protected void respondingTimestamp(CDODataOutput out) throws IOException
+  {
+    out.writeLong(commitContext.getTimeStamp());
+  }
+
+  protected void respondingMappingNewPackages(CDODataOutput out) throws IOException
+  {
+    // Meta ID ranges
+    List<CDOIDMetaRange> metaRanges = commitContext.getMetaIDRanges();
+    for (CDOIDMetaRange metaRange : metaRanges)
     {
-      transaction.postCommit(success);
+       out.writeCDOIDMetaRange(metaRange);
     }
   }
 
-  private Transaction getTransaction(int viewID)
+  protected void respondingMappingNewObjects(CDODataOutput out) throws IOException
+  {
+    // ID mappings
+    Map<CDOIDTemp, CDOID> idMappings = commitContext.getIDMappings();
+    for (Entry<CDOIDTemp, CDOID> entry : idMappings.entrySet())
+    {
+      CDOIDTemp oldID = entry.getKey();
+      if (!oldID.isMeta())
+      {
+        CDOID newID = entry.getValue();
+        out.writeCDOID(oldID);
+            out.writeCDOID(newID);
+      }
+    }
+    out.writeCDOID(CDOID.NULL);
+  }
+
+  protected Transaction getTransaction(int viewID)
   {
     IView view = getSession().getView(viewID);
     if (view instanceof Transaction)

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/246705
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
@@ -28,7 +29,9 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.lang.reflect.Method;
@@ -90,6 +93,12 @@ public final class FSMUtil
   {
     CDOState state = object.cdoState();
     return state == CDOState.TRANSIENT || state == CDOState.PREPARED;
+  }
+
+  public static boolean isNew(CDOObject object)
+  {
+    CDOState state = object.cdoState();
+    return state == CDOState.NEW;
   }
 
   /**
@@ -157,9 +166,51 @@ public final class FSMUtil
     return null;
   }
 
-  public static Iterator<InternalCDOObject> iterator(Collection<?> instances, final CDOViewImpl view)
+  /**
+   * Similar to {@link EcoreUtil#getAllProperContents(Resource, boolean)} except gives only one depth
+   */
+  public static Iterator<InternalCDOObject> getProperContents(final InternalCDOObject object)
   {
-    final Iterator<?> delegate = instances.iterator();
+    final boolean isResource = object instanceof Resource;
+    final CDOView cdoView = object.cdoView();
+    final Iterator<EObject> delegate = object.eContents().iterator();
+
+    return new Iterator<InternalCDOObject>()
+    {
+      private Object next;
+
+      public boolean hasNext()
+      {
+        while (delegate.hasNext())
+        {
+          InternalEObject eObject = (InternalEObject)delegate.next();
+
+          if (isResource || eObject.eDirectResource() == null)
+          {
+            next = adapt(eObject, cdoView);
+            if (next instanceof InternalCDOObject)
+            {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      public InternalCDOObject next()
+      {
+        return (InternalCDOObject)next;
+      }
+
+      public void remove()
+      {
+        throw new UnsupportedOperationException();
+      }
+    };
+  }
+
+  public static Iterator<InternalCDOObject> iterator(final Iterator<?> delegate, final CDOViewImpl view)
+  {
     return new Iterator<InternalCDOObject>()
     {
       private Object next;
@@ -188,5 +239,10 @@ public final class FSMUtil
         throw new UnsupportedOperationException();
       }
     };
+  }
+
+  public static Iterator<InternalCDOObject> iterator(Collection<?> instances, final CDOViewImpl view)
+  {
+    return iterator(instances.iterator(), view);
   }
 }

@@ -10,6 +10,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/233273    
  *    Simon McDuff - http://bugs.eclipse.org/230832                   
  *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server.protocol;
 
@@ -92,6 +93,18 @@ public class CDOServerProtocol extends CDOProtocolImpl
 
     case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
       return new ChangeSubscriptionIndication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1:
+      return new CommitTransactionPhase1Indication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2:
+      return new CommitTransactionPhase2Indication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3:
+      return new CommitTransactionPhase3Indication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL:
+      return new CommitTransactionCancelIndication();
 
     default:
       return null;

@@ -8,6 +8,8 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Simon McDuff - http://bugs.eclipse.org/204890 
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
@@ -35,18 +37,16 @@ import java.util.Map;
  */
 public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOContainerFeatureDelta
 {
-  /**
-   * TODO Move to CDOObjectContainerFeature
-   */
-  private static CDOFeature CONTAINER_FEATURE = new ContainerFeature();
+  private CDOID newResourceID;
 
-  private CDOID newContainerID;
+  private Object newContainerID;
 
   private int newContainerFeatureID;
 
-  public CDOContainerFeatureDeltaImpl(CDOID newContainerID, int newContainerFeatureID)
+  public CDOContainerFeatureDeltaImpl(CDOID newResourceID, Object newContainerID, int newContainerFeatureID)
   {
     super(CONTAINER_FEATURE);
+    this.newResourceID = newResourceID;
     this.newContainerID = newContainerID;
     this.newContainerFeatureID = newContainerFeatureID;
   }
@@ -55,25 +55,8 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   {
     super(CONTAINER_FEATURE);
     newContainerFeatureID = in.readInt();
-    newContainerID = in.readCDOID();
-  }
-
-  @Override
-  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
-  {
-    out.writeInt(getType().ordinal());
-    out.writeInt(newContainerFeatureID);
-    out.writeCDOID(newContainerID);
-  }
-
-  public int getContainerFeatureID()
-  {
-    return newContainerFeatureID;
-  }
-
-  public CDOID getContainerID()
-  {
-    return newContainerID;
+    newContainerID = in.readCDOID();  
+    newResourceID = in.readCDOID();    
   }
 
   public Type getType()
@@ -81,8 +64,24 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     return Type.CONTAINER;
   }
 
+  public CDOID getResourceID()
+  {
+    return newResourceID;
+  }
+
+  public Object getContainerID()
+  {
+    return newContainerID;
+  }
+
+  public int getContainerFeatureID()
+  {
+    return newContainerFeatureID;
+  }
+
   public void apply(CDORevision revision)
   {
+    ((InternalCDORevision)revision).setResourceID(newResourceID);
     ((InternalCDORevision)revision).setContainerID(newContainerID);
     ((InternalCDORevision)revision).setContainingFeatureID(newContainerFeatureID);
   }
@@ -90,7 +89,18 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   @Override
   public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
   {
+    newResourceID = (CDOID)CDORevisionUtil.remapID(newResourceID, idMappings);
     newContainerID = (CDOID)CDORevisionUtil.remapID(newContainerID, idMappings);
+  }
+
+  @Override
+  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  {
+    out.writeInt(getType().ordinal());
+    out.writeInt(newContainerFeatureID);
+    newContainerID = out.getIDProvider().provideCDOID(newContainerID);
+    out.writeCDOID((CDOID)newContainerID);
+    out.writeCDOID(newResourceID);
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)
@@ -101,7 +111,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   /**
    * @author Simon McDuff
    */
-  private static final class ContainerFeature implements CDOFeature
+  public static final class ContainerFeature implements CDOFeature
   {
     public CDOClass getContainingClass()
     {

@@ -103,10 +103,7 @@ public class ViewTest extends AbstractCDOTest
     CDORevisionData revision = resource.cdoRevision().getData();
     CDOResourcePackage resourcePackage = session.getPackageManager().getCDOResourcePackage();
     CDOContentsFeature contentsFeature = resourcePackage.getCDOResourceClass().getCDOContentsFeature();
-    assertEquals(false, revision.get(contentsFeature, 0) instanceof CDOReferenceProxy);
-    assertEquals(false, revision.get(contentsFeature, 1) instanceof CDOReferenceProxy);
-    assertEquals(false, revision.get(contentsFeature, 2) instanceof CDOReferenceProxy);
-    assertEquals(false, revision.get(contentsFeature, 99) instanceof CDOReferenceProxy);
+    assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOReferenceProxy);
     assertEquals(false, revision.get(contentsFeature, 100) instanceof CDOReferenceProxy);
     session.close();
   }

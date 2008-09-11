@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -137,12 +138,12 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   }
 
   @Override
-  public void commit(CommitContext context)
+  public void write(CommitContext context)
   {
     MEMStore store = getStore();
     synchronized (store)
     {
-      super.commit(context);
+      super.write(context);
     }
   }
 
@@ -158,6 +159,34 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
         store.removeRevision(revision);
       }
     }
+  }
+
+  @Override
+  protected void writePackages(CDOPackage... cdoPackages)
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void writeRevision(CDORevision revision)
+  {
+    newRevisions.add(revision);
+    getStore().addRevision(revision);
+  }
+
+  @Override
+  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
+  {
+    CDORevision revision = getStore().getRevision(revisionDelta.getID());
+    CDORevision newRevision = CDORevisionUtil.copy(revision);
+    revisionDelta.apply(newRevision);
+    writeRevision(newRevision);
+  }
+
+  @Override
+  protected void detachObject(CDOID id)
+  {
+    getStore().removeID(id);
   }
 
   /**
@@ -226,28 +255,6 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
    */
   public void refreshRevisions()
   {
-  }
-
-  @Override
-  protected void writePackages(CDOPackage... cdoPackages)
-  {
-    // Do nothing
-  }
-
-  @Override
-  protected void writeRevision(CDORevision revision)
-  {
-    newRevisions.add(revision);
-    getStore().addRevision(revision);
-  }
-
-  @Override
-  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
-  {
-    CDORevision revision = getStore().getRevision(revisionDelta.getID());
-    CDORevision newRevision = CDORevisionUtil.copy(revision);
-    revisionDelta.apply(newRevision);
-    writeRevision(newRevision);
   }
 
   @Override

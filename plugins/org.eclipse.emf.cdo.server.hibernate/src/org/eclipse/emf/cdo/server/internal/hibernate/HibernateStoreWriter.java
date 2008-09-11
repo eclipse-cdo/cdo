@@ -49,7 +49,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   }
 
   @Override
-  public void commit(CommitContext context)
+  public void write(CommitContext context)
   {
     if (TRACER.isEnabled())
     {
@@ -76,7 +76,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
       {
         if (cdoRevision instanceof InternalCDORevision)
         {
-          final CDOID containerID = ((InternalCDORevision)cdoRevision).getContainerID();
+          final CDOID containerID = (CDOID)((InternalCDORevision)cdoRevision).getContainerID();
           if (!containerID.isNull() && containerID instanceof CDOIDTemp)
           {
             repairContainerIDs.add((InternalCDORevision)cdoRevision);
@@ -112,7 +112,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
       // now do an update of the container without incrementing the version
       for (InternalCDORevision cdoRevision : repairContainerIDs)
       {
-        final CDORevision container = HibernateUtil.getInstance().getCDORevision(cdoRevision.getContainerID());
+        final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)cdoRevision.getContainerID());
         final String entityName = HibernateUtil.getInstance().getEntityName(cdoRevision);
         final CDOIDHibernate id = (CDOIDHibernate)cdoRevision.getID();
         final CDOIDHibernate containerID = (CDOIDHibernate)container.getID();

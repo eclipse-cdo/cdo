@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/246705
  **************************************************************************/
 
 package org.eclipse.emf.internal.cdo.util;
@@ -15,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
@@ -42,6 +44,13 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
   {
     this.revision = revision;
     revisionDelta.accept(this);
+  }
+
+  @Override
+  public void visit(CDOContainerFeatureDelta delta)
+  {
+    // Delta value must have been adjusted before!
+    revision.setContainerID(idProvider.provideCDOID(revision.getContainerID()));
   }
 
   @Override

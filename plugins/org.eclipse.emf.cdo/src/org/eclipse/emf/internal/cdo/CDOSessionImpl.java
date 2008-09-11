@@ -10,12 +10,14 @@
  *    Simon McDuff - http://bugs.eclipse.org/226778
  *    Simon McDuff - http://bugs.eclipse.org/230832
  *    Simon McDuff - http://bugs.eclipse.org/233490
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -24,6 +26,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
@@ -48,7 +51,6 @@ import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
-import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
@@ -71,12 +73,9 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
@@ -151,7 +150,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private ConcurrentMap<CDOID, CDOClass> types = new ConcurrentHashMap<CDOID, CDOClass>();
 
-  private Map<ResourceSet, CDOViewImpl> views = new HashMap<ResourceSet, CDOViewImpl>();
+  private Set<CDOViewImpl> views = new HashSet<CDOViewImpl>();
 
   @ExcludeFromDump
   private transient Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap<CDOID, InternalEObject>();
@@ -384,13 +383,10 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOViewImpl[] getViews()
   {
-    Collection<CDOViewImpl> values;
     synchronized (views)
     {
-      values = views.values();
+      return views.toArray(new CDOViewImpl[views.size()]);
     }
-
-    return values.toArray(new CDOViewImpl[values.size()]);
   }
 
   public CDOView[] getElements()
@@ -406,10 +402,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public void viewDetached(CDOViewImpl view)
   {
-    ResourceSet resourceSet = view.getResourceSet();
+    // Detach viewset from the view
+    ((CDOViewSetImpl)view.getViewSet()).remove(view);
     synchronized (views)
     {
-      if (views.remove(resourceSet) == null)
+      if (!views.remove(view))
       {
         return;
       }
@@ -417,7 +414,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     try
     {
-      new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED).send();
+      getFailOverStrategy().send(new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED));
     }
     catch (Exception ex)
     {
@@ -479,7 +476,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public CDOIDMetaRange registerEPackage(EPackage ePackage)
   {
     CDOIDMetaRange range = registerEPackage(ePackage, lastTempMetaID + 1, idToMetaInstanceMap, metaInstanceToIDMap);
-    lastTempMetaID = ((CDOIDTemp)range.getUpperBound()).getIntValue();
+    lastTempMetaID = ((CDOIDTempMeta)range.getUpperBound()).getIntValue();
     return range;
   }
 
@@ -573,11 +570,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    * @since 2.0
    */
   public void handleCommitNotification(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
+      Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
   {
     if (isPassiveUpdateEnabled())
     {
-      notifyInvalidation(timeStamp, dirtyOIDs, excludedView);
+      notifyInvalidation(timeStamp, dirtyOIDs, detachedObjects, excludedView);
     }
 
     handleChangeSubcription(deltas, excludedView);
@@ -586,12 +583,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
+  @SuppressWarnings("unchecked")
   public void handleSync(Set<CDOIDAndVersion> dirtyOIDs)
   {
-    notifyInvalidation(CDORevision.UNSPECIFIED_DATE, dirtyOIDs, null);
+    notifyInvalidation(CDORevision.UNSPECIFIED_DATE, dirtyOIDs, Collections.EMPTY_LIST, null);
   }
 
-  private void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, CDOViewImpl excludedView)
+  private void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
+      CDOViewImpl excludedView)
   {
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
     {
@@ -603,14 +602,25 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       }
     }
 
+    for (CDOID id : detachedObjects)
+    {
+      InternalCDORevision revision = getRevisionManager().getRevision(id, 0, false);
+      if (revision != null)
+      {
+        revision.setRevised(timeStamp - 1);
+      }
+    }
+
     dirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
+    detachedObjects = Collections.unmodifiableCollection(detachedObjects);
+
     for (CDOViewImpl view : getViews())
     {
       if (view != excludedView)
       {
         try
         {
-          view.handleInvalidation(timeStamp, dirtyOIDs);
+          view.handleInvalidation(timeStamp, dirtyOIDs, detachedObjects);
         }
         catch (RuntimeException ex)
         {
@@ -697,33 +707,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   protected void attach(ResourceSet resourceSet, CDOViewImpl view)
   {
-    if (CDOUtil.getView(resourceSet) != null)
-    {
-      throw new IllegalStateException("CDO view already open");
-    }
-
-    resourceSet.setPackageRegistry(new EPackageRegistryImpl(packageRegistry));
-    CDOUtil.prepareResourceSet(resourceSet);
-
-    Map<URI, Resource> resourceMap = null;
-    if (resourceSet instanceof ResourceSetImpl)
-    {
-      ResourceSetImpl rs = (ResourceSetImpl)resourceSet;
-      resourceMap = rs.getURIResourceMap();
-      rs.setURIResourceMap(new ProxyResolverURIResourceMap(view, resourceMap));
-    }
-    else
-    {
-      throw new ImplementationError("Not a " + ResourceSetImpl.class.getName() + ": "
-          + resourceSet.getClass().getName());
-    }
-
+    CDOViewSet viewSet = CDOUtil.prepareResourceSet(resourceSet);
     synchronized (views)
     {
-      views.put(resourceSet, view);
+      views.add(view);
     }
 
-    resourceSet.eAdapters().add(view);
+    // Link ViewSet with View
+    view.setViewSet(viewSet);
+    ((CDOViewSetImpl)viewSet).add(view);
+
     sendViewsNotification(view);
     fireElementAddedEvent(view);
   }

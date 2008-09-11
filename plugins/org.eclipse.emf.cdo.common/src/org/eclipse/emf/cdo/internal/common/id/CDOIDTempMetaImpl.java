@@ -7,16 +7,17 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.id;
 
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.spi.common.AbstractCDOIDInteger;
 
 /**
  * @author Eike Stepper
  */
-public class CDOIDTempMetaImpl extends AbstractCDOIDInteger implements CDOIDTemp
+public class CDOIDTempMetaImpl extends AbstractCDOIDInteger implements CDOIDTempMeta
 {
   private static final long serialVersionUID = 1L;
 

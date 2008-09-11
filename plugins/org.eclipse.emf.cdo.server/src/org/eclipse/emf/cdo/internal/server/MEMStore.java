@@ -170,6 +170,14 @@ public class MEMStore extends LongIDStore implements IMEMStore
     return false;
   }
 
+  /**
+   * @since 2.0
+   */
+  public synchronized void removeID(CDOID id)
+  {
+    revisions.remove(id);
+  }
+
   public synchronized CDORevision getResource(String path)
   {
     CDOPathFeature pathFeature = getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceClass()

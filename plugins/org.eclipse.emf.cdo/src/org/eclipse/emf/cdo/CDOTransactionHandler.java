@@ -29,7 +29,7 @@ public interface CDOTransactionHandler
    * Called by a <code>CDOTransaction</code> <b>before</b> an object is modified. The implementor of this method is
    * allowed to throw an unchecked exception that will propagate up to the operation that is about to modify the object.
    * <p>
-   * Note: This method will be called at most once per object until the associated transaction is committed.
+   * <b>Note:</b> This method will be called at most once per object until the associated transaction is committed.
    */
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta);
 

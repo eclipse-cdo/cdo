@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
@@ -30,13 +31,18 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
 public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessor.class);
-
+  
+  private List<CommitContext> commitContexts = new ArrayList<CommitContext>();
+  
   private Store store;
 
   private Object context;
@@ -95,16 +101,23 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return (InternalCDORevision)revision;
   }
 
-  public void commit(CommitContext context)
+  /**
+   * @since 2.0
+   */
+  public void write(CommitContext context)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Committing transaction: {0}", getView());
+      TRACER.format("Writing transaction: {0}", getView());
     }
-
+    
+    commitContexts.add(context);
+    
     writePackages(context.getNewPackages());
     addIDMappings(context);
+
     context.applyIDMappings();
+
     writeRevisions(context.getNewObjects());
     if (store.hasWriteDeltaSupport() && store.getRepository().isSupportingRevisionDeltas())
     {
@@ -114,19 +127,40 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     {
       writeRevisions(context.getDirtyObjects());
     }
+  
+    detachObjects(context.getDetachedObjects());
   }
 
-  public void rollback(CommitContext context)
+  /**
+   * @since 2.0
+   */
+  public void commit()
+  {
+  
+  }
+  
+  public void rollback(CommitContext commitContext)
+  {
+    
+  }
+  
+  public void rollback()
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Rolling back transaction: {0}", getView());
+    }
+    
+    for (CommitContext commitContext : commitContexts)
+    {
+      rollback(commitContext);
     }
   }
 
   public final void release()
   {
     store.releaseAccessor(this);
+    commitContexts.clear();
   }
 
   protected void addIDMappings(CommitContext context)
@@ -195,6 +229,17 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
   }
 
+  /**
+   * @since 2.0
+   */
+  protected void detachObjects(CDOID[] detachedObjects)
+  {
+    for (CDOID id : detachedObjects)
+    {
+      detachObject(id);
+    }
+  }
+
   protected void writeRevision(CDORevision revision)
   {
     throw new UnsupportedOperationException();
@@ -213,13 +258,27 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @since 2.0
+   */
+  protected void detachObject(CDOID id)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   protected abstract void doActivate() throws Exception;
 
   @Override
   protected abstract void doDeactivate() throws Exception;
 
+  /**
+   * @since 2.0
+   */
   protected abstract void doPassivate() throws Exception;
 
+  /**
+   * @since 2.0
+   */
   protected abstract void doUnpassivate() throws Exception;
 }

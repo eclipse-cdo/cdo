@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.BulkAddDialog;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -1036,7 +1036,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       else
       {
-        URI resourceURI = CDOUtil.createResourceURI(resourcePath);
+        URI resourceURI = CDOURIUtil.createResourceURI(view, resourcePath);
         viewerInput = resourceSet.getResource(resourceURI, true);
       }
 

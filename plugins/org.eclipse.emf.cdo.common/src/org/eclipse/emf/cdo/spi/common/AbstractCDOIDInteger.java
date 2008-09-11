@@ -47,7 +47,7 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID implements Comp
   /**
    * @since 2.0
    */
-  public String asString()
+  public String toURIFragment()
   {
     return String.valueOf(value);
   }

@@ -8,24 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778    
+ *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - http://bugs.eclipse.org/246705
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource.impl;
 
-import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -76,16 +75,6 @@ import java.util.Map;
  */
 public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 {
-  /**
-   * @ADDED
-   */
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOResourceImpl.class);
-
-  /**
-   * @ADDED
-   */
-  private CDOViewImpl view;
-
   /**
    * @ADDED
    */
@@ -161,7 +150,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   public void setURI(URI newURI)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__URI, newURI);
-    basicSetPath(CDOUtil.extractResourcePath(newURI));
+    basicSetPath(CDOURIUtil.extractResourcePath(newURI));
   }
 
   /**
@@ -306,7 +295,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void setPath(String newPath)
   {
-    setURI(CDOUtil.createResourceURI(newPath));
+    setURI(CDOURIUtil.createResourceURI(cdoView(), newPath));
   }
 
   /**
@@ -396,14 +385,14 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void save(Map<?, ?> options) throws IOException
   {
-    if (view instanceof CDOTransaction)
+    if (cdoView() instanceof CDOTransaction)
     {
-      CDOTransaction transaction = (CDOTransaction)view;
+      CDOTransaction transaction = (CDOTransaction)cdoView();
       transaction.commit();
     }
     else
     {
-      throw new IOException("CDO view is read only: " + view);
+      throw new IOException("CDO view is read only: " + cdoView());
     }
   }
 
@@ -426,9 +415,14 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * @ADDED
    */
-  public void delete(Map<?, ?> options) throws IOException
+  public void delete(Map<?, ?> defaultDeleteOptions) throws IOException
   {
-    throw new UnsupportedOperationException();
+    ResourceSet resourceSet = getResourceSet();
+    if (resourceSet != null)
+    {
+      resourceSet.getResources().remove(this);
+    }
+    cdoView().toTransaction().detach(this);
   }
 
   /**
@@ -436,11 +430,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    // InternalCDOObject legacy = getLegacyWrapper(object);
-    // if (legacy.cdoState() != CDOState.CLEAN)
-    // {
-    // CDOStateMachine.INSTANCE.attach(legacy, this, view);
-    // }
+    InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
+    CDOStateMachine.INSTANCE.attach(cdoObject, cdoView().toTransaction());
   }
 
   /**
@@ -448,8 +439,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void detached(EObject object)
   {
-    // InternalCDOObject legacy = getLegacyWrapper(object);
-    // CDOStateMachine.INSTANCE.detach(legacy);
+    InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
+    CDOStateMachine.INSTANCE.detach(cdoObject);
   }
 
   /**
@@ -498,43 +489,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   {
     // TODO Implement method CDOResourceImpl.isLoading()
     throw new UnsupportedOperationException("Not yet implemented");
-  }
-
-  /**
-   * @ADDED
-   */
-  @Override
-  public CDOState cdoState()
-  {
-    CDOState superState = super.cdoState();
-    if (superState == CDOState.TRANSIENT && isExisting())
-    {
-      return CDOState.PROXY;
-    }
-
-    return superState;
-  }
-
-  /**
-   * @ADDED
-   */
-  @Override
-  public CDOViewImpl cdoView()
-  {
-    return view;
-  }
-
-  /**
-   * @ADDED
-   */
-  public void cdoSetView(CDOViewImpl view)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting view: {0}", view);
-    }
-
-    this.view = view;
   }
 
   /**
@@ -590,6 +544,34 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       {
         kind &= ~IS_UNIQUE;
       }
+    }
+
+    @Override
+    public NotificationChain inverseAdd(Object object, NotificationChain notifications)
+    {
+      if (object instanceof InternalCDOObject)
+      {
+        InternalCDOObject eObject = (InternalCDOObject)object;
+        notifications = eObject.eSetResource(CDOResourceImpl.this, notifications);
+        // It is possible that a attached objects gets add to the resource.
+        if (FSMUtil.isTransient(eObject))
+        {
+          attached(eObject);
+        }
+      }
+      else
+      {
+        throw new LegacySystemNotAvailableException();
+      }
+      return notifications;
+    }
+
+    @Override
+    public NotificationChain inverseRemove(Object object, NotificationChain notifications)
+    {
+      InternalEObject eObject = (InternalEObject)object;
+      detached(eObject);
+      return eObject.eSetResource(null, notifications);
     }
   }
 

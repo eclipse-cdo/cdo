@@ -19,4 +19,5 @@ import org.eclipse.emf.common.notify.Adapter;
  */
 public interface CDOAdapter extends Adapter
 {
+
 }

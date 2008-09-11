@@ -115,9 +115,6 @@ public class QueryTest extends AbstractCDOTest
     transaction.getSession().close();
   }
 
-  /**
-   * TODO Simon: Enable me!
-   */
   public void testQueryCancel_ViewClose() throws Exception
   {
     CDOTransaction transaction = initialize(100);
@@ -130,9 +127,6 @@ public class QueryTest extends AbstractCDOTest
     transaction.getSession().close();
   }
 
-  /**
-   * TODO Simon: Enable me!
-   */
   public void _testQueryCancel_SessionClose() throws Exception
   {
     CDOTransaction transaction = initialize(100);

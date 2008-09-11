@@ -218,7 +218,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   {
     if (info.getQueryLanguage().equals("TEST"))
     {
-      MEMStoreQueryIterator queryExecution = new MEMStoreQueryIterator(getStore());
+      List<Object> filters = new ArrayList<Object>();
       Object context = info.getParameters().get("context");
       Long sleep = (Long)info.getParameters().get("sleep");
       if (context != null)
@@ -226,7 +226,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
         if (context instanceof CDOClass)
         {
           final CDOClass cdoClass = (CDOClass)context;
-          queryExecution.addFilter(new Object()
+          filters.add(new Object()
           {
             @Override
             public boolean equals(Object obj)
@@ -236,12 +236,39 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
             }
           });
         }
-      }
-      queryExecution.setSleep(sleep);
-      queryExecution.activate();
-      while (queryExecution.hasNext() && queryContext.addResult(queryExecution.next()))
+      }      
+      
+      for (CDORevision revision : getStore().getCurrentRevisions())
       {
+        if (sleep != null)
+        {
+          try
+          {
+            Thread.sleep(sleep);
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.interrupted();
+          }
+        }
         
+        boolean valid = true;
+        
+        for (Object filter : filters)
+        {
+          if (!filter.equals(revision))
+          {
+            valid = false;
+            break;
+          }
+        }
+        if (valid)
+        {
+          if (!queryContext.addResult(revision))
+          {
+            break;
+          }
+        }
       }
     }
     

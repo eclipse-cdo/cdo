@@ -12,7 +12,6 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.SignalRemoteException;
-import org.eclipse.net4j.tests.signal.ExceptionIndication;
 import org.eclipse.net4j.tests.signal.ExceptionRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 
@@ -48,7 +47,6 @@ public class ExceptionTest extends AbstractProtocolTest
     }
     catch (SignalRemoteException success)
     {
-      assertEquals(ExceptionIndication.SIMULATED_EXCEPTION, success.getMessage());
     }
   }
 }

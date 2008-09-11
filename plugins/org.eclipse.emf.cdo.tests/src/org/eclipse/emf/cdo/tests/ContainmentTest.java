@@ -339,7 +339,7 @@ public class ContainmentTest extends AbstractCDOTest
     assertContent(resource, order);
     assertNull(order.getShippingAddress());
   }
-  
+
   public void testObjectNotSameResourceThanItsContainer() throws Exception
   {
     {
@@ -352,7 +352,7 @@ public class ContainmentTest extends AbstractCDOTest
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
 
       session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
-      Resource resource1 = resourceSet.createResource(URI.createFileURI("c:\\1.xml"));
+      Resource resource1 = resourceSet.createResource(URI.createFileURI("1.xml"));
       Resource resource2 = transaction.createResource("test");
 
       EPackage packageObject = createDynamicEPackage();
@@ -384,26 +384,26 @@ public class ContainmentTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction(resourceSet);
 
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
-      
+
       Resource resource = transaction.getResource("test");
-      
+
       Order order = (Order)resource.getContents().get(0);
-      
-      Resource resourceXMI = resourceSet.getResource(URI.createFileURI("c:\\1.xml"), true);
-      
+
+      Resource resourceXMI = resourceSet.getResource(URI.createFileURI("1.xml"), true);
+
       assertEquals(resourceXMI.getContents().get(0), order.eContainer());
     }
 
   }
-  
+
   public void testObjectNotSameResourceThanItsContainer_WithoutCDO() throws Exception
   {
     ResourceSet resourceSet = new ResourceSetImpl();
 
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
 
-    Resource resource1 = resourceSet.createResource(URI.createFileURI("c:\\1.xml"));
-    Resource resource2 = resourceSet.createResource(URI.createFileURI("c:\\2.xml"));
+    Resource resource1 = resourceSet.createResource(URI.createFileURI("1.xml"));
+    Resource resource2 = resourceSet.createResource(URI.createFileURI("2.xml"));
     EPackage packageObject = createDynamicEPackage();
     EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
 
@@ -422,7 +422,7 @@ public class ContainmentTest extends AbstractCDOTest
     // If the relationship is define has resolveProxy this is true if not.. this is false.
     assertEquals(container, contained.eContainer());
   }
-  
+
   // Do not support legacy system
   public void _testBug246540() throws Exception
   {

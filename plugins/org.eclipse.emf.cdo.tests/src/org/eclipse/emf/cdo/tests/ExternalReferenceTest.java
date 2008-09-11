@@ -45,7 +45,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 {
   final static public String REPOSITORY2_NAME = "repo2";
 
-   
   public void testExternalWithDynamicEObject() throws Exception
   {
     {
@@ -56,87 +55,88 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
       EPackage schoolPackage = createDynamicEPackage();
       EClass classifier = (EClass)schoolPackage.getEClassifier("SchoolBook");
-      
+
       EObject schoolbook = schoolPackage.getEFactoryInstance().create(classifier);
       sessionA.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
 
       CDOResource resA = transactionA1.createResource("/resA");
-      Resource resD = resourceSet.createResource(URI.createFileURI("c:\\1.xml"));
-      
+      Resource resD = resourceSet.createResource(URI.createFileURI("1.xml"));
+
       GenRefSingleNonContained objectFromResA = model4Factory.eINSTANCE.createGenRefSingleNonContained();
       objectFromResA.setElement(schoolbook);
       resD.getContents().add(schoolbook);
-      
+
       resA.getContents().add(objectFromResA);
-      
+
       transactionA1.commit();
     }
   }
-  
+
   public void testExternalWithEClass() throws Exception
   {
     {
       CDOSession sessionA = openSession();
 
       ResourceSet resourceSet = new ResourceSetImpl();
-      
+
       sessionA.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
-      
+
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOResource resA = transactionA1.createResource("/resA");
       GenRefSingleNonContained objectFromResA = model4Factory.eINSTANCE.createGenRefSingleNonContained();
-      objectFromResA.setElement(Model1Package.eINSTANCE.getAddress());     
-      resA.getContents().add(objectFromResA);      
+      objectFromResA.setElement(Model1Package.eINSTANCE.getAddress());
+      resA.getContents().add(objectFromResA);
       transactionA1.commit();
     }
-    
+
     {
       CDOSession sessionA = openSession();
 
       ResourceSet resourceSet = new ResourceSetImpl();
       resourceSet.getPackageRegistry().put(Model1Package.eINSTANCE.getNsURI(), Model1Package.eINSTANCE);
-      
+
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOResource resA = transactionA1.getResource("/resA");
 
       GenRefSingleNonContained objectFromResA = (GenRefSingleNonContained)resA.getContents().get(0);
       assertEquals(Model1Package.eINSTANCE.getAddress(), objectFromResA.getElement());
       transactionA1.commit();
-    }    
-  } 
+    }
+  }
+
   public void testExternalWithEPackage() throws Exception
   {
     {
       CDOSession sessionA = openSession();
 
       ResourceSet resourceSet = new ResourceSetImpl();
-      
+
       sessionA.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
-      
+
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOResource resA = transactionA1.createResource("/resA");
       GenRefSingleNonContained objectFromResA = model4Factory.eINSTANCE.createGenRefSingleNonContained();
-      objectFromResA.setElement(Model1Package.eINSTANCE);     
-      resA.getContents().add(objectFromResA);      
+      objectFromResA.setElement(Model1Package.eINSTANCE);
+      resA.getContents().add(objectFromResA);
       transactionA1.commit();
     }
-    
+
     {
       CDOSession sessionA = openSession();
 
       ResourceSet resourceSet = new ResourceSetImpl();
       resourceSet.getPackageRegistry().put(Model1Package.eINSTANCE.getNsURI(), Model1Package.eINSTANCE);
-      
+
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOResource resA = transactionA1.getResource("/resA");
-     
+
       GenRefSingleNonContained objectFromResA = (GenRefSingleNonContained)resA.getContents().get(0);
       assertEquals(Model1Package.eINSTANCE, objectFromResA.getElement());
       transactionA1.commit();
-    }    
-  }    
-  
+    }
+  }
+
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
     URI a = URI.createURI("file:/c:/temp");
@@ -177,7 +177,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       assertEquals(3, resourceSet.getResources().size());
       // assertEquals(resC, resourceSet.getResource(CDOUtil.createResourceURI(sessionA, "/resC"), false));
 
-      Resource resD = resourceSet.createResource(URI.createFileURI("c:\\1.xml"));
+      Resource resD = resourceSet.createResource(URI.createFileURI("1.xml"));
 
       assertEquals(4, resourceSet.getResources().size());
       assertEquals(false, resD instanceof CDOResource);
@@ -225,7 +225,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resourceSet.getPackageRegistry().put(Model1Package.eINSTANCE.getNsURI(), Model1Package.eINSTANCE);
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
 
-      Resource resD = resourceSet.getResource(URI.createFileURI("c:\\1.xml"), true);
+      Resource resD = resourceSet.getResource(URI.createFileURI("1.xml"), true);
       CDOResource resA = transaction.getResource("/resA");
       CDOResource resB = transaction2.getResource("/resB");
       Company companyA = (Company)resA.getContents().get(0);
@@ -306,7 +306,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
     }
   }
-  
+
   private EPackage createDynamicEPackage()
   {
     final EcoreFactory efactory = EcoreFactory.eINSTANCE;
@@ -321,7 +321,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     level.setEType(epackage.getEInt());
     schoolBookEClass.getEStructuralFeatures().add(level);
 
-    // Create a new EPackage and add the new EClasses 
+    // Create a new EPackage and add the new EClasses
     EPackage schoolPackage = efactory.createEPackage();
     schoolPackage.setName("elv");
     schoolPackage.setNsPrefix("elv");
@@ -330,5 +330,5 @@ public class ExternalReferenceTest extends AbstractCDOTest
     return schoolPackage;
 
   }
-  
+
 }

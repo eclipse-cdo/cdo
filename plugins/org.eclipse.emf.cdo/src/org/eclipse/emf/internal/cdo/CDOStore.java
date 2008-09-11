@@ -64,7 +64,7 @@ public final class CDOStore implements EStore
 
   private CDOViewImpl view;
 
-  // Used for optimization. Often multiple call to CDStore will be sent like size and than add.
+  // Used for optimization. Multiple call to CDStore will be sent like size and than add.
   private EStructuralFeature lastLookupEFeature;
 
   private CDOFeature lastLookupCDOFeature;

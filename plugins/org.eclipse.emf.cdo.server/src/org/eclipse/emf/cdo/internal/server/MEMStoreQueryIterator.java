@@ -35,12 +35,19 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
 
   private ArrayList<Object> filters = new ArrayList<Object>();
 
+  private Long sleep = null;
+  
   public MEMStoreQueryIterator(MEMStore memStore)
   {
     store = memStore;
     revisions = store.getCurrentRevisions().iterator();
   }
-
+  
+  public void setSleep(Long sleep)
+  {
+    this.sleep = sleep;
+  }
+  
   public void addFilter(Object filter)
   {
     filters.add(filter);
@@ -60,6 +67,18 @@ public class MEMStoreQueryIterator implements CloseableIterator<Object>
   {
     try
     {
+      if (sleep != null)
+      {
+        try
+        {
+          Thread.sleep(sleep);
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.interrupted();
+        }
+      }
+      
       if (nextObject == null)
       {
         throw new NoSuchElementException();

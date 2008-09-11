@@ -101,13 +101,11 @@ public class QueryTest extends AbstractCDOTest
     session.close();
   }
 
-  /**
-   * TODO Simon: Enable me!
-   */
-  public void _testQueryCancel_successful() throws Exception
+  public void testQueryCancel_successful() throws Exception
   {
-    CDOTransaction transaction = initialize(1000);
+    CDOTransaction transaction = initialize(100);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
+    cdoQuery.setParameter("sleep", 1000L);
     CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     queryResult.close();
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
@@ -120,10 +118,11 @@ public class QueryTest extends AbstractCDOTest
   /**
    * TODO Simon: Enable me!
    */
-  public void _testQueryCancel_ViewClose() throws Exception
+  public void testQueryCancel_ViewClose() throws Exception
   {
     CDOTransaction transaction = initialize(100);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
+    cdoQuery.setParameter("sleep", 1000L);
     CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     transaction.close();
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
@@ -138,6 +137,7 @@ public class QueryTest extends AbstractCDOTest
   {
     CDOTransaction transaction = initialize(100);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
+    cdoQuery.setParameter("sleep", 1000L);
     CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     transaction.getSession().close();
 

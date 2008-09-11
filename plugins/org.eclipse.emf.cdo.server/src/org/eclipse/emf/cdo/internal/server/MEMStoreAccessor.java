@@ -220,6 +220,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     {
       MEMStoreQueryIterator queryExecution = new MEMStoreQueryIterator(getStore());
       Object context = info.getParameters().get("context");
+      Long sleep = (Long)info.getParameters().get("sleep");
       if (context != null)
       {
         if (context instanceof CDOClass)
@@ -236,14 +237,14 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
           });
         }
       }
-
+      queryExecution.setSleep(sleep);
       queryExecution.activate();
-      boolean moreResults = true;
-      while (moreResults && queryExecution.hasNext())
+      while (queryExecution.hasNext() && queryContext.addResult(queryExecution.next()))
       {
-        moreResults = queryContext.addResult(queryExecution.next());
+        
       }
     }
+    
     else
     {
       throw new RuntimeException("Unsupported language " + info.getQueryLanguage());

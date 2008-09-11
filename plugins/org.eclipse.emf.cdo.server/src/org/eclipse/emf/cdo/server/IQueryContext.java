@@ -22,7 +22,7 @@ public interface IQueryContext
    * Adds the given object to the results of the associated query.
    * 
    * @param object
-   *          TODO Simon: Describe the allowed types/values!
+   *          Support many primitives, CDOID and CDORevision. CDORevision are converted in CDOID and only CDOID are transfered to the client.
    * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
    *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
    */

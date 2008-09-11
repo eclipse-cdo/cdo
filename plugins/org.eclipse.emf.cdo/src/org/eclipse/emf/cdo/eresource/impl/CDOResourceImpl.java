@@ -546,6 +546,9 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       }
     }
 
+    /**
+     * @since 2.0
+     */
     @Override
     public NotificationChain inverseAdd(Object object, NotificationChain notifications)
     {
@@ -566,6 +569,9 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       return notifications;
     }
 
+    /**
+     * @since 2.0
+     */
     @Override
     public NotificationChain inverseRemove(Object object, NotificationChain notifications)
     {

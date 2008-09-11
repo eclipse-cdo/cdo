@@ -507,6 +507,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public Internal eDirectResource()
   {
@@ -636,6 +639,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * Code took from {@link BasicEObjectImpl#eBasicSetContainer} and modify it to detect when object are moved in the
    * same context.
+   * 
+   * @since 2.0
    */
   @Override
   public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
@@ -722,6 +727,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * Code took from {@link BasicEObjectImpl#eSetResource} and modify it to detect when object are moved in the same
    * context.
+   * 
+   * @since 2.0
    */
   @Override
   public NotificationChain eSetResource(Resource.Internal resource, NotificationChain notifications)

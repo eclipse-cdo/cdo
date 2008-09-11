@@ -521,6 +521,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return object;
   }
 
+  /**
+   * @since 2.0
+   */
   public void registerProxyResource(CDOResourceImpl resource)
   {
     resource.cdoInternalSetResource(resource);
@@ -631,6 +634,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return convertObjectToID(potentialObject, false);
   }
 
+  /**
+   * @since 2.0
+   */
   public Object convertObjectToID(Object potentialObject, boolean onlyPersistedID)
   {
     if (potentialObject instanceof CDOID)

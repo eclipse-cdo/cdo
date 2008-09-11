@@ -102,7 +102,7 @@ public class QueryTest extends AbstractCDOTest
   }
 
   /**
-   * TODO Enable me!
+   * TODO Simon: Enable me!
    */
   public void _testQueryCancel_successful() throws Exception
   {
@@ -118,7 +118,7 @@ public class QueryTest extends AbstractCDOTest
   }
 
   /**
-   * TODO Enable me!
+   * TODO Simon: Enable me!
    */
   public void _testQueryCancel_ViewClose() throws Exception
   {
@@ -132,7 +132,7 @@ public class QueryTest extends AbstractCDOTest
   }
 
   /**
-   * TODO Enable me!
+   * TODO Simon: Enable me!
    */
   public void _testQueryCancel_SessionClose() throws Exception
   {

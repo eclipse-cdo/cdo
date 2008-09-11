@@ -108,7 +108,7 @@ public class QueryTest extends AbstractCDOTest
     cdoQuery.setParameter("sleep", 1000L);
     CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     queryResult.close();
-    Thread.sleep(1000);
+    Thread.sleep(5000);
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
         ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
 
@@ -123,7 +123,7 @@ public class QueryTest extends AbstractCDOTest
     cdoQuery.setParameter("sleep", 1000L);
     CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     transaction.close();
-    Thread.sleep(1000);
+    Thread.sleep(5000);
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
         ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
     transaction.getSession().close();
@@ -136,7 +136,7 @@ public class QueryTest extends AbstractCDOTest
     cdoQuery.setParameter("sleep", 1000L);
     CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     transaction.getSession().close();
-    Thread.sleep(1000);
+    Thread.sleep(5000);
     assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
         ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
   }

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
@@ -117,5 +118,22 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
     }
 
     return builder.toString();
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+
+    if (obj instanceof CDOEditorInput)
+    {
+      CDOEditorInput that = (CDOEditorInput)obj;
+      return ObjectUtil.equals(view, that.view) && ObjectUtil.equals(resourcePath, that.resourcePath);
+    }
+
+    return false;
   }
 }

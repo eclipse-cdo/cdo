@@ -6,7 +6,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.MEMStore;
-import org.eclipse.emf.cdo.internal.server.NOOPStore;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Product;
@@ -50,7 +49,7 @@ public class ResourceTest extends AbstractCDOTest
     }
 
     IStore store = getRepository().getStore();
-    if (!(store instanceof MEMStore || store instanceof NOOPStore))
+    if (!(store instanceof MEMStore))
     {
       restartContainer();
     }
@@ -106,7 +105,7 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(CDOURIUtil.createResourceURI(session, "test1"), resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
   }
-  
+
   public void testRemoveResourceWithCloseView() throws Exception
   {
     {
@@ -206,8 +205,6 @@ public class ResourceTest extends AbstractCDOTest
     transaction.commit();
     session.close();
   }
-
-
 
   /**
    * http://bugs.eclipse.org/208689

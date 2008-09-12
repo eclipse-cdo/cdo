@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.server.MEMStore;
-import org.eclipse.emf.cdo.internal.server.NOOPStore;
 
 /**
  * @author Eike Stepper
@@ -20,11 +19,6 @@ public final class StoreUtil
 {
   private StoreUtil()
   {
-  }
-
-  public static IStore createNOOPStore()
-  {
-    return new NOOPStore();
   }
 
   public static IMEMStore createMEMStore()

@@ -47,8 +47,8 @@
    	<extension 
    		point="org.eclipse.emf.cdo.server.storeFactories">
       	<storeFactory
-        	class="org.eclipse.emf.cdo.internal.server.NOOPStoreFactory"
-            storeType="noop"/>
+        	class="org.eclipse.emf.cdo.internal.server.MEMStoreFactory"
+            storeType="mem"/>
    	</extension>
 
     <extension

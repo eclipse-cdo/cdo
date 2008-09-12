@@ -65,8 +65,17 @@ public abstract class PackageClosure implements IPackageClosure
     }
 
     Set<EPackage> visited = new HashSet<EPackage>();
-    collectContents(ePackage, visited);
+    doCollectContents(ePackage, visited);
     return visited;
+  }
+
+  private void doCollectContents(EPackage ePackage, Set<EPackage> visited)
+  {
+    collectContents(ePackage, visited);
+    for (EPackage subPackage : ePackage.getESubpackages())
+    {
+      doCollectContents(subPackage, visited);
+    }
   }
 
   protected abstract void collectContents(EPackage ePackage, Set<EPackage> visited);

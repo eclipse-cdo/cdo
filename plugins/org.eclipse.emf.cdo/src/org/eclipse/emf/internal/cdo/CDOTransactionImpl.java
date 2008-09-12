@@ -739,19 +739,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOSessionPackageManagerImpl packageManager)
   {
     // Calculate the top level EPackages of the used classes
-    Set<EPackage> usedPackages = new HashSet<EPackage>();
+    Set<EPackage> usedTopLevelPackages = new HashSet<EPackage>();
     for (EClass eClass : eClasses)
     {
       EPackage topLevelPackage = ModelUtil.getTopLevelPackage(eClass.getEPackage());
-      usedPackages.add(topLevelPackage);
+      usedTopLevelPackages.add(topLevelPackage);
     }
 
     IPackageClosure closure = new CompletePackageClosure();
-    usedPackages = closure.calculate(usedPackages);
+    usedTopLevelPackages = closure.calculate(usedTopLevelPackages);
 
     // Determine which of the corresdonding CDOPackages are new
     List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
-    for (EPackage usedPackage : usedPackages)
+    for (EPackage usedPackage : usedTopLevelPackages)
     {
       CDOPackage cdoPackage = ModelUtil.getCDOPackage(usedPackage, packageManager);
       if (cdoPackage == null)

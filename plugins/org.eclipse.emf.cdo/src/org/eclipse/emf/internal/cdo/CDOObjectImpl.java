@@ -389,6 +389,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (eAdapters == null)
     {
+      // TODO Adjust for EObjectEAdapterList (see bug #247130)
       eAdapters = new EAdapterList<Adapter>(this)
       {
         private static final long serialVersionUID = 1L;

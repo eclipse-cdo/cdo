@@ -238,6 +238,22 @@ public abstract class CDOWrapperImpl implements InternalCDOObject
     instance.eNotify(notification);
   }
 
+  /**
+   * @since 2.0
+   */
+  public void eNotifyPreRead(Object feature)
+  {
+    instance.eNotifyPreRead(feature);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void eNotifyPreWrite(Object feature)
+  {
+    instance.eNotifyPreWrite(feature);
+  }
+
   public EObject eObjectForURIFragmentSegment(String uriFragmentSegment)
   {
     return instance.eObjectForURIFragmentSegment(uriFragmentSegment);

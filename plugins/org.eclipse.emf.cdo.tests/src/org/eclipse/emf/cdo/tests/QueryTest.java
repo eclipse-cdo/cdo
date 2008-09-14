@@ -106,11 +106,20 @@ public class QueryTest extends AbstractCDOTest
     CDOTransaction transaction = initialize(500);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("sleep", 1000L);
-    CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
+    final CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     queryResult.close();
-    Thread.sleep(5000);
-    assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
-        ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
+
+    boolean timedOut = new PollingTimeOuter(500, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return !((Repository)getRepository()).getQueryManager().isRunning(
+            ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID());
+      }
+    }.timedOut();
+
+    assertEquals(false, timedOut);
 
     transaction.close();
     transaction.getSession().close();
@@ -121,11 +130,19 @@ public class QueryTest extends AbstractCDOTest
     CDOTransaction transaction = initialize(500);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("sleep", 1000L);
-    CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
+    final CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     transaction.close();
-    Thread.sleep(5000);
-    assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
-        ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
+    boolean timedOut = new PollingTimeOuter(500, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return !((Repository)getRepository()).getQueryManager().isRunning(
+            ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID());
+      }
+    }.timedOut();
+
+    assertEquals(false, timedOut);
     transaction.getSession().close();
   }
 
@@ -134,11 +151,20 @@ public class QueryTest extends AbstractCDOTest
     CDOTransaction transaction = initialize(500);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("sleep", 1000L);
-    CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
+    final CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     transaction.getSession().close();
-    Thread.sleep(5000);
-    assertEquals(false, ((Repository)getRepository()).getQueryManager().isRunning(
-        ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID()));
+    
+    boolean timedOut = new PollingTimeOuter(500, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return !((Repository)getRepository()).getQueryManager().isRunning(
+            ((CDOQueryResultIteratorImpl<?>)queryResult).getQueryID());
+      }
+    }.timedOut();
+
+    assertEquals(false, timedOut);
   }
 
   public void testQueryAsync_UnsupportedLanguage() throws Exception

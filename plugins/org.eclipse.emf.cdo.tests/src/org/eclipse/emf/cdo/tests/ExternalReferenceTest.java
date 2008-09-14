@@ -38,6 +38,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
 /**
  * @author Simon McDuff
  */
@@ -51,7 +54,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOSession sessionA = openSession();
 
       ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
+      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
       EPackage schoolPackage = createDynamicEPackage();
       EClass classifier = (EClass)schoolPackage.getEClassifier("SchoolBook");
@@ -61,7 +64,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
 
       CDOResource resA = transactionA1.createResource("/resA");
-      Resource resD = resourceSet.createResource(URI.createFileURI("1.xml"));
+      Resource resD = resourceSet.createResource(URI.createURI("test://1"));
 
       GenRefSingleNonContained objectFromResA = model4Factory.eINSTANCE.createGenRefSingleNonContained();
       objectFromResA.setElement(schoolbook);
@@ -139,20 +142,13 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
-    URI a = URI.createURI("file:/c:/temp");
-    URI b = URI.createURI("file://c:/temp");
-    URI c = URI.createURI("file:///c:/temp");
-
-    System.out.println(a.authority());
-    System.out.println(b.authority());
-    System.out.println(c.authority());
-
+    byte[] dataOfresD = null;
     createRepository(REPOSITORY2_NAME);
     {
       CDOSession sessionA = openSession();
       CDOSession sessionB = openSession(REPOSITORY2_NAME);
       ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
+      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
       sessionA.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
       sessionA.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
@@ -177,7 +173,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       assertEquals(3, resourceSet.getResources().size());
       // assertEquals(resC, resourceSet.getResource(CDOUtil.createResourceURI(sessionA, "/resC"), false));
 
-      Resource resD = resourceSet.createResource(URI.createFileURI("1.xml"));
+      Resource resD = resourceSet.createResource(URI.createURI("test://1"));
 
       assertEquals(4, resourceSet.getResources().size());
       assertEquals(false, resD instanceof CDOResource);
@@ -208,7 +204,10 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
       transactionA1.commit();
 
-      resD.save(null);
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      resD.save(outputStream, null);
+      dataOfresD = outputStream.toByteArray();
+
     }
 
     {
@@ -223,9 +222,11 @@ public class ExternalReferenceTest extends AbstractCDOTest
       assertNotNull(set);
 
       resourceSet.getPackageRegistry().put(Model1Package.eINSTANCE.getNsURI(), Model1Package.eINSTANCE);
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("file", new XMIResourceFactoryImpl());
+      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
-      Resource resD = resourceSet.getResource(URI.createFileURI("1.xml"), true);
+      Resource resD = resourceSet.createResource(URI.createURI("test://1"));
+      resD.load(new ByteArrayInputStream(dataOfresD), null);
+
       CDOResource resA = transaction.getResource("/resA");
       CDOResource resB = transaction2.getResource("/resB");
       Company companyA = (Company)resA.getContents().get(0);

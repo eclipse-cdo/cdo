@@ -110,8 +110,10 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
 
   public synchronized void unregister(final QueryContext queryContext)
   {
-    queryContexts.remove(queryContext.getQueryResult().getQueryID());
-    queryContext.removeListener();
+    if (queryContexts.remove(queryContext.getQueryResult().getQueryID()) != null)
+    {
+      queryContext.removeListener();
+    }
   }
 
   public synchronized int nextQuery()
@@ -135,11 +137,13 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
   {
     private QueryResult queryResult;
 
-    private boolean cancelled;
+    private boolean cancelled = false;
 
     private int resultCount;
 
     private Future<?> future;
+    
+    private boolean started = false;
 
     private IListener sessionListener = new IListener()
     {
@@ -190,6 +194,10 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
       {
         future.cancel(true);
       }
+      if (started == false)
+      {
+        unregister(this);
+      }
     }
 
     public boolean addResult(Object object)
@@ -207,6 +215,7 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
     {
       try
       {
+        started = true;
         CDOQueryInfo info = queryResult.getQueryInfo();
         resultCount = info.getMaxResults() < 0 ? Integer.MAX_VALUE : info.getMaxResults();
         IQueryHandler handler = repository.getQueryHandler(info);

@@ -49,6 +49,17 @@ public class DLRevisionList extends DLRevisionHolder
     return getDLPrev();
   }
 
+  @Override
+  protected void setDLList(DLRevisionList list)
+  {
+    if (getPrev() != null || getDLNext() != null || getDLList() != null)
+    {
+      throw new IllegalStateException("Cannot assign to a different list while linked to a list");
+    }
+
+    super.setDLList(list);
+  }
+
   public void setDLTail(DLRevisionHolder tail)
   {
     setDLPrev(tail);
@@ -85,28 +96,52 @@ public class DLRevisionList extends DLRevisionHolder
     addTail(holder);
   }
 
+  protected void validateUnlink(DLRevisionHolder holder)
+  {
+    if (holder.getDLList() != null)
+    {
+      throw new IllegalArgumentException("Holder " + holder + " is still linked in different list");
+    }
+  }
+
+  protected void validateLink(DLRevisionHolder holder)
+  {
+    if (holder.getDLList() != this)
+    {
+      throw new IllegalArgumentException("Holder " + holder + " does not belong to this list");
+    }
+  }
+
   public synchronized void addHead(DLRevisionHolder holder)
   {
+    validateUnlink(holder);
+
     ++size;
     DLRevisionHolder head = getDLHead();
     head.setDLPrev(holder);
     holder.setDLNext(head);
     holder.setDLPrev(this);
+    holder.setDLList(this);
     setDLHead(holder);
   }
 
   public synchronized void addTail(DLRevisionHolder holder)
   {
+    validateUnlink(holder);
+
     ++size;
     DLRevisionHolder tail = getDLTail();
     tail.setDLNext(holder);
     holder.setDLPrev(tail);
     holder.setDLNext(this);
+    holder.setDLList(this);
     setDLTail(holder);
   }
 
   public synchronized void remove(DLRevisionHolder holder)
   {
+    validateLink(holder);
+
     --size;
     DLRevisionHolder prev = holder.getDLPrev();
     DLRevisionHolder next = holder.getDLNext();
@@ -114,6 +149,7 @@ public class DLRevisionList extends DLRevisionHolder
     prev.setDLNext(next);
     holder.setDLPrev(null);
     holder.setDLNext(null);
+    holder.setDLList(null);
     next.setDLPrev(prev);
   }
 

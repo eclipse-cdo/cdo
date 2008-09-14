@@ -34,6 +34,11 @@ public class DLRevisionHolder extends RevisionHolder
     return dlList;
   }
 
+  protected void setDLList(DLRevisionList list)
+  {
+    dlList = list;
+  }
+
   public DLRevisionHolder getDLPrev()
   {
     return dlPrev;

@@ -88,7 +88,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public List<CDORevision> getRevisions()
   {
-    ArrayList<CDORevision> currentRevisions = new ArrayList<CDORevision>();
+    List<CDORevision> currentRevisions = new ArrayList<CDORevision>();
     for (RevisionHolder holder : revisions.values())
     {
       InternalCDORevision revision = holder.getRevision();
@@ -97,6 +97,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         currentRevisions.add(revision);
       }
     }
+
     return currentRevisions;
   }
 
@@ -236,6 +237,20 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
+  public synchronized boolean removeCachedRevisions(CDOID id)
+  {
+    RevisionHolder lookupHolder = revisions.get(id);
+    RevisionHolder holder = lookupHolder;
+    while (holder != null)
+    {
+      RevisionHolder nextHolder = holder.getNext();
+      removeHolder(holder);
+      holder = nextHolder;
+    }
+
+    return lookupHolder != null;
+  }
+
   @Override
   protected void doActivate() throws Exception
   {
@@ -250,6 +265,11 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     currentLRU = null;
     revisedLRU = null;
     super.doDeactivate();
+  }
+
+  protected RevisionHolder createHolder(InternalCDORevision revision)
+  {
+    return new LRURevisionHolder(revision);
   }
 
   private void adjustHolder(InternalCDORevision revision, RevisionHolder holder, RevisionHolder prevHolder,
@@ -322,12 +342,6 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
     holder.setPrev(null);
     holder.setNext(null);
-  }
-
-  private RevisionHolder createHolder(InternalCDORevision revision)
-  {
-    LRURevisionList list = revision.isCurrent() ? currentLRU : revisedLRU;
-    return new LRURevisionHolder(list, revision);
   }
 
   /**

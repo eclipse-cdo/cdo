@@ -37,6 +37,9 @@ public interface CDORevisionCache extends INotifier.Introspection
 
   public InternalCDORevision removeRevision(CDOID id, int version);
 
+  /**
+   * Returns a list of {@link CDORevision revisions} that are current.
+   */
   public List<CDORevision> getRevisions();
 
   public boolean addRevision(InternalCDORevision revision);

@@ -46,7 +46,7 @@ public class RevisionHolderTest extends AbstractOMTest
     validateList(list, 0);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(list, new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
       linkedList.addFirst(holder);
       list.addHead(holder);
       validateList(list, i + 1);
@@ -61,7 +61,7 @@ public class RevisionHolderTest extends AbstractOMTest
     validateList(list, 0);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(list, new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
       linkedList.addLast(holder);
       list.addTail(holder);
       validateList(list, i + 1);
@@ -75,7 +75,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(list, new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }
@@ -95,7 +95,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(list, new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }
@@ -115,7 +115,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(list, new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }
@@ -135,7 +135,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(list, new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }

@@ -19,9 +19,9 @@ public class LRURevisionHolder extends DLRevisionHolder
 {
   private long usedStamp;
 
-  public LRURevisionHolder(LRURevisionList list, InternalCDORevision revision)
+  public LRURevisionHolder(InternalCDORevision revision)
   {
-    super(list, revision);
+    super(null, revision);
     usedStamp = System.currentTimeMillis();
   }
 
@@ -29,6 +29,19 @@ public class LRURevisionHolder extends DLRevisionHolder
   public LRURevisionList getDLList()
   {
     return (LRURevisionList)super.getDLList();
+  }
+
+  @Override
+  protected void setDLList(DLRevisionList list)
+  {
+    if (list == null || list instanceof LRURevisionList)
+    {
+      super.setDLList(list);
+    }
+    else
+    {
+      throw new IllegalArgumentException("Not a " + LRURevisionList.class.getName() + ": " + list);
+    }
   }
 
   public long getUsedStamp()

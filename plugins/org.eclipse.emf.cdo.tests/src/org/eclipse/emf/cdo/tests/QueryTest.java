@@ -153,7 +153,7 @@ public class QueryTest extends AbstractCDOTest
     cdoQuery.setParameter("sleep", 1000L);
     final CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
     transaction.getSession().close();
-    
+
     boolean timedOut = new PollingTimeOuter(500, 100)
     {
       @Override

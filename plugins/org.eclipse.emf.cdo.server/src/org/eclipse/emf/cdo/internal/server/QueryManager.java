@@ -137,13 +137,13 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
   {
     private QueryResult queryResult;
 
-    private boolean cancelled = false;
+    private boolean started;
+
+    private boolean cancelled;
 
     private int resultCount;
 
     private Future<?> future;
-    
-    private boolean started = false;
 
     private IListener sessionListener = new IListener()
     {
@@ -194,7 +194,8 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
       {
         future.cancel(true);
       }
-      if (started == false)
+
+      if (!started)
       {
         unregister(this);
       }

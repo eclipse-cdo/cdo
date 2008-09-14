@@ -791,6 +791,10 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       if (cdoObject != null)
       {
         CDOStateMachine.INSTANCE.invalidate(cdoObject, true, timeStamp);
+        if (dirtyObjects != null && cdoObject.eNotificationRequired())
+        {
+          dirtyObjects.add(cdoObject);
+        }
       }
     }
 

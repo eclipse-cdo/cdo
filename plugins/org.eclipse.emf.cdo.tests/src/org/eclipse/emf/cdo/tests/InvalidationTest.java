@@ -27,11 +27,16 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -658,6 +663,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
+    viewB.setInvalidationNotificationsEnabled(true);
 
     msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");
@@ -665,6 +671,8 @@ public class InvalidationTest extends AbstractCDOTest
 
     EList<EObject> contents = resourceB.getContents();
     final Category categoryB = (Category)contents.get(0);
+    final TestAdapter testAdapter = new TestAdapter();
+    categoryB.eAdapters().add(testAdapter);
 
     // ************************************************************* //
 
@@ -678,13 +686,64 @@ public class InvalidationTest extends AbstractCDOTest
       }
     };
 
+    ITimeOuter timeOuterNotification = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return testAdapter.getNotifications().size() == 1;
+      }
+    };
+
     msg("Checking before commit");
     assertEquals(true, timeOuter.timedOut());
 
+    assertEquals(0, testAdapter.getNotifications().size());
     msg("Committing");
     transaction.commit();
 
     msg("Checking after commit");
     assertEquals(false, timeOuter.timedOut());
+    assertEquals(false, timeOuterNotification.timedOut());
+
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private static class TestAdapter implements Adapter
+  {
+    private List<Notification> notifications = new ArrayList<Notification>();
+
+    private Notifier notifier;
+
+    public TestAdapter()
+    {
+    }
+
+    public Notifier getTarget()
+    {
+      return notifier;
+    }
+
+    public List<Notification> getNotifications()
+    {
+      return notifications;
+    }
+
+    public boolean isAdapterForType(Object type)
+    {
+      return false;
+    }
+
+    public void notifyChanged(Notification notification)
+    {
+      notifications.add(notification);
+    }
+
+    public void setTarget(Notifier newTarget)
+    {
+      notifier = newTarget;
+    }
   }
 }

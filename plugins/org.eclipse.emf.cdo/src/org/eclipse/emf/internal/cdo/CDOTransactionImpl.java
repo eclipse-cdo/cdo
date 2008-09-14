@@ -13,6 +13,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/233490    
  *    Simon McDuff - http://bugs.eclipse.org/213402
  *    Simon McDuff - http://bugs.eclipse.org/246620
+ *    Simon McDuff - http://bugs.eclipse.org/247143
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -109,7 +110,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     synchronized (handlers)
     {
-      handlers.add(handler);
+      if (!handlers.contains(handler))
+      {
+        handlers.add(handler);
+      }
     }
   }
 
@@ -480,6 +484,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public void detachObject(InternalCDOObject object)
   {
+    for (CDOTransactionHandler handler : getHandlers())
+    {
+      handler.detachingObject(this, object);
+    }
+
     if (object.cdoState() == CDOState.NEW)
     {
       Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? getLastSavepoint().getNewResources()
@@ -502,6 +511,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       getLastSavepoint().getDetachedObjects().add(object.cdoID());
     }
+
   }
 
   /**
@@ -621,7 +631,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     for (CDOTransactionHandler handler : getHandlers())
     {
-      handler.addingObject(this, object);
+      handler.attachingObject(this, object);
     }
 
     if (object instanceof CDOResourceImpl)

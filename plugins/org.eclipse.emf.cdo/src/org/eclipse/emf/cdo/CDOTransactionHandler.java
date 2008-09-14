@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/233314
+ *    Simon McDuff - http://bugs.eclipse.org/247143
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -22,8 +23,18 @@ public interface CDOTransactionHandler
   /**
    * Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is allowed
    * to throw an unchecked exception that will propagate up to the operation that is about to add the object.
+   * 
+   * @since 2.0
    */
-  public void addingObject(CDOTransaction transaction, CDOObject object);
+  public void attachingObject(CDOTransaction transaction, CDOObject object);
+
+  /**
+   * Called by a <code>CDOTransaction</code> <b>before</b> an object is detached. The implementor of this method is
+   * allowed to throw an unchecked exception that will propagate up to the operation that is about to remove the object.
+   * 
+   * @since 2.0
+   */
+  public void detachingObject(CDOTransaction transaction, CDOObject object);
 
   /**
    * Called by a <code>CDOTransaction</code> <b>before</b> an object is modified. The implementor of this method is

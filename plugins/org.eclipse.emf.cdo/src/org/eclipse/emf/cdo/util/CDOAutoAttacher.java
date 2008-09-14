@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -38,7 +37,7 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOAutoAttacher implements CDOTransactionHandler
+public class CDOAutoAttacher extends CDOTransactionHandlerImpl
 {
   private CDOTransaction transaction;
 
@@ -53,7 +52,8 @@ public class CDOAutoAttacher implements CDOTransactionHandler
     return transaction;
   }
 
-  public void addingObject(CDOTransaction transaction, CDOObject object)
+  @Override
+  public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
     if (object instanceof CDOResource)
     {
@@ -64,6 +64,7 @@ public class CDOAutoAttacher implements CDOTransactionHandler
     handle(object, object);
   }
 
+  @Override
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
   {
     if (object instanceof CDOResource)
@@ -76,16 +77,6 @@ public class CDOAutoAttacher implements CDOTransactionHandler
       CDOFeatureDeltaVisitorAutoAttach featureChangeVisitor = new CDOFeatureDeltaVisitorAutoAttach(object);
       featureChange.accept(featureChangeVisitor);
     }
-  }
-
-  public void committingTransaction(CDOTransaction transaction)
-  {
-    // Do nothing
-  }
-
-  public void rolledBackTransaction(CDOTransaction transaction)
-  {
-    // Do nothing
   }
 
   protected void persist(EObject res, Object object)

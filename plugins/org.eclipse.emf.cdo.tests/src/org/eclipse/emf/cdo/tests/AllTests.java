@@ -57,6 +57,7 @@ public class AllTests
     suite.addTestSuite(DetachTest.class);
     suite.addTestSuite(ExternalReferenceTest.class);
     suite.addTestSuite(XATransactionTest.class);
+    suite.addTestSuite(TransactionHandlerTest.class);
 
     // Specific for MEMStore
     suite.addTestSuite(QueryTest.class);

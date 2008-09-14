@@ -302,7 +302,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       }
     }
 
-    public void addingObject(CDOTransaction transaction, CDOObject object)
+    public void attachingObject(CDOTransaction transaction, CDOObject object)
     {
     }
 
@@ -315,6 +315,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     }
 
     public void rolledBackTransaction(CDOTransaction transaction)
+    {
+    }
+
+    public void detachingObject(CDOTransaction transaction, CDOObject object)
     {
     }
   }
@@ -393,7 +397,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     }
 
     @Override
-    public void addingObject(CDOTransaction transaction, CDOObject object)
+    public void attachingObject(CDOTransaction transaction, CDOObject object)
     {
       EClass usedClass = object.eClass();
       addAllEPackages(usedClass);

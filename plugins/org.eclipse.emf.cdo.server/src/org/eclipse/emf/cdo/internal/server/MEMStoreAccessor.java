@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.util.ArrayList;
@@ -240,6 +241,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
       
       for (CDORevision revision : getStore().getCurrentRevisions())
       {
+        
         if (sleep != null)
         {
           try
@@ -248,7 +250,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
           }
           catch (InterruptedException ex)
           {
-            Thread.interrupted();
+            throw WrappedException.wrap(ex);
           }
         }
         

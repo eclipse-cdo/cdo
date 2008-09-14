@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/246442 
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -278,8 +279,14 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
   {
     if (ecore == null && packageManager instanceof CDOPackageManagerImpl && parentURI == null)
     {
-      // TODO Can ecore be null?
-      ecore = ((CDOPackageManagerImpl)packageManager).provideEcore(this);
+      if (isPersistent() && isDynamic())
+      {
+        resolve();
+      }
+      else
+      {
+        ecore = ((CDOPackageManagerImpl)packageManager).provideEcore(this);
+      }
     }
 
     return ecore;

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Eike Stepper - http://bugs.eclipse.org/246442 
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
@@ -35,6 +36,7 @@ import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -338,10 +340,27 @@ public final class ModelUtil
 
   public static EPackageImpl createDynamicEPackage(CDOPackage cdoPackage)
   {
-    String ecore = cdoPackage.getEcore();
-    EPackageImpl ePackage = (EPackageImpl)EMFUtil.ePackageFromString(ecore);
-    prepareEPackage(ePackage);
+    CDOPackage topLevelPackage = cdoPackage.getTopLevelPackage();
+    String ecore = topLevelPackage.getEcore();
+    EPackageImpl topLevelPackageEPackage = (EPackageImpl)EMFUtil.ePackageFromString(ecore);
+    EPackageImpl ePackage = prepareEPackage(topLevelPackageEPackage, cdoPackage.getPackageURI());
     return ePackage;
+  }
+
+  private static EPackageImpl prepareEPackage(EPackageImpl ePackage, String nsURI)
+  {
+    prepareEPackage(ePackage);
+    EPackageImpl result = ObjectUtil.equals(ePackage.getNsURI(), nsURI) ? ePackage : null;
+    for (EPackage subPackage : ePackage.getESubpackages())
+    {
+      EPackageImpl p = prepareEPackage((EPackageImpl)subPackage, nsURI);
+      if (p != null && result == null)
+      {
+        result = p;
+      }
+    }
+
+    return result;
   }
 
   public static void prepareEPackage(EPackageImpl ePackage)

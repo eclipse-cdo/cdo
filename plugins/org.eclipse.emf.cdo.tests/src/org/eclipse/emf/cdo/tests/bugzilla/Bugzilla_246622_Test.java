@@ -39,10 +39,11 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     CDOResource res = transaction1.createResource("/test1");
     Order order = Model1Factory.eINSTANCE.createOrder();
     OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
-    
+
     res.getContents().add(order);
     order.getOrderDetails().add(orderDetail);
-    CDOFeature order_OrderDetailFeature = session.getPackageManager().convert(Model1Package.eINSTANCE.getOrder_OrderDetails());
+    CDOFeature order_OrderDetailFeature = session.getPackageManager().convert(
+        Model1Package.eINSTANCE.getOrder_OrderDetails());
     assertEquals(orderDetail, order.cdoRevision().getData().get(order_OrderDetailFeature, 0));
 
     assertEquals(order, orderDetail.cdoRevision().getData().getContainerID());
@@ -58,51 +59,52 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
 
     msg("Committing");
     transaction1.commit();
-    
+
     assertEquals(orderDetail.cdoID(), order.cdoRevision().getData().get(order_OrderDetailFeature, 0));
     assertEquals(orderDetail2.cdoID(), order2.cdoRevision().getData().get(order_OrderDetailFeature, 0));
-    
+
     assertEquals(order.cdoID(), orderDetail.cdoRevision().getData().getContainerID());
     assertEquals(order2.cdoID(), orderDetail2.cdoRevision().getData().getContainerID());
-    
+
     Order order3 = Model1Factory.eINSTANCE.createOrder();
-    
+
     res.getContents().add(order3);
     order3.getOrderDetails().add(orderDetail2);
-    
+
     assertEquals(orderDetail2.cdoID(), order3.cdoRevision().getData().get(order_OrderDetailFeature, 0));
     assertEquals(order3, orderDetail2.cdoRevision().getData().getContainerID());
-    
+
     msg("Committing");
     transaction1.commit();
   }
+
   public void testSet() throws Exception
   {
     CDOSession session = openModel1Session();
 
     CDOTransaction transaction1 = session.openTransaction();
     CDOResource res = transaction1.createResource("/test1");
-    
-    
+
     msg("Test set with link before");
     PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
-    Supplier supplier  = Model1Factory.eINSTANCE.createSupplier();
-    
+    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+
     purchaseOrder.setSupplier(supplier);
-    
+
     res.getContents().add(purchaseOrder);
     res.getContents().add(supplier);
-    
-    CDOFeature supplier_PurchaseOrder = session.getPackageManager().convert(Model1Package.eINSTANCE.getSupplier_PurchaseOrders());
-    CDOFeature purchaseOrder_Supplier = session.getPackageManager().convert(Model1Package.eINSTANCE.getPurchaseOrder_Supplier());
 
-    
+    CDOFeature supplier_PurchaseOrder = session.getPackageManager().convert(
+        Model1Package.eINSTANCE.getSupplier_PurchaseOrders());
+    CDOFeature purchaseOrder_Supplier = session.getPackageManager().convert(
+        Model1Package.eINSTANCE.getPurchaseOrder_Supplier());
+
     assertEquals(supplier, purchaseOrder.cdoRevision().getData().get(purchaseOrder_Supplier, 0));
     assertEquals(purchaseOrder, supplier.cdoRevision().getData().get(supplier_PurchaseOrder, 0));
 
     msg("Test set with link after");
     PurchaseOrder purchaseOrder2 = Model1Factory.eINSTANCE.createPurchaseOrder();
-    Supplier supplier2  = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier2 = Model1Factory.eINSTANCE.createSupplier();
 
     res.getContents().add(purchaseOrder2);
     res.getContents().add(supplier2);
@@ -113,19 +115,18 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
 
     msg("Committing");
     transaction1.commit();
-    
-    
+
     assertEquals(supplier2.cdoID(), purchaseOrder2.cdoRevision().getData().get(purchaseOrder_Supplier, 0));
     assertEquals(purchaseOrder2.cdoID(), supplier2.cdoRevision().getData().get(supplier_PurchaseOrder, 0));
-    
+
     assertEquals(supplier.cdoID(), purchaseOrder.cdoRevision().getData().get(purchaseOrder_Supplier, 0));
     assertEquals(purchaseOrder.cdoID(), supplier.cdoRevision().getData().get(supplier_PurchaseOrder, 0));
-    
+
     msg("Test set with persisted CDOID");
     PurchaseOrder purchaseOrder3 = Model1Factory.eINSTANCE.createPurchaseOrder();
     purchaseOrder3.setSupplier(supplier2);
     res.getContents().add(purchaseOrder3);
-    
+
     assertEquals(supplier2.cdoID(), purchaseOrder3.cdoRevision().getData().get(purchaseOrder_Supplier, 0));
     assertEquals(purchaseOrder3, supplier2.cdoRevision().getData().get(supplier_PurchaseOrder, 1));
 

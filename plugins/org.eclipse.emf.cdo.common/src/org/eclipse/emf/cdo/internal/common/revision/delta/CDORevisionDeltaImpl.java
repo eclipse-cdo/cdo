@@ -73,7 +73,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     CDORevisionData dirtyData = dirtyRevision.getData();
     if (!compare(originData.getContainerID(), dirtyData.getContainerID())
         || !compare(originData.getContainingFeatureID(), dirtyData.getContainingFeatureID())
-            || !compare(originData.getResourceID(), dirtyData.getResourceID()))
+        || !compare(originData.getResourceID(), dirtyData.getResourceID()))
     {
       addFeatureDelta(new CDOContainerFeatureDeltaImpl(dirtyData.getResourceID(), dirtyData.getContainerID(), dirtyData
           .getContainingFeatureID()));

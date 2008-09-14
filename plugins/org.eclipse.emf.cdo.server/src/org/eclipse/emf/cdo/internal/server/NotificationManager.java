@@ -45,10 +45,10 @@ public class NotificationManager extends Lifecycle implements INotificationManag
   {
     CDORevisionDelta[] arrayOfDeltas = commitContext.getDirtyObjectDeltas();
     CDOID[] arrayOfDetachedObjects = commitContext.getDetachedObjects();
-    
+
     int dirtyIDSize = arrayOfDeltas == null ? 0 : arrayOfDeltas.length;
     int detachedObjectsSize = arrayOfDetachedObjects == null ? 0 : arrayOfDetachedObjects.length;
-    
+
     if (dirtyIDSize > 0 || detachedObjectsSize > 0)
     {
       List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(dirtyIDSize);

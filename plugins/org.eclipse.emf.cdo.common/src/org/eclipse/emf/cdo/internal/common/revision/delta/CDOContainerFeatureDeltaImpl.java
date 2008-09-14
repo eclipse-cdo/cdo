@@ -55,8 +55,8 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   {
     super(CONTAINER_FEATURE);
     newContainerFeatureID = in.readInt();
-    newContainerID = in.readCDOID();  
-    newResourceID = in.readCDOID();    
+    newContainerID = in.readCDOID();
+    newResourceID = in.readCDOID();
   }
 
   public Type getType()
@@ -90,7 +90,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
   {
     newResourceID = (CDOID)CDORevisionUtil.remapID(newResourceID, idMappings);
-    newContainerID = (CDOID)CDORevisionUtil.remapID(newContainerID, idMappings);
+    newContainerID = CDORevisionUtil.remapID(newContainerID, idMappings);
   }
 
   @Override

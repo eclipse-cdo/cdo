@@ -629,8 +629,7 @@ public class InvalidationTest extends AbstractCDOTest
     assertEquals(false, timeOuterB_2.timedOut());
     assertEquals(false, timeOuterC_2.timedOut());
   }
-  
-  
+
   public void testDetach() throws Exception
   {
     msg("Creating category1");

@@ -573,9 +573,9 @@ public class ComplexTest extends AbstractCDOTest
       MultiContainedElement element_work = (MultiContainedElement)o;
       assertEquals(resource1FromTx2, element_work.cdoResource());
       assertEquals(resource1FromTx2, element_work.eResource());
-      
+
       container.getElements().add(element_work);
-      
+
       assertEquals(null, element_work.cdoResource());
       assertEquals(resource2, element_work.eResource());
       transaction2.commit();

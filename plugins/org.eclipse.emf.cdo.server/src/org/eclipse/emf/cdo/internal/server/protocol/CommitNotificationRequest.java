@@ -38,7 +38,7 @@ public class CommitNotificationRequest extends CDOServerRequest
   private List<CDOIDAndVersion> dirtyIDs;
 
   private List<CDORevisionDelta> deltas;
-  
+
   private List<CDOID> detachedObjects;
 
   public CommitNotificationRequest(IChannel channel, long timeStamp, List<CDOIDAndVersion> dirtyIDs,

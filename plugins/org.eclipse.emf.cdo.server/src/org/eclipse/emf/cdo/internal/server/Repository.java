@@ -228,7 +228,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     {
       handler = new ResourcesQueryHandler();
     }
-  
+
     if (handler == null)
     {
       if (queryHandlerProvider != null)
@@ -248,12 +248,12 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
         }
       }
     }
-  
+
     if (handler == null)
     {
       handler = StoreThreadLocal.getStoreReader();
     }
-  
+
     return handler;
   }
 

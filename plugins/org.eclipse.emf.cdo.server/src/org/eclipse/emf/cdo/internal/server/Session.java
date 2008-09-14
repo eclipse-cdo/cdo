@@ -184,7 +184,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
+  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects,
+      List<CDORevisionDelta> deltas)
   {
     if (!isPassiveUpdateEnabled())
     {

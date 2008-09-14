@@ -109,14 +109,14 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas,
-      Session excludedSession)
+  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects,
+      List<CDORevisionDelta> deltas, Session excludedSession)
   {
     for (Session session : getSessions())
     {
       if (session != excludedSession)
       {
-        session.handleCommitNotification(timeStamp, dirtyIDs,detachedObjects, deltas);
+        session.handleCommitNotification(timeStamp, dirtyIDs, detachedObjects, deltas);
       }
     }
   }

@@ -62,7 +62,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   private CDORevision[] dirtyObjects;
 
   private CDOID[] detachedObjects;
-  
+
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();;
 
   private CDORevisionDelta[] dirtyObjectDeltas;
@@ -420,7 +420,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
       }
     }
   }
-  
+
   private void revisedDetachObjects()
   {
     for (InternalCDORevision revision : detachedRevisions)
@@ -428,13 +428,13 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
       revision.setRevised(getTimeStamp() - 1);
     }
   }
-  
+
   private void detachObjects()
   {
     detachedRevisions.clear();
-    
+
     RevisionManager revisionManager = transaction.getRepository().getRevisionManager();
-    
+
     for (CDOID id : getDetachedObjects())
     {
       InternalCDORevision revision = revisionManager.getRevision(id, CDORevision.UNCHUNKED, false);

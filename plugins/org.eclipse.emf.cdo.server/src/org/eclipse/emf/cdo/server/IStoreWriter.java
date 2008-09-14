@@ -29,13 +29,16 @@ public interface IStoreWriter extends IStoreReader
   public IView getView();
 
   /**
-   * Called before committing. An Instance of a storeWriter represents an instance of back-end Transaction. Could be called multiple times before commit it called. 
+   * Called before committing. An Instance of a storeWriter represents an instance of back-end Transaction. Could be
+   * called multiple times before commit it called.
+   * 
    * @since 2.0
    */
   public void write(CommitContext context);
 
   /**
    * It will flush to the backend and make available the data for others.
+   * 
    * @since 2.0
    */
   public void commit();

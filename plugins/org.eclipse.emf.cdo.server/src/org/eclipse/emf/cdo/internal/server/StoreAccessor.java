@@ -40,9 +40,9 @@ import java.util.List;
 public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessor.class);
-  
+
   private List<CommitContext> commitContexts = new ArrayList<CommitContext>();
-  
+
   private Store store;
 
   private Object context;
@@ -110,9 +110,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     {
       TRACER.format("Writing transaction: {0}", getView());
     }
-    
+
     commitContexts.add(context);
-    
+
     writePackages(context.getNewPackages());
     addIDMappings(context);
 
@@ -127,7 +127,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     {
       writeRevisions(context.getDirtyObjects());
     }
-  
+
     detachObjects(context.getDetachedObjects());
   }
 
@@ -136,21 +136,21 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    */
   public void commit()
   {
-  
+
   }
-  
+
   public void rollback(CommitContext commitContext)
   {
-    
+
   }
-  
+
   public void rollback()
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Rolling back transaction: {0}", getView());
     }
-    
+
     for (CommitContext commitContext : commitContexts)
     {
       rollback(commitContext);

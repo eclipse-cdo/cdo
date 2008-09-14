@@ -77,9 +77,9 @@ public class DetachTest extends AbstractCDOTest
     assertEquals(c1, transaction.getResourceSet().getEObject(uriC1, false));
 
     resource.getContents().remove(c1);
-    
+
     assertTransient(c1);
-    
+
     // We should not be able to access that objects
     try
     {
@@ -92,9 +92,9 @@ public class DetachTest extends AbstractCDOTest
     }
 
     transaction.commit();
-    
+
     assertTransient(c1);
-    
+
     try
     {
       transaction.getResourceSet().getEObject(uriC1, false);
@@ -105,7 +105,6 @@ public class DetachTest extends AbstractCDOTest
 
     }
 
-    
   }
 
   public void testSavePointNewObjectDeletion() throws Exception
@@ -215,14 +214,14 @@ public class DetachTest extends AbstractCDOTest
 
     assertEquals("Test", c1.getName());
   }
-  
+
   private void detachResource(ResourceSet rset, CDOResource resource) throws Exception
   {
     Order order = Model1Factory.eINSTANCE.createOrder();
     OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
     resource.getContents().add(order);
     order.getOrderDetails().add(orderDetail);
-    
+
     assertActive(resource);
     Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
     Assert.assertEquals(1, rset.getResources().size());
@@ -234,7 +233,7 @@ public class DetachTest extends AbstractCDOTest
     Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
     Assert.assertEquals(0, rset.getResources().size());
   }
-  
+
   public void testDetachNewResource() throws Exception
   {
     msg("Opening session");
@@ -250,7 +249,7 @@ public class DetachTest extends AbstractCDOTest
     detachResource(rset, resource);
 
   }
-  
+
   public void testDetachPersistedResource() throws Exception
   {
     msg("Opening session");
@@ -263,12 +262,12 @@ public class DetachTest extends AbstractCDOTest
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
-    
+
     transaction.commit();
     CDOID resourceID = resource.cdoID();
     detachResource(rset, resource);
-    
+
     assertEquals(true, transaction.getDetachedObjects().contains(resourceID));
   }
-  
+
 }

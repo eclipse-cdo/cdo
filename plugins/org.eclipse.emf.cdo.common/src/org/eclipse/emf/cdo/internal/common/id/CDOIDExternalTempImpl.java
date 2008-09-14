@@ -24,6 +24,7 @@ public class CDOIDExternalTempImpl extends CDOIDExternalImpl implements CDOIDTem
     super(uri);
   }
 
+  @Override
   public Type getType()
   {
     return Type.EXTERNAL_TEMP_OBJECT;

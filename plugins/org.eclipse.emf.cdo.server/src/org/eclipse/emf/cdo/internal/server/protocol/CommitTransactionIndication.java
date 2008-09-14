@@ -54,13 +54,14 @@ public class CommitTransactionIndication extends CDOServerIndication
     return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION;
   }
 
-   @Override
+  @Override
   protected TransactionPackageManager getPackageManager()
   {
     return commitContext.getPackageManager();
   }
- @Override
-  protected void indicating(CDODataInput in) throws IOException  
+
+  @Override
+  protected void indicating(CDODataInput in) throws IOException
   {
     try
     {
@@ -190,7 +191,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     List<CDOIDMetaRange> metaRanges = commitContext.getMetaIDRanges();
     for (CDOIDMetaRange metaRange : metaRanges)
     {
-       out.writeCDOIDMetaRange(metaRange);
+      out.writeCDOIDMetaRange(metaRange);
     }
   }
 
@@ -205,7 +206,7 @@ public class CommitTransactionIndication extends CDOServerIndication
       {
         CDOID newID = entry.getValue();
         out.writeCDOID(oldID);
-            out.writeCDOID(newID);
+        out.writeCDOID(newID);
       }
     }
     out.writeCDOID(CDOID.NULL);

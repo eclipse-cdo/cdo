@@ -141,7 +141,7 @@ public class XATransactionTest extends AbstractCDOTest
     xaTransaction.commit();
 
   }
-  
+
   public void testCommitFromTransactionDisabled() throws Exception
   {
     createRepository(REPOSITORY2_NAME);

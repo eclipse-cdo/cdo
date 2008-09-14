@@ -103,7 +103,8 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
       CDOID newID = commitContext.getResult().getIDMappings().get(oldCDOID);
       if (newID == null)
       {
-        throw new IllegalStateException("Missing informations. " + oldCDOID.toURIFragment() + " isn't mapped in the commit.");
+        throw new IllegalStateException("Missing informations. " + oldCDOID.toURIFragment()
+            + " isn't mapped in the commit.");
       }
 
       CDOID newIDExternal = CDOURIUtil.convertExternalCDOID(oldURIExternal, newID);

@@ -87,7 +87,7 @@ public final class CDOIDUtil
   {
     return new CDOIDTempObjectImpl(value);
   }
-  
+
   /**
    * @since 2.0
    */
@@ -103,7 +103,7 @@ public final class CDOIDUtil
   {
     return new CDOIDExternalTempImpl(uri);
   }
-  
+
   public static CDOID createLong(long value)
   {
     if (value == 0L)

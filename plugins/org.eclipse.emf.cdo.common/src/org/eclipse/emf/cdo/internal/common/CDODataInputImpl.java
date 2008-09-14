@@ -292,7 +292,7 @@ public abstract class CDODataInputImpl implements CDODataInput
 
     case EXTERNAL_TEMP_OBJECT:
       return new CDOIDExternalTempImpl(readString());
-    
+
     case OBJECT:
     {
       CDOIDObject id = getIDFactory().createCDOIDObject(this);

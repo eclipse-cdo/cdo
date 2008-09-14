@@ -32,12 +32,12 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
   {
     this.uri = uri;
   }
-  
+
   public String getURI()
   {
     return uri;
   }
-  
+
   public Type getType()
   {
     return Type.EXTERNAL_OBJECT;
@@ -79,7 +79,7 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     {
       return true;
     }
-    // Could CDOIDExternalTempImpl and CDOIDExternalImpl have the same uri. We don't want to mixed them.  
+    // Could CDOIDExternalTempImpl and CDOIDExternalImpl have the same uri. We don't want to mixed them.
     if (obj != null && obj.getClass() == getClass())
     {
       CDOIDExternal that = (CDOIDExternal)obj;
@@ -95,5 +95,4 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     return getClass().hashCode() ^ uri.hashCode();
   }
 
- 
 }

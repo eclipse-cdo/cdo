@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/246442 
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
@@ -50,9 +51,11 @@ public class CompletePackageClosure extends PackageClosure
   @Override
   protected void collectContents(EPackage ePackage, Set<EPackage> visited)
   {
-    if (ePackage != null)
+
+    if (ePackage != null && visited.add(ePackage))
     {
-      if (excludeEcore && ePackage == EcorePackage.eINSTANCE)
+      if (excludeEcore && // Optimize EPackage comparison
+          (EcorePackage.eINSTANCE == ePackage || EcorePackage.eNS_URI.equals(ePackage.getNsURI())))
       {
         return;
       }

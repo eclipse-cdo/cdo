@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_241464_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_243310_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_246442_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_246622_Test;
 
 import junit.framework.Test;
@@ -51,7 +52,8 @@ public class AllTests
     suite.addTestSuite(NoLegacyTest.class);
     suite.addTestSuite(Bugzilla_241464_Test.class);
     suite.addTestSuite(Bugzilla_243310_Test.class);
-    suite.addTestSuite(Bugzilla_246622_Test.class);    
+    suite.addTestSuite(Bugzilla_246622_Test.class);
+    suite.addTestSuite(Bugzilla_246442_Test.class);
     suite.addTestSuite(AutoAttacherTest.class);
     suite.addTestSuite(SavepointTest.class);
     suite.addTestSuite(ChangeSubscriptionTest.class);

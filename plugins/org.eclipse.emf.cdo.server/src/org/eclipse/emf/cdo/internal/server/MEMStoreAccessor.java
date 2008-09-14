@@ -237,11 +237,11 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
             }
           });
         }
-      }      
-      
+      }
+
       for (CDORevision revision : getStore().getCurrentRevisions())
       {
-        
+
         if (sleep != null)
         {
           try
@@ -253,9 +253,9 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
             throw WrappedException.wrap(ex);
           }
         }
-        
+
         boolean valid = true;
-        
+
         for (Object filter : filters)
         {
           if (!filter.equals(revision))
@@ -273,7 +273,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
         }
       }
     }
-    
+
     else
     {
       throw new RuntimeException("Unsupported language " + info.getQueryLanguage());

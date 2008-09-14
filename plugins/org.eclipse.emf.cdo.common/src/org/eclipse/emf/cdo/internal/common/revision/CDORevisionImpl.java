@@ -438,7 +438,7 @@ public class CDORevisionImpl implements InternalCDORevision
     }
 
     resourceID = (CDOID)remapID(resourceID, idMappings);
-    containerID = (CDOID)remapID(containerID, idMappings);
+    containerID = remapID(containerID, idMappings);
 
     CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)

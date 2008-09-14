@@ -389,14 +389,12 @@ public class ContainmentTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction(resourceSet);
 
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
-      
+
       Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
       resource1.load(new ByteArrayInputStream(data), null);
       Resource resource = transaction.getResource("test");
 
       Order order = (Order)resource.getContents().get(0);
-
-      
 
       assertEquals(resource1.getContents().get(0), order.eContainer());
     }

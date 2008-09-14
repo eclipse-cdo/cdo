@@ -405,10 +405,6 @@ public class ContainmentTest extends AbstractCDOTest
 
   public void testObjectNotSameResourceThanItsContainer_WithoutCDO() throws Exception
   {
-    
-    byte[] data1 = null;
-    byte[] data2 = null;
-    
     ResourceSet resourceSet = new ResourceSetImpl();
 
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());

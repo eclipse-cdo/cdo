@@ -76,13 +76,9 @@ public final class ReflectUtil
         return null;
       }
     }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
     catch (Exception ex)
     {
-      throw new ImplementationError(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 
@@ -97,9 +93,9 @@ public final class ReflectUtil
     {
       return method.invoke(target, arguments);
     }
-    catch (IllegalAccessException ex)
+    catch (Exception ex)
     {
-      throw new ImplementationError(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 
@@ -122,13 +118,9 @@ public final class ReflectUtil
         return null;
       }
     }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
     catch (Exception ex)
     {
-      throw new ImplementationError(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 
@@ -165,13 +157,9 @@ public final class ReflectUtil
         fields.add(field);
       }
     }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
     catch (Exception ex)
     {
-      throw new ImplementationError(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 
@@ -186,9 +174,9 @@ public final class ReflectUtil
     {
       return field.get(target);
     }
-    catch (IllegalAccessException ex)
+    catch (Exception ex)
     {
-      throw new ImplementationError(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 
@@ -203,9 +191,9 @@ public final class ReflectUtil
     {
       field.set(target, value);
     }
-    catch (IllegalAccessException ex)
+    catch (Exception ex)
     {
-      throw new ImplementationError(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 

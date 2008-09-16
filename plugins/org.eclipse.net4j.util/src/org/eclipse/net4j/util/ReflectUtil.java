@@ -73,7 +73,7 @@ public final class ReflectUtil
           return getMethod(superclass, methodName, parameterTypes);
         }
 
-        return null;
+        throw ex;
       }
     }
     catch (Exception ex)
@@ -82,9 +82,10 @@ public final class ReflectUtil
     }
   }
 
-  public static Object invokeMethod(Method method, Object target, Object... arguments) throws InvocationTargetException
+  public static Object invokeMethod(Method method, Object target, Object... arguments)
   {
-    if (!method.isAccessible())
+    boolean accessible = method.isAccessible();
+    if (!accessible)
     {
       method.setAccessible(true);
     }
@@ -96,6 +97,13 @@ public final class ReflectUtil
     catch (Exception ex)
     {
       throw WrappedException.wrap(ex);
+    }
+    finally
+    {
+      if (!accessible)
+      {
+        method.setAccessible(false);
+      }
     }
   }
 

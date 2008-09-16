@@ -13,6 +13,9 @@ import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -93,7 +96,11 @@ public class ResourceTest extends AbstractCDOTest
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
+    
+    // Test if Resource is well-formed after CDOResourceFactoryImpl.
+    // Adapter will be called right after and could be used!
+    transaction.getResourceSet().eAdapters().add(new TestAdapter());
+    
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
     assertActive(resource);
@@ -350,5 +357,33 @@ public class ResourceTest extends AbstractCDOTest
 
     assertEquals(expected, resources.size());
   }
+  
+  static class TestAdapter extends AdapterImpl
+  {
+
+    @Override
+    public void notifyChanged(Notification msg)
+    {
+      super.notifyChanged(msg);
+      if (msg.getNewValue() instanceof CDOResource)
+      {
+        ((CDOResource)msg.getNewValue()).getPath();
+      }
+    }
+
+    @Override
+    public void setTarget(Notifier newTarget)
+    {
+     
+    }
+
+    @Override
+    public boolean isAdapterForType(Object type)
+    {
+      return super.isAdapterForType(type);
+    }
+    
+    
+  };
 
 }

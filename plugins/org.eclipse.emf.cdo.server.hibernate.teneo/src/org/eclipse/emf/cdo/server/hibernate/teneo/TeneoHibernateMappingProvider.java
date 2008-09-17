@@ -28,8 +28,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-import org.eclipse.emf.teneo.extension.ExtensionManager;
-import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 import org.eclipse.emf.teneo.hibernate.cdo.CDOHelper;
 
 import org.hibernate.cfg.Configuration;
@@ -51,13 +49,6 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TeneoHibernateMappingProvider.class);
 
   private IHibernateStore hibernateStore;
-
-  private ExtensionManager extensionManager = ExtensionManagerFactory.getInstance().create();
-
-  public ExtensionManager getExtensionManager()
-  {
-    return extensionManager;
-  }
 
   public void addMapping(Configuration configuration)
   {
@@ -131,7 +122,7 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     // translate the list of EPackages to an array
     final EPackage[] ePackageArray = epacks.toArray(new EPackage[epacks.size()]);
     properties.put("teneo.mapping.also_map_as_class", "false");
-    return CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
+    return CDOHelper.getInstance().generateMapping(ePackageArray, properties);
   }
 
   // this will check the global package registry and read the epackages from

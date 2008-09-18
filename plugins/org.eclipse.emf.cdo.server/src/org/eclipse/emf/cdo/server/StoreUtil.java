@@ -21,6 +21,9 @@ public final class StoreUtil
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public static IMEMStore createMEMStore()
   {
     return new MEMStore();

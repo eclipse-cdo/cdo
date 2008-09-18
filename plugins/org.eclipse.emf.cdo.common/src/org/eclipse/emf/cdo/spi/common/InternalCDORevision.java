@@ -42,6 +42,9 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData
 
   public void setResourceID(CDOID resourceID);
 
+  /**
+   * @since 2.0
+   */
   public void setContainerID(Object containerID);
 
   public void setContainingFeatureID(int containingFeatureID);

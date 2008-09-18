@@ -37,6 +37,9 @@ public interface IMappingStrategy
 
   public IClassMapping getClassMapping(CDOClass cdoClass);
 
+  /**
+   * @since 2.0
+   */
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreReader storeReader);
 
   public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id);

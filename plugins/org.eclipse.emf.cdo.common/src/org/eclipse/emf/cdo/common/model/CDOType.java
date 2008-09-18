@@ -73,7 +73,13 @@ public interface CDOType
 
   public Object copyValue(Object value);
 
+  /**
+   * @since 2.0
+   */
   public Object readValue(CDODataInput in) throws IOException;
 
+  /**
+   * @since 2.0
+   */
   public void writeValue(CDODataOutput out, Object value) throws IOException;
 }

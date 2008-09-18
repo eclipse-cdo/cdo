@@ -144,6 +144,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
   }
 
+  /**
+   * @since 2.0
+   */
   public void rollback()
   {
     if (TRACER.isEnabled())

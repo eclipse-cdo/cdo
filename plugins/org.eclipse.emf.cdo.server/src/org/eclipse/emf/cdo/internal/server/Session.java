@@ -76,6 +76,9 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
   };
 
+  /**
+   * @since 2.0
+   */
   public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID)
       throws SessionCreationException
   {

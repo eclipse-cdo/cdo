@@ -73,6 +73,9 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public Session openSession(CDOServerProtocol protocol) throws SessionCreationException
   {
     int id = ++lastSessionID;

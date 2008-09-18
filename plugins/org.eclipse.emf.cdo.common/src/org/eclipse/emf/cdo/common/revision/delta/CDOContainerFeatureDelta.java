@@ -31,6 +31,9 @@ public interface CDOContainerFeatureDelta extends CDOFeatureDelta
    */
   public CDOID getResourceID();
 
+  /**
+   * @since 2.0
+   */
   public Object getContainerID();
 
   public int getContainerFeatureID();

@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.factory.Factory;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class QueryHandlerFactory extends Factory
 {

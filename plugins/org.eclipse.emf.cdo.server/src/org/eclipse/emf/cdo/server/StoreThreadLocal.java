@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public final class StoreThreadLocal
 {

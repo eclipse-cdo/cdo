@@ -43,6 +43,8 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
   /**
    * Returns an iterator that iterates over all objects in the store and makes their ids available for processing. This
    * method is supposed to be called very infrequently, for example during the recovery from a crash.
+   * 
+   * @since 2.0
    */
   public CloseableIterator<CDOID> readObjectIDs();
 

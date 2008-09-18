@@ -35,6 +35,9 @@ public final class CDOFetchRule
     this.cdoClass = cdoClass;
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOFetchRule(CDODataInput in, CDOPackageManager packageManager) throws IOException
   {
     cdoClass = in.readCDOClassRefAndResolve();
@@ -47,6 +50,9 @@ public final class CDOFetchRule
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public void write(CDODataOutput out) throws IOException
   {
     out.writeCDOClassRef(cdoClass);

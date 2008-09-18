@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class StoreAccessorPool
 {

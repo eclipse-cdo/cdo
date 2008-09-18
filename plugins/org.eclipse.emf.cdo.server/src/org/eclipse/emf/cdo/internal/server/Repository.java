@@ -221,6 +221,9 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     this.queryHandlerProvider = queryHandlerProvider;
   }
 
+  /**
+   * @since 2.0
+   */
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     IQueryHandler handler = null;

@@ -179,6 +179,7 @@ public abstract class Store extends Lifecycle implements IStore
    * @param forReleasing
    *          Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
    *          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.
+   * @since 2.0
    */
   protected abstract StoreAccessorPool getReaderPool(ISession session, boolean forReleasing);
 
@@ -199,6 +200,7 @@ public abstract class Store extends Lifecycle implements IStore
    * @param forReleasing
    *          Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
    *          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.
+   * @since 2.0
    */
   protected abstract StoreAccessorPool getWriterPool(IView view, boolean forReleasing);
 

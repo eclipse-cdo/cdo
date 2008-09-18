@@ -30,7 +30,13 @@ public interface InternalCDOModelElement extends CDOModelElement
 
   public void initialize();
 
+  /**
+   * @since 2.0
+   */
   public void read(CDODataInput in) throws IOException;
 
+  /**
+   * @since 2.0
+   */
   public void write(CDODataOutput out) throws IOException;
 }

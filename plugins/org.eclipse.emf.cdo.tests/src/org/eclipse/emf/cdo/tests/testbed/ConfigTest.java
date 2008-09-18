@@ -204,6 +204,11 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
     return null;
   }
 
+  public boolean isValid()
+  {
+    return true;
+  }
+
   @Override
   public String toString()
   {
@@ -214,7 +219,6 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   @Override
   public final void setUp() throws Exception
   {
-    super.setUp();
     IOUtil.OUT().println("*******************************************************");
     IOUtil.OUT().println(this);
     IOUtil.OUT().println("*******************************************************");
@@ -224,7 +228,13 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
     OMPlatform.INSTANCE.setDebugging(true);
     enableConsole();
 
+    super.setUp();
+    setUpConfig(containerConfig);
+    setUpConfig(repositoryConfig);
+    setUpConfig(sessionConfig);
+    setUpConfig(modelConfig);
     doSetUp();
+
     IOUtil.OUT().println();
     IOUtil.OUT().println("------------------------ START ------------------------");
   }
@@ -232,14 +242,38 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   @Override
   public final void tearDown() throws Exception
   {
-    sleep(200);
     IOUtil.OUT().println("------------------------- END -------------------------");
     IOUtil.OUT().println();
 
     doTearDown();
+    setUpConfig(modelConfig);
+    setUpConfig(sessionConfig);
+    setUpConfig(repositoryConfig);
+    setUpConfig(containerConfig);
     super.tearDown();
+
     IOUtil.OUT().println();
     IOUtil.OUT().println();
+  }
+
+  protected void setUpConfig(Config config) throws Exception
+  {
+    config.setCurrentTest(this);
+    config.setUp();
+  }
+
+  protected void tearDownConfig(Config config) throws Exception
+  {
+    config.tearDown();
+    config.setCurrentTest(null);
+  }
+
+  protected void doSetUp() throws Exception
+  {
+  }
+
+  protected void doTearDown() throws Exception
+  {
   }
 
   protected void enableConsole()
@@ -263,14 +297,6 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
       OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
       OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
     }
-  }
-
-  protected void doSetUp() throws Exception
-  {
-  }
-
-  protected void doTearDown() throws Exception
-  {
   }
 
   protected static void msg(Object m)
@@ -305,7 +331,7 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
     }
     catch (SkipTestException ex)
     {
-      OM.LOG.info("Skipped test: " + this);
+      OM.LOG.info("Skipped " + this);
     }
     catch (Throwable t)
     {

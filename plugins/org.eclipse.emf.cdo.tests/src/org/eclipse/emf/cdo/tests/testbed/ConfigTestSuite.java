@@ -164,7 +164,10 @@ public abstract class ConfigTestSuite
       configTest.setRepositoryConfig(repositoryConfig);
       configTest.setSessionConfig(sessionConfig);
       configTest.setModelConfig(modelConfig);
-      super.runTest(configTest, result);
+      if (configTest.isValid())
+      {
+        super.runTest(configTest, result);
+      }
     }
   }
 }

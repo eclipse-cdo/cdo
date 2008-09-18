@@ -166,7 +166,10 @@ public class CommitTransactionIndication extends CDOServerIndication
   protected void indicatingCommit()
   {
     commitContext.write();
-    commitContext.commit();
+    if (commitContext.getRollbackMessage() == null)
+    {
+      commitContext.commit();
+    }
   }
 
   protected boolean respondingException(CDODataOutput out, String rollbackMessage) throws IOException

@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.util.transaction.TransactionException;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -301,6 +303,69 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
       assertEquals(supplierB, pO.getSupplier());
       assertEquals(supplierB.getPurchaseOrders().get(0), pO);
+
+    }
+  }
+
+  public void testObjectNotAttached() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource1 = transaction.createResource("/test1");
+
+    msg("Adding company");
+    Supplier supplier = getModel1Factory().createSupplier();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    supplier.getPurchaseOrders().add(purchaseOrder);
+
+    resource1.getContents().add(supplier);
+    msg("Committing");
+
+    try
+    {
+      transaction.commit();
+      fail("Should have an IllegalStateException");
+    }
+    catch (TransactionException exception)
+    {
+      assertEquals(true, exception.getCause() instanceof IllegalStateException);
+    }
+  }
+
+  public void testUsingObjectsBetweenSameTransaction() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction1 = session.openTransaction();
+    CDOTransaction transaction2 = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource1 = transaction1.createResource("/test1");
+    CDOResource resource2 = transaction2.createResource("/test2");
+
+    msg("Adding company");
+    Supplier supplier = getModel1Factory().createSupplier();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    supplier.getPurchaseOrders().add(purchaseOrder);
+
+    resource1.getContents().add(supplier);
+    resource2.getContents().add(purchaseOrder);
+    msg("Committing");
+
+    try
+    {
+      transaction1.commit();
+      fail("Should have an IllegalStateException");
+    }
+    catch (TransactionException exception)
+    {
 
     }
   }

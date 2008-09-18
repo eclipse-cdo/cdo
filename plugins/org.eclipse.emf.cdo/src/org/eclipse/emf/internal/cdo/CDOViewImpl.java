@@ -572,7 +572,10 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           return CDOIDUtil.createExternalTemp(uri);
         }
       }
-      return CDOIDUtil.createExternal(uri);
+      if (eObject.eResource() != null)
+      {
+        return CDOIDUtil.createExternal(uri);
+      }
     }
 
     throw new IllegalStateException("Unable to provideCDOID: " + idOrObject.getClass().getName());

@@ -47,6 +47,8 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
 {
   private ContainerConfig containerConfig;
 
+  private RepositoryConfig repositoryConfig;
+
   private SessionConfig sessionConfig;
 
   private ModelConfig modelConfig;
@@ -70,6 +72,16 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   public void setContainerConfig(ContainerConfig containerConfig)
   {
     this.containerConfig = containerConfig;
+  }
+
+  public RepositoryConfig getRepositoryConfig()
+  {
+    return repositoryConfig;
+  }
+
+  public void setRepositoryConfig(RepositoryConfig repositoryConfig)
+  {
+    this.repositoryConfig = repositoryConfig;
   }
 
   public SessionConfig getSessionConfig()
@@ -195,8 +207,8 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}]", getClass().getSimpleName(), getName(), containerConfig,
-        sessionConfig, modelConfig);
+    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}, {5}]", getClass().getSimpleName(), getName(), containerConfig,
+        repositoryConfig, sessionConfig, modelConfig);
   }
 
   @Override

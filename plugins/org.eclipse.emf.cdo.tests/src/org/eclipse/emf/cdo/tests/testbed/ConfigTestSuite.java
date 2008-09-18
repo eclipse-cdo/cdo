@@ -25,9 +25,17 @@ import junit.framework.TestSuite;
  */
 public abstract class ConfigTestSuite
 {
-  public static final String[] DIMENSIONS = { ContainerConfig.DIMENSION, SessionConfig.DIMENSION, ModelConfig.DIMENSION };
+  public static final String[] DIMENSIONS = { // 
+  ContainerConfig.DIMENSION, //
+      RepositoryConfig.DIMENSION, //
+      SessionConfig.DIMENSION, //
+      ModelConfig.DIMENSION };
 
-  public static final Config[][] CONFIGS = { ContainerConfig.CONFIGS, SessionConfig.CONFIGS, ModelConfig.CONFIGS };
+  public static final Config[][] CONFIGS = { //
+  ContainerConfig.CONFIGS, //
+      RepositoryConfig.CONFIGS, //
+      SessionConfig.CONFIGS, //
+      ModelConfig.CONFIGS };
 
   public ConfigTestSuite()
   {
@@ -44,25 +52,34 @@ public abstract class ConfigTestSuite
   {
     for (ContainerConfig containerConfig : ContainerConfig.CONFIGS)
     {
-      for (SessionConfig sessionConfig : SessionConfig.CONFIGS)
+      for (RepositoryConfig repositoryConfig : RepositoryConfig.CONFIGS)
       {
-        for (ModelConfig modelConfig : ModelConfig.CONFIGS)
+        for (SessionConfig sessionConfig : SessionConfig.CONFIGS)
         {
-          initConfigSuite(parent, containerConfig, sessionConfig, modelConfig);
+          for (ModelConfig modelConfig : ModelConfig.CONFIGS)
+          {
+            initConfigSuite(parent, containerConfig, repositoryConfig, sessionConfig, modelConfig);
+          }
         }
       }
     }
   }
 
-  private void initConfigSuite(TestSuite parent, ContainerConfig containerConfig, SessionConfig sessionConfig,
-      ModelConfig modelConfig)
+  private void initConfigSuite(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
+      SessionConfig sessionConfig, ModelConfig modelConfig)
   {
     Set<Config> configs = new HashSet<Config>();
     configs.add(containerConfig);
+    configs.add(repositoryConfig);
     configs.add(sessionConfig);
     configs.add(modelConfig);
 
     if (!containerConfig.isValid(configs))
+    {
+      return;
+    }
+
+    if (!repositoryConfig.isValid(configs))
     {
       return;
     }
@@ -77,7 +94,8 @@ public abstract class ConfigTestSuite
       return;
     }
 
-    String name = MessageFormat.format("Config = [{0}, {1}, {2}]", containerConfig, sessionConfig, modelConfig);
+    String name = MessageFormat.format("Config = [{0}, {1}, {2}, {3}]", containerConfig, repositoryConfig,
+        sessionConfig, modelConfig);
     TestSuite suite = new TestSuite(name);
 
     List<Class<? extends ConfigTest>> testClasses = new ArrayList<Class<? extends ConfigTest>>();
@@ -85,7 +103,8 @@ public abstract class ConfigTestSuite
 
     for (Class<? extends ConfigTest> testClass : testClasses)
     {
-      ConfigSuite configSuite = new ConfigSuite(testClass, containerConfig, sessionConfig, modelConfig);
+      ConfigSuite configSuite = new ConfigSuite(testClass, containerConfig, repositoryConfig, sessionConfig,
+          modelConfig);
       suite.addTest(configSuite);
     }
 
@@ -101,15 +120,18 @@ public abstract class ConfigTestSuite
   {
     private ContainerConfig containerConfig;
 
+    private RepositoryConfig repositoryConfig;
+
     private SessionConfig sessionConfig;
 
     private ModelConfig modelConfig;
 
     public ConfigSuite(Class<? extends ConfigTest> testClass, ContainerConfig containerConfig,
-        SessionConfig sessionConfig, ModelConfig modelConfig)
+        RepositoryConfig repositoryConfig, SessionConfig sessionConfig, ModelConfig modelConfig)
     {
       super(testClass, testClass.getSimpleName());
       this.containerConfig = containerConfig;
+      this.repositoryConfig = repositoryConfig;
       this.sessionConfig = sessionConfig;
       this.modelConfig = modelConfig;
     }
@@ -117,6 +139,11 @@ public abstract class ConfigTestSuite
     public ContainerConfig getContainerConfig()
     {
       return containerConfig;
+    }
+
+    public RepositoryConfig getRepositoryConfig()
+    {
+      return repositoryConfig;
     }
 
     public SessionConfig getSessionConfig()

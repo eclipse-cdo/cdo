@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -91,6 +92,11 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   public IManagedContainer getServerContainer()
   {
     return containerConfig.getServerContainer();
+  }
+
+  public IConnector getConnector()
+  {
+    return sessionConfig.getConnector();
   }
 
   public CDOSession openMangoSession()

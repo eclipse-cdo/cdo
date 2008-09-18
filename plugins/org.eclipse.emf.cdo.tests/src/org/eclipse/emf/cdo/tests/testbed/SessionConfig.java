@@ -62,8 +62,6 @@ public abstract class SessionConfig extends Config implements SessionProvider
     return configuration.openSession();
   }
 
-  protected abstract IConnector getConnector();
-
   /**
    * @author Eike Stepper
    */
@@ -80,18 +78,17 @@ public abstract class SessionConfig extends Config implements SessionProvider
       super(NAME);
     }
 
+    public IConnector getConnector()
+    {
+      return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
+    }
+
     @Override
     protected void setUp() throws Exception
     {
       super.setUp();
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
-    }
-
-    @Override
-    protected IConnector getConnector()
-    {
-      return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
     }
   }
 
@@ -111,18 +108,17 @@ public abstract class SessionConfig extends Config implements SessionProvider
       super(NAME);
     }
 
+    public IConnector getConnector()
+    {
+      return JVMUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_NAME);
+    }
+
     @Override
     protected void setUp() throws Exception
     {
       super.setUp();
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
-    }
-
-    @Override
-    protected IConnector getConnector()
-    {
-      return JVMUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_NAME);
     }
   }
 }

@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.testbed;
 
 import org.eclipse.emf.cdo.CDOSession;
 
+import org.eclipse.net4j.connector.IConnector;
+
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -20,6 +22,8 @@ import org.eclipse.emf.ecore.EPackage;
 public interface SessionProvider
 {
   public static final String REPOSITORY_NAME = "repo1";
+
+  public IConnector getConnector();
 
   public CDOSession openMangoSession();
 

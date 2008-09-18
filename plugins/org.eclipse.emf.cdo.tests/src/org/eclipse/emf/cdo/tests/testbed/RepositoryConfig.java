@@ -133,7 +133,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
    */
   public static final class Hibernate extends RepositoryConfig
   {
-    public static final String NAME = "hibernate";
+    public static final String NAME = "Hibernate";
 
     public static final Hibernate INSTANCE = new Hibernate();
 

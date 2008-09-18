@@ -161,6 +161,7 @@ public abstract class ConfigTestSuite
     {
       ConfigTest configTest = (ConfigTest)test;
       configTest.setContainerConfig(containerConfig);
+      configTest.setRepositoryConfig(repositoryConfig);
       configTest.setSessionConfig(sessionConfig);
       configTest.setModelConfig(modelConfig);
       super.runTest(configTest, result);

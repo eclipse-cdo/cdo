@@ -135,7 +135,7 @@ public abstract class ConfigTestSuite
       ConfigTest configTest = (ConfigTest)test;
       configTest.setContainerConfig(containerConfig);
       configTest.setSessionConfig(sessionConfig);
-      configTest.setModelTypeConfig(modelConfig);
+      configTest.setModelConfig(modelConfig);
       super.runTest(configTest, result);
     }
   }

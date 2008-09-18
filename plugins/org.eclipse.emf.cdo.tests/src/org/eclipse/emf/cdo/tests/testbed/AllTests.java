@@ -33,17 +33,15 @@ public class AllTests extends ConfigTestSuite
   {
     public void test11() throws Exception
     {
-      System.out.println("TEST");
     }
 
     public void test12() throws Exception
     {
-      System.out.println("TEST");
     }
 
     public void test13() throws Exception
     {
-      System.out.println("TEST");
+      skipConfig(ModelConfig.Legacy.INSTANCE);
     }
   }
 
@@ -56,17 +54,14 @@ public class AllTests extends ConfigTestSuite
   {
     public void test21() throws Exception
     {
-      System.out.println("TEST");
     }
 
     public void test22() throws Exception
     {
-      System.out.println("TEST");
     }
 
     public void test23() throws Exception
     {
-      System.out.println("TEST");
     }
   }
 
@@ -79,17 +74,14 @@ public class AllTests extends ConfigTestSuite
   {
     public void test31() throws Exception
     {
-      System.out.println("TEST");
     }
 
     public void test32() throws Exception
     {
-      System.out.println("TEST");
     }
 
     public void test33() throws Exception
     {
-      System.out.println("TEST");
     }
   }
 }

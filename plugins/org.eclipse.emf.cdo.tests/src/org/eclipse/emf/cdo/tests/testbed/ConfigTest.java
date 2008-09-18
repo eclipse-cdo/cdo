@@ -25,8 +25,13 @@ import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.PrintLogHandler;
+import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -43,7 +48,9 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
 
   private SessionConfig sessionConfig;
 
-  private ModelConfig modelTypeConfig;
+  private ModelConfig modelConfig;
+
+  private static boolean consoleEnabled;
 
   public ConfigTest()
   {
@@ -74,14 +81,14 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
     this.sessionConfig = sessionConfig;
   }
 
-  public ModelConfig getModelTypeConfig()
+  public ModelConfig getModelConfig()
   {
-    return modelTypeConfig;
+    return modelConfig;
   }
 
-  public void setModelTypeConfig(ModelConfig modelTypeConfig)
+  public void setModelConfig(ModelConfig modelConfig)
   {
-    this.modelTypeConfig = modelTypeConfig;
+    this.modelConfig = modelConfig;
   }
 
   public IManagedContainer getClientContainer()
@@ -126,63 +133,149 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
 
   public MangoFactory getMangoFactory()
   {
-    return modelTypeConfig.getMangoFactory();
+    return modelConfig.getMangoFactory();
   }
 
   public MangoPackage getMangoPackage()
   {
-    return modelTypeConfig.getMangoPackage();
+    return modelConfig.getMangoPackage();
   }
 
   public Model1Factory getModel1Factory()
   {
-    return modelTypeConfig.getModel1Factory();
+    return modelConfig.getModel1Factory();
   }
 
   public Model1Package getModel1Package()
   {
-    return modelTypeConfig.getModel1Package();
+    return modelConfig.getModel1Package();
   }
 
   public Model2Factory getModel2Factory()
   {
-    return modelTypeConfig.getModel2Factory();
+    return modelConfig.getModel2Factory();
   }
 
   public Model2Package getModel2Package()
   {
-    return modelTypeConfig.getModel2Package();
+    return modelConfig.getModel2Package();
   }
 
   public Model3Factory getModel3Factory()
   {
-    return modelTypeConfig.getModel3Factory();
+    return modelConfig.getModel3Factory();
   }
 
   public Model3Package getModel3Package()
   {
-    return modelTypeConfig.getModel3Package();
+    return modelConfig.getModel3Package();
   }
 
   public model4Factory getModel4Factory()
   {
-    return modelTypeConfig.getModel4Factory();
+    return modelConfig.getModel4Factory();
   }
 
   public model4Package getModel4Package()
   {
-    return modelTypeConfig.getModel4Package();
+    return modelConfig.getModel4Package();
   }
 
   public model4interfacesPackage getModel4InterfacesPackage()
   {
-    return modelTypeConfig.getModel4InterfacesPackage();
+    return modelConfig.getModel4InterfacesPackage();
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[{1}, {2}, {3}]", getName(), containerConfig, sessionConfig, modelTypeConfig);
+    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}]", getClass().getSimpleName(), getName(), containerConfig,
+        sessionConfig, modelConfig);
+  }
+
+  @Override
+  public final void setUp() throws Exception
+  {
+    super.setUp();
+    IOUtil.OUT().println("*******************************************************");
+    IOUtil.OUT().println(this);
+    IOUtil.OUT().println("*******************************************************");
+
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+    OMPlatform.INSTANCE.setDebugging(true);
+    enableConsole();
+
+    doSetUp();
+    IOUtil.OUT().println();
+    IOUtil.OUT().println("------------------------ START ------------------------");
+  }
+
+  @Override
+  public final void tearDown() throws Exception
+  {
+    sleep(200);
+    IOUtil.OUT().println("------------------------- END -------------------------");
+    IOUtil.OUT().println();
+
+    doTearDown();
+    super.tearDown();
+    IOUtil.OUT().println();
+    IOUtil.OUT().println();
+  }
+
+  protected void enableConsole()
+  {
+    if (!consoleEnabled)
+    {
+      PrintTraceHandler.CONSOLE.setShortContext(true);
+      OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+      OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+      OMPlatform.INSTANCE.setDebugging(true);
+      consoleEnabled = true;
+    }
+  }
+
+  protected void disableConsole()
+  {
+    if (consoleEnabled)
+    {
+      consoleEnabled = false;
+      OMPlatform.INSTANCE.setDebugging(false);
+      OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
+      OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
+    }
+  }
+
+  protected void doSetUp() throws Exception
+  {
+  }
+
+  protected void doTearDown() throws Exception
+  {
+  }
+
+  protected static void msg(Object m)
+  {
+    if (consoleEnabled)
+    {
+      IOUtil.OUT().println("--> " + m);
+    }
+  }
+
+  protected static void sleep(long millis)
+  {
+    ConcurrencyUtil.sleep(millis);
+  }
+
+  protected static void assertActive(Object object)
+  {
+    assertEquals(true, LifecycleUtil.isActive(object));
+  }
+
+  protected static void assertInactive(Object object)
+  {
+    assertEquals(false, LifecycleUtil.isActive(object));
   }
 
   @Override
@@ -205,7 +298,7 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
 
   protected void skipConfig(Config config)
   {
-    skipTest(modelTypeConfig == config);
+    skipTest(modelConfig == config);
     skipTest(sessionConfig == config);
   }
 

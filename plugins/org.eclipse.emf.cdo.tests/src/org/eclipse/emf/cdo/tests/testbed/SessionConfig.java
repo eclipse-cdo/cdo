@@ -20,6 +20,8 @@ import org.eclipse.net4j.tcp.TCPUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -119,6 +121,12 @@ public abstract class SessionConfig extends Config implements SessionProvider
       super.setUp();
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
+    }
+
+    @Override
+    protected boolean isValid(Set<Config> configs)
+    {
+      return !configs.contains(ContainerConfig.Separated.INSTANCE);
     }
   }
 }

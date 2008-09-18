@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.testbed;
 
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,7 +57,27 @@ public abstract class ConfigTestSuite
   private void initConfigSuite(TestSuite parent, ContainerConfig containerConfig, SessionConfig sessionConfig,
       ModelConfig modelConfig)
   {
-    String name = MessageFormat.format("{0}, {1}, {2}", containerConfig, sessionConfig, modelConfig);
+    Set<Config> configs = new HashSet<Config>();
+    configs.add(containerConfig);
+    configs.add(sessionConfig);
+    configs.add(modelConfig);
+
+    if (!containerConfig.isValid(configs))
+    {
+      return;
+    }
+
+    if (!sessionConfig.isValid(configs))
+    {
+      return;
+    }
+
+    if (!modelConfig.isValid(configs))
+    {
+      return;
+    }
+
+    String name = MessageFormat.format("Config = [{0}, {1}, {2}]", containerConfig, sessionConfig, modelConfig);
     TestSuite suite = new TestSuite(name);
 
     List<Class<? extends ConfigTest>> testClasses = new ArrayList<Class<? extends ConfigTest>>();
@@ -66,7 +85,8 @@ public abstract class ConfigTestSuite
 
     for (Class<? extends ConfigTest> testClass : testClasses)
     {
-      suite.addTest(new ConfigSuite(testClass, containerConfig, sessionConfig, modelConfig));
+      ConfigSuite configSuite = new ConfigSuite(testClass, containerConfig, sessionConfig, modelConfig);
+      suite.addTest(configSuite);
     }
 
     parent.addTest(suite);
@@ -107,31 +127,6 @@ public abstract class ConfigTestSuite
     public ModelConfig getModelConfig()
     {
       return modelConfig;
-    }
-
-    public boolean isValid()
-    {
-      Set<Config> configs = new HashSet<Config>();
-      configs.add(containerConfig);
-      configs.add(sessionConfig);
-      configs.add(modelConfig);
-
-      if (!containerConfig.isValid(configs))
-      {
-        return false;
-      }
-
-      if (!sessionConfig.isValid(configs))
-      {
-        return false;
-      }
-
-      if (!modelConfig.isValid(configs))
-      {
-        return false;
-      }
-
-      return true;
     }
 
     @Override

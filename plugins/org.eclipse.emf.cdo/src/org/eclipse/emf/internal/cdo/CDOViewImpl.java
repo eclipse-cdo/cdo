@@ -173,11 +173,13 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return false;
   }
 
+  @Deprecated
   public boolean hasUniqueResourceContents()
   {
     return uniqueResourceContents;
   }
 
+  @Deprecated
   public void setUniqueResourceContents(boolean uniqueResourceContents)
   {
     this.uniqueResourceContents = uniqueResourceContents;

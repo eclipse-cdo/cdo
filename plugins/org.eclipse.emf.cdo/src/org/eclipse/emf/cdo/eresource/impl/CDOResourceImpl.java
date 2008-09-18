@@ -562,6 +562,18 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     }
 
     /**
+     * Optimization taken from ResourceImpl.EContentList.contains.
+     * 
+     * @since 2.0
+     */
+    @Override
+    public boolean contains(Object object)
+    {
+      return size() <= 4 ? super.contains(object) : object instanceof InternalEObject
+          && ((InternalEObject)object).eDirectResource() == CDOResourceImpl.this;
+    }
+
+    /**
      * @since 2.0
      */
     @Override
@@ -615,6 +627,18 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     public TransientContents(int initialCapacity)
     {
       super(initialCapacity);
+    }
+
+    /**
+     * Optimization taken from ResourceImpl.EContentList.contains
+     * 
+     * @since 2.0
+     */
+    @Override
+    public boolean contains(Object object)
+    {
+      return size <= 4 ? super.contains(object) : object instanceof InternalEObject
+          && ((InternalEObject)object).eDirectResource() == CDOResourceImpl.this;
     }
 
     @Override

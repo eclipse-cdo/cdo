@@ -52,6 +52,12 @@ public interface CDOView extends CDOProtocolView, INotifier
 
   public boolean hasConflict();
 
+  /**
+   * @see #setUniqueResourceContents(boolean)
+   * @deprecated This performance tweak is not necessary with EMF 2.5 anymore and is likely to be removed when CDO
+   *             reaches 2.0. In the meantime it can be safely used.
+   */
+  @Deprecated
   public boolean hasUniqueResourceContents();
 
   /**
@@ -65,7 +71,11 @@ public interface CDOView extends CDOProtocolView, INotifier
    * <code>false</code> is only recommended for performance optimization when uniqueness is granted by other means.
    * Violating the uniqueness constraint will result in unpredictable behaviour and possible corruption of the
    * repository!
+   * 
+   * @deprecated This performance tweak is not necessary with EMF 2.5 anymore and is likely to be removed when CDO
+   *             reaches 2.0. In the meantime it can be safely used.
    */
+  @Deprecated
   public void setUniqueResourceContents(boolean uniqueResourceContents);
 
   public boolean isInvalidationNotificationsEnabled();

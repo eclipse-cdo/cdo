@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
@@ -47,14 +48,13 @@ public abstract class PackageClosure implements IPackageClosure
     }
 
     // Handle >1 packages
-    Set<EPackage> result = new HashSet<EPackage>();
+    Set<EPackage> visited = new HashSet<EPackage>();
     for (EPackage ePackage : ePackages)
     {
-      Set<EPackage> packages = calculate(ePackage);
-      result.addAll(packages);
+      doCollectContents(ePackage, visited);
     }
 
-    return result;
+    return visited;
   }
 
   public Set<EPackage> calculate(EPackage ePackage)

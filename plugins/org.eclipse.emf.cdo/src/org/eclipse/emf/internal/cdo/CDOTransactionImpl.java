@@ -7,13 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/233314
- *    Simon McDuff - http://bugs.eclipse.org/215688    
- *    Simon McDuff - http://bugs.eclipse.org/233490    
- *    Simon McDuff - http://bugs.eclipse.org/213402
- *    Simon McDuff - http://bugs.eclipse.org/246620
- *    Simon McDuff - http://bugs.eclipse.org/247143
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -54,9 +48,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -262,6 +254,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
@@ -722,52 +717,46 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  @SuppressWarnings("unchecked")
   private List<CDOPackage> analyzeNewPackages()
   {
-    Set<EClass> usedClasses = new HashSet<EClass>();
+    CDOSessionPackageManagerImpl packageManager = getSession().getPackageManager();
+    Set<EPackage> usedPackages = new HashSet<EPackage>();
+    Set<EPackage> usedNewPackages = new HashSet<EPackage>();
     for (CDOObject object : getNewObjects().values())
     {
-      findAllUsedEClasses(object.eClass(), usedClasses);
+      EPackage ePackage = object.eClass().getEPackage();
+      if (usedPackages.add(ePackage))
+      {
+        EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
+        if (ePackage == topLevelPackage || usedPackages.add(topLevelPackage))
+        {
+          CDOPackage cdoPackage = ModelUtil.getCDOPackage(topLevelPackage, packageManager);
+          if (!cdoPackage.isPersistent() && !cdoPackage.isSystem())
+          {
+            usedNewPackages.add(topLevelPackage);
+          }
+        }
+      }
     }
 
-    return analyzeNewPackages(usedClasses, getSession().getPackageManager());
-  }
-
-  /**
-   * Find all used classes, their super classes and their referenced classes
-   */
-  private static void findAllUsedEClasses(EClass eClass, Set<EClass> foundClasses)
-  {
-    if (foundClasses.add(eClass))
+    if (usedNewPackages.size() > 0)
     {
-      for (EClass superType : eClass.getEAllSuperTypes())
-      {
-        findAllUsedEClasses(superType, foundClasses);
-      }
-
-      for (EReference eReference : eClass.getEAllReferences())
-      {
-        findAllUsedEClasses(eReference.getEReferenceType(), foundClasses);
-      }
+      return analyzeNewPackages(usedNewPackages, packageManager);
     }
+
+    return Collections.EMPTY_LIST;
   }
 
-  private static List<CDOPackage> analyzeNewPackages(Collection<EClass> eClasses,
+  private static List<CDOPackage> analyzeNewPackages(Collection<EPackage> usedTopLevelPackages,
       CDOSessionPackageManagerImpl packageManager)
   {
-    // Calculate the top level EPackages of the used classes
-    Set<EPackage> usedTopLevelPackages = new HashSet<EPackage>();
-    for (EClass eClass : eClasses)
-    {
-      EPackage topLevelPackage = ModelUtil.getTopLevelPackage(eClass.getEPackage());
-      usedTopLevelPackages.add(topLevelPackage);
-    }
+    // Determine which of the corresdonding CDOPackages are new
+    List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
 
     IPackageClosure closure = new CompletePackageClosure();
     usedTopLevelPackages = closure.calculate(usedTopLevelPackages);
 
-    // Determine which of the corresdonding CDOPackages are new
-    List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
     for (EPackage usedPackage : usedTopLevelPackages)
     {
       CDOPackage cdoPackage = ModelUtil.getCDOPackage(usedPackage, packageManager);
@@ -776,7 +765,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalStateException("Missing CDO package: " + usedPackage.getNsURI());
       }
 
-      if (!cdoPackage.isPersistent() && !cdoPackage.isSystem())
+      if (!(cdoPackage.isPersistent() || cdoPackage.isSystem()))
       {
         newPackages.add(cdoPackage);
       }

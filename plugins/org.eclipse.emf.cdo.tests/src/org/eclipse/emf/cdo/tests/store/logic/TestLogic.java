@@ -208,7 +208,7 @@ public abstract class TestLogic extends AbstractOMTest
     {
       this.viewID = viewID;
       protocol = createProtocol();
-      session = repository.getSessionManager().openSession(protocol, true);
+      session = repository.getSessionManager().openSession(protocol);
       protocol.setInfraStructure(session);
       transaction = createTransaction(session);
       transactionCommitContext = transaction.createCommitContext(timeStamp);

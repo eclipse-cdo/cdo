@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ImplSingleRefNonContainerImpl.java,v 1.2 2008-07-10 15:57:40 estepper Exp $
+ * $Id: ImplSingleRefNonContainerImpl.java,v 1.3 2008-09-18 12:56:49 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 

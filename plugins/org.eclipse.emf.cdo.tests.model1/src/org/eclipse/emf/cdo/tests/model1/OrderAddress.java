@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: OrderAddress.java,v 1.2 2008-06-03 06:41:31 estepper Exp $
+ * $Id: OrderAddress.java,v 1.3 2008-09-18 12:57:08 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1;
 

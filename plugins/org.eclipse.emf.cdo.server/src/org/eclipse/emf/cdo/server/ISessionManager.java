@@ -25,5 +25,5 @@ public interface ISessionManager extends IRepositoryElement, IContainer<ISession
   /**
    * @return Never <code>null</code>
    */
-  public ISession openSession(CDOServerProtocol protocol, boolean legacySupportEnabled) throws SessionCreationException;
+  public ISession openSession(CDOServerProtocol protocol) throws SessionCreationException;
 }

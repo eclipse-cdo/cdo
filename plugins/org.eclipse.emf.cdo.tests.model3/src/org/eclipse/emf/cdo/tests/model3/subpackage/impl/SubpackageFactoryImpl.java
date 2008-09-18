@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubpackageFactoryImpl.java,v 1.3 2008-09-08 06:55:57 estepper Exp $
+ * $Id: SubpackageFactoryImpl.java,v 1.4 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.impl;
 
@@ -67,7 +67,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
     switch (eClass.getClassifierID())
     {
     case SubpackagePackage.CLASS2:
-      return (EObject)createClass2();
+      return createClass2();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

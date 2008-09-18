@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
-import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 
 /**
@@ -29,7 +28,7 @@ public class MetaTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      MetaRef metaRef = Model3Factory.eINSTANCE.createMetaRef();
+      MetaRef metaRef = getModel3Factory().createMetaRef();
       metaRef.setEPackageRef(Model3Package.eINSTANCE);
       res.getContents().add(metaRef);
       transaction.commit();

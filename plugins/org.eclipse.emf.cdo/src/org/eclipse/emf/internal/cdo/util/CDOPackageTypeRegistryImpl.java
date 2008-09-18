@@ -12,9 +12,9 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.util.CDOFactory;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
@@ -24,9 +24,12 @@ import org.eclipse.net4j.util.registry.HashMapRegistry;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -38,7 +41,6 @@ import org.eclipse.core.runtime.dynamichelpers.IExtensionTracker;
 import org.eclipse.core.runtime.dynamichelpers.IFilter;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,43 +65,6 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     }
   }
 
-  public CDOPackageType getPackageType(EPackage ePackage)
-  {
-    if (ePackage.getClass() == EPackageImpl.class)
-    {
-      // Dynamic packages can be considered native
-      return CDOPackageType.NATIVE;
-    }
-
-    EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
-    EClass eClass = getAnyEClass(topLevelPackage);
-    if (eClass == null)
-    {
-      throw new IllegalArgumentException("ePackage does not contain classes");
-    }
-
-    try
-    {
-      if (isConverted(eClass))
-      {
-        return CDOPackageType.CONVERTED;
-      }
-    }
-    catch (Throwable ignore)
-    {
-      // Legacy system might not be available
-    }
-
-    // TODO This might not work if the model interface don't extend CDOObject
-    Class<?> instanceClass = eClass.getInstanceClass();
-    if (CDOObject.class.isAssignableFrom(instanceClass))
-    {
-      return CDOPackageType.NATIVE;
-    }
-
-    return CDOPackageType.LEGACY;
-  }
-
   public void register(EPackage ePackage)
   {
     put(ePackage.getNsURI(), getPackageType(ePackage));
@@ -113,11 +78,6 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
   public void registerNative(String uri)
   {
     put(uri, CDOPackageType.NATIVE);
-  }
-
-  public void registerConverted(String uri)
-  {
-    put(uri, CDOPackageType.CONVERTED);
   }
 
   @Override
@@ -191,46 +151,8 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     {
       return CDOPackageType.NATIVE;
     }
-    else
-    {
-      String version = (String)bundle.getHeaders().get(Constants.BUNDLE_VERSION);
-      if (version.endsWith(CDOUtil.CDO_VERSION_SUFFIX))
-      {
-        return CDOPackageType.CONVERTED;
-      }
-      else
-      {
-        return CDOPackageType.LEGACY;
-      }
-    }
-  }
 
-  private EClass getAnyEClass(EPackage ePackage)
-  {
-    for (EClassifier classifier : ePackage.getEClassifiers())
-    {
-      if (classifier instanceof EClass)
-      {
-        return (EClass)classifier;
-      }
-    }
-
-    for (EPackage subpackage : ePackage.getESubpackages())
-    {
-      EClass eClass = getAnyEClass(subpackage);
-      if (eClass != null)
-      {
-        return eClass;
-      }
-    }
-
-    return null;
-  }
-
-  private boolean isConverted(EClass eClass)
-  {
-    Class<?> instanceClass = eClass.getInstanceClass();
-    return org.eclipse.emf.ecore.impl.CDOAware.class.isAssignableFrom(instanceClass);
+    return CDOPackageType.LEGACY;
   }
 
   private void connectExtensionTracker()
@@ -269,5 +191,56 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
         return xpt.equals(target);
       }
     };
+  }
+
+  public static CDOPackageType getPackageType(EPackage ePackage)
+  {
+    if (ePackage.getClass() == EPackageImpl.class)
+    {
+      EFactory factory = ePackage.getEFactoryInstance();
+      if (factory instanceof CDOFactory)
+      {
+        return CDOPackageType.NATIVE;
+      }
+
+      return CDOPackageType.LEGACY;
+    }
+
+    EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
+    EClass eClass = getAnyEClass(topLevelPackage);
+    if (eClass == null)
+    {
+      return CDOPackageType.LEGACY;
+    }
+
+    EObject testObject = EcoreUtil.create(eClass);
+    if (testObject instanceof CDOObject)
+    {
+      return CDOPackageType.NATIVE;
+    }
+
+    return CDOPackageType.LEGACY;
+  }
+
+  private static EClass getAnyEClass(EPackage ePackage)
+  {
+    for (EClassifier classifier : ePackage.getEClassifiers())
+    {
+      if (classifier instanceof EClass)
+      {
+        return (EClass)classifier;
+      }
+    }
+
+    for (EPackage subpackage : ePackage.getESubpackages())
+    {
+      EClass eClass = getAnyEClass(subpackage);
+      if (eClass != null)
+      {
+        return eClass;
+      }
+    }
+
+    return null;
   }
 }

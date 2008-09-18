@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -49,9 +48,9 @@ public class RollbackTest extends AbstractCDOTest
   {
     // Client1
     CDOResource resource1 = transaction1.createResource("/test1");
-    Company company1 = Model1Factory.eINSTANCE.createCompany();
+    Company company1 = getModel1Factory().createCompany();
     resource1.getContents().add(company1);
-    Category category1 = Model1Factory.eINSTANCE.createCategory();
+    Category category1 = getModel1Factory().createCategory();
     company1.getCategories().add(category1);
     transaction1.commit();
 

@@ -37,8 +37,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="OrderDetail">
     <eStructuralFeatures xsi:type="ecore:EReference" name="order" lowerBound="1" eType="#//Order"
         eOpposite="#//Order/orderDetails"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="#//Product"
-        eOpposite="#//Product/orderDetails"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="#//Product1"
+        eOpposite="#//Product1/orderDetails"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PurchaseOrder" eSuperTypes="#//Order">
@@ -56,9 +56,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
         eType="#//Category" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1"
-        eType="#//Product" containment="true"/>
+        eType="#//Product1" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Product">
+  <eClassifiers xsi:type="ecore:EClass" name="Product1">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1"
         eType="#//OrderDetail" eOpposite="#//OrderDetail/product"/>

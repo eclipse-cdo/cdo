@@ -13,8 +13,6 @@
 package org.eclipse.emf.cdo.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
@@ -58,7 +56,6 @@ public final class CDOIDUtil
       return 0L;
 
     case OBJECT:
-    case LEGACY_OBJECT:
       if (id instanceof CDOIDLongImpl)
       {
         return ((CDOIDLongImpl)id).getLongValue();
@@ -168,21 +165,6 @@ public final class CDOIDUtil
       return id;
     }
 
-    case LEGACY_OBJECT:
-    {
-      int packageIndex = fragment.indexOf("/");
-      String packageURI = fragment.substring(0, packageIndex);
-      int classifierIndex = fragment.indexOf("/", packageIndex + 1);
-
-      String strClassifier = fragment.substring(packageIndex, classifierIndex);
-      int classifierID = Integer.valueOf(strClassifier);
-
-      CDOClassRef cdoClassRef = CDOModelUtil.createClassRef(packageURI, classifierID);
-      CDOIDObject id = factory.createCDOIDObject(fragment.substring(classifierIndex + 1));
-      ((AbstractCDOID)id).read(fragment);
-      return id.asLegacy(cdoClassRef);
-    }
-
     default:
       throw new IllegalArgumentException("Invalid ID type : " + uriFragment);
     }
@@ -219,12 +201,6 @@ public final class CDOIDUtil
     case TEMP_META:
     case META:
     case OBJECT:
-      break;
-
-    case LEGACY_OBJECT:
-      CDOIDObject legacy = (CDOIDObject)id;
-      builder.append("/" + legacy.getClassRef().getPackageURI());
-      builder.append("/" + legacy.getClassRef().getClassifierID());
       break;
 
     default:

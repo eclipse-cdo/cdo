@@ -2,13 +2,12 @@
  * <copyright>
  * </copyright>
  *
- * $Id: IMultiRefNonContainerNPL.java,v 1.2 2008-07-10 15:57:45 estepper Exp $
+ * $Id: IMultiRefNonContainerNPL.java,v 1.3 2008-09-18 12:56:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4interfaces;
 
-import org.eclipse.emf.cdo.CDOObject;
-
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>IMulti Ref Non Container NPL</b></em>'. <!--
@@ -22,10 +21,9 @@ import org.eclipse.emf.common.util.EList;
  * 
  * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefNonContainerNPL()
  * @model interface="true" abstract="true"
- * @extends CDOObject
  * @generated
  */
-public interface IMultiRefNonContainerNPL extends CDOObject
+public interface IMultiRefNonContainerNPL extends EObject
 {
   /**
    * Returns the value of the '<em><b>Elements</b></em>' reference list. The list contents are of type

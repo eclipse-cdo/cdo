@@ -18,8 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
@@ -58,11 +57,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = Model1Factory.eINSTANCE.createCategory();
+    final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
     msg("Creating company");
-    final Company companyA = Model1Factory.eINSTANCE.createCompany();
+    final Company companyA = getModel1Factory().createCompany();
 
     msg("Adding categories");
     companyA.getCategories().add(category1A);
@@ -88,7 +87,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening view");
     final CDOTransaction transaction2 = session.openTransaction();
 
-    final Category category1B = (Category)transaction2.getObject(category1A.cdoID(), true);
+    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -162,11 +161,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = Model1Factory.eINSTANCE.createCategory();
+    final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
     msg("Creating company");
-    final Company companyA = Model1Factory.eINSTANCE.createCompany();
+    final Company companyA = getModel1Factory().createCompany();
 
     msg("Adding categories");
     companyA.getCategories().add(category1A);
@@ -194,7 +193,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
-    final Category category1B = (Category)transaction2.getObject(category1A.cdoID(), true);
+    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -258,11 +257,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = Model1Factory.eINSTANCE.createCategory();
+    final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
     msg("Creating company");
-    final Company companyA = Model1Factory.eINSTANCE.createCompany();
+    final Company companyA = getModel1Factory().createCompany();
 
     msg("Adding categories");
     companyA.getCategories().add(category1A);
@@ -292,7 +291,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     final CDOTransaction transaction2 = session2.openTransaction();
     transaction.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);
 
-    final Category category1B = (Category)transaction2.getObject(category1A.cdoID(), true);
+    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -328,11 +327,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = Model1Factory.eINSTANCE.createCategory();
+    final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
     msg("Creating company");
-    final Company companyA = Model1Factory.eINSTANCE.createCompany();
+    final Company companyA = getModel1Factory().createCompany();
 
     msg("Adding categories");
     companyA.getCategories().add(category1A);
@@ -353,7 +352,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final TestAdapter adapter = new TestAdapter();
 
-    customPolicy.getCdoIDs().add(category1A.cdoID());
+    customPolicy.getCdoIDs().add(CDOUtil.getCDOObject(category1A).cdoID());
 
     category1A.eAdapters().add(adapter);
     companyA.eAdapters().add(adapter);
@@ -366,8 +365,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
-    final Category category1B = (Category)transaction2.getObject(category1A.cdoID(), true);
-    final Company company1B = (Company)transaction2.getObject(companyA.cdoID(), true);
+    final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
+    final Company company1B = (Company)transaction2.getObject(CDOUtil.getCDOObject(companyA).cdoID(), true);
 
     msg("Changing name");
     category1B.setName("CHANGED NAME");
@@ -428,11 +427,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating category1");
-    final Category category1A = Model1Factory.eINSTANCE.createCategory();
+    final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
 
     msg("Creating company");
-    final Company companyA = Model1Factory.eINSTANCE.createCompany();
+    final Company companyA = getModel1Factory().createCompany();
 
     msg("Adding categories");
     companyA.getCategories().add(category1A);
@@ -463,13 +462,13 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
-    final Company company1B = (Company)transaction2.getObject(companyA.cdoID(), true);
+    final Company company1B = (Company)transaction2.getObject(CDOUtil.getCDOObject(companyA).cdoID(), true);
 
     msg("Changing name");
     company1B.setName("TEST1");
     company1B.setCity("CITY1");
 
-    final Category category2B = Model1Factory.eINSTANCE.createCategory();
+    final Category category2B = getModel1Factory().createCategory();
     company1B.getCategories().add(category2B);
 
     assertEquals(0, adapter.getNotifications().size());
@@ -502,21 +501,21 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
         assertEquals(true, cdoNotification.hasNext());
       }
 
-      if (notification.getFeature() == Model1Package.eINSTANCE.getCategory_Name())
+      if (notification.getFeature() == getModel1Package().getCategory_Name())
       {
         assertEquals(Notification.SET, notification.getEventType());
         assertEquals("TEST1", notification.getNewStringValue());
       }
-      else if (notification.getFeature() == Model1Package.eINSTANCE.getAddress_City())
+      else if (notification.getFeature() == getModel1Package().getAddress_City())
       {
         assertEquals(Notification.SET, notification.getEventType());
         assertEquals("CITY1", notification.getNewStringValue());
       }
-      else if (notification.getFeature() == Model1Package.eINSTANCE.getCompany_Categories())
+      else if (notification.getFeature() == getModel1Package().getCompany_Categories())
       {
         assertEquals(Notification.ADD, notification.getEventType());
         assertEquals(1, notification.getPosition());
-        assertEquals(transaction.getObject(category2B.cdoID(), true), notification.getNewValue());
+        assertEquals(transaction.getObject(CDOUtil.getCDOObject(category2B).cdoID(), true), notification.getNewValue());
 
       }
       else

@@ -30,11 +30,9 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -389,7 +387,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public InternalCDOObject getObject(CDOID id)
   {
-    return getObject(id, false);
+    return getObject(id, true);
   }
 
   /**
@@ -425,7 +423,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           }
           else
           {
-            localLookupObject = createProxy(id);
+            return null;
           }
         }
 
@@ -501,7 +499,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       throw new ImplementationError("No metaInstance for " + id);
     }
 
-    return new CDOMetaImpl(this, metaInstance, id);
+    return new CDOMetaWrapper(this, metaInstance, id);
   }
 
   /**
@@ -519,18 +517,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     InternalCDOObject object = newInstance(cdoClass);
     cleanObject(object, revision);
     return object;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void registerProxyResource(CDOResourceImpl resource)
-  {
-    resource.cdoInternalSetResource(resource);
-    resource.cdoInternalSetView(this);
-    resource.cdoInternalSetID(getResourceID(resource.getPath()));
-    resource.cdoInternalSetState(CDOState.PROXY);
-    registerObject(resource);
   }
 
   /**
@@ -557,45 +543,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
     object.cdoInternalPostLoad();
-  }
-
-  private InternalCDOObject createProxy(CDOID id)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Creating proxy for " + id);
-    }
-
-    CDOClass cdoClass = getObjectType(id);
-    InternalCDOObject object = newInstance(cdoClass);
-    if (object instanceof CDOResourceImpl)
-    {
-      object.cdoInternalSetResource((CDOResourceImpl)object);
-    }
-
-    object.cdoInternalSetView(this);
-    object.cdoInternalSetID(id);
-    object.cdoInternalSetState(CDOState.PROXY);
-    return object;
-  }
-
-  private CDOClass getObjectType(CDOID id)
-  {
-    CDOClass type = session.getObjectType(id);
-    if (type != null)
-    {
-      return type;
-    }
-
-    if (id.isLegacy())
-    {
-      CDOClassRef typeRef = ((CDOIDObject)id).getClassRef();
-      type = typeRef.resolve(session.getPackageManager());
-      session.registerObjectType(id, type);
-      return type;
-    }
-
-    return session.requestObjectType(id);
   }
 
   public CDOID provideCDOID(Object idOrObject)
@@ -646,17 +593,18 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
     {
-      InternalEObject eObject = (InternalEObject)potentialObject;
-
-      // Only adapt object that are already adapted.
-      // We do not want to create a attach without goign through the normal process.
-      if (EcoreUtil.getAdapter(eObject.eAdapters(), CDOAdapterImpl.class) != null)
+      try
       {
-        InternalCDOObject adapter = FSMUtil.adapt(eObject, this);
-        if (adapter != null)
+        InternalEObject eObject = (InternalEObject)potentialObject;
+        Object legacyListener = FSMUtil.getLegacyWrapper(eObject);
+        if (legacyListener != null)
         {
-          potentialObject = adapter;
+          potentialObject = legacyListener;
         }
+      }
+      catch (Throwable ex)
+      {
+        OM.LOG.warn(ex);
       }
     }
 
@@ -698,6 +646,18 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
 
     return potentialID;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void registerProxyResource(CDOResourceImpl resource)
+  {
+    resource.cdoInternalSetResource(resource);
+    resource.cdoInternalSetView(this);
+    resource.cdoInternalSetID(getResourceID(resource.getPath()));
+    resource.cdoInternalSetState(CDOState.PROXY);
+    registerObject(resource);
   }
 
   public void registerObject(InternalCDOObject object)

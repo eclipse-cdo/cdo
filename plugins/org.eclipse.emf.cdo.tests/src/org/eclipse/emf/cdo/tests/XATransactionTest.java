@@ -15,12 +15,9 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
-import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -53,8 +50,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
-    sessionA.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
-    sessionB.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    sessionA.getPackageRegistry().putEPackage(getModel1Package());
+    sessionB.getPackageRegistry().putEPackage(getModel1Package());
 
     CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
     CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
@@ -62,8 +59,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOResource resA = transactionA1.createResource("/resA");
     CDOResource resB = transactionB1.createResource("/resB");
 
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
-    PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+    Supplier supplier = getModel1Factory().createSupplier();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
 
     supplier.getPurchaseOrders().add(purchaseOrder);
     resB.getContents().add(supplier);
@@ -93,8 +90,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
-    sessionA.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
-    sessionB.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    sessionA.getPackageRegistry().putEPackage(getModel1Package());
+    sessionB.getPackageRegistry().putEPackage(getModel1Package());
 
     CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
     CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
@@ -102,8 +99,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOResource resA = transactionA1.createResource("/resA");
     CDOResource resB = transactionB1.createResource("/resB");
 
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
-    PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+    Supplier supplier = getModel1Factory().createSupplier();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
 
     supplier.getPurchaseOrders().add(purchaseOrder);
     resB.getContents().add(supplier);
@@ -158,8 +155,8 @@ public class XATransactionTest extends AbstractCDOTest
       CDOResource resB = transactionB1.createResource("/resB");
 
       transactionA1.setTransactionStrategy(null);
-      GenRefSingleNonContained objectFromResA = model4Factory.eINSTANCE.createGenRefSingleNonContained();
-      GenRefSingleNonContained objectFromResB = model4Factory.eINSTANCE.createGenRefSingleNonContained();
+      GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
+      GenRefSingleNonContained objectFromResB = getModel4Factory().createGenRefSingleNonContained();
 
       objectFromResA.setElement(objectFromResB);
       resA.getContents().add(objectFromResA);
@@ -198,8 +195,8 @@ public class XATransactionTest extends AbstractCDOTest
 
       CDOResource resA = transactionA1.createResource("/resA");
       CDOResource resB = transactionB1.createResource("/resB");
-      GenRefSingleNonContained objectFromResA = model4Factory.eINSTANCE.createGenRefSingleNonContained();
-      GenRefSingleNonContained objectFromResB = model4Factory.eINSTANCE.createGenRefSingleNonContained();
+      GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
+      GenRefSingleNonContained objectFromResB = getModel4Factory().createGenRefSingleNonContained();
 
       objectFromResA.setElement(objectFromResB);
       resA.getContents().add(objectFromResA);

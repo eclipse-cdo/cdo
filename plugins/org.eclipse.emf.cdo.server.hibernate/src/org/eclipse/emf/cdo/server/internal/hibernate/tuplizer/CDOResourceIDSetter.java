@@ -28,12 +28,14 @@ public class CDOResourceIDSetter extends CDOPropertySetter
     super(tuplizer, propertyName);
   }
 
+  @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     InternalCDORevision revision = (InternalCDORevision)target;
     revision.setResourceID((CDOID)value);
   }
 
+  @Override
   protected boolean isVirtualPropertyAllowed()
   {
     return true;

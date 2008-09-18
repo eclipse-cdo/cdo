@@ -27,12 +27,14 @@ public class CDOContainingFeatureIDSetter extends CDOPropertySetter
     super(tuplizer, propertyName);
   }
 
+  @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     final InternalCDORevision revision = (InternalCDORevision)target;
     revision.setContainingFeatureID((Integer)value);
   }
 
+  @Override
   protected boolean isVirtualPropertyAllowed()
   {
     return true;

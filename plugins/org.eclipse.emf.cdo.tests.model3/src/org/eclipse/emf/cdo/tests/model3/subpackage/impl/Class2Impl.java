@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Class2Impl.java,v 1.1 2008-04-20 09:58:05 estepper Exp $
+ * $Id: Class2Impl.java,v 1.2 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.impl;
 

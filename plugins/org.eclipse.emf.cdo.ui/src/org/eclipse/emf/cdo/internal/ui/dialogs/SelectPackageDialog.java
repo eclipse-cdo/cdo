@@ -150,9 +150,6 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
         CDOPackageType packageType = CDOPackageTypeRegistry.INSTANCE.get(element);
         switch (packageType)
         {
-        case CONVERTED:
-          return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_CONVERTED);
-
         case LEGACY:
           return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_LEGACY);
 

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MangoFactoryImpl.java,v 1.5 2008-08-11 05:11:36 estepper Exp $
+ * $Id: MangoFactoryImpl.java,v 1.6 2008-09-18 12:56:15 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 

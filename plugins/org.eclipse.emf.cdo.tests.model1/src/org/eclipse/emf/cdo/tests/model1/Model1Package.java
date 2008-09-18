@@ -129,16 +129,6 @@ public interface Model1Package extends EPackage
   int ORDER_DETAIL = 5;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl <em>Product</em>}' class. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see org.eclipse.emf.cdo.tests.model1.impl.ProductImpl
-   * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getProduct()
-   * @generated
-   */
-  int PRODUCT = 9;
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Address <em>Address</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -550,12 +540,22 @@ public interface Model1Package extends EPackage
   int CATEGORY_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl <em>Product1</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model1.impl.Product1Impl
+   * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getProduct1()
+   * @generated
+   */
+  int PRODUCT1 = 9;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int PRODUCT__NAME = 0;
+  int PRODUCT1__NAME = 0;
 
   /**
    * The feature id for the '<em><b>Order Details</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
@@ -564,7 +564,7 @@ public interface Model1Package extends EPackage
    * @generated
    * @ordered
    */
-  int PRODUCT__ORDER_DETAILS = 1;
+  int PRODUCT1__ORDER_DETAILS = 1;
 
   /**
    * The feature id for the '<em><b>Vat</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -572,15 +572,15 @@ public interface Model1Package extends EPackage
    * @generated
    * @ordered
    */
-  int PRODUCT__VAT = 2;
+  int PRODUCT1__VAT = 2;
 
   /**
-   * The number of structural features of the '<em>Product</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Product1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int PRODUCT_FEATURE_COUNT = 3;
+  int PRODUCT1_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl <em>Order Address</em>}'
@@ -784,49 +784,6 @@ public interface Model1Package extends EPackage
   EAttribute getOrderDetail_Price();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Product <em>Product</em>}'. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for class '<em>Product</em>'.
-   * @see org.eclipse.emf.cdo.tests.model1.Product
-   * @generated
-   */
-  EClass getProduct();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.emf.cdo.tests.model1.Product#getName()
-   * @see #getProduct()
-   * @generated
-   */
-  EAttribute getProduct_Name();
-
-  /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.Product#getOrderDetails
-   * <em>Order Details</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the reference list '<em>Order Details</em>'.
-   * @see org.eclipse.emf.cdo.tests.model1.Product#getOrderDetails()
-   * @see #getProduct()
-   * @generated
-   */
-  EReference getProduct_OrderDetails();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product#getVat <em>Vat</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Vat</em>'.
-   * @see org.eclipse.emf.cdo.tests.model1.Product#getVat()
-   * @see #getProduct()
-   * @generated
-   */
-  EAttribute getProduct_Vat();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderAddress <em>Order Address</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -901,6 +858,49 @@ public interface Model1Package extends EPackage
    * @generated
    */
   EReference getCategory_Products();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Product1 <em>Product1</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Product1</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Product1
+   * @generated
+   */
+  EClass getProduct1();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product1#getName <em>Name</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Product1#getName()
+   * @see #getProduct1()
+   * @generated
+   */
+  EAttribute getProduct1_Name();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.Product1#getOrderDetails
+   * <em>Order Details</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Order Details</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Product1#getOrderDetails()
+   * @see #getProduct1()
+   * @generated
+   */
+  EReference getProduct1_OrderDetails();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product1#getVat <em>Vat</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Vat</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Product1#getVat()
+   * @see #getProduct1()
+   * @generated
+   */
+  EAttribute getProduct1_Vat();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Company <em>Company</em>}'. <!--
@@ -1190,40 +1190,6 @@ public interface Model1Package extends EPackage
     EAttribute ORDER_DETAIL__PRICE = eINSTANCE.getOrderDetail_Price();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.ProductImpl <em>Product</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @see org.eclipse.emf.cdo.tests.model1.impl.ProductImpl
-     * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getProduct()
-     * @generated
-     */
-    EClass PRODUCT = eINSTANCE.getProduct();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute PRODUCT__NAME = eINSTANCE.getProduct_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Order Details</b></em>' reference list feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference PRODUCT__ORDER_DETAILS = eINSTANCE.getProduct_OrderDetails();
-
-    /**
-     * The meta object literal for the '<em><b>Vat</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute PRODUCT__VAT = eINSTANCE.getProduct_Vat();
-
-    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl
      * <em>Order Address</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -1284,6 +1250,40 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EReference CATEGORY__PRODUCTS = eINSTANCE.getCategory_Products();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl <em>Product1</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model1.impl.Product1Impl
+     * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getProduct1()
+     * @generated
+     */
+    EClass PRODUCT1 = eINSTANCE.getProduct1();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PRODUCT1__NAME = eINSTANCE.getProduct1_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Order Details</b></em>' reference list feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference PRODUCT1__ORDER_DETAILS = eINSTANCE.getProduct1_OrderDetails();
+
+    /**
+     * The meta object literal for the '<em><b>Vat</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PRODUCT1__VAT = eINSTANCE.getProduct1_Vat();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl <em>Company</em>}'

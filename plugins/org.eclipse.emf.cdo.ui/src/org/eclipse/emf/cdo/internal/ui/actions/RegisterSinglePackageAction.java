@@ -54,9 +54,6 @@ public class RegisterSinglePackageAction extends RegisterPackagesAction
   {
     switch (packageType)
     {
-    case CONVERTED:
-      return SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE_CONVERTED);
-
     case LEGACY:
       return SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE_LEGACY);
 

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2FactoryImpl.java,v 1.3 2008-08-11 05:11:49 estepper Exp $
+ * $Id: Model2FactoryImpl.java,v 1.4 2008-09-18 12:56:55 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 

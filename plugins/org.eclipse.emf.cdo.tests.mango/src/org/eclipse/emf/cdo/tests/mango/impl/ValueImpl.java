@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ValueImpl.java,v 1.2 2008-02-23 10:00:34 estepper Exp $
+ * $Id: ValueImpl.java,v 1.3 2008-09-18 12:56:15 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 

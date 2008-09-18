@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
-
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.PreferenceHistory;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -54,20 +52,11 @@ public class OpenSessionDialog extends TitleAreaDialog
 
   private PreferenceButton automaticButton;
 
-  private PreferenceButton legacyButton;
-
   private String serverDescription;
 
   private String repositoryName;
 
   private boolean automaticPackageRegistry;
-
-  private boolean legacyModelSupport;
-
-  static
-  {
-    OM.PREF_LEGACY_MODEL_SUPPORT.setValue(FSMUtil.isLegacySystemAvailable());
-  }
 
   public OpenSessionDialog(IWorkbenchPage page)
   {
@@ -94,11 +83,6 @@ public class OpenSessionDialog extends TitleAreaDialog
   public boolean isAutomaticPackageRegistry()
   {
     return automaticPackageRegistry;
-  }
-
-  public boolean isLegacyModelSupport()
-  {
-    return legacyModelSupport;
   }
 
   @Override
@@ -138,10 +122,6 @@ public class OpenSessionDialog extends TitleAreaDialog
     automaticButton = new PreferenceButton(composite, SWT.CHECK, "Automatic Package Registry",
         OM.PREF_AUTOMATIC_PACKAGE_REGISTY);
 
-    new Label(composite, SWT.NONE);
-    legacyButton = new PreferenceButton(composite, SWT.CHECK, "Legacy Model Support", OM.PREF_LEGACY_MODEL_SUPPORT);
-    legacyButton.getButton().setEnabled(FSMUtil.isLegacySystemAvailable());
-
     connectorText.setFocus();
     connectorText.getCombo().addFocusListener(new FocusListener()
     {
@@ -171,7 +151,6 @@ public class OpenSessionDialog extends TitleAreaDialog
     serverDescription = connectorText.getText(true);
     repositoryName = repositoryText.getText(true);
     automaticPackageRegistry = automaticButton.getSelection(true);
-    legacyModelSupport = legacyButton.getSelection(true);
     super.okPressed();
   }
 

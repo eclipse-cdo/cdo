@@ -6,7 +6,7 @@
  */
 package org.eclipse.emf.cdo.tests.model1;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Order Detail</b></em>'. <!-- end-user-doc -->
@@ -21,10 +21,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderDetail()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface OrderDetail extends CDOObject
+public interface OrderDetail extends EObject
 {
   /**
    * Returns the value of the '<em><b>Order</b></em>' container reference. It is bidirectional and its opposite is '
@@ -57,7 +56,7 @@ public interface OrderDetail extends CDOObject
 
   /**
    * Returns the value of the '<em><b>Product</b></em>' reference. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.tests.model1.Product#getOrderDetails <em>Order Details</em>}'. <!-- begin-user-doc -->
+   * {@link org.eclipse.emf.cdo.tests.model1.Product1#getOrderDetails <em>Order Details</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Product</em>' reference isn't clear, there really should be more of a description
    * here...
@@ -65,13 +64,13 @@ public interface OrderDetail extends CDOObject
    * <!-- end-user-doc -->
    * 
    * @return the value of the '<em>Product</em>' reference.
-   * @see #setProduct(Product)
+   * @see #setProduct(Product1)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderDetail_Product()
-   * @see org.eclipse.emf.cdo.tests.model1.Product#getOrderDetails
+   * @see org.eclipse.emf.cdo.tests.model1.Product1#getOrderDetails
    * @model opposite="orderDetails"
    * @generated
    */
-  Product getProduct();
+  Product1 getProduct();
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getProduct <em>Product</em>}' reference.
@@ -82,7 +81,7 @@ public interface OrderDetail extends CDOObject
    * @see #getProduct()
    * @generated
    */
-  void setProduct(Product value);
+  void setProduct(Product1 value);
 
   /**
    * Returns the value of the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc -->

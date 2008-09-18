@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ISingleRefContainer.java,v 1.2 2008-07-10 15:57:45 estepper Exp $
+ * $Id: ISingleRefContainer.java,v 1.3 2008-09-18 12:56:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4interfaces;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>ISingle Ref Container</b></em>'. <!--
@@ -20,10 +20,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getISingleRefContainer()
  * @model interface="true" abstract="true"
- * @extends CDOObject
  * @generated
  */
-public interface ISingleRefContainer extends CDOObject
+public interface ISingleRefContainer extends EObject
 {
   /**
    * Returns the value of the '<em><b>Element</b></em>' containment reference. It is bidirectional and its opposite is '

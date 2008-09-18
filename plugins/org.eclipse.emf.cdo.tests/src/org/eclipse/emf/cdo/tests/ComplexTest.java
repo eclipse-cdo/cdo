@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -60,7 +61,7 @@ public class ComplexTest extends AbstractCDOTest
 {
   private static long uniqueCounter = System.currentTimeMillis();
 
-  private model4Factory factory = model4Factory.eINSTANCE;
+  private model4Factory factory = getModel4Factory();
 
   private CDOResource resource1 = null;
 
@@ -571,12 +572,12 @@ public class ComplexTest extends AbstractCDOTest
     for (EObject o : elementToRemove)
     {
       MultiContainedElement element_work = (MultiContainedElement)o;
-      assertEquals(resource1FromTx2, element_work.cdoResource());
+      assertEquals(resource1FromTx2, CDOUtil.getCDOObject(element_work).cdoResource());
       assertEquals(resource1FromTx2, element_work.eResource());
 
       container.getElements().add(element_work);
 
-      assertEquals(null, element_work.cdoResource());
+      assertEquals(null, CDOUtil.getCDOObject(element_work).cdoResource());
       assertEquals(resource2, element_work.eResource());
       transaction2.commit();
     }
@@ -600,13 +601,13 @@ public class ComplexTest extends AbstractCDOTest
 
     assertTrue(element.getParent() == container2);
     assertTrue(element.eContainer() == container2);
-    assertTrue(element.cdoResource() == null);
+    assertTrue(CDOUtil.getCDOObject(element).cdoResource() == null);
 
     assertTrue(container1.getElement() == null);
-    assertTrue(container1.cdoResource() == resource1);
+    assertTrue(CDOUtil.getCDOObject(container1).cdoResource() == resource1);
 
     assertTrue(container2.getElement() == element);
-    assertTrue(container2.cdoResource() == resource2);
+    assertTrue(CDOUtil.getCDOObject(container2).cdoResource() == resource2);
   }
 
   public void testMigrateContainmentMulti()
@@ -632,19 +633,19 @@ public class ComplexTest extends AbstractCDOTest
 
     assertTrue(elementA.getParent() == container2);
     assertTrue(elementA.eContainer() == container2);
-    assertTrue(elementA.cdoResource() == null);
+    assertTrue(CDOUtil.getCDOObject(elementA).cdoResource() == null);
     assertTrue(elementA.eResource() == resource2);
 
     assertTrue(elementB.getParent() == container1);
     assertTrue(elementB.eContainer() == container1);
-    assertTrue(elementB.cdoResource() == null);
+    assertTrue(CDOUtil.getCDOObject(elementB).cdoResource() == null);
     assertTrue(elementB.eResource() == resource1);
 
-    assertTrue(container1.cdoResource() == resource1);
+    assertTrue(CDOUtil.getCDOObject(container1).cdoResource() == resource1);
     assertEquals(1, container1.getElements().size());
     assertEquals(elementB, container1.getElements().get(0));
 
-    assertTrue(container2.cdoResource() == resource2);
+    assertTrue(CDOUtil.getCDOObject(container2).cdoResource() == resource2);
     assertEquals(1, container2.getElements().size());
     assertEquals(elementA, container2.getElements().get(0));
   }

@@ -69,7 +69,7 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     throw new UnsupportedOperationException();
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
+  public CloseableIterator<CDOID> readObjectIDs()
   {
     throw new UnsupportedOperationException();
   }

@@ -30,8 +30,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 
   private String repositoryName;
 
-  private boolean legacySupportEnabled;
-
   private IFailOverStrategy failOverStrategy;
 
   private CDOPackageRegistry packageRegistry;
@@ -66,17 +64,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.repositoryName = repositoryName;
   }
 
-  public boolean isLegacySupportEnabled()
-  {
-    return legacySupportEnabled;
-  }
-
-  public void setLegacySupportEnabled(boolean enabled)
-  {
-    checkNotOpen();
-    legacySupportEnabled = enabled;
-  }
-
   public IFailOverStrategy getFailOverStrategy()
   {
     return failOverStrategy;
@@ -105,14 +92,20 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.packageRegistry = packageRegistry;
   }
 
-  public void setSelfPopulatingPackageRegistry()
+  /**
+   * @since 2.0
+   */
+  public void setEagerPackageRegistry()
   {
-    setPackageRegistry(CDOUtil.createSelfPopulatingPackageRegistry());
+    setPackageRegistry(CDOUtil.createEagerPackageRegistry());
   }
 
-  public void setDemandPopulatingPackageRegistry()
+  /**
+   * @since 2.0
+   */
+  public void setLazyPackageRegistry()
   {
-    setPackageRegistry(CDOUtil.createDemandPopulatingPackageRegistry());
+    setPackageRegistry(CDOUtil.createLazyPackageRegistry());
   }
 
   /**
@@ -150,7 +143,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session = new CDOSessionImpl();
       session.setConnector(connector);
       session.setRepositoryName(repositoryName);
-      session.setLegacySupportEnabled(legacySupportEnabled);
       session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
       session.getRevisionManager().setCache(revisionCache);

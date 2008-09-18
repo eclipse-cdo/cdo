@@ -17,15 +17,16 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Category;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -50,29 +51,29 @@ public class StateMachineTest extends AbstractCDOTest
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
 
     // Attach single object
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
     resource.getContents().add(supplier);
     assertNew(supplier, transaction);
-    assertEquals(transaction, supplier.cdoView());
-    assertEquals(resource, supplier.cdoResource());
+    assertEquals(transaction, CDOUtil.getCDOObject(supplier).cdoView());
+    assertEquals(resource, CDOUtil.getCDOObject(supplier).cdoResource());
     assertEquals(resource, supplier.eResource());
     assertEquals(null, supplier.eContainer());
 
     // Attach object tree
-    Category cat1 = Model1Factory.eINSTANCE.createCategory();
+    Category cat1 = getModel1Factory().createCategory();
     cat1.setName("CAT1");
-    Category cat2 = Model1Factory.eINSTANCE.createCategory();
+    Category cat2 = getModel1Factory().createCategory();
     cat2.setName("CAT2");
     cat1.getCategories().add(cat2);
-    Product p1 = Model1Factory.eINSTANCE.createProduct();
+    Product1 p1 = getModel1Factory().createProduct1();
     p1.setName("P1");
     cat1.getProducts().add(p1);
-    Product p2 = Model1Factory.eINSTANCE.createProduct();
+    Product1 p2 = getModel1Factory().createProduct1();
     p2.setName("P2");
     cat1.getProducts().add(p2);
-    Product p3 = Model1Factory.eINSTANCE.createProduct();
+    Product1 p3 = getModel1Factory().createProduct1();
     p3.setName("P3");
     cat2.getProducts().add(p3);
     assertTransient(cat1);
@@ -90,12 +91,12 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void _____test_TRANSIENT_with_DETACH() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
     try
     {
-      CDOStateMachine.INSTANCE.detach((InternalCDOObject)supplier);
+      detach(supplier);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -106,28 +107,28 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_TRANSIENT_with_READ() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
-    CDOStateMachine.INSTANCE.read((InternalCDOObject)supplier);
+    read(supplier);
   }
 
   public void test_TRANSIENT_with_WRITE() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
-    CDOStateMachine.INSTANCE.write((InternalCDOObject)supplier);
+    write(supplier);
   }
 
   public void test_TRANSIENT_with_INVALIDATE() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
     try
     {
-      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)supplier, TIMESTAMP);
+      invalidate(supplier, TIMESTAMP);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -138,21 +139,21 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_TRANSIENT_with_RELOAD() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
-    CDOStateMachine.INSTANCE.reload((InternalCDOObject)supplier);
+    testReload(supplier);
     assertTransient(supplier);
   }
 
   public void test_TRANSIENT_with_COMMIT() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
     try
     {
-      CDOStateMachine.INSTANCE.commit((InternalCDOObject)supplier, new CommitTransactionResult(12345678L));
+      commit(supplier, new CommitTransactionResult(12345678L));
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -163,14 +164,14 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_TRANSIENT_with_ROLLBACK() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     assertTransient(supplier);
 
     // Rollback locally
     try
     {
-      CDOStateMachine.INSTANCE.rollback((InternalCDOObject)supplier, false);
+      rollback(supplier, false);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -181,7 +182,7 @@ public class StateMachineTest extends AbstractCDOTest
     // Rollback remotely
     try
     {
-      CDOStateMachine.INSTANCE.rollback((InternalCDOObject)supplier, true);
+      rollback(supplier, true);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -194,12 +195,13 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_PREPARED_with_ATTACH() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
+    setState(supplier, CDOState.PREPARED);
+
     try
     {
-      attach(supplier);
+      testAttach(CDOUtil.getCDOObject(supplier));
       fail("Expected NullPointerException due to revision==null");
     }
     catch (NullPointerException ex)
@@ -209,12 +211,13 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_PREPARED_with_DETACH() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
+    setState(supplier, CDOState.PREPARED);
+
     try
     {
-      CDOStateMachine.INSTANCE.detach((InternalCDOObject)supplier);
+      detach(supplier);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -225,21 +228,22 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_PREPARED_with_READ() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
-    CDOStateMachine.INSTANCE.read((InternalCDOObject)supplier);
-    assertEquals(CDOState.PREPARED, supplier.cdoState());
+    setState(supplier, CDOState.PREPARED);
+    read(supplier);
+    assertEquals(CDOState.PREPARED, CDOUtil.getCDOObject(supplier).cdoState());
   }
 
   public void test_PREPARED_with_WRITE() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
+    setState(supplier, CDOState.PREPARED);
+
     try
     {
-      CDOStateMachine.INSTANCE.write((InternalCDOObject)supplier);
+      write(supplier);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -250,12 +254,13 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_PREPARED_with_INVALIDATE() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
+    setState(supplier, CDOState.PREPARED);
+
     try
     {
-      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)supplier, TIMESTAMP);
+      invalidate(supplier, TIMESTAMP);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -266,12 +271,13 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_PREPARED_with_RELOAD() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
+    setState(supplier, CDOState.PREPARED);
+
     try
     {
-      reload(supplier);
+      testReload(CDOUtil.getCDOObject(supplier));
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -282,12 +288,13 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_PREPARED_with_COMMIT() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
+    setState(supplier, CDOState.PREPARED);
+
     try
     {
-      CDOStateMachine.INSTANCE.commit((InternalCDOObject)supplier, new CommitTransactionResult(TIMESTAMP));
+      commit(supplier, new CommitTransactionResult(TIMESTAMP));
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -298,12 +305,13 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_PREPARED_with_ROLLBACK() throws Exception
   {
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
-    ((InternalCDOObject)supplier).cdoInternalSetState(CDOState.PREPARED);
+    setState(supplier, CDOState.PREPARED);
+
     try
     {
-      CDOStateMachine.INSTANCE.rollback((InternalCDOObject)supplier, false);
+      rollback(supplier, false);
       fail("Expected IllegalStateException");
     }
     catch (IllegalStateException ex)
@@ -321,7 +329,7 @@ public class StateMachineTest extends AbstractCDOTest
     CDOResource resource = transaction.createResource("/test1");
     assertNew(resource, transaction);
 
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     resource.getContents().add(supplier); // ATTACH
     assertNew(supplier, transaction);
@@ -335,27 +343,27 @@ public class StateMachineTest extends AbstractCDOTest
     CDOResource resource = transaction.createResource("/test1");
     assertNew(resource, transaction);
 
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
     resource.getContents().add(supplier); // ATTACH
     assertNew(supplier, transaction);
 
-    CDOStateMachine.INSTANCE.detach((InternalCDOObject)supplier);
+    detach(supplier);
     assertTransient(supplier);
 
     // Detach object tree
-    Category cat1 = Model1Factory.eINSTANCE.createCategory();
+    Category cat1 = getModel1Factory().createCategory();
     cat1.setName("CAT1");
-    Category cat2 = Model1Factory.eINSTANCE.createCategory();
+    Category cat2 = getModel1Factory().createCategory();
     cat2.setName("CAT2");
     cat1.getCategories().add(cat2);
-    Product p1 = Model1Factory.eINSTANCE.createProduct();
+    Product1 p1 = getModel1Factory().createProduct1();
     p1.setName("P1");
     cat1.getProducts().add(p1);
-    Product p2 = Model1Factory.eINSTANCE.createProduct();
+    Product1 p2 = getModel1Factory().createProduct1();
     p2.setName("P2");
     cat1.getProducts().add(p2);
-    Product p3 = Model1Factory.eINSTANCE.createProduct();
+    Product1 p3 = getModel1Factory().createProduct1();
     p3.setName("P3");
     cat2.getProducts().add(p3);
     resource.getContents().add(cat1);
@@ -382,13 +390,13 @@ public class StateMachineTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
-    Category cat1 = Model1Factory.eINSTANCE.createCategory();
+    Category cat1 = getModel1Factory().createCategory();
     cat1.setName("CAT1");
     resource.getContents().add(cat1);
-    Category cat2 = Model1Factory.eINSTANCE.createCategory();
+    Category cat2 = getModel1Factory().createCategory();
     cat2.setName("CAT2");
     resource.getContents().add(cat2);
-    Product p1 = Model1Factory.eINSTANCE.createProduct();
+    Product1 p1 = getModel1Factory().createProduct1();
     p1.setName("P1");
     cat1.getProducts().add(p1);
     assertNew(cat1, transaction);
@@ -401,10 +409,10 @@ public class StateMachineTest extends AbstractCDOTest
     System.out.println();
     System.out.println();
 
-    CDOID id = p1.cdoID();
+    CDOID id = CDOUtil.getCDOObject(p1).cdoID();
     cat2.getProducts().add(p1);
     assertNew(p1, transaction);
-    assertEquals(id, p1.cdoID());
+    assertEquals(id, CDOUtil.getCDOObject(p1).cdoID());
   }
 
   public void test_NEW_with_READ() throws Exception
@@ -581,14 +589,85 @@ public class StateMachineTest extends AbstractCDOTest
     assertTrue("Expected FAIL transition", ex.getMessage().startsWith("Failing event "));
   }
 
-  private static void attach(CDOObject object) throws Exception
+  private static void setState(EObject object, CDOState state)
   {
-    invokeMethod(object, "testAttach");
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      ((InternalCDOObject)cdoObject).cdoInternalSetState(state);
+    }
   }
 
-  private static void reload(CDOObject object) throws Exception
+  private static void detach(EObject object)
   {
-    invokeMethod(object, "testReload");
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      CDOStateMachine.INSTANCE.detach((InternalCDOObject)cdoObject);
+    }
+  }
+
+  private static void read(EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      CDOStateMachine.INSTANCE.read((InternalCDOObject)cdoObject);
+    }
+  }
+
+  private static void write(EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      CDOStateMachine.INSTANCE.write((InternalCDOObject)cdoObject);
+    }
+  }
+
+  private static void invalidate(EObject object, long timeStamp)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, timeStamp);
+    }
+  }
+
+  private static void commit(EObject object, CommitTransactionResult result)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      CDOStateMachine.INSTANCE.commit((InternalCDOObject)cdoObject, result);
+    }
+  }
+
+  private static void rollback(EObject object, boolean remote)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      CDOStateMachine.INSTANCE.rollback((InternalCDOObject)cdoObject, remote);
+    }
+  }
+
+  private static void testAttach(EObject object) throws Exception
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      invokeMethod(cdoObject, "testAttach");
+    }
+  }
+
+  private static void testReload(EObject object) throws Exception
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (cdoObject != null)
+    {
+      invokeMethod(cdoObject, "testReload");
+    }
   }
 
   private static void invokeMethod(CDOObject object, String methodName) throws Exception

@@ -14,8 +14,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Category;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 
 /**
@@ -26,7 +25,7 @@ public class EnumTest extends AbstractCDOTest
   public void testTransient() throws Exception
   {
     {
-      Product product = Model1Factory.eINSTANCE.createProduct();
+      Product1 product = getModel1Factory().createProduct1();
       product.setName("Normal Product");
       product.setVat(VAT.VAT7);
 
@@ -42,7 +41,7 @@ public class EnumTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
-      Product product = (Product)resource.getContents().get(0);
+      Product1 product = (Product1)resource.getContents().get(0);
       assertEquals(VAT.VAT7, product.getVat());
 
       product.setVat(VAT.VAT15);
@@ -54,7 +53,7 @@ public class EnumTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
-      Product product = (Product)resource.getContents().get(0);
+      Product1 product = (Product1)resource.getContents().get(0);
       assertEquals(VAT.VAT15, product.getVat());
       session.close();
     }
@@ -63,13 +62,13 @@ public class EnumTest extends AbstractCDOTest
   public void testAttached() throws Exception
   {
     {
-      Category category = Model1Factory.eINSTANCE.createCategory();
+      Category category = getModel1Factory().createCategory();
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(category);
 
-      Product product = Model1Factory.eINSTANCE.createProduct();
+      Product1 product = getModel1Factory().createProduct1();
       product.setName("Normal Product");
       product.setVat(VAT.VAT7);
       category.getProducts().add(product);
@@ -83,7 +82,7 @@ public class EnumTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Category category = (Category)resource.getContents().get(0);
-      Product product = category.getProducts().get(0);
+      Product1 product = category.getProducts().get(0);
       assertEquals(VAT.VAT7, product.getVat());
 
       product.setVat(VAT.VAT15);
@@ -96,7 +95,7 @@ public class EnumTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/my/resource");
       Category category = (Category)resource.getContents().get(0);
-      Product product = category.getProducts().get(0);
+      Product1 product = category.getProducts().get(0);
       assertEquals(VAT.VAT15, product.getVat());
       session.close();
     }

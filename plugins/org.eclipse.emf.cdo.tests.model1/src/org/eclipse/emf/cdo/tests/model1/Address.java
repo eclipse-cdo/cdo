@@ -6,7 +6,7 @@
  */
 package org.eclipse.emf.cdo.tests.model1;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Address</b></em>'. <!-- end-user-doc -->
@@ -21,10 +21,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getAddress()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface Address extends CDOObject
+public interface Address extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->

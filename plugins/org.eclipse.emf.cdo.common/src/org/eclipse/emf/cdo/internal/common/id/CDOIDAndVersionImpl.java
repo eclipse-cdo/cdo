@@ -33,15 +33,15 @@ public final class CDOIDAndVersionImpl implements CDOIDAndVersion
     this.version = version;
   }
 
-  public CDOIDAndVersionImpl(CDODataInput in, boolean asLegacy) throws IOException
+  public CDOIDAndVersionImpl(CDODataInput in) throws IOException
   {
-    id = in.readCDOID(asLegacy);
+    id = in.readCDOID();
     version = in.readInt();
   }
 
-  public void write(CDODataOutput out, boolean asLegacy) throws IOException
+  public void write(CDODataOutput out) throws IOException
   {
-    out.writeCDOID(id, asLegacy);
+    out.writeCDOID(id);
     out.writeInt(version);
   }
 

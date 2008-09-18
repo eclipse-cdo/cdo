@@ -636,11 +636,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (object instanceof CDOResourceImpl)
     {
-      register(lastSavepoint.getNewResources(), object);
+      registerNew(lastSavepoint.getNewResources(), object);
     }
     else
     {
-      register(lastSavepoint.getNewObjects(), object);
+      registerNew(lastSavepoint.getNewObjects(), object);
     }
   }
 
@@ -695,12 +695,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       TRACER.format("Registering dirty object {0}", object);
     }
 
-    registerFeatureDelta(object, featureDelta);
-    register(lastSavepoint.getDirtyObjects(), object);
+    if (featureDelta != null)
+    {
+      registerFeatureDelta(object, featureDelta);
+    }
+
+    registerNew(lastSavepoint.getDirtyObjects(), object);
   }
 
+  /**
+   * TODO Simon: Should this method go to CDOSavePointImpl?
+   */
   @SuppressWarnings("unchecked")
-  private void register(Map map, InternalCDOObject object)
+  private void registerNew(Map map, InternalCDOObject object)
   {
     Object old = map.put(object.cdoID(), object);
     if (old != null)

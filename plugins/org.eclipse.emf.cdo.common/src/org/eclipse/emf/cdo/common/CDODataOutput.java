@@ -52,11 +52,7 @@ public interface CDODataOutput extends ExtendedDataOutput
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  public void writeCDOID(CDOID id, boolean asLegacy) throws IOException;
-
   public void writeCDOID(CDOID id) throws IOException;
-
-  public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion, boolean asLegacy) throws IOException;
 
   public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion) throws IOException;
 

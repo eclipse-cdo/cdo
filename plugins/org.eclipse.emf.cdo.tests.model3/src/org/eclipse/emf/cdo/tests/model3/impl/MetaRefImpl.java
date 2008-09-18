@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MetaRefImpl.java,v 1.1 2008-09-08 06:55:56 estepper Exp $
+ * $Id: MetaRefImpl.java,v 1.2 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 

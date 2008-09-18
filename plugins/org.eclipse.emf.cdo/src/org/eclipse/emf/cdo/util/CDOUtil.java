@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
@@ -22,7 +23,6 @@ import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.CDOViewSetImpl;
 import org.eclipse.emf.internal.cdo.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.LegacySupportEnabler;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -37,10 +37,14 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -67,17 +71,17 @@ public final class CDOUtil
   /**
    * @since 2.0
    */
-  public static CDOPackageRegistry createSelfPopulatingPackageRegistry()
+  public static CDOPackageRegistry createEagerPackageRegistry()
   {
-    return new CDOPackageRegistryImpl.SelfPopulating();
+    return new CDOPackageRegistryImpl.Eager();
   }
 
   /**
    * @since 2.0
    */
-  public static CDOPackageRegistry createDemandPopulatingPackageRegistry()
+  public static CDOPackageRegistry createLazyPackageRegistry()
   {
-    return new CDOPackageRegistryImpl.DemandPopulating();
+    return new CDOPackageRegistryImpl.Lazy();
   }
 
   /**
@@ -165,10 +169,12 @@ public final class CDOUtil
     return viewSet;
   }
 
-  public static void prepareContainer(IManagedContainer container, boolean legacySupportEnabled)
+  /**
+   * @since 2.0
+   */
+  public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new CDOClientProtocolFactory());
-    container.addPostProcessor(new LegacySupportEnabler(legacySupportEnabled));
   }
 
   public static EPackage createEPackage(String name, String nsPrefix, String nsURI)
@@ -221,5 +227,55 @@ public final class CDOUtil
       InternalCDOObject content = it.next();
       load(content, view);
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static EObject getEObject(EObject object)
+  {
+    if (object instanceof InternalCDOObject)
+    {
+      return ((InternalCDOObject)object).cdoInternalInstance();
+    }
+
+    return object;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOObject getCDOObject(EObject object)
+  {
+    if (object instanceof CDOObject)
+    {
+      return (CDOObject)object;
+    }
+
+    return (CDOObject)FSMUtil.getLegacyWrapper((InternalEObject)object);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOObject getCDOObject(EModelElement object, CDOView view)
+  {
+    return FSMUtil.adaptMeta((InternalEObject)object, view);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOObject getCDOObject(EGenericType object, CDOView view)
+  {
+    return FSMUtil.adaptMeta((InternalEObject)object, view);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOObject getCDOObject(EStringToStringMapEntryImpl object, CDOView view)
+  {
+    return FSMUtil.adaptMeta(object, view);
   }
 }

@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -96,8 +96,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
       return createSalesOrder();
     case Model1Package.CATEGORY:
       return createCategory();
-    case Model1Package.PRODUCT:
-      return createProduct();
+    case Model1Package.PRODUCT1:
+      return createProduct1();
     case Model1Package.ORDER_ADDRESS:
       return createOrderAddress();
     default:
@@ -188,17 +188,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * 
    * @generated
    */
-  public Product createProduct()
-  {
-    ProductImpl product = new ProductImpl();
-    return product;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public OrderAddress createOrderAddress()
   {
     OrderAddressImpl orderAddress = new OrderAddressImpl();
@@ -240,6 +229,17 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     CategoryImpl category = new CategoryImpl();
     return category;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Product1 createProduct1()
+  {
+    Product1Impl product1 = new Product1Impl();
+    return product1;
   }
 
   /**

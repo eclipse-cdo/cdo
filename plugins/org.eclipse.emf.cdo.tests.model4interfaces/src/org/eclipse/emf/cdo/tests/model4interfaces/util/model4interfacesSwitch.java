@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4interfacesSwitch.java,v 1.3 2008-08-11 05:11:27 estepper Exp $
+ * $Id: model4interfacesSwitch.java,v 1.4 2008-09-18 12:56:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4interfaces.util;
 

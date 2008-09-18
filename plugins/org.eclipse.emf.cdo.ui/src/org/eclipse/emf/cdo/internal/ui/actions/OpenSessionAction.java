@@ -55,11 +55,6 @@ public final class OpenSessionAction extends LongRunningAction
         builder.append("&automaticPackageRegistry=true");
       }
 
-      if (dialog.isLegacyModelSupport())
-      {
-        builder.append("&legacySupportEnabled=true");
-      }
-
       description = builder.toString();
     }
     else

@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: IMultiRefNonContainedElement.java,v 1.2 2008-07-10 15:57:45 estepper Exp $
+ * $Id: IMultiRefNonContainedElement.java,v 1.3 2008-09-18 12:56:27 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4interfaces;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>IMulti Ref Non Contained Element</b></em>'. <!--
@@ -20,10 +20,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIMultiRefNonContainedElement()
  * @model interface="true" abstract="true"
- * @extends CDOObject
  * @generated
  */
-public interface IMultiRefNonContainedElement extends CDOObject
+public interface IMultiRefNonContainedElement extends EObject
 {
   /**
    * Returns the value of the '<em><b>Parent</b></em>' reference. It is bidirectional and its opposite is '

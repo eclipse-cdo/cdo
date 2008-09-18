@@ -240,6 +240,66 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   /**
    * @author Eike Stepper
    */
+  public static class Eager extends SessionBound
+  {
+    private static final long serialVersionUID = 1L;
+
+    private IListener typeListener = new ContainerEventAdapter<Map.Entry<String, CDOPackageType>>()
+    {
+      @Override
+      protected void onAdded(IContainer<java.util.Map.Entry<String, CDOPackageType>> container,
+          java.util.Map.Entry<String, CDOPackageType> entry)
+      {
+        addEntry(entry);
+      }
+    };
+
+    public Eager()
+    {
+    }
+
+    @Override
+    protected void sessionActivated()
+    {
+      for (Map.Entry<String, CDOPackageType> entry : CDOPackageTypeRegistry.INSTANCE.entrySet())
+      {
+        addEntry(entry);
+      }
+
+      CDOPackageTypeRegistry.INSTANCE.addListener(typeListener);
+    }
+
+    @Override
+    protected void sessionAboutToDeactivate()
+    {
+      CDOPackageTypeRegistry.INSTANCE.removeListener(typeListener);
+    }
+
+    protected void addEntry(Map.Entry<String, CDOPackageType> entry)
+    {
+      CDOPackageType packageType = entry.getValue();
+      if (packageType != CDOPackageType.LEGACY)
+      {
+        String uri = entry.getKey();
+        if (!containsKey(uri))
+        {
+          try
+          {
+            EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
+            putEPackage(ePackage);
+          }
+          catch (RuntimeException ex)
+          {
+            OM.LOG.error(ex);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static class TransactionBound extends SessionBound implements CDOTransactionHandler
   {
     private static final long serialVersionUID = 1L;
@@ -326,73 +386,13 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
   /**
    * @author Eike Stepper
    */
-  public static class SelfPopulating extends SessionBound
-  {
-    private static final long serialVersionUID = 1L;
-
-    private IListener typeListener = new ContainerEventAdapter<Map.Entry<String, CDOPackageType>>()
-    {
-      @Override
-      protected void onAdded(IContainer<java.util.Map.Entry<String, CDOPackageType>> container,
-          java.util.Map.Entry<String, CDOPackageType> entry)
-      {
-        addEntry(entry);
-      }
-    };
-
-    public SelfPopulating()
-    {
-    }
-
-    @Override
-    protected void sessionActivated()
-    {
-      for (Map.Entry<String, CDOPackageType> entry : CDOPackageTypeRegistry.INSTANCE.entrySet())
-      {
-        addEntry(entry);
-      }
-
-      CDOPackageTypeRegistry.INSTANCE.addListener(typeListener);
-    }
-
-    @Override
-    protected void sessionAboutToDeactivate()
-    {
-      CDOPackageTypeRegistry.INSTANCE.removeListener(typeListener);
-    }
-
-    protected void addEntry(Map.Entry<String, CDOPackageType> entry)
-    {
-      CDOPackageType packageType = entry.getValue();
-      if (packageType != CDOPackageType.LEGACY)
-      {
-        String uri = entry.getKey();
-        if (!containsKey(uri))
-        {
-          try
-          {
-            EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
-            putEPackage(ePackage);
-          }
-          catch (RuntimeException ex)
-          {
-            OM.LOG.error(ex);
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class DemandPopulating extends TransactionBound
+  public static class Lazy extends TransactionBound
   {
     private static final long serialVersionUID = 1L;
 
     private Set<EClass> usedClasses = new HashSet<EClass>();
 
-    public DemandPopulating()
+    public Lazy()
     {
     }
 

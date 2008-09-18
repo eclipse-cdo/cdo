@@ -16,11 +16,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
-import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 
 import org.eclipse.emf.common.util.EList;
@@ -49,13 +46,13 @@ public class ContainmentTest extends AbstractCDOTest
   public void testTransientContainment() throws Exception
   {
     msg("Creating supplier");
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
 
     msg("Setting name");
     supplier.setName("Stepper");
 
     msg("Creating company");
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
 
     msg("Adding supplier");
     company.getSuppliers().add(supplier);
@@ -68,13 +65,13 @@ public class ContainmentTest extends AbstractCDOTest
   public void testBasicContainment() throws Exception
   {
     msg("Creating supplier");
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
 
     msg("Setting name");
     supplier.setName("Stepper");
 
     msg("Creating company");
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
 
     msg("Adding supplier");
     company.getSuppliers().add(supplier);
@@ -104,19 +101,19 @@ public class ContainmentTest extends AbstractCDOTest
   public void test3Levels() throws Exception
   {
     msg("Creating category1");
-    Category category1 = Model1Factory.eINSTANCE.createCategory();
+    Category category1 = getModel1Factory().createCategory();
     category1.setName("category1");
 
     msg("Creating category2");
-    Category category2 = Model1Factory.eINSTANCE.createCategory();
+    Category category2 = getModel1Factory().createCategory();
     category2.setName("category2");
 
     msg("Creating category3");
-    Category category3 = Model1Factory.eINSTANCE.createCategory();
+    Category category3 = getModel1Factory().createCategory();
     category3.setName("category3");
 
     msg("Creating company");
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
 
     msg("Adding categories");
     company.getCategories().add(category1);
@@ -156,19 +153,19 @@ public class ContainmentTest extends AbstractCDOTest
 
     {
       msg("Creating category1");
-      Category category1 = Model1Factory.eINSTANCE.createCategory();
+      Category category1 = getModel1Factory().createCategory();
       category1.setName("category1");
 
       msg("Creating category2");
-      Category category2 = Model1Factory.eINSTANCE.createCategory();
+      Category category2 = getModel1Factory().createCategory();
       category2.setName("category2");
 
       msg("Creating category3");
-      Category category3 = Model1Factory.eINSTANCE.createCategory();
+      Category category3 = getModel1Factory().createCategory();
       category3.setName("category3");
 
       msg("Creating company");
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
 
       msg("Adding categories");
       company.getCategories().add(category1);
@@ -225,19 +222,19 @@ public class ContainmentTest extends AbstractCDOTest
       CDOSession session = openModel1Session();
 
       msg("Creating category1");
-      Category category1 = Model1Factory.eINSTANCE.createCategory();
+      Category category1 = getModel1Factory().createCategory();
       category1.setName("category1");
 
       msg("Creating category2");
-      Category category2 = Model1Factory.eINSTANCE.createCategory();
+      Category category2 = getModel1Factory().createCategory();
       category2.setName("category2");
 
       msg("Creating category3");
-      Category category3 = Model1Factory.eINSTANCE.createCategory();
+      Category category3 = getModel1Factory().createCategory();
       category3.setName("category3");
 
       msg("Creating company");
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
 
       msg("Adding categories");
       company.getCategories().add(category1);
@@ -292,12 +289,12 @@ public class ContainmentTest extends AbstractCDOTest
 
   public void testSetSingleContainment() throws Exception
   {
-    Address address = Model1Factory.eINSTANCE.createAddress();
+    Address address = getModel1Factory().createAddress();
     address.setName("Stepper");
     address.setStreet("Home Ave. 007");
     address.setCity("Berlin");
 
-    SpecialPurchaseOrder order = Model2Factory.eINSTANCE.createSpecialPurchaseOrder();
+    SpecialPurchaseOrder order = getModel2Factory().createSpecialPurchaseOrder();
     order.setShippingAddress(address);
 
     CDOSession session = openModel2Session();
@@ -317,12 +314,12 @@ public class ContainmentTest extends AbstractCDOTest
   // TODO Re-include TC after fixing detachment
   public void _testUnsetSingleContainment() throws Exception
   {
-    Address address = Model1Factory.eINSTANCE.createAddress();
+    Address address = getModel1Factory().createAddress();
     address.setName("Stepper");
     address.setStreet("Home Ave. 007");
     address.setCity("Berlin");
 
-    SpecialPurchaseOrder order = Model2Factory.eINSTANCE.createSpecialPurchaseOrder();
+    SpecialPurchaseOrder order = getModel2Factory().createSpecialPurchaseOrder();
     order.setShippingAddress(address);
 
     CDOSession session = openModel2Session();
@@ -355,7 +352,7 @@ public class ContainmentTest extends AbstractCDOTest
 
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
-      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      session.getPackageRegistry().putEPackage(getModel1Package());
       Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
       Resource resource2 = transaction.createResource("test");
 
@@ -363,7 +360,7 @@ public class ContainmentTest extends AbstractCDOTest
       EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
 
       EObject container = packageObject.getEFactoryInstance().create(eClass);
-      Order contained = Model1Factory.eINSTANCE.createOrder();
+      Order contained = getModel1Factory().createOrder();
 
       resource1.getContents().add(container);
       resource2.getContents().add(contained);

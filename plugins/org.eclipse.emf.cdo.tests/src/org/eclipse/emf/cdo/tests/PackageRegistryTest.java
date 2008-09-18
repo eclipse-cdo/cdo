@@ -16,18 +16,12 @@ import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.tests.mango.MangoFactory;
-import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
-import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model3.Class1;
-import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
@@ -61,7 +55,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
       company.setName("Eike");
       res.getContents().add(company);
       transaction.commit();
@@ -82,12 +76,12 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     {
       CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+      session.getPackageRegistry().putEPackage(getModel1Package());
       session.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      SpecialPurchaseOrder specialPurchaseOrder = Model2Factory.eINSTANCE.createSpecialPurchaseOrder();
+      SpecialPurchaseOrder specialPurchaseOrder = getModel2Factory().createSpecialPurchaseOrder();
       specialPurchaseOrder.setDiscountCode("12345");
       res.getContents().add(specialPurchaseOrder);
       transaction.commit();
@@ -110,7 +104,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+      PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
       res.getContents().add(purchaseOrder);
 
       transaction.commit();
@@ -118,12 +112,11 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
 
     {
-      CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(MangoPackage.eINSTANCE);
+      CDOSession session = openMangoSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource("/res");
 
-      Value value = MangoFactory.eINSTANCE.createValue();
+      Value value = getMangoFactory().createValue();
       value.setName("V0");
       res.getContents().add(value);
 
@@ -160,7 +153,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res");
 
-    Class1 class1 = Model3Factory.eINSTANCE.createClass1();
+    Class1 class1 = getModel3Factory().createClass1();
     res.getContents().add(class1);
     transaction.commit();
 
@@ -183,7 +176,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      Class1 class1 = Model3Factory.eINSTANCE.createClass1();
+      Class1 class1 = getModel3Factory().createClass1();
       res.getContents().add(class1);
       transaction.commit();
       session.close();
@@ -211,7 +204,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOResource res1 = transaction.createResource("/res1");
       CDOResource res2 = transaction.createResource("/res2");
 
-      Class1 class1 = Model3Factory.eINSTANCE.createClass1();
+      Class1 class1 = getModel3Factory().createClass1();
       Class2 class2 = SubpackageFactory.eINSTANCE.createClass2();
       class1.getClass2().add(class2);
 
@@ -244,23 +237,22 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  public void testSelfPopulating() throws Exception
+  public void testEagerPackageRegistry() throws Exception
   {
-    CDOPackageTypeRegistry.INSTANCE.register(Model1Package.eINSTANCE);
+    CDOPackageTypeRegistry.INSTANCE.register(getModel1Package());
 
     {
       // Create resource in session 1
       CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(REPOSITORY_NAME);
-      configuration.setLegacySupportEnabled(false);
-      configuration.setSelfPopulatingPackageRegistry();
+      configuration.setEagerPackageRegistry();
 
       CDOSession session = configuration.openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
       company.setName("Eike");
       res.getContents().add(company);
       transaction.commit();
@@ -277,23 +269,22 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  public void testDemandPopulating() throws Exception
+  public void testLazyPackageRegistry() throws Exception
   {
-    CDOPackageTypeRegistry.INSTANCE.register(Model1Package.eINSTANCE);
+    CDOPackageTypeRegistry.INSTANCE.register(getModel1Package());
 
     {
       // Create resource in session 1
       CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(REPOSITORY_NAME);
-      configuration.setLegacySupportEnabled(false);
-      configuration.setDemandPopulatingPackageRegistry();
+      configuration.setLazyPackageRegistry();
 
       CDOSession session = configuration.openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
       company.setName("Eike");
       res.getContents().add(company);
       transaction.commit();

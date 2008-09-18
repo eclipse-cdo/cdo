@@ -8,7 +8,7 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
@@ -99,9 +99,9 @@ public class CategoryImpl extends CDOObjectImpl implements Category
    * @generated
    */
   @SuppressWarnings("unchecked")
-  public EList<Product> getProducts()
+  public EList<Product1> getProducts()
   {
-    return (EList<Product>)eGet(Model1Package.Literals.CATEGORY__PRODUCTS, true);
+    return (EList<Product1>)eGet(Model1Package.Literals.CATEGORY__PRODUCTS, true);
   }
 
 } // CategoryImpl

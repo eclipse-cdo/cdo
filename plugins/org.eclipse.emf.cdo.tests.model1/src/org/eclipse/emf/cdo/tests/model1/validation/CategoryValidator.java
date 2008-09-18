@@ -7,7 +7,7 @@
 package org.eclipse.emf.cdo.tests.model1.validation;
 
 import org.eclipse.emf.cdo.tests.model1.Category;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -27,5 +27,5 @@ public interface CategoryValidator
 
   boolean validateCategories(EList<Category> value);
 
-  boolean validateProducts(EList<Product> value);
+  boolean validateProducts(EList<Product1> value);
 }

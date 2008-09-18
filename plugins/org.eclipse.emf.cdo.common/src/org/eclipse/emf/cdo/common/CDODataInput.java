@@ -51,11 +51,7 @@ public interface CDODataInput extends ExtendedDataInput
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  public CDOID readCDOID(boolean asLegacy) throws IOException;
-
   public CDOID readCDOID() throws IOException;
-
-  public CDOIDAndVersion readCDOIDAndVersion(boolean asLegacy) throws IOException;
 
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException;
 

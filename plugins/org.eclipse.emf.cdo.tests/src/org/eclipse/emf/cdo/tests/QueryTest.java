@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.query.CDOQuery;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 
 import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
 
@@ -43,8 +41,8 @@ public class QueryTest extends AbstractCDOTest
 
     CDOResource resource1 = transaction.createResource("/test1");
     objects.add(resource1);
-    Company company1 = Model1Factory.eINSTANCE.createCompany();
-    Category category1 = Model1Factory.eINSTANCE.createCategory();
+    Company company1 = getModel1Factory().createCompany();
+    Category category1 = getModel1Factory().createCategory();
 
     resource1.getContents().add(company1);
     company1.getCategories().add(category1);
@@ -76,8 +74,8 @@ public class QueryTest extends AbstractCDOTest
 
     CDOResource resource1 = transaction.createResource("/test1");
     objects.add(resource1);
-    Company company1 = Model1Factory.eINSTANCE.createCompany();
-    Category category1 = Model1Factory.eINSTANCE.createCategory();
+    Company company1 = getModel1Factory().createCompany();
+    Category category1 = getModel1Factory().createCategory();
 
     resource1.getContents().add(company1);
     company1.getCategories().add(category1);
@@ -91,7 +89,7 @@ public class QueryTest extends AbstractCDOTest
     System.out.println(category1.eClass().getEPackage().getNsURI());
 
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
-    cdoQuery.setParameter("context", Model1Package.eINSTANCE.getCategory());
+    cdoQuery.setParameter("context", getModel1Package().getCategory());
 
     List<Category> queryResult = cdoQuery.getResult(Category.class);
     assertEquals(1, queryResult.size());
@@ -208,7 +206,7 @@ public class QueryTest extends AbstractCDOTest
 
     for (int i = 0; i < number; i++)
     {
-      Category category1 = Model1Factory.eINSTANCE.createCategory();
+      Category category1 = getModel1Factory().createCategory();
       resource1.getContents().add(category1);
     }
 

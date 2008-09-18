@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -208,10 +208,10 @@ public class Model1Switch<T>
       }
       return result;
     }
-    case Model1Package.PRODUCT:
+    case Model1Package.PRODUCT1:
     {
-      Product product = (Product)theEObject;
-      T result = caseProduct(product);
+      Product1 product1 = (Product1)theEObject;
+      T result = caseProduct1(product1);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -306,21 +306,6 @@ public class Model1Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Product</em>'. <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Product</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseProduct(Product object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Order Address</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
    * 
@@ -346,6 +331,21 @@ public class Model1Switch<T>
    * @generated
    */
   public T caseCategory(Category object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Product1</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Product1</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseProduct1(Product1 object)
   {
     return null;
   }

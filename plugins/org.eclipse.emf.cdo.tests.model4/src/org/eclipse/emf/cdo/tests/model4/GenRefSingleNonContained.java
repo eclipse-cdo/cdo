@@ -2,11 +2,9 @@
  * <copyright>
  * </copyright>
  *
- * $Id: GenRefSingleNonContained.java,v 1.2 2008-07-10 15:57:40 estepper Exp $
+ * $Id: GenRefSingleNonContained.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
-
-import org.eclipse.emf.cdo.CDOObject;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -22,10 +20,9 @@ import org.eclipse.emf.ecore.EObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefSingleNonContained()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface GenRefSingleNonContained extends CDOObject
+public interface GenRefSingleNonContained extends EObject
 {
   /**
    * Returns the value of the '<em><b>Element</b></em>' reference. <!-- begin-user-doc -->

@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
-import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
+import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -1203,7 +1203,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         @Override
         protected void objectInvalidated(InternalCDOObject cdoObject)
         {
-          if (cdoObject instanceof CDOLegacyImpl)
+          if (cdoObject instanceof CDOLegacyWrapper)
           {
             CDOStateMachine.INSTANCE.read(cdoObject);
           }

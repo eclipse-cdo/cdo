@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RefSingleNonContained.java,v 1.2 2008-07-10 15:57:40 estepper Exp $
+ * $Id: RefSingleNonContained.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Ref Single Non Contained</b></em>'. <!--
@@ -20,10 +20,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleNonContained()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface RefSingleNonContained extends CDOObject
+public interface RefSingleNonContained extends EObject
 {
   /**
    * Returns the value of the '<em><b>Element</b></em>' reference. It is bidirectional and its opposite is '

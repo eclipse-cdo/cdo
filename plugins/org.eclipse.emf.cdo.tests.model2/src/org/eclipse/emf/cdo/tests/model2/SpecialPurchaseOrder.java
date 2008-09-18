@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SpecialPurchaseOrder.java,v 1.4 2008-06-03 06:41:28 estepper Exp $
+ * $Id: SpecialPurchaseOrder.java,v 1.5 2008-09-18 12:56:56 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 

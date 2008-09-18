@@ -9,7 +9,7 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
@@ -87,9 +87,9 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * 
    * @generated
    */
-  public Product getProduct()
+  public Product1 getProduct()
   {
-    return (Product)eGet(Model1Package.Literals.ORDER_DETAIL__PRODUCT, true);
+    return (Product1)eGet(Model1Package.Literals.ORDER_DETAIL__PRODUCT, true);
   }
 
   /**
@@ -97,7 +97,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * 
    * @generated
    */
-  public void setProduct(Product newProduct)
+  public void setProduct(Product1 newProduct)
   {
     eSet(Model1Package.Literals.ORDER_DETAIL__PRODUCT, newProduct);
   }

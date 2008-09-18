@@ -49,7 +49,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION,
       TransactionCommitContextImpl.class);
 
-  private TransactionPackageManager packageManager = new TransactionPackageManager();
+  private TransactionPackageManager packageManager;
 
   private IStoreWriter storeWriter;
 
@@ -78,6 +78,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   public TransactionCommitContextImpl(Transaction transaction)
   {
     this.transaction = transaction;
+    packageManager = new TransactionPackageManager();
   }
 
   public int getTransactionID()
@@ -452,6 +453,8 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   {
     private List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
 
+    private PackageManager repositoryPackageManager = transaction.getRepository().getPackageManager();
+
     public TransactionPackageManager()
     {
     }
@@ -468,7 +471,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
     public CDOIDObjectFactory getCDOIDObjectFactory()
     {
-      return transaction.getRepository().getPackageManager().getCDOIDObjectFactory();
+      return repositoryPackageManager.getCDOIDObjectFactory();
     }
 
     public CDOPackage lookupPackage(String uri)
@@ -481,17 +484,17 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
         }
       }
 
-      return transaction.getRepository().getPackageManager().lookupPackage(uri);
+      return repositoryPackageManager.lookupPackage(uri);
     }
 
     public CDOCorePackage getCDOCorePackage()
     {
-      return transaction.getRepository().getPackageManager().getCDOCorePackage();
+      return repositoryPackageManager.getCDOCorePackage();
     }
 
     public CDOResourcePackage getCDOResourcePackage()
     {
-      return transaction.getRepository().getPackageManager().getCDOResourcePackage();
+      return repositoryPackageManager.getCDOResourcePackage();
     }
 
     public int getPackageCount()

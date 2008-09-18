@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RefSingleContainedNPL.java,v 1.2 2008-07-10 15:57:40 estepper Exp $
+ * $Id: RefSingleContainedNPL.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Ref Single Contained NPL</b></em>'. <!--
@@ -20,10 +20,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefSingleContainedNPL()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface RefSingleContainedNPL extends CDOObject
+public interface RefSingleContainedNPL extends EObject
 {
   /**
    * Returns the value of the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc -->

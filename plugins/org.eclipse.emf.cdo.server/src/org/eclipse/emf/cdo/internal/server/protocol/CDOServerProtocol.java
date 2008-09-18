@@ -73,11 +73,20 @@ public class CDOServerProtocol extends CDOProtocolImpl
     case CDOProtocolConstants.SIGNAL_VERIFY_REVISION:
       return new VerifyRevisionIndication();
 
-    case CDOProtocolConstants.SIGNAL_QUERY_OBJECT_TYPES:
-      return new QueryObjectTypesIndication();
-
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
       return new CommitTransactionIndication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1:
+      return new CommitTransactionPhase1Indication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2:
+      return new CommitTransactionPhase2Indication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3:
+      return new CommitTransactionPhase3Indication();
+
+    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL:
+      return new CommitTransactionCancelIndication();
 
     case CDOProtocolConstants.SIGNAL_QUERY:
       return new QueryIndication();
@@ -93,18 +102,6 @@ public class CDOServerProtocol extends CDOProtocolImpl
 
     case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
       return new ChangeSubscriptionIndication();
-
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1:
-      return new CommitTransactionPhase1Indication();
-
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2:
-      return new CommitTransactionPhase2Indication();
-
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3:
-      return new CommitTransactionPhase3Indication();
-
-    case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL:
-      return new CommitTransactionCancelIndication();
 
     default:
       return null;

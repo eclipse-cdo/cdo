@@ -7,8 +7,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.MEMStore;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -40,7 +39,7 @@ public class ResourceTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
 
-      Product p = Model1Factory.eINSTANCE.createProduct();
+      Product1 p = getModel1Factory().createProduct1();
       p.setName("test");
       p.setVat(VAT.VAT0);
 
@@ -96,11 +95,11 @@ public class ResourceTest extends AbstractCDOTest
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-    
+
     // Test if Resource is well-formed after CDOResourceFactoryImpl.
     // Adapter will be called right after and could be used!
     transaction.getResourceSet().eAdapters().add(new TestAdapter());
-    
+
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
     assertActive(resource);
@@ -326,7 +325,7 @@ public class ResourceTest extends AbstractCDOTest
 
   private CDOResource createResource(CDOTransaction transaction, String path)
   {
-    Product p = Model1Factory.eINSTANCE.createProduct();
+    Product1 p = getModel1Factory().createProduct1();
     p.setName("test-" + path);
     p.setVat(VAT.VAT0);
 
@@ -337,7 +336,7 @@ public class ResourceTest extends AbstractCDOTest
 
   private CDOResource modifyResource(CDOTransaction transaction, String path)
   {
-    Product p = Model1Factory.eINSTANCE.createProduct();
+    Product1 p = getModel1Factory().createProduct1();
     p.setName("test-" + path + "-modified");
     p.setVat(VAT.VAT0);
 
@@ -357,7 +356,7 @@ public class ResourceTest extends AbstractCDOTest
 
     assertEquals(expected, resources.size());
   }
-  
+
   static class TestAdapter extends AdapterImpl
   {
 
@@ -374,7 +373,7 @@ public class ResourceTest extends AbstractCDOTest
     @Override
     public void setTarget(Notifier newTarget)
     {
-     
+
     }
 
     @Override
@@ -382,8 +381,7 @@ public class ResourceTest extends AbstractCDOTest
     {
       return super.isAdapterForType(type);
     }
-    
-    
+
   };
 
 }

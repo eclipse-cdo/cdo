@@ -78,7 +78,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     throw new UnsupportedOperationException();
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(boolean withTypes)
+  public CloseableIterator<CDOID> readObjectIDs()
   {
     throw new UnsupportedOperationException();
   }

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.util.EList;
@@ -40,14 +39,14 @@ public class ChunkingTest extends AbstractCDOTest
       CDOResource resource = transaction.createResource("/test1");
 
       msg("Creating customer");
-      Customer customer = Model1Factory.eINSTANCE.createCustomer();
+      Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
 
       for (int i = 0; i < 100; i++)
       {
         msg("Creating salesOrder" + i);
-        SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+        SalesOrder salesOrder = getModel1Factory().createSalesOrder();
         salesOrder.setId(i);
         salesOrder.setCustomer(customer);
         resource.getContents().add(salesOrder);
@@ -93,14 +92,14 @@ public class ChunkingTest extends AbstractCDOTest
       CDOResource resource = transaction.createResource("/test1");
 
       msg("Creating customer");
-      Customer customer = Model1Factory.eINSTANCE.createCustomer();
+      Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
 
       for (int i = 0; i < 100; i++)
       {
         msg("Creating salesOrder" + i);
-        SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+        SalesOrder salesOrder = getModel1Factory().createSalesOrder();
         salesOrder.setId(i);
         salesOrder.setCustomer(customer);
         resource.getContents().add(salesOrder);
@@ -126,7 +125,7 @@ public class ChunkingTest extends AbstractCDOTest
     EList<SalesOrder> salesOrders = customer.getSalesOrders();
     for (int i = 50; i < 70; i++)
     {
-      SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+      SalesOrder salesOrder = getModel1Factory().createSalesOrder();
       salesOrder.setId(i + 1000);
       resource.getContents().add(salesOrder);
       salesOrders.set(i, salesOrder);
@@ -148,7 +147,7 @@ public class ChunkingTest extends AbstractCDOTest
       CDOResource resource = transaction.createResource("/test1");
 
       msg("Creating customer");
-      Customer customer = Model1Factory.eINSTANCE.createCustomer();
+      Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
 
@@ -168,7 +167,7 @@ public class ChunkingTest extends AbstractCDOTest
     msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
 
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
     resource.getContents().add(customer);
     for (EObject element : resource.getContents())

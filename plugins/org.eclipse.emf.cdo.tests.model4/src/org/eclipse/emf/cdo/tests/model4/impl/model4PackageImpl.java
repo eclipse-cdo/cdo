@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4PackageImpl.java,v 1.3 2008-08-11 05:11:44 estepper Exp $
+ * $Id: model4PackageImpl.java,v 1.4 2008-09-18 12:56:49 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 

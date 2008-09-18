@@ -21,6 +21,13 @@
             <message_arguments>
                 <message_argument value="CDOServerProtocol"/>
                 <message_argument value="SessionManager"/>
+                <message_argument value="openSession(CDOServerProtocol)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CDOServerProtocol"/>
+                <message_argument value="SessionManager"/>
                 <message_argument value="openSession(CDOServerProtocol, boolean)"/>
             </message_arguments>
         </filter>
@@ -33,28 +40,19 @@
                 <message_argument value="openSession(CDOServerProtocol, boolean)"/>
             </message_arguments>
         </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CDOServerProtocol"/>
+                <message_argument value="ISessionManager"/>
+                <message_argument value="openSession(CDOServerProtocol)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IRevisionManager.java" type="org.eclipse.emf.cdo.server.IRevisionManager">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDORevisionResolver"/>
                 <message_argument value="IRevisionManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/PackageManager.java" type="org.eclipse.emf.cdo.internal.server.PackageManager">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="CDOPackageManagerImpl"/>
-                <message_argument value="PackageManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContextImpl.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl$TransactionPackageManager">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDOPackageManager"/>
-                <message_argument value="TransactionPackageManager"/>
             </message_arguments>
         </filter>
     </resource>
@@ -75,6 +73,13 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/Session.java" type="org.eclipse.emf.cdo.internal.server.Session">
+        <filter id="643850349">
+            <message_arguments>
+                <message_argument value="CDOServerProtocol"/>
+                <message_argument value="Session"/>
+                <message_argument value="Session(SessionManager, CDOServerProtocol, int)"/>
+            </message_arguments>
+        </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOIDProvider"/>
@@ -86,6 +91,22 @@
                 <message_argument value="CDOServerProtocol"/>
                 <message_argument value="Session"/>
                 <message_argument value="Session(SessionManager, CDOServerProtocol, int, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/PackageManager.java" type="org.eclipse.emf.cdo.internal.server.PackageManager">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDOPackageManagerImpl"/>
+                <message_argument value="PackageManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContextImpl.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl$TransactionPackageManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOPackageManager"/>
+                <message_argument value="TransactionPackageManager"/>
             </message_arguments>
         </filter>
     </resource>

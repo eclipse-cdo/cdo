@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubpackageAdapterFactory.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
+ * $Id: SubpackageAdapterFactory.java,v 1.3 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.util;
 

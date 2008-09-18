@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -41,7 +40,7 @@ public class DymamicUmlTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
       company.setName("Eike");
       res.getContents().add(company);
       transaction.commit();

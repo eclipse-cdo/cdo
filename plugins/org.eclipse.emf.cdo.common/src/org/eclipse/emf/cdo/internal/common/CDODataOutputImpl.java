@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
@@ -37,7 +36,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -200,7 +198,7 @@ public abstract class CDODataOutputImpl implements CDODataOutput
     ((InternalCDOFeature)cdoFeature).write(this);
   }
 
-  public void writeCDOID(CDOID id, boolean asLegacy) throws IOException
+  public void writeCDOID(CDOID id) throws IOException
   {
     if (id == null)
     {
@@ -215,45 +213,12 @@ public abstract class CDODataOutputImpl implements CDODataOutput
     }
 
     writeByte(ordinal);
-    if (asLegacy)
-    {
-      switch (type)
-      {
-      case NULL:
-      case TEMP_OBJECT:
-      case TEMP_META:
-      case META:
-      case OBJECT:
-        throw new IllegalStateException("Missing classRef");
-
-      case LEGACY_OBJECT:
-        CDOIDObject legacy = (CDOIDObject)id;
-        ((AbstractCDOID)legacy).write(this);
-        writeCDOClassRef(legacy.getClassRef());
-        return;
-
-      default:
-        throw new ImplementationError();
-      }
-    }
-
-    // Not asLegacy
     ((AbstractCDOID)id).write(this);
-  }
-
-  public void writeCDOID(CDOID id) throws IOException
-  {
-    writeCDOID(id, false);
-  }
-
-  public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion, boolean asLegacy) throws IOException
-  {
-    ((CDOIDAndVersionImpl)idAndVersion).write(this, asLegacy);
   }
 
   public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion) throws IOException
   {
-    writeCDOIDAndVersion(idAndVersion, false);
+    ((CDOIDAndVersionImpl)idAndVersion).write(this);
   }
 
   public void writeCDOIDMetaRange(CDOIDMetaRange metaRange) throws IOException

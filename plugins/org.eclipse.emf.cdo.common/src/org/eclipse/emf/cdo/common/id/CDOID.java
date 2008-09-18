@@ -28,8 +28,6 @@ public interface CDOID extends Serializable
 
   public boolean isObject();
 
-  public boolean isLegacy();
-
   public boolean isMeta();
 
   public boolean isTemporary();
@@ -49,7 +47,8 @@ public interface CDOID extends Serializable
    */
   public enum Type
   {
-    NULL, OBJECT,
+    NULL, //
+    OBJECT,
 
     /**
      * @since 2.0
@@ -59,6 +58,9 @@ public interface CDOID extends Serializable
     /**
      * @since 2.0
      */
-    EXTERNAL_TEMP_OBJECT, LEGACY_OBJECT, TEMP_OBJECT, META, TEMP_META
+    EXTERNAL_TEMP_OBJECT, //
+    TEMP_OBJECT, //
+    META, //
+    TEMP_META
   }
 }

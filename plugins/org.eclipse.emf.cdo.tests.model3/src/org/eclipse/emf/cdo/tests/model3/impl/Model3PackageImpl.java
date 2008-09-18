@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3PackageImpl.java,v 1.4 2008-09-08 06:55:56 estepper Exp $
+ * $Id: Model3PackageImpl.java,v 1.5 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 
@@ -86,7 +86,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public static Model3Package init()
   {
     if (isInited)
+    {
       return (Model3Package)EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI);
+    }
 
     // Obtain or create and register package
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof Model3PackageImpl ? EPackage.Registry.INSTANCE
@@ -183,7 +185,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -210,7 +214,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

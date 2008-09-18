@@ -50,7 +50,6 @@ public class AllTests
     suite.addTestSuite(RevisionDeltaWithDeltaSupportTest.class);
     suite.addTestSuite(RevisionDeltaWithoutDeltaSupportTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
-    suite.addTestSuite(NoLegacyTest.class);
     suite.addTestSuite(AutoAttacherTest.class);
     suite.addTestSuite(SavepointTest.class);
     suite.addTestSuite(ChangeSubscriptionTest.class);

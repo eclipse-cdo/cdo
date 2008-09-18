@@ -108,7 +108,7 @@ public class CDOIDUserType implements UserType
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
   {
-    if (value == null || (value instanceof CDOID && ((CDOID)value).isNull()))
+    if (value == null || value instanceof CDOID && ((CDOID)value).isNull())
     {
       statement.setNull(index, Types.VARCHAR);
       statement.setNull(index + 1, Types.VARCHAR);

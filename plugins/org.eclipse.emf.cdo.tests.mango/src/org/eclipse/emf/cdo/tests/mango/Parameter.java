@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Parameter.java,v 1.1 2008-06-12 17:22:17 estepper Exp $
+ * $Id: Parameter.java,v 1.2 2008-09-18 12:56:15 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
@@ -20,10 +20,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getParameter()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface Parameter extends CDOObject
+public interface Parameter extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->

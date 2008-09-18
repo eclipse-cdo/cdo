@@ -66,6 +66,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData
 
   public MoveableList<Object> getList(CDOFeature feature);
 
+  /**
+   * @param size
+   *          the size of a new list to be created if this revision has no list so far, or -1 to skip list creation and
+   *          return <code>null</code> in this case.
+   */
   public MoveableList<Object> getList(CDOFeature feature, int size);
 
   public void setListSize(CDOFeature feature, int size);

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCache;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
@@ -42,7 +41,7 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
     CDOResource resource = transaction.createResource("/test1");
 
     msg("Creating supplier");
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
 
     msg("Adding supplier");
     resource.getContents().add(supplier);
@@ -51,12 +50,12 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
     transaction.commit();
     for (int i = 0; i < 10; i++)
     {
-      Supplier supplier2 = Model1Factory.eINSTANCE.createSupplier();
+      Supplier supplier2 = getModel1Factory().createSupplier();
       resource.getContents().add(supplier2);
       transaction.commit();
     }
 
-    Supplier supplier2 = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier2 = getModel1Factory().createSupplier();
     resource.getContents().add(supplier2);
 
     msg("Committing");

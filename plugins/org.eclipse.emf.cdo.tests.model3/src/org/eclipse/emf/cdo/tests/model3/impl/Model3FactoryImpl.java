@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model3FactoryImpl.java,v 1.3 2008-09-08 06:55:56 estepper Exp $
+ * $Id: Model3FactoryImpl.java,v 1.4 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 
@@ -68,9 +68,9 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
     switch (eClass.getClassifierID())
     {
     case Model3Package.CLASS1:
-      return (EObject)createClass1();
+      return createClass1();
     case Model3Package.META_REF:
-      return (EObject)createMetaRef();
+      return createMetaRef();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

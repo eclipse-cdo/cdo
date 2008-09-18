@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
@@ -65,7 +65,7 @@ public class ContentAdapterTest extends AbstractCDOTest
       CDOResource resource = transaction.createResource("/test2");
       // resource.eAdapters().add(contentAdapter);
 
-      Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+      Supplier supplier = getModel1Factory().createSupplier();
       resource.getContents().add(supplier);
       // notified[0] = false;
 
@@ -74,7 +74,7 @@ public class ContentAdapterTest extends AbstractCDOTest
 
       // assertEquals(true, notified[0]);
       transaction.commit();
-      supplierID = supplier.cdoID();
+      supplierID = CDOUtil.getCDOObject(supplier).cdoID();
 
       transaction.close();
       session.close();

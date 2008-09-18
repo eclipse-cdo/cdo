@@ -501,8 +501,8 @@ public final class CDOStore implements EStore
       lastLookupEFeature = eFeature;
       lastLookupCDOFeature = cdoFeature;
     }
-    return cdoFeature;
 
+    return cdoFeature;
   }
 
   private void loadAhead(InternalCDORevision revision, CDOFeature cdoFeature, CDOID id, int index)

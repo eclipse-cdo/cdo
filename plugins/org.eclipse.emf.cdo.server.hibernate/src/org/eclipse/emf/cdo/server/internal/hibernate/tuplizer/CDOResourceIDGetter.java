@@ -26,11 +26,13 @@ public class CDOResourceIDGetter extends CDOPropertyGetter
     super(tuplizer, propertyName);
   }
 
+  @Override
   public Object get(Object target) throws HibernateException
   {
     return ((InternalCDORevision)target).getResourceID();
   }
 
+  @Override
   protected boolean isVirtualPropertyAllowed()
   {
     return true;

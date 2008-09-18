@@ -19,16 +19,28 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.tests.legacy.LegacyPackage;
+import org.eclipse.emf.cdo.tests.mango.MangoFactory;
+import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model4.model4Factory;
+import org.eclipse.emf.cdo.tests.model4.model4Package;
+import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import org.eclipse.emf.ecore.EObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,12 +55,14 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
 {
   public static final String REPOSITORY_NAME = "repo1";
 
+  protected static boolean legacyTesting = false;
+
   @Override
   protected IManagedContainer createContainer()
   {
     LifecycleUtil.deactivate(container);
     IManagedContainer container = super.createContainer();
-    CDOUtil.prepareContainer(container, false);
+    CDOUtil.prepareContainer(container);
     CDOServerUtil.prepareContainer(container);
     CDOServerUtil.addRepository(container, createRepository());
     return container;
@@ -95,15 +109,7 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(getConnector());
     configuration.setRepositoryName(repoName);
-    configuration.setLegacySupportEnabled(false);
     return configuration.openSession();
-  }
-
-  protected CDOSession openModel1Session(String repoName)
-  {
-    CDOSession session = openSession(repoName);
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
-    return session;
   }
 
   protected CDOSession openSession()
@@ -111,97 +117,274 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(getConnector());
     configuration.setRepositoryName(REPOSITORY_NAME);
-    configuration.setLegacySupportEnabled(false);
     return configuration.openSession();
+  }
+
+  protected CDOSession openModel1Session(String repoName)
+  {
+    CDOSession session = openSession(repoName);
+    session.getPackageRegistry().putEPackage(getModel1Package());
+    return session;
   }
 
   protected CDOSession openModel1Session()
   {
     CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel1Package());
     return session;
   }
 
   protected CDOSession openModel2Session()
   {
     CDOSession session = openModel1Session();
-    session.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel2Package());
     return session;
   }
 
   protected CDOSession openModel3Session()
   {
     CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel3Package());
     return session;
   }
 
-  protected static void assertTransient(CDOObject object)
+  protected CDOSession openMangoSession()
   {
-    assertTrue(FSMUtil.isTransient(object));
-    // assertEquals(null, object.cdoID());
-    // assertEquals(null, object.cdoRevision());
-    // assertEquals(null, object.cdoView());
-    // assertEquals(bject.eResource(), object.cdoResource());
-    // assertEquals(null, object.cdoResource());
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(getMangoPackage());
+    return session;
   }
 
-  protected static void assertNotTransient(CDOObject object, CDOView view)
+  protected CDOSession openLegacySession()
   {
-    assertFalse(FSMUtil.isTransient(object));
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(LegacyPackage.eINSTANCE);
+    return session;
+  }
+
+  protected static void assertTransient(EObject eObject)
+  {
+    CDOObject object = CDOUtil.getCDOObject(eObject);
+    if (object != null)
+    {
+      assertEquals(true, FSMUtil.isTransient(object));
+    }
+  }
+
+  protected static MangoFactory getMangoFactory()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.mango.MangoFactory.eINSTANCE;
+  }
+
+  protected static MangoPackage getMangoPackage()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.mango.MangoPackage.eINSTANCE;
+  }
+
+  protected static Model1Factory getModel1Factory()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model1.Model1Factory.eINSTANCE;
+  }
+
+  protected static Model1Package getModel1Package()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE;
+  }
+
+  protected static Model2Factory getModel2Factory()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model2.Model2Factory.eINSTANCE;
+  }
+
+  protected static Model2Package getModel2Package()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model2.Model2Package.eINSTANCE;
+  }
+
+  protected static Model3Factory getModel3Factory()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model3.Model3Factory.eINSTANCE;
+  }
+
+  protected static Model3Package getModel3Package()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model3.Model3Package.eINSTANCE;
+  }
+
+  protected static model4Factory getModel4Factory()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model4.model4Factory.eINSTANCE;
+  }
+
+  protected static model4Package getModel4Package()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model4.model4Package.eINSTANCE;
+  }
+
+  protected static model4interfacesPackage getModel4InterfacesPackage()
+  {
+    if (legacyTesting)
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage.eINSTANCE;
+    }
+
+    return org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage.eINSTANCE;
+  }
+
+  public static void assertEquals(Object expected, Object actual)
+  {
+    // IMPORTANT: Give possible CDOLegacyWrapper a chance for actual, too
+    if (actual != null && actual.equals(expected))
+    {
+      return;
+    }
+
+    AbstractTransportTest.assertEquals(expected, actual);
+  }
+
+  public static void assertEquals(String message, Object expected, Object actual)
+  {
+    if (expected == null && actual == null)
+    {
+      return;
+    }
+
+    if (expected != null && expected.equals(actual))
+    {
+      return;
+    }
+
+    // IMPORTANT: Give possible CDOLegacyWrapper a chance for actual, too
+    if (actual != null && actual.equals(expected))
+    {
+      return;
+    }
+
+    failNotEquals(message, expected, actual);
+  }
+
+  protected static void assertNotTransient(EObject eObject, CDOView view)
+  {
+    CDOObject object = FSMUtil.adapt(eObject, view);
+    assertEquals(false, FSMUtil.isTransient(object));
     assertNotNull(object.cdoID());
     assertNotNull(object.cdoRevision());
     assertNotNull(object.cdoView());
-    // assertNotNull(object.cdoResource());
     assertNotNull(object.eResource());
-    // assertEquals(object.eResource(), object.cdoResource());
     assertEquals(view, object.cdoView());
     assertEquals(object, view.getObject(object.cdoID(), false));
   }
 
-  protected static void assertNew(CDOObject object, CDOView view)
+  protected static void assertNew(EObject eObject, CDOView view)
   {
+    CDOObject object = FSMUtil.adapt(eObject, view);
     assertNotTransient(object, view);
     assertEquals(CDOState.NEW, object.cdoState());
   }
 
-  protected static void assertDirty(CDOObject object, CDOView view)
+  protected static void assertDirty(EObject eObject, CDOView view)
   {
+    CDOObject object = FSMUtil.adapt(eObject, view);
     assertNotTransient(object, view);
     assertEquals(CDOState.DIRTY, object.cdoState());
   }
 
-  protected static void assertClean(CDOObject object, CDOView view)
+  protected static void assertClean(EObject eObject, CDOView view)
   {
+    CDOObject object = FSMUtil.adapt(eObject, view);
     assertNotTransient(object, view);
     assertEquals(CDOState.CLEAN, object.cdoState());
   }
 
-  protected static void assertProxy(CDOObject object)
+  protected static void assertProxy(EObject eObject)
   {
-    assertFalse(FSMUtil.isTransient(object));
-    assertNotNull(object.cdoID());
-    assertNotNull(object.cdoView());
-    assertNotNull(object.cdoResource());
-    assertNotNull(object.eResource());
-    assertEquals(object.eResource(), object.cdoResource());
-    assertEquals(CDOState.PROXY, object.cdoState());
+    CDOObject object = CDOUtil.getCDOObject(eObject);
+    if (object != null)
+    {
+      assertEquals(false, FSMUtil.isTransient(object));
+      assertNotNull(object.cdoID());
+      assertNotNull(object.cdoView());
+      assertNotNull(object.cdoResource());
+      assertNotNull(object.eResource());
+      assertEquals(object.eResource(), object.cdoResource());
+      assertEquals(CDOState.PROXY, object.cdoState());
+    }
   }
 
-  protected static void assertContent(CDOObject container, CDOObject contained)
+  protected static void assertContent(EObject eContainer, EObject eContained)
   {
-    assertEquals(container.eResource(), contained.eResource());
-    assertTrue(container.eContents().contains(contained));
-    if (container instanceof CDOResource)
+    CDOObject container = CDOUtil.getCDOObject(eContainer);
+    CDOObject contained = CDOUtil.getCDOObject(eContained);
+    if (container != null && contained != null)
     {
-      assertEquals(container.eResource(), container.cdoResource());
-      assertEquals(null, contained.eContainer());
-      assertTrue(((CDOResource)container).getContents().contains(contained));
+      assertEquals(container.eResource(), contained.eResource());
+      assertEquals(true, container.eContents().contains(contained));
+      if (container instanceof CDOResource)
+      {
+        assertEquals(container.eResource(), container.cdoResource());
+        assertEquals(null, contained.eContainer());
+        assertEquals(true, ((CDOResource)container).getContents().contains(contained));
+      }
+      else
+      {
+        assertEquals(container, contained.eContainer());
+      }
     }
-    else
-    {
-      assertEquals(container, contained.eContainer());
-    }
+  }
+
+  protected static void assertNotProxy(Object object)
+  {
+    assertEquals(false, CDOLegacyWrapper.isLegacyProxy(object));
   }
 
   /**

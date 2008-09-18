@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.util.CDOTransactionHandlerImpl;
@@ -50,8 +49,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     assertEquals(true, handler.getListOfAddingObject().contains(resource1));
 
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     resource1.getContents().add(order);
@@ -75,8 +74,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
       }
     });
 
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     try
@@ -99,8 +98,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
 
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     CDOResource resource = transaction.getOrCreateResource("/test1");
@@ -137,8 +136,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
     transaction.addHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     resource1.getContents().add(order);
@@ -169,8 +168,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
       }
     });
 
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     CDOResource resource = transaction.getOrCreateResource("/test1");
@@ -200,8 +199,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
     transaction.addHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     resource1.getContents().add(order);
@@ -229,8 +228,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
       }
     });
 
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     CDOResource resource = transaction.getOrCreateResource("/test1");
@@ -255,8 +254,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
 
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
     CDOResource resource = transaction.getOrCreateResource("/test1");

@@ -17,11 +17,10 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
@@ -58,27 +57,27 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
       msg("Creating supplier");
       for (int i = 0; i < 10; i++)
       {
-        Company company = Model1Factory.eINSTANCE.createCompany();
+        Company company = getModel1Factory().createCompany();
         company.setCity("CITY" + String.valueOf(i));
 
         for (int j = 0; j < 10; j++)
         {
-          PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+          PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
           company.getPurchaseOrders().add(purchaseOrder);
 
-          Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+          Supplier supplier = getModel1Factory().createSupplier();
 
           // Should it detect supplier to make it persistent...
 
           resource.getContents().add(supplier);
           purchaseOrder.setSupplier(supplier);
 
-          SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+          SalesOrder salesOrder = getModel1Factory().createSalesOrder();
           company.getSalesOrders().add(salesOrder);
         }
 
         resource.getContents().add(company);
-        listOfCompany.add(company);
+        listOfCompany.add(CDOUtil.getCDOObject(company));
       }
 
       transaction.commit();
@@ -119,17 +118,15 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
 
     CDOFetchRule fetchRule1 = fetchRules.get(0);
     EClass eClass = ModelUtil.getEClass(fetchRule1.getCDOClass(), session.getPackageRegistry());
-    assertEquals(Model1Package.eINSTANCE.getCompany(), eClass);
+    assertEquals(getModel1Package().getCompany(), eClass);
     assertEquals(1, fetchRule1.getFeatures().size());
-    assertEquals(Model1Package.eINSTANCE.getCompany_PurchaseOrders().getName(), fetchRule1.getFeatures().get(0)
-        .getName());
+    assertEquals(getModel1Package().getCompany_PurchaseOrders().getName(), fetchRule1.getFeatures().get(0).getName());
 
     CDOFetchRule fetchRule2 = fetchRules.get(1);
     EClass ePurchaseOrder = ModelUtil.getEClass(fetchRule2.getCDOClass(), session.getPackageRegistry());
-    assertEquals(Model1Package.eINSTANCE.getPurchaseOrder(), ePurchaseOrder);
+    assertEquals(getModel1Package().getPurchaseOrder(), ePurchaseOrder);
     assertEquals(1, fetchRule2.getFeatures().size());
-    assertEquals(Model1Package.eINSTANCE.getPurchaseOrder_Supplier().getName(), fetchRule2.getFeatures().get(0)
-        .getName());
+    assertEquals(getModel1Package().getPurchaseOrder_Supplier().getName(), fetchRule2.getFeatures().get(0).getName());
 
     transaction.close();
     // TODO session.close();

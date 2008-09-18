@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -38,7 +37,7 @@ public class DetachTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
-    Company c1 = Model1Factory.eINSTANCE.createCompany();
+    Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
     resource.getContents().add(c1);
 
@@ -67,7 +66,7 @@ public class DetachTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
-    Company c1 = Model1Factory.eINSTANCE.createCompany();
+    Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
     resource.getContents().add(c1);
     transaction.commit(); // (1)
@@ -113,7 +112,7 @@ public class DetachTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
-    Company c1 = Model1Factory.eINSTANCE.createCompany();
+    Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
     resource.getContents().add(c1);
 
@@ -126,7 +125,7 @@ public class DetachTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
-    Company c1 = Model1Factory.eINSTANCE.createCompany();
+    Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
     resource.getContents().add(c1);
 
@@ -191,7 +190,7 @@ public class DetachTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/my/resource");
 
-      Company c1 = Model1Factory.eINSTANCE.createCompany();
+      Company c1 = getModel1Factory().createCompany();
       c1.setName("Test");
       resource.getContents().add(c1);
 
@@ -217,8 +216,8 @@ public class DetachTest extends AbstractCDOTest
 
   private void detachResource(ResourceSet rset, CDOResource resource) throws Exception
   {
-    Order order = Model1Factory.eINSTANCE.createOrder();
-    OrderDetail orderDetail = Model1Factory.eINSTANCE.createOrderDetail();
+    Order order = getModel1Factory().createOrder();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     resource.getContents().add(order);
     order.getOrderDetails().add(orderDetail);
 

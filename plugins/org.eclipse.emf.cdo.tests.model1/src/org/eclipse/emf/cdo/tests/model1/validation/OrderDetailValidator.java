@@ -7,7 +7,7 @@
 package org.eclipse.emf.cdo.tests.model1.validation;
 
 import org.eclipse.emf.cdo.tests.model1.Order;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 
 /**
  * A sample validator interface for {@link org.eclipse.emf.cdo.tests.model1.OrderDetail}. This doesn't really do
@@ -23,7 +23,7 @@ public interface OrderDetailValidator
 
   boolean validateOrder(Order value);
 
-  boolean validateProduct(Product value);
+  boolean validateProduct(Product1 value);
 
   boolean validatePrice(float value);
 }

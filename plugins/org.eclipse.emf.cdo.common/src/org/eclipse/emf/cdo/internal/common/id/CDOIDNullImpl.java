@@ -15,7 +15,6 @@ package org.eclipse.emf.cdo.internal.common.id;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.spi.common.AbstractCDOID;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -49,16 +48,6 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
   public long getLongValue()
   {
     return 0L;
-  }
-
-  public CDOIDObject asLegacy(CDOClassRef classRef)
-  {
-    return this;
-  }
-
-  public CDOClassRef getClassRef()
-  {
-    return null;
   }
 
   public String toURIFragment()

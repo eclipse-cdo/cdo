@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SubpackageSwitch.java,v 1.4 2008-09-08 06:55:57 estepper Exp $
+ * $Id: SubpackageSwitch.java,v 1.5 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage.util;
 
@@ -93,7 +93,9 @@ public class SubpackageSwitch<T>
       Class2 class2 = (Class2)theEObject;
       T result = caseClass2(class2);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: OrderAddressImpl.java,v 1.2 2008-06-03 06:41:31 estepper Exp $
+ * $Id: OrderAddressImpl.java,v 1.3 2008-09-18 12:57:07 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
@@ -10,7 +10,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -89,9 +89,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    * 
    * @generated
    */
-  public Product getProduct()
+  public Product1 getProduct()
   {
-    return (Product)eGet(Model1Package.Literals.ORDER_DETAIL__PRODUCT, true);
+    return (Product1)eGet(Model1Package.Literals.ORDER_DETAIL__PRODUCT, true);
   }
 
   /**
@@ -99,7 +99,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    * 
    * @generated
    */
-  public void setProduct(Product newProduct)
+  public void setProduct(Product1 newProduct)
   {
     eSet(Model1Package.Literals.ORDER_DETAIL__PRODUCT, newProduct);
   }

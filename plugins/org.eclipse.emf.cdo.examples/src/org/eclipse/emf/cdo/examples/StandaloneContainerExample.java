@@ -46,7 +46,7 @@ public class StandaloneContainerExample
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
-    CDOUtil.prepareContainer(container, false); // Register CDO factories
+    CDOUtil.prepareContainer(container); // Register CDO factories
 
     // Create connector
     IConnector connector = TCPUtil.getConnector(container, "localhost:2036");

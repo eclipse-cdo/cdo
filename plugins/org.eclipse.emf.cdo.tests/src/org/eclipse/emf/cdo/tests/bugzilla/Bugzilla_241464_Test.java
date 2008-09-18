@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.net4j.signal.SignalRemoteException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -32,7 +31,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
   public void testBugzilla_241464() throws Exception
   {
     {
-      Customer customer = Model1Factory.eINSTANCE.createCustomer();
+      Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
 
       CDOSession session = openModel1Session();

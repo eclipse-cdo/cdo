@@ -12,9 +12,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 
 import org.eclipse.net4j.db.DBException;
@@ -34,8 +32,6 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 
   private IDBStoreReader storeReader;
 
-  private boolean withTypes;
-
   private ResultSet currentResultSet;
 
   private CDOID nextID;
@@ -46,11 +42,10 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
    * Creates an iterator over all objects in a store. It is important to {@link #dispose()} of this iterator after usage
    * to properly close internal result sets.
    */
-  public ObjectIDIterator(MappingStrategy mappingStrategy, IDBStoreReader storeReader, boolean withTypes)
+  public ObjectIDIterator(MappingStrategy mappingStrategy, IDBStoreReader storeReader)
   {
     this.mappingStrategy = mappingStrategy;
     this.storeReader = storeReader;
-    this.withTypes = withTypes;
   }
 
   public void close()
@@ -73,11 +68,6 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
   public IDBStoreReader getStoreReader()
   {
     return storeReader;
-  }
-
-  public boolean isWithTypes()
-  {
-    return withTypes;
   }
 
   public boolean hasNext()
@@ -105,13 +95,6 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
         {
           long id = currentResultSet.getLong(1);
           nextID = CDOIDUtil.createLong(id);
-          if (withTypes && nextID instanceof CDOIDObject)
-          {
-            int classID = currentResultSet.getInt(2);
-            CDOClassRef classRef = mappingStrategy.getClassRef(storeReader, classID);
-            nextID = ((CDOIDObject)nextID).asLegacy(classRef);
-          }
-
           return true;
         }
 

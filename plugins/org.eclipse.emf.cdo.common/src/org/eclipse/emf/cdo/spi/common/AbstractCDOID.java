@@ -46,20 +46,7 @@ public abstract class AbstractCDOID implements CDOID
     switch (getType())
     {
     case OBJECT:
-    case LEGACY_OBJECT:
     case TEMP_OBJECT:
-      return true;
-
-    default:
-      return false;
-    }
-  }
-
-  public boolean isLegacy()
-  {
-    switch (getType())
-    {
-    case LEGACY_OBJECT:
       return true;
 
     default:

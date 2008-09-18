@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: SingleNonContainedElement.java,v 1.2 2008-07-10 15:57:40 estepper Exp $
+ * $Id: SingleNonContainedElement.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Single Non Contained Element</b></em>'. <!--
@@ -21,10 +21,9 @@ import org.eclipse.emf.cdo.CDOObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getSingleNonContainedElement()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface SingleNonContainedElement extends CDOObject
+public interface SingleNonContainedElement extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->

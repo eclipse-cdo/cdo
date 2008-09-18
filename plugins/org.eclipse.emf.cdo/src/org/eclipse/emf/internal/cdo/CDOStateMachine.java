@@ -446,11 +446,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalPostAttach();
       changeState(object, CDOState.NEW);
 
-      List<InternalCDOObject> contents = mapOfContents.get(object);
-
       // Prepare content tree
+      List<InternalCDOObject> contents = mapOfContents.get(object);
       for (InternalCDOObject content : contents)
       {
+        // TODO Just call execute()?!
         INSTANCE.process(content, CDOEvent.ATTACH, mapOfContents);
       }
     }

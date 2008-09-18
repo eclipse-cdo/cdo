@@ -128,8 +128,20 @@ public interface CDOView extends CDOProtocolView, INotifier
    */
   public CDOResource getResource(String path);
 
+  /**
+   * Returns the object for the given CDOID.
+   * 
+   * @param loadOnDemand
+   *          whether to create and load the object, if it doesn't already exist.
+   * @return the object resolved by the CDOID, or <code>null</code> if there isn't one.
+   */
   public CDOObject getObject(CDOID id, boolean loadOnDemand);
 
+  /**
+   * Returns the object for the given CDOID.
+   * <p>
+   * Same as <code>getObject(id, true)</code>.
+   */
   public CDOObject getObject(CDOID id);
 
   /**

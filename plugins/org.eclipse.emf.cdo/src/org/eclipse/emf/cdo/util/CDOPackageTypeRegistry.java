@@ -24,13 +24,9 @@ public interface CDOPackageTypeRegistry extends IRegistry<String, CDOPackageType
 {
   public static final CDOPackageTypeRegistry INSTANCE = org.eclipse.emf.internal.cdo.util.CDOPackageTypeRegistryImpl.INSTANCE;
 
-  public CDOPackageType getPackageType(EPackage ePackage);
-
   public void register(EPackage ePackage);
 
   public void registerLegacy(String uri);
 
   public void registerNative(String uri);
-
-  public void registerConverted(String uri);
 }

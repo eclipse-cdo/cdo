@@ -35,8 +35,6 @@ public class OpenSessionIndication extends CDOServerIndication
 
   private String repositoryName;
 
-  private boolean legacySupportEnabled;
-
   private boolean passiveUpdateEnabled;
 
   private Repository repository;
@@ -74,12 +72,6 @@ public class OpenSessionIndication extends CDOServerIndication
       PROTOCOL_TRACER.format("Read repositoryName: {0}", repositoryName);
     }
 
-    legacySupportEnabled = in.readBoolean();
-    if (PROTOCOL_TRACER.isEnabled())
-    {
-      PROTOCOL_TRACER.format("Read legacySupportEnabled: {0}", legacySupportEnabled);
-    }
-
     passiveUpdateEnabled = in.readBoolean();
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -102,7 +94,7 @@ public class OpenSessionIndication extends CDOServerIndication
 
       SessionManager sessionManager = repository.getSessionManager();
 
-      session = sessionManager.openSession(protocol, legacySupportEnabled);
+      session = sessionManager.openSession(protocol);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
       // Adjust the infra structure (was IRepositoryProvider)

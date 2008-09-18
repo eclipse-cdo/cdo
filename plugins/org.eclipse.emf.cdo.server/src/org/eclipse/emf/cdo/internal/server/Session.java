@@ -17,10 +17,8 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -30,7 +28,6 @@ import org.eclipse.emf.cdo.internal.server.protocol.CommitNotificationRequest;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -62,8 +59,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private int sessionID;
 
-  private boolean legacySupportEnabled;
-
   private boolean passiveUpdateEnabled = true;
 
   private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
@@ -81,13 +76,12 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
   };
 
-  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID, boolean legacySupportEnabled)
+  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID)
       throws SessionCreationException
   {
     this.sessionManager = sessionManager;
     this.protocol = protocol;
     this.sessionID = sessionID;
-    this.legacySupportEnabled = legacySupportEnabled;
     protocol.addListener(protocolListener);
 
     try
@@ -108,11 +102,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public int getSessionID()
   {
     return sessionID;
-  }
-
-  public boolean isLegacySupportEnabled()
-  {
-    return legacySupportEnabled;
   }
 
   /**
@@ -222,27 +211,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   public CDOID provideCDOID(Object idObject)
   {
-    CDOID id = (CDOID)idObject;
-    if (!legacySupportEnabled || id.isNull() || id.isMeta())
-    {
-      return id;
-    }
-
-    CDOIDObject objectID = (CDOIDObject)id;
-    if (objectID.getClassRef() == null)
-    {
-      CDOClassRef classRef = getClassRef(objectID);
-      objectID = objectID.asLegacy(classRef);
-    }
-
-    return objectID;
-  }
-
-  public CDOClassRef getClassRef(CDOID id)
-  {
-    RevisionManager revisionManager = sessionManager.getRepository().getRevisionManager();
-    CDOClass cdoClass = revisionManager.getObjectType(id);
-    return cdoClass != null ? cdoClass.createClassRef() : StoreThreadLocal.getStoreReader().readObjectType(id);
+    return (CDOID)idObject;
   }
 
   /**

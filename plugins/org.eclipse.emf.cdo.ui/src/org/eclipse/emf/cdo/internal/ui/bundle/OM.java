@@ -59,9 +59,6 @@ public abstract class OM
   public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTY = //
   PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTY", true); //$NON-NLS-1$
 
-  public static final OMPreference<Boolean> PREF_LEGACY_MODEL_SUPPORT = //
-  PREFS.init("PREF_LEGACY_MODEL_SUPPORT", false); //$NON-NLS-1$
-
   static void start()
   {
     if (false)

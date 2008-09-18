@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -76,7 +75,7 @@ public class ViewTest extends AbstractCDOTest
       EList<EObject> contents = resource.getContents();
       for (int i = 0; i < 100; i++)
       {
-        Company company = Model1Factory.eINSTANCE.createCompany();
+        Company company = getModel1Factory().createCompany();
         company.setName("Company " + i);
         contents.add(company);
       }
@@ -95,7 +94,7 @@ public class ViewTest extends AbstractCDOTest
     EList<EObject> contents = resource.getContents();
     for (int i = 100; i < 110; i++)
     {
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
       company.setName("Company " + i);
       contents.add(company);
     }
@@ -117,7 +116,7 @@ public class ViewTest extends AbstractCDOTest
       EList<EObject> contents = resource.getContents();
       for (int i = 0; i < 100; i++)
       {
-        Company company = Model1Factory.eINSTANCE.createCompany();
+        Company company = getModel1Factory().createCompany();
         company.setName("Company " + i);
         contents.add(company);
       }
@@ -136,7 +135,7 @@ public class ViewTest extends AbstractCDOTest
     EList<EObject> contents = resource.getContents();
     for (int i = 100; i < 110; i++)
     {
-      Company company = Model1Factory.eINSTANCE.createCompany();
+      Company company = getModel1Factory().createCompany();
       company.setName("Company " + i);
       contents.add(company);
     }

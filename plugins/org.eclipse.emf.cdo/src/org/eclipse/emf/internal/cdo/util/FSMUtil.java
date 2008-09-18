@@ -12,20 +12,15 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
-import org.eclipse.emf.internal.cdo.CDOAdapterImpl;
-import org.eclipse.emf.internal.cdo.CDOLegacyImpl;
-import org.eclipse.emf.internal.cdo.CDOMetaImpl;
+import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
+import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
@@ -34,7 +29,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -43,50 +37,8 @@ import java.util.Iterator;
  */
 public final class FSMUtil
 {
-  private static Method adaptLegacyMethod = initAdaptLegacyMethod();
-
   private FSMUtil()
   {
-  }
-
-  private static Method initAdaptLegacyMethod()
-  {
-    // TODO Fix when legacy mode is supported again...
-    // try
-    // {
-    // Class<?> c = Class.forName("org.eclipse.emf.internal.cdo.CDOCallbackImpl");
-    // if (c != null)
-    // {
-    // final Class<?>[] params = { Object.class, CDOView.class };
-    // Method method = c.getDeclaredMethod("adapt", params);
-    // if (method != null)
-    // {
-    // return method;
-    // }
-    // }
-    // }
-    // catch (Throwable ignore)
-    // {
-    // // Only for testing:
-    // // ignore.printStackTrace();
-    // }
-    //
-    // OM.LOG.info(LegacySystemNotAvailableException.LEGACY_SYSTEM_NOT_AVAILABLE);
-    return null;
-  }
-
-  public static boolean isLegacySystemAvailable()
-  {
-    return adaptLegacyMethod != null;
-  }
-
-  public static void checkLegacySystemAvailability(CDOSession session, CDOObject object)
-      throws LegacySystemNotAvailableException
-  {
-    if (!session.isLegacySupportEnabled() && object instanceof CDOLegacyImpl)
-    {
-      throw new LegacySystemNotAvailableException();
-    }
   }
 
   public static boolean isTransient(CDOObject object)
@@ -99,6 +51,12 @@ public final class FSMUtil
   {
     CDOState state = object.cdoState();
     return state == CDOState.NEW;
+  }
+
+  public static boolean isMeta(Object object)
+  {
+    return object instanceof EModelElement || object instanceof EGenericType
+        || object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
   }
 
   /**
@@ -117,53 +75,79 @@ public final class FSMUtil
       throw new IllegalArgumentException("object == null");
     }
 
-    if (object instanceof EModelElement || object instanceof EGenericType
-        || object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl)
+    if (isMeta(object))
     {
-      InternalEObject eObject = (InternalEObject)object;
-      if (view == null)
-      {
-        throw new IllegalArgumentException("view == null");
-      }
-
-      if (eObject.eIsProxy())
-      {
-        eObject = (InternalEObject)EcoreUtil.resolve(eObject, view.getResourceSet());
-      }
-
-      CDOID id = ((CDOViewImpl)view).getSession().lookupMetaInstanceID(eObject);
-      if (id != null)
-      {
-        return new CDOMetaImpl((CDOViewImpl)view, eObject, id);
-      }
-    }
-
-    if (isLegacySystemAvailable())
-    {
-      try
-      {
-        return (InternalCDOObject)adaptLegacyMethod.invoke(null, object, view);
-      }
-      catch (Throwable t)
-      {
-        OM.LOG.info(t);
-      }
+      return adaptMeta((InternalEObject)object, view);
     }
 
     if (object instanceof InternalEObject)
     {
-      EList<Adapter> adapters = ((InternalEObject)object).eAdapters();
-      CDOAdapterImpl adapter = (CDOAdapterImpl)EcoreUtil.getAdapter(adapters, CDOAdapterImpl.class);
-      if (adapter == null)
-      {
-        adapter = new CDOAdapterImpl();
-        adapters.add(adapter);
-      }
-
-      return adapter;
+      return adaptLegacy((InternalEObject)object);
     }
 
     return null;
+  }
+
+  public static InternalCDOObject adaptMeta(InternalEObject object, CDOView view)
+  {
+    if (view == null)
+    {
+      throw new IllegalArgumentException("view == null");
+    }
+
+    if (object.eIsProxy())
+    {
+      object = (InternalEObject)EcoreUtil.resolve(object, view.getResourceSet());
+    }
+
+    CDOID id = ((CDOViewImpl)view).getSession().lookupMetaInstanceID(object);
+    if (id != null)
+    {
+      return new CDOMetaWrapper((CDOViewImpl)view, object, id);
+    }
+
+    return null;
+  }
+
+  /*
+   * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
+   * EMF with fixed bug #247130. These compile errors do not affect native models!
+   */
+  public static InternalCDOObject adaptLegacy(InternalEObject object)
+  {
+    EList<InternalEObject.EReadListener> readListeners = object.eReadListeners();
+    CDOLegacyWrapper wrapper = getLegacyWrapper(readListeners);
+    if (wrapper == null)
+    {
+      wrapper = new CDOLegacyWrapper(object);
+      // TODO Only Load/Attach transitions should actually *add* the wrappers!
+      readListeners.add(0, wrapper);
+      object.eWriteListeners().add(0, wrapper);
+    }
+
+    return wrapper;
+  }
+
+  public static CDOLegacyWrapper getLegacyWrapper(EList<?> listeners)
+  {
+    for (Object listener : listeners)
+    {
+      if (listener.getClass() == CDOLegacyWrapper.class)
+      {
+        return (CDOLegacyWrapper)listener;
+      }
+    }
+
+    return null;
+  }
+
+  /*
+   * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
+   * EMF with fixed bug #247130. These compile errors do not affect native models!
+   */
+  public static Object getLegacyWrapper(InternalEObject object)
+  {
+    return getLegacyWrapper(object.eReadListeners());
   }
 
   /**

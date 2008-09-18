@@ -2,14 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Class2.java,v 1.2 2008-06-03 06:41:22 estepper Exp $
+ * $Id: Class2.java,v 1.3 2008-09-18 12:57:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Class2</b></em>'. <!-- end-user-doc -->
@@ -22,10 +22,9 @@ import org.eclipse.emf.common.util.EList;
  * 
  * @see org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage#getClass2()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface Class2 extends CDOObject
+public interface Class2 extends EObject
 {
   /**
    * Returns the value of the '<em><b>Class1</b></em>' reference list. The list contents are of type

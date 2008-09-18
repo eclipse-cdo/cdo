@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.util.EList;
@@ -35,21 +34,21 @@ public class CrossReferenceTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating customer");
-    Customer customerA = Model1Factory.eINSTANCE.createCustomer();
+    Customer customerA = getModel1Factory().createCustomer();
     customerA.setName("customer");
 
     msg("Creating salesOrder1");
-    SalesOrder salesOrder1A = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder1A = getModel1Factory().createSalesOrder();
     salesOrder1A.setId(1);
     salesOrder1A.setCustomer(customerA);
 
     msg("Creating salesOrder2");
-    SalesOrder salesOrder2A = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder2A = getModel1Factory().createSalesOrder();
     salesOrder2A.setId(2);
     salesOrder2A.setCustomer(customerA);
 
     msg("Creating company");
-    Company companyA = Model1Factory.eINSTANCE.createCompany();
+    Company companyA = getModel1Factory().createCompany();
     companyA.getCustomers().add(customerA);
     companyA.getSalesOrders().add(salesOrder1A);
     companyA.getSalesOrders().add(salesOrder2A);
@@ -110,21 +109,21 @@ public class CrossReferenceTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating customer");
-    Customer customerA = Model1Factory.eINSTANCE.createCustomer();
+    Customer customerA = getModel1Factory().createCustomer();
     customerA.setName("customer");
 
     msg("Creating salesOrder1");
-    SalesOrder salesOrder1A = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder1A = getModel1Factory().createSalesOrder();
     salesOrder1A.setId(1);
     salesOrder1A.setCustomer(customerA);
 
     msg("Creating salesOrder2");
-    SalesOrder salesOrder2A = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder2A = getModel1Factory().createSalesOrder();
     salesOrder2A.setId(2);
     salesOrder2A.setCustomer(customerA);
 
     msg("Creating company");
-    Company companyA = Model1Factory.eINSTANCE.createCompany();
+    Company companyA = getModel1Factory().createCompany();
     companyA.getCustomers().add(customerA);
     companyA.getSalesOrders().add(salesOrder1A);
     companyA.getSalesOrders().add(salesOrder2A);
@@ -186,11 +185,11 @@ public class CrossReferenceTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating customer");
-    Customer customerA = Model1Factory.eINSTANCE.createCustomer();
+    Customer customerA = getModel1Factory().createCustomer();
     customerA.setName("customer");
 
     msg("Creating company1");
-    Company company1A = Model1Factory.eINSTANCE.createCompany();
+    Company company1A = getModel1Factory().createCompany();
     company1A.getCustomers().add(customerA);
 
     msg("Creating resource1");
@@ -202,21 +201,21 @@ public class CrossReferenceTest extends AbstractCDOTest
     // ************************************************************* //
 
     msg("Creating salesOrder1");
-    SalesOrder salesOrder1A = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder1A = getModel1Factory().createSalesOrder();
     assertTransient(salesOrder1A);
     salesOrder1A.setId(1);
     salesOrder1A.setCustomer(customerA);
     assertTransient(salesOrder1A);
 
     msg("Creating salesOrder2");
-    SalesOrder salesOrder2A = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder2A = getModel1Factory().createSalesOrder();
     assertTransient(salesOrder2A);
     salesOrder2A.setId(2);
     salesOrder2A.setCustomer(customerA);
     assertTransient(salesOrder2A);
 
     msg("Creating company2");
-    Company company2A = Model1Factory.eINSTANCE.createCompany();
+    Company company2A = getModel1Factory().createCompany();
     company2A.getSalesOrders().add(salesOrder1A);
     company2A.getSalesOrders().add(salesOrder2A);
 

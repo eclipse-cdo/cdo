@@ -31,7 +31,7 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
 {
   private static final String TITLE = "Register Generated Packages";
 
-  private static final String TOOL_TIP = "Register native, legacy or converted packages";
+  private static final String TOOL_TIP = "Register native and legacy packages";
 
   private EPackage.Registry registry = EPackage.Registry.INSTANCE;
 

@@ -30,9 +30,8 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 
@@ -54,8 +53,8 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource1 = transaction.createResource("/test1");
 
-    Company company1 = Model1Factory.eINSTANCE.createCompany();
-    Category category1 = Model1Factory.eINSTANCE.createCategory();
+    Company company1 = getModel1Factory().createCompany();
+    Category category1 = getModel1Factory().createCategory();
 
     resource1.getContents().add(company1);
     company1.getCategories().add(category1);
@@ -86,7 +85,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     // Test List Add
     for (int i = 0; i < 5; i++)
     {
-      Category category = Model1Factory.eINSTANCE.createCategory();
+      Category category = getModel1Factory().createCategory();
       company1.getCategories().add(category);
     }
     InternalCDORevision rev4 = getCopyCDORevision(company1);
@@ -114,11 +113,11 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
-    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
     transaction.commit();
 
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     salesOrder.setCustomer(customer);
 
     resource.getContents().add(customer);
@@ -126,9 +125,9 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     transaction.close();
 
     CDOTransaction transaction2 = session.openTransaction();
-    SalesOrder salesOrder2 = (SalesOrder)transaction2.getObject(salesOrder.cdoID(), true);
-    CDORevision salesRevision = salesOrder2.cdoRevision();
-    CDOFeature customerFeature = session.getPackageManager().convert(Model1Package.eINSTANCE.getSalesOrder_Customer());
+    SalesOrder salesOrder2 = (SalesOrder)transaction2.getObject(CDOUtil.getCDOObject(salesOrder).cdoID(), true);
+    CDORevision salesRevision = CDOUtil.getCDOObject(salesOrder2).cdoRevision();
+    CDOFeature customerFeature = session.getPackageManager().convert(getModel1Package().getSalesOrder_Customer());
 
     Object value = salesRevision.getData().get(customerFeature, 0);
     Assert.assertEquals(true, value instanceof CDOID);
@@ -147,13 +146,15 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
-    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
     transaction.commit();
 
     salesOrder.setId(4711);
-    assertNotSame(salesOrder.cdoRevision(), transaction.getRevision(salesOrder.cdoID(), true));
-    assertEquals(salesOrder.cdoRevision(), transaction.getDirtyObjects().get(salesOrder.cdoID()).cdoRevision());
+    assertNotSame(CDOUtil.getCDOObject(salesOrder).cdoRevision(), transaction.getRevision(CDOUtil.getCDOObject(
+        salesOrder).cdoID(), true));
+    assertEquals(CDOUtil.getCDOObject(salesOrder).cdoRevision(), transaction.getDirtyObjects().get(
+        CDOUtil.getCDOObject(salesOrder).cdoID()).cdoRevision());
     transaction.close();
     session.close();
   }
@@ -169,17 +170,17 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
 
-    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
     customer.getSalesOrders().add(salesOrder);
     customer.getSalesOrders().add(salesOrder);
     transaction.commit();
 
-    salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
-    customer = Model1Factory.eINSTANCE.createCustomer();
+    salesOrder = getModel1Factory().createSalesOrder();
+    customer = getModel1Factory().createCustomer();
     resource.getContents().add(salesOrder);
     resource.getContents().add(customer);
     salesOrder.setCustomer(customer);
@@ -199,15 +200,15 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
 
     transaction.commit();
 
     TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
-    revisionManager.removeCachedRevision(customer.cdoRevision());
+    revisionManager.removeCachedRevision(CDOUtil.getCDOObject(customer).cdoRevision());
 
-    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
     customer.getSalesOrders().add(salesOrder);
 

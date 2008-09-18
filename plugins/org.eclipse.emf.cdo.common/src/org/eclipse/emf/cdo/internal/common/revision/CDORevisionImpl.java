@@ -512,7 +512,7 @@ public class CDORevisionImpl implements InternalCDORevision
   {
     int i = cdoClass.getFeatureID(feature);
     MoveableList<Object> list = (MoveableList<Object>)values[i];
-    if (list == null)
+    if (list == null && size != -1)
     {
       list = new MoveableArrayList<Object>(size);
       values[i] = list;

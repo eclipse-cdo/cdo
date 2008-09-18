@@ -20,9 +20,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -69,7 +68,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testAddBefore1() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     transaction.commit();
@@ -80,10 +79,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().add(0, createSalesOrder());
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 0);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 1);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 0);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 1);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 2);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 3);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 4);
@@ -93,7 +92,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testAddBefore4() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -107,10 +106,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().add(0, createSalesOrder());
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 0);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 1);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 0);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 1);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -120,7 +119,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testAddAfter1() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     transaction.commit();
@@ -131,10 +130,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().add(createSalesOrder());
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 1);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 4);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 1);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 4);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 2);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 3);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 4);
@@ -144,7 +143,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testAddAfter4() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -158,10 +157,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().add(createSalesOrder());
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 4);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 5);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 6);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 7);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 4);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 5);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 6);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 7);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -171,7 +170,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testRemove1() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -186,10 +185,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().remove(0);
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 4);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 5);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 6);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 4);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 5);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -199,7 +198,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testRemove4() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -217,10 +216,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().remove(0);
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 0);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 1);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 0);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 1);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -230,7 +229,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testRemoveAdded() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -248,8 +247,8 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().remove(2);
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -259,7 +258,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testRemoveLastAdded() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -288,7 +287,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testReAdded() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -312,10 +311,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().add(createSalesOrder());
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 4);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 5);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 4);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -329,7 +328,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testMoveBehindEnd() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -345,10 +344,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().move(7, 2);
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 4);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 5);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 4);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -358,7 +357,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testMoveBackward() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -374,10 +373,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().move(5, 0);
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 6);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 7);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 6);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 7);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -387,7 +386,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   public void testMoveForward() throws Exception
   {
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     customer.getSalesOrders().add(createSalesOrder());
     customer.getSalesOrders().add(createSalesOrder());
@@ -403,10 +402,10 @@ public class IndexReconstructionTest extends AbstractCDOTest
     customer.getSalesOrders().move(2, 7);
 
     dumpReconstructedIndices();
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 2);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 3);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 6);
-    expectIndex(customer.cdoID(), Model1Package.eINSTANCE.getCustomer_SalesOrders(), 7);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 2);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 3);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 6);
+    expectIndex(CDOUtil.getCDOObject(customer).cdoID(), getModel1Package().getCustomer_SalesOrders(), 7);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 5);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 6);
     expectIndex(resource.cdoID(), EresourcePackage.eINSTANCE.getCDOResource_Contents(), 7);
@@ -416,7 +415,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
 
   private SalesOrder createSalesOrder()
   {
-    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
     return salesOrder;
   }

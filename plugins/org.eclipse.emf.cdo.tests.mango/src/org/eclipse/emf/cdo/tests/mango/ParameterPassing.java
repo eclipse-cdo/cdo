@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ParameterPassing.java,v 1.1 2008-06-12 17:22:17 estepper Exp $
+ * $Id: ParameterPassing.java,v 1.2 2008-09-18 12:56:15 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 

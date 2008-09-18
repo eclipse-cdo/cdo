@@ -39,7 +39,6 @@ public class AllTests
     suite.addTestSuite(HbCrossReferenceTest.class);
     suite.addTestSuite(HbMangoTest.class);
     suite.addTestSuite(HbEnumTest.class);
-    suite.addTestSuite(HbNoLegacyTest.class);
     suite.addTestSuite(HbNonCDOResourceTest.class);
     suite.addTestSuite(HbInvalidationTest.class);
     suite.addTestSuite(HbIndexReconstructionTest.class);

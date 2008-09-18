@@ -2,13 +2,12 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ValueList.java,v 1.3 2008-06-03 06:41:26 estepper Exp $
+ * $Id: ValueList.java,v 1.4 2008-09-18 12:56:15 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
-import org.eclipse.emf.cdo.CDOObject;
-
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc -->
@@ -22,10 +21,9 @@ import org.eclipse.emf.common.util.EList;
  * 
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getValueList()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface ValueList extends CDOObject
+public interface ValueList extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->

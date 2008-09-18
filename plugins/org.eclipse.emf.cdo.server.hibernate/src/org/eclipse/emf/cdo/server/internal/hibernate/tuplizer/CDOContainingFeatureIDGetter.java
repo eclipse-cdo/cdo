@@ -26,11 +26,13 @@ public class CDOContainingFeatureIDGetter extends CDOPropertyGetter
     super(tuplizer, propertyName);
   }
 
+  @Override
   public Object get(Object target) throws HibernateException
   {
     return ((InternalCDORevision)target).getContainingFeatureID();
   }
 
+  @Override
   protected boolean isVirtualPropertyAllowed()
   {
     return true;

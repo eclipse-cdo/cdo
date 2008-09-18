@@ -19,10 +19,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.LegacySystemNotAvailableException;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -168,6 +168,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       {
         transientContents = new TransientContents<EObject>();
         eSettings[EresourcePackage.CDO_RESOURCE__CONTENTS] = transientContents;
+        // throw new ImplementationError();
       }
 
       return transientContents;
@@ -320,6 +321,10 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * <b>Note:</b> URI from temporary objects are going to changed when we commit the CDOTransaction. Objects will not be
    * accessible from their temporary URI once CDOTransaction is committed.
+   * <p>
+   * <b>Note:</b> This resource is not actually used to lookup the resulting object in CDO. Only the CDOView is used for
+   * this lookup! This means that this resource can be used to resolve <em>any</em> fragment with a CDOID of the
+   * associated CDOView.
    * 
    * @ADDED
    */
@@ -431,7 +436,15 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   public void attached(EObject object)
   {
     InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
-    CDOStateMachine.INSTANCE.attach(cdoObject, cdoView().toTransaction());
+    attached(cdoObject, cdoView().toTransaction());
+  }
+
+  /**
+   * @ADDED
+   */
+  private void attached(InternalCDOObject cdoObject, CDOTransactionImpl transaction)
+  {
+    CDOStateMachine.INSTANCE.attach(cdoObject, transaction);
   }
 
   /**
@@ -530,6 +543,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
+   * {@link ResourceImpl.ContentsEList}!!! --> Bugzilla!
+   * 
    * @ADDED
    * @author Eike Stepper
    */
@@ -552,20 +567,15 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     @Override
     public NotificationChain inverseAdd(Object object, NotificationChain notifications)
     {
-      if (object instanceof InternalCDOObject)
+      CDOTransactionImpl transaction = cdoView().toTransaction();
+      InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
+      notifications = cdoObject.eSetResource(CDOResourceImpl.this, notifications);
+      // Attach here instead of i CDOObjectImpl.eSetResource because EMF does it also here
+      if (FSMUtil.isTransient(cdoObject))
       {
-        InternalCDOObject eObject = (InternalCDOObject)object;
-        notifications = eObject.eSetResource(CDOResourceImpl.this, notifications);
-        // It is possible that a attached objects gets add to the resource.
-        if (FSMUtil.isTransient(eObject))
-        {
-          attached(eObject);
-        }
+        attached(cdoObject, transaction);
       }
-      else
-      {
-        throw new LegacySystemNotAvailableException();
-      }
+
       return notifications;
     }
 
@@ -582,7 +592,8 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
-   * TODO Change superclass to NotifyingInternalEListImpl when EMF 2.3 is out of maintenance
+   * TODO Change superclass to NotifyingInternalEListImpl when EMF 2.3 is out of maintenance TODO Reuse
+   * {@link ResourceImpl.ContentsEList}!!! --> Bugzilla!
    * 
    * @ADDED
    * @author Eike Stepper
@@ -640,6 +651,18 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     protected boolean isUnique()
     {
       return true;
+    }
+
+    /**
+     * @since 2.0
+     */
+    /*
+     * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
+     * EMF with fixed bug #247130. These compile errors do not affect native models!
+     */
+    public InternalEList<E> readWriteFiringList()
+    {
+      return this;
     }
 
     @Override

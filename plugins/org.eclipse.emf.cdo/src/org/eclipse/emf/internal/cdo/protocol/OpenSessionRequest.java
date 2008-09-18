@@ -41,18 +41,14 @@ public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
 
   private String repositoryName;
 
-  private boolean legacySupportEnabled;
-
   private boolean passiveUpdateEnabled;
 
   private OpenSessionResult result;
 
-  public OpenSessionRequest(IChannel channel, String repositoryName, boolean legacySupportEnabled,
-      boolean passiveUpdateEnabled)
+  public OpenSessionRequest(IChannel channel, String repositoryName, boolean passiveUpdateEnabled)
   {
     super(channel);
     this.repositoryName = repositoryName;
-    this.legacySupportEnabled = legacySupportEnabled;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
@@ -106,13 +102,6 @@ public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
     }
 
     out.writeString(repositoryName);
-
-    if (PROTOCOL_TRACER.isEnabled())
-    {
-      PROTOCOL_TRACER.format("Writing legacySupportEnabled: {0}", legacySupportEnabled);
-    }
-
-    out.writeBoolean(legacySupportEnabled);
 
     if (PROTOCOL_TRACER.isEnabled())
     {

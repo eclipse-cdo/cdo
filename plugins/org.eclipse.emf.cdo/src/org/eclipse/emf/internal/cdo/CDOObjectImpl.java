@@ -36,6 +36,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -76,6 +77,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   private CDOViewImpl cdoView;
 
+  // TODO Consider removal because it's only an optimization (proof that revision.resourceID could be used in all cases
+  // as well)
   private CDOResourceImpl resource;
 
   private InternalCDORevision revision;
@@ -231,9 +234,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       }
     }
 
-    if (eBasicAdapters() != null)
+    BasicEList<Adapter> adapters = eBasicAdapters();
+    if (adapters != null)
     {
-      for (Adapter adapter : eBasicAdapters())
+      for (Adapter adapter : adapters)
       {
         view.subscribe(this, adapter);
       }
@@ -747,7 +751,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
       // When setting the resource to null we assume that detach has already been called in the resource implementation
       //
-
       if (!isSameView && resource != null)
       {
         oldResource.detached(this);

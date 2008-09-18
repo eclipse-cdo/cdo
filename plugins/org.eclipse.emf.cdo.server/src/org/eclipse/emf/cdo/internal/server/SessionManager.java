@@ -73,7 +73,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
-  public Session openSession(CDOServerProtocol protocol, boolean legacySupportEnabled) throws SessionCreationException
+  public Session openSession(CDOServerProtocol protocol) throws SessionCreationException
   {
     int id = ++lastSessionID;
     if (TRACER.isEnabled())
@@ -81,7 +81,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
       TRACER.trace("Opening session " + id);
     }
 
-    Session session = new Session(this, protocol, id, legacySupportEnabled);
+    Session session = new Session(this, protocol, id);
     synchronized (sessions)
     {
       sessions.put(id, session);

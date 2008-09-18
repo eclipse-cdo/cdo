@@ -2,11 +2,9 @@
  * <copyright>
  * </copyright>
  *
- * $Id: GenRefMultiContained.java,v 1.2 2008-07-10 15:57:40 estepper Exp $
+ * $Id: GenRefMultiContained.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
-
-import org.eclipse.emf.cdo.CDOObject;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -23,10 +21,9 @@ import org.eclipse.emf.ecore.EObject;
  * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMultiContained()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface GenRefMultiContained extends CDOObject
+public interface GenRefMultiContained extends EObject
 {
   /**
    * Returns the value of the '<em><b>Elements</b></em>' containment reference list. The list contents are of type

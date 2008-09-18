@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.hibernate.HibernateException;
@@ -28,12 +27,14 @@ public class CDOContainerIDSetter extends CDOPropertySetter
     super(tuplizer, propertyName);
   }
 
+  @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     final InternalCDORevision revision = (InternalCDORevision)target;
-    revision.setContainerID((CDOID)value);
+    revision.setContainerID(value);
   }
 
+  @Override
   protected boolean isVirtualPropertyAllowed()
   {
     return true;

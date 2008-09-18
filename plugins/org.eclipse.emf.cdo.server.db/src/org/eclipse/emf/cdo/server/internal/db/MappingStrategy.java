@@ -221,11 +221,11 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     resourcePathField = resourcePathMapping.getField();
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreReader storeReader, final boolean withTypes)
+  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreReader storeReader)
   {
     List<CDOClass> classes = getClassesWithObjectInfo();
     final Iterator<CDOClass> classIt = classes.iterator();
-    return new ObjectIDIterator(this, storeReader, withTypes)
+    return new ObjectIDIterator(this, storeReader)
     {
       @Override
       protected ResultSet getNextResultSet()
@@ -242,12 +242,6 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
               StringBuilder builder = new StringBuilder();
               builder.append("SELECT DISTINCT ");
               builder.append(CDODBSchema.ATTRIBUTES_ID);
-              if (withTypes)
-              {
-                builder.append(", ");
-                builder.append(CDODBSchema.ATTRIBUTES_CLASS);
-              }
-
               builder.append(" FROM ");
               builder.append(table);
               String sql = builder.toString();

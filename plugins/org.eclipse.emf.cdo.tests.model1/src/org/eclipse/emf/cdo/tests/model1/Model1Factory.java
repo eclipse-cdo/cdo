@@ -57,14 +57,6 @@ public interface Model1Factory extends EFactory
   OrderDetail createOrderDetail();
 
   /**
-   * Returns a new object of class '<em>Product</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return a new object of class '<em>Product</em>'.
-   * @generated
-   */
-  Product createProduct();
-
-  /**
    * Returns a new object of class '<em>Order Address</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return a new object of class '<em>Order Address</em>'.
@@ -79,6 +71,14 @@ public interface Model1Factory extends EFactory
    * @generated
    */
   Category createCategory();
+
+  /**
+   * Returns a new object of class '<em>Product1</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Product1</em>'.
+   * @generated
+   */
+  Product1 createProduct1();
 
   /**
    * Returns a new object of class '<em>Company</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

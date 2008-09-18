@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
-import org.eclipse.emf.cdo.tests.model1.Product;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -67,13 +67,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
-  private EClass productEClass = null;
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   private EClass orderAddressEClass = null;
 
   /**
@@ -89,6 +82,13 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * @generated
    */
   private EClass categoryEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass product1EClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -332,46 +332,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
-  public EClass getProduct()
-  {
-    return productEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getProduct_Name()
-  {
-    return (EAttribute)productEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EReference getProduct_OrderDetails()
-  {
-    return (EReference)productEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getProduct_Vat()
-  {
-    return (EAttribute)productEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public EClass getOrderAddress()
   {
     return orderAddressEClass;
@@ -435,6 +395,46 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   public EReference getCategory_Products()
   {
     return (EReference)categoryEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getProduct1()
+  {
+    return product1EClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getProduct1_Name()
+  {
+    return (EAttribute)product1EClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getProduct1_OrderDetails()
+  {
+    return (EReference)product1EClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getProduct1_Vat()
+  {
+    return (EAttribute)product1EClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -639,10 +639,10 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     createEReference(categoryEClass, CATEGORY__CATEGORIES);
     createEReference(categoryEClass, CATEGORY__PRODUCTS);
 
-    productEClass = createEClass(PRODUCT);
-    createEAttribute(productEClass, PRODUCT__NAME);
-    createEReference(productEClass, PRODUCT__ORDER_DETAILS);
-    createEAttribute(productEClass, PRODUCT__VAT);
+    product1EClass = createEClass(PRODUCT1);
+    createEAttribute(product1EClass, PRODUCT1__NAME);
+    createEReference(product1EClass, PRODUCT1__ORDER_DETAILS);
+    createEAttribute(product1EClass, PRODUCT1__VAT);
 
     orderAddressEClass = createEClass(ORDER_ADDRESS);
     createEAttribute(orderAddressEClass, ORDER_ADDRESS__TEST_ATTRIBUTE);
@@ -739,7 +739,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEReference(getOrderDetail_Order(), getOrder(), getOrder_OrderDetails(), "order", null, 1, 1, OrderDetail.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getOrderDetail_Product(), getProduct(), getProduct_OrderDetails(), "product", null, 0, 1,
+    initEReference(getOrderDetail_Product(), getProduct1(), getProduct1_OrderDetails(), "product", null, 0, 1,
         OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOrderDetail_Price(), ecorePackage.getEFloat(), "price", null, 0, 1, OrderDetail.class,
@@ -767,17 +767,17 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEReference(getCategory_Categories(), getCategory(), null, "categories", null, 0, -1, Category.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getCategory_Products(), getProduct(), null, "products", null, 0, -1, Category.class, !IS_TRANSIENT,
+    initEReference(getCategory_Products(), getProduct1(), null, "products", null, 0, -1, Category.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
-    initEClass(productEClass, Product.class, "Product", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getProduct_Name(), ecorePackage.getEString(), "name", null, 0, 1, Product.class, !IS_TRANSIENT,
+    initEClass(product1EClass, Product1.class, "Product1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getProduct1_Name(), ecorePackage.getEString(), "name", null, 0, 1, Product1.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProduct_OrderDetails(), getOrderDetail(), getOrderDetail_Product(), "orderDetails", null, 0, -1,
-        Product.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+    initEReference(getProduct1_OrderDetails(), getOrderDetail(), getOrderDetail_Product(), "orderDetails", null, 0, -1,
+        Product1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getProduct_Vat(), getVAT(), "vat", "vat15", 0, 1, Product.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEAttribute(getProduct1_Vat(), getVAT(), "vat", "vat15", 0, 1, Product1.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orderAddressEClass, OrderAddress.class, "OrderAddress", !IS_ABSTRACT, !IS_INTERFACE,

@@ -231,6 +231,14 @@ public class DetachTest extends AbstractCDOTest
 
     Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
     Assert.assertEquals(0, rset.getResources().size());
+    assertTransient(order);
+    assertTransient(orderDetail);
+
+    assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
+    assertEquals(0, rset.getResources().size());
+    assertEquals(true, resource.getContents().contains(order));
+    assertEquals(true, order.getOrderDetails().contains(orderDetail));
+
   }
 
   public void testDetachNewResource() throws Exception
@@ -267,6 +275,68 @@ public class DetachTest extends AbstractCDOTest
     detachResource(rset, resource);
 
     assertEquals(true, transaction.getDetachedObjects().contains(resourceID));
+  }
+
+  public void testDetachEmptyNewResource() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+
+    msg("Deleting resource");
+    resource.delete(null);
+  }
+
+  public void testDetachEmptyPersistedResource() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+    transaction.commit();
+
+    msg("Deleting resource");
+    resource.delete(null);
+    transaction.commit();
+  }
+
+  public void testDetachProxyResource() throws Exception
+  {
+    {
+      msg("Opening session");
+      CDOSession session = openModel1Session();
+
+      msg("Opening transaction");
+      CDOTransaction transaction = session.openTransaction();
+
+      msg("Creating resource");
+      transaction.createResource("/test1");
+      transaction.commit();
+    }
+
+    {
+      msg("Opening session");
+      CDOSession session = openModel1Session();
+
+      msg("Opening transaction");
+      CDOTransaction transaction = session.openTransaction();
+
+      msg("Creating resource");
+      CDOResource resource = transaction.getResource("/test1");
+
+	    msg("Deleting resource");
+      resource.delete(null);
+      transaction.commit();
+    }
   }
 
 }

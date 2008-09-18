@@ -332,41 +332,25 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private void depopulateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
       Object[] eSettings, int i)
   {
-    CDOFeature cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Depopulating feature {0}", cdoFeature);
+      TRACER.format("Depopulating feature {0}", eFeature);
     }
-
-    boolean isReference = cdoFeature.isReference();
-    if (cdoFeature.isMany())
+    
+    if (eFeature.isMany())
     {
       eSettings[i] = null;
       List<Object> setting = (List<Object>)super.dynamicGet(eFeature.getFeatureID());
-      List<Object> list = revision.getList(cdoFeature);
-      for (Object value : list)
-      {
-        if (isReference)
-        {
-          value = view.convertIDToObject(value);
-        }
 
-        setting.add(value);
+      int size = eStore().size(this, eFeature);
+      for (int index = 0; index < size; index++)
+      {
+        setting.add(eStore().get(this, eFeature, index));
       }
     }
     else
     {
-      Object value = revision.getValue(cdoFeature);
-      if (isReference)
-      {
-        value = view.convertIDToObject(value);
-      }
-      else if (cdoFeature.getType() == CDOType.CUSTOM)
-      {
-        value = EcoreUtil.createFromString((EDataType)eFeature.getEType(), (String)value);
-      }
-
-      eSettings[i] = value;
+      eSettings[i] = eStore().get(this, eFeature, 0);
     }
   }
 

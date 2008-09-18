@@ -427,7 +427,11 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     {
       resourceSet.getResources().remove(this);
     }
-    cdoView().toTransaction().detach(this);
+
+    if (!FSMUtil.isTransient(this))
+    {
+      cdoView().toTransaction().detach(this);
+    }
   }
 
   /**
@@ -435,8 +439,11 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void attached(EObject object)
   {
-    InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
-    attached(cdoObject, cdoView().toTransaction());
+    if (!FSMUtil.isTransient(this))
+    {
+      InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
+      attached(cdoObject, cdoView().toTransaction());
+    }
   }
 
   /**
@@ -452,8 +459,11 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void detached(EObject object)
   {
-    InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
-    CDOStateMachine.INSTANCE.detach(cdoObject);
+    if (!FSMUtil.isTransient(this))
+    {
+      InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
+      CDOStateMachine.INSTANCE.detach(cdoObject);
+    }
   }
 
   /**

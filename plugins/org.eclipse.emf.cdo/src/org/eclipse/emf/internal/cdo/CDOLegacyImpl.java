@@ -28,7 +28,6 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -48,7 +47,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
@@ -365,15 +363,7 @@ public abstract class CDOLegacyImpl extends CDOWrapperImpl implements Adapter.In
   public void transferResourceToInstance(Resource.Internal resource)
   {
     Method method = ReflectUtil.getMethod(BasicEObjectImpl.class, "eSetDirectResource", Resource.Internal.class);
-
-    try
-    {
-      ReflectUtil.invokeMethod(method, instance, resource);
-    }
-    catch (InvocationTargetException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    ReflectUtil.invokeMethod(method, instance, resource);
   }
 
   @SuppressWarnings("unchecked")

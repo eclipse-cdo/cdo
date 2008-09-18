@@ -36,6 +36,7 @@ import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.text.MessageFormat;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -184,6 +185,11 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   public model4interfacesPackage getModel4InterfacesPackage()
   {
     return modelConfig.getModel4InterfacesPackage();
+  }
+
+  public Map<String, String> getProperties()
+  {
+    return null;
   }
 
   @Override

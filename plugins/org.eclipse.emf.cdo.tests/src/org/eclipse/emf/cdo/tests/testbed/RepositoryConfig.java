@@ -28,8 +28,6 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
 
   public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHorizontal.INSTANCE, Hibernate.INSTANCE };
 
-  private Map<String, String> repositoryProperties;
-
   private IRepository repository;
 
   private IStore store;
@@ -39,12 +37,15 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     super(DIMENSION, name);
   }
 
-  public synchronized Map<String, String> getRepositoryProperties()
+  public Map<String, String> getRepositoryProperties()
   {
-    if (repositoryProperties == null)
+    Map<String, String> repositoryProperties = new HashMap<String, String>();
+    initRepositoryProperties(repositoryProperties);
+
+    Map<String, String> properties = getCurrentTest().getProperties();
+    if (properties != null)
     {
-      repositoryProperties = new HashMap<String, String>();
-      initRepositoryProperties(repositoryProperties);
+      repositoryProperties.putAll(properties);
     }
 
     return repositoryProperties;

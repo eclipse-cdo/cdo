@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -53,6 +55,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -299,7 +302,46 @@ public abstract class CDODataInputImpl implements CDODataInput
 
   public CDORevision readCDORevision() throws IOException
   {
-    return new CDORevisionImpl(this, getRevisionResolver());
+    return new CDORevisionImpl(this);
+  }
+
+  public CDOList readCDOList(CDORevision revision, CDOFeature feature) throws IOException
+  {
+    // TODO Simon: Could most of this stuff be moved into the list?
+    // (only if protected methods of this class don't need to become public)
+    CDOType type = feature.getType();
+    int referenceChunk;
+    int size = in.readInt();
+    if (size < 0)
+    {
+      size = -size;
+      referenceChunk = in.readInt();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Read feature {0}: size={1}, referenceChunk={2}", feature, size, referenceChunk);
+      }
+    }
+    else
+    {
+      referenceChunk = size;
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Read feature {0}: size={1}", feature, size);
+      }
+    }
+
+    InternalCDOList list = (InternalCDOList)getListFactory().createList(size, size, referenceChunk);
+    for (int j = 0; j < referenceChunk; j++)
+    {
+      Object value = type.readValue(this);
+      list.set(j, value);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("    " + value);
+      }
+    }
+
+    return list;
   }
 
   public CDORevisionDelta readCDORevisionDelta() throws IOException
@@ -366,4 +408,6 @@ public abstract class CDODataInputImpl implements CDODataInput
   protected abstract CDORevisionResolver getRevisionResolver();
 
   protected abstract CDOIDObjectFactory getIDFactory();
+
+  protected abstract CDOListFactory getListFactory();
 }

@@ -15,13 +15,12 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
@@ -42,6 +41,15 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   CDORevisionProxy(CDORevisionLazyInitializer li)
   {
     this.li = li;
+  }
+
+  /**
+   * @deprecated Doesn't seem to be used
+   */
+  @Deprecated
+  public void write(CDODataOutput out, int referenceChunk) throws IOException
+  {
+    out.writeCDORevision(li.getRevision(), referenceChunk);
   }
 
   public Object writeReplace()
@@ -114,14 +122,19 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().getID();
   }
 
-  public MoveableList<Object> getList(CDOFeature feature, int size)
+  public CDOList getList(CDOFeature feature, int size)
   {
     return li.getRevision().getList(feature, size);
   }
 
-  public MoveableList<Object> getList(CDOFeature feature)
+  public CDOList getList(CDOFeature feature)
   {
     return li.getRevision().getList(feature);
+  }
+
+  public void setList(CDOFeature feature, InternalCDOList list)
+  {
+    li.getRevision().setList(feature, list);
   }
 
   public CDOID getResourceID()
@@ -137,11 +150,6 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public CDORevision getRevision()
   {
     return li.getRevision().getRevision();
-  }
-
-  public CDORevisionResolver getRevisionResolver()
-  {
-    return li.getRevision().getRevisionResolver();
   }
 
   public Object getValue(CDOFeature feature)
@@ -292,10 +300,5 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public void unset(CDOFeature feature)
   {
     li.getRevision().unset(feature);
-  }
-
-  public void write(CDODataOutput out, int referenceChunk) throws IOException
-  {
-    out.writeCDORevision(li.getRevision(), referenceChunk);
   }
 }

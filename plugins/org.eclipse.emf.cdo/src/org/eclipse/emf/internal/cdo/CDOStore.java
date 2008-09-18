@@ -150,7 +150,8 @@ public final class CDOStore implements EStore
     {
       if (value instanceof CDOReferenceProxy)
       {
-        value = ((CDOReferenceProxy)value).resolve();
+        value = ((CDOReferenceProxy)value).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
+            index);
       }
 
       if (cdoFeature.isMany() && value instanceof CDOID)
@@ -293,7 +294,8 @@ public final class CDOStore implements EStore
       {
         if (result[i] instanceof CDOReferenceProxy)
         {
-          result[i] = ((CDOReferenceProxy)result[i]).resolve();
+          result[i] = ((CDOReferenceProxy)result[i]).resolve(getView().getSession().getRevisionManager(), revision,
+              cdoFeature, i);
         }
 
         result[i] = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result[i]);
@@ -348,8 +350,9 @@ public final class CDOStore implements EStore
       Object oldValue = revision.get(cdoFeature, index);
       if (oldValue instanceof CDOReferenceProxy)
       {
-        ((CDOReferenceProxy)oldValue).resolve();
+        ((CDOReferenceProxy)oldValue).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature, index);
       }
+
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
     }
 
@@ -412,7 +415,8 @@ public final class CDOStore implements EStore
     {
       if (result instanceof CDOReferenceProxy)
       {
-        result = ((CDOReferenceProxy)result).resolve();
+        result = ((CDOReferenceProxy)result).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
+            index);
       }
 
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
@@ -452,7 +456,8 @@ public final class CDOStore implements EStore
     {
       if (result instanceof CDOReferenceProxy)
       {
-        result = ((CDOReferenceProxy)result).resolve();
+        result = ((CDOReferenceProxy)result).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
+            target);
       }
 
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);

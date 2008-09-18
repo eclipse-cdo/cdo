@@ -21,7 +21,9 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -238,6 +240,67 @@ public abstract class CDODataOutputImpl implements CDODataOutput
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException
   {
     ((CDORevisionImpl)revision).write(this, referenceChunk);
+  }
+
+  public void writeCDOList(CDOList list, CDOFeature feature, int referenceChunk) throws IOException
+  {
+    // TODO Simon: Could most of this stuff be moved into the list?
+    // (only if protected methods of this class don't need to become public)
+    int size = list == null ? 0 : list.size();
+    if (size > 0)
+    {
+      // Need to adjust the referenceChunk in case where we do not have enough value in the list.
+      // Even if the referenceChunk is specified, a provider of data could have override that value.
+      int sizeToLook = referenceChunk == CDORevision.UNCHUNKED ? size : Math.min(referenceChunk, size);
+      for (int i = 0; i < sizeToLook; i++)
+      {
+        Object element = list.get(i, false);
+        if (element == CDORevisionUtil.UNINITIALIZED)
+        {
+          referenceChunk = i;
+          break;
+        }
+      }
+    }
+
+    if (referenceChunk != CDORevision.UNCHUNKED && referenceChunk < size)
+    {
+      // This happens only on server-side
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing feature {0}: size={1}, referenceChunk={2}", feature, size, referenceChunk);
+      }
+
+      out.writeInt(-size);
+      out.writeInt(referenceChunk);
+      size = referenceChunk;
+    }
+    else
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing feature {0}: size={1}", feature, size);
+      }
+
+      out.writeInt(size);
+    }
+
+    for (int j = 0; j < size; j++)
+    {
+      Object value = list.get(j, false);
+      if (value != null && feature.isReference())
+      {
+        value = getIDProvider().provideCDOID(value);
+        list.set(j, value);
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("    " + value);
+      }
+
+      feature.getType().writeValue(this, value);
+    }
   }
 
   public void writeCDORevisionDelta(CDORevisionDelta revisionDelta) throws IOException

@@ -29,43 +29,33 @@ public class ChunkingTest extends AbstractCDOTest
   public void testReadNative() throws Exception
   {
     {
-      msg("Opening session");
       CDOSession session = openModel1Session();
 
-      msg("Attaching transaction");
       CDOTransaction transaction = session.openTransaction();
 
-      msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
 
-      msg("Creating customer");
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
 
       for (int i = 0; i < 100; i++)
       {
-        msg("Creating salesOrder" + i);
         SalesOrder salesOrder = getModel1Factory().createSalesOrder();
         salesOrder.setId(i);
         salesOrder.setCustomer(customer);
         resource.getContents().add(salesOrder);
       }
 
-      msg("Committing");
       transaction.commit();
     }
 
     // ************************************************************* //
 
-    msg("Opening session");
     CDOSession session = openModel1Session();
     session.setReferenceChunkSize(10);
 
-    msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
 
     Customer customer = (Customer)resource.getContents().get(0);
@@ -82,43 +72,33 @@ public class ChunkingTest extends AbstractCDOTest
   public void testWriteNative() throws Exception
   {
     {
-      msg("Opening session");
       CDOSession session = openModel1Session();
 
-      msg("Attaching transaction");
       CDOTransaction transaction = session.openTransaction();
 
-      msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
 
-      msg("Creating customer");
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
 
       for (int i = 0; i < 100; i++)
       {
-        msg("Creating salesOrder" + i);
         SalesOrder salesOrder = getModel1Factory().createSalesOrder();
         salesOrder.setId(i);
         salesOrder.setCustomer(customer);
         resource.getContents().add(salesOrder);
       }
 
-      msg("Committing");
       transaction.commit();
     }
 
     // ************************************************************* //
 
-    msg("Opening session");
     CDOSession session = openModel1Session();
     session.setReferenceChunkSize(10);
 
-    msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
 
     Customer customer = (Customer)resource.getContents().get(0);
@@ -137,34 +117,27 @@ public class ChunkingTest extends AbstractCDOTest
   public void testChunkWithTemporaryObject() throws Exception
   {
     {
-      msg("Opening session");
+
       CDOSession session = openModel1Session();
 
-      msg("Attaching transaction");
       CDOTransaction transaction = session.openTransaction();
 
-      msg("Creating resource");
       CDOResource resource = transaction.createResource("/test1");
 
-      msg("Creating customer");
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
 
-      msg("Committing");
       transaction.commit();
     }
 
     // ************************************************************* //
 
-    msg("Opening session");
     CDOSession session = openModel1Session();
 
-    msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();
     transaction.setLoadRevisionCollectionChunkSize(10);
 
-    msg("Loading resource");
     CDOResource resource = transaction.getResource("/test1");
 
     Customer customer = getModel1Factory().createCustomer();
@@ -176,5 +149,90 @@ public class ChunkingTest extends AbstractCDOTest
     }
 
     transaction.commit();
+  }
+
+  public void testReadAfterUpdateBeforeCommit() throws Exception
+  {
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/test1");
+
+      for (int i = 0; i < 100; i++)
+      {
+        msg("Creating salesOrder" + i);
+        SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+        salesOrder.setId(i);
+        resource.getContents().add(salesOrder);
+      }
+
+      transaction.commit();
+    }
+
+    // ************************************************************* //
+
+    CDOSession session = openModel1Session();
+    session.setReferenceChunkSize(10);
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/test1");
+
+    for (int i = 50; i < 70; i++)
+    {
+      SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+      salesOrder.setId(i + 1000);
+      resource.getContents().add(i, salesOrder);
+    }
+
+    for (int i = 70; i < 120; i++)
+    {
+      SalesOrder saleOrders = (SalesOrder)resource.getContents().get(i);
+      assertEquals(i - 20, saleOrders.getId());
+    }
+
+    transaction.commit();
+  }
+
+  public void testReadAfterUpdateAfterCommit() throws Exception
+  {
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/test1");
+
+      for (int i = 0; i < 100; i++)
+      {
+        msg("Creating salesOrder" + i);
+        SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+        salesOrder.setId(i);
+        resource.getContents().add(salesOrder);
+      }
+
+      transaction.commit();
+    }
+
+    // ************************************************************* //
+
+    CDOSession session = openModel1Session();
+    session.setReferenceChunkSize(10);
+
+    msg("Creating resource");
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/test1");
+
+    for (int i = 50; i < 70; i++)
+    {
+      SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+      salesOrder.setId(i + 1000);
+      resource.getContents().add(i, salesOrder);
+    }
+
+    transaction.commit();
+
+    for (int i = 70; i < 120; i++)
+    {
+      SalesOrder saleOrders = (SalesOrder)resource.getContents().get(i);
+      assertEquals(i - 20, saleOrders.getId());
+    }
   }
 }

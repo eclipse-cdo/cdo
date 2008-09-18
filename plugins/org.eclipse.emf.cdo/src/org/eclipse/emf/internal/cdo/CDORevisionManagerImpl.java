@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *		Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -32,7 +33,6 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -63,12 +63,15 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     return session;
   }
 
-  public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
+  /**
+   * @since 2.0
+   */
+  public CDOID resolveReferenceProxy(CDORevision rev, CDOFeature feature, CDOReferenceProxy referenceProxy,
+      int accessIndex)
   {
     // Get proxy values
-    InternalCDORevision revision = (InternalCDORevision)referenceProxy.getRevision();
-    CDOFeature feature = referenceProxy.getFeature();
-    int accessIndex = referenceProxy.getIndex();
+    InternalCDORevision revision = (InternalCDORevision)rev;
+    int fetchIndex = referenceProxy.getIndex();
 
     // Get appropriate chunk size
     int chunkSize = session.getReferenceChunkSize();
@@ -129,7 +132,8 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     try
     {
       IChannel channel = session.getChannel();
-      LoadChunkRequest request = new LoadChunkRequest(channel, revision, feature, accessIndex, fromIndex, toIndex);
+      LoadChunkRequest request = new LoadChunkRequest(channel, revision, feature, accessIndex, fetchIndex, fromIndex,
+          toIndex);
 
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       return failOverStrategy.send(request);
@@ -142,79 +146,6 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     {
       throw new TransportException(ex);
     }
-  }
-
-  public List<Integer> analyzeReferenceRanges(List<Object> list)
-  {
-    List<Integer> ranges = new ArrayList<Integer>(0);
-    int range = 0; // Not in range
-    int lastIndex = -1; // Not in proxy range
-    for (Object value : list)
-    {
-      if (lastIndex == -1)
-      {
-        // Not in proxy range
-        if (value instanceof CDOReferenceProxy)
-        {
-          if (range != 0)
-          {
-            ranges.add(range);
-            range = 0;
-          }
-
-          CDOReferenceProxy proxy = (CDOReferenceProxy)value;
-          lastIndex = proxy.getIndex();
-          --range;
-        }
-        else
-        {
-          ++range; // One more non-proxy
-        }
-      }
-      else
-      {
-        // In proxy range
-        if (value instanceof CDOReferenceProxy)
-        {
-          CDOReferenceProxy proxy = (CDOReferenceProxy)value;
-          int index = proxy.getIndex();
-          if (index == lastIndex + 1)
-          {
-            --range;
-          }
-          else
-          {
-            ranges.add(range);
-            range = -1;
-          }
-
-          lastIndex = index;
-        }
-        else
-        {
-          if (range != 0)
-          {
-            ranges.add(range);
-            range = 1;
-          }
-
-          lastIndex = -1;
-        }
-      }
-    }
-
-    if (range != 0)
-    {
-      ranges.add(range);
-    }
-
-    int size = ranges.size();
-    if (size == 0 || size == 1 && ranges.get(0) > 0)
-    {
-      return null;
-    }
-
-    return ranges;
   }
 
   @Override

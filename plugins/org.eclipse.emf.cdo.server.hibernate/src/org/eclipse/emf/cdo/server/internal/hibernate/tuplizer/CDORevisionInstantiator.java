@@ -12,10 +12,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.hibernate.mapping.PersistentClass;
@@ -32,14 +29,9 @@ public class CDORevisionInstantiator implements Instantiator
 
   private CDOClass cdoClass;
 
-  private IRevisionManager revisionManager;
-
   public CDORevisionInstantiator(CDORevisionTuplizer tuplizer, PersistentClass mappingInfo)
   {
     cdoClass = tuplizer.getCDOClass();
-    HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
-    IRepository repository = hbStore.getRepository();
-    revisionManager = repository.getRevisionManager();
   }
 
   public Object instantiate()
@@ -50,8 +42,8 @@ public class CDORevisionInstantiator implements Instantiator
 
   public Object instantiate(Serializable id)
   {
-    return CDORevisionUtil.create(revisionManager, cdoClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id,
-        cdoClass.getName()));
+    return CDORevisionUtil
+        .create(cdoClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, cdoClass.getName()));
   }
 
   public boolean isInstance(Object object)

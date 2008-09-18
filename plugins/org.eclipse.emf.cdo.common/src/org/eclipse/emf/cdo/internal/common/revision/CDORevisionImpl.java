@@ -21,25 +21,24 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionMerger;
+import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.collection.MoveableArrayList;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,8 +51,6 @@ public class CDORevisionImpl implements InternalCDORevision
   private static final PerfTracer READING = new PerfTracer(OM.PERF_REVISION_READING, CDORevisionImpl.class);
 
   private static final PerfTracer WRITING = new PerfTracer(OM.PERF_REVISION_WRITING, CDORevisionImpl.class);
-
-  private CDORevisionResolver revisionResolver;
 
   private CDOClass cdoClass;
 
@@ -73,9 +70,8 @@ public class CDORevisionImpl implements InternalCDORevision
 
   private Object[] values;
 
-  public CDORevisionImpl(CDORevisionResolver revisionResolver, CDOClass cdoClass, CDOID id)
+  public CDORevisionImpl(CDOClass cdoClass, CDOID id)
   {
-    this.revisionResolver = revisionResolver;
     this.cdoClass = cdoClass;
     this.id = id;
     version = 0;
@@ -89,7 +85,6 @@ public class CDORevisionImpl implements InternalCDORevision
 
   public CDORevisionImpl(CDORevisionImpl source)
   {
-    revisionResolver = source.revisionResolver;
     cdoClass = source.cdoClass;
     id = source.id;
     version = source.version;
@@ -101,10 +96,8 @@ public class CDORevisionImpl implements InternalCDORevision
     copyValues(source.values);
   }
 
-  public CDORevisionImpl(CDODataInput in, CDORevisionResolver revisionResolver) throws IOException
+  public CDORevisionImpl(CDODataInput in) throws IOException
   {
-    this.revisionResolver = revisionResolver;
-
     READING.start(this);
     cdoClass = in.readCDOClassRefAndResolve();
 
@@ -151,11 +144,6 @@ public class CDORevisionImpl implements InternalCDORevision
     out.writeInt(containingFeatureID);
     writeValues(out, referenceChunk);
     WRITING.stop(this);
-  }
-
-  public CDORevisionResolver getRevisionResolver()
-  {
-    return revisionResolver;
   }
 
   public CDOClass getCDOClass()
@@ -448,16 +436,10 @@ public class CDORevisionImpl implements InternalCDORevision
       {
         if (feature.isMany())
         {
-          List<Object> list = getValueAsList(i);
-          int size = list == null ? 0 : list.size();
-          for (int j = 0; j < size; j++)
+          InternalCDOList list = (InternalCDOList)getValueAsList(i);
+          if (list != null)
           {
-            Object oldID = list.get(j);
-            Object newID = remapID(oldID, idMappings);
-            if (newID != oldID)
-            {
-              list.set(j, newID);
-            }
+            list.adjustReferences(idMappings);
           }
         }
         else
@@ -468,10 +450,9 @@ public class CDORevisionImpl implements InternalCDORevision
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private List<Object> getValueAsList(int i)
+  private CDOList getValueAsList(int i)
   {
-    return (List<Object>)values[i];
+    return (CDOList)values[i];
   }
 
   @Override
@@ -502,23 +483,27 @@ public class CDORevisionImpl implements InternalCDORevision
     }
   }
 
-  public MoveableList<Object> getList(CDOFeature feature)
+  public CDOList getList(CDOFeature feature)
   {
     return getList(feature, 0);
   }
 
-  @SuppressWarnings("unchecked")
-  public MoveableList<Object> getList(CDOFeature feature, int size)
+  public CDOList getList(CDOFeature feature, int size)
   {
     int i = cdoClass.getFeatureID(feature);
-    MoveableList<Object> list = (MoveableList<Object>)values[i];
+    CDOList list = (CDOList)values[i];
     if (list == null && size != -1)
     {
-      list = new MoveableArrayList<Object>(size);
+      list = CDOListFactory.DEFAULT.createList(size, 0, 0);
       values[i] = list;
     }
-
     return list;
+  }
+
+  public void setList(CDOFeature feature, InternalCDOList list)
+  {
+    int i = cdoClass.getFeatureID(feature);
+    values[i] = list;
   }
 
   public void setListSize(CDOFeature feature, int size)
@@ -530,7 +515,6 @@ public class CDORevisionImpl implements InternalCDORevision
     }
   }
 
-  @SuppressWarnings("unchecked")
   private void copyValues(Object[] sourceValues)
   {
     CDOFeature[] features = cdoClass.getAllFeatures();
@@ -541,25 +525,10 @@ public class CDORevisionImpl implements InternalCDORevision
       CDOType type = feature.getType();
       if (feature.isMany())
       {
-        MoveableList<Object> sourceList = (MoveableList<Object>)sourceValues[i];
+        InternalCDOList sourceList = (InternalCDOList)sourceValues[i];
         if (sourceList != null)
         {
-          int size = sourceList.size();
-          MoveableList<Object> list = new MoveableArrayList<Object>(size);
-          for (int j = 0; j < size; j++)
-          {
-            Object value = sourceList.get(j);
-            if (value instanceof CDOReferenceProxy)
-            {
-              list.add(new CDOReferenceProxyImpl(this, feature, ((CDOReferenceProxy)value).getIndex()));
-            }
-            else
-            {
-              list.add(type.copyValue(value));
-            }
-          }
-
-          values[i] = list;
+          values[i] = sourceList.clone(type);
         }
       }
       else
@@ -579,90 +548,7 @@ public class CDORevisionImpl implements InternalCDORevision
       CDOType type = feature.getType();
       if (feature.isMany())
       {
-        int referenceChunk;
-        int size = in.readInt();
-        if (size < 0)
-        {
-          size = -size;
-          referenceChunk = in.readInt();
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Read feature {0}: size={1}, referenceChunk={2}", feature, size, referenceChunk);
-          }
-        }
-        else
-        {
-          referenceChunk = size;
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Read feature {0}: size={1}", feature, size);
-          }
-        }
-
-        if (size != 0)
-        {
-          CDORevisionImpl baseRevision = null;
-          MoveableList<Object> list = new MoveableArrayList<Object>(size);
-          values[i] = list;
-          int ranges = in.readInt();
-          if (ranges != 0)
-          {
-            // This happens only on server side
-            while (ranges-- > 0)
-            {
-              int range = in.readInt();
-              if (range > 0)
-              {
-                while (range-- > 0)
-                {
-                  Object value = type.readValue(in);
-                  list.add(value);
-                  if (TRACER.isEnabled())
-                  {
-                    TRACER.trace("    " + value);
-                  }
-                }
-              }
-              else
-              {
-                if (baseRevision == null)
-                {
-                  baseRevision = (CDORevisionImpl)revisionResolver.getRevisionByVersion(id, CDORevision.UNCHUNKED,
-                      getVersion() - 1);
-                }
-
-                MoveableList<Object> baseList = baseRevision.getList(feature);
-                int index = in.readInt();
-                while (range++ < 0)
-                {
-                  Object value = baseList.get(index++);
-                  list.add(value);
-                  if (TRACER.isEnabled())
-                  {
-                    TRACER.trace("    " + value);
-                  }
-                }
-              }
-            }
-          }
-          else
-          {
-            for (int j = 0; j < referenceChunk; j++)
-            {
-              Object value = type.readValue(in);
-              list.add(value);
-              if (TRACER.isEnabled())
-              {
-                TRACER.trace("    " + value);
-              }
-            }
-
-            for (int j = referenceChunk; j < size; j++)
-            {
-              list.add(new CDOReferenceProxyImpl(this, feature, j));
-            }
-          }
-        }
+        values[i] = in.readCDOList(this, feature);
       }
       else
       {
@@ -683,92 +569,7 @@ public class CDORevisionImpl implements InternalCDORevision
       CDOFeature feature = features[i];
       if (feature.isMany())
       {
-        List<Object> list = getValueAsList(i);
-        int size = list == null ? 0 : list.size();
-        if (referenceChunk != CDORevision.UNCHUNKED && referenceChunk < size)
-        {
-          // This happens only on server-side
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Writing feature {0}: size={1}, referenceChunk={2}", feature, size, referenceChunk);
-          }
-
-          out.writeInt(-size);
-          out.writeInt(referenceChunk);
-          size = referenceChunk;
-        }
-        else
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Writing feature {0}: size={1}", feature, size);
-          }
-
-          out.writeInt(size);
-        }
-
-        if (size != 0)
-        {
-          List<Integer> ranges = revisionResolver.analyzeReferenceRanges(list);
-          if (ranges != null)
-          {
-            // This happens only on client-side
-            out.writeInt(ranges.size());
-            int j = 0;
-            for (int range : ranges)
-            {
-              out.writeInt(range);
-              if (range > 0)
-              {
-                // This is an id range
-                while (range-- > 0)
-                {
-                  Object value = list.get(j);
-                  if (value != null && feature.isReference())
-                  {
-                    value = out.getIDProvider().provideCDOID(value);
-                    list.set(j, value);
-                  }
-
-                  if (TRACER.isEnabled())
-                  {
-                    TRACER.trace("    " + value);
-                  }
-
-                  feature.getType().writeValue(out, value);
-                  ++j;
-                }
-              }
-              else
-              {
-                // This is a proxy range
-                CDOReferenceProxy proxy = (CDOReferenceProxy)list.get(j);
-                out.writeInt(proxy.getIndex());
-                j -= range; // Increase j to next range start
-              }
-            }
-          }
-          else
-          {
-            out.writeInt(0); // No ranges -> no ref proxies
-            for (int j = 0; j < size; j++)
-            {
-              Object value = list.get(j);
-              if (value != null && feature.isReference())
-              {
-                value = out.getIDProvider().provideCDOID(value);
-                list.set(j, value);
-              }
-
-              if (TRACER.isEnabled())
-              {
-                TRACER.trace("    " + value);
-              }
-
-              feature.getType().writeValue(out, value);
-            }
-          }
-        }
+        out.writeCDOList(getValueAsList(i), feature, referenceChunk);
       }
       else
       {

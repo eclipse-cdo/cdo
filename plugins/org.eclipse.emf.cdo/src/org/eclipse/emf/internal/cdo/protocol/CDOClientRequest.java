@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
@@ -123,6 +125,12 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       protected CDOIDObjectFactory getIDFactory()
       {
         return CDOClientRequest.this.getIDFactory();
+      }
+
+      @Override
+      protected CDOListFactory getListFactory()
+      {
+        return CDOListFactory.DEFAULT;
       }
     });
   }

@@ -42,13 +42,16 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
 
   private int toIndex;
 
+  private int fetchIndex;
+
   public LoadChunkRequest(IChannel channel, InternalCDORevision revision, CDOFeature feature, int accessIndex,
-      int fromIndex, int toIndex)
+      int fetchIndex, int fromIndex, int toIndex)
   {
     super(channel);
     this.revision = revision;
     this.feature = feature;
     this.accessIndex = accessIndex;
+    this.fetchIndex = fetchIndex;
     this.fromIndex = fromIndex;
     this.toIndex = toIndex;
   }
@@ -92,14 +95,14 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
     {
       PROTOCOL_TRACER.format("Writing fromIndex: {0}", fromIndex);
     }
-
-    out.writeInt(fromIndex);
+    int diffIndex = accessIndex - fetchIndex;
+    out.writeInt(fromIndex - diffIndex);
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing toIndex: {0}", toIndex);
     }
 
-    out.writeInt(toIndex);
+    out.writeInt(toIndex - diffIndex);
   }
 
   @Override

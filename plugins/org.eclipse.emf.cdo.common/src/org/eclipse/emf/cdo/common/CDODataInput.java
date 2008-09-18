@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ * 		Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.common;
 
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -61,6 +63,8 @@ public interface CDODataInput extends ExtendedDataInput
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
   public CDORevision readCDORevision() throws IOException;
+
+  public CDOList readCDOList(CDORevision revision, CDOFeature feature) throws IOException;
 
   public CDORevisionDelta readCDORevisionDelta() throws IOException;
 

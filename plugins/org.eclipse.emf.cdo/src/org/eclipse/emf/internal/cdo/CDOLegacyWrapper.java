@@ -176,7 +176,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper implements Internal
     instanceToRevision();
     if (cdoState() == CDOState.DIRTY) // NEW is handled in PrepareTransition
     {
-      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)revision.getRevisionResolver();
+      CDORevisionManagerImpl revisionManager = cdoView().getSession().getRevisionManager();
       InternalCDORevision originRevision = revisionManager.getRevisionByVersion(revision.getID(),
           CDORevision.UNCHUNKED, revision.getVersion() - 1, false);
       CDORevisionDelta delta = revision.compare(originRevision);

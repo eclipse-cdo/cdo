@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 import java.util.Collection;
 import java.util.List;
@@ -52,18 +53,8 @@ public interface CDORevisionResolver
 
   public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp);
 
-  public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy);
-
   /**
-   * Analyzing a list of values with respect to consecutive sequences of {@link CDOReferenceProxy} instances. A sequence
-   * of reference proxies is considered consecutive if and only if the {@link CDOReferenceProxy#getIndex() ids} of each
-   * proxy is the ids of its predecessor increased by one.
-   * <p>
-   * Implementation note: The implementation of this method should try to determine and deliver the longest possible
-   * consecutive sequences.
-   * 
-   * @return An integer list of the range <b>sizes</b>. A positive integer denotes a range of non-proxies. A negative
-   *         integer denotes a range of proxies. Ranges of zero size are not possible by definition.
+   * @since 2.0
    */
-  public List<Integer> analyzeReferenceRanges(List<Object> list);
+  public CDOID resolveReferenceProxy(CDORevision revision, CDOFeature feature, CDOReferenceProxy proxy, int accessIndex);
 }

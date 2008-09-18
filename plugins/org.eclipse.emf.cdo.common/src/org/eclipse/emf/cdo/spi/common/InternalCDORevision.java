@@ -7,17 +7,17 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-
-import org.eclipse.net4j.util.collection.MoveableList;
 
 import java.util.Map;
 
@@ -67,14 +67,24 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData
 
   public Object setValue(CDOFeature feature, Object value);
 
-  public MoveableList<Object> getList(CDOFeature feature);
+  /**
+   * @since 2.0
+   */
+  public void setList(CDOFeature feature, InternalCDOList list);
+
+  /**
+   * @since 2.0
+   */
+  public CDOList getList(CDOFeature feature);
 
   /**
    * @param size
    *          the size of a new list to be created if this revision has no list so far, or -1 to skip list creation and
    *          return <code>null</code> in this case.
+   * @since 2.0
    */
-  public MoveableList<Object> getList(CDOFeature feature, int size);
+  public CDOList getList(CDOFeature feature, int size);
 
+  @Deprecated
   public void setListSize(CDOFeature feature, int size);
 }

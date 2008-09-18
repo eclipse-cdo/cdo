@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * 
  * @author Eike Stepper
  */
-public final class MoveableArrayList<E> extends ArrayList<E> implements MoveableList<E>
+public class MoveableArrayList<E> extends ArrayList<E> implements MoveableList<E>
 {
   private static final long serialVersionUID = 1L;
 

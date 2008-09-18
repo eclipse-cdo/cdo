@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -57,17 +58,17 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return repository.getStore().getCDOIDObjectFactory();
   }
 
-  public CDOID resolveReferenceProxy(CDOReferenceProxy referenceProxy)
+  /**
+   * @since 2.0
+   */
+  public CDOID resolveReferenceProxy(CDORevision revision, CDOFeature feature, CDOReferenceProxy proxy, int currentIndex)
   {
     throw new UnsupportedOperationException("Reference proxies not supported on server side");
   }
 
-  public List<Integer> analyzeReferenceRanges(List<Object> list)
-  {
-    // There are currently no reference proxies on server side
-    return null;
-  }
-
+  /**
+   * @since 2.0
+   */
   @Override
   public boolean addCachedRevision(InternalCDORevision revision)
   {
@@ -259,4 +260,5 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     String capacity = repository.getProperties().get(prop);
     return capacity == null ? 0 : Integer.valueOf(capacity);
   }
+
 }

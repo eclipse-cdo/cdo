@@ -28,9 +28,12 @@ public final class CDORevisionUtil
   {
   }
 
-  public static CDORevision create(CDORevisionResolver revisionResolver, CDOClass cdoClass, CDOID id)
+  /**
+   * @since 2.0
+   */
+  public static CDORevision create(CDOClass cdoClass, CDOID id)
   {
-    return new CDORevisionImpl(revisionResolver, cdoClass, id);
+    return new CDORevisionImpl(cdoClass, id);
   }
 
   public static CDORevision copy(CDORevision source)

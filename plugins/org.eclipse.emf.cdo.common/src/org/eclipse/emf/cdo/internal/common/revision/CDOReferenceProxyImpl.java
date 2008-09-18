@@ -21,29 +21,13 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class CDOReferenceProxyImpl implements CDOReferenceProxy
+public final class CDOReferenceProxyImpl implements CDOReferenceProxy
 {
-  private CDORevision revision;
-
-  private CDOFeature feature;
-
   private int index;
 
-  public CDOReferenceProxyImpl(CDORevision revision, CDOFeature feature, int index)
+  public CDOReferenceProxyImpl(int index)
   {
-    this.revision = revision;
-    this.feature = feature;
     this.index = index;
-  }
-
-  public CDORevision getRevision()
-  {
-    return revision;
-  }
-
-  public CDOFeature getFeature()
-  {
-    return feature;
   }
 
   public int getIndex()
@@ -51,15 +35,19 @@ public class CDOReferenceProxyImpl implements CDOReferenceProxy
     return index;
   }
 
-  public CDOID resolve()
+  public void setIndex(int index)
   {
-    CDORevisionResolver revisionResolver = revision.getRevisionResolver();
-    return revisionResolver.resolveReferenceProxy(this);
+    this.index = index;
+  }
+
+  public CDOID resolve(CDORevisionResolver revisionResolver, CDORevision revision, CDOFeature feature, int index)
+  {
+    return revisionResolver.resolveReferenceProxy(revision, feature, this, index);
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOReferenceProxy[{0}, {1}, {2}", revision, feature, index);
+    return MessageFormat.format("CDOReferenceProxy[{0}]", index);
   }
 }

@@ -7,15 +7,10 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/215688    
- *    Simon McDuff - http://bugs.eclipse.org/213402
- *    Eike Stepper & Simon McDuff - http://bugs.eclipse.org/204890
- *    Simon McDuff - http://bugs.eclipse.org/246705
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
@@ -47,7 +42,6 @@ import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -153,17 +147,21 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void attach(InternalCDOObject object, CDOTransactionImpl transaction)
   {
-    Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents = new HashMap<InternalCDOObject, List<InternalCDOObject>>();
-    attach1(object, new Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>>(transaction,
-        mapOfContents));
-    attach2(object, mapOfContents);
+    List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
+    attach1(object, new Pair<CDOTransactionImpl, List<InternalCDOObject>>(transaction, contents));
+    attach2(object);
+
+    for (InternalCDOObject content : contents)
+    {
+      attach2(content);
+    }
   }
 
   /**
    * Phase 1: TRANSIENT --> PREPARED
    */
   private void attach1(InternalCDOObject object,
-      Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>> transactionAndMapOfContents)
+      Pair<CDOTransactionImpl, List<InternalCDOObject>> transactionAndMapOfContents)
   {
     if (TRACER.isEnabled())
     {
@@ -176,14 +174,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * Phase 2: PREPARED --> NEW
    */
-  private void attach2(InternalCDOObject object, Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents)
+  private void attach2(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("ATTACH: {0} --> {1}", object, mapOfContents);
+      TRACER.format("ATTACH: {0}", object);
     }
 
-    process(object, CDOEvent.ATTACH, mapOfContents);
+    process(object, CDOEvent.ATTACH, null);
   }
 
   public void detach(InternalCDOObject object)
@@ -373,18 +371,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @see AttachTransition
    * @author Eike Stepper
    */
-  @SuppressWarnings("unchecked")
-  private final class PrepareTransition
-      implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>>>
+  private final class PrepareTransition implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<CDOTransactionImpl, List<InternalCDOObject>>>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
-        Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>> transactionAndMapOfContents)
+        Pair<CDOTransactionImpl, List<InternalCDOObject>> transactionAndMapOfContents)
     {
       CDOTransactionImpl transaction = transactionAndMapOfContents.getElement1();
-      Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents = transactionAndMapOfContents.getElement2();
-
-      CDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
+      List<InternalCDOObject> contents = transactionAndMapOfContents.getElement2();
 
       // Prepare object
       CDOID id = transaction.getNextTemporaryID();
@@ -394,7 +388,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       // Create new revision
       CDOClass cdoClass = object.cdoClass();
-      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(revisionManager, cdoClass, id);
+      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(cdoClass, id);
       revision.setVersion(-1);
 
       object.cdoInternalSetRevision(revision);
@@ -403,19 +397,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       transaction.registerObject(object);
       transaction.registerNew(object);
 
-      // Build a list to access the same object in AttachTransition.
-      // This is an optimization. Accessing object from eStore/getObject takes more time than directly.
-      List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
-
       // Prepare content tree
       for (Iterator<InternalCDOObject> it = FSMUtil.getProperContents(object); it.hasNext();)
       {
         InternalCDOObject content = it.next();
         contents.add(content);
-        INSTANCE.process(content, CDOEvent.PREPARE,
-            new Pair<CDOTransactionImpl, Map<InternalCDOObject, List<InternalCDOObject>>>(transaction, mapOfContents));
+        INSTANCE.process(content, CDOEvent.PREPARE, transactionAndMapOfContents);
       }
-      mapOfContents.put(object, contents.size() == 0 ? Collections.EMPTY_LIST : contents);
     }
   }
 
@@ -437,22 +425,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @see PrepareTransition
    * @author Eike Stepper
    */
-  private final class AttachTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, Map<InternalCDOObject, List<InternalCDOObject>>>
+  private final class AttachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
-        Map<InternalCDOObject, List<InternalCDOObject>> mapOfContents)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       object.cdoInternalPostAttach();
       changeState(object, CDOState.NEW);
-
-      // Prepare content tree
-      List<InternalCDOObject> contents = mapOfContents.get(object);
-      for (InternalCDOObject content : contents)
-      {
-        // TODO Just call execute()?!
-        INSTANCE.process(content, CDOEvent.ATTACH, mapOfContents);
-      }
     }
   }
 

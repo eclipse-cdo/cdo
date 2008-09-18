@@ -25,8 +25,6 @@ public interface CDORevision
 
   public static final int UNCHUNKED = -1;
 
-  public CDORevisionResolver getRevisionResolver();
-
   public CDOClass getCDOClass();
 
   public CDOID getID();

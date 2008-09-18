@@ -161,10 +161,10 @@ public abstract class TestLogic extends AbstractOMTest
     CommitTemplate template = new CommitTemplate();
     template.addNewPackage(Model1Package.eINSTANCE);
 
-    Revision resource = template.addNewResource(1);
+    TestRevision resource = template.addNewResource(1);
     resource.set("path", "/res1");
 
-    Revision company = template.addNewObject(2, Model1Package.eINSTANCE.getCompany());
+    TestRevision company = template.addNewObject(2, Model1Package.eINSTANCE.getCompany());
     company.set("name", "Sympedia");
     company.set("street", "Homestr. 17");
     company.set("city", "Berlin");
@@ -264,14 +264,14 @@ public abstract class TestLogic extends AbstractOMTest
       return newPackage;
     }
 
-    public Revision addNewResource(int id)
+    public TestRevision addNewResource(int id)
     {
       CDOResourcePackage resourcePackage = repository.getPackageManager().getCDOResourcePackage();
       CDOResourceClass resourceClass = resourcePackage.getCDOResourceClass();
       return addRevision(id, resourceClass);
     }
 
-    public Revision addNewObject(int id, EClass eClass)
+    public TestRevision addNewObject(int id, EClass eClass)
     {
 
       String uri = eClass.getEPackage().getNsURI();
@@ -281,10 +281,10 @@ public abstract class TestLogic extends AbstractOMTest
       return addRevision(id, cdoClass);
     }
 
-    private Revision addRevision(int id, CDOClass cdoClass)
+    private TestRevision addRevision(int id, CDOClass cdoClass)
     {
       CDOIDTemp tempID = CDOIDUtil.createTempObject(id);
-      Revision newObject = new Revision(cdoClass, tempID);
+      TestRevision newObject = new TestRevision(cdoClass, tempID);
       newObjects.add(newObject);
       return newObject;
     }
@@ -328,11 +328,11 @@ public abstract class TestLogic extends AbstractOMTest
   /**
    * @author Eike Stepper
    */
-  protected class Revision extends CDORevisionImpl
+  protected class TestRevision extends CDORevisionImpl
   {
-    public Revision(CDOClass cdoClass, CDOID id)
+    public TestRevision(CDOClass cdoClass, CDOID id)
     {
-      super(repository.getRevisionManager(), cdoClass, id);
+      super(cdoClass, id);
     }
 
     public void set(String featureName, Object value)

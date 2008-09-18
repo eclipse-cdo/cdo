@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
@@ -23,10 +24,10 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.DLRevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
+import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
-import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class RevisionHolderTest extends AbstractOMTest
     validateList(list, 0);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new TestRevision(i));
       linkedList.addFirst(holder);
       list.addHead(holder);
       validateList(list, i + 1);
@@ -61,7 +62,7 @@ public class RevisionHolderTest extends AbstractOMTest
     validateList(list, 0);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new TestRevision(i));
       linkedList.addLast(holder);
       list.addTail(holder);
       validateList(list, i + 1);
@@ -75,7 +76,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new TestRevision(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }
@@ -95,7 +96,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new TestRevision(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }
@@ -115,7 +116,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new TestRevision(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }
@@ -135,7 +136,7 @@ public class RevisionHolderTest extends AbstractOMTest
     LRURevisionList list = new LRURevisionList(100);
     for (int i = 0; i < 10; i++)
     {
-      LRURevisionHolder holder = new LRURevisionHolder(new RevisionStub(i));
+      LRURevisionHolder holder = new LRURevisionHolder(new TestRevision(i));
       linkedList.addLast(holder);
       list.addTail(holder);
     }
@@ -191,11 +192,11 @@ public class RevisionHolderTest extends AbstractOMTest
   /**
    * @author Eike Stepper
    */
-  private static final class RevisionStub implements InternalCDORevision
+  private static final class TestRevision implements InternalCDORevision
   {
     private CDOID id;
 
-    public RevisionStub(long id)
+    public TestRevision(long id)
     {
       this.id = CDOIDUtil.createLong(id);
     }
@@ -305,12 +306,12 @@ public class RevisionHolderTest extends AbstractOMTest
       throw new UnsupportedOperationException();
     }
 
-    public MoveableList<Object> getList(CDOFeature feature, int size)
+    public CDOList getList(CDOFeature feature, int size)
     {
       throw new UnsupportedOperationException();
     }
 
-    public MoveableList<Object> getList(CDOFeature feature)
+    public CDOList getList(CDOFeature feature)
     {
       throw new UnsupportedOperationException();
     }
@@ -441,6 +442,11 @@ public class RevisionHolderTest extends AbstractOMTest
     }
 
     public void unset(CDOFeature feature)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setList(CDOFeature feature, InternalCDOList list)
     {
       throw new UnsupportedOperationException();
     }

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 
@@ -94,6 +95,12 @@ public abstract class CDOClientIndication extends Indication
       protected CDOIDObjectFactory getIDFactory()
       {
         return CDOClientIndication.this.getIDFactory();
+      }
+
+      @Override
+      protected CDOListFactory getListFactory()
+      {
+        return CDOListFactory.DEFAULT;
       }
     });
   }

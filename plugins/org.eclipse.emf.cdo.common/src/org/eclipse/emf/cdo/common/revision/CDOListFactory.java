@@ -6,24 +6,19 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Simon McDuff - maintenance
+ *    Simon McDuff - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.common.revision;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 
 /**
- * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @author Simon McDuff
+ * @since 2.0
  */
-public interface CDOReferenceProxy
+public interface CDOListFactory
 {
-  public int getIndex();
+  public static final CDOListFactory DEFAULT = CDOListImpl.FACTORY;
 
-  /**
-   * @since 2.0
-   */
-  public CDOID resolve(CDORevisionResolver revisionResolver, CDORevision revision, CDOFeature feature, int index);
+  public CDOList createList(int intitialCapacity, int size, int initialChunk);
 }

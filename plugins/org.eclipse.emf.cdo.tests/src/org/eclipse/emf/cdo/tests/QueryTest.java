@@ -201,7 +201,6 @@ public class QueryTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.setUniqueResourceContents(false);
     CDOResource resource1 = transaction.createResource("/test1");
 
     for (int i = 0; i < number; i++)

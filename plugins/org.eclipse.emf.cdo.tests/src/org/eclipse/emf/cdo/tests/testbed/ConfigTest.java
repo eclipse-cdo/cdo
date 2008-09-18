@@ -180,6 +180,12 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   }
 
   @Override
+  public String toString()
+  {
+    return MessageFormat.format("{0}[{1}, {2}, {3}]", getName(), containerConfig, sessionConfig, modelTypeConfig);
+  }
+
+  @Override
   protected void runTest() throws Throwable
   {
     try
@@ -195,12 +201,6 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
       t.printStackTrace(IOUtil.OUT());
       throw t;
     }
-  }
-
-  @Override
-  public String toString()
-  {
-    return MessageFormat.format("{0}[{1}, {2}]", getName(), modelTypeConfig, sessionConfig);
   }
 
   protected void skipConfig(Config config)
@@ -228,19 +228,5 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
   private static final class SkipTestException extends RuntimeException
   {
     private static final long serialVersionUID = 1L;
-  }
-
-  /**
-   * TODO Remove me
-   * 
-   * @author Eike Stepper
-   */
-  @Deprecated
-  public static class ConcreteDummy extends ConfigTest
-  {
-    public void test() throws Exception
-    {
-      System.out.println("TEST");
-    }
   }
 }

@@ -10,11 +10,15 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.testbed;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
 public abstract class Config
 {
+  private static final boolean LONG_FORMAT = false;
+
   private String dimension;
 
   private String name;
@@ -40,7 +44,12 @@ public abstract class Config
   @Override
   public String toString()
   {
-    return dimension + "=" + name;
+    if (LONG_FORMAT)
+    {
+      return dimension + "=" + name;
+    }
+
+    return name;
   }
 
   protected ConfigTest getCurrentTest()
@@ -51,6 +60,11 @@ public abstract class Config
   protected void setCurrentTest(ConfigTest currentTest)
   {
     this.currentTest = currentTest;
+  }
+
+  protected boolean isValid(Set<Config> configs)
+  {
+    return true;
   }
 
   protected void setUp() throws Exception

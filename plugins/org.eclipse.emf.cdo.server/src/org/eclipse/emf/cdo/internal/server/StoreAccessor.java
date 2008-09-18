@@ -269,9 +269,15 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected abstract void doActivate() throws Exception;
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected abstract void doDeactivate() throws Exception;
 

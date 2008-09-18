@@ -10,28 +10,21 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.testbed;
 
-import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStore;
 
-import org.eclipse.net4j.connector.IConnector;
-
-import org.eclipse.emf.ecore.EPackage;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public interface SessionProvider
+public interface RepositoryProvider
 {
-  public static final String REPOSITORY_NAME = RepositoryProvider.REPOSITORY_NAME;
+  public static final String REPOSITORY_NAME = "repo1";
 
-  public IConnector getConnector();
+  public Map<String, String> getRepositoryProperties();
 
-  public CDOSession openMangoSession();
+  public IRepository getRepository();
 
-  public CDOSession openModel1Session();
-
-  public CDOSession openModel2Session();
-
-  public CDOSession openModel3Session();
-
-  public CDOSession openSession(EPackage ePackage);
+  public IStore getStore();
 }

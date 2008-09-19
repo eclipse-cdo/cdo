@@ -204,7 +204,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects)
+  protected void detachObjects(CDOID[] detachedObjects, long revised)
   {
     for (CDOID id : detachedObjects)
     {

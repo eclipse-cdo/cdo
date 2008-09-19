@@ -280,6 +280,11 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     builder.append(" LIKE \'");
     builder.append(pathPrefix);
     builder.append("%\'");
+
+    // TODO Move the next part of the WHERE clause to some IView logic!!!
+    builder.append(" AND ");
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append("=0");
     String sql = builder.toString();
     if (TRACER.isEnabled())
     {

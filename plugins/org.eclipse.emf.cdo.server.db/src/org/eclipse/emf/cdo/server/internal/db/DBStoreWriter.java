@@ -211,27 +211,28 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects)
+  protected void detachObjects(CDOID[] detachedObjects, long revised)
   {
     for (CDOID id : detachedObjects)
     {
-      detachObject(id);
+      detachObject(id, revised);
     }
   }
 
   /**
+   * @param revised
    * @since 2.0
    */
-  protected void detachObject(CDOID id)
+  protected void detachObject(CDOID id, long revised)
   {
-    // if (TRACER.isEnabled())
-    // {
-    // TRACER.format("Detaching object: {0}", id);
-    // }
-    //
-    // CDOClass cdoClass = revision.getCDOClass();
-    // IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    // IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
-    // mapping.writeRevision(this, revision);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Detaching object: {0}", id);
+    }
+
+    CDOClass cdoClass = getObjectType(id);
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
+    mapping.detachObject(this, id, revised);
   }
 }

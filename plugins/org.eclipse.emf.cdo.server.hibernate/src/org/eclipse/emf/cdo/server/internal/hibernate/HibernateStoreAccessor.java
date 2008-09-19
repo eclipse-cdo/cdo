@@ -69,7 +69,7 @@ public abstract class HibernateStoreAccessor extends StoreAccessor implements IH
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects)
+  protected void detachObjects(CDOID[] detachedObjects, long revised)
   {
     throw new UnsupportedOperationException();
   }

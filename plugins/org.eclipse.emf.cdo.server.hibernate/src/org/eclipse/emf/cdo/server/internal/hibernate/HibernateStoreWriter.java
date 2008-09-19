@@ -160,7 +160,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects)
+  protected void detachObjects(CDOID[] detachedObjects, long revised)
   {
     // TODO: implement HibernateStoreWriter.detachObjects(detachedObjects)
     throw new UnsupportedOperationException();

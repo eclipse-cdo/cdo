@@ -128,7 +128,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       writeRevisions(context.getDirtyObjects());
     }
 
-    detachObjects(context.getDetachedObjects());
+    detachObjects(context.getDetachedObjects(), context.getTimeStamp() - 1);
   }
 
   /**
@@ -231,7 +231,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 2.0
    */
-  protected abstract void detachObjects(CDOID[] detachedObjects);
+  protected abstract void detachObjects(CDOID[] detachedObjects, long revised);
 
   /**
    * @since 2.0

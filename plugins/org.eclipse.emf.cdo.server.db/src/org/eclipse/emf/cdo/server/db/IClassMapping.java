@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -41,6 +42,11 @@ public interface IClassMapping
   public IReferenceMapping getReferenceMapping(CDOFeature feature);
 
   public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision);
+
+  /**
+   * @since 2.0
+   */
+  public void detachObject(IDBStoreWriter storeWriter, CDOID id, long revised);
 
   public void readRevision(IDBStoreReader storeReader, CDORevision revision, int referenceChunk);
 

@@ -80,7 +80,7 @@ public abstract class DBStoreAccessor extends StoreAccessor implements IDBStoreA
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects)
+  protected void detachObjects(CDOID[] detachedObjects, long revised)
   {
     throw new UnsupportedOperationException();
   }

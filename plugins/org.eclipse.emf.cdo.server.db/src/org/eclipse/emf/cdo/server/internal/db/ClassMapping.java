@@ -457,6 +457,14 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
+  public void detachObject(IDBStoreWriter storeWriter, CDOID id, long revised)
+  {
+    if (hasFullRevisionInfo())
+    {
+      writeRevisedRow(storeWriter, id, revised);
+    }
+  }
+
   protected void writeRevisedRow(IDBStoreWriter storeWriter, InternalCDORevision revision)
   {
     StringBuilder builder = new StringBuilder();

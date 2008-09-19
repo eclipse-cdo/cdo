@@ -11,6 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.StoreAccessor;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
@@ -27,7 +29,7 @@ import org.hibernate.SessionFactory;
  * @author Eike Stepper
  * @author Martin Taal
  */
-public class HibernateStoreAccessor extends StoreAccessor implements IHibernateStoreAccessor
+public abstract class HibernateStoreAccessor extends StoreAccessor implements IHibernateStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreAccessor.class);
 
@@ -51,6 +53,18 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
     }
+  }
+
+  @Override
+  protected void writeRevisions(CDORevision[] revisions)
+  {
+    // Don't do anything it is done at commit
+  }
+
+  @Override
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

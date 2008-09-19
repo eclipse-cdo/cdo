@@ -188,6 +188,14 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
   }
 
   @Override
+  protected void writeRevisions(CDORevision[] revisions)
+  {
+    for (CDORevision revision : revisions)
+    {
+      writeRevision(revision);
+    }
+  }
+
   protected void writeRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())

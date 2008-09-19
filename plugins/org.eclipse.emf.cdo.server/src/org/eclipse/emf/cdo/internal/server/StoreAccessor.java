@@ -224,13 +224,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  protected void writeRevisions(CDORevision[] revisions)
-  {
-    for (CDORevision revision : revisions)
-    {
-      writeRevision(revision);
-    }
-  }
+  protected abstract void writeRevisions(CDORevision[] revisions);
+
+  protected abstract void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas);
 
   /**
    * @since 2.0
@@ -247,24 +243,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * @since 2.0
    */
   protected void detachObject(CDOID id)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  protected void writeRevision(CDORevision revision)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
-  {
-    for (CDORevisionDelta revisionDelta : revisionDeltas)
-    {
-      writeRevisionDelta(revisionDelta);
-    }
-  }
-
-  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
   {
     throw new UnsupportedOperationException();
   }

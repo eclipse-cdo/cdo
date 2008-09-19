@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreWriter;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
@@ -178,18 +177,6 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   }
 
   @Override
-  protected void writeClass(InternalCDOClass cdoClass)
-  {
-    throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
-  }
-
-  @Override
-  protected void writeFeature(CDOFeature feature)
-  {
-    throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
-  }
-
-  @Override
   protected void writePackages(CDOPackage... cdoPackages)
   {
     if (cdoPackages != null && cdoPackages.length != 0)
@@ -208,25 +195,15 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   }
 
   @Override
-  protected void writeRevision(CDORevision revision)
+  protected void writeClass(InternalCDOClass cdoClass)
   {
-    // Do nothing, do it all at commit
+    throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
   }
 
   @Override
-  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
+  protected void writeFeature(CDOFeature feature)
   {
-  }
-
-  @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
-  {
-  }
-
-  @Override
-  protected void writeRevisions(CDORevision[] revisions)
-  {
-    // Don't do anything it is done at commit
+    throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
   }
 
   @Override

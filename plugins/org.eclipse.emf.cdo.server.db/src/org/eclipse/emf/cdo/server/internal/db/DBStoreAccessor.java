@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.StoreAccessor;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
@@ -33,7 +35,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
+public abstract class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 {
   private Connection connection;
 
@@ -62,6 +64,18 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     {
       throw new DBException(ex);
     }
+  }
+
+  @Override
+  protected void writeRevisions(CDORevision[] revisions)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

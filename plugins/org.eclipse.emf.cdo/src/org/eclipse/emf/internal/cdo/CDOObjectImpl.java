@@ -422,6 +422,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   protected EList<?> createList(final EStructuralFeature eStructuralFeature)
   {
     final EClassifier eType = eStructuralFeature.getEType();
+    // TODO Check if "==" is correct
     if (eType.getInstanceClassName() == "java.util.Map$Entry")
     {
       class EStoreEcoreEMap extends EcoreEMap<Object, Object>

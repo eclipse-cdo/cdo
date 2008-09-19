@@ -46,7 +46,6 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
       EPackage subpackage1 = topPackage.getESubpackages().get(0);
       EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
 
-      class1Class.getEAllStructuralFeatures();
       CDOSession session = openSession();
 
       session.getPackageRegistry().putEPackage(topPackage);

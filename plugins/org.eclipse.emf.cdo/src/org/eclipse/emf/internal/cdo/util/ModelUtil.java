@@ -222,6 +222,9 @@ public final class ModelUtil
       cdoClass.addSuperType(classRef);
     }
 
+    //Bugs: 247978 Make sure featureIndex are properly set for dynamic classes 
+    eClass.getEAllStructuralFeatures();
+    
     for (EStructuralFeature eFeature : EMFUtil.getPersistentFeatures(eClass.getEStructuralFeatures()))
     {
       CDOFeature cdoFeature = createCDOFeature(eFeature, cdoClass);

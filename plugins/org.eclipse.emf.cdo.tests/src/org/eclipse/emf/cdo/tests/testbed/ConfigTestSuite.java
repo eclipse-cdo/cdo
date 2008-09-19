@@ -77,24 +77,22 @@ public abstract class ConfigTestSuite
     if (containerConfig.isValid(configs) && repositoryConfig.isValid(configs) && sessionConfig.isValid(configs)
         && modelConfig.isValid(configs))
     {
-      return;
+      String name = MessageFormat.format("Config = [{0}, {1}, {2}, {3}]", containerConfig, repositoryConfig,
+          sessionConfig, modelConfig);
+      TestSuite suite = new TestSuite(name);
+
+      List<Class<? extends ConfigTest>> testClasses = new ArrayList<Class<? extends ConfigTest>>();
+      initTestClasses(testClasses);
+
+      for (Class<? extends ConfigTest> testClass : testClasses)
+      {
+        ConfigSuite configSuite = new ConfigSuite(testClass, containerConfig, repositoryConfig, sessionConfig,
+            modelConfig);
+        suite.addTest(configSuite);
+      }
+
+      parent.addTest(suite);
     }
-
-    String name = MessageFormat.format("Config = [{0}, {1}, {2}, {3}]", containerConfig, repositoryConfig,
-        sessionConfig, modelConfig);
-    TestSuite suite = new TestSuite(name);
-
-    List<Class<? extends ConfigTest>> testClasses = new ArrayList<Class<? extends ConfigTest>>();
-    initTestClasses(testClasses);
-
-    for (Class<? extends ConfigTest> testClass : testClasses)
-    {
-      ConfigSuite configSuite = new ConfigSuite(testClass, containerConfig, repositoryConfig, sessionConfig,
-          modelConfig);
-      suite.addTest(configSuite);
-    }
-
-    parent.addTest(suite);
   }
 
   protected abstract void initTestClasses(List<Class<? extends ConfigTest>> testClasses);

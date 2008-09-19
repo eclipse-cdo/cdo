@@ -562,6 +562,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   {
     private static final long serialVersionUID = 1L;
 
+    @SuppressWarnings("deprecation")
     public PersistentContents(EStructuralFeature eStructuralFeature)
     {
       super(eStructuralFeature);

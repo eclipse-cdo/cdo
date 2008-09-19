@@ -27,11 +27,11 @@ import java.util.ListIterator;
  * 
  * @author Martin Taal
  */
-public class HibernateMoveableListWrapper implements List<Object>, MoveableList<Object>
+public class WrappedHibernateList implements MoveableList<Object>
 {
   private List<Object> delegate;
 
-  public HibernateMoveableListWrapper()
+  public WrappedHibernateList()
   {
   }
 
@@ -181,7 +181,12 @@ public class HibernateMoveableListWrapper implements List<Object>, MoveableList<
 
   public Object get(int index)
   {
-    return getObject(getDelegate().get(index));
+    final Object value = getObject(getDelegate().get(index));
+    if (value instanceof CDORevision)
+    {
+      return ((CDORevision)value).getID();
+    }
+    return value;
   }
 
   public int indexOf(Object o)
@@ -236,7 +241,14 @@ public class HibernateMoveableListWrapper implements List<Object>, MoveableList<
 
   public Object set(int index, Object element)
   {
-    return getDelegate().set(index, getCDOID(element));
+    if (element instanceof CDOID)
+    {
+      return getDelegate().set(index, element);
+    }
+    else
+    {
+      return getDelegate().set(index, getCDOID(element));
+    }
   }
 
   public int size()

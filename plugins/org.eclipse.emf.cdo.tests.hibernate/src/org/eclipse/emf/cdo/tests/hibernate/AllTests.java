@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.tests.InvalidationTest;
 import org.eclipse.emf.cdo.tests.MangoTest;
 import org.eclipse.emf.cdo.tests.NoLegacyTest;
 import org.eclipse.emf.cdo.tests.NonCDOResourceTest;
-import org.eclipse.emf.cdo.tests.ResourceTest;
-import org.eclipse.emf.cdo.tests.RevisionDeltaTest;
 import org.eclipse.emf.cdo.tests.RevisionHolderTest;
 import org.eclipse.emf.cdo.tests.RollbackTest;
 import org.eclipse.emf.cdo.tests.StateMachineTest;
@@ -41,13 +39,14 @@ public class AllTests
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
 
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
-    suite.addTestSuite(ComplexTest.class);
-    suite.addTestSuite(CDOAutomaticPackageRefTest.class);
-    suite.addTestSuite(CDOPackageRefTest.class);
-    suite.addTestSuite(RevisionDeltaTest.class);
-    suite.addTestSuite(HbTransactionDeadLockTest.class);
+    suite.addTestSuite(InitialTest.class);
     suite.addTestSuite(HibernatePackageRegistryTest.class);
     suite.addTestSuite(ContainmentTest.class);
+    suite.addTestSuite(HbResourceTest.class);
+    suite.addTestSuite(CDOAutomaticPackageRefTest.class);
+    suite.addTestSuite(CDOPackageRefTest.class);
+    suite.addTestSuite(ComplexTest.class);
+    suite.addTestSuite(HbTransactionDeadLockTest.class);
     suite.addTestSuite(RollbackTest.class);
     suite.addTestSuite(StateMachineTest.class);
     suite.addTestSuite(RevisionHolderTest.class);
@@ -55,14 +54,13 @@ public class AllTests
     suite.addTestSuite(MangoTest.class);
     suite.addTestSuite(EnumTest.class);
     suite.addTestSuite(NoLegacyTest.class);
-    suite.addTestSuite(ResourceTest.class);
     suite.addTestSuite(NonCDOResourceTest.class);
     suite.addTestSuite(InvalidationTest.class);
-    suite.addTestSuite(InitialTest.class);
     suite.addTestSuite(ViewTest.class);
     suite.addTestSuite(IndexReconstructionTest.class);
 
     // These fail for standard cdo >>>
+    // suite.addTestSuite(RevisionDeltaTest.class);
     // suite.addTestSuite(DymamicEcoreTest.class);
     // suite.addTestSuite(ContentAdapterTest.class);
     // suite.addTestSuite(FetchRuleAnalyzerTest.class);

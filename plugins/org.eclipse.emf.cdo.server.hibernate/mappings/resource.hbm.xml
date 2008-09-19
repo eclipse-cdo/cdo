@@ -15,7 +15,7 @@
 			<meta attribute="syntheticVersion">true</meta>
 		</version>
 		<property name="path" type="string" not-null="true" length="255" />
-		<list name="contents" lazy="false" cascade="all,delete-orphan">
+		<list name="contents" lazy="true" cascade="all,delete-orphan">
 			<key/>
 			<list-index/>
 			<element type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">

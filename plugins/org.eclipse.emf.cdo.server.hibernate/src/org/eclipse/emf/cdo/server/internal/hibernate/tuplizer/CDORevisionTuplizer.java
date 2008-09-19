@@ -108,7 +108,8 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 
     if (cdoClass == null)
     {
-      throw new IllegalArgumentException("The mapped class " + mappingInfo.getEntityName());
+      throw new IllegalArgumentException("The mapped class " + mappingInfo.getEntityName()
+          + " does not have a cdoClass equivalent");
     }
   }
 
@@ -201,12 +202,21 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return new CDOVersionPropertyGetter(this, mappedProperty.getName());
     }
+    else if (mappedProperty.getName().compareTo("resourceID") == 0)
+    {
+      return new CDOResourceIDGetter(this, mappedProperty.getName());
+    }
+    else if (mappedProperty.getName().compareTo("containerID") == 0)
+    {
+      return new CDOContainerIDGetter(this, mappedProperty.getName());
+    }
+    else if (mappedProperty.getName().compareTo("containingFeatureID") == 0)
+    {
+      return new CDOContainingFeatureIDGetter(this, mappedProperty.getName());
+    }
 
     CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
-    if (cdoFeature == null) {
-      return new CDOVirtualPropertyGetter(this, mappedProperty.getName());
-    } 
-    else if (cdoFeature.isReference() && cdoFeature.isMany())
+    if (cdoFeature.isReference() && cdoFeature.isMany())
     {
       return new CDOManyReferenceGetter(this, mappedProperty.getName());
     }
@@ -239,12 +249,22 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return new CDOVersionPropertySetter(this, mappedProperty.getName());
     }
+    // TODO: externalize this
+    else if (mappedProperty.getName().compareTo("resourceID") == 0)
+    {
+      return new CDOResourceIDSetter(this, mappedProperty.getName());
+    }
+    else if (mappedProperty.getName().compareTo("containerID") == 0)
+    {
+      return new CDOContainerIDSetter(this, mappedProperty.getName());
+    }
+    else if (mappedProperty.getName().compareTo("containingFeatureID") == 0)
+    {
+      return new CDOContainingFeatureIDSetter(this, mappedProperty.getName());
+    }
 
     CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
-    if (cdoFeature == null) {
-      return new CDOVirtualPropertySetter(this, mappedProperty.getName());
-    } 
-    else if (cdoFeature.isReference() && cdoFeature.isMany())
+    if (cdoFeature.isReference() && cdoFeature.isMany())
     {
       return new CDOManyReferenceSetter(this, mappedProperty.getName());
     }

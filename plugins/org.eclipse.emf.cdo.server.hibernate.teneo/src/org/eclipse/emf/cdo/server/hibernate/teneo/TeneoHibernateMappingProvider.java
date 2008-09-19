@@ -60,6 +60,7 @@ public class TeneoHibernateMappingProvider implements IHibernateMappingProvider
     }
 
     configuration.addXML(mapping);
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("Added mapping to configuration");

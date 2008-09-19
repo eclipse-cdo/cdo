@@ -32,13 +32,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.criterion.Expression;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Delegate which stores and retrieves cdo packages.
@@ -277,6 +280,12 @@ public class HibernatePackageHandler extends Lifecycle
                 hibernateStore.getRepository().getPackageManager());
           }
         }
+
+        // // force indices to be set
+        // if (cdoClass.getAllFeatures().length > 0)
+        // {
+        // ((InternalCDOClass)cdoClass).getFeatureIndex(0);
+        // }
       }
 
       ((InternalCDOPackage)cdoPackage).setClasses(cdoClasses);
@@ -385,9 +394,17 @@ public class HibernatePackageHandler extends Lifecycle
     {
       sessionFactory.close();
       sessionFactory = null;
+      // and now do the drop action
     }
+    cdoPackageInfos = null;
 
     super.doDeactivate();
+  }
+
+  void doDropSchema()
+  {
+    final SchemaExport se = new SchemaExport(configuration);
+    se.drop(false, true);
   }
 
   protected void initConfiguration()
@@ -404,7 +421,18 @@ public class HibernatePackageHandler extends Lifecycle
       in = OM.BUNDLE.getInputStream("mappings/meta.hbm.xml");
       configuration = new Configuration();
       configuration.addInputStream(in);
-      configuration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(hibernateStore));
+
+      // the database schema update is done by the store and not
+      // by the packagehandler
+      final Properties props = new Properties();
+      props.putAll(HibernateUtil.getInstance().getPropertiesFromStore(hibernateStore));
+      if (configuration.getProperty(Environment.HBM2DDL_AUTO) != null
+          && configuration.getProperty(Environment.HBM2DDL_AUTO).startsWith("create"))
+      {
+        // note that the value create also re-creates the db and drops the old one
+        configuration.setProperty(Environment.HBM2DDL_AUTO, "update");
+      }
+      configuration.setProperties(props);
     }
     catch (Exception ex)
     {

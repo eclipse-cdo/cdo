@@ -13,16 +13,13 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.internal.server.StoreAccessor;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -59,24 +56,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   protected void doRelease()
   {
+    // TODO This method is called when this accessor is not needed anymore
     if (TRACER.isEnabled())
     {
       TRACER.trace("Committing/rollback and closing hibernate session");
     }
 
-    // this try/catch can disappear when in transaction commit the release
-    // of the accessor is done after the
-    try
-    {
-      // ugly cast
-      StoreUtil.setReader((IStoreReader)this);
-      endHibernateSession();
-      PersistableListHolder.getInstance().clearListMapping();
-    }
-    finally
-    {
-      StoreUtil.setReader(null);
-    }
+    endHibernateSession();
+    PersistableListHolder.getInstance().clearListMapping();
   }
 
   /** Clears the current hibernate session and sets a new one in the thread context */
@@ -93,24 +80,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * @since 1.0 - 6 July 2008
-   */
-  public Session createHibernateSession() {
-    beginHibernateSession();
-    return getHibernateSession();
-  }
-
-  /**
-   * @since 1.0 - 6 July 2008
-   */
-  public void clearHibernateSession() {
-    endHibernateSession();
-  }
-  
-  /**
    * starts a hibernate session and begins a transaction
    * 
-   * @since 1.0 - 6 July 2008
+   * @since 2.0
    */
   public void beginHibernateSession()
   {
@@ -122,13 +94,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     final SessionFactory sessionFactory = getStore().getHibernateSessionFactory();
     hibernateSession = sessionFactory.openSession();
     hibernateSession.beginTransaction();
-    hibernateSession.setFlushMode(FlushMode.COMMIT);
   }
 
   /**
    * commits/rollbacks and closes the session
    * 
-   * @since 1.0 - 6 July 2008
+   * @since 2.0
    */
   public void endHibernateSession()
   {
@@ -177,7 +148,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * @since 1.0 - 6 July 2008
+   * @since 2.0
    */
   public boolean isErrorOccured()
   {
@@ -185,7 +156,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * @since 1.0
+   * @since 2.0
    */
   public void setErrorOccured(boolean errorOccured)
   {

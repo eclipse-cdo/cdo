@@ -65,7 +65,7 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
       InternalCDORevision revision = (InternalCDORevision)target;
       revision.setValue(getCDOFeature(), list);
     }
-    
+
     // Wrap the moveablearraylist
     HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();
     wrapper.setDelegate(list);

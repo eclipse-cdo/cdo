@@ -28,7 +28,7 @@
 	<joined-subclass name="CDOPackageImpl" table="cdo_packages" lazy="false" extends="CDOModelElementImpl">
 		<key />
 		<property name="packageURI" column="uri" type="string" not-null="true" length="255" />
-		<property name="ecore" type="text" not-null="false" />
+		<property name="ecore" type="text" not-null="false" length="32767"/>
 		<property name="dynamic" type="boolean" not-null="true" />
 		<property name="parentURI" column="parentUri" type="string" length="255" />
 		<property name="metaIDRange" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDMetaRangeUserType"

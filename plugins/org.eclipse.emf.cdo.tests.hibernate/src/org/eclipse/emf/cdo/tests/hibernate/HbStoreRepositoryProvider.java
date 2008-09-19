@@ -57,7 +57,7 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
     props.put(Props.PROP_VERIFYING_REVISIONS, "false");
     props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
     props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
-    addHibernateTeneoProperties(props);
+    addHibernateTeneoProperties(name, props);
 
     // override with the test properties
     props.putAll(testProperties);
@@ -65,7 +65,7 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
     return CDOServerUtil.createRepository(name, createStore(), props);
   }
 
-  private void addHibernateTeneoProperties(Map<String, String> props)
+  private void addHibernateTeneoProperties(String repoName, Map<String, String> props)
   {
     try
     {
@@ -75,6 +75,9 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
       {
         props.put((String)key, teneoProperties.getProperty((String)key));
       }
+
+      // make the database name unique
+      props.put("hibernate.connection.url", props.get("hibernate.connection.url") + repoName);
     }
     catch (Exception e)
     {

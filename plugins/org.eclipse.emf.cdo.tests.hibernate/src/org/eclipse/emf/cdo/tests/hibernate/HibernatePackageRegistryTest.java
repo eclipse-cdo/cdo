@@ -53,10 +53,10 @@ public class HibernatePackageRegistryTest extends PackageRegistryTest
   // testcase a new package is written to the db
   public void testCommitUnrelatedPackage() throws Exception
   {
-    setHbm2ddlValue("update");
-    // this needs to be extra because in doSetup it is unknown which testcase is being run
-    doTearDown();
-    doSetUp();
+    // setHbm2ddlValue("update");
+    // // this needs to be extra because in doSetup it is unknown which testcase is being run
+    // doTearDown();
+    // doSetUp();
     try
     {
       super.testCommitUnrelatedPackage();
@@ -68,17 +68,39 @@ public class HibernatePackageRegistryTest extends PackageRegistryTest
   }
 
   @Override
-  protected void doSetUp() throws Exception
+  public void testCommitTopLevelPackages() throws Exception
   {
-    System.err.println("Called dosetup");
-    super.doSetUp();
+    setHbm2ddlValue("create-drop");
+    // this needs to be extra because in doSetup it is unknown which testcase is being run
+    doTearDown();
+    doSetUp();
+    doTearDown();
+    doSetUp();
+    try
+    {
+      super.testCommitTopLevelPackages();
+    }
+    finally
+    {
+      setHbm2ddlValue(null);
+    }
   }
 
   @Override
-  protected void doTearDown() throws Exception
+  public void testCommitNestedPackages() throws Exception
   {
-    System.err.println("Called doteardown");
-    super.doTearDown();
+    setHbm2ddlValue("create-drop");
+    // this needs to be extra because in doSetup it is unknown which testcase is being run
+    doTearDown();
+    doSetUp();
+    try
+    {
+      super.testCommitNestedPackages();
+    }
+    finally
+    {
+      setHbm2ddlValue(null);
+    }
   }
 
   public String getHbm2ddlValue()

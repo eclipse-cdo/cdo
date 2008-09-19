@@ -10,23 +10,29 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.hibernate.Session;
-
 /**
  * @author Martin Taal
- */ 
+ */
 public class HibernateThreadContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateThreadContext.class);
 
   private static ThreadLocal<HibernateCommitContext> commitContext = new ThreadLocal<HibernateCommitContext>();
-
+  private static ThreadLocal<HibernateStoreAccessor> accessor = new ThreadLocal<HibernateStoreAccessor>();
+  
+  public static HibernateStoreAccessor getCurrentHibernateStoreAccessor() {
+    return accessor.get();
+  }
+  
+  public static void setCurrentHibernateStoreAccessor(HibernateStoreAccessor hbStoreAccessor) {
+    accessor.set(hbStoreAccessor);
+  }
+  
   public static HibernateCommitContext getHibernateCommitContext()
   {
     HibernateCommitContext result = commitContext.get();
@@ -42,7 +48,7 @@ public class HibernateThreadContext
   {
     return commitContext.get() != null;
   }
-  
+
   public static void setCommitContext(CommitContext newCommitContext)
   {
     if (newCommitContext != null && commitContext.get() != null)
@@ -73,9 +79,5 @@ public class HibernateThreadContext
       hcc.setCommitContext(newCommitContext);
       commitContext.set(hcc);
     }
-  }
-  
-  public static Session getSession() {
-    return ((HibernateStoreReader)StoreUtil.getReader()).getHibernateSession();
   }
 }

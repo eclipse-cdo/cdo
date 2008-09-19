@@ -14,9 +14,19 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
+import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 
 import org.hibernate.Session;
 
@@ -28,6 +38,8 @@ import java.util.Properties;
  */
 public class HibernateUtil
 {
+  private static final String EXT_POINT = "mappingProviderFactories";
+
   private static HibernateUtil instance = new HibernateUtil();
 
   /**
@@ -48,11 +60,21 @@ public class HibernateUtil
   }
 
   /**
-   * @since 1.0 - 6 July 2008
+   * @since 2.0
+   */
+  public IHibernateStore createStore(IHibernateMappingProvider mappingProvider)
+  {
+    HibernateStore store = new HibernateStore(mappingProvider);
+    mappingProvider.setHibernateStore(store);
+    return store;
+  }
+
+  /**
+   * @since 2.0
    */
   public Session getHibernateSession()
   {
-    final HibernateStoreReader storeReader = (HibernateStoreReader)StoreUtil.getReader();
+    final HibernateStoreReader storeReader = (HibernateStoreReader)HibernateThreadContext.getCurrentHibernateStoreAccessor();
     return storeReader.getHibernateSession();
   }
 
@@ -88,7 +110,10 @@ public class HibernateUtil
     }
 
     final Session session = getHibernateSession();
-    session.saveOrUpdate(cdoRevision);
+    if (!(cdoRevision.getID() instanceof CDOIDHibernate))
+    {
+      session.saveOrUpdate(cdoRevision);
+    }
     if (!(cdoRevision.getID() instanceof CDOIDHibernate))
     {
       throw new IllegalStateException("CDORevision " + cdoRevision.getCDOClass().getName() + " " + cdoRevision.getID()
@@ -155,7 +180,45 @@ public class HibernateUtil
     final Session session = getHibernateSession();
     return (CDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
   }
-  
-  // get the revision from the context 
-  
+
+  public CDORevision getCDORevisionNullable(CDOID id)
+  {
+    if (id.isNull())
+    {
+      return null;
+    }
+
+    if (HibernateThreadContext.isHibernateCommitContextSet())
+    {
+      final HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+      CDORevision revision;
+      if ((revision = hcc.getDirtyObject(id)) != null)
+      {
+        return revision;
+      }
+      if ((revision = hcc.getNewObject(id)) != null)
+      {
+        return revision;
+      }
+
+      // maybe the temp was already translated
+      if (id instanceof CDOIDTemp)
+      {
+        final CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
+        if (newID != null)
+        {
+          return getCDORevision(newID);
+        }
+      }
+    }
+
+    if (!(id instanceof CDOIDHibernate))
+    {
+      return null;
+    }
+
+    final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
+    final Session session = getHibernateSession();
+    return (CDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
+  }
 }

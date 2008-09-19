@@ -324,16 +324,16 @@ public class ExternalReferenceTest extends AbstractCDOTest
     supplier.getPurchaseOrders().add(purchaseOrder);
 
     resource1.getContents().add(supplier);
-    msg("Committing");
 
     try
     {
+      msg("Committing");
       transaction.commit();
-      fail("Should have an IllegalStateException");
+      fail("TransactionException expected");
     }
-    catch (TransactionException exception)
+    catch (TransactionException success)
     {
-      assertEquals(true, exception.getCause() instanceof IllegalStateException);
+      assertEquals(true, success.getCause() instanceof IllegalStateException);
     }
   }
 
@@ -357,16 +357,15 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
     resource1.getContents().add(supplier);
     resource2.getContents().add(purchaseOrder);
-    msg("Committing");
 
     try
     {
+      msg("Committing");
       transaction1.commit();
-      fail("Should have an IllegalStateException");
+      fail("TransactionException expected");
     }
-    catch (TransactionException exception)
+    catch (TransactionException success)
     {
-
     }
   }
 
@@ -391,7 +390,5 @@ public class ExternalReferenceTest extends AbstractCDOTest
     schoolPackage.setNsURI("http:///www.elver.org/School");
     schoolPackage.getEClassifiers().add(schoolBookEClass);
     return schoolPackage;
-
   }
-
 }

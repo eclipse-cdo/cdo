@@ -477,24 +477,23 @@ public abstract class ClassMapping implements IClassMapping
     sqlUpdate(storeWriter, builder.toString());
   }
 
-  protected void writeRevisedRow(IDBStoreWriter storeWriter, CDOID id)
+  protected void writeRevisedRow(IDBStoreWriter storeWriter, CDOID id, long revised)
   {
     StringBuilder builder = new StringBuilder();
-    // builder.append("UPDATE ");
-    // builder.append(table);
-    // builder.append(" SET ");
-    // builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    // builder.append("=");
-    // builder.append(revision.getCreated() - 1);
-    // builder.append(" WHERE ");
-    // builder.append(CDODBSchema.ATTRIBUTES_ID);
-    // builder.append("=");
-    // builder.append(CDOIDUtil.getLong(revision.getID()));
-    // builder.append(" AND ");
-    // builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    // builder.append("=");
-    // builder.append(revision.getVersion() - 1);
-    // sqlUpdate(storeWriter, builder.toString());
+    builder.append("UPDATE ");
+    builder.append(table);
+    builder.append(" SET ");
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append("=");
+    builder.append(revised);
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append("=");
+    builder.append(CDOIDUtil.getLong(id));
+    builder.append(" AND ");
+    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+    builder.append("=0");
+    sqlUpdate(storeWriter, builder.toString());
   }
 
   protected void writeAttributes(IDBStoreWriter storeWriter, InternalCDORevision revision)

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOClass;
@@ -207,5 +208,30 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
+  }
+
+  @Override
+  protected void detachObjects(CDOID[] detachedObjects)
+  {
+    for (CDOID id : detachedObjects)
+    {
+      detachObject(id);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void detachObject(CDOID id)
+  {
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.format("Detaching object: {0}", id);
+    // }
+    //
+    // CDOClass cdoClass = revision.getCDOClass();
+    // IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    // IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
+    // mapping.writeRevision(this, revision);
   }
 }

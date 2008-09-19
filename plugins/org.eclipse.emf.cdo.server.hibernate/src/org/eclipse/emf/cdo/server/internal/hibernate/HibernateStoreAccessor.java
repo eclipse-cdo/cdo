@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.StoreAccessor;
@@ -68,9 +69,14 @@ public abstract class HibernateStoreAccessor extends StoreAccessor implements IH
   }
 
   @Override
+  protected void detachObjects(CDOID[] detachedObjects)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   protected void doActivate() throws Exception
   {
-    // TODO This method is called right after this accessor is created initially
   }
 
   @Override

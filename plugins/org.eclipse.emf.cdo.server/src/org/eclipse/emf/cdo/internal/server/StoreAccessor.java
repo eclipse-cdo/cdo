@@ -231,21 +231,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 2.0
    */
-  protected void detachObjects(CDOID[] detachedObjects)
-  {
-    for (CDOID id : detachedObjects)
-    {
-      detachObject(id);
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected void detachObject(CDOID id)
-  {
-    throw new UnsupportedOperationException();
-  }
+  protected abstract void detachObjects(CDOID[] detachedObjects);
 
   /**
    * @since 2.0

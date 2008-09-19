@@ -204,6 +204,17 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   }
 
   @Override
+  protected void detachObjects(CDOID[] detachedObjects)
+  {
+    for (CDOID id : detachedObjects)
+    {
+      detachObject(id);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
   protected void detachObject(CDOID id)
   {
     getStore().removeID(id);

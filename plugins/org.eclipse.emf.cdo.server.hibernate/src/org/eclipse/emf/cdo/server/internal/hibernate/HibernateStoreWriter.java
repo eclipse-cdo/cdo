@@ -160,6 +160,13 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
   }
 
   @Override
+  protected void detachObjects(CDOID[] detachedObjects)
+  {
+    // TODO: implement HibernateStoreWriter.detachObjects(detachedObjects)
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public boolean isReader()
   {
     // TODO Is this necessary?

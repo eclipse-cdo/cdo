@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -74,6 +75,12 @@ public abstract class DBStoreAccessor extends StoreAccessor implements IDBStoreA
 
   @Override
   protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void detachObjects(CDOID[] detachedObjects)
   {
     throw new UnsupportedOperationException();
   }

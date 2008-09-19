@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -33,6 +34,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
@@ -40,6 +43,18 @@ import java.util.Collection;
 public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implements CDOSessionPackageManager
 {
   private CDOSessionImpl session;
+
+  /**
+   * For optimization only. Instead of doing 3 lookups we are doing only one.
+   * <p>
+   * We could apply the same strategy for CDOClass and CDOPackage, because this is an optimization it will be good to do
+   * it only if it proof to make a difference. CDOPackage doesn't need to do it since we will do one lookup anyway...
+   * otherwise we need to proof it is more efficient.
+   * <p>
+   * TODO Should we have a cache for CDOClass(to save 1 lookup), CDOPackage (doesn'T save any lookup) ? TODO A reverse
+   * lookup cache is it worth it ?
+   */
+  private Map<EStructuralFeature, CDOFeature> featureCache = new ConcurrentHashMap<EStructuralFeature, CDOFeature>();
 
   public CDOSessionPackageManagerImpl(CDOSessionImpl session)
   {
@@ -85,6 +100,25 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
   public EStructuralFeature convert(CDOFeature cdoFeature)
   {
     return ModelUtil.getEFeature(cdoFeature, session.getPackageRegistry());
+  }
+
+  /**
+   * TODO Simon: If we enhance all these convert methods like getCDOFeature I suggest to do it directly in convert and
+   * remove the corresdonding static methods from ModelUtil. Then always call through the interface.
+   * 
+   * @since 2.0
+   */
+  public CDOFeature getCDOFeature(EStructuralFeature eFeature)
+  {
+    // Do not synchronized since we don't mind putting the same CDOFeeature twice in the Map.
+    CDOFeature feature = featureCache.get(eFeature);
+    if (feature == null)
+    {
+      feature = ModelUtil.getCDOFeature(eFeature, this);
+      featureCache.put(eFeature, feature);
+    }
+
+    return feature;
   }
 
   public void addPackageProxies(Collection<CDOPackageInfo> packageInfos)

@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -499,7 +498,7 @@ public final class CDOStore implements EStore
     }
 
     CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
-    CDOFeature cdoFeature = ModelUtil.getCDOFeature(eFeature, packageManager);
+    CDOFeature cdoFeature = packageManager.getCDOFeature(eFeature);
 
     synchronized (lock)
     {

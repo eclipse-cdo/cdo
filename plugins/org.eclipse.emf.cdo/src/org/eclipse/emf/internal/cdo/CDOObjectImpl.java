@@ -248,7 +248,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private void populateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
       Object[] eSettings, int i)
   {
-    CDOFeature cdoFeature = ModelUtil.getCDOFeature(eFeature, view.getSession().getPackageManager());
+    CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
+    CDOFeature cdoFeature = packageManager.getCDOFeature(eFeature);
     if (TRACER.isEnabled())
     {
       TRACER.format("Populating feature {0}", cdoFeature);
@@ -336,7 +337,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       TRACER.format("Depopulating feature {0}", eFeature);
     }
-    
+
     if (eFeature.isMany())
     {
       eSettings[i] = null;

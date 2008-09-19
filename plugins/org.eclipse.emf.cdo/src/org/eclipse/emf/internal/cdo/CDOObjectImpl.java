@@ -7,10 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/233490    
- *    Eike Stepper & Simon McDuff - http://bugs.eclipse.org/204890 
- *    Simon McDuff - http://bugs.eclipse.org/246705
- *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -179,9 +176,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalSetView(CDOView view)
   {
-    CDOViewImpl impl = (CDOViewImpl)view;
-    cdoView = impl;
-    eSetStore(impl.getStore());
+    cdoView = (CDOViewImpl)view;
+    if (cdoView != null)
+    {
+      eSetStore(cdoView.getStore());
+    }
+    else
+    {
+      eSetStore(null);
+    }
   }
 
   public void cdoInternalSetResource(CDOResource resource)
@@ -313,9 +316,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     CDOViewImpl view = cdoView();
-    eContainer = null;
-    eContainerFeatureID = 0;
+    super.eSetDirectResource(cdoResource());
+    eContainer = eStore().getContainer(this);
+    eContainerFeatureID = getStore().getContainingFeatureID(this);
 
+    // Ensure that the internal eSettings array is initialized;
     eSettings();
 
     EClass eClass = eClass();
@@ -341,12 +346,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     if (eFeature.isMany())
     {
       eSettings[i] = null;
-      List<Object> setting = (List<Object>)super.dynamicGet(eFeature.getFeatureID());
-
+      InternalEList<Object> setting = (InternalEList<Object>)eGet(eFeature, true);
       int size = eStore().size(this, eFeature);
       for (int index = 0; index < size; index++)
       {
-        setting.add(eStore().get(this, eFeature, index));
+        // Do not trigger events
+        // Do not trigger inverse updates
+        setting.basicAdd(eStore().get(this, eFeature, index), null);
       }
     }
     else

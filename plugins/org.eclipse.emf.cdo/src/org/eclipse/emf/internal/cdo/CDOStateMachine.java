@@ -191,7 +191,30 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       trace(object, CDOEvent.DETACH);
     }
 
-    process(object, CDOEvent.DETACH, null);
+    List<InternalCDOObject> objectsToDetach = new ArrayList<InternalCDOObject>();
+    CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
+
+    // Accumulate objects that needs to be detached
+    // If we have an error, we will keep the graph exactly like it was before.
+    process(object, CDOEvent.DETACH, objectsToDetach);
+
+    // postDetach requires the object to be TRANSIENT
+    for (InternalCDOObject content : objectsToDetach)
+    {
+      CDOState oldState = content.cdoInternalSetState(CDOState.TRANSIENT);
+      content.cdoInternalPostDetach();
+      content.cdoInternalSetState(oldState);
+    }
+
+    // detachObject needs to know the state before we change the object to TRANSIENT
+    for (InternalCDOObject content : objectsToDetach)
+    {
+      transaction.detachObject(content);
+      content.cdoInternalSetState(CDOState.TRANSIENT);
+
+      // Do not unset revision if a rollback occured. We will need the value.
+      content.cdoInternalSetView(null);
+    }
   }
 
   public void read(InternalCDOObject object)
@@ -437,18 +460,16 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class DetachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private final class DetachTransition implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, List<InternalCDOObject>>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
+        List<InternalCDOObject> objectsToDetach)
     {
       CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
-
-      transaction.detachObject(object);
-
-      object.cdoInternalPostDetach();
-      object.cdoInternalSetState(CDOState.TRANSIENT);
-
+      objectsToDetach.add(object);
       boolean isResource = object instanceof Resource;
+
       // Prepare content tree
       for (Iterator<EObject> it = object.eContents().iterator(); it.hasNext();)
       {
@@ -459,7 +480,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           InternalCDOObject content = FSMUtil.adapt(eObject, transaction);
           if (content != null)
           {
-            INSTANCE.process(content, CDOEvent.DETACH, object);
+            INSTANCE.process(content, CDOEvent.DETACH, objectsToDetach);
           }
         }
       }

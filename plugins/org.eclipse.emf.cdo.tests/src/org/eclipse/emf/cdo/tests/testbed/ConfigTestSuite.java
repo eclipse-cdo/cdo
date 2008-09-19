@@ -25,11 +25,11 @@ import junit.framework.TestSuite;
  */
 public abstract class ConfigTestSuite
 {
-  public static final String[] DIMENSIONS = { // 
-  ContainerConfig.DIMENSION, //
-      RepositoryConfig.DIMENSION, //
-      SessionConfig.DIMENSION, //
-      ModelConfig.DIMENSION };
+  // public static final String[] DIMENSIONS = { //
+  // ContainerConfig.DIMENSION, //
+  // RepositoryConfig.DIMENSION, //
+  // SessionConfig.DIMENSION, //
+  // ModelConfig.DIMENSION };
 
   public static final Config[][] CONFIGS = { //
   ContainerConfig.CONFIGS, //
@@ -74,22 +74,8 @@ public abstract class ConfigTestSuite
     configs.add(sessionConfig);
     configs.add(modelConfig);
 
-    if (!containerConfig.isValid(configs))
-    {
-      return;
-    }
-
-    if (!repositoryConfig.isValid(configs))
-    {
-      return;
-    }
-
-    if (!sessionConfig.isValid(configs))
-    {
-      return;
-    }
-
-    if (!modelConfig.isValid(configs))
+    if (containerConfig.isValid(configs) && repositoryConfig.isValid(configs) && sessionConfig.isValid(configs)
+        && modelConfig.isValid(configs))
     {
       return;
     }

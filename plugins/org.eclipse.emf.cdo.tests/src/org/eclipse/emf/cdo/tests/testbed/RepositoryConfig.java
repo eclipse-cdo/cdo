@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,8 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
 {
   public static final String DIMENSION = "repository";
 
-  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHorizontal.INSTANCE, Hibernate.INSTANCE };
+  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHorizontalHsql.INSTANCE,
+      DBHorizontalDerby.INSTANCE, Hibernate.INSTANCE };
 
   private IRepository repository;
 
@@ -110,13 +112,41 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   /**
    * @author Eike Stepper
    */
-  public static final class DBHorizontal extends RepositoryConfig
+  public static abstract class DB extends RepositoryConfig
   {
-    public static final String NAME = "DBHorizontal";
+    public DB(String name)
+    {
+      super(name);
+    }
 
-    public static final DBHorizontal INSTANCE = new DBHorizontal();
+    protected IStore createHsqlStore()
+    {
+      return null;
+    }
 
-    public DBHorizontal()
+    protected IStore createDerbyStore()
+    {
+      return null;
+    }
+
+    protected IMappingStrategy createHorizontalMappingStrategy()
+    {
+      return null;
+    }
+
+    protected abstract IMappingStrategy createMappingStrategy();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class DBHorizontalHsql extends DB
+  {
+    public static final String NAME = "DBHorizontalHsql";
+
+    public static final DBHorizontalHsql INSTANCE = new DBHorizontalHsql();
+
+    public DBHorizontalHsql()
     {
       super(NAME);
     }
@@ -124,7 +154,40 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     @Override
     protected IStore createStore()
     {
-      return null;
+      return createHsqlStore();
+    }
+
+    @Override
+    protected IMappingStrategy createMappingStrategy()
+    {
+      return createHorizontalMappingStrategy();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class DBHorizontalDerby extends DB
+  {
+    public static final String NAME = "DBHorizontalDerby";
+
+    public static final DBHorizontalDerby INSTANCE = new DBHorizontalDerby();
+
+    public DBHorizontalDerby()
+    {
+      super(NAME);
+    }
+
+    @Override
+    protected IStore createStore()
+    {
+      return createDerbyStore();
+    }
+
+    @Override
+    protected IMappingStrategy createMappingStrategy()
+    {
+      return createHorizontalMappingStrategy();
     }
   }
 

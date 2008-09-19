@@ -34,6 +34,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Expression;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 import java.io.InputStream;
@@ -345,6 +346,12 @@ public class HibernatePackageHandler extends Lifecycle
     {
       TRACER.trace("Finished reading CDOPackages");
     }
+  }
+
+  void doDropSchema()
+  {
+    final SchemaExport se = new SchemaExport(configuration);
+    se.drop(false, true);
   }
 
   public synchronized SessionFactory getSessionFactory()

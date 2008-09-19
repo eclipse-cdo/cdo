@@ -203,16 +203,21 @@ public class HibernateStore extends Store implements IHibernateStore
 
       hibernateSessionFactory.close();
       hibernateSessionFactory = null;
-
-      // and now do the drop action
-      if (doDropSchema)
-      {
-        final SchemaExport se = new SchemaExport(getHibernateConfiguration());
-        se.drop(false, false);
-      }
+    }
+    // and now do the drop action
+    if (doDropSchema)
+    {
+      final Configuration conf = getHibernateConfiguration();
+      final SchemaExport se = new SchemaExport(conf);
+      se.drop(false, true);
     }
 
     packageHandler.deactivate();
+
+    if (doDropSchema)
+    {
+      packageHandler.doDropSchema();
+    }
     super.doDeactivate();
   }
 

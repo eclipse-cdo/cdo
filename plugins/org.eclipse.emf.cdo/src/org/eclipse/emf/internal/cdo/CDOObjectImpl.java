@@ -422,7 +422,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   protected EList<?> createList(final EStructuralFeature eStructuralFeature)
   {
     final EClassifier eType = eStructuralFeature.getEType();
-    // TODO Check if "==" is correct
+
+    // Answer from Christian Damus
+    // Java ensures that string constants are interned, so this is actually
+    // more efficient than .equals() and it's correct
     if (eType.getInstanceClassName() == "java.util.Map$Entry")
     {
       class EStoreEcoreEMap extends EcoreEMap<Object, Object>

@@ -7,14 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201265
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/201997
- *    Simon McDuff - http://bugs.eclipse.org/202064
- *    Simon McDuff - http://bugs.eclipse.org/230832
- *    Simon McDuff - http://bugs.eclipse.org/233490
- *    Simon McDuff - http://bugs.eclipse.org/213402
- *    Simon McDuff - http://bugs.eclipse.org/204890
+ *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
@@ -572,11 +565,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           return CDOIDUtil.createExternalTemp(uri);
         }
       }
-      
+
       if (eObject.eResource() != null)
       {
-      return CDOIDUtil.createExternal(uri);
-    }
+        return CDOIDUtil.createExternal(uri);
+      }
     }
 
     throw new IllegalStateException("Unable to provideCDOID: " + idOrObject.getClass().getName());

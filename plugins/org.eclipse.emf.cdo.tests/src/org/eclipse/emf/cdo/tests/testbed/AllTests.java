@@ -1,5 +1,6 @@
 package org.eclipse.emf.cdo.tests.testbed;
 
+
 import java.util.List;
 
 import junit.framework.Test;

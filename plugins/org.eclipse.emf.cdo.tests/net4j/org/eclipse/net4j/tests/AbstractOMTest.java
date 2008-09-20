@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.emf.cdo.tests.bundle.OM;
+
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -33,17 +35,18 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public final void setUp() throws Exception
   {
-    super.setUp();
-    IOUtil.OUT().println("************************************************");
-    IOUtil.OUT().println(getName());
-    IOUtil.OUT().println("************************************************");
+    IOUtil.OUT().println("*******************************************************");
+    IOUtil.OUT().println(this);
+    IOUtil.OUT().println("*******************************************************");
 
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.setDebugging(true);
     enableConsole();
 
+    super.setUp();
     doSetUp();
+
     IOUtil.OUT().println();
     IOUtil.OUT().println("------------------------ START ------------------------");
   }
@@ -51,12 +54,12 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public final void tearDown() throws Exception
   {
-    sleep(200);
-    IOUtil.OUT().println("------------------------ END --------------------------");
+    IOUtil.OUT().println("------------------------- END -------------------------");
     IOUtil.OUT().println();
 
     doTearDown();
     super.tearDown();
+
     IOUtil.OUT().println();
     IOUtil.OUT().println();
   }
@@ -67,6 +70,10 @@ public abstract class AbstractOMTest extends TestCase
     try
     {
       super.runTest();
+    }
+    catch (SkipTestException ex)
+    {
+      OM.LOG.info("Skipped " + this);
     }
     catch (Throwable t)
     {
@@ -127,5 +134,26 @@ public abstract class AbstractOMTest extends TestCase
   protected static void assertInactive(Object object)
   {
     assertEquals(false, LifecycleUtil.isActive(object));
+  }
+
+  protected static void skipTest(boolean skip)
+  {
+    if (skip)
+    {
+      throw new SkipTestException();
+    }
+  }
+
+  protected static void skipTest()
+  {
+    skipTest(true);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class SkipTestException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
   }
 }

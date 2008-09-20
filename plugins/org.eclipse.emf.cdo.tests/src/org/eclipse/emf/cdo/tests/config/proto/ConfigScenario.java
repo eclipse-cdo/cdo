@@ -8,7 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.tests.config.proto;
+
+import org.eclipse.emf.cdo.tests.config.Config;
+import org.eclipse.emf.cdo.tests.config.ContainerConfig;
+import org.eclipse.emf.cdo.tests.config.ModelConfig;
+import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.SessionConfig;
 
 import java.text.MessageFormat;
 

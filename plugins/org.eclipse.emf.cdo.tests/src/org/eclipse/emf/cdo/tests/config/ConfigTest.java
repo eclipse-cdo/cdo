@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
@@ -26,26 +25,19 @@ import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.log.PrintLogHandler;
-import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import org.eclipse.emf.ecore.EPackage;
 
 import java.text.MessageFormat;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 /**
  * @author Eike Stepper
  */
-public abstract class ConfigTest extends TestCase implements ContainerProvider, RepositoryProvider, SessionProvider,
-    ModelProvider
+public abstract class ConfigTest extends AbstractOMTest implements ContainerProvider, RepositoryProvider,
+    SessionProvider, ModelProvider
 {
   private ContainerConfig containerConfig;
 
@@ -55,176 +47,280 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
 
   private ModelConfig modelConfig;
 
-  private static boolean consoleEnabled;
-
   public ConfigTest()
   {
   }
 
-  public ConfigTest(String name)
-  {
-    super(name);
-  }
+  // /////////////////////////////////////////////////////////////////////////
+  // //////////////////////// Container //////////////////////////////////////
 
+  /**
+   *@category Container
+   */
   public ContainerConfig getContainerConfig()
   {
     return containerConfig;
   }
 
+  /**
+   *@category Container
+   */
   public void setContainerConfig(ContainerConfig containerConfig)
   {
     this.containerConfig = containerConfig;
   }
 
-  public RepositoryConfig getRepositoryConfig()
-  {
-    return repositoryConfig;
-  }
-
-  public void setRepositoryConfig(RepositoryConfig repositoryConfig)
-  {
-    this.repositoryConfig = repositoryConfig;
-  }
-
-  public SessionConfig getSessionConfig()
-  {
-    return sessionConfig;
-  }
-
-  public void setSessionConfig(SessionConfig sessionConfig)
-  {
-    this.sessionConfig = sessionConfig;
-  }
-
-  public ModelConfig getModelConfig()
-  {
-    return modelConfig;
-  }
-
-  public void setModelConfig(ModelConfig modelConfig)
-  {
-    this.modelConfig = modelConfig;
-  }
-
+  /**
+   *@category Container
+   */
   public IManagedContainer getClientContainer()
   {
     return containerConfig.getClientContainer();
   }
 
+  /**
+   *@category Container
+   */
   public IManagedContainer getServerContainer()
   {
     return containerConfig.getServerContainer();
   }
 
+  // /////////////////////////////////////////////////////////////////////////
+  // //////////////////////// Repository /////////////////////////////////////
+
+  /**
+   *@category Repository
+   */
+  public RepositoryConfig getRepositoryConfig()
+  {
+    return repositoryConfig;
+  }
+
+  /**
+   *@category Repository
+   */
+  public void setRepositoryConfig(RepositoryConfig repositoryConfig)
+  {
+    this.repositoryConfig = repositoryConfig;
+  }
+
+  /**
+   *@category Repository
+   */
   public Map<String, String> getRepositoryProperties()
   {
     return repositoryConfig.getRepositoryProperties();
   }
 
+  /**
+   *@category Repository
+   */
   public IRepository getRepository(String name)
   {
     return repositoryConfig.getRepository(name);
   }
 
+  /**
+   *@category Repository
+   */
   public IRepository getRepository()
   {
     return repositoryConfig.getRepository(REPOSITORY_NAME);
   }
 
+  // /////////////////////////////////////////////////////////////////////////
+  // //////////////////////// Session ////////////////////////////////////////
+
+  /**
+   *@category Session
+   */
+  public SessionConfig getSessionConfig()
+  {
+    return sessionConfig;
+  }
+
+  /**
+   *@category Session
+   */
+  public void setSessionConfig(SessionConfig sessionConfig)
+  {
+    this.sessionConfig = sessionConfig;
+  }
+
+  /**
+   *@category Session
+   */
   public IConnector getConnector()
   {
     return sessionConfig.getConnector();
   }
 
+  /**
+   *@category Session
+   */
   public CDOSession openMangoSession()
   {
     return sessionConfig.openMangoSession();
   }
 
+  /**
+   *@category Session
+   */
   public CDOSession openModel1Session()
   {
     return sessionConfig.openModel1Session();
   }
 
+  /**
+   *@category Session
+   */
   public CDOSession openModel2Session()
   {
     return sessionConfig.openModel2Session();
   }
 
+  /**
+   *@category Session
+   */
   public CDOSession openModel3Session()
   {
     return sessionConfig.openModel3Session();
   }
 
+  /**
+   *@category Session
+   */
   public CDOSession openSession(EPackage ePackage)
   {
     return sessionConfig.openSession(ePackage);
   }
 
+  /**
+   *@category Session
+   */
   public CDOSession openSession(String repositoryName)
   {
     return sessionConfig.openSession(repositoryName);
   }
 
+  /**
+   *@category Session
+   */
   public CDOSession openSession()
   {
     return sessionConfig.openSession();
   }
 
+  // /////////////////////////////////////////////////////////////////////////
+  // //////////////////////// Model //////////////////////////////////////////
+
+  /**
+   *@category Model
+   */
+  public ModelConfig getModelConfig()
+  {
+    return modelConfig;
+  }
+
+  /**
+   *@category Model
+   */
+  public void setModelConfig(ModelConfig modelConfig)
+  {
+    this.modelConfig = modelConfig;
+  }
+
+  /**
+   *@category Model
+   */
   public MangoFactory getMangoFactory()
   {
     return modelConfig.getMangoFactory();
   }
 
+  /**
+   *@category Model
+   */
   public MangoPackage getMangoPackage()
   {
     return modelConfig.getMangoPackage();
   }
 
+  /**
+   *@category Model
+   */
   public Model1Factory getModel1Factory()
   {
     return modelConfig.getModel1Factory();
   }
 
+  /**
+   *@category Model
+   */
   public Model1Package getModel1Package()
   {
     return modelConfig.getModel1Package();
   }
 
+  /**
+   *@category Model
+   */
   public Model2Factory getModel2Factory()
   {
     return modelConfig.getModel2Factory();
   }
 
+  /**
+   *@category Model
+   */
   public Model2Package getModel2Package()
   {
     return modelConfig.getModel2Package();
   }
 
+  /**
+   *@category Model
+   */
   public Model3Factory getModel3Factory()
   {
     return modelConfig.getModel3Factory();
   }
 
+  /**
+   *@category Model
+   */
   public Model3Package getModel3Package()
   {
     return modelConfig.getModel3Package();
   }
 
+  /**
+   *@category Model
+   */
   public model4Factory getModel4Factory()
   {
     return modelConfig.getModel4Factory();
   }
 
+  /**
+   *@category Model
+   */
   public model4Package getModel4Package()
   {
     return modelConfig.getModel4Package();
   }
 
+  /**
+   *@category Model
+   */
   public model4interfacesPackage getModel4InterfacesPackage()
   {
     return modelConfig.getModel4InterfacesPackage();
   }
+
+  // /////////////////////////////////////////////////////////////////////////
+  // /////////////////////////////////////////////////////////////////////////
 
   public Map<String, String> getProperties()
   {
@@ -243,154 +339,41 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
         repositoryConfig, sessionConfig, modelConfig);
   }
 
-  @Override
-  public final void setUp() throws Exception
-  {
-    IOUtil.OUT().println("*******************************************************");
-    IOUtil.OUT().println(this);
-    IOUtil.OUT().println("*******************************************************");
-
-    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-    OMPlatform.INSTANCE.setDebugging(true);
-    enableConsole();
-
-    super.setUp();
-    setUpConfig(containerConfig);
-    setUpConfig(repositoryConfig);
-    setUpConfig(sessionConfig);
-    setUpConfig(modelConfig);
-    doSetUp();
-
-    IOUtil.OUT().println();
-    IOUtil.OUT().println("------------------------ START ------------------------");
-  }
-
-  @Override
-  public final void tearDown() throws Exception
-  {
-    IOUtil.OUT().println("------------------------- END -------------------------");
-    IOUtil.OUT().println();
-
-    doTearDown();
-    setUpConfig(modelConfig);
-    setUpConfig(sessionConfig);
-    setUpConfig(repositoryConfig);
-    setUpConfig(containerConfig);
-    super.tearDown();
-
-    IOUtil.OUT().println();
-    IOUtil.OUT().println();
-  }
-
-  protected void setUpConfig(Config config) throws Exception
-  {
-    config.setCurrentTest(this);
-    config.setUp();
-  }
-
-  protected void tearDownConfig(Config config) throws Exception
-  {
-    config.tearDown();
-    config.setCurrentTest(null);
-  }
-
-  protected void doSetUp() throws Exception
-  {
-  }
-
-  protected void doTearDown() throws Exception
-  {
-  }
-
-  protected void enableConsole()
-  {
-    if (!consoleEnabled)
-    {
-      PrintTraceHandler.CONSOLE.setShortContext(true);
-      OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-      OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-      OMPlatform.INSTANCE.setDebugging(true);
-      consoleEnabled = true;
-    }
-  }
-
-  protected void disableConsole()
-  {
-    if (consoleEnabled)
-    {
-      consoleEnabled = false;
-      OMPlatform.INSTANCE.setDebugging(false);
-      OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
-      OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
-    }
-  }
-
-  protected static void msg(Object m)
-  {
-    if (consoleEnabled)
-    {
-      IOUtil.OUT().println("--> " + m);
-    }
-  }
-
-  protected static void sleep(long millis)
-  {
-    ConcurrencyUtil.sleep(millis);
-  }
-
-  protected static void assertActive(Object object)
-  {
-    assertEquals(true, LifecycleUtil.isActive(object));
-  }
-
-  protected static void assertInactive(Object object)
-  {
-    assertEquals(false, LifecycleUtil.isActive(object));
-  }
-
-  @Override
-  protected void runTest() throws Throwable
-  {
-    try
-    {
-      super.runTest();
-    }
-    catch (SkipTestException ex)
-    {
-      OM.LOG.info("Skipped " + this);
-    }
-    catch (Throwable t)
-    {
-      t.printStackTrace(IOUtil.OUT());
-      throw t;
-    }
-  }
-
   protected void skipConfig(Config config)
   {
     skipTest(modelConfig == config);
     skipTest(sessionConfig == config);
   }
 
-  protected static void skipTest(boolean skip)
+  @Override
+  protected void doSetUp() throws Exception
   {
-    if (skip)
-    {
-      throw new SkipTestException();
-    }
+    super.doSetUp();
+    setUpConfig(containerConfig);
+    setUpConfig(repositoryConfig);
+    setUpConfig(sessionConfig);
+    setUpConfig(modelConfig);
   }
 
-  protected static void skipTest()
+  @Override
+  protected void doTearDown() throws Exception
   {
-    skipTest(true);
+    tearDownConfig(modelConfig);
+    tearDownConfig(sessionConfig);
+    tearDownConfig(repositoryConfig);
+    tearDownConfig(containerConfig);
+    super.doTearDown();
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private static final class SkipTestException extends RuntimeException
+  private void setUpConfig(Config config) throws Exception
   {
-    private static final long serialVersionUID = 1L;
+    config.setCurrentTest(this);
+    config.setUp();
+  }
+
+  private void tearDownConfig(Config config) throws Exception
+  {
+    config.tearDown();
+    config.setCurrentTest(null);
   }
 }

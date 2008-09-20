@@ -39,7 +39,7 @@ public class XATransactionTest extends AbstractCDOTest
 
   public void testRollback() throws Exception
   {
-    createRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY2_NAME);
 
     CDOSession sessionA = openSession();
     CDOSession sessionB = openSession(REPOSITORY2_NAME);
@@ -79,7 +79,7 @@ public class XATransactionTest extends AbstractCDOTest
 
   public void testRollback_AfterSetpoint() throws Exception
   {
-    createRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY2_NAME);
 
     CDOSession sessionA = openSession();
     CDOSession sessionB = openSession(REPOSITORY2_NAME);
@@ -141,7 +141,8 @@ public class XATransactionTest extends AbstractCDOTest
 
   public void testCommitFromTransactionDisabled() throws Exception
   {
-    createRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY2_NAME);
+
     {
       CDOSession sessionA = openSession();
       CDOSession sessionB = openSession(REPOSITORY2_NAME);
@@ -183,7 +184,8 @@ public class XATransactionTest extends AbstractCDOTest
 
   public void testNotUsingXATransaction_Exception() throws Exception
   {
-    createRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY2_NAME);
+
     {
       CDOSession sessionA = openSession();
       CDOSession sessionB = openSession(REPOSITORY2_NAME);

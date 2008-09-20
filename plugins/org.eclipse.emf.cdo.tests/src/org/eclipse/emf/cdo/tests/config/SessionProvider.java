@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.CDOSession;
 
@@ -21,8 +21,6 @@ import org.eclipse.emf.ecore.EPackage;
  */
 public interface SessionProvider
 {
-  public static final String REPOSITORY_NAME = RepositoryProvider.REPOSITORY_NAME;
-
   public IConnector getConnector();
 
   public CDOSession openMangoSession();
@@ -34,4 +32,8 @@ public interface SessionProvider
   public CDOSession openModel3Session();
 
   public CDOSession openSession(EPackage ePackage);
+
+  public CDOSession openSession(String repositoryName);
+
+  public CDOSession openSession();
 }

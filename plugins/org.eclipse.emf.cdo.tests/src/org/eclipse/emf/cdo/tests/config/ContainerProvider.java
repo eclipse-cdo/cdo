@@ -8,23 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStore;
-
-import java.util.Map;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Eike Stepper
  */
-public interface RepositoryProvider
+public interface ContainerProvider
 {
-  public static final String REPOSITORY_NAME = "repo1";
+  public IManagedContainer getClientContainer();
 
-  public Map<String, String> getRepositoryProperties();
-
-  public IRepository getRepository();
-
-  public IStore getStore();
+  public IManagedContainer getServerContainer();
 }

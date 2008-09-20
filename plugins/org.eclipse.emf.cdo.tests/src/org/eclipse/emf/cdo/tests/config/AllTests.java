@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import java.util.List;
 

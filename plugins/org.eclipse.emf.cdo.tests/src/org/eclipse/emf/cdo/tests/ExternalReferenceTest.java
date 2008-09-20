@@ -142,7 +142,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
     byte[] dataOfresD = null;
-    createRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY2_NAME);
+
     {
       CDOSession sessionA = openSession();
       CDOSession sessionB = openSession(REPOSITORY2_NAME);
@@ -206,7 +207,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       resD.save(outputStream, null);
       dataOfresD = outputStream.toByteArray();
-
     }
 
     {
@@ -251,7 +251,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testManyViewsOnOneResourceSet() throws Exception
   {
-    createRepository(REPOSITORY2_NAME);
+    getRepository(REPOSITORY2_NAME);
+
     {
       CDOSession sessionA = openSession();
       CDOSession sessionB = openSession(REPOSITORY2_NAME);

@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
@@ -43,7 +44,8 @@ import junit.framework.TestCase;
 /**
  * @author Eike Stepper
  */
-public abstract class ConfigTest extends TestCase implements ContainerProvider, SessionProvider, ModelProvider
+public abstract class ConfigTest extends TestCase implements ContainerProvider, RepositoryProvider, SessionProvider,
+    ModelProvider
 {
   private ContainerConfig containerConfig;
 
@@ -114,6 +116,21 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
     return containerConfig.getServerContainer();
   }
 
+  public Map<String, String> getRepositoryProperties()
+  {
+    return repositoryConfig.getRepositoryProperties();
+  }
+
+  public IRepository getRepository(String name)
+  {
+    return repositoryConfig.getRepository(name);
+  }
+
+  public IRepository getRepository()
+  {
+    return repositoryConfig.getRepository(REPOSITORY_NAME);
+  }
+
   public IConnector getConnector()
   {
     return sessionConfig.getConnector();
@@ -139,9 +156,19 @@ public abstract class ConfigTest extends TestCase implements ContainerProvider, 
     return sessionConfig.openModel3Session();
   }
 
-  public CDOSession openSession(EPackage package1)
+  public CDOSession openSession(EPackage ePackage)
   {
-    return sessionConfig.openSession(package1);
+    return sessionConfig.openSession(ePackage);
+  }
+
+  public CDOSession openSession(String repositoryName)
+  {
+    return sessionConfig.openSession(repositoryName);
+  }
+
+  public CDOSession openSession()
+  {
+    return sessionConfig.openSession();
   }
 
   public MangoFactory getMangoFactory()

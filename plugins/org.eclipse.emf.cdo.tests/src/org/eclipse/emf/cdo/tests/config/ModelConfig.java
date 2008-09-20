@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
@@ -27,14 +27,12 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
  */
 public abstract class ModelConfig extends Config implements ModelProvider
 {
-  public static final String DIMENSION = "model";
-
   // TODO LEGACY
   public static final ModelConfig[] CONFIGS = { Native.INSTANCE /* , Legacy.INSTANCE */};
 
   public ModelConfig(String name)
   {
-    super(DIMENSION, name);
+    super(name);
   }
 
   /**

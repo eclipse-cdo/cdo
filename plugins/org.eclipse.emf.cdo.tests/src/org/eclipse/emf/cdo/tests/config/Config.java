@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import java.util.Set;
 
@@ -17,23 +17,13 @@ import java.util.Set;
  */
 public abstract class Config
 {
-  private static final boolean LONG_FORMAT = false;
-
-  private String dimension;
-
   private String name;
 
   private ConfigTest currentTest;
 
-  public Config(String dimension, String name)
+  public Config(String name)
   {
-    this.dimension = dimension;
     this.name = name;
-  }
-
-  public String getDimension()
-  {
-    return dimension;
   }
 
   public String getName()
@@ -44,11 +34,6 @@ public abstract class Config
   @Override
   public String toString()
   {
-    if (LONG_FORMAT)
-    {
-      return dimension + "=" + name;
-    }
-
     return name;
   }
 

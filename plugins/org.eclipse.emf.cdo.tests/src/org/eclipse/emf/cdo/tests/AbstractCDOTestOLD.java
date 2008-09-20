@@ -50,18 +50,11 @@ import java.util.concurrent.locks.Lock;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOTest extends AbstractTransportTest
+public abstract class AbstractCDOTestOLD extends AbstractTransportTest
 {
   public static final String REPOSITORY_NAME = "repo1";
 
   protected static boolean legacyTesting = false;
-
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    startTransport();
-  }
 
   @Override
   protected IManagedContainer createContainer()
@@ -95,12 +88,19 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     return CDOServerUtil.getRepository(container, REPOSITORY_NAME);
   }
 
-  protected IRepository getRepository(String repositoryName)
+  @Override
+  protected void doSetUp() throws Exception
   {
-    IRepository repository = createRepository();
-    repository.setName(repositoryName);
-    CDOServerUtil.addRepository(container, repository);
-    return repository;
+    super.doSetUp();
+    startTransport();
+  }
+
+  protected IManagedContainer createRepository(String repoName)
+  {
+    IRepository repo2 = createRepository();
+    repo2.setName(repoName);
+    CDOServerUtil.addRepository(container, repo2);
+    return container;
   }
 
   protected CDOSession openSession(String repoName)
@@ -162,11 +162,19 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   // return session;
   // }
 
+  protected static void assertTransient(EObject eObject)
+  {
+    CDOObject object = CDOUtil.getCDOObject(eObject);
+    if (object != null)
+    {
+      assertEquals(true, FSMUtil.isTransient(object));
+    }
+  }
+
   protected static MangoFactory getMangoFactory()
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory.eINSTANCE;
     }
 
@@ -177,7 +185,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage.eINSTANCE;
     }
 
@@ -188,7 +195,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory.eINSTANCE;
     }
 
@@ -199,7 +205,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE;
     }
 
@@ -210,7 +215,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
     }
 
@@ -221,7 +225,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
     }
 
@@ -232,7 +235,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
     }
 
@@ -243,7 +245,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
     }
 
@@ -254,7 +255,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
     }
 
@@ -265,7 +265,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
     }
 
@@ -276,7 +275,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
   {
     if (legacyTesting)
     {
-      // TODO LEGACY
       // return org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage.eINSTANCE;
     }
 
@@ -313,15 +311,6 @@ public abstract class AbstractCDOTest extends AbstractTransportTest
     }
 
     failNotEquals(message, expected, actual);
-  }
-
-  protected static void assertTransient(EObject eObject)
-  {
-    CDOObject object = CDOUtil.getCDOObject(eObject);
-    if (object != null)
-    {
-      assertEquals(true, FSMUtil.isTransient(object));
-    }
   }
 
   protected static void assertNotTransient(EObject eObject, CDOView view)

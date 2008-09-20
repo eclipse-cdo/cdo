@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -22,13 +22,11 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public abstract class ContainerConfig extends Config implements ContainerProvider
 {
-  public static final String DIMENSION = "container";
-
   public static final ContainerConfig[] CONFIGS = { Combined.INSTANCE, Separated.INSTANCE };
 
   public ContainerConfig(String name)
   {
-    super(DIMENSION, name);
+    super(name);
   }
 
   /**

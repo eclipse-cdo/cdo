@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -25,18 +25,14 @@ import java.util.Map;
  */
 public abstract class RepositoryConfig extends Config implements RepositoryProvider
 {
-  public static final String DIMENSION = "repository";
-
   public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHorizontalHsql.INSTANCE,
       DBHorizontalDerby.INSTANCE, Hibernate.INSTANCE };
 
-  private IRepository repository;
-
-  private IStore store;
+  private Map<String, IRepository> repositories = new HashMap<String, IRepository>();
 
   public RepositoryConfig(String name)
   {
-    super(DIMENSION, name);
+    super(name);
   }
 
   public Map<String, String> getRepositoryProperties()
@@ -53,24 +49,16 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     return repositoryProperties;
   }
 
-  public synchronized IRepository getRepository()
+  public synchronized IRepository getRepository(String name)
   {
+    IRepository repository = repositories.get(name);
     if (repository == null)
     {
       repository = createRepository();
+      repositories.put(name, repository);
     }
 
     return repository;
-  }
-
-  public synchronized IStore getStore()
-  {
-    if (store == null)
-    {
-      store = createStore();
-    }
-
-    return store;
   }
 
   protected void initRepositoryProperties(Map<String, String> props)
@@ -81,9 +69,17 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
   }
 
+  @Override
+  protected void tearDown() throws Exception
+  {
+    // TODO deactivate?
+    repositories.clear();
+    super.tearDown();
+  }
+
   protected IRepository createRepository()
   {
-    return CDOServerUtil.createRepository(REPOSITORY_NAME, getStore(), getRepositoryProperties());
+    return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), getRepositoryProperties());
   }
 
   protected abstract IStore createStore();

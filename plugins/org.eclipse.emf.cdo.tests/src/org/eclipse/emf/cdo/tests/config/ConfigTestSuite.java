@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -25,12 +25,6 @@ import junit.framework.TestSuite;
  */
 public abstract class ConfigTestSuite
 {
-  // public static final String[] DIMENSIONS = { //
-  // ContainerConfig.DIMENSION, //
-  // RepositoryConfig.DIMENSION, //
-  // SessionConfig.DIMENSION, //
-  // ModelConfig.DIMENSION };
-
   public static final Config[][] CONFIGS = { //
   ContainerConfig.CONFIGS, //
       RepositoryConfig.CONFIGS, //

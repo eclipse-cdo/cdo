@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.testbed;
+package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
@@ -27,13 +27,11 @@ import java.util.Set;
  */
 public abstract class SessionConfig extends Config implements SessionProvider
 {
-  public static final String DIMENSION = "session";
-
   public static final SessionConfig[] CONFIGS = { TCP.INSTANCE, JVM.INSTANCE };
 
   public SessionConfig(String name)
   {
-    super(DIMENSION, name);
+    super(name);
   }
 
   public CDOSession openMangoSession()
@@ -58,10 +56,22 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
   public CDOSession openSession(EPackage ePackage)
   {
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(ePackage);
+    return session;
+  }
+
+  public CDOSession openSession(String repositoryName)
+  {
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(getConnector());
-    configuration.setRepositoryName(REPOSITORY_NAME);
+    configuration.setRepositoryName(repositoryName);
     return configuration.openSession();
+  }
+
+  public CDOSession openSession()
+  {
+    return openSession(RepositoryProvider.REPOSITORY_NAME);
   }
 
   /**

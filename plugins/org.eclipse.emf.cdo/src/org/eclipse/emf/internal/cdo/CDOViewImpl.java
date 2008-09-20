@@ -593,7 +593,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
     {
       // TODO LEGACY
-      throw new UnsupportedOperationException();
       // try
       // {
       // InternalEObject eObject = (InternalEObject)potentialObject;

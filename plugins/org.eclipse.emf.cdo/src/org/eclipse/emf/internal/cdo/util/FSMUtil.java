@@ -115,17 +115,19 @@ public final class FSMUtil
    */
   public static InternalCDOObject adaptLegacy(InternalEObject object)
   {
-    EList<InternalEObject.EReadListener> readListeners = object.eReadListeners();
-    CDOLegacyWrapper wrapper = getLegacyWrapper(readListeners);
-    if (wrapper == null)
-    {
-      wrapper = new CDOLegacyWrapper(object);
-      // TODO Only Load/Attach transitions should actually *add* the wrappers!
-      readListeners.add(0, wrapper);
-      object.eWriteListeners().add(0, wrapper);
-    }
-
-    return wrapper;
+    // TODO LEGACY
+    throw new UnsupportedOperationException();
+    // EList<InternalEObject.EReadListener> readListeners = object.eReadListeners();
+    // CDOLegacyWrapper wrapper = getLegacyWrapper(readListeners);
+    // if (wrapper == null)
+    // {
+    // wrapper = new CDOLegacyWrapper(object);
+    // // TODO Only Load/Attach transitions should actually *add* the wrappers!
+    // readListeners.add(0, wrapper);
+    // object.eWriteListeners().add(0, wrapper);
+    // }
+    //
+    // return wrapper;
   }
 
   public static CDOLegacyWrapper getLegacyWrapper(EList<?> listeners)
@@ -147,7 +149,9 @@ public final class FSMUtil
    */
   public static Object getLegacyWrapper(InternalEObject object)
   {
-    return getLegacyWrapper(object.eReadListeners());
+    // TODO LEGACY
+    throw new UnsupportedOperationException();
+    // return getLegacyWrapper(object.eReadListeners());
   }
 
   /**

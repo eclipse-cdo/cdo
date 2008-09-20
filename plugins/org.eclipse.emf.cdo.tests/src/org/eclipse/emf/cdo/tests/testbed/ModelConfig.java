@@ -29,7 +29,8 @@ public abstract class ModelConfig extends Config implements ModelProvider
 {
   public static final String DIMENSION = "model";
 
-  public static final ModelConfig[] CONFIGS = { Native.INSTANCE, Legacy.INSTANCE };
+  // TODO LEGACY
+  public static final ModelConfig[] CONFIGS = { Native.INSTANCE /* , Legacy.INSTANCE */};
 
   public ModelConfig(String name)
   {
@@ -107,73 +108,74 @@ public abstract class ModelConfig extends Config implements ModelProvider
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Legacy extends ModelConfig
-  {
-    public static final String NAME = "Legacy";
-
-    public static final Legacy INSTANCE = new Legacy();
-
-    public Legacy()
-    {
-      super(NAME);
-    }
-
-    public MangoFactory getMangoFactory()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory.eINSTANCE;
-    }
-
-    public MangoPackage getMangoPackage()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage.eINSTANCE;
-    }
-
-    public Model1Factory getModel1Factory()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory.eINSTANCE;
-    }
-
-    public Model1Package getModel1Package()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE;
-    }
-
-    public Model2Factory getModel2Factory()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
-    }
-
-    public Model2Package getModel2Package()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
-    }
-
-    public Model3Factory getModel3Factory()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
-    }
-
-    public Model3Package getModel3Package()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
-    }
-
-    public model4Factory getModel4Factory()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
-    }
-
-    public model4Package getModel4Package()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
-    }
-
-    public model4interfacesPackage getModel4InterfacesPackage()
-    {
-      return org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage.eINSTANCE;
-    }
-  }
+  // TODO LEGACY
+  // /**
+  // * @author Eike Stepper
+  // */
+  // public static final class Legacy extends ModelConfig
+  // {
+  // public static final String NAME = "Legacy";
+  //
+  // public static final Legacy INSTANCE = new Legacy();
+  //
+  // public Legacy()
+  // {
+  // super(NAME);
+  // }
+  //
+  // public MangoFactory getMangoFactory()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory.eINSTANCE;
+  // }
+  //
+  // public MangoPackage getMangoPackage()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage.eINSTANCE;
+  // }
+  //
+  // public Model1Factory getModel1Factory()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory.eINSTANCE;
+  // }
+  //
+  // public Model1Package getModel1Package()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE;
+  // }
+  //
+  // public Model2Factory getModel2Factory()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
+  // }
+  //
+  // public Model2Package getModel2Package()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
+  // }
+  //
+  // public Model3Factory getModel3Factory()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
+  // }
+  //
+  // public Model3Package getModel3Package()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
+  // }
+  //
+  // public model4Factory getModel4Factory()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
+  // }
+  //
+  // public model4Package getModel4Package()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
+  // }
+  //
+  // public model4interfacesPackage getModel4InterfacesPackage()
+  // {
+  // return org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage.eINSTANCE;
+  // }
+  // }
 }

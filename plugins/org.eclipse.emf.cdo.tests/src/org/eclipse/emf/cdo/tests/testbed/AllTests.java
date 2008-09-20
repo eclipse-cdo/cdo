@@ -41,7 +41,7 @@ public class AllTests extends ConfigTestSuite
 
     public void test13() throws Exception
     {
-      skipConfig(ModelConfig.Legacy.INSTANCE);
+      skipConfig(SessionConfig.JVM.INSTANCE);
     }
   }
 

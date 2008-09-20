@@ -65,8 +65,9 @@ import java.util.List;
  * IMPORTANT: Compile errors in this class might indicate an old version of EMF. Legacy support is only enabled for EMF
  * with fixed bug #247130. These compile errors do not affect native models!
  */
-public final class CDOLegacyWrapper extends CDOObjectWrapper implements InternalEObject.EReadListener,
-    InternalEObject.EWriteListener
+public final class CDOLegacyWrapper extends CDOObjectWrapper
+// TODO LEGACY
+// implements InternalEObject.EReadListener, InternalEObject.EWriteListener
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyWrapper.class);
 
@@ -623,11 +624,12 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper implements Internal
             InternalCDOObject resolved = view.getObject(id);
             InternalEObject instance = resolved.cdoInternalInstance();
 
-            // TODO Is InternalEList.basicSet() needed???
-            if (list instanceof org.eclipse.emf.ecore.util.DelegatingInternalEList)
-            {
-              list = ((org.eclipse.emf.ecore.util.DelegatingInternalEList)list).getDelegateInternalEList();
-            }
+            // TODO LEGACY
+            // // TODO Is InternalEList.basicSet() needed???
+            // if (list instanceof org.eclipse.emf.ecore.util.DelegatingInternalEList)
+            // {
+            // list = ((org.eclipse.emf.ecore.util.DelegatingInternalEList)list).getDelegateInternalEList();
+            // }
 
             if (list instanceof NotifyingListImpl)
             {

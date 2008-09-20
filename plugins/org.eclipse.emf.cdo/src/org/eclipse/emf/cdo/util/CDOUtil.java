@@ -252,7 +252,9 @@ public final class CDOUtil
       return (CDOObject)object;
     }
 
-    return (CDOObject)FSMUtil.getLegacyWrapper((InternalEObject)object);
+    // TODO LEGACY
+    throw new UnsupportedOperationException();
+    // return (CDOObject)FSMUtil.getLegacyWrapper((InternalEObject)object);
   }
 
   /**

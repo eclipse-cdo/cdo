@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_243310_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_246442_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_246456_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_246622_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_248052_Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -67,6 +68,7 @@ public class AllTests
     suite.addTestSuite(Bugzilla_246442_Test.class);
     suite.addTestSuite(Bugzilla_246456_Test.class);
     suite.addTestSuite(Bugzilla_246622_Test.class);
+    suite.addTestSuite(Bugzilla_248052_Test.class);
 
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$

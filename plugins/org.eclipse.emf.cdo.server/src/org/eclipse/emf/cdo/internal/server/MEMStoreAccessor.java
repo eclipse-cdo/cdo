@@ -121,7 +121,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
 
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    throw new UnsupportedOperationException();
+    return getStore().getRevisionByTime(id, timeStamp);
   }
 
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)

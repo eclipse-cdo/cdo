@@ -214,14 +214,36 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
     IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-    return (InternalCDORevision)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
+    if (getRepository().isSupportingAudits())
+    {
+      return (InternalCDORevision)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
+    }
+
+    if (getRepository().getStore().hasAuditingSupport())
+    {
+      throw new UnsupportedOperationException(
+          "Auditing supports isn't activated (see IRepository.Props.PROP_SUPPORTING_AUDITS).");
+    }
+
+    throw new UnsupportedOperationException("Store " + getRepository().getStore() + " doesn't support auditing mode");
   }
 
   @Override
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
     IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-    return (InternalCDORevision)storeReader.readRevisionByVersion(id, referenceChunk, version);
+    if (getRepository().isSupportingAudits())
+    {
+      return (InternalCDORevision)storeReader.readRevisionByVersion(id, referenceChunk, version);
+    }
+
+    InternalCDORevision revision = loadRevision(id, referenceChunk);
+    if (revision.getVersion() == version)
+    {
+      return revision;
+    }
+
+    throw new IllegalStateException("Cannot access object with id " + id + " and version " + version);
   }
 
   @Override
@@ -241,11 +263,10 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     for (CDOID id : ids)
     {
-      InternalCDORevision revision = (InternalCDORevision)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
+      InternalCDORevision revision = loadRevisionByTime(id, referenceChunk, timeStamp);
       revisions.add(revision);
     }
 

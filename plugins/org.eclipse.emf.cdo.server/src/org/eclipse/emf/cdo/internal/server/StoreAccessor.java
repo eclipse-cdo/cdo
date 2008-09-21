@@ -119,7 +119,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     context.applyIDMappings();
 
     writeRevisions(context.getNewObjects());
-    if (store.hasWriteDeltaSupport() && store.getRepository().isSupportingRevisionDeltas())
+    if (store.getRepository().isSupportingRevisionDeltas())
     {
       writeRevisionDeltas(context.getDirtyObjectDeltas());
     }

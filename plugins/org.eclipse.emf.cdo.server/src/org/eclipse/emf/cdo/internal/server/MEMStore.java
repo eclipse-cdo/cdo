@@ -108,13 +108,35 @@ public class MEMStore extends LongIDStore implements IMEMStore
 
   public synchronized CDORevision getRevisionByVersion(CDOID id, int version)
   {
-    List<CDORevision> list = revisions.get(id);
-    if (list != null)
+    if (getRepository().isSupportingAudits())
     {
-      return getRevisionByVersion(list, version);
+      List<CDORevision> list = revisions.get(id);
+      if (list != null)
+      {
+        return getRevisionByVersion(list, version);
+      }
+      return null;
     }
 
-    return null;
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized CDORevision getRevisionByTime(CDOID id, long timeStamp)
+  {
+    if (getRepository().isSupportingAudits())
+    {
+      List<CDORevision> list = revisions.get(id);
+      if (list != null)
+      {
+        return getRevisionByTime(list, timeStamp);
+      }
+      return null;
+    }
+
+    throw new UnsupportedOperationException();
   }
 
   public synchronized void addRevision(CDORevision revision)
@@ -269,4 +291,18 @@ public class MEMStore extends LongIDStore implements IMEMStore
 
     return null;
   }
+
+  private CDORevision getRevisionByTime(List<CDORevision> list, long timeStamp)
+  {
+    for (CDORevision revision : list)
+    {
+      if (revision.getRevised() == timeStamp)
+      {
+        return revision;
+      }
+    }
+
+    return null;
+  }
+
 }

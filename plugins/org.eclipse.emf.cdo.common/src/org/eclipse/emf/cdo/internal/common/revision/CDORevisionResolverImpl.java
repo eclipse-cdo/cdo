@@ -205,7 +205,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 
     if (!missingIDs.isEmpty())
     {
-      List<InternalCDORevision> missingRevisions = loadRevisions(missingIDs, referenceChunk);
+      List<InternalCDORevision> missingRevisions = loadRevisionsByTime(missingIDs, referenceChunk, timeStamp);
       handleMissingRevisions(revisions, missingRevisions);
     }
 

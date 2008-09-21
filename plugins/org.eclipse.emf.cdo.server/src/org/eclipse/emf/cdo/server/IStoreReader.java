@@ -56,8 +56,16 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
 
   public CDORevision readRevision(CDOID id, int referenceChunk);
 
+  /**
+   * It will be called only if {@link IStore#hasAuditingSupport()} and {@link IRepository#isSupportingAudits()} are
+   * true.
+   */
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
 
+  /**
+   * It will be called only if {@link IStore#hasAuditingSupport()} and {@link IRepository#isSupportingAudits()} are
+   * true.
+   */
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 
   /**

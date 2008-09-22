@@ -24,6 +24,7 @@ import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
@@ -76,6 +77,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   private transient List<InternalChannel> channels = new ArrayList<InternalChannel>(0);
 
+  @ExcludeFromDump
   private transient RWLock channelsLock = new RWLock(2500);
 
   private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
@@ -92,10 +94,13 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     }
   };
 
+  @ExcludeFromDump
   private transient CountDownLatch finishedConnecting;
 
+  @ExcludeFromDump
   private transient CountDownLatch finishedNegotiating;
 
+  @ExcludeFromDump
   private NegotiationException negotiationException;
 
   public Connector()

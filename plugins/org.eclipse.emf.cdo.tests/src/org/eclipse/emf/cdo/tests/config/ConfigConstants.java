@@ -27,9 +27,9 @@ public interface ConfigConstants
 
   public static final RepositoryConfig MEM = RepositoryConfig.MEM.INSTANCE;
 
-  public static final RepositoryConfig DB_HORIZONTAL_HSQL = RepositoryConfig.DBHorizontalHsql.INSTANCE;
+  public static final RepositoryConfig DB_HSQL_HORIZONTAL = RepositoryConfig.DBHsqldb.HSQLDB_HORIZONTAL;
 
-  public static final RepositoryConfig DB_HORIZONTAL_DERBY = RepositoryConfig.DBHorizontalDerby.INSTANCE;
+  public static final RepositoryConfig DB_DERBY_HORIZONTAL = RepositoryConfig.DBDerby.DERBY_HORIZONTAL;
 
   public static final RepositoryConfig HIBERNATE = RepositoryConfig.Hibernate.INSTANCE;
 

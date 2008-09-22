@@ -66,6 +66,18 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
     IOUtil.OUT().println("RESTARTING CONTAINER - FINISHED");
   }
 
+  @Override
+  protected void tearDown() throws Exception
+  {
+    LifecycleUtil.deactivate(clientContainer);
+    clientContainer = null;
+
+    LifecycleUtil.deactivate(serverContainer);
+    serverContainer = null;
+
+    super.tearDown();
+  }
+
   /**
    * @author Eike Stepper
    */

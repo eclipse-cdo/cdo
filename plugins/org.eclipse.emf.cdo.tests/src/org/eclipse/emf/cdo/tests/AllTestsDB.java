@@ -26,6 +26,6 @@ public class AllTestsDB extends AllTestsAllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    initConfigSuite(parent, COMBINED, DB_HORIZONTAL_HSQL, TCP, NATIVE);
+    initConfigSuite(parent, COMBINED, DB_HSQL_HORIZONTAL, TCP, NATIVE);
   }
 }

@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.tests.bundle.OM;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -32,7 +33,13 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
 
+import javax.sql.DataSource;
+
 import java.io.File;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,8 +49,8 @@ import java.util.Map.Entry;
  */
 public abstract class RepositoryConfig extends Config implements RepositoryProvider
 {
-  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHorizontalHsql.INSTANCE,
-      DBHorizontalDerby.INSTANCE, Hibernate.INSTANCE };
+  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHsqldb.HSQLDB_HORIZONTAL,
+      DBDerby.DERBY_HORIZONTAL, Hibernate.INSTANCE };
 
   public static final String PROP_TEST_REPOSITORY = "test.repository";
 
@@ -96,8 +103,6 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
 
       repositories.put(name, repository);
       LifecycleUtil.activate(repository);
-      // IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-      // CDOServerUtil.addRepository(serverContainer, repository);
     }
 
     return repository;
@@ -130,7 +135,11 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   @Override
   protected void tearDown() throws Exception
   {
-    // TODO deactivate?
+    for (Object repository : repositories.values().toArray())
+    {
+      LifecycleUtil.deactivate(repository);
+    }
+
     repositories.clear();
     super.tearDown();
   }
@@ -179,15 +188,13 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   /**
    * @author Eike Stepper
    */
-  public static final class MEM extends RepositoryConfig
+  public static class MEM extends RepositoryConfig
   {
-    public static final String NAME = "MEM";
-
     public static final MEM INSTANCE = new MEM();
 
     public MEM()
     {
-      super(NAME);
+      super("MEM");
     }
 
     @Override
@@ -202,48 +209,129 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
    */
   public static abstract class DB extends RepositoryConfig
   {
-    private File dbFolder;
+    private IMappingStrategy mappingStrategy;
+
+    public DB(String name, IMappingStrategy mappingStrategy)
+    {
+      super(name);
+      this.mappingStrategy = mappingStrategy;
+    }
+
+    @Override
+    protected IStore createStore()
+    {
+      IDBAdapter dbAdapter = createDBAdapter();
+      DataSource dataSource = createDataSource();
+      return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    }
+
+    protected abstract IDBAdapter createDBAdapter();
+
+    protected abstract DataSource createDataSource();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DBHsqldb extends DB
+  {
+    public static final DBHsqldb HSQLDB_HORIZONTAL = new DBHsqldb("HsqldbHorizontal", CDODBUtil
+        .createHorizontalMappingStrategy());
 
     private HSQLDBDataSource dataSource;
 
-    public DB(String name)
+    public DBHsqldb(String name, IMappingStrategy mappingStrategy)
     {
-      super(name);
+      super(name, mappingStrategy);
     }
 
     @SuppressWarnings("restriction")
-    protected IStore createHsqlStore()
+    @Override
+    protected IDBAdapter createDBAdapter()
     {
-      IDBAdapter dbAdapter = new org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter();
+      return new org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter();
+    }
 
+    @Override
+    protected DataSource createDataSource()
+    {
       dataSource = new HSQLDBDataSource();
       dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
       dataSource.setUser("sa");
 
-      return CDODBUtil.createStore(createMappingStrategy(), dbAdapter, DBUtil.createConnectionProvider(dataSource));
+      try
+      {
+        dataSource.setLogWriter(new PrintWriter(System.err));
+      }
+      catch (SQLException ex)
+      {
+        OM.LOG.warn(ex.getMessage());
+      }
+
+      return dataSource;
+    }
+
+    @Override
+    protected void tearDown() throws Exception
+    {
+      if (dataSource != null)
+      {
+        Connection connection = null;
+        Statement statement = null;
+
+        try
+        {
+          connection = dataSource.getConnection();
+          statement = connection.createStatement();
+          statement.execute("SHUTDOWN");
+        }
+        finally
+        {
+          DBUtil.close(statement);
+          DBUtil.close(connection);
+          dataSource = null;
+        }
+      }
+
+      super.tearDown();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DBDerby extends DB
+  {
+    public static final DBDerby DERBY_HORIZONTAL = new DBDerby("DerbyHorizontal", CDODBUtil
+        .createHorizontalMappingStrategy());
+
+    private File dbFolder;
+
+    private EmbeddedDataSource dataSource;
+
+    public DBDerby(String name, IMappingStrategy mappingStrategy)
+    {
+      super(name, mappingStrategy);
     }
 
     @SuppressWarnings("restriction")
-    protected IStore createDerbyStore()
+    @Override
+    protected IDBAdapter createDBAdapter()
     {
-      IDBAdapter dbAdapter = new org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter();
+      return new org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter();
+    }
 
+    @Override
+    protected DataSource createDataSource()
+    {
       dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
       deleteDBFolder();
 
-      EmbeddedDataSource dataSource = new EmbeddedDataSource();
+      dataSource = new EmbeddedDataSource();
       dataSource.setDatabaseName(dbFolder.getAbsolutePath());
       dataSource.setCreateDatabase("create");
-
-      return CDODBUtil.createStore(createMappingStrategy(), dbAdapter, DBUtil.createConnectionProvider(dataSource));
+      return dataSource;
     }
-
-    protected IMappingStrategy createHorizontalMappingStrategy()
-    {
-      return CDODBUtil.createHorizontalMappingStrategy();
-    }
-
-    protected abstract IMappingStrategy createMappingStrategy();
 
     @Override
     protected void tearDown() throws Exception
@@ -261,71 +349,15 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   /**
    * @author Eike Stepper
    */
-  public static final class DBHorizontalHsql extends DB
+  public static class Hibernate extends RepositoryConfig
   {
-    public static final String NAME = "DBHorizontalHsql";
-
-    public static final DBHorizontalHsql INSTANCE = new DBHorizontalHsql();
-
-    public DBHorizontalHsql()
-    {
-      super(NAME);
-    }
-
-    @Override
-    protected IStore createStore()
-    {
-      return createHsqlStore();
-    }
-
-    @Override
-    protected IMappingStrategy createMappingStrategy()
-    {
-      return createHorizontalMappingStrategy();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class DBHorizontalDerby extends DB
-  {
-    public static final String NAME = "DBHorizontalDerby";
-
-    public static final DBHorizontalDerby INSTANCE = new DBHorizontalDerby();
-
-    public DBHorizontalDerby()
-    {
-      super(NAME);
-    }
-
-    @Override
-    protected IStore createStore()
-    {
-      return createDerbyStore();
-    }
-
-    @Override
-    protected IMappingStrategy createMappingStrategy()
-    {
-      return createHorizontalMappingStrategy();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Hibernate extends RepositoryConfig
-  {
-    public static final String NAME = "Hibernate";
-
     public static final Hibernate INSTANCE = new Hibernate();
 
     public static final String MAPPING_FILE = "mappingfile";
 
     public Hibernate()
     {
-      super(NAME);
+      super("Hibernate");
     }
 
     @Override

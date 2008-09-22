@@ -26,7 +26,7 @@ public class MysqlTest extends AbstractDBTest<MysqlDataSource>
   }
 
   @Override
-  protected void configureDataSourcer(MysqlDataSource dataSource)
+  protected void configureDataSource(MysqlDataSource dataSource)
   {
     dataSource.setDatabaseName("dbtest");
   }

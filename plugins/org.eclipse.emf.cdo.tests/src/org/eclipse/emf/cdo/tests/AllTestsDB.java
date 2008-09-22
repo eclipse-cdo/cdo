@@ -16,16 +16,16 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsHibernate extends AllTestsAllConfigs
+public class AllTestsDB extends AllTestsAllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsHibernate().getTestSuite("CDO Tests (Hibernate)");
+    return new AllTestsDB().getTestSuite("CDO Tests (DB Horizontal Hsql)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    initConfigSuite(parent, COMBINED, HIBERNATE, TCP, NATIVE);
+    initConfigSuite(parent, COMBINED, DB_HORIZONTAL_HSQL, TCP, NATIVE);
   }
 }

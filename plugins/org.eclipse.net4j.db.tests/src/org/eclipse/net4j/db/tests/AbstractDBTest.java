@@ -40,7 +40,7 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
   {
     dbAdapter = createDBAdapter();
     DATA_SOURCE dataSource = (DATA_SOURCE)dbAdapter.createJDBCDataSource();
-    configureDataSourcer(dataSource);
+    configureDataSource(dataSource);
     dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
   }
 
@@ -51,7 +51,7 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
 
   protected abstract IDBAdapter createDBAdapter();
 
-  protected abstract void configureDataSourcer(DATA_SOURCE dataSource);
+  protected abstract void configureDataSource(DATA_SOURCE dataSource);
 
   protected Connection getConnection()
   {

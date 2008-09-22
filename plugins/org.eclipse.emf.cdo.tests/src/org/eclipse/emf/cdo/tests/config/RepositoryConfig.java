@@ -18,12 +18,23 @@ import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
+import org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter;
+import org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.apache.derby.jdbc.EmbeddedDataSource;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -97,7 +108,6 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   protected void initRepositoryProperties(Map<String, String> props)
   {
     props.put(Props.PROP_OVERRIDE_UUID, ""); // UUID := name !!!
-    props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "true");
     props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
     props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
   }
@@ -135,8 +145,13 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
       store = createStore();
     }
 
-    Repository repository = (Repository)CDOServerUtil.createRepository(name, store, getRepositoryProperties());
+    Map<String, String> props = getRepositoryProperties();
+    if (store.hasWriteDeltaSupport())
+    {
+      props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "true");
+    }
 
+    Repository repository = (Repository)CDOServerUtil.createRepository(name, store, props);
     RevisionManager revisionManager = getTestRevisionManager();
     if (revisionManager != null)
     {
@@ -189,27 +204,58 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
    */
   public static abstract class DB extends RepositoryConfig
   {
+    private File dbFolder;
+
     public DB(String name)
     {
       super(name);
     }
 
+    @SuppressWarnings("restriction")
     protected IStore createHsqlStore()
     {
-      return null;
+      IDBAdapter dbAdapter = new HSQLDBAdapter();
+
+      HSQLDBDataSource dataSource = new HSQLDBDataSource();
+      dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
+      dataSource.setUser("sa");
+
+      return CDODBUtil.createStore(createMappingStrategy(), dbAdapter, DBUtil.createConnectionProvider(dataSource));
     }
 
+    @SuppressWarnings("restriction")
     protected IStore createDerbyStore()
     {
-      return null;
+      IDBAdapter dbAdapter = new EmbeddedDerbyAdapter();
+
+      dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
+      deleteDBFolder();
+
+      EmbeddedDataSource dataSource = new EmbeddedDataSource();
+      dataSource.setDatabaseName(dbFolder.getAbsolutePath());
+      dataSource.setCreateDatabase("create");
+
+      return CDODBUtil.createStore(createMappingStrategy(), dbAdapter, DBUtil.createConnectionProvider(dataSource));
     }
 
     protected IMappingStrategy createHorizontalMappingStrategy()
     {
-      return null;
+      return CDODBUtil.createHorizontalMappingStrategy();
     }
 
     protected abstract IMappingStrategy createMappingStrategy();
+
+    @Override
+    protected void tearDown() throws Exception
+    {
+      deleteDBFolder();
+      super.tearDown();
+    }
+
+    private void deleteDBFolder()
+    {
+      IOUtil.delete(dbFolder);
+    }
   }
 
   /**

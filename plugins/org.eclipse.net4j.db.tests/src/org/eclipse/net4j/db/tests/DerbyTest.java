@@ -32,7 +32,7 @@ public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
   }
 
   @Override
-  protected void configureDataSourcer(EmbeddedDataSource dataSource)
+  protected void configureDataSource(EmbeddedDataSource dataSource)
   {
     dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
     deleteDBFolder();

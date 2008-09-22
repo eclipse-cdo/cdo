@@ -205,6 +205,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   public static abstract class DB extends RepositoryConfig
   {
     private File dbFolder;
+    private HSQLDBDataSource dataSource;
 
     public DB(String name)
     {
@@ -216,7 +217,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     {
       IDBAdapter dbAdapter = new HSQLDBAdapter();
 
-      HSQLDBDataSource dataSource = new HSQLDBDataSource();
+      dataSource = new HSQLDBDataSource();
       dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
       dataSource.setUser("sa");
 

@@ -25,9 +25,9 @@ public interface CDOList extends MoveableList<Object>
    * @param index
    *          The position of the element to return from this list.
    * @param resolve
-   *          A value of <code>false</code> indicates that {@link CDORevisionUtil#UNINITIALIZED} may be returned. It
-   *          should not return an instance of {@link CDOReferenceProxy}. A value of <code>true</code> indicates that it
-   *          should behave identical to {@link CDOList#get(int)}.
+   *          A value of <code>false</code> indicates that {@link CDORevisionUtil#UNINITIALIZED} may be returned for
+   *          unresolved elements. A value of <code>true</code> indicates that it should behave identical to
+   *          {@link CDOList#get(int)}.
    */
   public Object get(int index, boolean resolve);
 }

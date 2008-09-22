@@ -34,6 +34,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.ResultSet;
@@ -192,9 +193,16 @@ public abstract class ClassMapping implements IClassMapping
 
   protected IDBTable addTable(String name)
   {
+    String lastMangledName = null;
+    DBException lastException = null;
+
     for (int attempt = 0;; ++attempt)
     {
       String tableName = mangleTableName(name, attempt);
+      if (lastException != null && ObjectUtil.equals(tableName, lastMangledName))
+      {
+        throw lastException;
+      }
 
       try
       {
@@ -204,6 +212,8 @@ public abstract class ClassMapping implements IClassMapping
       }
       catch (DBException ex)
       {
+        lastMangledName = tableName;
+        lastException = ex;
         if (TRACER.isEnabled())
         {
           TRACER.format("{0}. attempt to add table: {1} ({2})", attempt + 1, tableName, ex.getMessage());

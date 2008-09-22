@@ -9,10 +9,12 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.common.revision;
+package org.eclipse.emf.internal.cdo.revision;
 
+import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 /**
  * @author Eike Stepper
@@ -25,5 +27,6 @@ public interface CDOReferenceProxy
   /**
    * @since 2.0
    */
-  public CDOID resolve(CDORevisionResolver revisionResolver, CDORevision revision, CDOFeature feature, int index);
+  public CDOID resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index);
+
 }

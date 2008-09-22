@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOChangeSubscriptionPolicy;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
@@ -35,6 +36,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.query.CDOQuery;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -87,9 +89,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private boolean uniqueResourceContents = true;
 
-  private boolean invalidationNotificationsEnabled;
+  private boolean invalidationNotificationEnabled;
 
-  private int loadRevisionCollectionChunkSize;
+  private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy;
 
   private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
@@ -118,8 +120,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     this.session = session;
     this.viewID = viewID;
-    invalidationNotificationsEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATIONS.getValue();
-    loadRevisionCollectionChunkSize = OM.PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE.getValue();
+    invalidationNotificationEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.getValue();
+    revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(OM.PREF_REVISION_LOADING_CHUNK_SIZE.getValue());
     objects = createObjectsMap();
   }
 
@@ -178,14 +180,20 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     this.uniqueResourceContents = uniqueResourceContents;
   }
 
-  public boolean isInvalidationNotificationsEnabled()
+  /**
+   * @since 2.0
+   */
+  public boolean isInvalidationNotificationEnabled()
   {
-    return invalidationNotificationsEnabled;
+    return invalidationNotificationEnabled;
   }
 
-  public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled)
+  /**
+   * @since 2.0
+   */
+  public void setInvalidationNotificationEnabled(boolean enabled)
   {
-    this.invalidationNotificationsEnabled = invalidationNotificationsEnabled;
+    invalidationNotificationEnabled = enabled;
   }
 
   /**
@@ -209,14 +217,25 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
   }
 
-  public int getLoadRevisionCollectionChunkSize()
+  /**
+   * @since 2.0
+   */
+  public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy()
   {
-    return loadRevisionCollectionChunkSize;
+    return revisionPrefetchingPolicy;
   }
 
-  public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize)
+  /**
+   * @since 2.0
+   */
+  public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy)
   {
-    this.loadRevisionCollectionChunkSize = loadRevisionCollectionChunkSize;
+    if (prefetchingPolicy == null)
+    {
+      prefetchingPolicy = CDORevisionPrefetchingPolicy.NO_PREFETCHING;
+    }
+
+    revisionPrefetchingPolicy = prefetchingPolicy;
   }
 
   public CDOFeatureAnalyzer getFeatureAnalyzer()
@@ -377,7 +396,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevision(id, session.getReferenceChunkSize(), loadOnDemand);
+    int initialChunkSize = session.getCollectionLoadingPolicy().getInitialChunkSize();
+    return (InternalCDORevision)revisionManager.getRevision(id, initialChunkSize, loadOnDemand);
   }
 
   public InternalCDOObject getObject(CDOID id)
@@ -726,7 +746,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
-    List<InternalCDOObject> dirtyObjects = invalidationNotificationsEnabled ? new ArrayList<InternalCDOObject>() : null;
+    List<InternalCDOObject> dirtyObjects = invalidationNotificationEnabled ? new ArrayList<InternalCDOObject>() : null;
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
     {
       InternalCDOObject dirtyObject;

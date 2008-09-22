@@ -7,16 +7,21 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.CDOXATransaction;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
+import org.eclipse.emf.internal.cdo.CDOCollectionLoadingPolicyImpl;
+import org.eclipse.emf.internal.cdo.CDORevisionPrefetchingPolicyImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
@@ -57,8 +62,6 @@ import java.util.Map;
  */
 public final class CDOUtil
 {
-  public static final String CDO_VERSION_SUFFIX = "-CDO";
-
   private CDOUtil()
   {
   }
@@ -66,6 +69,32 @@ public final class CDOUtil
   public static CDOSessionConfiguration createSessionConfiguration()
   {
     return new CDOSessionConfigurationImpl();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDORevisionPrefetchingPolicy createRevisionPrefetchingPolicy(int chunkSize)
+  {
+    if (chunkSize <= 0)
+    {
+      return CDORevisionPrefetchingPolicy.NO_PREFETCHING;
+    }
+
+    return new CDORevisionPrefetchingPolicyImpl(chunkSize);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOCollectionLoadingPolicy createCollectionLoadingPolicy(int initialChunkSize, int resolveChunkSize)
+  {
+    if (initialChunkSize == CDORevision.UNCHUNKED && resolveChunkSize == CDORevision.UNCHUNKED)
+    {
+      return CDOCollectionLoadingPolicy.DEFAULT;
+    }
+
+    return new CDOCollectionLoadingPolicyImpl(initialChunkSize, resolveChunkSize);
   }
 
   /**
@@ -94,6 +123,7 @@ public final class CDOUtil
     {
       xaTransaction.add(viewSet);
     }
+
     return xaTransaction;
   }
 
@@ -118,6 +148,7 @@ public final class CDOUtil
         return ((CDOXATransactionImpl.CDOXAInternalAdapter)adapter).getCDOXA();
       }
     }
+
     return null;
   }
 
@@ -134,6 +165,7 @@ public final class CDOUtil
         return (CDOViewSet)adapter;
       }
     }
+
     return null;
   }
 
@@ -143,7 +175,6 @@ public final class CDOUtil
   public static CDOViewSet prepareResourceSet(ResourceSet resourceSet)
   {
     CDOViewSetImpl viewSet = null;
-
     synchronized (resourceSet)
     {
       viewSet = (CDOViewSetImpl)getViewSet(resourceSet);
@@ -162,10 +193,12 @@ public final class CDOUtil
           throw new ImplementationError("Not a " + ResourceSetImpl.class.getName() + ": "
               + resourceSet.getClass().getName());
         }
+
         viewSet = new CDOViewSetImpl();
         resourceSet.eAdapters().add(viewSet);
       }
     }
+
     return viewSet;
   }
 

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
@@ -148,9 +149,9 @@ public class ContentAdapterTest extends AbstractCDOTest
       return null;
     }
 
-    public int getLoadRevisionCollectionChunkSize()
+    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
     {
-      return 0;
+      return CDOCollectionLoadingPolicy.DEFAULT;
     }
   }
 }

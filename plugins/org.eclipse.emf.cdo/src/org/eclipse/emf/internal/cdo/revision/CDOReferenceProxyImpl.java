@@ -7,14 +7,16 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.revision;
+package org.eclipse.emf.internal.cdo.revision;
 
+import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 
 import java.text.MessageFormat;
 
@@ -40,9 +42,9 @@ public final class CDOReferenceProxyImpl implements CDOReferenceProxy
     this.index = index;
   }
 
-  public CDOID resolve(CDORevisionResolver revisionResolver, CDORevision revision, CDOFeature feature, int index)
+  public CDOID resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index)
   {
-    return revisionResolver.resolveReferenceProxy(revision, feature, this, index);
+    return ((CDORevisionManagerImpl)revisionManager).resolveReferenceProxy(revision, feature, index, getIndex());
   }
 
   @Override

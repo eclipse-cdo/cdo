@@ -15,10 +15,12 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.model.resource.CDOContentsFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.util.CDOUtil;
+
+import org.eclipse.emf.internal.cdo.revision.CDOReferenceProxy;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -86,10 +88,9 @@ public class ViewTest extends AbstractCDOTest
     }
 
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(2);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
 
     CDOTransaction transaction = session.openTransaction();
-    transaction.setUniqueResourceContents(true);
 
     CDOResource resource = transaction.getResource("/test1");
     EList<EObject> contents = resource.getContents();
@@ -128,10 +129,9 @@ public class ViewTest extends AbstractCDOTest
     }
 
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(2);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
 
     CDOTransaction transaction = session.openTransaction();
-    transaction.setUniqueResourceContents(false);
 
     CDOResource resource = transaction.getResource("/test1");
     EList<EObject> contents = resource.getContents();

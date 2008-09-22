@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/230832
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -30,9 +30,6 @@ import java.util.Set;
  */
 public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
 {
-  public int getReferenceChunkSize();
-
-  public void setReferenceChunkSize(int referenceChunkSize);
 
   public IFailOverStrategy getFailOverStrategy();
 
@@ -52,19 +49,15 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
 
   public CDORevisionManager getRevisionManager();
 
-  public CDOView[] getViews();
+  /**
+   * @since 2.0
+   */
+  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
 
-  public CDOTransaction openTransaction(ResourceSet resourceSet);
-
-  public CDOTransaction openTransaction();
-
-  public CDOView openView(ResourceSet resourceSet);
-
-  public CDOView openView();
-
-  public CDOAudit openAudit(ResourceSet resourceSet, long timeStamp);
-
-  public CDOAudit openAudit(long timeStamp);
+  /**
+   * @since 2.0
+   */
+  public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
 
   /**
    * Specifies whether objects will be invalidated due by other users changes.
@@ -82,6 +75,20 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * @since 2.0
    */
   public void setPassiveUpdateEnabled(boolean enabled);
+
+  public CDOView[] getViews();
+
+  public CDOTransaction openTransaction(ResourceSet resourceSet);
+
+  public CDOTransaction openTransaction();
+
+  public CDOView openView(ResourceSet resourceSet);
+
+  public CDOView openView();
+
+  public CDOAudit openAudit(ResourceSet resourceSet, long timeStamp);
+
+  public CDOAudit openAudit(long timeStamp);
 
   /**
    * Refreshes the objects cache.

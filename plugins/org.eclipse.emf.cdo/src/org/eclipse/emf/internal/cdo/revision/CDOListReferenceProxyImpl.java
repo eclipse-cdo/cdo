@@ -8,76 +8,79 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.revision;
+package org.eclipse.emf.internal.cdo.revision;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
+import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.collection.MoveableArrayList;
-
-import java.util.Map;
 
 /**
  * @author Simon McDuff
  */
-public class CDOListImpl extends MoveableArrayList<Object> implements InternalCDOList
+public class CDOListReferenceProxyImpl extends CDOListImpl
 {
+
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {
     public CDOList createList(int initialCapacity, int size, int initialChunk)
     {
-      return new CDOListImpl(initialCapacity, size);
+      return new CDOListReferenceProxyImpl(initialCapacity, size, initialChunk);
     }
   };
 
   private static final long serialVersionUID = 1L;
 
-  public CDOListImpl(int initialCapacity, int size)
+  public CDOListReferenceProxyImpl(int initialCapacity, int size, int initialChunk)
   {
-    super(initialCapacity);
-    for (int j = 0; j < size; j++)
+    super(initialCapacity, initialChunk);
+    for (int j = initialChunk; j < size; j++)
     {
-      this.add(InternalCDORevision.UNINITIALIZED);
+      this.add(new CDOReferenceProxyImpl(j));
     }
   }
 
+  @Override
   public Object get(int index, boolean resolve)
   {
-    return super.get(index);
+    if (resolve == true)
+    {
+      return get(index);
+    }
+
+    Object element = super.get(index);
+
+    return element instanceof CDOReferenceProxy ? InternalCDORevision.UNINITIALIZED : element;
   }
 
+  @Override
   protected void handleAdjustReference(int index, Object element)
   {
-  }
-
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
-  {
-    int size = size();
-    for (int i = 0; i < size; i++)
+    if (element instanceof CDOReferenceProxy)
     {
-      Object element = super.get(i);
-      handleAdjustReference(i, element);
-      Object newID = CDORevisionImpl.remapID(element, idMappings);
-      if (newID != element)
-      {
-        super.set(i, newID);
-      }
+      ((CDOReferenceProxyImpl)element).setIndex(index);
     }
   }
 
+  @Override
   public InternalCDOList clone(CDOType type)
   {
     int size = size();
-    InternalCDOList list = new CDOListImpl(size, 0);
+    InternalCDOList list = new CDOListReferenceProxyImpl(size, 0, 0);
     for (int j = 0; j < size; j++)
     {
       Object value = this.get(j);
-      list.add(j, type.copyValue(value));
+
+      if (value instanceof CDOReferenceProxy)
+      {
+        list.add(j, new CDOReferenceProxyImpl(((CDOReferenceProxy)value).getIndex()));
+      }
+      else
+      {
+        list.add(j, type.copyValue(value));
+      }
     }
 
     return list;

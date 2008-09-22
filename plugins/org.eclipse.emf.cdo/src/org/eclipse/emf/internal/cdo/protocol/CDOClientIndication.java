@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
+import org.eclipse.emf.internal.cdo.revision.CDOListReferenceProxyImpl;
 
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -100,7 +101,7 @@ public abstract class CDOClientIndication extends Indication
       @Override
       protected CDOListFactory getListFactory()
       {
-        return CDOListFactory.DEFAULT;
+        return CDOListReferenceProxyImpl.FACTORY;
       }
     });
   }

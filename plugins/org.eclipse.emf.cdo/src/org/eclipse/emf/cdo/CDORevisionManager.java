@@ -7,9 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ * 		Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 
 /**
@@ -19,4 +23,20 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 public interface CDORevisionManager extends CDORevisionResolver
 {
   public CDOSession getSession();
+
+  /**
+   * @param revision
+   * @param feature
+   * @param accessIndex
+   *          Index of the item access at the client (with modifications)
+   * @param fetchIndex
+   *          Index of the item access at the server (without any modifications)
+   * @param fromIndex
+   *          Load objects at the client from fromIndex (inclusive)
+   * @param toIndex
+   *          Load objects at the client to toIndex (inclusive)
+   * @since 2.0
+   */
+  public CDOID loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
+      int fromIndex, int toIndex);
 }

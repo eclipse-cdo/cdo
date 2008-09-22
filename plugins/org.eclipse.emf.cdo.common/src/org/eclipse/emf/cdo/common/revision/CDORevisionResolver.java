@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 import java.util.Collection;
 import java.util.List;
@@ -52,9 +51,4 @@ public interface CDORevisionResolver
   public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk);
 
   public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp);
-
-  /**
-   * @since 2.0
-   */
-  public CDOID resolveReferenceProxy(CDORevision revision, CDOFeature feature, CDOReferenceProxy proxy, int accessIndex);
 }

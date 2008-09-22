@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -53,7 +54,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(10);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
@@ -96,7 +97,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(10);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
@@ -136,7 +137,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     CDOTransaction transaction = session.openTransaction();
-    transaction.setLoadRevisionCollectionChunkSize(10);
+    transaction.setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
 
     CDOResource resource = transaction.getResource("/test1");
 
@@ -172,7 +173,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(10);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
@@ -214,7 +215,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(10);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     msg("Creating resource");
     CDOTransaction transaction = session.openTransaction();

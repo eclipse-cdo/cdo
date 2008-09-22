@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
@@ -30,7 +29,6 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
 import java.util.Collection;
@@ -66,74 +64,22 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   /**
    * @since 2.0
    */
-  public CDOID resolveReferenceProxy(CDORevision rev, CDOFeature feature, CDOReferenceProxy referenceProxy,
-      int accessIndex)
+  public CDOID resolveReferenceProxy(CDORevision revision, CDOFeature feature, int accessIndex, int serverIndex)
   {
-    // Get proxy values
-    InternalCDORevision revision = (InternalCDORevision)rev;
-    int fetchIndex = referenceProxy.getIndex();
+    return session.getCollectionLoadingPolicy().resolveProxy(this, revision, feature, accessIndex, serverIndex);
+  }
 
-    // Get appropriate chunk size
-    int chunkSize = session.getReferenceChunkSize();
-    if (chunkSize == CDORevision.UNCHUNKED)
-    {
-      // Can happen if CDOSession.setReferenceChunkSize() was called meanwhile
-      chunkSize = Integer.MAX_VALUE;
-    }
-
-    MoveableList<Object> list = revision.getList(feature);
-    int size = list.size();
-    int fromIndex = accessIndex;
-    int toIndex = accessIndex;
-    boolean minReached = false;
-    boolean maxReached = false;
-    boolean alternation = false;
-    for (int i = 0; i < chunkSize; i++)
-    {
-      if (alternation)
-      {
-        if (!maxReached && toIndex < size - 1 && list.get(toIndex + 1) instanceof CDOReferenceProxy)
-        {
-          ++toIndex;
-        }
-        else
-        {
-          maxReached = true;
-        }
-
-        if (!minReached)
-        {
-          alternation = false;
-        }
-      }
-      else
-      {
-        if (!minReached && fromIndex > 0 && list.get(fromIndex - 1) instanceof CDOReferenceProxy)
-        {
-          --fromIndex;
-        }
-        else
-        {
-          minReached = true;
-        }
-
-        if (!maxReached)
-        {
-          alternation = true;
-        }
-      }
-
-      if (minReached && maxReached)
-      {
-        break;
-      }
-    }
-
+  /**
+   * @since 2.0
+   */
+  public CDOID loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
+      int fromIndex, int toIndex)
+  {
     try
     {
       IChannel channel = session.getChannel();
-      LoadChunkRequest request = new LoadChunkRequest(channel, revision, feature, accessIndex, fetchIndex, fromIndex,
-          toIndex);
+      LoadChunkRequest request = new LoadChunkRequest(channel, (InternalCDORevision)revision, feature, accessIndex,
+          fetchIndex, fromIndex, toIndex);
 
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       return failOverStrategy.send(request);

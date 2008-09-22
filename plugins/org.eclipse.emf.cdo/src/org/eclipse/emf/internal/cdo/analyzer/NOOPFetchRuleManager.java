@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
+import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -37,8 +38,8 @@ public class NOOPFetchRuleManager implements CDOFetchRuleManager
     return null;
   }
 
-  public int getLoadRevisionCollectionChunkSize()
+  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
-    return 1;
+    return CDOCollectionLoadingPolicy.DEFAULT;
   }
 }

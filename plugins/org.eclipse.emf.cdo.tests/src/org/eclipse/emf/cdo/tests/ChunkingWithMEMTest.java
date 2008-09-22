@@ -69,7 +69,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
 
     msg("Opening session");
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(10);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -128,7 +128,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
 
     msg("Opening session");
     CDOSession session = openModel1Session();
-    session.setReferenceChunkSize(10);
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();

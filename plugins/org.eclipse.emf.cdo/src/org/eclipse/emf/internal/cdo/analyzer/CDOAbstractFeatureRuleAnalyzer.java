@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
+import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -39,7 +40,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
 
   protected long lastLatencyTime;
 
-  protected int loadRevisionCollectionChunkSize;
+  protected CDOCollectionLoadingPolicy loadCollectionPolicy;
 
   private boolean didFetch;
 
@@ -54,9 +55,9 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     return fetchCount;
   }
 
-  public int getLoadRevisionCollectionChunkSize()
+  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
-    return loadRevisionCollectionChunkSize;
+    return loadCollectionPolicy;
   }
 
   public void preTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index)
@@ -66,7 +67,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
       TRACER.format("preTraverseFeature : {0}.{1}", cdoObject.cdoClass(), feature.getName());
     }
 
-    loadRevisionCollectionChunkSize = cdoObject.cdoView().getLoadRevisionCollectionChunkSize();
+    loadCollectionPolicy = cdoObject.cdoView().getSession().getCollectionLoadingPolicy();
     lastTraverseFeature = feature;
     lastTraverseCDOObject = cdoObject;
     lastTraverseIndex = index;

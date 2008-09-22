@@ -7,10 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/201997
- *    Simon McDuff - http://bugs.eclipse.org/233490
- *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - maintenance
  *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
  **************************************************************************/
 package org.eclipse.emf.cdo;
@@ -37,7 +34,10 @@ public interface CDOView extends CDOProtocolView, INotifier
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
-  public static final int NO_PRELOAD = 1;
+  /**
+   * @since 2.0
+   */
+  public static final int NO_REVISION_PREFETCHING = 1;
 
   public CDOSession getSession();
 
@@ -78,9 +78,15 @@ public interface CDOView extends CDOProtocolView, INotifier
   @Deprecated
   public void setUniqueResourceContents(boolean uniqueResourceContents);
 
-  public boolean isInvalidationNotificationsEnabled();
+  /**
+   * @since 2.0
+   */
+  public boolean isInvalidationNotificationEnabled();
 
-  public void setInvalidationNotificationsEnabled(boolean invalidationNotificationsEnabled);
+  /**
+   * @since 2.0
+   */
+  public void setInvalidationNotificationEnabled(boolean enabled);
 
   /**
    * @since 2.0
@@ -119,11 +125,17 @@ public interface CDOView extends CDOProtocolView, INotifier
    * 
    * @since 2.0
    */
-  public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy changeSubscriptionPolicy);
+  public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy policy);
 
-  public int getLoadRevisionCollectionChunkSize();
+  /**
+   * @since 2.0
+   */
+  public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy();
 
-  public void setLoadRevisionCollectionChunkSize(int loadRevisionCollectionChunkSize);
+  /**
+   * @since 2.0
+   */
+  public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
   public boolean hasResource(String path);
 

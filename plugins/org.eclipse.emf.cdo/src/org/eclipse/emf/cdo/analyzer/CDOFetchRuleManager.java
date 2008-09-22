@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.analyzer;
 
+import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
@@ -30,5 +31,8 @@ public interface CDOFetchRuleManager
 
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids);
 
-  public int getLoadRevisionCollectionChunkSize();
+  /**
+   * @since 2.0
+   */
+  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
 }

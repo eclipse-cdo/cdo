@@ -48,10 +48,13 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   {
     CDOSessionImpl session = getSession();
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevisionByTime(id, session.getReferenceChunkSize(), timeStamp,
-        loadOnDemand);
+    return (InternalCDORevision)revisionManager.getRevisionByTime(id, session.getCollectionLoadingPolicy()
+        .getInitialChunkSize(), timeStamp, loadOnDemand);
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public List<CDOResource> queryResources(String pathPrefix)
   {

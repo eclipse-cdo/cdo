@@ -14,10 +14,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
@@ -30,10 +31,10 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaIm
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.revision.CDOReferenceProxy;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
 
-import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -45,8 +46,7 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.text.MessageFormat;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * CDORevision needs to follow these rules:<br>
@@ -156,7 +156,15 @@ public final class CDOStore implements EStore
       if (cdoFeature.isMany() && value instanceof CDOID)
       {
         CDOID id = (CDOID)value;
-        loadAhead(revision, cdoFeature, id, index);
+        CDOList list = revision.getList(cdoFeature);
+        CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
+        CDORevisionPrefetchingPolicy policy = view.getRevisionPrefetchingPolicy();
+
+        Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, eFeature, list, index, id);
+        if (!listOfIDs.isEmpty())
+        {
+          revisionManager.getRevisions(listOfIDs, view.getSession().getCollectionLoadingPolicy().getInitialChunkSize());
+        }
       }
 
       value = view.convertIDToObject(value);
@@ -507,46 +515,6 @@ public final class CDOStore implements EStore
     }
 
     return cdoFeature;
-  }
-
-  private void loadAhead(InternalCDORevision revision, CDOFeature cdoFeature, CDOID id, int index)
-  {
-    CDOSessionImpl session = view.getSession();
-    CDORevisionManagerImpl revisionManager = session.getRevisionManager();
-
-    int chunkSize = view.getLoadRevisionCollectionChunkSize();
-    if (chunkSize > 1 && !revisionManager.containsRevision(id))
-    {
-      MoveableList<Object> list = revision.getList(cdoFeature);
-      int fromIndex = index;
-      int toIndex = Math.min(index + chunkSize, list.size()) - 1;
-
-      Set<CDOID> notRegistered = new HashSet<CDOID>();
-      for (int i = fromIndex; i <= toIndex; i++)
-      {
-        Object element = list.get(i);
-        if (element instanceof CDOID)
-        {
-          CDOID idElement = (CDOID)element;
-          if (!idElement.isTemporary())
-          {
-            if (!revisionManager.containsRevision(idElement))
-            {
-              if (!notRegistered.contains(idElement))
-              {
-                notRegistered.add(idElement);
-              }
-            }
-          }
-        }
-      }
-
-      if (!notRegistered.isEmpty())
-      {
-        int referenceChunk = session.getReferenceChunkSize();
-        revisionManager.getRevisions(notRegistered, referenceChunk);
-      }
-    }
   }
 
   private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)

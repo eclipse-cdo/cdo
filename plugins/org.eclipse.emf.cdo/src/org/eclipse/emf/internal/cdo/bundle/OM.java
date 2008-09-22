@@ -77,14 +77,14 @@ public abstract class OM
   public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = //
   PREFS.initString("PREF_CONNECTOR_DESCRIPTION"); //$NON-NLS-1$
 
-  public static final OMPreference<Integer> PREF_REFERENCE_CHUNK_SIZE = //
-  PREFS.init("PREF_REFERENCE_CHUNK_SIZE", CDORevision.UNCHUNKED); //$NON-NLS-1$
+  public static final OMPreference<Integer> PREF_COLLECTION_LOADING_CHUNK_SIZE = //
+  PREFS.init("PREF_COLLECTION_LOADING_CHUNK_SIZE", CDORevision.UNCHUNKED); //$NON-NLS-1$
 
-  public static final OMPreference<Boolean> PREF_ENABLE_INVALIDATION_NOTIFICATIONS = //
-  PREFS.init("PREF_ENABLE_INVALIDATION_NOTIFICATIONS", false); //$NON-NLS-1$
+  public static final OMPreference<Boolean> PREF_ENABLE_INVALIDATION_NOTIFICATION = //
+  PREFS.init("PREF_ENABLE_INVALIDATION_NOTIFICATION", false); //$NON-NLS-1$
 
-  public static final OMPreference<Integer> PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE = //
-  PREFS.init("PREF_LOAD_REVISION_COLLECTION_CHUNK_SIZE", CDOView.NO_PRELOAD); //$NON-NLS-1$
+  public static final OMPreference<Integer> PREF_REVISION_LOADING_CHUNK_SIZE = //
+  PREFS.init("PREF_REVISION_LOADING_CHUNK_SIZE", CDOView.NO_REVISION_PREFETCHING); //$NON-NLS-1$
 
   public static final OMPreference<Long> PREF_DEFAULT_COMMIT_TIMEOUT = //
   PREFS.init("PREF_DEFAULT_COMMIT_TIMEOUT", CDOTransaction.DEFAULT_COMMIT_TIMEOUT); //$NON-NLS-1$

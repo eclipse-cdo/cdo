@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.collection.MoveableList;
 public interface CDOList extends MoveableList<Object>
 {
   /**
-   * Returns the element at position index of this list and optinally resolves {@link CDOReferenceProxy proxies}.
+   * Returns the element at position index of this list and optionally resolves {@link CDOReferenceProxy proxies}.
    * <p>
    * 
    * @param index

@@ -14,6 +14,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
@@ -97,7 +98,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private boolean passiveUpdateEnabled = true;
 
-  private int referenceChunkSize;
+  private CDOCollectionLoadingPolicy collectionLoadingPolicy;
 
   private IFailOverStrategy failOverStrategy;
 
@@ -164,7 +165,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     revisionManager = createRevisionManager();
 
     // TODO Remove preferences from core
-    referenceChunkSize = OM.PREF_REFERENCE_CHUNK_SIZE.getValue();
+    collectionLoadingPolicy = CDOUtil.createCollectionLoadingPolicy(OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue(),
+        OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue());
   }
 
   public int getSessionID()
@@ -185,19 +187,25 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return cdoidObjectFactory.createCDOIDObject(in);
   }
 
-  public int getReferenceChunkSize()
+  /**
+   * @since 2.0
+   */
+  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
-    return referenceChunkSize;
+    return collectionLoadingPolicy;
   }
 
-  public void setReferenceChunkSize(int referenceChunkSize)
+  /**
+   * @since 2.0
+   */
+  public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
   {
-    if (referenceChunkSize <= 0)
+    if (policy == null)
     {
-      referenceChunkSize = CDORevision.UNCHUNKED;
+      policy = CDOCollectionLoadingPolicy.DEFAULT;
     }
 
-    this.referenceChunkSize = referenceChunkSize;
+    collectionLoadingPolicy = policy;
   }
 
   public synchronized IFailOverStrategy getFailOverStrategy()
@@ -210,17 +218,17 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return failOverStrategy;
   }
 
-  public synchronized void setFailOverStrategy(IFailOverStrategy failOverStrategy)
+  public synchronized void setFailOverStrategy(IFailOverStrategy strategy)
   {
-    if (this.failOverStrategy != null)
+    if (failOverStrategy != null)
     {
-      this.failOverStrategy.removeListener(failOverStrategyListener);
+      failOverStrategy.removeListener(failOverStrategyListener);
     }
 
-    this.failOverStrategy = failOverStrategy;
-    if (this.failOverStrategy != null)
+    failOverStrategy = strategy;
+    if (failOverStrategy != null)
     {
-      this.failOverStrategy.addListener(failOverStrategyListener);
+      failOverStrategy.addListener(failOverStrategyListener);
     }
   }
 
@@ -890,7 +898,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
         if (!allRevisions.isEmpty())
         {
           PassiveUpdateRequest request = new PassiveUpdateRequest(getChannel(), this, allRevisions,
-              getReferenceChunkSize(), passiveUpdateEnabled);
+              collectionLoadingPolicy.getInitialChunkSize(), passiveUpdateEnabled);
           getFailOverStrategy().send(request);
         }
       }
@@ -917,7 +925,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
         if (!allRevisions.isEmpty())
         {
           SyncRevisionRequest request = new SyncRevisionRequest(getChannel(), this, allRevisions,
-              getReferenceChunkSize());
+              collectionLoadingPolicy.getInitialChunkSize());
           return getFailOverStrategy().send(request);
         }
       }

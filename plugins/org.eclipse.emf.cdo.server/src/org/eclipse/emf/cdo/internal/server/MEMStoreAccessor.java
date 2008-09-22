@@ -225,7 +225,9 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
    */
   public void queryResources(QueryResourcesContext context)
   {
+    // TODO The following warning is a reminder that here is missing the whole view-dependency of the query!
     IView view = getView();
+
     for (CDORevision revision : getStore().getCurrentRevisions())
     {
       if (revision.isResource())

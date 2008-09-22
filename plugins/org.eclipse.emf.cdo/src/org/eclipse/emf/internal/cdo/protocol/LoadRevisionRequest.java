@@ -92,7 +92,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
       CDOID contextID = ruleManager.getContext();
 
       out.writeInt(fetchSize);
-      out.writeInt(ruleManager.getLoadRevisionCollectionChunkSize());
+      out.writeInt(ruleManager.getCollectionLoadingPolicy().getInitialChunkSize());
       out.writeCDOID(contextID);
 
       for (CDOFetchRule fetchRule : fetchRules)

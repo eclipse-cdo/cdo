@@ -95,7 +95,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
 
     CDOFeatureAnalyzerModelBased featureanalyzerModelBased = new CDOFeatureAnalyzerModelBased();
     transaction.setFeatureAnalyzer(featureanalyzerModelBased);
-    transaction.setLoadRevisionCollectionChunkSize(10);
+    transaction.setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
 
     msg("Getting resource");
 

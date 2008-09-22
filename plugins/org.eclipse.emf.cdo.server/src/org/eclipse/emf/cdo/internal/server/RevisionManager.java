@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
@@ -70,14 +68,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   public CDOIDObjectFactory getCDOIDObjectFactory()
   {
     return repository.getStore().getCDOIDObjectFactory();
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOID resolveReferenceProxy(CDORevision revision, CDOFeature feature, CDOReferenceProxy proxy, int currentIndex)
-  {
-    throw new UnsupportedOperationException("Reference proxies not supported on server side");
   }
 
   /**

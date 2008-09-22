@@ -663,7 +663,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
-    viewB.setInvalidationNotificationsEnabled(true);
+    viewB.setInvalidationNotificationEnabled(true);
 
     msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");

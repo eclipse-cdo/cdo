@@ -11,10 +11,9 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
-
-import org.eclipse.net4j.util.collection.MoveableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,7 +26,7 @@ import java.util.ListIterator;
  * 
  * @author Martin Taal
  */
-public class WrappedHibernateList implements MoveableList<Object>
+public class WrappedHibernateList implements CDOList
 {
   private List<Object> delegate;
 
@@ -187,6 +186,13 @@ public class WrappedHibernateList implements MoveableList<Object>
       return ((CDORevision)value).getID();
     }
     return value;
+  }
+
+  public Object get(int index, boolean resolve)
+  {
+    // Since delegate is a hibernate list, it is never a CDOReferenceProxy
+    // so the parameter resolve can be ignored
+    return get(index);
   }
 
   public int indexOf(Object o)

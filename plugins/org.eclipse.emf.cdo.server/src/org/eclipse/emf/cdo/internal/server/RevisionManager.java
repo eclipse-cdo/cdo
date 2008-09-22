@@ -223,7 +223,10 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       return (InternalCDORevision)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
     }
 
-    // TODO Simon: Is this check necessary here?
+    // TODO Simon*: Is this check necessary here?
+    // TODO Eike: To have better exception message.
+    // By knowing if the back-end supports it, it let know the user that it could be achieved by changing its
+    // configuration file at the server.
     // if (getRepository().getStore().hasAuditingSupport())
     // {
     // throw new UnsupportedOperationException(

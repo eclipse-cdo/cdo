@@ -34,16 +34,16 @@ public abstract class AbstractOMTest extends TestCase
   }
 
   @Override
-  public final void setUp() throws Exception
+  public void setUp() throws Exception
   {
-    IOUtil.OUT().println("*******************************************************");
-    IOUtil.OUT().println(this);
-    IOUtil.OUT().println("*******************************************************");
-
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.setDebugging(true);
     enableConsole();
+
+    IOUtil.OUT().println("*******************************************************");
+    IOUtil.OUT().println(this);
+    IOUtil.OUT().println("*******************************************************");
 
     super.setUp();
     doSetUp();
@@ -53,7 +53,7 @@ public abstract class AbstractOMTest extends TestCase
   }
 
   @Override
-  public final void tearDown() throws Exception
+  public void tearDown() throws Exception
   {
     IOUtil.OUT().println("------------------------- END -------------------------");
     IOUtil.OUT().println();

@@ -5,12 +5,12 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.MEMStore;
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+
+import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -32,8 +32,10 @@ public class ResourceTest extends AbstractCDOTest
   /**
    * http://bugs.eclipse.org/238963
    */
-  public void testEmptyContents() throws Exception
+  public void testEmptyContentsWithMEMStore() throws Exception
   {
+    skipUnlessConfig(MEM);
+
     {
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
@@ -50,11 +52,7 @@ public class ResourceTest extends AbstractCDOTest
       session.close();
     }
 
-    IStore store = getRepository().getStore();
-    if (!(store instanceof MEMStore))
-    {
-      restartContainers();
-    }
+    restartContainers();
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
@@ -210,6 +208,30 @@ public class ResourceTest extends AbstractCDOTest
 
     transaction.commit();
     session.close();
+  }
+
+  public void testDuplicateResources() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.createResource("/my/resource");
+    transaction.commit();
+
+    transaction.createResource("/my/resource");
+
+    try
+    {
+      transaction.commit();
+      fail("TransactionException expected");
+    }
+    catch (TransactionException expected)
+    {
+      // Success
+    }
+    finally
+    {
+      session.close();
+    }
   }
 
   /**

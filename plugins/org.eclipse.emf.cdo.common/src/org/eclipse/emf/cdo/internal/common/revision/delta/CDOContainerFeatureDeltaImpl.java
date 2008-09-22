@@ -177,6 +177,11 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
       return null;
     }
 
+    public String getQualifiedName()
+    {
+      return null;
+    }
+
     public CDOPackageManager getPackageManager()
     {
       return null;

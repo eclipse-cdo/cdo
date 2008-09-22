@@ -154,6 +154,11 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     this.classifierID = classifierID;
   }
 
+  public String getQualifiedName()
+  {
+    return getContainingPackage().getQualifiedName() + "." + getName();
+  }
+
   public boolean isAbstract()
   {
     return isAbstract;

@@ -226,6 +226,17 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     this.packageURI = packageURI;
   }
 
+  public String getQualifiedName()
+  {
+    CDOPackage parentPackage = getParentPackage();
+    if (parentPackage != null)
+    {
+      return parentPackage + "." + getName();
+    }
+
+    return getName();
+  }
+
   public int getClassCount()
   {
     resolve();

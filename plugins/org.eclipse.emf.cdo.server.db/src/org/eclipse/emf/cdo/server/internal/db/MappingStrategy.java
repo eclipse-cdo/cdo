@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.server.IPackageManager;
@@ -49,6 +50,8 @@ import java.util.Map;
 public abstract class MappingStrategy extends Lifecycle implements IMappingStrategy
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MappingStrategy.class);
+
+  public static final String PROP_QUALIFIED_NAMES = "qualifiedNames";
 
   public static final String PROP_TO_MANY_REFERENCE_MAPPING = "toManyReferenceMapping";
 
@@ -99,6 +102,12 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
   public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
+  }
+
+  public boolean isQualifiedNames()
+  {
+    String value = getProperties().get(PROP_QUALIFIED_NAMES);
+    return value == null ? false : Boolean.valueOf(value);
   }
 
   public ToMany getToMany()
@@ -219,6 +228,26 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     resourceTable = resourceClassMapping.getTable();
     resourceIDField = resourceTable.getField(CDODBSchema.ATTRIBUTES_ID);
     resourcePathField = resourcePathMapping.getField();
+  }
+
+  public String getTableName(CDOPackage cdoPackage)
+  {
+    if (isQualifiedNames())
+    {
+      return cdoPackage.getQualifiedName().replace('.', '_');
+    }
+
+    return cdoPackage.getName();
+  }
+
+  public String getTableName(CDOClass cdoClass)
+  {
+    if (isQualifiedNames())
+    {
+      return cdoClass.getQualifiedName().replace('.', '_');
+    }
+
+    return cdoClass.getName();
   }
 
   public CloseableIterator<CDOID> readObjectIDs(final IDBStoreReader storeReader)

@@ -237,27 +237,29 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   protected void mapReference(CDOClass cdoClass, CDOFeature cdoFeature)
   {
+    MappingStrategy mappingStrategy = getClassMapping().getMappingStrategy();
     switch (toMany)
     {
     case PER_REFERENCE:
       withFeature = false;
-      table = mapReferenceTable(cdoFeature, cdoClass.getName() + "_" + cdoFeature.getName() + "_refs");
+      table = mapReferenceTable(cdoFeature, mappingStrategy.getTableName(cdoClass) + "_" + cdoFeature.getName()
+          + "_refs");
       break;
 
     case PER_CLASS:
       withFeature = true;
-      table = mapReferenceTable(cdoClass, cdoClass.getName() + "_refs");
+      table = mapReferenceTable(cdoClass, mappingStrategy.getTableName(cdoClass) + "_refs");
       break;
 
     case PER_PACKAGE:
       withFeature = true;
       CDOPackage cdoPackage = cdoClass.getContainingPackage();
-      table = mapReferenceTable(cdoPackage, cdoPackage.getName() + "_refs");
+      table = mapReferenceTable(cdoPackage, mappingStrategy.getTableName(cdoPackage) + "_refs");
       break;
 
     case PER_REPOSITORY:
       withFeature = true;
-      IRepository repository = getClassMapping().getMappingStrategy().getStore().getRepository();
+      IRepository repository = mappingStrategy.getStore().getRepository();
       table = mapReferenceTable(repository, repository.getName() + "_refs");
       break;
 

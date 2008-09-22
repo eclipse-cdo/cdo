@@ -20,6 +20,11 @@ public interface CDOModelElement
 
   public String getName();
 
+  /**
+   * @since 2.0
+   */
+  public String getQualifiedName();
+
   public Object getClientInfo();
 
   public Object getServerInfo();

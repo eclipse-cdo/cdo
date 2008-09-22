@@ -73,7 +73,8 @@ public abstract class ClassMapping implements IClassMapping
     this.mappingStrategy = mappingStrategy;
     this.cdoClass = cdoClass;
 
-    table = addTable(cdoClass.getName());
+    String tableName = mappingStrategy.getTableName(cdoClass);
+    table = addTable(tableName);
     initTable(table, hasFullRevisionInfo());
     if (features != null)
     {

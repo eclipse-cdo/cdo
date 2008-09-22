@@ -199,6 +199,11 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     this.featureIndex = featureIndex;
   }
 
+  public String getQualifiedName()
+  {
+    return getContainingClass().getQualifiedName() + "." + getName();
+  }
+
   public CDOType getType()
   {
     return type;

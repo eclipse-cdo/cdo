@@ -24,8 +24,6 @@ import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
-import org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter;
-import org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -205,6 +203,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   public static abstract class DB extends RepositoryConfig
   {
     private File dbFolder;
+
     private HSQLDBDataSource dataSource;
 
     public DB(String name)
@@ -215,7 +214,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     @SuppressWarnings("restriction")
     protected IStore createHsqlStore()
     {
-      IDBAdapter dbAdapter = new HSQLDBAdapter();
+      IDBAdapter dbAdapter = new org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter();
 
       dataSource = new HSQLDBDataSource();
       dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
@@ -227,7 +226,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     @SuppressWarnings("restriction")
     protected IStore createDerbyStore()
     {
-      IDBAdapter dbAdapter = new EmbeddedDerbyAdapter();
+      IDBAdapter dbAdapter = new org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter();
 
       dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
       deleteDBFolder();

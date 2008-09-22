@@ -41,8 +41,8 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
   public void readPackage(CDOPackage cdoPackage);
 
   /**
-   * Returns an iterator that iterates over all objects in the store and makes their ids available for processing. This
-   * method is supposed to be called very infrequently, for example during the recovery from a crash.
+   * Returns an iterator that iterates over all objects in the store and makes their CDOIDs available for processing.
+   * This method is supposed to be called very infrequently, for example during the recovery from a crash.
    * 
    * @since 2.0
    */
@@ -54,17 +54,22 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
    */
   public CDOClassRef readObjectType(CDOID id);
 
+  /**
+   * Reads a current revision (i.e. one with revised == 0) from the backend.
+   */
   public CDORevision readRevision(CDOID id, int referenceChunk);
 
   /**
-   * It will be called only if {@link IStore#hasAuditingSupport()} and {@link IRepository#isSupportingAudits()} are
-   * true.
+   * Reads a revision from the backend that was valid at the given timeStamp. This method will only be called by the
+   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
+   * {@link IStore#hasAuditingSupport()} to be <code>true</code>).
    */
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
 
   /**
-   * It will be called only if {@link IStore#hasAuditingSupport()} and {@link IRepository#isSupportingAudits()} are
-   * true.
+   * Reads a revision with the given version from the backend. This method will only be called by the framework if
+   * {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
+   * {@link IStore#hasAuditingSupport()} to be <code>true</code>).
    */
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 

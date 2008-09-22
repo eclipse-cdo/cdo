@@ -115,6 +115,7 @@ public class MEMStore extends LongIDStore implements IMEMStore
       {
         return getRevisionByVersion(list, version);
       }
+
       return null;
     }
 
@@ -133,6 +134,7 @@ public class MEMStore extends LongIDStore implements IMEMStore
       {
         return getRevisionByTime(list, timeStamp);
       }
+
       return null;
     }
 
@@ -304,5 +306,4 @@ public class MEMStore extends LongIDStore implements IMEMStore
 
     return null;
   }
-
 }

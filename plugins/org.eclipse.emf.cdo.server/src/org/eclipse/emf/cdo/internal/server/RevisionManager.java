@@ -213,19 +213,20 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     if (getRepository().isSupportingAudits())
     {
+      IStoreReader storeReader = StoreThreadLocal.getStoreReader();
       return (InternalCDORevision)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
     }
 
-    if (getRepository().getStore().hasAuditingSupport())
-    {
-      throw new UnsupportedOperationException(
-          "Auditing supports isn't activated (see IRepository.Props.PROP_SUPPORTING_AUDITS).");
-    }
+    // TODO Simon: Is this check necessary here?
+    // if (getRepository().getStore().hasAuditingSupport())
+    // {
+    // throw new UnsupportedOperationException(
+    // "Auditing supports isn't activated (see IRepository.Props.PROP_SUPPORTING_AUDITS).");
+    // }
 
-    throw new UnsupportedOperationException("Store " + getRepository().getStore() + " doesn't support auditing mode");
+    throw new UnsupportedOperationException("No support for auditing mode");
   }
 
   @Override

@@ -234,6 +234,21 @@ public class ResourceTest extends AbstractCDOTest
     }
   }
 
+  public void testDuplicateResourcesAfterDetach() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/resource");
+    transaction.commit();
+
+    resource.delete(null);
+    transaction.commit();
+
+    transaction.createResource("/my/resource");
+    transaction.commit();
+    session.close();
+  }
+
   /**
    * http://bugs.eclipse.org/208689
    */

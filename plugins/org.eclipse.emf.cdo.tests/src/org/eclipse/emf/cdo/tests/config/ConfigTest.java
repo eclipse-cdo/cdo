@@ -490,13 +490,23 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   }
 
   @Override
+  public void setUp() throws Exception
+  {
+    containerConfig = filterContainerConfig(containerConfig);
+    repositoryConfig = filterRepositoryConfig(repositoryConfig);
+    sessionConfig = filterSessionConfig(sessionConfig);
+    modelConfig = filterModelConfig(modelConfig);
+    super.setUp();
+  }
+
+  @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    setUpConfig(containerConfig = filterContainerConfig(containerConfig));
-    setUpConfig(repositoryConfig = filterRepositoryConfig(repositoryConfig));
-    setUpConfig(sessionConfig = filterSessionConfig(sessionConfig));
-    setUpConfig(modelConfig = filterModelConfig(modelConfig));
+    setUpConfig(containerConfig);
+    setUpConfig(repositoryConfig);
+    setUpConfig(sessionConfig);
+    setUpConfig(modelConfig);
   }
 
   @Override

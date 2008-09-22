@@ -24,6 +24,7 @@ import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
  */
 public class Bugzilla_246456_Test extends AbstractCDOTest
 {
+  @SuppressWarnings("deprecation")
   public void testBugzilla_246456() throws Exception
   {
     msg("Opening session");

@@ -402,7 +402,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
   private void addNewPackages()
   {
-    PackageManager packageManager = transaction.getRepository().getPackageManager();
+    PackageManager packageManager = (PackageManager)transaction.getRepository().getPackageManager();
     for (int i = 0; i < newPackages.length; i++)
     {
       CDOPackage cdoPackage = newPackages[i];
@@ -412,7 +412,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
   private void addRevisions(CDORevision[] revisions)
   {
-    RevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+    RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
     for (CDORevision revision : revisions)
     {
       if (revision != null)
@@ -434,7 +434,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   {
     detachedRevisions.clear();
 
-    RevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+    RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
 
     for (CDOID id : getDetachedObjects())
     {
@@ -453,7 +453,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   {
     private List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
 
-    private PackageManager repositoryPackageManager = transaction.getRepository().getPackageManager();
+    private PackageManager repositoryPackageManager = (PackageManager)transaction.getRepository().getPackageManager();
 
     public TransactionPackageManager()
     {

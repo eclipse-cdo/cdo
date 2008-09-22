@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 
 /**
  * @author Eike Stepper
@@ -65,11 +66,11 @@ public abstract class AbstractOMTest extends TestCase
   }
 
   @Override
-  protected void runTest() throws Throwable
+  public void runBare() throws Throwable
   {
     try
     {
-      super.runTest();
+      super.runBare();
     }
     catch (SkipTestException ex)
     {
@@ -79,6 +80,29 @@ public abstract class AbstractOMTest extends TestCase
     {
       t.printStackTrace(IOUtil.OUT());
       throw t;
+    }
+  }
+
+  @Override
+  public void run(TestResult result)
+  {
+    try
+    {
+      super.run(result);
+    }
+    catch (SkipTestException ex)
+    {
+      OM.LOG.info("Skipped " + this);
+    }
+    catch (RuntimeException ex)
+    {
+      ex.printStackTrace(IOUtil.OUT());
+      throw ex;
+    }
+    catch (Error err)
+    {
+      err.printStackTrace(IOUtil.OUT());
+      throw err;
     }
   }
 

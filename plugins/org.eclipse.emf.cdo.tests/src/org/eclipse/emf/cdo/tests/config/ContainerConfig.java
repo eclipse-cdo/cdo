@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
@@ -29,6 +31,41 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
     super(name);
   }
 
+  protected IManagedContainer clientContainer;
+
+  protected IManagedContainer serverContainer;
+
+  public boolean hasClientContainer()
+  {
+    return clientContainer != null;
+  }
+
+  public boolean hasServerContainer()
+  {
+    return serverContainer != null;
+  }
+
+  public void restartContainers() throws Exception
+  {
+    IOUtil.OUT().println("RESTARTING CONTAINER");
+    getCurrentTest().stopTransport();
+
+    // Stop client
+    LifecycleUtil.deactivate(clientContainer);
+    clientContainer = null;
+
+    // Restart server
+    LifecycleUtil.deactivate(serverContainer);
+    serverContainer = null;
+    getServerContainer();
+
+    // Start client
+    getClientContainer();
+
+    getCurrentTest().startTransport();
+    IOUtil.OUT().println("RESTARTING CONTAINER - FINISHED");
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -38,8 +75,6 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
 
     public static final Combined INSTANCE = new Combined();
 
-    private IManagedContainer container;
-
     public Combined()
     {
       super(NAME);
@@ -47,12 +82,14 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
 
     public synchronized IManagedContainer getClientContainer()
     {
-      if (container == null)
+      if (clientContainer == null)
       {
-        container = createContainer();
+        clientContainer = createContainer();
+        LifecycleUtil.activate(clientContainer);
+        serverContainer = clientContainer;
       }
 
-      return container;
+      return clientContainer;
     }
 
     public IManagedContainer getServerContainer()
@@ -79,10 +116,6 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
 
     public static final Separated INSTANCE = new Separated();
 
-    private IManagedContainer clientContainer;
-
-    private IManagedContainer serverContainer;
-
     public Separated()
     {
       super(NAME);
@@ -93,6 +126,7 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
       if (clientContainer == null)
       {
         clientContainer = createClientContainer();
+        LifecycleUtil.activate(clientContainer);
       }
 
       return clientContainer;
@@ -103,6 +137,7 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
       if (serverContainer == null)
       {
         serverContainer = createServerContainer();
+        LifecycleUtil.activate(serverContainer);
       }
 
       return serverContainer;

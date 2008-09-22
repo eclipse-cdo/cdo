@@ -14,18 +14,12 @@ import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.server.Repository;
 
 /**
  * @author Eike Stepper
  */
 public interface IStore extends IRepositoryElement
 {
-  /**
-   * Internal method. Should only be called by {@link Repository#setStore(IStore)}.
-   */
-  public void setRepository(IRepository repository);
-
   public String getStoreType();
 
   public CDOIDObjectFactory getCDOIDObjectFactory();

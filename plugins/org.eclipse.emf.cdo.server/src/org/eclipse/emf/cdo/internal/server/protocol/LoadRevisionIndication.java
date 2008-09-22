@@ -179,7 +179,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
     visitedFetchRules.add(fetchRule);
 
-    RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
+    RevisionManager revisionManager = (RevisionManager)getSessionManager().getRepository().getRevisionManager();
     for (CDOFeature feature : fetchRule.getFeatures())
     {
       if (feature.isMany())

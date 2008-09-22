@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
@@ -29,7 +30,7 @@ import java.util.List;
  */
 public class Transaction extends View implements ITransaction
 {
-  private Repository repository;
+  private IRepository repository;
 
   public Transaction(Session session, int viewID)
   {
@@ -40,7 +41,7 @@ public class Transaction extends View implements ITransaction
   /**
    * @since 2.0
    */
-  public Repository getRepository()
+  public IRepository getRepository()
   {
     return repository;
   }

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
@@ -35,20 +36,33 @@ public class SessionManager extends Container<ISession> implements ISessionManag
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 
-  private Repository repository;
+  private IRepository repository;
 
   private Map<Integer, Session> sessions = new HashMap<Integer, Session>();
 
   private int lastSessionID;
 
-  public SessionManager(Repository repository)
+  /**
+   * @since 2.0
+   */
+  public SessionManager()
   {
-    this.repository = repository;
   }
 
-  public Repository getRepository()
+  /**
+   * @since 2.0
+   */
+  public IRepository getRepository()
   {
     return repository;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRepository(IRepository repository)
+  {
+    this.repository = repository;
   }
 
   public Session[] getSessions()

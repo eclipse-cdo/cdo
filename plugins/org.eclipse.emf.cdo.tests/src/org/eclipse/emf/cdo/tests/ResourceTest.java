@@ -53,7 +53,7 @@ public class ResourceTest extends AbstractCDOTest
     IStore store = getRepository().getStore();
     if (!(store instanceof MEMStore))
     {
-      restartContainer();
+      restartContainers();
     }
 
     CDOSession session = openModel1Session();

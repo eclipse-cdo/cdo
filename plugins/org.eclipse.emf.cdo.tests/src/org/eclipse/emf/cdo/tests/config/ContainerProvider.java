@@ -17,7 +17,13 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public interface ContainerProvider
 {
+  public boolean hasClientContainer();
+
+  public boolean hasServerContainer();
+
   public IManagedContainer getClientContainer();
 
   public IManagedContainer getServerContainer();
+
+  public void restartContainers() throws Exception;
 }

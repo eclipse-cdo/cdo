@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IResourceManager;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -29,20 +30,33 @@ public class ResourceManager extends Lifecycle implements IResourceManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 
-  private Repository repository;
+  private IRepository repository;
 
   private Map<CDOID, String> idToPathMap = new HashMap<CDOID, String>();
 
   private Map<String, CDOID> pathToIDMap = new HashMap<String, CDOID>();
 
-  public ResourceManager(Repository repository)
+  /**
+   * @since 2.0
+   */
+  public ResourceManager()
   {
-    this.repository = repository;
   }
 
-  public Repository getRepository()
+  /**
+   * @since 2.0
+   */
+  public IRepository getRepository()
   {
     return repository;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRepository(IRepository repository)
+  {
+    this.repository = repository;
   }
 
   public CDOID getResourceID(String path)

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -31,28 +32,31 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public abstract class ConfigTest extends AbstractOMTest implements ContainerProvider, RepositoryProvider,
-    SessionProvider, ModelProvider
+public abstract class ConfigTest extends AbstractOMTest implements ConfigConstants, ContainerProvider,
+    RepositoryProvider, SessionProvider, ModelProvider
 {
-  private ContainerConfig containerConfig;
-
-  private RepositoryConfig repositoryConfig;
-
-  private SessionConfig sessionConfig;
-
-  private ModelConfig modelConfig;
-
   public ConfigTest()
   {
   }
 
   // /////////////////////////////////////////////////////////////////////////
   // //////////////////////// Container //////////////////////////////////////
+
+  /**
+   *@category Container
+   */
+  public static final ContainerConfig DEFAULT_CONTAINER_CONFIG = COMBINED;
+
+  /**
+   *@category Container
+   */
+  private ContainerConfig containerConfig;
 
   /**
    *@category Container
@@ -73,6 +77,22 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
   /**
    *@category Container
    */
+  public boolean hasClientContainer()
+  {
+    return containerConfig.hasClientContainer();
+  }
+
+  /**
+   *@category Container
+   */
+  public boolean hasServerContainer()
+  {
+    return containerConfig.hasServerContainer();
+  }
+
+  /**
+   *@category Container
+   */
   public IManagedContainer getClientContainer()
   {
     return containerConfig.getClientContainer();
@@ -86,8 +106,26 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
     return containerConfig.getServerContainer();
   }
 
+  /**
+   *@category Container
+   */
+  public void restartContainers() throws Exception
+  {
+    containerConfig.restartContainers();
+  }
+
   // /////////////////////////////////////////////////////////////////////////
   // //////////////////////// Repository /////////////////////////////////////
+
+  /**
+   *@category Repository
+   */
+  public static final RepositoryConfig DEFAULT_REPOSITORY_CONFIG = MEM;
+
+  /**
+   *@category Repository
+   */
+  private RepositoryConfig repositoryConfig;
 
   /**
    *@category Repository
@@ -135,6 +173,16 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
   /**
    *@category Session
    */
+  public static final SessionConfig DEFAULT_SESSION_CONFIG = TCP;
+
+  /**
+   *@category Session
+   */
+  private SessionConfig sessionConfig;
+
+  /**
+   *@category Session
+   */
   public SessionConfig getSessionConfig()
   {
     return sessionConfig;
@@ -146,6 +194,30 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
   public void setSessionConfig(SessionConfig sessionConfig)
   {
     this.sessionConfig = sessionConfig;
+  }
+
+  /**
+   *@category Session
+   */
+  public void startTransport() throws Exception
+  {
+    sessionConfig.startTransport();
+  }
+
+  /**
+   *@category Session
+   */
+  public void stopTransport() throws Exception
+  {
+    sessionConfig.stopTransport();
+  }
+
+  /**
+   *@category Session
+   */
+  public IAcceptor getAcceptor()
+  {
+    return sessionConfig.getAcceptor();
   }
 
   /**
@@ -191,6 +263,22 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
   /**
    *@category Session
    */
+  public CDOSession openEagerSession()
+  {
+    return sessionConfig.openEagerSession();
+  }
+
+  /**
+   *@category Session
+   */
+  public CDOSession openLazySession()
+  {
+    return sessionConfig.openLazySession();
+  }
+
+  /**
+   *@category Session
+   */
   public CDOSession openSession(EPackage ePackage)
   {
     return sessionConfig.openSession(ePackage);
@@ -214,6 +302,16 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
 
   // /////////////////////////////////////////////////////////////////////////
   // //////////////////////// Model //////////////////////////////////////////
+
+  /**
+   *@category Model
+   */
+  public static final ModelConfig DEFAULT_MODEL_CONFIG = NATIVE;
+
+  /**
+   *@category Model
+   */
+  private ModelConfig modelConfig;
 
   /**
    *@category Model
@@ -322,9 +420,9 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
   // /////////////////////////////////////////////////////////////////////////
   // /////////////////////////////////////////////////////////////////////////
 
-  public Map<String, String> getProperties()
+  public Map<String, Object> getTestProperties()
   {
-    return null;
+    return new HashMap<String, Object>();
   }
 
   public boolean isValid()
@@ -339,20 +437,66 @@ public abstract class ConfigTest extends AbstractOMTest implements ContainerProv
         repositoryConfig, sessionConfig, modelConfig);
   }
 
+  protected ContainerConfig filterContainerConfig(ContainerConfig config)
+  {
+    if (config == null)
+    {
+      config = DEFAULT_CONTAINER_CONFIG;
+    }
+
+    return config;
+  }
+
+  protected RepositoryConfig filterRepositoryConfig(RepositoryConfig config)
+  {
+    if (config == null)
+    {
+      config = DEFAULT_REPOSITORY_CONFIG;
+    }
+
+    return config;
+  }
+
+  protected SessionConfig filterSessionConfig(SessionConfig config)
+  {
+    if (config == null)
+    {
+      config = DEFAULT_SESSION_CONFIG;
+    }
+
+    return config;
+  }
+
+  protected ModelConfig filterModelConfig(ModelConfig config)
+  {
+    if (config == null)
+    {
+      config = DEFAULT_MODEL_CONFIG;
+    }
+
+    return config;
+  }
+
   protected void skipConfig(Config config)
   {
-    skipTest(modelConfig == config);
-    skipTest(sessionConfig == config);
+    skipTest(containerConfig == config || repositoryConfig == config || sessionConfig == config
+        || modelConfig == config);
+  }
+
+  protected void skipUnlessConfig(Config config)
+  {
+    skipTest(containerConfig != config && repositoryConfig != config && sessionConfig != config
+        && modelConfig != config);
   }
 
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    setUpConfig(containerConfig);
-    setUpConfig(repositoryConfig);
-    setUpConfig(sessionConfig);
-    setUpConfig(modelConfig);
+    setUpConfig(containerConfig = filterContainerConfig(containerConfig));
+    setUpConfig(repositoryConfig = filterRepositoryConfig(repositoryConfig));
+    setUpConfig(sessionConfig = filterSessionConfig(sessionConfig));
+    setUpConfig(modelConfig = filterModelConfig(modelConfig));
   }
 
   @Override

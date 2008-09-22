@@ -10,15 +10,23 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.config;
 
+import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -27,6 +35,12 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
 {
   public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHorizontalHsql.INSTANCE,
       DBHorizontalDerby.INSTANCE, Hibernate.INSTANCE };
+
+  public static final String PROP_TEST_REPOSITORY = "test.repository";
+
+  public static final String PROP_TEST_REVISION_MANAGER = "test.repository.revisionmanager";
+
+  public static final String PROP_TEST_STORE = "test.repository.store";
 
   private Map<String, IRepository> repositories = new HashMap<String, IRepository>();
 
@@ -40,10 +54,16 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     Map<String, String> repositoryProperties = new HashMap<String, String>();
     initRepositoryProperties(repositoryProperties);
 
-    Map<String, String> properties = getCurrentTest().getProperties();
-    if (properties != null)
+    Map<String, Object> testProperties = getTestProperties();
+    if (testProperties != null)
     {
-      repositoryProperties.putAll(properties);
+      for (Entry<String, Object> entry : testProperties.entrySet())
+      {
+        if (entry.getValue() instanceof String)
+        {
+          repositoryProperties.put(entry.getKey(), (String)entry.getValue());
+        }
+      }
     }
 
     return repositoryProperties;
@@ -54,8 +74,21 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     IRepository repository = repositories.get(name);
     if (repository == null)
     {
-      repository = createRepository();
+      repository = getTestRepository();
+      if (repository != null && !ObjectUtil.equals(repository.getName(), name))
+      {
+        repository = null;
+      }
+
+      if (repository == null)
+      {
+        repository = createRepository(name);
+      }
+
       repositories.put(name, repository);
+      LifecycleUtil.activate(repository);
+      // IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+      // CDOServerUtil.addRepository(serverContainer, repository);
     }
 
     return repository;
@@ -63,10 +96,27 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
 
   protected void initRepositoryProperties(Map<String, String> props)
   {
-    props.put(Props.PROP_OVERRIDE_UUID, "TEST_UUID");
+    props.put(Props.PROP_OVERRIDE_UUID, ""); // UUID := name !!!
     props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "true");
     props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
     props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
+  }
+
+  @Override
+  protected void setUp() throws Exception
+  {
+    super.setUp();
+    IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+    CDOServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
+    {
+      public IRepository getRepository(String name)
+      {
+        return repositories.get(name);
+      }
+    });
+
+    // Start default repository
+    getRepository(REPOSITORY_NAME);
   }
 
   @Override
@@ -77,12 +127,41 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     super.tearDown();
   }
 
-  protected IRepository createRepository()
+  protected IRepository createRepository(String name)
   {
-    return CDOServerUtil.createRepository(REPOSITORY_NAME, createStore(), getRepositoryProperties());
+    IStore store = getTestStore();
+    if (store == null)
+    {
+      store = createStore();
+    }
+
+    Repository repository = (Repository)CDOServerUtil.createRepository(name, store, getRepositoryProperties());
+
+    RevisionManager revisionManager = getTestRevisionManager();
+    if (revisionManager != null)
+    {
+      repository.setRevisionManager(revisionManager);
+    }
+
+    return repository;
   }
 
   protected abstract IStore createStore();
+
+  protected IRepository getTestRepository()
+  {
+    return (IRepository)getTestProperty(PROP_TEST_REPOSITORY);
+  }
+
+  protected RevisionManager getTestRevisionManager()
+  {
+    return (RevisionManager)getTestProperty(PROP_TEST_REVISION_MANAGER);
+  }
+
+  protected IStore getTestStore()
+  {
+    return (IStore)getTestProperty(PROP_TEST_STORE);
+  }
 
   /**
    * @author Eike Stepper

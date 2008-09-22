@@ -223,7 +223,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
       List<InternalCDORevision> additionalRevisions)
   {
-    RevisionManager revisionManager = getSessionManager().getRepository().getRevisionManager();
+    RevisionManager revisionManager = (RevisionManager)getSessionManager().getRepository().getRevisionManager();
     CDOClass cdoClass = revision.getCDOClass();
     CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)

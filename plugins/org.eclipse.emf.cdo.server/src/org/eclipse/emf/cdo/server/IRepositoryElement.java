@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
@@ -17,4 +18,11 @@ package org.eclipse.emf.cdo.server;
 public interface IRepositoryElement
 {
   public IRepository getRepository();
+
+  /**
+   * Internal.
+   * 
+   * @since 2.0
+   */
+  public void setRepository(IRepository repository);
 }

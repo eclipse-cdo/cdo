@@ -45,7 +45,7 @@ public final class CDOServerUtil
 
   public static IRepository createRepository(String name, IStore store, Map<String, String> props)
   {
-    Repository repository = new Repository();
+    Repository repository = new Repository.Default();
     repository.setName(name);
     repository.setStore(store);
     repository.setProperties(props);

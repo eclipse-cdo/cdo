@@ -78,7 +78,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
 
   protected Repository getRepository()
   {
-    Repository repository = getSessionManager().getRepository();
+    Repository repository = (Repository)getSessionManager().getRepository();
     if (!repository.isActive())
     {
       throw new IllegalStateException("Repository has been deactivated");

@@ -35,7 +35,7 @@ public class RepositoryFactory implements IRepositoryFactory
 
   public Repository createRepository()
   {
-    return new Repository();
+    return new Repository.Default();
   }
 
   public static IRepository get(IManagedContainer container, String name)

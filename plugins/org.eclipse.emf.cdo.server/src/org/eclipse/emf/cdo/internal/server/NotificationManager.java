@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.INotificationManager;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -29,16 +30,20 @@ import java.util.List;
  */
 public class NotificationManager extends Lifecycle implements INotificationManager
 {
-  private Repository repository;
+  private IRepository repository;
 
-  public NotificationManager(Repository repository)
+  public NotificationManager()
   {
-    this.repository = repository;
   }
 
-  public Repository getRepository()
+  public IRepository getRepository()
   {
     return repository;
+  }
+
+  public void setRepository(IRepository repository)
+  {
+    this.repository = repository;
   }
 
   public void notifyCommit(Session session, CommitContext commitContext)
@@ -60,12 +65,14 @@ public class NotificationManager extends Lifecycle implements INotificationManag
         dirtyIDs.add(dirtyIDAndVersion);
         deltas.add(delta);
       }
+
       List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
       for (int i = 0; i < detachedObjectsSize; i++)
       {
         detachedObjects.add(arrayOfDetachedObjects[i]);
       }
-      SessionManager sessionManager = repository.getSessionManager();
+
+      SessionManager sessionManager = (SessionManager)repository.getSessionManager();
       sessionManager.handleCommitNotification(commitContext.getTimeStamp(), dirtyIDs, detachedObjects, deltas, session);
     }
   }

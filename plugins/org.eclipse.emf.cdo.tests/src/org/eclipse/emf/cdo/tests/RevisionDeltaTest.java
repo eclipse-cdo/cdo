@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -225,13 +224,8 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
   /**
    * @author Simon McDuff
    */
-  protected static class TestRevisionManager extends RevisionManager
+  public static class TestRevisionManager extends RevisionManager
   {
-    public TestRevisionManager(Repository repository)
-    {
-      super(repository);
-    }
-
     public void removeCachedRevision(CDORevision revision)
     {
       super.removeCachedRevision(revision.getID(), revision.getVersion());

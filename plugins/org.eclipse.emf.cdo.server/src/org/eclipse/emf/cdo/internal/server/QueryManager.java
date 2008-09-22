@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IView;
 
@@ -39,7 +40,7 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, QueryManager.class);
 
-  private Repository repository;
+  private IRepository repository;
 
   private Map<Integer, QueryContext> queryContexts = new ConcurrentHashMap<Integer, QueryContext>();
 
@@ -47,14 +48,18 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
 
   private int nextQuery;
 
-  public QueryManager(Repository repository)
+  public QueryManager()
   {
-    this.repository = repository;
   }
 
-  public Repository getRepository()
+  public IRepository getRepository()
   {
     return repository;
+  }
+
+  public void setRepository(IRepository repository)
+  {
+    this.repository = repository;
   }
 
   public synchronized ExecutorService getExecutors()

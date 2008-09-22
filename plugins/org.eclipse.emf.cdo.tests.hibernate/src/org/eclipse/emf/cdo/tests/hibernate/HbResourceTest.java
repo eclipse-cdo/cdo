@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.tests.ResourceTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,11 +26,10 @@ public class HbResourceTest extends ResourceTest
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
   }
 
-  // allows a testcase to pass specific properties
   @Override
-  protected Map<String, String> getTestProperties()
+  public Map<String, Object> getTestProperties()
   {
-    final Map<String, String> testProperties = new HashMap<String, String>();
+    Map<String, Object> testProperties = super.getTestProperties();
     testProperties.put("hibernate.hbm2ddl.auto", "update");
     return testProperties;
   }

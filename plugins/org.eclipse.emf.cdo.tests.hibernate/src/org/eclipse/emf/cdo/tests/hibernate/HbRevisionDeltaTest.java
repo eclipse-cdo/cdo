@@ -11,12 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.tests.RevisionDeltaWithoutDeltaSupportTest;
-import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
+import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
 
 import java.util.Map;
 
@@ -27,36 +23,11 @@ import java.util.Map;
  */
 public class HbRevisionDeltaTest extends RevisionDeltaWithoutDeltaSupportTest
 {
-  public HbRevisionDeltaTest()
-  {
-    StoreRepositoryProvider.setInstance(LocalHbStoreRepositoryProvider.getInstance());
-  }
-
   @Override
-  protected Repository createRepository()
+  public Map<String, Object> getTestProperties()
   {
-    LocalHbStoreRepositoryProvider provider = new LocalHbStoreRepositoryProvider();
-    return (Repository)provider.createRepository(REPOSITORY_NAME, getTestProperties());
-  }
-
-  private class LocalHbStoreRepositoryProvider extends HbStoreRepositoryProvider
-  {
-    @Override
-    protected IRepository createRepository(String name, IStore store, Map<String, String> props)
-    {
-      Repository repository = new Repository()
-      {
-        @Override
-        protected RevisionManager createRevisionManager()
-        {
-          return new TestRevisionManager(this);
-        }
-      };
-
-      repository.setName(name);
-      repository.setProperties(props);
-      repository.setStore(store);
-      return repository;
-    }
+    Map<String, Object> testProperties = super.getTestProperties();
+    testProperties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, new TestRevisionManager());
+    return testProperties;
   }
 }

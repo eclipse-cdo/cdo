@@ -15,16 +15,14 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
-import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -153,25 +151,11 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
   }
 
   @Override
-  protected Repository createRepository()
+  public Map<String, Object> getTestProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
-    // props.put(IRepository.PROP_SUPPORTING_REVISION_DELTAS, "true");
-
-    IStore store = createStore();
-    Repository repository = new Repository()
-    {
-      @Override
-      protected RevisionManager createRevisionManager()
-      {
-        return new TestRevisionManager(this);
-      }
-    };
-
-    repository.setName(REPOSITORY_NAME);
-    repository.setProperties(props);
-    repository.setStore(store);
-    return repository;
+    Map<String, Object> testProperties = super.getTestProperties();
+    testProperties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, new TestRevisionManager());
+    return testProperties;
   }
 
   /**
@@ -179,11 +163,6 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
    */
   private class TestRevisionManager extends RevisionManager
   {
-    public TestRevisionManager(Repository repository)
-    {
-      super(repository);
-    }
-
     public void removeCachedRevision(CDORevision revision)
     {
       super.removeCachedRevision(revision.getID(), revision.getVersion());

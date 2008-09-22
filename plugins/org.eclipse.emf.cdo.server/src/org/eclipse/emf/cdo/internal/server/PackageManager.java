@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
@@ -26,16 +27,29 @@ import java.util.Collection;
  */
 public class PackageManager extends CDOPackageManagerImpl implements IPackageManager
 {
-  private Repository repository;
+  private IRepository repository;
 
-  public PackageManager(Repository repository)
+  /**
+   * @since 2.0
+   */
+  public PackageManager()
   {
-    this.repository = repository;
   }
 
-  public Repository getRepository()
+  /**
+   * @since 2.0
+   */
+  public IRepository getRepository()
   {
     return repository;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRepository(IRepository repository)
+  {
+    this.repository = repository;
   }
 
   public CDOIDObjectFactory getCDOIDObjectFactory()

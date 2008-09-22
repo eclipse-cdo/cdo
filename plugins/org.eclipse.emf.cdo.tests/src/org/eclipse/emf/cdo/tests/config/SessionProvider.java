@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.CDOSession;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -21,6 +22,12 @@ import org.eclipse.emf.ecore.EPackage;
  */
 public interface SessionProvider
 {
+  public void startTransport() throws Exception;
+
+  public void stopTransport() throws Exception;
+
+  public IAcceptor getAcceptor();
+
   public IConnector getConnector();
 
   public CDOSession openMangoSession();
@@ -30,6 +37,10 @@ public interface SessionProvider
   public CDOSession openModel2Session();
 
   public CDOSession openModel3Session();
+
+  public CDOSession openEagerSession();
+
+  public CDOSession openLazySession();
 
   public CDOSession openSession(EPackage ePackage);
 

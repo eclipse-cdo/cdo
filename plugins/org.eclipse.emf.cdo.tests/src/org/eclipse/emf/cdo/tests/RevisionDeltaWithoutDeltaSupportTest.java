@@ -11,12 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,29 +22,12 @@ import java.util.Map;
  */
 public class RevisionDeltaWithoutDeltaSupportTest extends RevisionDeltaTest
 {
-  public RevisionDeltaWithoutDeltaSupportTest()
-  {
-  }
-
   @Override
-  protected Repository createRepository()
+  public Map<String, Object> getTestProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
-    props.put(IRepository.Props.PROP_SUPPORTING_REVISION_DELTAS, "false");
-
-    IStore store = createStore();
-    Repository repository = new Repository()
-    {
-      @Override
-      protected RevisionManager createRevisionManager()
-      {
-        return new TestRevisionManager(this);
-      }
-    };
-
-    repository.setName(REPOSITORY_NAME);
-    repository.setProperties(props);
-    repository.setStore(store);
-    return repository;
+    Map<String, Object> testProperties = super.getTestProperties();
+    testProperties.put(IRepository.Props.PROP_SUPPORTING_REVISION_DELTAS, "false");
+    testProperties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, new TestRevisionManager());
+    return testProperties;
   }
 }

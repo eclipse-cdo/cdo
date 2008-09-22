@@ -74,7 +74,7 @@ public abstract class CDOServerRequest extends Request
 
   protected Repository getRepository()
   {
-    Repository repository = getSessionManager().getRepository();
+    Repository repository = (Repository)getSessionManager().getRepository();
     if (!repository.isActive())
     {
       throw new IllegalStateException("Repository has been deactivated");

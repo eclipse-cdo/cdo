@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreReader;
@@ -38,19 +39,32 @@ import java.util.List;
  */
 public class RevisionManager extends CDORevisionResolverImpl implements IRevisionManager
 {
-  private Repository repository;
+  private IRepository repository;
 
   private CDOPathFeature cdoPathFeature;
 
-  public RevisionManager(Repository repository)
+  /**
+   * @since 2.0
+   */
+  public RevisionManager()
+  {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IRepository getRepository()
+  {
+    return repository;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRepository(IRepository repository)
   {
     this.repository = repository;
     cdoPathFeature = repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
-  }
-
-  public Repository getRepository()
-  {
-    return repository;
   }
 
   public CDOIDObjectFactory getCDOIDObjectFactory()
@@ -75,7 +89,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     if (revision.isResource())
     {
       String path = (String)revision.get(cdoPathFeature, 0);
-      repository.getResourceManager().registerResource(revision.getID(), path);
+      ((Repository)repository).getResourceManager().registerResource(revision.getID(), path);
     }
 
     return super.addCachedRevision(revision);

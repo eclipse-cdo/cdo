@@ -23,7 +23,6 @@ import junit.framework.TestCase;
 /**
  * @see http://bugs.eclipse.org/201593
  * @author Simon McDuff
- * @author Eike Stepper
  */
 public class NonCDOResourceTest extends TestCase
 {

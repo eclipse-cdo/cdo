@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.tests.config.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -578,9 +579,10 @@ public class StateMachineTest extends AbstractCDOTest
   // ///////////////////////////////////////////////////
 
   @Override
-  protected boolean useJVMTransport()
+  protected void doSetUp() throws Exception
   {
-    return true;
+    super.doSetUp();
+    skipUnlessConfig(SessionConfig.JVM.INSTANCE);
   }
 
   private static void assertFailure(IllegalStateException ex)

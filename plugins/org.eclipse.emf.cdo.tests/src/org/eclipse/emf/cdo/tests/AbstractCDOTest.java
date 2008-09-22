@@ -11,38 +11,19 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.CDOServerUtil;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.tests.mango.MangoFactory;
-import org.eclipse.emf.cdo.tests.mango.MangoPackage;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.model2.Model2Factory;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
-import org.eclipse.emf.cdo.tests.model3.Model3Factory;
-import org.eclipse.emf.cdo.tests.model3.Model3Package;
-import org.eclipse.emf.cdo.tests.model4.model4Factory;
-import org.eclipse.emf.cdo.tests.model4.model4Package;
-import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.tests.config.ConfigTest;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.tests.AbstractTransportTest;
-import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -50,237 +31,13 @@ import java.util.concurrent.locks.Lock;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOTest extends AbstractTransportTest
+public abstract class AbstractCDOTest extends ConfigTest
 {
-  public static final String REPOSITORY_NAME = "repo1";
-
-  protected static boolean legacyTesting = false;
-
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
     startTransport();
-  }
-
-  @Override
-  protected IManagedContainer createContainer()
-  {
-    LifecycleUtil.deactivate(container);
-    IManagedContainer container = super.createContainer();
-    CDOUtil.prepareContainer(container);
-    CDOServerUtil.prepareContainer(container);
-    CDOServerUtil.addRepository(container, createRepository());
-    return container;
-  }
-
-  protected IStore createStore()
-  {
-    return StoreRepositoryProvider.getInstance().createStore();
-  }
-
-  protected IRepository createRepository()
-  {
-    return StoreRepositoryProvider.getInstance().createRepository(REPOSITORY_NAME, getTestProperties());
-  }
-
-  // allows a testcase to pass specific properties
-  protected Map<String, String> getTestProperties()
-  {
-    return new HashMap<String, String>();
-  }
-
-  protected IRepository getRepository()
-  {
-    return CDOServerUtil.getRepository(container, REPOSITORY_NAME);
-  }
-
-  protected IRepository getRepository(String repositoryName)
-  {
-    IRepository repository = createRepository();
-    repository.setName(repositoryName);
-    CDOServerUtil.addRepository(container, repository);
-    return repository;
-  }
-
-  protected CDOSession openSession(String repoName)
-  {
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
-    configuration.setConnector(getConnector());
-    configuration.setRepositoryName(repoName);
-    return configuration.openSession();
-  }
-
-  protected CDOSession openSession()
-  {
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
-    configuration.setConnector(getConnector());
-    configuration.setRepositoryName(REPOSITORY_NAME);
-    return configuration.openSession();
-  }
-
-  protected CDOSession openModel1Session(String repoName)
-  {
-    CDOSession session = openSession(repoName);
-    session.getPackageRegistry().putEPackage(getModel1Package());
-    return session;
-  }
-
-  protected CDOSession openModel1Session()
-  {
-    CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(getModel1Package());
-    return session;
-  }
-
-  protected CDOSession openModel2Session()
-  {
-    CDOSession session = openModel1Session();
-    session.getPackageRegistry().putEPackage(getModel2Package());
-    return session;
-  }
-
-  protected CDOSession openModel3Session()
-  {
-    CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(getModel3Package());
-    return session;
-  }
-
-  protected CDOSession openMangoSession()
-  {
-    CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(getMangoPackage());
-    return session;
-  }
-
-  // TODO LEGACY
-  // protected CDOSession openLegacySession()
-  // {
-  // CDOSession session = openSession();
-  // session.getPackageRegistry().putEPackage(LegacyPackage.eINSTANCE);
-  // return session;
-  // }
-
-  protected static MangoFactory getMangoFactory()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.mango.MangoFactory.eINSTANCE;
-  }
-
-  protected static MangoPackage getMangoPackage()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.mango.MangoPackage.eINSTANCE;
-  }
-
-  protected static Model1Factory getModel1Factory()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model1.Model1Factory.eINSTANCE;
-  }
-
-  protected static Model1Package getModel1Package()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model1.Model1Package.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model1.Model1Package.eINSTANCE;
-  }
-
-  protected static Model2Factory getModel2Factory()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Factory.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model2.Model2Factory.eINSTANCE;
-  }
-
-  protected static Model2Package getModel2Package()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model2.Model2Package.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model2.Model2Package.eINSTANCE;
-  }
-
-  protected static Model3Factory getModel3Factory()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Factory.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model3.Model3Factory.eINSTANCE;
-  }
-
-  protected static Model3Package getModel3Package()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model3.Model3Package.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model3.Model3Package.eINSTANCE;
-  }
-
-  protected static model4Factory getModel4Factory()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model4.model4Factory.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model4.model4Factory.eINSTANCE;
-  }
-
-  protected static model4Package getModel4Package()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model4.model4Package.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model4.model4Package.eINSTANCE;
-  }
-
-  protected static model4interfacesPackage getModel4InterfacesPackage()
-  {
-    if (legacyTesting)
-    {
-      // TODO LEGACY
-      // return org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage.eINSTANCE;
-    }
-
-    return org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage.eINSTANCE;
   }
 
   public static void assertEquals(Object expected, Object actual)

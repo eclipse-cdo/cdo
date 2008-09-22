@@ -1,12 +1,10 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import reference.ReferenceFactory;
 import reference.ReferencePackage;
@@ -21,21 +19,11 @@ public class HbCDOPackageRefTest extends AbstractCDOTest
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
   }
 
-  @Override
-  protected CDOSession openSession()
-  {
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
-    configuration.setConnector(getConnector());
-    configuration.setRepositoryName(REPOSITORY_NAME);
-    configuration.setLazyPackageRegistry();
-    return configuration.openSession();
-  }
-
   public void testOnlyReference() throws Exception
   {
     try
     {
-      CDOSession session = openSession();
+      CDOSession session = openLazySession();
       session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
       session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
 

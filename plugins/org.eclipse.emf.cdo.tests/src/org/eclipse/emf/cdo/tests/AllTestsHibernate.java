@@ -10,22 +10,31 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.tests.config.ContainerConfig;
+import org.eclipse.emf.cdo.tests.config.ModelConfig;
+import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.SessionConfig;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
  * @author Eike Stepper
  */
-public class AllTests extends AllTestsAllConfigs
+public class AllTestsHibernate extends AllTestsAllConfigs
 {
   public static Test suite()
   {
-    return new AllTests().getTestSuite("CDO Tests");
+    return new AllTestsHibernate().getTestSuite("CDO Tests (Hibernate)");
   }
 
   @Override
-  protected void initConfigSuites(TestSuite parent)
+  protected void initConfigSuite(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
+      SessionConfig sessionConfig, ModelConfig modelConfig)
   {
-    initConfigSuite(parent, COMBINED, MEM, TCP, NATIVE);
+    if (repositoryConfig == HIBERNATE)
+    {
+      super.initConfigSuite(parent, containerConfig, repositoryConfig, sessionConfig, modelConfig);
+    }
   }
 }

@@ -54,9 +54,6 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
 
   private String parentURI;
 
-  /**
-   * TODO If this is only needed by the client then put it into server info
-   */
   private transient boolean persistent = true;
 
   public CDOPackageImpl()

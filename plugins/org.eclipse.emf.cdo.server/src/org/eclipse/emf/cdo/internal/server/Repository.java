@@ -57,19 +57,19 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private Boolean verifyingRevisions;
 
-  private PackageManager packageManager = createPackageManager();
+  private PackageManager packageManager;
 
-  private SessionManager sessionManager = createSessionManager();
+  private SessionManager sessionManager;
 
-  private ResourceManager resourceManager = createResourceManager();
+  private ResourceManager resourceManager;
 
-  private RevisionManager revisionManager = createRevisionManager();
+  private RevisionManager revisionManager;
 
-  private QueryManager queryManager = createQueryManager();
+  private QueryManager queryManager;
 
-  private NotificationManager notificationManager = createNotificationManager();
+  private NotificationManager notificationManager;
 
-  private CommitManager commitManager = createCommitManager();
+  private CommitManager commitManager;
 
   private IQueryHandlerProvider queryHandlerProvider;
 
@@ -106,8 +106,15 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (uuid == null)
     {
-      String value = getProperties().get(Props.PROP_OVERRIDE_UUID);
-      uuid = StringUtil.isEmpty(value) ? UUID.randomUUID().toString() : value;
+      uuid = getProperties().get(Props.PROP_OVERRIDE_UUID);
+      if (uuid == null)
+      {
+        uuid = UUID.randomUUID().toString();
+      }
+      else if (uuid.length() == 0)
+      {
+        uuid = getName();
+      }
     }
 
     return uuid;
@@ -166,9 +173,25 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return packageManager;
   }
 
+  /**
+   * @since 2.0
+   */
+  public void setPackageManager(PackageManager packageManager)
+  {
+    this.packageManager = packageManager;
+  }
+
   public SessionManager getSessionManager()
   {
     return sessionManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setSessionManager(SessionManager sessionManager)
+  {
+    this.sessionManager = sessionManager;
   }
 
   public ResourceManager getResourceManager()
@@ -176,9 +199,25 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return resourceManager;
   }
 
+  /**
+   * @since 2.0
+   */
+  public void setResourceManager(ResourceManager resourceManager)
+  {
+    this.resourceManager = resourceManager;
+  }
+
   public RevisionManager getRevisionManager()
   {
     return revisionManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRevisionManager(RevisionManager revisionManager)
+  {
+    this.revisionManager = revisionManager;
   }
 
   /**
@@ -192,6 +231,14 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   /**
    * @since 2.0
    */
+  public void setQueryManager(QueryManager queryManager)
+  {
+    this.queryManager = queryManager;
+  }
+
+  /**
+   * @since 2.0
+   */
   public NotificationManager getNotificationManager()
   {
     return notificationManager;
@@ -200,9 +247,25 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   /**
    * @since 2.0
    */
+  public void setNotificationManager(NotificationManager notificationManager)
+  {
+    this.notificationManager = notificationManager;
+  }
+
+  /**
+   * @since 2.0
+   */
   public CommitManager getCommitManager()
   {
     return commitManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setCommitManager(CommitManager commitManager)
+  {
+    this.commitManager = commitManager;
   }
 
   /**
@@ -294,54 +357,26 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return MessageFormat.format("Repository[{0}]", name);
   }
 
-  protected PackageManager createPackageManager()
-  {
-    return new PackageManager(this);
-  }
-
-  protected SessionManager createSessionManager()
-  {
-    return new SessionManager(this);
-  }
-
-  protected ResourceManager createResourceManager()
-  {
-    return new ResourceManager(this);
-  }
-
-  protected RevisionManager createRevisionManager()
-  {
-    return new RevisionManager(this);
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected QueryManager createQueryManager()
-  {
-    return new QueryManager(this);
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected NotificationManager createNotificationManager()
-  {
-    return new NotificationManager(this);
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected CommitManager createCommitManager()
-  {
-    return new CommitManager(this);
-  }
-
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    checkArg(packageManager, "packageManager");
+    checkArg(sessionManager, "sessionManager");
+    checkArg(resourceManager, "resourceManager");
+    checkArg(revisionManager, "revisionManager");
+    checkArg(queryManager, "queryManager");
+    checkArg(notificationManager, "notificationManager");
+    checkArg(commitManager, "commitManager");
+
+    packageManager.setRepository(this);
+    sessionManager.setRepository(this);
+    resourceManager.setRepository(this);
+    revisionManager.setRepository(this);
+    queryManager.setRepository(this);
+    notificationManager.setRepository(this);
+    commitManager.setRepository(this);
+
     if (StringUtil.isEmpty(name))
     {
       throw new IllegalArgumentException("name is null or empty");
@@ -413,5 +448,92 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
     LifecycleUtil.deactivate(packageManager);
     LifecycleUtil.deactivate(store);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static class Default extends Repository
+  {
+    public Default()
+    {
+    }
+
+    @Override
+    protected void doBeforeActivate() throws Exception
+    {
+      if (getPackageManager() == null)
+      {
+        setPackageManager(createPackageManager());
+      }
+
+      if (getSessionManager() == null)
+      {
+        setSessionManager(createSessionManager());
+      }
+
+      if (getResourceManager() == null)
+      {
+        setResourceManager(createResourceManager());
+      }
+
+      if (getRevisionManager() == null)
+      {
+        setRevisionManager(createRevisionManager());
+      }
+
+      if (getQueryManager() == null)
+      {
+        setQueryManager(createQueryManager());
+      }
+
+      if (getNotificationManager() == null)
+      {
+        setNotificationManager(createNotificationManager());
+      }
+
+      if (getCommitManager() == null)
+      {
+        setCommitManager(createCommitManager());
+      }
+
+      super.doBeforeActivate();
+    }
+
+    protected PackageManager createPackageManager()
+    {
+      return new PackageManager();
+    }
+
+    protected SessionManager createSessionManager()
+    {
+      return new SessionManager();
+    }
+
+    protected ResourceManager createResourceManager()
+    {
+      return new ResourceManager();
+    }
+
+    protected RevisionManager createRevisionManager()
+    {
+      return new RevisionManager();
+    }
+
+    protected QueryManager createQueryManager()
+    {
+      return new QueryManager();
+    }
+
+    protected NotificationManager createNotificationManager()
+    {
+      return new NotificationManager();
+    }
+
+    protected CommitManager createCommitManager()
+    {
+      return new CommitManager();
+    }
   }
 }

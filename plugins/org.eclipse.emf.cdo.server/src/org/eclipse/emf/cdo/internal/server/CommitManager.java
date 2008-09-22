@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -29,20 +30,24 @@ import java.util.concurrent.Future;
  */
 public class CommitManager extends Lifecycle implements IRepositoryElement
 {
-  private Repository repository;
+  private IRepository repository;
 
   private ExecutorService executors;
 
   private Map<Transaction, TransactionCommitContextEntry> commitContextMap = new ConcurrentHashMap<Transaction, TransactionCommitContextEntry>();
 
-  public CommitManager(Repository repository)
+  public CommitManager()
   {
-    this.repository = repository;
   }
 
-  public Repository getRepository()
+  public IRepository getRepository()
   {
     return repository;
+  }
+
+  public void setRepository(IRepository repository)
+  {
+    this.repository = repository;
   }
 
   public synchronized ExecutorService getExecutors()

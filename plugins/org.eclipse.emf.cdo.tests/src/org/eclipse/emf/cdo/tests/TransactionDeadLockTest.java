@@ -30,10 +30,10 @@ import java.util.List;
 public class TransactionDeadLockTest extends AbstractCDOTest
 {
   @Override
-  protected boolean useJVMTransport()
+  protected void doSetUp() throws Exception
   {
+    super.doSetUp();
     OMPlatform.INSTANCE.setDebugging(false);
-    return false;
   }
 
   public void _testCreateManySession() throws Exception
@@ -62,6 +62,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     }
   }
 
+  @SuppressWarnings("deprecation")
   public void testCreateManyTransaction() throws Exception
   {
     msg("Opening session");

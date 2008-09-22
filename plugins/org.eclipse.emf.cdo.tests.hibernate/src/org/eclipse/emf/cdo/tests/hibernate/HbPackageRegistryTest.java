@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.tests.PackageRegistryTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,15 +30,15 @@ public class HbPackageRegistryTest extends PackageRegistryTest
     StoreRepositoryProvider.setInstance(HbStoreRepositoryProvider.getInstance());
   }
 
-  // allows a testcase to pass specific properties
   @Override
-  protected Map<String, String> getTestProperties()
+  public Map<String, Object> getTestProperties()
   {
-    final Map<String, String> testProperties = new HashMap<String, String>();
+    Map<String, Object> testProperties = super.getTestProperties();
     if (getHbm2ddlValue() != null)
     {
       testProperties.put("hibernate.hbm2ddl.auto", getHbm2ddlValue());
     }
+
     return testProperties;
   }
 

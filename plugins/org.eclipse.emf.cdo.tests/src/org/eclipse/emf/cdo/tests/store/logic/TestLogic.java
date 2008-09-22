@@ -92,7 +92,7 @@ public abstract class TestLogic extends AbstractOMTest
       props.putAll(testProperties);
     }
 
-    Repository repository = new Repository();
+    Repository repository = new Repository.Default();
     repository.setName(REPOSITORY_NAME);
     repository.setProperties(props);
     repository.setStore(createStore());

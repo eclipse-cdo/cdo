@@ -23,14 +23,8 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public abstract class ConfigTestSuite
+public abstract class ConfigTestSuite implements ConfigConstants
 {
-  public static final Config[][] CONFIGS = { //
-  ContainerConfig.CONFIGS, //
-      RepositoryConfig.CONFIGS, //
-      SessionConfig.CONFIGS, //
-      ModelConfig.CONFIGS };
-
   public ConfigTestSuite()
   {
   }
@@ -42,7 +36,7 @@ public abstract class ConfigTestSuite
     return suite;
   }
 
-  private void initConfigSuites(TestSuite parent)
+  protected void initConfigSuites(TestSuite parent)
   {
     for (ContainerConfig containerConfig : ContainerConfig.CONFIGS)
     {
@@ -59,7 +53,7 @@ public abstract class ConfigTestSuite
     }
   }
 
-  private void initConfigSuite(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
+  protected void initConfigSuite(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
       SessionConfig sessionConfig, ModelConfig modelConfig)
   {
     Set<Config> configs = new HashSet<Config>();
@@ -107,7 +101,7 @@ public abstract class ConfigTestSuite
     public ConfigSuite(Class<? extends ConfigTest> testClass, ContainerConfig containerConfig,
         RepositoryConfig repositoryConfig, SessionConfig sessionConfig, ModelConfig modelConfig)
     {
-      super(testClass, testClass.getSimpleName());
+      super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.containerConfig = containerConfig;
       this.repositoryConfig = repositoryConfig;
       this.sessionConfig = sessionConfig;
@@ -137,14 +131,21 @@ public abstract class ConfigTestSuite
     @Override
     public void runTest(Test test, TestResult result)
     {
-      ConfigTest configTest = (ConfigTest)test;
-      configTest.setContainerConfig(containerConfig);
-      configTest.setRepositoryConfig(repositoryConfig);
-      configTest.setSessionConfig(sessionConfig);
-      configTest.setModelConfig(modelConfig);
-      if (configTest.isValid())
+      if (test instanceof ConfigTest)
       {
-        super.runTest(configTest, result);
+        ConfigTest configTest = (ConfigTest)test;
+        configTest.setContainerConfig(containerConfig);
+        configTest.setRepositoryConfig(repositoryConfig);
+        configTest.setSessionConfig(sessionConfig);
+        configTest.setModelConfig(modelConfig);
+        if (configTest.isValid())
+        {
+          super.runTest(configTest, result);
+        }
+      }
+      else
+      {
+        super.runTest(test, result);
       }
     }
   }

@@ -14,9 +14,11 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -34,6 +36,30 @@ public abstract class SessionConfig extends Config implements SessionProvider
     super(name);
   }
 
+  public void startTransport() throws Exception
+  {
+    IAcceptor acceptor = getAcceptor();
+    LifecycleUtil.activate(acceptor);
+
+    IConnector connector = getConnector();
+    LifecycleUtil.activate(connector);
+  }
+
+  public void stopTransport() throws Exception
+  {
+    if (getCurrentTest().hasClientContainer())
+    {
+      IConnector connector = getConnector();
+      LifecycleUtil.deactivate(connector);
+    }
+
+    if (getCurrentTest().hasServerContainer())
+    {
+      IAcceptor acceptor = getAcceptor();
+      LifecycleUtil.deactivate(acceptor);
+    }
+  }
+
   public CDOSession openMangoSession()
   {
     return openSession(getCurrentTest().getMangoPackage());
@@ -41,17 +67,33 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
   public CDOSession openModel1Session()
   {
-    return openSession(getCurrentTest().getMangoPackage());
+    return openSession(getCurrentTest().getModel1Package());
   }
 
   public CDOSession openModel2Session()
   {
-    return openSession(getCurrentTest().getMangoPackage());
+    CDOSession session = openModel1Session();
+    session.getPackageRegistry().putEPackage(getCurrentTest().getModel2Package());
+    return session;
   }
 
   public CDOSession openModel3Session()
   {
-    return openSession(getCurrentTest().getMangoPackage());
+    return openSession(getCurrentTest().getModel3Package());
+  }
+
+  public CDOSession openEagerSession()
+  {
+    CDOSessionConfiguration configuration = createSessionConfiguration(RepositoryProvider.REPOSITORY_NAME);
+    configuration.setEagerPackageRegistry();
+    return configuration.openSession();
+  }
+
+  public CDOSession openLazySession()
+  {
+    CDOSessionConfiguration configuration = createSessionConfiguration(RepositoryProvider.REPOSITORY_NAME);
+    configuration.setEagerPackageRegistry();
+    return configuration.openSession();
   }
 
   public CDOSession openSession(EPackage ePackage)
@@ -63,15 +105,21 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
   public CDOSession openSession(String repositoryName)
   {
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
-    configuration.setConnector(getConnector());
-    configuration.setRepositoryName(repositoryName);
+    CDOSessionConfiguration configuration = createSessionConfiguration(repositoryName);
     return configuration.openSession();
   }
 
   public CDOSession openSession()
   {
     return openSession(RepositoryProvider.REPOSITORY_NAME);
+  }
+
+  private CDOSessionConfiguration createSessionConfiguration(String repositoryName)
+  {
+    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    configuration.setConnector(getConnector());
+    configuration.setRepositoryName(repositoryName);
+    return configuration;
   }
 
   /**
@@ -90,6 +138,11 @@ public abstract class SessionConfig extends Config implements SessionProvider
       super(NAME);
     }
 
+    public IAcceptor getAcceptor()
+    {
+      return TCPUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
+    }
+
     public IConnector getConnector()
     {
       return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
@@ -100,7 +153,7 @@ public abstract class SessionConfig extends Config implements SessionProvider
     {
       super.setUp();
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
-      TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
+      TCPUtil.prepareContainer(getCurrentTest().getServerContainer());
     }
   }
 
@@ -113,24 +166,29 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
     public static final JVM INSTANCE = new JVM();
 
-    public static final String CONNECTOR_NAME = "default";
+    public static final String ACCEPTOR_NAME = "default";
 
     public JVM()
     {
       super(NAME);
     }
 
+    public IAcceptor getAcceptor()
+    {
+      return JVMUtil.getAcceptor(getCurrentTest().getServerContainer(), ACCEPTOR_NAME);
+    }
+
     public IConnector getConnector()
     {
-      return JVMUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_NAME);
+      return JVMUtil.getConnector(getCurrentTest().getClientContainer(), ACCEPTOR_NAME);
     }
 
     @Override
     protected void setUp() throws Exception
     {
       super.setUp();
-      TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
-      TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
+      JVMUtil.prepareContainer(getCurrentTest().getClientContainer());
+      JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
     }
 
     @Override

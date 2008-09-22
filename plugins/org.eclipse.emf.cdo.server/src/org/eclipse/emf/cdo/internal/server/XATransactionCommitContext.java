@@ -39,7 +39,8 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   @Override
   public void postCommit(boolean success)
   {
-    getTransaction().getRepository().getCommitManager().remove(this);
+    Repository repository = (Repository)getTransaction().getRepository();
+    repository.getCommitManager().remove(this);
     super.postCommit(success);
   }
 

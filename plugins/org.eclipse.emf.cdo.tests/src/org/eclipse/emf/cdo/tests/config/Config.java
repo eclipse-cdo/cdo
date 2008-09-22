@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.config;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -45,6 +46,22 @@ public abstract class Config
   protected void setCurrentTest(ConfigTest currentTest)
   {
     this.currentTest = currentTest;
+  }
+
+  public Map<String, Object> getTestProperties()
+  {
+    return currentTest.getTestProperties();
+  }
+
+  public Object getTestProperty(String key)
+  {
+    Map<String, Object> testProperties = getTestProperties();
+    if (testProperties != null)
+    {
+      return testProperties.get(key);
+    }
+  
+    return null;
   }
 
   protected boolean isValid(Set<Config> configs)

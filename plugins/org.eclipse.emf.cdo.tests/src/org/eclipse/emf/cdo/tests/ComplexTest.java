@@ -61,20 +61,21 @@ public class ComplexTest extends AbstractCDOTest
 {
   private static long uniqueCounter = System.currentTimeMillis();
 
-  private model4Factory factory = getModel4Factory();
+  private model4Factory factory;
 
-  private CDOResource resource1 = null;
+  private CDOResource resource1;
 
-  private CDOResource resource2 = null;
+  private CDOResource resource2;
 
-  private CDOTransaction transaction = null;
+  private CDOTransaction transaction;
 
-  private CDOSession session = null;
+  private CDOSession session;
 
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+    factory = getModel4Factory();
 
     session = openSession();
     session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);

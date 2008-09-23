@@ -25,6 +25,21 @@ import java.util.Map;
  */
 public interface IMappingStrategy
 {
+  /**
+   * @since 2.0
+   */
+  public static final String PROP_QUALIFIED_NAMES = "qualifiedNames";
+
+  /**
+   * @since 2.0
+   */
+  public static final String PROP_TO_MANY_REFERENCE_MAPPING = "toManyReferenceMapping";
+
+  /**
+   * @since 2.0
+   */
+  public static final String PROP_TO_ONE_REFERENCE_MAPPING = "toOneReferenceMapping";
+
   public String getType();
 
   public IDBStore getStore();

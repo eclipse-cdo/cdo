@@ -37,6 +37,7 @@ public class Audit extends View implements IAudit
     return CDOProtocolView.Type.AUDIT;
   }
 
+  @Override
   public long getTimeStamp()
   {
     return timeStamp;

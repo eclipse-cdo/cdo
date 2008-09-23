@@ -60,7 +60,7 @@ public abstract class Config
     {
       return testProperties.get(key);
     }
-  
+
     return null;
   }
 

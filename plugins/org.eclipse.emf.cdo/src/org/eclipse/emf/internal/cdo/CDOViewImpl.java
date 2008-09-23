@@ -333,7 +333,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     if (resourceID == null || resourceID.isNull())
     {
-      throw new IllegalArgumentException("resourceID == null || resourceID.isNull()");
+      throw new IllegalArgumentException("resourceID: " + resourceID);
     }
 
     CDOResourceImpl resource = (CDOResourceImpl)getObject(resourceID);

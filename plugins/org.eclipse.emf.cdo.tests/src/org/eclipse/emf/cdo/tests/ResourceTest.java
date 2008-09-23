@@ -210,7 +210,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testDuplicateResources() throws Exception
+  public void testDuplicatePath() throws Exception
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
@@ -234,7 +234,7 @@ public class ResourceTest extends AbstractCDOTest
     }
   }
 
-  public void testDuplicateResourcesAfterDetach() throws Exception
+  public void testDuplicatePathAfterDetach() throws Exception
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.HashMap;
@@ -121,6 +122,21 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     {
       fireElementRemovedEvent(session);
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    Session[] activeSessions = getSessions();
+    for (int i = 0; i < activeSessions.length; i++)
+    {
+      LifecycleUtil.deactivate(activeSessions[i]);
+    }
+
+    super.doDeactivate();
   }
 
   /**

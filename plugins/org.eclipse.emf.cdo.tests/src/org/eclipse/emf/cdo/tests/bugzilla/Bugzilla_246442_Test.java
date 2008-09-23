@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EcorePackage;
  */
 public class Bugzilla_246442_Test extends AbstractCDOTest
 {
-  public void testBugzilla_241464() throws Exception
+  public void testBugzilla_246442() throws Exception
   {
     CDOID lookupObject = null;
 

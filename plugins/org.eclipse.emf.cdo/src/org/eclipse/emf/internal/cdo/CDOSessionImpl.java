@@ -14,6 +14,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
@@ -392,7 +393,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     try
     {
-      getFailOverStrategy().send(new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED));
+      getFailOverStrategy().send(
+          new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED, -1));
     }
     catch (Exception ex)
     {
@@ -821,7 +823,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     {
       int id = view.getViewID();
       byte kind = getKind(view);
-      ViewsChangedRequest request = new ViewsChangedRequest(channel, id, kind);
+      long timeStamp = -1;
+      if (view instanceof CDOAudit)
+      {
+        timeStamp = ((CDOAudit)view).getTimeStamp();
+      }
+
+      ViewsChangedRequest request = new ViewsChangedRequest(channel, id, kind, timeStamp);
       getFailOverStrategy().send(request);
     }
     catch (Exception ex)

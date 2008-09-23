@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo;
 
 /**
+ * A read-only view to a <em>historical</em> state of the object graph in the repository specified by a time stamp (i.e.
+ * an arbitrary point in the lifetime of the repository).
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */

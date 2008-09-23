@@ -18,5 +18,10 @@ import org.eclipse.emf.cdo.common.CDOProtocolView;
  */
 public interface IView extends CDOProtocolView
 {
+  /**
+   * @since 2.0
+   */
+  public IRepository getRepository();
+
   public ISession getSession();
 }

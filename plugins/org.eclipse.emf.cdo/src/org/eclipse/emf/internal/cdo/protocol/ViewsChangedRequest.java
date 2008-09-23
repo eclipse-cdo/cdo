@@ -21,17 +21,20 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ViewsChangedRequest extends CDOClientRequest<Boolean> // Request
+public class ViewsChangedRequest extends CDOClientRequest<Boolean>
 {
   private int viewID;
 
   private byte kind;
 
-  public ViewsChangedRequest(IChannel channel, int viewID, byte kind)
+  private long timeStamp;
+
+  public ViewsChangedRequest(IChannel channel, int viewID, byte kind, long timeStamp)
   {
     super(channel);
     this.viewID = viewID;
     this.kind = kind;
+    this.timeStamp = timeStamp;
   }
 
   @Override
@@ -45,6 +48,10 @@ public class ViewsChangedRequest extends CDOClientRequest<Boolean> // Request
   {
     out.writeInt(viewID);
     out.writeByte(kind);
+    if (kind == CDOProtocolConstants.VIEW_AUDIT)
+    {
+      out.writeLong(timeStamp);
+    }
   }
 
   @Override

@@ -12,16 +12,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -30,25 +31,26 @@ import java.util.List;
  */
 public class Transaction extends View implements ITransaction
 {
-  private IRepository repository;
-
   public Transaction(Session session, int viewID)
   {
-    super(session, viewID, Type.TRANSACTION);
-    repository = session.getSessionManager().getRepository();
+    super(session, viewID);
   }
 
-  /**
-   * @since 2.0
-   */
-  public IRepository getRepository()
+  @Override
+  public Type getViewType()
   {
-    return repository;
+    return CDOProtocolView.Type.TRANSACTION;
   }
 
   public int getTransactionID()
   {
     return getViewID();
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("Transaction[{0}]", getTransactionID());
   }
 
   /**

@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.query.CDOQuery;
 
@@ -27,13 +26,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import java.util.List;
 
 /**
+ * A read-only view to the <em>current</em> (i.e. latest) state of the object graph in the repository.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOView extends CDOProtocolView, INotifier
 {
-  public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
-
   /**
    * @since 2.0
    */

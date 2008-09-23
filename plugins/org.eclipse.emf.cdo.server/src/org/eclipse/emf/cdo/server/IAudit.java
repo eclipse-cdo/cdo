@@ -7,33 +7,16 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
-package org.eclipse.emf.cdo.common;
-
-import org.eclipse.emf.cdo.common.revision.CDORevision;
+package org.eclipse.emf.cdo.server;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface CDOProtocolView
+public interface IAudit extends IView
 {
-  /**
-   * @since 2.0
-   */
-  public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
-
-  public int getViewID();
-
-  public Type getViewType();
-
-  public CDOProtocolSession getSession();
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum Type
-  {
-    TRANSACTION, READONLY, AUDIT
-  }
+  public long getTimeStamp();
 }

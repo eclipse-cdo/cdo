@@ -68,7 +68,6 @@ public class ViewTest extends AbstractCDOTest
     session.close();
   }
 
-  @SuppressWarnings("deprecation")
   public void testUniqueResourceContents() throws Exception
   {
     {
@@ -109,7 +108,6 @@ public class ViewTest extends AbstractCDOTest
     session.close();
   }
 
-  @SuppressWarnings("deprecation")
   public void testNonUniqueResourceContents() throws Exception
   {
     {

@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolSession;
-import org.eclipse.emf.cdo.common.CDOProtocolView;
 
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -24,7 +23,20 @@ public interface ISession extends CDOProtocolSession, IContainer<IView>
 {
   public ISessionManager getSessionManager();
 
-  public IView openView(int viewID, CDOProtocolView.Type type);
+  /**
+   * @since 2.0
+   */
+  public IView openView(int viewID);
+
+  /**
+   * @since 2.0
+   */
+  public IAudit openAudit(int viewID, long timeStamp);
+
+  /**
+   * @since 2.0
+   */
+  public ITransaction openTransaction(int viewID);
 
   public IView closeView(int viewID);
 }

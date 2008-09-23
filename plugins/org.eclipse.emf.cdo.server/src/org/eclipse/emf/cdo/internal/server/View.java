@@ -11,7 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IView;
 
 import java.text.MessageFormat;
@@ -23,19 +25,30 @@ import java.util.Set;
  */
 public class View implements IView
 {
+  private IRepository repository;
+
   private Session session;
 
   private int viewID;
 
-  private Type viewType;
-
   private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
 
-  public View(Session session, int viewID, Type viewType)
+  /**
+   * @since 2.0
+   */
+  public View(Session session, int viewID)
   {
+    repository = session.getSessionManager().getRepository();
     this.session = session;
     this.viewID = viewID;
-    this.viewType = viewType;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IRepository getRepository()
+  {
+    return repository;
   }
 
   public Session getSession()
@@ -48,9 +61,9 @@ public class View implements IView
     return viewID;
   }
 
-  public Type getViewType()
+  public CDOProtocolView.Type getViewType()
   {
-    return viewType;
+    return CDOProtocolView.Type.READONLY;
   }
 
   /**
@@ -88,6 +101,6 @@ public class View implements IView
   @Override
   public String toString()
   {
-    return MessageFormat.format("View({0}, {1})", viewID, viewType);
+    return MessageFormat.format("View[{0}]", viewID);
   }
 }

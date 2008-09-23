@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.internal.server.Session;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -50,15 +49,16 @@ public class ViewsChangedIndication extends CDOServerIndication // Indication
       break;
 
     case CDOProtocolConstants.VIEW_TRANSACTION:
-      session.openView(viewID, CDOProtocolView.Type.TRANSACTION);
+      session.openTransaction(viewID);
       break;
 
     case CDOProtocolConstants.VIEW_READONLY:
-      session.openView(viewID, CDOProtocolView.Type.READONLY);
+      session.openView(viewID);
       break;
 
     case CDOProtocolConstants.VIEW_AUDIT:
-      session.openView(viewID, CDOProtocolView.Type.AUDIT);
+      long timeStamp = in.readLong();
+      session.openAudit(viewID, timeStamp);
       break;
 
     default:

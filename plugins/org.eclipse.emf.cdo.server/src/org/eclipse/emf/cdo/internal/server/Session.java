@@ -14,7 +14,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -25,7 +24,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.CommitNotificationRequest;
+import org.eclipse.emf.cdo.server.IAudit;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -144,6 +145,42 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return views.get(viewID);
   }
 
+  /**
+   * @since 2.0
+   */
+  public IView openView(int viewID)
+  {
+    IView view = new View(this, viewID);
+    addView(view);
+    return view;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IAudit openAudit(int viewID, long timeStamp)
+  {
+    IAudit audit = new Audit(this, viewID, timeStamp);
+    addView(audit);
+    return audit;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public ITransaction openTransaction(int viewID)
+  {
+    ITransaction transaction = new Transaction(this, viewID);
+    addView(transaction);
+    return transaction;
+  }
+
+  private void addView(IView view)
+  {
+    views.put(view.getViewID(), view);
+    fireElementAddedEvent(view);
+  }
+
   public IView closeView(int viewID)
   {
     IView view = views.remove(viewID);
@@ -153,24 +190,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
 
     return view;
-  }
-
-  public IView openView(int viewID, CDOProtocolView.Type type)
-  {
-    IView view = createView(viewID, type);
-    views.put(viewID, view);
-    fireElementAddedEvent(view);
-    return view;
-  }
-
-  private IView createView(int viewID, CDOProtocolView.Type type)
-  {
-    if (type == CDOProtocolView.Type.TRANSACTION)
-    {
-      return new Transaction(this, viewID);
-    }
-
-    return new View(this, viewID, type);
   }
 
   /**

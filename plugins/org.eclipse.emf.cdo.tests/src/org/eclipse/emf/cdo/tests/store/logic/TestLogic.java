@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.store.logic;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -301,7 +300,7 @@ public abstract class TestLogic extends AbstractOMTest
 
     protected Transaction createTransaction(Session session)
     {
-      return (Transaction)session.openView(viewID, CDOProtocolView.Type.TRANSACTION);
+      return (Transaction)session.openTransaction(viewID);
     }
 
     private CDOPackage[] getNewPackages()

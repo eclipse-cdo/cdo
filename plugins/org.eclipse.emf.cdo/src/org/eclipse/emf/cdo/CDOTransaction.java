@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */

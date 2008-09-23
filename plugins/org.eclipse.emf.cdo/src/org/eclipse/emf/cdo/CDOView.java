@@ -193,7 +193,7 @@ public interface CDOView extends CDOProtocolView, INotifier
    * Returns a list of those resources whose path starts with the value of the pathPrefix parameter.
    * 
    * @param pathPrefix
-   *          the prefix of the resource's path
+   *          the prefix of the resources' path
    * @since 2.0
    */
   public List<CDOResource> queryResources(String pathPrefix);

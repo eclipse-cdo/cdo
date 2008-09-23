@@ -89,8 +89,11 @@ public abstract class RegisterPackagesAction extends SessionAction
       {
         public void run()
         {
-          MessageDialog.openError(shell, getText(), label
-              + " not been registered due to errors.\nSee the log for details.");
+          if (!shell.isDisposed())
+          {
+            MessageDialog.openError(shell, getText(), label
+                + " not been registered due to errors.\nSee the log for details.");
+          }
         }
       });
     }

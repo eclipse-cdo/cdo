@@ -25,7 +25,7 @@ public class HbTransactionDeadLockTest extends TransactionDeadLockTest
   {
     HbTransactionDeadLockTest test = new HbTransactionDeadLockTest();
     test.setUp();
-    test.testCreateManyTransaction();
+    test.testCreateManyTransactions();
     test.tearDown();
   }
 

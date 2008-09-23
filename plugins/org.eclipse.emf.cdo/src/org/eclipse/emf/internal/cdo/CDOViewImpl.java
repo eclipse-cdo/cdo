@@ -283,7 +283,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       }
 
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), path);
+      ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), viewID, path);
       return failOverStrategy.send(request);
     }
     catch (Exception ex)
@@ -345,7 +345,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     try
     {
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      ResourcePathRequest request = new ResourcePathRequest(session.getChannel(), resourceID);
+      ResourcePathRequest request = new ResourcePathRequest(session.getChannel(), viewID, resourceID);
       String path = failOverStrategy.send(request);
       return addResource(resourceID, path);
     }

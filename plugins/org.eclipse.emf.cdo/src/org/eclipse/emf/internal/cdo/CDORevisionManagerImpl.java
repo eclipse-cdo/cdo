@@ -126,6 +126,15 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     return send(new LoadRevisionByTimeRequest(session.getChannel(), ids, referenceChunk, timeStamp));
   }
 
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected CDOFeature getResourcePathFeature()
+  {
+    return session.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+  }
+
   private List<InternalCDORevision> send(LoadRevisionRequest request)
   {
     try

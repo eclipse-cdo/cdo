@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.ResourceManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
@@ -95,11 +94,6 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   protected CDOPackageManager getPackageManager()
   {
     return getRepository().getPackageManager();
-  }
-
-  protected ResourceManager getResourceManager()
-  {
-    return getRepository().getResourceManager();
   }
 
   protected IStore getStore()

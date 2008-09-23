@@ -29,11 +29,14 @@ public class ResourcePathRequest extends CDOClientRequest<String>
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResourcePathRequest.class);
 
+  private int viewID;
+
   private CDOID id;
 
-  public ResourcePathRequest(IChannel channel, CDOID id)
+  public ResourcePathRequest(IChannel channel, int viewID, CDOID id)
   {
     super(channel);
+    this.viewID = viewID;
     this.id = id;
   }
 
@@ -46,6 +49,12 @@ public class ResourcePathRequest extends CDOClientRequest<String>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
+    if (PROTOCOL_TRACER.isEnabled())
+    {
+      PROTOCOL_TRACER.format("Writing viewID: {0}", viewID);
+    }
+
+    out.writeInt(viewID);
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing ID: {0}", id);

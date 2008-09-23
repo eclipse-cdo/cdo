@@ -13,13 +13,12 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
-
-import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,6 +143,8 @@ public class MEMStore extends LongIDStore implements IMEMStore
   public synchronized void addRevision(CDORevision revision)
   {
     CDOID id = revision.getID();
+    int version = revision.getVersion();
+
     List<CDORevision> list = revisions.get(id);
     if (list == null)
     {
@@ -151,10 +152,25 @@ public class MEMStore extends LongIDStore implements IMEMStore
       revisions.put(id, list);
     }
 
-    CDORevision rev = getRevisionByVersion(list, revision.getVersion());
+    InternalCDORevision rev = (InternalCDORevision)getRevisionByVersion(list, version);
     if (rev != null)
     {
       throw new IllegalStateException("Concurrent modification of revision " + rev);
+    }
+
+    rev = (InternalCDORevision)getRevisionByVersion(list, version - 1);
+    if (rev != null)
+    {
+      rev.setRevised(revision.getCreated() - 1);
+    }
+
+    if (revision.isResource())
+    {
+      String revisionPath = (String)revision.getData().get(getResourcePathFeature(), 0);
+      if (getResourceID(revisionPath, revision.getCreated()) != null)
+      {
+        throw new IllegalStateException("Duplicate resource path: " + revisionPath);
+      }
     }
 
     list.add(revision);
@@ -164,15 +180,10 @@ public class MEMStore extends LongIDStore implements IMEMStore
     }
   }
 
-  private void enforceListLimit(List<CDORevision> list)
-  {
-    while (list.size() > listLimit)
-    {
-      list.remove(0);
-    }
-  }
-
-  public synchronized boolean removeRevision(CDORevision revision)
+  /**
+   * @since 2.0
+   */
+  public synchronized boolean rollbackRevision(CDORevision revision)
   {
     CDOID id = revision.getID();
     List<CDORevision> list = revisions.get(id);
@@ -181,13 +192,18 @@ public class MEMStore extends LongIDStore implements IMEMStore
       return false;
     }
 
+    int version = revision.getVersion();
     for (Iterator<CDORevision> it = list.iterator(); it.hasNext();)
     {
-      CDORevision rev = it.next();
-      if (rev.getVersion() == revision.getVersion())
+      InternalCDORevision rev = (InternalCDORevision)it.next();
+      if (rev.getVersion() == version)
       {
         it.remove();
         return true;
+      }
+      else if (rev.getVersion() == version - 1)
+      {
+        rev.setRevised(CDORevision.UNSPECIFIED_DATE);
       }
     }
 
@@ -202,10 +218,45 @@ public class MEMStore extends LongIDStore implements IMEMStore
     revisions.remove(id);
   }
 
-  public synchronized CDORevision getResource(String path)
+  /**
+   * @since 2.0
+   */
+  public CDOID getResourceID(final String path, final long timeStamp)
   {
-    CDOPathFeature pathFeature = getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceClass()
-        .getCDOPathFeature();
+    final CDOID[] result = new CDOID[1];
+    queryResources(new QueryResourcesContext()
+    {
+      public long getTimeStamp()
+      {
+        return timeStamp;
+      }
+
+      public String getPathPrefix()
+      {
+        return path;
+      }
+
+      public int getMaxResults()
+      {
+        return 1;
+      }
+
+      public boolean addResource(CDOID resourceID)
+      {
+        result[0] = resourceID;
+        return false;
+      }
+    }, true);
+
+    return result[0];
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized void queryResources(QueryResourcesContext context, boolean exactMatch)
+  {
+    String pathPrefix = context.getPathPrefix();
     for (List<CDORevision> list : revisions.values())
     {
       if (!list.isEmpty())
@@ -213,16 +264,23 @@ public class MEMStore extends LongIDStore implements IMEMStore
         CDORevision revision = list.get(0);
         if (revision.isResource())
         {
-          String p = (String)revision.getData().get(pathFeature, 0);
-          if (ObjectUtil.equals(p, path))
+          revision = getRevisionByTime(list, context.getTimeStamp());
+          if (revision != null)
           {
-            return revision;
+            String path = (String)revision.getData().get(getResourcePathFeature(), 0);
+            boolean match = exactMatch ? path.equals(pathPrefix) : path.startsWith(pathPrefix);
+            if (match)
+            {
+              if (!context.addResource(revision.getID()))
+              {
+                // No more results allowed
+                break;
+              }
+            }
           }
         }
       }
     }
-
-    return null;
   }
 
   @Override
@@ -298,12 +356,30 @@ public class MEMStore extends LongIDStore implements IMEMStore
   {
     for (CDORevision revision : list)
     {
-      if (revision.getRevised() == timeStamp)
+      if (timeStamp == CDORevision.UNSPECIFIED_DATE)
       {
-        return revision;
+        if (revision.isCurrent())
+        {
+          return revision;
+        }
+      }
+      else
+      {
+        if (revision.isValid(timeStamp))
+        {
+          return revision;
+        }
       }
     }
 
     return null;
+  }
+
+  private void enforceListLimit(List<CDORevision> list)
+  {
+    while (list.size() > listLimit)
+    {
+      list.remove(0);
+    }
   }
 }

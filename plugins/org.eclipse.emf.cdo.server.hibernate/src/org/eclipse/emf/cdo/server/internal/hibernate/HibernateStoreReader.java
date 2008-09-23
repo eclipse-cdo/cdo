@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -90,8 +91,13 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     return getStore().getPackageHandler().getCDOPackageInfos();
   }
 
-  public CDOID readResourceID(String path)
+  public CDOID readResourceID(String path, long timeStamp)
   {
+    if (timeStamp != CDOProtocolView.UNSPECIFIED_DATE)
+    {
+      throw new UnsupportedOperationException();
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("Finding resourceid using path " + path);
@@ -117,6 +123,10 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     return cdoRevision.getID();
   }
 
+  /**
+   * TODO Remove me
+   */
+  @Deprecated
   public String readResourcePath(CDOID id)
   {
     if (id == null)

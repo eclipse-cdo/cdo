@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.server.PackageManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.ResourceManager;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
@@ -91,11 +90,6 @@ public abstract class CDOServerRequest extends Request
   protected PackageManager getPackageManager()
   {
     return getRepository().getPackageManager();
-  }
-
-  protected ResourceManager getResourceManager()
-  {
-    return getRepository().getResourceManager();
   }
 
   protected IStore getStore()

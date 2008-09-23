@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.revision.cache;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -43,6 +44,12 @@ public interface CDORevisionCache extends INotifier.Introspection
   public List<CDORevision> getRevisions();
 
   public boolean addRevision(InternalCDORevision revision);
+
+  public CDOID getResourceID(String path, long timeStamp);
+
+  public CDOFeature getResourcePathFeature();
+
+  public void setResourcePathFeature(CDOFeature resourcePathFeature);
 
   /**
    * @author Eike Stepper

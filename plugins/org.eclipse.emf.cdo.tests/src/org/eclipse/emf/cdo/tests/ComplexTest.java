@@ -83,12 +83,12 @@ public class ComplexTest extends AbstractCDOTest
 
     transaction = session.openTransaction();
 
-    String resource1basename = "/resources/1/" + uniqueCounter;
-    String resource2basename = "/resources/2/" + uniqueCounter;
-    uniqueCounter++;
+    String path1 = "/resources/1/" + uniqueCounter;
+    String path2 = "/resources/2/" + uniqueCounter;
+    ++uniqueCounter;
 
-    resource1 = transaction.createResource(resource1basename);
-    resource2 = transaction.createResource(resource2basename);
+    resource1 = transaction.createResource(path1);
+    resource2 = transaction.createResource(path2);
 
     commit();
   }

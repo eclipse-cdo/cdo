@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.common.revision.cache.two;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -35,12 +36,33 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, TwoLevelRevisionCache.class);
 
+  private CDOFeature resourcePathFeature;
+
   private CDORevisionCache level1;
 
   private CDORevisionCache level2;
 
   public TwoLevelRevisionCache()
   {
+  }
+
+  public CDOFeature getResourcePathFeature()
+  {
+    return resourcePathFeature;
+  }
+
+  public void setResourcePathFeature(CDOFeature resourcePathFeature)
+  {
+    this.resourcePathFeature = resourcePathFeature;
+    if (level1 != null)
+    {
+      level1.setResourcePathFeature(resourcePathFeature);
+    }
+
+    if (level2 != null)
+    {
+      level2.setResourcePathFeature(resourcePathFeature);
+    }
   }
 
   public CDORevisionCache getLevel1()
@@ -51,6 +73,10 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel1(CDORevisionCache level1)
   {
     this.level1 = level1;
+    if (level1 != null)
+    {
+      level1.setResourcePathFeature(resourcePathFeature);
+    }
   }
 
   public CDORevisionCache getLevel2()
@@ -61,6 +87,10 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel2(CDORevisionCache level2)
   {
     this.level2 = level2;
+    if (level2 != null)
+    {
+      level2.setResourcePathFeature(resourcePathFeature);
+    }
   }
 
   public CDOClass getObjectType(CDOID id)
@@ -123,6 +153,17 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     }
 
     return revision;
+  }
+
+  public CDOID getResourceID(String path, long timeStamp)
+  {
+    CDOID id = level1.getResourceID(path, timeStamp);
+    if (id == null)
+    {
+      id = level2.getResourceID(path, timeStamp);
+    }
+
+    return id;
   }
 
   public void notifyEvent(IEvent event)

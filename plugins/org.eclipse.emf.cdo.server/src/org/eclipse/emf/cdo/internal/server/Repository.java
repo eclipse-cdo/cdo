@@ -61,8 +61,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private SessionManager sessionManager;
 
-  private ResourceManager resourceManager;
-
   private RevisionManager revisionManager;
 
   private QueryManager queryManager;
@@ -192,19 +190,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public void setSessionManager(SessionManager sessionManager)
   {
     this.sessionManager = sessionManager;
-  }
-
-  public ResourceManager getResourceManager()
-  {
-    return resourceManager;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setResourceManager(ResourceManager resourceManager)
-  {
-    this.resourceManager = resourceManager;
   }
 
   public RevisionManager getRevisionManager()
@@ -363,7 +348,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     super.doBeforeActivate();
     checkArg(packageManager, "packageManager");
     checkArg(sessionManager, "sessionManager");
-    checkArg(resourceManager, "resourceManager");
     checkArg(revisionManager, "revisionManager");
     checkArg(queryManager, "queryManager");
     checkArg(notificationManager, "notificationManager");
@@ -371,7 +355,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
     packageManager.setRepository(this);
     sessionManager.setRepository(this);
-    resourceManager.setRepository(this);
     revisionManager.setRepository(this);
     queryManager.setRepository(this);
     notificationManager.setRepository(this);
@@ -397,8 +380,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       throw new IllegalStateException("Store without auditing support");
     }
 
-    elements = new IRepositoryElement[] { packageManager, sessionManager, resourceManager, revisionManager,
-        queryManager, notificationManager, commitManager, store };
+    elements = new IRepositoryElement[] { packageManager, sessionManager, revisionManager, queryManager,
+        notificationManager, commitManager, store };
   }
 
   @Override
@@ -428,7 +411,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     setLastMetaID(store.getLastMetaID());
 
     LifecycleUtil.activate(sessionManager);
-    LifecycleUtil.activate(resourceManager);
     LifecycleUtil.activate(revisionManager);
     LifecycleUtil.activate(queryManager);
     LifecycleUtil.activate(notificationManager);
@@ -443,7 +425,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.deactivate(notificationManager);
     LifecycleUtil.deactivate(queryManager);
     LifecycleUtil.deactivate(revisionManager);
-    LifecycleUtil.deactivate(resourceManager);
     LifecycleUtil.deactivate(sessionManager);
 
     LifecycleUtil.deactivate(packageManager);
@@ -471,11 +452,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       if (getSessionManager() == null)
       {
         setSessionManager(createSessionManager());
-      }
-
-      if (getResourceManager() == null)
-      {
-        setResourceManager(createResourceManager());
       }
 
       if (getRevisionManager() == null)
@@ -509,11 +485,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     protected SessionManager createSessionManager()
     {
       return new SessionManager();
-    }
-
-    protected ResourceManager createResourceManager()
-    {
-      return new ResourceManager();
     }
 
     protected RevisionManager createRevisionManager()

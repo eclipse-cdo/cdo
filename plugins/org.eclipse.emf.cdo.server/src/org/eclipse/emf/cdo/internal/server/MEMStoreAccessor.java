@@ -18,12 +18,10 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -129,18 +127,6 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     return getStore().getRevisionByVersion(id, version);
   }
 
-  public CDOID readResourceID(String path)
-  {
-    CDORevision revision = getStore().getResource(path);
-    return revision == null ? null : revision.getID();
-  }
-
-  public String readResourcePath(CDOID id)
-  {
-    CDORevision revision = getStore().getRevision(id);
-    return getResourcePath(revision);
-  }
-
   @Override
   public void write(CommitContext context)
   {
@@ -160,7 +146,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
       super.rollback(context);
       for (CDORevision revision : newRevisions)
       {
-        store.removeRevision(revision);
+        store.rollbackRevision(revision);
       }
     }
   }
@@ -223,25 +209,17 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   /**
    * @since 2.0
    */
+  public CDOID readResourceID(String path, long timeStamp)
+  {
+    return getStore().getResourceID(path, timeStamp);
+  }
+
+  /**
+   * @since 2.0
+   */
   public void queryResources(QueryResourcesContext context)
   {
-    // TODO The following warning is a reminder that here is missing the whole view-dependency of the query!
-    IView view = getView();
-
-    for (CDORevision revision : getStore().getCurrentRevisions())
-    {
-      if (revision.isResource())
-      {
-        String path = getResourcePath(revision);
-        if (path != null && path.startsWith(context.getPathPrefix()))
-        {
-          if (!context.addResource(revision.getID()))
-          {
-            break;
-          }
-        }
-      }
-    }
+    getStore().queryResources(context, false);
   }
 
   /**
@@ -249,66 +227,63 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
    */
   public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
   {
-    if (info.getQueryLanguage().equals("TEST"))
+    if (!info.getQueryLanguage().equals("TEST"))
     {
-      List<Object> filters = new ArrayList<Object>();
-      Object context = info.getParameters().get("context");
-      Long sleep = (Long)info.getParameters().get("sleep");
-      if (context != null)
+      throw new RuntimeException("Unsupported language " + info.getQueryLanguage());
+    }
+
+    List<Object> filters = new ArrayList<Object>();
+    Object context = info.getParameters().get("context");
+    Long sleep = (Long)info.getParameters().get("sleep");
+    if (context != null)
+    {
+      if (context instanceof CDOClass)
       {
-        if (context instanceof CDOClass)
+        final CDOClass cdoClass = (CDOClass)context;
+        filters.add(new Object()
         {
-          final CDOClass cdoClass = (CDOClass)context;
-          filters.add(new Object()
+          @Override
+          public boolean equals(Object obj)
           {
-            @Override
-            public boolean equals(Object obj)
-            {
-              CDORevision revision = (CDORevision)obj;
-              return revision.getCDOClass().equals(cdoClass);
-            }
-          });
-        }
-      }
-
-      for (CDORevision revision : getStore().getCurrentRevisions())
-      {
-
-        if (sleep != null)
-        {
-          try
-          {
-            Thread.sleep(sleep);
+            CDORevision revision = (CDORevision)obj;
+            return revision.getCDOClass().equals(cdoClass);
           }
-          catch (InterruptedException ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
-        }
-
-        boolean valid = true;
-
-        for (Object filter : filters)
-        {
-          if (!filter.equals(revision))
-          {
-            valid = false;
-            break;
-          }
-        }
-        if (valid)
-        {
-          if (!queryContext.addResult(revision))
-          {
-            break;
-          }
-        }
+        });
       }
     }
 
-    else
+    for (CDORevision revision : getStore().getCurrentRevisions())
     {
-      throw new RuntimeException("Unsupported language " + info.getQueryLanguage());
+      if (sleep != null)
+      {
+        try
+        {
+          Thread.sleep(sleep);
+        }
+        catch (InterruptedException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      boolean valid = true;
+
+      for (Object filter : filters)
+      {
+        if (!filter.equals(revision))
+        {
+          valid = false;
+          break;
+        }
+      }
+      if (valid)
+      {
+        if (!queryContext.addResult(revision))
+        {
+          // No more results allowed
+          break;
+        }
+      }
     }
   }
 
@@ -341,17 +316,5 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   protected void doUnpassivate() throws Exception
   {
     // Pooling of store accessors not supported
-  }
-
-  private CDOPathFeature getResourcePathFeature()
-  {
-    IPackageManager packageManager = getStore().getRepository().getPackageManager();
-    return packageManager.getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
-  }
-
-  private String getResourcePath(CDORevision revision)
-  {
-    CDOPathFeature pathFeature = getResourcePathFeature();
-    return (String)revision.getData().get(pathFeature, 0);
   }
 }

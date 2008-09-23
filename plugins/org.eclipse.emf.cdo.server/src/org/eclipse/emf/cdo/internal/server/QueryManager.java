@@ -182,6 +182,12 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
       return queryResult.getView();
     }
 
+    public long getTimeStamp()
+    {
+      View view = (View)getView();
+      return view.getTimeStamp();
+    }
+
     public Future<?> getFuture()
     {
       return future;

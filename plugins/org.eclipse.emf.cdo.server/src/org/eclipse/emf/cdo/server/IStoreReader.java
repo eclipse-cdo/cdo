@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -60,13 +61,6 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
   public CDORevision readRevision(CDOID id, int referenceChunk);
 
   /**
-   * Reads a revision from the backend that was valid at the given timeStamp. This method will only be called by the
-   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
-   * {@link IStore#hasAuditingSupport()} to be <code>true</code>).
-   */
-  public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
-
-  /**
    * Reads a revision with the given version from the backend. This method will only be called by the framework if
    * {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
    * {@link IStore#hasAuditingSupport()} to be <code>true</code>).
@@ -74,16 +68,19 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 
   /**
-   * Returns the <code>CDOID</code> of the resource with the given path if a resource with this path exists in the
-   * store, <code>null</code> otherwise.
+   * Reads a revision from the backend that was valid at the given timeStamp. This method will only be called by the
+   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
+   * {@link IStore#hasAuditingSupport()} to be <code>true</code>).
    */
-  public CDOID readResourceID(String path);
+  public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
 
   /**
-   * Returns the path of the resource with the given <code>CDOID</code> if a resource with this <code>CDOID</code>
-   * exists in the store, <code>null</code> otherwise.
+   * Returns the <code>CDOID</code> of the resource with the given path if a resource with this path exists in the
+   * store, <code>null</code> otherwise.
+   * 
+   * @since 2.0
    */
-  public String readResourcePath(CDOID id);
+  public CDOID readResourceID(String path, long timeStamp);
 
   public CDORevision verifyRevision(CDORevision revision);
 
@@ -105,6 +102,12 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
    */
   public interface QueryResourcesContext
   {
+    /**
+     * The timeStamp of the view ({@link CDOProtocolView#UNSPECIFIED_DATE} if the view is an
+     * {@link CDOProtocolView.Type#AUDIT audit} view.
+     */
+    public long getTimeStamp();
+
     public String getPathPrefix();
 
     /**

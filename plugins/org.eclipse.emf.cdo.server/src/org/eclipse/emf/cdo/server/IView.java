@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
  * @author Eike Stepper
@@ -24,4 +25,14 @@ public interface IView extends CDOProtocolView
   public IRepository getRepository();
 
   public ISession getSession();
+
+  /**
+   * @since 2.0
+   */
+  public CDOID getResourceID(String path);
+
+  /**
+   * @since 2.0
+   */
+  public String getResourcePath(CDOID id);
 }

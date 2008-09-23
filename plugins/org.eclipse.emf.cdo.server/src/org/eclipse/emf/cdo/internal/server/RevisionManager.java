@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
@@ -39,8 +38,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
 {
   private IRepository repository;
 
-  private CDOPathFeature cdoPathFeature;
-
   /**
    * @since 2.0
    */
@@ -62,27 +59,11 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   public void setRepository(IRepository repository)
   {
     this.repository = repository;
-    cdoPathFeature = repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
   }
 
   public CDOIDObjectFactory getCDOIDObjectFactory()
   {
     return repository.getStore().getCDOIDObjectFactory();
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  public boolean addCachedRevision(InternalCDORevision revision)
-  {
-    if (revision.isResource())
-    {
-      String path = (String)revision.get(cdoPathFeature, 0);
-      ((Repository)repository).getResourceManager().registerResource(revision.getID(), path);
-    }
-
-    return super.addCachedRevision(revision);
   }
 
   @Override
@@ -282,6 +263,15 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   }
 
   /**
+   * @since 2.0
+   */
+  @Override
+  protected CDOFeature getResourcePathFeature()
+  {
+    return repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+  }
+
+  /**
    * TODO Move this to the cache(s)
    */
   protected int getLRUCapacity(String prop)
@@ -289,5 +279,4 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     String capacity = repository.getProperties().get(prop);
     return capacity == null ? 0 : Integer.valueOf(capacity);
   }
-
 }

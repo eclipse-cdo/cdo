@@ -13,8 +13,12 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -25,11 +29,13 @@ import java.util.Set;
  */
 public class View implements IView
 {
-  private IRepository repository;
-
   private Session session;
 
   private int viewID;
+
+  private IRepository repository;
+
+  private CDOPathFeature resourcePathFeature;
 
   private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
 
@@ -38,17 +44,12 @@ public class View implements IView
    */
   public View(Session session, int viewID)
   {
-    repository = session.getSessionManager().getRepository();
     this.session = session;
     this.viewID = viewID;
-  }
 
-  /**
-   * @since 2.0
-   */
-  public IRepository getRepository()
-  {
-    return repository;
+    repository = session.getSessionManager().getRepository();
+    resourcePathFeature = repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass()
+        .getCDOPathFeature();
   }
 
   public Session getSession()
@@ -64,6 +65,61 @@ public class View implements IView
   public CDOProtocolView.Type getViewType()
   {
     return CDOProtocolView.Type.READONLY;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IRepository getRepository()
+  {
+    return repository;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOID getResourceID(String path)
+  {
+    long timeStamp = getTimeStamp();
+    CDOID id = repository.getRevisionManager().getResourceID(path, timeStamp);
+    if (id == null)
+    {
+      IStoreReader storeReader = StoreThreadLocal.getStoreReader();
+      id = storeReader.readResourceID(path, timeStamp);
+    }
+
+    return id;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public String getResourcePath(CDOID id)
+  {
+    long timeStamp = getTimeStamp();
+    String path = repository.getRevisionManager().getResourcePath(id, timeStamp);
+    if (path == null)
+    {
+      IStoreReader storeReader = StoreThreadLocal.getStoreReader();
+      InternalCDORevision revision = (InternalCDORevision)storeReader.readRevisionByTime(id, 0, timeStamp);
+      if (revision != null && revision.isResource())
+      {
+        path = (String)revision.getValue(resourcePathFeature);
+      }
+    }
+
+    return path;
+  }
+
+  /**
+   * The timeStamp of the view ({@link CDOProtocolView#UNSPECIFIED_DATE} if the view is an
+   * {@link CDOProtocolView.Type#AUDIT audit} view.
+   * 
+   * @since 2.0
+   */
+  public long getTimeStamp()
+  {
+    return UNSPECIFIED_DATE;
   }
 
   /**

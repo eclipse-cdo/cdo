@@ -36,6 +36,11 @@ public class ResourcesQueryHandler implements IQueryHandler
     IStoreReader storeReader = StoreThreadLocal.getStoreReader();
     storeReader.queryResources(new IStoreReader.QueryResourcesContext()
     {
+      public long getTimeStamp()
+      {
+        return context.getTimeStamp();
+      }
+
       public String getPathPrefix()
       {
         return info.getQueryString();

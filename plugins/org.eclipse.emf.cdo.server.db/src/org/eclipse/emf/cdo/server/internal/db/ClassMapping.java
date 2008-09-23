@@ -82,7 +82,7 @@ public abstract class ClassMapping implements IClassMapping
       referenceMappings = createReferenceMappings(features);
 
       // Special handling of CDOResource table
-      CDOResourceClass resourceClass = cdoClass.getPackageManager().getCDOResourcePackage().getCDOResourceClass();
+      CDOResourceClass resourceClass = getResourceClass();
       if (cdoClass == resourceClass)
       {
         // Create a unique ids to prevent duplicate resource paths
@@ -95,8 +95,14 @@ public abstract class ClassMapping implements IClassMapping
             pathField.setPrecision(760);// MYSQL key limitation 767
             pathField.setNotNull(true);
 
-            // Create a unique ids to prevent duplicate resource paths
-            table.addIndex(IDBIndex.Type.UNIQUE, versionField, pathField);
+            // TODO Provide better design for store capabilities and repository support
+            // Example: Currently a store can not specify that it does not support non-auditing mode!
+            if (false && !mappingStrategy.getStore().getRepository().isSupportingAudits())
+            {
+              // Create a unique ids to prevent duplicate resource paths
+              table.addIndex(IDBIndex.Type.UNIQUE, versionField, pathField);
+            }
+
             break;
           }
         }
@@ -105,6 +111,11 @@ public abstract class ClassMapping implements IClassMapping
 
     selectPrefix = createSelectPrefix(false);
     selectPrefixWithVersion = createSelectPrefix(true);
+  }
+
+  private CDOResourceClass getResourceClass()
+  {
+    return mappingStrategy.getStore().getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceClass();
   }
 
   public MappingStrategy getMappingStrategy()
@@ -457,6 +468,22 @@ public abstract class ClassMapping implements IClassMapping
       writeRevisedRow(storeWriter, (InternalCDORevision)revision);
     }
 
+    if (revision.isResource())
+    {
+      // TODO Provide better design for store capabilities and repository support
+      // Example: Currently a store can not specify that it does not support non-auditing mode!
+      if (true || mappingStrategy.getStore().getRepository().isSupportingAudits())
+      {
+        // If auditing is not supported this is checked by a table index (see constructor)
+        CDOFeature resourcePathFeature = getResourceClass().getCDOPathFeature();
+        String revisionPath = (String)revision.getData().get(resourcePathFeature, 0);
+        if (mappingStrategy.readResourceID(storeWriter, revisionPath, revision.getCreated()) != null)
+        {
+          throw new IllegalStateException("Duplicate resource path: " + revisionPath);
+        }
+      }
+    }
+
     if (attributeMappings != null)
     {
       writeAttributes(storeWriter, (InternalCDORevision)revision);
@@ -543,24 +570,14 @@ public abstract class ClassMapping implements IClassMapping
 
   public void readRevision(IDBStoreReader storeReader, CDORevision revision, int referenceChunk)
   {
-    String where = CDODBSchema.ATTRIBUTES_REVISED + "=0";
+    String where = mappingStrategy.createWhereClause(CDORevision.UNSPECIFIED_DATE);
     readRevision(storeReader, (InternalCDORevision)revision, where, true, referenceChunk);
   }
 
   public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp, int referenceChunk)
   {
-    StringBuilder where = new StringBuilder();
-    where.append("(");
-    where.append(CDODBSchema.ATTRIBUTES_REVISED);
-    where.append("=0 OR ");
-    where.append(CDODBSchema.ATTRIBUTES_REVISED);
-    where.append(">=");
-    where.append(timeStamp);
-    where.append(") AND ");
-    where.append(timeStamp);
-    where.append(">=");
-    where.append(CDODBSchema.ATTRIBUTES_CREATED);
-    readRevision(storeReader, (InternalCDORevision)revision, where.toString(), true, referenceChunk);
+    String where = mappingStrategy.createWhereClause(timeStamp);
+    readRevision(storeReader, (InternalCDORevision)revision, where, true, referenceChunk);
   }
 
   public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version, int referenceChunk)
@@ -589,11 +606,9 @@ public abstract class ClassMapping implements IClassMapping
     long id = CDOIDUtil.getLong(revision.getID());
     StringBuilder builder = new StringBuilder(readVersion ? selectPrefixWithVersion : selectPrefix);
     builder.append(id);
-    if (where != null)
-    {
-      builder.append(" AND ");
-      builder.append(where);
-    }
+    builder.append(" AND (");
+    builder.append(where);
+    builder.append(")");
 
     String sql = builder.toString();
     if (TRACER.isEnabled())

@@ -36,7 +36,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     OMPlatform.INSTANCE.setDebugging(false);
   }
 
-  public void _testCreateManySession() throws Exception
+  public void testCreateManySessions() throws Exception
   {
     {
       msg("Opening session");
@@ -63,7 +63,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
   }
 
   @SuppressWarnings("deprecation")
-  public void testCreateManyTransaction() throws Exception
+  public void testCreateManyTransactions() throws Exception
   {
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -90,7 +90,7 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     session.close();
   }
 
-  public void _testCreateManySessionTransactionMultiThread() throws Exception
+  public void testCreateManySessionsAndTransactionsMultiThread() throws Exception
   {
     final List<Exception> exceptions = new ArrayList<Exception>();
     List<Thread> threadList = new ArrayList<Thread>();

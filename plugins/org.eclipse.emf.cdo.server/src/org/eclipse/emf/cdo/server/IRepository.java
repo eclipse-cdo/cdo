@@ -46,8 +46,6 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
 
   public ISessionManager getSessionManager();
 
-  public IResourceManager getResourceManager();
-
   public IRevisionManager getRevisionManager();
 
   /**

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
@@ -303,14 +304,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return transaction;
   }
 
-  protected CDOTransactionImpl createTransaction(int id)
-  {
-    return new CDOTransactionImpl(id, this);
-  }
-
   public CDOTransactionImpl openTransaction()
   {
     return openTransaction(createResourceSet());
+  }
+
+  protected CDOTransactionImpl createTransaction(int id)
+  {
+    return new CDOTransactionImpl(id, this);
   }
 
   public CDOViewImpl openView(ResourceSet resourceSet)
@@ -320,14 +321,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return view;
   }
 
-  protected CDOViewImpl createView(int id)
-  {
-    return new CDOViewImpl(this, id);
-  }
-
   public CDOViewImpl openView()
   {
     return openView(createResourceSet());
+  }
+
+  protected CDOViewImpl createView(int id)
+  {
+    return new CDOViewImpl(this, id);
   }
 
   public CDOAuditImpl openAudit(ResourceSet resourceSet, long timeStamp)
@@ -337,14 +338,80 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return audit;
   }
 
+  public CDOAuditImpl openAudit(long timeStamp)
+  {
+    return openAudit(createResourceSet(), timeStamp);
+  }
+
   protected CDOAuditImpl createAudit(int id, long timeStamp)
   {
     return new CDOAuditImpl(id, this, timeStamp);
   }
 
-  public CDOAuditImpl openAudit(long timeStamp)
+  public void viewDetached(CDOViewImpl view)
   {
-    return openAudit(createResourceSet(), timeStamp);
+    // Detach viewset from the view
+    ((CDOViewSetImpl)view.getViewSet()).remove(view);
+    synchronized (views)
+    {
+      if (!views.remove(view))
+      {
+        return;
+      }
+    }
+
+    try
+    {
+      getFailOverStrategy().send(
+          new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED,
+              CDOProtocolView.UNSPECIFIED_DATE));
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    fireElementRemovedEvent(view);
+  }
+
+  private void sendViewsChangedRequest(CDOViewImpl view)
+  {
+    try
+    {
+      int id = view.getViewID();
+      byte kind = getKind(view);
+      long timeStamp = CDOProtocolView.UNSPECIFIED_DATE;
+      if (view instanceof CDOAudit)
+      {
+        timeStamp = ((CDOAudit)view).getTimeStamp();
+      }
+
+      ViewsChangedRequest request = new ViewsChangedRequest(channel, id, kind, timeStamp);
+      getFailOverStrategy().send(request);
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  private byte getKind(CDOViewImpl view)
+  {
+    CDOView.Type type = view.getViewType();
+    switch (type)
+    {
+    case TRANSACTION:
+      return CDOProtocolConstants.VIEW_TRANSACTION;
+
+    case READONLY:
+      return CDOProtocolConstants.VIEW_READONLY;
+
+    case AUDIT:
+      return CDOProtocolConstants.VIEW_AUDIT;
+
+    default:
+      throw new ImplementationError("Invalid view type: " + type);
+    }
   }
 
   public CDOView getView(int viewID)
@@ -377,31 +444,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public boolean isEmpty()
   {
     return views.isEmpty();
-  }
-
-  public void viewDetached(CDOViewImpl view)
-  {
-    // Detach viewset from the view
-    ((CDOViewSetImpl)view.getViewSet()).remove(view);
-    synchronized (views)
-    {
-      if (!views.remove(view))
-      {
-        return;
-      }
-    }
-
-    try
-    {
-      getFailOverStrategy().send(
-          new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED, -1));
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-
-    fireElementRemovedEvent(view);
   }
 
   public synchronized CDOIDMetaRange getTempMetaIDRange(int count)
@@ -671,7 +713,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     view.setViewSet(viewSet);
     ((CDOViewSetImpl)viewSet).add(view);
 
-    sendViewsNotification(view);
+    sendViewsChangedRequest(view);
     fireElementAddedEvent(view);
   }
 
@@ -815,43 +857,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     return set;
-  }
-
-  private void sendViewsNotification(CDOViewImpl view)
-  {
-    try
-    {
-      int id = view.getViewID();
-      byte kind = getKind(view);
-      long timeStamp = -1;
-      if (view instanceof CDOAudit)
-      {
-        timeStamp = ((CDOAudit)view).getTimeStamp();
-      }
-
-      ViewsChangedRequest request = new ViewsChangedRequest(channel, id, kind, timeStamp);
-      getFailOverStrategy().send(request);
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-  }
-
-  private byte getKind(CDOViewImpl view)
-  {
-    CDOView.Type type = view.getViewType();
-    switch (type)
-    {
-    case TRANSACTION:
-      return CDOProtocolConstants.VIEW_TRANSACTION;
-    case READONLY:
-      return CDOProtocolConstants.VIEW_READONLY;
-    case AUDIT:
-      return CDOProtocolConstants.VIEW_AUDIT;
-    }
-
-    throw new ImplementationError("Invalid view type: " + type);
   }
 
   /**

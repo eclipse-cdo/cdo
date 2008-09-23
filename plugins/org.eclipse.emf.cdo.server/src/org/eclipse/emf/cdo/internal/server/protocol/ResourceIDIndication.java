@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -42,13 +43,20 @@ public class ResourceIDIndication extends CDOReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    final String path = in.readString();
+    int viewID = in.readInt();
+    if (PROTOCOL_TRACER.isEnabled())
+    {
+      PROTOCOL_TRACER.format("Read viewID: {0}", viewID);
+    }
+
+    String path = in.readString();
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Read path: {0}", path);
     }
 
-    id = getResourceManager().getResourceID(path);
+    IView view = getSession().getView(viewID);
+    id = view.getResourceID(path);
   }
 
   @Override

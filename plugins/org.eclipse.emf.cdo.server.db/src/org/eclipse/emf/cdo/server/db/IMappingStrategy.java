@@ -44,9 +44,10 @@ public interface IMappingStrategy
 
   public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id);
 
-  public CDOID readResourceID(IDBStoreReader storeReader, String path);
-
-  public String readResourcePath(IDBStoreReader storeReader, CDOID id);
+  /**
+   * @since 2.0
+   */
+  public CDOID readResourceID(IDBStoreReader storeReader, String path, long timeStamp);
 
   /**
    * @since 2.0

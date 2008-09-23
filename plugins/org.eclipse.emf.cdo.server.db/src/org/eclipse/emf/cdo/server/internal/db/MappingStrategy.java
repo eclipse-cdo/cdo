@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
@@ -38,7 +39,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -250,6 +250,31 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     return cdoClass.getName();
   }
 
+  public String createWhereClause(long timeStamp)
+  {
+    StringBuilder builder = new StringBuilder();
+    if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+    {
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("=0");
+    }
+    else
+    {
+      builder.append("(");
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append("=0 OR ");
+      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
+      builder.append(">=");
+      builder.append(timeStamp);
+      builder.append(") AND ");
+      builder.append(timeStamp);
+      builder.append(">=");
+      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    }
+
+    return builder.toString();
+  }
+
   public CloseableIterator<CDOID> readObjectIDs(final IDBStoreReader storeReader)
   {
     List<CDOClass> classes = getClassesWithObjectInfo();
@@ -292,7 +317,42 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     };
   }
 
+  public CDOID readResourceID(IDBStoreReader storeReader, final String path, final long timeStamp)
+  {
+    final CDOID[] result = new CDOID[1];
+    queryResources(storeReader, new QueryResourcesContext()
+    {
+      public long getTimeStamp()
+      {
+        return timeStamp;
+      }
+
+      public String getPathPrefix()
+      {
+        return path;
+      }
+
+      public int getMaxResults()
+      {
+        return 1;
+      }
+
+      public boolean addResource(CDOID resourceID)
+      {
+        result[0] = resourceID;
+        return false;
+      }
+    }, true);
+
+    return result[0];
+  }
+
   public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context)
+  {
+    queryResources(storeReader, context, false);
+  }
+
+  private void queryResources(IDBStoreReader storeReader, QueryResourcesContext context, boolean exactMatch)
   {
     IClassMapping mapping = getResourceClassMapping();
     IDBTable resourceTable = mapping.getTable();
@@ -306,14 +366,24 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     builder.append(resourceTable);
     builder.append(" WHERE ");
     builder.append(pathField);
-    builder.append(" LIKE \'");
-    builder.append(pathPrefix);
-    builder.append("%\'");
+    if (exactMatch)
+    {
+      builder.append("=\'");
+      builder.append(pathPrefix);
+      builder.append("\'");
+    }
+    else
+    {
+      builder.append(" LIKE \'");
+      builder.append(pathPrefix);
+      builder.append("%\'");
+    }
 
-    // TODO Move the next part of the WHERE clause to some IView logic!!!
-    builder.append(" AND ");
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=0");
+    String where = createWhereClause(context.getTimeStamp());
+    builder.append(" AND (");
+    builder.append(where);
+    builder.append(")");
+
     String sql = builder.toString();
     if (TRACER.isEnabled())
     {
@@ -331,77 +401,10 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
         CDOID id = CDOIDUtil.createLong(longID);
         if (!context.addResource(id))
         {
+          // No more results allowed
           break;
         }
       }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-    }
-  }
-
-  public CDOID readResourceID(IDBStoreReader storeReader, String path)
-  {
-    IDBTable resourceTable = getResourceTable();
-    IDBField selectField = getResourceIDField();
-    IDBField whereField = getResourcePathField();
-    return (CDOID)readResourceInfo(storeReader, resourceTable, selectField, whereField, path);
-  }
-
-  public String readResourcePath(IDBStoreReader storeReader, CDOID id)
-  {
-    IDBTable resourceTable = getResourceTable();
-    IDBField selectField = getResourcePathField();
-    IDBField whereField = getResourceIDField();
-    Object whereValue = CDOIDUtil.getLong(id);
-    return (String)readResourceInfo(storeReader, resourceTable, selectField, whereField, whereValue);
-  }
-
-  protected Object readResourceInfo(IDBStoreReader storeReader, IDBTable resourceTable, IDBField selectField,
-      IDBField whereField, Object whereValue)
-  {
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
-    builder.append(selectField);
-    builder.append(" FROM ");
-    builder.append(resourceTable);
-    builder.append(" WHERE ");
-    builder.append(whereField);
-    builder.append("=");
-    getStore().getDBAdapter().appendValue(builder, whereField, whereValue);
-
-    String sql = builder.toString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
-    ResultSet resultSet = null;
-
-    try
-    {
-      Statement statement = storeReader.getStatement();
-      statement.setMaxRows(1); // Reset by DBUtil.close(resultSet)
-
-      resultSet = statement.executeQuery(sql);
-      if (!resultSet.next())
-      {
-        return null;
-      }
-
-      if (whereValue instanceof Long)
-      {
-        String path = resultSet.getString(1);
-        return path;
-      }
-
-      long id = resultSet.getLong(1);
-      return CDOIDUtil.createLong(id);
     }
     catch (SQLException ex)
     {

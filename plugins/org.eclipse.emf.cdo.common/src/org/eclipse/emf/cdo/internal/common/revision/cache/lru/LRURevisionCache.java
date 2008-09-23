@@ -14,12 +14,14 @@ package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -38,6 +40,8 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   private Map<CDOID, RevisionHolder> revisions = new HashMap<CDOID, RevisionHolder>();
 
+  private CDOFeature resourcePathFeature;
+
   private int capacityCurrent;
 
   private int capacityRevised;
@@ -48,6 +52,16 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public LRURevisionCache()
   {
+  }
+
+  public CDOFeature getResourcePathFeature()
+  {
+    return resourcePathFeature;
+  }
+
+  public void setResourcePathFeature(CDOFeature resourcePathFeature)
+  {
+    this.resourcePathFeature = resourcePathFeature;
   }
 
   public int getCapacityCurrent()
@@ -128,27 +142,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
   public synchronized InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
   {
     RevisionHolder holder = revisions.get(id);
-    while (holder != null)
-    {
-      int indicator = holder.compareTo(timeStamp);
-      if (indicator == 1)
-      {
-        // timeStamp is after holder timeSpan
-        holder = holder.getNext();
-      }
-      else if (indicator == 0)
-      {
-        // timeStamp is within holder timeSpan
-        return holder.getRevision();
-      }
-      else
-      {
-        // timeStamp is before holder timeSpan
-        break;
-      }
-    }
-
-    return null;
+    return getRevisionByTime(holder, timeStamp);
   }
 
   public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int version)
@@ -237,7 +231,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public synchronized boolean removeCachedRevisions(CDOID id)
+  public synchronized boolean removeRevisions(CDOID id)
   {
     RevisionHolder lookupHolder = revisions.get(id);
     RevisionHolder holder = lookupHolder;
@@ -249,6 +243,63 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     }
 
     return lookupHolder != null;
+  }
+
+  public CDOID getResourceID(String path, long timeStamp)
+  {
+    CDOID[] ids = getRevisionIDs();
+    for (CDOID id : ids)
+    {
+      RevisionHolder holder = revisions.get(id);
+      if (holder != null)
+      {
+        InternalCDORevision revision = holder.getRevision();
+        if (revision.isResource())
+        {
+          revision = getRevisionByTime(holder, timeStamp);
+          if (revision != null)
+          {
+            String revisionPath = (String)revision.getValue(resourcePathFeature);
+            if (ObjectUtil.equals(revisionPath, path))
+            {
+              return revision.getID();
+            }
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private synchronized CDOID[] getRevisionIDs()
+  {
+    return revisions.keySet().toArray(new CDOID[revisions.size()]);
+  }
+
+  private InternalCDORevision getRevisionByTime(RevisionHolder holder, long timeStamp)
+  {
+    while (holder != null)
+    {
+      int indicator = holder.compareTo(timeStamp);
+      if (indicator == 1)
+      {
+        // timeStamp is after holder timeSpan
+        holder = holder.getNext();
+      }
+      else if (indicator == 0)
+      {
+        // timeStamp is within holder timeSpan
+        return holder.getRevision();
+      }
+      else
+      {
+        // timeStamp is before holder timeSpan
+        break;
+      }
+    }
+
+    return null;
   }
 
   @Override

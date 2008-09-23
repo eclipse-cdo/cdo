@@ -16,12 +16,14 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.KeyedPhantomReference;
 import org.eclipse.net4j.util.ref.KeyedReference;
@@ -48,6 +50,8 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, MEMRevisionCache.class);
 
+  private CDOFeature resourcePathFeature;
+
   private Map<CDOID, CacheList> cacheLists = new HashMap<CDOID, CacheList>();
 
   private ReferenceType referenceType;
@@ -60,6 +64,16 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
   public MEMRevisionCache()
   {
     this(ReferenceType.SOFT);
+  }
+
+  public CDOFeature getResourcePathFeature()
+  {
+    return resourcePathFeature;
+  }
+
+  public void setResourcePathFeature(CDOFeature resourcePathFeature)
+  {
+    this.resourcePathFeature = resourcePathFeature;
   }
 
   public ReferenceType getReferenceType()
@@ -176,6 +190,29 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     return null;
   }
 
+  public CDOID getResourceID(String path, long timeStamp)
+  {
+    CDOID[] ids = getRevisionIDs();
+    for (CDOID id : ids)
+    {
+      synchronized (cacheLists)
+      {
+        CacheList list = cacheLists.get(id);
+        if (list != null)
+        {
+          return list.getResourceID(path, timeStamp);
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private synchronized CDOID[] getRevisionIDs()
+  {
+    return cacheLists.keySet().toArray(new CDOID[cacheLists.size()]);
+  }
+
   @Override
   @SuppressWarnings("unchecked")
   protected void work(Reference<? extends InternalCDORevision> reference)
@@ -254,37 +291,6 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
       return null;
     }
 
-    public InternalCDORevision getRevisionByTime(long timeStamp)
-    {
-      for (Iterator<KeyedReference<CDOIDAndVersion, InternalCDORevision>> it = iterator(); it.hasNext();)
-      {
-        KeyedReference<CDOIDAndVersion, InternalCDORevision> ref = it.next();
-        InternalCDORevision revision = ref.get();
-        if (revision != null)
-        {
-          long created = revision.getCreated();
-          if (created <= timeStamp)
-          {
-            long revised = revision.getRevised();
-            if (timeStamp <= revised || revised == CDORevision.UNSPECIFIED_DATE)
-            {
-              return revision;
-            }
-            else
-            {
-              break;
-            }
-          }
-        }
-        else
-        {
-          it.remove();
-        }
-      }
-
-      return null;
-    }
-
     public InternalCDORevision getRevisionByVersion(int version)
     {
       for (Iterator<KeyedReference<CDOIDAndVersion, InternalCDORevision>> it = iterator(); it.hasNext();)
@@ -306,6 +312,26 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
         else
         {
           it.remove();
+        }
+      }
+
+      return null;
+    }
+
+    public InternalCDORevision getRevisionByTime(long timeStamp)
+    {
+      return getRevisionByTime(timeStamp, false);
+    }
+
+    public CDOID getResourceID(String path, long timeStamp)
+    {
+      InternalCDORevision revision = getRevisionByTime(timeStamp, true);
+      if (revision != null)
+      {
+        String revisionPath = (String)revision.getValue(resourcePathFeature);
+        if (ObjectUtil.equals(revisionPath, path))
+        {
+          return revision.getID();
         }
       }
 
@@ -367,6 +393,42 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
 
       addLast(reference);
       return true;
+    }
+
+    private InternalCDORevision getRevisionByTime(long timeStamp, boolean onlyResource)
+    {
+      for (Iterator<KeyedReference<CDOIDAndVersion, InternalCDORevision>> it = iterator(); it.hasNext();)
+      {
+        KeyedReference<CDOIDAndVersion, InternalCDORevision> ref = it.next();
+        InternalCDORevision revision = ref.get();
+        if (revision != null)
+        {
+          if (onlyResource && !revision.isResource())
+          {
+            return null;
+          }
+
+          long created = revision.getCreated();
+          if (created <= timeStamp)
+          {
+            long revised = revision.getRevised();
+            if (timeStamp <= revised || revised == CDORevision.UNSPECIFIED_DATE)
+            {
+              return revision;
+            }
+            else
+            {
+              break;
+            }
+          }
+        }
+        else
+        {
+          it.remove();
+        }
+      }
+
+      return null;
     }
   }
 }

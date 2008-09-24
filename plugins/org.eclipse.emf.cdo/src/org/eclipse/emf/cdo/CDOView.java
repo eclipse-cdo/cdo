@@ -197,6 +197,4 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @since 2.0
    */
   public List<CDOResource> queryResources(String pathPrefix);
-
-  public void close();
 }

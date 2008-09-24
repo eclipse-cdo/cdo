@@ -37,6 +37,4 @@ public interface ISession extends CDOProtocolSession, IContainer<IView>
    * @since 2.0
    */
   public ITransaction openTransaction(int viewID);
-
-  public IView closeView(int viewID);
 }

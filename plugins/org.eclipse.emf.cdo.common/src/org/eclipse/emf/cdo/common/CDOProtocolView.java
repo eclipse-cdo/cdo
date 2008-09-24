@@ -30,6 +30,11 @@ public interface CDOProtocolView
   public CDOProtocolSession getSession();
 
   /**
+   * @since 2.0
+   */
+  public void close();
+
+  /**
    * @author Eike Stepper
    */
   public enum Type

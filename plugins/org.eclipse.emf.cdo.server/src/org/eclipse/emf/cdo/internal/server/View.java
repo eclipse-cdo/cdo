@@ -159,4 +159,13 @@ public class View implements IView
   {
     return MessageFormat.format("View[{0}]", viewID);
   }
+
+  /**
+   * @since 2.0
+   */
+  public void close()
+  {
+    session.closeView(viewID);
+    clearChangeSubscription();
+  }
 }

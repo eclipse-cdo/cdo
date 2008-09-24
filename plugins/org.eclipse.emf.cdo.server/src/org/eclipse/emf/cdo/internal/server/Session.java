@@ -39,7 +39,6 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -293,13 +292,13 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   @Override
   protected void doDeactivate() throws Exception
   {
+    protocol.removeListener(protocolListener);
     IView[] activeViews = getViews();
     for (int i = 0; i < activeViews.length; i++)
     {
-      LifecycleUtil.deactivate(activeViews[i]);
+      activeViews[i].close();
     }
-
-    protocol.removeListener(protocolListener);
+    
     sessionManager.sessionClosed(this);
     super.doDeactivate();
   }

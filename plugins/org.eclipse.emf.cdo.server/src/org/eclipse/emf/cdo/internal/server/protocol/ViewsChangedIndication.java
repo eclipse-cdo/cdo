@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.Session;
+import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.ImplementationError;
 
@@ -45,7 +46,11 @@ public class ViewsChangedIndication extends CDOServerIndication // Indication
     switch (kind)
     {
     case CDOProtocolConstants.VIEW_CLOSED:
-      session.closeView(viewID);
+      IView view = session.getView(viewID);
+      if (view != null)
+      {
+        view.close();
+      }
       break;
 
     case CDOProtocolConstants.VIEW_TRANSACTION:

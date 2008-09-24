@@ -34,6 +34,8 @@ public final class OpenSessionResult implements CDOPackageURICompressor
 
   private long repositoryCreationTime;
 
+  private RepositoryTimeResult repositoryTimeResult;
+
   private CDOIDLibraryDescriptor libraryDescriptor;
 
   private List<CDOPackageInfo> packageInfos = new ArrayList<CDOPackageInfo>();
@@ -62,6 +64,16 @@ public final class OpenSessionResult implements CDOPackageURICompressor
   public long getRepositoryCreationTime()
   {
     return repositoryCreationTime;
+  }
+
+  public RepositoryTimeResult getRepositoryTimeResult()
+  {
+    return repositoryTimeResult;
+  }
+
+  public void setRepositoryTimeResult(RepositoryTimeResult repositoryTimeResult)
+  {
+    this.repositoryTimeResult = repositoryTimeResult;
   }
 
   public CDOIDLibraryDescriptor getLibraryDescriptor()

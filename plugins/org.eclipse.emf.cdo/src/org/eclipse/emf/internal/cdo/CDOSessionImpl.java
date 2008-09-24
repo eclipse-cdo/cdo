@@ -44,6 +44,8 @@ import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
 import org.eclipse.emf.internal.cdo.protocol.PassiveUpdateRequest;
+import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeRequest;
+import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeResult;
 import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
@@ -136,6 +138,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private String repositoryUUID;
 
   private long repositoryCreationTime;
+
+  private RepositoryTimeResult repositoryTimeResult;
 
   private CDOPackageRegistry packageRegistry;
 
@@ -272,6 +276,40 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public long getRepositoryCreationTime()
   {
     return repositoryCreationTime;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public long getRepositoryTime()
+  {
+    return getRepositoryTime(false);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public long getRepositoryTime(boolean force)
+  {
+    if (repositoryTimeResult == null || force)
+    {
+      repositoryTimeResult = sendRepositoryTimeRequest();
+    }
+
+    return repositoryTimeResult.getAproximateRepositoryTime();
+  }
+
+  private RepositoryTimeResult sendRepositoryTimeRequest()
+  {
+    try
+    {
+      RepositoryTimeRequest request = new RepositoryTimeRequest(channel);
+      return getFailOverStrategy().send(request);
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public boolean isOpen()
@@ -773,6 +811,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
     repositoryCreationTime = result.getRepositoryCreationTime();
+    repositoryTimeResult = result.getRepositoryTimeResult();
     handleLibraryDescriptor(result.getLibraryDescriptor());
     packageURICompressor = result.getCompressor();
     packageManager.addPackageProxies(result.getPackageInfos());

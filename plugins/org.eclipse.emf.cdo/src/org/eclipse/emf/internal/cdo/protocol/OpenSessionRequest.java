@@ -35,7 +35,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class OpenSessionRequest extends RepositoryTimeRequest<OpenSessionResult>
+public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
 
@@ -174,6 +174,7 @@ public class OpenSessionRequest extends RepositoryTimeRequest<OpenSessionResult>
     }
 
     super.confirming(in);
+    result.setRepositoryTimeResult(getRepositoryTimeResult());
     return result;
   }
 }

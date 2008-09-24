@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionCancelRequest;
@@ -381,10 +382,11 @@ public class CDOXATransactionImpl implements CDOXATransaction
       }
     }
 
-    public void commit(InternalCDOTransaction transactionCommit) throws Exception
+    public long commit(InternalCDOTransaction transactionCommit) throws Exception
     {
       check_access();
       CDOXATransactionImpl.this.commit();
+      return CDORevision.UNSPECIFIED_DATE;
     }
 
     public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint, boolean remote)

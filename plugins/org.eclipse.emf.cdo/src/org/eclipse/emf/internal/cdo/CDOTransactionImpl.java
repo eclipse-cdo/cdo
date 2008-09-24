@@ -82,6 +82,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private long commitTimeout;
 
+  private long lastCommitTime = CDORevision.UNSPECIFIED_DATE;
+
   private int lastTemporaryID;
 
   private CDOTransactionStrategy transactionStrategy;
@@ -152,6 +154,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void setCommitTimeout(long timeout)
   {
     commitTimeout = timeout;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public long getLastCommitTime()
+  {
+    return lastCommitTime;
   }
 
   public CDOIDTemp getNextTemporaryID()
@@ -281,7 +291,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     try
     {
-      getTransactionStrategy().commit(this);
+      lastCommitTime = getTransactionStrategy().commit(this);
     }
     catch (TransactionException ex)
     {

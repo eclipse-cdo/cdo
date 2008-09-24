@@ -40,6 +40,11 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public void setCommitTimeout(long timeout);
 
   /**
+   * @since 2.0
+   */
+  public long getLastCommitTime();
+
+  /**
    * @see ResourceSet#createResource(URI)
    */
   public CDOResource createResource(String path);
@@ -68,5 +73,4 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
    * @since 2.0
    */
   public Set<CDOID> getDetachedObjects();
-
 }

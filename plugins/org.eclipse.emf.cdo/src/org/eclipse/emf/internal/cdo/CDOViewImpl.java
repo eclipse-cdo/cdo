@@ -49,6 +49,7 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -99,9 +100,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private CDOStore store = new CDOStore(this);
 
-  private CDOID lastLookupID;
+  @ExcludeFromDump
+  private transient CDOID lastLookupID;
 
-  private InternalCDOObject lastLookupObject;
+  @ExcludeFromDump
+  private transient InternalCDOObject lastLookupObject;
 
   /**
    * @since 2.0

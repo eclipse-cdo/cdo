@@ -63,6 +63,23 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
   public CDOIDMetaRange getMetaIDRange(int count);
 
   /**
+   * Returns the repository creation time.
+   * 
+   * @since 2.0
+   */
+  public long getCreationTimeStamp();
+
+  /**
+   * Validates the given timeStamp against the repository time.
+   * 
+   * @throws IllegalArgumentException
+   *           if the given timeStamp is less than the repository creation time or greater than the current repository
+   *           time.
+   * @since 2.0
+   */
+  public void validateTimeStamp(long timeStamp) throws IllegalArgumentException;
+
+  /**
    * @author Eike Stepper
    */
   public interface Props

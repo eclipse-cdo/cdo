@@ -31,5 +31,10 @@ public interface CDOPackageRegistry extends EPackage.Registry
 
   public void putPackageDescriptor(CDOPackage proxy);
 
+  /**
+   * @since 2.0
+   */
+  public CDOSession getSession();
+
   public void setSession(CDOSession session);
 }

@@ -304,20 +304,25 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void invalidate(InternalCDOObject object, long timeStamp)
   {
-    invalidate(object, false, timeStamp);
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.INVALIDATE);
+    }
+
+    process(object, CDOEvent.INVALIDATE, timeStamp);
   }
 
   /**
    * @since 2.0
    */
-  public void invalidate(InternalCDOObject object, boolean detach, long timeStamp)
+  public void invalidate(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
       trace(object, CDOEvent.INVALIDATE);
     }
 
-    process(object, CDOEvent.INVALIDATE, new Pair<Boolean, Long>(detach, timeStamp));
+    process(object, CDOEvent.INVALIDATE, null);
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
@@ -603,23 +608,27 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<Boolean, Long>>
+  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<Boolean, Long> detachAndTimeStamp)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
     {
-      if (detachAndTimeStamp.getElement1())
+      if (timeStamp instanceof Long)
+      {
+        if (timeStamp != CDORevision.UNSPECIFIED_DATE)
+        {
+          reviseObject(object, timeStamp);
+        }
+
+        changeState(object, CDOState.PROXY);
+      }
+      else
       {
         object.cdoInternalPostDetach();
         object.cdoInternalSetState(CDOState.TRANSIENT);
       }
-      else
-      {
-        reviseObject(object, detachAndTimeStamp.getElement2());
-        changeState(object, CDOState.PROXY);
-      }
     }
 
-    protected void reviseObject(InternalCDOObject object, Long timeStamp)
+    protected void reviseObject(InternalCDOObject object, long timeStamp)
     {
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revision.setRevised(timeStamp - 1);
@@ -632,9 +641,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private final class ConflictTransition extends InvalidateTransition
   {
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<Boolean, Long> detachAndTimeStamp)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
     {
-      reviseObject(object, detachAndTimeStamp.getElement2());
+      reviseObject(object, timeStamp);
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
       transaction.setConflict(object);

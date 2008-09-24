@@ -95,6 +95,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_CHANGE_SUBSCRIPTION = 22;
 
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_SET_AUDIT = 23;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Management
 

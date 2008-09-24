@@ -336,6 +336,32 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     this.lastMetaID = lastMetaID;
   }
 
+  /**
+   * @since 2.0
+   */
+  public long getCreationTimeStamp()
+  {
+    return store.getCreationTimeStamp();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void validateTimeStamp(long timeStamp) throws IllegalArgumentException
+  {
+    long creationTimeStamp = getCreationTimeStamp();
+    if (timeStamp < creationTimeStamp)
+    {
+      throw new IllegalArgumentException("timeStamp < repository creation time: " + creationTimeStamp);
+    }
+
+    long currentTimeStamp = System.currentTimeMillis();
+    if (timeStamp > currentTimeStamp)
+    {
+      throw new IllegalArgumentException("timeStamp > current time: " + currentTimeStamp);
+    }
+  }
+
   @Override
   public String toString()
   {

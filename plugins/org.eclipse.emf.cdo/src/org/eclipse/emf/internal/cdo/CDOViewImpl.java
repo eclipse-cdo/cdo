@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -773,7 +774,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       InternalCDOObject cdoObject = removeObject(id);
       if (cdoObject != null)
       {
-        CDOStateMachine.INSTANCE.invalidate(cdoObject, true, timeStamp);
+        CDOStateMachine.INSTANCE.invalidate(cdoObject);
         if (dirtyObjects != null && cdoObject.eNotificationRequired())
         {
           dirtyObjects.add(cdoObject);
@@ -841,6 +842,29 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   protected ConcurrentMap<CDOID, InternalCDOObject> createObjectsMap()
   {
     return new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
+  }
+
+  /**
+   * Needed for {@link CDOAuditImpl#setTimeStamp(long)}.
+   * 
+   * @since 2.0
+   */
+  protected List<InternalCDOObject> getInvalidObjects(long timeStamp)
+  {
+    List<InternalCDOObject> result = new ArrayList<InternalCDOObject>();
+    synchronized (objects)
+    {
+      for (InternalCDOObject object : objects.values())
+      {
+        CDORevision revision = object.cdoRevision();
+        if (!revision.isValid(timeStamp))
+        {
+          result.add(object);
+        }
+      }
+    }
+
+    return result;
   }
 
   public int reload(CDOObject... objects)

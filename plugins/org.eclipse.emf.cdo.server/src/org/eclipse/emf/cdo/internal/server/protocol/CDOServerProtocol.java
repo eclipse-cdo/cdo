@@ -103,6 +103,9 @@ public class CDOServerProtocol extends CDOProtocolImpl
     case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
       return new ChangeSubscriptionIndication();
 
+    case CDOProtocolConstants.SIGNAL_SET_AUDIT:
+      return new SetAuditIndication();
+
     default:
       return null;
     }

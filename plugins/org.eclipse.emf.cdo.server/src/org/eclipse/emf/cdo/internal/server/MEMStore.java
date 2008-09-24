@@ -33,6 +33,8 @@ public class MEMStore extends LongIDStore implements IMEMStore
 {
   public static final String TYPE = "mem";
 
+  private long creationTimeStamp;
+
   private Map<CDOID, List<CDORevision>> revisions = new HashMap<CDOID, List<CDORevision>>();
 
   private int listLimit;
@@ -316,6 +318,21 @@ public class MEMStore extends LongIDStore implements IMEMStore
   public MEMStoreAccessor createWriter(IView view)
   {
     return new MEMStoreAccessor(this, view);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public long getCreationTimeStamp()
+  {
+    return creationTimeStamp;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    creationTimeStamp = System.currentTimeMillis();
   }
 
   @Override

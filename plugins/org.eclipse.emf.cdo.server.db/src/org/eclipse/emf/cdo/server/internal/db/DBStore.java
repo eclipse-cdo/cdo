@@ -45,6 +45,8 @@ public class DBStore extends LongIDStore implements IDBStore
 {
   public static final String TYPE = "db";
 
+  private long creationTimeStamp;
+
   private IMappingStrategy mappingStrategy;
 
   private IDBSchema dbSchema;
@@ -207,6 +209,11 @@ public class DBStore extends LongIDStore implements IDBStore
     }
   }
 
+  public long getCreationTimeStamp()
+  {
+    return creationTimeStamp;
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -220,6 +227,7 @@ public class DBStore extends LongIDStore implements IDBStore
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    long startupTime = getStartupTime();
     Connection connection = null;
 
     try
@@ -229,7 +237,9 @@ public class DBStore extends LongIDStore implements IDBStore
       if (createdTables.contains(CDODBSchema.REPOSITORY))
       {
         // First start
-        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, 1, getStartupTime(), 0, CRASHED, CRASHED);
+        creationTimeStamp = startupTime;
+        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTimeStamp, 1, startupTime, 0, CRASHED,
+            CRASHED);
 
         MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
 
@@ -243,6 +253,7 @@ public class DBStore extends LongIDStore implements IDBStore
       else
       {
         // Restart
+        creationTimeStamp = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_CREATED);
         long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
         setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_METAID));
         if (lastObjectID == CRASHED || getLastMetaID() == CRASHED)
@@ -262,7 +273,7 @@ public class DBStore extends LongIDStore implements IDBStore
         builder.append("+1, ");
         builder.append(CDODBSchema.REPOSITORY_STARTED);
         builder.append("=");
-        builder.append(getStartupTime());
+        builder.append(startupTime);
         builder.append(", ");
         builder.append(CDODBSchema.REPOSITORY_STOPPED);
         builder.append("=0, ");

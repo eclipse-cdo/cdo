@@ -13,9 +13,13 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IAudit;
+import org.eclipse.emf.cdo.server.IRepository;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -41,6 +45,15 @@ public class Audit extends View implements IAudit
   public long getTimeStamp()
   {
     return timeStamp;
+  }
+
+  public List<CDORevision> setTimeStamp(long timeStamp, List<CDOID> invalidObjects)
+  {
+    IRepository repository = getSession().getSessionManager().getRepository();
+    repository.validateTimeStamp(timeStamp);
+
+    this.timeStamp = timeStamp;
+    return repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp);
   }
 
   @Override

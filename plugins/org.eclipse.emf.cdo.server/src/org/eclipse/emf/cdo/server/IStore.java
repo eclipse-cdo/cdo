@@ -70,6 +70,13 @@ public interface IStore extends IRepositoryElement
   public long getLastMetaID();
 
   /**
+   * Returns the store creation time.
+   * 
+   * @since 2.0
+   */
+  public long getCreationTimeStamp();
+
+  /**
    * Returns a reader that can be used to read from this store in the context of the given session.
    * 
    * @param session

@@ -28,6 +28,9 @@ public class CDODBSchema extends DBSchema
    */
   public static final IDBTable REPOSITORY = INSTANCE.addTable("cdo_repository");
 
+  public static final IDBField REPOSITORY_CREATED = //
+  REPOSITORY.addField("created", DBType.BIGINT);
+
   public static final IDBField REPOSITORY_STARTS = //
   REPOSITORY.addField("starts", DBType.BIGINT);
 

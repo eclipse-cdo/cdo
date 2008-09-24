@@ -140,6 +140,8 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
    */
   private class QueryContext implements IQueryContext, Runnable
   {
+    private long timeStamp;
+
     private QueryResult queryResult;
 
     private boolean started;
@@ -170,6 +172,10 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
     public QueryContext(QueryResult queryResult)
     {
       this.queryResult = queryResult;
+
+      // Remember the timeStamp because it can change for audits
+      View view = (View)getView();
+      timeStamp = view.getTimeStamp();
     }
 
     public QueryResult getQueryResult()
@@ -184,8 +190,7 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
 
     public long getTimeStamp()
     {
-      View view = (View)getView();
-      return view.getTimeStamp();
+      return timeStamp;
     }
 
     public Future<?> getFuture()

@@ -289,9 +289,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
-  public long getRepositoryTime(boolean force)
+  public long getRepositoryTime(boolean forceRefresh)
   {
-    if (repositoryTimeResult == null || force)
+    if (repositoryTimeResult == null || forceRefresh)
     {
       repositoryTimeResult = sendRepositoryTimeRequest();
     }

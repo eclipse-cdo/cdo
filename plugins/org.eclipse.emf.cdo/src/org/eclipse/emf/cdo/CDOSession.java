@@ -52,6 +52,11 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    */
   public long getRepositoryTime();
 
+  /**
+   * @since 2.0
+   */
+  public long getRepositoryTime(boolean forceRefresh);
+
   public CDOPackageRegistry getPackageRegistry();
 
   public CDOSessionPackageManager getPackageManager();

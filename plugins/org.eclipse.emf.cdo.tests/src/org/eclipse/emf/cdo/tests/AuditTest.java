@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOSession;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-
 /**
  * @author Eike Stepper
  */
@@ -29,7 +27,7 @@ public class AuditTest extends AbstractCDOTest
 
   public void testRepositoryTime() throws Exception
   {
-    CDOSessionImpl session = (CDOSessionImpl)openSession();
+    CDOSession session = openSession();
     long repositoryTime = session.getRepositoryTime();
     assertTrue(Math.abs(System.currentTimeMillis() - repositoryTime) < 500);
   }

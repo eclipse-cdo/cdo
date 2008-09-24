@@ -45,7 +45,7 @@ public class DBStore extends LongIDStore implements IDBStore
 {
   public static final String TYPE = "db";
 
-  private long creationTimeStamp;
+  private long creationTime;
 
   private IMappingStrategy mappingStrategy;
 
@@ -209,9 +209,9 @@ public class DBStore extends LongIDStore implements IDBStore
     }
   }
 
-  public long getCreationTimeStamp()
+  public long getCreationTime()
   {
-    return creationTimeStamp;
+    return creationTime;
   }
 
   @Override
@@ -237,8 +237,8 @@ public class DBStore extends LongIDStore implements IDBStore
       if (createdTables.contains(CDODBSchema.REPOSITORY))
       {
         // First start
-        creationTimeStamp = startupTime;
-        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTimeStamp, 1, startupTime, 0, CRASHED,
+        creationTime = startupTime;
+        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTime, 1, startupTime, 0, CRASHED,
             CRASHED);
 
         MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
@@ -253,7 +253,7 @@ public class DBStore extends LongIDStore implements IDBStore
       else
       {
         // Restart
-        creationTimeStamp = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_CREATED);
+        creationTime = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_CREATED);
         long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
         setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_METAID));
         if (lastObjectID == CRASHED || getLastMetaID() == CRASHED)

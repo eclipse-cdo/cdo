@@ -178,7 +178,7 @@ public class HibernateStore extends Store implements IHibernateStore
     throw new UnsupportedOperationException(); // TODO Implement me
   }
 
-  public long getCreationTimeStamp()
+  public long getCreationTime()
   {
     throw new UnsupportedOperationException();
   }

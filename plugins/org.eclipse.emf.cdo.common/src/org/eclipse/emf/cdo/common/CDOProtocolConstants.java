@@ -100,6 +100,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_SET_AUDIT = 23;
 
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_REPOSITORY_TIME = 24;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Management
 

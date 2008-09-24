@@ -339,9 +339,9 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   /**
    * @since 2.0
    */
-  public long getCreationTimeStamp()
+  public long getCreationTime()
   {
-    return store.getCreationTimeStamp();
+    return store.getCreationTime();
   }
 
   /**
@@ -349,7 +349,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
    */
   public void validateTimeStamp(long timeStamp) throws IllegalArgumentException
   {
-    long creationTimeStamp = getCreationTimeStamp();
+    long creationTimeStamp = getCreationTime();
     if (timeStamp < creationTimeStamp)
     {
       throw new IllegalArgumentException("timeStamp < repository creation time: " + creationTimeStamp);

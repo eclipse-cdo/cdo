@@ -106,6 +106,9 @@ public class CDOServerProtocol extends CDOProtocolImpl
     case CDOProtocolConstants.SIGNAL_SET_AUDIT:
       return new SetAuditIndication();
 
+    case CDOProtocolConstants.SIGNAL_REPOSITORY_TIME:
+      return new RepositoryTimeIndication();
+
     default:
       return null;
     }

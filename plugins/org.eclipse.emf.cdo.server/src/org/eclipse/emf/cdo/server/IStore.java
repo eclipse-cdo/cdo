@@ -74,7 +74,7 @@ public interface IStore extends IRepositoryElement
    * 
    * @since 2.0
    */
-  public long getCreationTimeStamp();
+  public long getCreationTime();
 
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.

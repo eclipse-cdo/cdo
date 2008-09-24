@@ -32,16 +32,20 @@ public final class OpenSessionResult implements CDOPackageURICompressor
 
   private String repositoryUUID;
 
+  private long repositoryCreationTime;
+
   private CDOIDLibraryDescriptor libraryDescriptor;
 
   private List<CDOPackageInfo> packageInfos = new ArrayList<CDOPackageInfo>();
 
   private StringCompressor compressor = new StringCompressor(true);
 
-  public OpenSessionResult(int sessionID, String repositoryUUID, CDOIDLibraryDescriptor libraryDescriptor)
+  public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime,
+      CDOIDLibraryDescriptor libraryDescriptor)
   {
     this.sessionID = sessionID;
     this.repositoryUUID = repositoryUUID;
+    this.repositoryCreationTime = repositoryCreationTime;
     this.libraryDescriptor = libraryDescriptor;
   }
 
@@ -53,6 +57,11 @@ public final class OpenSessionResult implements CDOPackageURICompressor
   public String getRepositoryUUID()
   {
     return repositoryUUID;
+  }
+
+  public long getRepositoryCreationTime()
+  {
+    return repositoryCreationTime;
   }
 
   public CDOIDLibraryDescriptor getLibraryDescriptor()

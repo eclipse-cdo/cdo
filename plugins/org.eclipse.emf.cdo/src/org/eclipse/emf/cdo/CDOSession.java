@@ -30,7 +30,6 @@ import java.util.Set;
  */
 public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
 {
-
   public IFailOverStrategy getFailOverStrategy();
 
   public IChannel getChannel();
@@ -42,6 +41,11 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   public String getRepositoryName();
 
   public String getRepositoryUUID();
+
+  /**
+   * @since 2.0
+   */
+  public long getRepositoryCreationTime();
 
   public CDOPackageRegistry getPackageRegistry();
 

@@ -29,7 +29,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class OpenSessionIndication extends CDOServerIndication
+public class OpenSessionIndication extends RepositoryTimeIndication
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
 
@@ -66,6 +66,7 @@ public class OpenSessionIndication extends CDOServerIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
+    super.indicating(in);
     repositoryName = in.readString();
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -93,7 +94,6 @@ public class OpenSessionIndication extends CDOServerIndication
       }
 
       SessionManager sessionManager = repository.getSessionManager();
-
       session = sessionManager.openSession(protocol);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
@@ -111,6 +111,7 @@ public class OpenSessionIndication extends CDOServerIndication
       }
 
       out.writeString(repository.getUUID());
+      out.writeLong(repository.getCreationTime());
       repository.getStore().getCDOIDLibraryDescriptor().write(out);
       writePackageInfos(out);
     }
@@ -133,6 +134,8 @@ public class OpenSessionIndication extends CDOServerIndication
       out.writeInt(CDOProtocolConstants.ERROR_NO_SESSION);
       return;
     }
+
+    super.responding(out);
   }
 
   private void writePackageInfos(CDODataOutput out) throws IOException

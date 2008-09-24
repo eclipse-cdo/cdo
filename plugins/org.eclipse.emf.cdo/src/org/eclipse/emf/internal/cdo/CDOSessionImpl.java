@@ -135,6 +135,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private String repositoryUUID;
 
+  private long repositoryCreationTime;
+
   private CDOPackageRegistry packageRegistry;
 
   private CDOSessionPackageManagerImpl packageManager;
@@ -262,6 +264,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public String getRepositoryUUID()
   {
     return repositoryUUID;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public long getRepositoryCreationTime()
+  {
+    return repositoryCreationTime;
   }
 
   public boolean isOpen()
@@ -762,6 +772,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
+    repositoryCreationTime = result.getRepositoryCreationTime();
     handleLibraryDescriptor(result.getLibraryDescriptor());
     packageURICompressor = result.getCompressor();
     packageManager.addPackageProxies(result.getPackageInfos());

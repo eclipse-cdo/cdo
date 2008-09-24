@@ -35,7 +35,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
+public class OpenSessionRequest extends RepositoryTimeRequest<OpenSessionResult>
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
 
@@ -96,6 +96,7 @@ public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
+    super.requesting(out);
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing repositoryName: {0}", repositoryName);
@@ -138,13 +139,19 @@ public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
       PROTOCOL_TRACER.format("Read repositoryUUID: {0}", repositoryUUID);
     }
 
+    long repositoryCreationTime = in.readLong();
+    if (PROTOCOL_TRACER.isEnabled())
+    {
+      PROTOCOL_TRACER.format("Read repositoryCreationTime: {0,date} {0,time}", repositoryCreationTime);
+    }
+
     CDOIDLibraryDescriptor libraryDescriptor = CDOIDUtil.readLibraryDescriptor(in);
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor);
     }
 
-    result = new OpenSessionResult(sessionID, repositoryUUID, libraryDescriptor);
+    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, libraryDescriptor);
     for (;;)
     {
       boolean readInfo = in.readBoolean();
@@ -166,6 +173,7 @@ public class OpenSessionRequest extends CDOClientRequest<OpenSessionResult>
       result.addPackageInfo(packageURI, dynamic, metaIDRange, parentURI);
     }
 
+    super.confirming(in);
     return result;
   }
 }

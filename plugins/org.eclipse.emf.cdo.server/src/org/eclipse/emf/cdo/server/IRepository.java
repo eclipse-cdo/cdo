@@ -67,7 +67,7 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
    * 
    * @since 2.0
    */
-  public long getCreationTimeStamp();
+  public long getCreationTime();
 
   /**
    * Validates the given timeStamp against the repository time.

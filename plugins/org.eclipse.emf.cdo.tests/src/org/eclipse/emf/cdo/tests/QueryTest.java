@@ -35,6 +35,8 @@ public class QueryTest extends AbstractCDOTest
 
   public void testBasicQuery() throws Exception
   {
+    skipUnlessConfig(MEM);
+
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
@@ -68,6 +70,8 @@ public class QueryTest extends AbstractCDOTest
 
   public void testBasicQuery_EClassParameter() throws Exception
   {
+    skipUnlessConfig(MEM);
+
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
@@ -101,6 +105,8 @@ public class QueryTest extends AbstractCDOTest
 
   public void testQueryCancel_successful() throws Exception
   {
+    skipUnlessConfig(MEM);
+
     CDOTransaction transaction = initialize(500);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("sleep", 1000L);
@@ -125,6 +131,8 @@ public class QueryTest extends AbstractCDOTest
 
   public void testQueryCancel_ViewClose() throws Exception
   {
+    skipUnlessConfig(MEM);
+
     CDOTransaction transaction = initialize(500);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("sleep", 1000L);
@@ -146,6 +154,8 @@ public class QueryTest extends AbstractCDOTest
 
   public void testQueryCancel_SessionClose() throws Exception
   {
+    skipUnlessConfig(MEM);
+
     CDOTransaction transaction = initialize(500);
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("sleep", 1000L);

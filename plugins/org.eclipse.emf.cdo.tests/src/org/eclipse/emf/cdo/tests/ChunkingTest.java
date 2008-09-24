@@ -51,6 +51,8 @@ public class ChunkingTest extends AbstractCDOTest
       transaction.commit();
     }
 
+    removeAllRevisions(getRepository().getRevisionManager());
+
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
@@ -94,6 +96,8 @@ public class ChunkingTest extends AbstractCDOTest
       transaction.commit();
     }
 
+    removeAllRevisions(getRepository().getRevisionManager());
+
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
@@ -131,6 +135,7 @@ public class ChunkingTest extends AbstractCDOTest
 
       transaction.commit();
     }
+    removeAllRevisions(getRepository().getRevisionManager());
 
     // ************************************************************* //
 
@@ -170,6 +175,7 @@ public class ChunkingTest extends AbstractCDOTest
       transaction.commit();
     }
 
+    removeAllRevisions(getRepository().getRevisionManager());
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
@@ -212,6 +218,7 @@ public class ChunkingTest extends AbstractCDOTest
       transaction.commit();
     }
 
+    removeAllRevisions(getRepository().getRevisionManager());
     // ************************************************************* //
 
     CDOSession session = openModel1Session();

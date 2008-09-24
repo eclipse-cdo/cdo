@@ -73,10 +73,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel1(CDORevisionCache level1)
   {
     this.level1 = level1;
-    if (level1 != null)
-    {
-      level1.setResourcePathFeature(resourcePathFeature);
-    }
+    setResourcePathFeature(resourcePathFeature);
   }
 
   public CDORevisionCache getLevel2()
@@ -87,10 +84,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel2(CDORevisionCache level2)
   {
     this.level2 = level2;
-    if (level2 != null)
-    {
-      level2.setResourcePathFeature(resourcePathFeature);
-    }
+    setResourcePathFeature(resourcePathFeature);
   }
 
   public CDOClass getObjectType(CDOID id)

@@ -10,13 +10,29 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.tests.model1.Company;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public class AuditTest extends AbstractCDOTest
 {
+
+  @Override
+  public Map<String, Object> getTestProperties()
+  {
+    Map<String, Object> testProperties = super.getTestProperties();
+    testProperties.put(IRepository.Props.PROP_SUPPORTING_AUDITS, "true");
+    return testProperties;
+  }
+
   public void testRepositoryCreationTime() throws Exception
   {
     CDOSession session = openSession();
@@ -30,5 +46,31 @@ public class AuditTest extends AbstractCDOTest
     CDOSession session = openSession();
     long repositoryTime = session.getRepositoryTime();
     assertTrue(Math.abs(System.currentTimeMillis() - repositoryTime) < 500);
+  }
+
+  public void testLocalAudit() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("ESC");
+    resource.getContents().add(company);
+    transaction.commit();
+    long commitTime1 = transaction.getLastCommitTime();
+
+    company.setName("Sympedia");
+    transaction.commit();
+    long commitTime2 = transaction.getLastCommitTime();
+    assertTrue(commitTime1 < commitTime2);
+    assertEquals("Sympedia", company.getName());
+
+    CDOAudit audit = session.openAudit(commitTime1);
+    CDOResource auditResource = audit.getResource("/res1");
+    Company auditCompany = (Company)auditResource.getContents().get(0);
+    assertEquals("ESC", auditCompany.getName());
+    assertEquals("Sympedia", company.getName());
+    session.close();
   }
 }

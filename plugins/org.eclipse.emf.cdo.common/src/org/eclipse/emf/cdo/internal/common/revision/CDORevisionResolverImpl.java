@@ -287,6 +287,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    cache.setResourcePathFeature(getResourcePathFeature());
     LifecycleUtil.activate(cache);
   }
 

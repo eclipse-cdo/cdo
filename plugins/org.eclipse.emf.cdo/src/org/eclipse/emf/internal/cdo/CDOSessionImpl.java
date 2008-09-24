@@ -841,6 +841,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     channel.close();
+    channel = null;
     super.doDeactivate();
   }
 

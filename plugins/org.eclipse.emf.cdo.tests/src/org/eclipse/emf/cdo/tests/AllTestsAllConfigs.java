@@ -42,6 +42,7 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(EnumTest.class);
     testClasses.add(StateMachineTest.class);
     testClasses.add(ViewTest.class);
+    testClasses.add(AuditTest.class);
     testClasses.add(ResourceTest.class);
     testClasses.add(ContainmentTest.class);
     testClasses.add(InvalidationTest.class);
@@ -54,6 +55,7 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(MetaTest.class);
     testClasses.add(RevisionDeltaWithDeltaSupportTest.class);
     testClasses.add(RevisionDeltaWithoutDeltaSupportTest.class);
+    testClasses.add(RevisionHolderTest.class);
     testClasses.add(IndexReconstructionTest.class);
     testClasses.add(AutoAttacherTest.class);
     testClasses.add(SavepointTest.class);

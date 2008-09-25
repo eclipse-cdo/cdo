@@ -117,7 +117,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public CDOClass getObjectType(CDOID id)
   {
-    RevisionHolder holder = revisions.get(id);
+    RevisionHolder holder = getHolder(id);
     if (holder == null)
     {
       return null;
@@ -129,7 +129,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public synchronized InternalCDORevision getRevision(CDOID id)
   {
-    RevisionHolder holder = revisions.get(id);
+    RevisionHolder holder = getHolder(id);
     InternalCDORevision revision = holder == null ? null : holder.getRevision();
     if (revision == null || !revision.isCurrent())
     {
@@ -141,13 +141,13 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public synchronized InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
   {
-    RevisionHolder holder = revisions.get(id);
+    RevisionHolder holder = getHolder(id);
     return getRevisionByTime(holder, timeStamp);
   }
 
   public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int version)
   {
-    RevisionHolder holder = revisions.get(id);
+    RevisionHolder holder = getHolder(id);
     while (holder != null)
     {
       int holderVersion = holder.getVersion();
@@ -182,7 +182,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
     int version = revision.getVersion();
     RevisionHolder lastHolder = null;
-    RevisionHolder holder = revisions.get(revision.getID());
+    RevisionHolder holder = getHolder(revision.getID());
     while (holder != null)
     {
       int holderVersion = holder.getVersion();
@@ -208,7 +208,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
   public synchronized InternalCDORevision removeRevision(CDOID id, int version)
   {
     InternalCDORevision revision = null;
-    RevisionHolder holder = revisions.get(id);
+    RevisionHolder holder = getHolder(id);
     while (holder != null)
     {
       int holderVersion = holder.getVersion();
@@ -233,7 +233,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public synchronized boolean removeRevisions(CDOID id)
   {
-    RevisionHolder lookupHolder = revisions.get(id);
+    RevisionHolder lookupHolder = getHolder(id);
     RevisionHolder holder = lookupHolder;
     while (holder != null)
     {
@@ -250,7 +250,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     CDOID[] ids = getRevisionIDs();
     for (CDOID id : ids)
     {
-      RevisionHolder holder = revisions.get(id);
+      RevisionHolder holder = getHolder(id);
       if (holder != null)
       {
         InternalCDORevision revision = holder.getRevision();
@@ -316,6 +316,11 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     currentLRU = null;
     revisedLRU = null;
     super.doDeactivate();
+  }
+
+  public final RevisionHolder getHolder(CDOID id)
+  {
+    return revisions.get(id);
   }
 
   protected RevisionHolder createHolder(InternalCDORevision revision)

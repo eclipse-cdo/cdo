@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -73,7 +74,14 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private IRepositoryElement[] elements;
 
+  @ExcludeFromDump
   private transient long lastMetaID;
+
+  @ExcludeFromDump
+  private transient long lastCommitTimeStamp;
+
+  @ExcludeFromDump
+  private transient Object lastCommitTimeStampLock = new Object();
 
   public Repository()
   {
@@ -251,6 +259,26 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public void setCommitManager(CommitManager commitManager)
   {
     this.commitManager = commitManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public long createCommitTimeStamp()
+  {
+    synchronized (lastCommitTimeStampLock)
+    {
+      long now = System.currentTimeMillis();
+      if (lastCommitTimeStamp != 0 && lastCommitTimeStamp >= now)
+      {
+        // TODO Gracefully resolve this timing conflict
+        throw new IllegalStateException("lastCommitTimeStamp >= now");
+      }
+
+      // TODO Persist lastCommitTimeStamp in store
+      lastCommitTimeStamp = now;
+      return now;
+    }
   }
 
   /**

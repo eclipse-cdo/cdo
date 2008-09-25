@@ -501,7 +501,6 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Checking after sync");
     assertEquals(false, timeOuter.timedOut());
-
   }
 
   public void testPassiveUpdateOnAndOff() throws Exception

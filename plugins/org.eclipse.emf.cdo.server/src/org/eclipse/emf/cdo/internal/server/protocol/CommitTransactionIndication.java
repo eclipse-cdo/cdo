@@ -109,7 +109,6 @@ public class CommitTransactionIndication extends CDOServerIndication
   {
     // Create transaction context
     indicationTransaction(in);
-
     commitContext.preCommit();
 
     TransactionPackageManager packageManager = commitContext.getPackageManager();
@@ -180,6 +179,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     {
       out.writeString(rollbackMessage);
     }
+
     return success;
   }
 
@@ -212,6 +212,7 @@ public class CommitTransactionIndication extends CDOServerIndication
         out.writeCDOID(newID);
       }
     }
+
     out.writeCDOID(CDOID.NULL);
   }
 

@@ -229,6 +229,11 @@ public class CDORevisionImpl implements InternalCDORevision
 
   public void setRevised(long revised)
   {
+    if (revised != UNSPECIFIED_DATE && revised < created)
+    {
+      throw new IllegalArgumentException("created=" + created + ", revised=" + revised);
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting revised {0}: {1,date} {1,time}", this, revised);

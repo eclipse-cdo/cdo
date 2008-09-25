@@ -53,7 +53,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
   private IStoreWriter storeWriter;
 
-  private long timeStamp;
+  private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
   private CDOPackage[] newPackages;
 
@@ -247,7 +247,8 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
   protected long createTimeStamp()
   {
-    return System.currentTimeMillis();
+    Repository repository = (Repository)transaction.getSession().getSessionManager().getRepository();
+    return repository.createCommitTimeStamp();
   }
 
   public void postCommit(boolean success)
@@ -263,7 +264,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
     {
       StoreThreadLocal.release();
       storeWriter = null;
-      timeStamp = 0L;
+      timeStamp = CDORevision.UNSPECIFIED_DATE;
       packageManager.clear();
       metaIDRanges.clear();
       idMappings.clear();

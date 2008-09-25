@@ -74,7 +74,7 @@ public abstract class DBStoreAccessor extends StoreAccessor implements IDBStoreA
   }
 
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created)
   {
     throw new UnsupportedOperationException();
   }

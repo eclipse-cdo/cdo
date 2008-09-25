@@ -63,7 +63,7 @@ public abstract class HibernateStoreAccessor extends StoreAccessor implements IH
   }
 
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created)
   {
     throw new UnsupportedOperationException();
   }

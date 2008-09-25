@@ -302,6 +302,8 @@ public class InitialTest extends AbstractCDOTest
     transaction.commit();
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
+    assertCreatedTime(resource);
+    assertCreatedTime(supplier);
   }
 
   public void testReadResourceClean() throws Exception
@@ -331,6 +333,7 @@ public class InitialTest extends AbstractCDOTest
     EList<EObject> contents = resource.getContents();
     Supplier s = (Supplier)contents.get(0);
     assertEquals(supplier, s);
+    assertCreatedTime(s);
   }
 
   public void testReadObjectClean() throws Exception
@@ -418,14 +421,21 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Committing");
     transaction.commit();
+    long commitTime1 = transaction.getLastCommitTime();
+    assertCreatedTime(supplier);
 
     msg("Setting name");
     supplier.setName("Eike");
 
+    sleep(100);
     msg("Committing");
     transaction.commit();
+    long commitTime2 = transaction.getLastCommitTime();
+    assertTrue(commitTime1 < commitTime2);
+
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
+    assertCreatedTime(supplier);
   }
 
   public void testGetResource() throws Exception

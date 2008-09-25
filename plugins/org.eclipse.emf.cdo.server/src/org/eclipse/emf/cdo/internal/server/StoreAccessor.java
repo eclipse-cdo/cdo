@@ -112,6 +112,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
 
     commitContexts.add(context);
+    long timeStamp = context.getTimeStamp();
 
     writePackages(context.getNewPackages());
     addIDMappings(context);
@@ -121,14 +122,14 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     writeRevisions(context.getNewObjects());
     if (store.getRepository().isSupportingRevisionDeltas())
     {
-      writeRevisionDeltas(context.getDirtyObjectDeltas());
+      writeRevisionDeltas(context.getDirtyObjectDeltas(), timeStamp);
     }
     else
     {
       writeRevisions(context.getDirtyObjects());
     }
 
-    detachObjects(context.getDetachedObjects(), context.getTimeStamp() - 1);
+    detachObjects(context.getDetachedObjects(), timeStamp - 1);
   }
 
   /**
@@ -226,7 +227,10 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
   protected abstract void writeRevisions(CDORevision[] revisions);
 
-  protected abstract void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas);
+  /**
+   * @since 2.0
+   */
+  protected abstract void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created);
 
   /**
    * @since 2.0

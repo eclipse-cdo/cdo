@@ -22,12 +22,13 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.DLRevisionHolder;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.RevisionHolder;
 import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
@@ -38,8 +39,48 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class RevisionHolderTest extends AbstractOMTest
+public class RevisionHolderTest extends AbstractCDOTest
 {
+  public void testChronology() throws Exception
+  {
+    LRURevisionCache cache = new LRURevisionCache();
+    cache.activate();
+
+    TestRevision r1v1 = new TestRevision(1, 1, 1);
+    cache.addRevision(r1v1);
+    assertEquals(CDORevision.UNSPECIFIED_DATE, r1v1.getRevised());
+
+    TestRevision r1v2 = new TestRevision(1, 2, 6);
+    cache.addRevision(r1v2);
+    assertEquals(CDORevision.UNSPECIFIED_DATE, r1v2.getRevised());
+    assertEquals(r1v2.getCreated() - 1, r1v1.getRevised());
+
+    TestRevision r1v3 = new TestRevision(1, 3, 11);
+    cache.addRevision(r1v3);
+    assertEquals(CDORevision.UNSPECIFIED_DATE, r1v3.getRevised());
+    assertEquals(r1v3.getCreated() - 1, r1v2.getRevised());
+    assertEquals(r1v2.getCreated() - 1, r1v1.getRevised());
+
+    CDOID id = r1v1.getID();
+
+    RevisionHolder h1v3 = cache.getHolder(id);
+    assertEquals(r1v3, h1v3.getRevision());
+
+    RevisionHolder h1v2 = h1v3.getNext();
+    assertEquals(r1v2, h1v2.getRevision());
+
+    RevisionHolder h1v1 = h1v2.getNext();
+    assertEquals(r1v1, h1v1.getRevision());
+    assertEquals(null, h1v1.getNext());
+
+    h1v2 = h1v1.getPrev();
+    assertEquals(r1v2, h1v2.getRevision());
+
+    h1v3 = h1v2.getPrev();
+    assertEquals(r1v3, h1v3.getRevision());
+    assertEquals(null, h1v3.getPrev());
+  }
+
   public void testAddHead() throws Exception
   {
     LinkedList<LRURevisionHolder> linkedList = new LinkedList<LRURevisionHolder>();
@@ -196,24 +237,28 @@ public class RevisionHolderTest extends AbstractOMTest
   {
     private CDOID id;
 
-    public TestRevision(long id)
+    private int version;
+
+    private long created;
+
+    private long revised;
+
+    public TestRevision(long id, int version, long created, long revised)
     {
       this.id = CDOIDUtil.createLong(id);
+      this.version = version;
+      this.created = created;
+      this.revised = revised;
     }
 
-    public CDOClass getCDOClass()
+    public TestRevision(long id, int version, long created)
     {
-      return null;
+      this(id, version, created, CDORevision.UNSPECIFIED_DATE);
     }
 
-    public long getCreated()
+    public TestRevision(long id)
     {
-      return 0;
-    }
-
-    public CDORevisionData getData()
-    {
-      return null;
+      this(id, 0, CDORevision.UNSPECIFIED_DATE);
     }
 
     public CDOID getID()
@@ -221,39 +266,74 @@ public class RevisionHolderTest extends AbstractOMTest
       return id;
     }
 
-    public long getRevised()
+    public void setID(CDOID id)
     {
-      return 0;
-    }
-
-    public CDORevisionResolver getRevisionResolver()
-    {
-      return null;
+      this.id = id;
     }
 
     public int getVersion()
     {
-      return 0;
+      return version;
+    }
+
+    public void setVersion(int version)
+    {
+      this.version = version;
+    }
+
+    public long getCreated()
+    {
+      return created;
+    }
+
+    public void setCreated(long created)
+    {
+      this.created = created;
+    }
+
+    public long getRevised()
+    {
+      return revised;
+    }
+
+    public void setRevised(long revised)
+    {
+      this.revised = revised;
     }
 
     public boolean isCurrent()
     {
-      return false;
-    }
-
-    public boolean isResource()
-    {
-      return false;
+      return revised == UNSPECIFIED_DATE;
     }
 
     public boolean isTransactional()
     {
-      return false;
+      return version < 0;
     }
 
     public boolean isValid(long timeStamp)
     {
-      return false;
+      return (revised == UNSPECIFIED_DATE || revised >= timeStamp) && timeStamp >= created;
+    }
+
+    public CDOClass getCDOClass()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDORevisionData getData()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDORevisionResolver getRevisionResolver()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isResource()
+    {
+      throw new UnsupportedOperationException();
     }
 
     public CDORevisionDelta compare(CDORevision origin)
@@ -381,27 +461,12 @@ public class RevisionHolderTest extends AbstractOMTest
       throw new UnsupportedOperationException();
     }
 
-    public void setCreated(long created)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setID(CDOID id)
-    {
-      throw new UnsupportedOperationException();
-    }
-
     public void setListSize(CDOFeature feature, int size)
     {
       throw new UnsupportedOperationException();
     }
 
     public void setResourceID(CDOID resourceID)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setRevised(long revised)
     {
       throw new UnsupportedOperationException();
     }
@@ -417,11 +482,6 @@ public class RevisionHolderTest extends AbstractOMTest
     }
 
     public Object setValue(CDOFeature feature, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public void setVersion(int version)
     {
       throw new UnsupportedOperationException();
     }

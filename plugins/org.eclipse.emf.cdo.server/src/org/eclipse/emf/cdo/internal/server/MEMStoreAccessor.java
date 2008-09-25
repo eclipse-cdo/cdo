@@ -173,19 +173,23 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   }
 
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas)
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created)
   {
     for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
-      writeRevisionDelta(revisionDelta);
+      writeRevisionDelta(revisionDelta, created);
     }
   }
 
-  protected void writeRevisionDelta(CDORevisionDelta revisionDelta)
+  /**
+   * @since 2.0
+   */
+  protected void writeRevisionDelta(CDORevisionDelta revisionDelta, long created)
   {
     CDORevision revision = getStore().getRevision(revisionDelta.getID());
     CDORevision newRevision = CDORevisionUtil.copy(revision);
     revisionDelta.apply(newRevision);
+    ((InternalCDORevision)newRevision).setCreated(created);
     writeRevision(newRevision);
   }
 

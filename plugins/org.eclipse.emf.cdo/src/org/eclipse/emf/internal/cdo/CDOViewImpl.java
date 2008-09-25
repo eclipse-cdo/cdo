@@ -710,11 +710,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       TRACER.format("Deregistering {0}", object);
     }
 
-    InternalCDOObject old = removeObject(object.cdoID());
-    if (old == null)
-    {
-      throw new IllegalStateException("Unknown ID: " + object);
-    }
+    removeObject(object.cdoID());
   }
 
   public void remapObject(CDOID oldID)

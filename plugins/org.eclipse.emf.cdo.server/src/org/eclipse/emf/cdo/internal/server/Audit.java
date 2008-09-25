@@ -53,7 +53,7 @@ public class Audit extends View implements IAudit
     repository.validateTimeStamp(timeStamp);
 
     this.timeStamp = timeStamp;
-    return repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp);
+    return repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp, false);
   }
 
   @Override

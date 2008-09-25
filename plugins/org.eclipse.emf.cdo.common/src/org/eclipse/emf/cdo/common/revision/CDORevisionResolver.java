@@ -50,7 +50,11 @@ public interface CDORevisionResolver
 
   public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk);
 
-  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp);
+  /**
+   * @since 2.0
+   */
+  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp,
+      boolean loadMissingRevisions);
 
   /**
    * @since 2.0

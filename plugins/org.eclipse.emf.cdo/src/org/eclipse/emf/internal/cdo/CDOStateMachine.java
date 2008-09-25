@@ -623,8 +623,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
       else
       {
+        CDOViewImpl view = (CDOViewImpl)object.cdoView();
         object.cdoInternalPostDetach();
         object.cdoInternalSetState(CDOState.TRANSIENT);
+        view.deregisterObject(object);
       }
     }
 

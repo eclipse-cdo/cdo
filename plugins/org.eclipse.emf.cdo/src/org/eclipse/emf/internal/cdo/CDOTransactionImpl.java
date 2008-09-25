@@ -499,7 +499,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? getLastSavepoint().getNewResources()
           : getLastSavepoint().getNewObjects();
 
-      // Determine when we added object
+      // Determine if we added object
       if (map.containsKey(object.cdoID()))
       {
         map.remove(object.cdoID());
@@ -516,7 +516,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       getLastSavepoint().getDetachedObjects().add(object.cdoID());
     }
-
   }
 
   /**

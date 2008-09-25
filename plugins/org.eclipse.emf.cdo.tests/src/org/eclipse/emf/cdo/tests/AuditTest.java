@@ -19,9 +19,6 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 
 import org.eclipse.emf.internal.cdo.CDOAuditImpl;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-
 import java.util.Map;
 
 /**
@@ -29,6 +26,8 @@ import java.util.Map;
  */
 public class AuditTest extends AbstractCDOTest
 {
+  protected CDOSession session1;
+
   @Override
   public Map<String, Object> getTestProperties()
   {
@@ -37,24 +36,25 @@ public class AuditTest extends AbstractCDOTest
     return testProperties;
   }
 
-  public void testRepositoryCreationTime() throws Exception
+  protected CDOSession openSession1()
   {
-    CDOSession session = openSession();
-    long repositoryCreationTime = session.getRepositoryCreationTime();
-    assertEquals(getRepository().getCreationTime(), repositoryCreationTime);
-    assertEquals(getRepository().getStore().getCreationTime(), repositoryCreationTime);
+    session1 = openModel1Session();
+    return session1;
   }
 
-  public void testRepositoryTime() throws Exception
+  protected void closeSession1()
   {
-    CDOSession session = openSession();
-    long repositoryTime = session.getRepositoryTime();
-    assertTrue(Math.abs(System.currentTimeMillis() - repositoryTime) < 500);
+    session1.close();
   }
 
-  public void testLocalAudit() throws Exception
+  protected CDOSession openSession2()
   {
-    CDOSession session = openModel1Session();
+    return openModel1Session();
+  }
+
+  public void testNewAudit() throws Exception
+  {
+    CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
 
@@ -65,7 +65,6 @@ public class AuditTest extends AbstractCDOTest
     long commitTime1 = transaction.getLastCommitTime();
     assertTrue(session.getRepositoryCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
-    sleep(100);
 
     company.setName("Sympedia");
     transaction.commit();
@@ -80,6 +79,9 @@ public class AuditTest extends AbstractCDOTest
     assertTrue(commitTime2 < commitTime3);
     assertTrue(session.getRepositoryCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
+
+    closeSession1();
+    session = openSession2();
 
     CDOAudit audit = session.openAudit(commitTime1);
     CDOResource auditResource = audit.getResource("/res1");
@@ -93,9 +95,9 @@ public class AuditTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testRemoteAudit() throws Exception
+  public void testChangedAudit() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
 
@@ -106,7 +108,6 @@ public class AuditTest extends AbstractCDOTest
     long commitTime1 = transaction.getLastCommitTime();
     assertTrue(session.getRepositoryCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
-    sleep(100);
 
     company.setName("Sympedia");
     transaction.commit();
@@ -114,7 +115,6 @@ public class AuditTest extends AbstractCDOTest
     assertTrue(commitTime1 < commitTime2);
     assertTrue(session.getRepositoryCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
-    sleep(100);
 
     company.setName("Eclipse");
     transaction.commit();
@@ -122,79 +122,37 @@ public class AuditTest extends AbstractCDOTest
     assertTrue(commitTime2 < commitTime3);
     assertTrue(session.getRepositoryCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
-    session.close();
 
-    CDOSession session2 = openModel1Session();
-    CDOAudit audit = session2.openAudit(commitTime1);
-    CDOResource auditResource = audit.getResource("/res1");
-    EList<EObject> contents = auditResource.getContents();
-    Company auditCompany = (Company)contents.get(0);
-    String name = auditCompany.getName();
-    assertEquals("ESC", name);
+    closeSession1();
+    session = openSession2();
 
-    CDOAudit audit2 = session2.openAudit(commitTime2);
-    CDOResource auditResource2 = audit2.getResource("/res1");
-    Company auditCompany2 = (Company)auditResource2.getContents().get(0);
-    assertEquals("Sympedia", auditCompany2.getName());
-    session2.close();
-  }
-
-  public void testChangeLocalAudit() throws Exception
-  {
-    CDOSession session = openModel1Session();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
-  
-    Company company = getModel1Factory().createCompany();
-    company.setName("ESC");
-    resource.getContents().add(company);
-    transaction.commit();
-    long commitTime1 = transaction.getLastCommitTime();
-    assertTrue(session.getRepositoryCreationTime() < commitTime1);
-    assertEquals("ESC", company.getName());
-    sleep(100);
-  
-    company.setName("Sympedia");
-    transaction.commit();
-    long commitTime2 = transaction.getLastCommitTime();
-    assertTrue(commitTime1 < commitTime2);
-    assertTrue(session.getRepositoryCreationTime() < commitTime2);
-    assertEquals("Sympedia", company.getName());
-  
-    company.setName("Eclipse");
-    transaction.commit();
-    long commitTime3 = transaction.getLastCommitTime();
-    assertTrue(commitTime2 < commitTime3);
-    assertTrue(session.getRepositoryCreationTime() < commitTime2);
-    assertEquals("Eclipse", company.getName());
-  
     CDOAudit audit = session.openAudit(commitTime1);
     {
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("ESC", auditCompany.getName());
     }
-  
+
     ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
     {
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Sympedia", auditCompany.getName());
     }
-  
+
     ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
     {
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Eclipse", auditCompany.getName());
     }
-  
+
     session.close();
   }
 
-  public void testChangeRemoteAudit() throws Exception
+  public void testKeepHandle() throws Exception
   {
-    CDOSession session = openModel1Session();
+    CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/res1");
 
@@ -205,7 +163,6 @@ public class AuditTest extends AbstractCDOTest
     long commitTime1 = transaction.getLastCommitTime();
     assertTrue(session.getRepositoryCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
-    sleep(100);
 
     company.setName("Sympedia");
     transaction.commit();
@@ -220,30 +177,165 @@ public class AuditTest extends AbstractCDOTest
     assertTrue(commitTime2 < commitTime3);
     assertTrue(session.getRepositoryCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
-    session.close();
 
-    CDOSession session2 = openModel1Session();
-    CDOAudit audit = session2.openAudit(commitTime1);
-    {
-      CDOResource auditResource = audit.getResource("/res1");
-      Company auditCompany = (Company)auditResource.getContents().get(0);
-      assertEquals("ESC", auditCompany.getName());
-    }
+    closeSession1();
+    session = openSession2();
+
+    CDOAudit audit = session.openAudit(commitTime1);
+    CDOResource auditResource = audit.getResource("/res1");
+    Company auditCompany = (Company)auditResource.getContents().get(0);
+    assertEquals("ESC", auditCompany.getName());
 
     ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
-    {
-      CDOResource auditResource = audit.getResource("/res1");
-      Company auditCompany = (Company)auditResource.getContents().get(0);
-      assertEquals("Sympedia", auditCompany.getName());
-    }
+    assertEquals("Sympedia", auditCompany.getName());
 
     ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
+    assertEquals("Eclipse", auditCompany.getName());
+    session.close();
+  }
+
+  public void testAddingContents() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+    long commitTime1 = transaction.getLastCommitTime();
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+    long commitTime2 = transaction.getLastCommitTime();
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+    long commitTime3 = transaction.getLastCommitTime();
+    closeSession1();
+
+    session = openSession2();
+
+    CDOAudit audit = session.openAudit(commitTime1);
+    CDOResource auditResource = audit.getResource("/res1");
+    assertEquals(1, auditResource.getContents().size());
+
+    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    assertEquals(2, auditResource.getContents().size());
+
+    ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
+    assertEquals(3, auditResource.getContents().size());
+    session.close();
+  }
+
+  public void testRemovingContents() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+    long commitTime1 = transaction.getLastCommitTime();
+
+    resource.getContents().remove(2);
+    transaction.commit();
+    long commitTime2 = transaction.getLastCommitTime();
+
+    resource.getContents().remove(2);
+    transaction.commit();
+    long commitTime3 = transaction.getLastCommitTime();
+    closeSession1();
+
+    session = openSession2();
+
+    CDOAudit audit = session.openAudit(commitTime1);
+    CDOResource auditResource = audit.getResource("/res1");
+    assertEquals(5, auditResource.getContents().size());
+
+    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    assertEquals(4, auditResource.getContents().size());
+
+    ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
+    assertEquals(3, auditResource.getContents().size());
+    session.close();
+  }
+
+  public void testRemovingContentsKeepHandle() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("ESC");
+
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(company);
+    resource.getContents().add(getModel1Factory().createCompany());
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+    long commitTime1 = transaction.getLastCommitTime();
+
+    resource.getContents().remove(2);
+    transaction.commit();
+    long commitTime2 = transaction.getLastCommitTime();
+
+    closeSession1();
+    session = openSession2();
+
+    CDOAudit audit = session.openAudit(commitTime1);
+    CDOResource auditResource = audit.getResource("/res1");
+    assertEquals(5, auditResource.getContents().size());
+
+    Company auditCompany = (Company)auditResource.getContents().get(2);
+    assertEquals("ESC", auditCompany.getName());
+    assertClean(auditCompany, audit);
+
+    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    assertEquals(4, auditResource.getContents().size());
+    assertTransient(auditCompany);
+
+    ((CDOAuditImpl)audit).setTimeStamp(commitTime1);
+    assertTransient(auditCompany);
+    assertEquals(5, auditResource.getContents().size());
+    session.close();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class LocalAuditTest extends AuditTest
+  {
+    public void testRepositoryCreationTime() throws Exception
     {
-      CDOResource auditResource = audit.getResource("/res1");
-      Company auditCompany = (Company)auditResource.getContents().get(0);
-      assertEquals("Eclipse", auditCompany.getName());
+      CDOSession session = openSession();
+      long repositoryCreationTime = session.getRepositoryCreationTime();
+      assertEquals(getRepository().getCreationTime(), repositoryCreationTime);
+      assertEquals(getRepository().getStore().getCreationTime(), repositoryCreationTime);
     }
 
-    session2.close();
+    public void testRepositoryTime() throws Exception
+    {
+      CDOSession session = openSession();
+      long repositoryTime = session.getRepositoryTime();
+      assertTrue(Math.abs(System.currentTimeMillis() - repositoryTime) < 500);
+    }
+
+    @Override
+    protected void closeSession1()
+    {
+      // Do nothing
+    }
+
+    @Override
+    protected CDOSession openSession2()
+    {
+      return session1;
+    }
   }
 }

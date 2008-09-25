@@ -190,21 +190,22 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return revisions;
   }
 
-  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp,
+      boolean loadMissingRevisions)
   {
-    List<CDOID> missingIDs = new ArrayList<CDOID>(0);
+    List<CDOID> missingIDs = loadMissingRevisions ? new ArrayList<CDOID>(0) : null;
     List<CDORevision> revisions = new ArrayList<CDORevision>(ids.size());
     for (CDOID id : ids)
     {
       InternalCDORevision revision = getRevisionByTime(id, referenceChunk, timeStamp, false);
       revisions.add(revision);
-      if (revision == null)
+      if (revision == null && missingIDs != null)
       {
         missingIDs.add(id);
       }
     }
 
-    if (!missingIDs.isEmpty())
+    if (missingIDs != null && !missingIDs.isEmpty())
     {
       List<InternalCDORevision> missingRevisions = loadRevisionsByTime(missingIDs, referenceChunk, timeStamp);
       handleMissingRevisions(revisions, missingRevisions);

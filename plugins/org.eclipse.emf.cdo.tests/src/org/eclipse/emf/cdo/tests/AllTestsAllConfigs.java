@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.tests.AuditTest.LocalAuditTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_241464_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_243310_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_246442_Test;
@@ -43,6 +44,7 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(StateMachineTest.class);
     testClasses.add(ViewTest.class);
     testClasses.add(AuditTest.class);
+    testClasses.add(LocalAuditTest.class);
     testClasses.add(ResourceTest.class);
     testClasses.add(ContainmentTest.class);
     testClasses.add(InvalidationTest.class);

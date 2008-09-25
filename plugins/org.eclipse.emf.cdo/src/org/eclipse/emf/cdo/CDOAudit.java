@@ -20,4 +20,9 @@ package org.eclipse.emf.cdo;
 public interface CDOAudit extends CDOView
 {
   public long getTimeStamp();
+
+  /**
+   * @since 2.0
+   */
+  public void setTimeStamp(long timeStamp);
 }

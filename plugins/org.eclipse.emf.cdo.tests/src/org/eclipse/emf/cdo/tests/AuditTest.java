@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
 
-import org.eclipse.emf.internal.cdo.CDOAuditImpl;
-
 import java.util.Map;
 
 /**
@@ -133,14 +131,14 @@ public class AuditTest extends AbstractCDOTest
       assertEquals("ESC", auditCompany.getName());
     }
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    audit.setTimeStamp(commitTime2);
     {
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Sympedia", auditCompany.getName());
     }
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
+    audit.setTimeStamp(commitTime3);
     {
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
@@ -186,10 +184,10 @@ public class AuditTest extends AbstractCDOTest
     Company auditCompany = (Company)auditResource.getContents().get(0);
     assertEquals("ESC", auditCompany.getName());
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    audit.setTimeStamp(commitTime2);
     assertEquals("Sympedia", auditCompany.getName());
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
+    audit.setTimeStamp(commitTime3);
     assertEquals("Eclipse", auditCompany.getName());
     session.close();
   }
@@ -219,10 +217,10 @@ public class AuditTest extends AbstractCDOTest
     CDOResource auditResource = audit.getResource("/res1");
     assertEquals(1, auditResource.getContents().size());
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    audit.setTimeStamp(commitTime2);
     assertEquals(2, auditResource.getContents().size());
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
+    audit.setTimeStamp(commitTime3);
     assertEquals(3, auditResource.getContents().size());
     session.close();
   }
@@ -256,10 +254,10 @@ public class AuditTest extends AbstractCDOTest
     CDOResource auditResource = audit.getResource("/res1");
     assertEquals(5, auditResource.getContents().size());
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    audit.setTimeStamp(commitTime2);
     assertEquals(4, auditResource.getContents().size());
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime3);
+    audit.setTimeStamp(commitTime3);
     assertEquals(3, auditResource.getContents().size());
     session.close();
   }
@@ -296,11 +294,11 @@ public class AuditTest extends AbstractCDOTest
     assertEquals("ESC", auditCompany.getName());
     assertClean(auditCompany, audit);
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime2);
+    audit.setTimeStamp(commitTime2);
     assertEquals(4, auditResource.getContents().size());
     assertTransient(auditCompany);
 
-    ((CDOAuditImpl)audit).setTimeStamp(commitTime1);
+    audit.setTimeStamp(commitTime1);
     assertTransient(auditCompany);
     assertEquals(5, auditResource.getContents().size());
     session.close();

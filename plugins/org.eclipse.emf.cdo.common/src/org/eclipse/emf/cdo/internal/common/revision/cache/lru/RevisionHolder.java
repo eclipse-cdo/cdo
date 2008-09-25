@@ -62,16 +62,25 @@ public class RevisionHolder
     return (getRevised() == CDORevision.UNSPECIFIED_DATE || getRevised() >= timeStamp) && timeStamp >= getCreated();
   }
 
+  /**
+   * Returns:
+   * <ul>
+   * <li>-1 if the revision is valid *before* the timestamp
+   * <li>0 if the revision is valid *at* the timestamp
+   * <li>1 if the revision is valid *after* the timestamp
+   * </ul>
+   */
   public int compareTo(long timeStamp)
   {
     if (timeStamp < getCreated())
     {
-      return -1;
+      return 1;
     }
 
-    if (getRevised() != CDORevision.UNSPECIFIED_DATE && timeStamp > getRevised())
+    long revised = getRevised();
+    if (revised != CDORevision.UNSPECIFIED_DATE && revised < timeStamp)
     {
-      return 1;
+      return -1;
     }
 
     return 0;

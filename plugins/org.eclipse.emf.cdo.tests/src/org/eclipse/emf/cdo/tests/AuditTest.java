@@ -24,7 +24,6 @@ import java.util.Map;
  */
 public class AuditTest extends AbstractCDOTest
 {
-
   @Override
   public Map<String, Object> getTestProperties()
   {
@@ -59,20 +58,29 @@ public class AuditTest extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
     long commitTime1 = transaction.getLastCommitTime();
+    assertTrue(session.getRepositoryCreationTime() < commitTime1);
+    assertEquals("ESC", company.getName());
+    sleep(100);
 
     company.setName("Sympedia");
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
     assertTrue(commitTime1 < commitTime2);
-    assertTrue(session.getRepositoryCreationTime() < commitTime1);
     assertTrue(session.getRepositoryCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
+
+    company.setName("Eclipse");
+    transaction.commit();
+    long commitTime3 = transaction.getLastCommitTime();
+    assertTrue(commitTime2 < commitTime3);
+    assertTrue(session.getRepositoryCreationTime() < commitTime2);
+    assertEquals("Eclipse", company.getName());
 
     CDOAudit audit = session.openAudit(commitTime1);
     CDOResource auditResource = audit.getResource("/res1");
     Company auditCompany = (Company)auditResource.getContents().get(0);
     assertEquals("ESC", auditCompany.getName());
-    assertEquals("Sympedia", company.getName());
+    assertEquals("Eclipse", company.getName());
     session.close();
   }
 }

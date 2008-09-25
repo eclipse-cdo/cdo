@@ -291,7 +291,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     try
     {
-      lastCommitTime = getTransactionStrategy().commit(this);
+      getTransactionStrategy().commit(this);
     }
     catch (TransactionException ex)
     {
@@ -966,6 +966,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
 
           getTransaction().cleanUp();
+          lastCommitTime = result.getTimeStamp();
           Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
           getTransaction().fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
         }

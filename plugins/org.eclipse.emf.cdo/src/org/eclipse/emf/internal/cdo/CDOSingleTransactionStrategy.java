@@ -36,7 +36,7 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
   {
   }
 
-  public long commit(InternalCDOTransaction transaction) throws Exception
+  public void commit(InternalCDOTransaction transaction) throws Exception
   {
     CDOCommitContext commitContext = transaction.createCommitContext();
     if (TRACER.isEnabled())
@@ -68,7 +68,6 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
     }
 
     commitContext.postCommit(result);
-    return result.getTimeStamp();
   }
 
   public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint, boolean remote)

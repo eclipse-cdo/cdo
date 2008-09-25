@@ -64,6 +64,8 @@ public class AuditTest extends AbstractCDOTest
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
     assertTrue(commitTime1 < commitTime2);
+    assertTrue(session.getRepositoryCreationTime() < commitTime1);
+    assertTrue(session.getRepositoryCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
 
     CDOAudit audit = session.openAudit(commitTime1);

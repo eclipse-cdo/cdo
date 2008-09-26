@@ -168,7 +168,16 @@ public class ChannelTest extends AbstractProtocolTest
 
   public void testMultiThreadWithTinyData() throws Exception
   {
-    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(2000L);
+    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(2000L)
+    {
+      @Override
+      protected void handleTimeoutExpiration(MonitoredThread thread, long idle)
+      {
+        String name = thread.getName();
+        super.handleTimeoutExpiration(thread, idle);
+      }
+    };
+
     for (int i = 0; i < 100; i++)
     {
       threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor)

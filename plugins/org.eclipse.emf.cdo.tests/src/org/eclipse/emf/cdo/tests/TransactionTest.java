@@ -102,8 +102,9 @@ public class TransactionTest extends AbstractCDOTest
     for (int i = 0; i < THREADS; i++)
     {
       final int id = i;
-      threadList.add(new Thread(new Runnable()
+      threadList.add(new Thread("TEST-THREAD-" + id)
       {
+        @Override
         public void run()
         {
           try
@@ -134,7 +135,7 @@ public class TransactionTest extends AbstractCDOTest
             latch.countDown();
           }
         }
-      }, "TEST-THREAD-" + id));
+      });
     }
 
     for (Thread thread : threadList)

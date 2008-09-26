@@ -26,6 +26,11 @@ import java.util.Map;
  */
 public interface IStoreWriter extends IStoreReader
 {
+  /**
+   * Returns the transaction this store writer is associated with.
+   * <p>
+   * TODO Should be refactored to ITransaction getTransaction()?
+   */
   public IView getView();
 
   /**

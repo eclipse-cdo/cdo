@@ -215,7 +215,6 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
   {
     try
     {
-      // ugly cast
       super.doDeactivate();
     }
     finally

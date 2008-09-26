@@ -100,6 +100,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     rs.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
     rs.getPackageRegistry().put(XMLTypePackage.eNS_URI, XMLTypePackage.eINSTANCE);
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
+
     for (CDOPackage cdoPackage : getHibernateStore().getPackageHandler().getCDOPackages())
     {
       if (TRACER.isEnabled())

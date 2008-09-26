@@ -21,7 +21,7 @@ public interface IQueryContext
   public IView getView();
 
   /**
-   * The timeStamp of the view ({@link CDOProtocolView#UNSPECIFIED_DATE} if the view is an
+   * The timeStamp of the view or ({@link CDOProtocolView#UNSPECIFIED_DATE} if the view is an
    * {@link CDOProtocolView.Type#AUDIT audit} view.
    */
   public long getTimeStamp();

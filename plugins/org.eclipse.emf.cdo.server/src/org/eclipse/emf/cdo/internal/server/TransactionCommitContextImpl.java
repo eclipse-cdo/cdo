@@ -216,11 +216,12 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
    */
   public void write()
   {
-    timeStamp = createTimeStamp();
-    dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
-
     try
     {
+      // Could throw an exception
+      timeStamp = createTimeStamp();
+      dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
+
       adjustMetaRanges();
       adjustTimeStamps();
       computeDirtyObjects(!transaction.getRepository().isSupportingRevisionDeltas());

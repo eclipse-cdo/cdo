@@ -13,30 +13,62 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
 public class ChannelTest extends AbstractProtocolTest
 {
+  private IConnector connector;
+
+  private List<TestSignalProtocol> protocols;
+
   public ChannelTest()
   {
   }
 
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    connector = startTransport();
+    protocols = new ArrayList<TestSignalProtocol>();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    for (TestSignalProtocol protocol : protocols)
+    {
+      protocol.close();
+    }
+
+    super.doTearDown();
+  }
+
+  protected TestSignalProtocol openTestSignalProtocol()
+  {
+    return new TestSignalProtocol(connector);
+  }
+
   public void testOpenChannel() throws Exception
   {
-    IConnector connector = startTransport();
     TestSignalProtocol protocol = null;
 
     try
     {
-      protocol = new TestSignalProtocol(connector);
+      protocol = openTestSignalProtocol();
+      assertActive(protocol);
+
       protocol.close();
+      assertInactive(protocol);
     }
     finally
     {
       if (protocol != null)
       {
-        protocol.close();
       }
     }
   }

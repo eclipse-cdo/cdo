@@ -89,12 +89,7 @@ public abstract class SignalProtocol extends Protocol
    */
   public void close()
   {
-    IChannel channel = getChannel();
-    if (channel != null)
-    {
-      channel.close();
-      setChannel(null);
-    }
+    deactivate();
   }
 
   public IStreamWrapper getStreamWrapper()
@@ -240,6 +235,19 @@ public abstract class SignalProtocol extends Protocol
   public String toString()
   {
     return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$ 
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    IChannel channel = getChannel();
+    if (channel != null)
+    {
+      channel.close();
+      setChannel(null);
+    }
+
+    super.doDeactivate();
   }
 
   protected final SignalReactor provideSignalReactor(short signalID)

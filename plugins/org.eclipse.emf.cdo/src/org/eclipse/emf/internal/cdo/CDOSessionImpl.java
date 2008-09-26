@@ -760,7 +760,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     // Link ViewSet with View
     view.setViewSet(viewSet);
     ((CDOViewSetImpl)viewSet).add(view);
-
     sendViewsChangedRequest(view);
     fireElementAddedEvent(view);
   }
@@ -769,7 +768,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     EventUtil.removeListener(oldChannel, channelListener);
     EventUtil.addListener(newChannel, channelListener);
-
     channel = newChannel;
     connector = newConnector;
   }

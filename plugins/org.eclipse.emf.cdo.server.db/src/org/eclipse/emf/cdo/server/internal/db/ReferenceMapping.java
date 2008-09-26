@@ -107,6 +107,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     {
       TRACER.trace(sql);
     }
+
     ResultSet resultSet = null;
 
     try

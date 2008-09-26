@@ -33,7 +33,6 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -59,7 +58,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
-      for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
+      for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
       {
         if (lifecycle == entry.getValue())
         {
@@ -105,7 +104,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     if (processExistingElements)
     {
       ContainerEvent<Object> event = new ContainerEvent<Object>(this);
-      for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
+      for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
       {
         ElementKey key = entry.getKey();
         Object element = entry.getValue();
@@ -116,7 +115,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
         Object newElement = postProcessor.process(this, productGroup, factoryType, description, element);
         if (newElement != element)
         {
-          elementRegistry.put(key, newElement);
+          synchronized (elementRegistry)
+          {
+            elementRegistry.put(key, newElement);
+          }
+
           event.addDelta(element, IContainerDelta.Kind.REMOVED);
           event.addDelta(newElement, IContainerDelta.Kind.ADDED);
         }
@@ -146,7 +149,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       result.add(key.getProductGroup());
     }
 
-    for (ElementKey key : elementRegistry.keySet())
+    for (ElementKey key : getElementRegistryKeys())
     {
       result.add(key.getProductGroup());
     }
@@ -165,7 +168,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       }
     }
 
-    for (ElementKey key : elementRegistry.keySet())
+    for (ElementKey key : getElementRegistryKeys())
     {
       if (ObjectUtil.equals(key.getProductGroup(), productGroup))
       {
@@ -190,12 +193,15 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public boolean isEmpty()
   {
-    return elementRegistry.isEmpty();
+    synchronized (elementRegistry)
+    {
+      return elementRegistry.isEmpty();
+    }
   }
 
   public String[] getElementKey(Object element)
   {
-    for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
+    for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       if (entry.getValue() == element)
       {
@@ -210,13 +216,13 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object[] getElements()
   {
-    return elementRegistry.values().toArray();
+    return getElementRegistryValues();
   }
 
   public Object[] getElements(String productGroup)
   {
     List<Object> result = new ArrayList<Object>();
-    for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
+    for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
       if (ObjectUtil.equals(key.getProductGroup(), productGroup))
@@ -231,7 +237,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public Object[] getElements(String productGroup, String factoryType)
   {
     List<Object> result = new ArrayList<Object>();
-    for (Entry<ElementKey, Object> entry : elementRegistry.entrySet())
+    for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
       if (ObjectUtil.equals(key.getProductGroup(), productGroup)
@@ -255,17 +261,21 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public Object getElement(String productGroup, String factoryType, String description, boolean activate)
   {
     ElementKey key = new ElementKey(productGroup, factoryType, description);
-    Object element = elementRegistry.get(key);
-    if (element == null)
+    Object element;
+    synchronized (elementRegistry)
     {
-      element = createElement(productGroup, factoryType, description);
-      element = postProcessElement(productGroup, factoryType, description, element);
-      if (activate)
+      element = elementRegistry.get(key);
+      if (element == null)
       {
-        LifecycleUtil.activate(element);
-      }
+        element = createElement(productGroup, factoryType, description);
+        element = postProcessElement(productGroup, factoryType, description, element);
+        if (activate)
+        {
+          LifecycleUtil.activate(element);
+        }
 
-      putElement(key, element);
+        putElement(key, element);
+      }
     }
 
     return element;
@@ -280,8 +290,13 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   protected Object putElement(ElementKey key, Object element)
   {
     ContainerEvent<Object> event = new ContainerEvent<Object>(this);
-    key.setID(++maxElementID);
-    Object oldElement = elementRegistry.put(key, element);
+    Object oldElement;
+    synchronized (elementRegistry)
+    {
+      key.setID(++maxElementID);
+      oldElement = elementRegistry.put(key, element);
+    }
+
     if (oldElement != null)
     {
       EventUtil.removeListener(oldElement, elementListener);
@@ -302,7 +317,12 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   protected Object removeElement(ElementKey key)
   {
-    Object element = elementRegistry.remove(key);
+    Object element;
+    synchronized (elementRegistry)
+    {
+      element = elementRegistry.remove(key);
+    }
+
     if (element != null)
     {
       EventUtil.removeListener(element, elementListener);
@@ -314,58 +334,72 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public void clearElements()
   {
-    if (!elementRegistry.isEmpty())
+    ContainerEvent<Object> event = null;
+    synchronized (elementRegistry)
     {
-      ContainerEvent<Object> event = new ContainerEvent<Object>(this);
-      for (Object element : elementRegistry.values())
+      if (!elementRegistry.isEmpty())
       {
-        EventUtil.removeListener(element, elementListener);
-        event.addDelta(element, IContainerDelta.Kind.REMOVED);
-      }
+        event = new ContainerEvent<Object>(this);
+        for (Object element : elementRegistry.values())
+        {
+          EventUtil.removeListener(element, elementListener);
+          event.addDelta(element, IContainerDelta.Kind.REMOVED);
+        }
 
-      elementRegistry.clear();
+        elementRegistry.clear();
+      }
+    }
+
+    if (event != null)
+    {
       fireEvent(event);
     }
   }
 
   public void loadElements(InputStream stream) throws IOException
   {
-    clearElements();
-    ObjectInputStream ois = new ObjectInputStream(stream);
-    int size = ois.readInt();
-    for (int i = 0; i < size; i++)
+    synchronized (elementRegistry)
     {
-      try
+      clearElements();
+      ObjectInputStream ois = new ObjectInputStream(stream);
+      int size = ois.readInt();
+      for (int i = 0; i < size; i++)
       {
-        ElementKey key = (ElementKey)ois.readObject();
-        Object element = getElement(key.getProductGroup(), key.getFactoryType(), key.getDescription());
-
-        boolean active = ois.readBoolean();
-        if (active)
+        try
         {
-          // TODO Reconsider activation
-          LifecycleUtil.activate(element);
+          ElementKey key = (ElementKey)ois.readObject();
+          Object element = getElement(key.getProductGroup(), key.getFactoryType(), key.getDescription());
+
+          boolean active = ois.readBoolean();
+          if (active)
+          {
+            // TODO Reconsider activation
+            LifecycleUtil.activate(element);
+          }
+        }
+        catch (ClassNotFoundException cannotHappen)
+        {
         }
       }
-      catch (ClassNotFoundException cannotHappen)
-      {
-      }
-    }
 
-    initMaxElementID();
+      initMaxElementID();
+    }
   }
 
   public void saveElements(OutputStream stream) throws IOException
   {
-    ObjectOutputStream oos = new ObjectOutputStream(stream);
-    List<Entry<ElementKey, Object>> entries = new ArrayList<Entry<ElementKey, Object>>(elementRegistry.entrySet());
-    Collections.sort(entries, new EntryComparator());
-
-    oos.writeInt(entries.size());
-    for (Entry<ElementKey, Object> entry : entries)
+    synchronized (elementRegistry)
     {
-      oos.writeObject(entry.getKey());
-      oos.writeBoolean(LifecycleUtil.isActive(entry.getValue()));
+      ObjectOutputStream oos = new ObjectOutputStream(stream);
+      List<Entry<ElementKey, Object>> entries = new ArrayList<Entry<ElementKey, Object>>(elementRegistry.entrySet());
+      Collections.sort(entries, new EntryComparator());
+
+      oos.writeInt(entries.size());
+      for (Entry<ElementKey, Object> entry : entries)
+      {
+        oos.writeObject(entry.getKey());
+        oos.writeBoolean(LifecycleUtil.isActive(entry.getValue()));
+      }
     }
   }
 
@@ -401,6 +435,40 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return new ArrayList<IElementProcessor>();
   }
 
+  /**
+   * @since 2.0
+   */
+  protected ElementKey[] getElementRegistryKeys()
+  {
+    synchronized (elementRegistry)
+    {
+      return elementRegistry.keySet().toArray(new ElementKey[elementRegistry.size()]);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected Object[] getElementRegistryValues()
+  {
+    synchronized (elementRegistry)
+    {
+      return elementRegistry.values().toArray(new Object[elementRegistry.size()]);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  @SuppressWarnings("unchecked")
+  protected Entry<ElementKey, Object>[] getElementRegistryEntries()
+  {
+    synchronized (elementRegistry)
+    {
+      return elementRegistry.entrySet().toArray(new Entry[elementRegistry.size()]);
+    }
+  }
+
   protected Object createElement(String productGroup, String factoryType, String description)
   {
     IFactory factory = getFactory(productGroup, factoryType);
@@ -417,7 +485,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return element;
   }
 
-  protected void initMaxElementID()
+  private void initMaxElementID()
   {
     maxElementID = 0L;
     for (ElementKey key : elementRegistry.keySet())
@@ -441,8 +509,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   @Override
   protected void doDeactivate() throws Exception
   {
-    Collection<Object> values = elementRegistry.values();
-    for (Object element : values.toArray())
+    for (Object element : getElementRegistryValues())
     {
       try
       {

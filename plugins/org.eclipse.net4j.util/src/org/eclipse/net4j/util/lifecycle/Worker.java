@@ -12,7 +12,6 @@ package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -154,7 +153,14 @@ public abstract class Worker extends Lifecycle
         }
         catch (NextWork nextWork)
         {
-          nextWork.pause();
+          try
+          {
+            nextWork.pause();
+          }
+          catch (InterruptedException ex)
+          {
+            break;
+          }
         }
         catch (Terminate terminate)
         {
@@ -230,11 +236,11 @@ public abstract class Worker extends Lifecycle
       this.pauseMillis = pauseMillis;
     }
 
-    public void pause()
+    public void pause() throws InterruptedException
     {
       if (pauseMillis > 0)
       {
-        ConcurrencyUtil.sleep(pauseMillis);
+        Thread.sleep(pauseMillis);
       }
     }
   }

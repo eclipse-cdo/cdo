@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
@@ -43,27 +42,6 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
   public boolean hasServerContainer()
   {
     return serverContainer != null;
-  }
-
-  public void restartContainers() throws Exception
-  {
-    IOUtil.OUT().println("RESTARTING CONTAINER");
-    getCurrentTest().stopTransport();
-
-    // Stop client
-    LifecycleUtil.deactivate(clientContainer);
-    clientContainer = null;
-
-    // Restart server
-    LifecycleUtil.deactivate(serverContainer);
-    serverContainer = null;
-    getServerContainer();
-
-    // Start client
-    getClientContainer();
-
-    getCurrentTest().startTransport();
-    IOUtil.OUT().println("RESTARTING CONTAINER - FINISHED");
   }
 
   @Override

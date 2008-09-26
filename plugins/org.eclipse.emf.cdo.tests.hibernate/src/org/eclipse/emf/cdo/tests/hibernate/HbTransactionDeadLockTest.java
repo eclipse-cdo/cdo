@@ -12,14 +12,14 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
-import org.eclipse.emf.cdo.tests.TransactionDeadLockTest;
+import org.eclipse.emf.cdo.tests.TransactionTest;
 
 import java.util.Map;
 
 /**
  * @author Martin Taal
  */
-public class HbTransactionDeadLockTest extends TransactionDeadLockTest
+public class HbTransactionDeadLockTest extends TransactionTest
 {
   public static void main(String[] args) throws Exception
   {

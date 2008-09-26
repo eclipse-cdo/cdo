@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -266,13 +267,16 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
    */
   public long createCommitTimeStamp()
   {
+    long now = System.currentTimeMillis();
     synchronized (lastCommitTimeStampLock)
     {
-      long now = System.currentTimeMillis();
-      if (lastCommitTimeStamp != 0 && lastCommitTimeStamp >= now)
+      if (lastCommitTimeStamp != 0)
       {
-        // TODO Gracefully resolve this timing conflict
-        throw new IllegalStateException("lastCommitTimeStamp >= now");
+        while (lastCommitTimeStamp == now)
+        {
+          ConcurrencyUtil.sleep(1);
+          now = System.currentTimeMillis();
+        }
       }
 
       // TODO Persist lastCommitTimeStamp in store

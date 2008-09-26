@@ -177,13 +177,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOResource getOrCreateResource(String path)
   {
-    CDOID id = getResourceID(path);
-    if (id == null || id.isNull())
+    try
     {
-      return createResource(path);
+      CDOID id = getResourceID(path);
+      if (id != null && !id.isNull())
+      {
+        return (CDOResource)getObject(id);
+      }
+    }
+    catch (Exception expected)
+    {
+      TRACER.trace(expected);
     }
 
-    return (CDOResource)getObject(id);
+    return createResource(path);
   }
 
   /**

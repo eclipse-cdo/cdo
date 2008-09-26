@@ -19,15 +19,16 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @see http://bugs.eclipse.org/213782
  * @see http://bugs.eclipse.org/201366
  * @author Simon McDuff
  */
-public class TransactionDeadLockTest extends AbstractCDOTest
+public class TransactionTest extends AbstractCDOTest
 {
   @Override
   protected void doSetUp() throws Exception
@@ -90,11 +91,15 @@ public class TransactionDeadLockTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testCreateManySessionsAndTransactionsMultiThread() throws Exception
+  public void _testCreateManySessionsAndTransactionsMultiThread() throws Exception
   {
+    final long TIMEOUT = 2 * 120L;
+    final int THREADS = 5;
+
     final List<Exception> exceptions = new ArrayList<Exception>();
+    final CountDownLatch latch = new CountDownLatch(THREADS);
     List<Thread> threadList = new ArrayList<Thread>();
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < THREADS; i++)
     {
       final int id = i;
       threadList.add(new Thread(new Runnable()
@@ -103,8 +108,8 @@ public class TransactionDeadLockTest extends AbstractCDOTest
         {
           try
           {
-            msg("Thread " + id + ": Starting");
-            for (int i = 0; i < 100; i++)
+            msg("Thread " + id + ": Started");
+            for (int i = 0; i < 1000; i++)
             {
               CDOSession session = openModel1Session();
               CDOTransaction transaction = session.openTransaction();
@@ -118,61 +123,41 @@ public class TransactionDeadLockTest extends AbstractCDOTest
           }
           catch (Exception ex)
           {
+            System.out.println("Thread " + id + ": " + ex.getClass().getName() + ": " + ex.getMessage());
             synchronized (exceptions)
             {
-              System.out.println("Thread " + id + ": " + ex.getClass().getName() + ": " + ex.getMessage());
               exceptions.add(ex);
             }
           }
+          finally
+          {
+            latch.countDown();
+          }
         }
-      }));
+      }, "TEST-THREAD-" + id));
     }
 
-    startThreads(threadList);
-    for (Exception exp : exceptions)
-    {
-      System.out.println();
-      System.out.println();
-      exp.printStackTrace();
-      System.out.println();
-      System.out.println();
-    }
-
-    assertEquals(0, exceptions.size());
-  }
-
-  private void startThreads(Collection<Thread> threadList)
-  {
     for (Thread thread : threadList)
     {
       thread.start();
     }
 
-    // Usually takes around 4 seconds on the build machine
-    final long TIMEOUT = 120L;
+    boolean timedOut = !latch.await(TIMEOUT, TimeUnit.SECONDS);
 
-    long start = System.currentTimeMillis();
-    while (System.currentTimeMillis() < start + TIMEOUT * 1000L)
+    for (Exception exp : exceptions)
     {
-      int count = 0;
-      for (Thread thread : threadList)
-      {
-        if (thread.isAlive())
-        {
-          break;
-        }
-
-        count++;
-      }
-
-      if (count == threadList.size())
-      {
-        return;
-      }
-
-      sleep(100);
+      System.out.println();
+      System.out.println();
+      exp.printStackTrace();
     }
 
-    fail("Timeout after " + TIMEOUT + " seconds");
+    if (timedOut)
+    {
+      fail("Timeout after " + TIMEOUT + " seconds");
+    }
+    else
+    {
+      assertEquals(0, exceptions.size());
+    }
   }
 }

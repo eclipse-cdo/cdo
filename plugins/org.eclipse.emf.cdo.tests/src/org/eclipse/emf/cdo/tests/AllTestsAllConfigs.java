@@ -43,6 +43,7 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(EnumTest.class);
     testClasses.add(StateMachineTest.class);
     testClasses.add(ViewTest.class);
+    testClasses.add(TransactionTest.class);
     testClasses.add(AuditTest.class);
     testClasses.add(LocalAuditTest.class);
     testClasses.add(ResourceTest.class);
@@ -52,7 +53,6 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(CrossReferenceTest.class);
     testClasses.add(ChunkingTest.class);
     testClasses.add(ChunkingWithMEMTest.class);
-    testClasses.add(TransactionDeadLockTest.class);
     testClasses.add(PackageRegistryTest.class);
     testClasses.add(MetaTest.class);
     testClasses.add(RevisionDeltaWithDeltaSupportTest.class);

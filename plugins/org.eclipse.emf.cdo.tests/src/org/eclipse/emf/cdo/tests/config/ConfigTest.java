@@ -32,6 +32,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -108,14 +109,6 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   public IManagedContainer getServerContainer()
   {
     return containerConfig.getServerContainer();
-  }
-
-  /**
-   *@category Container
-   */
-  public void restartContainers() throws Exception
-  {
-    containerConfig.restartContainers();
   }
 
   // /////////////////////////////////////////////////////////////////////////
@@ -502,6 +495,16 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
     }
   }
 
+  public void restartConfigs() throws Exception
+  {
+    IOUtil.OUT().println("RESTARTING CONFIGURATIONS");
+    stopTransport();
+    tearDownConfigs();
+    setupConfigs();
+    startTransport();
+    IOUtil.OUT().println("RESTARTING CONFIGURATIONS - FINISHED");
+  }
+
   @Override
   public void setUp() throws Exception
   {
@@ -516,26 +519,36 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+    setupConfigs();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    tearDownConfigs();
+    super.doTearDown();
+  }
+
+  private void setupConfigs() throws Exception
+  {
     setUpConfig(containerConfig);
     setUpConfig(repositoryConfig);
     setUpConfig(sessionConfig);
     setUpConfig(modelConfig);
   }
 
-  @Override
-  protected void doTearDown() throws Exception
+  private void setUpConfig(Config config) throws Exception
+  {
+    config.setCurrentTest(this);
+    config.setUp();
+  }
+
+  private void tearDownConfigs() throws Exception
   {
     tearDownConfig(modelConfig);
     tearDownConfig(sessionConfig);
     tearDownConfig(repositoryConfig);
     tearDownConfig(containerConfig);
-    super.doTearDown();
-  }
-
-  private void setUpConfig(Config config) throws Exception
-  {
-    config.setCurrentTest(this);
-    config.setUp();
   }
 
   private void tearDownConfig(Config config) throws Exception

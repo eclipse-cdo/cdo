@@ -24,6 +24,4 @@ public interface ContainerProvider
   public IManagedContainer getClientContainer();
 
   public IManagedContainer getServerContainer();
-
-  public void restartContainers() throws Exception;
 }

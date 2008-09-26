@@ -15,9 +15,7 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -29,40 +27,6 @@ import junit.framework.Assert;
 
 public class ResourceTest extends AbstractCDOTest
 {
-  /**
-   * http://bugs.eclipse.org/238963
-   */
-  public void testEmptyContentsWithMEMStore() throws Exception
-  {
-    skipUnlessConfig(MEM);
-
-    {
-      CDOSession session = openModel1Session();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
-
-      Product1 p = getModel1Factory().createProduct1();
-      p.setName("test");
-      p.setVat(VAT.VAT0);
-
-      resource.getContents().add(p);
-      transaction.commit();
-
-      assertEquals(1, resource.getContents().size());
-      session.close();
-    }
-
-    restartContainers();
-
-    CDOSession session = openModel1Session();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/my/resource");
-    EList<EObject> contents = resource.getContents();
-    int size = contents.size();
-    assertEquals(1, size);
-    session.close();
-  }
-
   public void testCreateResource_FromResourceSet() throws Exception
   {
     final URI uri = URI.createURI("cdo:/test1");

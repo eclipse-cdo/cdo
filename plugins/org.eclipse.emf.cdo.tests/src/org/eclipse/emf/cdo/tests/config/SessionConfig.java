@@ -47,13 +47,14 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
   public void stopTransport() throws Exception
   {
-    if (getCurrentTest().hasClientContainer())
+    ConfigTest currentTest = getCurrentTest();
+    if (currentTest.hasClientContainer())
     {
       IConnector connector = getConnector();
       LifecycleUtil.deactivate(connector);
     }
 
-    if (getCurrentTest().hasServerContainer())
+    if (currentTest.hasServerContainer())
     {
       IAcceptor acceptor = getAcceptor();
       LifecycleUtil.deactivate(acceptor);

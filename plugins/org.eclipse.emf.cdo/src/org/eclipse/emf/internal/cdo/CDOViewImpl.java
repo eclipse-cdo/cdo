@@ -677,16 +677,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public void registerProxyResource(CDOResourceImpl resource)
   {
-    String path = resource.getPath();
-    CDOID id = getResourceID(path);
-    if (id == null || id.isNull())
-    {
-      throw new IllegalStateException("Resource does not exist: " + path);
-    }
-
     resource.cdoInternalSetResource(resource);
     resource.cdoInternalSetView(this);
-    resource.cdoInternalSetID(id);
+    resource.cdoInternalSetID(getResourceID(resource.getPath()));
     resource.cdoInternalSetState(CDOState.PROXY);
     registerObject(resource);
   }

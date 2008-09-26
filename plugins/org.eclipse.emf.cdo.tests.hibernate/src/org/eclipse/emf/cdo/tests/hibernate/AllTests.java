@@ -57,10 +57,7 @@ public class AllTests
     // failures testReadNative, testWriteNative
     // suite.addTestSuite(HbRevisionDeltaTest.class);
 
-    // $JUnit-BEGIN$
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
-    // $JUnit-END$
-
     return suite;
   }
 }

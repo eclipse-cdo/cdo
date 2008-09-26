@@ -25,9 +25,9 @@ public abstract class HibernateMappingProvider implements IHibernateMappingProvi
   }
 
   /**
-   * @return the hibernate store, never null.
+   * @return the hibernate store, never <code>null</code>.
    * @throws IllegalStateException
-   *           if the hibernate store is null.
+   *           if the hibernate store is <code>null</code>.
    */
   public IHibernateStore getHibernateStore()
   {

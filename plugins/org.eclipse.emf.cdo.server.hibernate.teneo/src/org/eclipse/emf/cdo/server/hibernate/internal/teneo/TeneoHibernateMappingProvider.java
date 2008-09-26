@@ -52,13 +52,13 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
   private ExtensionManager extensionManager = ExtensionManagerFactory.getInstance().create();
 
+  public TeneoHibernateMappingProvider()
+  {
+  }
+
   public ExtensionManager getExtensionManager()
   {
     return extensionManager;
-  }
-
-  public TeneoHibernateMappingProvider()
-  {
   }
 
   @Override

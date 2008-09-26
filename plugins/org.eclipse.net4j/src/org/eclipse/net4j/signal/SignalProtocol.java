@@ -89,8 +89,12 @@ public abstract class SignalProtocol extends Protocol
    */
   public void close()
   {
-    getChannel().close();
-    setChannel(null);
+    IChannel channel = getChannel();
+    if (channel != null)
+    {
+      channel.close();
+      setChannel(null);
+    }
   }
 
   public IStreamWrapper getStreamWrapper()

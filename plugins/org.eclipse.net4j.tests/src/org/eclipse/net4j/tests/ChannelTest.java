@@ -35,6 +35,12 @@ public class ChannelTest extends AbstractProtocolTest
   }
 
   @Override
+  protected boolean useJVMTransport()
+  {
+    return false;
+  }
+
+  @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
@@ -171,10 +177,11 @@ public class ChannelTest extends AbstractProtocolTest
     MultiThreadMonitor threadMonitor = new MultiThreadMonitor(2000L)
     {
       @Override
-      protected void handleTimeoutExpiration(MonitoredThread thread, long idle)
+      protected void handleTimeoutExpiration(MonitoredThread thread)
       {
         String name = thread.getName();
-        super.handleTimeoutExpiration(thread, idle);
+        System.out.println("DEADLOCK: " + name);
+        super.handleTimeoutExpiration(thread);
       }
     };
 

@@ -43,6 +43,17 @@ public abstract class MonitoredThread extends Thread
     return timeStamp;
   }
 
+  public boolean isIdleTimeoutExpired(long idleTimeOut)
+  {
+    if (timeStamp != 0L) // Skip in first loop
+    {
+      long idle = System.currentTimeMillis() - timeStamp;
+      return idle > idleTimeOut;
+    }
+
+    return false;
+  }
+
   public void heartBeat()
   {
     if (shutdown)
@@ -190,6 +201,50 @@ public abstract class MonitoredThread extends Thread
 
     public void run()
     {
+      startupThreads();
+
+      for (;;)
+      {
+        List<MonitoredThread> idleThreads = new ArrayList<MonitoredThread>();
+        synchronized (threads)
+        {
+          if (threads.isEmpty())
+          {
+            break;
+          }
+
+          for (MonitoredThread thread : threads)
+          {
+            if (thread.isIdleTimeoutExpired(idleTimeOut))
+            {
+              idleThreads.add(thread);
+            }
+          }
+        }
+
+        for (MonitoredThread thread : idleThreads)
+        {
+          synchronized (threads)
+          {
+            threads.remove(thread);
+          }
+
+          handleTimeoutExpiration(thread);
+        }
+      }
+
+      ConcurrencyUtil.sleep(10);
+    }
+
+    protected void handleTimeoutExpiration(MonitoredThread thread)
+    {
+      shutdownThreads();
+
+      throw new RuntimeException("Idle timeout expired: " + thread.getName());
+    }
+
+    private void startupThreads()
+    {
       for (MonitoredThread thread : threads)
       {
         thread.start();
@@ -199,36 +254,9 @@ public abstract class MonitoredThread extends Thread
       {
         startLatch.countDown();
       }
-
-      for (;;)
-      {
-        synchronized (threads)
-        {
-          if (threads.isEmpty())
-          {
-            break;
-          }
-
-          long now = System.currentTimeMillis();
-          for (MonitoredThread thread : threads)
-          {
-            long timeStamp = thread.getTimeStamp();
-            if (timeStamp != 0L) // Skip in first loop
-            {
-              long idle = now - timeStamp;
-              if (idle > idleTimeOut)
-              {
-                handleTimeoutExpiration(thread, idle);
-              }
-            }
-          }
-        }
-      }
-
-      ConcurrencyUtil.sleep(10);
     }
 
-    protected void handleTimeoutExpiration(MonitoredThread thread, long idle)
+    private void shutdownThreads()
     {
       synchronized (threads)
       {
@@ -237,8 +265,6 @@ public abstract class MonitoredThread extends Thread
           t.shutdown();
         }
       }
-
-      throw new RuntimeException(thread.getName() + " idle timeout expired: " + idle);
     }
   }
 }

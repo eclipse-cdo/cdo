@@ -226,7 +226,7 @@ public class Channel extends Lifecycle implements InternalChannel
         @Override
         protected String getThreadName()
         {
-          return "ReceiveSerializer" + channelIndex;
+          return "ReceiveSerializer-" + channelIndex + "-" + channelMultiplexer;
         }
       }
 

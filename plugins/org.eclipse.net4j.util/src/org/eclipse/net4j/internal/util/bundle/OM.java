@@ -64,7 +64,7 @@ public abstract class OM
       OM.BUNDLE.setBundleContext(context);
       ((OSGiBundle)OM.BUNDLE).start();
 
-      // TODO  Make configurable
+      // TODO Make configurable
       PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}");
       AbstractPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
       AbstractPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);

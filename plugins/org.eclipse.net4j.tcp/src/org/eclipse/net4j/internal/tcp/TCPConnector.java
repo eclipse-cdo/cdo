@@ -282,12 +282,12 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeout)
+  protected void registerChannelWithPeer(short channelIndex, long timeout, IProtocol protocol)
       throws ConnectorException
   {
     try
     {
-      if (!controlChannel.registerChannel(channelID, channelIndex, protocol, timeout))
+      if (!controlChannel.registerChannel(channelIndex, timeout, protocol))
       {
         throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
       }
@@ -303,46 +303,15 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  public void inverseRemoveChannel(int channelID, short channelIndex)
+  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ConnectorException
   {
-    try
-    {
-      InternalChannel channel = getChannel(channelIndex);
-      if (channel instanceof ControlChannel)
-      {
-        return;
-      }
-
-      if (channel != null)
-      {
-        super.removeChannel(channel);
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      OM.LOG.warn(ex);
-    }
-  }
-
-  @Override
-  public boolean removeChannel(IChannel channel)
-  {
-    if (channel instanceof ControlChannel)
-    {
-      return true;
-    }
-
-    if (super.removeChannel(channel))
+    if (channel != null && channel.getClass() != ControlChannel.class)
     {
       if (controlChannel != null && isConnected())
       {
-        controlChannel.deregisterChannel(channel.getChannelID(), channel.getChannelIndex());
+        controlChannel.deregisterChannel(channel.getChannelIndex(), getChannelTimeout());
       }
-
-      return true;
     }
-
-    return false;
   }
 
   @Override
@@ -370,7 +339,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    controlChannel = new ControlChannel(getNextChannelID(), this);
+    controlChannel = new ControlChannel(this);
     controlChannel.activate();
     selector.orderRegistration(socketChannel, isClient(), this);
   }

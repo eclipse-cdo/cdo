@@ -13,7 +13,6 @@ package org.eclipse.net4j.internal.jvm;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
-import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.jvm.bundle.OM;
 import org.eclipse.net4j.jvm.IJVMConnector;
@@ -69,11 +68,6 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
     return "jvm://" + name;
   }
 
-  public ConnectorLocation getLocation()
-  {
-    return null;
-  }
-
   @Override
   public void setState(ConnectorState newState) throws ConnectorException
   {
@@ -113,18 +107,34 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeoutIgnored)
+  protected void registerChannelWithPeer(short channelIndex, long timeoutIgnored, IProtocol protocol)
       throws ConnectorException
   {
     try
     {
-      InternalChannel channel = getPeer().createChannel(channelID, channelIndex, protocol.getType());
+      String protocolID = protocol == null ? null : protocol.getType();
+      InternalChannel channel = getPeer().inverseOpenChannel(channelIndex, protocolID);
       if (channel == null)
       {
         throw new ConnectorException("Failed to register channel with peer");
       }
+    }
+    catch (ConnectorException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new ConnectorException(ex);
+    }
+  }
 
-      channel.activate();
+  @Override
+  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ConnectorException
+  {
+    try
+    {
+      getPeer().inverseCloseChannel(channel.getChannelIndex());
     }
     catch (ConnectorException ex)
     {

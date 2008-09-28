@@ -11,7 +11,6 @@
 package org.eclipse.net4j.internal.http;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -61,9 +60,9 @@ public class HTTPClientConnector extends HTTPConnector
   {
   }
 
-  public ConnectorLocation getLocation()
+  public Location getLocation()
   {
-    return ConnectorLocation.CLIENT;
+    return Location.CLIENT;
   }
 
   public String getURL()

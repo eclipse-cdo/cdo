@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
@@ -23,10 +22,9 @@ public class JVMServerConnector extends JVMConnector
     setPeer(clientPeer);
   }
 
-  @Override
-  public ConnectorLocation getLocation()
+  public Location getLocation()
   {
-    return ConnectorLocation.SERVER;
+    return Location.SERVER;
   }
 
   @Override

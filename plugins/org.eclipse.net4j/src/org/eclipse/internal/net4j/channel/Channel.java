@@ -14,6 +14,7 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
@@ -37,8 +38,6 @@ public class Channel extends Lifecycle implements InternalChannel
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CHANNEL, Channel.class);
 
-  private int channelID;
-
   private IChannelMultiplexer channelMultiplexer;
 
   private short channelIndex = IBuffer.NO_CHANNEL;
@@ -52,20 +51,28 @@ public class Channel extends Lifecycle implements InternalChannel
 
   private IWorkSerializer receiveSerializer;
 
-  private Queue<IBuffer> sendQueue;
+  private transient Queue<IBuffer> sendQueue;
+
+  @ExcludeFromDump
+  private transient boolean inverseClosed;
 
   public Channel()
   {
   }
 
-  public int getChannelID()
+  public Location getLocation()
   {
-    return channelID;
+    return channelMultiplexer.getLocation();
   }
 
-  public void setChannelID(int channelID)
+  public boolean isClient()
   {
-    this.channelID = channelID;
+    return channelMultiplexer.isClient();
+  }
+
+  public boolean isServer()
+  {
+    return channelMultiplexer.isServer();
   }
 
   public IChannelMultiplexer getChannelMultiplexer()
@@ -118,11 +125,6 @@ public class Channel extends Lifecycle implements InternalChannel
     return sendQueue;
   }
 
-  public void close()
-  {
-    deactivate();
-  }
-
   public void sendBuffer(IBuffer buffer)
   {
     handleBuffer(buffer);
@@ -158,7 +160,7 @@ public class Channel extends Lifecycle implements InternalChannel
     }
   }
 
-  public void handleBufferFromMultiplexer(final IBuffer buffer)
+  public void handleBufferFromMultiplexer(IBuffer buffer)
   {
     if (receiveHandler != null)
     {
@@ -167,13 +169,18 @@ public class Channel extends Lifecycle implements InternalChannel
         TRACER.format("Handling buffer from multiplexer: {0} --> {1}", buffer, this); //$NON-NLS-1$
       }
 
-      receiveSerializer.addWork(new ReceiverWork(buffer));
+      receiveSerializer.addWork(craeteReceiverWork(buffer));
     }
     else
     {
       // Shutting down
       buffer.release();
     }
+  }
+
+  protected ReceiverWork craeteReceiverWork(IBuffer buffer)
+  {
+    return new ReceiverWork(this, buffer);
   }
 
   public short getBufferCapacity()
@@ -194,7 +201,7 @@ public class Channel extends Lifecycle implements InternalChannel
   @Override
   public String toString()
   {
-    return MessageFormat.format("Channel[{0}]", channelIndex); //$NON-NLS-1$
+    return MessageFormat.format("Channel[{0}, {1}]", channelIndex, getLocation()); //$NON-NLS-1$
   }
 
   @Override
@@ -226,7 +233,7 @@ public class Channel extends Lifecycle implements InternalChannel
         @Override
         protected String getThreadName()
         {
-          return "ReceiveSerializer-" + channelIndex + "-" + channelMultiplexer;
+          return "ReceiveSerializer-" + Channel.this;
         }
       }
 
@@ -237,10 +244,24 @@ public class Channel extends Lifecycle implements InternalChannel
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(receiveHandler);
-    receiveHandler = null;
+    if (!inverseClosed)
+    {
+      channelMultiplexer.closeChannel(this);
+    }
 
-    channelMultiplexer.removeChannel(this);
+    super.doDeactivate();
+  }
+
+  public void finishDeactivate(boolean inverse)
+  {
+    inverseClosed = inverse;
+    if (inverse)
+    {
+      LifecycleUtil.deactivate(receiveHandler);
+      deactivate();
+    }
+
+    receiveHandler = null;
     if (receiveSerializer != null)
     {
       receiveSerializer.dispose();
@@ -252,24 +273,31 @@ public class Channel extends Lifecycle implements InternalChannel
       sendQueue.clear();
       sendQueue = null;
     }
+  }
 
-    super.doDeactivate();
+  public void close()
+  {
+    deactivate();
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class ReceiverWork implements Runnable
+  protected static class ReceiverWork implements Runnable
   {
+    private final InternalChannel channel;
+
     private final IBuffer buffer;
 
-    private ReceiverWork(IBuffer buffer)
+    public ReceiverWork(InternalChannel channel, IBuffer buffer)
     {
+      this.channel = channel;
       this.buffer = buffer;
     }
 
     public void run()
     {
+      IBufferHandler receiveHandler = channel.getReceiveHandler();
       if (receiveHandler != null)
       {
         receiveHandler.handleBuffer(buffer);

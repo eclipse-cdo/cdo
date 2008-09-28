@@ -14,7 +14,6 @@ import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
-import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
@@ -23,17 +22,10 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
-import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IContainerEvent;
-import org.eclipse.net4j.util.container.LifecycleEventConverter;
-import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.Event;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactoryKey;
@@ -53,10 +45,8 @@ import org.eclipse.spi.net4j.InternalConnector;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
@@ -71,28 +61,14 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   private INegotiationContext negotiationContext;
 
-  private long openChannelTimeout = DEFAULT_OPEN_CHANNEL_TIMEOUT;;
+  private long channelTimeout = DEFAULT_CHANNEL_TIMEOUT;
 
-  private transient int nextChannelID;
-
-  private transient List<InternalChannel> channels = new ArrayList<InternalChannel>(0);
+  private transient InternalChannel[] channels = {};
 
   @ExcludeFromDump
-  private transient RWLock channelsLock = new RWLock(2500);
+  private transient Object channelsLock = new Object();
 
   private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
-
-  /**
-   * Is registered with each {@link IChannel} of this {@link IConnector}.
-   */
-  private transient IListener channelListener = new LifecycleEventConverter<IChannel>(this)
-  {
-    @Override
-    protected IContainerEvent<IChannel> createContainerEvent(IContainer<IChannel> container, IChannel element, Kind kind)
-    {
-      return newContainerEvent(element, kind);
-    }
-  };
 
   @ExcludeFromDump
   private transient CountDownLatch finishedConnecting;
@@ -127,29 +103,29 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     return negotiationContext;
   }
 
-  public long getOpenChannelTimeout()
+  public long getChannelTimeout()
   {
-    if (openChannelTimeout == DEFAULT_OPEN_CHANNEL_TIMEOUT)
+    if (channelTimeout == DEFAULT_CHANNEL_TIMEOUT)
     {
-      return OM.BUNDLE.getDebugSupport().getDebugOption("open.channel.timeout", 10000);
+      return OM.BUNDLE.getDebugSupport().getDebugOption("channel.timeout", 10000);
     }
 
-    return openChannelTimeout;
+    return channelTimeout;
   }
 
-  public void setOpenChannelTimeout(long openChannelTimeout)
+  public void setChannelTimeout(long channelTimeout)
   {
-    this.openChannelTimeout = openChannelTimeout;
+    this.channelTimeout = channelTimeout;
   }
 
   public boolean isClient()
   {
-    return getLocation() == ConnectorLocation.CLIENT;
+    return getLocation() == Location.CLIENT;
   }
 
   public boolean isServer()
   {
-    return getLocation() == ConnectorLocation.SERVER;
+    return getLocation() == Location.SERVER;
   }
 
   public String getUserID()
@@ -161,7 +137,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting userID {0} for {1}", userID, this); //$NON-NLS-1$ 
+      TRACER.format("Setting userID {0} for {1}", userID, this);
     }
 
     this.userID = userID;
@@ -179,7 +155,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Setting state {0} (was {1}) for {2}", newState, oldState.toString().toLowerCase(), this); //$NON-NLS-1$ 
+        TRACER.format("Setting state {0} (was {1}) for {2}", newState, oldState.toString().toLowerCase(), this);
       }
 
       connectorState = newState;
@@ -270,7 +246,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Waiting for connection..."); //$NON-NLS-1$
+        TRACER.trace("Waiting for connection...");
       }
 
       do
@@ -323,24 +299,22 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     return new ConnectorException(ex);
   }
 
-  public IChannel[] getChannels()
+  public final List<IChannel> getChannels()
   {
-    final List<IChannel> result = new ArrayList<IChannel>(0);
-    channelsLock.read(new Runnable()
+    List<IChannel> result = new ArrayList<IChannel>(0);
+    synchronized (channelsLock)
     {
-      public void run()
+      for (int i = 0; i < channels.length; i++)
       {
-        for (InternalChannel channel : channels)
+        IChannel channel = channels[i];
+        if (channel != null)
         {
-          if (channel != null)
-          {
-            result.add(channel);
-          }
+          result.add(channel);
         }
       }
-    });
+    }
 
-    return result.toArray(new IChannel[result.size()]);
+    return result;
   }
 
   @Override
@@ -351,15 +325,16 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public IChannel[] getElements()
   {
-    return getChannels();
+    List<IChannel> list = getChannels();
+    return list.toArray(new IChannel[list.size()]);
   }
 
-  public IChannel openChannel() throws ConnectorException
+  public InternalChannel openChannel() throws ConnectorException
   {
     return openChannel((IProtocol)null);
   }
 
-  public IChannel openChannel(String protocolID, Object infraStructure) throws ConnectorException
+  public InternalChannel openChannel(String protocolID, Object infraStructure) throws ConnectorException
   {
     IProtocol protocol = createProtocol(protocolID, infraStructure);
     if (protocol == null)
@@ -370,9 +345,9 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     return openChannel(protocol);
   }
 
-  public IChannel openChannel(final IProtocol protocol) throws ConnectorException
+  public InternalChannel openChannel(IProtocol protocol) throws ConnectorException
   {
-    long openChannelTimeout = getOpenChannelTimeout();
+    long openChannelTimeout = getChannelTimeout();
     long start = System.currentTimeMillis();
     if (!waitForConnection(openChannelTimeout))
     {
@@ -380,24 +355,23 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     }
 
     final long elapsed = System.currentTimeMillis() - start;
-    int channelID = getNextChannelID();
-    InternalChannel channel = createChannel(channelID, protocol);
+    InternalChannel channel = createChannel();
+    initChannel(channel, protocol);
+    addChannelWithoutIndex(channel);
 
     try
     {
       try
       {
-        registerChannelWithPeer(channelID, channel.getChannelIndex(), protocol, openChannelTimeout - elapsed);
+        registerChannelWithPeer(channel.getChannelIndex(), openChannelTimeout - elapsed, protocol);
       }
       catch (TimeoutRuntimeException ex)
       {
         // Adjust the message for the complete timeout time
         throw new TimeoutRuntimeException("Registration timeout  after " + openChannelTimeout + " milliseconds");
       }
-
-      channel.activate();
     }
-    catch (RuntimeException ex)
+    catch (ConnectorException ex)
     {
       throw ex;
     }
@@ -409,17 +383,40 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     return channel;
   }
 
-  public InternalChannel createChannel(int channelID, short channelIndex, String protocolID)
+  public InternalChannel inverseOpenChannel(short channelIndex, String protocolID)
   {
     IProtocol protocol = createProtocol(protocolID, null);
-    return createAndAddChannel(channelID, channelIndex, protocol);
+
+    InternalChannel channel = createChannel();
+    initChannel(channel, protocol);
+    channel.setChannelIndex(channelIndex);
+    addChannelWithIndex(channel);
+    return channel;
   }
 
-  protected InternalChannel createChannelWithoutChannelIndex(int channelID, IProtocol protocol)
+  public final InternalChannel getChannel(short channelIndex)
   {
-    InternalChannel channel = createChannel();
-    channel.setChannelID(channelID);
+    int index = getChannelsArrayIndex(channelIndex);
+    synchronized (channelsLock)
+    {
+      if (channels == null || index >= channels.length)
+      {
+        return null;
+      }
 
+      return channels[index];
+    }
+  }
+
+  protected InternalChannel createChannel()
+  {
+    return new Channel();
+  }
+
+  private void initChannel(InternalChannel channel, IProtocol protocol)
+  {
+    channel.setChannelMultiplexer(this);
+    channel.setReceiveExecutor(getConfig().getReceiveExecutor());
     if (protocol != null)
     {
       protocol.setChannel(channel);
@@ -427,197 +424,150 @@ public abstract class Connector extends Container<IChannel> implements InternalC
       if (TRACER.isEnabled())
       {
         String protocolType = protocol == null ? null : protocol.getType();
-        TRACER.format("Opening channel ID {0} with protocol {1}", channelID, protocolType); //$NON-NLS-1$
+        TRACER.format("Opening channel with protocol {0}", protocolType);
       }
+
+      channel.setReceiveHandler(protocol);
     }
     else
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Opening channel ID {0} without protocol", channelID); //$NON-NLS-1$
+        TRACER.trace("Opening channel without protocol");
       }
     }
-
-    channel.setReceiveHandler(protocol);
-    channel.addListener(channelListener);
-    return channel;
   }
 
-  public InternalChannel createAndAddChannel(int channelID, short channelIndex, IProtocol protocol)
+  private void addChannelWithIndex(InternalChannel channel)
   {
-    InternalChannel channel = createChannelWithoutChannelIndex(channelID, protocol);
-    channel.setChannelIndex(channelIndex);
-    addChannelWithIndex(channel);
-    return channel;
-  }
-
-  public InternalChannel createChannel(int channelID, IProtocol protocol)
-  {
-    InternalChannel channel = createChannelWithoutChannelIndex(channelID, protocol);
-    addChannelWithoutIndex(channel);
-    return channel;
-  }
-
-  protected InternalChannel createChannel()
-  {
-    InternalChannel channel = createChannelInstance();
-    channel.setChannelMultiplexer(this);
-    channel.setReceiveExecutor(getConfig().getReceiveExecutor());
-    return channel;
-  }
-
-  protected InternalChannel createChannelInstance()
-  {
-    return new Channel();
-  }
-
-  public InternalChannel getChannel(final short channelIndex)
-  {
-    return channelsLock.read(new Callable<InternalChannel>()
+    short channelIndex = channel.getChannelIndex();
+    int index = getChannelsArrayIndex(channelIndex);
+    synchronized (channelsLock)
     {
-      public InternalChannel call() throws Exception
+      if (index >= channels.length)
       {
-        return channels.get(channelIndex);
+        InternalChannel[] newChannels = new InternalChannel[index + 1];
+        System.arraycopy(channels, 0, newChannels, 0, channels.length);
+        channels = newChannels;
       }
-    });
+
+      channels[index] = channel;
+    }
+
+    LifecycleUtil.activate(channel);
+    fireElementAddedEvent(channel);
   }
 
-  protected int getNextChannelID()
+  private void addChannelWithoutIndex(InternalChannel channel)
   {
-    return nextChannelID++;
-  }
-
-  protected void addChannelWithIndex(final InternalChannel channel)
-  {
-    channelsLock.write(new Runnable()
+    final short INCREMENT = (short)(isClient() ? 1 : -1);
+    short channelIndex = INCREMENT;
+    synchronized (channelsLock)
     {
-      public void run()
+      for (;;)
       {
-        short channelIndex = channel.getChannelIndex();
-        while (channelIndex >= channels.size())
+        int index = getChannelsArrayIndex(channelIndex);
+        if (index >= channels.length)
         {
-          channels.add(null);
+          channel.setChannelIndex(channelIndex);
+          addChannelWithIndex(channel);
+          return;
         }
 
-        channels.set(channelIndex, channel);
+        if (channels[index] == null)
+        {
+          channel.setChannelIndex(channelIndex);
+          channels[index] = channel;
+
+          LifecycleUtil.activate(channel);
+          fireElementAddedEvent(channel);
+          return;
+        }
+
+        channelIndex += INCREMENT;
       }
-    });
+    }
   }
 
-  protected void addChannelWithoutIndex(final InternalChannel channel)
+  public void closeChannel(IChannel channel) throws ConnectorException
   {
-    channelsLock.write(new Runnable()
-    {
-      public void run()
-      {
-        int size = channels.size();
-        for (short i = 0; i < size; i++)
-        {
-          if (channels.get(i) == null)
-          {
-            channels.set(i, channel);
-            channel.setChannelIndex(i);
-            return;
-          }
-        }
-
-        channel.setChannelIndex((short)size);
-        channels.add(channel);
-      }
-    });
+    InternalChannel internalChannel = (InternalChannel)channel;
+    deregisterChannelFromPeer(internalChannel, getChannelTimeout());
+    removeChannel(internalChannel, false);
   }
 
-  /**
-   * @return <code>true</code> if the channel was removed, <code>false</code> otherwise.
-   */
-  public boolean removeChannel(final IChannel channel)
+  public void inverseCloseChannel(short channelIndex) throws ConnectorException
   {
-    if (channel == null)
+    InternalChannel channel = getChannel(channelIndex);
+    if (channel != null && channel.isActive())
     {
-      throw new IllegalArgumentException("channel == null");
+      removeChannel(channel, true);
     }
-
-    if (!isConnected())
-    {
-      return false;
-    }
-
-    final int channelIndex = channel.getChannelIndex();
-    boolean removed = false;
-    try
-    {
-      removed = channelsLock.write(new Callable<Boolean>()
-      {
-        public Boolean call() throws Exception
-        {
-          if (channelIndex < channels.size() && channels.get(channelIndex) == channel)
-          {
-            if (TRACER.isEnabled())
-            {
-              TRACER.trace("Removing channel " + channelIndex); //$NON-NLS-1$
-            }
-
-            channels.set(channelIndex, null);
-            return true;
-          }
-
-          return false;
-        }
-      });
-
-      if (removed)
-      {
-        channel.removeListener(channelListener);
-        channel.close();
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      Exception unwrapped = WrappedException.unwrap(ex);
-      if (unwrapped instanceof TimeoutException)
-      {
-        if (channelIndex < channels.size())
-        {
-          InternalChannel c = channels.get(channelIndex);
-          if (c != null && c.isActive())
-          {
-            throw ex;
-          }
-        }
-      }
-      else
-      {
-        throw ex;
-      }
-    }
-
-    return removed;
   }
 
-  public void inverseRemoveChannel(int channelID, short channelIndex)
+  private void removeChannel(InternalChannel channel, boolean inverse)
   {
     try
     {
-      InternalChannel channel = getChannel(channelIndex);
-      if (channel != null)
+      short channelIndex = channel.getChannelIndex();
+      int index = getChannelsArrayIndex(channelIndex);
+      synchronized (channelsLock)
       {
-        if (channel.getChannelID() != channelID)
+        if (index < channels.length)
         {
+          if (channels[index] != channel)
+          {
+            throw new IllegalStateException("Wrong channel: " + channels[index]);
+          }
+
           if (TRACER.isEnabled())
           {
-            TRACER.format("Ignoring concurrent atempt to remove channel {0} (channelID={1}", channelIndex, channelID);
+            TRACER.trace("Removing " + channel);
+          }
+
+          if (index == channels.length - 1)
+          {
+            --index;
+            while (index > 0 && channels[index] == null)
+            {
+              --index;
+            }
+
+            if (index == 0)
+            {
+              channels = new InternalChannel[0];
+            }
+            else
+            {
+              InternalChannel[] newChannels = new InternalChannel[index + 1];
+              System.arraycopy(channels, 0, newChannels, 0, newChannels.length);
+              channels = newChannels;
+            }
+          }
+          else
+          {
+            channels[index] = null;
           }
         }
-        else
-        {
-          removeChannel(channel);
-        }
       }
+
+      channel.finishDeactivate(inverse);
     }
     catch (RuntimeException ex)
     {
-      OM.LOG.warn(ex);
+      OM.LOG.error(ex);
+      throw ex;
     }
+  }
+
+  private int getChannelsArrayIndex(short channelIndex)
+  {
+    if (channelIndex < 0)
+    {
+      return ~channelIndex << 1;
+    }
+
+    return (channelIndex << 1) - 1;
   }
 
   public short getBufferCapacity()
@@ -675,7 +625,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     IProtocol protocol = protocolProvider.getProtocol(type);
     if (protocol == null)
     {
-      throw new ConnectorException("Invalid protocol factory: " + type); //$NON-NLS-1$
+      throw new ConnectorException("Invalid protocol factory: " + type);
     }
 
     protocol.setBufferProvider(getConfig().getBufferProvider());
@@ -713,7 +663,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     super.doBeforeActivate();
     if (getConfig().getBufferProvider() == null)
     {
-      throw new IllegalStateException("getConfig().getBufferProvider() == null"); //$NON-NLS-1$
+      throw new IllegalStateException("getConfig().getBufferProvider() == null");
     }
   }
 
@@ -728,28 +678,27 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   protected void doDeactivate() throws Exception
   {
     setState(ConnectorState.DISCONNECTED);
-    channelsLock.write(new Runnable()
+    synchronized (channelsLock)
     {
-      public void run()
+      for (short i = 0; i < channels.length; i++)
       {
-        for (short i = 0; i < channels.size(); i++)
+        InternalChannel channel = channels[i];
+        if (channel != null)
         {
-          InternalChannel channel = channels.get(i);
-          if (channel != null)
-          {
-            LifecycleUtil.deactivate(channel);
-          }
+          LifecycleUtil.deactivate(channel);
         }
-
-        channels.clear();
       }
-    });
+
+      channels = new InternalChannel[0];
+    }
 
     super.doDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeout)
+  protected abstract void registerChannelWithPeer(short channelIndex, long timeout, IProtocol protocol)
       throws ConnectorException;
+
+  protected abstract void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ConnectorException;
 
   /**
    * @author Eike Stepper

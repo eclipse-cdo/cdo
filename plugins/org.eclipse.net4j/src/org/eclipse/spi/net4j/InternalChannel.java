@@ -24,8 +24,6 @@ import java.util.concurrent.ExecutorService;
  */
 public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.Introspection
 {
-  public void setChannelID(int channelID);
-
   public void setChannelIndex(short channelIndex);
 
   public ExecutorService getReceiveExecutor();
@@ -39,4 +37,9 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.I
   public void handleBufferFromMultiplexer(IBuffer buffer);
 
   public Queue<IBuffer> getSendQueue();
+
+  /**
+   * @since 2.0
+   */
+  public void finishDeactivate(boolean inverse);
 }

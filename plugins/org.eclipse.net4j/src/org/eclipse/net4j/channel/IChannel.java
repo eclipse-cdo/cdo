@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.channel;
 
+import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.connector.IConnector;
@@ -58,14 +59,8 @@ import org.eclipse.net4j.util.event.INotifier;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IChannel extends IBufferHandler, INotifier
+public interface IChannel extends ILocationAware, IBufferHandler, INotifier
 {
-  /**
-   * Returns the ID of this channel that is unique among all channels that the connector of this channel has ever
-   * created or will ever create.
-   */
-  public int getChannelID();
-
   /**
    * Returns the index of this channel within the array of channels returned from the {@link IConnector#getChannels()
    * getChannels()} method of the connector of this channel.

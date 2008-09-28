@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.protocol;
 
+import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
@@ -19,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public interface IProtocol extends IBufferHandler
+public interface IProtocol extends ILocationAware, IBufferHandler
 {
   public String getType();
 

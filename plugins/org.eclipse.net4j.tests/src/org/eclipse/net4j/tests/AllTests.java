@@ -30,8 +30,6 @@ public class AllTests
   public static Test suite()
   {
     TestSuite suite = new TestSuite("Tests for Net4j");
-
-    // $JUnit-BEGIN$
     suite.addTestSuite(MonitorTest.class);
     suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
@@ -40,13 +38,14 @@ public class AllTests
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
     suite.addTestSuite(Bugzilla241463_Test.class);
-    suite.addTestSuite(ConnectorTest.class);
-    suite.addTestSuite(TCPTransportTest.class);
+    suite.addTestSuite(ChannelTest.JVM.class);
+    suite.addTestSuite(ChannelTest.TCP.class);
+    suite.addTestSuite(TCPConnectorTest.class);
+    suite.addTestSuite(TransportTest.JVM.class);
+    suite.addTestSuite(TransportTest.TCP.class);
     suite.addTestSuite(SignalTest.class);
     suite.addTestSuite(ExceptionTest.class);
     suite.addTestSuite(SecurityTest.class);
-    // $JUnit-END$
-
     return suite;
   }
 }

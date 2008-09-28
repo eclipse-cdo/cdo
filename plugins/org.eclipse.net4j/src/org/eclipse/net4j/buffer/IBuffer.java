@@ -77,6 +77,21 @@ public interface IBuffer
    */
   public static final short NO_CHANNEL = Short.MIN_VALUE;
 
+  /**
+   * @since 2.0
+   */
+  public static final short CONTROL_CHANNEL = 0;
+
+  /**
+   * @since 2.0
+   */
+  public static final short MIN_CHANNEL = 1;
+
+  /**
+   * @since 2.0
+   */
+  public static final short MAX_CHANNEL = Short.MAX_VALUE;
+
   public static final short HEADER_SIZE = 4;
 
   /**

@@ -11,7 +11,6 @@
 package org.eclipse.net4j.http.internal.server;
 
 import org.eclipse.net4j.connector.ConnectorException;
-import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 
@@ -34,9 +33,9 @@ public class HTTPServerConnector extends HTTPConnector
     return acceptor;
   }
 
-  public ConnectorLocation getLocation()
+  public Location getLocation()
   {
-    return ConnectorLocation.SERVER;
+    return Location.SERVER;
   }
 
   public String getURL()
@@ -68,7 +67,7 @@ public class HTTPServerConnector extends HTTPConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(int channelID, short channelIndex, IProtocol protocol, long timeout)
+  protected void registerChannelWithPeer(short channelIndex, long timeout, IProtocol protocol)
       throws ConnectorException
   {
     throw new UnsupportedOperationException();

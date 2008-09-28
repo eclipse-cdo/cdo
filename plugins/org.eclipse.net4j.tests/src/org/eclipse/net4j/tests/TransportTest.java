@@ -37,11 +37,14 @@ import java.util.concurrent.TimeUnit;
  * @author Eike Stepper
  */
 @SuppressWarnings("unchecked")
-public class TCPTransportTest extends AbstractProtocolTest
+public abstract class TransportTest extends AbstractProtocolTest
 {
-  public TCPTransportTest()
+  public TransportTest()
   {
   }
+
+  @Override
+  protected abstract boolean useJVMTransport();
 
   protected IBuffer provideBuffer()
   {
@@ -349,5 +352,29 @@ public class TCPTransportTest extends AbstractProtocolTest
     dataInput.close();
 
     msg(new String(b));
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class TCP extends TransportTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class JVM extends TransportTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return true;
+    }
   }
 }

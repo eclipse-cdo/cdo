@@ -37,7 +37,7 @@ import java.util.concurrent.Executors;
 /**
  * @author Eike Stepper
  */
-public class ConnectorTest extends AbstractOMTest
+public class TCPConnectorTest extends AbstractOMTest
 {
   private static final int TIMEOUT = 10000;
 

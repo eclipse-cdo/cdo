@@ -115,6 +115,13 @@ public abstract class SessionConfig extends Config implements SessionProvider
     return openSession(RepositoryProvider.REPOSITORY_NAME);
   }
 
+  @Override
+  protected void tearDown() throws Exception
+  {
+    stopTransport();
+    super.tearDown();
+  }
+
   private CDOSessionConfiguration createSessionConfiguration(String repositoryName)
   {
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();

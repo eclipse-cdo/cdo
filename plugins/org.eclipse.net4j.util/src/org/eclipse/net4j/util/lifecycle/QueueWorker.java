@@ -51,10 +51,17 @@ public abstract class QueueWorker<E> extends Worker
   @Override
   protected final void work(WorkContext context) throws Exception
   {
-    E element = queue.poll(pollMillis, TimeUnit.MILLISECONDS);
-    if (element != null)
+    if (queue == null)
     {
-      work(context, element);
+      context.terminate();
+    }
+    else
+    {
+      E element = queue.poll(pollMillis, TimeUnit.MILLISECONDS);
+      if (element != null)
+      {
+        work(context, element);
+      }
     }
   }
 

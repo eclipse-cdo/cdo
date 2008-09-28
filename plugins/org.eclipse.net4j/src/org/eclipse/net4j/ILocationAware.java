@@ -8,24 +8,32 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.channel;
-
-import org.eclipse.net4j.ILocationAware;
-import org.eclipse.net4j.buffer.IBufferProvider;
+package org.eclipse.net4j;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public interface IChannelMultiplexer extends ILocationAware, IBufferProvider
+public interface ILocationAware
 {
-  /**
-   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
-   * dequeued from the outputQueue of the {@link IChannel}.
-   */
-  public void multiplexChannel(IChannel channel);
+  public Location getLocation();
 
   /**
+   * Same as <code>{@link #getLocation()} == {@link Location#CLIENT}</code>.
+   */
+  public boolean isClient();
+
+  /**
+   * Same as <code>{@link #getLocation()} == {@link Location#SERVER}</code>.
+   */
+  public boolean isServer();
+
+  /**
+   * @author Eike Stepper
    * @since 2.0
    */
-  public void closeChannel(IChannel channel);
+  public enum Location
+  {
+    CLIENT, SERVER
+  }
 }

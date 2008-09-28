@@ -202,7 +202,7 @@ public class Buffer implements InternalBuffer
     }
     else if (state != BufferState.INITIAL)
     {
-      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+      throw new IllegalStateException("state: " + state); //$NON-NLS-1$
     }
     else
     {

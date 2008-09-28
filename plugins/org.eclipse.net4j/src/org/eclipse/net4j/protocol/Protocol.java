@@ -33,6 +33,30 @@ public abstract class Protocol extends Lifecycle implements IProtocol
   {
   }
 
+  /**
+   * @since 2.0
+   */
+  public Location getLocation()
+  {
+    return channel.getLocation();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isClient()
+  {
+    return channel.isClient();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isServer()
+  {
+    return channel.isServer();
+  }
+
   public IChannel getChannel()
   {
     return channel;

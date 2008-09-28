@@ -10,15 +10,14 @@
  **************************************************************************/
 package org.eclipse.net4j.acceptor;
 
-import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.internal.net4j.acceptor.Acceptor;
 
 /**
- * Accepts incoming connection requests from {@link ConnectorLocation#CLIENT client} {@link IConnector connectors} and
- * creates the appropriate {@link ConnectorLocation#SERVER server} connectors.
+ * Accepts incoming connection requests from {@link Location#CLIENT client} {@link IConnector connectors} and creates
+ * the appropriate {@link Location#SERVER server} connectors.
  * <p>
  * Since the process of accepting connection requests is heavily dependent on the implementation of the respective
  * connectors the only public API is introspection and notification.

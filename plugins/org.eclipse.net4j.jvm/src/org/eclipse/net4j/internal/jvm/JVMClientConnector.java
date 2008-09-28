@@ -10,10 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.jvm;
 
-import org.eclipse.net4j.connector.ConnectorLocation;
-import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
@@ -23,24 +19,13 @@ public class JVMClientConnector extends JVMConnector
 {
   private JVMAcceptor acceptor;
 
-  private IListener peerLifecycleListener = new LifecycleEventAdapter()
-  {
-    @Override
-    protected void onAboutToDeactivate(ILifecycle lifecycle)
-    {
-      setPeer(null);
-      deactivate();
-    }
-  };
-
   public JVMClientConnector()
   {
   }
 
-  @Override
-  public ConnectorLocation getLocation()
+  public Location getLocation()
   {
-    return ConnectorLocation.CLIENT;
+    return Location.CLIENT;
   }
 
   public JVMAcceptor getAcceptor()
@@ -64,7 +49,6 @@ public class JVMClientConnector extends JVMConnector
   {
     super.doActivate();
     JVMConnector peer = acceptor.handleAccept(this);
-    peer.addListener(peerLifecycleListener);
     setPeer(peer);
   }
 

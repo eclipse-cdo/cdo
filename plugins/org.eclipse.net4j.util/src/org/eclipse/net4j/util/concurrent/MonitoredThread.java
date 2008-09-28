@@ -12,7 +12,6 @@ package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +23,6 @@ import java.util.concurrent.CountDownLatch;
  */
 public abstract class MonitoredThread extends Thread
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONCURRENCY, MonitoredThread.class);
-
   private MonitoredThread.ThreadMonitor monitor;
 
   private long timeStamp;
@@ -84,11 +81,7 @@ public abstract class MonitoredThread extends Thread
     }
     catch (Exception ex)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(ex);
-      }
-
+      OM.LOG.error(ex);
       throw WrappedException.wrap(ex);
     }
     finally
@@ -224,11 +217,6 @@ public abstract class MonitoredThread extends Thread
 
         for (MonitoredThread thread : idleThreads)
         {
-          synchronized (threads)
-          {
-            threads.remove(thread);
-          }
-
           handleTimeoutExpiration(thread);
         }
       }
@@ -238,8 +226,12 @@ public abstract class MonitoredThread extends Thread
 
     protected void handleTimeoutExpiration(MonitoredThread thread)
     {
-      shutdownThreads();
+      synchronized (threads)
+      {
+        threads.remove(thread);
+      }
 
+      shutdownThreads();
       throw new RuntimeException("Idle timeout expired: " + thread.getName());
     }
 

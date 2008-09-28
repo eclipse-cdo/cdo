@@ -256,7 +256,7 @@
 <mapEntry key="org.eclipse.net4j.pop.repository/debug" value="true"/>
 <mapEntry key="org.eclipse.osgi/trace/classLoading" value="false"/>
 <mapEntry key="org.eclipse.net4j.jms.server.jdbc/debug" value="true"/>
-<mapEntry key="org.eclipse.net4j/open.channel.timeout" value="10000"/>
+<mapEntry key="org.eclipse.net4j/channel.timeout" value="10000"/>
 <mapEntry key="org.eclipse.core.jobs/jobs/errorondeadlock" value="false"/>
 <mapEntry key="org.eclipse.core.resources/save" value="false"/>
 <mapEntry key="org.eclipse.core.resources/contenttype" value="false"/>

@@ -19,12 +19,14 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
+import java.util.List;
+
 /**
  * One endpoint of a physical connection of arbitrary nature between two communicating parties. A {@link IConnector}
- * encapsulates the process of establishing and closing such connections and has a {@link ConnectorLocation} of
- * {@link ConnectorLocation#CLIENT CLIENT} or {@link ConnectorLocation#SERVER SERVER} with respect to this process. Once
- * a connection is established either party can use its connector to open multiple {@link IChannel}s to asynchronously
- * exchange {@link IBuffer}s.
+ * encapsulates the process of establishing and closing such connections and has a {@link Location} of
+ * {@link Location#CLIENT CLIENT} or {@link Location#SERVER SERVER} with respect to this process. Once a connection is
+ * established either party can use its connector to open multiple {@link IChannel}s to asynchronously exchange
+ * {@link IBuffer}s.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Providers of connectors for new physical
  * connection types have to implement org.eclipse.internal.net4j.connector.InternalConnector.
@@ -53,32 +55,17 @@ public interface IConnector extends IContainer<IChannel>
   /**
    * @since 2.0
    */
-  public static final long NO_OPEN_CHANNEL_TIMEOUT = Long.MAX_VALUE;
+  public static final long NO_CHANNEL_TIMEOUT = Long.MAX_VALUE;
 
   /**
-   * Indicates to use the timeout that is configured via debug property <code>open.channel.timeout</code> (see .options
-   * file) which has a default of 10 seconds.
+   * Indicates to use the timeout that is configured via debug property <code>channel.timeout</code> (see .options file)
+   * which has a default of 10 seconds.
    * 
    * @since 2.0
    */
-  public static final long DEFAULT_OPEN_CHANNEL_TIMEOUT = -1L;
+  public static final long DEFAULT_CHANNEL_TIMEOUT = -1L;
 
   public String getURL();
-
-  /**
-   * Indicates which role this connector has played during the establishment of the physical connection.
-   */
-  public ConnectorLocation getLocation();
-
-  /**
-   * Same as <code>{@link #getLocation()} == {@link ConnectorLocation#CLIENT}</code>.
-   */
-  public boolean isClient();
-
-  /**
-   * Same as <code>{@link #getLocation()} == {@link ConnectorLocation#SERVER}</code>.
-   */
-  public boolean isServer();
 
   /**
    * Returns the userID of this connector.
@@ -119,11 +106,13 @@ public interface IConnector extends IContainer<IChannel>
   public ConnectorException disconnect();
 
   /**
-   * Returns an array of currently open channels. Note that the resulting array does not contain <code>null</code>
-   * values. Generally the <code>channelIndex</code> of a channel can not be used as an index into this array.
+   * Returns a list of currently open channels. Note that the resulting list does not contain <code>null</code> values.
+   * Generally the <code>channelIndex</code> of a channel can not be used as an index into this array.
    * <p>
+   * 
+   * @since 2.0
    */
-  public IChannel[] getChannels();
+  public List<IChannel> getChannels();
 
   /**
    * Synchronous request to open a new {@link IChannel} with an undefined channel protocol. Since the peer connector
@@ -162,10 +151,10 @@ public interface IConnector extends IContainer<IChannel>
   /**
    * @since 2.0
    */
-  public long getOpenChannelTimeout();
+  public long getChannelTimeout();
 
   /**
    * @since 2.0
    */
-  public void setOpenChannelTimeout(long openChannelTimeout);
+  public void setChannelTimeout(long channelTimeout);
 }

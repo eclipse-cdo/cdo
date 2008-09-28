@@ -91,7 +91,7 @@ public class TransactionTest extends AbstractCDOTest
     session.close();
   }
 
-  public void _testCreateManySessionsAndTransactionsMultiThread() throws Exception
+  public void testCreateManySessionsAndTransactionsMultiThread() throws Exception
   {
     final long TIMEOUT = 2 * 120L;
     final int THREADS = 5;
@@ -110,7 +110,7 @@ public class TransactionTest extends AbstractCDOTest
           try
           {
             msg("Thread " + id + ": Started");
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
               CDOSession session = openModel1Session();
               CDOTransaction transaction = session.openTransaction();

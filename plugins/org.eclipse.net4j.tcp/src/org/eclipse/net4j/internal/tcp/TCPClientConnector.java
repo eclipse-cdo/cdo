@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.tcp;
 
-import org.eclipse.net4j.connector.ConnectorLocation;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
 
@@ -41,9 +40,9 @@ public class TCPClientConnector extends TCPConnector
     }
   }
 
-  public ConnectorLocation getLocation()
+  public Location getLocation()
   {
-    return ConnectorLocation.CLIENT;
+    return Location.CLIENT;
   }
 
   @Override

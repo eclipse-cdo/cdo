@@ -168,7 +168,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
         }
 
         writer.write(" (");
-        writer.write(String.valueOf(channel.getChannelID()));
+        writer.write(String.valueOf(channel.getChannelIndex()));
         writer.write(")\n");
       }
     }

@@ -101,7 +101,7 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
       {
         if (repositoryUUID != null)
         {
-          throw new IllegalArgumentException("Cannot find associate CDOView for reposUUID " + repositoryUUID);
+          throw new IllegalArgumentException("Cannot find associated CDOView for repository " + repositoryUUID);
         }
 
         if (mapOfViews.size() == 1)

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.ui.CDOViewHistoryEntry;
+import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEntry;
 
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 

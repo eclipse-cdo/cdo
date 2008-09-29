@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.ui;
+package org.eclipse.emf.cdo.ui.viewhistory;
 
 import org.eclipse.emf.cdo.CDOView;
 

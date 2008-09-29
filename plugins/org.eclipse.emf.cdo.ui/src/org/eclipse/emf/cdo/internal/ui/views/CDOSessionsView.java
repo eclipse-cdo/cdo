@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.ui.CDOViewHistoryEntry;
+import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEntry;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;

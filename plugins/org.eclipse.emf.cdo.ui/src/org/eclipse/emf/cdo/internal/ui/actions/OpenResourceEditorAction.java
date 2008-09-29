@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
-import org.eclipse.emf.cdo.ui.CDOViewHistoryEntry;
+import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEntry;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;

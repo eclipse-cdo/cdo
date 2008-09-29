@@ -8,13 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.ui;
+package org.eclipse.emf.cdo.ui.viewhistory;
 
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOViewHistoryEvent extends IEvent
 {

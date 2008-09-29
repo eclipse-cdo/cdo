@@ -36,6 +36,9 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
+import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistory;
+import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEntry;
+import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEvent;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 

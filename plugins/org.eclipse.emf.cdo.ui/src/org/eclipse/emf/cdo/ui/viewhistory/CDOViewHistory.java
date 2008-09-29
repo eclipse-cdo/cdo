@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.ui;
+package org.eclipse.emf.cdo.ui.viewhistory;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewResourcesEvent;

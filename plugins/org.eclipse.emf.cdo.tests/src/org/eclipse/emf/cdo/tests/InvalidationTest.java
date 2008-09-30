@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -45,6 +46,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class InvalidationTest extends AbstractCDOTest
 {
+
   public void testSeparateView() throws Exception
   {
     msg("Opening session");
@@ -707,6 +709,108 @@ public class InvalidationTest extends AbstractCDOTest
     assertEquals(false, timeOuter.timedOut());
     assertEquals(false, timeOuterNotification.timedOut());
 
+  }
+
+  public void testDetachAndPassiveUpdate() throws Exception
+  {
+    detachAndPassiveUpdate(false);
+  }
+
+  public void testDetachAndPassiveUpdateWithoutRevisionTimestamp() throws Exception
+  {
+    detachAndPassiveUpdate(true);
+  }
+
+  private void detachAndPassiveUpdate(boolean isRemoveRevision) throws Exception
+  {
+    msg("Creating category1");
+    final Category categoryA = getModel1Factory().createCategory();
+    categoryA.setName("category1");
+
+    msg("Opening sessionA");
+    final CDOSession sessionA = openModel1Session();
+
+    msg("Attaching transaction");
+    final CDOTransaction transaction = sessionA.openTransaction();
+
+    msg("Creating resource");
+    final CDOResource resourceA = transaction.createResource("/test1");
+
+    msg("Adding company");
+    resourceA.getContents().add(categoryA);
+
+    msg("Committing");
+    transaction.commit();
+
+    // ************************************************************* //
+
+    msg("Opening sessionB");
+    final CDOSession sessionB = openModel1Session();
+    sessionB.setPassiveUpdateEnabled(false);
+
+    msg("Attaching viewB");
+    final CDOView viewB = sessionB.openTransaction();
+    viewB.setInvalidationNotificationEnabled(true);
+
+    msg("Loading resource");
+    final CDOResource resourceB = viewB.getResource("/test1");
+    assertProxy(resourceB);
+
+    EList<EObject> contents = resourceB.getContents();
+    final Category categoryB = (Category)contents.get(0);
+
+    final TestAdapter testAdapter = new TestAdapter();
+    categoryB.eAdapters().add(testAdapter);
+
+    // ************************************************************* //
+
+    resourceA.getContents().remove(categoryA);
+    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return FSMUtil.isTransient(CDOUtil.getCDOObject(categoryB));
+      }
+    };
+
+    ITimeOuter timeOuterNotification = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return testAdapter.getNotifications().size() == 1;
+      }
+    };
+
+    msg("Checking before commit");
+    assertEquals(true, timeOuter.timedOut());
+
+    assertEquals(0, testAdapter.getNotifications().size());
+    msg("Committing");
+    transaction.commit();
+
+    final Category categoryA2 = getModel1Factory().createCategory();
+    categoryA2.setName("categoryA2");
+    resourceA.getContents().add(categoryA2);
+    transaction.commit();
+
+    if (isRemoveRevision)
+    {
+      removeAllRevisions(getRepository().getRevisionManager());
+      ((RevisionManager)getRepository().getRevisionManager()).removeCachedRevision(resourceA.cdoID(), 1);
+      ((RevisionManager)getRepository().getRevisionManager()).removeCachedRevision(resourceA.cdoID(), 2);
+    }
+
+    msg("Checking after commit");
+    assertEquals(true, timeOuter.timedOut());
+    assertEquals(0, testAdapter.getNotifications().size());
+
+    sessionB.refresh();
+
+    msg("Checking after commit");
+    assertEquals(false, timeOuter.timedOut());
+    assertEquals(false, timeOuterNotification.timedOut());
   }
 
   /**

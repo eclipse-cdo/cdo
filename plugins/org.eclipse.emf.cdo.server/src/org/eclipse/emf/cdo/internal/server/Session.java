@@ -298,7 +298,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     {
       activeViews[i].close();
     }
-    
+
     sessionManager.sessionClosed(this);
     super.doDeactivate();
   }

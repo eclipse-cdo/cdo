@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.common.CDOProtocolSession;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -22,7 +21,7 @@ import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -107,13 +106,13 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   /**
    * Refreshes the objects cache.
    * <p>
-   * Takes CDOID and version of all objects in the cache and sends it to the server. Only dirty objects will be
-   * returned. In the case where {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return
-   * immediately without doing anything.
+   * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDOTimestampContext}
+   * contains informations of which objects changed/detached. The collection is ordered by timestamp. In the case where
+   * {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing anything.
    * 
    * @since 2.0
    */
-  public Set<CDOIDAndVersion> refresh();
+  public Collection<CDOTimestampContext> refresh();
 
   public void close();
 }

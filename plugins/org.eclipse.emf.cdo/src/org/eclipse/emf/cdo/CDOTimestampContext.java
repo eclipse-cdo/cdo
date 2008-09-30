@@ -6,8 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Simon McDuff - maintenance
+ *    Simon McDuff - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -18,25 +18,15 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * @author Eike Stepper
+ * @author Simon McDuff
+ * @since 2.0
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSessionInvalidationEvent extends CDOSessionEvent
+public interface CDOTimestampContext
 {
-  public static final long LOCAL_ROLLBACK = 0L;
+  public long getTimestamp();
 
-  public CDOView getView();
-
-  /**
-   * Returns the time stamp of the server transaction if this event was sent as a result of a successfully committed
-   * transaction or <code>LOCAL_ROLLBACK</code> if this event was sent due to a local rollback.
-   */
-  public long getTimeStamp();
-
-  public Set<CDOIDAndVersion> getDirtyOIDs();
-
-  /**
-   * @since 2.0
-   */
   public Collection<CDOID> getDetachedObjects();
+
+  public Set<CDOIDAndVersion> getDirtyObjects();
 }

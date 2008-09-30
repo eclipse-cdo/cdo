@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.CDOTimestampContext;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
@@ -627,10 +628,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
-  @SuppressWarnings("unchecked")
-  public void handleSync(Set<CDOIDAndVersion> dirtyOIDs)
+  public void handleSync(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
-    notifyInvalidation(CDORevision.UNSPECIFIED_DATE, dirtyOIDs, Collections.EMPTY_LIST, null);
+    notifyInvalidation(timestamp, dirtyOIDs, detachedObjects, null);
   }
 
   private void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
@@ -638,9 +638,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
     {
-      InternalCDORevision revision = getRevisionManager().getRevisionByVersion(dirtyOID.getID(), 0,
-          dirtyOID.getVersion(), false);
-      if (revision != null)
+      CDOID id = dirtyOID.getID();
+      int version = dirtyOID.getVersion();
+      InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version, false);
+      if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+      {
+        revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
+      }
+      else if (revision != null)
       {
         revision.setRevised(timeStamp - 1);
       }
@@ -648,8 +653,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     for (CDOID id : detachedObjects)
     {
-      InternalCDORevision revision = getRevisionManager().getRevision(id, 0, false);
-      if (revision != null)
+      InternalCDORevision revision = revisionManager.getRevision(id, 0, false);
+      if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+      {
+        revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
+      }
+      else if (revision != null)
       {
         revision.setRevised(timeStamp - 1);
       }
@@ -673,7 +682,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       }
     }
 
-    fireInvalidationEvent(timeStamp, dirtyOIDs, excludedView);
+    fireInvalidationEvent(timeStamp, dirtyOIDs, detachedObjects, excludedView);
   }
 
   private void handleChangeSubcription(Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
@@ -699,9 +708,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
   }
 
-  public void fireInvalidationEvent(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, CDOViewImpl excludedView)
+  /**
+   * @since 2.0
+   */
+  public void fireInvalidationEvent(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
+      CDOViewImpl excludedView)
   {
-    fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs));
+    fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs, detachedObjects));
   }
 
   /**
@@ -974,7 +987,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
-  public Set<CDOIDAndVersion> refresh()
+  public Collection<CDOTimestampContext> refresh()
   {
     // If passive update is turned on we don`t need to refresh.
     // We do not throw an exception since the client could turn that feature on or off without affecting their code.
@@ -997,7 +1010,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       }
     }
 
-    return Collections.emptySet();
+    return Collections.emptyList();
   }
 
   /**
@@ -1013,12 +1026,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     private Set<CDOIDAndVersion> dirtyOIDs;
 
-    public InvalidationEvent(CDOViewImpl view, long timeStamp, Set<CDOIDAndVersion> dirtyOIDs)
+    private Collection<CDOID> detachedObjects;
+
+    public InvalidationEvent(CDOViewImpl view, long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+        Collection<CDOID> detachedObjects)
     {
       super(CDOSessionImpl.this);
       this.view = view;
       this.timeStamp = timeStamp;
       this.dirtyOIDs = dirtyOIDs;
+      this.detachedObjects = detachedObjects;
     }
 
     public CDOSession getSession()
@@ -1039,6 +1056,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     public Set<CDOIDAndVersion> getDirtyOIDs()
     {
       return dirtyOIDs;
+    }
+
+    public Collection<CDOID> getDetachedObjects()
+    {
+      return detachedObjects;
     }
 
     @Override

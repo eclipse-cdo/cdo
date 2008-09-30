@@ -173,6 +173,9 @@ public abstract class Store extends Lifecycle implements IStore
     }
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected void doActivate() throws Exception
   {

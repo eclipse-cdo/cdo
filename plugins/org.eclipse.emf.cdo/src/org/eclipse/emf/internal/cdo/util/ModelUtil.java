@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Eike Stepper - http://bugs.eclipse.org/246442 
+ *    Simon McDuff - maintenance 
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.util;
 
@@ -346,17 +346,17 @@ public final class ModelUtil
     CDOPackage topLevelPackage = cdoPackage.getTopLevelPackage();
     String ecore = topLevelPackage.getEcore();
     EPackageImpl topLevelPackageEPackage = (EPackageImpl)EMFUtil.ePackageFromString(ecore);
-    EPackageImpl ePackage = prepareEPackage(topLevelPackageEPackage, cdoPackage.getPackageURI());
+    EPackageImpl ePackage = prepareDynamicEPackage(topLevelPackageEPackage, cdoPackage.getPackageURI());
     return ePackage;
   }
 
-  private static EPackageImpl prepareEPackage(EPackageImpl ePackage, String nsURI)
+  private static EPackageImpl prepareDynamicEPackage(EPackageImpl ePackage, String nsURI)
   {
-    prepareEPackage(ePackage);
+    prepareDynamicEPackage(ePackage);
     EPackageImpl result = ObjectUtil.equals(ePackage.getNsURI(), nsURI) ? ePackage : null;
     for (EPackage subPackage : ePackage.getESubpackages())
     {
-      EPackageImpl p = prepareEPackage((EPackageImpl)subPackage, nsURI);
+      EPackageImpl p = prepareDynamicEPackage((EPackageImpl)subPackage, nsURI);
       if (p != null && result == null)
       {
         result = p;
@@ -366,10 +366,9 @@ public final class ModelUtil
     return result;
   }
 
-  public static void prepareEPackage(EPackageImpl ePackage)
+  public static void prepareDynamicEPackage(EPackageImpl ePackage)
   {
     ePackage.setEFactoryInstance(new CDOFactoryImpl(ePackage));
-    EMFUtil.fixEClassifiers(ePackage);
   }
 
   public static CDOClassRef createClassRef(EClassifier classifier)

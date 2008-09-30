@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - http://bugs.eclipse.org/244801
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
@@ -18,15 +19,12 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.impl.EClassifierImpl;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -42,7 +40,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -326,121 +323,4 @@ public final class EMFUtil
     resource.getContents().add(ePackage);
     return resource;
   }
-
-  /**
-   * TODO Remove when EMF has fixed this
-   */
-  public static void fixEClassifiers(EPackageImpl ePackage)
-  {
-    int id = 0;
-    for (Iterator<EClassifier> i = ePackage.getEClassifiers().iterator(); i.hasNext();)
-    {
-      EClassifierImpl eClassifier = (EClassifierImpl)i.next();
-      if (eClassifier instanceof EClass)
-      {
-        eClassifier.setClassifierID(id++);
-      }
-    }
-
-    for (Iterator<EClassifier> i = ePackage.getEClassifiers().iterator(); i.hasNext();)
-    {
-      EClassifierImpl eClassifier = (EClassifierImpl)i.next();
-      if (eClassifier.getClassifierID() == -1 && eClassifier instanceof EEnum)
-      {
-        eClassifier.setClassifierID(id++);
-      }
-    }
-
-    for (Iterator<EClassifier> i = ePackage.getEClassifiers().iterator(); i.hasNext();)
-    {
-      EClassifierImpl eClassifier = (EClassifierImpl)i.next();
-      if (eClassifier.getClassifierID() == -1 && eClassifier instanceof EDataType)
-      {
-        eClassifier.setClassifierID(id++);
-      }
-    }
-
-    // try
-    // {
-    // Method method = EPackageImpl.class.getDeclaredMethod("fixEClassifiers",
-    // ReflectUtil.NO_PARAMETERS);
-    // if (!method.isAccessible())
-    // {
-    // method.setAccessible(true);
-    // }
-    //
-    // method.invoke(ePackage, ReflectUtil.NO_ARGUMENTS);
-    // }
-    // catch (Exception ex)
-    // {
-    // OM.LOG.error(ex);
-    // }
-  }
-
-  // public static List<Change> analyzeListDifferences(InternalCDORevision
-  // oldRevision,
-  // InternalCDORevision newRevision, CDOFeatureImpl feature)
-  // {
-  // if (!feature.isMany())
-  // {
-  // throw new IllegalArgumentException("Feature is not many: " + feature);
-  // }
-  //
-  // final List<Object> oldList = (List)oldRevision.getValue(feature);
-  // final List newList = (List)newRevision.getValue(feature);
-  // final List<Change> changes = new ArrayList(0);
-  //
-  // new ECollections.ListDifferenceAnalyzer()
-  // {
-  // @Override
-  // protected void add(List<Object> oldList, Object newObject, int ids)
-  // {
-  // changes.add(new AddChange(newObject, ids));
-  // }
-  //
-  // @Override
-  // protected void remove(List<?> oldList, int ids)
-  // {
-  // changes.add(new RemoveChange(ids));
-  // }
-  //
-  // @Override
-  // protected void move(List<?> oldList, int ids, int toIndex)
-  // {
-  // changes.add(new MoveChange(ids, toIndex));
-  // }
-  // }.createListChanges(oldList, newList);
-  //
-  // return changes;
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static class MoveChange implements FeatureChange
-  // {
-  // public MoveChange(int ids, int toIndex)
-  // {
-  // }
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static class RemoveChange implements FeatureChange
-  // {
-  // public RemoveChange(int ids)
-  // {
-  // }
-  // }
-  //
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static class AddChange implements FeatureChange
-  // {
-  // public AddChange(Object newObject, int ids)
-  // {
-  // }
-  // }
 }

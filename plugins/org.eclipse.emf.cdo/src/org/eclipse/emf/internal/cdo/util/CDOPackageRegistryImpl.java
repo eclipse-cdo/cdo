@@ -129,7 +129,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
         EPackageImpl ePackage = (EPackageImpl)value;
         if (EMFUtil.isDynamicEPackage(ePackage))
         {
-          ModelUtil.prepareEPackage(ePackage);
+          ModelUtil.prepareDynamicEPackage(ePackage);
         }
       }
 

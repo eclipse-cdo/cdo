@@ -34,6 +34,10 @@ import java.util.Set;
  */
 public abstract class ChannelTest extends AbstractProtocolTest
 {
+  private static final long TIMEOUT = 20000;
+
+  private static final int THREADS = 40;
+
   private IConnector connector;
 
   private List<TestSignalProtocol> protocols;
@@ -121,8 +125,8 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
   public void testMultiThreadNoData() throws Exception
   {
-    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(5000L);
-    for (int i = 0; i < 100; i++)
+    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(TIMEOUT);
+    for (int i = 0; i < THREADS; i++)
     {
       threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor)
       {
@@ -150,9 +154,9 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
   public void testMultiThreadTinyData() throws Exception
   {
-    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(5000L);
+    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(TIMEOUT);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < THREADS; i++)
     {
       threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor)
       {
@@ -186,8 +190,8 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
   public void testMultiThreadDataLoop() throws Exception
   {
-    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(5000L, 10L);
-    for (int i = 0; i < 100; i++)
+    MultiThreadMonitor threadMonitor = new MultiThreadMonitor(TIMEOUT, 10L);
+    for (int i = 0; i < THREADS; i++)
     {
       threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor)
       {
@@ -232,7 +236,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
   {
     super.doSetUp();
     connector = startTransport();
-    connector.setChannelTimeout(100000L);
+    connector.setChannelTimeout(TIMEOUT);
     protocols = new ArrayList<TestSignalProtocol>();
   }
 

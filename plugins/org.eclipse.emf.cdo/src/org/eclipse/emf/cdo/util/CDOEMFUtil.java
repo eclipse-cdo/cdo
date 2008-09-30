@@ -269,30 +269,32 @@ public final class CDOEMFUtil
   {
     synchronized (CDOEMFUtil.class)
     {
-      Resource.Factory resourceFactory = new XMIResourceFactoryImpl();
-      ResourceSetImpl resourceSet = new ResourceSetImpl();
+      ePackage = (EPackage)EcoreUtil.copy(ePackage);
+    }
 
-      Resource.Factory.Registry registry = resourceSet.getResourceFactoryRegistry();
-      registry.getExtensionToFactoryMap().put("*", resourceFactory);
-      registry.getProtocolToFactoryMap().put("*", resourceFactory);
+    Resource.Factory resourceFactory = new XMIResourceFactoryImpl();
+    ResourceSetImpl resourceSet = new ResourceSetImpl();
 
-      Resource packageResource = createPackageResource(resourceSet, ePackage);
-      ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    Resource.Factory.Registry registry = resourceSet.getResourceFactoryRegistry();
+    registry.getExtensionToFactoryMap().put("*", resourceFactory);
+    registry.getProtocolToFactoryMap().put("*", resourceFactory);
 
-      try
-      {
-        packageResource.save(stream, null);
-        String string = stream.toString(ECORE_ENCODING);
-        return string;
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (IOException ex)
-      {
-        throw new IORuntimeException(ex);
-      }
+    Resource packageResource = createPackageResource(resourceSet, ePackage);
+    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+    try
+    {
+      packageResource.save(stream, null);
+      String string = stream.toString(ECORE_ENCODING);
+      return string;
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
     }
   }
 

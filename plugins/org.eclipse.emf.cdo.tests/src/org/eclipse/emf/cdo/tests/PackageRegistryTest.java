@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -36,11 +37,11 @@ import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Eike Stepper
@@ -61,15 +62,13 @@ public class PackageRegistryTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    {
-      // Load resource in session 2
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      Company company = (Company)res.getContents().get(0);
-      assertEquals("Eike", company.getName());
-    }
+    Company company = (Company)res.getContents().get(0);
+    assertEquals("Eike", company.getName());
   }
 
   public void testCommitTwoPackages() throws Exception
@@ -87,14 +86,12 @@ public class PackageRegistryTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      SpecialPurchaseOrder specialPurchaseOrder = (SpecialPurchaseOrder)res.getContents().get(0);
-      assertEquals("12345", specialPurchaseOrder.getDiscountCode());
-    }
+    SpecialPurchaseOrder specialPurchaseOrder = (SpecialPurchaseOrder)res.getContents().get(0);
+    assertEquals("12345", specialPurchaseOrder.getDiscountCode());
   }
 
   public void testCommitUnrelatedPackage() throws Exception
@@ -111,18 +108,16 @@ public class PackageRegistryTest extends AbstractCDOTest
       session.close();
     }
 
-    {
-      CDOSession session = openMangoSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    CDOSession session = openMangoSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      Value value = getMangoFactory().createValue();
-      value.setName("V0");
-      res.getContents().add(value);
+    Value value = getMangoFactory().createValue();
+    value.setName("V0");
+    res.getContents().add(value);
 
-      transaction.commit();
-      session.close();
-    }
+    transaction.commit();
+    session.close();
   }
 
   public void testCommitNestedPackages() throws Exception
@@ -182,17 +177,15 @@ public class PackageRegistryTest extends AbstractCDOTest
       session.close();
     }
 
-    {
-      CDOSession session = openSession();
-      CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
-      assertEquals(11, model3Package.getMetaIDRange().size());
-      assertNotNull(model3Package.getEcore());
+    CDOSession session = openSession();
+    CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
+    assertEquals(11, model3Package.getMetaIDRange().size());
+    assertNotNull(model3Package.getEcore());
 
-      CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());
-      assertNull(subPackage.getMetaIDRange());
-      assertNull(subPackage.getEcore());
-      session.close();
-    }
+    CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());
+    assertNull(subPackage.getMetaIDRange());
+    assertNull(subPackage.getEcore());
+    session.close();
   }
 
   public void testCommitCircularPackages() throws Exception
@@ -225,16 +218,14 @@ public class PackageRegistryTest extends AbstractCDOTest
       assertNotNull(class2);
     }
 
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res2 = transaction.getResource("/res2");
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res2 = transaction.getResource("/res2");
 
-      Class2 class2 = (Class2)res2.getContents().get(0);
-      assertNotNull(class2);
-      Class1 class1 = class2.getClass1().get(0);
-      assertNotNull(class1);
-    }
+    Class2 class2 = (Class2)res2.getContents().get(0);
+    assertNotNull(class2);
+    Class1 class1 = class2.getClass1().get(0);
+    assertNotNull(class1);
   }
 
   public void testEagerPackageRegistry() throws Exception
@@ -258,15 +249,13 @@ public class PackageRegistryTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    {
-      // Load resource in session 2
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      Company company = (Company)res.getContents().get(0);
-      assertEquals("Eike", company.getName());
-    }
+    Company company = (Company)res.getContents().get(0);
+    assertEquals("Eike", company.getName());
   }
 
   public void testLazyPackageRegistry() throws Exception
@@ -290,30 +279,28 @@ public class PackageRegistryTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    {
-      // Load resource in session 2
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      Company company = (Company)res.getContents().get(0);
-      assertEquals("Eike", company.getName());
-    }
+    Company company = (Company)res.getContents().get(0);
+    assertEquals("Eike", company.getName());
   }
 
-  /**
-   * TODO Fix file loading under OSGi
-   */
-  public void _testDynamicPackageFactory() throws Exception
+  public void testDynamicPackageFactory() throws Exception
   {
     {
       EPackage model1 = loadModel("model1.ecore");
       EClass companyClass = (EClass)model1.getEClassifier("Company");
       EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
+      Resource model1Resource = model1.eResource();
 
       // Create resource in session 1
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(model1);
+      assertEquals(model1Resource, model1.eResource());
+
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -322,26 +309,23 @@ public class PackageRegistryTest extends AbstractCDOTest
       company.eSet(nameAttribute, "Eike");
       res.getContents().add(company);
       transaction.commit();
+      session.close();
     }
 
-    {
-      // Load resource in session 2
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      CDOObject company = (CDOObject)res.getContents().get(0);
-      EClass companyClass = company.eClass();
-      EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
-      String name = (String)company.eGet(nameAttribute);
-      assertEquals("Eike", name);
-    }
+    CDOObject company = (CDOObject)res.getContents().get(0);
+    EClass companyClass = company.eClass();
+    EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
+    String name = (String)company.eGet(nameAttribute);
+    assertEquals("Eike", name);
+    session.close();
   }
 
-  /**
-   * TODO Fix file loading under OSGi
-   */
-  public void _testDynamicPackageNewInstance() throws Exception
+  public void testDynamicPackageNewInstance() throws Exception
   {
     {
       EPackage model1 = loadModel("model1.ecore");
@@ -358,27 +342,28 @@ public class PackageRegistryTest extends AbstractCDOTest
       company.eSet(nameAttribute, "Eike");
       res.getContents().add(company);
       transaction.commit();
+      session.close();
     }
 
-    {
-      // Load resource in session 2
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      CDOObject company = (CDOObject)res.getContents().get(0);
-      EClass companyClass = company.eClass();
-      EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
-      String name = (String)company.eGet(nameAttribute);
-      assertEquals("Eike", name);
-    }
+    CDOObject company = (CDOObject)res.getContents().get(0);
+    EClass companyClass = company.eClass();
+    EAttribute nameAttribute = (EAttribute)companyClass.getEStructuralFeature("name");
+    String name = (String)company.eGet(nameAttribute);
+    assertEquals("Eike", name);
+    session.close();
   }
 
   private static EPackage loadModel(String fileName) throws IOException
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
-    Resource resource = resourceSet.getResource(URI.createFileURI(fileName), true);
+    URI uri = URI.createURI("file://" + fileName);
+    XMIResource resource = new XMIResourceImpl(uri);
+    resource.setEncoding("UTF-8");
+    resource.load(OM.BUNDLE.getInputStream(fileName), null);
     return (EPackage)resource.getContents().get(0);
   }
 }

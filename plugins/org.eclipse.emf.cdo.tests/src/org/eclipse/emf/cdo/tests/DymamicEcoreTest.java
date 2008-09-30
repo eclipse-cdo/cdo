@@ -45,17 +45,17 @@ public class DymamicEcoreTest extends AbstractCDOTest
       EObject root = loadModel("model1.ecore", session.getPackageRegistry());
       res.getContents().add(root);
       transaction.commit();
+      session.close();
     }
 
-    {
-      // Load resource in session 2
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      EObject root = res.getContents().get(0);
-      saveModel("model1X.ecore", root);
-    }
+    EObject root = res.getContents().get(0);
+    saveModel("model1X.ecore", root);
+    session.close();
   }
 
   private static EObject loadModel(String fileName, EPackage.Registry packageRegistry) throws IOException

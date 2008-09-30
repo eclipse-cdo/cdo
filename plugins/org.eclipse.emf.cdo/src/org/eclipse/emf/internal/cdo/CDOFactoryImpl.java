@@ -27,12 +27,6 @@ public class CDOFactoryImpl extends EFactoryImpl implements CDOFactory
     this.ePackage = ePackage;
   }
 
-  // @Override
-  // public EObject create(EClass eClass)
-  // {
-  // return new DynamicCDOObjectImpl(eClass);
-  // }
-
   @Override
   protected EObject basicCreate(EClass eClass)
   {

@@ -275,14 +275,39 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 2.0
    */
   @Override
-  public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
+  public CDOID getResourceID(String path)
   {
-    if (lastSavepoint.getSharedDetachedObjects().contains(id))
+    CDOID id = super.getResourceID(path);
+    return validateObject(id) ? id : CDOID.NULL;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected boolean validateObject(CDOID id)
+  {
+    return !lastSavepoint.getSharedDetachedObjects().contains(id);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void validateObjectWithException(CDOID id) throws IllegalArgumentException
+  {
+    if (!validateObject(id))
     {
       throw new IllegalArgumentException("Cannot access object with id " + id
           + " anymore. It was removed from this view.");
     }
+  }
 
+  /**
+   * @since 2.0
+   */
+  @Override
+  public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
+  {
+    validateObjectWithException(id);
     return super.getObject(id, loadOnDemand);
   }
 

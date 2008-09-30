@@ -66,8 +66,14 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
 
     if (resource.isExisting())
     {
-      view.registerProxyResource(resource);
+      // Doesn't have any resource for that path!
+      if (!view.registerProxyResource(resource))
+      {
+        // TODO Should fill getErrors here !!
+        resource.setExisting(false);
+      }
     }
+    
     return resource;
   }
 

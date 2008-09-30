@@ -72,6 +72,7 @@ public class View implements IView
    */
   public IRepository getRepository()
   {
+    checkOpen();
     return repository;
   }
 
@@ -80,6 +81,7 @@ public class View implements IView
    */
   public CDOID getResourceID(String path)
   {
+    checkOpen();
     long timeStamp = getTimeStamp();
     CDOID id = repository.getRevisionManager().getResourceID(path, timeStamp);
     if (id == null)
@@ -96,6 +98,7 @@ public class View implements IView
    */
   public String getResourcePath(CDOID id)
   {
+    checkOpen();
     long timeStamp = getTimeStamp();
     String path = repository.getRevisionManager().getResourcePath(id, timeStamp);
     if (path == null)
@@ -127,6 +130,7 @@ public class View implements IView
    */
   public synchronized void subscribe(CDOID id)
   {
+    checkOpen();
     changeSubscriptionIDs.add(id);
   }
 
@@ -135,6 +139,7 @@ public class View implements IView
    */
   public synchronized void unsubscribe(CDOID id)
   {
+    checkOpen();
     changeSubscriptionIDs.remove(id);
   }
 
@@ -143,6 +148,7 @@ public class View implements IView
    */
   public synchronized boolean hasSubscription(CDOID id)
   {
+    checkOpen();
     return changeSubscriptionIDs.contains(id);
   }
 
@@ -151,6 +157,7 @@ public class View implements IView
    */
   public synchronized void clearChangeSubscription()
   {
+    checkOpen();
     changeSubscriptionIDs.clear();
   }
 
@@ -165,7 +172,37 @@ public class View implements IView
    */
   public void close()
   {
-    session.closeView(viewID);
+    if (!isClosed())
+    {
+      session.viewClosed(this);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void doClose()
+  {
     clearChangeSubscription();
+    session = null;
+    repository = null;
+    resourcePathFeature = null;
+    changeSubscriptionIDs = null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isClosed()
+  {
+    return session == null;
+  }
+
+  private void checkOpen()
+  {
+    if (isClosed())
+    {
+      throw new IllegalStateException("View closed");
+    }
   }
 }

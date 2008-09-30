@@ -113,6 +113,4 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * @since 2.0
    */
   public Collection<CDOTimestampContext> refresh();
-
-  public void close();
 }

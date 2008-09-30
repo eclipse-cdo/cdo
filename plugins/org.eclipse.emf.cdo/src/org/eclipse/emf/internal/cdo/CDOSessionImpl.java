@@ -276,6 +276,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    */
   public long getRepositoryCreationTime()
   {
+    checkActive();
     return repositoryCreationTime;
   }
 
@@ -292,6 +293,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    */
   public long getRepositoryTime(boolean forceRefresh)
   {
+    checkActive();
     if (repositoryTimeResult == null || forceRefresh)
     {
       repositoryTimeResult = sendRepositoryTimeRequest();
@@ -326,6 +328,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
+  public boolean isClosed()
+  {
+    return !isActive();
+  }
+
+  /**
+   * @since 2.0
+   */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry)
   {
     this.packageRegistry = packageRegistry;
@@ -348,6 +358,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOTransactionImpl openTransaction(ResourceSet resourceSet)
   {
+    checkActive();
     CDOTransactionImpl transaction = createTransaction(++lastViewID);
     attach(resourceSet, transaction);
     return transaction;
@@ -365,6 +376,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOViewImpl openView(ResourceSet resourceSet)
   {
+    checkActive();
     CDOViewImpl view = createView(++lastViewID);
     attach(resourceSet, view);
     return view;
@@ -382,6 +394,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOAuditImpl openAudit(ResourceSet resourceSet, long timeStamp)
   {
+    checkActive();
     CDOAuditImpl audit = createAudit(++lastViewID, timeStamp);
     attach(resourceSet, audit);
     return audit;
@@ -465,6 +478,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOView getView(int viewID)
   {
+    checkActive();
     for (CDOViewImpl view : getViews())
     {
       if (view.getViewID() == viewID)
@@ -478,6 +492,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOViewImpl[] getViews()
   {
+    checkActive();
     synchronized (views)
     {
       return views.toArray(new CDOViewImpl[views.size()]);
@@ -492,6 +507,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   @Override
   public boolean isEmpty()
   {
+    checkActive();
     return views.isEmpty();
   }
 
@@ -837,17 +853,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     EventUtil.removeListener(channel, channelListener);
     revisionManager.deactivate();
     packageManager.deactivate();
-    synchronized (views)
+    for (CDOViewImpl view : views.toArray(new CDOViewImpl[views.size()]))
     {
-      for (CDOViewImpl view : getViews())
+      try
       {
-        try
-        {
-          view.close();
-        }
-        catch (RuntimeException ignore)
-        {
-        }
+        view.close();
+      }
+      catch (RuntimeException ignore)
+      {
       }
     }
 
@@ -991,6 +1004,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     // If passive update is turned on we don`t need to refresh.
     // We do not throw an exception since the client could turn that feature on or off without affecting their code.
+    checkActive();
     if (!isPassiveUpdateEnabled())
     {
       Map<CDOID, CDORevision> allRevisions = getAllRevisions();

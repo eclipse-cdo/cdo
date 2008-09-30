@@ -41,7 +41,6 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author Eike Stepper

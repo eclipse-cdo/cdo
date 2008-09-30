@@ -26,4 +26,14 @@ public interface CDOProtocolSession
    * @since 2.0
    */
   public boolean isPassiveUpdateEnabled();
+
+  /**
+   * @since 2.0
+   */
+  public void close();
+
+  /**
+   * @since 2.0
+   */
+  public boolean isClosed();
 }

@@ -130,12 +130,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public boolean isDirty()
   {
+    checkOpen();
     return dirty;
   }
 
   @Override
   public boolean hasConflict()
   {
+    checkOpen();
     return conflict;
   }
 
@@ -171,12 +173,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOResource createResource(String path)
   {
+    checkOpen();
     URI createURI = CDOURIUtil.createResourceURI(this, path);
     return (CDOResource)getResourceSet().createResource(createURI);
   }
 
   public CDOResource getOrCreateResource(String path)
   {
+    checkOpen();
+
     try
     {
       CDOID id = getResourceID(path);
@@ -236,6 +241,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public CDOSavepointImpl getLastSavepoint()
   {
+    checkOpen();
     return lastSavepoint;
   }
 
@@ -292,6 +298,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
+    checkOpen();
     if (isDetached(id))
     {
       throw new IllegalArgumentException("Cannot access object with id " + id
@@ -311,6 +318,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public void commit() throws TransactionException
   {
+    checkOpen();
+
     try
     {
       getTransactionStrategy().commit(this);
@@ -327,6 +336,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public void rollback(boolean remote)
   {
+    checkOpen();
     rollback(firstSavepoint, remote);
     cleanUp();
   }
@@ -545,6 +555,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public void rollback(CDOSavepoint savepoint, boolean remote)
   {
+    checkOpen();
     getTransactionStrategy().rollback(this, savepoint, remote);
   }
 
@@ -629,6 +640,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public CDOSavepoint setSavepoint()
   {
+    checkOpen();
     return getTransactionStrategy().setSavepoint(this);
   }
 
@@ -818,16 +830,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
+    checkOpen();
     return lastSavepoint.getAllDirtyObjects();
   }
 
   public Map<CDOID, CDOObject> getNewObjects()
   {
+    checkOpen();
     return lastSavepoint.getAllNewObjects();
   }
 
   public Map<CDOID, CDOResource> getNewResources()
   {
+    checkOpen();
     return lastSavepoint.getAllNewResources();
   }
 
@@ -836,11 +851,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public Map<CDOID, CDORevision> getBaseNewObjects()
   {
+    checkOpen();
     return lastSavepoint.getAllBaseNewObjects();
   }
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
+    checkOpen();
     return lastSavepoint.getAllRevisionDeltas();
   }
 
@@ -849,7 +866,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public Set<CDOID> getDetachedObjects()
   {
+    checkOpen();
     return lastSavepoint.getAllDetachedObjects();
+  }
+
+  private void checkOpen()
+  {
+    if (isClosed())
+    {
+      throw new IllegalStateException("View closed");
+    }
   }
 
   /**

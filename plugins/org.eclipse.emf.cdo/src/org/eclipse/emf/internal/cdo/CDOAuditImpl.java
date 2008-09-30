@@ -52,6 +52,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
    */
   public void setTimeStamp(long timeStamp)
   {
+    checkOpen();
     if (this.timeStamp != timeStamp)
     {
       List<InternalCDOObject> invalidObjects = getInvalidObjects(timeStamp);
@@ -94,6 +95,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   @Override
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
+    checkOpen();
     CDOSessionImpl session = getSession();
     int initialChunkSize = session.getCollectionLoadingPolicy().getInitialChunkSize();
 
@@ -105,5 +107,13 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   public String toString()
   {
     return MessageFormat.format("CDOAudit({0})", getViewID());
+  }
+
+  private void checkOpen()
+  {
+    if (isClosed())
+    {
+      throw new IllegalStateException("View closed");
+    }
   }
 }

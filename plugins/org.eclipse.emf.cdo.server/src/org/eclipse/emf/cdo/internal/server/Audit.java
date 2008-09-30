@@ -49,6 +49,7 @@ public class Audit extends View implements IAudit
 
   public List<CDORevision> setTimeStamp(long timeStamp, List<CDOID> invalidObjects)
   {
+    checkOpen();
     IRepository repository = getSession().getSessionManager().getRepository();
     repository.validateTimeStamp(timeStamp);
 
@@ -60,5 +61,13 @@ public class Audit extends View implements IAudit
   public String toString()
   {
     return MessageFormat.format("Audit[{0}, {1,date} {1,time}]", getViewID(), timeStamp);
+  }
+
+  private void checkOpen()
+  {
+    if (isClosed())
+    {
+      throw new IllegalStateException("View closed");
+    }
   }
 }

@@ -65,6 +65,11 @@ public final class FSMUtil
    */
   public static InternalCDOObject adapt(Object object, CDOView view)
   {
+    if (view.isClosed())
+    {
+      throw new IllegalStateException("View closed");
+    }
+
     if (object instanceof InternalCDOObject)
     {
       return (InternalCDOObject)object;

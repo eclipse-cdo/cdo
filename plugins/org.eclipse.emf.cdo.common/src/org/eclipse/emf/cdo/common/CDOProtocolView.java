@@ -35,6 +35,11 @@ public interface CDOProtocolView
   public void close();
 
   /**
+   * @since 2.0
+   */
+  public boolean isClosed();
+
+  /**
    * @author Eike Stepper
    */
   public enum Type

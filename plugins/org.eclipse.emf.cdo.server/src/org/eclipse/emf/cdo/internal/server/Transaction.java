@@ -58,6 +58,7 @@ public class Transaction extends View implements ITransaction
    */
   public InternalCommitContext createCommitContext()
   {
+    checkOpen();
     return new TransactionCommitContextImpl(this);
   }
 
@@ -68,6 +69,7 @@ public class Transaction extends View implements ITransaction
    */
   public InternalCommitContext createCommitContext(final long timeStamp)
   {
+    checkOpen();
     return new TransactionCommitContextImpl(this)
     {
       @Override
@@ -76,6 +78,14 @@ public class Transaction extends View implements ITransaction
         return timeStamp;
       }
     };
+  }
+
+  private void checkOpen()
+  {
+    if (isClosed())
+    {
+      throw new IllegalStateException("View closed");
+    }
   }
 
   /**

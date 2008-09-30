@@ -125,8 +125,9 @@ public class QueryTest extends AbstractCDOTest
 
     assertEquals(false, timedOut);
 
+    CDOSession session = transaction.getSession();
     transaction.close();
-    transaction.getSession().close();
+    session.close();
   }
 
   public void testQueryCancel_ViewClose() throws Exception
@@ -137,6 +138,7 @@ public class QueryTest extends AbstractCDOTest
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     cdoQuery.setParameter("sleep", 1000L);
     final CloseableIterator<Object> queryResult = cdoQuery.getResultAsync(Object.class);
+    CDOSession session = transaction.getSession();
     transaction.close();
     boolean timedOut = new PollingTimeOuter(500, 100)
     {
@@ -149,7 +151,7 @@ public class QueryTest extends AbstractCDOTest
     }.timedOut();
 
     assertEquals(false, timedOut);
-    transaction.getSession().close();
+    session.close();
   }
 
   public void testQueryCancel_SessionClose() throws Exception

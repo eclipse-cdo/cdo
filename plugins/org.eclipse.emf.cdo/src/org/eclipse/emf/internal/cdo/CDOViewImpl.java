@@ -254,6 +254,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public CDOTransactionImpl toTransaction()
   {
+    checkOpen();
     if (this instanceof CDOTransactionImpl)
     {
       return (CDOTransactionImpl)this;
@@ -264,6 +265,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public boolean hasResource(String path)
   {
+    checkOpen();
     CDOID id = getResourceID(path);
     return id != null && !id.isNull();
   }
@@ -273,6 +275,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public CDOQuery createQuery(String language, String queryString)
   {
+    checkOpen();
     return new CDOQueryImpl(this, language, queryString);
   }
 
@@ -312,6 +315,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public CDOResource getResource(String path)
   {
+    checkOpen();
     return getResource(path, true);
   }
 
@@ -320,6 +324,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public CDOResource getResource(String path, boolean loadInDemand)
   {
+    checkOpen();
     URI uri = CDOURIUtil.createResourceURI(this, path);
     return (CDOResource)getResourceSet().getResource(uri, loadInDemand);
   }
@@ -329,6 +334,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public List<CDOResource> queryResources(String pathPrefix)
   {
+    checkOpen();
     CDOQuery resourceQuery = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, pathPrefix);
     return resourceQuery.getResult(CDOResource.class);
   }
@@ -414,6 +420,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
+    checkOpen();
     if (id == null || id.isNull())
     {
       return null;
@@ -461,6 +468,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   @SuppressWarnings("unchecked")
   public <T extends EObject> T getObject(T objectFromDifferentView)
   {
+    checkOpen();
     if (objectFromDifferentView instanceof CDOObject)
     {
       CDOObject object = (CDOObject)objectFromDifferentView;
@@ -482,6 +490,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public boolean isObjectRegistered(CDOID id)
   {
+    checkOpen();
     synchronized (objects)
     {
       return objects.containsKey(id);
@@ -688,7 +697,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       resource.cdoInternalSetState(CDOState.PROXY);
       registerObject(resource);
     }
-    
+
     return exists;
   }
 
@@ -906,9 +915,24 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public void close()
   {
     session.viewDetached(this);
-    objects.clear();
+    session = null;
     objects = null;
     store = null;
+    viewSet = null;
+    changeSubscriptionManager = null;
+    changeSubscriptionPolicy = null;
+    revisionPrefetchingPolicy = null;
+    featureAnalyzer = null;
+    lastLookupID = null;
+    lastLookupObject = null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isClosed()
+  {
+    return session == null;
   }
 
   @Override
@@ -933,6 +957,14 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public void setViewSet(CDOViewSet viewSet)
   {
     this.viewSet = viewSet;
+  }
+
+  private void checkOpen()
+  {
+    if (isClosed())
+    {
+      throw new IllegalStateException("View closed");
+    }
   }
 
   /**

@@ -121,27 +121,32 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
+    checkActive();
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
   public View[] getElements()
   {
+    checkActive();
     return getViews();
   }
 
   @Override
   public boolean isEmpty()
   {
+    checkActive();
     return views.isEmpty();
   }
 
   public View[] getViews()
   {
+    checkActive();
     return views.values().toArray(new View[views.size()]);
   }
 
   public IView getView(int viewID)
   {
+    checkActive();
     return views.get(viewID);
   }
 
@@ -150,6 +155,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public IView openView(int viewID)
   {
+    checkActive();
     IView view = new View(this, viewID);
     addView(view);
     return view;
@@ -160,6 +166,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public IAudit openAudit(int viewID, long timeStamp)
   {
+    checkActive();
     IAudit audit = new Audit(this, viewID, timeStamp);
     addView(audit);
     return audit;
@@ -170,6 +177,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public ITransaction openTransaction(int viewID)
   {
+    checkActive();
     ITransaction transaction = new Transaction(this, viewID);
     addView(transaction);
     return transaction;
@@ -177,19 +185,21 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private void addView(IView view)
   {
+    checkActive();
     views.put(view.getViewID(), view);
     fireElementAddedEvent(view);
   }
 
-  public IView closeView(int viewID)
+  /**
+   * @since 2.0
+   */
+  public void viewClosed(View view)
   {
-    IView view = views.remove(viewID);
-    if (view != null)
+    if (views.remove(view.getViewID()) == view)
     {
+      view.doClose();
       fireElementRemovedEvent(view);
     }
-
-    return view;
   }
 
   /**
@@ -286,20 +296,41 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   @Override
   public String toString()
   {
-    return MessageFormat.format("Session[{0}, {1}]", sessionID, protocol.getChannel());
+    return MessageFormat.format("Session[{0}]", sessionID);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void close()
+  {
+    deactivate();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isClosed()
+  {
+    return !isActive();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
     protocol.removeListener(protocolListener);
-    IView[] activeViews = getViews();
-    for (int i = 0; i < activeViews.length; i++)
+    protocol = null;
+    protocolListener = null;
+
+    for (IView view : views.values().toArray(new View[views.size()]))
     {
-      activeViews[i].close();
+      view.close();
     }
 
+    views = null;
     sessionManager.sessionClosed(this);
+    sessionManager = null;
+    packageURICompressor = null;
     super.doDeactivate();
   }
 }

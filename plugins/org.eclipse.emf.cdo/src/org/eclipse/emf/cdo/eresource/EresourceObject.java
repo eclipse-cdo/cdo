@@ -19,4 +19,8 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public interface EresourceObject extends CDOObject, Resource.Internal
 {
+  /**
+   * @since 2.0
+   */
+  public boolean isExisting();
 }

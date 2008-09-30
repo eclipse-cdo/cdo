@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
-import org.eclipse.emf.cdo.util.EMFUtil;
+import org.eclipse.emf.cdo.util.CDOEMFUtil;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -127,7 +127,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       if (value instanceof EPackageImpl)
       {
         EPackageImpl ePackage = (EPackageImpl)value;
-        if (EMFUtil.isDynamicEPackage(ePackage))
+        if (CDOEMFUtil.isDynamicEPackage(ePackage))
         {
           ModelUtil.prepareDynamicEPackage(ePackage);
         }

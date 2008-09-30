@@ -44,12 +44,13 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public final class EMFUtil
+public final class CDOEMFUtil
 {
   private static final String ECORE_ENCODING = "ASCII";
 
-  private EMFUtil()
+  private CDOEMFUtil()
   {
   }
 
@@ -213,11 +214,6 @@ public final class EMFUtil
         continue;
       }
 
-      // if (feature == EcorePackage.eINSTANCE.getEGenericType_EClassifier())
-      // {
-      // continue;
-      // }
-
       result.add(feature);
     }
 
@@ -271,32 +267,16 @@ public final class EMFUtil
 
   public static String ePackageToString(EPackage ePackage, EPackage.Registry packageRegistry)
   {
-    synchronized (EMFUtil.class)
+    synchronized (CDOEMFUtil.class)
     {
       Resource.Factory resourceFactory = new XMIResourceFactoryImpl();
-      ResourceSetImpl resourceSet = new ResourceSetImpl()
-      // {
-      // @Override
-      // protected Resource delegatedGetResource(URI uri, boolean loadOnDemand)
-      // {
-      // System.out.println("\nGET_RESOURCE: " + uri);
-      // return delegatedGetResource(uri, loadOnDemand);
-      // }
-      // }
-      ;
+      ResourceSetImpl resourceSet = new ResourceSetImpl();
 
-      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory);
+      Resource.Factory.Registry registry = resourceSet.getResourceFactoryRegistry();
+      registry.getExtensionToFactoryMap().put("*", resourceFactory);
+      registry.getProtocolToFactoryMap().put("*", resourceFactory);
 
       Resource packageResource = createPackageResource(resourceSet, ePackage);
-      // for (Object object : packageRegistry.values())
-      // {
-      // if (object != ePackage)
-      // {
-      // createPackageResource(resourceSet, (EPackage)object);
-      // }
-      // }
-
       ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
       try

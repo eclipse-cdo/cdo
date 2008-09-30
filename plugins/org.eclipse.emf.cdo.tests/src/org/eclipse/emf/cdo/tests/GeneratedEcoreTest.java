@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.EMFUtil;
+import org.eclipse.emf.cdo.util.CDOEMFUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -40,7 +40,7 @@ public class GeneratedEcoreTest extends AbstractCDOTest
     CDOTransaction transaction1 = session1.openTransaction();
     CDOResource res1 = transaction1.createResource("/res");
 
-    EPackage root1 = (EPackage)EMFUtil.loadEcore("model1.ecore", session1.getPackageRegistry());
+    EPackage root1 = (EPackage)CDOEMFUtil.loadEcore("model1.ecore", session1.getPackageRegistry());
     res1.getContents().add(root1);
     transaction1.commit();
 
@@ -55,7 +55,7 @@ public class GeneratedEcoreTest extends AbstractCDOTest
     assertEquals(res2, root2.eResource());
 
     CDOUtil.load(root2, transaction2);
-    EMFUtil.saveEcore("model1X.ecore", root2);
+    CDOEMFUtil.saveEcore("model1X.ecore", root2);
     // assertTrue("Models differ", EcoreUtil.equals(root1, root2));
   }
 }

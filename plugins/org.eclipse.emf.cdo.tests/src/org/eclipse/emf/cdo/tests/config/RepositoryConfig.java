@@ -274,6 +274,12 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     @Override
     protected void tearDown() throws Exception
     {
+      super.tearDown();
+      shutDownHsqldb();
+    }
+
+    private void shutDownHsqldb() throws SQLException
+    {
       if (dataSource != null)
       {
         Connection connection = null;
@@ -292,8 +298,6 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
           dataSource = null;
         }
       }
-
-      super.tearDown();
     }
   }
 

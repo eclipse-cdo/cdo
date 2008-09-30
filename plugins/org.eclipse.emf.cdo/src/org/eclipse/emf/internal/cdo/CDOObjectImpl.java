@@ -392,6 +392,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         @Override
         protected void didAdd(int index, Adapter newObject)
         {
+          super.didAdd(index, newObject);
+
           if (!FSMUtil.isTransient(CDOObjectImpl.this))
           {
             cdoView().subscribe(CDOObjectImpl.this, newObject);
@@ -401,6 +403,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         @Override
         protected void didRemove(int index, Adapter oldObject)
         {
+          super.didRemove(index, oldObject);
+
           if (!FSMUtil.isTransient(CDOObjectImpl.this))
           {
             cdoView().unsubscribe(CDOObjectImpl.this, oldObject);

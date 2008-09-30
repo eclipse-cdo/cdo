@@ -231,7 +231,7 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     CDOPackage parentPackage = getParentPackage();
     if (parentPackage != null)
     {
-      return parentPackage + "." + getName();
+      return parentPackage.getQualifiedName() + "." + getName();
     }
 
     return getName();

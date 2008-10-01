@@ -242,6 +242,7 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
   {
     try
     {
+      // We do not notify view for remove notifications.
       switch (notification.getEventType())
       {
       case Notification.ADD:
@@ -252,7 +253,6 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
         break;
 
       case Notification.ADD_MANY:
-      {
         List<Resource> newResources = (List<Resource>)notification.getNewValue();
         for (Resource newResource : newResources)
         {
@@ -261,27 +261,6 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
             notifyAdd((CDOResourceImpl)newResource);
           }
         }
-      }
-        break;
-
-      case Notification.REMOVE:
-        if (notification.getOldValue() instanceof CDOResourceImpl)
-        {
-          notifyRemove((CDOResourceImpl)notification.getOldValue());
-        }
-        break;
-
-      case Notification.REMOVE_MANY:
-      {
-        List<Resource> resources = (List<Resource>)notification.getOldValue();
-        for (Resource oldResource : resources)
-        {
-          if (oldResource instanceof CDOResourceImpl)
-          {
-            notifyRemove((CDOResourceImpl)oldResource);
-          }
-        }
-      }
         break;
       }
     }
@@ -302,11 +281,5 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
     {
       view.toTransaction().attach(resource);
     }
-  }
-
-  private void notifyRemove(CDOResourceImpl resource)
-  {
-    // TODO Simon: Why do we have private methods that do nothing?
-    // Don't do anything
   }
 }

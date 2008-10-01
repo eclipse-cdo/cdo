@@ -32,7 +32,8 @@ public class Audit extends View implements IAudit
   public Audit(Session session, int viewID, long timeStamp)
   {
     super(session, viewID);
-    this.timeStamp = timeStamp;
+    IRepository repository = getSession().getSessionManager().getRepository();
+    setTimeStamp(repository,timeStamp);
   }
 
   @Override
@@ -51,9 +52,7 @@ public class Audit extends View implements IAudit
   {
     checkOpen();
     IRepository repository = getSession().getSessionManager().getRepository();
-    repository.validateTimeStamp(timeStamp);
-
-    this.timeStamp = timeStamp;
+    setTimeStamp(repository,timeStamp);
     return repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp, false);
   }
 
@@ -61,6 +60,12 @@ public class Audit extends View implements IAudit
   public String toString()
   {
     return MessageFormat.format("Audit[{0}, {1,date} {1,time}]", getViewID(), timeStamp);
+  }
+
+  private void setTimeStamp(IRepository repository,long timeStamp)
+  {
+    repository.validateTimeStamp(timeStamp);
+    this.timeStamp = timeStamp;
   }
 
   private void checkOpen()

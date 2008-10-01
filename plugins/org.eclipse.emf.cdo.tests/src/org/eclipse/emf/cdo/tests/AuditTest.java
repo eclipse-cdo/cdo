@@ -17,6 +17,10 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
 
+import org.eclipse.net4j.signal.SignalRemoteException;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 /**
@@ -302,6 +306,89 @@ public class AuditTest extends AbstractCDOTest
     assertTransient(auditCompany);
     assertEquals(5, auditResource.getContents().size());
     session.close();
+  }
+
+  public void testCanCreateAuditAtRepoCreationTime() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+    closeSession1();
+
+    session = openSession2();
+    session.openAudit(session.getRepositoryCreationTime());
+    session.close();
+  }
+
+  public void testCannotCreateAuditWithTimestampPriorToRepo() throws Exception
+  {
+    Calendar calendar = GregorianCalendar.getInstance();
+    calendar.set(Calendar.YEAR, 19);
+    calendar.set(Calendar.MONTH, 11);
+    calendar.set(Calendar.DAY_OF_MONTH, 11);
+
+    long timeStampPriorToRepoCreation = calendar.getTime().getTime();
+    CDOSession session = openSession1();
+
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+      Company company = getModel1Factory().createCompany();
+      resource.getContents().add(company);
+      transaction.commit();
+      closeSession1();
+
+      session = openSession2();
+      session.openAudit(timeStampPriorToRepoCreation);
+      fail("SignalRemoteException expected");
+    }
+    catch (SignalRemoteException eexpected)
+    {
+      // Success
+    }
+    finally
+    {
+      session.close();
+    }
+  }
+
+  public void testCannotSetAuditTimestampPriorToRepo() throws Exception
+  {
+    Calendar calendar = GregorianCalendar.getInstance();
+    calendar.set(Calendar.YEAR, 19);
+    calendar.set(Calendar.MONTH, 11);
+    calendar.set(Calendar.DAY_OF_MONTH, 11);
+
+    long timeStampPriorToRepoCreation = calendar.getTime().getTime();
+    CDOSession session = openSession1();
+
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+      Company company = getModel1Factory().createCompany();
+      resource.getContents().add(company);
+      transaction.commit();
+      long commitTime1 = transaction.getLastCommitTime();
+      closeSession1();
+
+      session = openSession2();
+      CDOAudit audit = session.openAudit(commitTime1);
+      audit.setTimeStamp(timeStampPriorToRepoCreation);
+      fail("SignalRemoteException expected");
+    }
+    catch (SignalRemoteException expected)
+    {
+      // Success
+    }
+    finally
+    {
+      session.close();
+    }
   }
 
   /**

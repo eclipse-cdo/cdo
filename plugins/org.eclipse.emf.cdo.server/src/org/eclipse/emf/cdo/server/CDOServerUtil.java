@@ -10,9 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.ContainerRepositoryProvider;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RepositoryFactory;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocolFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -32,6 +34,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,5 +102,68 @@ public final class CDOServerUtil
     }
 
     throw new IllegalStateException("Repository config not found: " + repositoryName);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static abstract class RepositoryReadAccessValidator implements IRepository.ReadAccessHandler
+  {
+    public RepositoryReadAccessValidator()
+    {
+    }
+
+    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions,
+        List<CDORevision> additionalRevisions) throws RuntimeException
+    {
+      List<String> violations = new ArrayList<String>();
+      for (CDORevision revision : revisions)
+      {
+        String violation = validate(session, revision);
+        if (violation != null)
+        {
+          violations.add(violation);
+        }
+      }
+
+      if (!violations.isEmpty())
+      {
+        throwException(session, violations);
+      }
+
+      for (Iterator<CDORevision> it = additionalRevisions.iterator(); it.hasNext();)
+      {
+        CDORevision revision = it.next();
+        String violation = validate(session, revision);
+        if (violation != null)
+        {
+          OM.LOG.info("Revision can not be delivered to " + session + ": " + violation);
+          it.remove();
+        }
+      }
+    }
+
+    protected void throwException(ISession session, List<String> violations) throws RuntimeException
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("Revisions can not be delivered to ");
+      builder.append(session);
+      builder.append(":");
+      for (String violation : violations)
+      {
+        builder.append("\n- ");
+        builder.append(violation);
+      }
+
+      throwException(builder.toString());
+    }
+
+    protected void throwException(String message) throws RuntimeException
+    {
+      throw new IllegalStateException(message);
+    }
+
+    protected abstract String validate(ISession session, CDORevision revision);
   }
 }

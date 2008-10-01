@@ -1,0 +1,160 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
+package org.eclipse.emf.cdo.tests;
+
+import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+
+import org.eclipse.net4j.util.transaction.TransactionException;
+
+import org.eclipse.emf.ecore.EObject;
+
+/**
+ * @author Eike Stepper
+ */
+public class RepositoryTest extends AbstractCDOTest
+{
+  public void testWriteAccessHandlers() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    resource.getContents().add(createCustomer("Eike"));
+    transaction.commit(); // Ensure that model1 is committed to the repository
+
+    getRepository().addHandler(new IRepository.WriteAccessHandler()
+    {
+      CDOPackage model1Package = getRepository().getPackageManager().lookupPackage(getModel1Package().getNsURI());
+
+      CDOClass customerClass = model1Package.lookupClass(getModel1Package().getCustomer().getClassifierID());
+
+      CDOFeature nameFeature = customerClass.lookupFeature("name");
+
+      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext)
+          throws RuntimeException
+      {
+        CDORevision[] newObjects = commitContext.getNewObjects();
+        for (CDORevision revision : newObjects)
+        {
+          if (revision.getCDOClass() == customerClass)
+          {
+            String name = (String)revision.getData().get(nameFeature, 0);
+            if ("Admin".equals(name))
+            {
+              throw new IllegalStateException("Adding a customer with name 'Admin' is not allowed");
+            }
+          }
+        }
+      }
+    });
+
+    resource.getContents().add(createCustomer("Simon"));
+    transaction.commit();
+    resource.getContents().add(createCustomer("Admin"));
+
+    try
+    {
+      transaction.commit();
+      fail("TransactionException expected");
+    }
+    catch (TransactionException expected)
+    {
+      // Success
+      transaction.rollback();
+    }
+
+    resource.getContents().add(createCustomer("Martin"));
+    transaction.commit();
+    resource.getContents().add(createCustomer("Nick"));
+    transaction.commit();
+    session.close();
+  }
+
+  public void testReadAccessHandlers() throws Exception
+  {
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+      resource.getContents().add(createCustomer("Eike"));
+      resource.getContents().add(createCustomer("Simon"));
+      resource.getContents().add(createCustomer("Admin"));
+      resource.getContents().add(createCustomer("Martin"));
+      resource.getContents().add(createCustomer("Nick"));
+      transaction.commit();
+      session.close();
+    }
+
+    getRepository().addHandler(new CDOServerUtil.RepositoryReadAccessValidator()
+    {
+      CDOPackage model1Package = getRepository().getPackageManager().lookupPackage(getModel1Package().getNsURI());
+
+      CDOClass customerClass = model1Package.lookupClass(getModel1Package().getCustomer().getClassifierID());
+
+      CDOFeature nameFeature = customerClass.lookupFeature("name");
+
+      @Override
+      protected String validate(ISession session, CDORevision revision)
+      {
+        if (revision.getCDOClass() == customerClass)
+        {
+          String name = (String)revision.getData().get(nameFeature, 0);
+          if ("Admin".equals(name))
+          {
+            return "Confidential!";
+          }
+        }
+
+        return null;
+      }
+    });
+
+    CDOSession session = openModel1Session();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource("/res1");
+    int read = 0;
+
+    try
+    {
+      for (EObject object : resource.getContents())
+      {
+        Customer customer = (Customer)object;
+        System.out.println(customer.getName());
+        ++read;
+      }
+    }
+    catch (Exception ex)
+    {
+    }
+
+    assertEquals(2, read);
+    session.close();
+  }
+
+  private Customer createCustomer(String name)
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName(name);
+    return customer;
+  };
+}

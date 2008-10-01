@@ -224,7 +224,11 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
       adjustMetaRanges();
       adjustTimeStamps();
-      computeDirtyObjects(!transaction.getRepository().isSupportingRevisionDeltas());
+
+      Repository repository = (Repository)transaction.getRepository();
+      computeDirtyObjects(!repository.isSupportingRevisionDeltas());
+
+      repository.notifyWriteAccessHandlers(transaction, this);
       detachObjects();
       storeWriter.write(this);
     }
@@ -435,9 +439,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   private void detachObjects()
   {
     detachedRevisions.clear();
-
     RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
-
     for (CDOID id : getDetachedObjects())
     {
       InternalCDORevision revision = revisionManager.getRevision(id, CDORevision.UNCHUNKED, false);

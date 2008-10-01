@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -113,7 +114,7 @@ public class LoadRevisionIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    List<InternalCDORevision> additionalRevisions = new ArrayList<InternalCDORevision>();
+    List<CDORevision> additionalRevisions = new ArrayList<CDORevision>();
     Set<CDOID> revisionIDs = new HashSet<CDOID>();
     if (PROTOCOL_TRACER.isEnabled())
     {
@@ -138,14 +139,22 @@ public class LoadRevisionIndication extends CDOReadIndication
       collectRevisions(revisionContext, revisionIDs, additionalRevisions, visitedFetchRules);
     }
 
-    for (CDOID id : ids)
+    CDORevision[] revisions = new CDORevision[ids.length];
+    for (int i = 0; i < ids.length; i++)
     {
+      CDOID id = ids[i];
       InternalCDORevision revision = getRevision(id);
-      out.writeCDORevision(revision, referenceChunk);
+      revisions[i] = revision;
       if (loadRevisionCollectionChunkSize > 0)
       {
         collectRevisions(revision, revisionIDs, additionalRevisions, visitedFetchRules);
       }
+    }
+
+    getRepository().notifyReadAccessHandlers(getSession(), revisions, additionalRevisions);
+    for (CDORevision revision : revisions)
+    {
+      out.writeCDORevision(revision, referenceChunk);
     }
 
     int additionalSize = additionalRevisions.size();
@@ -155,7 +164,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     }
 
     out.writeInt(additionalSize);
-    for (InternalCDORevision revision : additionalRevisions)
+    for (CDORevision revision : additionalRevisions)
     {
       out.writeCDORevision(revision, referenceChunk);
     }
@@ -168,7 +177,7 @@ public class LoadRevisionIndication extends CDOReadIndication
   }
 
   private void collectRevisions(InternalCDORevision revision, Set<CDOID> revisions,
-      List<InternalCDORevision> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
+      List<CDORevision> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
   {
     getSession().collectContainedRevisions(revision, referenceChunk, revisions, additionalRevisions);
     CDOFetchRule fetchRule = fetchRules.get(revision.getCDOClass());

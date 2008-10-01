@@ -18,12 +18,14 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -35,7 +37,9 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -72,6 +76,10 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private CommitManager commitManager;
 
   private IQueryHandlerProvider queryHandlerProvider;
+
+  private List<ReadAccessHandler> readAccessHandlers = new ArrayList<ReadAccessHandler>();
+
+  private List<WriteAccessHandler> writeAccessHandlers = new ArrayList<WriteAccessHandler>();
 
   private IRepositoryElement[] elements;
 
@@ -391,6 +399,110 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     if (timeStamp > currentTimeStamp)
     {
       throw new IllegalArgumentException("timeStamp > current time: " + currentTimeStamp);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void addHandler(Handler handler)
+  {
+    if (handler instanceof ReadAccessHandler)
+    {
+      synchronized (readAccessHandlers)
+      {
+        if (!readAccessHandlers.contains(handler))
+        {
+          readAccessHandlers.add((ReadAccessHandler)handler);
+        }
+      }
+    }
+    else if (handler instanceof WriteAccessHandler)
+    {
+      synchronized (writeAccessHandlers)
+      {
+        if (!writeAccessHandlers.contains(handler))
+        {
+          writeAccessHandlers.add((WriteAccessHandler)handler);
+        }
+      }
+    }
+    else
+    {
+      throw new IllegalArgumentException("Invalid handler: " + handler);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void removeHandler(Handler handler)
+  {
+    if (handler instanceof ReadAccessHandler)
+    {
+      synchronized (readAccessHandlers)
+      {
+        readAccessHandlers.remove(handler);
+      }
+    }
+    else if (handler instanceof WriteAccessHandler)
+    {
+      synchronized (writeAccessHandlers)
+      {
+        writeAccessHandlers.remove(handler);
+      }
+    }
+    else
+    {
+      throw new IllegalArgumentException("Invalid handler: " + handler);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void notifyReadAccessHandlers(Session session, CDORevision[] revisions, List<CDORevision> additionalRevisions)
+  {
+    ReadAccessHandler[] handlers;
+    synchronized (readAccessHandlers)
+    {
+      int size = readAccessHandlers.size();
+      if (size == 0)
+      {
+        return;
+      }
+
+      handlers = readAccessHandlers.toArray(new ReadAccessHandler[size]);
+    }
+
+    for (ReadAccessHandler handler : handlers)
+    {
+      // Do *not* protect against unchecked exceptions from handlers!
+      handler.handleRevisionsBeforeSending(session, revisions, additionalRevisions);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void notifyWriteAccessHandlers(Transaction transaction, IStoreWriter.CommitContext commitContext)
+  {
+    WriteAccessHandler[] handlers;
+    synchronized (writeAccessHandlers)
+    {
+      int size = writeAccessHandlers.size();
+      if (size == 0)
+      {
+        return;
+      }
+
+      handlers = writeAccessHandlers.toArray(new WriteAccessHandler[size]);
+    }
+
+    for (WriteAccessHandler handler : handlers)
+    {
+      // Do *not* protect against unchecked exceptions from handlers!
+      handler.handleTransactionBeforeCommitting(transaction, commitContext);
     }
   }
 

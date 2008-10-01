@@ -11,9 +11,11 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.container.IContainer;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -95,5 +97,78 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
     public static final String PROP_CURRENT_LRU_CAPACITY = "currentLRUCapacity";
 
     public static final String PROP_REVISED_LRU_CAPACITY = "revisedLRUCapacity";
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void addHandler(Handler handler);
+
+  /**
+   * @since 2.0
+   */
+  public void removeHandler(Handler handler);
+
+  /**
+   * A marker interface to indicate valid arguments to {@link IRepository#addHandler(Handler)} and
+   * {@link IRepository#removeHandler(Handler)}.
+   * 
+   * @see ReadAccessHandler
+   * @see WriteAccessHandler
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface Handler
+  {
+  }
+
+  /**
+   * Provides a way to handle revisions that are to be sent to the client.
+   * 
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface ReadAccessHandler extends Handler
+  {
+    /**
+     * Provides a way to handle revisions that are to be sent to the client.
+     * 
+     * @param session
+     *          The session that is going to send the revisions.
+     * @param revisions
+     *          The revisions that are requested by the client. If the client must not see any of these revisions an
+     *          unchecked exception must be thrown.
+     * @param additionalRevisions
+     *          The additional revisions that are to be sent to the client because internal optimizers believe that they
+     *          will be need soon. If the client must not see any of these revisions they should be removed from the
+     *          list.
+     * @throws RuntimeException
+     *           to indicate that none of the revisions must be sent to the client. This exception will be visible at
+     *           the client side!
+     */
+    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions,
+        List<CDORevision> additionalRevisions) throws RuntimeException;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface WriteAccessHandler extends Handler
+  {
+    /**
+     * Provides a way to handle transactions that are to be committed to the backend store.
+     * 
+     * @param transaction
+     *          The transaction that is going to be committed.
+     * @param commitContext
+     *          The context of the commit operation that is to be executed against the backend store. The context can be
+     *          used to introspect all aspects of the current commit operation.
+     * @throws RuntimeException
+     *           to indicate that the commit operation must not be executed against the backend store. This exception
+     *           will be visible at the client side!
+     */
+    public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreWriter.CommitContext commitContext)
+        throws RuntimeException;
   }
 }

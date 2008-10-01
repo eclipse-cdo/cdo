@@ -13,7 +13,6 @@ package org.eclipse.net4j.util.security;
 /**
  * @author Eike Stepper
  */
-public interface ICredentials
+public interface ICredentials extends IUserAware
 {
-  public String getUserID();
 }

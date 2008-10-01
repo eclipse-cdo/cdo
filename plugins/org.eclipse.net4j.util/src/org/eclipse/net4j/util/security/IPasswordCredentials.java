@@ -15,7 +15,5 @@ package org.eclipse.net4j.util.security;
  */
 public interface IPasswordCredentials extends ICredentials
 {
-  public String getUserID();
-
   public char[] getPassword();
 }

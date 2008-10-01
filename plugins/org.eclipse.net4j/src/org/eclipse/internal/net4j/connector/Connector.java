@@ -417,6 +417,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   {
     channel.setChannelMultiplexer(this);
     channel.setReceiveExecutor(getConfig().getReceiveExecutor());
+    channel.setUserID(getUserID());
     if (protocol != null)
     {
       protocol.setChannel(channel);

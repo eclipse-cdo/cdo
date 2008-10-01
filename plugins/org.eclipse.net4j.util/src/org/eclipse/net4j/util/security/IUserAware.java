@@ -8,24 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.buddies.common;
-
-import org.eclipse.net4j.util.security.IUserAware;
-
-import java.util.Map;
+package org.eclipse.net4j.util.security;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public interface IAccount extends IUserAware
+public interface IUserAware
 {
-  public void setPassword(String password);
-
-  public boolean authenticate(String password);
-
-  public Map<String, String> getProperties();
-
-  public void touch();
-
-  public long getTimeStamp();
+  public String getUserID();
 }

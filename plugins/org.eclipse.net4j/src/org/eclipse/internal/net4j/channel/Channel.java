@@ -38,6 +38,8 @@ public class Channel extends Lifecycle implements InternalChannel
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CHANNEL, Channel.class);
 
+  private String userID;
+
   private IChannelMultiplexer channelMultiplexer;
 
   private short channelIndex = IBuffer.NO_CHANNEL;
@@ -58,6 +60,16 @@ public class Channel extends Lifecycle implements InternalChannel
 
   public Channel()
   {
+  }
+
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  public void setUserID(String userID)
+  {
+    this.userID = userID;
   }
 
   public Location getLocation()

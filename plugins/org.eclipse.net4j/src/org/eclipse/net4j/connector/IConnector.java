@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.security.IUserAware;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ import java.util.List;
  * 
  * @author Eike Stepper
  */
-public interface IConnector extends IContainer<IChannel>
+public interface IConnector extends IUserAware, IContainer<IChannel>
 {
   /**
    * @since 2.0
@@ -66,11 +67,6 @@ public interface IConnector extends IContainer<IChannel>
   public static final long DEFAULT_CHANNEL_TIMEOUT = -1L;
 
   public String getURL();
-
-  /**
-   * Returns the userID of this connector.
-   */
-  public String getUserID();
 
   /**
    * Returns the current state of this onnector.

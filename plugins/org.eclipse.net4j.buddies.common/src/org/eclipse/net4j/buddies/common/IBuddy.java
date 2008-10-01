@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.buddies.common;
 
+import org.eclipse.net4j.util.security.IUserAware;
+
 import org.eclipse.core.runtime.IAdaptable;
 
 import java.util.Collection;
@@ -18,10 +20,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface IBuddy extends IMembershipContainer, ICollaborationProvider, IAdaptable
+public interface IBuddy extends IUserAware, IMembershipContainer, ICollaborationProvider, IAdaptable
 {
-  public String getUserID();
-
   public State getState();
 
   public IAccount getAccount();

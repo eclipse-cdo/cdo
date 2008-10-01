@@ -24,6 +24,11 @@ import java.util.concurrent.ExecutorService;
  */
 public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.Introspection
 {
+  /**
+   * @since 2.0
+   */
+  public void setUserID(String userID);
+
   public void setChannelIndex(short channelIndex);
 
   public ExecutorService getReceiveExecutor();

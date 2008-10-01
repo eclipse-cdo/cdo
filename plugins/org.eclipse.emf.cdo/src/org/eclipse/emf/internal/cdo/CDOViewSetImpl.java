@@ -295,20 +295,18 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
   /**
    * Only generates event to CDOView if it is a new CDOResource.
    */
-  private void notifyAdd(CDOResourceImpl resourceImpl)
+  private void notifyAdd(CDOResourceImpl resource)
   {
-    CDOViewImpl view = resolveUUID(resourceImpl.getURI().authority());
-    if (view != null && FSMUtil.isTransient(resourceImpl))
+    CDOViewImpl view = resolveUUID(resource.getURI().authority());
+    if (view != null && FSMUtil.isTransient(resource))
     {
-      view.toTransaction().attach(resourceImpl);
+      view.toTransaction().attach(resource);
     }
   }
 
-  /**
-   * 
-   */
-  private void notifyRemove(CDOResourceImpl resourceImpl)
+  private void notifyRemove(CDOResourceImpl resource)
   {
+    // TODO Simon: Why do we have private methods that do nothing?
     // Don't do anything
   }
 }

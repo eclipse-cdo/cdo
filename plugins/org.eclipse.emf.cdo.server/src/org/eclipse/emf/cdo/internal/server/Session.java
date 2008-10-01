@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
@@ -106,6 +107,14 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public int getSessionID()
   {
     return sessionID;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public String getUserID()
+  {
+    return protocol.getChannel().getUserID();
   }
 
   /**
@@ -250,7 +259,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    * TODO I can't see how recursion is controlled/limited
    */
   public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
-      List<InternalCDORevision> additionalRevisions)
+      List<CDORevision> additionalRevisions)
   {
     RevisionManager revisionManager = (RevisionManager)getSessionManager().getRepository().getRevisionManager();
     CDOClass cdoClass = revision.getCDOClass();

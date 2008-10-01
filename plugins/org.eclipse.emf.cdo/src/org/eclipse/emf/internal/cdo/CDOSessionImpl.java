@@ -183,6 +183,14 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return sessionID;
   }
 
+  /**
+   * @since 2.0
+   */
+  public String getUserID()
+  {
+    return connector == null ? null : connector.getUserID();
+  }
+
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
   {
     return cdoidObjectFactory.createCDOIDObject(in);

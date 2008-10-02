@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A read-only view to the <em>current</em> (i.e. latest) state of the object graph in the repository.
@@ -46,6 +47,11 @@ public interface CDOView extends CDOProtocolView, INotifier
   public CDOViewSet getViewSet();
 
   public ResourceSet getResourceSet();
+
+  /**
+   * @since 2.0
+   */
+  public ReentrantLock getLock();
 
   public boolean isDirty();
 

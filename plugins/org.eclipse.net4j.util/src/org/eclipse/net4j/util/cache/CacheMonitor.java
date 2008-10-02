@@ -12,8 +12,8 @@ package org.eclipse.net4j.util.cache;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.event.Event;
-import org.eclipse.net4j.util.lifecycle.Worker;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.HashMap;

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.lifecycle;
+package org.eclipse.net4j.util.concurrent;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class QueueWorker<E> extends Worker
 {

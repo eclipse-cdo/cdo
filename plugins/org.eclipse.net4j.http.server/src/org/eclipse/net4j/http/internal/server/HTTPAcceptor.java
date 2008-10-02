@@ -17,9 +17,9 @@ import org.eclipse.net4j.http.internal.server.bundle.OM;
 import org.eclipse.net4j.http.server.IHTTPAcceptor;
 import org.eclipse.net4j.http.server.INet4jTransportServlet;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.lifecycle.Worker;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.IRandomizer;
 

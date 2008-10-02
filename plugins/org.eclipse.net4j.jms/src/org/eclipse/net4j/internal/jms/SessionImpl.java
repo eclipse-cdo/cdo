@@ -19,7 +19,7 @@ import org.eclipse.net4j.internal.jms.protocol.JMSRegisterConsumerRequest;
 import org.eclipse.net4j.internal.jms.protocol.JMSRollbackRequest;
 import org.eclipse.net4j.internal.jms.util.DestinationUtil;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
-import org.eclipse.net4j.util.lifecycle.QueueWorker;
+import org.eclipse.net4j.util.concurrent.QueueWorker;
 
 import javax.jms.BytesMessage;
 import javax.jms.Destination;
@@ -416,6 +416,9 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     return "jms-session";
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected void work(WorkContext context, MessageConsumerImpl consumer)
   {

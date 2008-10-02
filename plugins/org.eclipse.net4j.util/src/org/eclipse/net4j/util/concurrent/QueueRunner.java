@@ -12,16 +12,17 @@ package org.eclipse.net4j.util.concurrent;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class QueueWorkerWorkSerializer extends QueueRunner implements IWorkSerializer
+public class QueueRunner extends QueueWorker<Runnable>
 {
-  public QueueWorkerWorkSerializer()
+  public QueueRunner()
   {
-    activate();
   }
 
-  public void dispose()
+  @Override
+  protected void work(WorkContext context, Runnable runnable)
   {
-    deactivate();
+    runnable.run();
   }
 }

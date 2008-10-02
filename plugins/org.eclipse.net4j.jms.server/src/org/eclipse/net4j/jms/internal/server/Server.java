@@ -20,7 +20,7 @@ import org.eclipse.net4j.jms.server.IStore;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.concurrent.NonBlockingLongCounter;
-import org.eclipse.net4j.util.lifecycle.QueueWorker;
+import org.eclipse.net4j.util.concurrent.QueueWorker;
 
 import javax.jms.Destination;
 import javax.naming.Context;

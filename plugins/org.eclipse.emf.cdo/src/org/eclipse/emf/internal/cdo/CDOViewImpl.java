@@ -75,6 +75,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -100,6 +101,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   private ConcurrentMap<CDOID, InternalCDOObject> objects;
 
   private CDOStore store = new CDOStore(this);
+
+  /**
+   * Since always almost two threads can be under contention for this lock we need no fairness ;-)
+   */
+  private ReentrantLock lock = new ReentrantLock(false);
 
   @ExcludeFromDump
   private transient CDOID lastLookupID;
@@ -160,6 +166,14 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public CDOStore getStore()
   {
     return store;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public ReentrantLock getLock()
+  {
+    return lock;
   }
 
   public boolean isDirty()
@@ -752,6 +766,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    * <b>Implementation note:</b> This implementation guarantees that exceptions from listener code don't propagate up to
    * the caller of this method. Runtime exceptions from the implementation of the {@link CDOStateMachine} are propagated
    * to the caller of this method but this should not happen in the absence of implementation errors.
+   * <p>
+   * Note that this method can block for an uncertain time on the reentrant view lock!
    * 
    * @param timeStamp
    *          The time stamp of the server transaction if this event was sent as a result of a successfully committed
@@ -764,44 +780,53 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
     List<InternalCDOObject> dirtyObjects = invalidationNotificationEnabled ? new ArrayList<InternalCDOObject>() : null;
-    for (CDOIDAndVersion dirtyOID : dirtyOIDs)
+    lock.lock();
+
+    try
     {
-      InternalCDOObject dirtyObject;
-      synchronized (objects)
+      for (CDOIDAndVersion dirtyOID : dirtyOIDs)
       {
-        dirtyObject = objects.get(dirtyOID.getID());
-        if (dirtyObject != null)
+        InternalCDOObject dirtyObject;
+        synchronized (objects)
         {
-          CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);
+          dirtyObject = objects.get(dirtyOID.getID());
+          if (dirtyObject != null)
+          {
+            CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);
+          }
+        }
+
+        if (dirtyObject != null && dirtyObjects != null && dirtyObject.eNotificationRequired())
+        {
+          dirtyObjects.add(dirtyObject);
         }
       }
 
-      if (dirtyObject != null && dirtyObjects != null && dirtyObject.eNotificationRequired())
+      for (CDOID id : detachedObjects)
       {
-        dirtyObjects.add(dirtyObject);
-      }
-    }
-
-    for (CDOID id : detachedObjects)
-    {
-      InternalCDOObject cdoObject = removeObject(id);
-      if (cdoObject != null)
-      {
-        CDOStateMachine.INSTANCE.invalidate(cdoObject);
-        if (dirtyObjects != null && cdoObject.eNotificationRequired())
+        InternalCDOObject cdoObject = removeObject(id);
+        if (cdoObject != null)
         {
-          dirtyObjects.add(cdoObject);
+          CDOStateMachine.INSTANCE.invalidate(cdoObject);
+          if (dirtyObjects != null && cdoObject.eNotificationRequired())
+          {
+            dirtyObjects.add(cdoObject);
+          }
+        }
+      }
+
+      if (dirtyObjects != null)
+      {
+        for (InternalCDOObject dirtyObject : dirtyObjects)
+        {
+          CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
+          dirtyObject.eNotify(notification);
         }
       }
     }
-
-    if (dirtyObjects != null)
+    finally
     {
-      for (InternalCDOObject dirtyObject : dirtyObjects)
-      {
-        CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
-        dirtyObject.eNotify(notification);
-      }
+      lock.unlock();
     }
   }
 

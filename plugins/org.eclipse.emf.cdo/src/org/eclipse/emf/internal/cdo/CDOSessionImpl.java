@@ -60,6 +60,7 @@ import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -149,6 +150,10 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private CDORevisionManagerImpl revisionManager;
 
   private Set<CDOViewImpl> views = new HashSet<CDOViewImpl>();
+
+  private QueueRunner invalidationRunner;
+
+  private Object invalidationRunnerLock = new Object();
 
   @ExcludeFromDump
   private transient Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap<CDOID, InternalEObject>();
@@ -657,8 +662,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     notifyInvalidation(timestamp, dirtyOIDs, detachedObjects, null);
   }
 
-  private void notifyInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
-      CDOViewImpl excludedView)
+  private void notifyInvalidation(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      Collection<CDOID> detachedObjects, CDOViewImpl excludedView)
   {
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
     {
@@ -688,25 +693,46 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       }
     }
 
-    dirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
-    detachedObjects = Collections.unmodifiableCollection(detachedObjects);
+    final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
+    final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
 
-    for (CDOViewImpl view : getViews())
+    for (final CDOViewImpl view : getViews())
     {
       if (view != excludedView)
       {
-        try
+        QueueRunner runner = getInvalidationRunner();
+        runner.addWork(new Runnable()
         {
-          view.handleInvalidation(timeStamp, dirtyOIDs, detachedObjects);
-        }
-        catch (RuntimeException ex)
-        {
-          OM.LOG.error(ex);
-        }
+          public void run()
+          {
+            try
+            {
+              view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+            }
+            catch (RuntimeException ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        });
       }
     }
 
     fireInvalidationEvent(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+  }
+
+  private QueueRunner getInvalidationRunner()
+  {
+    synchronized (invalidationRunnerLock)
+    {
+      if (invalidationRunner == null)
+      {
+        invalidationRunner = new QueueRunner();
+        invalidationRunner.activate();
+      }
+    }
+
+    return invalidationRunner;
   }
 
   private void handleChangeSubcription(Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
@@ -859,8 +885,18 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   protected void doDeactivate() throws Exception
   {
     EventUtil.removeListener(channel, channelListener);
+    if (invalidationRunner != null)
+    {
+      invalidationRunner.deactivate();
+      invalidationRunner = null;
+    }
+
     revisionManager.deactivate();
+    revisionManager = null;
+
     packageManager.deactivate();
+    packageManager = null;
+
     for (CDOViewImpl view : views.toArray(new CDOViewImpl[views.size()]))
     {
       try
@@ -871,6 +907,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
       }
     }
+
+    views.clear();
+    views = null;
 
     channel.close();
     channel = null;

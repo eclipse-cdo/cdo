@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.ref;
 
-import org.eclipse.net4j.util.lifecycle.Worker;
+import org.eclipse.net4j.util.concurrent.Worker;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;

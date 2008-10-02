@@ -12,12 +12,12 @@ package org.eclipse.net4j.internal.http;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
+import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.ExtendedIOAdapter;
 import org.eclipse.net4j.util.io.ExtendedIOHandler;
 import org.eclipse.net4j.util.io.IORuntimeException;
-import org.eclipse.net4j.util.lifecycle.Worker;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;

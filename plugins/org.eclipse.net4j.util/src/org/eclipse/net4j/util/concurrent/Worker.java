@@ -8,10 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.util.lifecycle;
+package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class Worker extends Lifecycle
 {

@@ -92,6 +92,7 @@ public class CommitNotificationIndication extends CDOClientIndication
     {
       PROTOCOL_TRACER.format("Reading {0} Detach Objects", size);
     }
+
     List<CDOID> detachedObjects = new ArrayList<CDOID>();
     for (int i = 0; i < size; i++)
     {

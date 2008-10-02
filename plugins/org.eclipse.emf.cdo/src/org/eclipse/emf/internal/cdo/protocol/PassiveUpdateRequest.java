@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
+ * TODO Simon: Can we find a better name? Passive and request is just a contradiction...
+ * 
  * @author Simon McDuff
  * @since 2.0
  */

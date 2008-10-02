@@ -54,7 +54,7 @@ public class CommitNotificationRequest extends CDOServerRequest
   @Override
   protected short getSignalID()
   {
-    return CDOProtocolConstants.SIGNAL_INVALIDATION;
+    return CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION;
   }
 
   @Override

@@ -43,7 +43,7 @@ public class CommitNotificationIndication extends CDOClientIndication
   @Override
   protected short getSignalID()
   {
-    return CDOProtocolConstants.SIGNAL_INVALIDATION;
+    return CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION;
   }
 
   @Override

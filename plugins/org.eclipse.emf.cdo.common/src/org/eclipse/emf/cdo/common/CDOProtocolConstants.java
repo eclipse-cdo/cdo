@@ -68,7 +68,10 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_COMMIT_TRANSACTION_CANCEL = 16;
 
-  public static final short SIGNAL_INVALIDATION = 17;
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_COMMIT_NOTIFICATION = 17;
 
   /**
    * @since 2.0

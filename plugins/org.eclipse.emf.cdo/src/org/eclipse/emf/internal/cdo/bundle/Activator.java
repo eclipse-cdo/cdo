@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.bundle;
 
+import org.eclipse.emf.internal.cdo.util.CDOPackageTypeRegistryImpl;
+
 import org.eclipse.net4j.util.om.OSGiActivator;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -120,6 +122,7 @@ public final class Activator extends EMFPlugin
      */
     protected void doStop() throws Exception
     {
+      CDOPackageTypeRegistryImpl.INSTANCE.deactivate();
     }
   }
 }

@@ -278,6 +278,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     protected void addEntry(Map.Entry<String, CDOPackageType> entry)
     {
       CDOPackageType packageType = entry.getValue();
+      // TODO LEGACY
       if (packageType != CDOPackageType.LEGACY)
       {
         String uri = entry.getKey();

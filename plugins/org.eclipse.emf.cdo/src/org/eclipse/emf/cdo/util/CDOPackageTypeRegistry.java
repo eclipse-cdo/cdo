@@ -26,7 +26,7 @@ public interface CDOPackageTypeRegistry extends IRegistry<String, CDOPackageType
 
   public void register(EPackage ePackage);
 
-  public void registerLegacy(String uri);
+  public void registerLegacy(String packageURI);
 
-  public void registerNative(String uri);
+  public void registerNative(String packageURI);
 }

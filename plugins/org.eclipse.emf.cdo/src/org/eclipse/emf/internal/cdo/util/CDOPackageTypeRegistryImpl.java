@@ -59,10 +59,7 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 
   private CDOPackageTypeRegistryImpl()
   {
-    if (OMPlatform.INSTANCE.isOSGiRunning())
-    {
-      initPackageTypes();
-    }
+    activate();
   }
 
   public void register(EPackage ePackage)
@@ -70,21 +67,21 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     put(ePackage.getNsURI(), getPackageType(ePackage));
   }
 
-  public void registerLegacy(String uri)
+  public void registerLegacy(String packageURI)
   {
-    put(uri, CDOPackageType.LEGACY);
+    put(packageURI, CDOPackageType.LEGACY);
   }
 
-  public void registerNative(String uri)
+  public void registerNative(String packageURI)
   {
-    put(uri, CDOPackageType.NATIVE);
+    put(packageURI, CDOPackageType.NATIVE);
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
-
+    initPackageTypes();
     if (OMPlatform.INSTANCE.isOSGiRunning())
     {
       try
@@ -118,9 +115,21 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 
   private void initPackageTypes()
   {
-    IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(ECORE_ID,
-        EcorePlugin.GENERATED_PACKAGE_PPID);
-    addPackageTypes(elements);
+    for (Object object : EPackage.Registry.INSTANCE.values())
+    {
+      if (object instanceof EPackage)
+      {
+        EPackage ePackage = (EPackage)object;
+        register(ePackage);
+      }
+    }
+
+    if (OMPlatform.INSTANCE.isOSGiRunning())
+    {
+      IConfigurationElement[] elements = Platform.getExtensionRegistry().getConfigurationElementsFor(ECORE_ID,
+          EcorePlugin.GENERATED_PACKAGE_PPID);
+      addPackageTypes(elements);
+    }
   }
 
   private void addPackageTypes(IConfigurationElement[] elements)
@@ -129,7 +138,7 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     for (IConfigurationElement element : elements)
     {
       String uri = element.getAttribute("uri");
-      if (!StringUtil.isEmpty(uri) && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()))
+      if (!StringUtil.isEmpty(uri) && !uri.equals(EresourcePackage.eINSTANCE.getNsURI()) && !containsKey(uri))
       {
         String bundleName = element.getContributor().getName();
         CDOPackageType packageType = bundles.get(bundleName);
@@ -207,7 +216,7 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     }
 
     EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
-    EClass eClass = getAnyEClass(topLevelPackage);
+    EClass eClass = getAnyConcreteEClass(topLevelPackage);
     if (eClass == null)
     {
       return CDOPackageType.LEGACY;
@@ -222,19 +231,23 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     return CDOPackageType.LEGACY;
   }
 
-  private static EClass getAnyEClass(EPackage ePackage)
+  private static EClass getAnyConcreteEClass(EPackage ePackage)
   {
     for (EClassifier classifier : ePackage.getEClassifiers())
     {
       if (classifier instanceof EClass)
       {
-        return (EClass)classifier;
+        EClass eClass = (EClass)classifier;
+        if (!(eClass.isAbstract() || eClass.isInterface()))
+        {
+          return eClass;
+        }
       }
     }
 
     for (EPackage subpackage : ePackage.getESubpackages())
     {
-      EClass eClass = getAnyEClass(subpackage);
+      EClass eClass = getAnyConcreteEClass(subpackage);
       if (eClass != null)
       {
         return eClass;

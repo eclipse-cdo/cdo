@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
@@ -285,6 +286,66 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     Company company = (Company)res.getContents().get(0);
     assertEquals("Eike", company.getName());
+  }
+
+  /**
+   * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
+   * https://bugs.eclipse.org/bugs/show_bug.cgi?id=249383
+   */
+  public void testGlobalDynamicPackageEager() throws Exception
+  {
+    EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+    p.setName("dynamic");
+    p.setNsPrefix("dynamic");
+    p.setNsURI("http://dynamic");
+
+    EClass c = EcoreFactory.eINSTANCE.createEClass();
+    c.setName("DClass");
+
+    p.getEClassifiers().add(c);
+    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
+    CDOPackageTypeRegistry.INSTANCE.registerNative(p.getNsURI());
+
+    CDOSession session = openEagerSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource("/res");
+
+    EFactory factory = p.getEFactoryInstance();
+    EObject object = factory.create(c);
+
+    res.getContents().add(object);
+    transaction.commit();
+    session.close();
+  }
+
+  /**
+   * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
+   * https://bugs.eclipse.org/bugs/show_bug.cgi?id=249383
+   */
+  public void testGlobalDynamicPackageLazy() throws Exception
+  {
+    EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+    p.setName("dynamic");
+    p.setNsPrefix("dynamic");
+    p.setNsURI("http://dynamic");
+
+    EClass c = EcoreFactory.eINSTANCE.createEClass();
+    c.setName("DClass");
+
+    p.getEClassifiers().add(c);
+    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
+    CDOPackageTypeRegistry.INSTANCE.registerNative(p.getNsURI());
+
+    CDOSession session = openLazySession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource("/res");
+
+    EFactory factory = p.getEFactoryInstance();
+    EObject object = factory.create(c);
+
+    res.getContents().add(object);
+    transaction.commit();
+    session.close();
   }
 
   public void testDynamicPackageFactory() throws Exception

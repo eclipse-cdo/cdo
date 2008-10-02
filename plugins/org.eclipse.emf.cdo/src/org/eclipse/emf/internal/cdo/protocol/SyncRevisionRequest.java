@@ -143,7 +143,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimestam
       ((CDOTimestampContextImpl)timestampContext).setDirtyObjects(dirtyObjects);
       ((CDOTimestampContextImpl)timestampContext).setDetachedObjects(detachedObjects);
 
-      cdoSession.handleSync(timestampContext.getTimestamp(), dirtyObjects, detachedObjects);
+      cdoSession.handleSyncResponse(timestampContext.getTimestamp(), dirtyObjects, detachedObjects);
     }
 
     return Collections.unmodifiableCollection(mapofContext.values());

@@ -652,7 +652,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
-  public void handleSync(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
+  public void handleSyncResponse(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
     notifyInvalidation(timestamp, dirtyOIDs, detachedObjects, null);
   }

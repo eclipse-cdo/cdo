@@ -997,6 +997,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
           getTransaction().getChangeSubscriptionManager().notifyDirtyObjects();
 
+          long timeStamp = result.getTimeStamp();
           Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
           if (!dirtyObjects.isEmpty())
           {
@@ -1008,12 +1009,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               dirtyIDs.add(dirtyID);
             }
 
-            session.handleCommitNotification(result.getTimeStamp(), dirtyIDs, getDetachedObjects(), deltas,
-                getTransaction());
+            Set<CDOID> detachedIDs = new HashSet<CDOID>(getDetachedObjects());
+            Collection<CDORevisionDelta> deltasCopy = new ArrayList<CDORevisionDelta>(deltas);
+            session.handleCommitNotification(timeStamp, dirtyIDs, detachedIDs, deltasCopy, getTransaction());
           }
 
           getTransaction().cleanUp();
-          lastCommitTime = result.getTimeStamp();
+          lastCommitTime = timeStamp;
           Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
           getTransaction().fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
         }

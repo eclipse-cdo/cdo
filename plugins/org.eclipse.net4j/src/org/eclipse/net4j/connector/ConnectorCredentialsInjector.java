@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.connector;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.security.ChallengeResponseNegotiator;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
@@ -46,6 +45,11 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
 
   private String connectorDescription;
 
+  /**
+   * @param connectorDescription
+   *          The description of the IConnector that the negotiator shall be injected into, or <code>null</code> to
+   *          bypass the description check.
+   */
   public ConnectorCredentialsInjector(String connectorDescription, IPasswordCredentialsProvider credentialsProvider,
       String algorithmName)
   {
@@ -53,6 +57,11 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
     this.connectorDescription = connectorDescription;
   }
 
+  /**
+   * @param connectorDescription
+   *          The description of the IConnector that the negotiator shall be injected into, or <code>null</code> to
+   *          bypass the description check.
+   */
   public ConnectorCredentialsInjector(String connectorDescription, IPasswordCredentialsProvider credentialsProvider)
   {
     this(connectorDescription, credentialsProvider, DEFAULT_ALGORITHM_NAME);
@@ -76,7 +85,12 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
 
   protected boolean filterConnectorDescription(String description)
   {
-    return ObjectUtil.equals(description, connectorDescription);
+    if (connectorDescription == null)
+    {
+      return true;
+    }
+
+    return connectorDescription.equals(description);
   }
 
   private static ResponseNegotiator createNegotiator(IPasswordCredentialsProvider credentialsProvider,

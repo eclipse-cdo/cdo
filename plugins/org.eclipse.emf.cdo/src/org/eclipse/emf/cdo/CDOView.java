@@ -49,6 +49,42 @@ public interface CDOView extends CDOProtocolView, INotifier
   public ResourceSet getResourceSet();
 
   /**
+   * Returns a reentrant lock that can be used to prevent the framework from writing to any object in this view (caused,
+   * for example, by passive updates).
+   * <p>
+   * Acquiring this lock provides a means to safely iterate over multiple model elements without being affected by
+   * unanticipated remote updates, like in the following example:
+   * 
+   * <pre>
+   *    CDOResource resource = view.getResource(&quot;/orders/order-4711&quot;);
+   *    PurchaseOrder order = (PurchaseOrder)resource.getContents().get(0);
+   * 
+   *    ReentrantLock lock = view.getLock();
+   *    if (!lock.tryLock(5L, TimeUnit.SECONDS))
+   *    {
+   *      throw new TimeoutException();
+   *    }
+   * 
+   *    try
+   *    {
+   *      float sum = 0;
+   *      for (OrderDetail detail : order.getOrderDetails())
+   *      {
+   *        sum += detail.getPrice();
+   *      }
+   * 
+   *      System.out.println(&quot;Sum: &quot; + sum);
+   *    }
+   *    finally
+   *    {
+   *      lock.unlock();
+   *    }
+   *  }
+   * </pre>
+   * 
+   * Note that this method really just returns the lock instance but does <b>not</b> acquire the lock! The above example
+   * acquires the lock with a timeout that expires after five seconds.
+   * 
    * @since 2.0
    */
   public ReentrantLock getLock();

@@ -102,10 +102,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private CDOStore store = new CDOStore(this);
 
-  /**
-   * Since always almost two threads can be under contention for this lock we need no fairness ;-)
-   */
-  private ReentrantLock lock = new ReentrantLock(false);
+  private ReentrantLock lock = new ReentrantLock(true);
 
   @ExcludeFromDump
   private transient CDOID lastLookupID;

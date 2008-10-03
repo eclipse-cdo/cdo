@@ -12,7 +12,7 @@ package org.eclipse.net4j;
 
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.protocol.IProtocolProvider;
-import org.eclipse.net4j.util.security.INegotiator;
+import org.eclipse.net4j.util.security.INegotiatorAware;
 
 import java.util.concurrent.ExecutorService;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface ITransportConfig
+public interface ITransportConfig extends INegotiatorAware
 {
   public IBufferProvider getBufferProvider();
 
@@ -33,8 +33,4 @@ public interface ITransportConfig
   public IProtocolProvider getProtocolProvider();
 
   public void setProtocolProvider(IProtocolProvider protocolProvider);
-
-  public INegotiator getNegotiator();
-
-  public void setNegotiator(INegotiator negotiator);
 }

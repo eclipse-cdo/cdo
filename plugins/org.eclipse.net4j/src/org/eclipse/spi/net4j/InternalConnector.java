@@ -10,22 +10,14 @@
  **************************************************************************/
 package org.eclipse.spi.net4j;
 
-import org.eclipse.net4j.ITransportConfig;
+import org.eclipse.net4j.ITransportConfigAware;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.security.INegotiatorAware;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalConnector extends IConnector, IChannelMultiplexer
+public interface InternalConnector extends IConnector, IChannelMultiplexer, ITransportConfigAware, INegotiatorAware
 {
-  /**
-   * @since 2.0
-   */
-  public ITransportConfig getConfig();
-
-  /**
-   * @since 2.0
-   */
-  public void setConfig(ITransportConfig config);
 }

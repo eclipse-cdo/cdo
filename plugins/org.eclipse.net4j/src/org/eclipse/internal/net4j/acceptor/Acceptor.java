@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
@@ -52,7 +53,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   {
   }
 
-  public ITransportConfig getConfig()
+  public synchronized ITransportConfig getConfig()
   {
     if (config == null)
     {
@@ -62,9 +63,19 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
     return config;
   }
 
-  public void setConfig(ITransportConfig config)
+  public synchronized void setConfig(ITransportConfig config)
   {
     this.config = config;
+  }
+
+  public INegotiator getNegotiator()
+  {
+    return getConfig().getNegotiator();
+  }
+
+  public void setNegotiator(INegotiator negotiator)
+  {
+    getConfig().setNegotiator(negotiator);
   }
 
   public IConnector[] getAcceptedConnectors()

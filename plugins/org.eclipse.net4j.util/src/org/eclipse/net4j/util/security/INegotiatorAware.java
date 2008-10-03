@@ -8,15 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.spi.net4j;
-
-import org.eclipse.net4j.ITransportConfigAware;
-import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.util.security.INegotiatorAware;
+package org.eclipse.net4j.util.security;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public interface InternalAcceptor extends IAcceptor, ITransportConfigAware, INegotiatorAware
+public interface INegotiatorAware
 {
+  public INegotiator getNegotiator();
+
+  public void setNegotiator(INegotiator negotiator);
 }

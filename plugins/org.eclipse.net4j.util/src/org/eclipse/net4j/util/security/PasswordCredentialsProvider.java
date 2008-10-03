@@ -13,13 +13,29 @@ package org.eclipse.net4j.util.security;
 /**
  * @author Eike Stepper
  */
-public final class PasswordCredentialsProvider implements IPasswordCredentialsProvider
+public class PasswordCredentialsProvider implements IPasswordCredentialsProvider
 {
   private IPasswordCredentials credentials;
 
   public PasswordCredentialsProvider(IPasswordCredentials credentials)
   {
     this.credentials = credentials;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public PasswordCredentialsProvider(String userID, char[] password)
+  {
+    this(new PasswordCredentials(userID, password));
+  }
+
+  /**
+   * @since 2.0
+   */
+  public PasswordCredentialsProvider(String userID, String password)
+  {
+    this(userID, password.toCharArray());
   }
 
   public boolean isInteractive()

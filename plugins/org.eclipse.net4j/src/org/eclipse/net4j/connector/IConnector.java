@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.connector;
 
+import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannel;
@@ -51,7 +52,7 @@ import java.util.List;
  * 
  * @author Eike Stepper
  */
-public interface IConnector extends IUserAware, IContainer<IChannel>
+public interface IConnector extends ILocationAware, IUserAware, IContainer<IChannel>
 {
   /**
    * @since 2.0

@@ -15,5 +15,10 @@ package org.eclipse.net4j.util.security;
  */
 public interface INegotiator
 {
+  /**
+   * @since 2.0
+   */
+  public boolean isInitiator();
+
   public void negotiate(INegotiationContext context);
 }

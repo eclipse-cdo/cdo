@@ -13,7 +13,6 @@ package org.eclipse.net4j;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.security.INegotiator;
 
 import org.eclipse.internal.net4j.ExecutorServiceFactory;
 import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
@@ -29,10 +28,6 @@ import java.util.concurrent.ExecutorService;
  */
 public class TransportInjector implements IElementProcessor
 {
-  public static INegotiator serverNegotiator;
-
-  public static INegotiator clientNegotiator;
-
   public TransportInjector()
   {
   }
@@ -72,11 +67,6 @@ public class TransportInjector implements IElementProcessor
     {
       config.setProtocolProvider(new ContainerProtocolProvider.Server(container));
     }
-
-    if (config.getNegotiator() == null && serverNegotiator != null)
-    {
-      config.setNegotiator(serverNegotiator);
-    }
   }
 
   protected void processConnector(IManagedContainer container, String factoryType, String description,
@@ -96,11 +86,6 @@ public class TransportInjector implements IElementProcessor
     if (config.getProtocolProvider() == null)
     {
       config.setProtocolProvider(new ContainerProtocolProvider.Client(container));
-    }
-
-    if (config.getNegotiator() == null && clientNegotiator != null && connector.isClient())
-    {
-      config.setNegotiator(clientNegotiator);
     }
   }
 

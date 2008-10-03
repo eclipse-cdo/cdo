@@ -12,16 +12,13 @@ package org.eclipse.emf.cdo.internal.ui.bundle;
 
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 
-import org.eclipse.net4j.TransportInjector;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
-import org.eclipse.net4j.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.ui.UIActivator;
-import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -58,25 +55,6 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTY = //
   PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTY", true); //$NON-NLS-1$
-
-  static void start()
-  {
-    if (false)
-    {
-      try
-      {
-        ResponseNegotiator responseNegotiator = new ResponseNegotiator();
-        responseNegotiator.setCredentialsProvider(new InteractiveCredentialsProvider());
-        responseNegotiator.activate();
-
-        TransportInjector.clientNegotiator = responseNegotiator;
-      }
-      catch (Exception ex)
-      {
-        LOG.error(ex);
-      }
-    }
-  }
 
   /**
    * @author Eike Stepper

@@ -60,7 +60,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IChannel extends IUserAware, ILocationAware, IBufferHandler, INotifier
+public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, INotifier
 {
   /**
    * Returns the index of this channel within the array of channels returned from the {@link IConnector#getChannels()

@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.internal.server.StoreAccessorPool;
 import org.eclipse.emf.cdo.server.ISession;
@@ -180,7 +181,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public long getCreationTime()
   {
-    throw new UnsupportedOperationException();
+    return CDORevision.UNSPECIFIED_DATE;
   }
 
   public HibernatePackageHandler getPackageHandler()

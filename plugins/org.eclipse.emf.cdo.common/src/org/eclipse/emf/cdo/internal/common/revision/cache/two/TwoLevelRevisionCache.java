@@ -160,6 +160,12 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return id;
   }
 
+  public void clear()
+  {
+    level1.clear();
+    level2.clear();
+  }
+
   public void notifyEvent(IEvent event)
   {
     if (event instanceof EvictionEvent)

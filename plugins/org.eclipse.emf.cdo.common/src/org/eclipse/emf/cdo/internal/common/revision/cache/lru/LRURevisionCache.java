@@ -272,6 +272,13 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return null;
   }
 
+  public synchronized void clear()
+  {
+    revisions.clear();
+    currentLRU = new LRU(capacityCurrent);
+    revisedLRU = new LRU(capacityRevised);
+  }
+
   private synchronized CDOID[] getRevisionIDs()
   {
     return revisions.keySet().toArray(new CDOID[revisions.size()]);

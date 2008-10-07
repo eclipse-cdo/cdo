@@ -208,6 +208,14 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     return null;
   }
 
+  public void clear()
+  {
+    synchronized (cacheLists)
+    {
+      cacheLists.clear();
+    }
+  }
+
   private synchronized CDOID[] getRevisionIDs()
   {
     return cacheLists.keySet().toArray(new CDOID[cacheLists.size()]);

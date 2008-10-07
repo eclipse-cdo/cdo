@@ -51,6 +51,8 @@ public interface CDORevisionCache extends INotifier.Introspection
 
   public void setResourcePathFeature(CDOFeature resourcePathFeature);
 
+  public void clear();
+
   /**
    * @author Eike Stepper
    */

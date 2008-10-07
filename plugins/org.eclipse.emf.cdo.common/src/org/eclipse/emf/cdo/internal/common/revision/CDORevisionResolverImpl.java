@@ -256,6 +256,11 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     cache.removeRevision(id, version);
   }
 
+  public void clearCache()
+  {
+    cache.clear();
+  }
+
   protected InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
   {
     return revision;

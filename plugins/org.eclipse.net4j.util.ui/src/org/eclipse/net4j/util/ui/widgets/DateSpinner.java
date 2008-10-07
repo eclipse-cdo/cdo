@@ -27,9 +27,8 @@ import java.util.Date;
  * @author Eike Stepper
  * @since 2.0
  */
-//Under development
+// Under development
 @Deprecated
-@SuppressWarnings("deprecation")
 public class DateSpinner extends Composite implements SelectionListener
 {
   public static final Date MIN_DATE = new Date(0);

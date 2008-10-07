@@ -13,7 +13,6 @@ package org.eclipse.internal.net4j.connector;
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.ConnectorCredentialsInjector;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
@@ -26,8 +25,6 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
-import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.factory.FactoryKey;
@@ -37,9 +34,7 @@ import org.eclipse.net4j.util.om.monitor.MonitorUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiator;
-import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.NegotiationException;
-import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
@@ -137,24 +132,6 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   public boolean isClient()
   {
     return getLocation() == Location.CLIENT;
-  }
-
-  public static void main(String[] args)
-  {
-    IManagedContainer container = IPluginContainer.INSTANCE;
-    String connectorDescription = "localhost:2036";
-    String userID = "name";
-    String password = "secret";
-
-    IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(userID, password);
-    container.addPostProcessor(new ConnectorCredentialsInjector(connectorDescription, credentialsProvider));
-
-    IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement( //
-        "org.eclipse.net4j.connectors", //
-        "tcp", //
-        connectorDescription);
-
-    IChannel channel = connector.openChannel();
   }
 
   public boolean isServer()

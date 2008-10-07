@@ -13,14 +13,12 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -53,5 +51,5 @@ public abstract class CDOFeatureDeltaImpl implements CDOFeatureDelta
     return feature;
   }
 
-  public abstract void adjustReferences(Map<CDOIDTemp, CDOID> idMappings);
+  public abstract void adjustReferences(CDOReferenceAdjuster referenceAdjuster);
 }

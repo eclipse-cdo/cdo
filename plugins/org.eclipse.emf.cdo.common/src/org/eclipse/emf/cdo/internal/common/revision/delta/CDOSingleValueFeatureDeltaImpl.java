@@ -14,14 +14,12 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -51,12 +49,13 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   {
     super.write(out, cdoClass);
     out.writeInt(index);
-    if (newValue != null && getFeature().isReference())
+    Object valueToWrite = newValue;
+    if (valueToWrite != null && getFeature().isReference())
     {
-      newValue = out.getIDProvider().provideCDOID(newValue);
+      valueToWrite = out.getIDProvider().provideCDOID(newValue);
     }
 
-    getFeature().getType().writeValue(out, newValue);
+    getFeature().getType().writeValue(out, valueToWrite);
   }
 
   public int getIndex()
@@ -70,11 +69,11 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   }
 
   @Override
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
+  public void adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     if (newValue instanceof CDOID)
     {
-      newValue = CDORevisionUtil.remapID(newValue, idMappings);
+      newValue = referenceAdjuster.adjustReference(newValue);
     }
   }
 }

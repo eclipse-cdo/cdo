@@ -10,12 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -25,5 +22,8 @@ public interface InternalCDORevisionDelta extends CDORevisionDelta
 {
   public void addFeatureDelta(CDOFeatureDelta delta);
 
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings);
+  /**
+   * @since 2.0
+   */
+  public void adjustReferences(CDOReferenceAdjuster idMappings);
 }

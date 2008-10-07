@@ -26,12 +26,10 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.CDOCommitContext;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -40,7 +38,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -142,14 +139,9 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       PROTOCOL_TRACER.format("Writing {0} dirty objects", revisionDeltas.size());
     }
 
-    Map<CDOID, CDOObject> dirtyObjects = commitContext.getDirtyObjects();
-    RevisionAdjuster revisionAdjuster = new RevisionAdjuster(getIDProvider());
     for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
       out.writeCDORevisionDelta(revisionDelta);
-      CDOObject object = dirtyObjects.get(revisionDelta.getID());
-      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-      revisionAdjuster.adjustRevision(revision, revisionDelta);
     }
 
     for (CDOID id : detachedObjects)
@@ -166,15 +158,16 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     {
       String rollbackMessage = in.readString();
       OM.LOG.error(rollbackMessage);
-      return new CommitTransactionResult(rollbackMessage);
+      return new CommitTransactionResult(commitContext, rollbackMessage);
     }
+
     return null;
   }
 
   protected CommitTransactionResult confirmingTransactionResult(CDODataInput in) throws IOException
   {
     long timeStamp = in.readLong();
-    CommitTransactionResult result = new CommitTransactionResult(timeStamp);
+    CommitTransactionResult result = new CommitTransactionResult(commitContext, timeStamp);
     return result;
   }
 

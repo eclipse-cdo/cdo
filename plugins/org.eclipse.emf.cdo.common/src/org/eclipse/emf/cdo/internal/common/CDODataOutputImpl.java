@@ -291,7 +291,6 @@ public abstract class CDODataOutputImpl implements CDODataOutput
       if (value != null && feature.isReference())
       {
         value = getIDProvider().provideCDOID(value);
-        list.set(j, value);
       }
 
       if (TRACER.isEnabled())

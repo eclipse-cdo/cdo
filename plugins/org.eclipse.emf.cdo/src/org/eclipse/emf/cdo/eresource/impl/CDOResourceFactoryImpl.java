@@ -73,7 +73,7 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
         resource.setExisting(false);
       }
     }
-    
+
     return resource;
   }
 

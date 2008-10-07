@@ -160,15 +160,15 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
   public interface Props
   {
     public static final String PROP_OVERRIDE_UUID = "overrideUUID";
-  
+
     public static final String PROP_SUPPORTING_REVISION_DELTAS = "supportingRevisionDeltas";
-  
+
     public static final String PROP_SUPPORTING_AUDITS = "supportingAudits";
-  
+
     public static final String PROP_VERIFYING_REVISIONS = "verifyingRevisions";
-  
+
     public static final String PROP_CURRENT_LRU_CAPACITY = "currentLRUCapacity";
-  
+
     public static final String PROP_REVISED_LRU_CAPACITY = "revisedLRUCapacity";
   }
 }

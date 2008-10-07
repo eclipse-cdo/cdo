@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -70,6 +71,8 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   private List<CDOIDMetaRange> metaIDRanges = new ArrayList<CDOIDMetaRange>();
 
   private ConcurrentMap<CDOIDTemp, CDOID> idMappings = new ConcurrentHashMap<CDOIDTemp, CDOID>();
+
+  private CDOIDMapper idMapper = new CDOIDMapper(idMappings);
 
   private String rollbackMessage;
 
@@ -156,7 +159,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
     applyIDMappings(dirtyObjects);
     for (CDORevisionDelta dirtyObjectDelta : dirtyObjectDeltas)
     {
-      ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMappings);
+      ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMapper);
     }
   }
 
@@ -359,6 +362,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
   private void applyIDMappings(CDORevision[] revisions)
   {
+
     for (CDORevision revision : revisions)
     {
       if (revision != null)
@@ -370,7 +374,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
           internal.setID(newID);
         }
 
-        internal.adjustReferences(idMappings);
+        internal.adjustReferences(idMapper);
       }
     }
   }

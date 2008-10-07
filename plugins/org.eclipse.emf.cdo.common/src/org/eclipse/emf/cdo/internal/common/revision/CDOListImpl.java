@@ -10,17 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableArrayList;
-
-import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -46,30 +43,6 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     }
   }
 
-  public Object get(int index, boolean resolve)
-  {
-    return super.get(index);
-  }
-
-  protected void handleAdjustReference(int index, Object element)
-  {
-  }
-
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
-  {
-    int size = size();
-    for (int i = 0; i < size; i++)
-    {
-      Object element = super.get(i);
-      handleAdjustReference(i, element);
-      Object newID = CDORevisionImpl.remapID(element, idMappings);
-      if (newID != element)
-      {
-        super.set(i, newID);
-      }
-    }
-  }
-
   public InternalCDOList clone(CDOType type)
   {
     int size = size();
@@ -81,5 +54,29 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     }
 
     return list;
+  }
+
+  public Object get(int index, boolean resolve)
+  {
+    return super.get(index);
+  }
+
+  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)
+  {
+    int size = size();
+    for (int i = 0; i < size; i++)
+    {
+      Object element = super.get(i);
+      handleAdjustReference(i, element);
+      Object newID = revisionAdjuster.adjustReference(element);
+      if (newID != element)
+      {
+        super.set(i, newID);
+      }
+    }
+  }
+
+  protected void handleAdjustReference(int index, Object element)
+  {
   }
 }

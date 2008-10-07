@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -139,8 +140,8 @@ public class CDORevisionImpl implements InternalCDORevision
     out.writeLong(created);
     out.writeLong(revised);
     out.writeCDOID(resourceID);
-    containerID = out.getIDProvider().provideCDOID(containerID);
-    out.writeCDOID((CDOID)containerID);
+    Object newContainerID = out.getIDProvider().provideCDOID(containerID);
+    out.writeCDOID((CDOID)newContainerID);
     out.writeInt(containingFeatureID);
     writeValues(out, referenceChunk);
     WRITING.stop(this);
@@ -423,15 +424,15 @@ public class CDORevisionImpl implements InternalCDORevision
     setValue(feature, null);
   }
 
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
+  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Adjusting references for revision {0}", this);
     }
 
-    resourceID = (CDOID)remapID(resourceID, idMappings);
-    containerID = remapID(containerID, idMappings);
+    resourceID = (CDOID)revisionAdjuster.adjustReference(resourceID);
+    containerID = revisionAdjuster.adjustReference(containerID);
 
     CDOFeature[] features = cdoClass.getAllFeatures();
     for (int i = 0; i < features.length; i++)
@@ -444,12 +445,12 @@ public class CDORevisionImpl implements InternalCDORevision
           InternalCDOList list = (InternalCDOList)getValueAsList(i);
           if (list != null)
           {
-            list.adjustReferences(idMappings);
+            list.adjustReferences(revisionAdjuster);
           }
         }
         else
         {
-          values[i] = remapID(values[i], idMappings);
+          values[i] = revisionAdjuster.adjustReference(values[i]);
         }
       }
     }
@@ -578,17 +579,18 @@ public class CDORevisionImpl implements InternalCDORevision
       }
       else
       {
-        if (values[i] != null && feature.isReference())
+        Object value = values[i];
+        if (value != null && feature.isReference())
         {
-          values[i] = out.getIDProvider().provideCDOID(values[i]);
+          value = out.getIDProvider().provideCDOID(value);
         }
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Writing feature {0}: {1}", feature, values[i]);
+          TRACER.format("Writing feature {0}: {1}", feature, value);
         }
 
-        feature.getType().writeValue(out, values[i]);
+        feature.getType().writeValue(out, value);
       }
     }
   }

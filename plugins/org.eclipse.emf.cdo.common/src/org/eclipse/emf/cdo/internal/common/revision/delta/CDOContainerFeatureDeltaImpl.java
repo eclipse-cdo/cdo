@@ -16,21 +16,19 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -87,10 +85,10 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   }
 
   @Override
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
+  public void adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
-    newResourceID = (CDOID)CDORevisionUtil.remapID(newResourceID, idMappings);
-    newContainerID = CDORevisionUtil.remapID(newContainerID, idMappings);
+    newResourceID = (CDOID)referenceAdjuster.adjustReference(newResourceID);
+    newContainerID = referenceAdjuster.adjustReference(newContainerID);
   }
 
   @Override
@@ -98,8 +96,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   {
     out.writeInt(getType().ordinal());
     out.writeInt(newContainerFeatureID);
-    newContainerID = out.getIDProvider().provideCDOID(newContainerID);
-    out.writeCDOID((CDOID)newContainerID);
+    out.writeCDOID(out.getIDProvider().provideCDOID(newContainerID));
     out.writeCDOID(newResourceID);
   }
 

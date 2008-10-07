@@ -8,25 +8,16 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
-
-import org.eclipse.emf.cdo.common.model.CDOType;
-import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+package org.eclipse.emf.cdo.common.revision;
 
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public interface InternalCDOList extends CDOList
+public interface CDOReferenceAdjuster
 {
   /**
-   * Adjusts references according to the passed adjuster and resynchronizes indexes.
+   * TODO Simon: The signature does not explain the intention very well, maybe a bit of JavaDoc?
    */
-  public void adjustReferences(CDOReferenceAdjuster adjuster);
-
-  /**
-   * Clones the list.
-   */
-  public InternalCDOList clone(CDOType type);
+  Object adjustReference(Object id);
 }

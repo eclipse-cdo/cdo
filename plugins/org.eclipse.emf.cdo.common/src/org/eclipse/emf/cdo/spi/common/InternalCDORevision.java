@@ -12,14 +12,12 @@
 package org.eclipse.emf.cdo.spi.common;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -61,7 +59,10 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData
 
   public void unset(CDOFeature feature);
 
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings);
+  /**
+   * @since 2.0
+   */
+  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster);
 
   public Object getValue(CDOFeature feature);
 

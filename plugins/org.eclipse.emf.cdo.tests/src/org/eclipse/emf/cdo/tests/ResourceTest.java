@@ -298,30 +298,30 @@ public class ResourceTest extends AbstractCDOTest
       CDOResource resource = transaction.createResource("/res1");
       assertEquals("/res1", resource.getPath());
       assertEquals(CDOURIUtil.createResourceURI(session, "/res1"), resource.getURI());
-  
+
       transaction.commit();
       assertEquals("/res1", resource.getPath());
       assertEquals(CDOURIUtil.createResourceURI(session, "/res1"), resource.getURI());
       session.close();
     }
-  
+
     {
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/res1");
       assertEquals("/res1", resource.getPath());
       assertEquals(CDOURIUtil.createResourceURI(session, "/res1"), resource.getURI());
-  
+
       CDOResource resource2 = transaction.getOrCreateResource("/res2");
       assertEquals("/res2", resource2.getPath());
       assertEquals(CDOURIUtil.createResourceURI(session, "/res2"), resource2.getURI());
-  
+
       transaction.commit();
       assertEquals("/res2", resource2.getPath());
       assertEquals(CDOURIUtil.createResourceURI(session, "/res2"), resource2.getURI());
       session.close();
     }
-  
+
     {
       CDOSession session = openModel1Session();
       CDOView view = session.openView();

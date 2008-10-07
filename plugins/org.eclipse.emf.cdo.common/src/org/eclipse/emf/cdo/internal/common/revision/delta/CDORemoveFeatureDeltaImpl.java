@@ -13,17 +13,15 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -94,7 +92,7 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
   }
 
   @Override
-  public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
+  public void adjustReferences(CDOReferenceAdjuster idMappings)
   {
     // do Nothing
   }

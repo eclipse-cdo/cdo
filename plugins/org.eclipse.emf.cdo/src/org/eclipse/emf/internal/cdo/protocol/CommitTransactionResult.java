@@ -12,6 +12,11 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
+
+import org.eclipse.emf.internal.cdo.CDOCommitContext;
+import org.eclipse.emf.internal.cdo.revision.CDOPostCommitReferenceAdjuster;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,20 +26,48 @@ import java.util.Map;
  */
 public final class CommitTransactionResult
 {
+
   private String rollbackMessage;
 
   private long timeStamp;
 
   private Map<CDOIDTemp, CDOID> idMappings = new HashMap<CDOIDTemp, CDOID>();
 
-  public CommitTransactionResult(String rollbackMessage)
+  private CDOReferenceAdjuster referenceAdjuster;
+
+  private CDOCommitContext commitContext;
+
+  public CommitTransactionResult(CDOCommitContext commitContext, String rollbackMessage)
   {
     this.rollbackMessage = rollbackMessage;
+    this.commitContext = commitContext;
   }
 
-  public CommitTransactionResult(long timeStamp)
+  public CommitTransactionResult(CDOCommitContext commitContext, long timeStamp)
   {
     this.timeStamp = timeStamp;
+    this.commitContext = commitContext;
+  }
+
+  public CDOReferenceAdjuster getReferenceAdjuster()
+  {
+    if (referenceAdjuster == null)
+    {
+      referenceAdjuster = new CDOPostCommitReferenceAdjuster(commitContext.getTransaction(),
+          new CDOIDMapper(idMappings));
+    }
+
+    return referenceAdjuster;
+  }
+
+  public void setReferenceAdjuster(CDOReferenceAdjuster referenceAdjuster)
+  {
+    this.referenceAdjuster = referenceAdjuster;
+  }
+
+  public CDOCommitContext getCommitContext()
+  {
+    return commitContext;
   }
 
   public String getRollbackMessage()

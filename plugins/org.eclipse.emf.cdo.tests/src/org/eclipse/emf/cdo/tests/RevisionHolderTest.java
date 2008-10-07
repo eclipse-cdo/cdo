@@ -12,11 +12,11 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
@@ -34,7 +34,6 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -356,7 +355,7 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public void adjustReferences(Map<CDOIDTemp, CDOID> idMappings)
+    public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)
     {
       throw new UnsupportedOperationException();
     }

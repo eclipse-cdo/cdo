@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -28,6 +29,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
@@ -95,7 +97,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.WRITE, new WriteNewTransition());
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
     init(CDOState.NEW, CDOEvent.RELOAD, FAIL);
-    init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition());
+    init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition(false));
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
 
     init(CDOState.CLEAN, CDOEvent.PREPARE, FAIL);
@@ -115,7 +117,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.WRITE, new RewriteTransition());
     init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
     init(CDOState.DIRTY, CDOEvent.RELOAD, new ReloadTransition());
-    init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition());
+    // TODO Simon: Waiting for bugs https://bugs.eclipse.org/bugs/show_bug.cgi?id=248771
+    // init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(true));
+    init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(false));
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
 
     init(CDOState.PROXY, CDOEvent.PREPARE, FAIL);
@@ -495,36 +499,58 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class CommitTransition implements
+  final private class CommitTransition implements
       ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
   {
+    private boolean useDeltas = false;
+
+    public CommitTransition(boolean useDeltas)
+    {
+      this.useDeltas = useDeltas;
+    }
+
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CommitTransactionResult data)
     {
+
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
+
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+
       Map<CDOIDTemp, CDOID> idMappings = data.getIDMappings();
 
       // Adjust object
-      CDOID id = object.cdoID();
+      CDOID id, oldID;
+      oldID = id = object.cdoID();
       CDOID newID = idMappings.get(id);
       if (newID != null)
       {
         object.cdoInternalSetID(newID);
-        view.remapObject(id);
+        view.remapObject(oldID);
         id = newID;
       }
 
       // Adjust revision
-      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
       revision.setID(id);
       revision.setUntransactional();
       revision.setCreated(data.getTimeStamp());
-      revision.adjustReferences(idMappings);
+
+      if (useDeltas)
+      {
+        RevisionAdjuster revisionAdjuster = new RevisionAdjuster(data.getReferenceAdjuster());
+        CDORevisionDelta delta = data.getCommitContext().getRevisionDeltas().get(oldID);
+        revisionAdjuster.adjustRevision(revision, delta);
+      }
+      else
+      {
+        revision.adjustReferences(data.getReferenceAdjuster());
+      }
 
       CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
       revisionManager.addCachedRevision(revision);
 
       changeState(object, CDOState.CLEAN);
     }
+
   }
 
   /**

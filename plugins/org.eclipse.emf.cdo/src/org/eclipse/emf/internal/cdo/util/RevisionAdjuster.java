@@ -12,8 +12,8 @@
 
 package org.eclipse.emf.internal.cdo.util;
 
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
@@ -32,13 +32,13 @@ import java.util.List;
  */
 public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
 {
-  private CDOIDProvider idProvider;
+  private CDOReferenceAdjuster referenceAdjuster;
 
   private InternalCDORevision revision;
 
-  public RevisionAdjuster(CDOIDProvider idProvider)
+  public RevisionAdjuster(CDOReferenceAdjuster referenceAdjuster)
   {
-    this.idProvider = idProvider;
+    this.referenceAdjuster = referenceAdjuster;
   }
 
   public void adjustRevision(InternalCDORevision revision, CDORevisionDelta revisionDelta)
@@ -51,7 +51,7 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
   public void visit(CDOContainerFeatureDelta delta)
   {
     // Delta value must have been adjusted before!
-    revision.setContainerID(idProvider.provideCDOID(revision.getContainerID()));
+    revision.setContainerID(referenceAdjuster.adjustReference(revision.getContainerID()));
   }
 
   @Override
@@ -68,7 +68,7 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
     Object value = delta.getValue();
     if (value != null && feature.isReference() && !(value instanceof CDOReferenceProxy))
     {
-      revision.setValue(feature, idProvider.provideCDOID(value));
+      revision.setValue(feature, referenceAdjuster.adjustReference(value));
     }
   }
 
@@ -85,7 +85,7 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
       Object value = list.get(index);
       if (value != null && feature.isReference() && !(value instanceof CDOReferenceProxy))
       {
-        value = idProvider.provideCDOID(value);
+        value = referenceAdjuster.adjustReference(value);
         list.set(index, value);
       }
     }

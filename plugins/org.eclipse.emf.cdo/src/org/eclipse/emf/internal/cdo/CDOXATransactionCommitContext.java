@@ -14,15 +14,18 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOXATransactionImpl.CDOXAState;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.net4j.util.ImplementationError;
+
+import org.eclipse.emf.ecore.InternalEObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +48,8 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
   private CDOCommitContext delegateCommitContext;
 
   private Map<CDOIDExternalTempImpl, InternalCDOTransaction> requestedIDs = new HashMap<CDOIDExternalTempImpl, InternalCDOTransaction>();
+
+  private Map<InternalCDOObject, CDOIDExternalTempImpl> objectToID = new HashMap<InternalCDOObject, CDOIDExternalTempImpl>();
 
   public CDOXATransactionCommitContext(CDOXATransactionImpl manager, CDOCommitContext commitContext)
   {
@@ -129,15 +134,21 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
 
     if (id instanceof CDOIDExternalTempImpl)
     {
-      CDOIDExternalTempImpl proxyTemp = (CDOIDExternalTempImpl)id;
-      if (!requestedIDs.containsKey(proxyTemp))
+      if (idOrObject instanceof InternalEObject)
       {
-        ResourceSet resourceSet = getTransaction().getResourceSet();
-        URI uri = URI.createURI(proxyTemp.toURIFragment());
-        InternalCDOObject object = (InternalCDOObject)resourceSet.getEObject(uri, true);
-        InternalCDOTransaction cdoTransaction = (InternalCDOTransaction)object.cdoView();
-        getTransactionManager().add(cdoTransaction, proxyTemp);
-        requestedIDs.put(proxyTemp, cdoTransaction);
+        CDOIDExternalTempImpl proxyTemp = (CDOIDExternalTempImpl)id;
+        if (!requestedIDs.containsKey(proxyTemp))
+        {
+          InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject((InternalEObject)idOrObject);
+          InternalCDOTransaction cdoTransaction = (InternalCDOTransaction)cdoObject.cdoView();
+          getTransactionManager().add(cdoTransaction, proxyTemp);
+          requestedIDs.put(proxyTemp, cdoTransaction);
+          objectToID.put(cdoObject, proxyTemp);
+        }
+      }
+      else
+      {
+        throw new ImplementationError("Object should be an EObject " + idOrObject);
       }
     }
 
@@ -151,6 +162,21 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
 
   public void postCommit(CommitTransactionResult result)
   {
+    final CDOReferenceAdjuster defaultReferenceAdjuster = result.getReferenceAdjuster();
+    result.setReferenceAdjuster(new CDOReferenceAdjuster()
+    {
+      public Object adjustReference(Object id)
+      {
+        CDOIDExternalTempImpl externalID = objectToID.get(id);
+        if (externalID != null)
+        {
+          id = externalID;
+        }
+
+        return defaultReferenceAdjuster.adjustReference(id);
+      }
+    });
+
     delegateCommitContext.postCommit(result);
   }
 };

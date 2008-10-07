@@ -10,10 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.collection.MoveableArrayList;
-import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.hibernate.HibernateException;
 import org.hibernate.collection.PersistentCollection;
@@ -55,16 +53,8 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
       return collection;
     }
 
-    // Not yet, get the moveablearraylist
-    @SuppressWarnings("unchecked")
-    MoveableList<Object> list = (MoveableList<Object>)super.get(target);
-    if (list == null)
-    {
-      // TODO: what initial size?
-      list = new MoveableArrayList<Object>(10);
-      InternalCDORevision revision = (InternalCDORevision)target;
-      revision.setValue(getCDOFeature(), list);
-    }
+    InternalCDORevision revision = (InternalCDORevision)target;
+    CDOList list = revision.getList(getCDOFeature(), 10);
 
     // Wrap the moveablearraylist
     HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();

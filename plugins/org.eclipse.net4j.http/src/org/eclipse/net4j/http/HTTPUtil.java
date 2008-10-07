@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.http;
 
+import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.internal.http.HTTPConnectorFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -27,6 +28,9 @@ public final class HTTPUtil
     container.registerFactory(new HTTPConnectorFactory());
   }
 
+  /**
+   * @since 2.0
+   */
   public static IHTTPConnector getConnector(IManagedContainer container, String description)
   {
     return (IHTTPConnector)container.getElement(HTTPConnectorFactory.PRODUCT_GROUP, HTTPConnectorFactory.TYPE,

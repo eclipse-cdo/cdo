@@ -144,23 +144,11 @@ public interface CDOResource extends EresourceObject
    * <!-- end-user-doc -->
    * 
    * @return the value of the '<em>Loaded</em>' attribute.
-   * @see #setLoaded(boolean)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Loaded()
-   * @model transient="true"
+   * @model transient="true" suppressedSetVisibility="true"
    * @generated
    */
   boolean isLoaded();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}' attribute. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Loaded</em>' attribute.
-   * @see #isLoaded()
-   * @generated
-   */
-  void setLoaded(boolean value);
 
   /**
    * Returns the value of the '<em><b>Tracking Modification</b></em>' attribute. <!-- begin-user-doc -->

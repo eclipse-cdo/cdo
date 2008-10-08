@@ -29,5 +29,7 @@ public class MysqlTest extends AbstractDBTest<MysqlDataSource>
   protected void configureDataSource(MysqlDataSource dataSource)
   {
     dataSource.setDatabaseName("dbtest");
+    dataSource.setUser("root");
+    dataSource.setPassword("root");
   }
 }

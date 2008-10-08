@@ -107,4 +107,17 @@ public class MYSQLAdapter extends DBAdapter
   {
     return RESERVED_WORDS;
   }
+
+  @Override
+  public boolean isTypeIndexable(DBType type)
+  {
+    switch (type)
+    {
+    case VARCHAR:
+      return false;
+
+    default:
+      return super.isTypeIndexable(type);
+    }
+  }
 }

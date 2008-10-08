@@ -147,7 +147,13 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public String formatPrecision()
   {
-    return "(" + getPrecision() + ")";
+    int precision = getPrecision();
+    if (precision > 0)
+    {
+      return "(" + precision + ")";
+    }
+
+    return "";
   }
 
   public String formatPrecisionAndScale()

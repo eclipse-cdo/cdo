@@ -99,12 +99,29 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
   {
     IDBSchema schema = DBUtil.createSchema("testEscapeStrings");
     IDBTable table = schema.addTable("testtable");
-    IDBField strval = table.addField("strval", DBType.VARCHAR, 255);
+    IDBField field = table.addField("strval", DBType.VARCHAR, 255);
     schema.create(dbAdapter, dbConnectionProvider);
 
-    String val = "My name is 'nobody', not body";
-    DBUtil.insertRow(getConnection(), dbAdapter, table, val);
-    Object[] result = DBUtil.select(getConnection(), (String)null, strval);
-    assertEquals(val, result[0]);
+    insertString(field, "My name is 'nobody', not body");
+    insertString(field, "a = 'hello'");
+    insertString(field, "'hello' == a");
+    insertString(field, "'hello'");
+  }
+
+  private void insertString(IDBField field, String val)
+  {
+    Connection connection = getConnection();
+    IDBTable table = field.getTable();
+
+    try
+    {
+      DBUtil.insertRow(connection, dbAdapter, table, val);
+      Object[] result = DBUtil.select(connection, (String)null, field);
+      assertEquals(val, result[0]);
+    }
+    finally
+    {
+      DBUtil.update(connection, "DELETE FROM " + table);
+    }
   }
 }

@@ -10,35 +10,38 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource;
 
+import org.eclipse.emf.cdo.CDOObject;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc -->
- * <p>
- * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}</li>
- * </ul>
- * </p>
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'.
  * 
+ * @extends EresourceObject <!-- end-user-doc -->
+ *          <p>
+ *          The following features are supported:
+ *          <ul>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}</li>
+ *          </ul>
+ *          </p>
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource()
  * @model
- * @extends EresourceObject
+ * @extends CDOObject
  * @generated
  */
-public interface CDOResource extends EresourceObject
+public interface CDOResource extends CDOObject, EresourceObject
 {
   /**
    * Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc -->
@@ -137,7 +140,8 @@ public interface CDOResource extends EresourceObject
   void setModified(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Loaded</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Loaded</b></em>' attribute. The default value is <code>"true"</code>. <!--
+   * begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Loaded</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
@@ -145,7 +149,7 @@ public interface CDOResource extends EresourceObject
    * 
    * @return the value of the '<em>Loaded</em>' attribute.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Loaded()
-   * @model transient="true" suppressedSetVisibility="true"
+   * @model default="true" transient="true" suppressedSetVisibility="true"
    * @generated
    */
   boolean isLoaded();

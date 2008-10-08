@@ -300,10 +300,10 @@ public class AuditTest extends AbstractCDOTest
 
     audit.setTimeStamp(commitTime2);
     assertEquals(4, auditResource.getContents().size());
-    assertTransient(auditCompany);
+    assertInvalid(auditCompany);
 
     audit.setTimeStamp(commitTime1);
-    assertTransient(auditCompany);
+    assertInvalid(auditCompany);
     assertEquals(5, auditResource.getContents().size());
     session.close();
   }

@@ -87,6 +87,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
       Category category = getModel1Factory().createCategory();
       company1.getCategories().add(category);
     }
+
     InternalCDORevision rev4 = getCopyCDORevision(company1);
 
     CDORevisionDelta revisionDelta4 = rev4.compare(rev3);
@@ -95,8 +96,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
 
     assertEquals(5, delta4List.getListChanges().size());
     assertEquals(true, delta4List.getListChanges().get(0) instanceof CDOAddFeatureDelta);
-    transaction.rollback(true);
-
+    transaction.rollback();
     transaction.close();
     session.close();
   }

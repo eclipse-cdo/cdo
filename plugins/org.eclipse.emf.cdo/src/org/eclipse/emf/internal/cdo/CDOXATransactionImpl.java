@@ -270,22 +270,12 @@ public class CDOXATransactionImpl implements CDOXATransaction
     return lastSavepoint;
   }
 
-  public void rollback(boolean remote)
-  {
-    rollback(firstSavepoint, true);
-  }
-
   public void rollback()
   {
-    rollback(true);
+    rollback(firstSavepoint);
   }
 
   public void rollback(CDOSavepoint savepoint)
-  {
-    rollback(savepoint, true);
-  }
-
-  public void rollback(CDOSavepoint savepoint, boolean remote)
   {
     if (savepoint == null)
     {
@@ -312,7 +302,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     for (CDOSavepoint indexSavePoint : savepoints)
     {
       InternalCDOTransaction transaction = (InternalCDOTransaction)indexSavePoint.getUserTransaction();
-      CDOSingleTransactionStrategy.INSTANCE.rollback(transaction, indexSavePoint, remote);
+      CDOSingleTransactionStrategy.INSTANCE.rollback(transaction, indexSavePoint);
     }
 
     lastSavepoint = savepointSet;
@@ -373,7 +363,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
       }
     }
 
-    private void check_access()
+    private void checkAccess()
     {
       if (!allRequestEnabled)
       {
@@ -383,19 +373,19 @@ public class CDOXATransactionImpl implements CDOXATransaction
 
     public void commit(InternalCDOTransaction transactionCommit) throws Exception
     {
-      check_access();
+      checkAccess();
       CDOXATransactionImpl.this.commit();
     }
 
-    public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint, boolean remote)
+    public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint)
     {
-      check_access();
-      CDOXATransactionImpl.this.rollback(savepoint, remote);
+      checkAccess();
+      CDOXATransactionImpl.this.rollback(savepoint);
     }
 
     public CDOSavepoint setSavepoint(InternalCDOTransaction transaction)
     {
-      check_access();
+      checkAccess();
       return CDOXATransactionImpl.this.setSavepoint();
     }
   }

@@ -56,21 +56,22 @@ public interface IStoreReader extends IStoreAccessor, IQueryHandler
   public CDOClassRef readObjectType(CDOID id);
 
   /**
-   * Reads a current revision (i.e. one with revised == 0) from the backend.
+   * Reads a current revision (i.e. one with revised == 0) from the backend. Returns <code>null</code> if the id is
+   * invalid.
    */
   public CDORevision readRevision(CDOID id, int referenceChunk);
 
   /**
    * Reads a revision with the given version from the backend. This method will only be called by the framework if
    * {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
-   * {@link IStore#hasAuditingSupport()} to be <code>true</code>).
+   * {@link IStore#hasAuditingSupport()} to be <code>true</code>). Returns <code>null</code> if the id is invalid.
    */
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 
   /**
    * Reads a revision from the backend that was valid at the given timeStamp. This method will only be called by the
    * framework if {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
-   * {@link IStore#hasAuditingSupport()} to be <code>true</code>).
+   * {@link IStore#hasAuditingSupport()} to be <code>true</code>). Returns <code>null</code> if the id is invalid.
    */
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
 

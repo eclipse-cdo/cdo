@@ -53,7 +53,11 @@ public class SavepointTest extends AbstractCDOTest
     company1.getCategories().add(category3);
 
     transaction1.setSavepoint();
-    transaction1.rollback(savePoint2, false);
+    transaction1.rollback(savePoint2);
+
+    assertNew(category1, transaction1);
+    assertNew(company1, transaction1);
+    assertNew(resource1, transaction1);
     assertEquals(2, company1.getCategories().size());
 
     transaction1.commit();
@@ -94,24 +98,26 @@ public class SavepointTest extends AbstractCDOTest
 
     CDOSavepoint savePoint1 = transaction1.setSavepoint();
     CDOSavepoint savePoint2 = transaction1.setSavepoint();
-    transaction1.rollback(savePoint1, false);
+    transaction1.rollback(savePoint1);
 
     try
     {
-      transaction1.rollback(savePoint2, false);
-      fail("Should have thrown an exception");
+      transaction1.rollback(savePoint2);
+      fail("IllegalArgumentException expected");
     }
     catch (IllegalArgumentException expected)
     {
+      // SUCCESS
     }
 
     try
     {
-      transaction1.rollback(null, false);
-      fail("Should have thrown an exception");
+      transaction1.rollback(null);
+      fail("IllegalArgumentException expected");
     }
     catch (IllegalArgumentException expected)
     {
+      // SUCCESS
     }
   }
 
@@ -139,20 +145,20 @@ public class SavepointTest extends AbstractCDOTest
 
     assertEquals(true, transaction1.isDirty());
 
-    transaction1.rollback(savePoint3, false);
+    transaction1.rollback(savePoint3);
     assertEquals(true, transaction1.isDirty());
 
-    transaction1.rollback(savePoint2, false);
+    transaction1.rollback(savePoint2);
     assertEquals(true, transaction1.isDirty());
 
-    transaction1.rollback(savePoint1, false);
+    transaction1.rollback(savePoint1);
     assertEquals(true, transaction1.isDirty());
 
     // Didn`t make any modification prior to savepoint0
-    transaction1.rollback(savePoint0, false);
+    transaction1.rollback(savePoint0);
     assertEquals(false, transaction1.isDirty());
 
-    transaction1.rollback(false);
+    transaction1.rollback();
     assertEquals(false, transaction1.isDirty());
   }
 
@@ -182,7 +188,7 @@ public class SavepointTest extends AbstractCDOTest
     assertEquals(2, resource1.getContents().size());
 
     // Rollback
-    transaction1.rollback(savePoint1, false);
+    transaction1.rollback(savePoint1);
 
     if (commitBegin)
     {
@@ -212,10 +218,9 @@ public class SavepointTest extends AbstractCDOTest
       assertEquals(3, company1.getCategories().size());
       category4 = getModel1Factory().createCategory();
       company1.getCategories().add(category4);
-
     }
 
-    transaction1.rollback(savePoint2, false);
+    transaction1.rollback(savePoint2);
     assertEquals(true, transaction1.isDirty());
 
     // Test NEW TO NEW
@@ -247,7 +252,7 @@ public class SavepointTest extends AbstractCDOTest
     }
     else
     {
-      transaction1.rollback(false);
+      transaction1.rollback();
       assertEquals(false, transaction1.isDirty());
       assertEquals(null, transaction1.getLastSavepoint().getNextSavepoint());
       assertEquals(null, transaction1.getLastSavepoint().getPreviousSavepoint());

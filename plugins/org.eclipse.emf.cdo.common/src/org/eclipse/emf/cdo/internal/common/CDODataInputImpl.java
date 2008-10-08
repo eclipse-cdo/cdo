@@ -302,7 +302,13 @@ public abstract class CDODataInputImpl implements CDODataInput
 
   public CDORevision readCDORevision() throws IOException
   {
-    return new CDORevisionImpl(this);
+    boolean notNull = readBoolean();
+    if (notNull)
+    {
+      return new CDORevisionImpl(this);
+    }
+
+    return null;
   }
 
   public CDOList readCDOList(CDORevision revision, CDOFeature feature) throws IOException

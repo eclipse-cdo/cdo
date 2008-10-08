@@ -46,19 +46,20 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
 
   private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
 
-  private Set<CDOID> detachedObjects = new HashSet<CDOID>()
+  private Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>()
   {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public boolean add(CDOID key)
+    public CDOObject put(CDOID key, CDOObject object)
     {
       sharedDetachedObjects.add(key);
       dirtyObjects.remove(key);
       baseNewObjects.remove(key);
       newObjects.remove(key);
       newResources.remove(key);
-      return super.add(key);
+      revisionDeltas.remove(key);
+      return super.put(key, object);
     }
   };
 
@@ -111,7 +112,7 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
     return newObjects;
   }
 
-  public Set<CDOID> getDetachedObjects()
+  public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return detachedObjects;
   }
@@ -179,11 +180,11 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
     Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
     for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
-      for (CDOObject object : savepoint.getNewObjects().values())
+      for (Entry<CDOID, CDOObject> entry : savepoint.getNewObjects().entrySet())
       {
-        if (!getSharedDetachedObjects().contains(object.cdoID()))
+        if (!getSharedDetachedObjects().contains(entry.getKey()))
         {
-          newObjects.put(object.cdoID(), object);
+          newObjects.put(entry.getKey(), entry.getValue());
         }
       }
     }
@@ -215,11 +216,11 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
     Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
     for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
-      for (CDOResource resource : savepoint.getNewResources().values())
+      for (Entry<CDOID, CDOResource> entry : savepoint.getNewResources().entrySet())
       {
-        if (!sharedDetachedObjects.contains(resource.cdoID()))
+        if (!getSharedDetachedObjects().contains(entry.getKey()))
         {
-          newResources.put(resource.cdoID(), resource);
+          newResources.put(entry.getKey(), entry.getValue());
         }
       }
     }
@@ -257,14 +258,14 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
     }
 
     // We need to combined the result for all delta in different Savepoint
-    Map<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
+    Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
     for (CDOSavepointImpl savepoint = (CDOSavepointImpl)getFirstSavePoint(); savepoint != null; savepoint = savepoint
         .getNextSavepoint())
     {
       for (Entry<CDOID, CDORevisionDelta> entry : savepoint.getRevisionDeltas().entrySet())
       {
         // Skipping temporary
-        if (entry.getKey().isTemporary() || detachedObjects.contains(entry.getKey()))
+        if (entry.getKey().isTemporary() || getSharedDetachedObjects().contains(entry.getKey()))
         {
           continue;
         }
@@ -294,26 +295,38 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
       }
     }
 
-    return revisionDeltas;
+    return Collections.unmodifiableMap(revisionDeltas);
   }
 
-  public Set<CDOID> getAllDetachedObjects()
+  public Map<CDOID, CDOObject> getAllDetachedObjects()
   {
     if (getPreviousSavepoint() == null)
     {
-      return Collections.unmodifiableSet(getDetachedObjects());
+      return Collections.unmodifiableMap(getDetachedObjects());
     }
 
-    Set<CDOID> detachedObjects = new HashSet<CDOID>();
+    Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>();
     for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
-      for (CDOID id : savepoint.getDetachedObjects())
+      for (Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
       {
-        detachedObjects.add(id);
+        detachedObjects.put(entry.getKey(), entry.getValue());
       }
     }
 
     return detachedObjects;
+  }
+
+  public void recalculateSharedDetachedObjects()
+  {
+    sharedDetachedObjects.clear();
+    for (CDOSavepointImpl savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      for (CDOID id : savepoint.getDetachedObjects().keySet())
+      {
+        sharedDetachedObjects.add(id);
+      }
+    }
   }
 
   @Override
@@ -336,12 +349,6 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
   public void setNextSavepoint(CDOSavepointImpl nextSavepoint)
   {
     super.setNextSavepoint(nextSavepoint);
-  }
-
-  @Override
-  public void rollback(boolean remote)
-  {
-    getUserTransaction().rollback(this, remote);
   }
 
   @Override

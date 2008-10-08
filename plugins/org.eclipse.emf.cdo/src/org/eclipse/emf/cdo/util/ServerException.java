@@ -10,10 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.common.util.CDOException;
+
 /**
  * @author Eike Stepper
  */
-public class ServerException extends RuntimeException
+public class ServerException extends CDOException
 {
   private static final long serialVersionUID = 1L;
 

@@ -80,11 +80,6 @@ public abstract class CDOAbstractSavepoint implements CDOSavepoint
     return false;
   }
 
-  public void rollback(boolean remote)
-  {
-    getUserTransaction().rollback(this, remote);
-  }
-
   public void rollback()
   {
     getUserTransaction().rollback(this);

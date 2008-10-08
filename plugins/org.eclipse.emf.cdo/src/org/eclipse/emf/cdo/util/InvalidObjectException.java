@@ -6,35 +6,27 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
- * @author Eike Stepper
+ * Exception occurs when an object isn't valid anymore. It was valid when we create it, but not anymore. The cause could
+ * be that another {@link CDOTransaction} removed it.
+ * 
+ * @author Simon McDuff
+ * @since 2.0
  */
-public class ReadOnlyException extends CDOException
+public class InvalidObjectException extends CDOException
 {
   private static final long serialVersionUID = 1L;
 
-  public ReadOnlyException()
+  public InvalidObjectException(CDOID id)
   {
-  }
-
-  public ReadOnlyException(String message)
-  {
-    super(message);
-  }
-
-  public ReadOnlyException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
-
-  public ReadOnlyException(Throwable cause)
-  {
-    super(cause);
+    super("Object " + id + " isn't valid anymore.");
   }
 }

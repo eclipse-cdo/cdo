@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -26,7 +25,7 @@ public final class RollbackTransactionAction extends ViewAction
 
   private static final String TOOL_TIP = "Rollback this transaction";
 
-  private boolean remote;
+  private static final String MESSAGE = "Choose how to rollback this transaction.";
 
   public RollbackTransactionAction(IWorkbenchPage page, CDOView view)
   {
@@ -38,25 +37,16 @@ public final class RollbackTransactionAction extends ViewAction
   protected void preRun() throws Exception
   {
     CDOTransaction transaction = (CDOTransaction)getView();
-    Dialog dialog = new RollbackTransactionDialog(getPage(), TITLE, "Choose how to rollback this transaction.",
-        transaction);
-    switch (dialog.open())
+    RollbackTransactionDialog dialog = new RollbackTransactionDialog(getPage(), TITLE, MESSAGE, transaction);
+    if (dialog.open() != RollbackTransactionDialog.OK)
     {
-    case RollbackTransactionDialog.REMOTE:
-      remote = true;
-      break;
-    case RollbackTransactionDialog.LOCAL:
-      remote = false;
-      break;
-    default:
       cancel();
-      break;
     }
   }
 
   @Override
   protected void doRun() throws Exception
   {
-    getTransaction().rollback(remote);
+    getTransaction().rollback();
   }
 }

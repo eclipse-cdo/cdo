@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
@@ -299,10 +300,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     checkOpen();
+
+    if (id == null || id.isNull())
+    {
+      return null;
+    }
+
     if (isDetached(id))
     {
-      throw new IllegalArgumentException("Cannot access object with id " + id
-          + " anymore. It was removed from this view.");
+      CDOUtil.validate(id, null);
     }
 
     return super.getObject(id, loadOnDemand);
@@ -334,27 +340,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public void rollback(boolean remote)
-  {
-    checkOpen();
-    rollback(firstSavepoint, remote);
-    cleanUp();
-  }
-
   /**
    * @since 2.0
    */
   public void rollback()
   {
-    rollback(true);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void rollback(CDOSavepoint savepoint)
-  {
-    rollback(savepoint, true);
+    checkOpen();
+    rollback(firstSavepoint);
+    cleanUp();
   }
 
   private void removeObjects(Collection<? extends CDOObject> objects)
@@ -365,65 +358,76 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         ((InternalCDOObject)object).cdoInternalSetState(CDOState.TRANSIENT);
         removeObject(object.cdoID());
+
         if (object instanceof CDOResource)
         {
           getResourceSet().getResources().remove(object);
         }
 
-        // TODO Should call detach transition : not there yet
-        // TODO How to remove it from Resource?
-        // CDOStateMachine.INSTANCE.detach(newObject);
+        ((InternalCDOObject)object).cdoInternalSetID(null);
+        ((InternalCDOObject)object).cdoInternalSetRevision(null);
+        ((InternalCDOObject)object).cdoInternalSetView(null);
       }
     }
   }
 
-  private Set<CDOID> rollbackCompletely(CDOSavepoint savepoint, boolean remote)
+  private Set<CDOID> rollbackCompletely(CDOSavepoint savepoint)
   {
     Set<CDOID> idsOfNewObjectWithDeltas = new HashSet<CDOID>();
-
-    // Determine the limit where we after the rollback which savepoint will still be active.
-    // Ex: sv1, sv2, sv3, sv4. Rollback with sv3.
-    // isSavepointActive is false for sv4, sv3.
-    // isSavepointActive is true for sv2, sv1.
-    boolean isSavepointActive = false;
 
     // Start from the last savepoint and come back up to the active
     for (CDOSavepointImpl itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint
         .getPreviousSavepoint())
     {
-      if (isSavepointActive == false)
-      {
-        // Rollback new objects created after the save point
-        removeObjects(itrSavepoint.getNewResources().values());
-        removeObjects(itrSavepoint.getNewObjects().values());
+      // Rollback new objects created after the save point
+      removeObjects(itrSavepoint.getNewResources().values());
+      removeObjects(itrSavepoint.getNewObjects().values());
 
-        Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas();
-        if (!revisionDeltas.isEmpty())
+      Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas();
+      if (!revisionDeltas.isEmpty())
+      {
+        for (CDORevisionDelta dirtyObject : revisionDeltas.values())
         {
-          for (CDORevisionDelta dirtyObject : revisionDeltas.values())
+          if (dirtyObject.getID().isTemporary())
           {
-            if (dirtyObject.getID().isTemporary())
-            {
-              idsOfNewObjectWithDeltas.add(dirtyObject.getID());
-            }
+            idsOfNewObjectWithDeltas.add(dirtyObject.getID());
           }
         }
       }
 
       // Rollback every persisted objects
-      Map<CDOID, CDOObject> dirtyObjects = itrSavepoint.getDirtyObjects();
-      if (!dirtyObjects.isEmpty())
+      Map<CDOID, CDOObject> detachedObjects = itrSavepoint.getDetachedObjects();
+      if (!detachedObjects.isEmpty())
       {
-        for (Entry<CDOID, CDOObject> entryDirty : dirtyObjects.entrySet())
+        for (Entry<CDOID, CDOObject> entryDirty : detachedObjects.entrySet())
         {
-          InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirty.getValue();
-          cleanObject(internalDirtyObject, getRevision(entryDirty.getKey(), true));
+          if (entryDirty.getKey().isTemporary())
+          {
+            idsOfNewObjectWithDeltas.add(entryDirty.getKey());
+          }
+          else
+          {
+            InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirty.getValue();
+            cleanObject(internalDirtyObject, getRevision(entryDirty.getKey(), true));
+            registerObject(internalDirtyObject);
+          }
+        }
+      }
+
+      for (Entry<CDOID, CDOObject> entryDirtyObject : itrSavepoint.getDirtyObjects().entrySet())
+      {
+        // Rollback every persisted objects
+        if (!entryDirtyObject.getKey().isTemporary())
+        {
+          InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
+          // cleanObject(internalDirtyObject, getRevision(entryDirtyObject.getKey(), true));
+          CDOStateMachine.INSTANCE.rollback(internalDirtyObject);
         }
       }
 
       if (savepoint == itrSavepoint)
       {
-        isSavepointActive = true;
+        break;
       }
     }
 
@@ -432,17 +436,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void loadSavepoint(CDOSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
   {
-    lastSavepoint.getSharedDetachedObjects().clear();
+    lastSavepoint.recalculateSharedDetachedObjects();
 
     Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
     Map<CDOID, CDOObject> newObjMaps = getNewObjects();
     Map<CDOID, CDOResource> newResources = getNewResources();
     Map<CDOID, CDORevision> newBaseRevision = getBaseNewObjects();
-    Set<CDOID> detachedObjects = getDetachedObjects();
+    Map<CDOID, CDOObject> detachedObjects = getDetachedObjects();
 
     // Reload the objects (NEW) with their base.
     for (CDOID id : idsOfNewObjectWithDeltas)
     {
+      if (detachedObjects.containsKey(id))
+      {
+        continue;
+      }
+
       InternalCDOObject object = (InternalCDOObject)newObjMaps.get(id);
       if (object == null)
       {
@@ -453,6 +462,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (revision != null)
       {
         object.cdoInternalSetRevision(CDORevisionUtil.copy(revision));
+        object.cdoInternalSetView(this);
+        object.cdoInternalSetID(revision.getID());
         object.cdoInternalSetState(CDOState.NEW);
 
         // Load the object from revision to EObject
@@ -463,14 +474,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     // We need to register back new objects that are not removed anymore there.
     for (Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
     {
+      InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
       if (!isObjectRegistered(entryNewObject.getKey()))
       {
-        // Go back to the previous state
-        InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
-        cleanObject(object, (InternalCDORevision)object.cdoRevision());
-        object.cdoInternalSetState(CDOState.NEW);
         registerObject(object);
       }
+
+      // Go back to the previous state
+      cleanObject(object, (InternalCDORevision)object.cdoRevision());
+      object.cdoInternalSetState(CDOState.NEW);
+    }
+
+    for (Entry<CDOID, CDOObject> entryDirtyObject : dirtyObjects.entrySet())
+    {
+      if (detachedObjects.containsKey(entryDirtyObject.getKey()))
+      {
+        continue;
+      }
+
+      // Rollback every persisted objects
+      InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
+      cleanObject(internalDirtyObject, getRevision(entryDirtyObject.getKey(), true));
     }
 
     for (CDOSavepointImpl itrSavepoint = firstSavepoint; itrSavepoint != savepoint; itrSavepoint = itrSavepoint
@@ -479,7 +503,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOObjectMerger merger = new CDOObjectMerger();
       for (CDORevisionDelta delta : itrSavepoint.getRevisionDeltas().values())
       {
-        if (delta.getID().isTemporary() && !idsOfNewObjectWithDeltas.contains(delta.getID()))
+        if (delta.getID().isTemporary() && !idsOfNewObjectWithDeltas.contains(delta.getID())
+            || detachedObjects.containsKey(delta.getID()))
         {
           continue;
         }
@@ -499,20 +524,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    // Put persistent objects that we removed in a savepoint to transient
-    for (CDOID id : detachedObjects)
-    {
-      if (!id.isTemporary())
-      {
-        InternalCDOObject object = getObject(id, true);
-        object.cdoInternalPostDetach();
-        object.cdoInternalSetState(CDOState.TRANSIENT);
-      }
-
-      // Recalculate HashSet
-      lastSavepoint.getSharedDetachedObjects().add(id);
-    }
-
     dirty = ((CDOSavepointImpl)savepoint).isDirty();
   }
 
@@ -526,6 +537,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       handler.detachingObject(this, object);
     }
 
+    // deregister object
+    deregisterObject(object);
+
     if (object.cdoState() == CDOState.NEW)
     {
       Map<CDOID, ? extends CDOObject> map = object instanceof CDOResource ? getLastSavepoint().getNewResources()
@@ -538,31 +552,34 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
       else
       {
-        getLastSavepoint().getDetachedObjects().add(object.cdoID());
+        getLastSavepoint().getDetachedObjects().put(object.cdoID(), object);
       }
-
-      // deregister object
-      deregisterObject(object);
     }
     else
     {
-      getLastSavepoint().getDetachedObjects().add(object.cdoID());
+      getLastSavepoint().getDetachedObjects().put(object.cdoID(), object);
+    }
+
+    if (!dirty)
+    {
+      dirty = true;
+      fireEvent(new StartedEvent());
     }
   }
 
   /**
    * @since 2.0
    */
-  public void rollback(CDOSavepoint savepoint, boolean remote)
+  public void rollback(CDOSavepoint savepoint)
   {
     checkOpen();
-    getTransactionStrategy().rollback(this, savepoint, remote);
+    getTransactionStrategy().rollback(this, savepoint);
   }
 
   /**
    * @since 2.0
    */
-  public void handleRollback(CDOSavepoint savepoint, boolean remote)
+  public void handleRollback(CDOSavepoint savepoint)
   {
     if (savepoint == null)
     {
@@ -587,10 +604,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       // Rollback objects
-      Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint, remote);
+      Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
 
       lastSavepoint = (CDOSavepointImpl)savepoint;
-
       // Make savepoint active. Erase savepoint that could have be after
       lastSavepoint.setNextSavepoint(null);
       lastSavepoint.clear();
@@ -864,7 +880,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public Set<CDOID> getDetachedObjects()
+  public Map<CDOID, CDOObject> getDetachedObjects()
   {
     checkOpen();
     return lastSavepoint.getAllDetachedObjects();
@@ -897,12 +913,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public CDOCommitContextImpl()
     {
-      newResources = getTransaction().getNewResources();
-      newObjects = getTransaction().getNewObjects();
-      dirtyObjects = getTransaction().getDirtyObjects();
-      detachedObjects = getTransaction().getDetachedObjects();
-      revisionDeltas = getTransaction().getRevisionDeltas();
-      newPackages = getTransaction().analyzeNewPackages();
+      CDOTransactionImpl transaction = getTransaction();
+      newResources = transaction.getNewResources();
+      newObjects = transaction.getNewObjects();
+      dirtyObjects = transaction.getDirtyObjects();
+      detachedObjects = transaction.getDetachedObjects().keySet();
+      revisionDeltas = transaction.getRevisionDeltas();
+      newPackages = transaction.analyzeNewPackages();
     }
 
     public Map<CDOID, CDOObject> getDirtyObjects()
@@ -983,11 +1000,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           postCommit(getNewObjects(), result);
           postCommit(getDirtyObjects(), result);
 
-          for (CDOID id : getDetachedObjects())
-          {
-            removeObject(id);
-          }
-
           CDOSessionImpl session = getTransaction().getSession();
 
           for (CDOPackage newPackage : newPackages)
@@ -998,17 +1010,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           getTransaction().getChangeSubscriptionManager().notifyDirtyObjects();
 
           long timeStamp = result.getTimeStamp();
-          Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
-          if (!dirtyObjects.isEmpty())
-          {
-            Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
-            for (CDOObject dirtyObject : dirtyObjects.values())
-            {
-              CDORevision revision = dirtyObject.cdoRevision();
-              CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
-              dirtyIDs.add(dirtyID);
-            }
 
+          Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
+          Set<CDOIDAndVersion> dirtyIDs = new HashSet<CDOIDAndVersion>();
+          for (CDOObject dirtyObject : dirtyObjects.values())
+          {
+            CDORevision revision = dirtyObject.cdoRevision();
+            CDOIDAndVersion dirtyID = CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion() - 1);
+            dirtyIDs.add(dirtyID);
+          }
+
+          if (!dirtyIDs.isEmpty() || !getDetachedObjects().isEmpty())
+          {
             Set<CDOID> detachedIDs = new HashSet<CDOID>(getDetachedObjects());
             Collection<CDORevisionDelta> deltasCopy = new ArrayList<CDORevisionDelta>(deltas);
             session.handleCommitNotification(timeStamp, dirtyIDs, detachedIDs, deltasCopy, getTransaction());

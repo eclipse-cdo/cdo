@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -20,7 +21,9 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.InvalidObjectException;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -36,6 +39,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -256,6 +260,120 @@ public class InvalidationTest extends AbstractCDOTest
     }
   }
 
+  public void testConflictSameSession() throws InterruptedException, IOException
+  {
+    CDOSession session = openSession(getModel1Package());
+    CDOTransaction trans1 = session.openTransaction();
+    CDOTransaction trans2 = session.openTransaction();
+    testConflict(trans1, trans2);
+  }
+
+  public void testConflictDifferentSession() throws InterruptedException, IOException
+  {
+    CDOSession session1 = openSession(getModel1Package());
+    CDOTransaction trans1 = session1.openTransaction();
+
+    CDOSession session2 = openSession(getModel1Package());
+    CDOTransaction trans2 = session2.openTransaction();
+
+    testConflict(trans1, trans2);
+  }
+
+  private void testConflict(CDOTransaction trans1, CDOTransaction trans2) throws InterruptedException, IOException
+  {
+    final CDOResource res1 = trans1.getOrCreateResource("/test");
+    trans1.commit();
+
+    final CDOResource res2 = trans2.getOrCreateResource("/test");
+
+    final Customer customerA1 = getModel1Factory().createCustomer();
+    res1.getContents().add(customerA1);
+
+    final Customer customerB2 = getModel1Factory().createCustomer();
+    res2.getContents().add(customerB2);
+
+    trans1.commit();
+
+    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return CDOUtil.getCDOObject(res2).cdoState() == CDOState.CONFLICT;
+      }
+    };
+
+    assertEquals(false, timeOuter.timedOut());
+
+    final Customer customerA2 = getModel1Factory().createCustomer();
+    res1.getContents().add(customerA2);
+    trans1.commit();
+
+    assertEquals(false, timeOuter.timedOut());
+
+    trans2.rollback();
+    assertEquals(2, res1.getContents().size());
+  }
+
+  public void testDetachedConflictSameSession() throws InterruptedException, IOException
+  {
+    CDOSession session = openSession(getModel1Package());
+    CDOTransaction trans1 = session.openTransaction();
+    CDOTransaction trans2 = session.openTransaction();
+    testDetachedConflict(trans1, trans2);
+  }
+
+  public void testDetachedConflictDifferentSession() throws InterruptedException, IOException
+  {
+    CDOSession session1 = openSession(getModel1Package());
+    CDOTransaction trans1 = session1.openTransaction();
+
+    CDOSession session2 = openSession(getModel1Package());
+    CDOTransaction trans2 = session2.openTransaction();
+
+    testDetachedConflict(trans1, trans2);
+  }
+
+  private void testDetachedConflict(CDOTransaction trans1, CDOTransaction trans2) throws InterruptedException,
+      IOException
+  {
+    final CDOResource res1 = trans1.getOrCreateResource("/test");
+    trans1.commit();
+
+    final CDOResource res2 = trans2.getOrCreateResource("/test");
+
+    res1.delete(null);
+
+    final Customer customerB2 = getModel1Factory().createCustomer();
+    res2.getContents().add(customerB2);
+
+    trans1.commit();
+
+    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return CDOUtil.getCDOObject(res2).cdoState() == CDOState.INVALID_CONFLICT;
+      }
+    };
+
+    assertEquals(false, timeOuter.timedOut());
+
+    trans2.rollback();
+    assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(res2).cdoState());
+
+    try
+    {
+      res2.getContents().get(0);
+      fail("InvalidObjectException expected");
+    }
+    catch (InvalidObjectException expected)
+    {
+      // SUCCESS
+    }
+  }
+
   public void testSeparateSession() throws Exception
   {
     msg("Creating category1");
@@ -425,8 +543,7 @@ public class InvalidationTest extends AbstractCDOTest
     session.close();
   }
 
-  // TODO Simon: Fix me
-  public void _testSeparateSession_PassiveUpdateDisable() throws Exception
+  public void testSeparateSession_PassiveUpdateDisable() throws Exception
   {
     msg("Creating category1");
     final Category category1A = getModel1Factory().createCategory();
@@ -506,8 +623,7 @@ public class InvalidationTest extends AbstractCDOTest
     assertEquals(false, timeOuter.timedOut());
   }
 
-  // TODO Simon: Fix me
-  public void _testPassiveUpdateOnAndOff() throws Exception
+  public void testPassiveUpdateOnAndOff() throws Exception
   {
     msg("Creating category1");
     final Category category1A = getModel1Factory().createCategory();
@@ -685,7 +801,7 @@ public class InvalidationTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return FSMUtil.isTransient(CDOUtil.getCDOObject(categoryB));
+        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
       }
     };
 
@@ -770,7 +886,7 @@ public class InvalidationTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return FSMUtil.isTransient(CDOUtil.getCDOObject(categoryB));
+        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
       }
     };
 

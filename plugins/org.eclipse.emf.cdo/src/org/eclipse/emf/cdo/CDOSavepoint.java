@@ -30,7 +30,5 @@ public interface CDOSavepoint
 
   public boolean isValid();
 
-  public void rollback(boolean remote);
-
   public void rollback();
 }

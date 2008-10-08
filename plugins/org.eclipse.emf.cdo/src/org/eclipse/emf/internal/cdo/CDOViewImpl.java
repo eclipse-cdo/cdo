@@ -502,6 +502,12 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public boolean isObjectRegistered(CDOID id)
   {
     checkOpen();
+
+    if (id == null || id.isNull())
+    {
+      return false;
+    }
+
     synchronized (objects)
     {
       return objects.containsKey(id);
@@ -552,6 +558,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
 
     InternalCDORevision revision = getRevision(id, true);
+    CDOUtil.validate(id, revision);
+
     CDOClass cdoClass = revision.getCDOClass();
     InternalCDOObject object = newInstance(cdoClass);
     cleanObject(object, revision);
@@ -804,7 +812,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         InternalCDOObject cdoObject = removeObject(id);
         if (cdoObject != null)
         {
-          CDOStateMachine.INSTANCE.invalidate(cdoObject);
+          CDOStateMachine.INSTANCE.detachRemote(cdoObject);
           if (dirtyObjects != null && cdoObject.eNotificationRequired())
           {
             dirtyObjects.add(cdoObject);

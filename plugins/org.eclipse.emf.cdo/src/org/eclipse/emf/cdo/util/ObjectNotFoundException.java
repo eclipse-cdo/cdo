@@ -6,35 +6,25 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
- * @author Eike Stepper
+ * Exception occurs when an id doesn't exist on the server.
+ * 
+ * @author Simon McDuff
+ * @since 2.0
  */
-public class ReadOnlyException extends CDOException
+public class ObjectNotFoundException extends CDOException
 {
   private static final long serialVersionUID = 1L;
 
-  public ReadOnlyException()
+  public ObjectNotFoundException(CDOID id)
   {
-  }
-
-  public ReadOnlyException(String message)
-  {
-    super(message);
-  }
-
-  public ReadOnlyException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
-
-  public ReadOnlyException(Throwable cause)
-  {
-    super(cause);
+    super("Object " + id + " not found (temporary = " + id.isTemporary() + ").");
   }
 }

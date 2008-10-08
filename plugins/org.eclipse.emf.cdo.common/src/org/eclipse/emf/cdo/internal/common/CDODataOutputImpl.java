@@ -239,7 +239,15 @@ public abstract class CDODataOutputImpl implements CDODataOutput
 
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException
   {
-    ((CDORevisionImpl)revision).write(this, referenceChunk);
+    if (revision != null)
+    {
+      writeBoolean(true);
+      ((CDORevisionImpl)revision).write(this, referenceChunk);
+    }
+    else
+    {
+      writeBoolean(false);
+    }
   }
 
   public void writeCDOList(CDOList list, CDOFeature feature, int referenceChunk) throws IOException

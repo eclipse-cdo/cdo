@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
@@ -20,11 +21,17 @@ import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+
+import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import java.io.IOException;
 
 import junit.framework.Assert;
 
@@ -44,20 +51,10 @@ public class DetachTest extends AbstractCDOTest
     resource.getContents().add(c1);
 
     final URI uriC1 = EcoreUtil.getURI(c1);
-
     assertEquals(c1, transaction.getResourceSet().getEObject(uriC1, false));
 
     resource.getContents().remove(0); // remove object by index
-
-    try
-    {
-      transaction.getResourceSet().getEObject(uriC1, false);
-      fail("Object shouldn't be available anymore");
-    }
-    catch (Exception ex)
-    {
-
-    }
+    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
 
     transaction.commit();
   }
@@ -74,38 +71,37 @@ public class DetachTest extends AbstractCDOTest
     transaction.commit(); // (1)
 
     final URI uriC1 = EcoreUtil.getURI(c1);
-
+    final CDOID id = CDOUtil.getCDOObject(c1).cdoID();
     assertEquals(c1, transaction.getResourceSet().getEObject(uriC1, false));
 
     resource.getContents().remove(c1);
-
     assertTransient(c1);
 
-    // We should not be able to access that objects
     try
     {
-      transaction.getResourceSet().getEObject(uriC1, false);
-      fail("Cannot access objects detach");
+      transaction.getObject(id);
+      fail("ObjectNotFoundException expected");
     }
-    catch (Exception excp)
+    catch (ObjectNotFoundException expected)
     {
-
+      // SUCCESS
     }
 
+    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
     transaction.commit();
-
     assertTransient(c1);
 
     try
     {
-      transaction.getResourceSet().getEObject(uriC1, false);
-      fail("Cannot access objects detach");
+      transaction.getObject(id);
+      fail("ObjectNotFoundException expected");
     }
-    catch (Exception excp)
+    catch (ObjectNotFoundException expected)
     {
-
+      // SUCCESS
     }
 
+    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
   }
 
   public void testSavePointNewObjectDeletion() throws Exception
@@ -118,7 +114,7 @@ public class DetachTest extends AbstractCDOTest
     c1.setName("Test");
     resource.getContents().add(c1);
 
-    testSavePointObjectDeletion(transaction, resource);
+    savePointObjectDeletion(transaction, resource);
   }
 
   public void testSavePointCleanObjectDeletion() throws Exception
@@ -132,55 +128,45 @@ public class DetachTest extends AbstractCDOTest
     resource.getContents().add(c1);
 
     URI uriC1 = EcoreUtil.getURI(c1);
-
     assertEquals(c1, transaction.getResourceSet().getEObject(uriC1, false));
 
     transaction.commit();
-
-    testSavePointObjectDeletion(transaction, resource);
-
+    savePointObjectDeletion(transaction, resource);
   }
 
-  private void testSavePointObjectDeletion(CDOTransaction transaction, CDOResource resource)
+  private void savePointObjectDeletion(CDOTransaction transaction, CDOResource resource)
   {
     Company c1 = (Company)resource.getContents().get(0);
 
     URI uriC1 = EcoreUtil.getURI(c1);
-
+    CDOObject companyCDOObject = CDOUtil.getCDOObject(c1);
+    boolean isPersisted = !FSMUtil.isNew(companyCDOObject);
     c1.setName("SIMON");
 
     CDOSavepoint savepoint = transaction.setSavepoint();
-
     resource.getContents().remove(0); // remove object by index
+    assertTransient(c1);
 
     CDOSavepoint savepoint2 = transaction.setSavepoint();
-    try
-    {
-      transaction.getResourceSet().getEObject(uriC1, false);
-      fail("Object shouldn't be available anymore");
-    }
-    catch (Exception ex)
-    {
+    c1.setName("SIMON2");
+    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
 
-    }
     savepoint2.rollback();
-
-    assertEquals("SIMON", c1.getName());
-
-    try
-    {
-      transaction.getResourceSet().getEObject(uriC1, false);
-      fail("Object shouldn't be available anymore");
-    }
-    catch (Exception ex)
-    {
-
-    }
+    assertEquals("SIMON2", c1.getName());
+    assertTransient(c1);
+    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
 
     savepoint.rollback();
-
     assertEquals("SIMON", c1.getName());
     assertEquals(c1, transaction.getResourceSet().getEObject(uriC1, false));
+    if (isPersisted)
+    {
+      assertDirty(c1, transaction);
+    }
+    else
+    {
+      assertNew(c1, transaction);
+    }
 
     transaction.commit();
   }
@@ -204,20 +190,18 @@ public class DetachTest extends AbstractCDOTest
     CDOResource resource = transaction.getOrCreateResource("/my/resource");
 
     Company c1 = (Company)resource.getContents().get(0); // remove object by index
-
     assertEquals("Test", c1.getName());
 
     resource.getContents().remove(0);
-
     assertEquals("Test", c1.getName());
 
     transaction.commit();
-
     assertEquals("Test", c1.getName());
   }
 
   private void detachResource(ResourceSet rset, CDOResource resource, boolean commitBeforeDelete) throws Exception
   {
+    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
     Order order = getModel1Factory().createOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     Product1 product1 = getModel1Factory().createProduct1();
@@ -232,14 +216,14 @@ public class DetachTest extends AbstractCDOTest
     Assert.assertEquals(1, rset.getResources().size());
     if (commitBeforeDelete == true)
     {
-      ((CDOTransaction)resource.cdoView()).commit();
+      transaction.commit();
     }
+
+    InternalCDOObject orderInternal = FSMUtil.adapt(order, resource.cdoView());
+    CDOID orderID = orderInternal.cdoID();
+
     resource.delete(null);
-
     assertTransient(resource);
-
-    Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
-    Assert.assertEquals(0, rset.getResources().size());
     assertTransient(order);
     assertTransient(orderDetail);
     assertTransient(product1);
@@ -253,6 +237,9 @@ public class DetachTest extends AbstractCDOTest
     assertEquals(order, orderDetail.eContainer());
     assertEquals(resource, ((InternalEObject)order).eDirectResource());
     assertEquals(resource, ((InternalEObject)product1).eDirectResource());
+
+    assertEquals(true && commitBeforeDelete, transaction.getDetachedObjects().containsKey(orderID));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(orderID));
   }
 
   public void testDetachNewResource() throws Exception
@@ -268,6 +255,8 @@ public class DetachTest extends AbstractCDOTest
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
     detachResource(rset, resource, false);
+
+    transaction.commit();
   }
 
   public void testDetachPersistedResource() throws Exception
@@ -286,8 +275,9 @@ public class DetachTest extends AbstractCDOTest
     transaction.commit();
     CDOID resourceID = resource.cdoID();
     detachResource(rset, resource, false);
+    assertEquals(true, transaction.getDetachedObjects().containsKey(resourceID));
 
-    assertEquals(true, transaction.getDetachedObjects().contains(resourceID));
+    transaction.commit();
   }
 
   public void testDetachPersistedResourceWithPersistedData() throws Exception
@@ -306,8 +296,9 @@ public class DetachTest extends AbstractCDOTest
     transaction.commit();
     CDOID resourceID = resource.cdoID();
     detachResource(rset, resource, true);
+    assertEquals(true, transaction.getDetachedObjects().containsKey(resourceID));
 
-    assertEquals(true, transaction.getDetachedObjects().contains(resourceID));
+    transaction.commit();
   }
 
   public void testDetachEmptyNewResource() throws Exception
@@ -323,23 +314,44 @@ public class DetachTest extends AbstractCDOTest
 
     msg("Deleting resource");
     resource.delete(null);
+    assertTransient(resource);
   }
 
-  public void testDetachEmptyPersistedResource() throws Exception
+  public void testDetachEmptyPersistedResource() throws IOException, InterruptedException
   {
-    msg("Opening session");
     CDOSession session = openModel1Session();
 
-    msg("Opening transaction");
-    CDOTransaction transaction = session.openTransaction();
+    CDOTransaction transaction1 = session.openTransaction();
+    String resourcePath = "/test1";
+    CDOResource res = transaction1.createResource(resourcePath);
+    res.getContents().add(getModel1Factory().createCompany());
+    res.getContents().add(getModel1Factory().createCompany());
+    res.getContents().add(getModel1Factory().createCompany());
+    transaction1.commit();
 
-    msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
-    transaction.commit();
+    CDOTransaction transaction2 = session.openTransaction();
+    CDOResource res2 = transaction2.getResource(resourcePath);
 
-    msg("Deleting resource");
-    resource.delete(null);
-    transaction.commit();
+    ResourceSet rSet1 = res.getResourceSet();
+    final ResourceSet rSet2 = res2.getResourceSet();
+
+    res.delete(null);
+    assertTrue(transaction1.isDirty());
+    transaction1.commit();
+
+    boolean timedOut = new PollingTimeOuter(20, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return rSet2.getResources().size() == 0;
+      }
+    }.timedOut();
+
+    assertTrue(rSet1.getResources().size() == 0);
+    assertEquals(false, timedOut);
+    assertTransient(res);
+    assertInvalid(res2);
   }
 
   public void testDetachProxyResource() throws Exception
@@ -356,20 +368,17 @@ public class DetachTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    {
-      msg("Opening session");
-      CDOSession session = openModel1Session();
+    msg("Opening session");
+    CDOSession session = openModel1Session();
 
-      msg("Opening transaction");
-      CDOTransaction transaction = session.openTransaction();
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
 
-      msg("Creating resource");
-      CDOResource resource = transaction.getResource("/test1");
+    msg("Creating resource");
+    CDOResource resource = transaction.getResource("/test1");
 
-      msg("Deleting resource");
-      resource.delete(null);
-      transaction.commit();
-    }
+    msg("Deleting resource");
+    resource.delete(null);
+    transaction.commit();
   }
-
 }

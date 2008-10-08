@@ -47,6 +47,12 @@ public final class FSMUtil
     return state == CDOState.TRANSIENT || state == CDOState.PREPARED;
   }
 
+  public static boolean isInvalid(CDOObject object)
+  {
+    CDOState state = object.cdoState();
+    return state == CDOState.INVALID || state == CDOState.INVALID_CONFLICT;
+  }
+
   public static boolean isNew(CDOObject object)
   {
     CDOState state = object.cdoState();

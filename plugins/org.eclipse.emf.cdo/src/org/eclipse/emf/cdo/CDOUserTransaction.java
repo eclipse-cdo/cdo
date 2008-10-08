@@ -22,11 +22,7 @@ public interface CDOUserTransaction
 {
   public void commit() throws TransactionException;
 
-  public void rollback(boolean remote);
-
   public void rollback();
-
-  public void rollback(CDOSavepoint savepoint, boolean remote);
 
   public void rollback(CDOSavepoint savepoint);
 

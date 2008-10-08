@@ -23,7 +23,10 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.InvalidObjectException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
@@ -76,6 +79,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.TRANSIENT, CDOEvent.READ, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.WRITE, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.TRANSIENT, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.RELOAD, IGNORE);
     init(CDOState.TRANSIENT, CDOEvent.COMMIT, FAIL);
     init(CDOState.TRANSIENT, CDOEvent.ROLLBACK, FAIL);
@@ -86,6 +90,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PREPARED, CDOEvent.READ, IGNORE);
     init(CDOState.PREPARED, CDOEvent.WRITE, FAIL);
     init(CDOState.PREPARED, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.PREPARED, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.PREPARED, CDOEvent.RELOAD, FAIL);
     init(CDOState.PREPARED, CDOEvent.COMMIT, FAIL);
     init(CDOState.PREPARED, CDOEvent.ROLLBACK, FAIL);
@@ -96,6 +101,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, new WriteNewTransition());
     init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.NEW, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.NEW, CDOEvent.RELOAD, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition(false));
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
@@ -106,6 +112,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CLEAN, CDOEvent.READ, IGNORE);
     init(CDOState.CLEAN, CDOEvent.WRITE, new WriteTransition());
     init(CDOState.CLEAN, CDOEvent.INVALIDATE, new InvalidateTransition());
+    init(CDOState.CLEAN, CDOEvent.DETACH_REMOTE, DetachRemoteTransition.INSTANCE);
     init(CDOState.CLEAN, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.CLEAN, CDOEvent.COMMIT, FAIL);
     init(CDOState.CLEAN, CDOEvent.ROLLBACK, FAIL);
@@ -115,12 +122,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, new RewriteTransition());
-    init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
+    init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition(CDOState.CONFLICT));
+    init(CDOState.DIRTY, CDOEvent.DETACH_REMOTE, new ConflictTransition(CDOState.INVALID_CONFLICT));
     init(CDOState.DIRTY, CDOEvent.RELOAD, new ReloadTransition());
-    // TODO Simon: Waiting for bugs https://bugs.eclipse.org/bugs/show_bug.cgi?id=248771
-    // init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(true));
-    init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(false));
-    init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
+    init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(true));
+    init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition(CDOState.PROXY));
 
     init(CDOState.PROXY, CDOEvent.PREPARE, FAIL);
     init(CDOState.PROXY, CDOEvent.ATTACH, FAIL);
@@ -128,6 +134,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.PROXY, CDOEvent.READ, new LoadTransition(false));
     init(CDOState.PROXY, CDOEvent.WRITE, new LoadTransition(true));
     init(CDOState.PROXY, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.PROXY, CDOEvent.DETACH_REMOTE, DetachRemoteTransition.INSTANCE);
     init(CDOState.PROXY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.PROXY, CDOEvent.COMMIT, FAIL);
     init(CDOState.PROXY, CDOEvent.ROLLBACK, FAIL);
@@ -138,9 +145,32 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.CONFLICT, CDOEvent.READ, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.WRITE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.CONFLICT, CDOEvent.DETACH_REMOTE, IGNORE);
     init(CDOState.CONFLICT, CDOEvent.RELOAD, FAIL);
     init(CDOState.CONFLICT, CDOEvent.COMMIT, IGNORE);
-    init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition());
+    init(CDOState.CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition(CDOState.PROXY));
+
+    init(CDOState.INVALID, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.DETACH, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.READ, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.WRITE, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.INVALID, CDOEvent.DETACH_REMOTE, IGNORE);
+    init(CDOState.INVALID, CDOEvent.RELOAD, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID, CDOEvent.ROLLBACK, InvalidTransition.INSTANCE);
+
+    init(CDOState.INVALID_CONFLICT, CDOEvent.PREPARE, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.ATTACH, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.DETACH, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.READ, IGNORE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.WRITE, IGNORE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.INVALIDATE, IGNORE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.DETACH_REMOTE, IGNORE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.RELOAD, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.COMMIT, InvalidTransition.INSTANCE);
+    init(CDOState.INVALID_CONFLICT, CDOEvent.ROLLBACK, new RollbackTransition(CDOState.INVALID));
   }
 
   /**
@@ -216,8 +246,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       transaction.detachObject(content);
       content.cdoInternalSetState(CDOState.TRANSIENT);
 
-      // Do not unset revision if a rollback occured. We will need the value.
       content.cdoInternalSetView(null);
+      content.cdoInternalSetID(null);
+      content.cdoInternalSetRevision(null);
     }
   }
 
@@ -319,14 +350,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @since 2.0
    */
-  public void invalidate(InternalCDOObject object)
+  public void detachRemote(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
-      trace(object, CDOEvent.INVALIDATE);
+      trace(object, CDOEvent.DETACH_REMOTE);
     }
 
-    process(object, CDOEvent.INVALIDATE, null);
+    process(object, CDOEvent.DETACH_REMOTE, null);
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
@@ -339,14 +370,17 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.COMMIT, result);
   }
 
-  public void rollback(InternalCDOObject object, boolean remote)
+  /**
+   * @since 2.0
+   */
+  public void rollback(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
       trace(object, CDOEvent.ROLLBACK);
     }
 
-    process(object, CDOEvent.ROLLBACK, remote);
+    process(object, CDOEvent.ROLLBACK, null);
   }
 
   @Override
@@ -534,8 +568,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.setUntransactional();
       revision.setCreated(data.getTimeStamp());
 
-      if (useDeltas)
+      if (useDeltas && false)
       {
+        // Cannot use that yet, since we need to change adjust index for list.
+        // TODO Simon Implement a way to adjust indexes as fast as possible.
         RevisionAdjuster revisionAdjuster = new RevisionAdjuster(data.getReferenceAdjuster());
         CDORevisionDelta delta = data.getCommitContext().getRevisionDeltas().get(oldID);
         revisionAdjuster.adjustRevision(revision, delta);
@@ -556,22 +592,18 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class RollbackTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Boolean>
+  private final class RollbackTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Boolean remote)
+    private CDOState state;
+
+    public RollbackTransition(CDOState newState)
     {
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      state = newState;
+    }
 
-      // Adjust object
-      CDOID id = object.cdoID();
-      CDORevision transactionalRevision = object.cdoRevision();
-      int version = transactionalRevision.getVersion();
-
-      CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
-      InternalCDORevision previousRevision = revisionManager.getRevisionByVersion(id, 0, version - 1);
-      object.cdoInternalSetRevision(previousRevision);
-
-      changeState(object, remote ? CDOState.PROXY : CDOState.CLEAN);
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    {
+      changeState(object, this.state);
     }
   }
 
@@ -632,28 +664,44 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
+   * @author Simon McDuff
+   */
+  static private class DetachRemoteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  {
+    static DetachRemoteTransition INSTANCE = new DetachRemoteTransition();
+
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    {
+      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+
+      if (object instanceof CDOResourceImpl)
+      {
+        view.getResourceSet().getResources().remove(object);
+      }
+
+      view.deregisterObject(object);
+
+      object.cdoInternalSetState(CDOState.INVALID);
+      // Need information of the objects, do not set them to NULL
+      // (object).cdoInternalSetID(null);
+      // (object).cdoInternalSetRevision(null);
+      // (object).cdoInternalSetView(null);
+
+    }
+  }
+
+  /**
    * @author Eike Stepper
    */
   private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
     {
-      if (timeStamp instanceof Long)
+      if (timeStamp != CDORevision.UNSPECIFIED_DATE)
       {
-        if (timeStamp != CDORevision.UNSPECIFIED_DATE)
-        {
-          reviseObject(object, timeStamp);
-        }
-
-        changeState(object, CDOState.PROXY);
+        reviseObject(object, timeStamp);
       }
-      else
-      {
-        CDOViewImpl view = (CDOViewImpl)object.cdoView();
-        object.cdoInternalPostDetach();
-        object.cdoInternalSetState(CDOState.TRANSIENT);
-        view.deregisterObject(object);
-      }
+      changeState(object, CDOState.PROXY);
     }
 
     protected void reviseObject(InternalCDOObject object, long timeStamp)
@@ -668,14 +716,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class ConflictTransition extends InvalidateTransition
   {
+    private CDOState state;
+
+    public ConflictTransition(CDOState newState)
+    {
+      state = newState;
+    }
+
     @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
     {
-      reviseObject(object, timeStamp);
+      // TODO Eike: to we really need to revise the object since we put them at PROXY ?
+      // reviseObject(object, timeStamp);
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
       transaction.setConflict(object);
-      changeState(object, CDOState.CONFLICT);
+      changeState(object, this.state);
     }
   }
 
@@ -696,6 +752,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       InternalCDORevision revision = view.getRevision(id, true);
+      CDOUtil.validate(object, revision);
       object.cdoInternalSetRevision(revision);
       changeState(object, CDOState.CLEAN);
       object.cdoInternalPostLoad();
@@ -706,6 +763,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
     }
   }
+
+  /**
+   * @author Simon McDuff
+   */
+  private static final class InvalidTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  {
+    public static final InvalidTransition INSTANCE = new InvalidTransition();
+
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    {
+      throw new InvalidObjectException(object.cdoID());
+    }
+  }
 }
 
 /**
@@ -713,5 +783,5 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
  */
 enum CDOEvent
 {
-  PREPARE, ATTACH, DETACH, READ, WRITE, INVALIDATE, RELOAD, COMMIT, ROLLBACK
+  PREPARE, ATTACH, DETACH, READ, WRITE, INVALIDATE, DETACH_REMOTE, RELOAD, COMMIT, ROLLBACK
 }

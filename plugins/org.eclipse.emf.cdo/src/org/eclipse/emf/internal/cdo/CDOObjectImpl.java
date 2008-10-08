@@ -128,11 +128,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalSetID(CDOID id)
   {
-    if (id == null)
-    {
-      throw new IllegalArgumentException("id == null");
-    }
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting ID: {0}", id);
@@ -204,7 +199,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalPostLoad()
   {
-    // Do nothing
+    if (eSettings != null)
+    {
+      // Make sure transient feature are kept but persisted value are not cached.
+      EClass eClass = eClass();
+      for (int i = 0; i < eClass.getFeatureCount(); i++)
+      {
+        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        if (!eFeature.isTransient())
+        {
+          eSettings[i] = null;
+        }
+      }
+    }
   }
 
   public void cdoInternalPostAttach()

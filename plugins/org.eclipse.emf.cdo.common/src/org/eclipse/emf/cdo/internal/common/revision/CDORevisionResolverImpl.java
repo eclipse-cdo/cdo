@@ -92,7 +92,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
         }
 
         revision = loadRevision(id, referenceChunk);
-        addCachedRevision(revision);
+        addCachedRevisionIfNotNull(revision);
       }
     }
     else
@@ -101,7 +101,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       revision = verifyRevision(oldRevision, referenceChunk);
       if (revision != oldRevision)
       {
-        addCachedRevision(revision);
+        addCachedRevisionIfNotNull(revision);
       }
     }
 
@@ -126,7 +126,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
         }
 
         revision = loadRevisionByTime(id, referenceChunk, timeStamp);
-        addCachedRevision(revision);
+        addCachedRevisionIfNotNull(revision);
       }
     }
     else
@@ -134,7 +134,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       InternalCDORevision verified = verifyRevision(revision, referenceChunk);
       if (revision != verified)
       {
-        addCachedRevision(verified);
+        addCachedRevisionIfNotNull(verified);
         revision = verified;
       }
     }
@@ -160,7 +160,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
         }
 
         revision = loadRevisionByVersion(id, referenceChunk, version);
-        addCachedRevision(revision);
+        addCachedRevisionIfNotNull(revision);
       }
     }
 
@@ -241,14 +241,22 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return cache.getRevisions();
   }
 
+  private void addCachedRevisionIfNotNull(InternalCDORevision revision)
+  {
+    if (revision != null)
+    {
+      cache.addRevision(revision);
+    }
+  }
+
   public boolean addCachedRevision(InternalCDORevision revision)
   {
-    if (revision == null)
+    if (revision != null)
     {
-      throw new IllegalArgumentException("revision == null");
+      return cache.addRevision(revision);
     }
 
-    return cache.addRevision(revision);
+    throw new IllegalArgumentException("revision == null");
   }
 
   public void removeCachedRevision(CDOID id, int version)
@@ -314,7 +322,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       {
         InternalCDORevision missingRevision = it.next();
         revisions.set(i, missingRevision);
-        addCachedRevision(missingRevision);
+        addCachedRevisionIfNotNull(missingRevision);
       }
     }
   }

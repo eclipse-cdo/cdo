@@ -79,6 +79,18 @@ public abstract class AbstractCDOTest extends ConfigTest
     if (object != null)
     {
       assertEquals(true, FSMUtil.isTransient(object));
+      assertNull(object.cdoID());
+      assertNull(object.cdoRevision());
+      assertNull(object.cdoView());
+    }
+  }
+
+  protected static void assertInvalid(EObject eObject)
+  {
+    CDOObject object = CDOUtil.getCDOObject(eObject);
+    if (object != null)
+    {
+      assertEquals(true, FSMUtil.isInvalid(object));
     }
   }
 

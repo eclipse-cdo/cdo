@@ -108,7 +108,7 @@ public class RollbackTest extends AbstractCDOTest
       CDOObject cdoObjectCategory2 = CDOUtil.getCDOObject(category2);
       testObject = cdoObjectCategory2.cdoRevision().getData().get(category_Products2, 0);
       assertEquals(product2, testObject);
-      transaction2.rollback(true);
+      transaction2.rollback();
     }
 
     assertEquals(false, transaction2.isDirty());

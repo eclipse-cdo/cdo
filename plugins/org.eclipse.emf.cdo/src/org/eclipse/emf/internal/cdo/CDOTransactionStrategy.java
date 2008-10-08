@@ -26,7 +26,7 @@ public interface CDOTransactionStrategy
 
   public void commit(InternalCDOTransaction transaction) throws Exception;
 
-  public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint, boolean remote);
+  public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint);
 
   public CDOSavepoint setSavepoint(InternalCDOTransaction transaction);
 }

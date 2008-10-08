@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.
@@ -72,5 +71,5 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   /**
    * @since 2.0
    */
-  public Set<CDOID> getDetachedObjects();
+  public Map<CDOID, CDOObject> getDetachedObjects();
 }

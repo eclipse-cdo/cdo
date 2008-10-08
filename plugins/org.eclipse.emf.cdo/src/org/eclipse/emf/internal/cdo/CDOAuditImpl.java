@@ -70,8 +70,8 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
         }
         else
         {
-          // --> TANSIENT
-          CDOStateMachine.INSTANCE.invalidate(invalidObject);
+          // --> DETACHED
+          CDOStateMachine.INSTANCE.detachRemote(invalidObject);
         }
       }
     }

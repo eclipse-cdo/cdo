@@ -70,9 +70,9 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
     commitContext.postCommit(result);
   }
 
-  public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint, boolean remote)
+  public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint)
   {
-    transaction.handleRollback(savepoint, remote);
+    transaction.handleRollback(savepoint);
   }
 
   public CDOSavepoint setSavepoint(InternalCDOTransaction transaction)

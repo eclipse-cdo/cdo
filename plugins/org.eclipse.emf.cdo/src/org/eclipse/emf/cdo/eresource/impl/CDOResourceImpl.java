@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -339,19 +340,22 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
 
     CDOID cdoID = CDOIDUtil.read(uriFragment, cdoView().getSession().getPackageManager().getCDOIDObjectFactory());
 
-    if (cdoID.isNull())
+    if (cdoID.isNull() || cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
     {
       return null;
     }
 
-    if (cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
-    {
-      throw new IllegalStateException("Temporary object : " + uriFragment + " is not available anymore.");
-    }
-
     if (cdoID.isObject())
     {
-      return cdoView().getObject(cdoID, true);
+      try
+      {
+        return cdoView().getObject(cdoID, true);
+      }
+      catch (ObjectNotFoundException ex)
+      {
+        // Do nothing
+        // getEObject return null when the object cannot be resolved.
+      }
     }
 
     // If it doesn`t match to anything we return null like ResourceImpl.getEObject

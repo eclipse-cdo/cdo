@@ -12,6 +12,7 @@
 
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -21,11 +22,10 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.revision.CDOReferenceProxy;
-
-import java.util.List;
 
 /**
  * @author Simon McDuff
@@ -52,6 +52,7 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
   {
     // Delta value must have been adjusted before!
     revision.setContainerID(referenceAdjuster.adjustReference(revision.getContainerID()));
+    revision.setResourceID((CDOID)referenceAdjuster.adjustReference(revision.getResourceID()));
   }
 
   @Override
@@ -73,20 +74,23 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public void visit(CDOListFeatureDelta deltas)
   {
     CDOFeature feature = deltas.getFeature();
-    List<Object> list = (List<Object>)revision.getValue(feature);
-    int[] indices = ((CDOListFeatureDeltaImpl)deltas).reconstructAddedIndices();
-    for (int i = 1; i <= indices[0]; i++)
+    InternalCDOList list = (InternalCDOList)revision.getValue(feature);
+
+    if (feature.isReference())
     {
-      int index = indices[i];
-      Object value = list.get(index);
-      if (value != null && feature.isReference() && !(value instanceof CDOReferenceProxy))
+      int[] indices = ((CDOListFeatureDeltaImpl)deltas).reconstructAddedIndices();
+      for (int i = 1; i <= indices[0]; i++)
       {
-        value = referenceAdjuster.adjustReference(value);
-        list.set(index, value);
+        int index = indices[i];
+        Object value = list.get(index);
+        if (value != null && !(value instanceof CDOReferenceProxy))
+        {
+          value = referenceAdjuster.adjustReference(value);
+          list.set(index, value);
+        }
       }
     }
   }

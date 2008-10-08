@@ -909,13 +909,7 @@ public class InitialTest extends AbstractCDOTest
 
     assertEquals(supplier, CDOUtil.getEObject(supplierFromURI));
 
-    try
-    {
-      EObject supplierAfterCommit2 = transaction.getResourceSet().getEObject(supplierTempURI, true);
-      assertEquals(null, supplierAfterCommit2);
-    }
-    catch (IllegalStateException expected)
-    {
-    }
+    EObject supplierAfterCommit2 = transaction.getResourceSet().getEObject(supplierTempURI, true);
+    assertEquals(null, supplierAfterCommit2);
   }
 }

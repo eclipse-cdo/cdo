@@ -92,7 +92,6 @@ import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -1588,16 +1587,13 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                 public void run()
                 {
                   CDOTransaction transaction = (CDOTransaction)view;
-                  Dialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), "Transaction Error",
-                      exception.getMessage(), transaction);
-                  switch (dialog.open())
+                  String title = "Transaction Error";
+                  String message = exception.getMessage();
+                  RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
+                      message, transaction);
+                  if (dialog.open() == RollbackTransactionDialog.OK)
                   {
-                  case RollbackTransactionDialog.REMOTE:
-                    transaction.rollback(true);
-                    break;
-                  case RollbackTransactionDialog.LOCAL:
-                    transaction.rollback(false);
-                    break;
+                    transaction.rollback();
                   }
                 }
               });

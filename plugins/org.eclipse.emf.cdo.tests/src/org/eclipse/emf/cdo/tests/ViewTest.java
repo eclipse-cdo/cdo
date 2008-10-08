@@ -49,6 +49,14 @@ public class ViewTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testIsObjectRegisteredWithNull() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOView view = session.openView();
+    assertFalse(view.isObjectRegistered(null));
+    session.close();
+  }
+
   public void testGetOrCreateResource() throws Exception
   {
     String id;

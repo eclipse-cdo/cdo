@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -30,16 +29,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class RollbackTransactionDialog extends TitleAreaDialog
 {
-  // public static final String TITLE = "Rollback Transaction";
-
-  public static final int REMOTE = CANCEL + 1;
-
-  public static final int LOCAL = CANCEL + 2;
-
-  private static final int REMOTE_ID = IDialogConstants.CLIENT_ID + REMOTE;
-
-  private static final int LOCAL_ID = IDialogConstants.CLIENT_ID + LOCAL;
-
   private IWorkbenchPage page;
 
   private String title;
@@ -87,70 +76,32 @@ public class RollbackTransactionDialog extends TitleAreaDialog
     return composite;
   }
 
-  @Override
-  protected void createButtonsForButtonBar(Composite parent)
-  {
-    createButton(parent, REMOTE_ID, "Remote Rollback", true);
-    createButton(parent, LOCAL_ID, "Local Rollback", false);
-    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-  }
-
-  @Override
-  protected void buttonPressed(int buttonId)
-  {
-    if (buttonId == REMOTE_ID)
-    {
-      setReturnCode(REMOTE);
-      close();
-    }
-    else if (buttonId == LOCAL_ID)
-    {
-      setReturnCode(LOCAL);
-      close();
-    }
-    else
-    {
-      super.buttonPressed(buttonId);
-    }
-  }
-
   protected String formatMessage()
   {
-    int newObjects = transaction.getNewObjects().size();
-    int dirtyObjects = transaction.getDirtyObjects().size();
-    int count = (newObjects > 0 ? 1 : 0) + (dirtyObjects > 0 ? 1 : 0);
-
     StringBuilder builder = new StringBuilder();
-    builder.append("This transaction contains ");
+    builder.append("This transaction contains:\n");
 
-    if (newObjects > 0)
-    {
-      builder.append(newObjects);
-      builder.append(" new object");
-      if (newObjects > 1)
-      {
-        builder.append("s");
-      }
-    }
+    append(builder, transaction.getNewResources().size(), "new resource");
+    append(builder, transaction.getNewObjects().size(), "new object");
+    append(builder, transaction.getDirtyObjects().size(), "dirty object");
+    append(builder, transaction.getDetachedObjects().size(), "detached object");
 
-    if (dirtyObjects > 0)
-    {
-      if (count > 0)
-      {
-        builder.append(" and ");
-      }
-
-      builder.append(dirtyObjects);
-      builder.append(" dirty object");
-      if (dirtyObjects > 1)
-      {
-        builder.append("s");
-      }
-    }
-
-    builder.append(".\n\nBe careful, rolling back to local state can result\n"
-        + "in visible state that is different from the remote state!");
     builder.append("\n\nAre you sure to rollback this transaction?");
     return builder.toString();
+  }
+
+  private void append(StringBuilder builder, int count, String label)
+  {
+    if (count > 0)
+    {
+      builder.append("\n- ");
+      builder.append(count);
+      builder.append(" ");
+      builder.append(label);
+      if (count > 1)
+      {
+        builder.append("s");
+      }
+    }
   }
 }

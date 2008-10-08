@@ -22,12 +22,11 @@ public interface InternalCDOTransaction extends CDOTransaction, CDOIDProvider
 {
   public CDOCommitContext createCommitContext();
 
-  public void handleRollback(CDOSavepoint savepoint, boolean remote);
+  public void handleRollback(CDOSavepoint savepoint);
 
   public CDOSavepoint handleSetSavepoint();
 
   public CDOTransactionStrategy getTransactionStrategy();
 
   public void setTransactionStrategy(CDOTransactionStrategy transactionStrategy);
-
 }

@@ -15,5 +15,20 @@ package org.eclipse.emf.cdo;
  */
 public enum CDOState
 {
-  TRANSIENT, NEW, CLEAN, DIRTY, PROXY, CONFLICT, PREPARED
+  TRANSIENT, NEW, CLEAN, DIRTY, PROXY, CONFLICT,
+
+  /**
+   * @since 2.0
+   */
+  INVALID,
+
+  /**
+   * @since 2.0
+   */
+  INVALID_CONFLICT,
+
+  /**
+   * An intermediary state for internal use only. This state marks the first of two phases during an attach operation.
+   */
+  PREPARED
 }

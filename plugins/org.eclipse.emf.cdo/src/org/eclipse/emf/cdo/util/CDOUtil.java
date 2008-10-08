@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.CDOXATransaction;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.emf.internal.cdo.CDOCollectionLoadingPolicyImpl;
@@ -312,5 +313,32 @@ public final class CDOUtil
   public static CDOObject getCDOObject(EStringToStringMapEntryImpl object, CDOView view)
   {
     return FSMUtil.adaptMeta(object, view);
+  }
+
+  /**
+   * TODO Simon: Do you see any value in having this method public?
+   * 
+   * @since 2.0
+   */
+  public static void validate(CDOID id, CDORevision revision)
+  {
+    if (revision == null)
+    {
+      throw new ObjectNotFoundException(id);
+    }
+  }
+
+  /**
+   * TODO Simon: Do you see any value in having this method public?
+   * 
+   * @since 2.0
+   */
+  public static void validate(CDOObject object, CDORevision revision)
+  {
+    if (revision == null)
+    {
+      CDOStateMachine.INSTANCE.detachRemote((InternalCDOObject)object);
+      throw new InvalidObjectException(object.cdoID());
+    }
   }
 }

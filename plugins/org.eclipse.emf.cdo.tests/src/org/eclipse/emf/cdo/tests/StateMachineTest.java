@@ -98,11 +98,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       detach(supplier);
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -130,11 +130,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       invalidate(supplier, TIMESTAMP);
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -155,11 +155,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       commit(supplier, new CommitTransactionResult(null, 12345678L));
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -172,23 +172,23 @@ public class StateMachineTest extends AbstractCDOTest
     // Rollback locally
     try
     {
-      rollback(supplier, false);
-      fail("Expected IllegalStateException");
+      rollback(supplier);
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
 
     // Rollback remotely
     try
     {
-      rollback(supplier, true);
-      fail("Expected IllegalStateException");
+      rollback(supplier);
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -219,11 +219,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       detach(supplier);
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -245,11 +245,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       write(supplier);
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -262,11 +262,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       invalidate(supplier, TIMESTAMP);
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -279,11 +279,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       testReload(CDOUtil.getCDOObject(supplier));
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -296,11 +296,11 @@ public class StateMachineTest extends AbstractCDOTest
     try
     {
       commit(supplier, new CommitTransactionResult(null, TIMESTAMP));
-      fail("Expected IllegalStateException");
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -312,12 +312,12 @@ public class StateMachineTest extends AbstractCDOTest
 
     try
     {
-      rollback(supplier, false);
-      fail("Expected IllegalStateException");
+      rollback(supplier);
+      fail("IllegalStateException expected");
     }
-    catch (IllegalStateException ex)
+    catch (IllegalStateException expected)
     {
-      assertFailure(ex);
+      assertFailure(expected);
     }
   }
 
@@ -645,12 +645,12 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  private static void rollback(EObject object, boolean remote)
+  private static void rollback(EObject object)
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     if (cdoObject != null)
     {
-      CDOStateMachine.INSTANCE.rollback((InternalCDOObject)cdoObject, remote);
+      CDOStateMachine.INSTANCE.rollback((InternalCDOObject)cdoObject);
     }
   }
 

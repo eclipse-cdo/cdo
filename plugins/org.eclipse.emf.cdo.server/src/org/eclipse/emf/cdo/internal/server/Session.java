@@ -239,7 +239,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
     try
     {
-      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || detachedObjects.isEmpty())
+      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty())
       {
         new CommitNotificationRequest(protocol.getChannel(), timeStamp, dirtyIDs, detachedObjects, newDeltas).send();
       }

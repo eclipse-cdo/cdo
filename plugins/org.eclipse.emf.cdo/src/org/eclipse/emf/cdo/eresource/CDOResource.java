@@ -137,7 +137,8 @@ public interface CDOResource extends EresourceObject
   void setModified(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Loaded</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Loaded</b></em>' attribute. The default value is <code>"true"</code>. <!--
+   * begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Loaded</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
@@ -146,7 +147,7 @@ public interface CDOResource extends EresourceObject
    * @return the value of the '<em>Loaded</em>' attribute.
    * @see #setLoaded(boolean)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Loaded()
-   * @model transient="true"
+   * @model default="true" transient="true"
    * @generated
    */
   boolean isLoaded();

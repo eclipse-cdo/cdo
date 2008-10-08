@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -390,14 +391,15 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void save(Map<?, ?> options) throws IOException
   {
-    if (cdoView() instanceof CDOTransaction)
+    CDOView view = cdoView();
+    if (view instanceof CDOTransaction)
     {
-      CDOTransaction transaction = (CDOTransaction)cdoView();
+      CDOTransaction transaction = (CDOTransaction)view;
       transaction.commit();
     }
     else
     {
-      throw new IOException("CDO view is read only: " + cdoView());
+      throw new IOException("CDO view is read only: " + view);
     }
   }
 

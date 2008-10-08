@@ -575,12 +575,20 @@ public interface Model1Package extends EPackage
   int PRODUCT1__VAT = 2;
 
   /**
+   * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT1__DESCRIPTION = 3;
+
+  /**
    * The number of structural features of the '<em>Product1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int PRODUCT1_FEATURE_COUNT = 3;
+  int PRODUCT1_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl <em>Order Address</em>}'
@@ -901,6 +909,17 @@ public interface Model1Package extends EPackage
    * @generated
    */
   EAttribute getProduct1_Vat();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product1#getDescription
+   * <em>Description</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Description</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Product1#getDescription()
+   * @see #getProduct1()
+   * @generated
+   */
+  EAttribute getProduct1_Description();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Company <em>Company</em>}'. <!--
@@ -1284,6 +1303,14 @@ public interface Model1Package extends EPackage
      * @generated
      */
     EAttribute PRODUCT1__VAT = eINSTANCE.getProduct1_Vat();
+
+    /**
+     * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PRODUCT1__DESCRIPTION = eINSTANCE.getProduct1_Description();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl <em>Company</em>}'

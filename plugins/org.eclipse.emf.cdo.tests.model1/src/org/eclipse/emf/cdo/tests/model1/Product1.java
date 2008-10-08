@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Product1.java,v 1.2 2008-09-18 12:57:08 estepper Exp $
+ * $Id: Product1.java,v 1.3 2008-10-08 00:05:35 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model1;
 
@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Product1#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Product1#getOrderDetails <em>Order Details</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.Product1#getVat <em>Vat</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.Product1#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  * 
@@ -98,5 +99,32 @@ public interface Product1 extends EObject
    * @generated
    */
   void setVat(VAT value);
+
+  /**
+   * Returns the value of the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Description</em>' attribute isn't clear, there really should be more of a description
+   * here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Description</em>' attribute.
+   * @see #setDescription(String)
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1_Description()
+   * @model transient="true"
+   * @generated
+   */
+  String getDescription();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Product1#getDescription <em>Description</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Description</em>' attribute.
+   * @see #getDescription()
+   * @generated
+   */
+  void setDescription(String value);
 
 } // Product

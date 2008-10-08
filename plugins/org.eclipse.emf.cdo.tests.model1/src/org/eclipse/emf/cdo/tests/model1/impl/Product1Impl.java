@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Product1Impl.java,v 1.2 2008-09-18 12:57:07 estepper Exp $
+ * $Id: Product1Impl.java,v 1.3 2008-10-08 00:05:35 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getOrderDetails <em>Order Details</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getVat <em>Vat</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  * 
@@ -112,6 +113,26 @@ public class Product1Impl extends CDOObjectImpl implements Product1
   public void setVat(VAT newVat)
   {
     eSet(Model1Package.Literals.PRODUCT1__VAT, newVat);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String getDescription()
+  {
+    return (String)eGet(Model1Package.Literals.PRODUCT1__DESCRIPTION, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setDescription(String newDescription)
+  {
+    eSet(Model1Package.Literals.PRODUCT1__DESCRIPTION, newDescription);
   }
 
 } // ProductImpl

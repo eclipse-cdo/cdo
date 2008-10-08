@@ -13,10 +13,12 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -575,6 +577,59 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Verifying name");
     assertEquals("Stepper", s.getName());
+  }
+
+  public void testReadTransientValue() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    {
+      disableConsole();
+      msg("Opening transaction");
+      CDOTransaction transaction = session.openTransaction();
+
+      msg("Creating resource");
+      CDOResource resource = transaction.createResource("/test1");
+
+      msg("Creating supplier");
+      Product1 product = getModel1Factory().createProduct1();
+
+      msg("Setting name");
+      product.setDescription("DESCRIPTION");
+      product.setName("McDuff");
+
+      msg("Adding supplier");
+      resource.getContents().add(product);
+
+      assertEquals("DESCRIPTION", product.getDescription());
+
+      msg("Committing");
+      transaction.commit();
+      enableConsole();
+    }
+
+    msg("Opening transaction");
+    CDOView view = session.openView();
+
+    msg("Getting resource");
+    CDOResource resource = view.getResource("/test1");
+
+    msg("Getting contents");
+    EList<EObject> contents = resource.getContents();
+
+    msg("Getting supplier");
+    Product1 s = (Product1)contents.get(0);
+    assertNotNull(s);
+
+    msg("Verifying name");
+    assertEquals("McDuff", s.getName());
+
+    assertNull(s.getDescription());
+
+    s.setDescription("HELLO");
+
+    assertEquals("HELLO", s.getDescription());
   }
 
   public void testLoadResource() throws Exception

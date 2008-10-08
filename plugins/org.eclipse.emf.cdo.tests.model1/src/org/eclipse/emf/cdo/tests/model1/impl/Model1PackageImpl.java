@@ -442,6 +442,16 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
+  public EAttribute getProduct1_Description()
+  {
+    return (EAttribute)product1EClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getCompany()
   {
     return companyEClass;
@@ -643,6 +653,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     createEAttribute(product1EClass, PRODUCT1__NAME);
     createEReference(product1EClass, PRODUCT1__ORDER_DETAILS);
     createEAttribute(product1EClass, PRODUCT1__VAT);
+    createEAttribute(product1EClass, PRODUCT1__DESCRIPTION);
 
     orderAddressEClass = createEClass(ORDER_ADDRESS);
     createEAttribute(orderAddressEClass, ORDER_ADDRESS__TEST_ATTRIBUTE);
@@ -779,6 +790,8 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProduct1_Vat(), getVAT(), "vat", "vat15", 0, 1, Product1.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProduct1_Description(), ecorePackage.getEString(), "description", null, 0, 1, Product1.class,
+        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orderAddressEClass, OrderAddress.class, "OrderAddress", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

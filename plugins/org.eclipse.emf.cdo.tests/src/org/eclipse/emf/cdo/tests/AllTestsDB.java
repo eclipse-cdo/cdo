@@ -20,7 +20,7 @@ public class AllTestsDB extends AllTestsAllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDB().getTestSuite("CDO Tests (DB Horizontal Hsql)");
+    return new AllTestsDB().getTestSuite("CDO Tests (DB Hsql Horizontal)");
   }
 
   @Override

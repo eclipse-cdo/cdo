@@ -51,6 +51,9 @@ public class Pair<T1, T2>
     this.element2 = element2;
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public boolean equals(Object obj)
   {
@@ -68,12 +71,18 @@ public class Pair<T1, T2>
     return false;
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public int hashCode()
   {
     return ObjectUtil.hashCode(element1) ^ ObjectUtil.hashCode(element2);
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public String toString()
   {

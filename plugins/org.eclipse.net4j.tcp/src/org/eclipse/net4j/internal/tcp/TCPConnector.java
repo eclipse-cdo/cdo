@@ -347,11 +347,16 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected void doDeactivate() throws Exception
   {
-    selectionKey.cancel();
+    if (selectionKey != null)
+    {
+      selectionKey.cancel();
+      selectionKey = null;
+    }
 
     LifecycleUtil.deactivate(controlChannel);
-    IOUtil.closeSilent(socketChannel);
     controlChannel = null;
+
+    IOUtil.closeSilent(socketChannel);
     socketChannel = null;
     super.doDeactivate();
   }

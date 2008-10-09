@@ -572,7 +572,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     }
 
     InternalCDORevision revision = getRevision(id, true);
-    CDOUtil.validate(id, revision);
+    FSMUtil.validate(id, revision);
 
     CDOClass cdoClass = revision.getCDOClass();
     InternalCDOObject object = newInstance(cdoClass);

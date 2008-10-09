@@ -35,11 +35,11 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
@@ -308,7 +308,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (isDetached(id))
     {
-      CDOUtil.validate(id, null);
+      FSMUtil.validate(id, null);
     }
 
     return super.getObject(id, loadOnDemand);

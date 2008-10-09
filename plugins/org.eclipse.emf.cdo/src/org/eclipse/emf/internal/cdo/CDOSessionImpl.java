@@ -50,6 +50,7 @@ import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeResult;
 import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -814,7 +815,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   protected void attach(ResourceSet resourceSet, CDOViewImpl view)
   {
-    CDOViewSet viewSet = CDOUtil.prepareResourceSet(resourceSet);
+    CDOViewSet viewSet = FSMUtil.prepareResourceSet(resourceSet);
     synchronized (views)
     {
       views.add(view);

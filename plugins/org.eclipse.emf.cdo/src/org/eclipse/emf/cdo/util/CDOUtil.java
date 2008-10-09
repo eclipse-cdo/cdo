@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.CDOXATransaction;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.emf.internal.cdo.CDOCollectionLoadingPolicyImpl;
@@ -26,20 +25,16 @@ import org.eclipse.emf.internal.cdo.CDORevisionPrefetchingPolicyImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
-import org.eclipse.emf.internal.cdo.CDOViewSetImpl;
 import org.eclipse.emf.internal.cdo.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
-import org.eclipse.emf.internal.cdo.util.ProxyResolverURIResourceMap;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -51,12 +46,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -173,39 +165,6 @@ public final class CDOUtil
   /**
    * @since 2.0
    */
-  public static CDOViewSet prepareResourceSet(ResourceSet resourceSet)
-  {
-    CDOViewSetImpl viewSet = null;
-    synchronized (resourceSet)
-    {
-      viewSet = (CDOViewSetImpl)getViewSet(resourceSet);
-
-      if (viewSet == null)
-      {
-        if (resourceSet instanceof ResourceSetImpl)
-        {
-          Map<URI, Resource> resourceMap = null;
-          ResourceSetImpl rs = (ResourceSetImpl)resourceSet;
-          resourceMap = rs.getURIResourceMap();
-          rs.setURIResourceMap(new ProxyResolverURIResourceMap(null, resourceMap));
-        }
-        else
-        {
-          throw new ImplementationError("Not a " + ResourceSetImpl.class.getName() + ": "
-              + resourceSet.getClass().getName());
-        }
-
-        viewSet = new CDOViewSetImpl();
-        resourceSet.eAdapters().add(viewSet);
-      }
-    }
-
-    return viewSet;
-  }
-
-  /**
-   * @since 2.0
-   */
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new CDOClientProtocolFactory());
@@ -313,32 +272,5 @@ public final class CDOUtil
   public static CDOObject getCDOObject(EStringToStringMapEntryImpl object, CDOView view)
   {
     return FSMUtil.adaptMeta(object, view);
-  }
-
-  /**
-   * TODO Simon: Do you see any value in having this method public?
-   * 
-   * @since 2.0
-   */
-  public static void validate(CDOID id, CDORevision revision)
-  {
-    if (revision == null)
-    {
-      throw new ObjectNotFoundException(id);
-    }
-  }
-
-  /**
-   * TODO Simon: Do you see any value in having this method public?
-   * 
-   * @since 2.0
-   */
-  public static void validate(CDOObject object, CDORevision revision)
-  {
-    if (revision == null)
-    {
-      CDOStateMachine.INSTANCE.detachRemote((InternalCDOObject)object);
-      throw new InvalidObjectException(object.cdoID());
-    }
   }
 }

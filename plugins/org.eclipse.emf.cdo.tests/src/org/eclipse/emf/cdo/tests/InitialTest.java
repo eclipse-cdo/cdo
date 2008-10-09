@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannel;
 
@@ -92,7 +94,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Creating resourceSet");
     ResourceSet resourceSet = new ResourceSetImpl();
-    CDOUtil.prepareResourceSet(resourceSet);
+    FSMUtil.prepareResourceSet(resourceSet);
 
     msg("Creating resource");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
@@ -169,7 +171,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Creating resourceSet");
     ResourceSet resourceSet = new ResourceSetImpl();
-    CDOUtil.prepareResourceSet(resourceSet);
+    FSMUtil.prepareResourceSet(resourceSet);
 
     msg("Creating resource");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
@@ -196,7 +198,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Creating resourceSet");
     ResourceSet resourceSet = new ResourceSetImpl();
-    CDOUtil.prepareResourceSet(resourceSet);
+    FSMUtil.prepareResourceSet(resourceSet);
 
     msg("Creating resource");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);

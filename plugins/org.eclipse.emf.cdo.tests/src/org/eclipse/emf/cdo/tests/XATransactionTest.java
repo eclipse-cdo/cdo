@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -47,7 +48,7 @@ public class XATransactionTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
 
-    CDOUtil.prepareResourceSet(resourceSet);
+    FSMUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
     sessionA.getPackageRegistry().putEPackage(getModel1Package());
@@ -87,7 +88,7 @@ public class XATransactionTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
 
-    CDOUtil.prepareResourceSet(resourceSet);
+    FSMUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
     sessionA.getPackageRegistry().putEPackage(getModel1Package());

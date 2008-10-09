@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -752,7 +751,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDOID id = object.cdoID();
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       InternalCDORevision revision = view.getRevision(id, true);
-      CDOUtil.validate(object, revision);
+      FSMUtil.validate(object, revision);
       object.cdoInternalSetRevision(revision);
       changeState(object, CDOState.CLEAN);
       object.cdoInternalPostLoad();

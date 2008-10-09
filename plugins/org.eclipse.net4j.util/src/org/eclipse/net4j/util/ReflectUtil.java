@@ -233,7 +233,7 @@ public final class ReflectUtil
     return 0;
   }
 
-  public static Long getID(Object object)
+  public static synchronized Long getID(Object object)
   {
     Long id = ids.get(object);
     if (id == null)

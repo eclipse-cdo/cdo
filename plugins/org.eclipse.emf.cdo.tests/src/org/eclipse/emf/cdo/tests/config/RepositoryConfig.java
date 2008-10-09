@@ -209,21 +209,21 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
    */
   public static abstract class DB extends RepositoryConfig
   {
-    private IMappingStrategy mappingStrategy;
-
-    public DB(String name, IMappingStrategy mappingStrategy)
+    public DB(String name)
     {
       super(name);
-      this.mappingStrategy = mappingStrategy;
     }
 
     @Override
     protected IStore createStore()
     {
+      IMappingStrategy mappingStrategy = createMappingStrategy();
       IDBAdapter dbAdapter = createDBAdapter();
       DataSource dataSource = createDataSource();
       return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
     }
+
+    protected abstract IMappingStrategy createMappingStrategy();
 
     protected abstract IDBAdapter createDBAdapter();
 
@@ -235,14 +235,19 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
    */
   public static class DBHsqldb extends DB
   {
-    public static final DBHsqldb HSQLDB_HORIZONTAL = new DBHsqldb("HsqldbHorizontal", CDODBUtil
-        .createHorizontalMappingStrategy());
+    public static final DBHsqldb HSQLDB_HORIZONTAL = new DBHsqldb("HsqldbHorizontal");
 
     private HSQLDBDataSource dataSource;
 
-    public DBHsqldb(String name, IMappingStrategy mappingStrategy)
+    public DBHsqldb(String name)
     {
-      super(name, mappingStrategy);
+      super(name);
+    }
+
+    @Override
+    protected IMappingStrategy createMappingStrategy()
+    {
+      return CDODBUtil.createHorizontalMappingStrategy();
     }
 
     @SuppressWarnings("restriction")
@@ -306,16 +311,21 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
    */
   public static class DBDerby extends DB
   {
-    public static final DBDerby DERBY_HORIZONTAL = new DBDerby("DerbyHorizontal", CDODBUtil
-        .createHorizontalMappingStrategy());
+    public static final DBDerby DERBY_HORIZONTAL = new DBDerby("DerbyHorizontal");
 
     private File dbFolder;
 
     private EmbeddedDataSource dataSource;
 
-    public DBDerby(String name, IMappingStrategy mappingStrategy)
+    public DBDerby(String name)
     {
-      super(name, mappingStrategy);
+      super(name);
+    }
+
+    @Override
+    protected IMappingStrategy createMappingStrategy()
+    {
+      return CDODBUtil.createHorizontalMappingStrategy();
     }
 
     @SuppressWarnings("restriction")

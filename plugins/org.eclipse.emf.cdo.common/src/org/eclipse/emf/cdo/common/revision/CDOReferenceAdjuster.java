@@ -10,6 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.revision;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+
 /**
  * @author Simon McDuff
  * @since 2.0
@@ -17,7 +20,10 @@ package org.eclipse.emf.cdo.common.revision;
 public interface CDOReferenceAdjuster
 {
   /**
-   * TODO Simon: The signature does not explain the intention very well, maybe a bit of JavaDoc?
+   * Adjust internal structure of an object (e.g: {@link CDORevision}). This is mainly use after committing a
+   * transaction. {@link CDORevision} must replace {@link CDOIDTemp} for non-temporary {@link CDOID} with a mapping ID.
+   * Only the internal structure knows how to do these modifications. This is important to consider using different
+   * implementation of {@link CDOList}.
    */
   Object adjustReference(Object id);
 }

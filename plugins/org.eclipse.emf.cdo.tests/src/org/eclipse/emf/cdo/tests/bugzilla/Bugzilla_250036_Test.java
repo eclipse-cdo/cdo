@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class Bugzilla_250036_Test extends AbstractCDOTest
 {
-  public void testEMap() throws InterruptedException
+  public void testBugzilla_250036_Invalidation() throws InterruptedException
   {
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel4InterfacesPackage());

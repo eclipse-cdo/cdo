@@ -23,12 +23,12 @@ import java.io.IOException;
 /**
  * @author Simon McDuff
  */
-public class PassiveUpdateIndication extends SyncRevisionIndication
+public class SetPassiveUpdateIndication extends SyncRevisionIndication
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      PassiveUpdateIndication.class);
+      SetPassiveUpdateIndication.class);
 
-  public PassiveUpdateIndication()
+  public SetPassiveUpdateIndication()
   {
     super();
   }

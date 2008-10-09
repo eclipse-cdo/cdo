@@ -26,18 +26,17 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * TODO Simon: Can we find a better name? Passive and request is just a contradiction...
- * 
  * @author Simon McDuff
  * @since 2.0
  */
-public class PassiveUpdateRequest extends SyncRevisionRequest
+public class SetPassiveUpdateRequest extends SyncRevisionRequest
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, PassiveUpdateRequest.class);
+  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      SetPassiveUpdateRequest.class);
 
   private boolean passiveUpdateEnabled;
 
-  public PassiveUpdateRequest(IChannel channel, CDOSessionImpl session, Map<CDOID, CDORevision> cdoRevisions,
+  public SetPassiveUpdateRequest(IChannel channel, CDOSessionImpl session, Map<CDOID, CDORevision> cdoRevisions,
       int referenceChunk, boolean passiveUpdateEnabled)
   {
     super(channel, session, cdoRevisions, referenceChunk);

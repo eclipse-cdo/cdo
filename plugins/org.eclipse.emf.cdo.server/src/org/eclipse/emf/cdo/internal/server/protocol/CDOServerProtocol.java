@@ -98,7 +98,7 @@ public class CDOServerProtocol extends CDOProtocolImpl
       return new SyncRevisionIndication();
 
     case CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE:
-      return new PassiveUpdateIndication();
+      return new SetPassiveUpdateIndication();
 
     case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
       return new ChangeSubscriptionIndication();

@@ -44,7 +44,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
-import org.eclipse.emf.internal.cdo.protocol.PassiveUpdateRequest;
+import org.eclipse.emf.internal.cdo.protocol.SetPassiveUpdateRequest;
 import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeRequest;
 import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeResult;
 import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
@@ -1033,7 +1033,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         if (!allRevisions.isEmpty())
         {
-          PassiveUpdateRequest request = new PassiveUpdateRequest(getChannel(), this, allRevisions,
+          SetPassiveUpdateRequest request = new SetPassiveUpdateRequest(getChannel(), this, allRevisions,
               collectionLoadingPolicy.getInitialChunkSize(), passiveUpdateEnabled);
           getFailOverStrategy().send(request);
         }

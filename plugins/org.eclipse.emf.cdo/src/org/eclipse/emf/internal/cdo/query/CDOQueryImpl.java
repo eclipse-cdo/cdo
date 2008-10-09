@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.query;
 
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
@@ -37,9 +38,9 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 {
   private CDOViewImpl view;
 
-  public CDOQueryImpl(CDOViewImpl view, String language, String queryString)
+  public CDOQueryImpl(CDOViewImpl view, String queryLanguage, String queryString)
   {
-    super(language, queryString);
+    super(queryLanguage, queryString);
     this.view = view;
   }
 
@@ -68,9 +69,10 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 
     try
     {
-      IChannel channel = view.getSession().getChannel();
+      CDOSession session = view.getSession();
+      IChannel channel = session.getChannel();
       QueryRequest request = new QueryRequest(channel, view.getViewID(), queryInfo, queryResult);
-      view.getSession().getFailOverStrategy().send(request);
+      session.getFailOverStrategy().send(request);
     }
     catch (Exception exception)
     {
@@ -91,9 +93,10 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       {
         try
         {
-          IChannel channel = view.getSession().getChannel();
+          CDOSession session = view.getSession();
+          IChannel channel = session.getChannel();
           QueryRequest request = new QueryRequest(channel, view.getViewID(), queryInfo, queryResult);
-          view.getSession().getFailOverStrategy().send(request);
+          session.getFailOverStrategy().send(request);
         }
         catch (Exception ex)
         {

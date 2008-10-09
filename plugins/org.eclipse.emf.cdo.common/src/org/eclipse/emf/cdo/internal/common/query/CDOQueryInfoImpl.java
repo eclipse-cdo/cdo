@@ -33,9 +33,9 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   protected int maxResults = UNLIMITED_RESULTS;
 
-  public CDOQueryInfoImpl(String language, String queryString)
+  public CDOQueryInfoImpl(String queryLanguage, String queryString)
   {
-    queryLanguage = language;
+    this.queryLanguage = queryLanguage;
     this.queryString = queryString;
   }
 

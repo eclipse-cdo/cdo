@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4FactoryImpl.java,v 1.4 2008-09-18 12:56:49 estepper Exp $
+ * $Id: model4FactoryImpl.java,v 1.5 2008-10-09 09:56:42 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
@@ -44,6 +46,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
@@ -155,6 +159,12 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
       return createImplMultiRefNonContainerNPL();
     case model4Package.IMPL_CONTAINED_ELEMENT_NPL:
       return createImplContainedElementNPL();
+    case model4Package.GEN_REF_MULTI_NU_NON_CONTAINED:
+      return createGenRefMultiNUNonContained();
+    case model4Package.GEN_REF_MAP_NON_CONTAINED:
+      return createGenRefMapNonContained();
+    case model4Package.STRING_TO_EOBJECT:
+      return (EObject)createStringToEObject();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -488,6 +498,39 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
   {
     ImplContainedElementNPLImpl implContainedElementNPL = new ImplContainedElementNPLImpl();
     return implContainedElementNPL;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenRefMultiNUNonContained createGenRefMultiNUNonContained()
+  {
+    GenRefMultiNUNonContainedImpl genRefMultiNUNonContained = new GenRefMultiNUNonContainedImpl();
+    return genRefMultiNUNonContained;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenRefMapNonContained createGenRefMapNonContained()
+  {
+    GenRefMapNonContainedImpl genRefMapNonContained = new GenRefMapNonContainedImpl();
+    return genRefMapNonContained;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<String, EObject> createStringToEObject()
+  {
+    StringToEObjectImpl stringToEObject = new StringToEObjectImpl();
+    return stringToEObject;
   }
 
   /**

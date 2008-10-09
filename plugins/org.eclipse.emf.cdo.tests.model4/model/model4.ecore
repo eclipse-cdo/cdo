@@ -93,4 +93,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefContainerNPL"/>
   <eClassifiers xsi:type="ecore:EClass" name="ImplMultiRefNonContainerNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IMultiRefNonContainerNPL"/>
   <eClassifiers xsi:type="ecore:EClass" name="ImplContainedElementNPL" eSuperTypes="../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//IContainedElementNoParentLink ../../org.eclipse.emf.cdo.tests.model4interfaces/model/interfaces.ecore#//INamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GenRefMultiNUNonContained">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenRefMapNonContained">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" unique="false"
+        upperBound="-1" eType="#//StringToEObject" containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToEObject" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" unique="false" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        resolveProxies="false"/>
+  </eClassifiers>
 </ecore:EPackage>

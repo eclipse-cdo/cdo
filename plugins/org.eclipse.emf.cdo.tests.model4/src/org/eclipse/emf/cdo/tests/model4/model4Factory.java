@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4Factory.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
+ * $Id: model4Factory.java,v 1.4 2008-10-09 09:56:43 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
@@ -277,6 +277,23 @@ public interface model4Factory extends EFactory
    * @generated
    */
   ImplContainedElementNPL createImplContainedElementNPL();
+
+  /**
+   * Returns a new object of class '<em>Gen Ref Multi NU Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @return a new object of class '<em>Gen Ref Multi NU Non Contained</em>'.
+   * @generated
+   */
+  GenRefMultiNUNonContained createGenRefMultiNUNonContained();
+
+  /**
+   * Returns a new object of class '<em>Gen Ref Map Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen Ref Map Non Contained</em>'.
+   * @generated
+   */
+  GenRefMapNonContained createGenRefMapNonContained();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

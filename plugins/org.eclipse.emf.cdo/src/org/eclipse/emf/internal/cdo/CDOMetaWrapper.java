@@ -81,6 +81,11 @@ public class CDOMetaWrapper extends CDOObjectWrapper
     throw new UnsupportedOperationException();
   }
 
+  public void cdoInternalCleanup()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void cdoInternalPostAttach()
   {
     throw new UnsupportedOperationException();

@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4PackageImpl.java,v 1.4 2008-09-18 12:56:49 estepper Exp $
+ * $Id: model4PackageImpl.java,v 1.5 2008-10-09 09:56:42 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
@@ -45,6 +47,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
@@ -262,6 +266,27 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * @generated
    */
   private EClass implContainedElementNPLEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genRefMultiNUNonContainedEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genRefMapNonContainedEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass stringToEObjectEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -890,6 +915,76 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * 
    * @generated
    */
+  public EClass getGenRefMultiNUNonContained()
+  {
+    return genRefMultiNUNonContainedEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getGenRefMultiNUNonContained_Elements()
+  {
+    return (EReference)genRefMultiNUNonContainedEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getGenRefMapNonContained()
+  {
+    return genRefMapNonContainedEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getGenRefMapNonContained_Elements()
+  {
+    return (EReference)genRefMapNonContainedEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getStringToEObject()
+  {
+    return stringToEObjectEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getStringToEObject_Key()
+  {
+    return (EAttribute)stringToEObjectEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getStringToEObject_Value()
+  {
+    return (EReference)stringToEObjectEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public model4Factory getmodel4Factory()
   {
     return (model4Factory)getEFactoryInstance();
@@ -1001,6 +1096,16 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     implMultiRefNonContainerNPLEClass = createEClass(IMPL_MULTI_REF_NON_CONTAINER_NPL);
 
     implContainedElementNPLEClass = createEClass(IMPL_CONTAINED_ELEMENT_NPL);
+
+    genRefMultiNUNonContainedEClass = createEClass(GEN_REF_MULTI_NU_NON_CONTAINED);
+    createEReference(genRefMultiNUNonContainedEClass, GEN_REF_MULTI_NU_NON_CONTAINED__ELEMENTS);
+
+    genRefMapNonContainedEClass = createEClass(GEN_REF_MAP_NON_CONTAINED);
+    createEReference(genRefMapNonContainedEClass, GEN_REF_MAP_NON_CONTAINED__ELEMENTS);
+
+    stringToEObjectEClass = createEClass(STRING_TO_EOBJECT);
+    createEAttribute(stringToEObjectEClass, STRING_TO_EOBJECT__KEY);
+    createEReference(stringToEObjectEClass, STRING_TO_EOBJECT__VALUE);
   }
 
   /**
@@ -1224,6 +1329,26 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
 
     initEClass(implContainedElementNPLEClass, ImplContainedElementNPL.class, "ImplContainedElementNPL", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(genRefMultiNUNonContainedEClass, GenRefMultiNUNonContained.class, "GenRefMultiNUNonContained",
+        !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getGenRefMultiNUNonContained_Elements(), ecorePackage.getEObject(), null, "elements", null, 0, -1,
+        GenRefMultiNUNonContained.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genRefMapNonContainedEClass, GenRefMapNonContained.class, "GenRefMapNonContained", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getGenRefMapNonContained_Elements(), getStringToEObject(), null, "elements", null, 0, -1,
+        GenRefMapNonContained.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(stringToEObjectEClass, Map.Entry.class, "StringToEObject", !IS_ABSTRACT, !IS_INTERFACE,
+        !IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getStringToEObject_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStringToEObject_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

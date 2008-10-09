@@ -585,6 +585,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   protected void cleanObject(InternalCDOObject object, InternalCDORevision revision)
   {
+    object.cdoInternalCleanup();
     if (object instanceof CDOResourceImpl)
     {
       object.cdoInternalSetResource((CDOResourceImpl)object);
@@ -603,6 +604,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
+
     object.cdoInternalPostLoad();
   }
 

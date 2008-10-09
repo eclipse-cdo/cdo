@@ -206,6 +206,28 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       for (int i = 0; i < eClass.getFeatureCount(); i++)
       {
         EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        // We need to keep the existing list if possible.
+        if (!eFeature.isTransient() && eSettings[i] instanceof InternalCDOLoadable)
+        {
+          ((InternalCDOLoadable)eSettings[i]).cdoInternalPostLoad();
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void cdoInternalCleanup()
+  {
+    if (eSettings != null)
+    {
+      // Make sure transient feature are kept but persisted value are not cached.
+      EClass eClass = eClass();
+      for (int i = 0; i < eClass.getFeatureCount(); i++)
+      {
+        EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
+        // We need to keep the existing list if possible.
         if (!eFeature.isTransient())
         {
           eSettings[i] = null;
@@ -437,7 +459,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     // more efficient than .equals() and it's correct
     if (eType.getInstanceClassName() == "java.util.Map$Entry")
     {
-      class EStoreEcoreEMap extends EcoreEMap<Object, Object>
+      class EStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
       {
         private static final long serialVersionUID = 1L;
 
@@ -481,6 +503,69 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
             }
           };
 
+          size = delegateEList.size();
+        }
+
+        private void checkListForReading()
+        {
+          CDOStateMachine.INSTANCE.read(CDOObjectImpl.this);
+        }
+
+        /**
+         * Ensures that the entry data is created and is populated with contents of the delegate list.
+         */
+        @Override
+        synchronized protected void ensureEntryDataExists()
+        {
+          checkListForReading();
+          super.ensureEntryDataExists();
+        }
+
+        @Override
+        public int size()
+        {
+          checkListForReading();
+          return size;
+        }
+
+        @Override
+        public boolean isEmpty()
+        {
+          checkListForReading();
+          return size == 0;
+        }
+
+        @Override
+        public boolean contains(Object object)
+        {
+          checkListForReading();
+          return super.contains(object);
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> collection)
+        {
+          checkListForReading();
+          return super.containsAll(collection);
+        }
+
+        @Override
+        public boolean containsKey(Object key)
+        {
+          checkListForReading();
+          return super.containsKey(key);
+        }
+
+        @Override
+        public boolean containsValue(Object value)
+        {
+          checkListForReading();
+          return super.containsValue(value);
+        }
+
+        public void cdoInternalPostLoad()
+        {
+          entryData = null;
           size = delegateEList.size();
         }
       }

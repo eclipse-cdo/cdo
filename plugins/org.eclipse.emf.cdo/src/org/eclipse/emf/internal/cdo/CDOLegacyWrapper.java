@@ -193,6 +193,10 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     revisionToInstance();
   }
 
+  public void cdoInternalCleanup()
+  {
+  }
+
   public synchronized void handleRead(InternalEObject object, int featureID)
   {
     if (!handlingCallback)

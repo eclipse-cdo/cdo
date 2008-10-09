@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4Switch.java,v 1.4 2008-09-18 12:56:50 estepper Exp $
+ * $Id: model4Switch.java,v 1.5 2008-10-09 09:56:42 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.util;
 
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
@@ -56,6 +58,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -481,6 +484,37 @@ public class model4Switch<T>
       {
         result = caseINamedElement(implContainedElementNPL);
       }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case model4Package.GEN_REF_MULTI_NU_NON_CONTAINED:
+    {
+      GenRefMultiNUNonContained genRefMultiNUNonContained = (GenRefMultiNUNonContained)theEObject;
+      T result = caseGenRefMultiNUNonContained(genRefMultiNUNonContained);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case model4Package.GEN_REF_MAP_NON_CONTAINED:
+    {
+      GenRefMapNonContained genRefMapNonContained = (GenRefMapNonContained)theEObject;
+      T result = caseGenRefMapNonContained(genRefMapNonContained);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case model4Package.STRING_TO_EOBJECT:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<String, EObject> stringToEObject = (Map.Entry<String, EObject>)theEObject;
+      T result = caseStringToEObject(stringToEObject);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -967,6 +1001,53 @@ public class model4Switch<T>
    * @generated
    */
   public T caseImplContainedElementNPL(ImplContainedElementNPL object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen Ref Multi NU Non Contained</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen Ref Multi NU Non Contained</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenRefMultiNUNonContained(GenRefMultiNUNonContained object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen Ref Map Non Contained</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen Ref Map Non Contained</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenRefMapNonContained(GenRefMapNonContained object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String To EObject</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String To EObject</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringToEObject(Map.Entry<String, EObject> object)
   {
     return null;
   }

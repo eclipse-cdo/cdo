@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4Package.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
+ * $Id: model4Package.java,v 1.4 2008-10-09 09:56:43 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
@@ -943,6 +943,95 @@ public interface model4Package extends EPackage
   int IMPL_CONTAINED_ELEMENT_NPL_FEATURE_COUNT = model4interfacesPackage.ICONTAINED_ELEMENT_NO_PARENT_LINK_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMultiNUNonContainedImpl
+   * <em>Gen Ref Multi NU Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model4.impl.GenRefMultiNUNonContainedImpl
+   * @see org.eclipse.emf.cdo.tests.model4.impl.model4PackageImpl#getGenRefMultiNUNonContained()
+   * @generated
+   */
+  int GEN_REF_MULTI_NU_NON_CONTAINED = 30;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_REF_MULTI_NU_NON_CONTAINED__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen Ref Multi NU Non Contained</em>' class. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_REF_MULTI_NU_NON_CONTAINED_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMapNonContainedImpl
+   * <em>Gen Ref Map Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model4.impl.GenRefMapNonContainedImpl
+   * @see org.eclipse.emf.cdo.tests.model4.impl.model4PackageImpl#getGenRefMapNonContained()
+   * @generated
+   */
+  int GEN_REF_MAP_NON_CONTAINED = 31;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_REF_MAP_NON_CONTAINED__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen Ref Map Non Contained</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_REF_MAP_NON_CONTAINED_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.StringToEObjectImpl
+   * <em>String To EObject</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model4.impl.StringToEObjectImpl
+   * @see org.eclipse.emf.cdo.tests.model4.impl.model4PackageImpl#getStringToEObject()
+   * @generated
+   */
+  int STRING_TO_EOBJECT = 32;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_EOBJECT__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_EOBJECT__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>String To EObject</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRING_TO_EOBJECT_FEATURE_COUNT = 2;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleContained
    * <em>Ref Single Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -1541,6 +1630,83 @@ public interface model4Package extends EPackage
   EClass getImplContainedElementNPL();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained
+   * <em>Gen Ref Multi NU Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen Ref Multi NU Non Contained</em>'.
+   * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained
+   * @generated
+   */
+  EClass getGenRefMultiNUNonContained();
+
+  /**
+   * Returns the meta object for the reference list '
+   * {@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained#getElements <em>Elements</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained#getElements()
+   * @see #getGenRefMultiNUNonContained()
+   * @generated
+   */
+  EReference getGenRefMultiNUNonContained_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained
+   * <em>Gen Ref Map Non Contained</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen Ref Map Non Contained</em>'.
+   * @see org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained
+   * @generated
+   */
+  EClass getGenRefMapNonContained();
+
+  /**
+   * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained#getElements
+   * <em>Elements</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the map '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained#getElements()
+   * @see #getGenRefMapNonContained()
+   * @generated
+   */
+  EReference getGenRefMapNonContained_Elements();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>String To EObject</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>String To EObject</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EString" valueType="org.eclipse.emf.ecore.EObject"
+   *        valueResolveProxies="false"
+   * @generated
+   */
+  EClass getStringToEObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToEObject()
+   * @generated
+   */
+  EAttribute getStringToEObject_Key();
+
+  /**
+   * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToEObject()
+   * @generated
+   */
+  EReference getStringToEObject_Value();
+
+  /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the factory that creates the instances of the model.
@@ -2063,6 +2229,68 @@ public interface model4Package extends EPackage
      * @generated
      */
     EClass IMPL_CONTAINED_ELEMENT_NPL = eINSTANCE.getImplContainedElementNPL();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMultiNUNonContainedImpl
+     * <em>Gen Ref Multi NU Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model4.impl.GenRefMultiNUNonContainedImpl
+     * @see org.eclipse.emf.cdo.tests.model4.impl.model4PackageImpl#getGenRefMultiNUNonContained()
+     * @generated
+     */
+    EClass GEN_REF_MULTI_NU_NON_CONTAINED = eINSTANCE.getGenRefMultiNUNonContained();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference GEN_REF_MULTI_NU_NON_CONTAINED__ELEMENTS = eINSTANCE.getGenRefMultiNUNonContained_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMapNonContainedImpl
+     * <em>Gen Ref Map Non Contained</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model4.impl.GenRefMapNonContainedImpl
+     * @see org.eclipse.emf.cdo.tests.model4.impl.model4PackageImpl#getGenRefMapNonContained()
+     * @generated
+     */
+    EClass GEN_REF_MAP_NON_CONTAINED = eINSTANCE.getGenRefMapNonContained();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' map feature. <!-- begin-user-doc --> <!-- end-user-doc
+     * -->
+     * 
+     * @generated
+     */
+    EReference GEN_REF_MAP_NON_CONTAINED__ELEMENTS = eINSTANCE.getGenRefMapNonContained_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4.impl.StringToEObjectImpl
+     * <em>String To EObject</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model4.impl.StringToEObjectImpl
+     * @see org.eclipse.emf.cdo.tests.model4.impl.model4PackageImpl#getStringToEObject()
+     * @generated
+     */
+    EClass STRING_TO_EOBJECT = eINSTANCE.getStringToEObject();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute STRING_TO_EOBJECT__KEY = eINSTANCE.getStringToEObject_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference STRING_TO_EOBJECT__VALUE = eINSTANCE.getStringToEObject_Value();
 
   }
 

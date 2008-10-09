@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4AdapterFactory.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
+ * $Id: model4AdapterFactory.java,v 1.4 2008-10-09 09:56:42 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.util;
 
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
+import org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
@@ -56,6 +58,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
@@ -293,6 +297,24 @@ public class model4AdapterFactory extends AdapterFactoryImpl
     public Adapter caseImplContainedElementNPL(ImplContainedElementNPL object)
     {
       return createImplContainedElementNPLAdapter();
+    }
+
+    @Override
+    public Adapter caseGenRefMultiNUNonContained(GenRefMultiNUNonContained object)
+    {
+      return createGenRefMultiNUNonContainedAdapter();
+    }
+
+    @Override
+    public Adapter caseGenRefMapNonContained(GenRefMapNonContained object)
+    {
+      return createGenRefMapNonContainedAdapter();
+    }
+
+    @Override
+    public Adapter caseStringToEObject(Map.Entry<String, EObject> object)
+    {
+      return createStringToEObjectAdapter();
     }
 
     @Override
@@ -848,6 +870,50 @@ public class model4AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createImplContainedElementNPLAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained
+   * <em>Gen Ref Multi NU Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained
+   * @generated
+   */
+  public Adapter createGenRefMultiNUNonContainedAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained
+   * <em>Gen Ref Map Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained
+   * @generated
+   */
+  public Adapter createGenRefMapNonContainedAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To EObject</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createStringToEObjectAdapter()
   {
     return null;
   }

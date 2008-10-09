@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.query.CDOQuery;
 
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.common.util.URI;
@@ -239,4 +240,14 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @since 2.0
    */
   public List<CDOResource> queryResources(String pathPrefix);
+
+  /**
+   * Returns an iterator over those resources whose path starts with the value of the pathPrefix parameter. The
+   * underlying query will be executed asynchronously.
+   * 
+   * @param pathPrefix
+   *          the prefix of the resources' path
+   * @since 2.0
+   */
+  public CloseableIterator<CDOResource> queryResourcesAsync(String pathPrefix);
 }

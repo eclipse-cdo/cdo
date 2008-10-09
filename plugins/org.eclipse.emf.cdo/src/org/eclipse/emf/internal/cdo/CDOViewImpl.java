@@ -51,6 +51,7 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -345,9 +346,22 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public List<CDOResource> queryResources(String pathPrefix)
   {
-    checkOpen();
-    CDOQuery resourceQuery = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, pathPrefix);
+    CDOQuery resourceQuery = createResourcesQuery(pathPrefix);
     return resourceQuery.getResult(CDOResource.class);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CloseableIterator<CDOResource> queryResourcesAsync(String pathPrefix)
+  {
+    CDOQuery resourceQuery = createResourcesQuery(pathPrefix);
+    return resourceQuery.getResultAsync(CDOResource.class);
+  }
+
+  private CDOQuery createResourcesQuery(String pathPrefix)
+  {
+    return createQuery(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES, pathPrefix);
   }
 
   public CDOResourceImpl getResource(CDOID resourceID)

@@ -11,10 +11,21 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 
 /**
+ * A custom EMF {@link Notification notification} that is emitted to {@link Adapter adapters} of the objects in a
+ * {@link CDOView view} if {@link CDOView#setInvalidationNotificationEnabled(boolean) invalidation notification} is
+ * enabled for the view. Since the notifications are constructed out of the information in a
+ * {@link CDOSessionInvalidationEvent} (i.e. {@link CDOID CDOIDs}) they don't carry detailed change deltas. All the
+ * methods related to change deltas throw {@link UnsupportedOperationException UnsupportedOperationExceptions}.
+ * 
  * @author Simon McDuff
+ * @see CDOSessionInvalidationEvent
+ * @see CDOChangeSubscriptionPolicy
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOInvalidationNotification extends Notification

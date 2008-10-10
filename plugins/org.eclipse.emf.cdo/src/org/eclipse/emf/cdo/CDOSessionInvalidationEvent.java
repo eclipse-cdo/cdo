@@ -13,17 +13,25 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+
+import org.eclipse.net4j.util.event.IListener;
 
 import java.util.Collection;
 import java.util.Set;
 
 /**
+ * An event that is emitted to registered {@link IListener listeners} of a {@link CDOSession} if
+ * {@link CDOSession#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
+ * 
  * @author Eike Stepper
+ * @see CDOInvalidationNotification
+ * @see CDOChangeSubscriptionPolicy
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSessionInvalidationEvent extends CDOSessionEvent
 {
-  public static final long LOCAL_ROLLBACK = 0L;
+  public static final long LOCAL_ROLLBACK = CDORevision.UNSPECIFIED_DATE;
 
   /**
    * Returns the transaction that was committed and thereby caused this event to be emitted if this transaction is
@@ -37,9 +45,14 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent
    */
   public long getTimeStamp();
 
+  /**
+   * Returns a set of the {@link CDOID CDOIDs} and versions of the modified objects.
+   */
   public Set<CDOIDAndVersion> getDirtyOIDs();
 
   /**
+   * Returns a collection of the {@link CDOID CDOIDs} of the removed objects.
+   * 
    * @since 2.0
    */
   public Collection<CDOID> getDetachedObjects();

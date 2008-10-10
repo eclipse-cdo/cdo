@@ -25,6 +25,10 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent
 {
   public static final long LOCAL_ROLLBACK = 0L;
 
+  /**
+   * Returns the transaction that was committed and thereby caused this event to be emitted if this transaction is
+   * local, or <code>null</code> if the transaction was remote.
+   */
   public CDOView getView();
 
   /**

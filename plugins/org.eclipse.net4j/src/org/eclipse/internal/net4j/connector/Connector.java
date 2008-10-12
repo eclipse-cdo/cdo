@@ -60,16 +60,14 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   private ITransportConfig config;
 
-  private INegotiationContext negotiationContext;
-
   private long channelTimeout = DEFAULT_CHANNEL_TIMEOUT;
+
+  private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
   private transient InternalChannel[] channels = {};
 
   @ExcludeFromDump
   private transient Object channelsLock = new Object();
-
-  private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
   @ExcludeFromDump
   private transient CountDownLatch finishedConnecting;
@@ -78,7 +76,10 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   private transient CountDownLatch finishedNegotiating;
 
   @ExcludeFromDump
-  private NegotiationException negotiationException;
+  private transient INegotiationContext negotiationContext;
+
+  @ExcludeFromDump
+  private transient NegotiationException negotiationException;
 
   public Connector()
   {
@@ -96,6 +97,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public synchronized void setConfig(ITransportConfig config)
   {
+    checkInactive();
     this.config = config;
   }
 
@@ -146,6 +148,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public void setUserID(String userID)
   {
+    checkState(getState() != ConnectorState.CONNECTED, "Connector is already connected");
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting userID {0} for {1}", userID, this);
@@ -318,7 +321,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
       for (int i = 0; i < channels.length; i++)
       {
         IChannel channel = channels[i];
-        if (channel != null)
+        if (LifecycleUtil.isActive(channel))
         {
           result.add(channel);
         }

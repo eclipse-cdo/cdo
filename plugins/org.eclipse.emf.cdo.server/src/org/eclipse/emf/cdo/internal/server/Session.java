@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
@@ -40,6 +41,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -150,6 +152,11 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public View[] getViews()
   {
     checkActive();
+    return getViewsArray();
+  }
+
+  private View[] getViewsArray()
+  {
     return views.values().toArray(new View[views.size()]);
   }
 
@@ -237,11 +244,20 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         }
       }
     }
+
     try
     {
       if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty())
       {
-        new CommitNotificationRequest(protocol.getChannel(), timeStamp, dirtyIDs, detachedObjects, newDeltas).send();
+        IChannel channel = protocol.getChannel();
+        if (LifecycleUtil.isActive(channel))
+        {
+          new CommitNotificationRequest(channel, timeStamp, dirtyIDs, detachedObjects, newDeltas).send();
+        }
+        else
+        {
+          OM.LOG.warn("Session channel is inactive: " + this);
+        }
       }
     }
     catch (Exception ex)
@@ -331,7 +347,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     protocol = null;
     protocolListener = null;
 
-    for (IView view : views.values().toArray(new View[views.size()]))
+    for (IView view : getViewsArray())
     {
       view.close();
     }

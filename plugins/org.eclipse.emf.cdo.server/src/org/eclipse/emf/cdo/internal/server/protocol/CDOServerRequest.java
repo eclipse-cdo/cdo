@@ -37,7 +37,7 @@ public abstract class CDOServerRequest extends Request
 {
   public CDOServerRequest(IChannel channel)
   {
-    super((SignalProtocol)channel.getReceiveHandler());
+    super(extractProtocol(channel));
   }
 
   @Override
@@ -122,4 +122,14 @@ public abstract class CDOServerRequest extends Request
   }
 
   protected abstract void requesting(CDODataOutput out) throws IOException;
+
+  private static SignalProtocol extractProtocol(IChannel channel)
+  {
+    if (LifecycleUtil.isActive(channel))
+    {
+      return (SignalProtocol)channel.getReceiveHandler();
+    }
+
+    throw new IllegalStateException("Channel is inactive: " + channel);
+  }
 }

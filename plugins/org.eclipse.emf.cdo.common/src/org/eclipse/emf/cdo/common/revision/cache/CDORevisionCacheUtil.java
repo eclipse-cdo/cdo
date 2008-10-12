@@ -75,6 +75,6 @@ public final class CDORevisionCacheUtil
    */
   public static CDORevisionCache createDefaultCache()
   {
-    return createTwoLevelCache(createLRUCache(DEFAULT_CAPACITY_CURRENT, DEFAULT_CAPACITY_REVISED), createMEMCache());
+    return createDefaultCache(DEFAULT_CAPACITY_CURRENT, DEFAULT_CAPACITY_REVISED);
   }
 }

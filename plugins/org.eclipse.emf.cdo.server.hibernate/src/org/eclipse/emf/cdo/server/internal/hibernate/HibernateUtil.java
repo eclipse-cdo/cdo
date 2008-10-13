@@ -17,16 +17,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
-import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.WrappedException;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 
 import org.hibernate.Session;
 
@@ -74,7 +65,8 @@ public class HibernateUtil
    */
   public Session getHibernateSession()
   {
-    final HibernateStoreReader storeReader = (HibernateStoreReader)HibernateThreadContext.getCurrentHibernateStoreAccessor();
+    final HibernateStoreReader storeReader = (HibernateStoreReader)HibernateThreadContext
+        .getCurrentHibernateStoreAccessor();
     return storeReader.getHibernateSession();
   }
 

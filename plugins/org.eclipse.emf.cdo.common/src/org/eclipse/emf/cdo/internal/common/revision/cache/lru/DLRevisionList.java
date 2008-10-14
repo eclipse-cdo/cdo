@@ -112,7 +112,7 @@ public class DLRevisionList extends DLRevisionHolder
     }
   }
 
-  public synchronized void addHead(DLRevisionHolder holder)
+  public void addHead(DLRevisionHolder holder)
   {
     validateUnlink(holder);
 
@@ -125,7 +125,7 @@ public class DLRevisionList extends DLRevisionHolder
     setDLHead(holder);
   }
 
-  public synchronized void addTail(DLRevisionHolder holder)
+  public void addTail(DLRevisionHolder holder)
   {
     validateUnlink(holder);
 
@@ -138,7 +138,7 @@ public class DLRevisionList extends DLRevisionHolder
     setDLTail(holder);
   }
 
-  public synchronized void remove(DLRevisionHolder holder)
+  public void remove(DLRevisionHolder holder)
   {
     validateLink(holder);
 

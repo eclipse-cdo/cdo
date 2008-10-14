@@ -100,7 +100,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     }
   }
 
-  public List<CDORevision> getRevisions()
+  public synchronized List<CDORevision> getRevisions()
   {
     List<CDORevision> currentRevisions = new ArrayList<CDORevision>();
     for (RevisionHolder holder : revisions.values())
@@ -115,7 +115,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return currentRevisions;
   }
 
-  public CDOClass getObjectType(CDOID id)
+  public synchronized CDOClass getObjectType(CDOID id)
   {
     RevisionHolder holder = getHolder(id);
     if (holder == null)
@@ -168,7 +168,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return null;
   }
 
-  public boolean addRevision(InternalCDORevision revision)
+  public synchronized boolean addRevision(InternalCDORevision revision)
   {
     if (TRACER.isEnabled())
     {
@@ -245,7 +245,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return lookupHolder != null;
   }
 
-  public CDOID getResourceID(String path, long timeStamp)
+  public synchronized CDOID getResourceID(String path, long timeStamp)
   {
     CDOID[] ids = getRevisionIDs();
     for (CDOID id : ids)
@@ -325,7 +325,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     super.doDeactivate();
   }
 
-  public final RevisionHolder getHolder(CDOID id)
+  public final synchronized RevisionHolder getHolder(CDOID id)
   {
     return revisions.get(id);
   }

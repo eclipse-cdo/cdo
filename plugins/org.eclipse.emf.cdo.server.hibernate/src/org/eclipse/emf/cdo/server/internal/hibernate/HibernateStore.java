@@ -72,7 +72,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public HibernateStore(IHibernateMappingProvider mappingProvider)
   {
-    super(TYPE);
+    super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE), set(RevisionParallelism.NONE));
     this.mappingProvider = mappingProvider;
     packageHandler = new HibernatePackageHandler(this);
 
@@ -110,21 +110,6 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     return hibernateSessionFactory;
-  }
-
-  public boolean hasAuditingSupport()
-  {
-    return false;
-  }
-
-  public boolean hasBranchingSupport()
-  {
-    return false;
-  }
-
-  public boolean hasWriteDeltaSupport()
-  {
-    return false;
   }
 
   public CDOIDObjectFactory getCDOIDObjectFactory()

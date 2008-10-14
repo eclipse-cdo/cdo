@@ -67,7 +67,7 @@ public class DBStore extends LongIDStore implements IDBStore
 
   public DBStore()
   {
-    super(TYPE);
+    super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.AUDITING), set(RevisionParallelism.NONE));
   }
 
   public IMappingStrategy getMappingStrategy()
@@ -115,24 +115,6 @@ public class DBStore extends LongIDStore implements IDBStore
     }
 
     return dbSchema;
-  }
-
-  @Override
-  public boolean hasAuditingSupport()
-  {
-    return true;
-  }
-
-  @Override
-  public boolean hasBranchingSupport()
-  {
-    return false;
-  }
-
-  @Override
-  public boolean hasWriteDeltaSupport()
-  {
-    return false;
   }
 
   @Override

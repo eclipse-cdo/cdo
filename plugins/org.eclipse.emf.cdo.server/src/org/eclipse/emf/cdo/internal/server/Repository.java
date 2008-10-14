@@ -57,11 +57,11 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private Map<String, String> properties;
 
-  private Boolean supportingRevisionDeltas;
+  private boolean supportingRevisionDeltas;
 
-  private Boolean supportingAudits;
+  private boolean supportingAudits;
 
-  private Boolean verifyingRevisions;
+  private boolean verifyingRevisions;
 
   private PackageManager packageManager;
 
@@ -121,7 +121,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     if (uuid == null)
     {
-      uuid = getProperties().get(Props.PROP_OVERRIDE_UUID);
+      uuid = getProperties().get(Props.OVERRIDE_UUID);
       if (uuid == null)
       {
         uuid = UUID.randomUUID().toString();
@@ -152,34 +152,16 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   public boolean isSupportingRevisionDeltas()
   {
-    if (supportingRevisionDeltas == null)
-    {
-      String value = getProperties().get(Props.PROP_SUPPORTING_REVISION_DELTAS);
-      supportingRevisionDeltas = value == null ? false : Boolean.valueOf(value);
-    }
-
     return supportingRevisionDeltas;
   }
 
   public boolean isSupportingAudits()
   {
-    if (supportingAudits == null)
-    {
-      String value = getProperties().get(Props.PROP_SUPPORTING_AUDITS);
-      supportingAudits = value == null ? false : Boolean.valueOf(value);
-    }
-
     return supportingAudits;
   }
 
   public boolean isVerifyingRevisions()
   {
-    if (verifyingRevisions == null)
-    {
-      String value = getProperties().get(Props.PROP_VERIFYING_REVISIONS);
-      verifyingRevisions = value == null ? false : Boolean.valueOf(value);
-    }
-
     return verifyingRevisions;
   }
 
@@ -516,12 +498,13 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkArg(packageManager, "packageManager");
-    checkArg(sessionManager, "sessionManager");
-    checkArg(revisionManager, "revisionManager");
-    checkArg(queryManager, "queryManager");
-    checkArg(notificationManager, "notificationManager");
-    checkArg(commitManager, "commitManager");
+    checkState(!StringUtil.isEmpty(name), "name is empty");
+    checkState(packageManager, "packageManager");
+    checkState(sessionManager, "sessionManager");
+    checkState(revisionManager, "revisionManager");
+    checkState(queryManager, "queryManager");
+    checkState(notificationManager, "notificationManager");
+    checkState(commitManager, "commitManager");
 
     packageManager.setRepository(this);
     sessionManager.setRepository(this);
@@ -530,24 +513,19 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     notificationManager.setRepository(this);
     commitManager.setRepository(this);
 
-    if (StringUtil.isEmpty(name))
+    checkState(store, "store");
+    supportingRevisionDeltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
+
     {
-      throw new IllegalArgumentException("name is null or empty");
+      String value = getProperties().get(Props.SUPPORTING_AUDITS);
+      supportingAudits = value == null ? false : Boolean.valueOf(value);
+      store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
+          : IStore.RevisionTemporality.NONE);
     }
 
-    if (store == null)
     {
-      throw new IllegalArgumentException("store is null");
-    }
-
-    if (isSupportingRevisionDeltas() && !store.hasWriteDeltaSupport())
-    {
-      throw new IllegalStateException("Store without revision delta support");
-    }
-
-    if (isSupportingAudits() && !store.hasAuditingSupport())
-    {
-      throw new IllegalStateException("Store without auditing support");
+      String value = getProperties().get(Props.VERIFYING_REVISIONS);
+      verifyingRevisions = value == null ? false : Boolean.valueOf(value);
     }
 
     elements = new IRepositoryElement[] { packageManager, sessionManager, revisionManager, queryManager,
@@ -558,18 +536,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    activateRepository();
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    deactivateRepository();
-    super.doDeactivate();
-  }
-
-  protected void activateRepository() throws Exception
-  {
     LifecycleUtil.activate(store);
     LifecycleUtil.activate(packageManager);
     if (store.wasCrashed())
@@ -588,7 +554,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(queryHandlerProvider);
   }
 
-  protected void deactivateRepository()
+  @Override
+  protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(queryHandlerProvider);
     LifecycleUtil.deactivate(commitManager);
@@ -599,6 +566,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
     LifecycleUtil.deactivate(packageManager);
     LifecycleUtil.deactivate(store);
+    super.doDeactivate();
   }
 
   /**

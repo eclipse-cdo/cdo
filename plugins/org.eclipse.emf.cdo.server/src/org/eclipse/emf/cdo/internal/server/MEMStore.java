@@ -46,7 +46,8 @@ public class MEMStore extends LongIDStore implements IMEMStore
    */
   public MEMStore(int listLimit)
   {
-    super(TYPE);
+    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(RevisionTemporality.NONE,
+        RevisionTemporality.AUDITING), set(RevisionParallelism.NONE));
     this.listLimit = listLimit;
   }
 
@@ -283,24 +284,6 @@ public class MEMStore extends LongIDStore implements IMEMStore
         }
       }
     }
-  }
-
-  @Override
-  public boolean hasBranchingSupport()
-  {
-    return false;
-  }
-
-  @Override
-  public boolean hasWriteDeltaSupport()
-  {
-    return true;
-  }
-
-  @Override
-  public boolean hasAuditingSupport()
-  {
-    return true;
   }
 
   public void repairAfterCrash()

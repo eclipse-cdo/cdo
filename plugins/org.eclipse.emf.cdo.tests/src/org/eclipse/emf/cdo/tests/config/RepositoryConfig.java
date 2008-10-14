@@ -110,9 +110,9 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
 
   protected void initRepositoryProperties(Map<String, String> props)
   {
-    props.put(Props.PROP_OVERRIDE_UUID, ""); // UUID := name !!!
-    props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
-    props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
+    props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
+    props.put(Props.CURRENT_LRU_CAPACITY, "10000");
+    props.put(Props.REVISED_LRU_CAPACITY, "10000");
   }
 
   @Override
@@ -153,11 +153,6 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     }
 
     Map<String, String> props = getRepositoryProperties();
-    if (store.hasWriteDeltaSupport())
-    {
-      props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "true");
-    }
-
     Repository repository = (Repository)CDOServerUtil.createRepository(name, store, props);
     RevisionManager revisionManager = getTestRevisionManager();
     if (revisionManager != null)
@@ -378,9 +373,8 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     protected void initRepositoryProperties(Map<String, String> props)
     {
       super.initRepositoryProperties(props);
-      props.put(Props.PROP_SUPPORTING_AUDITS, "false");
-      props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "false");
-      props.put(Props.PROP_VERIFYING_REVISIONS, "false");
+      props.put(Props.SUPPORTING_AUDITS, "false");
+      props.put(Props.VERIFYING_REVISIONS, "false");
     }
 
     @Override

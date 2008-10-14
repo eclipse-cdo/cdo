@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.spi.common.CDOIDLongFactoryImpl;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -28,29 +30,13 @@ public abstract class LongIDStore extends Store
 
   private transient long lastObjectID;
 
-  public LongIDStore(String type)
+  /**
+   * @since 2.0
+   */
+  public LongIDStore(String type, Set<ChangeFormat> supportedChangeFormats,
+      Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
-    super(type);
-  }
-
-  public synchronized CDOID getNextCDOID()
-  {
-    return CDOIDUtil.createLong(++lastObjectID);
-  }
-
-  public long getLastObjectID()
-  {
-    return lastObjectID;
-  }
-
-  public void setLastObjectID(long lastObjectID)
-  {
-    this.lastObjectID = lastObjectID;
-  }
-
-  public boolean wasCrashed()
-  {
-    return lastObjectID == CRASHED;
+    super(type, supportedChangeFormats, supportedRevisionTemporalities, supportedRevisionParallelisms);
   }
 
   public CDOIDObjectFactory getCDOIDObjectFactory()
@@ -68,18 +54,23 @@ public abstract class LongIDStore extends Store
     return CDOID_OBJECT_FACTORY.getLibraryHandler();
   }
 
-  public boolean hasAuditingSupport()
+  public long getLastObjectID()
   {
-    return false;
+    return lastObjectID;
   }
 
-  public boolean hasBranchingSupport()
+  public void setLastObjectID(long lastObjectID)
   {
-    return false;
+    this.lastObjectID = lastObjectID;
   }
 
-  public boolean hasWriteDeltaSupport()
+  public synchronized CDOID getNextCDOID()
   {
-    return false;
+    return CDOIDUtil.createLong(++lastObjectID);
+  }
+
+  public boolean wasCrashed()
+  {
+    return lastObjectID == CRASHED;
   }
 }

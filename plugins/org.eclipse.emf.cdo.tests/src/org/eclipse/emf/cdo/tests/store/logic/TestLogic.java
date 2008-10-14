@@ -81,9 +81,8 @@ public abstract class TestLogic extends AbstractOMTest
   protected Repository createRepository()
   {
     Map<String, String> props = new HashMap<String, String>();
-    props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, Boolean.toString(withRevisionDeltaSupport()));
-    props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
-    props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
+    props.put(Props.CURRENT_LRU_CAPACITY, "10000");
+    props.put(Props.REVISED_LRU_CAPACITY, "10000");
 
     Map<String, String> testProperties = getTestProperties();
     if (testProperties != null)

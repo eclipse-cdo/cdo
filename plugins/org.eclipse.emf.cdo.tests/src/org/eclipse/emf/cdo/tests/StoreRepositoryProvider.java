@@ -45,9 +45,8 @@ public class StoreRepositoryProvider
   protected IRepository createRepository(String name, Map<String, String> testProperties)
   {
     Map<String, String> props = new HashMap<String, String>();
-    props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "true");
-    props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
-    props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
+    props.put(Props.CURRENT_LRU_CAPACITY, "10000");
+    props.put(Props.REVISED_LRU_CAPACITY, "10000");
 
     props.putAll(testProperties);
 

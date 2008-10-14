@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
 
 import java.util.Map;
@@ -26,7 +25,6 @@ public class RevisionDeltaWithoutDeltaSupportTest extends RevisionDeltaTest
   public Map<String, Object> getTestProperties()
   {
     Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.PROP_SUPPORTING_REVISION_DELTAS, "false");
     testProperties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, new TestRevisionManager());
     return testProperties;
   }

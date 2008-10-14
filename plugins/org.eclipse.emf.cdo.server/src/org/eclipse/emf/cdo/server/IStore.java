@@ -13,14 +13,18 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public interface IStore extends IRepositoryElement
 {
-  public String getStoreType();
+  /**
+   * @since 2.0
+   */
+  public String getType();
 
   public CDOIDObjectFactory getCDOIDObjectFactory();
 
@@ -29,39 +33,39 @@ public interface IStore extends IRepositoryElement
   public CDOIDLibraryProvider getCDOIDLibraryProvider();
 
   /**
-   * Returns if this store supports the writing of modified newRevisions in terms of deltas.
-   * <p>
-   * The contract includes that store implementations with write delta support must also implement
-   * {@link IStoreWriter#writeRevisionDelta(CDORevisionDelta) IStoreWriter.writeRevisionDelta(CDORevisionDeltaImpl)} to
-   * not throw an <code>UnsupportedOperationException</code>.
-   * 
-   * @return <code>true</code> if this store supports the writing of modified newRevisions in terms of deltas,
-   *         <code>false</code> otherwise.
+   * @since 2.0
    */
-  public boolean hasWriteDeltaSupport();
+  public Set<ChangeFormat> getSupportedChangeFormats();
 
   /**
-   * Returns if this store supports the retrieval of historical newRevisions.
-   * <p>
-   * The contract includes that store implementations with auditing support must also implement
-   * {@link IStoreReader#readRevisionByTime(org.eclipse.emf.cdo.common.CDOID, int, long)
-   * IStoreReader.readRevisionByTime(CDOID, int, long)} to not throw an <code>UnsupportedOperationException</code>.
-   * 
-   * @return <code>true</code> if this store supports the retrieval of historical newRevisions, <code>false</code>
-   *         otherwise.
+   * @since 2.0
    */
-  public boolean hasAuditingSupport();
+  public Set<RevisionTemporality> getSupportedRevisionTemporalities();
 
   /**
-   * Returns if this store supports the storage of concurrent newRevisions in separate branches.
-   * <p>
-   * <b>Note:</b> This is reserved for future use by the framework. There is currently no support for branching in the
-   * framework!
-   * 
-   * @return <code>true</code> if this store supports the storage of concurrent newRevisions in separate branches,
-   *         <code>false</code> otherwise.
+   * @since 2.0
    */
-  public boolean hasBranchingSupport();
+  public Set<RevisionParallelism> getSupportedRevisionParallelisms();
+
+  /**
+   * @since 2.0
+   */
+  public RevisionTemporality getRevisionTemporality();
+
+  /**
+   * @since 2.0
+   */
+  public void setRevisionTemporality(RevisionTemporality revisionTemporality);
+
+  /**
+   * @since 2.0
+   */
+  public RevisionParallelism getRevisionParallelism();
+
+  /**
+   * @since 2.0
+   */
+  public void setRevisionParallelism(RevisionParallelism revisionParallelism);
 
   public boolean wasCrashed();
 
@@ -104,4 +108,31 @@ public interface IStore extends IRepositoryElement
    * @return a writer that can be used to write to this store in the context of the given view, never <code>null</code>.
    */
   public IStoreWriter getWriter(IView view);
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public enum ChangeFormat
+  {
+    REVISION, DELTA
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public enum RevisionTemporality
+  {
+    NONE, AUDITING
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public enum RevisionParallelism
+  {
+    NONE, BRANCHING
+  }
 }

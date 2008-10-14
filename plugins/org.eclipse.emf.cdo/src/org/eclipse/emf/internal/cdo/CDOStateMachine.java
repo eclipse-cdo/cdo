@@ -700,6 +700,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         reviseObject(object, timeStamp);
       }
+
       changeState(object, CDOState.PROXY);
     }
 

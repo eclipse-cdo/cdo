@@ -20,24 +20,32 @@ import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public abstract class Store extends Lifecycle implements IStore
 {
-  private String type;
+  private final String type;
 
-  // Exclude from dump due to contained db password
-  @ExcludeFromDump
-  private Map<String, String> properties;
+  private final Set<ChangeFormat> supportedChangeFormats;
+
+  private final Set<RevisionTemporality> supportedRevisionTemporalities;
+
+  private final Set<RevisionParallelism> supportedRevisionParallelisms;
+
+  private RevisionTemporality revisionTemporality = RevisionTemporality.NONE;
+
+  private RevisionParallelism revisionParallelism = RevisionParallelism.NONE;
 
   private IRepository repository;
 
@@ -45,29 +53,33 @@ public abstract class Store extends Lifecycle implements IStore
 
   private CDOPathFeature resourcePathFeature;
 
-  public Store(String type)
+  /**
+   * @since 2.0
+   */
+  public Store(String type, Set<ChangeFormat> supportedChangeFormats,
+      Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
+    checkArg(!StringUtil.isEmpty(type), "Empty type");
     this.type = type;
+
+    checkArg(supportedChangeFormats != null && !supportedChangeFormats.isEmpty(), "Empty supportedChangeFormats");
+    this.supportedChangeFormats = supportedChangeFormats;
+
+    checkArg(supportedRevisionTemporalities != null && !supportedRevisionTemporalities.isEmpty(),
+        "Empty supportedRevisionTemporalities");
+    this.supportedRevisionTemporalities = supportedRevisionTemporalities;
+
+    checkArg(supportedRevisionParallelisms != null && !supportedRevisionParallelisms.isEmpty(),
+        "Empty supportedRevisionParallelisms");
+    this.supportedRevisionParallelisms = supportedRevisionParallelisms;
   }
 
-  public String getStoreType()
+  /**
+   * @since 2.0
+   */
+  public String getType()
   {
     return type;
-  }
-
-  public synchronized Map<String, String> getProperties()
-  {
-    if (properties == null)
-    {
-      properties = new HashMap<String, String>();
-    }
-
-    return properties;
-  }
-
-  public synchronized void setProperties(Map<String, String> properties)
-  {
-    this.properties = properties;
   }
 
   public IRepository getRepository()
@@ -78,6 +90,68 @@ public abstract class Store extends Lifecycle implements IStore
   public void setRepository(IRepository repository)
   {
     this.repository = repository;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Set<ChangeFormat> getSupportedChangeFormats()
+  {
+    return supportedChangeFormats;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Set<RevisionTemporality> getSupportedRevisionTemporalities()
+  {
+    return supportedRevisionTemporalities;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Set<RevisionParallelism> getSupportedRevisionParallelisms()
+  {
+    return supportedRevisionParallelisms;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public RevisionTemporality getRevisionTemporality()
+  {
+    return revisionTemporality;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRevisionTemporality(RevisionTemporality revisionTemporality)
+  {
+    checkInactive();
+    checkState(supportedRevisionTemporalities.contains(revisionTemporality), "Revision temporality not supported: "
+        + revisionTemporality);
+    this.revisionTemporality = revisionTemporality;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public RevisionParallelism getRevisionParallelism()
+  {
+    return revisionParallelism;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRevisionParallelism(RevisionParallelism revisionParallelism)
+  {
+    checkInactive();
+    checkState(supportedRevisionParallelisms.contains(revisionParallelism), "Revision parallelism not supported: "
+        + revisionParallelism);
+    this.revisionParallelism = revisionParallelism;
   }
 
   public long getLastMetaID()
@@ -237,4 +311,12 @@ public abstract class Store extends Lifecycle implements IStore
    * {@link Lifecycle#activate() activating} the new instance.
    */
   protected abstract IStoreWriter createWriter(IView view);
+
+  /**
+   * @since 2.0
+   */
+  protected static <T> Set<T> set(T... elements)
+  {
+    return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));
+  }
 }

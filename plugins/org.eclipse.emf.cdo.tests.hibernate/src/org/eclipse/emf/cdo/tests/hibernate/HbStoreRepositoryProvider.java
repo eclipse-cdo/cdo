@@ -51,12 +51,11 @@ public class HbStoreRepositoryProvider extends StoreRepositoryProvider
     setLogging();
 
     Map<String, String> props = new HashMap<String, String>();
-    props.put(Props.PROP_OVERRIDE_UUID, "f8188187-65de-4c8a-8e75-e0ce5949837a");
-    props.put(Props.PROP_SUPPORTING_AUDITS, "false");
-    props.put(Props.PROP_SUPPORTING_REVISION_DELTAS, "false");
-    props.put(Props.PROP_VERIFYING_REVISIONS, "false");
-    props.put(Props.PROP_CURRENT_LRU_CAPACITY, "10000");
-    props.put(Props.PROP_REVISED_LRU_CAPACITY, "10000");
+    props.put(Props.OVERRIDE_UUID, "f8188187-65de-4c8a-8e75-e0ce5949837a");
+    props.put(Props.SUPPORTING_AUDITS, "false");
+    props.put(Props.VERIFYING_REVISIONS, "false");
+    props.put(Props.CURRENT_LRU_CAPACITY, "10000");
+    props.put(Props.REVISED_LRU_CAPACITY, "10000");
     addHibernateTeneoProperties(props);
 
     // override with the test properties

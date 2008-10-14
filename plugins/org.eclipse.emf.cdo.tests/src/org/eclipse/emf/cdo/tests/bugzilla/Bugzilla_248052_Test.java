@@ -37,8 +37,7 @@ public class Bugzilla_248052_Test extends AbstractCDOTest
   public Map<String, Object> getTestProperties()
   {
     Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.PROP_SUPPORTING_REVISION_DELTAS, "false");
-    testProperties.put(IRepository.Props.PROP_SUPPORTING_AUDITS, "false");
+    testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "false");
     return testProperties;
   }
 

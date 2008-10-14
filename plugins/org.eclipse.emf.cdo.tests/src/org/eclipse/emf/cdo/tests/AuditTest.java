@@ -34,7 +34,7 @@ public class AuditTest extends AbstractCDOTest
   public Map<String, Object> getTestProperties()
   {
     Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.PROP_SUPPORTING_AUDITS, "true");
+    testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
     return testProperties;
   }
 

@@ -519,8 +519,11 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     {
       String value = getProperties().get(Props.SUPPORTING_AUDITS);
       supportingAudits = value == null ? false : Boolean.valueOf(value);
-      store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
-          : IStore.RevisionTemporality.NONE);
+      if (value != null)
+      {
+        store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
+            : IStore.RevisionTemporality.NONE);
+      }
     }
 
     {

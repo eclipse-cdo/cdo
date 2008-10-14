@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.IStoreWriter;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -35,13 +36,17 @@ import java.util.Set;
  */
 public abstract class Store extends Lifecycle implements IStore
 {
-  private final String type;
+  @ExcludeFromDump
+  private final transient String type;
 
-  private final Set<ChangeFormat> supportedChangeFormats;
+  @ExcludeFromDump
+  private final transient Set<ChangeFormat> supportedChangeFormats;
 
-  private final Set<RevisionTemporality> supportedRevisionTemporalities;
+  @ExcludeFromDump
+  private final transient Set<RevisionTemporality> supportedRevisionTemporalities;
 
-  private final Set<RevisionParallelism> supportedRevisionParallelisms;
+  @ExcludeFromDump
+  private final transient Set<RevisionParallelism> supportedRevisionParallelisms;
 
   private RevisionTemporality revisionTemporality = RevisionTemporality.NONE;
 
@@ -49,9 +54,11 @@ public abstract class Store extends Lifecycle implements IStore
 
   private IRepository repository;
 
-  private long lastMetaID;
+  @ExcludeFromDump
+  private transient long lastMetaID;
 
-  private CDOPathFeature resourcePathFeature;
+  @ExcludeFromDump
+  private transient CDOPathFeature resourcePathFeature;
 
   /**
    * @since 2.0

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.Map;
@@ -32,9 +33,11 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
 {
   private IRepository repository;
 
-  private ExecutorService executors;
+  @ExcludeFromDump
+  private transient ExecutorService executors;
 
-  private Map<Transaction, TransactionCommitContextEntry> commitContextMap = new ConcurrentHashMap<Transaction, TransactionCommitContextEntry>();
+  @ExcludeFromDump
+  private transient Map<Transaction, TransactionCommitContextEntry> commitContextMap = new ConcurrentHashMap<Transaction, TransactionCommitContextEntry>();
 
   public CommitManager()
   {

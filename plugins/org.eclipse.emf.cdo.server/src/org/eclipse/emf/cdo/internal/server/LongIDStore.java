@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.spi.common.CDOIDLongFactoryImpl;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+
 import java.util.Set;
 
 /**
@@ -28,6 +30,7 @@ public abstract class LongIDStore extends Store
 
   private static final CDOIDLongFactoryImpl CDOID_OBJECT_FACTORY = new CDOIDLongFactoryImpl();
 
+  @ExcludeFromDump
   private transient long lastObjectID;
 
   /**

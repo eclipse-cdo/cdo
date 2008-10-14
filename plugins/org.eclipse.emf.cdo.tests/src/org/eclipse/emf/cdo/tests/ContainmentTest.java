@@ -348,15 +348,11 @@ public class ContainmentTest extends AbstractCDOTest
   {
     byte[] data = null;
     {
+      CDOSession session = openModel1Session();
       ResourceSet resourceSet = new ResourceSetImpl();
-
-      CDOSession session = openSession();
-
-      CDOTransaction transaction = session.openTransaction(resourceSet);
-
       resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
-      session.getPackageRegistry().putEPackage(getModel1Package());
+      CDOTransaction transaction = session.openTransaction(resourceSet);
       Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
       Resource resource2 = transaction.createResource("test");
 
@@ -381,26 +377,23 @@ public class ContainmentTest extends AbstractCDOTest
       data = outputStream.toByteArray();
       transaction.commit();
     }
+
     removeAllRevisions(getRepository().getRevisionManager());
-    {
-      EPackage packageObject = createDynamicEPackage();
-      ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.getPackageRegistry().put(packageObject.getNsURI(), packageObject);
-      CDOSession session = openSession();
+    EPackage packageObject = createDynamicEPackage();
 
-      CDOTransaction transaction = session.openTransaction(resourceSet);
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getPackageRegistry().put(packageObject.getNsURI(), packageObject);
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
 
-      Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
-      resource1.load(new ByteArrayInputStream(data), null);
-      Resource resource = transaction.getResource("test");
+    Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
+    resource1.load(new ByteArrayInputStream(data), null);
+    Resource resource = transaction.getResource("test");
 
-      Order order = (Order)resource.getContents().get(0);
-
-      assertEquals(resource1.getContents().get(0), order.eContainer());
-    }
-
+    Order order = (Order)resource.getContents().get(0);
+    assertEquals(resource1.getContents().get(0), order.eContainer());
   }
 
   public void testObjectNotSameResourceThanItsContainer_WithoutCDO() throws Exception

@@ -30,6 +30,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import javax.sql.DataSource;
@@ -55,15 +56,20 @@ public class DBStore extends LongIDStore implements IDBStore
 
   private IDBConnectionProvider dbConnectionProvider;
 
-  private int nextPackageID;
+  @ExcludeFromDump
+  private transient StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
 
-  private int nextClassID;
+  @ExcludeFromDump
+  private transient StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
 
-  private int nextFeatureID;
+  @ExcludeFromDump
+  private transient int nextPackageID;
 
-  private StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
+  @ExcludeFromDump
+  private transient int nextClassID;
 
-  private StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
+  @ExcludeFromDump
+  private transient int nextFeatureID;
 
   public DBStore()
   {

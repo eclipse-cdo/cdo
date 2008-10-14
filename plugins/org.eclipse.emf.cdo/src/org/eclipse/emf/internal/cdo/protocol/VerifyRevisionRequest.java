@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -37,15 +36,15 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
 
   private Collection<InternalCDORevision> revisions;
 
-  public VerifyRevisionRequest(IChannel channel, Collection<InternalCDORevision> revisions)
+  public VerifyRevisionRequest(CDOClientProtocol protocol, Collection<InternalCDORevision> revisions)
   {
-    super(channel);
+    super(protocol);
     this.revisions = revisions;
   }
 
-  public VerifyRevisionRequest(IChannel channel, InternalCDORevision revision)
+  public VerifyRevisionRequest(CDOClientProtocol protocol, InternalCDORevision revision)
   {
-    this(channel, Collections.singleton(revision));
+    this(protocol, Collections.singleton(revision));
   }
 
   @Override

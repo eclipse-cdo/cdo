@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.core.runtime.Path;
@@ -89,12 +88,9 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
   public String getToolTipText()
   {
     CDOSession session = view.getSession();
-    IConnector connector = session.getConnector();
     String repositoryName = session.getRepositoryName();
 
     StringBuilder builder = new StringBuilder();
-    builder.append(connector.getURL());
-    builder.append("/");
     builder.append(repositoryName);
     if (resourcePath != null)
     {

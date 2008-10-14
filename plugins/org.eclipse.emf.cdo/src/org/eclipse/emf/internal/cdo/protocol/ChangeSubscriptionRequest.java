@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -45,10 +44,10 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
 
   private boolean clear;
 
-  public ChangeSubscriptionRequest(IChannel channel, int viewID, List<CDOID> cdoIDs, boolean subscribeMode,
+  public ChangeSubscriptionRequest(CDOClientProtocol protocol, int viewID, List<CDOID> cdoIDs, boolean subscribeMode,
       boolean clear)
   {
-    super(channel);
+    super(protocol);
     this.viewID = viewID;
     this.cdoIDs = cdoIDs;
     this.subscribeMode = subscribeMode;

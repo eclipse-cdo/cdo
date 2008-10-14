@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -36,9 +35,9 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
 
   private List<InternalCDOObject> invalidObjects;
 
-  public SetAuditRequest(IChannel channel, int viewID, long timeStamp, List<InternalCDOObject> invalidObjects)
+  public SetAuditRequest(CDOClientProtocol protocol, int viewID, long timeStamp, List<InternalCDOObject> invalidObjects)
   {
-    super(channel);
+    super(protocol);
     this.viewID = viewID;
     this.timeStamp = timeStamp;
     this.invalidObjects = invalidObjects;

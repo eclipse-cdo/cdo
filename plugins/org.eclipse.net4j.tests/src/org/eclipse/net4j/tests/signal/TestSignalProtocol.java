@@ -37,7 +37,7 @@ public class TestSignalProtocol extends SignalProtocol
 
   public TestSignalProtocol(IConnector connector)
   {
-    super(connector);
+    open(connector);
   }
 
   private TestSignalProtocol()
@@ -56,18 +56,25 @@ public class TestSignalProtocol extends SignalProtocol
     {
     case SIGNAL_INT:
       return new IntIndication();
+
     case SIGNAL_INT_FAIL:
       return new IntFailIndication();
+
     case SIGNAL_ARRAY:
       return new ArrayIndication();
+
     case SIGNAL_STRING:
       return new StringIndication();
+
     case SIGNAL_ASYNC:
       return new AsyncIndication();
+
     case SIGNAL_EXCEPTION:
       return new ExceptionIndication();
+
+    default:
+      return null;
     }
-    return null;
   }
 
   /**

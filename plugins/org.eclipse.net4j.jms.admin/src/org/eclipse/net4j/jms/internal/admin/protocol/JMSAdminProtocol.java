@@ -22,7 +22,7 @@ public class JMSAdminProtocol extends SignalProtocol
 {
   public JMSAdminProtocol(IConnector connector)
   {
-    super(connector);
+    open(connector);
   }
 
   public String getType()

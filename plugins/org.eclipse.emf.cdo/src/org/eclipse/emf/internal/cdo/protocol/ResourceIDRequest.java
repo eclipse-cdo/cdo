@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -33,9 +32,9 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
 
   private String path;
 
-  public ResourceIDRequest(IChannel channel, int viewID, String path)
+  public ResourceIDRequest(CDOClientProtocol protocol, int viewID, String path)
   {
-    super(channel);
+    super(protocol);
     this.viewID = viewID;
     this.path = path;
   }

@@ -27,9 +27,7 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.revision.CDOListReferenceProxyImpl;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -40,9 +38,9 @@ import java.io.IOException;
  */
 public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<RESULT>
 {
-  public CDOClientRequest(IChannel channel)
+  public CDOClientRequest(CDOClientProtocol protocol)
   {
-    super((SignalProtocol)channel.getReceiveHandler());
+    super(protocol);
   }
 
   @Override

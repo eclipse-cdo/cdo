@@ -26,7 +26,6 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOTimestampContextImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -50,10 +49,10 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimestam
 
   private int referenceChunk;
 
-  public SyncRevisionRequest(IChannel channel, CDOSessionImpl cdoSession, Map<CDOID, CDORevision> cdoRevisions,
-      int referenceChunk)
+  public SyncRevisionRequest(CDOClientProtocol protocol, CDOSessionImpl cdoSession,
+      Map<CDOID, CDORevision> cdoRevisions, int referenceChunk)
   {
-    super(channel);
+    super(protocol);
     collectionRevisions = cdoRevisions;
     this.referenceChunk = referenceChunk;
     this.cdoSession = cdoSession;

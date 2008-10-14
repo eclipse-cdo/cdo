@@ -12,11 +12,11 @@
 package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -36,7 +36,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
 
   protected long lastElapseTimeBetweenOperations;
 
-  protected InternalCDOObject lastTraverseCDOObject;
+  protected CDOObject lastTraverseCDOObject;
 
   protected long lastLatencyTime;
 
@@ -60,7 +60,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     return loadCollectionPolicy;
   }
 
-  public void preTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index)
+  public void preTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index)
   {
     if (TRACER.isEnabled())
     {
@@ -79,7 +79,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     doPreTraverseFeature(cdoObject, feature, index);
   }
 
-  public void postTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index, Object value)
+  public void postTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index, Object value)
   {
     if (TRACER.isEnabled())
     {
@@ -97,11 +97,11 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     }
   }
 
-  protected void doPreTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index)
+  protected void doPreTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index)
   {
   }
 
-  protected void doPostTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index, Object value)
+  protected void doPostTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index, Object value)
   {
   }
 

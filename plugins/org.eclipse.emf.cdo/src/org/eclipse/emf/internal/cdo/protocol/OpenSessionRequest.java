@@ -26,7 +26,6 @@ import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -45,9 +44,9 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
 
   private OpenSessionResult result;
 
-  public OpenSessionRequest(IChannel channel, String repositoryName, boolean passiveUpdateEnabled)
+  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, boolean passiveUpdateEnabled)
   {
-    super(channel);
+    super(protocol);
     this.repositoryName = repositoryName;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }

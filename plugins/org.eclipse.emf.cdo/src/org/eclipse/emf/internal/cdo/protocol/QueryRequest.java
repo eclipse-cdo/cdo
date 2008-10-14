@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -40,10 +39,10 @@ public class QueryRequest extends CDOClientRequest<Object>
 
   private CDOQueryResultIteratorImpl<?> queryResult;
 
-  public QueryRequest(IChannel channel, int viewID, CDOQueryInfoImpl queryInfo,
+  public QueryRequest(CDOClientProtocol protocol, int viewID, CDOQueryInfoImpl queryInfo,
       CDOQueryResultIteratorImpl<?> queryResult)
   {
-    super(channel);
+    super(protocol);
     this.viewID = viewID;
     this.queryInfo = queryInfo;
     this.queryResult = queryResult;

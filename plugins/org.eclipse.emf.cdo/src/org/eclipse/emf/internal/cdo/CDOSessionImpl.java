@@ -41,12 +41,13 @@ import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
 import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
-import org.eclipse.emf.internal.cdo.protocol.SetPassiveUpdateRequest;
 import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeRequest;
 import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeResult;
+import org.eclipse.emf.internal.cdo.protocol.SetPassiveUpdateRequest;
 import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
@@ -124,7 +125,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private IConnector connector;
 
-  private IChannel channel;
+  private CDOClientProtocol protocol;
 
   @ExcludeFromDump
   private IListener channelListener = new LifecycleEventAdapter()
@@ -176,6 +177,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOSessionImpl()
   {
+    protocol = new CDOClientProtocol();
+    protocol.setInfraStructure(this);
+
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
 
@@ -194,7 +198,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    */
   public String getUserID()
   {
-    return connector == null ? null : connector.getUserID();
+    IChannel channel = protocol.getChannel();
+    return channel == null ? null : channel.getUserID();
   }
 
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
@@ -265,9 +270,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     this.connector = connector;
   }
 
-  public IChannel getChannel()
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public CDOClientProtocol getProtocol()
   {
-    return channel;
+    return protocol;
   }
 
   public String getRepositoryName()
@@ -320,7 +328,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     try
     {
-      RepositoryTimeRequest request = new RepositoryTimeRequest(channel);
+      RepositoryTimeRequest request = new RepositoryTimeRequest(protocol);
       return getFailOverStrategy().send(request);
     }
     catch (Exception ex)
@@ -331,6 +339,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public boolean isOpen()
   {
+    IChannel channel = protocol.getChannel();
     return channel != null;
   }
 
@@ -436,15 +445,18 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       }
     }
 
-    try
+    if (isActive())
     {
-      getFailOverStrategy().send(
-          new ViewsChangedRequest(channel, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED,
-              CDOProtocolView.UNSPECIFIED_DATE));
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
+      try
+      {
+        ViewsChangedRequest request = new ViewsChangedRequest(protocol, view.getViewID(),
+            CDOProtocolConstants.VIEW_CLOSED, CDOProtocolView.UNSPECIFIED_DATE);
+        getFailOverStrategy().send(request);
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
     }
 
     fireElementRemovedEvent(view);
@@ -462,7 +474,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
         timeStamp = ((CDOAudit)view).getTimeStamp();
       }
 
-      ViewsChangedRequest request = new ViewsChangedRequest(channel, id, kind, timeStamp);
+      ViewsChangedRequest request = new ViewsChangedRequest(protocol, id, kind, timeStamp);
       getFailOverStrategy().send(request);
     }
     catch (Exception ex)
@@ -787,7 +799,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOSession[{0}/{1}]", connector, repositoryName);
+    IChannel channel = protocol.getChannel();
+    return MessageFormat.format("CDOSession[{0}/{1}]", channel, repositoryName);
   }
 
   /**
@@ -824,31 +837,28 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     // Link ViewSet with View
     view.setViewSet(viewSet);
     ((CDOViewSetImpl)viewSet).add(view);
+
     sendViewsChangedRequest(view);
     fireElementAddedEvent(view);
   }
 
   protected void handleFailOver(IChannel oldChannel, IChannel newChannel, IConnector newConnector)
   {
-    EventUtil.removeListener(oldChannel, channelListener);
-    EventUtil.addListener(newChannel, channelListener);
-    channel = newChannel;
-    connector = newConnector;
+    // TODO: implement CDOSessionImpl.handleFailOver(oldChannel, newChannel, newConnector)
+    throw new UnsupportedOperationException();
+
+    // EventUtil.removeListener(oldChannel, channelListener);
+    // EventUtil.addListener(newChannel, channelListener);
+    // channel = newChannel;
+    // connector = newConnector;
   }
 
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (channel == null && connector == null)
-    {
-      throw new IllegalStateException("channel == null && connector == null");
-    }
-
-    if (repositoryName == null)
-    {
-      throw new IllegalStateException("repositoryName == null");
-    }
+    checkState(connector, "connector == null");
+    checkState(repositoryName, "repositoryName == null");
   }
 
   @Override
@@ -861,13 +871,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     packageRegistry.setSession(this);
+    IChannel channel = protocol.open(connector);
 
-    if (channel == null)
-    {
-      channel = connector.openChannel(CDOProtocolConstants.PROTOCOL_NAME, this);
-    }
-
-    OpenSessionRequest request = new OpenSessionRequest(channel, repositoryName, passiveUpdateEnabled);
+    OpenSessionRequest request = new OpenSessionRequest(protocol, repositoryName, passiveUpdateEnabled);
     OpenSessionResult result = getFailOverStrategy().send(request);
 
     sessionID = result.getSessionID();
@@ -885,6 +891,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   @Override
   protected void doDeactivate() throws Exception
   {
+    IChannel channel = protocol.getChannel();
     EventUtil.removeListener(channel, channelListener);
     if (invalidationRunner != null)
     {
@@ -938,7 +945,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       missingLibraries.removeAll(existingLibraries);
       if (!missingLibraries.isEmpty())
       {
-        LoadLibrariesRequest request = new LoadLibrariesRequest(channel, missingLibraries, cacheFolder);
+        LoadLibrariesRequest request = new LoadLibrariesRequest(protocol, missingLibraries, cacheFolder);
         getFailOverStrategy().send(request);
       }
     }
@@ -1033,7 +1040,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         if (!allRevisions.isEmpty())
         {
-          SetPassiveUpdateRequest request = new SetPassiveUpdateRequest(getChannel(), this, allRevisions,
+          SetPassiveUpdateRequest request = new SetPassiveUpdateRequest(protocol, this, allRevisions,
               collectionLoadingPolicy.getInitialChunkSize(), passiveUpdateEnabled);
           getFailOverStrategy().send(request);
         }
@@ -1061,8 +1068,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         if (!allRevisions.isEmpty())
         {
-          SyncRevisionRequest request = new SyncRevisionRequest(getChannel(), this, allRevisions,
-              collectionLoadingPolicy.getInitialChunkSize());
+          SyncRevisionRequest request = new SyncRevisionRequest(protocol, this, allRevisions, collectionLoadingPolicy
+              .getInitialChunkSize());
           return getFailOverStrategy().send(request);
         }
       }

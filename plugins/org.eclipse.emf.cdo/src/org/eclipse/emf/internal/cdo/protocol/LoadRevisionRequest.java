@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -41,9 +40,9 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
 
   private int referenceChunk;
 
-  public LoadRevisionRequest(IChannel channel, Collection<CDOID> ids, int referenceChunk)
+  public LoadRevisionRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk)
   {
-    super(channel);
+    super(protocol);
     this.ids = ids;
     this.referenceChunk = referenceChunk;
   }

@@ -48,7 +48,6 @@ import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -301,9 +300,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         return resource.cdoID();
       }
 
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      ResourceIDRequest request = new ResourceIDRequest(session.getChannel(), viewID, path);
-      return failOverStrategy.send(request);
+      ResourceIDRequest request = new ResourceIDRequest(session.getProtocol(), viewID, path);
+      return session.getFailOverStrategy().send(request);
     }
     catch (Exception ex)
     {
@@ -379,9 +377,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     try
     {
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      ResourcePathRequest request = new ResourcePathRequest(session.getChannel(), viewID, resourceID);
-      String path = failOverStrategy.send(request);
+      ResourcePathRequest request = new ResourcePathRequest(session.getProtocol(), viewID, resourceID);
+      String path = session.getFailOverStrategy().send(request);
       return addResource(resourceID, path);
     }
     catch (RuntimeException ex)
@@ -1097,7 +1094,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     {
       try
       {
-        ChangeSubscriptionRequest request = new ChangeSubscriptionRequest(getSession().getChannel(), getViewID(),
+        ChangeSubscriptionRequest request = new ChangeSubscriptionRequest(getSession().getProtocol(), getViewID(),
             cdoIDs, subscribeMode, clear);
         session.getFailOverStrategy().send(request);
       }

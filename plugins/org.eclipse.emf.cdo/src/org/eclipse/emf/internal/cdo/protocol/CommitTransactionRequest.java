@@ -31,7 +31,6 @@ import org.eclipse.emf.internal.cdo.CDOCommitContext;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -49,9 +48,9 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   protected CDOCommitContext commitContext;
 
-  public CommitTransactionRequest(IChannel channel, CDOCommitContext commitContext)
+  public CommitTransactionRequest(CDOClientProtocol protocol, CDOCommitContext commitContext)
   {
-    super(channel);
+    super(protocol);
     this.commitContext = commitContext;
   }
 

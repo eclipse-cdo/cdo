@@ -59,8 +59,9 @@ public class JMSServerProtocol extends SignalProtocol
 
     case JMSProtocolConstants.SIGNAL_ROLLBACK:
       return new JMSRollbackIndication();
-    }
 
-    return null;
+    default:
+      return null;
+    }
   }
 }

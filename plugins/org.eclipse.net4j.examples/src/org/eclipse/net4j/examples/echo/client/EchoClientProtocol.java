@@ -23,7 +23,7 @@ public class EchoClientProtocol extends SignalProtocol implements EchoProtocol
 {
   public EchoClientProtocol(IConnector connector)
   {
-    super(connector);
+    open(connector);
   }
 
   public String getType()

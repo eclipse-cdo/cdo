@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.protocol.SetAuditRequest;
 
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.WrappedException;
 
 import java.text.MessageFormat;
@@ -82,9 +81,8 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
     try
     {
       CDOSessionImpl session = getSession();
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      SetAuditRequest request = new SetAuditRequest(session.getChannel(), getViewID(), timeStamp, invalidObjects);
-      return failOverStrategy.send(request);
+      SetAuditRequest request = new SetAuditRequest(session.getProtocol(), getViewID(), timeStamp, invalidObjects);
+      return session.getFailOverStrategy().send(request);
     }
     catch (Exception ex)
     {

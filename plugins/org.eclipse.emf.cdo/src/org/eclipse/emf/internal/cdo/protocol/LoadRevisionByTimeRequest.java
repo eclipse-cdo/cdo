@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -33,9 +32,9 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
 
   private long timeStamp;
 
-  public LoadRevisionByTimeRequest(IChannel channel, Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  public LoadRevisionByTimeRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    super(channel, ids, referenceChunk);
+    super(protocol, ids, referenceChunk);
     this.timeStamp = timeStamp;
   }
 

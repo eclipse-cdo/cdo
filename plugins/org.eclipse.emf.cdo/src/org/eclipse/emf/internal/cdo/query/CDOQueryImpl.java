@@ -11,19 +11,18 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.query;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.query.CDOQuery;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.protocol.QueryRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.ecore.EClass;
@@ -69,9 +68,8 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 
     try
     {
-      CDOSession session = view.getSession();
-      IChannel channel = session.getChannel();
-      QueryRequest request = new QueryRequest(channel, view.getViewID(), queryInfo, queryResult);
+      CDOSessionImpl session = view.getSession();
+      QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryInfo, queryResult);
       session.getFailOverStrategy().send(request);
     }
     catch (Exception exception)
@@ -93,9 +91,8 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       {
         try
         {
-          CDOSession session = view.getSession();
-          IChannel channel = session.getChannel();
-          QueryRequest request = new QueryRequest(channel, view.getViewID(), queryInfo, queryResult);
+          CDOSessionImpl session = view.getSession();
+          QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryInfo, queryResult);
           session.getFailOverStrategy().send(request);
         }
         catch (Exception ex)

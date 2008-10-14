@@ -11,13 +11,11 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSavepoint;
-import org.eclipse.emf.cdo.CDOSession;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -46,15 +44,14 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
 
     commitContext.preCommit();
 
-    CDOSession session = transaction.getSession();
-    IChannel channel = session.getChannel();
-    IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-    CommitTransactionRequest request = new CommitTransactionRequest(channel, commitContext);
+    CDOSessionImpl session = (CDOSessionImpl)transaction.getSession();
+    CommitTransactionRequest request = new CommitTransactionRequest(session.getProtocol(), commitContext);
     if (TRACER.isEnabled())
     {
       TRACER.format("Sending commit request");
     }
 
+    IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
     CommitTransactionResult result = failOverStrategy.send(request, transaction.getCommitTimeout());
     String rollbackMessage = result.getRollbackMessage();
     if (rollbackMessage != null)

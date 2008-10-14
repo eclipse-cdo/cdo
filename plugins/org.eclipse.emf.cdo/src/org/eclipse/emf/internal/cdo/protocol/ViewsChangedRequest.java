@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 
-import org.eclipse.net4j.channel.IChannel;
-
 import java.io.IOException;
 
 /**
@@ -29,9 +27,9 @@ public class ViewsChangedRequest extends CDOClientRequest<Boolean>
 
   private long timeStamp;
 
-  public ViewsChangedRequest(IChannel channel, int viewID, byte kind, long timeStamp)
+  public ViewsChangedRequest(CDOClientProtocol protocol, int viewID, byte kind, long timeStamp)
   {
-    super(channel);
+    super(protocol);
     this.viewID = viewID;
     this.kind = kind;
     this.timeStamp = timeStamp;

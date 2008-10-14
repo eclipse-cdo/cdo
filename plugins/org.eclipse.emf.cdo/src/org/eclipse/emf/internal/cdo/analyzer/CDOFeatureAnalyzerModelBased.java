@@ -11,11 +11,10 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,12 +32,12 @@ public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer
   }
 
   @Override
-  public void doPreTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index)
+  public void doPreTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index)
   {
   }
 
   @Override
-  public void doPostTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index, Object value)
+  public void doPostTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index, Object value)
   {
     if (didFetch())
     {

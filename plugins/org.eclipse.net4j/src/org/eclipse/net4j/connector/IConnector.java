@@ -11,6 +11,7 @@
 package org.eclipse.net4j.connector;
 
 import org.eclipse.net4j.ILocationAware;
+import org.eclipse.net4j.ILocationAware.Location;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannel;

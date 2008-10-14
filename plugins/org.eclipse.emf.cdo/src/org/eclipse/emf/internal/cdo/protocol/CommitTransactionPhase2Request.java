@@ -22,7 +22,6 @@ import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.URI;
@@ -44,9 +43,9 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionPhase1Request.class);
 
-  public CommitTransactionPhase2Request(IChannel channel, final CDOXATransactionCommitContext xaTransaction)
+  public CommitTransactionPhase2Request(CDOClientProtocol protocol, final CDOXATransactionCommitContext xaTransaction)
   {
-    super(channel, xaTransaction);
+    super(protocol, xaTransaction);
   }
 
   @Override

@@ -11,15 +11,14 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.query;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.concurrent.ConcurrentValue;
 
 import java.util.ArrayList;
@@ -102,9 +101,8 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryResult<T>
 
       try
       {
-        CDOSession session = getView().getSession();
-        IChannel channel = session.getChannel();
-        QueryCancelRequest request = new QueryCancelRequest(channel, getQueryID());
+        CDOSessionImpl session = (CDOSessionImpl)getView().getSession();
+        QueryCancelRequest request = new QueryCancelRequest(session.getProtocol(), getQueryID());
         session.getFailOverStrategy().send(request);
       }
       catch (Exception exception)

@@ -42,7 +42,6 @@ import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEvent;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -241,9 +240,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
   public static String getSessionLabel(CDOSession session)
   {
-    IConnector connector = session.getConnector();
-    String repositoryName = session.getRepositoryName();
-    return "Session " + connector.getURL() + "/" + repositoryName + " [" + session.getSessionID() + "]";
+    return "Session " + session.getRepositoryName() + " [" + session.getSessionID() + "]";
   }
 
   public static String getViewLabel(CDOView view)

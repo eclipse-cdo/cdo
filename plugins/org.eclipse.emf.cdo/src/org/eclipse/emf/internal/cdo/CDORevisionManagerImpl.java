@@ -22,12 +22,12 @@ import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.LoadChunkRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByTimeRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
@@ -77,8 +77,8 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
-      IChannel channel = session.getChannel();
-      LoadChunkRequest request = new LoadChunkRequest(channel, (InternalCDORevision)revision, feature, accessIndex,
+      CDOClientProtocol protocol = session.getProtocol();
+      LoadChunkRequest request = new LoadChunkRequest(protocol, (InternalCDORevision)revision, feature, accessIndex,
           fetchIndex, fromIndex, toIndex);
 
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
@@ -97,33 +97,36 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   @Override
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    return send(new LoadRevisionRequest(session.getChannel(), Collections.singleton(id), referenceChunk)).get(0);
+    CDOClientProtocol protocol = session.getProtocol();
+    return send(new LoadRevisionRequest(protocol, Collections.singleton(id), referenceChunk)).get(0);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    return send(
-        new LoadRevisionByTimeRequest(session.getChannel(), Collections.singleton(id), referenceChunk, timeStamp)).get(
-        0);
+    CDOClientProtocol protocol = session.getProtocol();
+    return send(new LoadRevisionByTimeRequest(protocol, Collections.singleton(id), referenceChunk, timeStamp)).get(0);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    return send(new LoadRevisionByVersionRequest(session.getChannel(), id, referenceChunk, version)).get(0);
+    CDOClientProtocol protocol = session.getProtocol();
+    return send(new LoadRevisionByVersionRequest(protocol, id, referenceChunk, version)).get(0);
   }
 
   @Override
   protected List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    return send(new LoadRevisionRequest(session.getChannel(), ids, referenceChunk));
+    CDOClientProtocol protocol = session.getProtocol();
+    return send(new LoadRevisionRequest(protocol, ids, referenceChunk));
   }
 
   @Override
   protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    return send(new LoadRevisionByTimeRequest(session.getChannel(), ids, referenceChunk, timeStamp));
+    CDOClientProtocol protocol = session.getProtocol();
+    return send(new LoadRevisionByTimeRequest(protocol, ids, referenceChunk, timeStamp));
   }
 
   /**

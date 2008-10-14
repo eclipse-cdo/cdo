@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo" version="2">
-    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionImpl.java" type="org.eclipse.emf.internal.cdo.CDOXATransactionImpl$CDOXAState">
-        <filter id="643846161">
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.CDOSessionImpl">
+        <filter id="643842064">
             <message_arguments>
-                <message_argument value="CommitTransactionResult"/>
-                <message_argument value="CDOXAState"/>
-                <message_argument value="check_result(CommitTransactionResult)"/>
+                <message_argument value="CDOClientProtocol"/>
+                <message_argument value="CDOSessionImpl"/>
+                <message_argument value="getProtocol()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -15,6 +15,15 @@
                 <message_argument value="CommitTransactionResult"/>
                 <message_argument value="CDOStateMachine"/>
                 <message_argument value="commit(InternalCDOObject, CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionImpl.java" type="org.eclipse.emf.internal.cdo.CDOXATransactionImpl$CDOXAState">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXAState"/>
+                <message_argument value="check_result(CommitTransactionResult)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -38,18 +47,18 @@
                 <message_argument value="setResult(CommitTransactionResult)"/>
             </message_arguments>
         </filter>
-        <filter id="643842064">
-            <message_arguments>
-                <message_argument value="CommitTransactionResult"/>
-                <message_argument value="CDOXATransactionCommitContext"/>
-                <message_argument value="getResult()"/>
-            </message_arguments>
-        </filter>
         <filter id="643846161">
             <message_arguments>
                 <message_argument value="CommitTransactionResult"/>
                 <message_argument value="CDOXATransactionCommitContext"/>
                 <message_argument value="postCommit(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXATransactionCommitContext"/>
+                <message_argument value="getResult()"/>
             </message_arguments>
         </filter>
     </resource>

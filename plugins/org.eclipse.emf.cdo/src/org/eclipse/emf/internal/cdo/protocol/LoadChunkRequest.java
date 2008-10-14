@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -44,10 +43,10 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
 
   private int fetchIndex;
 
-  public LoadChunkRequest(IChannel channel, InternalCDORevision revision, CDOFeature feature, int accessIndex,
-      int fetchIndex, int fromIndex, int toIndex)
+  public LoadChunkRequest(CDOClientProtocol protocol, InternalCDORevision revision, CDOFeature feature,
+      int accessIndex, int fetchIndex, int fromIndex, int toIndex)
   {
-    super(channel);
+    super(protocol);
     this.revision = revision;
     this.feature = feature;
     this.accessIndex = accessIndex;

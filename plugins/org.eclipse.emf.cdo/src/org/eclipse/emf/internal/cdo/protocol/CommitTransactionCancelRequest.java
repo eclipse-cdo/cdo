@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 
-import org.eclipse.net4j.channel.IChannel;
-
 import java.io.IOException;
 
 /**
@@ -32,9 +30,9 @@ import java.io.IOException;
  */
 public class CommitTransactionCancelRequest extends CommitTransactionRequest
 {
-  public CommitTransactionCancelRequest(IChannel channel, CDOXATransactionCommitContext xaTransaction)
+  public CommitTransactionCancelRequest(CDOClientProtocol protocol, CDOXATransactionCommitContext xaTransaction)
   {
-    super(channel, xaTransaction);
+    super(protocol, xaTransaction);
   }
 
   @Override

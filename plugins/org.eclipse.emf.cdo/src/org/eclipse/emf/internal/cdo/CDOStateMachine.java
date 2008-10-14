@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
@@ -28,12 +27,12 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
@@ -311,10 +310,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       try
       {
-        CDOSession session = view.getSession();
-        IChannel channel = session.getChannel();
+        CDOSessionImpl session = (CDOSessionImpl)view.getSession();
+        CDOClientProtocol protocol = session.getProtocol();
+        VerifyRevisionRequest request = new VerifyRevisionRequest(protocol, revisions);
+
         IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-        VerifyRevisionRequest request = new VerifyRevisionRequest(channel, revisions);
         revisions = failOverStrategy.send(request);
       }
       catch (Exception ex)

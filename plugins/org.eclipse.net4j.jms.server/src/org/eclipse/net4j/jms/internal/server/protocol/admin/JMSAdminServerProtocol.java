@@ -36,9 +36,10 @@ public class JMSAdminServerProtocol extends SignalProtocol
     {
     case JMSAdminProtocolConstants.SIGNAL_CREATE_DESTINATION:
       return new JMSCreateDestinationIndication();
-    }
 
-    return null;
+    default:
+      return null;
+    }
   }
 
   public IServer getServer()

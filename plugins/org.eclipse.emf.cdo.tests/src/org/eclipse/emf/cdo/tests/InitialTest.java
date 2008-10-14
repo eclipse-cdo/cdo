@@ -24,10 +24,8 @@ import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
-
-import org.eclipse.net4j.buffer.IBufferHandler;
-import org.eclipse.net4j.channel.IChannel;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -127,14 +125,9 @@ public class InitialTest extends AbstractCDOTest
   public void testOpenSession() throws Exception
   {
     msg("Opening session");
-    CDOSession session = openModel1Session();
+    CDOSessionImpl session = (CDOSessionImpl)openModel1Session();
     assertNotNull(session);
-
-    IChannel channel = session.getChannel();
-    assertNotNull(channel);
-
-    IBufferHandler receiveHandler = channel.getReceiveHandler();
-    assertNotNull(receiveHandler);
+    assertEquals(true, session.isOpen());
   }
 
   public void testStartTransaction() throws Exception

@@ -11,12 +11,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -101,7 +100,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
   }
 
   @Override
-  protected void doPreTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index)
+  protected void doPreTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index)
   {
     // Don`t handle containment relationship
     if (!feature.isReference())
@@ -117,7 +116,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
   }
 
   @Override
-  protected void doPostTraverseFeature(InternalCDOObject cdoObject, CDOFeature feature, int index, Object object)
+  protected void doPostTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index, Object object)
   {
     if (didFetch())
     {

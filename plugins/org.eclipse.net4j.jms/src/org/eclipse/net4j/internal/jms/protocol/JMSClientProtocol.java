@@ -40,8 +40,9 @@ public class JMSClientProtocol extends SignalProtocol
     {
     case JMSProtocolConstants.SIGNAL_SERVER_MESSAGE:
       return new JMSServerMessageIndication();
-    }
 
-    return null;
+    default:
+      return null;
+    }
   }
 }

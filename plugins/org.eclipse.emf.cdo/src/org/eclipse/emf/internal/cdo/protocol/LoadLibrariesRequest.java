@@ -14,9 +14,7 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -38,9 +36,9 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
 
   private File cacheFolder;
 
-  public LoadLibrariesRequest(IChannel channel, Collection<String> libraryNames, File cacheFolder)
+  public LoadLibrariesRequest(CDOClientProtocol protocol, Collection<String> libraryNames, File cacheFolder)
   {
-    super((SignalProtocol)channel.getReceiveHandler());
+    super(protocol);
     this.libraryNames = libraryNames;
     this.cacheFolder = cacheFolder;
   }

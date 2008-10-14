@@ -57,9 +57,10 @@ public class BuddiesServerProtocol extends SignalProtocol
 
     case ProtocolConstants.SIGNAL_MESSAGE:
       return new MessageIndication(IBuddyAdmin.INSTANCE);
-    }
 
-    return null;
+    default:
+      return null;
+    }
   }
 
   /**

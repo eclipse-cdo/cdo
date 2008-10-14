@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 
 import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 
-import org.eclipse.net4j.channel.IChannel;
-
 import java.io.IOException;
 
 /**
@@ -31,9 +29,9 @@ import java.io.IOException;
  */
 public class CommitTransactionPhase1Request extends CommitTransactionRequest
 {
-  public CommitTransactionPhase1Request(IChannel channel, final CDOXATransactionCommitContext xaTransaction)
+  public CommitTransactionPhase1Request(CDOClientProtocol protocol, final CDOXATransactionCommitContext xaTransaction)
   {
-    super(channel, xaTransaction);
+    super(protocol, xaTransaction);
   }
 
   @Override

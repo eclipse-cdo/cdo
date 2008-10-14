@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.util.CDOEMFUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
@@ -152,8 +153,10 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
 
     try
     {
+      CDOClientProtocol protocol = session.getProtocol();
+      LoadPackageRequest request = new LoadPackageRequest(protocol, cdoPackage);
+
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      LoadPackageRequest request = new LoadPackageRequest(session.getChannel(), cdoPackage);
       failOverStrategy.send(request);
 
       if (!cdoPackage.isDynamic())

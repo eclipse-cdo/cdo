@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -33,9 +32,9 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
 
   private int version;
 
-  public LoadRevisionByVersionRequest(IChannel channel, CDOID id, int referenceChunk, int version)
+  public LoadRevisionByVersionRequest(CDOClientProtocol protocol, CDOID id, int referenceChunk, int version)
   {
-    super(channel, Collections.singleton(id), referenceChunk);
+    super(protocol, Collections.singleton(id), referenceChunk);
     this.version = version;
   }
 

@@ -11,7 +11,6 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSavepoint;
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
@@ -19,13 +18,13 @@ import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionCancelRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase1Request;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase2Request;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase3Request;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -428,15 +427,17 @@ public class CDOXATransactionImpl implements CDOXATransaction
       xaTransaction.preCommit();
 
       InternalCDOTransaction transaction = xaTransaction.getTransaction();
-      CDOSession session = xaTransaction.getTransaction().getSession();
-      IChannel channel = session.getChannel();
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      CDOSessionImpl session = (CDOSessionImpl)xaTransaction.getTransaction().getSession();
 
       // Phase 1
       {
-        CommitTransactionPhase1Request requestPhase1 = new CommitTransactionPhase1Request(channel, xaTransaction);
+        CDOClientProtocol protocol = session.getProtocol();
+        CommitTransactionPhase1Request requestPhase1 = new CommitTransactionPhase1Request(protocol, xaTransaction);
+
+        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         CommitTransactionResult result = failOverStrategy.send(requestPhase1, transaction.getCommitTimeout());
         check_result(result);
+
         xaTransaction.setResult(result);
         xaTransaction.setState(CDOXAPhase2State.INSTANCE);
       }
@@ -458,15 +459,17 @@ public class CDOXATransactionImpl implements CDOXATransaction
     protected void handle(CDOXATransactionCommitContext xaTransaction) throws Exception
     {
       InternalCDOTransaction transaction = xaTransaction.getTransaction();
-      CDOSession session = xaTransaction.getTransaction().getSession();
-      IChannel channel = session.getChannel();
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      CDOSessionImpl session = (CDOSessionImpl)xaTransaction.getTransaction().getSession();
 
       // Phase 2
       {
-        CommitTransactionPhase2Request requestPhase2 = new CommitTransactionPhase2Request(channel, xaTransaction);
+        CDOClientProtocol protocol = session.getProtocol();
+        CommitTransactionPhase2Request requestPhase2 = new CommitTransactionPhase2Request(protocol, xaTransaction);
+
+        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         CommitTransactionResult result = failOverStrategy.send(requestPhase2, transaction.getCommitTimeout());
         check_result(result);
+
         xaTransaction.setState(CDOXAPhase3State.INSTANCE);
       }
     }
@@ -487,15 +490,17 @@ public class CDOXATransactionImpl implements CDOXATransaction
     protected void handle(CDOXATransactionCommitContext xaTransaction) throws Exception
     {
       InternalCDOTransaction transaction = xaTransaction.getTransaction();
-      CDOSession session = xaTransaction.getTransaction().getSession();
-      IChannel channel = session.getChannel();
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      CDOSessionImpl session = (CDOSessionImpl)xaTransaction.getTransaction().getSession();
 
       // Phase 2
       {
-        CommitTransactionPhase3Request requestPhase3 = new CommitTransactionPhase3Request(channel, xaTransaction);
+        CDOClientProtocol protocol = session.getProtocol();
+        CommitTransactionPhase3Request requestPhase3 = new CommitTransactionPhase3Request(protocol, xaTransaction);
+
+        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         CommitTransactionResult result = failOverStrategy.send(requestPhase3, transaction.getCommitTimeout());
         check_result(result);
+
         xaTransaction.postCommit(xaTransaction.getResult());
         xaTransaction.setState(null);
       }
@@ -517,13 +522,14 @@ public class CDOXATransactionImpl implements CDOXATransaction
     protected void handle(CDOXATransactionCommitContext xaTransaction) throws Exception
     {
       InternalCDOTransaction transaction = xaTransaction.getTransaction();
-      CDOSession session = xaTransaction.getTransaction().getSession();
-      IChannel channel = session.getChannel();
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      CDOSessionImpl session = (CDOSessionImpl)xaTransaction.getTransaction().getSession();
 
       // Phase 2
       {
-        CommitTransactionCancelRequest requestCancel = new CommitTransactionCancelRequest(channel, xaTransaction);
+        CDOClientProtocol protocol = session.getProtocol();
+        CommitTransactionCancelRequest requestCancel = new CommitTransactionCancelRequest(protocol, xaTransaction);
+
+        IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
         CommitTransactionResult result = failOverStrategy.send(requestCancel, transaction.getCommitTimeout());
         check_result(result);
       }

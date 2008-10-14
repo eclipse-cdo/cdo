@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 
-import org.eclipse.net4j.channel.IChannel;
-
 import java.io.IOException;
 
 /**
@@ -26,9 +24,9 @@ public class LoadPackageRequest extends CDOClientRequest<Object>
 {
   private CDOPackage cdoPackage;
 
-  public LoadPackageRequest(IChannel channel, CDOPackage cdoPackage)
+  public LoadPackageRequest(CDOClientProtocol protocol, CDOPackage cdoPackage)
   {
-    super(channel);
+    super(protocol);
     this.cdoPackage = cdoPackage;
   }
 

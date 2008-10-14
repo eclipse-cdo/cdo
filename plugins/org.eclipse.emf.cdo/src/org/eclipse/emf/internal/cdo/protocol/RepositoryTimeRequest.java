@@ -13,8 +13,6 @@ package org.eclipse.emf.internal.cdo.protocol;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 
-import org.eclipse.net4j.channel.IChannel;
-
 import java.io.IOException;
 
 /**
@@ -22,9 +20,9 @@ import java.io.IOException;
  */
 public class RepositoryTimeRequest extends CDOTimeRequest<RepositoryTimeResult>
 {
-  public RepositoryTimeRequest(IChannel channel)
+  public RepositoryTimeRequest(CDOClientProtocol protocol)
   {
-    super(channel);
+    super(protocol);
   }
 
   @Override

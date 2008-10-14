@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -29,9 +28,9 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
 
   private RepositoryTimeResult repositoryTimeResult = new RepositoryTimeResult();
 
-  public CDOTimeRequest(IChannel channel)
+  public CDOTimeRequest(CDOClientProtocol protocol)
   {
-    super(channel);
+    super(protocol);
   }
 
   public RepositoryTimeResult getRepositoryTimeResult()

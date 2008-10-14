@@ -31,7 +31,7 @@ public class BuddiesClientProtocol extends SignalProtocol
 
   public BuddiesClientProtocol(IConnector connector)
   {
-    super(connector);
+    open(connector);
   }
 
   public String getType()
@@ -64,9 +64,10 @@ public class BuddiesClientProtocol extends SignalProtocol
 
     case ProtocolConstants.SIGNAL_MESSAGE:
       return new MessageIndication(getSelf());
-    }
 
-    return null;
+    default:
+      return null;
+    }
   }
 
   protected Self getSelf()

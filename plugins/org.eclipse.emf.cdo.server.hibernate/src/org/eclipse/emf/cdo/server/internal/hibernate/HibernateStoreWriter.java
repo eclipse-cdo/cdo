@@ -116,7 +116,7 @@ public class HibernateStoreWriter extends HibernateStoreReader implements IHiber
         final CDOIDHibernate id = (CDOIDHibernate)cdoRevision.getID();
         final CDOIDHibernate containerID = (CDOIDHibernate)container.getID();
         final String hqlUpdate = "update " + entityName
-            + " set _contID_Entity = :contEntity, _contID_ID=:contID, _contID_class=:contClass where e_id = :id";
+            + " set contID_Entity = :contEntity, contID_ID=:contID, contID_class=:contClass where e_id = :id";
         final Query qry = session.createQuery(hqlUpdate);
         qry.setParameter("contEntity", containerID.getEntityName());
         qry.setParameter("contID", containerID.getId().toString());

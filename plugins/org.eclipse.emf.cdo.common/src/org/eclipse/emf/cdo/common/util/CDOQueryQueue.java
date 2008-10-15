@@ -352,14 +352,17 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       {
         try
         {
-          if (CDOQueryQueue.this.isEmpty() && CDOQueryQueue.this.isClosed())
+          synchronized (CDOQueryQueue.this)
           {
-            if (failOnNull)
+            if (CDOQueryQueue.this.isEmpty() && CDOQueryQueue.this.isClosed())
             {
-              throw new NoSuchElementException();
-            }
+              if (failOnNull)
+              {
+                throw new NoSuchElementException();
+              }
 
-            return;
+              return;
+            }
           }
 
           nextElement = take();

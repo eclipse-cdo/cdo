@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
@@ -246,6 +247,7 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
       {
         queryResult.getQueue().close();
         unregister(this);
+        StoreThreadLocal.release();
       }
     }
 

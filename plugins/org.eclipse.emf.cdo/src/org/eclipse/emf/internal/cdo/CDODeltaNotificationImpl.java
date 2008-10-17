@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDONotification;
+import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
@@ -23,147 +23,149 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDONotificationImpl extends ENotificationImpl implements CDONotification
+public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODeltaNotification
 {
   private CDORevisionDelta revisionDelta;
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
       Object newValue, boolean isSetChange)
   {
     super(notifier, eventType, feature, oldValue, newValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
       Object newValue, int position, boolean wasSet)
   {
     super(notifier, eventType, feature, oldValue, newValue, position, wasSet);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
       Object newValue, int position)
   {
     super(notifier, eventType, feature, oldValue, newValue, position);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
       Object newValue)
   {
     super(notifier, eventType, feature, oldValue, newValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, boolean oldBooleanValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, boolean oldBooleanValue,
       boolean newBooleanValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldBooleanValue, newBooleanValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, boolean oldBooleanValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, boolean oldBooleanValue,
       boolean newBooleanValue)
   {
     super(notifier, eventType, featureID, oldBooleanValue, newBooleanValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, byte oldByteValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, byte oldByteValue,
       byte newByteValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldByteValue, newByteValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, byte oldByteValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, byte oldByteValue,
       byte newByteValue)
   {
     super(notifier, eventType, featureID, oldByteValue, newByteValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, char oldCharValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, char oldCharValue,
       char newCharValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldCharValue, newCharValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, char oldCharValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, char oldCharValue,
       char newCharValue)
   {
     super(notifier, eventType, featureID, oldCharValue, newCharValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, double oldDoubleValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, double oldDoubleValue,
       double newDoubleValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldDoubleValue, newDoubleValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, double oldDoubleValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, double oldDoubleValue,
       double newDoubleValue)
   {
     super(notifier, eventType, featureID, oldDoubleValue, newDoubleValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, float oldFloatValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, float oldFloatValue,
       float newFloatValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldFloatValue, newFloatValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, float oldFloatValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, float oldFloatValue,
       float newFloatValue)
   {
     super(notifier, eventType, featureID, oldFloatValue, newFloatValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, int oldIntValue, int newIntValue,
-      boolean isSetChange)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, int oldIntValue,
+      int newIntValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldIntValue, newIntValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, int oldIntValue, int newIntValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, int oldIntValue,
+      int newIntValue)
   {
     super(notifier, eventType, featureID, oldIntValue, newIntValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, long oldLongValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, long oldLongValue,
       long newLongValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldLongValue, newLongValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, long oldLongValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, long oldLongValue,
       long newLongValue)
   {
     super(notifier, eventType, featureID, oldLongValue, newLongValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue, Object newValue,
-      boolean isSetChange)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue,
+      Object newValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldValue, newValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue, Object newValue,
-      int position, boolean wasSet)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue,
+      Object newValue, int position, boolean wasSet)
   {
     super(notifier, eventType, featureID, oldValue, newValue, position, wasSet);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue, Object newValue,
-      int position)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue,
+      Object newValue, int position)
   {
     super(notifier, eventType, featureID, oldValue, newValue, position);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue, Object newValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, Object oldValue,
+      Object newValue)
   {
     super(notifier, eventType, featureID, oldValue, newValue);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, short oldShortValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, short oldShortValue,
       short newShortValue, boolean isSetChange)
   {
     super(notifier, eventType, featureID, oldShortValue, newShortValue, isSetChange);
   }
 
-  public CDONotificationImpl(InternalEObject notifier, int eventType, int featureID, short oldShortValue,
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, int featureID, short oldShortValue,
       short newShortValue)
   {
     super(notifier, eventType, featureID, oldShortValue, newShortValue);

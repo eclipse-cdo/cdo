@@ -664,7 +664,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       notifyInvalidation(timeStamp, dirtyOIDs, detachedObjects, excludedView);
     }
 
-    handleChangeSubcription(deltas, excludedView);
+    handleChangeSubcription(deltas, detachedObjects, excludedView);
+
   }
 
   /**
@@ -748,20 +749,20 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return invalidationRunner;
   }
 
-  private void handleChangeSubcription(Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
+  private void handleChangeSubcription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects,
+      CDOViewImpl excludedView)
   {
-    if (deltas == null || deltas.size() <= 0)
+    if ((deltas == null || deltas.size() <= 0) && (detachedObjects == null || detachedObjects.size() <= 0))
     {
       return;
     }
-
     for (CDOViewImpl view : getViews())
     {
       if (view != excludedView)
       {
         try
         {
-          view.handleChangeSubscription(deltas);
+          view.handleChangeSubscription(deltas, detachedObjects);
         }
         catch (RuntimeException ex)
         {

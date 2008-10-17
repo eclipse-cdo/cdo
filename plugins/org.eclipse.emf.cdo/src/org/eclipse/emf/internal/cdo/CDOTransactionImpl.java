@@ -1007,7 +1007,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             ((InternalCDOPackage)newPackage).setPersistent(true);
           }
 
-          getTransaction().getChangeSubscriptionManager().notifyDirtyObjects();
+          ChangeSubscriptionManager changeSubscriptionManager = getTransaction().getChangeSubscriptionManager();
+          changeSubscriptionManager.handleNewObjects(getNewObjects().values());
+          changeSubscriptionManager.handleNewObjects(getNewResources().values());
+          changeSubscriptionManager.handleDetachedObjects(getDetachedObjects());
 
           long timeStamp = result.getTimeStamp();
 

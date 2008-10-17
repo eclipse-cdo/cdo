@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOChangeSubscriptionPolicy;
-import org.eclipse.emf.cdo.CDONotification;
+import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -490,8 +490,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     int count = 0;
     for (Notification notification : adapter.getNotifications())
     {
-      CDONotification cdoNotification = (CDONotification)notification;
-
+      CDODeltaNotification cdoNotification = (CDODeltaNotification)notification;
       if (adapter.getNotifications().size() - 1 == count)
       {
         assertEquals(false, cdoNotification.hasNext());

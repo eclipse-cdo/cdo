@@ -227,7 +227,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     if (!isPassiveUpdateEnabled())
     {
       dirtyIDs = Collections.emptyList();
-      detachedObjects = Collections.emptyList();
     }
 
     // Look if someone needs to know something about modified objects
@@ -243,6 +242,24 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
           break;
         }
       }
+    }
+
+    if (!isPassiveUpdateEnabled())
+    {
+      List<CDOID> subDetached = new ArrayList<CDOID>();
+      for (CDOID id : detachedObjects)
+      {
+        for (View view : getViews())
+        {
+          if (view.hasSubscription(id))
+          {
+            subDetached.add(id);
+            break;
+          }
+        }
+      }
+
+      detachedObjects = subDetached;
     }
 
     try

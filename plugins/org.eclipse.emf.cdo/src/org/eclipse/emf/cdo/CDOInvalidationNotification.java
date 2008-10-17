@@ -28,7 +28,6 @@ import org.eclipse.emf.common.notify.Notification;
  * @see CDOChangeSubscriptionPolicy
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOInvalidationNotification extends Notification
+public interface CDOInvalidationNotification extends CDONotification
 {
-  public static final int INVALIDATE = EVENT_TYPE_COUNT + 1;
 }

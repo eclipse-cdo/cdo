@@ -33,7 +33,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -273,15 +272,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         populateRevisionFeature(view, revision, eFeature, eSettings, i);
       }
     }
-
-    BasicEList<Adapter> adapters = eBasicAdapters();
-    if (adapters != null)
-    {
-      for (Adapter adapter : adapters)
-      {
-        view.subscribe(this, adapter);
-      }
-    }
   }
 
   @SuppressWarnings("unchecked")
@@ -430,7 +420,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         protected void didAdd(int index, Adapter newObject)
         {
           super.didAdd(index, newObject);
-          if (!FSMUtil.isTransient(CDOObjectImpl.this))
+          if (!FSMUtil.isTransient(CDOObjectImpl.this) && !FSMUtil.isNew(CDOObjectImpl.this))
           {
             cdoView().subscribe(CDOObjectImpl.this, newObject);
           }
@@ -440,7 +430,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         protected void didRemove(int index, Adapter oldObject)
         {
           super.didRemove(index, oldObject);
-          if (!FSMUtil.isTransient(CDOObjectImpl.this))
+          if (!FSMUtil.isTransient(CDOObjectImpl.this) && !FSMUtil.isNew(CDOObjectImpl.this))
           {
             cdoView().unsubscribe(CDOObjectImpl.this, oldObject);
           }

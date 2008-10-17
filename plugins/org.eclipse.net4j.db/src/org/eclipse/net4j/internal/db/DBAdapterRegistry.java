@@ -12,7 +12,6 @@ package org.eclipse.net4j.internal.db;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
-import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +19,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class DBAdapterRegistry extends HashMapRegistry<String, IDBAdapter> implements IRegistry<String, IDBAdapter>
+public class DBAdapterRegistry extends HashMapRegistry<String, IDBAdapter>
 {
   public static final DBAdapterRegistry INSTANCE = new DBAdapterRegistry();
 

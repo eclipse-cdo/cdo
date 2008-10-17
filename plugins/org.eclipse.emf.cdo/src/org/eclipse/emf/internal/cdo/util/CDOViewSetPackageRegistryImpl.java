@@ -25,35 +25,31 @@ public class CDOViewSetPackageRegistryImpl extends EPackageRegistryImpl
 
   private CDOViewSet viewSet;
 
-  public CDOViewSetPackageRegistryImpl(CDOViewSet viewSet)
+  public CDOViewSetPackageRegistryImpl(CDOViewSet viewSet, EPackage.Registry delegateRegistry)
   {
+    super(delegateRegistry);
     this.viewSet = viewSet;
   }
 
   @Override
-  public synchronized EPackage getEPackage(String nsURI)
+  protected EPackage delegatedGetEPackage(String nsURI)
   {
-    EPackage ePackage = super.getEPackage(nsURI);
-    if (ePackage == null)
+    for (CDOView view : viewSet.getViews())
     {
-      for (CDOView view : viewSet.getViews())
+      EPackage ePackage = view.getSession().getPackageRegistry().getEPackage(nsURI);
+      if (ePackage != null)
       {
-        ePackage = view.getSession().getPackageRegistry().getEPackage(nsURI);
-        if (ePackage != null)
-        {
-          break;
-        }
+        return ePackage;
       }
     }
 
-    return ePackage;
+    return super.delegatedGetEPackage(nsURI);
   }
 
   @Override
   public Object put(String key, Object value)
   {
     super.put(key, value);
-
     for (CDOView view : viewSet.getViews())
     {
       view.getSession().getPackageRegistry().put(key, value);

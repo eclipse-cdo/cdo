@@ -40,7 +40,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 /**
  * @author Simon McDuff
@@ -52,11 +51,11 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
 
   private Map<String, CDOViewImpl> mapOfViews = new HashMap<String, CDOViewImpl>();
 
-  private ResourceSet resourceSet;
-
   private CDOResourceFactoryImpl resourceFactory = new CDOResourceFactoryImpl(this);
 
-  private CDOViewSetPackageRegistryImpl packageRegistry = new CDOViewSetPackageRegistryImpl(this);
+  private CDOViewSetPackageRegistryImpl packageRegistry;
+
+  private ResourceSet resourceSet;
 
   public CDOViewSetImpl()
   {
@@ -92,11 +91,9 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
   public CDOViewImpl resolveUUID(String repositoryUUID)
   {
     CDOViewImpl view = null;
-
     synchronized (views)
     {
       view = mapOfViews.get(repositoryUUID);
-
       if (view == null)
       {
         if (repositoryUUID != null)
@@ -117,6 +114,7 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
         throw new IllegalStateException("Don't know which CDOView to take since no authority has been specified");
       }
     }
+
     return view;
   }
 
@@ -217,11 +215,9 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
     {
       resourceSet = (ResourceSet)newTarget;
       EPackage.Registry oldPackageRegistry = resourceSet.getPackageRegistry();
-      resourceSet.setPackageRegistry(getPackageRegistry());
-      for (Entry<String, Object> entry : oldPackageRegistry.entrySet())
-      {
-        getPackageRegistry().put(entry.getKey(), entry.getValue());
-      }
+      packageRegistry = new CDOViewSetPackageRegistryImpl(this, oldPackageRegistry);
+      resourceSet.setPackageRegistry(packageRegistry);
+
       Registry registry = resourceSet.getResourceFactoryRegistry();
       Map<String, Object> map = registry.getProtocolToFactoryMap();
       map.put(CDOProtocolConstants.PROTOCOL_NAME, getResourceFactory());

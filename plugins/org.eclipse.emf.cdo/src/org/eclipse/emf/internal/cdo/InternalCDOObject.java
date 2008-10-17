@@ -31,6 +31,11 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
 
   public void cdoInternalPostDetach();
 
+  /**
+   * @since 2.0
+   */
+  public void cdoInternalPostInvalid();
+
   public void cdoInternalPreCommit();
 
   public void cdoInternalSetID(CDOID id);

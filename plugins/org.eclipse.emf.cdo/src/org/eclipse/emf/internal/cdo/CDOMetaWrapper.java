@@ -101,6 +101,11 @@ public class CDOMetaWrapper extends CDOObjectWrapper
     throw new UnsupportedOperationException();
   }
 
+  public void cdoInternalPostInvalid()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   public String toString()
   {

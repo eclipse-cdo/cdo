@@ -218,6 +218,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * @since 2.0
    */
+  public void cdoInternalPostInvalid()
+  {
+    // Do nothing
+  }
+
+  /**
+   * @since 2.0
+   */
   public void cdoInternalCleanup()
   {
     if (eSettings != null)

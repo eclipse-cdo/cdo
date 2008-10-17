@@ -340,12 +340,13 @@ public class InvalidationTest extends AbstractCDOTest
     final CDOResource res1 = trans1.getOrCreateResource("/test");
     trans1.commit();
 
-    final CDOResource res2 = trans2.getOrCreateResource("/test");
+    final CDOResource res2 = trans2.getResource("/test");
 
     res1.delete(null);
 
     final Customer customerB2 = getModel1Factory().createCustomer();
     res2.getContents().add(customerB2);
+    assertTrue(res2.isExisting());
 
     trans1.commit();
 
@@ -362,6 +363,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     trans2.rollback();
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(res2).cdoState());
+    assertFalse(res2.isExisting());
 
     try
     {

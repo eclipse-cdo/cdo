@@ -379,6 +379,7 @@ public class DetachTest extends AbstractCDOTest
 
     msg("Deleting resource");
     resource.delete(null);
+    assertTrue(resource.isExisting());
     transaction.commit();
   }
 }

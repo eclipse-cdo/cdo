@@ -193,6 +193,10 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     revisionToInstance();
   }
 
+  public void cdoInternalPostInvalid()
+  {
+  }
+
   public void cdoInternalCleanup()
   {
   }

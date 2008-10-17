@@ -182,6 +182,20 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
+   * @generated NOT
+   * @since 2.0
+   */
+  @Override
+  public void cdoInternalPostInvalid()
+  {
+    super.cdoInternalPostInvalid();
+    existing = false;
+    cdoView().getResourceSet().getResources().remove(this);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isModified()

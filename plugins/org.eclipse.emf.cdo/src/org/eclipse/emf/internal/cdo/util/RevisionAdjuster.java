@@ -81,7 +81,7 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
 
     if (feature.isReference())
     {
-      int[] indices = ((CDOListFeatureDeltaImpl)deltas).reconstructAddedIndices();
+      int[] indices = ((CDOListFeatureDeltaImpl)deltas).reconstructAddedIndices().getElement2();
       for (int i = 1; i <= indices[0]; i++)
       {
         int index = indices[i];

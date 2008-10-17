@@ -74,7 +74,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     ((InternalCDORevision)revision).getList(getFeature()).move(newPosition, oldPosition);
   }
 
-  public void affectIndices(int[] indices)
+  public void affectIndices(IListTargetAdding[] source, int[] indices)
   {
     if (oldPosition < newPosition)
     {

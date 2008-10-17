@@ -20,6 +20,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+
+import org.eclipse.net4j.util.collection.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +51,18 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   }
 
   @Override
+  public CDOListFeatureDelta copy()
+  {
+    CDOListFeatureDeltaImpl list = new CDOListFeatureDeltaImpl(getFeature());
+    for (CDOFeatureDelta delta : featureDeltas)
+    {
+      list.add(((InternalCDOFeatureDelta)delta).copy());
+    }
+
+    return list;
+  }
+
+  @Override
   public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
   {
     super.write(out, cdoClass);
@@ -73,28 +88,53 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
    * 
    * @return never <code>null</code>.
    */
-  public int[] reconstructAddedIndices()
+  public Pair<IListTargetAdding[], int[]> reconstructAddedIndices()
   {
     int[] indices = new int[1 + featureDeltas.size()];
+    IListTargetAdding[] sources = new IListTargetAdding[1 + featureDeltas.size()];
     for (CDOFeatureDelta featureDelta : featureDeltas)
     {
       if (featureDelta instanceof IListIndexAffecting)
       {
         IListIndexAffecting affecting = (IListIndexAffecting)featureDelta;
-        affecting.affectIndices(indices);
+        affecting.affectIndices(sources, indices);
       }
 
       if (featureDelta instanceof IListTargetAdding)
       {
         indices[++indices[0]] = ((IListTargetAdding)featureDelta).getIndex();
+        sources[indices[0]] = (IListTargetAdding)featureDelta;
       }
     }
 
-    return indices;
+    return new Pair<IListTargetAdding[], int[]>(sources, indices);
+  }
+
+  private void cleanupWithNewDelta(CDOFeatureDelta featureDelta)
+  {
+    CDOFeature feature = getFeature();
+    if (feature.isReference() && featureDelta instanceof CDORemoveFeatureDelta)
+    {
+      int indexToRemove = ((CDORemoveFeatureDelta)featureDelta).getIndex();
+      Pair<IListTargetAdding[], int[]> sourcesAndIndices = reconstructAddedIndices();
+      IListTargetAdding[] sources = sourcesAndIndices.getElement1();
+      int[] indices = sourcesAndIndices.getElement2();
+
+      for (int i = 1; i <= indices[0]; i++)
+      {
+        int index = indices[i];
+        if (indexToRemove == index)
+        {
+          sources[i].clear();
+          break;
+        }
+      }
+    }
   }
 
   public void add(CDOFeatureDelta featureDelta)
   {
+    cleanupWithNewDelta(featureDelta);
     featureDeltas.add(featureDelta);
   }
 

@@ -6,18 +6,21 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Simon McDuff - maintenance
+ *    Simon McDuff - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+
 /**
- * @author Eike Stepper
+ * @author Simon McDuff
  */
-public interface IListIndexAffecting
+public interface InternalCDOFeatureDelta extends CDOFeatureDelta
 {
   /**
-   * Expects the number of indices in the first element of the indices array.
+   * Create a copy only for objects that keep references of objects
+   * 
+   * @since 2.0
    */
-  public void affectIndices(IListTargetAdding source[], int[] indices);
+  public CDOFeatureDelta copy();
 }

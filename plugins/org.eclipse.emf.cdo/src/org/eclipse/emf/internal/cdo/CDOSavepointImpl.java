@@ -16,10 +16,11 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.InternalCDOFeatureDelta;
 
 import org.eclipse.net4j.util.collection.MultiMap;
 
@@ -273,23 +274,14 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
         CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(entry.getKey());
         if (revisionDelta == null)
         {
-          revisionDeltas.put(entry.getKey(), entry.getValue());
+          revisionDeltas.put(entry.getKey(), CDORevisionDeltaUtil.copy(entry.getValue()));
         }
         else
         {
+
           for (CDOFeatureDelta delta : entry.getValue().getFeatureDeltas())
           {
-            if (delta instanceof CDOListFeatureDelta)
-            {
-              for (CDOFeatureDelta subDelta : ((CDOListFeatureDelta)delta).getListChanges())
-              {
-                revisionDelta.addFeatureDelta(subDelta);
-              }
-            }
-            else
-            {
-              revisionDelta.addFeatureDelta(delta);
-            }
+            revisionDelta.addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
           }
         }
       }
@@ -310,7 +302,10 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
     {
       for (Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
       {
-        detachedObjects.put(entry.getKey(), entry.getValue());
+        if (!entry.getKey().isTemporary())
+        {
+          detachedObjects.put(entry.getKey(), entry.getValue());
+        }
       }
     }
 

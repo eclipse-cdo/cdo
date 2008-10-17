@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -52,7 +53,13 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     visitor.visit(this);
   }
 
-  public void affectIndices(int[] indices)
+  @Override
+  public CDOAddFeatureDelta copy()
+  {
+    return new CDOAddFeatureDeltaImpl(getFeature(), getIndex(), getValue());
+  }
+
+  public void affectIndices(IListTargetAdding[] source, int[] indices)
   {
     int index = getIndex();
     if (index == NO_INDEX)
@@ -67,5 +74,10 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
         ++indices[i];
       }
     }
+  }
+
+  public void clear()
+  {
+    setValue(CDOID.NULL);
   }
 }

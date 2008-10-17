@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Simon McDuff
  */
-public abstract class CDOFeatureDeltaImpl implements CDOFeatureDelta
+public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
 {
   public static final int NO_INDEX = -1;
 
@@ -49,6 +49,11 @@ public abstract class CDOFeatureDeltaImpl implements CDOFeatureDelta
   public CDOFeature getFeature()
   {
     return feature;
+  }
+
+  public CDOFeatureDelta copy()
+  {
+    return this;
   }
 
   public abstract void adjustReferences(CDOReferenceAdjuster referenceAdjuster);

@@ -70,7 +70,7 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
     visitor.visit(this);
   }
 
-  public void affectIndices(int[] indices)
+  public void affectIndices(IListTargetAdding sources[], int[] indices)
   {
     int index = getIndex();
     for (int i = 1; i <= indices[0]; i++)
@@ -85,6 +85,7 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
         if (rest > 0)
         {
           System.arraycopy(indices, i + 1, indices, i, rest);
+          System.arraycopy(sources, i + 1, sources, i, rest);
           --i;
         }
       }

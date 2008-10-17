@@ -68,6 +68,11 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     return newValue;
   }
 
+  protected void setValue(Object value)
+  {
+    newValue = value;
+  }
+
   @Override
   public void adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
@@ -16,4 +17,6 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 public interface IListTargetAdding
 {
   public int getIndex();
+
+  public void clear();
 }

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.common.revision.delta;
 
@@ -25,6 +26,14 @@ public final class CDORevisionDeltaUtil
   public static CDORevisionDelta create(CDORevision revision)
   {
     return new CDORevisionDeltaImpl(revision);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDORevisionDelta copy(CDORevisionDelta revisionDelta)
+  {
+    return new CDORevisionDeltaImpl(revisionDelta);
   }
 
   public static CDORevisionDelta create(CDORevision originRevision, CDORevision dirtyRevision)

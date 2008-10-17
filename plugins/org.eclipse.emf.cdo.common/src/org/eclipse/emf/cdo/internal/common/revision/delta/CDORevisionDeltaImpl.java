@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 
@@ -53,6 +55,19 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     cdoClass = revision.getCDOClass();
     dirtyVersion = revision.getVersion();
     originVersion = dirtyVersion - 1;
+  }
+
+  public CDORevisionDeltaImpl(CDORevisionDelta revisionDelta)
+  {
+    cdoID = revisionDelta.getID();
+    cdoClass = ((CDORevisionDeltaImpl)revisionDelta).cdoClass;
+    dirtyVersion = revisionDelta.getDirtyVersion();
+    originVersion = revisionDelta.getOriginVersion();
+
+    for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
+    {
+      addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
+    }
   }
 
   public CDORevisionDeltaImpl(CDORevision originRevision, CDORevision dirtyRevision)
@@ -139,7 +154,24 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   public void addFeatureDelta(CDOFeatureDelta delta)
   {
+    if (delta instanceof CDOListFeatureDelta)
+    {
+      CDOListFeatureDelta deltas = (CDOListFeatureDelta)delta;
+      for (CDOFeatureDelta childDelta : deltas.getListChanges())
+      {
+        addFeatureDelta(childDelta);
+      }
+    }
+    else
+    {
+      addSingleFeatureDelta(delta);
+    }
+  }
+
+  private void addSingleFeatureDelta(CDOFeatureDelta delta)
+  {
     CDOFeature feature = delta.getFeature();
+
     if (feature.isMany())
     {
       CDOListFeatureDeltaImpl lookupDelta = (CDOListFeatureDeltaImpl)featureDeltas.get(feature);

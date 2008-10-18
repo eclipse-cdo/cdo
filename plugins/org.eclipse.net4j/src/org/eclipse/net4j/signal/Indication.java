@@ -53,6 +53,7 @@ public abstract class Indication extends SignalReactor
     }
     catch (Exception ex)
     {
+      OM.LOG.error(ex);
       sendExceptionMessage(ex);
       throw ex;
     }

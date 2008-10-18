@@ -53,6 +53,7 @@ public abstract class IndicationWithResponse extends Indication
     }
     catch (Exception ex)
     {
+      OM.LOG.error(ex);
       sendExceptionMessage(ex);
       throw ex;
     }

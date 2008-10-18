@@ -27,6 +27,8 @@ import junit.framework.TestResult;
  */
 public abstract class AbstractOMTest extends TestCase
 {
+  public static boolean SUPPRESS_OUTPUT;
+
   private static boolean consoleEnabled;
 
   protected AbstractOMTest()
@@ -36,33 +38,41 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public void setUp() throws Exception
   {
-    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-    OMPlatform.INSTANCE.setDebugging(true);
-    enableConsole();
-
-    IOUtil.OUT().println("*******************************************************");
-    IOUtil.OUT().println(this);
-    IOUtil.OUT().println("*******************************************************");
+    if (!SUPPRESS_OUTPUT)
+    {
+      enableConsole();
+      IOUtil.OUT().println("*******************************************************");
+      IOUtil.OUT().println(this);
+      IOUtil.OUT().println("*******************************************************");
+    }
 
     super.setUp();
     doSetUp();
 
-    IOUtil.OUT().println();
-    IOUtil.OUT().println("------------------------ START ------------------------");
+    if (!SUPPRESS_OUTPUT)
+    {
+      IOUtil.OUT().println();
+      IOUtil.OUT().println("------------------------ START ------------------------");
+    }
   }
 
   @Override
   public void tearDown() throws Exception
   {
-    IOUtil.OUT().println("------------------------- END -------------------------");
-    IOUtil.OUT().println();
+    if (!SUPPRESS_OUTPUT)
+    {
+      IOUtil.OUT().println("------------------------- END -------------------------");
+      IOUtil.OUT().println();
+    }
 
     doTearDown();
     super.tearDown();
 
-    IOUtil.OUT().println();
-    IOUtil.OUT().println();
+    if (!SUPPRESS_OUTPUT)
+    {
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+    }
   }
 
   @Override
@@ -78,7 +88,11 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (Throwable t)
     {
-      t.printStackTrace(IOUtil.OUT());
+      if (!SUPPRESS_OUTPUT)
+      {
+        t.printStackTrace(IOUtil.OUT());
+      }
+
       throw t;
     }
   }
@@ -96,36 +110,50 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (RuntimeException ex)
     {
-      ex.printStackTrace(IOUtil.OUT());
+      if (!SUPPRESS_OUTPUT)
+      {
+        ex.printStackTrace(IOUtil.OUT());
+      }
+
       throw ex;
     }
     catch (Error err)
     {
-      err.printStackTrace(IOUtil.OUT());
+      if (!SUPPRESS_OUTPUT)
+      {
+        err.printStackTrace(IOUtil.OUT());
+      }
+
       throw err;
     }
   }
 
   protected void enableConsole()
   {
-    if (!consoleEnabled)
+    if (!SUPPRESS_OUTPUT)
     {
-      PrintTraceHandler.CONSOLE.setShortContext(true);
-      OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-      OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-      OMPlatform.INSTANCE.setDebugging(true);
-      consoleEnabled = true;
+      if (!consoleEnabled)
+      {
+        PrintTraceHandler.CONSOLE.setShortContext(true);
+        OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+        OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+        OMPlatform.INSTANCE.setDebugging(true);
+        consoleEnabled = true;
+      }
     }
   }
 
   protected void disableConsole()
   {
-    if (consoleEnabled)
+    if (!SUPPRESS_OUTPUT)
     {
-      consoleEnabled = false;
-      OMPlatform.INSTANCE.setDebugging(false);
-      OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
-      OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
+      if (consoleEnabled)
+      {
+        consoleEnabled = false;
+        OMPlatform.INSTANCE.setDebugging(false);
+        OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
+        OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
+      }
     }
   }
 
@@ -139,9 +167,12 @@ public abstract class AbstractOMTest extends TestCase
 
   protected static void msg(Object m)
   {
-    if (consoleEnabled)
+    if (!SUPPRESS_OUTPUT)
     {
-      IOUtil.OUT().println("--> " + m);
+      if (consoleEnabled)
+      {
+        IOUtil.OUT().println("--> " + m);
+      }
     }
   }
 

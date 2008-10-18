@@ -344,7 +344,7 @@ public class ContainmentTest extends AbstractCDOTest
     assertNull(order.getShippingAddress());
   }
 
-  public void testObjectNotSameResourceThanItsContainer() throws Exception
+  public void testObjectNotSameResourceThanItsContainerCDOANDXMI() throws Exception
   {
     byte[] data = null;
     {
@@ -382,18 +382,77 @@ public class ContainmentTest extends AbstractCDOTest
     EPackage packageObject = createDynamicEPackage();
 
     ResourceSet resourceSet = new ResourceSetImpl();
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(packageObject);
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+
     resourceSet.getPackageRegistry().put(packageObject.getNsURI(), packageObject);
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction(resourceSet);
-
     Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
     resource1.load(new ByteArrayInputStream(data), null);
-    Resource resource = transaction.getResource("test");
+    Resource resource2 = transaction.getResource("test");
 
-    Order order = (Order)resource.getContents().get(0);
+    EObject container = resource1.getContents().get(0);
+    Order order = (Order)resource2.getContents().get(0);
+
     assertEquals(resource1.getContents().get(0), order.eContainer());
+    resource2.getContents().remove(order);
+
+    Order order2 = (Order)container.eGet(container.eClass().getEStructuralFeature("proxyElement"));
+    assertSame(order, order2);
+  }
+
+  public void testObjectNotSameResourceThanItsContainerCDO() throws Exception
+  {
+    {
+      CDOSession session = openModel1Session();
+      ResourceSet resourceSet = new ResourceSetImpl();
+
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+      Resource resource1 = transaction.createResource("testA");
+      Resource resource2 = transaction.createResource("testB");
+
+      EPackage packageObject = createDynamicEPackage();
+      session.getPackageRegistry().putEPackage(packageObject);
+      EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
+
+      EObject container = packageObject.getEFactoryInstance().create(eClass);
+      Order contained = getModel1Factory().createOrder();
+
+      resource1.getContents().add(container);
+      resource2.getContents().add(contained);
+
+      container.eSet(container.eClass().getEStructuralFeature("proxyElement"), contained);
+
+      assertEquals(resource1, container.eResource());
+      assertEquals(resource2, contained.eResource());
+
+      // If the relationship is define has resolveProxy this is true if not.. this is false.
+      assertEquals(container, contained.eContainer());
+      transaction.commit();
+    }
+
+    removeAllRevisions(getRepository().getRevisionManager());
+
+    ResourceSet resourceSet = new ResourceSetImpl();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+    EPackage packageObject = createDynamicEPackage();
+    session.getPackageRegistry().putEPackage(packageObject);
+    Resource resource1 = transaction.getResource("testA");
+    Resource resource2 = transaction.getResource("testB");
+
+    EObject container = resource1.getContents().get(0);
+    Order order = (Order)resource2.getContents().get(0);
+
+    assertEquals(resource1.getContents().get(0), order.eContainer());
+    resource2.getContents().remove(order);
+
+    Order order2 = (Order)container.eGet(container.eClass().getEStructuralFeature("proxyElement"));
+    assertSame(order, order2);
+
   }
 
   public void testObjectNotSameResourceThanItsContainer_WithoutCDO() throws Exception

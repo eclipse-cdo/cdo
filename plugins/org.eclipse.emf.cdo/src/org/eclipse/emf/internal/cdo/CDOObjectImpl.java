@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
@@ -346,6 +348,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     super.eSetDirectResource(cdoResource());
     eContainer = eStore().getContainer(this);
     eContainerFeatureID = getStore().getContainingFeatureID(this);
+    if (eContainer != null && eContainmentFeature().isResolveProxies())
+    {
+      adjustOppositeReference(eContainer, eContainmentFeature());
+    }
 
     // Ensure that the internal eSettings array is initialized;
     eSettings();
@@ -370,6 +376,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Depopulating feature {0}", eFeature);
     }
 
+    EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
+    EReference oppositeReference = cdoID().isTemporary() ? null : internalFeature.getEOpposite();
+
     if (eFeature.isMany())
     {
       eSettings[i] = null;
@@ -379,12 +388,73 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         // Do not trigger events
         // Do not trigger inverse updates
-        setting.basicAdd(eStore().get(this, eFeature, index), null);
+        Object object = eStore().get(this, eFeature, index);
+        setting.basicAdd(object, null);
+        if (oppositeReference != null)
+        {
+          adjustOppositeReference((InternalEObject)object, oppositeReference);
+        }
       }
     }
     else
     {
       eSettings[i] = eStore().get(this, eFeature, 0);
+      if (oppositeReference != null)
+      {
+        adjustOppositeReference((InternalEObject)eSettings[i], oppositeReference);
+      }
+    }
+  }
+
+  /**
+   * Adjust the reference ONLY if the opposite reference used CDOID. This is true ONLY if the state of <cdo>this</code>
+   * was not {@link CDOState#NEW}.
+   */
+  @SuppressWarnings("unchecked")
+  private void adjustOppositeReference(InternalEObject object, EReference feature)
+  {
+    if (object != null)
+    {
+      InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(object);
+      if (cdoObject != null && !FSMUtil.isTransient(cdoObject))
+      {
+        if (feature.isMany())
+        {
+          int index = cdoObject.eStore().indexOf(cdoObject, feature, cdoID());
+
+          // TODO Simon Log an error in the new view.getErrors() in the case we are not able to find the object.
+          // Cannot throw an exception, the detach process is too far.
+          if (index != -1)
+          {
+            cdoObject.eStore().set(cdoObject, feature, index, this);
+          }
+        }
+        else
+        {
+          cdoObject.eStore().set(cdoObject, feature, 0, this);
+        }
+      }
+      else
+      {
+        if (feature.isResolveProxies())
+        {
+          // We should not trigger events. But we have no choice :-(.
+          if (feature.isMany())
+          {
+            InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
+            int index = list.indexOf(this);
+            if (index != -1)
+            {
+              list.set(index, this);
+            }
+          }
+          else
+          {
+            object.eSet(feature, this);
+          }
+        }
+      }
+
     }
   }
 

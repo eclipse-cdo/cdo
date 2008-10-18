@@ -38,9 +38,9 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public void setUp() throws Exception
   {
+    enableConsole();
     if (!SUPPRESS_OUTPUT)
     {
-      enableConsole();
       IOUtil.OUT().println("*******************************************************");
       IOUtil.OUT().println(this);
       IOUtil.OUT().println("*******************************************************");
@@ -59,6 +59,7 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public void tearDown() throws Exception
   {
+    enableConsole();
     if (!SUPPRESS_OUTPUT)
     {
       IOUtil.OUT().println("------------------------- END -------------------------");
@@ -132,14 +133,11 @@ public abstract class AbstractOMTest extends TestCase
   {
     if (!SUPPRESS_OUTPUT)
     {
-      if (!consoleEnabled)
-      {
-        PrintTraceHandler.CONSOLE.setShortContext(true);
-        OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-        OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-        OMPlatform.INSTANCE.setDebugging(true);
-        consoleEnabled = true;
-      }
+      PrintTraceHandler.CONSOLE.setShortContext(true);
+      OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+      OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
+      OMPlatform.INSTANCE.setDebugging(true);
+      consoleEnabled = true;
     }
   }
 
@@ -147,13 +145,10 @@ public abstract class AbstractOMTest extends TestCase
   {
     if (!SUPPRESS_OUTPUT)
     {
-      if (consoleEnabled)
-      {
-        consoleEnabled = false;
-        OMPlatform.INSTANCE.setDebugging(false);
-        OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
-        OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
-      }
+      consoleEnabled = false;
+      OMPlatform.INSTANCE.setDebugging(false);
+      OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
+      OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
     }
   }
 

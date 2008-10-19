@@ -44,6 +44,17 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public long getLastCommitTime();
 
   /**
+   * Returns <code>true</code> if this transaction contains local modifications, <code>false</code> otherwise.
+   */
+  public boolean isDirty();
+
+  /**
+   * Returns <code>true</code> if this transaction contains local modifications that are conflicting with remote
+   * modifications, <code>false</code> otherwise.
+   */
+  public boolean hasConflict();
+
+  /**
    * @see ResourceSet#createResource(URI)
    */
   public CDOResource createResource(String path);

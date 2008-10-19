@@ -112,8 +112,22 @@ public interface CDOView extends CDOProtocolView, INotifier
    */
   public ReentrantLock getLock();
 
+  /**
+   * Returns always <code>false</code>.
+   * <p>
+   * This method has a special implementation in {@link CDOTransaction} as well.
+   * 
+   * @see CDOTransaction#isDirty()
+   */
   public boolean isDirty();
 
+  /**
+   * Returns always <code>false</code>.
+   * <p>
+   * This method has a special implementation in {@link CDOTransaction} as well.
+   * 
+   * @see CDOTransaction#hasConflict()
+   */
   public boolean hasConflict();
 
   /**
@@ -215,6 +229,11 @@ public interface CDOView extends CDOProtocolView, INotifier
   public CDOResource getResource(String path);
 
   /**
+   * Returns the root resource of the repository.
+   * <p>
+   * The root resource is a special resource with only {@link CDOResourceNode CDOResourceNodes} in its contents list.
+   * You can use it as the main entry into the new resource and folder structure.
+   * 
    * @since 2.0
    */
   public CDOResource getRootResource();
@@ -264,6 +283,8 @@ public interface CDOView extends CDOProtocolView, INotifier
    * Returns the object for the given CDOID.
    * <p>
    * Same as <code>getObject(id, true)</code>.
+   * 
+   * @see getObject(CDOID, boolean)
    */
   public CDOObject getObject(CDOID id);
 

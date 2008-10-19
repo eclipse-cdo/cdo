@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.util.CDOEMFUtil;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -60,7 +60,7 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
       String[] fileNames = dialog.getFileNames();
       if (fileNames != null && fileNames.length != 0)
       {
-        ResourceSet resourceSet = CDOEMFUtil.newEcoreResourceSet();
+        ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
         List<EPackage> ePackages = new ArrayList<EPackage>(fileNames.length);
         for (String fileName : fileNames)
         {

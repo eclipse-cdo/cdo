@@ -37,7 +37,7 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOAutoAttacher extends CDOTransactionHandlerImpl
+public class CDOAutoAttacher extends CDODefaultTransactionHandler
 {
   private CDOTransaction transaction;
 

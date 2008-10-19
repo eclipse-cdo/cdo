@@ -9,9 +9,8 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.query;
+package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;

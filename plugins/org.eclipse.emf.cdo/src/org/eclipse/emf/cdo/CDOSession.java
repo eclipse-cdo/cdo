@@ -100,11 +100,11 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   /**
    * Refreshes the objects cache.
    * <p>
-   * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDOTimestampContext}
+   * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDOTimeStampContext}
    * contains informations of which objects changed/detached. The collection is ordered by timestamp. In the case where
    * {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing anything.
    * 
    * @since 2.0
    */
-  public Collection<CDOTimestampContext> refresh();
+  public Collection<CDOTimeStampContext> refresh();
 }

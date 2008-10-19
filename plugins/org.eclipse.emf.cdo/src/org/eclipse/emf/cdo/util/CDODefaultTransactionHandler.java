@@ -19,9 +19,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class CDOTransactionHandlerImpl implements CDOTransactionHandler
+public abstract class CDODefaultTransactionHandler implements CDOTransactionHandler
 {
-  protected CDOTransactionHandlerImpl()
+  protected CDODefaultTransactionHandler()
   {
   }
 

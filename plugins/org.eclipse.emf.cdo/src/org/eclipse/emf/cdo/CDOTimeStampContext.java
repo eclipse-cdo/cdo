@@ -9,30 +9,24 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.analyzer;
+package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
-import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
-
-import org.eclipse.emf.internal.cdo.analyzer.NOOPFetchRuleManager;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOFetchRuleManager
+public interface CDOTimeStampContext
 {
-  public static final CDOFetchRuleManager NOOP = new NOOPFetchRuleManager();
+  public long getTimeStamp();
 
-  public CDOID getContext();
+  public Collection<CDOID> getDetachedObjects();
 
-  public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids);
-
-  /**
-   * @since 2.0
-   */
-  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
+  public Set<CDOIDAndVersion> getDirtyObjects();
 }

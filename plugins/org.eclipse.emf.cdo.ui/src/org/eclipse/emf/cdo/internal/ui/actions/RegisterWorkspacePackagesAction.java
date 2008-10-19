@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenResourcesDialog;
-import org.eclipse.emf.cdo.util.CDOEMFUtil;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -50,7 +50,7 @@ public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
       Object[] result = dialog.getResult();
       if (result != null && result.length != 0)
       {
-        ResourceSet resourceSet = CDOEMFUtil.newEcoreResourceSet();
+        ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
         List<EPackage> ePackages = new ArrayList<EPackage>(result.length);
         for (Object object : result)
         {

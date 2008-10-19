@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.CDOTimestampContext;
+import org.eclipse.emf.cdo.CDOTimeStampContext;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
@@ -1055,7 +1055,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   /**
    * @since 2.0
    */
-  public Collection<CDOTimestampContext> refresh()
+  public Collection<CDOTimeStampContext> refresh()
   {
     // If passive update is turned on we don`t need to refresh.
     // We do not throw an exception since the client could turn that feature on or off without affecting their code.

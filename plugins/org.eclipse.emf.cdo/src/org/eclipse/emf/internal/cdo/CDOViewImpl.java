@@ -13,14 +13,15 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOChangeSubscriptionPolicy;
+import org.eclipse.emf.cdo.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOQuery;
 import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewSet;
-import org.eclipse.emf.cdo.analyzer.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
@@ -41,7 +42,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.query.CDOQuery;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -294,11 +294,17 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     revisionPrefetchingPolicy = prefetchingPolicy;
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOFeatureAnalyzer getFeatureAnalyzer()
   {
     return featureAnalyzer;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
   {
     this.featureAnalyzer = featureAnalyzer == null ? CDOFeatureAnalyzer.NOOP : featureAnalyzer;

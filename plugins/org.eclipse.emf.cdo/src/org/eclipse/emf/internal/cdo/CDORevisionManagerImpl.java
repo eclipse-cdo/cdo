@@ -11,8 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.CDORevisionManager;
-import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -161,11 +161,17 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOFetchRuleManager getRuleManager()
   {
     return ruleManager;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setRuleManager(CDOFetchRuleManager ruleManager)
   {
     this.ruleManager = ruleManager;

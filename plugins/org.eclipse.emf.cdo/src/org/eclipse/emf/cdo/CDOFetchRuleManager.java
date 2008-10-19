@@ -11,22 +11,28 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+
+import org.eclipse.emf.internal.cdo.analyzer.NOOPFetchRuleManager;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Simon McDuff
  * @since 2.0
- * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOTimestampContext
+public interface CDOFetchRuleManager
 {
-  public long getTimestamp();
+  public static final CDOFetchRuleManager NOOP = new NOOPFetchRuleManager();
 
-  public Collection<CDOID> getDetachedObjects();
+  public CDOID getContext();
 
-  public Set<CDOIDAndVersion> getDirtyObjects();
+  public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids);
+
+  /**
+   * @since 2.0
+   */
+  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
 }

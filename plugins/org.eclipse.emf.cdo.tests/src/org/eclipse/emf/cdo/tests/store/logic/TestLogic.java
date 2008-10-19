@@ -35,7 +35,7 @@ import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
-import org.eclipse.emf.cdo.util.CDOEMFUtil;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
@@ -240,7 +240,7 @@ public abstract class TestLogic extends AbstractOMTest
       String uri = ePackage.getNsURI();
       String parentURI = ModelUtil.getParentURI(ePackage);
       String name = ePackage.getName();
-      boolean dynamic = CDOEMFUtil.isDynamicEPackage(ePackage);
+      boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
       String ecore = null;
       CDOIDMetaRange idRange = null;
 
@@ -248,7 +248,7 @@ public abstract class TestLogic extends AbstractOMTest
       {
         if (!EcorePackage.eINSTANCE.getNsURI().equals(uri))
         {
-          ecore = CDOEMFUtil.ePackageToString(ePackage, EPackage.Registry.INSTANCE);
+          ecore = EMFUtil.ePackageToString(ePackage, EPackage.Registry.INSTANCE);
         }
 
         idRange = CDOSessionImpl.registerEPackage(ePackage, 1, null, null);

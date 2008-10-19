@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
-import org.eclipse.emf.cdo.util.CDOTransactionHandlerImpl;
+import org.eclipse.emf.cdo.util.CDODefaultTransactionHandler;
 
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 
@@ -65,7 +65,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
-    transaction.addHandler(new CDOTransactionHandlerImpl()
+    transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void attachingObject(CDOTransaction transaction, CDOObject object)
@@ -103,7 +103,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     order.getOrderDetails().add(orderDetail);
 
     CDOResource resource = transaction.getOrCreateResource("/test1");
-    transaction.addHandler(new CDOTransactionHandlerImpl()
+    transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void attachingObject(CDOTransaction transaction, CDOObject object)
@@ -159,7 +159,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
-    transaction.addHandler(new CDOTransactionHandlerImpl()
+    transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void detachingObject(CDOTransaction transaction, CDOObject object)
@@ -219,7 +219,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
-    transaction.addHandler(new CDOTransactionHandlerImpl()
+    transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
@@ -259,7 +259,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOResource resource = transaction.getOrCreateResource("/test1");
     resource.getContents().add(order);
 
-    transaction.addHandler(new CDOTransactionHandlerImpl()
+    transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)

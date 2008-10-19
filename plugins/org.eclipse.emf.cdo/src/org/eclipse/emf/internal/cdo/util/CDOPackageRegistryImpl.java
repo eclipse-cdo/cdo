@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
-import org.eclipse.emf.cdo.util.CDOEMFUtil;
+import org.eclipse.emf.cdo.util.EMFUtil;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
@@ -127,7 +127,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       if (value instanceof EPackageImpl)
       {
         EPackageImpl ePackage = (EPackageImpl)value;
-        if (CDOEMFUtil.isDynamicEPackage(ePackage))
+        if (EMFUtil.isDynamicEPackage(ePackage))
         {
           ModelUtil.prepareDynamicEPackage(ePackage);
         }

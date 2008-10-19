@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.CDOTimestampContext;
+import org.eclipse.emf.cdo.CDOTimeStampContext;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOTimestampContextImpl;
+import org.eclipse.emf.internal.cdo.CDOTimeStampContextImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -39,7 +39,7 @@ import java.util.TreeMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimestampContext>>
+public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStampContext>>
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionRequest.class);
 
@@ -81,12 +81,12 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimestam
     }
   }
 
-  private CDOTimestampContext getMap(Map<Long, CDOTimestampContext> mapOfContext, long timestamp)
+  private CDOTimeStampContext getMap(Map<Long, CDOTimeStampContext> mapOfContext, long timestamp)
   {
-    CDOTimestampContext result = mapOfContext.get(timestamp);
+    CDOTimeStampContext result = mapOfContext.get(timestamp);
     if (result == null)
     {
-      result = new CDOTimestampContextImpl(timestamp);
+      result = new CDOTimeStampContextImpl(timestamp);
       mapOfContext.put(timestamp, result);
     }
 
@@ -94,10 +94,10 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimestam
   }
 
   @Override
-  protected Collection<CDOTimestampContext> confirming(CDODataInput in) throws IOException
+  protected Collection<CDOTimeStampContext> confirming(CDODataInput in) throws IOException
   {
     CDORevisionManagerImpl revisionManager = getRevisionManager();
-    TreeMap<Long, CDOTimestampContext> mapofContext = new TreeMap<Long, CDOTimestampContext>();
+    TreeMap<Long, CDOTimeStampContext> mapofContext = new TreeMap<Long, CDOTimeStampContext>();
 
     int size = in.readInt();
     for (int i = 0; i < size; i++)
@@ -131,7 +131,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimestam
       detachedObjects.add(id);
     }
 
-    for (CDOTimestampContext timestampContext : mapofContext.values())
+    for (CDOTimeStampContext timestampContext : mapofContext.values())
     {
       Set<CDOIDAndVersion> dirtyObjects = timestampContext.getDirtyObjects();
       Collection<CDOID> detachedObjects = timestampContext.getDetachedObjects();
@@ -139,10 +139,10 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimestam
       dirtyObjects = Collections.unmodifiableSet(dirtyObjects);
       detachedObjects = Collections.unmodifiableCollection(detachedObjects);
 
-      ((CDOTimestampContextImpl)timestampContext).setDirtyObjects(dirtyObjects);
-      ((CDOTimestampContextImpl)timestampContext).setDetachedObjects(detachedObjects);
+      ((CDOTimeStampContextImpl)timestampContext).setDirtyObjects(dirtyObjects);
+      ((CDOTimeStampContextImpl)timestampContext).setDetachedObjects(detachedObjects);
 
-      cdoSession.handleSyncResponse(timestampContext.getTimestamp(), dirtyObjects, detachedObjects);
+      cdoSession.handleSyncResponse(timestampContext.getTimeStamp(), dirtyObjects, detachedObjects);
     }
 
     return Collections.unmodifiableCollection(mapofContext.values());

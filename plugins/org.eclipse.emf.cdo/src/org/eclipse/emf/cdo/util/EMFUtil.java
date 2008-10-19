@@ -46,11 +46,11 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public final class CDOEMFUtil
+public final class EMFUtil
 {
   private static final String ECORE_ENCODING = "ASCII";
 
-  private CDOEMFUtil()
+  private EMFUtil()
   {
   }
 
@@ -267,7 +267,7 @@ public final class CDOEMFUtil
 
   public static String ePackageToString(EPackage ePackage, EPackage.Registry packageRegistry)
   {
-    synchronized (CDOEMFUtil.class)
+    synchronized (EMFUtil.class)
     {
       ePackage = (EPackage)EcoreUtil.copy(ePackage);
     }

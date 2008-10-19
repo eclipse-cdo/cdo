@@ -9,15 +9,15 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.analyzer;
+package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFeatureAnalyzer;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public interface CDOFeatureAnalyzer
 {

@@ -29,7 +29,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
-import org.eclipse.emf.cdo.util.CDOEMFUtil;
+import org.eclipse.emf.cdo.util.EMFUtil;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
@@ -130,7 +130,7 @@ public final class ModelUtil
   public static void initializeCDOPackage(EPackage ePackage, CDOPackage cdoPackage)
   {
     ((InternalCDOPackage)cdoPackage).setClientInfo(ePackage);
-    for (EClass eClass : CDOEMFUtil.getPersistentClasses(ePackage))
+    for (EClass eClass : EMFUtil.getPersistentClasses(ePackage))
     {
       CDOClass cdoClass = createCDOClass(eClass, cdoPackage);
       ((InternalCDOPackage)cdoPackage).addClass(cdoClass);
@@ -184,7 +184,7 @@ public final class ModelUtil
   }
 
   /**
-   * @see CDOEMFUtil#getPersistentFeatures(org.eclipse.emf.common.util.EList)
+   * @see EMFUtil#getPersistentFeatures(org.eclipse.emf.common.util.EList)
    * @see http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
    */
   private static CDOPackage createCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
@@ -193,7 +193,7 @@ public final class ModelUtil
     String uri = ePackage.getNsURI();
     String parentURI = getParentURI(ePackage);
     String name = ePackage.getName();
-    boolean dynamic = CDOEMFUtil.isDynamicEPackage(ePackage);
+    boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
     String ecore = null;
     CDOIDMetaRange idRange = null;
 
@@ -201,7 +201,7 @@ public final class ModelUtil
     {
       if (!EcorePackage.eINSTANCE.getNsURI().equals(uri))
       {
-        ecore = CDOEMFUtil.ePackageToString(ePackage, session.getPackageRegistry());
+        ecore = EMFUtil.ePackageToString(ePackage, session.getPackageRegistry());
       }
 
       idRange = session.registerEPackage(ePackage);
@@ -227,7 +227,7 @@ public final class ModelUtil
     // Bugs: 247978 Make sure featureIndex are properly set for dynamic classes
     eClass.getEAllStructuralFeatures();
 
-    for (EStructuralFeature eFeature : CDOEMFUtil.getPersistentFeatures(eClass.getEStructuralFeatures()))
+    for (EStructuralFeature eFeature : EMFUtil.getPersistentFeatures(eClass.getEStructuralFeatures()))
     {
       CDOFeature cdoFeature = createCDOFeature(eFeature, cdoClass);
       cdoClass.addFeature(cdoFeature);
@@ -238,7 +238,7 @@ public final class ModelUtil
 
   private static CDOFeature createCDOFeature(EStructuralFeature eFeature, CDOClass containingClass)
   {
-    InternalCDOFeature cdoFeature = (InternalCDOFeature)(CDOEMFUtil.isReference(eFeature) ? createCDOReference(
+    InternalCDOFeature cdoFeature = (InternalCDOFeature)(EMFUtil.isReference(eFeature) ? createCDOReference(
         (EReference)eFeature, containingClass) : createCDOAttribute((EAttribute)eFeature, containingClass));
     cdoFeature.setClientInfo(eFeature);
     return cdoFeature;
@@ -251,7 +251,7 @@ public final class ModelUtil
     String name = eFeature.getName();
     CDOClassRef classRef = createClassRef(eFeature.getEType());
     boolean many = eFeature.isMany();
-    boolean containment = CDOEMFUtil.isContainment(eFeature);
+    boolean containment = EMFUtil.isContainment(eFeature);
     CDOFeature cdoFeature = CDOModelUtil.createReference(containingClass, featureID, name, new CDOClassProxy(classRef,
         packageManager), many, containment);
 
@@ -270,7 +270,7 @@ public final class ModelUtil
     int featureID = eFeature.getFeatureID();
     String name = eFeature.getName();
     CDOType type = getCDOType(eFeature);
-    boolean many = CDOEMFUtil.isMany(eFeature);
+    boolean many = EMFUtil.isMany(eFeature);
     return CDOModelUtil.createAttribute(containingClass, featureID, name, type, many);
   }
 
@@ -347,7 +347,7 @@ public final class ModelUtil
   {
     CDOPackage topLevelPackage = cdoPackage.getTopLevelPackage();
     String ecore = topLevelPackage.getEcore();
-    EPackageImpl topLevelPackageEPackage = (EPackageImpl)CDOEMFUtil.ePackageFromString(ecore);
+    EPackageImpl topLevelPackageEPackage = (EPackageImpl)EMFUtil.ePackageFromString(ecore);
     EPackageImpl ePackage = prepareDynamicEPackage(topLevelPackageEPackage, cdoPackage.getPackageURI());
     return ePackage;
   }

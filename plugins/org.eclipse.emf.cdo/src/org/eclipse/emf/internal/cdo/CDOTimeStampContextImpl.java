@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOTimestampContext;
+import org.eclipse.emf.cdo.CDOTimeStampContext;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 
@@ -24,22 +24,22 @@ import java.util.Set;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOTimestampContextImpl implements CDOTimestampContext
+public class CDOTimeStampContextImpl implements CDOTimeStampContext
 {
-  private long timestamp;
+  private long timeStamp;
 
   private Set<CDOIDAndVersion> dirtyObjects = new HashSet<CDOIDAndVersion>();
 
   private Collection<CDOID> detachedObjects = new ArrayList<CDOID>();
 
-  public CDOTimestampContextImpl(long timestamp)
+  public CDOTimeStampContextImpl(long timeStamp)
   {
-    this.timestamp = timestamp;
+    this.timeStamp = timeStamp;
   }
 
-  public long getTimestamp()
+  public long getTimeStamp()
   {
-    return timestamp;
+    return timeStamp;
   }
 
   public Set<CDOIDAndVersion> getDirtyObjects()

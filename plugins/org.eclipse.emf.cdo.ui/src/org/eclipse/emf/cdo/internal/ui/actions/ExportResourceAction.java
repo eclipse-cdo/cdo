@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.dialogs.ExportResourceDialog;
-import org.eclipse.emf.cdo.util.CDOEMFUtil;
+import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -79,6 +79,6 @@ public class ExportResourceAction extends ViewAction
     List<EObject> sourceContents = new ArrayList<EObject>(source.getContents());
 
     // Target Resource
-    CDOEMFUtil.saveXMI(sourceURI.toString(), sourceContents);
+    EMFUtil.saveXMI(sourceURI.toString(), sourceContents);
   }
 }

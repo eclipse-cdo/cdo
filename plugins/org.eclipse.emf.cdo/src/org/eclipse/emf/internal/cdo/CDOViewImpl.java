@@ -266,6 +266,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy subscriptionPolicy)
   {
+    if (subscriptionPolicy == null)
+    {
+      subscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
+    }
+
     if (changeSubscriptionPolicy != subscriptionPolicy)
     {
       changeSubscriptionPolicy = subscriptionPolicy;

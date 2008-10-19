@@ -66,18 +66,44 @@ public interface CDOView extends CDOProtocolView, INotifier
    */
   public static final int NO_REVISION_PREFETCHING = 1;
 
+  /**
+   * Returns the {@link CDOSession session} this view was opened by.
+   * 
+   * @return The session this view was opened by, or <code>null</code> if this view is closed.
+   * @see #close()
+   * @see #isClosed()
+   * @see CDOSession#openView()
+   * @see CDOSession#openView(ResourceSet)
+   * @see CDOSession#openAudit(long)
+   * @see CDOSession#openAudit(ResourceSet, long)
+   * @see CDOSession#openTransaction()
+   * @see CDOSession#openTransaction(ResourceSet)
+   */
   public CDOSession getSession();
 
   /**
+   * Returns the {@link CDOViewSet view set} this view is associated with.
+   * 
+   * @return The view set this view is associated with, never <code>null</code>.
+   * @see CDOViewSet#getViews()
    * @since 2.0
    */
   public CDOViewSet getViewSet();
 
+  /**
+   * Returns the {@link ResourceSet resource set} this view is associated with.
+   * <p>
+   * Same as calling <tt>getViewSet().getResourceSet()</tt>.
+   * 
+   * @see CDOViewSet#getResourceSet()
+   */
   public ResourceSet getResourceSet();
 
   /**
    * @since 2.0
+   * @deprecated This API is provisional and subject to change or removal.
    */
+  @Deprecated
   public URIHandler getURIHandler();
 
   /**
@@ -166,16 +192,30 @@ public interface CDOView extends CDOProtocolView, INotifier
   public void setUniqueResourceContents(boolean uniqueResourceContents);
 
   /**
+   * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
+   * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
+   * remote changes), <code>false</code> otherwise.
+   * 
+   * @see CDOInvalidationNotification
    * @since 2.0
    */
   public boolean isInvalidationNotificationEnabled();
 
   /**
+   * Specifies whether the {@link CDOObject objects} in this view will notify their
+   * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
+   * remote changes) or not.
+   * 
+   * @see CDOInvalidationNotification
    * @since 2.0
    */
   public void setInvalidationNotificationEnabled(boolean enabled);
 
   /**
+   * Returns the current {@link CDOChangeSubscriptionPolicy change subscription policy}.
+   * 
+   * @return The current change subscription policy, never <code>null</code>.
+   * @see #setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy)
    * @since 2.0
    */
   public CDOChangeSubscriptionPolicy getChangeSubscriptionPolicy();
@@ -224,6 +264,11 @@ public interface CDOView extends CDOProtocolView, INotifier
    */
   public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
+  /**
+   * Returns <code>true</code> if a resource with the given path exists in the repository, <code>false</code>.
+   * 
+   * @see #getResource(String, boolean)
+   */
   public boolean hasResource(String path);
 
   /**

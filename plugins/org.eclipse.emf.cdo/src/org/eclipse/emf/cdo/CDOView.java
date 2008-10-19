@@ -47,6 +47,15 @@ import java.util.concurrent.locks.ReentrantLock;
  *   ...
  * </pre>
  * 
+ * CDOView instances <b>must not</b> be accessed through concurrent client threads.
+ * <p>
+ * Since a CDOObject, in a {@link CDOState#TRANSIENT non-TRANSIENT} state, is only meaningful in combination with its
+ * dedicated view they must also not be accessed through concurrent client threads. Please note that at arbitrary times
+ * an arbitrary number of framework background threads are allowed to use and modify a CDOview and its CDOObjects.
+ * Whenever you are iterating over a number of CDOObjects and need to ensure that they are not modified by the framework
+ * at the same time it is strongly recommended to acquire the {@link #getLock() view lock} and protect your code
+ * appropriately.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
@@ -72,8 +81,8 @@ public interface CDOView extends CDOProtocolView, INotifier
   public URIHandler getURIHandler();
 
   /**
-   * Returns a reentrant lock that can be used to prevent the framework from writing to any object in this view (caused,
-   * for example, by passive updates).
+   * Returns a reentrant lock that can be used to prevent the framework from writing to any object in this view (as it
+   * is caused, for example, by passive updates).
    * <p>
    * Acquiring this lock provides a means to safely iterate over multiple model elements without being affected by
    * unanticipated remote updates, like in the following example:

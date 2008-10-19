@@ -94,6 +94,31 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.eresource.CDOResourceFolder} instances.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected CDOResourceFolderItemProvider cdoResourceFolderItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.eresource.CDOResourceFolder}. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Adapter createCDOResourceFolderAdapter()
+  {
+    if (cdoResourceFolderItemProvider == null)
+    {
+      cdoResourceFolderItemProvider = new CDOResourceFolderItemProvider(this);
+    }
+
+    return cdoResourceFolderItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.eresource.CDOResource} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -254,6 +279,10 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
    */
   public void dispose()
   {
+    if (cdoResourceFolderItemProvider != null)
+    {
+      cdoResourceFolderItemProvider.dispose();
+    }
     if (cdoResourceItemProvider != null)
     {
       cdoResourceItemProvider.dispose();

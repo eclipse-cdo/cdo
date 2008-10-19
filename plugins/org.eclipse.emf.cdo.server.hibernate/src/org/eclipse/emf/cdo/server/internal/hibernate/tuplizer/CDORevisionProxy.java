@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -25,7 +24,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -40,15 +38,6 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   CDORevisionProxy(CDORevisionLazyInitializer li)
   {
     this.li = li;
-  }
-
-  /**
-   * @deprecated Doesn't seem to be used
-   */
-  @Deprecated
-  public void write(CDODataOutput out, int referenceChunk) throws IOException
-  {
-    out.writeCDORevision(li.getRevision(), referenceChunk);
   }
 
   public Object writeReplace()
@@ -179,6 +168,16 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public boolean isEmpty(CDOFeature feature)
   {
     return li.getRevision().isEmpty(feature);
+  }
+
+  public boolean isResourceNode()
+  {
+    return li.getRevision().isResourceNode();
+  }
+
+  public boolean isResourceFolder()
+  {
+    return li.getRevision().isResourceFolder();
   }
 
   public boolean isResource()

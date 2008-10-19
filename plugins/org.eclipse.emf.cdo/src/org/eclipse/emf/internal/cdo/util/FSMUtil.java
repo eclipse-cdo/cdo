@@ -14,10 +14,8 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
@@ -25,25 +23,18 @@ import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOViewImpl;
-import org.eclipse.emf.internal.cdo.CDOViewSetImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
-import org.eclipse.net4j.util.ImplementationError;
-
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -273,35 +264,5 @@ public final class FSMUtil
   public static Iterator<InternalCDOObject> iterator(Collection<?> instances, final CDOViewImpl view)
   {
     return iterator(instances.iterator(), view);
-  }
-
-  public static CDOViewSet prepareResourceSet(ResourceSet resourceSet)
-  {
-    CDOViewSetImpl viewSet = null;
-    synchronized (resourceSet)
-    {
-      viewSet = (CDOViewSetImpl)CDOUtil.getViewSet(resourceSet);
-
-      if (viewSet == null)
-      {
-        if (resourceSet instanceof ResourceSetImpl)
-        {
-          Map<URI, Resource> resourceMap = null;
-          ResourceSetImpl rs = (ResourceSetImpl)resourceSet;
-          resourceMap = rs.getURIResourceMap();
-          rs.setURIResourceMap(new ProxyResolverURIResourceMap(null, resourceMap));
-        }
-        else
-        {
-          throw new ImplementationError("Not a " + ResourceSetImpl.class.getName() + ": "
-              + resourceSet.getClass().getName());
-        }
-
-        viewSet = new CDOViewSetImpl();
-        resourceSet.eAdapters().add(viewSet);
-      }
-    }
-
-    return viewSet;
   }
 }

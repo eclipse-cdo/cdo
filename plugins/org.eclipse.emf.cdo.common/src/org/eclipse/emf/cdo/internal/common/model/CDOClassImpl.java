@@ -169,6 +169,16 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     this.isAbstract = isAbstract;
   }
 
+  public boolean isResourceNode()
+  {
+    return false;
+  }
+
+  public boolean isResourceFolder()
+  {
+    return false;
+  }
+
   public boolean isResource()
   {
     return false;

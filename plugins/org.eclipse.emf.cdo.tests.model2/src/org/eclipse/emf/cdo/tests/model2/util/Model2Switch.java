@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2Switch.java,v 1.5 2008-09-18 12:56:55 estepper Exp $
+ * $Id: Model2Switch.java,v 1.6 2008-10-19 01:28:55 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.util;
 
@@ -10,6 +10,8 @@ import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
+import org.eclipse.emf.cdo.tests.model2.Task;
+import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -108,6 +110,26 @@ public class Model2Switch<T>
       }
       return result;
     }
+    case Model2Package.TASK_CONTAINER:
+    {
+      TaskContainer taskContainer = (TaskContainer)theEObject;
+      T result = caseTaskContainer(taskContainer);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model2Package.TASK:
+    {
+      Task task = (Task)theEObject;
+      T result = caseTask(task);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -125,6 +147,36 @@ public class Model2Switch<T>
    * @generated
    */
   public T caseSpecialPurchaseOrder(SpecialPurchaseOrder object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Task Container</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Task Container</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTaskContainer(TaskContainer object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Task</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTask(Task object)
   {
     return null;
   }

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.eresource.util;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -77,6 +79,18 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
   protected EresourceSwitch<Adapter> modelSwitch = new EresourceSwitch<Adapter>()
   {
     @Override
+    public Adapter caseCDOResourceNode(CDOResourceNode object)
+    {
+      return createCDOResourceNodeAdapter();
+    }
+
+    @Override
+    public Adapter caseCDOResourceFolder(CDOResourceFolder object)
+    {
+      return createCDOResourceFolderAdapter();
+    }
+
+    @Override
     public Adapter caseCDOResource(CDOResource object)
     {
       return createCDOResourceAdapter();
@@ -101,6 +115,36 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
   public Adapter createAdapter(Notifier target)
   {
     return modelSwitch.doSwitch((EObject)target);
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode
+   * <em>CDO Resource Node</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceNode
+   * @generated
+   */
+  public Adapter createCDOResourceNodeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder
+   * <em>CDO Resource Folder</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceFolder
+   * @generated
+   */
+  public Adapter createCDOResourceFolderAdapter()
+  {
+    return null;
   }
 
   /**

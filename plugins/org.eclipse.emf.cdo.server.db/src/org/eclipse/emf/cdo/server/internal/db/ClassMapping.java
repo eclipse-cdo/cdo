@@ -15,13 +15,13 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -31,7 +31,6 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -81,41 +80,36 @@ public abstract class ClassMapping implements IClassMapping
       attributeMappings = createAttributeMappings(features);
       referenceMappings = createReferenceMappings(features);
 
-      // Special handling of CDOResource table
-      CDOResourceClass resourceClass = getResourceClass();
-      if (cdoClass == resourceClass)
-      {
-        // Create a unique ids to prevent duplicate resource paths
-        for (IAttributeMapping attributeMapping : attributeMappings)
-        {
-          if (attributeMapping.getFeature() == resourceClass.getCDOPathFeature())
-          {
-            IDBField versionField = table.getField(CDODBSchema.ATTRIBUTES_VERSION);
-            IDBField pathField = attributeMapping.getField();
-            pathField.setPrecision(760);// MYSQL key limitation 767
-            pathField.setNotNull(true);
-
-            // TODO Provide better design for store capabilities and repository support
-            // Example: Currently a store can not specify that it does not support non-auditing mode!
-            if (false && !mappingStrategy.getStore().getRepository().isSupportingAudits())
-            {
-              // Create a unique ids to prevent duplicate resource paths
-              table.addIndex(IDBIndex.Type.UNIQUE, versionField, pathField);
-            }
-
-            break;
-          }
-        }
-      }
+      // // Special handling of CDOResource table
+      // CDOResourceClass resourceClass = getResourceClass();
+      // if (cdoClass == resourceClass)
+      // {
+      // // Create a unique ids to prevent duplicate resource paths
+      // for (IAttributeMapping attributeMapping : attributeMappings)
+      // {
+      // if (attributeMapping.getFeature() == resourceClass.getCDOPathFeature())
+      // {
+      // IDBField versionField = table.getField(CDODBSchema.ATTRIBUTES_VERSION);
+      // IDBField pathField = attributeMapping.getField();
+      // pathField.setPrecision(760);// MYSQL key limitation 767
+      // pathField.setNotNull(true);
+      //
+      // // TODO Provide better design for store capabilities and repository support
+      // // Example: Currently a store can not specify that it does not support non-auditing mode!
+      // if (false && !mappingStrategy.getStore().getRepository().isSupportingAudits())
+      // {
+      // // Create a unique ids to prevent duplicate resource paths
+      // table.addIndex(IDBIndex.Type.UNIQUE, versionField, pathField);
+      // }
+      //
+      // break;
+      // }
+      // }
+      // }
     }
 
     selectPrefix = createSelectPrefix(false);
     selectPrefixWithVersion = createSelectPrefix(true);
-  }
-
-  private CDOResourceClass getResourceClass()
-  {
-    return mappingStrategy.getStore().getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceClass();
   }
 
   public MappingStrategy getMappingStrategy()
@@ -325,6 +319,16 @@ public abstract class ClassMapping implements IClassMapping
     return builder.toString();
   }
 
+  public IFeatureMapping getFeatureMapping(CDOFeature feature)
+  {
+    if (feature.isReference() && mappingStrategy.getToMany() != ToMany.LIKE_ATTRIBUTES)
+    {
+      return getReferenceMapping(feature);
+    }
+
+    return getAttributeMapping(feature);
+  }
+
   public List<IAttributeMapping> getAttributeMappings()
   {
     return attributeMappings;
@@ -463,25 +467,14 @@ public abstract class ClassMapping implements IClassMapping
 
   public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision)
   {
-    if (revision.getVersion() >= 2 && hasFullRevisionInfo())
+    if (revision.getVersion() > 1 && hasFullRevisionInfo())
     {
       writeRevisedRow(storeWriter, (InternalCDORevision)revision);
     }
 
-    if (revision.isResource())
+    if (revision.isResourceFolder() || revision.isResource())
     {
-      // TODO Provide better design for store capabilities and repository support
-      // Example: Currently a store can not specify that it does not support non-auditing mode!
-      if (true || mappingStrategy.getStore().getRepository().isSupportingAudits())
-      {
-        // If auditing is not supported this is checked by a table index (see constructor)
-        CDOFeature resourcePathFeature = getResourceClass().getCDOPathFeature();
-        String revisionPath = (String)revision.getData().get(resourcePathFeature, 0);
-        if (mappingStrategy.readResourceID(storeWriter, revisionPath, revision.getCreated()) != null)
-        {
-          throw new IllegalStateException("Duplicate resource path: " + revisionPath);
-        }
-      }
+      checkDuplicateResources(storeWriter, revision);
     }
 
     if (attributeMappings != null)
@@ -494,6 +487,9 @@ public abstract class ClassMapping implements IClassMapping
       writeReferences(storeWriter, (InternalCDORevision)revision);
     }
   }
+
+  protected abstract void checkDuplicateResources(IDBStoreReader storeReader, CDORevision revision)
+      throws IllegalStateException;
 
   public void detachObject(IDBStoreWriter storeWriter, CDOID id, long revised)
   {

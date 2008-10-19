@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
-import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEntry;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -20,23 +20,23 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public final class OpenResourceEditorAction extends EntryAction
+public final class OpenResourceEditorAction extends ResourceNodeAction
 {
   private static final String TITLE = "Open Editor";
 
   private static final String TOOL_TIP = "Open a CDO editor for this resource";
 
   public OpenResourceEditorAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
-      CDOViewHistoryEntry entry)
+      CDOResourceNode resourceNode)
   {
-    super(page, TITLE, TOOL_TIP, null, entry);
+    super(page, TITLE, TOOL_TIP, null, resourceNode);
   }
 
   @Override
   protected void doRun() throws Exception
   {
-    CDOView view = getEntry().getView();
-    String resourcePath = getEntry().getResourcePath();
+    CDOView view = getResourceNode().cdoView();
+    String resourcePath = getResourceNode().getPath();
     CDOEditor.open(getPage(), view, resourcePath);
   }
 }

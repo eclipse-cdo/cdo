@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2PackageImpl.java,v 1.6 2008-09-18 12:56:55 estepper Exp $
+ * $Id: Model2PackageImpl.java,v 1.7 2008-10-19 01:28:55 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -10,6 +10,8 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
+import org.eclipse.emf.cdo.tests.model2.Task;
+import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -30,6 +32,20 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * @generated
    */
   private EClass specialPurchaseOrderEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass taskContainerEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass taskEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -138,6 +154,66 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * 
    * @generated
    */
+  public EClass getTaskContainer()
+  {
+    return taskContainerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getTaskContainer_Tasks()
+  {
+    return (EReference)taskContainerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getTask()
+  {
+    return taskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getTask_TaskContainer()
+  {
+    return (EReference)taskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getTask_Description()
+  {
+    return (EAttribute)taskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getTask_Done()
+  {
+    return (EAttribute)taskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model2Factory getModel2Factory()
   {
     return (Model2Factory)getEFactoryInstance();
@@ -168,6 +244,14 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     specialPurchaseOrderEClass = createEClass(SPECIAL_PURCHASE_ORDER);
     createEAttribute(specialPurchaseOrderEClass, SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE);
     createEReference(specialPurchaseOrderEClass, SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS);
+
+    taskContainerEClass = createEClass(TASK_CONTAINER);
+    createEReference(taskContainerEClass, TASK_CONTAINER__TASKS);
+
+    taskEClass = createEClass(TASK);
+    createEReference(taskEClass, TASK__TASK_CONTAINER);
+    createEAttribute(taskEClass, TASK__DESCRIPTION);
+    createEAttribute(taskEClass, TASK__DONE);
   }
 
   /**
@@ -215,6 +299,21 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     initEReference(getSpecialPurchaseOrder_ShippingAddress(), theModel1Package.getAddress(), null, "shippingAddress",
         null, 0, 1, SpecialPurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(taskContainerEClass, TaskContainer.class, "TaskContainer", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTaskContainer_Tasks(), getTask(), getTask_TaskContainer(), "tasks", null, 0, -1,
+        TaskContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTask_TaskContainer(), getTaskContainer(), getTaskContainer_Tasks(), "taskContainer", null, 0, 1,
+        Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTask_Description(), ecorePackage.getEString(), "description", null, 0, 1, Task.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTask_Done(), ecorePackage.getEBoolean(), "done", null, 0, 1, Task.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

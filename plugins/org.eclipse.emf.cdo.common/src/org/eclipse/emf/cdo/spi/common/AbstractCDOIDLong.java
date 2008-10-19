@@ -22,6 +22,11 @@ import java.io.IOException;
  */
 public abstract class AbstractCDOIDLong extends AbstractCDOID implements Comparable<AbstractCDOIDLong>
 {
+  /**
+   * @since 2.0
+   */
+  public static final long NULL_VALUE = 0L;
+
   private static final long serialVersionUID = 1L;
 
   private long value;
@@ -32,9 +37,9 @@ public abstract class AbstractCDOIDLong extends AbstractCDOID implements Compara
 
   public AbstractCDOIDLong(long value)
   {
-    if (value == 0L)
+    if (value == NULL_VALUE)
     {
-      throw new IllegalArgumentException("value == 0L");
+      throw new IllegalArgumentException("value == NULL_VALUE");
     }
 
     this.value = value;

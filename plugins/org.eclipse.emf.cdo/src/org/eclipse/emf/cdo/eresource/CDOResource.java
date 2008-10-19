@@ -10,17 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource;
 
-import org.eclipse.emf.cdo.CDOObject;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'.
  * 
- * @extends EresourceObject <!-- end-user-doc -->
+ * @extends Resource <!-- end-user-doc -->
  *          <p>
  *          The following features are supported:
  *          <ul>
@@ -33,15 +32,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
  *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
  *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}</li>
  *          </ul>
  *          </p>
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource()
  * @model
- * @extends CDOObject
  * @generated
  */
-public interface CDOResource extends CDOObject, EresourceObject
+public interface CDOResource extends CDOResourceNode, Resource
 {
   /**
    * Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc -->
@@ -80,7 +77,7 @@ public interface CDOResource extends CDOObject, EresourceObject
    * @return the value of the '<em>URI</em>' attribute.
    * @see #setURI(URI)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_URI()
-   * @model dataType="org.eclipse.emf.cdo.eresource.URI" transient="true"
+   * @model dataType="org.eclipse.emf.cdo.eresource.URI" transient="true" volatile="true" derived="true"
    * @generated
    */
   URI getURI();
@@ -192,7 +189,8 @@ public interface CDOResource extends CDOObject, EresourceObject
    * 
    * @return the value of the '<em>Errors</em>' attribute list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Errors()
-   * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true"
+   * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true"
+   *        derived="true"
    * @generated
    */
   EList<Diagnostic> getErrors();
@@ -208,7 +206,8 @@ public interface CDOResource extends CDOObject, EresourceObject
    * 
    * @return the value of the '<em>Warnings</em>' attribute list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Warnings()
-   * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true"
+   * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true"
+   *        derived="true"
    * @generated
    */
   EList<Diagnostic> getWarnings();
@@ -241,29 +240,9 @@ public interface CDOResource extends CDOObject, EresourceObject
   void setTimeStamp(long value);
 
   /**
-   * Returns the value of the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Path</em>' attribute isn't clear, there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Path</em>' attribute.
-   * @see #setPath(String)
-   * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource_Path()
-   * @model
-   * @generated
+   * @ADDED
+   * @since 2.0
    */
-  String getPath();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}' attribute. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Path</em>' attribute.
-   * @see #getPath()
-   * @generated
-   */
-  void setPath(String value);
+  public boolean isExisting();
 
 } // CDOResource

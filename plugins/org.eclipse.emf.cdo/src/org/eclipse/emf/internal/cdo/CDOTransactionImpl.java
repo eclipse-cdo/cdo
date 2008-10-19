@@ -29,8 +29,13 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
@@ -44,6 +49,7 @@ import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -172,11 +178,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return CDOIDUtil.createTempObject(++lastTemporaryID);
   }
 
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected CDOResourceImpl createRootResource()
+  {
+    return (CDOResourceImpl)getOrCreateResource(CDOResourceNode.ROOT_PATH);
+  }
+
   public CDOResource createResource(String path)
   {
     checkOpen();
-    URI createURI = CDOURIUtil.createResourceURI(this, path);
-    return (CDOResource)getResourceSet().createResource(createURI);
+    URI uri = CDOURIUtil.createResourceURI(this, path);
+    return (CDOResource)getResourceSet().createResource(uri);
   }
 
   public CDOResource getOrCreateResource(String path)
@@ -191,9 +206,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return (CDOResource)getObject(id);
       }
     }
-    catch (Exception expected)
+    catch (Exception ignore)
     {
-      TRACER.trace(expected);
+      // Just create the missing resource
     }
 
     return createResource(path);
@@ -202,35 +217,89 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-
-  public void attach(CDOResourceImpl cdoResource)
+  @Override
+  public void attachResource(CDOResourceImpl resource)
   {
-    try
+    if (resource.isExisting())
     {
-      CDOStateMachine.INSTANCE.attach(cdoResource, this);
-      fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.ADDED));
+      super.attachResource(resource);
     }
-    catch (RuntimeException ex)
+    else
     {
-      OM.LOG.error(ex);
+      // ResourceSet.createResource(uri) was called!!
+      attachNewResource(resource);
+    }
+  }
+
+  private void attachNewResource(CDOResourceImpl resource)
+  {
+    URI uri = resource.getURI();
+    List<String> names = CDOURIUtil.analyzePath(uri);
+    String resourceName = names.isEmpty() ? null : names.remove(names.size() - 1);
+
+    CDOResourceFolder folder = getOrCreateResourceFolder(names);
+    attachNewResourceNode(folder, resourceName, resource);
+  }
+
+  /**
+   * @return never <code>null</code>;
+   * @since 2.0
+   */
+  public CDOResourceFolder getOrCreateResourceFolder(List<String> names)
+  {
+    CDOResourceFolder folder = null;
+    for (String name : names)
+    {
+      CDOResourceNode node;
 
       try
       {
-        ((InternalCDOObject)cdoResource).cdoInternalSetState(CDOState.NEW);
-        getResourceSet().getResources().remove(cdoResource);
+        CDOID folderID = folder == null ? null : folder.cdoID();
+        node = getResourceNode(folderID, name);
       }
-      catch (RuntimeException ignore)
+      catch (CDOException ex)
       {
+        node = EresourceFactory.eINSTANCE.createCDOResourceFolder();
+        attachNewResourceNode(folder, name, node);
       }
 
-      throw ex;
+      if (node instanceof CDOResourceFolder)
+      {
+        folder = (CDOResourceFolder)node;
+      }
+      else
+      {
+        throw new CDOException("Not a ResourceFolder: " + node);
+      }
+    }
+
+    return folder;
+  }
+
+  private void attachNewResourceNode(CDOResourceFolder folder, String name, CDOResourceNode newNode)
+  {
+    CDOResourceNodeImpl node = (CDOResourceNodeImpl)newNode;
+    node.basicSetName(name, false);
+    if (folder == null)
+    {
+      if (node.isRoot())
+      {
+        CDOStateMachine.INSTANCE.attach(node, this);
+      }
+      else
+      {
+        getRootResource().getContents().add(node);
+      }
+    }
+    else
+    {
+      node.basicSetFolder(folder, false);
     }
   }
 
   /**
    * @since 2.0
    */
-
   public void detach(CDOResourceImpl cdoResource)
   {
     CDOStateMachine.INSTANCE.detach(cdoResource);
@@ -271,7 +340,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     this.transactionStrategy = transactionStrategy;
-
     if (this.transactionStrategy != null)
     {
       this.transactionStrategy.setTarget(this);
@@ -282,10 +350,53 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 2.0
    */
   @Override
-  public CDOID getResourceID(String path)
+  protected CDOID getRootOrTopLevelResourceNodeID(String name)
   {
-    CDOID id = super.getResourceID(path);
-    return isDetached(id) ? CDOID.NULL : id;
+    if (dirty)
+    {
+      CDOResourceNode node = getRootResourceNode(name, getDirtyObjects().values());
+      if (node != null)
+      {
+        return node.cdoID();
+      }
+
+      node = getRootResourceNode(name, getNewObjects().values());
+      if (node != null)
+      {
+        return node.cdoID();
+      }
+
+      node = getRootResourceNode(name, getNewResources().values());
+      if (node != null)
+      {
+        return node.cdoID();
+      }
+    }
+
+    CDOID id = super.getRootOrTopLevelResourceNodeID(name);
+    if (getLastSavepoint().getAllDetachedObjects().containsKey(id) || getDirtyObjects().containsKey(id))
+    {
+      throw new CDOException("Root resource node " + name + " doesn't exist");
+    }
+
+    return id;
+  }
+
+  private CDOResourceNode getRootResourceNode(String name, Collection<? extends CDOObject> objects)
+  {
+    for (CDOObject object : objects)
+    {
+      if (object instanceof CDOResourceNode)
+      {
+        CDOResourceNode node = (CDOResourceNode)object;
+        if (node.getFolder() == null && ObjectUtil.equals(name, node.getName()))
+        {
+          return node;
+        }
+      }
+    }
+
+    return null;
   }
 
   private boolean isDetached(CDOID id)
@@ -300,7 +411,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     checkOpen();
-
     if (id == null || id.isNull())
     {
       return null;

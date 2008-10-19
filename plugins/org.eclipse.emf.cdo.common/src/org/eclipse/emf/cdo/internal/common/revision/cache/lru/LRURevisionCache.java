@@ -13,8 +13,11 @@
 package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
+import org.eclipse.emf.cdo.common.model.resource.CDONameFeature;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -40,7 +43,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   private Map<CDOID, RevisionHolder> revisions = new HashMap<CDOID, RevisionHolder>();
 
-  private CDOFeature resourcePathFeature;
+  private CDOPackageManager packageManager;
 
   private int capacityCurrent;
 
@@ -50,18 +53,25 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   private LRU revisedLRU;
 
+  private transient CDONameFeature cdoNameFeature;
+
   public LRURevisionCache()
   {
   }
 
-  public CDOFeature getResourcePathFeature()
+  public CDOPackageManager getPackageManager()
   {
-    return resourcePathFeature;
+    return packageManager;
   }
 
-  public void setResourcePathFeature(CDOFeature resourcePathFeature)
+  public void setPackageManager(CDOPackageManager packageManager)
   {
-    this.resourcePathFeature = resourcePathFeature;
+    this.packageManager = packageManager;
+    if (packageManager != null)
+    {
+      CDOResourceNodeClass resourceNodeClass = packageManager.getCDOResourcePackage().getCDOResourceNodeClass();
+      cdoNameFeature = resourceNodeClass.getCDONameFeature();
+    }
   }
 
   public int getCapacityCurrent()
@@ -245,7 +255,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return lookupHolder != null;
   }
 
-  public synchronized CDOID getResourceID(String path, long timeStamp)
+  public synchronized CDOID getResourceID(CDOID folderID, String name, long timeStamp)
   {
     CDOID[] ids = getRevisionIDs();
     for (CDOID id : ids)
@@ -254,15 +264,19 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
       if (holder != null)
       {
         InternalCDORevision revision = holder.getRevision();
-        if (revision.isResource())
+        if (revision.isResourceNode())
         {
           revision = getRevisionByTime(holder, timeStamp);
           if (revision != null)
           {
-            String revisionPath = (String)revision.getValue(resourcePathFeature);
-            if (ObjectUtil.equals(revisionPath, path))
+            CDOID revisionFolderID = (CDOID)revision.getContainerID();
+            if (CDOIDUtil.equals(revisionFolderID, folderID))
             {
-              return revision.getID();
+              String revisionName = (String)revision.getValue(cdoNameFeature);
+              if (ObjectUtil.equals(revisionName, name))
+              {
+                return revision.getID();
+              }
             }
           }
         }

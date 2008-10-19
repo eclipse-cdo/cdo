@@ -51,7 +51,6 @@ import org.eclipse.emf.internal.cdo.protocol.SetPassiveUpdateRequest;
 import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.channel.IChannel;
@@ -829,7 +828,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   protected void attach(ResourceSet resourceSet, CDOViewImpl view)
   {
-    CDOViewSet viewSet = FSMUtil.prepareResourceSet(resourceSet);
+    CDOViewSet viewSet = CDOSessionImpl.prepareResourceSet(resourceSet);
     synchronized (views)
     {
       views.add(view);
@@ -1081,6 +1080,25 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     return Collections.emptyList();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static CDOViewSet prepareResourceSet(ResourceSet resourceSet)
+  {
+    CDOViewSetImpl viewSet = null;
+    synchronized (resourceSet)
+    {
+      viewSet = (CDOViewSetImpl)CDOUtil.getViewSet(resourceSet);
+      if (viewSet == null)
+      {
+        viewSet = new CDOViewSetImpl();
+        resourceSet.eAdapters().add(viewSet);
+      }
+    }
+
+    return viewSet;
   }
 
   /**

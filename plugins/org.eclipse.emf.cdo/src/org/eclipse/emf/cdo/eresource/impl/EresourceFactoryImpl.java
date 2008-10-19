@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
@@ -39,7 +40,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     try
     {
       EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/resource/1.0.0");
+          .getEFactory("http://www.eclipse.org/emf/CDO/resource/2.0.0");
       if (theEresourceFactory != null)
       {
         return theEresourceFactory;
@@ -65,13 +66,15 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated NOT
+   * @generated
    */
   @Override
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
     {
+    case EresourcePackage.CDO_RESOURCE_FOLDER:
+      return createCDOResourceFolder();
     case EresourcePackage.CDO_RESOURCE:
       return createCDOResource();
     default:
@@ -111,6 +114,18 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0 <!-- end-user-doc -->
+   * @generated
+   */
+  public CDOResourceFolder createCDOResourceFolder()
+  {
+    CDOResourceFolderImpl cdoResourceFolder = new CDOResourceFolderImpl();
+    return cdoResourceFolder;
   }
 
   /**

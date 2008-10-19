@@ -14,12 +14,6 @@ package org.eclipse.emf.internal.cdo.query;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
-
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
-
-import org.eclipse.net4j.util.concurrent.ConcurrentValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,52 +21,17 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
-public class CDOQueryResultIteratorImpl<T> extends AbstractQueryResult<T>
+public class CDOQueryResultIteratorImpl<T> extends CDOAbstractQueryIteratorImpl<T>
 {
-  private static final int UNDEFINED_QUERY_ID = -1;
-
-  private ConcurrentValue<Boolean> queryIDSet = new ConcurrentValue<Boolean>(false);
-
   public CDOQueryResultIteratorImpl(CDOView view, CDOQueryInfo queryInfo)
   {
-    super(view, queryInfo, UNDEFINED_QUERY_ID);
-  }
-
-  @Override
-  public void setQueryID(int queryID)
-  {
-    super.setQueryID(queryID);
-    queryIDSet.set(true);
-  }
-
-  public void waitForInitialization() throws InterruptedException
-  {
-    queryIDSet.acquire(new Object()
-    {
-      @Override
-      public boolean equals(Object obj)
-      {
-        return Boolean.TRUE.equals(obj) || isClosed();
-      }
-    });
-  }
-
-  @Override
-  public CDOView getView()
-  {
-    return (CDOView)super.getView();
+    super(view, queryInfo);
   }
 
   @Override
   public T next()
   {
     return adapt(super.next());
-  }
-
-  @Override
-  public void remove()
-  {
-    throw new UnsupportedOperationException();
   }
 
   @SuppressWarnings("unchecked")
@@ -92,29 +51,9 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryResult<T>
   }
 
   @Override
-  public void close()
+  public List<T> asList()
   {
-    if (!isClosed())
-    {
-      super.close();
-      queryIDSet.reevaluate();
-
-      try
-      {
-        CDOSessionImpl session = (CDOSessionImpl)getView().getSession();
-        QueryCancelRequest request = new QueryCancelRequest(session.getProtocol(), getQueryID());
-        session.getFailOverStrategy().send(request);
-      }
-      catch (Exception exception)
-      {
-        // Catch all exception
-      }
-    }
-  }
-
-  public List<T> getAsList()
-  {
-    ArrayList<Object> result = new ArrayList<Object>();
+    List<Object> result = new ArrayList<Object>();
     while (super.hasNext())
     {
       result.add(super.next());

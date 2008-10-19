@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.internal.common.revision.cache.two;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -36,7 +36,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, TwoLevelRevisionCache.class);
 
-  private CDOFeature resourcePathFeature;
+  private CDOPackageManager packageManager;
 
   private CDORevisionCache level1;
 
@@ -46,22 +46,22 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   {
   }
 
-  public CDOFeature getResourcePathFeature()
+  public CDOPackageManager getPackageManager()
   {
-    return resourcePathFeature;
+    return packageManager;
   }
 
-  public void setResourcePathFeature(CDOFeature resourcePathFeature)
+  public void setPackageManager(CDOPackageManager packageManager)
   {
-    this.resourcePathFeature = resourcePathFeature;
+    this.packageManager = packageManager;
     if (level1 != null)
     {
-      level1.setResourcePathFeature(resourcePathFeature);
+      level1.setPackageManager(packageManager);
     }
 
     if (level2 != null)
     {
-      level2.setResourcePathFeature(resourcePathFeature);
+      level2.setPackageManager(packageManager);
     }
   }
 
@@ -73,7 +73,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel1(CDORevisionCache level1)
   {
     this.level1 = level1;
-    setResourcePathFeature(resourcePathFeature);
+    setPackageManager(packageManager);
   }
 
   public CDORevisionCache getLevel2()
@@ -84,7 +84,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel2(CDORevisionCache level2)
   {
     this.level2 = level2;
-    setResourcePathFeature(resourcePathFeature);
+    setPackageManager(packageManager);
   }
 
   public CDOClass getObjectType(CDOID id)
@@ -149,12 +149,12 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public CDOID getResourceID(String path, long timeStamp)
+  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
   {
-    CDOID id = level1.getResourceID(path, timeStamp);
+    CDOID id = level1.getResourceID(folderID, name, timeStamp);
     if (id == null)
     {
-      id = level2.getResourceID(path, timeStamp);
+      id = level2.getResourceID(folderID, name, timeStamp);
     }
 
     return id;

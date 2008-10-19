@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 
 import java.util.ArrayList;
@@ -71,5 +72,12 @@ public class VerticalClassMapping extends ClassMapping
         superMapping.writeRevision(storeWriter, revision);
       }
     }
+  }
+
+  @Override
+  protected void checkDuplicateResources(IDBStoreReader storeReader, CDORevision revision) throws IllegalStateException
+  {
+    // TODO: implement VerticalClassMapping.checkDuplicateResources(storeReader, revision)
+    throw new UnsupportedOperationException();
   }
 }

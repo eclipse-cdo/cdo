@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2Package.java,v 1.5 2008-09-18 12:56:55 estepper Exp $
+ * $Id: Model2Package.java,v 1.6 2008-10-19 01:28:55 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 
@@ -119,6 +119,77 @@ public interface Model2Package extends EPackage
   int SPECIAL_PURCHASE_ORDER_FEATURE_COUNT = Model1Package.PURCHASE_ORDER_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl <em>Task Container</em>}
+   * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getTaskContainer()
+   * @generated
+   */
+  int TASK_CONTAINER = 1;
+
+  /**
+   * The feature id for the '<em><b>Tasks</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TASK_CONTAINER__TASKS = 0;
+
+  /**
+   * The number of structural features of the '<em>Task Container</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TASK_CONTAINER_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl <em>Task</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model2.impl.TaskImpl
+   * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getTask()
+   * @generated
+   */
+  int TASK = 2;
+
+  /**
+   * The feature id for the '<em><b>Task Container</b></em>' container reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TASK__TASK_CONTAINER = 0;
+
+  /**
+   * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TASK__DESCRIPTION = 1;
+
+  /**
+   * The feature id for the '<em><b>Done</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TASK__DONE = 2;
+
+  /**
+   * The number of structural features of the '<em>Task</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TASK_FEATURE_COUNT = 3;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder
    * <em>Special Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -151,6 +222,71 @@ public interface Model2Package extends EPackage
    * @generated
    */
   EReference getSpecialPurchaseOrder_ShippingAddress();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.TaskContainer <em>Task Container</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Task Container</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.TaskContainer
+   * @generated
+   */
+  EClass getTaskContainer();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.model2.TaskContainer#getTasks <em>Tasks</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Tasks</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.TaskContainer#getTasks()
+   * @see #getTaskContainer()
+   * @generated
+   */
+  EReference getTaskContainer_Tasks();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Task <em>Task</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Task</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Task
+   * @generated
+   */
+  EClass getTask();
+
+  /**
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model2.Task#getTaskContainer
+   * <em>Task Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the container reference '<em>Task Container</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Task#getTaskContainer()
+   * @see #getTask()
+   * @generated
+   */
+  EReference getTask_TaskContainer();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Task#getDescription
+   * <em>Description</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Description</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Task#getDescription()
+   * @see #getTask()
+   * @generated
+   */
+  EAttribute getTask_Description();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Task#isDone <em>Done</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Done</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Task#isDone()
+   * @see #getTask()
+   * @generated
+   */
+  EAttribute getTask_Done();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -199,6 +335,58 @@ public interface Model2Package extends EPackage
      * @generated
      */
     EReference SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS = eINSTANCE.getSpecialPurchaseOrder_ShippingAddress();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl
+     * <em>Task Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getTaskContainer()
+     * @generated
+     */
+    EClass TASK_CONTAINER = eINSTANCE.getTaskContainer();
+
+    /**
+     * The meta object literal for the '<em><b>Tasks</b></em>' containment reference list feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference TASK_CONTAINER__TASKS = eINSTANCE.getTaskContainer_Tasks();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl <em>Task</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model2.impl.TaskImpl
+     * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getTask()
+     * @generated
+     */
+    EClass TASK = eINSTANCE.getTask();
+
+    /**
+     * The meta object literal for the '<em><b>Task Container</b></em>' container reference feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference TASK__TASK_CONTAINER = eINSTANCE.getTask_TaskContainer();
+
+    /**
+     * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute TASK__DESCRIPTION = eINSTANCE.getTask_Description();
+
+    /**
+     * The meta object literal for the '<em><b>Done</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute TASK__DONE = eINSTANCE.getTask_Done();
 
   }
 

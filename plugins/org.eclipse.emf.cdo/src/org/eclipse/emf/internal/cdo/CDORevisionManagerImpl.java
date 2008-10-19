@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.analyzer.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
@@ -133,9 +134,9 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
    * @since 2.0
    */
   @Override
-  protected CDOFeature getResourcePathFeature()
+  protected CDOPackageManager getPackageManager()
   {
-    return session.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+    return session.getPackageManager();
   }
 
   private List<InternalCDORevision> send(LoadRevisionRequest request)

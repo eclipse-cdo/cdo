@@ -16,10 +16,8 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -27,7 +25,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -39,7 +36,7 @@ import java.util.List;
  * 
  * @generated
  */
-public class CDOResourceItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class CDOResourceItemProvider extends CDOResourceNodeItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -69,7 +66,6 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
       addLoadedPropertyDescriptor(object);
       addTrackingModificationPropertyDescriptor(object);
       addTimeStampPropertyDescriptor(object);
-      addPathPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -143,20 +139,6 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
         "_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", "_UI_CDOResource_type"),
         EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true, false, false,
         ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Path feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  protected void addPathPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResource_path_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_CDOResource_path_feature", "_UI_CDOResource_type"),
-        EresourcePackage.Literals.CDO_RESOURCE__PATH, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
   }
 
   /**
@@ -236,7 +218,6 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
     case EresourcePackage.CDO_RESOURCE__ERRORS:
     case EresourcePackage.CDO_RESOURCE__WARNINGS:
     case EresourcePackage.CDO_RESOURCE__TIME_STAMP:
-    case EresourcePackage.CDO_RESOURCE__PATH:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case EresourcePackage.CDO_RESOURCE__CONTENTS:
@@ -255,17 +236,6 @@ public class CDOResourceItemProvider extends ItemProviderAdapter implements IEdi
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
@@ -205,8 +204,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     }
 
     CDOClass cdoClass = revision.getCDOClass();
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
+    IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(cdoClass);
     mapping.writeRevision(this, revision);
   }
 
@@ -231,8 +229,7 @@ public class DBStoreWriter extends DBStoreReader implements IDBStoreWriter
     }
 
     CDOClass cdoClass = getObjectType(id);
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
+    IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(cdoClass);
     mapping.detachObject(this, id, revised);
   }
 }

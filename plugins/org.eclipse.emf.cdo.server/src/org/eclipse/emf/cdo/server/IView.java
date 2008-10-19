@@ -30,9 +30,4 @@ public interface IView extends CDOProtocolView
    * @since 2.0
    */
   public CDOID getResourceID(String path);
-
-  /**
-   * @since 2.0
-   */
-  public String getResourcePath(CDOID id);
 }

@@ -127,6 +127,21 @@ public final class CDOStore implements EStore
     return revision.getContainingFeatureID();
   }
 
+  /**
+   * @since 2.0
+   */
+  public InternalEObject getResource(InternalEObject eObject)
+  {
+    InternalCDOObject cdoObject = getCDOObject(eObject);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("getContainer({0})", cdoObject);
+    }
+
+    InternalCDORevision revision = getRevisionForReading(cdoObject);
+    return (InternalEObject)((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(revision.getResourceID());
+  }
+
   @Deprecated
   public EStructuralFeature getContainingFeature(InternalEObject eObject)
   {
@@ -147,12 +162,7 @@ public final class CDOStore implements EStore
     Object value = revision.get(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      if (value instanceof CDOReferenceProxy)
-      {
-        value = ((CDOReferenceProxy)value).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
-            index);
-      }
-
+      value = resolveProxy(revision, cdoFeature, index, value);
       if (cdoFeature.isMany() && value instanceof CDOID)
       {
         CDOID id = (CDOID)value;
@@ -299,12 +309,7 @@ public final class CDOStore implements EStore
     {
       for (int i = 0; i < result.length; i++)
       {
-        if (result[i] instanceof CDOReferenceProxy)
-        {
-          result[i] = ((CDOReferenceProxy)result[i]).resolve(getView().getSession().getRevisionManager(), revision,
-              cdoFeature, i);
-        }
-
+        result[i] = resolveProxy(revision, cdoFeature, i, result[i]);
         result[i] = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result[i]);
       }
     }
@@ -355,11 +360,7 @@ public final class CDOStore implements EStore
     if (cdoFeature.isReference())
     {
       Object oldValue = revision.get(cdoFeature, index);
-      if (oldValue instanceof CDOReferenceProxy)
-      {
-        ((CDOReferenceProxy)oldValue).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature, index);
-      }
-
+      oldValue = resolveProxy(revision, cdoFeature, index, oldValue);
       value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
     }
 
@@ -420,12 +421,7 @@ public final class CDOStore implements EStore
     Object result = revision.remove(cdoFeature, index);
     if (cdoFeature.isReference())
     {
-      if (result instanceof CDOReferenceProxy)
-      {
-        result = ((CDOReferenceProxy)result).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
-            index);
-      }
-
+      result = resolveProxy(revision, cdoFeature, index, result);
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
@@ -461,12 +457,7 @@ public final class CDOStore implements EStore
     Object result = revision.move(cdoFeature, target, source);
     if (cdoFeature.isReference())
     {
-      if (result instanceof CDOReferenceProxy)
-      {
-        result = ((CDOReferenceProxy)result).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
-            target);
-      }
-
+      result = resolveProxy(revision, cdoFeature, target, result);
       result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
     }
 
@@ -487,6 +478,20 @@ public final class CDOStore implements EStore
   private InternalCDOObject getCDOObject(Object object)
   {
     return FSMUtil.adapt(object, view);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Object resolveProxy(InternalCDORevision revision, CDOFeature cdoFeature, int index, Object value)
+  {
+    if (value instanceof CDOReferenceProxy)
+    {
+      value = ((CDOReferenceProxy)value).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
+          index);
+    }
+
+    return value;
   }
 
   private CDOFeature getCDOFeature(InternalCDOObject cdoObject, EStructuralFeature eFeature)

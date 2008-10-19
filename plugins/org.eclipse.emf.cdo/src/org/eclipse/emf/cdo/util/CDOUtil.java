@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import org.eclipse.emf.internal.cdo.CDOCollectionLoadingPolicyImpl;
 import org.eclipse.emf.internal.cdo.CDORevisionPrefetchingPolicyImpl;
@@ -34,6 +35,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -46,6 +48,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.util.Iterator;
@@ -272,5 +275,29 @@ public final class CDOUtil
   public static CDOObject getCDOObject(EStringToStringMapEntryImpl object, CDOView view)
   {
     return FSMUtil.adaptMeta(object, view);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static EList<Resource> getResources(ResourceSet resourceSet)
+  {
+    EList<Resource> result = new BasicEList<Resource>();
+    EList<Resource> resources = resourceSet.getResources();
+    for (Resource resource : resources)
+    {
+      if (resource instanceof CDOResource)
+      {
+        CDOResource cdoResource = (CDOResource)resource;
+        if (cdoResource.isRoot())
+        {
+          continue;
+        }
+      }
+
+      result.add(resource);
+    }
+
+    return result;
   }
 }

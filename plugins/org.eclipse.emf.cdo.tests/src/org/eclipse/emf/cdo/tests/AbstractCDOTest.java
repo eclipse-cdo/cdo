@@ -101,7 +101,14 @@ public abstract class AbstractCDOTest extends ConfigTest
     assertNotNull(object.cdoID());
     assertNotNull(object.cdoRevision());
     assertNotNull(object.cdoView());
-    assertNotNull(object.eResource());
+    if (eObject instanceof CDOResource && ((CDOResource)eObject).isRoot())
+    {
+      assertNull(object.eResource());
+    }
+    else
+    {
+      assertNotNull(object.eResource());
+    }
     assertEquals(view, object.cdoView());
     assertEquals(object, view.getObject(object.cdoID(), false));
   }
@@ -135,9 +142,6 @@ public abstract class AbstractCDOTest extends ConfigTest
       assertEquals(false, FSMUtil.isTransient(object));
       assertNotNull(object.cdoID());
       assertNotNull(object.cdoView());
-      assertNotNull(object.cdoResource());
-      assertNotNull(object.eResource());
-      assertEquals(object.eResource(), object.cdoResource());
       assertEquals(CDOState.PROXY, object.cdoState());
     }
   }
@@ -148,16 +152,16 @@ public abstract class AbstractCDOTest extends ConfigTest
     CDOObject contained = CDOUtil.getCDOObject(eContained);
     if (container != null && contained != null)
     {
-      assertEquals(container.eResource(), contained.eResource());
       assertEquals(true, container.eContents().contains(contained));
       if (container instanceof CDOResource)
       {
-        assertEquals(container.eResource(), container.cdoResource());
+        assertEquals(container, contained.eResource());
         assertEquals(null, contained.eContainer());
         assertEquals(true, ((CDOResource)container).getContents().contains(contained));
       }
       else
       {
+        assertEquals(container.eResource(), contained.eResource());
         assertEquals(container, contained.eContainer());
       }
     }

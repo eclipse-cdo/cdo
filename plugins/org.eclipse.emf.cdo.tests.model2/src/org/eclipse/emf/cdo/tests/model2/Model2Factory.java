@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2Factory.java,v 1.3 2008-09-18 12:56:55 estepper Exp $
+ * $Id: Model2Factory.java,v 1.4 2008-10-19 01:28:55 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 
@@ -31,6 +31,22 @@ public interface Model2Factory extends EFactory
    * @generated
    */
   SpecialPurchaseOrder createSpecialPurchaseOrder();
+
+  /**
+   * Returns a new object of class '<em>Task Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Task Container</em>'.
+   * @generated
+   */
+  TaskContainer createTaskContainer();
+
+  /**
+   * Returns a new object of class '<em>Task</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Task</em>'.
+   * @generated
+   */
+  Task createTask();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

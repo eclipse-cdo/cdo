@@ -22,10 +22,12 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.spi.common.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.CDOIDLibraryDescriptorImpl;
 import org.eclipse.emf.cdo.spi.common.CDOIDLongImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -47,13 +49,13 @@ public final class CDOIDUtil
   {
     if (id == null)
     {
-      return 0L;
+      return AbstractCDOIDLong.NULL_VALUE;
     }
 
     switch (id.getType())
     {
     case NULL:
-      return 0L;
+      return AbstractCDOIDLong.NULL_VALUE;
 
     case OBJECT:
       if (id instanceof CDOIDLongImpl)
@@ -228,5 +230,23 @@ public final class CDOIDUtil
   public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)
   {
     return new CDOIDAndVersionImpl(id, version);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static boolean equals(CDOID id1, CDOID id2)
+  {
+    if (id1 == null)
+    {
+      id1 = CDOID.NULL;
+    }
+
+    if (id2 == null)
+    {
+      id2 = CDOID.NULL;
+    }
+
+    return ObjectUtil.equals(id1, id2);
   }
 }

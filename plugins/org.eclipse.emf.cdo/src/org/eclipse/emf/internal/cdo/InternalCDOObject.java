@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -39,8 +38,6 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
   public void cdoInternalPreCommit();
 
   public void cdoInternalSetID(CDOID id);
-
-  public void cdoInternalSetResource(CDOResource resource);
 
   public void cdoInternalSetView(CDOView view);
 

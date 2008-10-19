@@ -14,10 +14,7 @@ package org.eclipse.emf.cdo.ui;
 import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
-import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
@@ -36,15 +33,10 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
-import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistory;
-import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEntry;
-import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEvent;
 import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
@@ -61,7 +53,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -73,66 +64,6 @@ import java.util.Set;
 public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
   private IWorkbenchPage page;
-
-  private Map<CDOView, CDOViewHistory> viewHistories = new HashMap<CDOView, CDOViewHistory>();
-
-  private IListener viewListener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDOTransactionStartedEvent || event instanceof CDOTransactionFinishedEvent)
-      {
-        try
-        {
-          final CDOView view = ((CDOViewEvent)event).getView();
-          getViewer().getControl().getDisplay().syncExec(new Runnable()
-          {
-            public void run()
-            {
-              try
-              {
-                fireLabelProviderChanged(view);
-                CDOViewHistory history = viewHistories.get(view);
-                if (history != null)
-                {
-                  CDOViewHistoryEntry[] entries = history.getEntries();
-                  if (entries != null && entries.length != 0)
-                  {
-                    fireLabelProviderChanged(entries);
-                  }
-                }
-              }
-              catch (Exception ignore)
-              {
-              }
-            }
-          });
-        }
-        catch (Exception ignore)
-        {
-        }
-      }
-    }
-  };
-
-  private IListener historyListener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDOViewHistoryEvent)
-      {
-        CDOViewHistoryEvent e = (CDOViewHistoryEvent)event;
-        CDOView view = e.getViewHistory().getView();
-        refreshElement(view, false);
-
-        CDOViewHistoryEntry addedEntry = e.getAddedEntry();
-        if (addedEntry != null)
-        {
-          revealElement(addedEntry);
-        }
-      }
-    }
-  };
 
   public CDOItemProvider(IWorkbenchPage page, IElementFilter rootElementFilter)
   {
@@ -150,13 +81,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     if (element instanceof CDOView)
     {
-      CDOView view = (CDOView)element;
-      CDOViewHistory history = viewHistories.get(view);
-      if (history != null)
-      {
-        return history.getEntries();
-      }
-
+      // CDOView view = (CDOView)element;
       return NO_ELEMENTS;
     }
 
@@ -168,13 +93,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     if (element instanceof CDOView)
     {
-      CDOView view = (CDOView)element;
-      CDOViewHistory history = viewHistories.get(view);
-      if (history != null)
-      {
-        return history.hasEntries();
-      }
-
+      // CDOView view = (CDOView)element;
       return false;
     }
 
@@ -184,10 +103,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public Object getParent(Object element)
   {
-    if (element instanceof CDOViewHistoryEntry)
-    {
-      return ((CDOViewHistoryEntry)element).getView();
-    }
+    // if (element instanceof CDOViewHistoryEntry)
+    // {
+    // return ((CDOViewHistoryEntry)element).getView();
+    // }
 
     return super.getParent(element);
   }
@@ -203,11 +122,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (obj instanceof CDOView)
     {
       return getViewLabel((CDOView)obj);
-    }
-
-    if (obj instanceof CDOViewHistoryEntry)
-    {
-      return getHistroyEntryLabel((CDOViewHistoryEntry)obj);
     }
 
     return super.getText(obj);
@@ -260,14 +174,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return MessageFormat.format("View [{0}]", view.getViewID());
   }
 
-  /**
-   * @since 2.0
-   */
-  public static String getHistroyEntryLabel(CDOViewHistoryEntry entry)
-  {
-    return (entry.getView().isDirty() ? "*" : "") + entry.getResourcePath();
-  }
-
   @Override
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
@@ -282,10 +188,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       else if (object instanceof CDOView)
       {
         fillView(manager, (CDOView)object);
-      }
-      else if (object instanceof CDOViewHistoryEntry)
-      {
-        fillHistoryEntry(manager, (CDOViewHistoryEntry)object);
       }
     }
   }
@@ -363,25 +265,13 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new CloseViewAction(page, view));
   }
 
-  /**
-   * @since 2.0
-   */
-  protected void fillHistoryEntry(IMenuManager manager, CDOViewHistoryEntry entry)
-  {
-  }
-
   @Override
   protected void elementAdded(Object element, Object parent)
   {
     super.elementAdded(element, parent);
     if (element instanceof CDOView)
     {
-      CDOView view = (CDOView)element;
-      view.addListener(viewListener);
-
-      CDOViewHistory history = new CDOViewHistory(view);
-      history.addListener(historyListener);
-      viewHistories.put(view, history);
+      // CDOView view = (CDOView)element;
     }
   }
 
@@ -391,12 +281,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     super.elementRemoved(element, parent);
     if (element instanceof CDOView)
     {
-      CDOView view = (CDOView)element;
-      view.removeListener(viewListener);
-
-      CDOViewHistory history = viewHistories.remove(view);
-      history.removeListener(historyListener);
-      history.dispose();
+      // CDOView view = (CDOView)element;
     }
   }
 }

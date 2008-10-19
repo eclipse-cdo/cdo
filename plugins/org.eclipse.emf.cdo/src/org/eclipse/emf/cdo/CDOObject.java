@@ -22,17 +22,22 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface CDOObject extends EObject
 {
+  public CDOState cdoState();
+
   public CDOClass cdoClass();
 
   public CDOID cdoID();
 
-  public CDOState cdoState();
-
   public CDOView cdoView();
+
+  public CDORevision cdoRevision();
 
   public CDOResource cdoResource();
 
-  public CDORevision cdoRevision();
+  /**
+   * @since 2.0
+   */
+  public CDOResource cdoDirectResource();
 
   public void cdoReload();
 }

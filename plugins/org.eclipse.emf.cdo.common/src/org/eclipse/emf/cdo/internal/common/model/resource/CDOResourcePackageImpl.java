@@ -19,12 +19,28 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
  */
 public final class CDOResourcePackageImpl extends CDOPackageImpl implements CDOResourcePackage
 {
+  private CDOResourceNodeClassImpl cdoResourceNodeClass;
+
+  private CDOResourceFolderClassImpl cdoResourceFolderClass;
+
   private CDOResourceClassImpl cdoResourceClass;
 
   public CDOResourcePackageImpl(CDOPackageManagerImpl packageManager)
   {
     super(packageManager, PACKAGE_URI, NAME, null, false, null, null);
+    addClass(cdoResourceNodeClass = new CDOResourceNodeClassImpl(this, packageManager));
+    addClass(cdoResourceFolderClass = new CDOResourceFolderClassImpl(this, packageManager));
     addClass(cdoResourceClass = new CDOResourceClassImpl(this, packageManager));
+  }
+
+  public CDOResourceFolderClassImpl getCDOResourceFolderClass()
+  {
+    return cdoResourceFolderClass;
+  }
+
+  public CDOResourceNodeClassImpl getCDOResourceNodeClass()
+  {
+    return cdoResourceNodeClass;
   }
 
   public CDOResourceClassImpl getCDOResourceClass()

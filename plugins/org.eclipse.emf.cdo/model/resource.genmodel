@@ -14,6 +14,14 @@
     <genDataTypes ecoreDataType="eresource.ecore#//ResourceSet"/>
     <genDataTypes ecoreDataType="eresource.ecore#//URI"/>
     <genDataTypes ecoreDataType="eresource.ecore#//Diagnostic"/>
+    <genClasses image="false" ecoreClass="eresource.ecore#//CDOResourceNode">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference eresource.ecore#//CDOResourceNode/folder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResourceNode/name"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResourceNode/path"/>
+    </genClasses>
+    <genClasses ecoreClass="eresource.ecore#//CDOResourceFolder">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eresource.ecore#//CDOResourceFolder/contents"/>
+    </genClasses>
     <genClasses ecoreClass="eresource.ecore#//CDOResource">
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/resourceSet"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/uRI"/>
@@ -24,7 +32,6 @@
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/errors"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/warnings"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/timeStamp"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/path"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

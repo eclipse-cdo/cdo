@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -28,7 +29,7 @@ import java.util.NoSuchElementException;
  */
 public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 {
-  private MappingStrategy mappingStrategy;
+  private IMappingStrategy mappingStrategy;
 
   private IDBStoreReader storeReader;
 
@@ -42,7 +43,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
    * Creates an iterator over all objects in a store. It is important to {@link #dispose()} of this iterator after usage
    * to properly close internal result sets.
    */
-  public ObjectIDIterator(MappingStrategy mappingStrategy, IDBStoreReader storeReader)
+  public ObjectIDIterator(IMappingStrategy mappingStrategy, IDBStoreReader storeReader)
   {
     this.mappingStrategy = mappingStrategy;
     this.storeReader = storeReader;
@@ -60,7 +61,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
     return closed;
   }
 
-  public MappingStrategy getMappingStrategy()
+  public IMappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
   }

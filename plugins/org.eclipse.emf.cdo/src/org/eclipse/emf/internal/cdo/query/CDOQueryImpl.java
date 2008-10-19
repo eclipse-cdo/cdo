@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.query.CDOQuery;
@@ -61,15 +62,26 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return this;
   }
 
-  public <T> List<T> getResult(Class<T> classObject)
+  @SuppressWarnings("unchecked")
+  protected <T> CDOAbstractQueryIteratorImpl<T> createQueryResult(Class<T> classObject)
   {
     CDOQueryInfoImpl queryInfo = createQueryInfo();
-    CDOQueryResultIteratorImpl<T> queryResult = new CDOQueryResultIteratorImpl<T>(view, queryInfo);
+    if (classObject.equals(CDOID.class))
+    {
+      return new CDOQueryCDOIDIteratorImpl(view, queryInfo);
+    }
+
+    return new CDOQueryResultIteratorImpl<T>(view, queryInfo);
+  }
+
+  public <T> List<T> getResult(Class<T> classObject)
+  {
+    CDOAbstractQueryIteratorImpl<T> queryResult = createQueryResult(classObject);
 
     try
     {
       CDOSessionImpl session = view.getSession();
-      QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryInfo, queryResult);
+      QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryResult);
       session.getFailOverStrategy().send(request);
     }
     catch (Exception exception)
@@ -77,13 +89,12 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       throw WrappedException.wrap(exception);
     }
 
-    return queryResult.getAsList();
+    return queryResult.asList();
   }
 
   public <T> BlockingCloseableIterator<T> getResultAsync(Class<T> classObject)
   {
-    final CDOQueryInfoImpl queryInfo = createQueryInfo();
-    final CDOQueryResultIteratorImpl<T> queryResult = new CDOQueryResultIteratorImpl<T>(view, queryInfo);
+    final CDOAbstractQueryIteratorImpl<T> queryResult = createQueryResult(classObject);
     final Exception exception[] = new Exception[1];
     Runnable runnable = new Runnable()
     {
@@ -92,7 +103,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
         try
         {
           CDOSessionImpl session = view.getSession();
-          QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryInfo, queryResult);
+          QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryResult);
           session.getFailOverStrategy().send(request);
         }
         catch (Exception ex)
@@ -103,6 +114,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       }
     };
 
+    // TODO Simon: Can we leverage a thread pool?
     new Thread(runnable).start();
 
     try

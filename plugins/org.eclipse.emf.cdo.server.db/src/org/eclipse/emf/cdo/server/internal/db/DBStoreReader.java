@@ -270,10 +270,10 @@ public class DBStoreReader extends DBStoreAccessor implements IDBStoreReader
     return revision;
   }
 
-  public CDOID readResourceID(String path, long timeStamp)
+  public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    return mappingStrategy.readResourceID(this, path, timeStamp);
+    return mappingStrategy.readResourceID(this, folderID, name, timeStamp);
   }
 
   /**

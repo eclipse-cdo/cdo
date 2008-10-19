@@ -59,10 +59,5 @@ public interface CDORevisionResolver
   /**
    * @since 2.0
    */
-  public CDOID getResourceID(String path, long timeStamp);
-
-  /**
-   * @since 2.0
-   */
-  public String getResourcePath(CDOID id, long timeStamp);
+  public CDOID getResourceID(CDOID folderID, String name, long timeStamp);
 }

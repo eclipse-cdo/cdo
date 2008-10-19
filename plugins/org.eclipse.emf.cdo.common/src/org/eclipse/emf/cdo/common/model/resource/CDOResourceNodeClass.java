@@ -8,19 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.eresource;
+package org.eclipse.emf.cdo.common.model.resource;
 
-import org.eclipse.emf.cdo.CDOObject;
-
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.cdo.common.model.CDOClass;
 
 /**
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface EresourceObject extends CDOObject, Resource.Internal
+public interface CDOResourceNodeClass extends CDOClass
 {
-  /**
-   * @since 2.0
-   */
-  public boolean isExisting();
+  public static final int CLASSIFIER_ID = 0;
+
+  public static final String NAME = "CDOResourceNode";
+
+  public CDOFolderFeature getCDOFolderFeature();
+
+  public CDONameFeature getCDONameFeature();
 }

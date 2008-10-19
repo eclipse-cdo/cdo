@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.server.StoreAccessorPool;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -185,7 +184,7 @@ public class DBStore extends LongIDStore implements IDBStore
       StoreThreadLocal.setStoreReader(storeWriter);
 
       Connection connection = storeWriter.getConnection();
-      long maxObjectID = mappingStrategy.repairAfterCrash(connection);
+      long maxObjectID = mappingStrategy.repairAfterCrash(dbAdapter, connection);
       long maxMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB);
 
       OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID, maxMetaID));
@@ -230,14 +229,8 @@ public class DBStore extends LongIDStore implements IDBStore
         DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTime, 1, startupTime, 0, CRASHED,
             CRASHED);
 
-        MappingStrategy mappingStrategy = (MappingStrategy)getMappingStrategy();
-
-        IClassMapping resourceClassMapping = mappingStrategy.getResourceClassMapping();
-        Set<IDBTable> tables = resourceClassMapping.getAffectedTables();
-        if (dbAdapter.createTables(tables, connection).size() != tables.size())
-        {
-          throw new DBException("CDOResource tables not completely created");
-        }
+        IMappingStrategy mappingStrategy = getMappingStrategy();
+        mappingStrategy.createResourceTables(dbAdapter, connection);
       }
       else
       {

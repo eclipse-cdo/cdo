@@ -83,8 +83,8 @@ public class ComplexTest extends AbstractCDOTest
 
     transaction = session.openTransaction();
 
-    String path1 = "/resources/1/" + uniqueCounter;
-    String path2 = "/resources/2/" + uniqueCounter;
+    String path1 = "/resources/folder1/" + uniqueCounter;
+    String path2 = "/resources/folder2/" + uniqueCounter;
     ++uniqueCounter;
 
     resource1 = transaction.createResource(path1);
@@ -478,14 +478,15 @@ public class ComplexTest extends AbstractCDOTest
 
   public void testMultipleTransactions3()
   {
-
     CDOTransaction transaction1 = session.openTransaction();
     String resource1path = "/resources/3/" + uniqueCounter;
     CDOResource resource1 = transaction1.createResource(resource1path);
+    transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     String resource2path = "/resources/4/" + uniqueCounter++;
     CDOResource resource2 = transaction2.createResource(resource2path);
+    transaction2.commit();
 
     MultiContainedElement element0 = factory.createMultiContainedElement();
     element0.setName("MultipleTransactions-Element-0");
@@ -534,10 +535,12 @@ public class ComplexTest extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
     String resource1path = "/resources/3/" + uniqueCounter;
     CDOResource resource1 = transaction1.createResource(resource1path);
+    transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     String resource2path = "/resources/4/" + uniqueCounter++;
     CDOResource resource2 = transaction2.createResource(resource2path);
+    transaction2.commit();
 
     MultiContainedElement element0 = factory.createMultiContainedElement();
     element0.setName("MultipleTransactions-Element-0");
@@ -573,12 +576,12 @@ public class ComplexTest extends AbstractCDOTest
     for (EObject o : elementToRemove)
     {
       MultiContainedElement element_work = (MultiContainedElement)o;
-      assertEquals(resource1FromTx2, CDOUtil.getCDOObject(element_work).cdoResource());
+      assertEquals(resource1FromTx2, CDOUtil.getCDOObject(element_work).cdoDirectResource());
       assertEquals(resource1FromTx2, element_work.eResource());
 
       container.getElements().add(element_work);
 
-      assertEquals(null, CDOUtil.getCDOObject(element_work).cdoResource());
+      assertEquals(null, CDOUtil.getCDOObject(element_work).cdoDirectResource());
       assertEquals(resource2, element_work.eResource());
       transaction2.commit();
     }
@@ -602,13 +605,13 @@ public class ComplexTest extends AbstractCDOTest
 
     assertTrue(element.getParent() == container2);
     assertTrue(element.eContainer() == container2);
-    assertTrue(CDOUtil.getCDOObject(element).cdoResource() == null);
+    assertTrue(CDOUtil.getCDOObject(element).cdoDirectResource() == null);
 
     assertTrue(container1.getElement() == null);
-    assertTrue(CDOUtil.getCDOObject(container1).cdoResource() == resource1);
+    assertTrue(CDOUtil.getCDOObject(container1).cdoDirectResource() == resource1);
 
     assertTrue(container2.getElement() == element);
-    assertTrue(CDOUtil.getCDOObject(container2).cdoResource() == resource2);
+    assertTrue(CDOUtil.getCDOObject(container2).cdoDirectResource() == resource2);
   }
 
   public void testMigrateContainmentMulti()
@@ -634,19 +637,19 @@ public class ComplexTest extends AbstractCDOTest
 
     assertTrue(elementA.getParent() == container2);
     assertTrue(elementA.eContainer() == container2);
-    assertTrue(CDOUtil.getCDOObject(elementA).cdoResource() == null);
+    assertTrue(CDOUtil.getCDOObject(elementA).cdoDirectResource() == null);
     assertTrue(elementA.eResource() == resource2);
 
     assertTrue(elementB.getParent() == container1);
     assertTrue(elementB.eContainer() == container1);
-    assertTrue(CDOUtil.getCDOObject(elementB).cdoResource() == null);
+    assertTrue(CDOUtil.getCDOObject(elementB).cdoDirectResource() == null);
     assertTrue(elementB.eResource() == resource1);
 
-    assertTrue(CDOUtil.getCDOObject(container1).cdoResource() == resource1);
+    assertTrue(CDOUtil.getCDOObject(container1).cdoDirectResource() == resource1);
     assertEquals(1, container1.getElements().size());
     assertEquals(elementB, container1.getElements().get(0));
 
-    assertTrue(CDOUtil.getCDOObject(container2).cdoResource() == resource2);
+    assertTrue(CDOUtil.getCDOObject(container2).cdoDirectResource() == resource2);
     assertEquals(1, container2.getElements().size());
     assertEquals(elementA, container2.getElements().get(0));
   }

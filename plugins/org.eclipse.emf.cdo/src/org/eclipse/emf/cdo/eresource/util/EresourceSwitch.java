@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.eresource.util;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
 import org.eclipse.emf.ecore.EClass;
@@ -92,10 +94,38 @@ public class EresourceSwitch<T>
   {
     switch (classifierID)
     {
+    case EresourcePackage.CDO_RESOURCE_NODE:
+    {
+      CDOResourceNode cdoResourceNode = (CDOResourceNode)theEObject;
+      T result = caseCDOResourceNode(cdoResourceNode);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case EresourcePackage.CDO_RESOURCE_FOLDER:
+    {
+      CDOResourceFolder cdoResourceFolder = (CDOResourceFolder)theEObject;
+      T result = caseCDOResourceFolder(cdoResourceFolder);
+      if (result == null)
+      {
+        result = caseCDOResourceNode(cdoResourceFolder);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case EresourcePackage.CDO_RESOURCE:
     {
       CDOResource cdoResource = (CDOResource)theEObject;
       T result = caseCDOResource(cdoResource);
+      if (result == null)
+      {
+        result = caseCDOResourceNode(cdoResource);
+      }
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -105,6 +135,38 @@ public class EresourceSwitch<T>
     default:
       return defaultCase(theEObject);
     }
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>CDO Resource Node</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch.
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>CDO Resource Node</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCDOResourceNode(CDOResourceNode object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>CDO Resource Folder</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch.
+   * 
+   * @since 2.0 <!-- end-user-doc -->
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>CDO Resource Folder</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCDOResourceFolder(CDOResourceFolder object)
+  {
+    return null;
   }
 
   /**

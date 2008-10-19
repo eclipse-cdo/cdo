@@ -12,8 +12,13 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
  * @author Eike Stepper
@@ -40,6 +45,27 @@ public class HorizontalClassMapping extends ClassMapping
       CDOID id = revision.getID();
       CDOClass type = revision.getCDOClass();
       getMappingStrategy().getObjectTypeCache().putObjectType(storeWriter, id, type);
+    }
+  }
+
+  @Override
+  protected void checkDuplicateResources(IDBStoreReader storeReader, CDORevision revision) throws IllegalStateException
+  {
+    // If auditing is not supported this is checked by a table index (see constructor)
+    IMappingStrategy mappingStrategy = getMappingStrategy();
+    if (mappingStrategy.getStore().getRepository().isSupportingAudits())
+    {
+      IPackageManager packageManager = mappingStrategy.getStore().getRepository().getPackageManager();
+      CDOResourceNodeClass resourceNodeClass = packageManager.getCDOResourcePackage().getCDOResourceNodeClass();
+      CDOFeature resourceNameFeature = resourceNodeClass.getCDONameFeature();
+
+      CDOID folderID = (CDOID)revision.getData().getContainerID();
+      String name = (String)revision.getData().get(resourceNameFeature, 0);
+
+      if (mappingStrategy.readResourceID(storeReader, folderID, name, revision.getCreated()) != null)
+      {
+        throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID);
+      }
     }
   }
 

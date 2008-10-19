@@ -18,11 +18,9 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
  */
 public interface CDOResourceClass extends CDOClass
 {
-  public static final int CLASSIFIER_ID = 0;
+  public static final int CLASSIFIER_ID = 2;
 
   public static final String NAME = "CDOResource";
-
-  public CDOPathFeature getCDOPathFeature();
 
   public CDOContentsFeature getCDOContentsFeature();
 }

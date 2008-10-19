@@ -70,11 +70,15 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     }
 
     CDOView transaction2 = session.openTransaction();
-    CDOResource resource = (CDOResource)transaction2.getResourceSet().getResource(
-        CDOURIUtil.createResourceURI(view, resourcePath), true);
-    assertNew(resource, transaction2);
-    // Need to implement errors
-    // assertEquals(1, resource.getErrors().size());
+    try
+    {
+      transaction2.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, resourcePath), true);
+      fail("Should fail to create resource");
+    }
+    catch (RuntimeException exception)
+    {
+
+    }
   }
 
   public void testBugzilla_248124_hasResourceWithoutCommit() throws Exception
@@ -105,11 +109,15 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     transaction1.commit();
     res.delete(null);
 
-    CDOResource resource = (CDOResource)transaction1.getResourceSet().getResource(
-        CDOURIUtil.createResourceURI(transaction1, resourcePath), true);
-    assertNew(resource, transaction1);
+    try
+    {
 
-    // Need to implement errors
-    // assertEquals(1, resource.getErrors().size());
+      transaction1.getResourceSet().getResource(CDOURIUtil.createResourceURI(transaction1, resourcePath), true);
+      fail("Should fail to create resource");
+    }
+    catch (RuntimeException exception)
+    {
+
+    }
   }
 }

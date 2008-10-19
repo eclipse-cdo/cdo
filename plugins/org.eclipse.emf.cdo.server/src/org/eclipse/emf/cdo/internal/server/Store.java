@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOProtocolView;
-import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -56,9 +55,6 @@ public abstract class Store extends Lifecycle implements IStore
 
   @ExcludeFromDump
   private transient long lastMetaID;
-
-  @ExcludeFromDump
-  private transient CDOPathFeature resourcePathFeature;
 
   /**
    * @since 2.0
@@ -171,14 +167,6 @@ public abstract class Store extends Lifecycle implements IStore
     this.lastMetaID = lastMetaID;
   }
 
-  /**
-   * @since 2.0
-   */
-  public CDOPathFeature getResourcePathFeature()
-  {
-    return resourcePathFeature;
-  }
-
   public final IStoreReader getReader(ISession session)
   {
     IStoreReader reader = null;
@@ -252,17 +240,6 @@ public abstract class Store extends Lifecycle implements IStore
     {
       accessor.deactivate();
     }
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  protected void doActivate() throws Exception
-  {
-    super.doActivate();
-    resourcePathFeature = repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass()
-        .getCDOPathFeature();
   }
 
   /**

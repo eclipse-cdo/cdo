@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
+import org.eclipse.emf.cdo.tests.model2.Task;
+import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -482,6 +484,28 @@ public class ContainmentTest extends AbstractCDOTest
     assertEquals(container, contained.eContainer());
   }
 
+  public void testModeledBackPointer() throws Exception
+  {
+    Task task = getModel2Factory().createTask();
+    task.setDescription("Task 1");
+
+    TaskContainer taskContainer = getModel2Factory().createTaskContainer();
+    taskContainer.getTasks().add(task);
+    assertEquals(taskContainer, task.eContainer());
+    assertEquals(taskContainer, task.getTaskContainer());
+
+    CDOSession session = openModel2Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/resource1");
+    resource.getContents().add(taskContainer);
+
+    transaction.commit();
+    assertEquals(taskContainer, task.eContainer());
+    assertEquals(taskContainer, task.getTaskContainer());
+    session.close();
+  }
+
+  // TODO Revisit me
   // Do not support legacy system
   public void _testBug246540() throws Exception
   {

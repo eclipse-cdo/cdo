@@ -11,13 +11,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -25,19 +23,12 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
-import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Expression;
-
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -91,76 +82,39 @@ public class HibernateStoreReader extends HibernateStoreAccessor implements IHib
     return getStore().getPackageHandler().getCDOPackageInfos();
   }
 
-  public CDOID readResourceID(String path, long timeStamp)
+  public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
   {
-    if (timeStamp != CDOProtocolView.UNSPECIFIED_DATE)
-    {
-      throw new UnsupportedOperationException();
-    }
+    // TODO: implement HibernateStoreReader.readResourceID(folderID, name, timeStamp)
+    throw new UnsupportedOperationException();
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Finding resourceid using path " + path);
-    }
-
-    Session session = getHibernateSession();
-    Criteria criteria = session.createCriteria(CDOResourceClass.NAME);
-    criteria.add(Expression.eq("path", path));
-    List<?> result = criteria.list();
-    if (result.size() == 0)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Resource not found");
-      }
-
-      // TODO: throw exception?
-      return null;
-    }
-
-    // TODO: throw exception if list.size() > 1?
-    CDORevision cdoRevision = (CDORevision)result.get(0);
-    return cdoRevision.getID();
-  }
-
-  /**
-   * TODO Remove me
-   */
-  @Deprecated
-  public String readResourcePath(CDOID id)
-  {
-    if (id == null)
-    {
-      throw new IllegalArgumentException("ID must be not null");
-    }
-
-    if (!(id instanceof CDOIDHibernate))
-    {
-      throw new IllegalArgumentException("ID type " + id.getClass().getName() + " not supported by hibernate reader");
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Finding resource using id " + id);
-    }
-
-    Session session = getHibernateSession();
-    Query qry = session.createQuery("select path from " + CDOResourceClass.NAME + " where id=:id");
-    CDOIDHibernate idHibernate = (CDOIDHibernate)id;
-    qry.setParameter("id", idHibernate.getId());
-    final List<?> result = qry.list();
-    if (result.size() == 0)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Resource not found");
-      }
-
-      // TODO: throw exception?
-      return null;
-    }
-
-    return (String)result.get(0);
+    // if (timeStamp != CDOProtocolView.UNSPECIFIED_DATE)
+    // {
+    // throw new UnsupportedOperationException();
+    // }
+    //
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.trace("Finding resourceid using path " + path);
+    // }
+    //
+    // Session session = getHibernateSession();
+    // Criteria criteria = session.createCriteria(CDOResourceClass.NAME);
+    // criteria.add(Expression.eq("path", path));
+    // List<?> result = criteria.list();
+    // if (result.size() == 0)
+    // {
+    // if (TRACER.isEnabled())
+    // {
+    // TRACER.trace("Resource not found");
+    // }
+    //
+    // // TODO: throw exception?
+    // return null;
+    // }
+    //
+    // // TODO: throw exception if list.size() > 1?
+    // CDORevision cdoRevision = (CDORevision)result.get(0);
+    // return cdoRevision.getID();
   }
 
   public CDORevision readRevision(CDOID id, int referenceChunk)

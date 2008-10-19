@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.query.CDOQueryResultIteratorImpl;
+import org.eclipse.emf.internal.cdo.query.CDOAbstractQueryIteratorImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -35,16 +35,12 @@ public class QueryRequest extends CDOClientRequest<Object>
 
   private int viewID;
 
-  private CDOQueryInfoImpl queryInfo;
+  private CDOAbstractQueryIteratorImpl<?> queryResult;
 
-  private CDOQueryResultIteratorImpl<?> queryResult;
-
-  public QueryRequest(CDOClientProtocol protocol, int viewID, CDOQueryInfoImpl queryInfo,
-      CDOQueryResultIteratorImpl<?> queryResult)
+  public QueryRequest(CDOClientProtocol protocol, int viewID, CDOAbstractQueryIteratorImpl<?> queryResult)
   {
     super(protocol);
     this.viewID = viewID;
-    this.queryInfo = queryInfo;
     this.queryResult = queryResult;
   }
 
@@ -58,7 +54,8 @@ public class QueryRequest extends CDOClientRequest<Object>
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeInt(viewID);
-    queryInfo.write(out);
+    // TODO Simon: Move I/O logic to CDODataInput/OutputStream?!
+    ((CDOQueryInfoImpl)queryResult.getQueryInfo()).write(out);
   }
 
   @Override

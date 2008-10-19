@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.CDOViewSetPackageRegistryImpl;
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -88,7 +87,7 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
    * @throws IllegalArgumentException
    *           if repositoryUUID doesn't match any CDOView.
    */
-  public CDOViewImpl resolveUUID(String repositoryUUID)
+  public CDOViewImpl resolveView(String repositoryUUID)
   {
     CDOViewImpl view = null;
     synchronized (views)
@@ -242,13 +241,18 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
       switch (notification.getEventType())
       {
       case Notification.ADD:
-        if (notification.getNewValue() instanceof CDOResourceImpl)
+      {
+        Object newResource = notification.getNewValue();
+        if (newResource instanceof CDOResourceImpl)
         {
-          notifyAdd((CDOResourceImpl)notification.getNewValue());
+          notifyAdd((CDOResourceImpl)newResource);
         }
+
         break;
+      }
 
       case Notification.ADD_MANY:
+      {
         List<Resource> newResources = (List<Resource>)notification.getNewValue();
         for (Resource newResource : newResources)
         {
@@ -257,7 +261,9 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
             notifyAdd((CDOResourceImpl)newResource);
           }
         }
+
         break;
+      }
       }
     }
     catch (RuntimeException ex)
@@ -272,10 +278,11 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
    */
   private void notifyAdd(CDOResourceImpl resource)
   {
-    CDOViewImpl view = resolveUUID(resource.getURI().authority());
-    if (view != null && FSMUtil.isTransient(resource))
+    String respositoryUUID = CDOURIUtil.extractRepositoryUUID(resource.getURI());
+    CDOViewImpl view = resolveView(respositoryUUID);
+    if (view != null)
     {
-      view.toTransaction().attach(resource);
+      view.attachResource(resource);
     }
   }
 }

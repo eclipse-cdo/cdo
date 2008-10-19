@@ -51,14 +51,14 @@ public class QueryTest extends AbstractCDOTest
 
     objects.add(company1);
     objects.add(category1);
-
+    objects.add(transaction.getRootResource());
     company1.setName("TEST");
 
     transaction.commit();
 
     CDOQuery cdoQuery = transaction.createQuery(LANGUAGE, "QUERYSTRING");
     List<Object> queryResult = cdoQuery.getResult(Object.class);
-    assertEquals(3, queryResult.size());
+    assertEquals(4, queryResult.size());
     for (Object object : queryResult)
     {
       assertEquals(true, objects.contains(object));

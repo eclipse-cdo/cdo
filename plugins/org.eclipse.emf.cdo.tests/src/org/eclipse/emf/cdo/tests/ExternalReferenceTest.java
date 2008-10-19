@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -161,21 +162,15 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOResource resA = transactionA1.createResource("/resA");
       CDOResource resB = transactionB1.createResource("/resB");
 
-      assertEquals(2, resourceSet.getResources().size());
-      // assertEquals(resA, resourceSet.getResource(CDOUtil.createResourceURI(sessionA, "/resA"), false));
-      // assertEquals(resB, resourceSet.getResource(CDOUtil.createResourceURI(sessionA, "/resB"), false));
+      EList<Resource> resources = resourceSet.getResources();
+      assertEquals(4, resources.size());
 
-      // CDOResource resC = (CDOResource)resourceSet.createResource(CDOUtil.createResourceURI(sessionA, "/resC"));
-      // assertEquals(transactionA1, resC.cdoView());
       CDOResource resC = transactionA1.createResource("/resC");
       assertNotNull(resC);
-
-      assertEquals(3, resourceSet.getResources().size());
-      // assertEquals(resC, resourceSet.getResource(CDOUtil.createResourceURI(sessionA, "/resC"), false));
+      assertEquals(5, resources.size());
 
       Resource resD = resourceSet.createResource(URI.createURI("test://1"));
-
-      assertEquals(4, resourceSet.getResources().size());
+      assertEquals(6, resources.size());
       assertEquals(false, resD instanceof CDOResource);
 
       Company companyA = getModel1Factory().createCompany();

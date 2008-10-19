@@ -37,6 +37,8 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   private boolean closed;
 
+  private Object closeLock = new Object();
+
   public CDOQueryQueue()
   {
   }
@@ -48,9 +50,9 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   public void close()
   {
-    synchronized (this)
+    synchronized (closeLock)
     {
-      if (!isClosed())
+      if (!closed)
       {
         closed = true;
         queue.add(QUEUE_CLOSED);
@@ -60,7 +62,10 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   public boolean isClosed()
   {
+    synchronized (closeLock)
+    {
     return closed;
+  }
   }
 
   public boolean add(E e)
@@ -352,7 +357,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       {
         try
         {
-          synchronized (CDOQueryQueue.this)
+          synchronized (closeLock)
           {
             if (CDOQueryQueue.this.isEmpty() && CDOQueryQueue.this.isClosed())
             {

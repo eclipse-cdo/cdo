@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 
@@ -56,6 +57,11 @@ public class NoClassMapping implements IClassMapping
   public Set<IDBTable> getAffectedTables()
   {
     return Collections.emptySet();
+  }
+
+  public IFeatureMapping getFeatureMapping(CDOFeature feature)
+  {
+    return null;
   }
 
   public List<IAttributeMapping> getAttributeMappings()

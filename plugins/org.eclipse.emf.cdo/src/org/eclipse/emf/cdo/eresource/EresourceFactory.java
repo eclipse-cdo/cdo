@@ -29,6 +29,15 @@ public interface EresourceFactory extends EFactory
   EresourceFactory eINSTANCE = org.eclipse.emf.cdo.eresource.impl.EresourceFactoryImpl.init();
 
   /**
+   * Returns a new object of class '<em>CDO Resource Folder</em>'. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return a new object of class '<em>CDO Resource Folder</em>'.
+   * @generated
+   */
+  CDOResourceFolder createCDOResourceFolder();
+
+  /**
    * Returns a new object of class '<em>CDO Resource</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return a new object of class '<em>CDO Resource</em>'.

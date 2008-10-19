@@ -62,4 +62,11 @@ public class VerticalMappingStrategy extends MappingStrategy
   {
     return Collections.singletonList(rootClassMapping.getCDOClass());
   }
+
+  @Override
+  protected String[] getResourceQueries(CDOID folderID, String name, boolean exactMatch)
+  {
+    // TODO: implement VerticalMappingStrategy.getResourceQueries(folderID, name, exactMatch)
+    throw new UnsupportedOperationException();
+  }
 }

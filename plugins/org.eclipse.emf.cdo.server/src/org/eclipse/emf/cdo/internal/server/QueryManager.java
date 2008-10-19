@@ -231,6 +231,8 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
 
     public void run()
     {
+      Session session = (Session)queryResult.getView().getSession();
+      StoreThreadLocal.setSession(session);
       try
       {
         started = true;

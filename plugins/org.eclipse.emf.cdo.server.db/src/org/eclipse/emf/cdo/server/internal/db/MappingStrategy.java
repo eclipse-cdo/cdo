@@ -16,12 +16,11 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
-import org.eclipse.emf.cdo.server.db.IAttributeMapping;
+import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext.ExactMatch;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
@@ -30,6 +29,7 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -40,9 +40,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -58,16 +60,6 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
   private Map<Object, IDBTable> referenceTables = new HashMap<Object, IDBTable>();
 
   private Map<Integer, CDOClassRef> classRefs = new HashMap<Integer, CDOClassRef>();
-
-  private IClassMapping resourceClassMapping;
-
-  private IAttributeMapping resourcePathMapping;
-
-  private IDBTable resourceTable;
-
-  private IDBField resourceIDField;
-
-  private IDBField resourcePathField;
 
   public MappingStrategy()
   {
@@ -126,14 +118,30 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     CDOClassRef classRef = classRefs.get(classID);
     if (classRef == null)
     {
-      if (classID == ClassServerInfo.CDO_RESOURCE_CLASS_DBID)
+      switch (classID)
       {
-        IPackageManager packageManager = getStore().getRepository().getPackageManager();
-        CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
-        classRef = resourceClass.createClassRef();
+      case ClassServerInfo.CDO_RESOURCE_NODE_CLASS_DBID:
+      {
+        CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+        classRef = resourcePackage.getCDOResourceNodeClass().createClassRef();
+        break;
       }
-      else
+
+      case ClassServerInfo.CDO_RESOURCE_FOLDER_CLASS_DBID:
       {
+        CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+        classRef = resourcePackage.getCDOResourceFolderClass().createClassRef();
+        break;
+      }
+
+      case ClassServerInfo.CDO_RESOURCE_CLASS_DBID:
+      {
+        CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+        classRef = resourcePackage.getCDOResourceClass().createClassRef();
+        break;
+      }
+
+      default:
         classRef = storeReader.readClassRef(classID);
       }
 
@@ -158,70 +166,6 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     }
 
     return mapping;
-  }
-
-  public IClassMapping getResourceClassMapping()
-  {
-    if (resourceClassMapping == null)
-    {
-      initResourceInfos();
-    }
-
-    return resourceClassMapping;
-  }
-
-  public IAttributeMapping getResourcePathMapping()
-  {
-    if (resourcePathMapping == null)
-    {
-      initResourceInfos();
-    }
-
-    return resourcePathMapping;
-  }
-
-  public IDBTable getResourceTable()
-  {
-    if (resourceTable == null)
-    {
-      initResourceInfos();
-    }
-
-    return resourceTable;
-  }
-
-  public IDBField getResourceIDField()
-  {
-    if (resourceIDField == null)
-    {
-      initResourceInfos();
-    }
-
-    return resourceIDField;
-  }
-
-  public IDBField getResourcePathField()
-  {
-    if (resourcePathField == null)
-    {
-      initResourceInfos();
-    }
-
-    return resourcePathField;
-  }
-
-  protected void initResourceInfos()
-  {
-    IPackageManager packageManager = getStore().getRepository().getPackageManager();
-    CDOResourceClass resourceClass = packageManager.getCDOResourcePackage().getCDOResourceClass();
-    CDOPathFeature pathFeature = packageManager.getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
-
-    resourceClassMapping = getClassMapping(resourceClass);
-    resourcePathMapping = resourceClassMapping.getAttributeMapping(pathFeature);
-
-    resourceTable = resourceClassMapping.getTable();
-    resourceIDField = resourceTable.getField(CDODBSchema.ATTRIBUTES_ID);
-    resourcePathField = resourcePathMapping.getField();
   }
 
   public String getTableName(CDOPackage cdoPackage)
@@ -311,106 +255,90 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     };
   }
 
-  public CDOID readResourceID(IDBStoreReader storeReader, final String path, final long timeStamp)
+  public CDOID readResourceID(IDBStoreReader storeReader, CDOID folderID, String name, long timeStamp)
   {
-    final CDOID[] result = new CDOID[1];
-    queryResources(storeReader, new QueryResourcesContext()
-    {
-      public long getTimeStamp()
-      {
-        return timeStamp;
-      }
-
-      public String getPathPrefix()
-      {
-        return path;
-      }
-
-      public int getMaxResults()
-      {
-        return 1;
-      }
-
-      public boolean addResource(CDOID resourceID)
-      {
-        result[0] = resourceID;
-        return false;
-      }
-    }, true);
-
-    return result[0];
+    ExactMatch context = StoreUtil.createExactMatchContext(folderID, name, timeStamp);
+    queryResources(storeReader, context);
+    return context.getResourceID();
   }
 
   public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context)
   {
-    queryResources(storeReader, context, false);
-  }
-
-  private void queryResources(IDBStoreReader storeReader, QueryResourcesContext context, boolean exactMatch)
-  {
-    IClassMapping mapping = getResourceClassMapping();
-    IDBTable resourceTable = mapping.getTable();
-    IDBField pathField = getResourcePathField();
-    String pathPrefix = context.getPathPrefix();
-
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" FROM ");
-    builder.append(resourceTable);
-    builder.append(" WHERE ");
-    builder.append(pathField);
-    if (exactMatch)
-    {
-      builder.append("=\'");
-      builder.append(pathPrefix);
-      builder.append("\'");
-    }
-    else
-    {
-      builder.append(" LIKE \'");
-      builder.append(pathPrefix);
-      builder.append("%\'");
-    }
-
+    CDOID folderID = context.getFolderID();
+    String name = context.getName();
+    boolean exactMatch = context.exactMatch();
     String where = createWhereClause(context.getTimeStamp());
-    builder.append(" AND (");
-    builder.append(where);
-    builder.append(")");
 
-    String sql = builder.toString();
-    if (TRACER.isEnabled())
+    String[] queries = getResourceQueries(folderID, name, exactMatch);
+    for (String query : queries)
     {
-      TRACER.trace(sql);
-    }
+      StringBuilder builder = new StringBuilder();
+      builder.append(query);
+      builder.append(" AND (");
+      builder.append(where);
+      builder.append(")");
 
-    ResultSet resultSet = null;
-
-    try
-    {
-      resultSet = storeReader.getStatement().executeQuery(sql);
-      while (resultSet.next())
+      String sql = builder.toString();
+      if (TRACER.isEnabled())
       {
-        long longID = resultSet.getLong(1);
-        CDOID id = CDOIDUtil.createLong(longID);
-        if (!context.addResource(id))
+        TRACER.trace(sql);
+      }
+
+      ResultSet resultSet = null;
+
+      try
+      {
+        resultSet = storeReader.getStatement().executeQuery(sql);
+        while (resultSet.next())
         {
-          // No more results allowed
-          break;
+          long longID = resultSet.getLong(1);
+          CDOID id = CDOIDUtil.createLong(longID);
+          if (!context.addResource(id))
+          {
+            // No more results allowed
+            return;
+          }
         }
       }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+      }
     }
   }
 
-  public long repairAfterCrash(Connection connection)
+  protected abstract String[] getResourceQueries(CDOID folderID, String name, boolean exactMatch);
+
+  public void createResourceTables(IDBAdapter dbAdapter, Connection connection)
+  {
+    Set<IDBTable> tables = new HashSet<IDBTable>();
+    CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+
+    addResourceTables(resourcePackage.getCDOResourceNodeClass(), tables);
+    addResourceTables(resourcePackage.getCDOResourceFolderClass(), tables);
+    addResourceTables(resourcePackage.getCDOResourceClass(), tables);
+
+    if (dbAdapter.createTables(tables, connection).size() != tables.size())
+    {
+      throw new DBException("Resource tables not completely created");
+    }
+  }
+
+  private void addResourceTables(CDOClass cdoClass, Set<IDBTable> tables)
+  {
+    IClassMapping mapping = getClassMapping(cdoClass);
+    if (mapping != null)
+    {
+      Set<IDBTable> affectedTables = mapping.getAffectedTables();
+      tables.addAll(affectedTables);
+    }
+  }
+
+  public long repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
     long maxCDOID = 0L;
     for (CDOClass idClass : getClassesWithObjectInfo())

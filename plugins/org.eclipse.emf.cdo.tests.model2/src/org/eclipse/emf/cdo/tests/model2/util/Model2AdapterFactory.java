@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2AdapterFactory.java,v 1.4 2008-09-18 12:56:55 estepper Exp $
+ * $Id: Model2AdapterFactory.java,v 1.5 2008-10-19 01:28:55 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.util;
 
@@ -10,6 +10,8 @@ import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
+import org.eclipse.emf.cdo.tests.model2.Task;
+import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -81,6 +83,18 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseTaskContainer(TaskContainer object)
+    {
+      return createTaskContainerAdapter();
+    }
+
+    @Override
+    public Adapter caseTask(Task object)
+    {
+      return createTaskAdapter();
+    }
+
+    @Override
     public Adapter caseOrder(Order object)
     {
       return createOrderAdapter();
@@ -124,6 +138,34 @@ public class Model2AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSpecialPurchaseOrderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.TaskContainer
+   * <em>Task Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model2.TaskContainer
+   * @generated
+   */
+  public Adapter createTaskContainerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model2.Task <em>Task</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model2.Task
+   * @generated
+   */
+  public Adapter createTaskAdapter()
   {
     return null;
   }

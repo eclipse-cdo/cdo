@@ -41,6 +41,16 @@ public interface CDORevision
 
   public boolean isTransactional();
 
+  /**
+   * @since 2.0
+   */
+  public boolean isResourceNode();
+
+  /**
+   * @since 2.0
+   */
+  public boolean isResourceFolder();
+
   public boolean isResource();
 
   public CDORevisionData getData();

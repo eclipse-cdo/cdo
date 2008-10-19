@@ -11,17 +11,22 @@
 package org.eclipse.emf.cdo.internal.common.model.resource;
 
 import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.resource.CDOPathFeature;
+import org.eclipse.emf.cdo.common.model.CDOClassProxy;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
+import org.eclipse.emf.cdo.common.model.resource.CDONodesFeature;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOFeatureImpl;
-import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
 
 /**
  * @author Eike Stepper
  */
-public class CDOPathFeatureImpl extends CDOFeatureImpl implements CDOPathFeature
+public class CDONodesFeatureImpl extends CDOFeatureImpl implements CDONodesFeature
 {
-  public CDOPathFeatureImpl(CDOClass containingClass)
+  public CDONodesFeatureImpl(CDOClass containingClass, CDOPackageManager packageManager)
   {
-    super(containingClass, FEATURE_ID, NAME, CDOTypeImpl.STRING, false);
+    super(containingClass, FEATURE_ID, NAME, new CDOClassProxy(CDOModelUtil.createClassRef(
+        CDOResourcePackage.PACKAGE_URI, CDOResourceNodeClass.CLASSIFIER_ID), packageManager), true, true);
   }
 }

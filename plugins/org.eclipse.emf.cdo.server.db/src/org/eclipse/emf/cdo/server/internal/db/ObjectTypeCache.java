@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreReader;
 import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
 
 import org.eclipse.net4j.db.DBException;
@@ -37,7 +38,7 @@ import java.sql.Statement;
  */
 public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 {
-  private MappingStrategy mappingStrategy;
+  private IMappingStrategy mappingStrategy;
 
   private IDBTable table;
 
@@ -51,12 +52,12 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
   {
   }
 
-  public MappingStrategy getMappingStrategy()
+  public IMappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
   }
 
-  public void setMappingStrategy(MappingStrategy mappingStrategy)
+  public void setMappingStrategy(IMappingStrategy mappingStrategy)
   {
     this.mappingStrategy = mappingStrategy;
   }

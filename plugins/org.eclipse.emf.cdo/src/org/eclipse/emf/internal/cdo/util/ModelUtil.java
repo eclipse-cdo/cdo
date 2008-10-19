@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceFolderClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
@@ -391,13 +393,29 @@ public final class ModelUtil
     ((InternalCDOClass)corePackage.getCDOObjectClass()).setClientInfo(EcorePackage.eINSTANCE.getEObject());
 
     // Eresource
+    if (!ObjectUtil.equals(CDOResourcePackage.PACKAGE_URI, EresourcePackage.eNS_URI))
+    {
+      throw new ImplementationError();
+    }
+
     CDOResourcePackage resourcePackage = packageManager.getCDOResourcePackage();
     ((InternalCDOPackage)resourcePackage).setClientInfo(EresourcePackage.eINSTANCE);
+
+    CDOResourceNodeClass resourceNodeClass = resourcePackage.getCDOResourceNodeClass();
+    ((InternalCDOClass)resourceNodeClass).setClientInfo(EresourcePackage.eINSTANCE.getCDOResourceNode());
+    ((InternalCDOFeature)resourceNodeClass.getCDOFolderFeature()).setClientInfo(EresourcePackage.eINSTANCE
+        .getCDOResourceNode_Folder());
+    ((InternalCDOFeature)resourceNodeClass.getCDONameFeature()).setClientInfo(EresourcePackage.eINSTANCE
+        .getCDOResourceNode_Name());
+
+    CDOResourceFolderClass resourceFolderClass = resourcePackage.getCDOResourceFolderClass();
+    ((InternalCDOClass)resourceFolderClass).setClientInfo(EresourcePackage.eINSTANCE.getCDOResourceFolder());
+    ((InternalCDOFeature)resourceFolderClass.getCDONodesFeature()).setClientInfo(EresourcePackage.eINSTANCE
+        .getCDOResourceFolder_Nodes());
+
     CDOResourceClass resourceClass = resourcePackage.getCDOResourceClass();
     ((InternalCDOClass)resourceClass).setClientInfo(EresourcePackage.eINSTANCE.getCDOResource());
     ((InternalCDOFeature)resourceClass.getCDOContentsFeature()).setClientInfo(EresourcePackage.eINSTANCE
         .getCDOResource_Contents());
-    ((InternalCDOFeature)resourceClass.getCDOPathFeature()).setClientInfo(EresourcePackage.eINSTANCE
-        .getCDOResource_Path());
   }
 }

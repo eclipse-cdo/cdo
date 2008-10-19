@@ -2,13 +2,15 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model2FactoryImpl.java,v 1.4 2008-09-18 12:56:55 estepper Exp $
+ * $Id: Model2FactoryImpl.java,v 1.5 2008-10-19 01:28:55 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
 import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
+import org.eclipse.emf.cdo.tests.model2.Task;
+import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -68,6 +70,10 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
     {
     case Model2Package.SPECIAL_PURCHASE_ORDER:
       return createSpecialPurchaseOrder();
+    case Model2Package.TASK_CONTAINER:
+      return createTaskContainer();
+    case Model2Package.TASK:
+      return createTask();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -82,6 +88,28 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   {
     SpecialPurchaseOrderImpl specialPurchaseOrder = new SpecialPurchaseOrderImpl();
     return specialPurchaseOrder;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public TaskContainer createTaskContainer()
+  {
+    TaskContainerImpl taskContainer = new TaskContainerImpl();
+    return taskContainer;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Task createTask()
+  {
+    TaskImpl task = new TaskImpl();
+    return task;
   }
 
   /**

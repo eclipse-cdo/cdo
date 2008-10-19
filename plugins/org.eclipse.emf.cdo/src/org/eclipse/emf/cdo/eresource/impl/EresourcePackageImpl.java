@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
@@ -31,6 +33,20 @@ import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
  */
 public class EresourcePackageImpl extends EPackageImpl implements EresourcePackage
 {
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cdoResourceNodeEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cdoResourceFolderEClass = null;
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -129,6 +145,72 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     theEresourcePackage.freeze();
 
     return theEresourcePackage;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCDOResourceNode()
+  {
+    return cdoResourceNodeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCDOResourceNode_Folder()
+  {
+    return (EReference)cdoResourceNodeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCDOResourceNode_Name()
+  {
+    return (EAttribute)cdoResourceNodeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCDOResourceNode_Path()
+  {
+    return (EAttribute)cdoResourceNodeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCDOResourceFolder()
+  {
+    return cdoResourceFolderEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCDOResourceFolder_Nodes()
+  {
+    return (EReference)cdoResourceFolderEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -236,16 +318,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * 
    * @generated
    */
-  public EAttribute getCDOResource_Path()
-  {
-    return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(9);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public EDataType getResourceSet()
   {
     return resourceSetEDataType;
@@ -303,6 +375,14 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     isCreated = true;
 
     // Create classes and their features
+    cdoResourceNodeEClass = createEClass(CDO_RESOURCE_NODE);
+    createEReference(cdoResourceNodeEClass, CDO_RESOURCE_NODE__FOLDER);
+    createEAttribute(cdoResourceNodeEClass, CDO_RESOURCE_NODE__NAME);
+    createEAttribute(cdoResourceNodeEClass, CDO_RESOURCE_NODE__PATH);
+
+    cdoResourceFolderEClass = createEClass(CDO_RESOURCE_FOLDER);
+    createEReference(cdoResourceFolderEClass, CDO_RESOURCE_FOLDER__NODES);
+
     cdoResourceEClass = createEClass(CDO_RESOURCE);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__RESOURCE_SET);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__URI);
@@ -313,7 +393,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__ERRORS);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__WARNINGS);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__TIME_STAMP);
-    createEAttribute(cdoResourceEClass, CDO_RESOURCE__PATH);
 
     // Create data types
     resourceSetEDataType = createEDataType(RESOURCE_SET);
@@ -355,32 +434,48 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    cdoResourceFolderEClass.getESuperTypes().add(getCDOResourceNode());
+    cdoResourceEClass.getESuperTypes().add(getCDOResourceNode());
 
     // Initialize classes and features; add operations and parameters
+    initEClass(cdoResourceNodeEClass, CDOResourceNode.class, "CDOResourceNode", IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCDOResourceNode_Folder(), getCDOResourceFolder(), getCDOResourceFolder_Nodes(), "folder", null,
+        0, 1, CDOResourceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCDOResourceNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, CDOResourceNode.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCDOResourceNode_Path(), ecorePackage.getEString(), "path", null, 0, 1, CDOResourceNode.class,
+        IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+    initEClass(cdoResourceFolderEClass, CDOResourceFolder.class, "CDOResourceFolder", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCDOResourceFolder_Nodes(), getCDOResourceNode(), getCDOResourceNode_Folder(), "nodes", null, 0,
+        -1, CDOResourceFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(cdoResourceEClass, CDOResource.class, "CDOResource", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCDOResource_ResourceSet(), getResourceSet(), "resourceSet", null, 0, 1, CDOResource.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_URI(), getURI(), "uRI", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCDOResource_URI(), getURI(), "uRI", null, 0, 1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getCDOResource_Contents(), theEcorePackage.getEObject(), null, "contents", null, 0, -1,
         CDOResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Modified(), ecorePackage.getEBoolean(), "modified", null, 0, 1, CDOResource.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Loaded(), ecorePackage.getEBoolean(), "loaded", "true", 0, 1, CDOResource.class,
-        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_TrackingModification(), ecorePackage.getEBoolean(), "trackingModification", null, 0,
         1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Errors(), getDiagnostic(), "errors", null, 0, -1, CDOResource.class, IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Warnings(), getDiagnostic(), "warnings", null, 0, -1, CDOResource.class,
-        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_TimeStamp(), theEcorePackage.getELong(), "timeStamp", null, 0, 1, CDOResource.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_Path(), ecorePackage.getEString(), "path", null, 0, 1, CDOResource.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(resourceSetEDataType, ResourceSet.class, "ResourceSet", !IS_SERIALIZABLE,

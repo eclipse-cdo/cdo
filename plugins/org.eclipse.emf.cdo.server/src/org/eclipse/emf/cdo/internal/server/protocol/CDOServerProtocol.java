@@ -52,9 +52,6 @@ public class CDOServerProtocol extends CDOProtocolImpl
     case CDOProtocolConstants.SIGNAL_RESOURCE_ID:
       return new ResourceIDIndication();
 
-    case CDOProtocolConstants.SIGNAL_RESOURCE_PATH:
-      return new ResourcePathIndication();
-
     case CDOProtocolConstants.SIGNAL_LOAD_PACKAGE:
       return new LoadPackageIndication();
 

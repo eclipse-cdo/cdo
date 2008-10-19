@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
  */
 public interface CDOContentsFeature extends CDOFeature
 {
-  public static final int FEATURE_ID = 2;
+  public static final int FEATURE_ID = 6;
 
   public static final String NAME = "contents";
 }

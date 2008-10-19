@@ -11,9 +11,12 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -23,6 +26,7 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -82,6 +86,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
           {
             TRACER.trace(sql);
           }
+
           ResultSet resultSet = null;
 
           try
@@ -147,6 +152,68 @@ public class HorizontalMappingStrategy extends MappingStrategy
       objectTypeCache = createObjectTypeCache(getStore());
       LifecycleUtil.activate(objectTypeCache);
     }
+  }
+
+  @Override
+  protected String[] getResourceQueries(CDOID folderID, String name, boolean exactMatch)
+  {
+    CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+    String[] queries = new String[2];
+
+    IClassMapping resourceFolderMapping = getClassMapping(resourcePackage.getCDOResourceFolderClass());
+    queries[0] = getResourceQuery(folderID, name, exactMatch, resourceFolderMapping);
+
+    IClassMapping resourceMapping = getClassMapping(resourcePackage.getCDOResourceClass());
+    queries[1] = getResourceQuery(folderID, name, exactMatch, resourceMapping);
+
+    return queries;
+  }
+
+  protected String getResourceQuery(CDOID folderID, String name, boolean exactMatch, IClassMapping classMapping)
+  {
+    CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+    CDOResourceNodeClass resourceNodeClass = resourcePackage.getCDOResourceNodeClass();
+
+    IDBTable table = classMapping.getTable();
+    IDBField nameField = classMapping.getAttributeMapping(resourceNodeClass.getCDONameFeature()).getField();
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" FROM ");
+    builder.append(table);
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append("=");
+    builder.append(CDOIDUtil.getLong(folderID));
+    if (exactMatch || name != null)
+    {
+      builder.append(" AND ");
+      builder.append(nameField);
+      if (exactMatch)
+      {
+        if (name == null)
+        {
+          builder.append(" IS NULL");
+        }
+        else
+        {
+          builder.append("=\'");
+          builder.append(name);
+          builder.append("\'");
+        }
+      }
+      else
+      {
+        // Here: name != null
+        builder.append(" LIKE \'");
+        builder.append(name);
+        builder.append("%\'");
+      }
+    }
+
+    String sql = builder.toString();
+    return sql;
   }
 
   @Override

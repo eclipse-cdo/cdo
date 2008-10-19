@@ -11,11 +11,8 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.ui.viewhistory.CDOViewHistoryEntry;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -27,7 +24,6 @@ import org.eclipse.net4j.util.ui.views.IElementFilter;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IWorkbenchPage;
 
 public class CDOSessionsView extends ContainerView
 {
@@ -67,22 +63,5 @@ public class CDOSessionsView extends ContainerView
   {
     manager.add(openSessionAction);
     super.fillLocalToolBar(manager);
-  }
-
-  @Override
-  protected void doubleClicked(Object object)
-  {
-    if (object instanceof CDOViewHistoryEntry)
-    {
-      CDOViewHistoryEntry entry = (CDOViewHistoryEntry)object;
-      IWorkbenchPage page = getViewSite().getPage();
-      CDOView view = entry.getView();
-      String resourcePath = entry.getResourcePath();
-      CDOEditor.open(page, view, resourcePath);
-    }
-    else
-    {
-      super.doubleClicked(object);
-    }
   }
 }

@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
@@ -58,6 +59,31 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   public CDOViewImpl cdoView()
   {
     return view;
+  }
+
+  public CDOResourceImpl cdoResource()
+  {
+    Resource resource = eResource();
+    if (resource instanceof CDOResourceImpl)
+    {
+      return (CDOResourceImpl)resource;
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOResourceImpl cdoDirectResource()
+  {
+    Resource.Internal resource = eDirectResource();
+    if (resource instanceof CDOResourceImpl)
+    {
+      return (CDOResourceImpl)resource;
+    }
+
+    return null;
   }
 
   public void cdoInternalSetID(CDOID id)

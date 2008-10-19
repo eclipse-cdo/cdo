@@ -213,7 +213,7 @@ public class DetachTest extends AbstractCDOTest
     orderDetail.setProduct(product1);
     assertActive(resource);
     Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
-    Assert.assertEquals(1, rset.getResources().size());
+    Assert.assertEquals(2, rset.getResources().size());
     if (commitBeforeDelete == true)
     {
       transaction.commit();
@@ -229,7 +229,7 @@ public class DetachTest extends AbstractCDOTest
     assertTransient(product1);
 
     assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
-    assertEquals(0, rset.getResources().size());
+    assertEquals(1, rset.getResources().size());
     assertEquals(2, resource.getContents().size());
     assertEquals(true, resource.getContents().contains(order));
     assertEquals(true, resource.getContents().contains(product1));
@@ -249,7 +249,6 @@ public class DetachTest extends AbstractCDOTest
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-
     ResourceSet rset = transaction.getResourceSet();
 
     msg("Creating resource");
@@ -348,7 +347,7 @@ public class DetachTest extends AbstractCDOTest
       }
     }.timedOut();
 
-    assertTrue(rSet1.getResources().size() == 0);
+    assertEquals(1, rSet1.getResources().size());
     assertEquals(false, timedOut);
     assertTransient(res);
     assertInvalid(res2);

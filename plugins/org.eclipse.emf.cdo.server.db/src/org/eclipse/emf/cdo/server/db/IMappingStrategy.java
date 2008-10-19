@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
 
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
 import java.sql.Connection;
@@ -55,6 +56,11 @@ public interface IMappingStrategy
   /**
    * @since 2.0
    */
+  public CDOClassRef getClassRef(IDBStoreReader storeReader, int classID);
+
+  /**
+   * @since 2.0
+   */
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreReader storeReader);
 
   public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id);
@@ -62,7 +68,7 @@ public interface IMappingStrategy
   /**
    * @since 2.0
    */
-  public CDOID readResourceID(IDBStoreReader storeReader, String path, long timeStamp);
+  public CDOID readResourceID(IDBStoreReader storeReader, CDOID folderID, String name, long timeStamp);
 
   /**
    * @since 2.0
@@ -70,7 +76,14 @@ public interface IMappingStrategy
   public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context);
 
   /**
-   * Must return the maximum CDOID value .
+   * @since 2.0
    */
-  public long repairAfterCrash(Connection connection);
+  public void createResourceTables(IDBAdapter dbAdapter, Connection connection);
+
+  /**
+   * Returns the maximum CDOID value.
+   * 
+   * @since 2.0
+   */
+  public long repairAfterCrash(IDBAdapter dbAdapter, Connection connection);
 }

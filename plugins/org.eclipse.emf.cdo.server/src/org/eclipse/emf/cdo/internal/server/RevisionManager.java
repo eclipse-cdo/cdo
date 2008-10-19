@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
@@ -266,9 +267,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
    * @since 2.0
    */
   @Override
-  protected CDOFeature getResourcePathFeature()
+  protected CDOPackageManager getPackageManager()
   {
-    return repository.getPackageManager().getCDOResourcePackage().getCDOResourceClass().getCDOPathFeature();
+    return repository.getPackageManager();
   }
 
   /**

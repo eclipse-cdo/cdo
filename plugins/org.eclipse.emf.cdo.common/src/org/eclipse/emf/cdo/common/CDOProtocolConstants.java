@@ -32,8 +32,6 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_RESOURCE_ID = 4;
 
-  public static final short SIGNAL_RESOURCE_PATH = 5;
-
   public static final short SIGNAL_LOAD_PACKAGE = 6;
 
   public static final short SIGNAL_LOAD_REVISION = 7;
@@ -148,4 +146,14 @@ public interface CDOProtocolConstants
    * @since 2.0
    */
   public static final String QUERY_LANGUAGE_RESOURCES = "resources";
+
+  /**
+   * @since 2.0
+   */
+  public static final String QUERY_LANGUAGE_RESOURCES_FOLDER_ID = "folder";
+
+  /**
+   * @since 2.0
+   */
+  public static final String QUERY_LANGUAGE_RESOURCES_EXACT_MATCH = "exactMatch";
 }

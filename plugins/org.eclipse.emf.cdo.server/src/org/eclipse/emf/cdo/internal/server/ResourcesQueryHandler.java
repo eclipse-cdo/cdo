@@ -41,9 +41,19 @@ public class ResourcesQueryHandler implements IQueryHandler
         return context.getTimeStamp();
       }
 
-      public String getPathPrefix()
+      public CDOID getFolderID()
+      {
+        return (CDOID)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID);
+      }
+
+      public String getName()
       {
         return info.getQueryString();
+      }
+
+      public boolean exactMatch()
+      {
+        return (Boolean)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_EXACT_MATCH);
       }
 
       public int getMaxResults()

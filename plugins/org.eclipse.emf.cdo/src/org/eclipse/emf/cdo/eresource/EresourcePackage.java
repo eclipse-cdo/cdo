@@ -44,7 +44,7 @@ public interface EresourcePackage extends EPackage
    * 
    * @generated
    */
-  String eNS_URI = "http://www.eclipse.org/emf/CDO/resource/1.0.0";
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/resource/2.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -61,6 +61,109 @@ public interface EresourcePackage extends EPackage
   EresourcePackage eINSTANCE = org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl.init();
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl
+   * <em>CDO Resource Node</em>}' class. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl
+   * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceNode()
+   * @generated
+   */
+  int CDO_RESOURCE_NODE = 0;
+
+  /**
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_NODE__FOLDER = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_NODE__NAME = 1;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_NODE__PATH = 2;
+
+  /**
+   * The number of structural features of the '<em>CDO Resource Node</em>' class. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_NODE_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl
+   * <em>CDO Resource Folder</em>}' class. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl
+   * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceFolder()
+   * @generated
+   */
+  int CDO_RESOURCE_FOLDER = 1;
+
+  /**
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_FOLDER__FOLDER = CDO_RESOURCE_NODE__FOLDER;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_FOLDER__NAME = CDO_RESOURCE_NODE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_FOLDER__PATH = CDO_RESOURCE_NODE__PATH;
+
+  /**
+   * The feature id for the '<em><b>Nodes</b></em>' containment reference list. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_FOLDER__NODES = CDO_RESOURCE_NODE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>CDO Resource Folder</em>' class. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_FOLDER_FEATURE_COUNT = CDO_RESOURCE_NODE_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl <em>CDO Resource</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -68,7 +171,33 @@ public interface EresourcePackage extends EPackage
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResource()
    * @generated
    */
-  int CDO_RESOURCE = 0;
+  int CDO_RESOURCE = 2;
+
+  /**
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE__FOLDER = CDO_RESOURCE_NODE__FOLDER;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE__NAME = CDO_RESOURCE_NODE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE__PATH = CDO_RESOURCE_NODE__PATH;
 
   /**
    * The feature id for the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -76,7 +205,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__RESOURCE_SET = 0;
+  int CDO_RESOURCE__RESOURCE_SET = CDO_RESOURCE_NODE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>URI</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -84,7 +213,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__URI = 1;
+  int CDO_RESOURCE__URI = CDO_RESOURCE_NODE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Contents</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -93,7 +222,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__CONTENTS = 2;
+  int CDO_RESOURCE__CONTENTS = CDO_RESOURCE_NODE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Modified</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -101,7 +230,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__MODIFIED = 3;
+  int CDO_RESOURCE__MODIFIED = CDO_RESOURCE_NODE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Loaded</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -109,7 +238,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__LOADED = 4;
+  int CDO_RESOURCE__LOADED = CDO_RESOURCE_NODE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Tracking Modification</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -118,7 +247,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__TRACKING_MODIFICATION = 5;
+  int CDO_RESOURCE__TRACKING_MODIFICATION = CDO_RESOURCE_NODE_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Errors</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -126,7 +255,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__ERRORS = 6;
+  int CDO_RESOURCE__ERRORS = CDO_RESOURCE_NODE_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Warnings</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -134,7 +263,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__WARNINGS = 7;
+  int CDO_RESOURCE__WARNINGS = CDO_RESOURCE_NODE_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Time Stamp</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -142,15 +271,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__TIME_STAMP = 8;
-
-  /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CDO_RESOURCE__PATH = 9;
+  int CDO_RESOURCE__TIME_STAMP = CDO_RESOURCE_NODE_FEATURE_COUNT + 8;
 
   /**
    * The number of structural features of the '<em>CDO Resource</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -159,7 +280,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE_FEATURE_COUNT = 10;
+  int CDO_RESOURCE_FEATURE_COUNT = CDO_RESOURCE_NODE_FEATURE_COUNT + 9;
 
   /**
    * The meta object id for the '<em>Resource Set</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -168,7 +289,7 @@ public interface EresourcePackage extends EPackage
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getResourceSet()
    * @generated
    */
-  int RESOURCE_SET = 1;
+  int RESOURCE_SET = 3;
 
   /**
    * The meta object id for the '<em>URI</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -177,7 +298,7 @@ public interface EresourcePackage extends EPackage
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getURI()
    * @generated
    */
-  int URI = 2;
+  int URI = 4;
 
   /**
    * The meta object id for the '<em>Diagnostic</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -186,7 +307,77 @@ public interface EresourcePackage extends EPackage
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getDiagnostic()
    * @generated
    */
-  int DIAGNOSTIC = 3;
+  int DIAGNOSTIC = 5;
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode <em>CDO Resource Node</em>}
+   * '. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the meta object for class '<em>CDO Resource Node</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceNode
+   * @generated
+   */
+  EClass getCDOResourceNode();
+
+  /**
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the meta object for the container reference '<em>Folder</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder()
+   * @see #getCDOResourceNode()
+   * @generated
+   */
+  EReference getCDOResourceNode_Folder();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getName
+   * <em>Name</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceNode#getName()
+   * @see #getCDOResourceNode()
+   * @generated
+   */
+  EAttribute getCDOResourceNode_Name();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getPath
+   * <em>Path</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Path</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceNode#getPath()
+   * @see #getCDOResourceNode()
+   * @generated
+   */
+  EAttribute getCDOResourceNode_Path();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder
+   * <em>CDO Resource Folder</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the meta object for class '<em>CDO Resource Folder</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceFolder
+   * @generated
+   */
+  EClass getCDOResourceFolder();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes <em>Nodes</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 2.0<!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Nodes</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes()
+   * @see #getCDOResourceFolder()
+   * @generated
+   */
+  EReference getCDOResourceFolder_Nodes();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.eresource.CDOResource <em>CDO Resource</em>}'. <!--
@@ -299,17 +490,6 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_TimeStamp();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOResource#getPath <em>Path</em>}
-   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Path</em>'.
-   * @see org.eclipse.emf.cdo.eresource.CDOResource#getPath()
-   * @see #getCDOResource()
-   * @generated
-   */
-  EAttribute getCDOResource_Path();
-
-  /**
    * Returns the meta object for data type '{@link org.eclipse.emf.ecore.resource.ResourceSet <em>Resource Set</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -364,6 +544,61 @@ public interface EresourcePackage extends EPackage
    */
   interface Literals
   {
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl
+     * <em>CDO Resource Node</em>}' class. <!-- begin-user-doc -->
+     * 
+     * @since 2.0<!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl
+     * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceNode()
+     * @generated
+     */
+    EClass CDO_RESOURCE_NODE = eINSTANCE.getCDOResourceNode();
+
+    /**
+     * The meta object literal for the '<em><b>Folder</b></em>' container reference feature. <!-- begin-user-doc -->
+     * 
+     * @since 2.0<!-- end-user-doc -->
+     * @generated
+     */
+    EReference CDO_RESOURCE_NODE__FOLDER = eINSTANCE.getCDOResourceNode_Folder();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc -->
+     * 
+     * @since 2.0<!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CDO_RESOURCE_NODE__NAME = eINSTANCE.getCDOResourceNode_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Path</b></em>' attribute feature. <!-- begin-user-doc -->
+     * 
+     * @since 2.0<!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CDO_RESOURCE_NODE__PATH = eINSTANCE.getCDOResourceNode_Path();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl
+     * <em>CDO Resource Folder</em>}' class. <!-- begin-user-doc -->
+     * 
+     * @since 2.0<!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl
+     * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceFolder()
+     * @generated
+     */
+    EClass CDO_RESOURCE_FOLDER = eINSTANCE.getCDOResourceFolder();
+
+    /**
+     * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature. <!-- begin-user-doc
+     * -->
+     * 
+     * @since 2.0<!-- end-user-doc -->
+     * @generated
+     */
+    EReference CDO_RESOURCE_FOLDER__NODES = eINSTANCE.getCDOResourceFolder_Nodes();
+
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl <em>CDO Resource</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -445,14 +680,6 @@ public interface EresourcePackage extends EPackage
      * @generated
      */
     EAttribute CDO_RESOURCE__TIME_STAMP = eINSTANCE.getCDOResource_TimeStamp();
-
-    /**
-     * The meta object literal for the '<em><b>Path</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute CDO_RESOURCE__PATH = eINSTANCE.getCDOResource_Path();
 
     /**
      * The meta object literal for the '<em>Resource Set</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

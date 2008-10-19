@@ -73,6 +73,16 @@ public class CDORevisionImpl implements InternalCDORevision
 
   public CDORevisionImpl(CDOClass cdoClass, CDOID id)
   {
+    if (cdoClass.isAbstract())
+    {
+      throw new IllegalArgumentException("CDOClass is abstract: " + cdoClass);
+    }
+
+    if (id == null || id.isNull())
+    {
+      throw new IllegalArgumentException("CDIID is null");
+    }
+
     this.cdoClass = cdoClass;
     this.id = id;
     version = 0;
@@ -104,8 +114,12 @@ public class CDORevisionImpl implements InternalCDORevision
 
     id = in.readCDOID();
     version = in.readInt();
-    created = in.readLong();
-    revised = in.readLong();
+    if (!id.isTemporary())
+    {
+      created = in.readLong();
+      revised = in.readLong();
+    }
+
     resourceID = in.readCDOID();
     containerID = in.readCDOID();
     containingFeatureID = in.readInt();
@@ -137,8 +151,12 @@ public class CDORevisionImpl implements InternalCDORevision
     out.writeCDOClassRef(classRef);
     out.writeCDOID(id);
     out.writeInt(getVersion());
-    out.writeLong(created);
-    out.writeLong(revised);
+    if (!id.isTemporary())
+    {
+      out.writeLong(created);
+      out.writeLong(revised);
+    }
+
     out.writeCDOID(resourceID);
     Object newContainerID = out.getIDProvider().provideCDOID(containerID);
     out.writeCDOID((CDOID)newContainerID);
@@ -251,6 +269,16 @@ public class CDORevisionImpl implements InternalCDORevision
   public boolean isValid(long timeStamp)
   {
     return (revised == UNSPECIFIED_DATE || revised >= timeStamp) && timeStamp >= created;
+  }
+
+  public boolean isResourceNode()
+  {
+    return cdoClass.isResourceNode();
+  }
+
+  public boolean isResourceFolder()
+  {
+    return cdoClass.isResourceFolder();
   }
 
   public boolean isResource()

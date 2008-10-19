@@ -232,11 +232,9 @@ public class TransactionHandlerTest extends AbstractCDOTest
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
-    CDOResource resource = transaction.getOrCreateResource("/test1");
-
     try
     {
-      resource.getContents().add(order);
+      transaction.getOrCreateResource("/test1");
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException ex)

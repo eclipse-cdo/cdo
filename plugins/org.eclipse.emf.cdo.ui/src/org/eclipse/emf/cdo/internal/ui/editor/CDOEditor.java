@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -85,7 +86,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -1330,7 +1330,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * This accesses a cached version of the content outliner. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public IContentOutlinePage getContentOutlinePage()
   {
@@ -1357,12 +1357,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           //
           createContextMenuFor(contentOutlineViewer);
 
-          if (!editingDomain.getResourceSet().getResources().isEmpty())
+          if (!CDOUtil.getResources(editingDomain.getResourceSet()).isEmpty())
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources()
-                .get(0)), true);
+            contentOutlineViewer.setSelection(new StructuredSelection(CDOUtil.getResources(
+                editingDomain.getResourceSet()).get(0)), true);
           }
         }
 
@@ -1569,7 +1569,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         // Save the resources to the file system.
         //
         boolean first = true;
-        for (Resource resource : editingDomain.getResourceSet().getResources())
+        for (Resource resource : CDOUtil.getResources(editingDomain.getResourceSet()))
         {
           if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
               && !editingDomain.isReadOnly(resource))
@@ -1700,16 +1700,18 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
-    setInputWithNotify(editorInput);
-    setPartName(editorInput.getName());
-    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
-        .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-    doSave(progressMonitor);
+    throw new UnsupportedOperationException();
+
+    // CDOUtil.getResources(editingDomain.getResourceSet()).get(0).setURI(uri);
+    // setInputWithNotify(editorInput);
+    // setPartName(editorInput.getName());
+    // IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
+    // .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
+    // doSave(progressMonitor);
   }
 
   /**

@@ -330,6 +330,16 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
+    public boolean isResourceNode()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isResourceFolder()
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public boolean isResource()
     {
       throw new UnsupportedOperationException();

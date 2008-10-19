@@ -13,6 +13,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -22,9 +23,9 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -43,44 +44,92 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.NotifyingInternalEListImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'. <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getPath <em>Path</em>}</li>
- * </ul>
- * </p>
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
  * 
+ * @extends Resource.Internal<!-- end-user-doc -->
+ *          <p>
+ *          The following features are implemented:
+ *          <ul>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking
+ *          Modification</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
+ *          </ul>
+ *          </p>
  * @generated
  */
-public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
+public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource, Resource.Internal
 {
+  /**
+   * The default URI converter when there is no resource set.
+   * 
+   * @ADDED
+   */
+  private static URIConverter defaultURIConverter;
+
+  /**
+   * @ADDED
+   */
+  private boolean root;
+
+  /**
+   * @ADDED
+   */
+  private URI initialURI;
+
   /**
    * @ADDED
    */
   private boolean existing;
+
+  /**
+   * @ADDED
+   */
+  private boolean loading;
+
+  /**
+   * @ADDED
+   */
+  private boolean loaded;
+
+  /**
+   * @ADDED
+   */
+  private EList<Diagnostic> errors;
+
+  /**
+   * @ADDED
+   */
+  private EList<Diagnostic> warnings;
+
+  /**
+   * @ADDED
+   * @since 2.0
+   */
+  public CDOResourceImpl(URI initialURI)
+  {
+    this.initialURI = initialURI;
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -104,14 +153,16 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
+   * @since 2.0
    */
-  @Override
-  protected int eStaticFeatureCount()
+  public boolean isRoot()
   {
-    return 0;
+    return root;
+  }
+
+  void setRoot(boolean root)
+  {
+    this.root = root;
   }
 
   /**
@@ -135,11 +186,12 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
    * 
+   * @since 2.0 <!-- end-user-doc -->
    * @generated
    */
-  public URI getURI()
+  public URI getURIGen()
   {
     return (URI)eGet(EresourcePackage.Literals.CDO_RESOURCE__URI, true);
   }
@@ -149,10 +201,36 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    * 
    * @generated NOT
    */
-  public void setURI(URI newURI)
+  public URI getURI()
+  {
+    if (cdoID() == null && initialURI != null)
+    {
+      return initialURI;
+    }
+
+    return CDOURIUtil.createResourceURI(cdoView(), getPath());
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 2.0 <!-- end-user-doc -->
+   * @generated
+   */
+  public void setURIGen(URI newURI)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__URI, newURI);
-    basicSetPath(CDOURIUtil.extractResourcePath(newURI));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   */
+  public void setURI(URI newURI)
+  {
+    String newPath = CDOURIUtil.extractResourcePath(newURI);
+    setPath(newPath);
   }
 
   /**
@@ -216,21 +294,45 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public boolean isLoaded()
   {
-    return ((Boolean)eGet(EresourcePackage.Literals.CDO_RESOURCE__LOADED, true)).booleanValue();
+    return loaded;
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
+   * @see ResourceImpl#setLoaded(boolean)
+   * @ADDED
    */
-  public void setLoaded(boolean newLoaded)
+  private Notification setLoaded(boolean isLoaded)
   {
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__LOADED, new Boolean(newLoaded));
+    boolean oldIsLoaded = loaded;
+    loaded = isLoaded;
+
+    if (eNotificationRequired())
+    {
+      Notification notification = new NotificationImpl(Notification.SET, oldIsLoaded, isLoaded)
+      {
+        @Override
+        public Object getNotifier()
+        {
+          return CDOResourceImpl.this;
+        }
+
+        @Override
+        public int getFeatureID(Class<?> expectedClass)
+        {
+          return EresourcePackage.CDO_RESOURCE__LOADED;
+        }
+      };
+
+      return notification;
+    }
+    else
+    {
+      return null;
+    }
   }
 
   /**
@@ -256,23 +358,73 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  @SuppressWarnings("unchecked")
   public EList<Diagnostic> getErrors()
   {
-    return (EList<Diagnostic>)eGet(EresourcePackage.Literals.CDO_RESOURCE__ERRORS, true);
+    if (errors == null)
+    {
+      errors = new NotifyingListImpl<Diagnostic>()
+      {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        protected boolean isNotificationRequired()
+        {
+          return CDOResourceImpl.this.eNotificationRequired();
+        }
+
+        @Override
+        public Object getNotifier()
+        {
+          return CDOResourceImpl.this;
+        }
+
+        @Override
+        public int getFeatureID()
+        {
+          return EresourcePackage.CDO_RESOURCE__ERRORS;
+        }
+      };
+    }
+
+    return errors;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  @SuppressWarnings("unchecked")
   public EList<Diagnostic> getWarnings()
   {
-    return (EList<Diagnostic>)eGet(EresourcePackage.Literals.CDO_RESOURCE__WARNINGS, true);
+    if (warnings == null)
+    {
+      warnings = new NotifyingListImpl<Diagnostic>()
+      {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        protected boolean isNotificationRequired()
+        {
+          return CDOResourceImpl.this.eNotificationRequired();
+        }
+
+        @Override
+        public Object getNotifier()
+        {
+          return CDOResourceImpl.this;
+        }
+
+        @Override
+        public int getFeatureID()
+        {
+          return EresourcePackage.CDO_RESOURCE__WARNINGS;
+        }
+      };
+    }
+
+    return warnings;
   }
 
   /**
@@ -293,26 +445,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   public void setTimeStamp(long newTimeStamp)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, new Long(newTimeStamp));
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public String getPath()
-  {
-    return (String)eGet(EresourcePackage.Literals.CDO_RESOURCE__PATH, true);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated NOT
-   */
-  public void setPath(String newPath)
-  {
-    setURI(CDOURIUtil.createResourceURI(cdoView(), newPath));
   }
 
   /**
@@ -393,7 +525,16 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void load(InputStream inputStream, Map<?, ?> options) throws IOException
   {
-    // Do nothing
+    throw new UnsupportedOperationException();
+    // if (inputStream instanceof CDOResourceInputStream)
+    // {
+    // CDOResourceInputStream stream = (CDOResourceInputStream)inputStream;
+    // URI uri = stream.getURI();
+    // }
+    // else
+    // {
+    // throw new IOException("Stream not supported: " + inputStream);
+    // }
   }
 
   /**
@@ -401,7 +542,109 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void load(Map<?, ?> options) throws IOException
   {
-    // Do nothing
+    if (!isLoaded())
+    {
+      CDOViewImpl view = cdoView();
+      if (!FSMUtil.isTransient(this))
+      {
+        CDOID id = cdoID();
+        if (id == null || id != null && !view.isObjectRegistered(id))
+        {
+          try
+          {
+            view.registerProxyResource(this);
+          }
+          catch (Exception ex)
+          {
+            setExisting(false);
+            cdoInternalSetState(CDOState.TRANSIENT);
+            throw new IOWrappedException(ex);
+          }
+        }
+      }
+
+      setLoaded(true);
+
+      // URIConverter uriConverter = getURIConverter();
+      //
+      // // If an input stream can't be created, ensure that the resource is still considered loaded after the failure,
+      // // and do all the same processing we'd do if we actually were able to create a valid input stream.
+      // //
+      // InputStream inputStream = null;
+      //
+      // try
+      // {
+      // inputStream = uriConverter.createInputStream(getURI(), options);
+      // }
+      // catch (IOException exception)
+      // {
+      // Notification notification = setLoaded(true);
+      // loading = true;
+      // if (errors != null)
+      // {
+      // errors.clear();
+      // }
+      //
+      // if (warnings != null)
+      // {
+      // warnings.clear();
+      // }
+      //
+      // loading = false;
+      // if (notification != null)
+      // {
+      // eNotify(notification);
+      // }
+      //
+      // setModified(false);
+      // throw exception;
+      // }
+      //
+      // try
+      // {
+      // load(inputStream, options);
+      // }
+      // finally
+      // {
+      // inputStream.close();
+      // // TODO Handle timeStamp
+      // // Long timeStamp = (Long)response.get(URIConverter.RESPONSE_TIME_STAMP_PROPERTY);
+      // // if (timeStamp != null)
+      // // {
+      // // setTimeStamp(timeStamp);
+      // // }
+      // }
+    }
+  }
+
+  /**
+   * Returns the URI converter. This typically gets the {@link ResourceSet#getURIConverter converter} from the
+   * {@link #getResourceSet containing} resource set, but it calls {@link #getDefaultURIConverter} when there is no
+   * containing resource set.
+   * 
+   * @return the URI converter.
+   * @ADDED
+   */
+  private URIConverter getURIConverter()
+  {
+    return getResourceSet() == null ? getDefaultURIConverter() : getResourceSet().getURIConverter();
+  }
+
+  /**
+   * Returns the default URI converter that's used when there is no resource set.
+   * 
+   * @return the default URI converter.
+   * @see #getURIConverter
+   * @ADDED
+   */
+  private static synchronized URIConverter getDefaultURIConverter()
+  {
+    if (defaultURIConverter == null)
+    {
+      defaultURIConverter = new ExtensibleURIConverterImpl();
+    }
+
+    return defaultURIConverter;
   }
 
   /**
@@ -417,7 +660,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     }
     else
     {
-      throw new IOException("CDO view is read only: " + view);
+      throw new IOException("CDO view is read-only: " + view);
     }
   }
 
@@ -442,15 +685,45 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public void delete(Map<?, ?> defaultDeleteOptions) throws IOException
   {
+    if (FSMUtil.isTransient(this))
+    {
+      removeFromResourceSet();
+    }
+    else
+    {
+      if (isRoot())
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      if (getFolder() == null)
+      {
+        CDOViewImpl view = cdoView();
+        view.getRootResource().getContents().remove(this);
+      }
+      else
+      {
+        basicSetFolder(null, false);
+      }
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  public void cdoInternalPostDetach()
+  {
+    super.cdoInternalPostDetach();
+    removeFromResourceSet();
+  }
+
+  private void removeFromResourceSet()
+  {
     ResourceSet resourceSet = getResourceSet();
     if (resourceSet != null)
     {
       resourceSet.getResources().remove(this);
-    }
-
-    if (!FSMUtil.isTransient(this))
-    {
-      cdoView().toTransaction().detach(this);
     }
   }
 
@@ -530,8 +803,7 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
    */
   public boolean isLoading()
   {
-    // TODO Implement method CDOResourceImpl.isLoading()
-    throw new UnsupportedOperationException("Not yet implemented");
+    return loading;
   }
 
   /**
@@ -562,14 +834,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     }
 
     return super.createList(eStructuralFeature);
-  }
-
-  /**
-   * @ADDED
-   */
-  private void basicSetPath(String newPath)
-  {
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__PATH, newPath);
   }
 
   /**
@@ -635,14 +899,14 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
   }
 
   /**
-   * TODO Change superclass to NotifyingInternalEListImpl when EMF 2.3 is out of maintenance TODO Reuse
-   * {@link ResourceImpl.ContentsEList}!!! --> Bugzilla!
+   * TODO Change superclass to NotifyingInternalEListImpl when EMF 2.3 is out of maintenance
+   * <p>
+   * TODO Reuse {@link ResourceImpl.ContentsEList}!!! --> Bugzilla!
    * 
    * @ADDED
    * @author Eike Stepper
    */
-  protected class TransientContents<E extends Object & EObject> extends NotifyingListImpl<E> implements
-      InternalEList<E>
+  protected class TransientContents<E extends Object & EObject> extends NotifyingInternalEListImpl<E>
   {
     private static final long serialVersionUID = 1L;
 
@@ -737,66 +1001,6 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
       return eObject.eSetResource(null, notifications);
     }
 
-    public boolean basicContains(Object object)
-    {
-      return super.contains(object);
-    }
-
-    public boolean basicContainsAll(Collection<?> collection)
-    {
-      return super.containsAll(collection);
-    }
-
-    public int basicIndexOf(Object object)
-    {
-      return super.indexOf(object);
-    }
-
-    public int basicLastIndexOf(Object object)
-    {
-      return super.lastIndexOf(object);
-    }
-
-    public Object[] basicToArray()
-    {
-      return super.toArray();
-    }
-
-    public <T> T[] basicToArray(T[] array)
-    {
-      return super.toArray(array);
-    }
-
-    @Override
-    public Iterator<E> basicIterator()
-    {
-      return super.basicIterator();
-    }
-
-    @Override
-    public ListIterator<E> basicListIterator()
-    {
-      return super.basicListIterator();
-    }
-
-    @Override
-    public ListIterator<E> basicListIterator(int index)
-    {
-      return super.basicListIterator(index);
-    }
-
-    @Override
-    public List<E> basicList()
-    {
-      return super.basicList();
-    }
-
-    @Override
-    protected Object[] newData(int capacity)
-    {
-      return new EObject[capacity];
-    }
-
     @Override
     protected void didAdd(int index, E object)
     {
@@ -821,8 +1025,29 @@ public class CDOResourceImpl extends CDOObjectImpl implements CDOResource
     @Override
     protected void didClear(int oldSize, Object[] oldData)
     {
-      super.didClear(oldSize, oldData);
-      // modified();
+      if (oldSize == 0)
+      {
+        loaded();
+      }
+      else
+      {
+        super.didClear(oldSize, oldData);
+      }
+    }
+
+    /**
+     * @since 2.0
+     */
+    protected void loaded()
+    {
+      if (!isLoaded())
+      {
+        Notification notification = setLoaded(true);
+        if (notification != null)
+        {
+          eNotify(notification);
+        }
+      }
     }
 
     protected void modified()

@@ -15,7 +15,10 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.query.CDOQuery;
+import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.event.INotifier;
@@ -23,12 +26,26 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIHandler;
 
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * A read-only view to the <em>current</em> (i.e. latest) state of the object graph in the repository.
+ * A read-only view to the <em>current</em> (i.e. latest) state of the object graph in the repository of the underlying
+ * {@link CDOSession session}.
+ * <p>
+ * Objects that are accessed through this view are unchangeable for the client. Each attempt to call a mutator on one of
+ * these objects or one of their reference collections will result in a {@link ReadOnlyException} being thrown
+ * immediately.
+ * <p>
+ * A view is opened through API of the underlying session like this:
+ * 
+ * <pre>
+ *   CDOSession session = ...
+ *   CDOView view = session.openView();
+ *   ...
+ * </pre>
  * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
@@ -48,6 +65,11 @@ public interface CDOView extends CDOProtocolView, INotifier
   public CDOViewSet getViewSet();
 
   public ResourceSet getResourceSet();
+
+  /**
+   * @since 2.0
+   */
+  public URIHandler getURIHandler();
 
   /**
    * Returns a reentrant lock that can be used to prevent the framework from writing to any object in this view (caused,
@@ -193,11 +215,48 @@ public interface CDOView extends CDOProtocolView, INotifier
   public CDOResource getResource(String path);
 
   /**
+   * @since 2.0
+   */
+  public CDOResource getRootResource();
+
+  /**
+   * Returns a list of the resources in the given folder with a name equal to or starting with the value of the name
+   * parameter.
+   * 
+   * @param folder
+   *          The folder to search in, or <code>null</code> for top level resource nodes.
+   * @param name
+   *          the name or prefix of the resource nodes to return.
+   * @param exactMatch
+   *          <code>true</code> if the complete name of the resource must match, <code>false</code> if only a common
+   *          prefix of the name must match.
+   * @since 2.0
+   */
+  public List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch);
+
+  /**
+   * Returns an iterator over the resources in the given folder with a name equal to or starting with the value of the
+   * name parameter. The underlying query will be executed asynchronously.
+   * 
+   * @param folder
+   *          The folder to search in, or <code>null</code> for top level resource nodes.
+   * @param name
+   *          the name or prefix of the resource nodes to return.
+   * @param exactMatch
+   *          <code>true</code> if the complete name of the resource must match, <code>false</code> if only a common
+   *          prefix of the name must match.
+   * @since 2.0
+   */
+  public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
+      boolean exactMatch);
+
+  /**
    * Returns the object for the given CDOID.
    * 
    * @param loadOnDemand
    *          whether to create and load the object, if it doesn't already exist.
-   * @return the object resolved by the CDOID, or <code>null</code> if there isn't one.
+   * @return the object resolved by the CDOID if the id is not <code>null</code>, or <code>null</code> if there isn't
+   *         one and loadOnDemand is <code>false</code>.
    */
   public CDOObject getObject(CDOID id, boolean loadOnDemand);
 
@@ -231,23 +290,4 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @since 2.0
    */
   public CDOQuery createQuery(String language, String queryString);
-
-  /**
-   * Returns a list of those resources whose path starts with the value of the pathPrefix parameter.
-   * 
-   * @param pathPrefix
-   *          the prefix of the resources' path
-   * @since 2.0
-   */
-  public List<CDOResource> queryResources(String pathPrefix);
-
-  /**
-   * Returns an iterator over those resources whose path starts with the value of the pathPrefix parameter. The
-   * underlying query will be executed asynchronously.
-   * 
-   * @param pathPrefix
-   *          the prefix of the resources' path
-   * @since 2.0
-   */
-  public CloseableIterator<CDOResource> queryResourcesAsync(String pathPrefix);
 }

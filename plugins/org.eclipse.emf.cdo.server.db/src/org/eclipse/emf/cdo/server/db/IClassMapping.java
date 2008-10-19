@@ -33,6 +33,11 @@ public interface IClassMapping
 
   public Set<IDBTable> getAffectedTables();
 
+  /**
+   * @since 2.0
+   */
+  public IFeatureMapping getFeatureMapping(CDOFeature feature);
+
   public List<IAttributeMapping> getAttributeMappings();
 
   public List<IReferenceMapping> getReferenceMappings();

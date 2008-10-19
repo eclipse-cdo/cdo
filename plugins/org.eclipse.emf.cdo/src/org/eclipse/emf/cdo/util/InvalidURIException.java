@@ -8,17 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.common.model.resource;
+package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.util.CDOException;
+
+import org.eclipse.emf.common.util.URI;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface CDOPathFeature extends CDOFeature
+public class InvalidURIException extends CDOException
 {
-  public static final int FEATURE_ID = 9;
+  private static final long serialVersionUID = 1L;
 
-  public static final String NAME = "path";
+  private URI uri;
+
+  public InvalidURIException(URI uri, Throwable cause)
+  {
+    super("Invalid URI: " + uri, cause);
+    this.uri = uri;
+  }
+
+  public InvalidURIException(URI uri)
+  {
+    this(uri, null);
+  }
+
+  public URI getURI()
+  {
+    return uri;
+  }
 }

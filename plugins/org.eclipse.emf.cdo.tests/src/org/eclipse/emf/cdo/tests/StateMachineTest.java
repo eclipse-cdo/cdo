@@ -58,7 +58,7 @@ public class StateMachineTest extends AbstractCDOTest
     resource.getContents().add(supplier);
     assertNew(supplier, transaction);
     assertEquals(transaction, CDOUtil.getCDOObject(supplier).cdoView());
-    assertEquals(resource, CDOUtil.getCDOObject(supplier).cdoResource());
+    assertEquals(resource, CDOUtil.getCDOObject(supplier).cdoDirectResource());
     assertEquals(resource, supplier.eResource());
     assertEquals(null, supplier.eContainer());
 

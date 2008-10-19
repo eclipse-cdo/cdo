@@ -213,9 +213,9 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   /**
    * @since 2.0
    */
-  public CDOID readResourceID(String path, long timeStamp)
+  public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
   {
-    return getStore().getResourceID(path, timeStamp);
+    return getStore().getResourceID(folderID, name, timeStamp);
   }
 
   /**
@@ -223,7 +223,7 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
    */
   public void queryResources(QueryResourcesContext context)
   {
-    getStore().queryResources(context, false);
+    getStore().queryResources(context);
   }
 
   /**

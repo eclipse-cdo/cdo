@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
@@ -79,8 +78,6 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
 
   private CDOState state;
 
-  private CDOResourceImpl resource;
-
   private InternalCDORevision revision;
 
   private boolean allProxiesResolved;
@@ -106,11 +103,6 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   public InternalCDORevision cdoRevision()
   {
     return revision;
-  }
-
-  public CDOResourceImpl cdoResource()
-  {
-    return resource;
   }
 
   public void cdoReload()
@@ -145,16 +137,6 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
 
     this.revision = (InternalCDORevision)revision;
-  }
-
-  public void cdoInternalSetResource(CDOResource resource)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting resource: {0}", resource);
-    }
-
-    this.resource = (CDOResourceImpl)resource;
   }
 
   public void cdoInternalPostAttach()

@@ -383,7 +383,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         revisedLRU.add((DLRevisionHolder)nextHolder);
 
         InternalCDORevision oldRevision = nextHolder.getRevision();
-        if (oldRevision != null)
+        if (oldRevision != null && oldRevision.getRevised() == 0 && oldRevision.getVersion() == holder.getVersion() - 1)
         {
           oldRevision.setRevised(holder.getCreated() - 1);
         }

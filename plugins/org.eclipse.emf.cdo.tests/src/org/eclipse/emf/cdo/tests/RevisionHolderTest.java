@@ -196,6 +196,27 @@ public class RevisionHolderTest extends AbstractCDOTest
     validateList(list, linkedList);
   }
 
+  public void testRevised() throws Exception
+  {
+    LRURevisionCache cache = new LRURevisionCache();
+    cache.activate();
+
+    TestRevision r1v1 = new TestRevision(1, 1, 1);
+    cache.addRevision(r1v1);
+    assertEquals(CDORevision.UNSPECIFIED_DATE, r1v1.getRevised());
+
+    TestRevision r1v3 = new TestRevision(1, 3, 11);
+    cache.addRevision(r1v3);
+    assertEquals(CDORevision.UNSPECIFIED_DATE, r1v3.getRevised());
+    assertNotSame(r1v3.getCreated() - 1, r1v1.getRevised());
+
+    CDOID id = r1v1.getID();
+
+    RevisionHolder h1v3 = cache.getHolder(id);
+    assertEquals(r1v3, h1v3.getRevision());
+
+  }
+
   private void validateList(LRURevisionList list, int size)
   {
     assertEquals(size, list.size());

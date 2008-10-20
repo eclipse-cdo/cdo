@@ -34,9 +34,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +99,7 @@ public class ResourceTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource rootResource = transaction.getRootResource();
+    assertSame(rootResource, rootResource.eResource());
     String path = "";
     List<String> names = new ArrayList<String>();
     for (int i = 0; i < depth; i++)
@@ -198,6 +201,38 @@ public class ResourceTest extends AbstractCDOTest
     transaction.commit();
   }
 
+  public void testRootResourceFromURI() throws Exception
+  {
+    URI rootResourceURI = null;
+    URI resourceURI = null;
+    String resourcePath = "test1";
+    {
+      CDOSession session = openModel1Session();
+      ResourceSet resourceSet = new ResourceSetImpl();
+      CDOTransaction transaction = session.openTransaction(resourceSet);
+
+      resourceURI = URI.createURI("cdo:/" + resourcePath);
+      Resource res1 = resourceSet.createResource(resourceURI);
+
+      transaction.commit();
+      rootResourceURI = EcoreUtil.getURI(transaction.getRootResource());
+      resourceURI = EcoreUtil.getURI((EObject)res1);
+    }
+    CDOSession session = openModel1Session();
+    ResourceSet resourceSet = new ResourceSetImpl();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+    CDOResource rootResource = (CDOResource)resourceSet.getEObject(rootResourceURI, true);
+    assertProxy(rootResource);
+    assertSame(rootResource, transaction.getRootResource());
+
+    CDOResource resource = (CDOResource)resourceSet.getEObject(resourceURI, true);
+    assertClean(resource, transaction);
+    assertSame(resource, transaction.getResource(resourcePath));
+
+    transaction.close();
+    session.close();
+  }
+
   public void testCreateResource_FromResourceSet() throws Exception
   {
     CDOSession session = openModel1Session();
@@ -222,7 +257,7 @@ public class ResourceTest extends AbstractCDOTest
     assertClean(cdoRootResource, transaction);
     assertEquals(CDOID.NULL, cdoResource.cdoRevision().getData().getContainerID());
     assertEquals(cdoRootResource.cdoID(), cdoResource.cdoRevision().getData().getResourceID());
-    assertEquals(CDOID.NULL, cdoRootResource.cdoRevision().getData().getResourceID());
+    assertEquals(cdoRootResource.cdoID(), cdoRootResource.cdoRevision().getData().getResourceID());
     assertEquals(true, transaction.getResourceSet().getResources().contains(resource));
     assertEquals(true, transaction.getResourceSet().getResources().contains(transaction.getRootResource()));
 

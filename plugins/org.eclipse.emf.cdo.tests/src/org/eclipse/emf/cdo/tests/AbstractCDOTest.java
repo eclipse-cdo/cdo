@@ -101,14 +101,7 @@ public abstract class AbstractCDOTest extends ConfigTest
     assertNotNull(object.cdoID());
     assertNotNull(object.cdoRevision());
     assertNotNull(object.cdoView());
-    if (eObject instanceof CDOResource && ((CDOResource)eObject).isRoot())
-    {
-      assertNull(object.eResource());
-    }
-    else
-    {
-      assertNotNull(object.eResource());
-    }
+    assertNotNull(object.eResource());
     assertEquals(view, object.cdoView());
     assertEquals(object, view.getObject(object.cdoID(), false));
   }

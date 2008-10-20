@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOResourceNodeImpl.java,v 1.2 2008-10-19 01:28:53 smcduff Exp $
+ * $Id: CDOResourceNodeImpl.java,v 1.3 2008-10-20 22:47:22 smcduff Exp $
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
@@ -178,13 +178,17 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   public String getPath()
   {
+    if (isRoot())
+    {
+      return CDOResourceNode.ROOT_PATH;
+    }
+
     CDOResourceFolder folder = getFolder();
     if (folder == null)
     {
-      return "/" + getName();
+      return CDOResourceNode.ROOT_PATH + getName();
     }
-
-    return folder.getPath() + "/" + getName();
+    return folder.getPath() + CDOResourceNode.ROOT_PATH + getName();
   }
 
   /**

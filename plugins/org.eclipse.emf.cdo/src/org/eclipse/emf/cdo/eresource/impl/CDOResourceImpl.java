@@ -153,6 +153,22 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   }
 
   /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   * @since 2.0
+   */
+  @Override
+  public Resource.Internal eDirectResource()
+  {
+    if (isRoot())
+    {
+      return this;
+    }
+    return super.eDirectResource();
+  }
+
+  /**
    * @since 2.0
    */
   public boolean isRoot()

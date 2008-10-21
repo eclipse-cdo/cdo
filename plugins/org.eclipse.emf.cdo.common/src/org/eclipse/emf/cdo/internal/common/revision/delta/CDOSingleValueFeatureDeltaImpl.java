@@ -81,4 +81,9 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
       newValue = referenceAdjuster.adjustReference(newValue);
     }
   }
+
+  public void clear()
+  {
+    setValue(CDOID.NULL);
+  }
 }

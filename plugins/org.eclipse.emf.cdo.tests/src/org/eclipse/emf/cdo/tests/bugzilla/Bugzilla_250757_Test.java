@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -52,6 +54,28 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
     {
       fail("Should not have an exception");
     }
+  }
+
+  public void testAddAndModifyAndRemoveFromPersistedList() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction1 = session.openTransaction();
+    String resourcePath = "/test1";
+    CDOResource res = transaction1.createResource(resourcePath);
+    res.getContents().add(getModel1Factory().createCompany());
+    transaction1.commit();
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    res.getContents().add(supplier);
+    res.getContents().add(purchaseOrder);
+    supplier.getPurchaseOrders().add(purchaseOrder);
+    transaction1.commit();
+
+    res.getContents().remove(purchaseOrder);
+    supplier.getPurchaseOrders().remove(purchaseOrder);
+    purchaseOrder.setSupplier(null);
+    transaction1.commit();
   }
 
   public void testAddAndMoveAndRemoveFromPersistedList() throws Exception

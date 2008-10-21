@@ -51,8 +51,4 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
   {
     visitor.visit(this);
   }
-
-  public void clear()
-  {
-  }
 }

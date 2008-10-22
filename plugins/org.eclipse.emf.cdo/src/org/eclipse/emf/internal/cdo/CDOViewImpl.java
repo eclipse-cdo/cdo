@@ -1439,24 +1439,18 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       return count;
     }
 
-    private void subscribe(EObject eObject, int adjust)
-    {
-      InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, CDOViewImpl.this);
-      if (internalCDOObject.cdoView() != CDOViewImpl.this)
-      {
-        throw new CDOException("Object " + internalCDOObject + " doesn`t belong to this view.");
-      }
-
-      subscribe(internalCDOObject.cdoID(), internalCDOObject, adjust);
-    }
-
     private void subscribe(EObject eObject, Adapter adapter, int adjust)
     {
       synchronized (subscriptions)
       {
         if (getChangeSubscriptionPolicy().shouldSubscribe(eObject, adapter))
         {
-          subscribe(eObject, adjust);
+          InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, CDOViewImpl.this);
+          if (internalCDOObject.cdoView() != CDOViewImpl.this)
+          {
+            throw new CDOException("Object " + internalCDOObject + " doesn`t belong to this view.");
+          }
+          subscribe(internalCDOObject.cdoID(), internalCDOObject, adjust);
         }
       }
     }
@@ -1472,7 +1466,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           // Cannot adjust negative value
           if (adjust < 0)
           {
-            throw new IllegalStateException("Object " + id + " cannot be unsubscribe");
+            return;
           }
 
           // Notification need to be enable to send correct value to the server

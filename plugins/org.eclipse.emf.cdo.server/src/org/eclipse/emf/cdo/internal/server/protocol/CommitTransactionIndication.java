@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.Transact
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IView;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -75,6 +76,7 @@ public class CommitTransactionIndication extends CDOServerIndication
     catch (Exception ex)
     {
       OM.LOG.error(ex);
+      throw WrappedException.wrap(ex);
     }
   }
 

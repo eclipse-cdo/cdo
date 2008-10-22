@@ -41,7 +41,7 @@
    <extension
   			point="org.eclipse.emf.ecore.generated_package">
      <package 
-       		uri="http://www.eclipse.org/emf/CDO/resource/1.0.0" 
+       		uri="http://www.eclipse.org/emf/CDO/resource/2.0.0" 
        		class="org.eclipse.emf.cdo.eresource.EresourcePackage"
        		genModel="model/resource.genmodel"/> 
    </extension>
@@ -49,7 +49,7 @@
    <extension
   			point="org.eclipse.emf.cdo.persistent_package">
      <package 
-       		uri="http://www.eclipse.org/emf/CDO/resource/1.0.0"/> 
+       		uri="http://www.eclipse.org/emf/CDO/resource/2.0.0"/> 
    </extension>
 
 </plugin>

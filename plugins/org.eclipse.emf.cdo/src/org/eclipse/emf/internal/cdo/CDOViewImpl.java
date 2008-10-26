@@ -1061,7 +1061,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           dirtyObject = objects.get(dirtyOID.getID());
           if (dirtyObject != null)
           {
-            CDOStateMachine.INSTANCE.invalidate(dirtyObject, timeStamp);
+            CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
           }
         }
 

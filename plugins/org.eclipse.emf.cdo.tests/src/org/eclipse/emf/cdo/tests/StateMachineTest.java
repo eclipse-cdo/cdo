@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.config.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -129,7 +130,7 @@ public class StateMachineTest extends AbstractCDOTest
     assertTransient(supplier);
     try
     {
-      invalidate(supplier, TIMESTAMP);
+      invalidate(supplier);
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)
@@ -261,7 +262,7 @@ public class StateMachineTest extends AbstractCDOTest
 
     try
     {
-      invalidate(supplier, TIMESTAMP);
+      invalidate(supplier);
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException expected)
@@ -627,12 +628,12 @@ public class StateMachineTest extends AbstractCDOTest
     }
   }
 
-  private static void invalidate(EObject object, long timeStamp)
+  private static void invalidate(EObject object)
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     if (cdoObject != null)
     {
-      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, timeStamp);
+      CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoObject, CDORevision.UNSPECIFIED_VERSION);
     }
   }
 

@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -65,7 +66,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
         if (existanceFlag)
         {
           // --> PROXY
-          CDOStateMachine.INSTANCE.invalidate(invalidObject, UNSPECIFIED_DATE);
+          CDOStateMachine.INSTANCE.invalidate(invalidObject, CDORevision.UNSPECIFIED_VERSION);
         }
         else
         {

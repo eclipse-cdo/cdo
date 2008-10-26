@@ -119,8 +119,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.DIRTY, CDOEvent.DETACH, new DetachTransition());
     init(CDOState.DIRTY, CDOEvent.READ, IGNORE);
     init(CDOState.DIRTY, CDOEvent.WRITE, new RewriteTransition());
-    init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition(CDOState.CONFLICT));
-    init(CDOState.DIRTY, CDOEvent.DETACH_REMOTE, new ConflictTransition(CDOState.INVALID_CONFLICT));
+    init(CDOState.DIRTY, CDOEvent.INVALIDATE, new ConflictTransition());
+    init(CDOState.DIRTY, CDOEvent.DETACH_REMOTE, new InvalidConflictTransition());
     init(CDOState.DIRTY, CDOEvent.RELOAD, new ReloadTransition());
     init(CDOState.DIRTY, CDOEvent.COMMIT, new CommitTransition(true));
     init(CDOState.DIRTY, CDOEvent.ROLLBACK, new RollbackTransition());
@@ -335,14 +335,17 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  public void invalidate(InternalCDOObject object, long timeStamp)
+  /**
+   * @since 2.0
+   */
+  public void invalidate(InternalCDOObject object, int version)
   {
     if (TRACER.isEnabled())
     {
       trace(object, CDOEvent.INVALIDATE);
     }
 
-    process(object, CDOEvent.INVALIDATE, timeStamp);
+    process(object, CDOEvent.INVALIDATE, version);
   }
 
   /**
@@ -355,7 +358,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       trace(object, CDOEvent.DETACH_REMOTE);
     }
 
-    process(object, CDOEvent.DETACH_REMOTE, null);
+    process(object, CDOEvent.DETACH_REMOTE, CDORevision.UNSPECIFIED_VERSION);
   }
 
   public void commit(InternalCDOObject object, CommitTransactionResult result)
@@ -674,46 +677,51 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Long>
+  private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Integer>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
-    {
-      if (timeStamp != CDORevision.UNSPECIFIED_DATE)
-      {
-        reviseObject(object, timeStamp);
-      }
-
-      changeState(object, CDOState.PROXY);
-    }
-
-    protected void reviseObject(InternalCDOObject object, long timeStamp)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
     {
       InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-      revision.setRevised(timeStamp - 1);
+      if (version == CDORevision.UNSPECIFIED_VERSION || revision.getVersion() <= version)
+      {
+        changeState(object, CDOState.PROXY);
+        object.cdoInternalSetRevision(null);
+      }
     }
   }
 
   /**
    * @author Eike Stepper
+   * @since 2.0
    */
-  private final class ConflictTransition extends InvalidateTransition
+  protected class ConflictTransition extends InvalidateTransition
   {
-    private CDOState state;
-
-    public ConflictTransition(CDOState newState)
-    {
-      state = newState;
-    }
-
     @Override
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Long timeStamp)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
     {
-      // TODO Eike: to we really need to revise the object since we put them at PROXY ?
-      // reviseObject(object, timeStamp);
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+      if (version == 0 || revision.getVersion() <= version + 1)
+      {
+        CDOViewImpl view = (CDOViewImpl)object.cdoView();
+        CDOTransactionImpl transaction = view.toTransaction();
+        transaction.setConflict(object);
+        changeState(object, CDOState.CONFLICT);
+      }
+    }
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private final class InvalidConflictTransition extends ConflictTransition
+  {
+    @Override
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
+    {
       CDOViewImpl view = (CDOViewImpl)object.cdoView();
       CDOTransactionImpl transaction = view.toTransaction();
       transaction.setConflict(object);
-      changeState(object, this.state);
+      changeState(object, CDOState.INVALID_CONFLICT);
     }
   }
 

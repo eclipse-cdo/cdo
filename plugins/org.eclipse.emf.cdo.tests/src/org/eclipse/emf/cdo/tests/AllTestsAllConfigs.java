@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_248124_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_248915_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_250036_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_250757_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_250910_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_251087_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_251263_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_251752_Test;
@@ -91,6 +92,7 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_251087_Test.class);
     testClasses.add(Bugzilla_251263_Test.class);
     testClasses.add(Bugzilla_251752_Test.class);
+    testClasses.add(Bugzilla_250910_Test.class);
 
     // TODO testClasses.add(NonCDOResourceTest.class);
     // TODO testClasses.add(GeneratedEcoreTest.class);

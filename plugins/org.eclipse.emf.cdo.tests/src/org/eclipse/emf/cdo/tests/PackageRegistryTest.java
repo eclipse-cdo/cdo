@@ -232,37 +232,41 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testEagerPackageRegistry() throws Exception
   {
     CDOPackageTypeRegistry.INSTANCE.register(getModel1Package());
-
+    try
     {
-      // Create resource in session 1
-      CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
-      configuration.setConnector(getConnector());
-      configuration.setRepositoryName(REPOSITORY_NAME);
-      configuration.setEagerPackageRegistry();
+      {
+        // Create resource in session 1
+        CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+        configuration.setConnector(getConnector());
+        configuration.setRepositoryName(REPOSITORY_NAME);
+        configuration.setEagerPackageRegistry();
 
-      CDOSession session = configuration.openSession();
+        CDOSession session = configuration.openSession();
+        CDOTransaction transaction = session.openTransaction();
+        CDOResource res = transaction.createResource("/res");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Eike");
+        res.getContents().add(company);
+        transaction.commit();
+      }
+
+      // Load resource in session 2
+      CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.getResource("/res");
 
-      Company company = getModel1Factory().createCompany();
-      company.setName("Eike");
-      res.getContents().add(company);
-      transaction.commit();
+      Company company = (Company)res.getContents().get(0);
+      assertEquals("Eike", company.getName());
     }
-
-    // Load resource in session 2
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
-
-    Company company = (Company)res.getContents().get(0);
-    assertEquals("Eike", company.getName());
+    finally
+    {
+      CDOPackageTypeRegistry.INSTANCE.clear();
+    }
   }
 
   public void testLazyPackageRegistry() throws Exception
   {
-    CDOPackageTypeRegistry.INSTANCE.register(getModel1Package());
-
     {
       // Create resource in session 1
       CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();

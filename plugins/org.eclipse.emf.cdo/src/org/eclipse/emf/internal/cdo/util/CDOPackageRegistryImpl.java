@@ -124,13 +124,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
         tracer.format("Registering package for {0}", key);
       }
 
-      if (value instanceof EPackageImpl)
+      if (EMFUtil.isDynamicEPackage(value))
       {
         EPackageImpl ePackage = (EPackageImpl)value;
-        if (EMFUtil.isDynamicEPackage(ePackage))
-        {
-          ModelUtil.prepareDynamicEPackage(ePackage);
-        }
+        ModelUtil.prepareDynamicEPackage(ePackage);
       }
 
       EPackage ePackage = (EPackage)value;

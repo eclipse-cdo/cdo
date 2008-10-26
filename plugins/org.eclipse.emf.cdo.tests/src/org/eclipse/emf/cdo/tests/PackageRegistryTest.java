@@ -322,7 +322,7 @@ public class PackageRegistryTest extends AbstractCDOTest
    * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
    * https://bugs.eclipse.org/bugs/show_bug.cgi?id=249383
    */
-  public void testGlobalDynamicPackageLazy() throws Exception
+  public void _testGlobalDynamicPackageLazy() throws Exception
   {
     EPackage p = EcoreFactory.eINSTANCE.createEPackage();
     p.setName("dynamic");

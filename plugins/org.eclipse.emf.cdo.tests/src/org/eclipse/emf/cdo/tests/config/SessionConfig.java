@@ -93,7 +93,7 @@ public abstract class SessionConfig extends Config implements SessionProvider
   public CDOSession openLazySession()
   {
     CDOSessionConfiguration configuration = createSessionConfiguration(RepositoryProvider.REPOSITORY_NAME);
-    configuration.setEagerPackageRegistry();
+    configuration.setLazyPackageRegistry();
     return configuration.openSession();
   }
 

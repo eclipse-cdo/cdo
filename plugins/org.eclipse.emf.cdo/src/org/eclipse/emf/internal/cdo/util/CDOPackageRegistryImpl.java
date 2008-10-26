@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 
 import java.text.MessageFormat;
@@ -124,13 +123,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
         tracer.format("Registering package for {0}", key);
       }
 
-      if (EMFUtil.isDynamicEPackage(value))
-      {
-        EPackageImpl ePackage = (EPackageImpl)value;
-        ModelUtil.prepareDynamicEPackage(ePackage);
-      }
-
       EPackage ePackage = (EPackage)value;
+      EMFUtil.prepareDynamicEPackage(ePackage);
       CDOPackage cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
       CDOIDMetaRange metaIDRange = cdoPackage.getTopLevelPackage().getMetaIDRange();
       ((InternalCDOPackage)cdoPackage).setPersistent(metaIDRange != null && !metaIDRange.isTemporary());

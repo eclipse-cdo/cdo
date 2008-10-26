@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -354,7 +353,7 @@ public final class ModelUtil
 
   private static EPackageImpl prepareDynamicEPackage(EPackageImpl ePackage, String nsURI)
   {
-    prepareDynamicEPackage(ePackage);
+    EMFUtil.prepareDynamicEPackage(ePackage);
     EPackageImpl result = ObjectUtil.equals(ePackage.getNsURI(), nsURI) ? ePackage : null;
     for (EPackage subPackage : ePackage.getESubpackages())
     {
@@ -366,11 +365,6 @@ public final class ModelUtil
     }
 
     return result;
-  }
-
-  public static void prepareDynamicEPackage(EPackageImpl ePackage)
-  {
-    ePackage.setEFactoryInstance(new CDOFactoryImpl(ePackage));
   }
 
   public static CDOClassRef createClassRef(EClassifier classifier)

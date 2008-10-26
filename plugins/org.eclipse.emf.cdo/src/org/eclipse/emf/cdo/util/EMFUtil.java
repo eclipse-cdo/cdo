@@ -12,6 +12,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
+
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.util.EList;
@@ -223,6 +225,20 @@ public final class EMFUtil
   public static boolean isDynamicEPackage(Object value)
   {
     return value.getClass() == EPackageImpl.class;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static boolean prepareDynamicEPackage(EPackage ePackage)
+  {
+    if (isDynamicEPackage(ePackage))
+    {
+      ePackage.setEFactoryInstance(new CDOFactoryImpl(ePackage));
+      return true;
+    }
+
+    return false;
   }
 
   public static boolean isMany(EStructuralFeature eFeature)

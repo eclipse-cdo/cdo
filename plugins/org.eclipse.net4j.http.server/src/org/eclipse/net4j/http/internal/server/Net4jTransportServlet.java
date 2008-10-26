@@ -149,7 +149,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       for (IChannel channel : connector.getChannels())
       {
         writer.write("    ");
-        writer.write(String.valueOf(channel.getChannelIndex()));
+        writer.write(String.valueOf(channel.getIndex()));
         writer.write(": ");
         IBufferHandler receiveHandler = channel.getReceiveHandler();
         if (receiveHandler instanceof IProtocol)
@@ -168,7 +168,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
         }
 
         writer.write(" (");
-        writer.write(String.valueOf(channel.getChannelIndex()));
+        writer.write(String.valueOf(channel.getIndex()));
         writer.write(")\n");
       }
     }

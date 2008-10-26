@@ -59,14 +59,14 @@ public class ControlChannel extends Channel
   public ControlChannel(TCPConnector connector)
   {
     setChannelIndex(CONTROL_CHANNEL_INDEX);
-    setChannelMultiplexer(connector);
+    setMultiplexer(connector);
     setReceiveExecutor(connector.getConfig().getReceiveExecutor());
     setUserID(connector.getUserID());
   }
 
   public TCPConnector getConnector()
   {
-    return (TCPConnector)getChannelMultiplexer();
+    return (TCPConnector)getMultiplexer();
   }
 
   public boolean registerChannel(short channelIndex, long timeout, IProtocol protocol)

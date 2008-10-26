@@ -64,7 +64,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     for (int i = 0; i < 3; i++)
     {
       IBuffer buffer = provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
+      ByteBuffer byteBuffer = buffer.startPutting(channel.getIndex());
       byteBuffer.putInt(1970);
       channel.sendBuffer(buffer);
     }
@@ -82,7 +82,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     for (int i = 0; i < COUNT; i++)
     {
       IBuffer buffer = provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(channel.getChannelIndex());
+      ByteBuffer byteBuffer = buffer.startPutting(channel.getIndex());
       byteBuffer.putInt(1970);
       channel.sendBuffer(buffer);
       sleep(50);

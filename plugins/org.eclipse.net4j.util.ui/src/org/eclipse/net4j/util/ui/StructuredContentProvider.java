@@ -61,10 +61,14 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
       {
         disconnectInput(input);
       }
+
       try
       {
         input = (INPUT)newInput;
-        connectInput(input);
+        if (input != null)
+        {
+          connectInput(input);
+        }
       }
       catch (Exception ex)
       {

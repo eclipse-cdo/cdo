@@ -35,9 +35,10 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.I
 
   public void setReceiveExecutor(ExecutorService receiveExecutor);
 
-  public IChannelMultiplexer getChannelMultiplexer();
-
-  public void setChannelMultiplexer(IChannelMultiplexer channelMultiplexer);
+  /**
+   * @since 2.0
+   */
+  public void setMultiplexer(IChannelMultiplexer channelMultiplexer);
 
   public void handleBufferFromMultiplexer(IBuffer buffer);
 

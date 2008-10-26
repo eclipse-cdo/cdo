@@ -8,23 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.channel;
+package org.eclipse.spi.net4j;
 
-import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.channel.IChannelMultiplexer;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class ChannelOutputStream extends BufferOutputStream
+public interface InternalChannelMultiplexer extends IChannelMultiplexer, IBufferProvider
 {
-  public ChannelOutputStream(IChannel channel)
-  {
-    super(channel, channel.getIndex());
-  }
+  /**
+   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
+   * dequeued from the outputQueue of the {@link IChannel}.
+   */
+  public void multiplexChannel(InternalChannel channel);
 
-  public ChannelOutputStream(IChannel channel, IBufferProvider bufferProvider)
-  {
-    super(channel, bufferProvider, channel.getIndex());
-  }
+  /**
+   * @since 2.0
+   */
+  public void closeChannel(InternalChannel channel);
 }

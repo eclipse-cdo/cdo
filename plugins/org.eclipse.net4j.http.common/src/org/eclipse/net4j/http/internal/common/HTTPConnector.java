@@ -11,7 +11,6 @@
 package org.eclipse.net4j.http.internal.common;
 
 import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.bundle.OM;
@@ -89,7 +88,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     lastTraffic = System.currentTimeMillis();
   }
 
-  public void multiplexChannel(IChannel channel)
+  public void multiplexChannel(InternalChannel channel)
   {
     IBuffer buffer;
     long outputOperationCount;
@@ -108,7 +107,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       TRACER.format("Multiplexing {0} (count={1})", buffer.formatContent(true), outputOperationCount);
     }
 
-    outputOperations.add(new BufferChannelOperation(httpChannel.getChannelIndex(), outputOperationCount, buffer));
+    outputOperations.add(new BufferChannelOperation(httpChannel.getIndex(), outputOperationCount, buffer));
   }
 
   /**
@@ -420,7 +419,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   {
     public CloseChannelOperation(HTTPChannel channel)
     {
-      super(channel.getChannelIndex(), channel.getOutputOperationCount());
+      super(channel.getIndex(), channel.getOutputOperationCount());
       channel.increaseOutputOperationCount();
     }
 
@@ -439,7 +438,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     public void doEexecute(HTTPChannel channel)
     {
       channel.setInverseRemoved();
-      inverseCloseChannel(channel.getChannelIndex());
+      inverseCloseChannel(channel.getIndex());
     }
   }
 

@@ -370,7 +370,7 @@ public abstract class SignalProtocol extends Protocol
         public IBuffer provideBuffer()
         {
           IBuffer buffer = delegate.provideBuffer();
-          ByteBuffer byteBuffer = buffer.startPutting(getChannel().getChannelIndex());
+          ByteBuffer byteBuffer = buffer.startPutting(getChannel().getIndex());
           if (STREAM_TRACER.isEnabled())
           {
             STREAM_TRACER.trace("Providing buffer for correlation " + correlationID); //$NON-NLS-1$

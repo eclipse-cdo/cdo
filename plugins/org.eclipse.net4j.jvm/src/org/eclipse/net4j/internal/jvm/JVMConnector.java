@@ -11,7 +11,6 @@
 package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.jvm.bundle.OM;
@@ -80,9 +79,9 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
     return super.waitForConnection(timeout);
   }
 
-  public void multiplexChannel(IChannel localChannel)
+  public void multiplexChannel(InternalChannel localChannel)
   {
-    short channelIndex = localChannel.getChannelIndex();
+    short channelIndex = localChannel.getIndex();
     InternalChannel peerChannel = peer.getChannel(channelIndex);
     if (peerChannel == null)
     {
@@ -134,7 +133,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   {
     try
     {
-      getPeer().inverseCloseChannel(channel.getChannelIndex());
+      getPeer().inverseCloseChannel(channel.getIndex());
     }
     catch (ConnectorException ex)
     {

@@ -24,6 +24,9 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public interface InternalCDOObject extends CDOObject, InternalEObject, InternalCDOLoadable
 {
+  /**
+   * @since 2.0
+   */
   public void cdoInternalCleanup();
 
   public void cdoInternalPostAttach();

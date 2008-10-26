@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.spi.net4j.InternalChannel;
+import org.eclipse.spi.net4j.InternalChannelMultiplexer;
 
 import java.text.MessageFormat;
 import java.util.Queue;
@@ -40,7 +41,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   private String userID;
 
-  private IChannelMultiplexer channelMultiplexer;
+  private InternalChannelMultiplexer channelMultiplexer;
 
   private short channelIndex = IBuffer.NO_CHANNEL;
 
@@ -87,17 +88,17 @@ public class Channel extends Lifecycle implements InternalChannel
     return channelMultiplexer.isServer();
   }
 
-  public IChannelMultiplexer getChannelMultiplexer()
+  public IChannelMultiplexer getMultiplexer()
   {
     return channelMultiplexer;
   }
 
-  public void setChannelMultiplexer(IChannelMultiplexer channelMultiplexer)
+  public void setMultiplexer(IChannelMultiplexer channelMultiplexer)
   {
-    this.channelMultiplexer = channelMultiplexer;
+    this.channelMultiplexer = (InternalChannelMultiplexer)channelMultiplexer;
   }
 
-  public short getChannelIndex()
+  public short getIndex()
   {
     return channelIndex;
   }

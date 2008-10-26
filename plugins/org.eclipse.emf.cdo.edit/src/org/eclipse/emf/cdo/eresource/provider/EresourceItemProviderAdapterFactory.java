@@ -98,6 +98,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 2.0
    */
   protected CDOResourceFolderItemProvider cdoResourceFolderItemProvider;
 
@@ -106,6 +107,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
    * end-user-doc -->
    * 
    * @generated
+   * @since 2.0
    */
   @Override
   public Adapter createCDOResourceFolderAdapter()

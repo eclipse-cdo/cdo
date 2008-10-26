@@ -377,7 +377,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     {
       try
       {
-        registerChannelWithPeer(channel.getChannelIndex(), openChannelTimeout - elapsed, protocol);
+        registerChannelWithPeer(channel.getIndex(), openChannelTimeout - elapsed, protocol);
       }
       catch (TimeoutRuntimeException ex)
       {
@@ -429,7 +429,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   private void initChannel(InternalChannel channel, IProtocol protocol)
   {
-    channel.setChannelMultiplexer(this);
+    channel.setMultiplexer(this);
     channel.setReceiveExecutor(getConfig().getReceiveExecutor());
     channel.setUserID(getUserID());
     if (protocol != null)
@@ -455,7 +455,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   private void addChannelWithIndex(InternalChannel channel)
   {
-    short channelIndex = channel.getChannelIndex();
+    short channelIndex = channel.getIndex();
     int index = getChannelsArrayIndex(channelIndex);
     synchronized (channelsLock)
     {
@@ -504,7 +504,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     }
   }
 
-  public void closeChannel(IChannel channel) throws ConnectorException
+  public void closeChannel(InternalChannel channel) throws ConnectorException
   {
     InternalChannel internalChannel = (InternalChannel)channel;
     deregisterChannelFromPeer(internalChannel, getChannelTimeout());
@@ -524,7 +524,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   {
     try
     {
-      short channelIndex = channel.getChannelIndex();
+      short channelIndex = channel.getIndex();
       int index = getChannelsArrayIndex(channelIndex);
       synchronized (channelsLock)
       {

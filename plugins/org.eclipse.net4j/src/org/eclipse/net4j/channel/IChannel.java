@@ -18,12 +18,10 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.security.IUserAware;
 
 /**
- * A bidirectional communications channel for the asynchronous exchange of {@link IBuffer}s. A channel is lightweight
- * and virtual in the sense that it does not necessarily represent a single physical connection like a TCP socket
- * connection. The underlying physical connection is represented by a {@link IConnector}.
- * <p>
- * This interface is <b>not</b> intended to be implemented by clients. Providers of channels (for example for new
- * physical connection types) have to extend/subclass {@link org.eclipse.spi.net4j.InternalChannel InternalChannel}.
+ * A bidirectional communications channel for the asynchronous exchange of {@link IBuffer buffers}. A channel is
+ * lightweight and virtual in the sense that it does not necessarily represent a single physical connection like a TCP
+ * socket connection. The underlying physical connection is represented by a {@link IChannelMultiplexer channel
+ * multiplexer}.
  * <p>
  * <dt><b>Class Diagram:</b></dt>
  * <dd><img src="doc-files/Channels.png" title="Diagram Buffers" border="0" usemap="#Channels.png"/></dd>
@@ -44,9 +42,9 @@ import org.eclipse.net4j.util.security.IUserAware;
  * An example for opening a channel on an {@link IConnector} and sending an {@link IBuffer}:
  * <p>
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Open a channel
- * IChannel channel = connector.openChannel(); short channelIndex = channel.getChannelIndex(); // Fill a buffer Buffer
- * buffer = bufferProvider.getBuffer(); ByteBuffer byteBuffer = buffer.startPutting(channelIndex);
- * byteBuffer.putDouble(15.47); // Let the channel send the buffer without blocking channel.sendBuffer(buffer); </pre>
+ * IChannel channel = connector.openChannel(); short channelIndex = channel.getIndex(); // Fill a buffer Buffer buffer =
+ * bufferProvider.getBuffer(); ByteBuffer byteBuffer = buffer.startPutting(channelIndex); byteBuffer.putDouble(15.47);
+ * // Let the channel send the buffer without blocking channel.sendBuffer(buffer); </pre>
  * <p>
  * An example for receiving {@link IBuffer}s from channels on an {@link IConnector}:
  * <p>
@@ -58,15 +56,27 @@ import org.eclipse.net4j.util.security.IUserAware;
  * (IChannel)element; channel.setReceiveHandler(receiveHandler); } }); </pre>
  * 
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @noimplement This interface is <b>not</b> intended to be implemented by clients. Providers of channels (for example
+ *              for new physical connection types) have to extend/subclass {@link org.eclipse.spi.net4j.InternalChannel
+ *              InternalChannel}.
  */
 public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, INotifier
 {
   /**
-   * Returns the index of this channel within the array of channels returned from the {@link IConnector#getChannels()
-   * getChannels()} method of the connector of this channel.
+   * Returns the index of this channel within the array of channels returned from the
+   * {@link IChannelMultiplexer#getChannels() getChannels()} method of the multiplexer of this channel.
+   * 
+   * @since 2.0
    */
-  public short getChannelIndex();
+  public short getIndex();
+
+  /**
+   * Returns the multiplexer this channel is associated with. This channel multiplexer can be used, for example, to open
+   * additional channels that will be multiplexed through the same transport medium.
+   * 
+   * @since 2.0
+   */
+  public IChannelMultiplexer getMultiplexer();
 
   /**
    * Asynchronously sends the given buffer to the receive handler of the peer channel.

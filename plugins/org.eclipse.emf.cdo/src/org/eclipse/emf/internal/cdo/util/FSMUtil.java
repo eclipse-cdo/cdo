@@ -131,7 +131,7 @@ public final class FSMUtil
   public static InternalCDOObject adaptLegacy(InternalEObject object)
   {
     // TODO LEGACY
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Legacy models not supported");
     // EList<InternalEObject.EReadListener> readListeners = object.eReadListeners();
     // CDOLegacyWrapper wrapper = getLegacyWrapper(readListeners);
     // if (wrapper == null)

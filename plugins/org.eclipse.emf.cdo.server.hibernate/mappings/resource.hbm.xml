@@ -3,7 +3,7 @@
 <hibernate-mapping auto-import="false">
 	<class entity-name="CDOResource" abstract="false" lazy="false" discriminator-value="cdoresource" table="`cdo_resources`">
 		<meta attribute="eclassName">CDOResource</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/1.0.0</meta>
+		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">

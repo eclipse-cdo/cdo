@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceFolderClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.StoreUtil;
@@ -146,21 +149,21 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     {
       switch (classID)
       {
-      case ClassServerInfo.CDO_RESOURCE_NODE_CLASS_DBID:
+      case ServerInfo.CDO_RESOURCE_NODE_CLASS_DBID:
       {
         CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
         classRef = resourcePackage.getCDOResourceNodeClass().createClassRef();
         break;
       }
 
-      case ClassServerInfo.CDO_RESOURCE_FOLDER_CLASS_DBID:
+      case ServerInfo.CDO_RESOURCE_FOLDER_CLASS_DBID:
       {
         CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
         classRef = resourcePackage.getCDOResourceFolderClass().createClassRef();
         break;
       }
 
-      case ClassServerInfo.CDO_RESOURCE_CLASS_DBID:
+      case ServerInfo.CDO_RESOURCE_CLASS_DBID:
       {
         CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
         classRef = resourcePackage.getCDOResourceClass().createClassRef();
@@ -365,18 +368,33 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
   protected abstract String[] getResourceQueries(CDOID folderID, String name, boolean exactMatch);
 
-  public void createResourceTables(IDBAdapter dbAdapter, Connection connection)
+  public void mapResourceTables(IDBAdapter dbAdapter, Connection connection)
   {
-    Set<IDBTable> tables = new HashSet<IDBTable>();
     CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
+    CDOResourceNodeClass resourceNodeClass = resourcePackage.getCDOResourceNodeClass();
+    CDOResourceFolderClass resourceFolderClass = resourcePackage.getCDOResourceFolderClass();
+    CDOResourceClass resourceClass = resourcePackage.getCDOResourceClass();
 
-    addResourceTables(resourcePackage.getCDOResourceNodeClass(), tables);
-    addResourceTables(resourcePackage.getCDOResourceFolderClass(), tables);
-    addResourceTables(resourcePackage.getCDOResourceClass(), tables);
+    PackageServerInfo.setDBID(resourcePackage, ServerInfo.CDO_RESOURCE_PACKAGE_DBID);
+    ClassServerInfo.setDBID(resourceNodeClass, ServerInfo.CDO_RESOURCE_NODE_CLASS_DBID);
+    FeatureServerInfo.setDBID(resourceNodeClass.getCDOFolderFeature(), ServerInfo.CDO_FOLDER_FEATURE_DBID);
+    FeatureServerInfo.setDBID(resourceNodeClass.getCDONameFeature(), ServerInfo.CDO_NAME_FEATURE_DBID);
+    ClassServerInfo.setDBID(resourceFolderClass, ServerInfo.CDO_RESOURCE_FOLDER_CLASS_DBID);
+    FeatureServerInfo.setDBID(resourceFolderClass.getCDONodesFeature(), ServerInfo.CDO_NODES_FEATURE_DBID);
+    ClassServerInfo.setDBID(resourceClass, ServerInfo.CDO_RESOURCE_CLASS_DBID);
+    FeatureServerInfo.setDBID(resourceClass.getCDOContentsFeature(), ServerInfo.CDO_CONTENTS_FEATURE_DBID);
 
-    if (dbAdapter.createTables(tables, connection).size() != tables.size())
+    if (dbAdapter != null && connection != null)
     {
-      throw new DBException("Resource tables not completely created");
+      Set<IDBTable> tables = new HashSet<IDBTable>();
+      addResourceTables(resourceNodeClass, tables);
+      addResourceTables(resourceFolderClass, tables);
+      addResourceTables(resourceClass, tables);
+
+      if (dbAdapter.createTables(tables, connection).size() != tables.size())
+      {
+        throw new DBException("Resource tables not completely created");
+      }
     }
   }
 

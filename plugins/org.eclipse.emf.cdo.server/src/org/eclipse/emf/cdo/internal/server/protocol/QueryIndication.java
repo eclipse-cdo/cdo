@@ -96,7 +96,7 @@ public class QueryIndication extends CDOReadIndication
 
       // Exception occured during the query
       out.writeByte(CDOProtocolConstants.QUERY_EXCEPTION);
-      out.writeString(exception.getMessage());
+      out.writeString(getMessage(exception));
     }
   }
 }

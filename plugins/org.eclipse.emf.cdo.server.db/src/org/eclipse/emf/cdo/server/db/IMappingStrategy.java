@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
+import org.eclipse.emf.cdo.server.internal.db.ServerInfo;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -110,9 +111,12 @@ public interface IMappingStrategy
   public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context);
 
   /**
+   * Responsible for creation of the resource tables (if dbAdapter and connection are not <code>null</code>) and for the
+   * association with the static DBIDs (see {@link ServerInfo} with the respective model elements.
+   * 
    * @since 2.0
    */
-  public void createResourceTables(IDBAdapter dbAdapter, Connection connection);
+  public void mapResourceTables(IDBAdapter dbAdapter, Connection connection);
 
   /**
    * Returns the maximum CDOID value.

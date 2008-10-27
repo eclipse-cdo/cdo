@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.query.CDOAbstractQueryIteratorImpl;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -89,11 +90,11 @@ public class QueryRequest extends CDOClientRequest<Object>
         {
           // Exception on the server
           String exceptionString = in.readString();
-          throw new RuntimeException(exceptionString);
+          throw new IORuntimeException(exceptionString);
         }
         else
         {
-          throw new IllegalStateException();
+          throw new IORuntimeException("Illegal state: " + state);
         }
       }
 

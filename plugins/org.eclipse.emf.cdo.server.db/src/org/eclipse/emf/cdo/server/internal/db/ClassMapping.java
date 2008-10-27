@@ -534,6 +534,7 @@ public abstract class ClassMapping implements IClassMapping
   {
     String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
     readRevision(storeReader, (InternalCDORevision)revision, where, false, referenceChunk);
+    ((InternalCDORevision)revision).setVersion(version);
   }
 
   protected void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, String where,

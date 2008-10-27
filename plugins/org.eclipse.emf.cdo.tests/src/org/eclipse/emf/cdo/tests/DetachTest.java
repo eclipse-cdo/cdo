@@ -57,6 +57,8 @@ public class DetachTest extends AbstractCDOTest
     assertNull(transaction.getResourceSet().getEObject(uriC1, false));
 
     transaction.commit();
+    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
+    session.close();
   }
 
   public void testCleanObjectDeletion() throws Exception
@@ -76,18 +78,9 @@ public class DetachTest extends AbstractCDOTest
 
     resource.getContents().remove(c1);
     assertTransient(c1);
+    assertSame(c1, transaction.getObject(id));
+    assertSame(c1, transaction.getResourceSet().getEObject(uriC1, false));
 
-    try
-    {
-      transaction.getObject(id);
-      fail("ObjectNotFoundException expected");
-    }
-    catch (ObjectNotFoundException expected)
-    {
-      // SUCCESS
-    }
-
-    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
     transaction.commit();
     assertTransient(c1);
 
@@ -102,6 +95,7 @@ public class DetachTest extends AbstractCDOTest
     }
 
     assertNull(transaction.getResourceSet().getEObject(uriC1, false));
+    session.close();
   }
 
   public void testSavePointNewObjectDeletion() throws Exception
@@ -149,16 +143,32 @@ public class DetachTest extends AbstractCDOTest
 
     CDOSavepoint savepoint2 = transaction.setSavepoint();
     c1.setName("SIMON2");
-    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
+    if (isPersisted)
+    {
+      assertNotNull(transaction.getResourceSet().getEObject(uriC1, false));
+    }
+    else
+    {
+      assertNull(transaction.getResourceSet().getEObject(uriC1, false));
+    }
 
     savepoint2.rollback();
     assertEquals("SIMON2", c1.getName());
     assertTransient(c1);
-    assertNull(transaction.getResourceSet().getEObject(uriC1, false));
+
+    if (isPersisted)
+    {
+      assertNotNull(transaction.getResourceSet().getEObject(uriC1, false));
+    }
+    else
+    {
+      assertNull(transaction.getResourceSet().getEObject(uriC1, false));
+    }
 
     savepoint.rollback();
     assertEquals("SIMON", c1.getName());
     assertEquals(c1, transaction.getResourceSet().getEObject(uriC1, false));
+
     if (isPersisted)
     {
       assertDirty(c1, transaction);

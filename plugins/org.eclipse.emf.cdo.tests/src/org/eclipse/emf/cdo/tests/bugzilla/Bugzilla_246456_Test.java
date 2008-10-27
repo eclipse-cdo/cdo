@@ -24,7 +24,6 @@ import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
  */
 public class Bugzilla_246456_Test extends AbstractCDOTest
 {
-  @SuppressWarnings("deprecation")
   public void testBugzilla_246456() throws Exception
   {
     msg("Opening session");
@@ -36,7 +35,6 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
         .setCapacityRevised(10);
     ((LRURevisionCache)((TwoLevelRevisionCache)transaction.getSession().getRevisionManager().getCache()).getLevel1())
         .setCapacityCurrent(10);
-    transaction.setUniqueResourceContents(false);
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");

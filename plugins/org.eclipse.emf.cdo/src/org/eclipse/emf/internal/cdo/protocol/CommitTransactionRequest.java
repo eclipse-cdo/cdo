@@ -103,7 +103,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     Collection<CDOResource> newResources = commitContext.getNewResources().values();
     Collection<CDOObject> newObjects = commitContext.getNewObjects().values();
     Collection<CDORevisionDelta> revisionDeltas = commitContext.getRevisionDeltas().values();
-    Collection<CDOID> detachedObjects = commitContext.getDetachedObjects();
+    Collection<CDOID> detachedObjects = commitContext.getDetachedObjects().keySet();
 
     out.writeInt(newPackages.size());
     out.writeInt(newResources.size() + newObjects.size());

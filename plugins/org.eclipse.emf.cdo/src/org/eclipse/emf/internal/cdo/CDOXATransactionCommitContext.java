@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 /**
@@ -112,7 +111,7 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
     return delegateCommitContext.getNewResources();
   }
 
-  public Set<CDOID> getDetachedObjects()
+  public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return delegateCommitContext.getDetachedObjects();
   }

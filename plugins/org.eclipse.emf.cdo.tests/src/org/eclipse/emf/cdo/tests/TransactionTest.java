@@ -63,7 +63,6 @@ public class TransactionTest extends AbstractCDOTest
     }
   }
 
-  @SuppressWarnings("deprecation")
   public void testCreateManyTransactions() throws Exception
   {
     msg("Opening session");
@@ -79,8 +78,8 @@ public class TransactionTest extends AbstractCDOTest
       msg("Transaction " + i + "    (" + lastDuration + ")");
       lastDuration = System.currentTimeMillis();
       transaction = session.openTransaction();
-      transaction.setUniqueResourceContents(false);
       resource = transaction.getResource("/test2");
+
       Category category = getModel1Factory().createCategory();
       resource.getContents().add(category);
       transaction.commit();

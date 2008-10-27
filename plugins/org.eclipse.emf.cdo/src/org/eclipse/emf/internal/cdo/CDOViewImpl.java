@@ -100,8 +100,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private CDOURIHandler uriHandler = new CDOURIHandler(this);
 
-  private boolean uniqueResourceContents = true;
-
   private boolean invalidationNotificationEnabled;
 
   private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy;
@@ -223,18 +221,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public boolean hasConflict()
   {
     return false;
-  }
-
-  @Deprecated
-  public boolean hasUniqueResourceContents()
-  {
-    return uniqueResourceContents;
-  }
-
-  @Deprecated
-  public void setUniqueResourceContents(boolean uniqueResourceContents)
-  {
-    this.uniqueResourceContents = uniqueResourceContents;
   }
 
   /**

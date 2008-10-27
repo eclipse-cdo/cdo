@@ -48,12 +48,10 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.util.NotifyingInternalEListImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -257,19 +255,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   @SuppressWarnings("unchecked")
   public EList<EObject> getContents()
   {
-    if (FSMUtil.isTransient(this))
-    {
-      EList<EObject> transientContents = (EList<EObject>)eSettings[EresourcePackage.CDO_RESOURCE__CONTENTS];
-      if (transientContents == null)
-      {
-        transientContents = new TransientContents<EObject>();
-        eSettings[EresourcePackage.CDO_RESOURCE__CONTENTS] = transientContents;
-        // throw new ImplementationError();
-      }
-
-      return transientContents;
-    }
-
     return (EList<EObject>)eGet(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS, true);
   }
 
@@ -846,7 +831,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   {
     if (eStructuralFeature == EresourcePackage.eINSTANCE.getCDOResource_Contents())
     {
-      return new PersistentContents(eStructuralFeature);
+      return new ContentsCDOList(eStructuralFeature);
     }
 
     return super.createList(eStructuralFeature);
@@ -857,19 +842,15 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    * 
    * @ADDED
    * @author Eike Stepper
+   * @since 2.0
    */
-  protected class PersistentContents extends CDOStoreEList<Object>
+  protected class ContentsCDOList extends BasicEStoreEList<Object>
   {
     private static final long serialVersionUID = 1L;
 
-    @SuppressWarnings("deprecation")
-    public PersistentContents(EStructuralFeature eStructuralFeature)
+    public ContentsCDOList(EStructuralFeature eStructuralFeature)
     {
-      super(eStructuralFeature);
-      if (!cdoView().hasUniqueResourceContents())
-      {
-        kind &= ~IS_UNIQUE;
-      }
+      super(CDOResourceImpl.this, eStructuralFeature);
     }
 
     /**
@@ -880,8 +861,12 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     @Override
     public boolean contains(Object object)
     {
-      return size() <= 4 ? super.contains(object) : object instanceof InternalEObject
-          && ((InternalEObject)object).eDirectResource() == CDOResourceImpl.this;
+      if (size() <= 4)
+      {
+        return super.contains(object);
+      }
+
+      return object instanceof InternalEObject && ((InternalEObject)object).eDirectResource() == CDOResourceImpl.this;
     }
 
     /**
@@ -890,13 +875,22 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     @Override
     public NotificationChain inverseAdd(Object object, NotificationChain notifications)
     {
-      CDOTransactionImpl transaction = cdoView().toTransaction();
-      InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
-      notifications = cdoObject.eSetResource(CDOResourceImpl.this, notifications);
-      // Attach here instead of i CDOObjectImpl.eSetResource because EMF does it also here
-      if (FSMUtil.isTransient(cdoObject))
+      if (FSMUtil.isTransient(CDOResourceImpl.this))
       {
-        attached(cdoObject, transaction);
+        InternalEObject eObject = (InternalEObject)object;
+        notifications = eObject.eSetResource(CDOResourceImpl.this, notifications);
+      }
+      else
+      {
+        CDOTransactionImpl transaction = cdoView().toTransaction();
+        InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
+        notifications = cdoObject.eSetResource(CDOResourceImpl.this, notifications);
+
+        // Attach here instead of in CDOObjectImpl.eSetResource because EMF does it also here
+        if (FSMUtil.isTransient(cdoObject))
+        {
+          attached(cdoObject, transaction);
+        }
       }
 
       return notifications;
@@ -908,147 +902,19 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     @Override
     public NotificationChain inverseRemove(Object object, NotificationChain notifications)
     {
-      InternalEObject eObject = (InternalEObject)object;
-      detached(eObject);
-      return eObject.eSetResource(null, notifications);
-    }
-  }
-
-  /**
-   * TODO Change superclass to NotifyingInternalEListImpl when EMF 2.3 is out of maintenance
-   * <p>
-   * TODO Reuse {@link ResourceImpl.ContentsEList}!!! --> Bugzilla!
-   * 
-   * @ADDED
-   * @author Eike Stepper
-   */
-  protected class TransientContents<E extends Object & EObject> extends NotifyingInternalEListImpl<E>
-  {
-    private static final long serialVersionUID = 1L;
-
-    public TransientContents()
-    {
-    }
-
-    public TransientContents(Collection<? extends E> collection)
-    {
-      super(collection);
-    }
-
-    public TransientContents(int initialCapacity)
-    {
-      super(initialCapacity);
-    }
-
-    /**
-     * Optimization taken from ResourceImpl.EContentList.contains
-     * 
-     * @since 2.0
-     */
-    @Override
-    public boolean contains(Object object)
-    {
-      return size <= 4 ? super.contains(object) : object instanceof InternalEObject
-          && ((InternalEObject)object).eDirectResource() == CDOResourceImpl.this;
-    }
-
-    @Override
-    public Object getNotifier()
-    {
-      return CDOResourceImpl.this;
-    }
-
-    @Override
-    public int getFeatureID()
-    {
-      return EresourcePackage.CDO_RESOURCE__CONTENTS;
-    }
-
-    @Override
-    protected boolean isNotificationRequired()
-    {
-      return eNotificationRequired();
-    }
-
-    @Override
-    protected boolean useEquals()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean hasInverse()
-    {
-      return true;
-    }
-
-    @Override
-    protected boolean isUnique()
-    {
-      return true;
-    }
-
-    /**
-     * @since 2.0
-     */
-    /*
-     * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
-     * EMF with fixed bug #247130. These compile errors do not affect native models!
-     */
-    public InternalEList<E> readWriteFiringList()
-    {
-      return this;
-    }
-
-    @Override
-    public NotificationChain inverseAdd(E object, NotificationChain notifications)
-    {
-      InternalEObject eObject = (InternalEObject)object;
-      notifications = eObject.eSetResource(CDOResourceImpl.this, notifications);
-      // CDOResourceImpl.this.attached(eObject);
-      return notifications;
-    }
-
-    @Override
-    public NotificationChain inverseRemove(E object, NotificationChain notifications)
-    {
-      InternalEObject eObject = (InternalEObject)object;
-      // CDOResourceImpl.this.detached(eObject);
-      return eObject.eSetResource(null, notifications);
-    }
-
-    @Override
-    protected void didAdd(int index, E object)
-    {
-      super.didAdd(index, object);
-      modified();
-    }
-
-    @Override
-    protected void didRemove(int index, E object)
-    {
-      super.didRemove(index, object);
-      modified();
-    }
-
-    @Override
-    protected void didSet(int index, E newObject, E oldObject)
-    {
-      super.didSet(index, newObject, oldObject);
-      modified();
-    }
-
-    @Override
-    protected void didClear(int oldSize, Object[] oldData)
-    {
-      if (oldSize == 0)
+      if (FSMUtil.isTransient(CDOResourceImpl.this))
       {
-        loaded();
+        InternalEObject eObject = (InternalEObject)object;
+        notifications = eObject.eSetResource(null, notifications);
       }
       else
       {
-        super.didClear(oldSize, oldData);
+        InternalEObject eObject = (InternalEObject)object;
+        detached(eObject);
+        notifications = eObject.eSetResource(null, notifications);
       }
+
+      return notifications;
     }
 
     /**
@@ -1066,12 +932,42 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       }
     }
 
+    /**
+     * @since 2.0
+     */
     protected void modified()
     {
       if (isTrackingModification())
       {
         setModified(true);
       }
+    }
+
+    /**
+     * @since 2.0
+     */
+    @Override
+    protected boolean useEquals()
+    {
+      return false;
+    }
+
+    /**
+     * @since 2.0
+     */
+    @Override
+    protected boolean hasInverse()
+    {
+      return true;
+    }
+
+    /**
+     * @since 2.0
+     */
+    @Override
+    protected boolean isUnique()
+    {
+      return true;
     }
   }
 } // CDOResourceImpl

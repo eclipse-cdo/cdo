@@ -21,7 +21,6 @@ import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Provides a context for a commit operation.
@@ -45,7 +44,7 @@ public interface CDOCommitContext
 
   public Map<CDOID, CDOObject> getDirtyObjects();
 
-  public Set<CDOID> getDetachedObjects();
+  public Map<CDOID, CDOObject> getDetachedObjects();
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
 }

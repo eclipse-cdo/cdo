@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceFolderClass;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 
@@ -21,6 +24,10 @@ import org.eclipse.net4j.util.ImplementationError;
  */
 public final class ClassServerInfo extends ServerInfo
 {
+  public static final int CDO_CORE_PACKAGE_DBID = -1;
+
+  public static final int CDO_RESOURCE_PACKAGE_DBID = -2;
+
   public static final int CDO_OBJECT_CLASS_DBID = -1;
 
   public static final int CDO_RESOURCE_CLASS_DBID = -2;
@@ -28,6 +35,14 @@ public final class ClassServerInfo extends ServerInfo
   public static final int CDO_RESOURCE_NODE_CLASS_DBID = -3;
 
   public static final int CDO_RESOURCE_FOLDER_CLASS_DBID = -4;
+
+  public static final int CDO_FOLDER_FEATURE_DBID = -1;
+
+  public static final int CDO_NAME_FEATURE_DBID = -2;
+
+  public static final int CDO_NODES_FEATURE_DBID = -3;
+
+  public static final int CDO_CONTENTS_FEATURE_DBID = -4;
 
   private IClassMapping classMapping;
 
@@ -63,7 +78,7 @@ public final class ClassServerInfo extends ServerInfo
     serverInfo.classMapping = classMapping;
   }
 
-  protected static ClassServerInfo getServerInfo(CDOClass cdoClass)
+  private static ClassServerInfo getServerInfo(CDOClass cdoClass)
   {
     ClassServerInfo serverInfo = (ClassServerInfo)cdoClass.getServerInfo();
     if (serverInfo == null)
@@ -74,15 +89,22 @@ public final class ClassServerInfo extends ServerInfo
       }
       else if (cdoClass.isResource())
       {
-        serverInfo = setDBID(cdoClass, CDO_RESOURCE_CLASS_DBID);
+        CDOResourceClass c = (CDOResourceClass)cdoClass;
+        FeatureServerInfo.setDBID(c.getCDOContentsFeature(), CDO_CONTENTS_FEATURE_DBID);
+        serverInfo = setDBID(c, CDO_RESOURCE_CLASS_DBID);
       }
       else if (cdoClass.isResourceFolder())
       {
-        serverInfo = setDBID(cdoClass, CDO_RESOURCE_FOLDER_CLASS_DBID);
+        CDOResourceFolderClass c = (CDOResourceFolderClass)cdoClass;
+        FeatureServerInfo.setDBID(c.getCDONodesFeature(), CDO_NODES_FEATURE_DBID);
+        serverInfo = setDBID(c, CDO_RESOURCE_FOLDER_CLASS_DBID);
       }
       else if (cdoClass.isResourceNode())
       {
         // Important to check the abstract class *after* the concrete ones!
+        CDOResourceNodeClass c = (CDOResourceNodeClass)cdoClass;
+        FeatureServerInfo.setDBID(c.getCDOFolderFeature(), CDO_FOLDER_FEATURE_DBID);
+        FeatureServerInfo.setDBID(c.getCDONameFeature(), CDO_NAME_FEATURE_DBID);
         serverInfo = setDBID(cdoClass, CDO_RESOURCE_NODE_CLASS_DBID);
       }
     }

@@ -202,14 +202,22 @@ public abstract class DBAdapter implements IDBAdapter
     return "DROP TABLE " + table;
   }
 
-  public String mangleTableName(String name, int attempt)
+  /**
+   * @since 2.0
+   */
+  public int getMaxTableNameLength()
   {
-    return mangleName(name, getMaximumTableNameLength(), attempt);
+    // Ansi SQL 92 default value
+    return 128;
   }
 
-  public String mangleFieldName(String name, int attempt)
+  /**
+   * @since 2.0
+   */
+  public int getMaxFieldNameLength()
   {
-    return mangleName(name, getMaximumFieldNameLength(), attempt);
+    // Ansi SQL 92 default value
+    return 128;
   }
 
   public void appendValue(StringBuilder builder, IDBField field, Object value)
@@ -369,38 +377,6 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     throw new IllegalArgumentException("Unknown type: " + type);
-  }
-
-  protected int getMaximumTableNameLength()
-  {
-    return 128;
-  }
-
-  protected int getMaximumFieldNameLength()
-  {
-    return 128;
-  }
-
-  protected String mangleName(String name, int max, int attempt)
-  {
-    if (isReservedWord(name))
-    {
-      String suffix = "_" + String.valueOf(attempt);
-      if (name.length() + suffix.length() > max)
-      {
-        name = name.substring(0, max - suffix.length()) + suffix;
-      }
-      else
-      {
-        name += suffix;
-      }
-    }
-    else if (name.length() > max)
-    {
-      name = name.substring(0, max);
-    }
-
-    return name;
   }
 
   public String[] getSQL92ReservedWords()

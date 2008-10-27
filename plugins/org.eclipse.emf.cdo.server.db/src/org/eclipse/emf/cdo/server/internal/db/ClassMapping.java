@@ -33,7 +33,6 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.ResultSet;
@@ -187,69 +186,22 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected String mangleTableName(String name, int attempt)
-  {
-    return getDBAdapter().mangleTableName(name, attempt);
-  }
-
-  protected String mangleFieldName(String name, int attempt)
-  {
-    return getDBAdapter().mangleFieldName(name, attempt);
-  }
-
   protected IDBTable addTable(String name)
   {
-    String lastMangledName = null;
-    DBException lastException = null;
-
-    for (int attempt = 0;; ++attempt)
-    {
-      String tableName = mangleTableName(name, attempt);
-      if (lastException != null && ObjectUtil.equals(tableName, lastMangledName))
-      {
-        throw lastException;
-      }
-
-      try
-      {
-        IDBTable table = mappingStrategy.getStore().getDBSchema().addTable(tableName);
-        affectedTables.add(table);
-        return table;
-      }
-      catch (DBException ex)
-      {
-        lastMangledName = tableName;
-        lastException = ex;
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("{0}. attempt to add table: {1} ({2})", attempt + 1, tableName, ex.getMessage());
-        }
-      }
-    }
+    IDBTable table = mappingStrategy.getStore().getDBSchema().addTable(name);
+    affectedTables.add(table);
+    return table;
   }
 
   protected IDBField addField(CDOFeature cdoFeature, IDBTable table) throws DBException
   {
+    String fieldName = mappingStrategy.getFieldName(cdoFeature);
     DBType fieldType = getDBType(cdoFeature);
     int fieldLength = getDBLength(cdoFeature);
-    for (int attempt = 0;; ++attempt)
-    {
-      String fieldName = mangleFieldName(cdoFeature.getName(), attempt);
 
-      try
-      {
-        IDBField field = table.addField(fieldName, fieldType, fieldLength);
-        affectedTables.add(table);
-        return field;
-      }
-      catch (DBException ex)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("{0}. attempt to add field: {1} ({2})", attempt + 1, fieldName, ex.getMessage());
-        }
-      }
-    }
+    IDBField field = table.addField(fieldName, fieldType, fieldLength);
+    affectedTables.add(table);
+    return field;
   }
 
   protected DBType getDBType(CDOFeature cdoFeature)

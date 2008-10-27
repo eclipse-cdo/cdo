@@ -77,6 +77,22 @@ public class MYSQLAdapter extends DBAdapter
     return new MysqlDataSource();
   }
 
+  /**
+   * @since 2.0
+   */
+  public int getMaxTableNameLength()
+  {
+    return 64;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public int getMaxFieldNameLength()
+  {
+    return 64;
+  }
+
   @Override
   protected String getTypeName(IDBField field)
   {

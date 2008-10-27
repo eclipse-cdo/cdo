@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -32,6 +33,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -90,9 +92,33 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     this.properties = properties;
   }
 
+  public int getMaxTableNameLength()
+  {
+    String value = getProperties().get(PROP_MAX_TABLE_NAME_LENGTH);
+    return value == null ? store.getDBAdapter().getMaxTableNameLength() : Integer.valueOf(value);
+  }
+
+  public int getMaxFieldNameLength()
+  {
+    String value = getProperties().get(PROP_MAX_FIELD_NAME_LENGTH);
+    return value == null ? store.getDBAdapter().getMaxFieldNameLength() : Integer.valueOf(value);
+  }
+
+  public String getTableNamePrefix()
+  {
+    String value = getProperties().get(PROP_TABLE_NAME_PREFIX);
+    return StringUtil.safe(value);
+  }
+
   public boolean isQualifiedNames()
   {
     String value = getProperties().get(PROP_QUALIFIED_NAMES);
+    return value == null ? false : Boolean.valueOf(value);
+  }
+
+  public boolean isForceNamesWithID()
+  {
+    String value = getProperties().get(PROP_FORCE_NAMES_WITH_ID);
     return value == null ? false : Boolean.valueOf(value);
   }
 
@@ -122,21 +148,21 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
       {
       case ClassServerInfo.CDO_RESOURCE_NODE_CLASS_DBID:
       {
-        CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+        CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
         classRef = resourcePackage.getCDOResourceNodeClass().createClassRef();
         break;
       }
 
       case ClassServerInfo.CDO_RESOURCE_FOLDER_CLASS_DBID:
       {
-        CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+        CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
         classRef = resourcePackage.getCDOResourceFolderClass().createClassRef();
         break;
       }
 
       case ClassServerInfo.CDO_RESOURCE_CLASS_DBID:
       {
-        CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+        CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
         classRef = resourcePackage.getCDOResourceClass().createClassRef();
         break;
       }
@@ -170,22 +196,48 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
   public String getTableName(CDOPackage cdoPackage)
   {
-    if (isQualifiedNames())
-    {
-      return cdoPackage.getQualifiedName().replace('.', '_');
-    }
-
-    return cdoPackage.getName();
+    String name = isQualifiedNames() ? cdoPackage.getQualifiedName().replace('.', '_') : cdoPackage.getName();
+    return getTableName(name, "P" + PackageServerInfo.getDBID(cdoPackage));
   }
 
   public String getTableName(CDOClass cdoClass)
   {
-    if (isQualifiedNames())
+    String name = isQualifiedNames() ? cdoClass.getQualifiedName().replace('.', '_') : cdoClass.getName();
+    return getTableName(name, "C" + ClassServerInfo.getDBID(cdoClass));
+  }
+
+  public String getFieldName(CDOFeature cdoFeature)
+  {
+    return getName(cdoFeature.getName(), "F" + FeatureServerInfo.getDBID(cdoFeature), getMaxFieldNameLength());
+  }
+
+  private String getTableName(String name, String suffix)
+  {
+    String prefix = getTableNamePrefix();
+    if (prefix.length() != 0 && !prefix.endsWith("_"))
     {
-      return cdoClass.getQualifiedName().replace('.', '_');
+      prefix += "_";
     }
 
-    return cdoClass.getName();
+    return getName(prefix + name, suffix, getMaxTableNameLength());
+  }
+
+  private String getName(String name, String suffix, int maxLength)
+  {
+    boolean forceNamesWithID = isForceNamesWithID();
+    if (store.getDBAdapter().isReservedWord(name))
+    {
+      forceNamesWithID = true;
+    }
+
+    if (name.length() > maxLength || forceNamesWithID)
+    {
+      suffix = "_" + suffix.replace('-', 'S');
+      int length = Math.min(name.length(), maxLength - suffix.length());
+      name = name.substring(0, length) + suffix;
+    }
+
+    return name;
   }
 
   public String createWhereClause(long timeStamp)
@@ -316,7 +368,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
   public void createResourceTables(IDBAdapter dbAdapter, Connection connection)
   {
     Set<IDBTable> tables = new HashSet<IDBTable>();
-    CDOResourcePackage resourcePackage = getStore().getRepository().getPackageManager().getCDOResourcePackage();
+    CDOResourcePackage resourcePackage = store.getRepository().getPackageManager().getCDOResourcePackage();
 
     addResourceTables(resourcePackage.getCDOResourceNodeClass(), tables);
     addResourceTables(resourcePackage.getCDOResourceFolderClass(), tables);

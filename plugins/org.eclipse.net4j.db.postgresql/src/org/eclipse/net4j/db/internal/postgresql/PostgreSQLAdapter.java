@@ -57,6 +57,24 @@ public class PostgreSQLAdapter extends DBAdapter
     return new PGSimpleDataSource();
   }
 
+  /**
+   * @since 2.0
+   */
+  public int getMaxTableNameLength()
+  {
+    // http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html
+    return 63;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public int getMaxFieldNameLength()
+  {
+    // http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html
+    return 63;
+  }
+
   @Override
   protected String getTypeName(IDBField field)
   {

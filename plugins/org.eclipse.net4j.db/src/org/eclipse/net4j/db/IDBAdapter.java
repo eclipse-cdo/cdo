@@ -50,9 +50,15 @@ public interface IDBAdapter
 
   public boolean isReservedWord(String word);
 
-  public String mangleTableName(String name, int attempt);
+  /**
+   * @since 2.0
+   */
+  public int getMaxTableNameLength();
 
-  public String mangleFieldName(String name, int attempt);
+  /**
+   * @since 2.0
+   */
+  public int getMaxFieldNameLength();
 
   public void appendValue(StringBuilder builder, IDBField field, Object value);
 

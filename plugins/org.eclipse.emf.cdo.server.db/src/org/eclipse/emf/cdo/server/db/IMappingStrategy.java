@@ -27,9 +27,43 @@ import java.util.Map;
 public interface IMappingStrategy
 {
   /**
+   * Name of the integer property that configures the maximum length for table names. A value of zero indicates the
+   * value of the {@link IDBAdapter#getMaxTableNameLength() db adapter} to be used.
+   * 
+   * @since 2.0
+   */
+  public static final String PROP_MAX_TABLE_NAME_LENGTH = "maxTableNameLength";
+
+  /**
+   * Name of the integer property that configures the maximum length for column names. A value of zero indicates the
+   * value of the {@link IDBAdapter#getMaxFieldNameLength() db adapter} to be used.
+   * 
+   * @since 2.0
+   */
+  public static final String PROP_MAX_FIELD_NAME_LENGTH = "maxFieldNameLength";
+
+  /**
+   * Name of the String property that specifies a common prefix for table names.
+   * 
+   * @since 2.0
+   */
+  public static final String PROP_TABLE_NAME_PREFIX = "tableNamePrefix";
+
+  /**
+   * Name of the boolean property that configures whether the table names are made of simple class names or of qualified
+   * class names.
+   * 
    * @since 2.0
    */
   public static final String PROP_QUALIFIED_NAMES = "qualifiedNames";
+
+  /**
+   * Name of the boolean property that configures whether table names and column names are always suffixed with the
+   * internal DBID or only in cases where generated names violate the naming constraints of the underlying backend.
+   * 
+   * @since 2.0
+   */
+  public static final String PROP_FORCE_NAMES_WITH_ID = "forceNamesWithID";
 
   /**
    * @since 2.0

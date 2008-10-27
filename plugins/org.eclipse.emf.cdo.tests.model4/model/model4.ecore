@@ -32,7 +32,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RefMultiNonContained">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//MultiNonContainedElement" containment="true" eOpposite="#//MultiNonContainedElement/parent"/>
+        eType="#//MultiNonContainedElement" eOpposite="#//MultiNonContainedElement/parent"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MultiNonContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

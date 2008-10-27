@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RefMultiNonContained.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
+ * $Id: RefMultiNonContained.java,v 1.4 2008-10-27 13:36:18 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface RefMultiNonContained extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Elements</b></em>' containment reference list. The list contents are of type
+   * Returns the value of the '<em><b>Elements</b></em>' reference list. The list contents are of type
    * {@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement}. It is bidirectional and its opposite is '
    * {@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement#getParent <em>Parent</em>}'. <!-- begin-user-doc
    * -->
@@ -36,10 +36,10 @@ public interface RefMultiNonContained extends EObject
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Elements</em>' containment reference list.
+   * @return the value of the '<em>Elements</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model4.model4Package#getRefMultiNonContained_Elements()
    * @see org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement#getParent
-   * @model opposite="parent" containment="true"
+   * @model opposite="parent"
    * @generated
    */
   EList<MultiNonContainedElement> getElements();

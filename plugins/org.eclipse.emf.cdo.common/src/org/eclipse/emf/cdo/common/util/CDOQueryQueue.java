@@ -64,8 +64,8 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
   {
     synchronized (closeLock)
     {
-    return closed;
-  }
+      return closed;
+    }
   }
 
   public boolean add(E e)

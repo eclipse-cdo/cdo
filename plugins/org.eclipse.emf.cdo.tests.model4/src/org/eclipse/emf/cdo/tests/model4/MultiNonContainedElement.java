@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MultiNonContainedElement.java,v 1.3 2008-09-18 12:56:50 estepper Exp $
+ * $Id: MultiNonContainedElement.java,v 1.4 2008-10-27 13:36:18 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
@@ -52,7 +52,7 @@ public interface MultiNonContainedElement extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Parent</b></em>' container reference. It is bidirectional and its opposite is '
+   * Returns the value of the '<em><b>Parent</b></em>' reference. It is bidirectional and its opposite is '
    * {@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContained#getElements <em>Elements</em>}'. <!-- begin-user-doc
    * -->
    * <p>
@@ -61,21 +61,21 @@ public interface MultiNonContainedElement extends EObject
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Parent</em>' container reference.
+   * @return the value of the '<em>Parent</em>' reference.
    * @see #setParent(RefMultiNonContained)
    * @see org.eclipse.emf.cdo.tests.model4.model4Package#getMultiNonContainedElement_Parent()
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContained#getElements
-   * @model opposite="elements" transient="false"
+   * @model opposite="elements"
    * @generated
    */
   RefMultiNonContained getParent();
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement#getParent <em>Parent</em>}'
-   * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
-   *          the new value of the '<em>Parent</em>' container reference.
+   *          the new value of the '<em>Parent</em>' reference.
    * @see #getParent()
    * @generated
    */

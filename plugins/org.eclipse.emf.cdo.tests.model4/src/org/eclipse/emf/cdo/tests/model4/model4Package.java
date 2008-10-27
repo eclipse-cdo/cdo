@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: model4Package.java,v 1.4 2008-10-09 09:56:43 smcduff Exp $
+ * $Id: model4Package.java,v 1.5 2008-10-27 13:36:18 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
@@ -256,8 +256,7 @@ public interface model4Package extends EPackage
   int REF_MULTI_NON_CONTAINED = 6;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
@@ -292,7 +291,7 @@ public interface model4Package extends EPackage
   int MULTI_NON_CONTAINED_ELEMENT__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
@@ -1208,11 +1207,11 @@ public interface model4Package extends EPackage
   EClass getRefMultiNonContained();
 
   /**
-   * Returns the meta object for the containment reference list '
+   * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContained#getElements <em>Elements</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the containment reference list '<em>Elements</em>'.
+   * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContained#getElements()
    * @see #getRefMultiNonContained()
    * @generated
@@ -1242,11 +1241,11 @@ public interface model4Package extends EPackage
   EAttribute getMultiNonContainedElement_Name();
 
   /**
-   * Returns the meta object for the container reference '
+   * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement#getParent <em>Parent</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the container reference '<em>Parent</em>'.
+   * @return the meta object for the reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement#getParent()
    * @see #getMultiNonContainedElement()
    * @generated
@@ -1897,8 +1896,8 @@ public interface model4Package extends EPackage
     EAttribute MULTI_NON_CONTAINED_ELEMENT__NAME = eINSTANCE.getMultiNonContainedElement_Name();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Parent</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
      * @generated
      */

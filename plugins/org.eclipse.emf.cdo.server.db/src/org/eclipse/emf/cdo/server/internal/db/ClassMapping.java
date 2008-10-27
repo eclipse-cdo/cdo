@@ -429,11 +429,10 @@ public abstract class ClassMapping implements IClassMapping
       checkDuplicateResources(storeWriter, revision);
     }
 
-    if (attributeMappings != null)
-    {
-      writeAttributes(storeWriter, (InternalCDORevision)revision);
-    }
+    // Write attribute table always (even without modeled attributes!)
+    writeAttributes(storeWriter, (InternalCDORevision)revision);
 
+    // Write reference tables only if they exist
     if (referenceMappings != null)
     {
       writeReferences(storeWriter, (InternalCDORevision)revision);
@@ -498,10 +497,13 @@ public abstract class ClassMapping implements IClassMapping
     builder.append(" VALUES (");
     appendRevisionInfos(builder, revision, hasFullRevisionInfo());
 
-    for (IAttributeMapping attributeMapping : attributeMappings)
+    if (attributeMappings != null)
     {
-      builder.append(", ");
-      attributeMapping.appendValue(builder, revision);
+      for (IAttributeMapping attributeMapping : attributeMappings)
+      {
+        builder.append(", ");
+        attributeMapping.appendValue(builder, revision);
+      }
     }
 
     builder.append(")");
@@ -537,11 +539,10 @@ public abstract class ClassMapping implements IClassMapping
   protected void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, String where,
       boolean readVersion, int referenceChunk)
   {
-    if (attributeMappings != null)
-    {
-      readAttributes(storeReader, revision, where, readVersion);
-    }
+    // Read attribute table always (even without modeled attributes!)
+    readAttributes(storeReader, revision, where, readVersion);
 
+    // Read reference tables only if they exist
     if (referenceMappings != null)
     {
       readReferences(storeReader, revision, referenceChunk);

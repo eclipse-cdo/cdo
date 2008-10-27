@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
@@ -45,6 +46,12 @@ import org.eclipse.emf.cdo.tests.model4.SingleContainedElement;
 import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
+import org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.INamedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
+import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -98,6 +105,30 @@ public class ComplexTest extends AbstractCDOTest
     transaction.commit();
   }
 
+  private void purgeCaches()
+  {
+    // according to Eike's comment at Bug 249681, client caches are
+    // ignored, if a new session is opened.
+    // server caches are wiped by the clearCache call.
+
+    String path1 = resource1.getPath();
+    String path2 = resource2.getPath();
+
+    transaction.close();
+    session.close();
+
+    ((CDORevisionResolverImpl)getRepository().getRevisionManager()).clearCache();
+
+    session = openSession();
+    session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);
+    session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
+
+    transaction = session.openTransaction();
+
+    resource1 = transaction.getResource(path1);
+    resource2 = transaction.getResource(path2);
+  }
+
   public void testPlainSingleNonContainedBidirectional()
   {
     RefSingleNonContained container = factory.createRefSingleNonContained();
@@ -107,6 +138,21 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(2, resource1.getContents().size());
+
+    container = (RefSingleNonContained)resource1.getContents().get(0);
+    element0 = (SingleNonContainedElement)resource1.getContents().get(1);
+
+    assertEquals(element0, container.getElement());
+    assertEquals(container, element0.getParent());
+    assertEquals("PlainSingleNonContainedBidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0);
   }
 
   public void testPlainSingleContainedBidirectional()
@@ -117,6 +163,20 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(container);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (RefSingleContained)resource1.getContents().get(0);
+    element0 = container.getElement();
+
+    assertEquals(container, element0.getParent());
+    assertEquals("PlainSingleContainedBidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0);
   }
 
   public void testPlainMultiNonContainedBidirectional()
@@ -132,6 +192,27 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(3, resource1.getContents().size());
+
+    container = (RefMultiNonContained)resource1.getContents().get(0);
+    element0 = (MultiNonContainedElement)resource1.getContents().get(1);
+    element1 = (MultiNonContainedElement)resource1.getContents().get(2);
+
+    assertEquals(element0, container.getElements().get(0));
+    assertEquals(element1, container.getElements().get(1));
+    assertEquals(container, element0.getParent());
+    assertEquals(container, element1.getParent());
+    assertEquals("PlainMultiNonContainedBidirectional-Element-0", element0.getName());
+    assertEquals("PlainMultiNonContainedBidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+    assertEquals(resource1, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0);
+    assertContent(resource1, element1);
   }
 
   public void testPlainMultiContainedBidirectional()
@@ -145,6 +226,27 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (RefMultiContained)resource1.getContents().get(0);
+    assertEquals(2, container.getElements().size());
+
+    element0 = container.getElements().get(0);
+    element1 = container.getElements().get(1);
+
+    assertEquals(container, element0.getParent());
+    assertEquals(container, element1.getParent());
+    assertEquals("PlainMultiContainedBidirectional-Element-0", element0.getName());
+    assertEquals("PlainMultiContainedBidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+    assertEquals(resource1, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0);
+    assertContent(container, element1);
   }
 
   public void testPlainSingleNonContainedUnidirectional()
@@ -156,6 +258,20 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(2, resource1.getContents().size());
+
+    container = (RefSingleNonContainedNPL)resource1.getContents().get(0);
+    element0 = (ContainedElementNoOpposite)resource1.getContents().get(1);
+
+    assertEquals(element0, container.getElement());
+    assertEquals("PlainSingleNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0);
   }
 
   public void testPlainSingleContainedUnidirectional()
@@ -166,6 +282,20 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(container);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (RefSingleContainedNPL)resource1.getContents().get(0);
+    element0 = container.getElement();
+
+    assertEquals("PlainSingleContainedUnidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0);
+
   }
 
   public void testPlainMultiNonContainedUnidirectional()
@@ -181,6 +311,25 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(3, resource1.getContents().size());
+
+    container = (RefMultiNonContainedNPL)resource1.getContents().get(0);
+    element0 = (ContainedElementNoOpposite)resource1.getContents().get(1);
+    element1 = (ContainedElementNoOpposite)resource1.getContents().get(2);
+
+    assertEquals(element0, container.getElements().get(0));
+    assertEquals(element1, container.getElements().get(1));
+    assertEquals("PlainMultiNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals("PlainMultiNonContainedUnidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+    assertEquals(resource1, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0);
+    assertContent(resource1, element1);
   }
 
   public void testPlainMultiContainedUnidirectional()
@@ -194,6 +343,25 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (RefMultiContainedNPL)resource1.getContents().get(0);
+    assertEquals(2, container.getElements().size());
+
+    element0 = container.getElements().get(0);
+    element1 = container.getElements().get(1);
+
+    assertEquals("PlainMultiContainedUnidirectional-Element-0", element0.getName());
+    assertEquals("PlainMultiContainedUnidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+    assertEquals(resource1, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0);
+    assertContent(container, element1);
   }
 
   public void testGenRefSingleNonContainedUnidirectional()
@@ -205,6 +373,21 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(2, resource1.getContents().size());
+
+    container = (GenRefSingleNonContained)resource1.getContents().get(0);
+    element0 = (ImplContainedElementNPL)resource1.getContents().get(1);
+
+    assertEquals(element0, container.getElement());
+    assertEquals("GenRefSingleNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0);
+
   }
 
   public void testGenRefSingleContainedUnidirectional()
@@ -218,6 +401,19 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(element0);
 
     commit();
+
+    purgeCaches();
+    assertEquals(2, resource1.getContents().size());
+
+    container = (GenRefSingleContained)resource1.getContents().get(0);
+    element0 = (ImplContainedElementNPL)container.getElement();
+
+    assertEquals("GenRefSingleContainedUnidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0);
   }
 
   public void testGenRefMultiNonContainedUnidirectional()
@@ -233,6 +429,25 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(3, resource1.getContents().size());
+
+    container = (GenRefMultiNonContained)resource1.getContents().get(0);
+    element0 = (ImplContainedElementNPL)resource1.getContents().get(1);
+    element1 = (ImplContainedElementNPL)resource1.getContents().get(2);
+
+    assertEquals(element0, container.getElements().get(0));
+    assertEquals(element1, container.getElements().get(1));
+    assertEquals("GenRefMultiNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals("GenRefMultiNonContainedUnidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+    assertEquals(resource1, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0);
+    assertContent(resource1, element1);
   }
 
   public void testGenRefMultiContainedUnidirectional()
@@ -246,6 +461,25 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (GenRefMultiContained)resource1.getContents().get(0);
+    assertEquals(2, container.getElements().size());
+
+    element0 = (ImplContainedElementNPL)container.getElements().get(0);
+    element1 = (ImplContainedElementNPL)container.getElements().get(1);
+
+    assertEquals("GenRefMultiContainedUnidirectional-Element-0", element0.getName());
+    assertEquals("GenRefMultiContainedUnidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0.eResource());
+    assertEquals(resource1, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0);
+    assertContent(container, element1);
   }
 
   public void testIfcimplSingleNonContainedBidirectional()
@@ -257,6 +491,22 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(2, resource1.getContents().size());
+
+    container = (ImplSingleRefNonContainer)resource1.getContents().get(0);
+    ISingleRefNonContainedElement element0_ = (ISingleRefNonContainedElement)resource1.getContents().get(1);
+
+    assertEquals(element0_, container.getElement());
+    assertEquals(container, element0_.getParent());
+    assertEquals("IfcimplSingleNonContainedBidirectional-Element-0", ((ImplSingleRefNonContainedElement)element0_)
+        .getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0_);
   }
 
   public void testIfcimplSingleContainedBidirectional()
@@ -267,6 +517,20 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(container);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (ImplSingleRefContainer)resource1.getContents().get(0);
+    ISingleRefContainedElement element0_ = container.getElement();
+
+    assertEquals(container, element0_.getParent());
+    assertEquals("IfcimplSingleContainedBidirectional-Element-0", ((ImplSingleRefContainedElement)element0_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0_);
   }
 
   public void testIfcimplMultiNonContainedBidirectional()
@@ -282,6 +546,29 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(3, resource1.getContents().size());
+
+    container = (ImplMultiRefNonContainer)resource1.getContents().get(0);
+    IMultiRefNonContainedElement element0_ = (IMultiRefNonContainedElement)resource1.getContents().get(1);
+    IMultiRefNonContainedElement element1_ = (IMultiRefNonContainedElement)resource1.getContents().get(2);
+
+    assertEquals(element0_, container.getElements().get(0));
+    assertEquals(element1_, container.getElements().get(1));
+    assertEquals(container, element0_.getParent());
+    assertEquals(container, element1_.getParent());
+    assertEquals("IfcimplMultiNonContainedBidirectional-Element-0", ((ImplMultiRefNonContainedElement)element0_)
+        .getName());
+    assertEquals("IfcimplMultiNonContainedBidirectional-Element-1", ((ImplMultiRefNonContainedElement)element1_)
+        .getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+    assertEquals(resource1, element1_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0_);
+    assertContent(resource1, element1_);
   }
 
   public void testIfcimplMultiContainedBidirectional()
@@ -295,6 +582,27 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (ImplMultiRefContainer)resource1.getContents().get(0);
+    assertEquals(2, container.getElements().size());
+
+    IMultiRefContainedElement element0_ = container.getElements().get(0);
+    IMultiRefContainedElement element1_ = container.getElements().get(1);
+
+    assertEquals(container, element0_.getParent());
+    assertEquals(container, element1_.getParent());
+    assertEquals("IfcimplMultiContainedBidirectional-Element-0", ((ImplMultiRefContainedElement)element0_).getName());
+    assertEquals("IfcimplMultiContainedBidirectional-Element-1", ((ImplMultiRefContainedElement)element1_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+    assertEquals(resource1, element1_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0_);
+    assertContent(container, element1_);
   }
 
   public void testIfcimplSingleNonContainedUnidirectional()
@@ -306,6 +614,20 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(2, resource1.getContents().size());
+
+    container = (ImplSingleRefNonContainerNPL)resource1.getContents().get(0);
+    IContainedElementNoParentLink element0_ = (IContainedElementNoParentLink)resource1.getContents().get(1);
+
+    assertEquals(element0_, container.getElement());
+    assertEquals("IfcimplSingleNonContainedUnidirectional-Element-0", ((INamedElement)element0_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0_);
   }
 
   public void testIfcimplSingleContainedUnidirectional()
@@ -316,6 +638,19 @@ public class ComplexTest extends AbstractCDOTest
     resource1.getContents().add(container);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (ImplSingleRefContainerNPL)resource1.getContents().get(0);
+    IContainedElementNoParentLink element0_ = container.getElement();
+
+    assertEquals("IfcimplSingleContainedUnidirectional-Element-0", ((INamedElement)element0_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0_);
   }
 
   public void testIfcimplMultiNonContainedUnidirectional()
@@ -331,6 +666,25 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(3, resource1.getContents().size());
+
+    container = (ImplMultiRefNonContainerNPL)resource1.getContents().get(0);
+    IContainedElementNoParentLink element0_ = (IContainedElementNoParentLink)resource1.getContents().get(1);
+    IContainedElementNoParentLink element1_ = (IContainedElementNoParentLink)resource1.getContents().get(2);
+
+    assertEquals(element0_, container.getElements().get(0));
+    assertEquals(element1_, container.getElements().get(1));
+    assertEquals("IfcimplMultiNonContainedUnidirectional-Element-0", ((INamedElement)element0_).getName());
+    assertEquals("IfcimplMultiNonContainedUnidirectional-Element-1", ((INamedElement)element1_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+    assertEquals(resource1, element1_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource1, element0_);
+    assertContent(resource1, element1_);
   }
 
   public void testIfcimplMultiContainedUnidirectional()
@@ -344,6 +698,25 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+
+    container = (ImplMultiRefContainerNPL)resource1.getContents().get(0);
+    assertEquals(2, container.getElements().size());
+
+    IContainedElementNoParentLink element0_ = container.getElements().get(0);
+    IContainedElementNoParentLink element1_ = container.getElements().get(1);
+
+    assertEquals("IfcimplMultiContainedUnidirectional-Element-0", ((INamedElement)element0_).getName());
+    assertEquals("IfcimplMultiContainedUnidirectional-Element-1", ((INamedElement)element1_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource1, element0_.eResource());
+    assertEquals(resource1, element1_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(container, element0_);
+    assertContent(container, element1_);
   }
 
   public void testCrossResourcePlainSingleNonContainedBidirectional()
@@ -355,6 +728,22 @@ public class ComplexTest extends AbstractCDOTest
     resource2.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(1, resource2.getContents().size());
+
+    container = (RefSingleNonContained)resource1.getContents().get(0);
+    element0 = (SingleNonContainedElement)resource2.getContents().get(0);
+
+    assertEquals(element0, container.getElement());
+    assertEquals(container, element0.getParent());
+    assertEquals("CrossResourcePlainSingleNonContainedBidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0);
   }
 
   public void testCrossResourcePlainMultiNonContainedBidirectional()
@@ -370,6 +759,28 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(2, resource2.getContents().size());
+
+    container = (RefMultiNonContained)resource1.getContents().get(0);
+    element0 = (MultiNonContainedElement)resource2.getContents().get(0);
+    element1 = (MultiNonContainedElement)resource2.getContents().get(1);
+
+    assertEquals(element0, container.getElements().get(0));
+    assertEquals(element1, container.getElements().get(1));
+    assertEquals(container, element0.getParent());
+    assertEquals(container, element1.getParent());
+    assertEquals("CrossResourcePlainMultiNonContainedBidirectional-Element-0", element0.getName());
+    assertEquals("CrossResourcePlainMultiNonContainedBidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0.eResource());
+    assertEquals(resource2, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0);
+    assertContent(resource2, element1);
   }
 
   public void testCrossResourcePlainSingleNonContainedUnidirectional()
@@ -381,6 +792,21 @@ public class ComplexTest extends AbstractCDOTest
     resource2.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(1, resource2.getContents().size());
+
+    container = (RefSingleNonContainedNPL)resource1.getContents().get(0);
+    element0 = (ContainedElementNoOpposite)resource2.getContents().get(0);
+
+    assertEquals(element0, container.getElement());
+    assertEquals("CrossResourcePlainSingleNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0);
   }
 
   public void testCrossResourcePlainMultiNonContainedUnidirectional()
@@ -396,6 +822,26 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(2, resource2.getContents().size());
+
+    container = (RefMultiNonContainedNPL)resource1.getContents().get(0);
+    element0 = (ContainedElementNoOpposite)resource2.getContents().get(0);
+    element1 = (ContainedElementNoOpposite)resource2.getContents().get(1);
+
+    assertEquals(element0, container.getElements().get(0));
+    assertEquals(element1, container.getElements().get(1));
+    assertEquals("CrossResourcePlainMultiNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals("CrossResourcePlainMultiNonContainedUnidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0.eResource());
+    assertEquals(resource2, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0);
+    assertContent(resource2, element1);
   }
 
   public void testCrossResourceGenRefSingleNonContainedUnidirectional()
@@ -407,6 +853,21 @@ public class ComplexTest extends AbstractCDOTest
     resource2.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(1, resource2.getContents().size());
+
+    container = (GenRefSingleNonContained)resource1.getContents().get(0);
+    element0 = (ImplContainedElementNPL)resource2.getContents().get(0);
+
+    assertEquals(element0, container.getElement());
+    assertEquals("CrossResourceGenRefSingleNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0);
   }
 
   public void testCrossResourceGenRefMultiNonContainedUnidirectional()
@@ -422,6 +883,26 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(2, resource2.getContents().size());
+
+    container = (GenRefMultiNonContained)resource1.getContents().get(0);
+    element0 = (ImplContainedElementNPL)resource2.getContents().get(0);
+    element1 = (ImplContainedElementNPL)resource2.getContents().get(1);
+
+    assertEquals(element0, container.getElements().get(0));
+    assertEquals(element1, container.getElements().get(1));
+    assertEquals("CrossResourceGenRefMultiNonContainedUnidirectional-Element-0", element0.getName());
+    assertEquals("CrossResourceGenRefMultiNonContainedUnidirectional-Element-1", element1.getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0.eResource());
+    assertEquals(resource2, element1.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0);
+    assertContent(resource2, element1);
   }
 
   public void testCrossResourceIfcimplSingleNonContainedBidirectional()
@@ -433,6 +914,23 @@ public class ComplexTest extends AbstractCDOTest
     resource2.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(1, resource2.getContents().size());
+
+    container = (ImplSingleRefNonContainer)resource1.getContents().get(0);
+    ISingleRefNonContainedElement element0_ = (ISingleRefNonContainedElement)resource2.getContents().get(0);
+
+    assertEquals(element0_, container.getElement());
+    assertEquals(container, element0_.getParent());
+    assertEquals("CrossResourceIfcimplSingleNonContainedBidirectional-Element-0",
+        ((ImplSingleRefNonContainedElement)element0_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0_);
   }
 
   public void testCrossResourceIfcimplMultiNonContainedBidirectional()
@@ -448,6 +946,30 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(2, resource2.getContents().size());
+
+    container = (ImplMultiRefNonContainer)resource1.getContents().get(0);
+    IMultiRefNonContainedElement element0_ = (IMultiRefNonContainedElement)resource2.getContents().get(0);
+    IMultiRefNonContainedElement element1_ = (IMultiRefNonContainedElement)resource2.getContents().get(1);
+
+    assertEquals(element0_, container.getElements().get(0));
+    assertEquals(element1_, container.getElements().get(1));
+    assertEquals(container, element0_.getParent());
+    assertEquals(container, element1_.getParent());
+    assertEquals("CrossResourceIfcimplMultiNonContainedBidirectional-Element-0",
+        ((ImplMultiRefNonContainedElement)element0_).getName());
+    assertEquals("CrossResourceIfcimplMultiNonContainedBidirectional-Element-1",
+        ((ImplMultiRefNonContainedElement)element1_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0_.eResource());
+    assertEquals(resource2, element1_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0_);
+    assertContent(resource2, element1_);
   }
 
   public void testCrossResourceIfcimplSingleNonContainedUnidirectional()
@@ -459,6 +981,21 @@ public class ComplexTest extends AbstractCDOTest
     resource2.getContents().add(element0);
     container.setElement(element0);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(1, resource1.getContents().size());
+
+    container = (ImplSingleRefNonContainerNPL)resource1.getContents().get(0);
+    IContainedElementNoParentLink element0_ = (IContainedElementNoParentLink)resource2.getContents().get(0);
+
+    assertEquals(element0_, container.getElement());
+    assertEquals("CrossResourceIfcimplSingleNonContainedUnidirectional-Element-0", ((INamedElement)element0_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0_);
   }
 
   public void testCrossResourceIfcimplMultiNonContainedUnidirectional()
@@ -474,6 +1011,26 @@ public class ComplexTest extends AbstractCDOTest
     container.getElements().add(element0);
     container.getElements().add(element1);
     commit();
+
+    purgeCaches();
+    assertEquals(1, resource1.getContents().size());
+    assertEquals(2, resource2.getContents().size());
+
+    container = (ImplMultiRefNonContainerNPL)resource1.getContents().get(0);
+    IContainedElementNoParentLink element0_ = (IContainedElementNoParentLink)resource2.getContents().get(0);
+    IContainedElementNoParentLink element1_ = (IContainedElementNoParentLink)resource2.getContents().get(1);
+
+    assertEquals(element0_, container.getElements().get(0));
+    assertEquals(element1_, container.getElements().get(1));
+    assertEquals("CrossResourceIfcimplMultiNonContainedUnidirectional-Element-0", ((INamedElement)element0_).getName());
+    assertEquals("CrossResourceIfcimplMultiNonContainedUnidirectional-Element-1", ((INamedElement)element1_).getName());
+    assertEquals(resource1, container.eResource());
+    assertEquals(resource2, element0_.eResource());
+    assertEquals(resource2, element1_.eResource());
+
+    assertContent(resource1, container);
+    assertContent(resource2, element0_);
+    assertContent(resource2, element1_);
   }
 
   public void testMultipleTransactions3()
@@ -653,5 +1210,4 @@ public class ComplexTest extends AbstractCDOTest
     assertEquals(1, container2.getElements().size());
     assertEquals(elementA, container2.getElements().get(0));
   }
-
 }

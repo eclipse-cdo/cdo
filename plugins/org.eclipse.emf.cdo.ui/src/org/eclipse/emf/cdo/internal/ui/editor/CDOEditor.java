@@ -1989,25 +1989,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     for (CDOPackage cdoPackage : cdoPackages)
     {
-      List<CDOClass> cdoClasses = Arrays.asList(cdoPackage.getConcreteClasses());
-      Collections.sort(cdoClasses);
-      // TODO Sorting by class name may not have the desired effect if the labels are computed by an ItemProvider!
-
-      if (!cdoClasses.isEmpty())
+      if (!cdoPackage.isSystem())
       {
-        MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
-        for (CDOClass cdoClass : cdoClasses)
+        List<CDOClass> cdoClasses = Arrays.asList(cdoPackage.getConcreteClasses());
+        Collections.sort(cdoClasses);
+        // TODO Sorting by class name may not have the desired effect if the labels are computed by an ItemProvider!
+
+        if (!cdoClasses.isEmpty())
         {
-          if (!cdoClass.isResource())
+          MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
+          for (CDOClass cdoClass : cdoClasses)
           {
             // TODO Optimize/cache this?
             CreateRootAction action = new CreateRootAction(cdoClass);
             submenuManager.add(action);
             populated = true;
           }
-        }
 
-        menuManager.add(submenuManager);
+          menuManager.add(submenuManager);
+        }
       }
     }
 

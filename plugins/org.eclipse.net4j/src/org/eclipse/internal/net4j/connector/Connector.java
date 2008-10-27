@@ -13,6 +13,7 @@ package org.eclipse.internal.net4j.connector;
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
@@ -60,7 +61,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   private ITransportConfig config;
 
-  private long channelTimeout = DEFAULT_CHANNEL_TIMEOUT;
+  private long channelTimeout = IChannelMultiplexer.DEFAULT_CHANNEL_TIMEOUT;
 
   private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
@@ -118,7 +119,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public long getChannelTimeout()
   {
-    if (channelTimeout == DEFAULT_CHANNEL_TIMEOUT)
+    if (channelTimeout == IChannelMultiplexer.DEFAULT_CHANNEL_TIMEOUT)
     {
       return OM.BUNDLE.getDebugSupport().getDebugOption("channel.timeout", 10000);
     }

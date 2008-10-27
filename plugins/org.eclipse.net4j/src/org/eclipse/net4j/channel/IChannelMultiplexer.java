@@ -27,6 +27,18 @@ import java.util.List;
 public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel>
 {
   /**
+   * @since 2.0
+   */
+  public static final long NO_CHANNEL_TIMEOUT = Long.MAX_VALUE;
+  /**
+   * Indicates to use the timeout that is configured via debug property <code>channel.timeout</code> (see .options file)
+   * which has a default of 10 seconds.
+   * 
+   * @since 2.0
+   */
+  public static final long DEFAULT_CHANNEL_TIMEOUT = -1L;
+
+  /**
    * Returns a list of currently open channels. Note that the resulting list does not contain <code>null</code> values.
    * Generally the {@link IChannel#getIndex() index} of a channel <b>must not</b> be used as an index into this list.
    * Each call to this method creates a new copy of the internal channels array, so it can safely be modified bz the

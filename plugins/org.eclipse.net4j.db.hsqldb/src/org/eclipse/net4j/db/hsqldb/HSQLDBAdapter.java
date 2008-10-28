@@ -8,11 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db.internal.hsqldb;
+package org.eclipse.net4j.db.hsqldb;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
 import org.hsqldb.jdbcDriver;
@@ -23,6 +22,7 @@ import java.sql.Driver;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class HSQLDBAdapter extends DBAdapter
 {

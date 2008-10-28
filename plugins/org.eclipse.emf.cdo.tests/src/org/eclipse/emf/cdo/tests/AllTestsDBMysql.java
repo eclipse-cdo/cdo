@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
@@ -14,18 +14,18 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author Eike Stepper
+ * @author Simon McDuff
  */
-public class AllTestsDB extends AllTestsAllConfigs
+public class AllTestsDBMysql extends AllTestsAllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDB().getTestSuite("CDO Tests (DB Hsql Horizontal)");
+    return new AllTestsDBMysql().getTestSuite("CDO Tests (DB MySql Horizontal)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    initConfigSuite(parent, COMBINED, DB_HSQL_HORIZONTAL, TCP, NATIVE);
+    initConfigSuite(parent, COMBINED, DB_MYSQL_HORIZONTAL, TCP, NATIVE);
   }
 }

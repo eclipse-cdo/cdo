@@ -8,28 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db.tests;
+package org.eclipse.net4j.db.derby;
 
-import org.eclipse.net4j.db.IDBAdapter;
+import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.apache.derby.jdbc.EmbeddedDriver;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import javax.sql.DataSource;
+
+import java.sql.Driver;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class MysqlTest extends AbstractDBTest<MysqlDataSource>
+public class EmbeddedDerbyAdapter extends DerbyAdapter
 {
-  @Override
-  protected IDBAdapter createDBAdapter()
+  public static final String NAME = "derby-embedded";
+
+  public EmbeddedDerbyAdapter()
   {
-    return new org.eclipse.net4j.db.mysql.MYSQLAdapter();
+    super(NAME);
   }
 
-  @Override
-  protected void configureDataSource(MysqlDataSource dataSource)
+  public Driver getJDBCDriver()
   {
-    dataSource.setDatabaseName("dbtest");
-    dataSource.setUser("root");
-    dataSource.setPassword("root");
+    return new EmbeddedDriver();
+  }
+
+  public DataSource createJDBCDataSource()
+  {
+    return new EmbeddedDataSource();
   }
 }

@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.net4j.db.internal.postgresql;
+package org.eclipse.net4j.db.postgresql;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;

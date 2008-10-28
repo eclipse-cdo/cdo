@@ -21,7 +21,7 @@
    <extension
          point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
-            class="org.eclipse.net4j.db.internal.postgresql.PostgreSQLAdapter"
+            class="org.eclipse.net4j.db.postgresql.PostgreSQLAdapter"
             name="postgresql"
             version="8.3">
       </dbAdapter>

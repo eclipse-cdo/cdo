@@ -31,6 +31,8 @@ public interface ConfigConstants
 
   public static final RepositoryConfig DB_DERBY_HORIZONTAL = RepositoryConfig.DBDerby.DERBY_HORIZONTAL;
 
+  public static final RepositoryConfig DB_MYSQL_HORIZONTAL = RepositoryConfig.DBMysql.MYSQL_HORIZONTAL;
+
   public static final RepositoryConfig HIBERNATE = RepositoryConfig.Hibernate.INSTANCE;
 
   public static final SessionConfig JVM = SessionConfig.JVM.INSTANCE;

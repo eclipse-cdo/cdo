@@ -13,7 +13,7 @@ package org.eclipse.net4j.jms.tests;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter;
+import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
 import org.eclipse.net4j.jms.JMSInitialContext;
 import org.eclipse.net4j.jms.admin.IJMSAdmin;
 import org.eclipse.net4j.jms.admin.JMSAdminUtil;

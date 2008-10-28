@@ -8,34 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db.internal.derby;
+package org.eclipse.emf.cdo.tests;
 
-import org.apache.derby.jdbc.EmbeddedDataSource;
-import org.apache.derby.jdbc.EmbeddedDriver;
-
-import javax.sql.DataSource;
-
-import java.sql.Driver;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Eike Stepper
  */
-public class EmbeddedDerbyAdapter extends DerbyAdapter
+public class AllTestsDBHsqldb extends AllTestsAllConfigs
 {
-  public static final String NAME = "derby-embedded";
-
-  public EmbeddedDerbyAdapter()
+  public static Test suite()
   {
-    super(NAME);
+    return new AllTestsDBHsqldb().getTestSuite("CDO Tests (DB Hsql Horizontal)");
   }
 
-  public Driver getJDBCDriver()
+  @Override
+  protected void initConfigSuites(TestSuite parent)
   {
-    return new EmbeddedDriver();
-  }
-
-  public DataSource createJDBCDataSource()
-  {
-    return new EmbeddedDataSource();
+    initConfigSuite(parent, COMBINED, DB_HSQL_HORIZONTAL, TCP, NATIVE);
   }
 }

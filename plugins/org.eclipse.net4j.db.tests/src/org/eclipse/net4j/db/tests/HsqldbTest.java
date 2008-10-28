@@ -21,7 +21,7 @@ public class HsqldbTest extends AbstractDBTest<HSQLDBDataSource>
   @Override
   protected IDBAdapter createDBAdapter()
   {
-    return new org.eclipse.net4j.db.internal.hsqldb.HSQLDBAdapter();
+    return new org.eclipse.net4j.db.hsqldb.HSQLDBAdapter();
   }
 
   @Override

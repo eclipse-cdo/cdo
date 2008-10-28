@@ -20,7 +20,7 @@
    <extension
          point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
-            class="org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter"
+            class="org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter"
             name="derby-embedded"
             version="10.1.2.1"/>
       <!--dbAdapter

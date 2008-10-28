@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db.internal.derby;
+package org.eclipse.net4j.db.derby;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
@@ -16,6 +16,7 @@ import org.eclipse.net4j.spi.db.DBAdapter;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class DerbyAdapter extends DBAdapter
 {

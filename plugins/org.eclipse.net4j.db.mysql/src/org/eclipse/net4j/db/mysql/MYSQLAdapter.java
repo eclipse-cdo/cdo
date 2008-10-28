@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.db.internal.mysql;
+package org.eclipse.net4j.db.mysql;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -24,6 +24,7 @@ import java.sql.SQLException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class MYSQLAdapter extends DBAdapter
 {

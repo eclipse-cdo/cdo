@@ -28,7 +28,7 @@ public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
   @Override
   protected IDBAdapter createDBAdapter()
   {
-    return new org.eclipse.net4j.db.internal.derby.EmbeddedDerbyAdapter();
+    return new org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter();
   }
 
   @Override

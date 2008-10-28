@@ -1177,7 +1177,12 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       for (InternalCDOObject object : objects.values())
       {
         CDORevision revision = object.cdoRevision();
-        if (!revision.isValid(timeStamp))
+        if (revision == null)
+        {
+          revision = getRevision(object.cdoID(), false);
+        }
+
+        if (revision == null || !revision.isValid(timeStamp))
         {
           result.add(object);
         }

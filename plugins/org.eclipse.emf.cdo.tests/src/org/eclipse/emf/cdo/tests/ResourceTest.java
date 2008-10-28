@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
@@ -442,7 +441,7 @@ public class ResourceTest extends AbstractCDOTest
       session.close();
     }
 
-    ((CDORevisionResolverImpl)getRepository().getRevisionManager()).clearCache();
+    clearCache(getRepository().getRevisionManager());
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

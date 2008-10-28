@@ -187,7 +187,7 @@ public class ContainmentTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
@@ -258,7 +258,7 @@ public class ContainmentTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
 
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -380,7 +380,7 @@ public class ContainmentTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
     EPackage packageObject = createDynamicEPackage();
 
     ResourceSet resourceSet = new ResourceSetImpl();
@@ -435,7 +435,7 @@ public class ContainmentTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
 
     ResourceSet resourceSet = new ResourceSetImpl();
 

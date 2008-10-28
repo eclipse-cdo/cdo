@@ -92,7 +92,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resA.getContents().add(objectFromResA);
       transactionA1.commit();
     }
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
     {
       CDOSession sessionA = openSession();
 
@@ -124,7 +124,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resA.getContents().add(objectFromResA);
       transactionA1.commit();
     }
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
     {
       CDOSession sessionA = openSession();
 
@@ -203,7 +203,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resD.save(outputStream, null);
       dataOfresD = outputStream.toByteArray();
     }
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
     {
       ResourceSet resourceSet = new ResourceSetImpl();
       CDOSession session = openSession();
@@ -275,7 +275,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
       transactionA1.commit();
     }
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
     {
       ResourceSet resourceSet = new ResourceSetImpl();
       CDOSession sessionA = openSession();

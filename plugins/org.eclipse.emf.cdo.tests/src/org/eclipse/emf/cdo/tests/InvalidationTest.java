@@ -915,7 +915,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     if (isRemoveRevision)
     {
-      removeAllRevisions(getRepository().getRevisionManager());
+      clearCache(getRepository().getRevisionManager());
       ((RevisionManager)getRepository().getRevisionManager()).removeCachedRevision(resourceA.cdoID(), 1);
       ((RevisionManager)getRepository().getRevisionManager()).removeCachedRevision(resourceA.cdoID(), 2);
     }

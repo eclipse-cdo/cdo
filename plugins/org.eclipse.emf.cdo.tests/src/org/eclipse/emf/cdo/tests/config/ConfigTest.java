@@ -11,8 +11,6 @@
 package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
@@ -486,13 +484,9 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
         && modelConfig != config);
   }
 
-  protected void removeAllRevisions(IRevisionManager revisionManager)
+  protected void clearCache(IRevisionManager revisionManager)
   {
-    CDORevisionCache cache = ((RevisionManager)revisionManager).getCache();
-    for (CDORevision revision : cache.getRevisions())
-    {
-      cache.removeRevision(revision.getID(), revision.getVersion());
-    }
+    ((RevisionManager)revisionManager).getCache().clear();
   }
 
   public void restartConfigs() throws Exception

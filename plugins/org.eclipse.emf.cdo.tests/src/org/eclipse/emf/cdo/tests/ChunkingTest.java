@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -52,7 +51,7 @@ public class ChunkingTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
 
     // ************************************************************* //
 
@@ -97,7 +96,7 @@ public class ChunkingTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
 
     // ************************************************************* //
 
@@ -136,7 +135,7 @@ public class ChunkingTest extends AbstractCDOTest
 
       transaction.commit();
     }
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
 
     // ************************************************************* //
 
@@ -176,7 +175,7 @@ public class ChunkingTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    removeAllRevisions(getRepository().getRevisionManager());
+    clearCache(getRepository().getRevisionManager());
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
@@ -218,8 +217,7 @@ public class ChunkingTest extends AbstractCDOTest
 
       transaction.commit();
     }
-
-    ((CDORevisionResolverImpl)getRepository().getRevisionManager()).clearCache();
+    clearCache(getRepository().getRevisionManager());
     // ************************************************************* //
 
     CDOSession session = openModel1Session();

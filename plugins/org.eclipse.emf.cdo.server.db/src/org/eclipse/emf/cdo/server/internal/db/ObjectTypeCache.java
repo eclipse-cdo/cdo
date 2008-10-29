@@ -14,8 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
-import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
 
@@ -62,9 +61,9 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     this.mappingStrategy = mappingStrategy;
   }
 
-  public CDOClassRef getObjectType(IDBStoreReader storeReader, CDOID id)
+  public CDOClassRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    Statement statement = storeReader.getStatement();
+    Statement statement = accessor.getStatement();
     initialize(statement);
 
     StringBuilder builder = new StringBuilder();
@@ -90,7 +89,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
       }
 
       int classID = resultSet.getInt(1);
-      return mappingStrategy.getClassRef(storeReader, classID);
+      return mappingStrategy.getClassRef(accessor, classID);
     }
     catch (SQLException ex)
     {
@@ -102,9 +101,9 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
   }
 
-  public void putObjectType(IDBStoreWriter storeWriter, CDOID id, CDOClass type)
+  public void putObjectType(IDBStoreAccessor accessor, CDOID id, CDOClass type)
   {
-    Statement statement = storeWriter.getStatement();
+    Statement statement = accessor.getStatement();
     initialize(statement);
 
     StringBuilder builder = new StringBuilder();

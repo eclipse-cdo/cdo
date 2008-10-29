@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import java.util.Collection;
@@ -62,8 +62,8 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   {
     if (!cdoPackage.isSystem())
     {
-      IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-      storeReader.readPackage(cdoPackage);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      accessor.readPackage(cdoPackage);
     }
   }
 
@@ -78,12 +78,12 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    IStoreReader storeReader = null;
+    IStoreAccessor accessor = null;
 
     try
     {
-      storeReader = repository.getStore().getReader(null);
-      Collection<CDOPackageInfo> packageInfos = storeReader.readPackageInfos();
+      accessor = repository.getStore().getReader(null);
+      Collection<CDOPackageInfo> packageInfos = accessor.readPackageInfos();
       for (CDOPackageInfo info : packageInfos)
       {
         addPackage(CDOModelUtil.createProxyPackage(this, info.getPackageURI(), info.isDynamic(), info.getMetaIDRange(),
@@ -92,9 +92,9 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
     }
     finally
     {
-      if (storeReader != null)
+      if (accessor != null)
       {
-        storeReader.release();
+        accessor.release();
       }
     }
   }

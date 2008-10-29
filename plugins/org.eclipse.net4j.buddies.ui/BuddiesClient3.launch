@@ -13,10 +13,6 @@
 <booleanAttribute key="includeOptional" value="false"/>
 <stringAttribute key="location" value="${workspace_loc}/../buddies.client3"/>
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
-<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
-<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
-<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
-</listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-nosplash&#13;&#10;-console"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.aspectj.tracing.debug=false&#13;&#10;-Xms40m&#13;&#10;-Xmx512m"/>
@@ -97,7 +93,6 @@
 <mapEntry key="org.eclipse.emf.query/debug/exceptions/throwing" value="false"/>
 <mapEntry key="org.eclipse.wst.common.environment/trace/ws_dt_cmd_engine" value="true"/>
 <mapEntry key="org.eclipse.osgi/monitor/activation" value="false"/>
-<mapEntry key="org.eclipse.net4j.buddies.common/debug.revision" value="true"/>
 <mapEntry key="org.eclipse.net4j.jms/debug.protocol" value="true"/>
 <mapEntry key="org.eclipse.wst.sse.ui/gotoNextAnnotation" value="false"/>
 <mapEntry key="org.eclipse.wst.common.project.facet.core/delegate/calls" value="false"/>
@@ -114,7 +109,6 @@
 <mapEntry key="org.eclipse.wst.sse.core/tasks/overalltime" value="false"/>
 <mapEntry key="org.eclipse.wst.sse.core/structuredmodel/state" value="false"/>
 <mapEntry key="org.eclipse.ui/perf/perspective.create" value="800"/>
-<mapEntry key="org.eclipse.net4j.buddies.common/debug" value="true"/>
 <mapEntry key="org.eclipse.update.core/debug/type" value="false"/>
 <mapEntry key="org.eclipse.osgi/eclipseadaptor/debug/platformadmin" value="false"/>
 <mapEntry key="org.eclipse.emf.workspace/debug/methods/exiting" value="false"/>
@@ -367,7 +361,6 @@
 <mapEntry key="org.eclipse.core.resources/natures" value="false"/>
 <mapEntry key="org.eclipse.jdt.core.manipulation/debug" value="true"/>
 <mapEntry key="org.eclipse.net4j.jms.admin/debug" value="true"/>
-<mapEntry key="org.eclipse.net4j.buddies.common/debug.model" value="false"/>
 <mapEntry key="org.eclipse.jdt.core/debug/cpresolution" value="false"/>
 <mapEntry key="org.eclipse.wst.common.project.facet.core/activation" value="false"/>
 <mapEntry key="org.eclipse.help.ui/debug/embeddedBrowser" value="false"/>
@@ -398,8 +391,8 @@
 <mapEntry key="org.eclipse.ui.workbench/debug" value="false"/>
 <mapEntry key="org.eclipse.jdt.ui/perf/content_assist/extensions" value="1000"/>
 <mapEntry key="org.eclipse.osgi/debug/filter" value="false"/>
+<mapEntry key="org.eclipse.net4j.buddies.common/debug" value="true"/>
 <mapEntry key="org.eclipse.debug.core/debug" value="false"/>
-<mapEntry key="org.eclipse.net4j.buddies.common/debug.protocol" value="true"/>
 <mapEntry key="org.eclipse.core.resources/debug" value="false"/>
 <mapEntry key="org.eclipse.jdt.core/debug/zipaccess" value="false"/>
 <mapEntry key="org.eclipse.jem.util/debug/logtracefile" value="false"/>
@@ -429,13 +422,16 @@
 <mapEntry key="org.eclipse.datatools.connectivity/debug" value="true"/>
 <mapEntry key="org.eclipse.jet/debug/modelLoaderExtensions" value="false"/>
 <mapEntry key="org.eclipse.wst.sse.core/debug" value="true"/>
+<mapEntry key="org.eclipse.net4j.buddies.common/debug.protocol" value="true"/>
 <mapEntry key="org.eclipse.ui/trace/handlers.verbose" value="false"/>
 <mapEntry key="org.eclipse.emf.validation/debug" value="true"/>
 <mapEntry key="org.eclipse.wst.sse.ui/storagemodelprovider/elementstatelistener" value="false"/>
+<mapEntry key="org.eclipse.net4j.buddies.common/debug.revision" value="true"/>
 <mapEntry key="org.eclipse.net4j.buddies.server/debug.revision" value="false"/>
 <mapEntry key="org.eclipse.osgi/monitor/resources" value="false"/>
 <mapEntry key="com.ibm.datatools.core.ui/editor/log" value="true"/>
 <mapEntry key="org.eclipse.emf.validation/debug/constraints/evaluation" value="false"/>
+<mapEntry key="org.eclipse.net4j.buddies.common/debug.model" value="false"/>
 <mapEntry key="org.eclipse.jet/debug/xpath/compilations" value="false"/>
 <mapEntry key="org.eclipse.ui/perf/part.control" value="800"/>
 <mapEntry key="org.eclipse.net4j/debug.buffer.stream" value="false"/>

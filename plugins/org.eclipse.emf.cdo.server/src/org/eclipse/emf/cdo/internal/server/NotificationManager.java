@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.INotificationManager;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -46,7 +46,7 @@ public class NotificationManager extends Lifecycle implements INotificationManag
     this.repository = repository;
   }
 
-  public void notifyCommit(Session session, CommitContext commitContext)
+  public void notifyCommit(Session session, IStoreAccessor.CommitContext commitContext)
   {
     CDORevisionDelta[] arrayOfDeltas = commitContext.getDirtyObjectDeltas();
     CDOID[] arrayOfDetachedObjects = commitContext.getDetachedObjects();

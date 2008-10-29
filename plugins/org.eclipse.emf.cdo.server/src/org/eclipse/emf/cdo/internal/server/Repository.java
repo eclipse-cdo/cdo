@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -324,7 +324,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
     if (handler == null)
     {
-      handler = StoreThreadLocal.getStoreReader();
+      handler = StoreThreadLocal.getAccessor();
     }
 
     return handler;
@@ -467,7 +467,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   /**
    * @since 2.0
    */
-  public void notifyWriteAccessHandlers(Transaction transaction, IStoreWriter.CommitContext commitContext)
+  public void notifyWriteAccessHandlers(Transaction transaction, IStoreAccessor.CommitContext commitContext)
   {
     WriteAccessHandler[] handlers;
     synchronized (writeAccessHandlers)

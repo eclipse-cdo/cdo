@@ -16,8 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
-import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
@@ -84,23 +83,23 @@ public class NoClassMapping implements IClassMapping
     return null;
   }
 
-  public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision)
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision)
   {
   }
 
-  public void detachObject(IDBStoreWriter storeWriter, CDOID id, long revised)
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised)
   {
   }
 
-  public void readRevision(IDBStoreReader storeReader, CDORevision revision, int referenceChunk)
+  public void readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk)
   {
   }
 
-  public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp, int referenceChunk)
+  public void readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk)
   {
   }
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version, int referenceChunk)
+  public void readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk)
   {
   }
 }

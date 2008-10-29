@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -50,7 +50,7 @@ public class RepositoryTest extends AbstractCDOTest
 
       CDOFeature nameFeature = customerClass.lookupFeature("name");
 
-      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext)
+      public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext)
           throws RuntimeException
       {
         CDORevision[] newObjects = commitContext.getNewObjects();

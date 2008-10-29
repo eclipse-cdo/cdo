@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.StoreChunkReader;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreChunkReader;
-import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreReader;
 
 import java.util.List;
 
@@ -23,15 +22,15 @@ import java.util.List;
  */
 public class HibernateStoreChunkReader extends StoreChunkReader implements IHibernateStoreChunkReader
 {
-  public HibernateStoreChunkReader(IHibernateStoreReader storeReader, CDORevision revision, CDOFeature feature)
+  public HibernateStoreChunkReader(HibernateStoreAccessor accessor, CDORevision revision, CDOFeature feature)
   {
-    super(storeReader, revision, feature);
+    super(accessor, revision, feature);
   }
 
   @Override
-  public HibernateStoreReader getStoreReader()
+  public HibernateStoreAccessor getAccessor()
   {
-    return (HibernateStoreReader)super.getStoreReader();
+    return (HibernateStoreAccessor)super.getAccessor();
   }
 
   @Override

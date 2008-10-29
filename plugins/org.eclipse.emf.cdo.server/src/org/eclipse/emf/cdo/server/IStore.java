@@ -92,22 +92,24 @@ public interface IStore extends IRepositoryElement
    *          startup of the server while the repositories are initialized but before any user session has been opened.
    * @return a reader that can be used to read from this store in the context of the given session, never
    *         <code>null</code>.
+   * @since 2.0
    */
-  public IStoreReader getReader(ISession session);
+  public IStoreAccessor getReader(ISession session);
 
   /**
    * Returns a writer that can be used to write to this store in the context of the given view. The given view is always
    * marked as a transaction.
    * 
-   * @param view
+   * @param transaction
    *          The view that must be used as a context for write access. The store implementor is free to interpret and
    *          use the view in a manner suitable for him or ignore it at all. It is meant only as a hint. Implementor can
    *          use it as a key into a cache and/or register a
    *          {@link org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter LifecycleEventAdapter} with it to intercept
    *          cleanup on view close.
    * @return a writer that can be used to write to this store in the context of the given view, never <code>null</code>.
+   * @since 2.0
    */
-  public IStoreWriter getWriter(IView view);
+  public IStoreAccessor getWriter(ITransaction transaction);
 
   /**
    * @author Eike Stepper

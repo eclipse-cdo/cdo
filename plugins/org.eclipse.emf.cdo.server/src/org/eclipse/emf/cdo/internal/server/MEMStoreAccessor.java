@@ -24,10 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreChunkReader;
-import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.IStoreWriter;
-import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -41,7 +38,7 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, IStoreWriter
+public class MEMStoreAccessor extends StoreAccessor
 {
   private List<CDORevision> newRevisions = new ArrayList<CDORevision>();
 
@@ -50,9 +47,12 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     super(store, session);
   }
 
-  public MEMStoreAccessor(MEMStore store, IView view)
+  /**
+   * @since 2.0
+   */
+  public MEMStoreAccessor(MEMStore store, ITransaction transaction)
   {
-    super(store, view);
+    super(store, transaction);
   }
 
   @Override
@@ -61,7 +61,10 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     return (MEMStore)super.getStore();
   }
 
-  public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
+  /**
+   * @since 2.0
+   */
+  public MEMStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
   {
     return new MEMStoreChunkReader(this, revision, feature);
   }
@@ -127,6 +130,14 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
     return getStore().getRevisionByVersion(id, version);
   }
 
+  /**
+   * @since 2.0
+   */
+  public void commit()
+  {
+    // Do nothing
+  }
+
   @Override
   public void write(CommitContext context)
   {
@@ -138,12 +149,11 @@ public class MEMStoreAccessor extends StoreAccessor implements IStoreReader, ISt
   }
 
   @Override
-  public void rollback(CommitContext context)
+  protected void rollback(CommitContext context)
   {
     MEMStore store = getStore();
     synchronized (store)
     {
-      super.rollback(context);
       for (CDORevision revision : newRevisions)
       {
         store.rollbackRevision(revision);

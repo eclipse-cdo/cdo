@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -33,8 +33,8 @@ public class ResourcesQueryHandler implements IQueryHandler
 
   public void executeQuery(final CDOQueryInfo info, final IQueryContext context)
   {
-    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-    storeReader.queryResources(new IStoreReader.QueryResourcesContext()
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    accessor.queryResources(new IStoreAccessor.QueryResourcesContext()
     {
       public long getTimeStamp()
       {

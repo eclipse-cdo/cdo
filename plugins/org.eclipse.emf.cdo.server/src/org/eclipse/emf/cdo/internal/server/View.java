@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
@@ -103,8 +103,8 @@ public class View implements IView
     CDOID id = repository.getRevisionManager().getResourceID(folderID, name, timeStamp);
     if (id == null)
     {
-      IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-      id = storeReader.readResourceID(folderID, name, timeStamp);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      id = accessor.readResourceID(folderID, name, timeStamp);
     }
 
     return id;

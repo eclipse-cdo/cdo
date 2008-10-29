@@ -24,7 +24,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import java.util.Map;
 
 /**
- * 248052: CDO: UnsupportedOperationException in HibernateStoreReader
+ * 248052: CDO: UnsupportedOperationException in HibernateStoreAccessor
  * <p>
  * See https://bugs.eclipse.org/248052
  * 
@@ -32,7 +32,6 @@ import java.util.Map;
  */
 public class Bugzilla_248052_Test extends AbstractCDOTest
 {
-
   @Override
   public Map<String, Object> getTestProperties()
   {

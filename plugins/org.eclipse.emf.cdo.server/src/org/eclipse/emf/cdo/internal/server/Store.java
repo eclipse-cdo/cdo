@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IStoreReader;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -167,13 +167,16 @@ public abstract class Store extends Lifecycle implements IStore
     this.lastMetaID = lastMetaID;
   }
 
-  public final IStoreReader getReader(ISession session)
+  /**
+   * @since 2.0
+   */
+  public final IStoreAccessor getReader(ISession session)
   {
-    IStoreReader reader = null;
+    IStoreAccessor reader = null;
     StoreAccessorPool pool = getReaderPool(session, false);
     if (pool != null)
     {
-      reader = (IStoreReader)pool.removeStoreAccessor();
+      reader = pool.removeStoreAccessor();
     }
 
     if (reader == null && session != null)
@@ -184,7 +187,7 @@ public abstract class Store extends Lifecycle implements IStore
         pool = getWriterPool((IView)view, false);
         if (pool != null)
         {
-          reader = (IStoreReader)pool.removeStoreAccessor();
+          reader = pool.removeStoreAccessor();
           if (reader != null)
           {
             break;
@@ -202,18 +205,21 @@ public abstract class Store extends Lifecycle implements IStore
     return reader;
   }
 
-  public final IStoreWriter getWriter(IView view)
+  /**
+   * @since 2.0
+   */
+  public final IStoreAccessor getWriter(ITransaction transaction)
   {
-    IStoreWriter writer = null;
-    StoreAccessorPool pool = getWriterPool(view, false);
+    IStoreAccessor writer = null;
+    StoreAccessorPool pool = getWriterPool(transaction, false);
     if (pool != null)
     {
-      writer = (IStoreWriter)pool.removeStoreAccessor();
+      writer = pool.removeStoreAccessor();
     }
 
     if (writer == null)
     {
-      writer = createWriter(view);
+      writer = createWriter(transaction);
       LifecycleUtil.activate(writer);
     }
 
@@ -223,9 +229,9 @@ public abstract class Store extends Lifecycle implements IStore
   protected void releaseAccessor(StoreAccessor accessor)
   {
     StoreAccessorPool pool = null;
-    if (accessor instanceof IStoreWriter)
+    if (accessor instanceof IStoreAccessor)
     {
-      pool = getWriterPool(accessor.getView(), true);
+      pool = getWriterPool(accessor.getTransaction(), true);
     }
     else
     {
@@ -243,7 +249,7 @@ public abstract class Store extends Lifecycle implements IStore
   }
 
   /**
-   * Returns a {@link StoreAccessorPool pool} that may contain {@link IStoreReader} instances that are compatible with
+   * Returns a {@link StoreAccessorPool pool} that may contain {@link IStoreAccessor} instances that are compatible with
    * the given session. The implementor may return <code>null</code> to indicate that no pooling occurs. It's also left
    * to the implementors choice how to determine the appropriate pool instance to be used for the given session, for
    * example it could always return the same pool instance, regardless of the given session.
@@ -264,7 +270,7 @@ public abstract class Store extends Lifecycle implements IStore
   protected abstract StoreAccessorPool getReaderPool(ISession session, boolean forReleasing);
 
   /**
-   * Returns a {@link StoreAccessorPool pool} that may contain {@link IStoreWriter} instances that are compatible with
+   * Returns a {@link StoreAccessorPool pool} that may contain {@link IStoreAccessor} instances that are compatible with
    * the given session. The implementor may return <code>null</code> to indicate that no pooling occurs. It's also left
    * to the implementors choice how to determine the appropriate pool instance to be used for the given session, for
    * example it could always return the same pool instance, regardless of the given session.
@@ -285,16 +291,20 @@ public abstract class Store extends Lifecycle implements IStore
   protected abstract StoreAccessorPool getWriterPool(IView view, boolean forReleasing);
 
   /**
-   * Creates and returns a <b>new</b> {@link IStoreReader} instance. The caller of this method is responsible for
+   * Creates and returns a <b>new</b> {@link IStoreAccessor} instance. The caller of this method is responsible for
    * {@link Lifecycle#activate() activating} the new instance.
+   * 
+   * @since 2.0
    */
-  protected abstract IStoreReader createReader(ISession session);
+  protected abstract IStoreAccessor createReader(ISession session);
 
   /**
-   * Creates and returns a <b>new</b> {@link IStoreWriter} instance. The caller of this method is responsible for
+   * Creates and returns a <b>new</b> {@link IStoreAccessor} instance. The caller of this method is responsible for
    * {@link Lifecycle#activate() activating} the new instance.
+   * 
+   * @since 2.0
    */
-  protected abstract IStoreWriter createWriter(IView view);
+  protected abstract IStoreAccessor createWriter(ITransaction transaction);
 
   /**
    * @since 2.0

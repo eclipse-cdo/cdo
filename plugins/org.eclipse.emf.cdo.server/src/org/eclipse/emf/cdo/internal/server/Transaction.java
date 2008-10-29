@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -92,7 +92,7 @@ public class Transaction extends View implements ITransaction
    * @author Simon McDuff
    * @since 2.0
    */
-  public interface InternalCommitContext extends CommitContext
+  public interface InternalCommitContext extends IStoreAccessor.CommitContext
   {
     public Transaction getTransaction();
 

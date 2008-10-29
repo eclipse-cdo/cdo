@@ -115,9 +115,8 @@ public class HibernateUtil
    */
   public Session getHibernateSession()
   {
-    final HibernateStoreReader storeReader = (HibernateStoreReader)HibernateThreadContext
-        .getCurrentHibernateStoreAccessor();
-    return storeReader.getHibernateSession();
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentHibernateStoreAccessor();
+    return accessor.getHibernateSession();
   }
 
   /** Converts from a Map<String, String> to a Properties */

@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.server.MEMStore;
-import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
 
 /**
  * @author Eike Stepper
@@ -34,10 +33,10 @@ public final class StoreUtil
   /**
    * @since 2.0
    */
-  public static QueryResourcesContext.ExactMatch createExactMatchContext(final CDOID folderID, final String name,
-      final long timeStamp)
+  public static IStoreAccessor.QueryResourcesContext.ExactMatch createExactMatchContext(final CDOID folderID,
+      final String name, final long timeStamp)
   {
-    return new QueryResourcesContext.ExactMatch()
+    return new IStoreAccessor.QueryResourcesContext.ExactMatch()
     {
       private CDOID resourceID;
 

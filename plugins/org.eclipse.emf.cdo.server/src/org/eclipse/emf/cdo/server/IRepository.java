@@ -150,7 +150,7 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
      *           to indicate that the commit operation must not be executed against the backend store. This exception
      *           will be visible at the client side!
      */
-    public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreWriter.CommitContext commitContext)
+    public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext)
         throws RuntimeException;
   }
 

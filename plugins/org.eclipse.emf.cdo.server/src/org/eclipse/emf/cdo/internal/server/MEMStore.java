@@ -19,10 +19,10 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreUtil;
-import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
-import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext.ExactMatch;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -246,7 +246,8 @@ public class MEMStore extends LongIDStore implements IMEMStore
    */
   public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
   {
-    ExactMatch context = StoreUtil.createExactMatchContext(folderID, name, timeStamp);
+    IStoreAccessor.QueryResourcesContext.ExactMatch context = StoreUtil.createExactMatchContext(folderID, name,
+        timeStamp);
     queryResources(context);
     return context.getResourceID();
   }
@@ -254,7 +255,7 @@ public class MEMStore extends LongIDStore implements IMEMStore
   /**
    * @since 2.0
    */
-  public synchronized void queryResources(QueryResourcesContext context)
+  public synchronized void queryResources(IStoreAccessor.QueryResourcesContext context)
   {
     CDOID folderID = context.getFolderID();
     String name = context.getName();
@@ -302,10 +303,13 @@ public class MEMStore extends LongIDStore implements IMEMStore
     return new MEMStoreAccessor(this, session);
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
-  public MEMStoreAccessor createWriter(IView view)
+  public MEMStoreAccessor createWriter(ITransaction transaction)
   {
-    return new MEMStoreAccessor(this, view);
+    return new MEMStoreAccessor(this, transaction);
   }
 
   /**

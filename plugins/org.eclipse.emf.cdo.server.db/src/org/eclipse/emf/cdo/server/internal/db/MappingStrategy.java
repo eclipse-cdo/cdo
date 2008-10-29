@@ -22,12 +22,12 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourceFolderClass;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreUtil;
-import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
-import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext.ExactMatch;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -142,7 +142,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     return referenceTables;
   }
 
-  public CDOClassRef getClassRef(IDBStoreReader storeReader, int classID)
+  public CDOClassRef getClassRef(IDBStoreAccessor accessor, int classID)
   {
     CDOClassRef classRef = classRefs.get(classID);
     if (classRef == null)
@@ -171,7 +171,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
       }
 
       default:
-        classRef = storeReader.readClassRef(classID);
+        classRef = accessor.readClassRef(classID);
       }
 
       classRefs.put(classID, classRef);
@@ -268,11 +268,11 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     return builder.toString();
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreReader storeReader)
+  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor accessor)
   {
     List<CDOClass> classes = getClassesWithObjectInfo();
     final Iterator<CDOClass> classIt = classes.iterator();
-    return new ObjectIDIterator(this, storeReader)
+    return new ObjectIDIterator(this, accessor)
     {
       @Override
       protected ResultSet getNextResultSet()
@@ -295,7 +295,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
               try
               {
-                return storeReader.getStatement().executeQuery(sql);
+                return accessor.getStatement().executeQuery(sql);
               }
               catch (SQLException ex)
               {
@@ -310,14 +310,15 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     };
   }
 
-  public CDOID readResourceID(IDBStoreReader storeReader, CDOID folderID, String name, long timeStamp)
+  public CDOID readResourceID(IDBStoreAccessor accessor, CDOID folderID, String name, long timeStamp)
   {
-    ExactMatch context = StoreUtil.createExactMatchContext(folderID, name, timeStamp);
-    queryResources(storeReader, context);
+    IStoreAccessor.QueryResourcesContext.ExactMatch context = StoreUtil.createExactMatchContext(folderID, name,
+        timeStamp);
+    queryResources(accessor, context);
     return context.getResourceID();
   }
 
-  public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context)
+  public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
   {
     CDOID folderID = context.getFolderID();
     String name = context.getName();
@@ -343,7 +344,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
       try
       {
-        resultSet = storeReader.getStatement().executeQuery(sql);
+        resultSet = accessor.getStatement().executeQuery(sql);
         while (resultSet.next())
         {
           long longID = resultSet.getLong(1);

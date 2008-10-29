@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
@@ -52,7 +52,7 @@ import java.util.List;
  */
 public class HibernatePackageHandler extends Lifecycle
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStoreWriter.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernatePackageHandler.class);
 
   private Configuration configuration;
 

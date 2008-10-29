@@ -23,8 +23,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -61,9 +60,12 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     this(store, session, true);
   }
 
-  protected StoreAccessor(Store store, IView view)
+  /**
+   * @since 2.0
+   */
+  protected StoreAccessor(Store store, ITransaction transaction)
   {
-    this(store, view, false);
+    this(store, transaction, false);
   }
 
   public Store getStore()
@@ -78,19 +80,22 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
   public ISession getSession()
   {
-    if (context instanceof IView)
+    if (context instanceof ITransaction)
     {
-      return ((IView)context).getSession();
+      return ((ITransaction)context).getSession();
     }
 
     return (ISession)context;
   }
 
-  public IView getView()
+  /**
+   * @since 2.0
+   */
+  public ITransaction getTransaction()
   {
-    if (context instanceof IView)
+    if (context instanceof ITransaction)
     {
-      return (IView)context;
+      return (ITransaction)context;
     }
 
     return null;
@@ -108,7 +113,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing transaction: {0}", getView());
+      TRACER.format("Writing transaction: {0}", getTransaction());
     }
 
     commitContexts.add(context);
@@ -135,24 +140,11 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 2.0
    */
-  public void commit()
-  {
-
-  }
-
-  public void rollback(CommitContext commitContext)
-  {
-
-  }
-
-  /**
-   * @since 2.0
-   */
   public void rollback()
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Rolling back transaction: {0}", getView());
+      TRACER.format("Rolling back transaction: {0}", getTransaction());
     }
 
     for (CommitContext commitContext : commitContexts)
@@ -161,13 +153,18 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
   }
 
+  protected abstract void rollback(IStoreAccessor.CommitContext commitContext);
+
   public final void release()
   {
     store.releaseAccessor(this);
     commitContexts.clear();
   }
 
-  protected void addIDMappings(CommitContext context)
+  /**
+   * @since 2.0
+   */
+  protected void addIDMappings(IStoreAccessor.CommitContext context)
   {
     if (store instanceof LongIDStore)
     {

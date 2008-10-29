@@ -46,16 +46,28 @@ public interface IClassMapping
 
   public IReferenceMapping getReferenceMapping(CDOFeature feature);
 
-  public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision);
+  /**
+   * @since 2.0
+   */
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision);
 
   /**
    * @since 2.0
    */
-  public void detachObject(IDBStoreWriter storeWriter, CDOID id, long revised);
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised);
 
-  public void readRevision(IDBStoreReader storeReader, CDORevision revision, int referenceChunk);
+  /**
+   * @since 2.0
+   */
+  public void readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk);
 
-  public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp, int referenceChunk);
+  /**
+   * @since 2.0
+   */
+  public void readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk);
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version, int referenceChunk);
+  /**
+   * @since 2.0
+   */
+  public void readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk);
 }

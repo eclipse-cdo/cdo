@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.model.core.CDOObjectClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
 /**
  * @author Eike Stepper
@@ -38,9 +38,9 @@ public class RootClassMapping extends ClassMapping
   }
 
   @Override
-  protected void checkDuplicateResources(IDBStoreReader storeReader, CDORevision revision) throws IllegalStateException
+  protected void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException
   {
-    // TODO: implement RootClassMapping.checkDuplicateResources(storeReader, revision)
+    // TODO: implement RootClassMapping.checkDuplicateResources(accessor, revision)
     throw new UnsupportedOperationException();
   }
 

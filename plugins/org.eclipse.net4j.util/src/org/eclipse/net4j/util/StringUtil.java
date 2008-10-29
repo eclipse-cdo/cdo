@@ -10,6 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 /**
  * @author Eike Stepper
  */
@@ -21,6 +24,17 @@ public final class StringUtil
 
   private StringUtil()
   {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static String formatException(Throwable t)
+  {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream s = new PrintStream(baos);
+    t.printStackTrace(s);
+    return baos.toString();
   }
 
   public static String replace(String text, String[] find, String[] replace)

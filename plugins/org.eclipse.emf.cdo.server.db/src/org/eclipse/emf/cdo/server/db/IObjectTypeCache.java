@@ -19,7 +19,13 @@ import org.eclipse.emf.cdo.common.model.CDOClassRef;
  */
 public interface IObjectTypeCache
 {
-  public CDOClassRef getObjectType(IDBStoreReader storeReader, CDOID id);
+  /**
+   * @since 2.0
+   */
+  public CDOClassRef getObjectType(IDBStoreAccessor accessor, CDOID id);
 
-  public void putObjectType(IDBStoreWriter storeWriter, CDOID id, CDOClass type);
+  /**
+   * @since 2.0
+   */
+  public void putObjectType(IDBStoreAccessor accessor, CDOID id, CDOClass type);
 }

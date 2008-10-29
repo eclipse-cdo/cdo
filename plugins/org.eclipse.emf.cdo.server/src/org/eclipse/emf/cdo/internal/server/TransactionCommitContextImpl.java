@@ -24,13 +24,14 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IStoreWriter;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -45,14 +46,14 @@ import java.util.concurrent.ConcurrentMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class TransactionCommitContextImpl implements IStoreWriter.CommitContext, Transaction.InternalCommitContext
+public class TransactionCommitContextImpl implements IStoreAccessor.CommitContext, Transaction.InternalCommitContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION,
       TransactionCommitContextImpl.class);
 
   private TransactionPackageManager packageManager;
 
-  private IStoreWriter storeWriter;
+  private IStoreAccessor accessor;
 
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
@@ -171,10 +172,10 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   public void preCommit()
   {
     // Allocate a store writer
-    storeWriter = transaction.getRepository().getStore().getWriter(transaction);
+    accessor = transaction.getRepository().getStore().getWriter(transaction);
 
     // Make the store writer available in a ThreadLocal variable
-    StoreThreadLocal.setStoreReader(storeWriter);
+    StoreThreadLocal.setAccessor(accessor);
   }
 
   public void setNewPackages(CDOPackage[] newPackages)
@@ -201,7 +202,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   {
     try
     {
-      storeWriter.commit();
+      accessor.commit();
       updateInfraStructure();
     }
     catch (RuntimeException ex)
@@ -233,7 +234,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
       repository.notifyWriteAccessHandlers(transaction, this);
       detachObjects();
-      storeWriter.write(this);
+      accessor.write(this);
     }
     catch (RuntimeException ex)
     {
@@ -249,7 +250,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
   {
     OM.LOG.error(ex);
     String storeClass = transaction.getRepository().getStore().getClass().getSimpleName();
-    rollbackMessage = "Rollback in " + storeClass + ": " + ex.getMessage();
+    rollbackMessage = "Rollback in " + storeClass + ": " + StringUtil.formatException(ex);
     rollback();
   }
 
@@ -271,7 +272,7 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
     finally
     {
       StoreThreadLocal.release();
-      storeWriter = null;
+      accessor = null;
       timeStamp = CDORevision.UNSPECIFIED_DATE;
       packageManager.clear();
       metaIDRanges.clear();
@@ -381,11 +382,11 @@ public class TransactionCommitContextImpl implements IStoreWriter.CommitContext,
 
   protected void rollback()
   {
-    if (storeWriter != null)
+    if (accessor != null)
     {
       try
       {
-        storeWriter.rollback();
+        accessor.rollback();
       }
       catch (RuntimeException ex)
       {

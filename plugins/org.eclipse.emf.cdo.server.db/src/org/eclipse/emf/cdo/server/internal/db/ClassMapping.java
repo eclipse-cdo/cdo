@@ -19,8 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
-import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -168,7 +167,7 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected int sqlUpdate(IDBStoreWriter storeWriter, String sql) throws DBException
+  protected int sqlUpdate(IDBStoreAccessor accessor, String sql) throws DBException
   {
     if (TRACER.isEnabled())
     {
@@ -177,7 +176,7 @@ public abstract class ClassMapping implements IClassMapping
 
     try
     {
-      Statement statement = storeWriter.getStatement();
+      Statement statement = accessor.getStatement();
       return statement.executeUpdate(sql);
     }
     catch (SQLException ex)
@@ -417,40 +416,40 @@ public abstract class ClassMapping implements IClassMapping
 
   protected abstract boolean hasFullRevisionInfo();
 
-  public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision)
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision)
   {
     if (revision.getVersion() > 1 && hasFullRevisionInfo())
     {
-      writeRevisedRow(storeWriter, (InternalCDORevision)revision);
+      writeRevisedRow(accessor, (InternalCDORevision)revision);
     }
 
     if (revision.isResourceFolder() || revision.isResource())
     {
-      checkDuplicateResources(storeWriter, revision);
+      checkDuplicateResources(accessor, revision);
     }
 
     // Write attribute table always (even without modeled attributes!)
-    writeAttributes(storeWriter, (InternalCDORevision)revision);
+    writeAttributes(accessor, (InternalCDORevision)revision);
 
     // Write reference tables only if they exist
     if (referenceMappings != null)
     {
-      writeReferences(storeWriter, (InternalCDORevision)revision);
+      writeReferences(accessor, (InternalCDORevision)revision);
     }
   }
 
-  protected abstract void checkDuplicateResources(IDBStoreReader storeReader, CDORevision revision)
+  protected abstract void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision)
       throws IllegalStateException;
 
-  public void detachObject(IDBStoreWriter storeWriter, CDOID id, long revised)
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     if (hasFullRevisionInfo())
     {
-      writeRevisedRow(storeWriter, id, revised);
+      writeRevisedRow(accessor, id, revised);
     }
   }
 
-  protected void writeRevisedRow(IDBStoreWriter storeWriter, InternalCDORevision revision)
+  protected void writeRevisedRow(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE ");
@@ -467,10 +466,10 @@ public abstract class ClassMapping implements IClassMapping
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
     builder.append("=");
     builder.append(revision.getVersion() - 1);
-    sqlUpdate(storeWriter, builder.toString());
+    sqlUpdate(accessor, builder.toString());
   }
 
-  protected void writeRevisedRow(IDBStoreWriter storeWriter, CDOID id, long revised)
+  protected void writeRevisedRow(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE ");
@@ -486,10 +485,10 @@ public abstract class ClassMapping implements IClassMapping
     builder.append(" AND ");
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
     builder.append("=0");
-    sqlUpdate(storeWriter, builder.toString());
+    sqlUpdate(accessor, builder.toString());
   }
 
-  protected void writeAttributes(IDBStoreWriter storeWriter, InternalCDORevision revision)
+  protected void writeAttributes(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO ");
@@ -507,50 +506,50 @@ public abstract class ClassMapping implements IClassMapping
     }
 
     builder.append(")");
-    sqlUpdate(storeWriter, builder.toString());
+    sqlUpdate(accessor, builder.toString());
   }
 
-  protected void writeReferences(IDBStoreWriter storeWriter, InternalCDORevision revision)
+  protected void writeReferences(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
-      referenceMapping.writeReference(storeWriter, revision);
+      referenceMapping.writeReference(accessor, revision);
     }
   }
 
-  public void readRevision(IDBStoreReader storeReader, CDORevision revision, int referenceChunk)
+  public void readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk)
   {
     String where = mappingStrategy.createWhereClause(CDORevision.UNSPECIFIED_DATE);
-    readRevision(storeReader, (InternalCDORevision)revision, where, true, referenceChunk);
+    readRevision(accessor, (InternalCDORevision)revision, where, true, referenceChunk);
   }
 
-  public void readRevisionByTime(IDBStoreReader storeReader, CDORevision revision, long timeStamp, int referenceChunk)
+  public void readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk)
   {
     String where = mappingStrategy.createWhereClause(timeStamp);
-    readRevision(storeReader, (InternalCDORevision)revision, where, true, referenceChunk);
+    readRevision(accessor, (InternalCDORevision)revision, where, true, referenceChunk);
   }
 
-  public void readRevisionByVersion(IDBStoreReader storeReader, CDORevision revision, int version, int referenceChunk)
+  public void readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
-    readRevision(storeReader, (InternalCDORevision)revision, where, false, referenceChunk);
+    readRevision(accessor, (InternalCDORevision)revision, where, false, referenceChunk);
     ((InternalCDORevision)revision).setVersion(version);
   }
 
-  protected void readRevision(IDBStoreReader storeReader, InternalCDORevision revision, String where,
+  protected void readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, String where,
       boolean readVersion, int referenceChunk)
   {
     // Read attribute table always (even without modeled attributes!)
-    readAttributes(storeReader, revision, where, readVersion);
+    readAttributes(accessor, revision, where, readVersion);
 
     // Read reference tables only if they exist
     if (referenceMappings != null)
     {
-      readReferences(storeReader, revision, referenceChunk);
+      readReferences(accessor, revision, referenceChunk);
     }
   }
 
-  protected void readAttributes(IDBStoreReader storeReader, InternalCDORevision revision, String where,
+  protected void readAttributes(IDBStoreAccessor accessor, InternalCDORevision revision, String where,
       boolean readVersion)
   {
     long id = CDOIDUtil.getLong(revision.getID());
@@ -570,7 +569,7 @@ public abstract class ClassMapping implements IClassMapping
 
     try
     {
-      resultSet = storeReader.getStatement().executeQuery(sql);
+      resultSet = accessor.getStatement().executeQuery(sql);
       if (!resultSet.next())
       {
         throw new IllegalStateException("Revision not found: " + id);
@@ -609,11 +608,11 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void readReferences(IDBStoreReader storeReader, InternalCDORevision revision, int referenceChunk)
+  protected void readReferences(IDBStoreAccessor accessor, InternalCDORevision revision, int referenceChunk)
   {
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
-      referenceMapping.readReference(storeReader, revision, referenceChunk);
+      referenceMapping.readReference(accessor, revision, referenceChunk);
     }
   }
 }

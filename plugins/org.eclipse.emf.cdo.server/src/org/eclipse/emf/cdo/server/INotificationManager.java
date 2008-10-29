@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.internal.server.Session;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
 
 /**
  * @author Simon McDuff
@@ -20,5 +19,5 @@ import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
  */
 public interface INotificationManager extends IRepositoryElement
 {
-  public void notifyCommit(Session session, CommitContext commitContext);
+  public void notifyCommit(Session session, IStoreAccessor.CommitContext commitContext);
 }

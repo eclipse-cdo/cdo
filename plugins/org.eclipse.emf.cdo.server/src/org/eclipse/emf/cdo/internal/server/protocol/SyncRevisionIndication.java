@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -55,10 +55,10 @@ public class SyncRevisionIndication extends CDOReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    IStoreReader reader = StoreThreadLocal.getStoreReader();
+    IStoreAccessor reader = StoreThreadLocal.getAccessor();
     if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Refreshing reader : " + reader);
+      PROTOCOL_TRACER.format("Refreshing store accessor: " + reader);
     }
 
     reader.refreshRevisions();

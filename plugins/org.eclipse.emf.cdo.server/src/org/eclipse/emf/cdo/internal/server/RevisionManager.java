@@ -20,8 +20,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
-import org.eclipse.emf.cdo.server.IStoreReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -70,19 +70,22 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
   {
-    IStoreReader storeReader = null;
+    IStoreAccessor accessor = null;
     revision = super.verifyRevision(revision, referenceChunk);
     if (repository.isVerifyingRevisions())
     {
-      storeReader = StoreThreadLocal.getStoreReader();
-      revision = (InternalCDORevision)storeReader.verifyRevision(revision);
+      accessor = StoreThreadLocal.getAccessor();
+      revision = (InternalCDORevision)accessor.verifyRevision(revision);
     }
 
-    ensureChunks(revision, referenceChunk, storeReader);
+    ensureChunks(revision, referenceChunk, accessor);
     return revision;
   }
 
-  protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreReader storeReader)
+  /**
+   * @since 2.0
+   */
+  protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreAccessor accessor)
   {
     CDOClass cdoClass = revision.getCDOClass();
     CDOFeature[] features = cdoClass.getAllFeatures();
@@ -93,19 +96,22 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       {
         MoveableList<Object> list = revision.getList(feature);
         int chunkEnd = Math.min(referenceChunk, list.size());
-        storeReader = ensureChunk(revision, feature, storeReader, list, 0, chunkEnd);
+        accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
       }
     }
   }
 
-  public IStoreReader ensureChunk(InternalCDORevision revision, CDOFeature feature, int chunkStart, int chunkEnd)
+  /**
+   * @since 2.0
+   */
+  public IStoreAccessor ensureChunk(InternalCDORevision revision, CDOFeature feature, int chunkStart, int chunkEnd)
   {
     MoveableList<Object> list = revision.getList(feature);
     chunkEnd = Math.min(chunkEnd, list.size());
-    return ensureChunk(revision, feature, StoreThreadLocal.getStoreReader(), list, chunkStart, chunkEnd);
+    return ensureChunk(revision, feature, StoreThreadLocal.getAccessor(), list, chunkStart, chunkEnd);
   }
 
-  protected IStoreReader ensureChunk(InternalCDORevision revision, CDOFeature feature, IStoreReader storeReader,
+  protected IStoreAccessor ensureChunk(InternalCDORevision revision, CDOFeature feature, IStoreAccessor accessor,
       MoveableList<Object> list, int chunkStart, int chunkEnd)
   {
     IStoreChunkReader chunkReader = null;
@@ -125,12 +131,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
         {
           if (chunkReader == null)
           {
-            if (storeReader == null)
+            if (accessor == null)
             {
-              storeReader = StoreThreadLocal.getStoreReader();
+              accessor = StoreThreadLocal.getAccessor();
             }
 
-            chunkReader = storeReader.createChunkReader(revision, feature);
+            chunkReader = accessor.createChunkReader(revision, feature);
           }
 
           int toIndex = j;
@@ -153,12 +159,12 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     {
       if (chunkReader == null)
       {
-        if (storeReader == null)
+        if (accessor == null)
         {
-          storeReader = StoreThreadLocal.getStoreReader();
+          accessor = StoreThreadLocal.getAccessor();
         }
 
-        chunkReader = storeReader.createChunkReader(revision, feature);
+        chunkReader = accessor.createChunkReader(revision, feature);
       }
 
       int toIndex = chunkEnd;
@@ -186,14 +192,14 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       }
     }
 
-    return storeReader;
+    return accessor;
   }
 
   @Override
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-    return (InternalCDORevision)storeReader.readRevision(id, referenceChunk);
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    return (InternalCDORevision)accessor.readRevision(id, referenceChunk);
   }
 
   @Override
@@ -201,8 +207,8 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     if (getRepository().isSupportingAudits())
     {
-      IStoreReader storeReader = StoreThreadLocal.getStoreReader();
-      return (InternalCDORevision)storeReader.readRevisionByTime(id, referenceChunk, timeStamp);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      return (InternalCDORevision)accessor.readRevisionByTime(id, referenceChunk, timeStamp);
     }
 
     // TODO Simon*: Is this check necessary here?
@@ -221,10 +227,10 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     if (getRepository().isSupportingAudits())
     {
-      return (InternalCDORevision)storeReader.readRevisionByVersion(id, referenceChunk, version);
+      return (InternalCDORevision)accessor.readRevisionByVersion(id, referenceChunk, version);
     }
 
     InternalCDORevision revision = loadRevision(id, referenceChunk);
@@ -239,11 +245,11 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   @Override
   protected List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    IStoreReader storeReader = StoreThreadLocal.getStoreReader();
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     for (CDOID id : ids)
     {
-      InternalCDORevision revision = (InternalCDORevision)storeReader.readRevision(id, referenceChunk);
+      InternalCDORevision revision = (InternalCDORevision)accessor.readRevision(id, referenceChunk);
       revisions.add(revision);
     }
 

@@ -18,7 +18,7 @@ public final class StoreThreadLocal
 {
   private static final ThreadLocal<ISession> SESSION = new InheritableThreadLocal<ISession>();
 
-  private static final ThreadLocal<IStoreReader> STORE_READER = new InheritableThreadLocal<IStoreReader>();
+  private static final ThreadLocal<IStoreAccessor> ACCESSOR = new InheritableThreadLocal<IStoreAccessor>();
 
   private StoreThreadLocal()
   {
@@ -27,7 +27,7 @@ public final class StoreThreadLocal
   public static void setSession(ISession session)
   {
     SESSION.set(session);
-    STORE_READER.set(null);
+    ACCESSOR.set(null);
   }
 
   /**
@@ -48,33 +48,33 @@ public final class StoreThreadLocal
     return session;
   }
 
-  public static void setStoreReader(IStoreReader storeReader)
+  public static void setAccessor(IStoreAccessor accessor)
   {
-    SESSION.set(storeReader.getSession());
-    STORE_READER.set(storeReader);
+    SESSION.set(accessor.getSession());
+    ACCESSOR.set(accessor);
   }
 
-  public static IStoreReader getStoreReader()
+  public static IStoreAccessor getAccessor()
   {
-    IStoreReader storeReader = STORE_READER.get();
-    if (storeReader == null)
+    IStoreAccessor accessor = ACCESSOR.get();
+    if (accessor == null)
     {
       ISession session = getSession();
       IStore store = session.getSessionManager().getRepository().getStore();
-      storeReader = store.getReader(session);
-      STORE_READER.set(storeReader);
+      accessor = store.getReader(session);
+      ACCESSOR.set(accessor);
     }
 
-    return storeReader;
+    return accessor;
   }
 
   public static void release()
   {
-    IStoreReader storeReader = STORE_READER.get();
-    if (storeReader != null)
+    IStoreAccessor accessor = ACCESSOR.get();
+    if (accessor != null)
     {
-      storeReader.release();
-      STORE_READER.set(null);
+      accessor.release();
+      ACCESSOR.set(null);
     }
 
     SESSION.set(null);

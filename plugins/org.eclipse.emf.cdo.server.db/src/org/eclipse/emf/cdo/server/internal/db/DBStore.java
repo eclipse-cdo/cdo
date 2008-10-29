@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.internal.server.LongIDStore;
 import org.eclipse.emf.cdo.internal.server.StoreAccessorPool;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -136,15 +137,15 @@ public class DBStore extends LongIDStore implements IDBStore
   }
 
   @Override
-  protected DBStoreReader createReader(ISession session) throws DBException
+  protected DBStoreAccessor createReader(ISession session) throws DBException
   {
-    return new DBStoreReader(this, session);
+    return new DBStoreAccessor(this, session);
   }
 
   @Override
-  protected DBStoreWriter createWriter(IView view) throws DBException
+  protected DBStoreAccessor createWriter(ITransaction transaction) throws DBException
   {
-    return new DBStoreWriter(this, view);
+    return new DBStoreAccessor(this, transaction);
   }
 
   public synchronized int getNextPackageID()
@@ -180,10 +181,10 @@ public class DBStore extends LongIDStore implements IDBStore
   {
     try
     {
-      DBStoreWriter storeWriter = (DBStoreWriter)getWriter(null);
-      StoreThreadLocal.setStoreReader(storeWriter);
+      DBStoreAccessor accessor = (DBStoreAccessor)getWriter(null);
+      StoreThreadLocal.setAccessor(accessor);
 
-      Connection connection = storeWriter.getConnection();
+      Connection connection = accessor.getConnection();
       long maxObjectID = mappingStrategy.repairAfterCrash(dbAdapter, connection);
       long maxMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB);
 

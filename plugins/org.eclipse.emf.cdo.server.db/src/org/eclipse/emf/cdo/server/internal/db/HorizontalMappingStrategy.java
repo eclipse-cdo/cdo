@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -64,12 +64,12 @@ public class HorizontalMappingStrategy extends MappingStrategy
     this.objectTypeCache = objectTypeCache;
   }
 
-  public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id)
+  public CDOClassRef readObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    return objectTypeCache.getObjectType(storeReader, id);
+    return objectTypeCache.getObjectType(accessor, id);
   }
 
-  protected CDOClassRef readObjectTypeFromClassesWithObjectInfo(IDBStoreReader storeReader, CDOID id)
+  protected CDOClassRef readObjectTypeFromClassesWithObjectInfo(IDBStoreAccessor accessor, CDOID id)
   {
     String prefix = "SELECT DISTINCT " + CDODBSchema.ATTRIBUTES_CLASS + " FROM ";
     String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
@@ -91,11 +91,11 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
           try
           {
-            resultSet = storeReader.getStatement().executeQuery(sql);
+            resultSet = accessor.getStatement().executeQuery(sql);
             if (resultSet.next())
             {
               int classID = resultSet.getInt(1);
-              return getClassRef(storeReader, classID);
+              return getClassRef(accessor, classID);
             }
           }
           catch (SQLException ex)

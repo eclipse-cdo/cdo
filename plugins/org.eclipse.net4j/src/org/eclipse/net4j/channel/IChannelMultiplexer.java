@@ -30,6 +30,7 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
    * @since 2.0
    */
   public static final long NO_CHANNEL_TIMEOUT = Long.MAX_VALUE;
+
   /**
    * Indicates to use the timeout that is configured via debug property <code>channel.timeout</code> (see .options file)
    * which has a default of 10 seconds.

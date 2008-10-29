@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.server.IStoreReader.QueryResourcesContext;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.ServerInfo;
 
 import org.eclipse.net4j.db.IDBAdapter;
@@ -91,24 +91,27 @@ public interface IMappingStrategy
   /**
    * @since 2.0
    */
-  public CDOClassRef getClassRef(IDBStoreReader storeReader, int classID);
+  public CDOClassRef getClassRef(IDBStoreAccessor accessor, int classID);
 
   /**
    * @since 2.0
    */
-  public CloseableIterator<CDOID> readObjectIDs(IDBStoreReader storeReader);
-
-  public CDOClassRef readObjectType(IDBStoreReader storeReader, CDOID id);
+  public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor accessor);
 
   /**
    * @since 2.0
    */
-  public CDOID readResourceID(IDBStoreReader storeReader, CDOID folderID, String name, long timeStamp);
+  public CDOClassRef readObjectType(IDBStoreAccessor accessor, CDOID id);
 
   /**
    * @since 2.0
    */
-  public void queryResources(IDBStoreReader storeReader, QueryResourcesContext context);
+  public CDOID readResourceID(IDBStoreAccessor accessor, CDOID folderID, String name, long timeStamp);
+
+  /**
+   * @since 2.0
+   */
+  public void queryResources(IDBStoreAccessor accessor, IStoreAccessor.QueryResourcesContext context);
 
   /**
    * Responsible for creation of the resource tables (if dbAdapter and connection are not <code>null</code>) and for the

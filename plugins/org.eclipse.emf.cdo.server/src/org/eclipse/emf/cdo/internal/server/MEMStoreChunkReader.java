@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IStoreReader;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import java.util.List;
@@ -24,14 +24,17 @@ import java.util.List;
  */
 public class MEMStoreChunkReader extends StoreChunkReader
 {
-  public MEMStoreChunkReader(IStoreReader storeReader, CDORevision revision, CDOFeature feature)
+  /**
+   * @since 2.0
+   */
+  public MEMStoreChunkReader(IStoreAccessor accessor, CDORevision revision, CDOFeature feature)
   {
-    super(storeReader, revision, feature);
+    super(accessor, revision, feature);
   }
 
   public List<Chunk> executeRead()
   {
-    MEMStore store = getStoreReader().getStore();
+    MEMStore store = getAccessor().getStore();
     List<Chunk> chunks = getChunks();
     for (Chunk chunk : chunks)
     {
@@ -47,9 +50,12 @@ public class MEMStoreChunkReader extends StoreChunkReader
     return chunks;
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
-  public MEMStoreAccessor getStoreReader()
+  public MEMStoreAccessor getAccessor()
   {
-    return (MEMStoreAccessor)super.getStoreReader();
+    return (MEMStoreAccessor)super.getAccessor();
   }
 }

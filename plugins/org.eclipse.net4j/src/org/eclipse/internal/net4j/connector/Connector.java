@@ -507,7 +507,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public void closeChannel(InternalChannel channel) throws ConnectorException
   {
-    InternalChannel internalChannel = (InternalChannel)channel;
+    InternalChannel internalChannel = channel;
     deregisterChannelFromPeer(internalChannel, getChannelTimeout());
     removeChannel(internalChannel, false);
   }

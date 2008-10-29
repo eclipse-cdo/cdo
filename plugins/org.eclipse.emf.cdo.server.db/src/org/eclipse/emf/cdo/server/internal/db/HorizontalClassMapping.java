@@ -16,8 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IPackageManager;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
-import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
@@ -37,19 +36,19 @@ public class HorizontalClassMapping extends ClassMapping
   }
 
   @Override
-  public void writeRevision(IDBStoreWriter storeWriter, CDORevision revision)
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision)
   {
-    super.writeRevision(storeWriter, revision);
+    super.writeRevision(accessor, revision);
     if (revision.getVersion() == 1)
     {
       CDOID id = revision.getID();
       CDOClass type = revision.getCDOClass();
-      getMappingStrategy().getObjectTypeCache().putObjectType(storeWriter, id, type);
+      getMappingStrategy().getObjectTypeCache().putObjectType(accessor, id, type);
     }
   }
 
   @Override
-  protected void checkDuplicateResources(IDBStoreReader storeReader, CDORevision revision) throws IllegalStateException
+  protected void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException
   {
     // If auditing is not supported this is checked by a table index (see constructor)
     IMappingStrategy mappingStrategy = getMappingStrategy();
@@ -62,7 +61,7 @@ public class HorizontalClassMapping extends ClassMapping
       CDOID folderID = (CDOID)revision.getData().getContainerID();
       String name = (String)revision.getData().get(resourceNameFeature, 0);
 
-      if (mappingStrategy.readResourceID(storeReader, folderID, name, revision.getCreated()) != null)
+      if (mappingStrategy.readResourceID(accessor, folderID, name, revision.getCreated()) != null)
       {
         throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID);
       }

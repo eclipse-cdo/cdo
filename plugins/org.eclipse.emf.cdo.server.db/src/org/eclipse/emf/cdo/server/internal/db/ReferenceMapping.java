@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
-import org.eclipse.emf.cdo.server.db.IDBStoreReader;
-import org.eclipse.emf.cdo.server.db.IDBStoreWriter;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -73,7 +71,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     return table;
   }
 
-  public void writeReference(IDBStoreWriter storeWriter, CDORevision revision)
+  public void writeReference(IDBStoreAccessor accessor, CDORevision revision)
   {
     long source = CDOIDUtil.getLong(revision.getID());
     int version = revision.getVersion();
@@ -92,11 +90,11 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       builder.append(target);
       builder.append(")");
       String sql = builder.toString();
-      getClassMapping().sqlUpdate(storeWriter, sql);
+      getClassMapping().sqlUpdate(accessor, sql);
     }
   }
 
-  public void readReference(IDBStoreReader storeReader, CDORevision revision, int referenceChunk)
+  public void readReference(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk)
   {
     MoveableList<Object> list = ((InternalCDORevision)revision).getList(getFeature());
     CDOID source = revision.getID();
@@ -112,7 +110,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
     try
     {
-      resultSet = storeReader.getStatement().executeQuery(sql);
+      resultSet = accessor.getStatement().executeQuery(sql);
       while (resultSet.next() && (referenceChunk == CDORevision.UNCHUNKED || --referenceChunk >= 0))
       {
         long target = resultSet.getLong(1);
@@ -137,7 +135,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
   public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
-    IDBStoreAccessor storeAccessor = chunkReader.getStoreReader();
+    IDBStoreAccessor storeAccessor = chunkReader.getAccessor();
     CDOID source = chunkReader.getRevision().getID();
     int version = chunkReader.getRevision().getVersion();
 

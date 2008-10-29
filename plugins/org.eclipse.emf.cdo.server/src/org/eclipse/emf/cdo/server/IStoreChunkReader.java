@@ -22,7 +22,10 @@ import java.util.List;
  */
 public interface IStoreChunkReader
 {
-  public IStoreReader getStoreReader();
+  /**
+   * @since 2.0
+   */
+  public IStoreAccessor getAccessor();
 
   public CDORevision getRevision();
 
@@ -37,7 +40,7 @@ public interface IStoreChunkReader
   /**
    * @author Eike Stepper
    */
-  public class Chunk
+  public static class Chunk
   {
     private int startIndex;
 

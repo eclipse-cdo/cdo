@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 
 import java.util.HashMap;
 

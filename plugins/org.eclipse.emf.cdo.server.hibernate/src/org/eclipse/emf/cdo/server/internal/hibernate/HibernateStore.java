@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.Store;
 import org.eclipse.emf.cdo.internal.server.StoreAccessorPool;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
@@ -128,15 +129,15 @@ public class HibernateStore extends Store implements IHibernateStore
   }
 
   @Override
-  public HibernateStoreReader createReader(ISession session)
+  public HibernateStoreAccessor createReader(ISession session)
   {
-    return new HibernateStoreReader(this, session);
+    return new HibernateStoreAccessor(this, session);
   }
 
   @Override
-  public HibernateStoreWriter createWriter(IView view)
+  public HibernateStoreAccessor createWriter(ITransaction transaction)
   {
-    return new HibernateStoreWriter(this, view);
+    return new HibernateStoreAccessor(this, transaction);
   }
 
   public synchronized int getNextPackageID()

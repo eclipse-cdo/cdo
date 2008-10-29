@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.server.IStoreWriter.CommitContext;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;

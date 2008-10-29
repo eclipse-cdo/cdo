@@ -47,6 +47,11 @@ import org.eclipse.net4j.util.security.IUserAware;
  */
 public interface IConnector extends IChannelMultiplexer, IUserAware
 {
+  /**
+   * @since 2.0
+   */
+  public static final long NO_TIMEOUT = -1;
+
   public String getURL();
 
   /**
@@ -62,23 +67,37 @@ public interface IConnector extends IChannelMultiplexer, IUserAware
   /**
    * Asynchronous connect. May leave this {@link IConnector} in a state where <code>{@link #isConnected()} == false
    * </code>.
-   * <p>
+   * 
+   * @see #waitForConnection(long)
+   * @see #connect(long)
    */
   public void connectAsync() throws ConnectorException;
 
   /**
    * Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
-   * <p>
    * 
+   * @param timeout
+   *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
+   *          connection occurs.
    * @throws ConnectorException
    */
   public boolean waitForConnection(long timeout) throws ConnectorException;
 
   /**
    * Synchronous connect. Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
-   * <p>
+   * 
+   * @param timeout
+   *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
+   *          connection occurs.
    */
   public boolean connect(long timeout) throws ConnectorException;
+
+  /**
+   * Synchronous connect with infinite timeout value. Same as {@link #connect() connect(NO_TIMEOUT)}.
+   * 
+   * @since 2.0
+   */
+  public boolean connect() throws ConnectorException;
 
   public ConnectorException disconnect();
 }

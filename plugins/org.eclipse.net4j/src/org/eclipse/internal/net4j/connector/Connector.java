@@ -257,6 +257,9 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public boolean waitForConnection(long timeout) throws ConnectorException
   {
+    final long MAX_POLL_INTERVAL = 100L;
+    boolean withTimeout = timeout != NO_TIMEOUT;
+
     try
     {
       if (TRACER.isEnabled())
@@ -264,14 +267,26 @@ public abstract class Connector extends Container<IChannel> implements InternalC
         TRACER.trace("Waiting for connection...");
       }
 
-      do
+      for (;;)
       {
+        long t = MAX_POLL_INTERVAL;
+        if (withTimeout)
+        {
+          t = Math.min(MAX_POLL_INTERVAL, timeout);
+          timeout -= MAX_POLL_INTERVAL;
+        }
+
+        if (t <= 0)
+        {
+          break;
+        }
+
         if (finishedNegotiating == null)
         {
           break;
         }
 
-        if (finishedNegotiating.await(Math.min(100L, timeout), TimeUnit.MILLISECONDS))
+        if (finishedNegotiating.await(t, TimeUnit.MILLISECONDS))
         {
           break;
         }
@@ -280,9 +295,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
         {
           break;
         }
-
-        timeout -= 100L;
-      } while (timeout > 0);
+      }
 
       return isConnected();
     }
@@ -296,6 +309,11 @@ public abstract class Connector extends Container<IChannel> implements InternalC
   {
     connectAsync();
     return waitForConnection(timeout);
+  }
+
+  public boolean connect() throws ConnectorException
+  {
+    return connect(NO_TIMEOUT);
   }
 
   public ConnectorException disconnect()

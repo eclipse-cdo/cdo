@@ -229,13 +229,13 @@ public abstract class Store extends Lifecycle implements IStore
   protected void releaseAccessor(StoreAccessor accessor)
   {
     StoreAccessorPool pool = null;
-    if (accessor instanceof IStoreAccessor)
+    if (accessor.isReader())
     {
-      pool = getWriterPool(accessor.getTransaction(), true);
+      pool = getReaderPool(accessor.getSession(), true);
     }
     else
     {
-      pool = getReaderPool(accessor.getSession(), true);
+      pool = getWriterPool(accessor.getTransaction(), true);
     }
 
     if (pool != null)

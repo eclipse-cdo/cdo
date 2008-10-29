@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
+import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -183,44 +185,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
   }
 
-  protected void writePackages(CDOPackage... cdoPackages)
-  {
-    for (CDOPackage cdoPackage : cdoPackages)
-    {
-      writePackage(cdoPackage);
-    }
-  }
-
-  protected void writePackage(CDOPackage cdoPackage)
-  {
-    for (CDOClass cdoClass : cdoPackage.getClasses())
-    {
-      writeClass((InternalCDOClass)cdoClass);
-    }
-  }
-
-  protected void writeClass(InternalCDOClass cdoClass)
-  {
-    for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
-    {
-      writeSuperType(cdoClass, superType);
-    }
-
-    for (CDOFeature feature : cdoClass.getFeatures())
-    {
-      writeFeature(feature);
-    }
-  }
-
-  protected void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  protected void writeFeature(CDOFeature feature)
-  {
-    throw new UnsupportedOperationException();
-  }
+  protected abstract void writePackages(CDOPackage[] cdoPackages);
 
   protected abstract void writeRevisions(CDORevision[] revisions);
 
@@ -255,4 +220,62 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * @since 2.0
    */
   protected abstract void doUnpassivate() throws Exception;
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static abstract class PackageWriter implements Runnable
+  {
+    private CDOPackage[] cdoPackages;
+
+    public PackageWriter(CDOPackage[] cdoPackages)
+    {
+      this.cdoPackages = cdoPackages;
+    }
+
+    public CDOPackage[] getCDOPackages()
+    {
+      return cdoPackages;
+    }
+
+    public void run()
+    {
+      for (CDOPackage cdoPackage : cdoPackages)
+      {
+        runPackage(cdoPackage);
+      }
+    }
+
+    protected void runPackage(CDOPackage cdoPackage)
+    {
+      writePackage((InternalCDOPackage)cdoPackage);
+      for (CDOClass cdoClass : cdoPackage.getClasses())
+      {
+        runClass((InternalCDOClass)cdoClass);
+      }
+    }
+
+    protected void runClass(InternalCDOClass cdoClass)
+    {
+      writeClass(cdoClass);
+      for (CDOClassProxy superType : cdoClass.getSuperTypeProxies())
+      {
+        writeSuperType(cdoClass, superType);
+      }
+
+      for (CDOFeature feature : cdoClass.getFeatures())
+      {
+        writeFeature((InternalCDOFeature)feature);
+      }
+    }
+
+    protected abstract void writePackage(InternalCDOPackage cdoPackage);
+
+    protected abstract void writeClass(InternalCDOClass cdoClass);
+
+    protected abstract void writeSuperType(InternalCDOClass type, CDOClassProxy superType);
+
+    protected abstract void writeFeature(InternalCDOFeature feature);
+  }
 }

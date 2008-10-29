@@ -162,7 +162,7 @@ public class MEMStoreAccessor extends StoreAccessor
   }
 
   @Override
-  protected void writePackages(CDOPackage... cdoPackages)
+  protected void writePackages(CDOPackage[] cdoPackages)
   {
     // Do nothing
   }

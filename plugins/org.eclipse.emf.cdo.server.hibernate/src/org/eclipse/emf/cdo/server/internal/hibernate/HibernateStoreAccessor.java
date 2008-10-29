@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
@@ -30,7 +29,6 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
-import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -432,7 +430,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void writePackages(CDOPackage... cdoPackages)
+  protected void writePackages(CDOPackage[] cdoPackages)
   {
     if (cdoPackages != null && cdoPackages.length != 0)
     {
@@ -441,30 +439,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
     // Set a new hibernatesession in the thread
     resetHibernateSession();
-  }
-
-  @Override
-  protected void writePackage(CDOPackage cdoPackage)
-  {
-    throw new UnsupportedOperationException("Should not be called");
-  }
-
-  @Override
-  protected void writeClass(InternalCDOClass cdoClass)
-  {
-    throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
-  }
-
-  @Override
-  protected void writeFeature(CDOFeature feature)
-  {
-    throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
-  }
-
-  @Override
-  protected void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
-  {
-    throw new UnsupportedOperationException("Should not be called, should be handled by hibernate cascade");
   }
 
   @Override

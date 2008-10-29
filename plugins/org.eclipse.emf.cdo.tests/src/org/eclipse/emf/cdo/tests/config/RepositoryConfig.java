@@ -55,7 +55,7 @@ import java.util.Map.Entry;
 public abstract class RepositoryConfig extends Config implements RepositoryProvider
 {
   public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHsqldb.HSQLDB_HORIZONTAL,
-      DBDerby.DERBY_HORIZONTAL, DBMysql.MYSQL_HORIZONTAL, Hibernate.INSTANCE };
+      DBDerby.DERBY_HORIZONTAL, DBMysql.MYSQL_HORIZONTAL };
 
   public static final String PROP_TEST_REPOSITORY = "test.repository";
 
@@ -451,35 +451,6 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
       {
         connection.close();
       }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class Hibernate extends RepositoryConfig
-  {
-    public static final Hibernate INSTANCE = new Hibernate();
-
-    public static final String MAPPING_FILE = "mappingfile";
-
-    public Hibernate()
-    {
-      super("Hibernate");
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(Props.SUPPORTING_AUDITS, "false");
-      props.put(Props.VERIFYING_REVISIONS, "false");
-    }
-
-    @Override
-    protected IStore createStore()
-    {
-      return null;
     }
   }
 }

@@ -8,7 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.hibernate;
+
+import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -18,6 +21,8 @@ import junit.framework.TestSuite;
  */
 public class AllTestsHibernate extends AllTestsAllConfigs
 {
+  public static final RepositoryConfig HIBERNATE = HibernateConfig.INSTANCE;
+
   public static Test suite()
   {
     return new AllTestsHibernate().getTestSuite("CDO Tests (Hibernate)");

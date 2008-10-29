@@ -1022,7 +1022,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    * the caller of this method. Runtime exceptions from the implementation of the {@link CDOStateMachine} are propagated
    * to the caller of this method but this should not happen in the absence of implementation errors.
    * <p>
-   * Note that this method can block for an uncertain time on the reentrant view lock!
+   * Note that this method can block for an uncertain amount of time on the reentrant view lock!
    * 
    * @param timeStamp
    *          The time stamp of the server transaction if this event was sent as a result of a successfully committed

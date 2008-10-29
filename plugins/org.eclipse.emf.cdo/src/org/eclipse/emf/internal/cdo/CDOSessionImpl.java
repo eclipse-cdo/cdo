@@ -660,7 +660,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     if (isPassiveUpdateEnabled())
     {
-      notifyInvalidation(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+      notifyInvalidation(timeStamp, dirtyOIDs, detachedObjects, excludedView, true);
     }
 
     handleChangeSubcription(deltas, detachedObjects, excludedView);
@@ -672,11 +672,11 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    */
   public void handleSyncResponse(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
-    notifyInvalidation(timestamp, dirtyOIDs, detachedObjects, null);
+    notifyInvalidation(timestamp, dirtyOIDs, detachedObjects, null, false);
   }
 
   private void notifyInvalidation(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects, CDOViewImpl excludedView)
+      Collection<CDOID> detachedObjects, CDOViewImpl excludedView, boolean async)
   {
     for (CDOIDAndVersion dirtyOID : dirtyOIDs)
     {
@@ -713,21 +713,28 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     {
       if (view != excludedView)
       {
-        QueueRunner runner = getInvalidationRunner();
-        runner.addWork(new Runnable()
+        if (async)
         {
-          public void run()
+          QueueRunner runner = getInvalidationRunner();
+          runner.addWork(new Runnable()
           {
-            try
+            public void run()
             {
-              view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+              try
+              {
+                view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+              }
+              catch (RuntimeException ex)
+              {
+                OM.LOG.error(ex);
+              }
             }
-            catch (RuntimeException ex)
-            {
-              OM.LOG.error(ex);
-            }
-          }
-        });
+          });
+        }
+        else
+        {
+          view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+        }
       }
     }
 

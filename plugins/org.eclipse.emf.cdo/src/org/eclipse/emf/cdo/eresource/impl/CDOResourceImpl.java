@@ -285,11 +285,31 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public void setModified(boolean newModified)
   {
+    boolean oldIsModified = isModified();
     eSet(EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, new Boolean(newModified));
+    if (eNotificationRequired())
+    {
+      Notification notification = new NotificationImpl(Notification.SET, oldIsModified, newModified)
+      {
+        @Override
+        public Object getNotifier()
+        {
+          return CDOResourceImpl.this;
+        }
+
+        @Override
+        public int getFeatureID(Class<?> expectedClass)
+        {
+          return RESOURCE__IS_MODIFIED;
+        }
+      };
+
+      eNotify(notification);
+    }
   }
 
   /**
@@ -658,6 +678,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     {
       CDOTransaction transaction = (CDOTransaction)view;
       transaction.commit();
+      setModified(false);
     }
     else
     {

@@ -1,28 +1,59 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="false">
-	<class entity-name="CDOResource" abstract="false" lazy="false" discriminator-value="cdoresource" table="`cdo_resources`">
-		<meta attribute="eclassName">CDOResource</meta>
+	<class entity-name="CDOResourceNode" abstract="false" lazy="false"
+		discriminator-value="cdoresourcenode" table="`cdo_resources_structure`">
+		<meta attribute="eclassName">CDOResourceNode</meta>
 		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
-		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
+		<tuplizer entity-mode="pojo"
+			class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer" />
+		<tuplizer entity-mode="dynamic-map"
+			class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer" />
+		<id type="long" name="e_id" column="e_id"
+			access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
 			<meta attribute="syntheticId">true</meta>
-			<generator class="native"/>
+			<generator class="native" />
 		</id>
-		<discriminator column="`dtype`" type="string"/>
-		<version name="e_version" column="e_version" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
+		<discriminator column="`dtype`" type="string" />
+		<version name="e_version" column="e_version"
+			access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
 			<meta attribute="syntheticVersion">true</meta>
 		</version>
-		<property name="path" type="string" not-null="true" length="255" />
-		<list name="contents" lazy="true" cascade="all,delete-orphan">
-			<key/>
-			<list-index/>
-			<element type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
-				<column name="entityName"/>
-				<column name="idString"/>
-				<column name="idBinary" length="1000"/>
-			</element>
-		</list>
+		<property name="containerID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
+			<column name="contID_Entity" unique-key="resourcepath"/>
+			<column name="contID_ID" unique-key="resourcepath"/>
+			<column name="contID_class" unique-key="resourcepath"/>
+		</property>
+		<property name="name" type="string" length="255">
+			<column name="name" unique-key="resourcepath"/>
+		</property>
+		<many-to-one name="folder" entity-name="CDOResourceFolder"
+			column="folderid" />
+		<subclass entity-name="CDOResourceFolder" abstract="false"
+			lazy="false" discriminator-value="cdoresourcefolder">
+			<meta attribute="eclassName">CDOResourceFolder</meta>
+			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
+			<list name="nodes" lazy="true" cascade="all"
+				inverse="true">
+				<key column="folderid" />
+				<list-index />
+				<one-to-many entity-name="CDOResourceNode" />
+			</list>
+		</subclass>
+		<subclass entity-name="CDOResource" abstract="false" lazy="false"
+			discriminator-value="cdoresource">
+			<meta attribute="eclassName">CDOResource</meta>
+			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
+			<list name="contents" lazy="true" cascade="all,delete-orphan">
+				<key />
+				<list-index />
+				<element
+					type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
+					<column name="entityName" />
+					<column name="idString" />
+					<column name="idBinary" length="1000" />
+				</element>
+			</list>
+		</subclass>
 	</class>
 </hibernate-mapping>

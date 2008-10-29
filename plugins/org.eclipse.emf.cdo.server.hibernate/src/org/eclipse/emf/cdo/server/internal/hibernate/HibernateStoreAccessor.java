@@ -13,10 +13,12 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -25,20 +27,26 @@ import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
+import org.eclipse.emf.cdo.spi.common.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Expression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -212,8 +220,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
   {
-    // TODO: implement HibernateStoreAccessor.readResourceID(folderID, name, timeStamp)
-    throw new UnsupportedOperationException();
+    IStoreAccessor.QueryResourcesContext.ExactMatch context = StoreUtil.createExactMatchContext(folderID, name,
+        timeStamp);
+    queryResources(context);
+    return context.getResourceID();
 
     // if (timeStamp != CDOProtocolView.UNSPECIFIED_DATE)
     // {
@@ -276,8 +286,67 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    */
   public void queryResources(QueryResourcesContext context)
   {
-    // TODO: implement HibernateStoreAccessor.queryResources(context)
-    throw new UnsupportedOperationException();
+    // logic description
+    CDOID folderID = context.getFolderID();
+    String name = context.getName();
+    boolean exactMatch = context.exactMatch();
+
+    CDOIDHibernate cdoID = null;
+    if (folderID.getType().equals(Type.NULL))
+    {
+      cdoID = null;
+    }
+    else if (folderID instanceof CDOIDHibernate)
+    {
+      cdoID = (CDOIDHibernate)folderID;
+    }
+    else if (folderID != null)
+    {
+      final long l = ((AbstractCDOIDLong)folderID).getLongValue();
+      cdoID = CDOIDHibernateFactoryImpl.getInstance().createCDOID(l, CDOResourceNodeClass.NAME);
+    }
+    final Session session = getHibernateSession();
+    final Criteria criteria = session.createCriteria(CDOResourceNodeClass.NAME);
+    if (cdoID == null)
+    {
+      criteria.add(Expression.isNull("containerID"));
+    }
+    else
+    {
+      criteria.add(Expression.eq("containerID", cdoID));
+    }
+    List<?> result = criteria.list();
+    for (Object o : result)
+    {
+      final CDORevision revision = (CDORevision)o;
+      String revisionName = (String)revision.getData().get(getResourceNameFeature(), 0);
+      boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
+          : revisionName.startsWith(name);
+
+      if (match && !context.addResource(revision.getID()))
+      {
+        // No more results allowed
+        break;
+      }
+    }
+    //
+    // final Criteria c2 = session.createCriteria(CDOResourceNodeClass.NAME);
+    // for (Object o : c2.list())
+    // {
+    // final CDORevision cr = (CDORevision)o;
+    // System.err.println(cr.getData().get(getResourceNameFeature(), 0));
+    // System.err.println(cr.getData().getContainerID());
+    // }
+  }
+
+  private CDOFeature getResourceNameFeature()
+  {
+    return getResourceNodeClass().getCDONameFeature();
+  }
+
+  private CDOResourceNodeClass getResourceNodeClass()
+  {
+    return getStore().getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceNodeClass();
   }
 
   /**

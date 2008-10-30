@@ -280,21 +280,19 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   private CDOIDHibernate getHibernateID(CDOID id)
   {
-    CDOIDHibernate folderID = null;
     if (!CDOIDUtil.isNull(id))
     {
       if (id instanceof CDOIDHibernate)
       {
-        folderID = (CDOIDHibernate)id;
+        return (CDOIDHibernate)id;
       }
-      else
-      {
-        // TODO Can this happen? When?
-        final long longID = CDOIDUtil.getLong(id);
-        folderID = CDOIDHibernateFactoryImpl.getInstance().createCDOID(longID, CDOResourceNodeClass.NAME);
-      }
+
+      // TODO Can this happen? When?
+      final long longID = CDOIDUtil.getLong(id);
+      return CDOIDHibernateFactoryImpl.getInstance().createCDOID(longID, CDOResourceNodeClass.NAME);
     }
-    return folderID;
+
+    return null;
   }
 
   private CDOFeature getResourceNameFeature()

@@ -5,7 +5,7 @@ import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.hibernate.CDOHibernateUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.teneo.TeneoUtil;
-import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.util.WrappedException;
 
@@ -20,6 +20,8 @@ public class HibernateConfig extends RepositoryConfig
   public static final HibernateConfig INSTANCE = new HibernateConfig();
 
   public static final String MAPPING_FILE = "mappingfile";
+
+  private static final long serialVersionUID = 1L;
 
   public HibernateConfig()
   {

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.bundle.OM;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -52,7 +53,7 @@ import java.util.Map.Entry;
 /**
  * @author Eike Stepper
  */
-public abstract class RepositoryConfig extends Config implements RepositoryProvider
+public abstract class RepositoryConfig extends Config implements IRepositoryConfig
 {
   public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHsqldb.HSQLDB_HORIZONTAL,
       DBDerby.DERBY_HORIZONTAL, DBMysql.MYSQL_HORIZONTAL };
@@ -63,7 +64,9 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
 
   public static final String PROP_TEST_STORE = "test.repository.store";
 
-  private Map<String, IRepository> repositories = new HashMap<String, IRepository>();
+  private static final long serialVersionUID = 1L;
+
+  private transient Map<String, IRepository> repositories;
 
   public RepositoryConfig(String name)
   {
@@ -121,9 +124,10 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   }
 
   @Override
-  protected void setUp() throws Exception
+  public void setUp() throws Exception
   {
     super.setUp();
+    repositories = new HashMap<String, IRepository>();
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     CDOServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
@@ -138,7 +142,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   }
 
   @Override
-  protected void tearDown() throws Exception
+  public void tearDown() throws Exception
   {
     for (Object repository : repositories.values().toArray())
     {
@@ -146,6 +150,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     }
 
     repositories.clear();
+    repositories = null;
     super.tearDown();
   }
 
@@ -192,6 +197,8 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   {
     public static final MEM INSTANCE = new MEM();
 
+    private static final long serialVersionUID = 1L;
+
     public MEM()
     {
       super("MEM");
@@ -209,6 +216,8 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
    */
   public static abstract class DB extends RepositoryConfig
   {
+    private static final long serialVersionUID = 1L;
+
     public DB(String name)
     {
       super(name);
@@ -237,7 +246,9 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   {
     public static final DBHsqldb HSQLDB_HORIZONTAL = new DBHsqldb("HsqldbHorizontal");
 
-    private HSQLDBDataSource dataSource;
+    private static final long serialVersionUID = 1L;
+
+    private transient HSQLDBDataSource dataSource;
 
     public DBHsqldb(String name)
     {
@@ -276,7 +287,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     }
 
     @Override
-    protected void tearDown() throws Exception
+    public void tearDown() throws Exception
     {
       super.tearDown();
       shutDownHsqldb();
@@ -312,9 +323,11 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   {
     public static final DBDerby DERBY_HORIZONTAL = new DBDerby("DerbyHorizontal");
 
-    private File dbFolder;
+    private static final long serialVersionUID = 1L;
 
-    private EmbeddedDataSource dataSource;
+    private transient File dbFolder;
+
+    private transient EmbeddedDataSource dataSource;
 
     public DBDerby(String name)
     {
@@ -346,7 +359,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     }
 
     @Override
-    protected void tearDown() throws Exception
+    public void tearDown() throws Exception
     {
       deleteDBFolder();
       super.tearDown();
@@ -365,9 +378,11 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
   {
     public static final DBMysql MYSQL_HORIZONTAL = new DBMysql("MysqlHorizontal");
 
-    private MysqlDataSource setupDataSource;
+    private static final long serialVersionUID = 1L;
 
-    private MysqlDataSource dataSource;
+    private transient MysqlDataSource setupDataSource;
+
+    private transient MysqlDataSource dataSource;
 
     public DBMysql(String name)
     {
@@ -399,7 +414,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     }
 
     @Override
-    protected void setUp() throws Exception
+    public void setUp() throws Exception
     {
       dropDatabase();
       Connection connection = null;
@@ -429,7 +444,7 @@ public abstract class RepositoryConfig extends Config implements RepositoryProvi
     }
 
     @Override
-    protected void tearDown() throws Exception
+    public void tearDown() throws Exception
     {
       super.tearDown();
       dropDatabase();

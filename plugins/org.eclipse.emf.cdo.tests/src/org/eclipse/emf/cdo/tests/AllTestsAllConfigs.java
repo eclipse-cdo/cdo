@@ -27,23 +27,16 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_251263_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_251544_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_251752_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
-import org.eclipse.emf.cdo.tests.config.ConfigTest;
-import org.eclipse.emf.cdo.tests.config.ConfigTestSuite;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
 import java.util.List;
-
-import junit.framework.Test;
 
 /**
  * @author Eike Stepper
  */
-public class AllTestsAllConfigs extends ConfigTestSuite
+public abstract class AllTestsAllConfigs extends ConfigTestSuite
 {
-  public static Test suite()
-  {
-    return new AllTestsAllConfigs().getTestSuite("CDO Tests (All Configs)");
-  }
-
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
@@ -71,7 +64,7 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(RevisionHolderTest.class);
     testClasses.add(IndexReconstructionTest.class);
     testClasses.add(AutoAttacherTest.class);
-    testClasses.add(SavepointTest.class);
+    testClasses.add(SavePointTest.class);
     testClasses.add(ChangeSubscriptionTest.class);
     testClasses.add(DetachTest.class);
     testClasses.add(ExternalReferenceTest.class);
@@ -80,7 +73,7 @@ public class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(RepositoryTest.class);
 
     // Specific for MEMStore
-    testClasses.add(QueryTest.class);
+    testClasses.add(MEMStoreQueryTest.class);
 
     // Bugzilla verifications
     testClasses.add(Bugzilla_241464_Test.class);

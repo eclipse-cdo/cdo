@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.RevisionDeltaWithoutDeltaSupportTest;
-import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import java.util.Map;
 

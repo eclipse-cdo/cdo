@@ -10,18 +10,18 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.config;
 
-import org.eclipse.emf.cdo.server.IRepository;
-
-import java.util.Map;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Eike Stepper
  */
-public interface RepositoryProvider
+public interface IContainerConfig extends IConfig
 {
-  public static final String REPOSITORY_NAME = "repo1";
+  public boolean hasClientContainer();
 
-  public Map<String, String> getRepositoryProperties();
+  public boolean hasServerContainer();
 
-  public IRepository getRepository(String name);
+  public IManagedContainer getClientContainer();
+
+  public IManagedContainer getServerContainer();
 }

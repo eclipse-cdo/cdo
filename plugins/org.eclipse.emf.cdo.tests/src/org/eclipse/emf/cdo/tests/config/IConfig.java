@@ -10,18 +10,20 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.config;
 
-import org.eclipse.net4j.util.container.IManagedContainer;
+import java.io.Serializable;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public interface ContainerProvider
+public interface IConfig extends ITestLifecycle, Serializable
 {
-  public boolean hasClientContainer();
+  public String getName();
 
-  public boolean hasServerContainer();
+  public Map<String, Object> getTestProperties();
 
-  public IManagedContainer getClientContainer();
+  public Object getTestProperty(String key);
 
-  public IManagedContainer getServerContainer();
+  public boolean isValid(Set<IConfig> configs);
 }

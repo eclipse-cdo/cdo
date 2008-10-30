@@ -26,7 +26,7 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 /**
  * @author Simon McDuff
  */
-public class SavepointTest extends AbstractCDOTest
+public class SavePointTest extends AbstractCDOTest
 {
   public void testRollbackWithNewObject_Collection() throws Exception
   {

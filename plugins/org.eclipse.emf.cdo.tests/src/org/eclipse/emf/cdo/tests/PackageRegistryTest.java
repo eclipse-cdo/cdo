@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.bundle.OM;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -238,7 +239,7 @@ public class PackageRegistryTest extends AbstractCDOTest
         // Create resource in session 1
         CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
         configuration.setConnector(getConnector());
-        configuration.setRepositoryName(REPOSITORY_NAME);
+        configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
         configuration.setEagerPackageRegistry();
 
         CDOSession session = configuration.openSession();
@@ -271,7 +272,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       // Create resource in session 1
       CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
-      configuration.setRepositoryName(REPOSITORY_NAME);
+      configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
       configuration.setLazyPackageRegistry();
 
       CDOSession session = configuration.openSession();

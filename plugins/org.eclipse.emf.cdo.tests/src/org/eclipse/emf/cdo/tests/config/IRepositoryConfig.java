@@ -8,20 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config.proto;
+package org.eclipse.emf.cdo.tests.config;
 
-import org.eclipse.emf.cdo.tests.config.Config;
+import org.eclipse.emf.cdo.server.IRepository;
 
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public interface IConfigScenario extends ILifecycle
+public interface IRepositoryConfig extends IConfig
 {
-  public Config[] getConfigs();
+  public static final String REPOSITORY_NAME = "repo1";
 
-  public void setConfigs(Config[] configs);
+  public Map<String, String> getRepositoryProperties();
 
-  public boolean isValid();
+  public IRepository getRepository(String name);
 }

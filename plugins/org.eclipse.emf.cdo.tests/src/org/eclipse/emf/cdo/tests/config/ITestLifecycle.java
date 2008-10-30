@@ -8,24 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.config;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 /**
  * @author Eike Stepper
  */
-public class AllTests extends AllTestsAllConfigs
+public interface ITestLifecycle
 {
-  public static Test suite()
-  {
-    return new AllTests().getTestSuite("CDO Tests");
-  }
+  public ConfigTest getCurrentTest();
 
-  @Override
-  protected void initConfigSuites(TestSuite parent)
-  {
-    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
-  }
+  public void setCurrentTest(ConfigTest currentTest);
+
+  public void setUp() throws Exception;
+
+  public void tearDown() throws Exception;
 }

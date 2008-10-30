@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class QueryTest extends AbstractCDOTest
+public class MEMStoreQueryTest extends AbstractCDOTest
 {
   private static final String LANGUAGE = "TEST";
 

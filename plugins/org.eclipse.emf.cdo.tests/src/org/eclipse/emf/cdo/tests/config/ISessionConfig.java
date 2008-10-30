@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 /**
  * @author Eike Stepper
  */
-public interface SessionProvider
+public interface ISessionConfig extends IConfig
 {
   public void startTransport() throws Exception;
 

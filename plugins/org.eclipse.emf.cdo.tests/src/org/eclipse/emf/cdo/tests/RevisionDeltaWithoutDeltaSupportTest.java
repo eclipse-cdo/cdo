@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import java.util.Map;
 

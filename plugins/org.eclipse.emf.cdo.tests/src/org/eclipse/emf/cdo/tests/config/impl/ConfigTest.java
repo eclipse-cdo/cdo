@@ -8,12 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
+import org.eclipse.emf.cdo.tests.config.IConstants;
+import org.eclipse.emf.cdo.tests.config.IContainerConfig;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.IScenario;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
@@ -46,17 +52,34 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public abstract class ConfigTest extends AbstractOMTest implements ConfigConstants, ContainerProvider,
-    RepositoryProvider, SessionProvider, ModelProvider
+public abstract class ConfigTest extends AbstractOMTest implements IConstants
 {
   public ConfigTest()
   {
   }
 
-  private Properties homeProperties;
+  private IScenario scenario;
 
-  // /////////////////////////////////////////////////////////////////////////
-  // //////////////////////// Container //////////////////////////////////////
+  public synchronized IScenario getScenario()
+  {
+    if (scenario == null)
+    {
+      setScenario(getDefaultScenario());
+    }
+
+    return scenario;
+  }
+
+  public synchronized void setScenario(IScenario scenario)
+  {
+    this.scenario = scenario;
+    if (scenario != null)
+    {
+      scenario.setCurrentTest(this);
+    }
+  }
+
+  private Properties homeProperties;
 
   public synchronized Properties getHomeProperties()
   {
@@ -90,41 +113,20 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
     return homeProperties;
   }
 
-  public ContainerConfig getLastContainerConfig()
-  {
-    String name = getHomeProperties().getProperty("org.eclipse.emf.cdo.tests.config.ContainerConfig");
-    return ContainerConfig.getInstance(name);
-  }
-
   public synchronized void setHomeProperties(Properties homeProperties)
   {
     this.homeProperties = homeProperties;
   }
 
-  /**
-   *@category Container
-   */
-  public static final ContainerConfig DEFAULT_CONTAINER_CONFIG = COMBINED;
+  // /////////////////////////////////////////////////////////////////////////
+  // //////////////////////// Container //////////////////////////////////////
 
   /**
    *@category Container
    */
-  private ContainerConfig containerConfig;
-
-  /**
-   *@category Container
-   */
-  public ContainerConfig getContainerConfig()
+  public IContainerConfig getContainerConfig()
   {
-    return containerConfig;
-  }
-
-  /**
-   *@category Container
-   */
-  public void setContainerConfig(ContainerConfig containerConfig)
-  {
-    this.containerConfig = containerConfig;
+    return getScenario().getContainerConfig();
   }
 
   /**
@@ -132,7 +134,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public boolean hasClientContainer()
   {
-    return containerConfig.hasClientContainer();
+    return getContainerConfig().hasClientContainer();
   }
 
   /**
@@ -140,7 +142,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public boolean hasServerContainer()
   {
-    return containerConfig.hasServerContainer();
+    return getContainerConfig().hasServerContainer();
   }
 
   /**
@@ -148,7 +150,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public IManagedContainer getClientContainer()
   {
-    return containerConfig.getClientContainer();
+    return getContainerConfig().getClientContainer();
   }
 
   /**
@@ -156,7 +158,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public IManagedContainer getServerContainer()
   {
-    return containerConfig.getServerContainer();
+    return getContainerConfig().getServerContainer();
   }
 
   // /////////////////////////////////////////////////////////////////////////
@@ -165,27 +167,9 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   /**
    *@category Repository
    */
-  public static final RepositoryConfig DEFAULT_REPOSITORY_CONFIG = MEM;
-
-  /**
-   *@category Repository
-   */
-  private RepositoryConfig repositoryConfig;
-
-  /**
-   *@category Repository
-   */
-  public RepositoryConfig getRepositoryConfig()
+  public IRepositoryConfig getRepositoryConfig()
   {
-    return repositoryConfig;
-  }
-
-  /**
-   *@category Repository
-   */
-  public void setRepositoryConfig(RepositoryConfig repositoryConfig)
-  {
-    this.repositoryConfig = repositoryConfig;
+    return getScenario().getRepositoryConfig();
   }
 
   /**
@@ -193,7 +177,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public Map<String, String> getRepositoryProperties()
   {
-    return repositoryConfig.getRepositoryProperties();
+    return getRepositoryConfig().getRepositoryProperties();
   }
 
   /**
@@ -201,7 +185,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public IRepository getRepository(String name)
   {
-    return repositoryConfig.getRepository(name);
+    return getRepositoryConfig().getRepository(name);
   }
 
   /**
@@ -209,7 +193,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public IRepository getRepository()
   {
-    return repositoryConfig.getRepository(REPOSITORY_NAME);
+    return getRepositoryConfig().getRepository(IRepositoryConfig.REPOSITORY_NAME);
   }
 
   // /////////////////////////////////////////////////////////////////////////
@@ -218,27 +202,9 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   /**
    *@category Session
    */
-  public static final SessionConfig DEFAULT_SESSION_CONFIG = TCP;
-
-  /**
-   *@category Session
-   */
-  private SessionConfig sessionConfig;
-
-  /**
-   *@category Session
-   */
-  public SessionConfig getSessionConfig()
+  public ISessionConfig getSessionConfig()
   {
-    return sessionConfig;
-  }
-
-  /**
-   *@category Session
-   */
-  public void setSessionConfig(SessionConfig sessionConfig)
-  {
-    this.sessionConfig = sessionConfig;
+    return getScenario().getSessionConfig();
   }
 
   /**
@@ -246,7 +212,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public void startTransport() throws Exception
   {
-    sessionConfig.startTransport();
+    getSessionConfig().startTransport();
   }
 
   /**
@@ -254,7 +220,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public void stopTransport() throws Exception
   {
-    sessionConfig.stopTransport();
+    getSessionConfig().stopTransport();
   }
 
   /**
@@ -262,7 +228,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public IAcceptor getAcceptor()
   {
-    return sessionConfig.getAcceptor();
+    return getSessionConfig().getAcceptor();
   }
 
   /**
@@ -270,7 +236,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public IConnector getConnector()
   {
-    return sessionConfig.getConnector();
+    return getSessionConfig().getConnector();
   }
 
   /**
@@ -278,7 +244,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openMangoSession()
   {
-    return sessionConfig.openMangoSession();
+    return getSessionConfig().openMangoSession();
   }
 
   /**
@@ -286,7 +252,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openModel1Session()
   {
-    return sessionConfig.openModel1Session();
+    return getSessionConfig().openModel1Session();
   }
 
   /**
@@ -294,7 +260,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openModel2Session()
   {
-    return sessionConfig.openModel2Session();
+    return getSessionConfig().openModel2Session();
   }
 
   /**
@@ -302,7 +268,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openModel3Session()
   {
-    return sessionConfig.openModel3Session();
+    return getSessionConfig().openModel3Session();
   }
 
   /**
@@ -310,7 +276,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openEagerSession()
   {
-    return sessionConfig.openEagerSession();
+    return getSessionConfig().openEagerSession();
   }
 
   /**
@@ -318,7 +284,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openLazySession()
   {
-    return sessionConfig.openLazySession();
+    return getSessionConfig().openLazySession();
   }
 
   /**
@@ -326,7 +292,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openSession(EPackage ePackage)
   {
-    return sessionConfig.openSession(ePackage);
+    return getSessionConfig().openSession(ePackage);
   }
 
   /**
@@ -334,7 +300,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openSession(String repositoryName)
   {
-    return sessionConfig.openSession(repositoryName);
+    return getSessionConfig().openSession(repositoryName);
   }
 
   /**
@@ -342,7 +308,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public CDOSession openSession()
   {
-    return sessionConfig.openSession();
+    return getSessionConfig().openSession();
   }
 
   // /////////////////////////////////////////////////////////////////////////
@@ -351,27 +317,9 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   /**
    *@category Model
    */
-  public static final ModelConfig DEFAULT_MODEL_CONFIG = NATIVE;
-
-  /**
-   *@category Model
-   */
-  private ModelConfig modelConfig;
-
-  /**
-   *@category Model
-   */
-  public ModelConfig getModelConfig()
+  public IModelConfig getModelConfig()
   {
-    return modelConfig;
-  }
-
-  /**
-   *@category Model
-   */
-  public void setModelConfig(ModelConfig modelConfig)
-  {
-    this.modelConfig = modelConfig;
+    return getScenario().getModelConfig();
   }
 
   /**
@@ -379,7 +327,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public MangoFactory getMangoFactory()
   {
-    return modelConfig.getMangoFactory();
+    return getModelConfig().getMangoFactory();
   }
 
   /**
@@ -387,7 +335,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public MangoPackage getMangoPackage()
   {
-    return modelConfig.getMangoPackage();
+    return getModelConfig().getMangoPackage();
   }
 
   /**
@@ -395,7 +343,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public Model1Factory getModel1Factory()
   {
-    return modelConfig.getModel1Factory();
+    return getModelConfig().getModel1Factory();
   }
 
   /**
@@ -403,7 +351,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public Model1Package getModel1Package()
   {
-    return modelConfig.getModel1Package();
+    return getModelConfig().getModel1Package();
   }
 
   /**
@@ -411,7 +359,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public Model2Factory getModel2Factory()
   {
-    return modelConfig.getModel2Factory();
+    return getModelConfig().getModel2Factory();
   }
 
   /**
@@ -419,7 +367,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public Model2Package getModel2Package()
   {
-    return modelConfig.getModel2Package();
+    return getModelConfig().getModel2Package();
   }
 
   /**
@@ -427,7 +375,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public Model3Factory getModel3Factory()
   {
-    return modelConfig.getModel3Factory();
+    return getModelConfig().getModel3Factory();
   }
 
   /**
@@ -435,7 +383,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public Model3Package getModel3Package()
   {
-    return modelConfig.getModel3Package();
+    return getModelConfig().getModel3Package();
   }
 
   /**
@@ -443,7 +391,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public model4Factory getModel4Factory()
   {
-    return modelConfig.getModel4Factory();
+    return getModelConfig().getModel4Factory();
   }
 
   /**
@@ -451,7 +399,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public model4Package getModel4Package()
   {
-    return modelConfig.getModel4Package();
+    return getModelConfig().getModel4Package();
   }
 
   /**
@@ -459,7 +407,7 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
    */
   public model4interfacesPackage getModel4InterfacesPackage()
   {
-    return modelConfig.getModel4InterfacesPackage();
+    return getModelConfig().getModel4InterfacesPackage();
   }
 
   // /////////////////////////////////////////////////////////////////////////
@@ -478,60 +426,20 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}, {5}]", getClass().getSimpleName(), getName(), containerConfig,
-        repositoryConfig, sessionConfig, modelConfig);
-  }
-
-  protected ContainerConfig filterContainerConfig(ContainerConfig config)
-  {
-    if (config == null)
-    {
-      config = DEFAULT_CONTAINER_CONFIG;
-    }
-
-    return config;
-  }
-
-  protected RepositoryConfig filterRepositoryConfig(RepositoryConfig config)
-  {
-    if (config == null)
-    {
-      config = DEFAULT_REPOSITORY_CONFIG;
-    }
-
-    return config;
-  }
-
-  protected SessionConfig filterSessionConfig(SessionConfig config)
-  {
-    if (config == null)
-    {
-      config = DEFAULT_SESSION_CONFIG;
-    }
-
-    return config;
-  }
-
-  protected ModelConfig filterModelConfig(ModelConfig config)
-  {
-    if (config == null)
-    {
-      config = DEFAULT_MODEL_CONFIG;
-    }
-
-    return config;
+    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}, {5}]", getClass().getSimpleName(), getName(),
+        getContainerConfig(), getRepositoryConfig(), getSessionConfig(), getModelConfig());
   }
 
   protected void skipConfig(Config config)
   {
-    skipTest(containerConfig == config || repositoryConfig == config || sessionConfig == config
-        || modelConfig == config);
+    skipTest(getContainerConfig() == config || getRepositoryConfig() == config || getSessionConfig() == config
+        || getModelConfig() == config);
   }
 
   protected void skipUnlessConfig(Config config)
   {
-    skipTest(containerConfig != config && repositoryConfig != config && sessionConfig != config
-        && modelConfig != config);
+    skipTest(getContainerConfig() != config && getRepositoryConfig() != config && getSessionConfig() != config
+        && getModelConfig() != config);
   }
 
   protected void clearCache(IRevisionManager revisionManager)
@@ -539,23 +447,34 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
     ((RevisionManager)revisionManager).getCache().clear();
   }
 
-  public void restartConfigs() throws Exception
+  public void restartScenario() throws Exception
   {
-    IOUtil.OUT().println("RESTARTING CONFIGURATIONS");
+    IOUtil.OUT().println("RESTARTING SCENARIO");
     stopTransport();
-    tearDownConfigs();
-    setupConfigs();
+
+    IScenario scenario = getScenario();
+    scenario.tearDown();
+    scenario.setUp();
+
     startTransport();
-    IOUtil.OUT().println("RESTARTING CONFIGURATIONS - FINISHED");
+    IOUtil.OUT().println("RESTARTING SCENARIO - FINISHED");
+  }
+
+  protected IScenario getDefaultScenario()
+  {
+    IScenario scenario = Scenario.load();
+    if (scenario == null)
+    {
+      scenario = Scenario.getDefault();
+    }
+
+    return scenario;
   }
 
   @Override
   public void setUp() throws Exception
   {
-    containerConfig = filterContainerConfig(containerConfig);
-    repositoryConfig = filterRepositoryConfig(repositoryConfig);
-    sessionConfig = filterSessionConfig(sessionConfig);
-    modelConfig = filterModelConfig(modelConfig);
+    getScenario();
     super.setUp();
   }
 
@@ -563,41 +482,13 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    setupConfigs();
+    getScenario().setUp();
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
-    tearDownConfigs();
+    getScenario().tearDown();
     super.doTearDown();
-  }
-
-  private void setupConfigs() throws Exception
-  {
-    setUpConfig(containerConfig);
-    setUpConfig(repositoryConfig);
-    setUpConfig(sessionConfig);
-    setUpConfig(modelConfig);
-  }
-
-  private void setUpConfig(Config config) throws Exception
-  {
-    config.setCurrentTest(this);
-    config.setUp();
-  }
-
-  private void tearDownConfigs() throws Exception
-  {
-    tearDownConfig(modelConfig);
-    tearDownConfig(sessionConfig);
-    tearDownConfig(repositoryConfig);
-    tearDownConfig(containerConfig);
-  }
-
-  private void tearDownConfig(Config config) throws Exception
-  {
-    config.tearDown();
-    config.setCurrentTest(null);
   }
 }

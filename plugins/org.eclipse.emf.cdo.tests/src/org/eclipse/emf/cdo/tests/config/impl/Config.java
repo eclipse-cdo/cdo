@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.tests.config.impl;
+
+import org.eclipse.emf.cdo.tests.config.IConfig;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,11 +18,13 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class Config
+public abstract class Config implements IConfig
 {
+  private static final long serialVersionUID = 1L;
+
   private String name;
 
-  private ConfigTest currentTest;
+  private transient ConfigTest currentTest;
 
   public Config(String name)
   {
@@ -35,15 +39,15 @@ public abstract class Config
   @Override
   public String toString()
   {
-    return name;
+    return getName();
   }
 
-  protected ConfigTest getCurrentTest()
+  public ConfigTest getCurrentTest()
   {
     return currentTest;
   }
 
-  protected void setCurrentTest(ConfigTest currentTest)
+  public void setCurrentTest(ConfigTest currentTest)
   {
     this.currentTest = currentTest;
   }
@@ -64,12 +68,12 @@ public abstract class Config
     return null;
   }
 
-  protected boolean isValid(Set<Config> configs)
+  public boolean isValid(Set<IConfig> configs)
   {
     return true;
   }
 
-  protected void setUp() throws Exception
+  public void setUp() throws Exception
   {
     if (currentTest == null)
     {
@@ -77,7 +81,7 @@ public abstract class Config
     }
   }
 
-  protected void tearDown() throws Exception
+  public void tearDown() throws Exception
   {
   }
 }

@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.mango.MangoFactory;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
@@ -25,10 +26,12 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 /**
  * @author Eike Stepper
  */
-public abstract class ModelConfig extends Config implements ModelProvider
+public abstract class ModelConfig extends Config implements IModelConfig
 {
   // TODO LEGACY
   public static final ModelConfig[] CONFIGS = { Native.INSTANCE /* , Legacy.INSTANCE */};
+
+  private static final long serialVersionUID = 1L;
 
   public ModelConfig(String name)
   {
@@ -43,6 +46,8 @@ public abstract class ModelConfig extends Config implements ModelProvider
     public static final String NAME = "Native";
 
     public static final Native INSTANCE = new Native();
+
+    private static final long serialVersionUID = 1L;
 
     public Native()
     {

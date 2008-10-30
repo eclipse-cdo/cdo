@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
-import org.eclipse.emf.cdo.tests.config.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,6 +31,6 @@ public class AllTestsHibernate extends AllTestsAllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    initConfigSuite(parent, COMBINED, HIBERNATE, TCP, NATIVE);
+    addScenario(parent, COMBINED, HIBERNATE, TCP, NATIVE);
   }
 }

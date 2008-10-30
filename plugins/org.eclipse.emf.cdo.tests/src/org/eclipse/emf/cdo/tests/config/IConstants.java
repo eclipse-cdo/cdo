@@ -10,11 +10,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.config;
 
+import org.eclipse.emf.cdo.tests.config.impl.Config;
+import org.eclipse.emf.cdo.tests.config.impl.ContainerConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+
 
 /**
  * @author Eike Stepper
  */
-public interface ConfigConstants
+public interface IConstants
 {
   public static final Config[][] CONFIGS = { //
   ContainerConfig.CONFIGS, //

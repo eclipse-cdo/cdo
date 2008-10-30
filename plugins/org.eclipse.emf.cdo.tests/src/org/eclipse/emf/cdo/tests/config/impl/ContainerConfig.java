@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.tests.config.IContainerConfig;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -21,31 +22,20 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 /**
  * @author Eike Stepper
  */
-public abstract class ContainerConfig extends Config implements ContainerProvider
+public abstract class ContainerConfig extends Config implements IContainerConfig
 {
   public static final ContainerConfig[] CONFIGS = { Combined.INSTANCE, Separated.INSTANCE };
 
-  public static ContainerConfig getInstance(String name)
-  {
-    for (ContainerConfig config : CONFIGS)
-    {
-      if (config.equals(name))
-      {
-        return config;
-      }
-    }
+  private static final long serialVersionUID = 1L;
 
-    return null;
-  }
+  protected transient IManagedContainer clientContainer;
+
+  protected transient IManagedContainer serverContainer;
 
   public ContainerConfig(String name)
   {
     super(name);
   }
-
-  protected IManagedContainer clientContainer;
-
-  protected IManagedContainer serverContainer;
 
   public boolean hasClientContainer()
   {
@@ -58,7 +48,7 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
   }
 
   @Override
-  protected void tearDown() throws Exception
+  public void tearDown() throws Exception
   {
     LifecycleUtil.deactivate(clientContainer);
     clientContainer = null;
@@ -77,6 +67,8 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
     public static final String NAME = "Combined";
 
     public static final Combined INSTANCE = new Combined();
+
+    private static final long serialVersionUID = 1L;
 
     public Combined()
     {
@@ -118,6 +110,8 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
     public static final String NAME = "Separated";
 
     public static final Separated INSTANCE = new Separated();
+
+    private static final long serialVersionUID = 1L;
 
     public Separated()
     {

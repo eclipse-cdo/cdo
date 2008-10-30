@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 /**
  * @author Eike Stepper
  */
-public interface ModelProvider
+public interface IModelConfig extends IConfig
 {
   public MangoFactory getMangoFactory();
 

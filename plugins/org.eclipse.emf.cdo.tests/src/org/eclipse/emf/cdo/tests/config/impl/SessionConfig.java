@@ -8,10 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.tests.config.IConfig;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -27,9 +30,11 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class SessionConfig extends Config implements SessionProvider
+public abstract class SessionConfig extends Config implements ISessionConfig
 {
   public static final SessionConfig[] CONFIGS = { TCP.INSTANCE, JVM.INSTANCE };
+
+  private static final long serialVersionUID = 1L;
 
   public SessionConfig(String name)
   {
@@ -85,14 +90,14 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
   public CDOSession openEagerSession()
   {
-    CDOSessionConfiguration configuration = createSessionConfiguration(RepositoryProvider.REPOSITORY_NAME);
+    CDOSessionConfiguration configuration = createSessionConfiguration(IRepositoryConfig.REPOSITORY_NAME);
     configuration.setEagerPackageRegistry();
     return configuration.openSession();
   }
 
   public CDOSession openLazySession()
   {
-    CDOSessionConfiguration configuration = createSessionConfiguration(RepositoryProvider.REPOSITORY_NAME);
+    CDOSessionConfiguration configuration = createSessionConfiguration(IRepositoryConfig.REPOSITORY_NAME);
     configuration.setLazyPackageRegistry();
     return configuration.openSession();
   }
@@ -112,11 +117,11 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
   public CDOSession openSession()
   {
-    return openSession(RepositoryProvider.REPOSITORY_NAME);
+    return openSession(IRepositoryConfig.REPOSITORY_NAME);
   }
 
   @Override
-  protected void tearDown() throws Exception
+  public void tearDown() throws Exception
   {
     stopTransport();
     super.tearDown();
@@ -141,6 +146,8 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
     public static final String CONNECTOR_HOST = "localhost";
 
+    private static final long serialVersionUID = 1L;
+
     public TCP()
     {
       super(NAME);
@@ -157,7 +164,7 @@ public abstract class SessionConfig extends Config implements SessionProvider
     }
 
     @Override
-    protected void setUp() throws Exception
+    public void setUp() throws Exception
     {
       super.setUp();
       TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
@@ -176,6 +183,8 @@ public abstract class SessionConfig extends Config implements SessionProvider
 
     public static final String ACCEPTOR_NAME = "default";
 
+    private static final long serialVersionUID = 1L;
+
     public JVM()
     {
       super(NAME);
@@ -192,7 +201,7 @@ public abstract class SessionConfig extends Config implements SessionProvider
     }
 
     @Override
-    protected void setUp() throws Exception
+    public void setUp() throws Exception
     {
       super.setUp();
       JVMUtil.prepareContainer(getCurrentTest().getClientContainer());
@@ -200,7 +209,7 @@ public abstract class SessionConfig extends Config implements SessionProvider
     }
 
     @Override
-    protected boolean isValid(Set<Config> configs)
+    public boolean isValid(Set<IConfig> configs)
     {
       return !configs.contains(ContainerConfig.Separated.INSTANCE);
     }

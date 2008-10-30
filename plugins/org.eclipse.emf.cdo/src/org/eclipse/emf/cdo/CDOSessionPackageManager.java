@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 
+import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -25,6 +27,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public interface CDOSessionPackageManager extends CDOPackageManager
 {
+  /**
+   * @since 2.0
+   */
+  public CDOSessionImpl getSession();
+
   public CDOPackage convert(EPackage ePackage);
 
   public CDOClass convert(EClass eClass);

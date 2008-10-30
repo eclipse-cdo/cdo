@@ -322,7 +322,7 @@ public final class ModelUtil
   {
     if (!cdoPackage.isDynamic())
     {
-      EPackage ePackage = createGeneratedEPackage(cdoPackage.getPackageURI());
+      EPackage ePackage = getGeneratedEPackage(cdoPackage);
       if (ePackage != null)
       {
         return ePackage;
@@ -332,14 +332,16 @@ public final class ModelUtil
     return createDynamicEPackage(cdoPackage);
   }
 
-  public static EPackage createGeneratedEPackage(String packageURI)
+  private static EPackage getGeneratedEPackage(CDOPackage cdoPackage)
   {
+    String packageURI = cdoPackage.getPackageURI();
     if (packageURI.equals(EcorePackage.eINSTANCE.getNsURI()))
     {
       return EcorePackage.eINSTANCE;
     }
 
-    return EPackage.Registry.INSTANCE.getEPackage(packageURI);
+    EPackage.Registry registry = EPackage.Registry.INSTANCE;
+    return registry.getEPackage(packageURI);
   }
 
   public static EPackageImpl createDynamicEPackage(CDOPackage cdoPackage)

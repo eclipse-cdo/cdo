@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
-import org.eclipse.emf.cdo.util.EMFUtil;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
@@ -137,8 +137,10 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
     }
   }
 
-  @Override
-  protected void resolve(CDOPackage cdoPackage)
+  /**
+   * @since 2.0
+   */
+  public void loadPackage(CDOPackage cdoPackage)
   {
     if (!cdoPackage.isDynamic())
     {
@@ -154,7 +156,7 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
     try
     {
       CDOClientProtocol protocol = session.getProtocol();
-      LoadPackageRequest request = new LoadPackageRequest(protocol, cdoPackage);
+      LoadPackageRequest request = new LoadPackageRequest(protocol, cdoPackage, false);
 
       IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
       failOverStrategy.send(request);
@@ -174,10 +176,27 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
     }
   }
 
-  @Override
-  protected String provideEcore(CDOPackage cdoPackage)
+  /**
+   * @since 2.0
+   */
+  public void loadPackageEcore(CDOPackage cdoPackage)
   {
-    EPackage ePackage = ModelUtil.getEPackage(cdoPackage, session.getPackageRegistry());
-    return EMFUtil.ePackageToString(ePackage, session.getPackageRegistry());
+    try
+    {
+      CDOClientProtocol protocol = session.getProtocol();
+      LoadPackageRequest request = new LoadPackageRequest(protocol, cdoPackage, true);
+
+      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
+      String ecore = failOverStrategy.send(request);
+      ((InternalCDOPackage)cdoPackage).setEcore(ecore);
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
+    }
   }
 }

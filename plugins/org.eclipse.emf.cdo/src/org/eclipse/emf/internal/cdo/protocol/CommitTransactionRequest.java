@@ -124,6 +124,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
       }
 
       out.writeCDOPackage(newPackage);
+      out.writeString(((InternalCDOPackage)newPackage).basicGetEcore());
     }
 
     if (PROTOCOL_TRACER.isEnabled())

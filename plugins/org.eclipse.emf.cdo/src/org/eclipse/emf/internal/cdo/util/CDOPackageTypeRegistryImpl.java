@@ -77,6 +77,12 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
     put(packageURI, CDOPackageType.NATIVE);
   }
 
+  public void reset()
+  {
+    deactivate();
+    activate();
+  }
+
   @Override
   protected void doActivate() throws Exception
   {
@@ -110,6 +116,7 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
       }
     }
 
+    clear();
     super.doDeactivate();
   }
 

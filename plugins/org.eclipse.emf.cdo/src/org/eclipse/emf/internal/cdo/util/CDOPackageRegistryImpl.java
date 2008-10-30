@@ -166,7 +166,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
     public EFactory getEFactory()
     {
-      // TODO Implement method LocalPackageDescriptor.getEFactory()
+      // TODO Implement method RemotePackageDescriptor.getEFactory()
       throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -185,7 +185,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     @Override
     public String toString()
     {
-      return MessageFormat.format("LocalPackageDescriptor[{0}]", cdoPackage.getPackageURI());
+      return MessageFormat.format("RemotePackageDescriptor[{0}]", cdoPackage.getPackageURI());
     }
   }
 

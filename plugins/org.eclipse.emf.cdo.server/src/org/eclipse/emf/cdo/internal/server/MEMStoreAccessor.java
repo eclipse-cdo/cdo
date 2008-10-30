@@ -82,6 +82,14 @@ public class MEMStoreAccessor extends StoreAccessor
   /**
    * @since 2.0
    */
+  public void readPackageEcore(CDOPackage cdoPackage)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
   public CloseableIterator<CDOID> readObjectIDs()
   {
     throw new UnsupportedOperationException();

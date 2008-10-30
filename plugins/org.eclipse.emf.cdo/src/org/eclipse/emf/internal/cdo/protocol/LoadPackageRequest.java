@@ -20,14 +20,17 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadPackageRequest extends CDOClientRequest<Object>
+public class LoadPackageRequest extends CDOClientRequest<String>
 {
   private CDOPackage cdoPackage;
 
-  public LoadPackageRequest(CDOClientProtocol protocol, CDOPackage cdoPackage)
+  private boolean onlyEcore;
+
+  public LoadPackageRequest(CDOClientProtocol protocol, CDOPackage cdoPackage, boolean onlyEcore)
   {
     super(protocol);
     this.cdoPackage = cdoPackage;
+    this.onlyEcore = onlyEcore;
   }
 
   @Override
@@ -40,11 +43,17 @@ public class LoadPackageRequest extends CDOClientRequest<Object>
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeCDOPackageURI(cdoPackage.getPackageURI());
+    out.writeBoolean(onlyEcore);
   }
 
   @Override
-  protected Object confirming(CDODataInput in) throws IOException
+  protected String confirming(CDODataInput in) throws IOException
   {
+    if (onlyEcore)
+    {
+      return in.readString();
+    }
+
     in.readCDOPackage(cdoPackage);
     return null;
   }

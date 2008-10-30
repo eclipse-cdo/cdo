@@ -154,11 +154,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   public void readPackage(CDOPackage cdoPackage)
   {
     String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
-    Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME,
-        CDODBSchema.PACKAGES_ECORE);
+    Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME);
     PackageServerInfo.setDBID(cdoPackage, (Integer)values[0]);
     ((InternalCDOPackage)cdoPackage).setName((String)values[1]);
-    ((InternalCDOPackage)cdoPackage).setEcore((String)values[2]);
     readClasses(cdoPackage);
     mapPackages(cdoPackage);
   }
@@ -241,6 +239,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     DBUtil.select(getConnection(), rowHandler, where, CDODBSchema.FEATURES_ID, CDODBSchema.FEATURES_FEATURE,
         CDODBSchema.FEATURES_NAME, CDODBSchema.FEATURES_TYPE, CDODBSchema.FEATURES_REFERENCE_PACKAGE,
         CDODBSchema.FEATURES_REFERENCE_CLASSIFIER, CDODBSchema.FEATURES_MANY, CDODBSchema.FEATURES_CONTAINMENT);
+  }
+
+  public void readPackageEcore(CDOPackage cdoPackage)
+  {
+    String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
+    Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ECORE);
+    ((InternalCDOPackage)cdoPackage).setEcore((String)values[0]);
   }
 
   public String readPackageURI(int packageID)

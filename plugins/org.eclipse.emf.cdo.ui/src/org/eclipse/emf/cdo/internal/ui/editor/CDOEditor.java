@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOSessionPackageManager;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.model.CDOClass;
@@ -1985,13 +1986,23 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected boolean populateNewRoot(MenuManager menuManager)
   {
     boolean populated = false;
-    List<CDOPackage> cdoPackages = Arrays.asList(view.getSession().getPackageManager().getPackages());
+    CDOSessionPackageManager packageManager = view.getSession().getPackageManager();
+    List<CDOPackage> cdoPackages = Arrays.asList(packageManager.getPackages());
     Collections.sort(cdoPackages);
 
     for (CDOPackage cdoPackage : cdoPackages)
     {
       if (!cdoPackage.isSystem())
       {
+        try
+        {
+          packageManager.convert(cdoPackage);
+        }
+        catch (Exception ex)
+        {
+          continue;
+        }
+
         List<CDOClass> cdoClasses = Arrays.asList(cdoPackage.getConcreteClasses());
         Collections.sort(cdoClasses);
         // TODO Sorting by class name may not have the desired effect if the labels are computed by an ItemProvider!
@@ -1999,6 +2010,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         if (!cdoClasses.isEmpty())
         {
           MenuManager submenuManager = new MenuManager(cdoPackage.getPackageURI());
+
           for (CDOClass cdoClass : cdoClasses)
           {
             // TODO Optimize/cache this?

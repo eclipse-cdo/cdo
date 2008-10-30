@@ -207,7 +207,8 @@ public interface IStoreAccessor extends IQueryHandler
 
   /**
    * Called before committing. An Instance of a accessor represents an instance of back-end Transaction. Could be called
-   * multiple times before commit it called.
+   * multiple times before commit it called. {@link IStoreAccessor#commit()} or {@link IStoreAccessor#rollback()} will
+   * be called after any numbers of {@link IStoreAccessor#write(CommitContext)}.
    * 
    * @since 2.0
    */

@@ -22,8 +22,6 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourceFolderClass;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -308,14 +306,6 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
         return null;
       }
     };
-  }
-
-  public CDOID readResourceID(IDBStoreAccessor accessor, CDOID folderID, String name, long timeStamp)
-  {
-    IStoreAccessor.QueryResourcesContext.ExactMatch context = StoreUtil.createExactMatchContext(folderID, name,
-        timeStamp);
-    queryResources(accessor, context);
-    return context.getResourceID();
   }
 
   public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)

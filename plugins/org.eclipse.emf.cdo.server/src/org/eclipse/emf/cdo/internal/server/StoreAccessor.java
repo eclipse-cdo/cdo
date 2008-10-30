@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
@@ -103,6 +105,18 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return null;
   }
 
+  /**
+   * @since 2.0
+   */
+  public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
+  {
+    IStoreAccessor.QueryResourcesContext.ExactMatch context = //
+    StoreUtil.createExactMatchContext(folderID, name, timeStamp);
+
+    queryResources(context);
+    return context.getResourceID();
+  }
+
   public InternalCDORevision verifyRevision(CDORevision revision)
   {
     return (InternalCDORevision)revision;
@@ -175,7 +189,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       {
         CDOIDTemp oldID = (CDOIDTemp)revision.getID();
         CDOID newID = longIDStore.getNextCDOID();
-        if (newID == null || newID.isNull() || newID.isTemporary())
+        if (CDOIDUtil.isNull(newID) || newID.isTemporary())
         {
           throw new IllegalStateException("newID=" + newID);
         }

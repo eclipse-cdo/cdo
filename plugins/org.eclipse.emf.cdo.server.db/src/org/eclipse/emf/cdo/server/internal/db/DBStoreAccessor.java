@@ -327,12 +327,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     return revision;
   }
 
-  public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    return mappingStrategy.readResourceID(this, folderID, name, timeStamp);
-  }
-
   /**
    * @since 2.0
    */
@@ -489,7 +483,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
         String name = feature.getName();
         int featureID = feature.getFeatureID();
         int type = feature.getType().getTypeID();
-        CDOClassProxy reference = (feature).getReferenceTypeProxy();
+        CDOClassProxy reference = feature.getReferenceTypeProxy();
         String packageURI = reference == null ? null : reference.getPackageURI();
         int classifierID = reference == null ? 0 : reference.getClassifierID();
         boolean many = feature.isMany();

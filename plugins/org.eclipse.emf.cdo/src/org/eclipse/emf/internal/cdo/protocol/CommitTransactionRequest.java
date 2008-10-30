@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -200,7 +201,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     for (;;)
     {
       CDOIDTemp oldID = (CDOIDTemp)in.readCDOID();
-      if (oldID.isNull())
+      if (CDOIDUtil.isNull(oldID))
       {
         break;
       }

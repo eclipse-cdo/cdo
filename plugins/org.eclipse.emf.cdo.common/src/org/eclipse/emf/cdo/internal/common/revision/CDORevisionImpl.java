@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -78,7 +79,7 @@ public class CDORevisionImpl implements InternalCDORevision
       throw new IllegalArgumentException("CDOClass is abstract: " + cdoClass);
     }
 
-    if (id == null || id.isNull())
+    if (CDOIDUtil.isNull(id))
     {
       throw new IllegalArgumentException("CDIID is null");
     }

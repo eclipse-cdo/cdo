@@ -106,11 +106,6 @@ public interface IMappingStrategy
   /**
    * @since 2.0
    */
-  public CDOID readResourceID(IDBStoreAccessor accessor, CDOID folderID, String name, long timeStamp);
-
-  /**
-   * @since 2.0
-   */
   public void queryResources(IDBStoreAccessor accessor, IStoreAccessor.QueryResourcesContext context);
 
   /**

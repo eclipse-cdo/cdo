@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreUtil;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -179,8 +179,10 @@ public class MEMStore extends LongIDStore implements IMEMStore
     {
       CDOID revisionFolder = (CDOID)revision.getData().getContainerID();
       String revisionName = (String)revision.getData().get(getResourceNameFeature(), 0);
-      CDOID resourceID = getResourceID(revisionFolder, revisionName, revision.getCreated());
-      if (resourceID != null)
+
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      CDOID resourceID = accessor.readResourceID(revisionFolder, revisionName, revision.getCreated());
+      if (!CDOIDUtil.isNull(resourceID))
       {
         throw new IllegalStateException("Duplicate resource: " + revisionName + " (folderID=" + revisionFolder + ")");
       }
@@ -239,17 +241,6 @@ public class MEMStore extends LongIDStore implements IMEMStore
   public synchronized void removeID(CDOID id)
   {
     revisions.remove(id);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    IStoreAccessor.QueryResourcesContext.ExactMatch context = StoreUtil.createExactMatchContext(folderID, name,
-        timeStamp);
-    queryResources(context);
-    return context.getResourceID();
   }
 
   /**

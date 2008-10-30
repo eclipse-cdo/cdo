@@ -223,14 +223,6 @@ public class MEMStoreAccessor extends StoreAccessor
   /**
    * @since 2.0
    */
-  public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    return getStore().getResourceID(folderID, name, timeStamp);
-  }
-
-  /**
-   * @since 2.0
-   */
   public void queryResources(QueryResourcesContext context)
   {
     getStore().queryResources(context);

@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
@@ -306,7 +307,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         if (value instanceof CDOID)
         {
           CDOID id = (CDOID)value;
-          if (!id.isNull() && !revisions.contains(id))
+          if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
             InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
             revisions.add(id);

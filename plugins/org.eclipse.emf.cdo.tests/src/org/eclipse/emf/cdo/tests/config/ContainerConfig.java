@@ -25,6 +25,19 @@ public abstract class ContainerConfig extends Config implements ContainerProvide
 {
   public static final ContainerConfig[] CONFIGS = { Combined.INSTANCE, Separated.INSTANCE };
 
+  public static ContainerConfig getInstance(String name)
+  {
+    for (ContainerConfig config : CONFIGS)
+    {
+      if (config.equals(name))
+      {
+        return config;
+      }
+    }
+
+    return null;
+  }
+
   public ContainerConfig(String name)
   {
     super(name);

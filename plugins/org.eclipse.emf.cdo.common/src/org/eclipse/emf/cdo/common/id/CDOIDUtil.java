@@ -45,6 +45,14 @@ public final class CDOIDUtil
   {
   }
 
+  /**
+   * @since 2.0
+   */
+  public static boolean isNull(CDOID id)
+  {
+    return id == null || id.isNull();
+  }
+
   public static long getLong(CDOID id)
   {
     if (id == null)

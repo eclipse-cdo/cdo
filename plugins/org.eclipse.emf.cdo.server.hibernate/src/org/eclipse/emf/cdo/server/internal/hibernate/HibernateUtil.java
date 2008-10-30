@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
@@ -182,7 +183,7 @@ public class HibernateUtil
    */
   public CDORevision getCDORevision(CDOID id)
   {
-    if (id.isNull())
+    if (CDOIDUtil.isNull(id))
     {
       return null;
     }
@@ -224,7 +225,7 @@ public class HibernateUtil
 
   public CDORevision getCDORevisionNullable(CDOID id)
   {
-    if (id.isNull())
+    if (CDOIDUtil.isNull(id))
     {
       return null;
     }

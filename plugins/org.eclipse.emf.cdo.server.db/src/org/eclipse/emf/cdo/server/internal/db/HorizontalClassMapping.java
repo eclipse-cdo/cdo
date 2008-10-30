@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IPackageManager;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 
 /**
  * @author Eike Stepper
@@ -50,18 +50,17 @@ public class HorizontalClassMapping extends ClassMapping
   @Override
   protected void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException
   {
-    // If auditing is not supported this is checked by a table index (see constructor)
-    IMappingStrategy mappingStrategy = getMappingStrategy();
-    if (mappingStrategy.getStore().getRepository().isSupportingAudits())
+    IRepository repository = getMappingStrategy().getStore().getRepository();
+    if (repository.isSupportingAudits())
     {
-      IPackageManager packageManager = mappingStrategy.getStore().getRepository().getPackageManager();
+      IPackageManager packageManager = repository.getPackageManager();
       CDOResourceNodeClass resourceNodeClass = packageManager.getCDOResourcePackage().getCDOResourceNodeClass();
       CDOFeature resourceNameFeature = resourceNodeClass.getCDONameFeature();
 
       CDOID folderID = (CDOID)revision.getData().getContainerID();
       String name = (String)revision.getData().get(resourceNameFeature, 0);
 
-      if (mappingStrategy.readResourceID(accessor, folderID, name, revision.getCreated()) != null)
+      if (accessor.readResourceID(folderID, name, revision.getCreated()) != null)
       {
         throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID);
       }

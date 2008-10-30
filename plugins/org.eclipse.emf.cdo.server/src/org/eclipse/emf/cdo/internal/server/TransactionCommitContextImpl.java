@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
@@ -142,7 +143,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
   public void addIDMapping(CDOIDTemp oldID, CDOID newID)
   {
-    if (newID == null || newID.isNull() || newID.isTemporary())
+    if (CDOIDUtil.isNull(newID) || newID.isTemporary())
     {
       throw new IllegalStateException("newID=" + newID);
     }

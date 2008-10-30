@@ -585,7 +585,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public CDOResourceImpl getResource(CDOID resourceID)
   {
-    if (resourceID == null || resourceID.isNull())
+    if (CDOIDUtil.isNull(resourceID))
     {
       throw new IllegalArgumentException("resourceID: " + resourceID);
     }
@@ -628,7 +628,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     checkOpen();
-    if (id == null || id.isNull())
+    if (CDOIDUtil.isNull(id))
     {
       return null;
     }
@@ -703,7 +703,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     checkOpen();
 
-    if (id == null || id.isNull())
+    if (CDOIDUtil.isNull(id))
     {
       return false;
     }
@@ -791,7 +791,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     CDOID folderID = (CDOID)revision.getData().getContainerID();
     String name = (String)revision.getData().get(nameFeature, 0);
-    if (folderID == null || folderID.isNull())
+    if (CDOIDUtil.isNull(folderID))
     {
       if (name == null)
       {

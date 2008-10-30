@@ -29,14 +29,19 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -48,8 +53,53 @@ public abstract class ConfigTest extends AbstractOMTest implements ConfigConstan
   {
   }
 
+  private Properties homeProperties;
+
   // /////////////////////////////////////////////////////////////////////////
   // //////////////////////// Container //////////////////////////////////////
+
+  public synchronized Properties getHomeProperties()
+  {
+    if (homeProperties == null)
+    {
+      homeProperties = new Properties();
+      String home = System.getProperty("user.home");
+      if (home != null)
+      {
+        File file = new File(home, ".cdo_config_test.properties");
+        if (file.exists())
+        {
+          FileInputStream stream = IOUtil.openInputStream(file);
+
+          try
+          {
+            homeProperties.load(stream);
+          }
+          catch (IOException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+          finally
+          {
+            IOUtil.close(stream);
+          }
+        }
+      }
+    }
+
+    return homeProperties;
+  }
+
+  public ContainerConfig getLastContainerConfig()
+  {
+    String name = getHomeProperties().getProperty("org.eclipse.emf.cdo.tests.config.ContainerConfig");
+    return ContainerConfig.getInstance(name);
+  }
+
+  public synchronized void setHomeProperties(Properties homeProperties)
+  {
+    this.homeProperties = homeProperties;
+  }
 
   /**
    *@category Container

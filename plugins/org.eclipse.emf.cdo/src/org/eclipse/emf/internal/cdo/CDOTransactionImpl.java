@@ -201,7 +201,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     try
     {
       CDOID id = getResourceID(path);
-      if (id != null && !id.isNull())
+      if (!CDOIDUtil.isNull(id))
       {
         return (CDOResource)getObject(id);
       }
@@ -406,7 +406,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     checkOpen();
-    if (id == null || id.isNull())
+    if (CDOIDUtil.isNull(id))
     {
       return null;
     }

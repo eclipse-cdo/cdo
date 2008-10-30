@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -128,7 +129,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
     // Need to fetch the rule first.
     Set<CDOFetchRule> visitedFetchRules = new HashSet<CDOFetchRule>();
-    if (!contextID.isNull() && fetchRules.size() > 0)
+    if (!CDOIDUtil.isNull(contextID) && fetchRules.size() > 0)
     {
       if (PROTOCOL_TRACER.isEnabled())
       {
@@ -201,7 +202,7 @@ public class LoadRevisionIndication extends CDOReadIndication
           if (value instanceof CDOID)
           {
             CDOID id = (CDOID)value;
-            if (!id.isNull() && !revisions.contains(id))
+            if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
             {
               InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
               revisions.add(containedRevision.getID());

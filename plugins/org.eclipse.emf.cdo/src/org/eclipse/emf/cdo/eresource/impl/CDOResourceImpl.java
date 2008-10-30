@@ -506,8 +506,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     }
 
     CDOID cdoID = CDOIDUtil.read(uriFragment, cdoView().getSession().getPackageManager().getCDOIDObjectFactory());
-
-    if (cdoID.isNull() || cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
+    if (CDOIDUtil.isNull(cdoID) || cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
     {
       return null;
     }

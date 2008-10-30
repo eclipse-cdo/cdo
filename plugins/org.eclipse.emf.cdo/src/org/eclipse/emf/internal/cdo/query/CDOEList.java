@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -39,14 +40,14 @@ public class CDOEList<T> implements EList<T>
   }
 
   @SuppressWarnings("unchecked")
-  protected T adapt(CDOID object)
+  protected T adapt(CDOID id)
   {
-    if (object.isNull())
+    if (CDOIDUtil.isNull(id))
     {
       return null;
     }
 
-    return (T)view.getObject(object, true);
+    return (T)view.getObject(id, true);
   }
 
   public boolean add(T o)

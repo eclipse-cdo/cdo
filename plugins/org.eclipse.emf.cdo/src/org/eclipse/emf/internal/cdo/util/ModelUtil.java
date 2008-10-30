@@ -329,7 +329,7 @@ public final class ModelUtil
     EPackage ePackage = getGeneratedEPackage(cdoPackage);
     if (ePackage == null)
     {
-      throw new CDOException("Generated package locally not available: " + cdoPackage);
+      throw new CDOException("Generated package locally not available: " + cdoPackage.getPackageURI());
     }
 
     return ePackage;

@@ -11,12 +11,12 @@
 package org.eclipse.emf.cdo.internal.common.model;
 
 import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.model.core.CDOCorePackageImpl;
 import org.eclipse.emf.cdo.internal.common.model.resource.CDOResourcePackageImpl;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackageManager;
 
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOPackageManagerImpl extends Container<CDOPackage> implements CDOPackageManager
+public abstract class CDOPackageManagerImpl extends Container<CDOPackage> implements InternalCDOPackageManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, CDOPackageManagerImpl.class);
 
@@ -129,16 +129,4 @@ public abstract class CDOPackageManagerImpl extends Container<CDOPackage> implem
     packages.remove(cdoPackage.getPackageURI());
     fireElementRemovedEvent(cdoPackage);
   }
-
-  /**
-   * @param cdoPackage
-   *          is a proxy CDO package. The implementer of this method must only use the package URI of the cdoPackage
-   *          passed in.
-   */
-  protected abstract void resolve(CDOPackage cdoPackage);
-
-  /**
-   * Only called on clients for generated models
-   */
-  protected abstract String provideEcore(CDOPackage cdoPackage);
 }

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -29,6 +28,8 @@ public class LoadPackageIndication extends CDOReadIndication
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackageIndication.class);
 
   private CDOPackage cdoPackage;
+
+  private boolean onlyEcore;
 
   public LoadPackageIndication()
   {
@@ -49,21 +50,40 @@ public class LoadPackageIndication extends CDOReadIndication
       PROTOCOL_TRACER.format("Read packageURI: {0}", packageURI);
     }
 
+    onlyEcore = in.readBoolean();
+    if (PROTOCOL_TRACER.isEnabled())
+    {
+      PROTOCOL_TRACER.format("Read onlyEcore: {0}", onlyEcore);
+    }
+
     cdoPackage = getPackageManager().lookupPackage(packageURI);
     if (cdoPackage == null)
     {
-      throw new ImplementationError("CDO package not found: " + packageURI);
+      throw new IllegalStateException("CDO package not found: " + packageURI);
     }
   }
 
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (onlyEcore)
     {
-      PROTOCOL_TRACER.format("Writing package: {0}", cdoPackage);
-    }
+      String ecore = cdoPackage.getEcore();
+      if (PROTOCOL_TRACER.isEnabled())
+      {
+        PROTOCOL_TRACER.format("Writing ecore:\n{0}", ecore);
+      }
 
-    out.writeCDOPackage(cdoPackage);
+      out.writeString(ecore);
+    }
+    else
+    {
+      if (PROTOCOL_TRACER.isEnabled())
+      {
+        PROTOCOL_TRACER.format("Writing package: {0}", cdoPackage);
+      }
+
+      out.writeCDOPackage(cdoPackage);
+    }
   }
 }

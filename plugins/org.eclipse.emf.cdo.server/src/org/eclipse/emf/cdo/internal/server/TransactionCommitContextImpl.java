@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -28,6 +27,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackageManager;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 
@@ -459,7 +459,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
   /**
    * @author Eike Stepper
    */
-  public final class TransactionPackageManager implements CDOPackageManager
+  public final class TransactionPackageManager implements InternalCDOPackageManager
   {
     private List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
 
@@ -505,6 +505,16 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     public CDOResourcePackage getCDOResourcePackage()
     {
       return repositoryPackageManager.getCDOResourcePackage();
+    }
+
+    public void loadPackage(CDOPackage cdoPackage)
+    {
+      repositoryPackageManager.loadPackage(cdoPackage);
+    }
+
+    public void loadPackageEcore(CDOPackage cdoPackage)
+    {
+      repositoryPackageManager.loadPackageEcore(cdoPackage);
     }
 
     public int getPackageCount()

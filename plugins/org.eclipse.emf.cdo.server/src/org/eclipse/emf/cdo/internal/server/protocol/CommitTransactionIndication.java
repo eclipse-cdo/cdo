@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -127,8 +128,10 @@ public class CommitTransactionIndication extends CDOServerIndication
 
     for (int i = 0; i < newPackages.length; i++)
     {
-      newPackages[i] = in.readCDOPackage();
-      packageManager.addPackage(newPackages[i]);
+      InternalCDOPackage newPackage = (InternalCDOPackage)in.readCDOPackage();
+      newPackage.setEcore(in.readString());
+      newPackages[i] = newPackage;
+      packageManager.addPackage(newPackage);
     }
 
     // New objects

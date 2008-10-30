@@ -276,9 +276,4 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
       return MessageFormat.format("CDOFeature(ID={0}, name={1}, type={2})", featureID, getName(), type);
     }
   }
-
-  @Override
-  protected void onInitialize()
-  {
-  }
 }

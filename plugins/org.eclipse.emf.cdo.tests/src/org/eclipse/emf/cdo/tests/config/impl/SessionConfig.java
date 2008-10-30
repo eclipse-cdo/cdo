@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.util.CDOPackageTypeRegistryImpl;
+
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -24,6 +26,7 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.util.Set;
 
@@ -121,10 +124,25 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   }
 
   @Override
+  public void setUp() throws Exception
+  {
+    super.setUp();
+    CDOPackageTypeRegistryImpl.INSTANCE.activate();
+  }
+
+  @Override
   public void tearDown() throws Exception
   {
-    stopTransport();
-    super.tearDown();
+    try
+    {
+      stopTransport();
+      super.tearDown();
+    }
+    finally
+    {
+      CDOPackageTypeRegistryImpl.INSTANCE.deactivate();
+      removeDynamicPackagesFromGlobalRegistry();
+    }
   }
 
   private CDOSessionConfiguration createSessionConfiguration(String repositoryName)
@@ -133,6 +151,19 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     configuration.setConnector(getConnector());
     configuration.setRepositoryName(repositoryName);
     return configuration;
+  }
+
+  private void removeDynamicPackagesFromGlobalRegistry()
+  {
+    EPackage.Registry registry = EPackage.Registry.INSTANCE;
+    for (String uri : registry.keySet().toArray(new String[registry.size()]))
+    {
+      Object object = registry.get(uri);
+      if (object != null && object.getClass() == EPackageImpl.class)
+      {
+        registry.remove(uri);
+      }
+    }
   }
 
   /**

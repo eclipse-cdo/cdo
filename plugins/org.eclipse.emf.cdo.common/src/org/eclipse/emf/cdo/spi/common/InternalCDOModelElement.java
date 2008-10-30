@@ -28,8 +28,6 @@ public interface InternalCDOModelElement extends CDOModelElement
 
   public void setServerInfo(Object serverInfo);
 
-  public void initialize();
-
   /**
    * @since 2.0
    */

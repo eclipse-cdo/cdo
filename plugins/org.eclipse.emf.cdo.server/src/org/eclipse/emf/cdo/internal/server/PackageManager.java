@@ -57,21 +57,22 @@ public class PackageManager extends CDOPackageManagerImpl implements IPackageMan
     return repository.getStore().getCDOIDObjectFactory();
   }
 
-  @Override
-  protected void resolve(CDOPackage cdoPackage)
+  /**
+   * @since 2.0
+   */
+  public void loadPackage(CDOPackage cdoPackage)
   {
-    if (!cdoPackage.isSystem())
-    {
-      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      accessor.readPackage(cdoPackage);
-    }
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    accessor.readPackage(cdoPackage);
   }
 
-  @Override
-  protected String provideEcore(CDOPackage cdoPackage)
+  /**
+   * @since 2.0
+   */
+  public void loadPackageEcore(CDOPackage cdoPackage)
   {
-    // No generated model on server side
-    return null;
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    accessor.readPackageEcore(cdoPackage);
   }
 
   @Override

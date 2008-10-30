@@ -211,6 +211,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     getStore().getPackageHandler().readPackage(cdoPackage);
   }
 
+  public void readPackageEcore(CDOPackage cdoPackage)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public Collection<CDOPackageInfo> readPackageInfos()
   {
     return getStore().getPackageHandler().getCDOPackageInfos();

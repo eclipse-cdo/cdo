@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackageManager;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -48,6 +49,8 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
 
   private String ecore;
 
+  private boolean ecoreLoaded;
+
   private boolean dynamic;
 
   private CDOIDMetaRange metaIDRange;
@@ -66,7 +69,6 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     super(name);
     this.packageManager = packageManager;
     this.packageURI = packageURI;
-    this.ecore = ecore;
     this.dynamic = dynamic;
     this.metaIDRange = metaIDRange;
     this.parentURI = parentURI;
@@ -75,6 +77,7 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
       MODEL_TRACER.format("Created {0}", this);
     }
 
+    setEcore(ecore);
     createLists();
   }
 
@@ -109,7 +112,6 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     super.read(in);
     packageURI = in.readCDOPackageURI();
     dynamic = in.readBoolean();
-    ecore = in.readString();
     metaIDRange = in.readCDOIDMetaRange();
     parentURI = in.readString();
     if (PROTOCOL_TRACER.isEnabled())
@@ -134,7 +136,7 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
   @Override
   public void write(CDODataOutput out) throws IOException
   {
-    resolve();
+    load();
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Writing package: URI={0}, name={1}, dynamic={2}, metaIDRange={3}, parentURI={4}",
@@ -144,7 +146,6 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     super.write(out);
     out.writeCDOPackageURI(packageURI);
     out.writeBoolean(dynamic);
-    out.writeString(ecore);
     out.writeCDOIDMetaRange(metaIDRange);
     out.writeString(parentURI);
 
@@ -189,6 +190,11 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
 
   public CDOPackage getParentPackage()
   {
+    if (parentURI == null)
+    {
+      return null;
+    }
+
     return packageManager.lookupPackage(parentURI);
   }
 
@@ -239,13 +245,13 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
 
   public int getClassCount()
   {
-    resolve();
+    load();
     return classes.size();
   }
 
   public CDOClass[] getClasses()
   {
-    resolve();
+    load();
     return classes.toArray(new CDOClass[classes.size()]);
   }
 
@@ -264,7 +270,7 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
    */
   public CDOClass[] getConcreteClasses()
   {
-    resolve();
+    load();
     List<CDOClass> result = new ArrayList<CDOClass>(0);
     for (CDOClass cdoClass : classes)
     {
@@ -279,33 +285,32 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
 
   public CDOClass lookupClass(int classifierID)
   {
-    resolve();
+    load();
     return index.get(classifierID);
   }
 
-  public String getEcore()
+  public synchronized String basicGetEcore()
   {
-    if (ecore == null && packageManager instanceof CDOPackageManagerImpl && parentURI == null)
+    return ecore;
+  }
+
+  public synchronized String getEcore()
+  {
+    if (!ecoreLoaded)
     {
-      if (isPersistent() && isDynamic())
+      if (parentURI == null && !isSystem())
       {
-        resolve();
-      }
-      else
-      {
-        ecore = ((CDOPackageManagerImpl)packageManager).provideEcore(this);
+        ((InternalCDOPackageManager)packageManager).loadPackageEcore(this);
       }
     }
 
     return ecore;
   }
 
-  /**
-   * TODO Add IStore API to demand read dynamic ecore string
-   */
-  public void setEcore(String ecore)
+  public synchronized void setEcore(String ecore)
   {
     this.ecore = ecore;
+    ecoreLoaded = true;
   }
 
   public CDOIDMetaRange getMetaIDRange()
@@ -372,15 +377,6 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
         packageURI, getName(), dynamic, metaIDRange, parentURI);
   }
 
-  @Override
-  protected void onInitialize()
-  {
-    for (CDOClass cdoClass : classes)
-    {
-      ((InternalCDOClass)cdoClass).initialize();
-    }
-  }
-
   private void setIndex(int classifierID, CDOClass cdoClass)
   {
     while (classifierID >= index.size())
@@ -391,18 +387,18 @@ public class CDOPackageImpl extends CDOModelElementImpl implements InternalCDOPa
     index.set(classifierID, cdoClass);
   }
 
-  private void resolve()
-  {
-    if (classes == null && packageManager instanceof CDOPackageManagerImpl)
-    {
-      createLists();
-      ((CDOPackageManagerImpl)packageManager).resolve(this);
-    }
-  }
-
   private void createLists()
   {
     classes = new ArrayList<CDOClass>(0);
     index = new ArrayList<CDOClass>(0);
+  }
+
+  private synchronized void load()
+  {
+    if (classes == null)
+    {
+      createLists();
+      ((InternalCDOPackageManager)packageManager).loadPackage(this);
+    }
   }
 }

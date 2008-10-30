@@ -109,6 +109,7 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
     subPackage1.setName("subPackage1");
     subPackage1.setNsPrefix("subPackage1");
     subPackage1.setNsURI("http:///www.elver.org/subPackage1");
+
     {
       EClass schoolBookEClass = efactory.createEClass();
       schoolBookEClass.setName("class1");
@@ -119,17 +120,20 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
       schoolBookEClass.getEStructuralFeatures().add(level);
       subPackage1.getEClassifiers().add(schoolBookEClass);
     }
+
     {
       EEnum schoolBookEClass = efactory.createEEnum();
       schoolBookEClass.setName("enum");
       subPackage1.getEClassifiers().add(schoolBookEClass);
     }
+
     {
       EClass schoolBookEClass = efactory.createEClass();
       schoolBookEClass.setName("class2");
       // create a new attribute for this EClass
       subPackage1.getEClassifiers().add(schoolBookEClass);
     }
+
     {
       EClass schoolBookEClass = efactory.createEClass();
       schoolBookEClass.setName("class3");

@@ -356,6 +356,8 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testDynamicPackageFactory() throws Exception
   {
+    // -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.EPackageRegistryImpl
+
     {
       EPackage model1 = loadModel("model1.ecore");
       EClass companyClass = (EClass)model1.getEClassifier("Company");

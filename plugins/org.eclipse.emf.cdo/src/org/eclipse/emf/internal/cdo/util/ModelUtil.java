@@ -344,7 +344,7 @@ public final class ModelUtil
     return registry.getEPackage(packageURI);
   }
 
-  public static EPackageImpl createDynamicEPackage(CDOPackage cdoPackage)
+  private static EPackageImpl createDynamicEPackage(CDOPackage cdoPackage)
   {
     CDOPackage topLevelPackage = cdoPackage.getTopLevelPackage();
     String ecore = topLevelPackage.getEcore();

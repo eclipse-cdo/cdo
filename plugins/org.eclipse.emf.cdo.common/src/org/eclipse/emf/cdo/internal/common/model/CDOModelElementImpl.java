@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOModelElement;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -32,8 +31,6 @@ public abstract class CDOModelElementImpl implements InternalCDOModelElement
   private Object clientInfo;
 
   private Object serverInfo;
-
-  private boolean initialized;
 
   protected CDOModelElementImpl(String name)
   {
@@ -93,22 +90,4 @@ public abstract class CDOModelElementImpl implements InternalCDOModelElement
 
     this.serverInfo = serverInfo;
   }
-
-  public boolean isInitialized()
-  {
-    return initialized;
-  }
-
-  public final void initialize()
-  {
-    if (initialized)
-    {
-      throw new ImplementationError("Duplicate initialization");
-    }
-
-    initialized = true;
-    onInitialize();
-  }
-
-  protected abstract void onInitialize();
 }

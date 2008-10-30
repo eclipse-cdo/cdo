@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -168,9 +169,11 @@ public class HibernatePackageHandler extends Lifecycle
     CDOPackage[] cdoPackages = hibernateStore.getRepository().getPackageManager().getPackages();
     for (CDOPackage cdoPackage : cdoPackages)
     {
-      if (cdoPackage.getClassCount() > 0 && cdoPackage.getPackageURI().compareTo(newCDOPackage.getPackageURI()) == 0)
+      if (cdoPackage.getClassCount() > 0 && cdoPackage.getPackageURI().equals(newCDOPackage.getPackageURI()))
       {
-        return cdoPackage.getEcore().compareTo(newCDOPackage.getEcore()) == 0;
+        String ecore = cdoPackage.getEcore();
+        String newEcore = newCDOPackage.getEcore();
+        return ObjectUtil.equals(ecore, newEcore);
       }
     }
 

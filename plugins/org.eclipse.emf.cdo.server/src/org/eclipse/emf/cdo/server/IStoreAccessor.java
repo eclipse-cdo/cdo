@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
@@ -66,10 +67,25 @@ public interface IStoreAccessor extends IQueryHandler
 
   /**
    * Demand loads a given package proxy that has been created on startup of the repository.
+   * <p>
+   * It's left to the implementor's choice whether to load the {@link CDOPackage#getEcore() ecore xml} at this time
+   * already. In case it is <b>not</b> loaded at this time {@link #readPackageEcore(CDOPackage) readPackageEcore()} is
+   * called later on demand.
+   * <p>
+   * This method must only load the given package, <b>not</b> possible contained packages.
    * 
+   * @see InternalCDOPackage
    * @since 2.0
    */
   public void readPackage(CDOPackage cdoPackage);
+
+  /**
+   * Loads the {@link CDOPackage#getEcore() ecore xml} of the given package.
+   * 
+   * @see InternalCDOPackage#setEcore(String)
+   * @since 2.0
+   */
+  public void readPackageEcore(CDOPackage cdoPackage);
 
   /**
    * Returns an iterator that iterates over all objects in the store and makes their CDOIDs available for processing.

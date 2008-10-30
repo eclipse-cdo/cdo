@@ -25,8 +25,6 @@ public final class RollbackTransactionAction extends ViewAction
 
   private static final String TOOL_TIP = "Rollback this transaction";
 
-  private static final String MESSAGE = "Choose how to rollback this transaction.";
-
   public RollbackTransactionAction(IWorkbenchPage page, CDOView view)
   {
     super(page, TITLE + INTERACTIVE, TOOL_TIP, null, view);
@@ -37,7 +35,7 @@ public final class RollbackTransactionAction extends ViewAction
   protected void preRun() throws Exception
   {
     CDOTransaction transaction = (CDOTransaction)getView();
-    RollbackTransactionDialog dialog = new RollbackTransactionDialog(getPage(), TITLE, MESSAGE, transaction);
+    RollbackTransactionDialog dialog = new RollbackTransactionDialog(getPage(), TITLE, TOOL_TIP, transaction);
     if (dialog.open() != RollbackTransactionDialog.OK)
     {
       cancel();

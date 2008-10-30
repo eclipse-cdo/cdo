@@ -361,15 +361,6 @@ public class CDOClassImpl extends CDOModelElementImpl implements InternalCDOClas
     return MessageFormat.format("CDOClass(ID={0}, name={1})", classifierID, getName());
   }
 
-  @Override
-  protected void onInitialize()
-  {
-    for (CDOFeature cdoFeature : features)
-    {
-      ((InternalCDOFeature)cdoFeature).initialize();
-    }
-  }
-
   private void setIndex(int featureID, int index)
   {
     while (indices.size() <= featureID)

@@ -63,8 +63,6 @@ public abstract class ClassMapping implements IClassMapping
 
   private String selectPrefix;
 
-  private String selectPrefixWithVersion;
-
   public ClassMapping(MappingStrategy mappingStrategy, CDOClass cdoClass, CDOFeature[] features)
   {
     this.mappingStrategy = mappingStrategy;
@@ -106,8 +104,7 @@ public abstract class ClassMapping implements IClassMapping
       // }
     }
 
-    selectPrefix = createSelectPrefix(false);
-    selectPrefixWithVersion = createSelectPrefix(true);
+    selectPrefix = createSelectPrefix();
   }
 
   public MappingStrategy getMappingStrategy()
@@ -221,19 +218,15 @@ public abstract class ClassMapping implements IClassMapping
     return store.getDBAdapter();
   }
 
-  protected String createSelectPrefix(boolean readVersion)
+  protected String createSelectPrefix()
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");
 
     if (hasFullRevisionInfo())
     {
-      if (readVersion)
-      {
-        builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-        builder.append(", ");
-      }
-
+      builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+      builder.append(", ");
       builder.append(CDODBSchema.ATTRIBUTES_CREATED);
       builder.append(", ");
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
@@ -520,27 +513,25 @@ public abstract class ClassMapping implements IClassMapping
   public void readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk)
   {
     String where = mappingStrategy.createWhereClause(CDORevision.UNSPECIFIED_DATE);
-    readRevision(accessor, (InternalCDORevision)revision, where, true, referenceChunk);
+    readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
   }
 
   public void readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk)
   {
     String where = mappingStrategy.createWhereClause(timeStamp);
-    readRevision(accessor, (InternalCDORevision)revision, where, true, referenceChunk);
+    readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
   }
 
   public void readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
-    readRevision(accessor, (InternalCDORevision)revision, where, false, referenceChunk);
-    ((InternalCDORevision)revision).setVersion(version);
+    readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
   }
 
-  protected void readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, String where,
-      boolean readVersion, int referenceChunk)
+  protected void readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, String where, int referenceChunk)
   {
     // Read attribute table always (even without modeled attributes!)
-    readAttributes(accessor, revision, where, readVersion);
+    readAttributes(accessor, revision, where);
 
     // Read reference tables only if they exist
     if (referenceMappings != null)
@@ -549,11 +540,10 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void readAttributes(IDBStoreAccessor accessor, InternalCDORevision revision, String where,
-      boolean readVersion)
+  protected void readAttributes(IDBStoreAccessor accessor, InternalCDORevision revision, String where)
   {
     long id = CDOIDUtil.getLong(revision.getID());
-    StringBuilder builder = new StringBuilder(readVersion ? selectPrefixWithVersion : selectPrefix);
+    StringBuilder builder = new StringBuilder(selectPrefix);
     builder.append(id);
     builder.append(" AND (");
     builder.append(where);
@@ -575,26 +565,22 @@ public abstract class ClassMapping implements IClassMapping
         throw new IllegalStateException("Revision not found: " + id);
       }
 
-      int i = 1;
+      int i = 0;
       if (hasFullRevisionInfo())
       {
-        if (readVersion)
-        {
-          revision.setVersion(resultSet.getInt(i++));
-        }
-
-        revision.setCreated(resultSet.getLong(i++));
-        revision.setRevised(resultSet.getLong(i++));
-        revision.setResourceID(CDOIDUtil.createLong(resultSet.getLong(i++)));
-        revision.setContainerID(CDOIDUtil.createLong(resultSet.getLong(i++)));
-        revision.setContainingFeatureID(resultSet.getInt(i++));
+        revision.setVersion(resultSet.getInt(++i));
+        revision.setCreated(resultSet.getLong(++i));
+        revision.setRevised(resultSet.getLong(++i));
+        revision.setResourceID(CDOIDUtil.createLong(resultSet.getLong(++i)));
+        revision.setContainerID(CDOIDUtil.createLong(resultSet.getLong(++i)));
+        revision.setContainingFeatureID(resultSet.getInt(++i));
       }
 
       if (attributeMappings != null)
       {
         for (IAttributeMapping attributeMapping : attributeMappings)
         {
-          attributeMapping.extractValue(resultSet, i++, revision);
+          attributeMapping.extractValue(resultSet, ++i, revision);
         }
       }
     }

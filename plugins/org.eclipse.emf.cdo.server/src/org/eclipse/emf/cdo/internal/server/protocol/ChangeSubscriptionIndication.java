@@ -30,14 +30,9 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       ChangeSubscriptionIndication.class);
 
-  public ChangeSubscriptionIndication()
+  public ChangeSubscriptionIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION;
+    super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION);
   }
 
   @Override

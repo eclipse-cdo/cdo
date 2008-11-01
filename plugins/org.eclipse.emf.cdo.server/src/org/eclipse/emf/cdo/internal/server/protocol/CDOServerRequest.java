@@ -34,9 +34,9 @@ import java.io.IOException;
  */
 public abstract class CDOServerRequest extends Request
 {
-  public CDOServerRequest(IChannel channel)
+  public CDOServerRequest(IChannel channel, short signalID)
   {
-    super(extractProtocol(channel));
+    super(extractProtocol(channel), signalID);
   }
 
   @Override

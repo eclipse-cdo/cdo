@@ -21,14 +21,9 @@ import java.io.IOException;
  */
 public class CommitTransactionPhase3Indication extends CommitTransactionIndication
 {
-  public CommitTransactionPhase3Indication()
+  public CommitTransactionPhase3Indication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3;
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3);
   }
 
   @Override

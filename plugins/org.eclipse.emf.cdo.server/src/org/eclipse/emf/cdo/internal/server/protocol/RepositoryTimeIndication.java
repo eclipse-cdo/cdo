@@ -29,14 +29,14 @@ public class RepositoryTimeIndication extends CDOServerIndication
 
   private long indicated;
 
-  public RepositoryTimeIndication()
+  public RepositoryTimeIndication(CDOServerProtocol protocol)
   {
+    super(protocol, CDOProtocolConstants.SIGNAL_REPOSITORY_TIME);
   }
 
-  @Override
-  protected short getSignalID()
+  public RepositoryTimeIndication(CDOServerProtocol protocol, short signalID)
   {
-    return CDOProtocolConstants.SIGNAL_REPOSITORY_TIME;
+    super(protocol, signalID);
   }
 
   @Override

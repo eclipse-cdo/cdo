@@ -30,15 +30,9 @@ public class InviteBuddiesNotification extends Request
 
   public InviteBuddiesNotification(BuddiesClientProtocol protocol, long collaborationID, Collection<IBuddy> buddies)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_INVITE_BUDDIES);
     this.buddies = buddies;
     this.collaborationID = collaborationID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_INVITE_BUDDIES;
   }
 
   @Override

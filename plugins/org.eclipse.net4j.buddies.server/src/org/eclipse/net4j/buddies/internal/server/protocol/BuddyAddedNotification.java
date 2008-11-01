@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
@@ -26,16 +27,10 @@ public class BuddyAddedNotification extends Request
   /**
    * @since 2.0
    */
-  public BuddyAddedNotification(BuddiesServerProtocol protocol, String buddy)
+  public BuddyAddedNotification(SignalProtocol<?> protocol, String buddy)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_BUDDY_ADDED);
     this.buddy = buddy;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_BUDDY_ADDED;
   }
 
   @Override

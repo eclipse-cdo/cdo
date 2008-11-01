@@ -32,13 +32,7 @@ public class CommitTransactionCancelRequest extends CommitTransactionRequest
 {
   public CommitTransactionCancelRequest(CDOClientProtocol protocol, CDOXATransactionCommitContext xaTransaction)
   {
-    super(protocol, xaTransaction);
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL;
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL, xaTransaction);
   }
 
   @Override

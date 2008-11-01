@@ -28,14 +28,8 @@ public class LoadAccountRequest extends RequestWithConfirmation<IAccount>
 
   public LoadAccountRequest(BuddiesClientProtocol protocol, String userID)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_LOAD_ACCOUNT);
     this.userID = userID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_LOAD_ACCOUNT;
   }
 
   @Override

@@ -15,6 +15,7 @@ import org.eclipse.net4j.buddies.common.ICollaborationProvider;
 import org.eclipse.net4j.buddies.common.IMessage;
 import org.eclipse.net4j.buddies.spi.common.Facility;
 import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
@@ -26,15 +27,10 @@ public class MessageIndication extends Indication
 {
   private ICollaborationProvider collaborationProvider;
 
-  public MessageIndication(ICollaborationProvider collaborationProvider)
+  public MessageIndication(SignalProtocol<?> protocol, ICollaborationProvider collaborationProvider)
   {
+    super(protocol, ProtocolConstants.SIGNAL_MESSAGE);
     this.collaborationProvider = collaborationProvider;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_MESSAGE;
   }
 
   @Override

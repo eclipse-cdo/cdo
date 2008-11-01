@@ -28,9 +28,9 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
 
   private RepositoryTimeResult repositoryTimeResult = new RepositoryTimeResult();
 
-  public CDOTimeRequest(CDOClientProtocol protocol)
+  public CDOTimeRequest(CDOClientProtocol protocol, short signalID)
   {
-    super(protocol);
+    super(protocol, signalID);
   }
 
   public RepositoryTimeResult getRepositoryTimeResult()

@@ -28,14 +28,9 @@ import java.util.Set;
  */
 public class CollaborationInitiatedIndication extends Indication
 {
-  public CollaborationInitiatedIndication()
+  public CollaborationInitiatedIndication(BuddiesClientProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_COLLABORATION_INITIATED;
+    super(protocol, ProtocolConstants.SIGNAL_COLLABORATION_INITIATED);
   }
 
   @Override

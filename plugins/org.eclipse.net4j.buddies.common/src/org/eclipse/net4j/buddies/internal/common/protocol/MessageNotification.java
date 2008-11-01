@@ -30,16 +30,10 @@ public class MessageNotification extends Request
 
   public MessageNotification(SignalProtocol<?> protocol, long collaborationID, String facilityType, IMessage message)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_MESSAGE);
     this.collaborationID = collaborationID;
     this.facilityType = facilityType;
     this.message = message;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_MESSAGE;
   }
 
   @Override

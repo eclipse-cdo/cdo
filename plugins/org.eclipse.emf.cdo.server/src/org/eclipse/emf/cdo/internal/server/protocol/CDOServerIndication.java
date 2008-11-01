@@ -40,8 +40,9 @@ import java.io.IOException;
  */
 public abstract class CDOServerIndication extends IndicationWithResponse
 {
-  public CDOServerIndication()
+  public CDOServerIndication(CDOServerProtocol protocol, short signalID)
   {
+    super(protocol, signalID);
   }
 
   @Override

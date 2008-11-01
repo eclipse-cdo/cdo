@@ -29,14 +29,8 @@ public class JMSRollbackRequest extends RequestWithConfirmation<Boolean>
    */
   public JMSRollbackRequest(JMSClientProtocol protocol, int sessionID)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_ROLLBACK);
     this.sessionID = sessionID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_ROLLBACK;
   }
 
   @Override

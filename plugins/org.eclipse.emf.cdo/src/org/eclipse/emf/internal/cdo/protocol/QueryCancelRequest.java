@@ -32,14 +32,8 @@ public class QueryCancelRequest extends CDOClientRequest<Object>
 
   public QueryCancelRequest(CDOClientProtocol protocol, int queryID)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_QUERY_CANCEL);
     this.queryID = queryID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_QUERY_CANCEL;
   }
 
   @Override

@@ -40,18 +40,12 @@ public class JMSRegisterConsumerRequest extends RequestWithConfirmation<Long>
   public JMSRegisterConsumerRequest(JMSClientProtocol protocol, int sessionID, DestinationImpl destination,
       String messageSelector, boolean noLocal, boolean durable)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_REGISTER_CONSUMER);
     this.sessionID = sessionID;
     this.destination = destination;
     this.messageSelector = messageSelector;
     this.noLocal = noLocal;
     this.durable = durable;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_REGISTER_CONSUMER;
   }
 
   @Override

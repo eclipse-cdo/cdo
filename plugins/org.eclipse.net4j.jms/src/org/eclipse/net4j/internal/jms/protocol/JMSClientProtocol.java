@@ -39,7 +39,7 @@ public class JMSClientProtocol extends SignalProtocol<ConnectionImpl>
     switch (signalID)
     {
     case JMSProtocolConstants.SIGNAL_SERVER_MESSAGE:
-      return new JMSServerMessageIndication();
+      return new JMSServerMessageIndication(this);
 
     default:
       return null;

@@ -31,9 +31,9 @@ public abstract class Request extends SignalActor
   /**
    * @since 2.0
    */
-  protected Request(SignalProtocol<?> protocol)
+  public Request(SignalProtocol<?> protocol, short signalID)
   {
-    super(protocol);
+    super(protocol, signalID);
   }
 
   @Override

@@ -30,15 +30,9 @@ public class FacilityInstalledNotification extends Request
    */
   public FacilityInstalledNotification(BuddiesServerProtocol protocol, long collaborationID, String facilityType)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_FACILITY_INSTALLED);
     this.collaborationID = collaborationID;
     this.facilityType = facilityType;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_FACILITY_INSTALLED;
   }
 
   @Override

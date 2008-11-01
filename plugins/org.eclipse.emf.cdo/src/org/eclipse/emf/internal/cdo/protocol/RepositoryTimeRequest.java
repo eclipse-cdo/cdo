@@ -22,13 +22,7 @@ public class RepositoryTimeRequest extends CDOTimeRequest<RepositoryTimeResult>
 {
   public RepositoryTimeRequest(CDOClientProtocol protocol)
   {
-    super(protocol);
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_REPOSITORY_TIME;
+    super(protocol, CDOProtocolConstants.SIGNAL_REPOSITORY_TIME);
   }
 
   @Override

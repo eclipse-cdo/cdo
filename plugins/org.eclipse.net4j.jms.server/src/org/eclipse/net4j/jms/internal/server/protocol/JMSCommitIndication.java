@@ -29,14 +29,9 @@ public class JMSCommitIndication extends IndicationWithResponse
 {
   private String[] messageIDs;
 
-  public JMSCommitIndication()
+  public JMSCommitIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_COMMIT;
+    super(protocol, JMSProtocolConstants.SIGNAL_COMMIT);
   }
 
   @Override
@@ -51,7 +46,7 @@ public class JMSCommitIndication extends IndicationWithResponse
     }
 
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {

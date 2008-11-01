@@ -28,14 +28,8 @@ public class JMSAcknowledgeRequest extends Request
    */
   public JMSAcknowledgeRequest(JMSClientProtocol protocol, int sessionID)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_ACKNOWLEDGE);
     this.sessionID = sessionID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_ACKNOWLEDGE;
   }
 
   @Override

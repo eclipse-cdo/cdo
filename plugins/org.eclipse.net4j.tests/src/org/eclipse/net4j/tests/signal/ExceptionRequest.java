@@ -25,14 +25,8 @@ public class ExceptionRequest extends RequestWithConfirmation<Boolean>
 
   public ExceptionRequest(TestSignalProtocol protocol, boolean exceptionInIndicating)
   {
-    super(protocol);
+    super(protocol, TestSignalProtocol.SIGNAL_EXCEPTION);
     this.exceptionInIndicating = exceptionInIndicating;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_EXCEPTION;
   }
 
   @Override

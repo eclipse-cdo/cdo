@@ -34,14 +34,8 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
 
   public LoadRevisionByTimeRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    super(protocol, ids, referenceChunk);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME, ids, referenceChunk);
     this.timeStamp = timeStamp;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME;
   }
 
   @Override

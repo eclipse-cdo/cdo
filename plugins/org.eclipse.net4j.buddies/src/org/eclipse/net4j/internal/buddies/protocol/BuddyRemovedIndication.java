@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.buddies.protocol;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
@@ -22,14 +23,9 @@ import java.io.IOException;
  */
 public class BuddyRemovedIndication extends Indication
 {
-  public BuddyRemovedIndication()
+  public BuddyRemovedIndication(SignalProtocol<?> protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_BUDDY_REMOVED;
+    super(protocol, ProtocolConstants.SIGNAL_BUDDY_REMOVED);
   }
 
   @Override

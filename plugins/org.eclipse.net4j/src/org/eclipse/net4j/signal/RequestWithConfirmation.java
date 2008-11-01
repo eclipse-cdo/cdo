@@ -31,9 +31,9 @@ public abstract class RequestWithConfirmation<RESULT> extends Request
   /**
    * @since 2.0
    */
-  protected RequestWithConfirmation(SignalProtocol<?> protocol)
+  public RequestWithConfirmation(SignalProtocol<?> protocol, short signalID)
   {
-    super(protocol);
+    super(protocol, signalID);
   }
 
   @Override

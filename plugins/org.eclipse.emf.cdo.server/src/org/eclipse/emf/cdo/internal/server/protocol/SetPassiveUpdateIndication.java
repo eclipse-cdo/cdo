@@ -28,15 +28,9 @@ public class SetPassiveUpdateIndication extends SyncRevisionIndication
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       SetPassiveUpdateIndication.class);
 
-  public SetPassiveUpdateIndication()
+  public SetPassiveUpdateIndication(CDOServerProtocol protocol)
   {
-    super();
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE;
+    super(protocol, CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE);
   }
 
   @Override

@@ -29,14 +29,9 @@ public class QueryCancelIndication extends CDOReadIndication
 
   private int queryID;
 
-  public QueryCancelIndication()
+  public QueryCancelIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_QUERY_CANCEL;
+    super(protocol, CDOProtocolConstants.SIGNAL_QUERY_CANCEL);
   }
 
   @Override

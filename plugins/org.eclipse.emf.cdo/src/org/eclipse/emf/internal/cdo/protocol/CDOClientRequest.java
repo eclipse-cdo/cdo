@@ -38,9 +38,9 @@ import java.io.IOException;
  */
 public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<RESULT>
 {
-  public CDOClientRequest(CDOClientProtocol protocol)
+  public CDOClientRequest(CDOClientProtocol protocol, short signalID)
   {
-    super(protocol);
+    super(protocol, signalID);
   }
 
   @Override

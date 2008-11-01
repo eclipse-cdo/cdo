@@ -28,8 +28,12 @@ public abstract class IndicationWithResponse extends Indication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, IndicationWithResponse.class);
 
-  protected IndicationWithResponse()
+  /**
+   * @since 2.0
+   */
+  public IndicationWithResponse(SignalProtocol<?> protocol, short signalID)
   {
+    super(protocol, signalID);
   }
 
   @Override

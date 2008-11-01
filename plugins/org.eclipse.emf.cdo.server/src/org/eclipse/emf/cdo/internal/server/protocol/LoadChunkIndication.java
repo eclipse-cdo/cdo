@@ -43,14 +43,9 @@ public class LoadChunkIndication extends CDOReadIndication
 
   private int toIndex;
 
-  public LoadChunkIndication()
+  public LoadChunkIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_CHUNK;
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_CHUNK);
   }
 
   @Override

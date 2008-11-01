@@ -25,14 +25,8 @@ public class IntRequest extends RequestWithConfirmation<Integer>
 
   public IntRequest(TestSignalProtocol protocol, int data)
   {
-    super(protocol);
+    super(protocol, TestSignalProtocol.SIGNAL_INT);
     this.data = data;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_INT;
   }
 
   @Override

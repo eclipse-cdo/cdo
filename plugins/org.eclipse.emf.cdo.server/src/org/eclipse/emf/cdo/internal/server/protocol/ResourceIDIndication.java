@@ -30,14 +30,9 @@ public class ResourceIDIndication extends CDOReadIndication
 
   private CDOID id;
 
-  public ResourceIDIndication()
+  public ResourceIDIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_RESOURCE_ID;
+    super(protocol, CDOProtocolConstants.SIGNAL_RESOURCE_ID);
   }
 
   @Override

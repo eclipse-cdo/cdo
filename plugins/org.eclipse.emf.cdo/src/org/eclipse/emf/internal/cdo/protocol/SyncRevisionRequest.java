@@ -43,25 +43,25 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStam
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionRequest.class);
 
-  private Map<CDOID, CDORevision> collectionRevisions;
+  private Map<CDOID, CDORevision> revisions;
 
-  private CDOSessionImpl cdoSession;
+  private CDOSessionImpl session;
 
   private int referenceChunk;
 
-  public SyncRevisionRequest(CDOClientProtocol protocol, CDOSessionImpl cdoSession,
-      Map<CDOID, CDORevision> cdoRevisions, int referenceChunk)
+  public SyncRevisionRequest(CDOClientProtocol protocol, CDOSessionImpl session, Map<CDOID, CDORevision> revisions,
+      int referenceChunk)
   {
-    super(protocol);
-    collectionRevisions = cdoRevisions;
-    this.referenceChunk = referenceChunk;
-    this.cdoSession = cdoSession;
+    this(protocol, CDOProtocolConstants.SIGNAL_SYNC, session, revisions, referenceChunk);
   }
 
-  @Override
-  protected short getSignalID()
+  public SyncRevisionRequest(CDOClientProtocol protocol, short signalID, CDOSessionImpl session,
+      Map<CDOID, CDORevision> revisions, int referenceChunk)
   {
-    return CDOProtocolConstants.SIGNAL_SYNC;
+    super(protocol, signalID);
+    this.session = session;
+    this.revisions = revisions;
+    this.referenceChunk = referenceChunk;
   }
 
   @Override
@@ -69,28 +69,16 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStam
   {
     if (PROTOCOL_TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.trace("Synchronization " + collectionRevisions.size() + " objects");
+      PROTOCOL_TRACER.trace("Synchronization " + revisions.size() + " objects");
     }
 
     out.writeInt(referenceChunk);
-    out.writeInt(collectionRevisions.size());
-    for (CDORevision revision : collectionRevisions.values())
+    out.writeInt(revisions.size());
+    for (CDORevision revision : revisions.values())
     {
       out.writeCDOID(revision.getID());
       out.writeInt(revision.getVersion());
     }
-  }
-
-  private CDOTimeStampContext getMap(Map<Long, CDOTimeStampContext> mapOfContext, long timestamp)
-  {
-    CDOTimeStampContext result = mapOfContext.get(timestamp);
-    if (result == null)
-    {
-      result = new CDOTimeStampContextImpl(timestamp);
-      mapOfContext.put(timestamp, result);
-    }
-
-    return result;
   }
 
   @Override
@@ -105,7 +93,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStam
       CDORevision revision = in.readCDORevision();
       long revised = in.readLong();
 
-      CDORevision oldRevision = collectionRevisions.get(revision.getID());
+      CDORevision oldRevision = revisions.get(revision.getID());
       if (oldRevision == null)
       {
         throw new IllegalStateException("Didn't expect to receive object with id '" + revision.getID() + "'");
@@ -142,9 +130,21 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStam
       ((CDOTimeStampContextImpl)timestampContext).setDirtyObjects(dirtyObjects);
       ((CDOTimeStampContextImpl)timestampContext).setDetachedObjects(detachedObjects);
 
-      cdoSession.handleSyncResponse(timestampContext.getTimeStamp(), dirtyObjects, detachedObjects);
+      session.handleSyncResponse(timestampContext.getTimeStamp(), dirtyObjects, detachedObjects);
     }
 
     return Collections.unmodifiableCollection(mapofContext.values());
+  }
+
+  private CDOTimeStampContext getMap(Map<Long, CDOTimeStampContext> mapOfContext, long timestamp)
+  {
+    CDOTimeStampContext result = mapOfContext.get(timestamp);
+    if (result == null)
+    {
+      result = new CDOTimeStampContextImpl(timestamp);
+      mapOfContext.put(timestamp, result);
+    }
+  
+    return result;
   }
 }

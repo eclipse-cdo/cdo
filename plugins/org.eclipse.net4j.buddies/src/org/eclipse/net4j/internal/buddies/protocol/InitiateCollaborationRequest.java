@@ -29,14 +29,8 @@ public class InitiateCollaborationRequest extends RequestWithConfirmation<Long>
 
   public InitiateCollaborationRequest(BuddiesClientProtocol protocol, Collection<IBuddy> buddies)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_INITIATE_COLLABORATION);
     this.buddies = buddies;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_INITIATE_COLLABORATION;
   }
 
   @Override

@@ -28,15 +28,9 @@ public class JMSCreateDestinationRequest extends RequestWithConfirmation<Boolean
 
   public JMSCreateDestinationRequest(JMSAdminProtocol protocol, byte type, String name)
   {
-    super(protocol);
+    super(protocol, JMSAdminProtocolConstants.SIGNAL_CREATE_DESTINATION);
     this.type = type;
     this.name = name;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSAdminProtocolConstants.SIGNAL_CREATE_DESTINATION;
   }
 
   @Override

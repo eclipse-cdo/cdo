@@ -29,14 +29,8 @@ public class JMSCloseSessionRequest extends RequestWithConfirmation<Boolean>
    */
   public JMSCloseSessionRequest(JMSClientProtocol protocol, int sessionID)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_CLOSE_SESSION);
     this.sessionID = sessionID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_CLOSE_SESSION;
   }
 
   @Override

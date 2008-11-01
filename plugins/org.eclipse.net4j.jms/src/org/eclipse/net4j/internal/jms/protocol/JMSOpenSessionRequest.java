@@ -29,14 +29,8 @@ public class JMSOpenSessionRequest extends RequestWithConfirmation<Boolean>
    */
   public JMSOpenSessionRequest(JMSClientProtocol protocol, int sessionID)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_OPEN_SESSION);
     this.sessionID = sessionID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_OPEN_SESSION;
   }
 
   @Override

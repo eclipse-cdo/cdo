@@ -31,15 +31,9 @@ public class JMSLogonRequest extends RequestWithConfirmation<Boolean>
    */
   public JMSLogonRequest(JMSClientProtocol protocol, String userName, String password)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_LOGON);
     this.userName = userName;
     this.password = password;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_LOGON;
   }
 
   @Override

@@ -47,17 +47,11 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
   public ChangeSubscriptionRequest(CDOClientProtocol protocol, int viewID, List<CDOID> cdoIDs, boolean subscribeMode,
       boolean clear)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION);
     this.viewID = viewID;
     this.cdoIDs = cdoIDs;
     this.subscribeMode = subscribeMode;
     this.clear = clear;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION;
   }
 
   @Override

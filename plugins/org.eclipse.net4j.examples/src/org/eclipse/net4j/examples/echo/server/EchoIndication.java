@@ -25,14 +25,9 @@ public class EchoIndication extends IndicationWithResponse implements EchoProtoc
 {
   private String message;
 
-  public EchoIndication()
+  public EchoIndication(EchoServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ECHO_SIGNAL;
+    super(protocol, ECHO_SIGNAL);
   }
 
   @Override

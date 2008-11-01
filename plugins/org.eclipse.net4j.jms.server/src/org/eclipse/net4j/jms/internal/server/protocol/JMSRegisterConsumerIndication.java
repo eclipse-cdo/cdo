@@ -28,14 +28,9 @@ public class JMSRegisterConsumerIndication extends IndicationWithResponse
 {
   private long consumerID;
 
-  public JMSRegisterConsumerIndication()
+  public JMSRegisterConsumerIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_REGISTER_CONSUMER;
+    super(protocol, JMSProtocolConstants.SIGNAL_REGISTER_CONSUMER);
   }
 
   @Override
@@ -47,7 +42,7 @@ public class JMSRegisterConsumerIndication extends IndicationWithResponse
     boolean noLocal = in.readBoolean();
     boolean durable = in.readBoolean();
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     consumerID = session.registerConsumer(destination, messageSelector, noLocal, durable);
   }

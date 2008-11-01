@@ -20,8 +20,9 @@ import org.eclipse.net4j.internal.buddies.ClientSession;
  */
 public class ClientBuddyStateIndication extends BuddyStateIndication
 {
-  public ClientBuddyStateIndication()
+  public ClientBuddyStateIndication(BuddiesClientProtocol protocol)
   {
+    super(protocol);
   }
 
   @Override

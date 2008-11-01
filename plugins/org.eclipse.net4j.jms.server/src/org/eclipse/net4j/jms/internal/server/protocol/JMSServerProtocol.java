@@ -35,31 +35,31 @@ public class JMSServerProtocol extends SignalProtocol<ServerConnection>
     switch (signalID)
     {
     case JMSProtocolConstants.SIGNAL_SYNC:
-      return new JMSSyncIndication();
+      return new JMSSyncIndication(this);
 
     case JMSProtocolConstants.SIGNAL_LOGON:
-      return new JMSLogonIndication();
+      return new JMSLogonIndication(this);
 
     case JMSProtocolConstants.SIGNAL_OPEN_SESSION:
-      return new JMSOpenSessionIndication();
+      return new JMSOpenSessionIndication(this);
 
     case JMSProtocolConstants.SIGNAL_REGISTER_CONSUMER:
-      return new JMSRegisterConsumerIndication();
+      return new JMSRegisterConsumerIndication(this);
 
     case JMSProtocolConstants.SIGNAL_CLIENT_MESSAGE:
-      return new JMSClientMessageIndication();
+      return new JMSClientMessageIndication(this);
 
     case JMSProtocolConstants.SIGNAL_ACKNOWLEDGE:
-      return new JMSAcknowledgeIndication();
+      return new JMSAcknowledgeIndication(this);
 
     case JMSProtocolConstants.SIGNAL_RECOVER:
-      return new JMSRecoverIndication();
+      return new JMSRecoverIndication(this);
 
     case JMSProtocolConstants.SIGNAL_COMMIT:
-      return new JMSCommitIndication();
+      return new JMSCommitIndication(this);
 
     case JMSProtocolConstants.SIGNAL_ROLLBACK:
-      return new JMSRollbackIndication();
+      return new JMSRollbackIndication(this);
 
     default:
       return null;

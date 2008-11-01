@@ -23,16 +23,11 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ViewsChangedIndication extends CDOServerIndication // Indication
+public class ViewsChangedIndication extends CDOServerIndication
 {
-  public ViewsChangedIndication()
+  public ViewsChangedIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_VIEWS_CHANGED;
+    super(protocol, CDOProtocolConstants.SIGNAL_VIEWS_CHANGED);
   }
 
   @Override

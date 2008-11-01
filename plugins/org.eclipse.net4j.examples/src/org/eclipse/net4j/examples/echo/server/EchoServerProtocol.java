@@ -37,7 +37,7 @@ public class EchoServerProtocol extends SignalProtocol<Object> implements EchoPr
     switch (signalID)
     {
     case ECHO_SIGNAL:
-      return new EchoIndication();
+      return new EchoIndication(this);
 
     default:
       return null;

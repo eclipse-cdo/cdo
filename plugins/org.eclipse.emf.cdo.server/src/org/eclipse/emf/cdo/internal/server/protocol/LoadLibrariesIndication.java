@@ -32,14 +32,9 @@ public class LoadLibrariesIndication extends CDOServerIndication
 
   private String[] libraryNames;
 
-  public LoadLibrariesIndication()
+  public LoadLibrariesIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_LIBRARIES;
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_LIBRARIES);
   }
 
   @Override

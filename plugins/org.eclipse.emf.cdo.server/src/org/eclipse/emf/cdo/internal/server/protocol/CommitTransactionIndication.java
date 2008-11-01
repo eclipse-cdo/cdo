@@ -46,14 +46,14 @@ public class CommitTransactionIndication extends CDOServerIndication
 
   protected InternalCommitContext commitContext;
 
-  public CommitTransactionIndication()
+  public CommitTransactionIndication(CDOServerProtocol protocol)
   {
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
   }
 
-  @Override
-  protected short getSignalID()
+  protected CommitTransactionIndication(CDOServerProtocol protocol, short signalID)
   {
-    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION;
+    super(protocol, signalID);
   }
 
   @Override

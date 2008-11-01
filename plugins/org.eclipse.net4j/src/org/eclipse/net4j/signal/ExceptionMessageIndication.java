@@ -19,14 +19,9 @@ import java.io.IOException;
  */
 class ExceptionMessageIndication extends Indication
 {
-  public ExceptionMessageIndication()
+  public ExceptionMessageIndication(SignalProtocol<?> protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return SignalProtocol.SIGNAL_EXCEPTION_MESSAGE;
+    super(protocol, SignalProtocol.SIGNAL_EXCEPTION_MESSAGE);
   }
 
   @Override

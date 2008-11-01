@@ -31,14 +31,8 @@ public class JMSClientMessageRequest extends RequestWithConfirmation<String>
    */
   public JMSClientMessageRequest(JMSClientProtocol protocol, MessageImpl message)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_CLIENT_MESSAGE);
     this.message = message;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_CLIENT_MESSAGE;
   }
 
   @Override

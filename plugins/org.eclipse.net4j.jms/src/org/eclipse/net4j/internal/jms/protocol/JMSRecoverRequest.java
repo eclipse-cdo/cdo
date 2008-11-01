@@ -29,14 +29,8 @@ public class JMSRecoverRequest extends RequestWithConfirmation<Object>
    */
   public JMSRecoverRequest(JMSClientProtocol protocol, int sessionID)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_RECOVER);
     this.sessionID = sessionID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_RECOVER;
   }
 
   @Override

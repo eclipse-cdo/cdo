@@ -25,19 +25,14 @@ public class ExceptionIndication extends IndicationWithResponse
 
   private boolean exceptionInIndicating;
 
-  public ExceptionIndication()
+  public ExceptionIndication(TestSignalProtocol protocol)
   {
+    super(protocol, TestSignalProtocol.SIGNAL_EXCEPTION);
   }
 
   public boolean isExceptionInIndicating()
   {
     return exceptionInIndicating;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_EXCEPTION;
   }
 
   @Override

@@ -41,14 +41,9 @@ public class OpenSessionIndication extends RepositoryTimeIndication
 
   private Session session;
 
-  public OpenSessionIndication()
+  public OpenSessionIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_OPEN_SESSION;
+    super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
   }
 
   @Override

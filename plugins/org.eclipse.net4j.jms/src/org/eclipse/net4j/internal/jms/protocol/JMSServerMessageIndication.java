@@ -24,14 +24,12 @@ import java.io.IOException;
  */
 public class JMSServerMessageIndication extends Indication
 {
-  public JMSServerMessageIndication()
+  /**
+   * @since 2.0
+   */
+  public JMSServerMessageIndication(JMSClientProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_SERVER_MESSAGE;
+    super(protocol, JMSProtocolConstants.SIGNAL_SERVER_MESSAGE);
   }
 
   @Override
@@ -41,7 +39,7 @@ public class JMSServerMessageIndication extends Indication
     long consumerID = in.readLong();
     MessageImpl message = MessageUtil.read(in);
     JMSClientProtocol protocol = (JMSClientProtocol)getProtocol();
-    ConnectionImpl connection = (ConnectionImpl)protocol.getInfraStructure();
+    ConnectionImpl connection = protocol.getInfraStructure();
     connection.handleMessageFromSignal(sessionID, consumerID, message);
   }
 }

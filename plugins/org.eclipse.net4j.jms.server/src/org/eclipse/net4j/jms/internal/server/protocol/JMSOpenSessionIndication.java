@@ -26,14 +26,9 @@ public class JMSOpenSessionIndication extends IndicationWithResponse
 {
   private boolean ok;
 
-  public JMSOpenSessionIndication()
+  public JMSOpenSessionIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_OPEN_SESSION;
+    super(protocol, JMSProtocolConstants.SIGNAL_OPEN_SESSION);
   }
 
   @Override
@@ -41,7 +36,7 @@ public class JMSOpenSessionIndication extends IndicationWithResponse
   {
     int sessionID = in.readInt();
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.openSession(sessionID);
     if (session != null)
     {

@@ -29,16 +29,10 @@ public class ViewsChangedRequest extends CDOClientRequest<Boolean>
 
   public ViewsChangedRequest(CDOClientProtocol protocol, int viewID, byte kind, long timeStamp)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_VIEWS_CHANGED);
     this.viewID = viewID;
     this.kind = kind;
     this.timeStamp = timeStamp;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_VIEWS_CHANGED;
   }
 
   @Override

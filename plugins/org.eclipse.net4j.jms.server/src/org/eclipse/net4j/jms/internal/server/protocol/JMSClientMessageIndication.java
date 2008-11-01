@@ -28,14 +28,9 @@ public class JMSClientMessageIndication extends IndicationWithResponse
 {
   private String messageID;
 
-  public JMSClientMessageIndication()
+  public JMSClientMessageIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_CLIENT_MESSAGE;
+    super(protocol, JMSProtocolConstants.SIGNAL_CLIENT_MESSAGE);
   }
 
   @Override
@@ -43,7 +38,7 @@ public class JMSClientMessageIndication extends IndicationWithResponse
   {
     MessageImpl[] messages = { MessageUtil.read(in) };
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
+    ServerConnection connection = protocol.getInfraStructure();
     Server server = connection.getServer();
     String[] ids = server.handleClientMessages(messages);
     if (ids != null && ids.length != 0)

@@ -188,7 +188,6 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
           }
 
           signal = provideSignalReactor(signalID);
-          signal.setProtocol(this);
           signal.setCorrelationID(-correlationID);
           signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
           signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
@@ -248,7 +247,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     checkActive();
     if (signalID == SIGNAL_EXCEPTION_MESSAGE)
     {
-      return new ExceptionMessageIndication();
+      return new ExceptionMessageIndication(this);
     }
 
     SignalReactor signal = createSignalReactor(signalID);

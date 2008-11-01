@@ -27,14 +27,9 @@ public class JMSCreateDestinationIndication extends IndicationWithResponse
 {
   private boolean ok;
 
-  public JMSCreateDestinationIndication()
+  public JMSCreateDestinationIndication(JMSAdminServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSAdminProtocolConstants.SIGNAL_CREATE_DESTINATION;
+    super(protocol, JMSAdminProtocolConstants.SIGNAL_CREATE_DESTINATION);
   }
 
   @Override

@@ -34,14 +34,9 @@ public class QueryIndication extends CDOReadIndication
 
   private QueryResult queryResult;
 
-  public QueryIndication()
+  public QueryIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_QUERY;
+    super(protocol, CDOProtocolConstants.SIGNAL_QUERY);
   }
 
   @Override

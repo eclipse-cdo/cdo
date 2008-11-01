@@ -46,15 +46,9 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
 
   public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, boolean passiveUpdateEnabled)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_OPEN_SESSION;
   }
 
   @Override

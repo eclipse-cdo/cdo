@@ -38,15 +38,9 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
 
   public LoadLibrariesRequest(CDOClientProtocol protocol, Collection<String> libraryNames, File cacheFolder)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_LIBRARIES);
     this.libraryNames = libraryNames;
     this.cacheFolder = cacheFolder;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_LIBRARIES;
   }
 
   @Override

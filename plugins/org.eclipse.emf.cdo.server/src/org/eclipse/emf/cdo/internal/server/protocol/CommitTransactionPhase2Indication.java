@@ -32,14 +32,9 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionPhase2Indication.class);
 
-  public CommitTransactionPhase2Indication()
+  public CommitTransactionPhase2Indication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2;
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2);
   }
 
   @Override

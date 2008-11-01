@@ -31,16 +31,10 @@ public class JMSServerMessageRequest extends Request
 
   public JMSServerMessageRequest(JMSServerProtocol protocol, int sessionID, long consumerID, MessageImpl message)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_SERVER_MESSAGE);
     this.sessionID = sessionID;
     this.consumerID = consumerID;
     this.message = message;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_SERVER_MESSAGE;
   }
 
   @Override

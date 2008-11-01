@@ -37,7 +37,7 @@ public class CDOClientProtocol extends CDOProtocolImpl
     switch (signalID)
     {
     case CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION:
-      return new CommitNotificationIndication();
+      return new CommitNotificationIndication(this);
 
     default:
       return null;

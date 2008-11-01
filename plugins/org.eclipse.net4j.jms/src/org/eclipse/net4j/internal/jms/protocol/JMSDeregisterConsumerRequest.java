@@ -31,15 +31,9 @@ public class JMSDeregisterConsumerRequest extends RequestWithConfirmation<Boolea
    */
   public JMSDeregisterConsumerRequest(JMSClientProtocol protocol, int sessionID, long consumerID)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_DEREGISTER_CONSUMER);
     this.sessionID = sessionID;
     this.consumerID = consumerID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_DEREGISTER_CONSUMER;
   }
 
   @Override

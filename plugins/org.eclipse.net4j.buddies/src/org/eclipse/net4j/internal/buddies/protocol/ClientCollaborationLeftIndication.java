@@ -18,8 +18,8 @@ import org.eclipse.net4j.internal.buddies.Self;
  */
 public class ClientCollaborationLeftIndication extends CollaborationLeftIndication
 {
-  public ClientCollaborationLeftIndication(Self self)
+  public ClientCollaborationLeftIndication(BuddiesClientProtocol protocol, Self self)
   {
-    super(self.getSession(), self);
+    super(protocol, self.getSession(), self);
   }
 }

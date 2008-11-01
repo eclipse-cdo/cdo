@@ -35,7 +35,7 @@ public class JMSAdminServerProtocol extends SignalProtocol<Object>
     switch (signalID)
     {
     case JMSAdminProtocolConstants.SIGNAL_CREATE_DESTINATION:
-      return new JMSCreateDestinationIndication();
+      return new JMSCreateDestinationIndication(this);
 
     default:
       return null;

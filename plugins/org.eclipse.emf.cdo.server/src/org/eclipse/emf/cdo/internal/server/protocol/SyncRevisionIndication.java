@@ -42,14 +42,14 @@ public class SyncRevisionIndication extends CDOReadIndication
 
   private int referenceChunk;
 
-  public SyncRevisionIndication()
+  public SyncRevisionIndication(CDOServerProtocol protocol)
   {
+    super(protocol, CDOProtocolConstants.SIGNAL_SYNC);
   }
 
-  @Override
-  protected short getSignalID()
+  public SyncRevisionIndication(CDOServerProtocol protocol, short signalID)
   {
-    return CDOProtocolConstants.SIGNAL_SYNC;
+    super(protocol, signalID);
   }
 
   @Override

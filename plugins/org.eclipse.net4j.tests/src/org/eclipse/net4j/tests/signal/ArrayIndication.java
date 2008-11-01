@@ -23,10 +23,9 @@ public class ArrayIndication extends IndicationWithResponse
 {
   private byte[] data;
 
-  @Override
-  protected short getSignalID()
+  public ArrayIndication(TestSignalProtocol protocol)
   {
-    return TestSignalProtocol.SIGNAL_ARRAY;
+    super(protocol, TestSignalProtocol.SIGNAL_ARRAY);
   }
 
   @Override

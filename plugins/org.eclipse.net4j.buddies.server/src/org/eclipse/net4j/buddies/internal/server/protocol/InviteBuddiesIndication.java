@@ -31,14 +31,12 @@ import java.util.Set;
  */
 public class InviteBuddiesIndication extends Indication
 {
-  public InviteBuddiesIndication()
+  /**
+   * @since 2.0
+   */
+  public InviteBuddiesIndication(BuddiesServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_INVITE_BUDDIES;
+    super(protocol, ProtocolConstants.SIGNAL_INVITE_BUDDIES);
   }
 
   @Override

@@ -23,10 +23,9 @@ public class StringIndication extends IndicationWithResponse
 {
   private String data;
 
-  @Override
-  protected short getSignalID()
+  public StringIndication(TestSignalProtocol protocol)
   {
-    return TestSignalProtocol.SIGNAL_STRING;
+    super(protocol, TestSignalProtocol.SIGNAL_STRING);
   }
 
   @Override

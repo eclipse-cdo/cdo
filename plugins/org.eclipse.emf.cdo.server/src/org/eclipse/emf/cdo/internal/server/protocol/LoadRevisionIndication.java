@@ -52,14 +52,14 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected int loadRevisionCollectionChunkSize;
 
-  public LoadRevisionIndication()
+  public LoadRevisionIndication(CDOServerProtocol protocol)
   {
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION);
   }
 
-  @Override
-  protected short getSignalID()
+  public LoadRevisionIndication(CDOServerProtocol protocol, short signalID)
   {
-    return CDOProtocolConstants.SIGNAL_LOAD_REVISION;
+    super(protocol, signalID);
   }
 
   @Override

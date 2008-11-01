@@ -35,16 +35,10 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
 
   public OpenSessionRequest(BuddiesClientProtocol protocol, String userID, String password, Set<String> facilityTypes)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_OPEN_SESSION);
     this.userID = userID;
     this.password = password;
     this.facilityTypes = facilityTypes;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_OPEN_SESSION;
   }
 
   @Override

@@ -28,15 +28,9 @@ public class BuddyStateNotification extends Request
 
   public BuddyStateNotification(SignalProtocol<?> protocol, String userID, State state)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_BUDDY_STATE);
     this.userID = userID;
     this.state = state;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_BUDDY_STATE;
   }
 
   @Override

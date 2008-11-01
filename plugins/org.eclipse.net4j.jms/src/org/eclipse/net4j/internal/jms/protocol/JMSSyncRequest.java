@@ -29,13 +29,7 @@ public class JMSSyncRequest extends RequestWithConfirmation<Long>
    */
   public JMSSyncRequest(JMSClientProtocol protocol)
   {
-    super(protocol);
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_SYNC;
+    super(protocol, JMSProtocolConstants.SIGNAL_SYNC);
   }
 
   @Override

@@ -29,8 +29,12 @@ public abstract class Indication extends SignalReactor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Indication.class);
 
-  protected Indication()
+  /**
+   * @since 2.0
+   */
+  public Indication(SignalProtocol<?> protocol, short signalID)
   {
+    super(protocol, signalID);
   }
 
   @Override

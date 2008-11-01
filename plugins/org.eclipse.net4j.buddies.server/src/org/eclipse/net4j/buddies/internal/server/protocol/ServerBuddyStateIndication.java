@@ -21,8 +21,12 @@ import org.eclipse.net4j.buddies.server.IBuddyAdmin;
  */
 public class ServerBuddyStateIndication extends BuddyStateIndication
 {
-  public ServerBuddyStateIndication()
+  /**
+   * @since 2.0
+   */
+  public ServerBuddyStateIndication(BuddiesServerProtocol protocol)
   {
+    super(protocol);
   }
 
   @Override

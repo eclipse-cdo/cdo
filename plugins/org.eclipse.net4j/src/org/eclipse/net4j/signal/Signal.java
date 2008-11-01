@@ -32,6 +32,8 @@ public abstract class Signal implements Runnable
 
   private SignalProtocol<?> protocol;
 
+  private short signalID;
+
   private int correlationID;
 
   private BufferInputStream bufferInputStream;
@@ -40,13 +42,31 @@ public abstract class Signal implements Runnable
 
   private Object currentStream;
 
-  protected Signal()
+  /**
+   * Both implementation classes of a logical signal must have the same signalID. The signalID of a user signals must be
+   * equal to or greater than zero.
+   * 
+   * @since 2.0
+   */
+  protected Signal(SignalProtocol<?> protocol, short signalID)
   {
+    this.protocol = protocol;
+    this.signalID = signalID;
   }
 
   public SignalProtocol<?> getProtocol()
   {
     return protocol;
+  }
+
+  /**
+   * Returns the short integer ID of this signal.
+   * 
+   * @since 2.0
+   */
+  public final short getSignalID()
+  {
+    return signalID;
   }
 
   protected final int getCorrelationID()
@@ -204,20 +224,7 @@ public abstract class Signal implements Runnable
     }
   }
 
-  /**
-   * Returns the short integer ID of this signal.
-   * <p>
-   * Both implementation classes of a logical signal must return the same ID. The ID of user signals must be different
-   * from -1 (the ID of the system signal for exception feedback).
-   */
-  protected abstract short getSignalID();
-
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;
-
-  void setProtocol(SignalProtocol<?> protocol)
-  {
-    this.protocol = protocol;
-  }
 
   void setCorrelationID(int correlationID)
   {

@@ -34,14 +34,9 @@ public class SetAuditIndication extends CDOReadIndication
 
   private List<CDORevision> revisions;
 
-  public SetAuditIndication()
+  public SetAuditIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_SET_AUDIT;
+    super(protocol, CDOProtocolConstants.SIGNAL_SET_AUDIT);
   }
 
   @Override

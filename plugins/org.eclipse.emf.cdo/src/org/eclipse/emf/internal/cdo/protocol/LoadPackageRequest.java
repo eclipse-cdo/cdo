@@ -28,15 +28,9 @@ public class LoadPackageRequest extends CDOClientRequest<String>
 
   public LoadPackageRequest(CDOClientProtocol protocol, CDOPackage cdoPackage, boolean onlyEcore)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_PACKAGE);
     this.cdoPackage = cdoPackage;
     this.onlyEcore = onlyEcore;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_PACKAGE;
   }
 
   @Override

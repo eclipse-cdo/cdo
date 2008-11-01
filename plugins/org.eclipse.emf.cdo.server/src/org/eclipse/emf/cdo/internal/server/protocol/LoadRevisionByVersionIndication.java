@@ -30,14 +30,9 @@ public class LoadRevisionByVersionIndication extends LoadRevisionIndication
 
   private int version;
 
-  public LoadRevisionByVersionIndication()
+  public LoadRevisionByVersionIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION;
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION);
   }
 
   @Override

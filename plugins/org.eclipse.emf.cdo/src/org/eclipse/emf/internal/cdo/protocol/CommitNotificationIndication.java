@@ -36,14 +36,9 @@ public class CommitNotificationIndication extends CDOClientIndication
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitNotificationIndication.class);
 
-  public CommitNotificationIndication()
+  public CommitNotificationIndication(CDOClientProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION;
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION);
   }
 
   @Override

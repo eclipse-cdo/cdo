@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -23,16 +24,10 @@ public class ArrayRequest extends RequestWithConfirmation<byte[]>
 {
   private byte[] data;
 
-  public ArrayRequest(TestSignalProtocol protocol, byte[] data)
+  public ArrayRequest(SignalProtocol<?> protocol, byte[] data)
   {
-    super(protocol);
+    super(protocol, TestSignalProtocol.SIGNAL_ARRAY);
     this.data = data;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_ARRAY;
   }
 
   @Override

@@ -40,15 +40,9 @@ public class QueryRequest extends CDOClientRequest<Object>
 
   public QueryRequest(CDOClientProtocol protocol, int viewID, CDOAbstractQueryIteratorImpl<?> queryResult)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_QUERY);
     this.viewID = viewID;
     this.queryResult = queryResult;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_QUERY;
   }
 
   @Override

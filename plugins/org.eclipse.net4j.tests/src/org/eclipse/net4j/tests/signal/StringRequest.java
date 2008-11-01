@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -23,16 +24,10 @@ public class StringRequest extends RequestWithConfirmation<String>
 {
   private String data;
 
-  public StringRequest(TestSignalProtocol protocol, String data)
+  public StringRequest(SignalProtocol<?> protocol, String data)
   {
-    super(protocol);
+    super(protocol, TestSignalProtocol.SIGNAL_STRING);
     this.data = data;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_STRING;
   }
 
   @Override

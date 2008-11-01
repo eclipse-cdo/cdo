@@ -21,14 +21,9 @@ import java.io.IOException;
  */
 public class CommitTransactionCancelIndication extends CommitTransactionIndication
 {
-  public CommitTransactionCancelIndication()
+  public CommitTransactionCancelIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL;
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL);
   }
 
   @Override

@@ -55,22 +55,22 @@ public class TestSignalProtocol extends SignalProtocol<Object>
     switch (signalID)
     {
     case SIGNAL_INT:
-      return new IntIndication();
+      return new IntIndication(this);
 
     case SIGNAL_INT_FAIL:
-      return new IntFailIndication();
+      return new IntFailIndication(this);
 
     case SIGNAL_ARRAY:
-      return new ArrayIndication();
+      return new ArrayIndication(this);
 
     case SIGNAL_STRING:
-      return new StringIndication();
+      return new StringIndication(this);
 
     case SIGNAL_ASYNC:
-      return new AsyncIndication();
+      return new AsyncIndication(this);
 
     case SIGNAL_EXCEPTION:
-      return new ExceptionIndication();
+      return new ExceptionIndication(this);
 
     default:
       return null;

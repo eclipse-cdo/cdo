@@ -27,14 +27,12 @@ public class LoadAccountIndication extends IndicationWithResponse
 {
   private IAccount account;
 
-  public LoadAccountIndication()
+  /**
+   * @since 2.0
+   */
+  public LoadAccountIndication(BuddiesServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_LOAD_ACCOUNT;
+    super(protocol, ProtocolConstants.SIGNAL_LOAD_ACCOUNT);
   }
 
   @Override

@@ -45,25 +45,25 @@ public class BuddiesClientProtocol extends SignalProtocol<ClientSession>
     switch (signalID)
     {
     case ProtocolConstants.SIGNAL_BUDDY_ADDED:
-      return new BuddyAddedIndication();
+      return new BuddyAddedIndication(this);
 
     case ProtocolConstants.SIGNAL_BUDDY_REMOVED:
-      return new BuddyRemovedIndication();
+      return new BuddyRemovedIndication(this);
 
     case ProtocolConstants.SIGNAL_BUDDY_STATE:
-      return new ClientBuddyStateIndication();
+      return new ClientBuddyStateIndication(this);
 
     case ProtocolConstants.SIGNAL_COLLABORATION_INITIATED:
-      return new CollaborationInitiatedIndication();
+      return new CollaborationInitiatedIndication(this);
 
     case ProtocolConstants.SIGNAL_COLLABORATION_LEFT:
-      return new ClientCollaborationLeftIndication(getSelf());
+      return new ClientCollaborationLeftIndication(this, getSelf());
 
     case ProtocolConstants.SIGNAL_FACILITY_INSTALLED:
-      return new FacilityInstalledIndication();
+      return new FacilityInstalledIndication(this);
 
     case ProtocolConstants.SIGNAL_MESSAGE:
-      return new MessageIndication(getSelf());
+      return new MessageIndication(this, getSelf());
 
     default:
       return null;

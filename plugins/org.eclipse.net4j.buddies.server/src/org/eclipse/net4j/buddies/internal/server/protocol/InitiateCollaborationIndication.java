@@ -29,14 +29,12 @@ public class InitiateCollaborationIndication extends IndicationWithResponse
 {
   private ICollaboration collaboration;
 
-  public InitiateCollaborationIndication()
+  /**
+   * @since 2.0
+   */
+  public InitiateCollaborationIndication(BuddiesServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_INITIATE_COLLABORATION;
+    super(protocol, ProtocolConstants.SIGNAL_INITIATE_COLLABORATION);
   }
 
   @Override

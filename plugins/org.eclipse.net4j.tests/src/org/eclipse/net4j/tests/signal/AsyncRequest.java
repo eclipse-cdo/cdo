@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.Request;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 import java.io.IOException;
@@ -22,16 +23,10 @@ public class AsyncRequest extends Request
 {
   private String data;
 
-  public AsyncRequest(TestSignalProtocol protocol, String data)
+  public AsyncRequest(SignalProtocol<?> protocol, String data)
   {
-    super(protocol);
+    super(protocol, TestSignalProtocol.SIGNAL_ASYNC);
     this.data = data;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_ASYNC;
   }
 
   @Override

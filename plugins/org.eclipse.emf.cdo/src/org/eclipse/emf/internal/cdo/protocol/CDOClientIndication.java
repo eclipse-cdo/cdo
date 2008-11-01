@@ -34,8 +34,9 @@ import java.io.IOException;
  */
 public abstract class CDOClientIndication extends Indication
 {
-  public CDOClientIndication()
+  public CDOClientIndication(CDOClientProtocol protocol, short signalID)
   {
+    super(protocol, signalID);
   }
 
   @Override

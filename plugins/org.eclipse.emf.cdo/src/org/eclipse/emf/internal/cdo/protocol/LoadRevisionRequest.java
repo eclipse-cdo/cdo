@@ -42,15 +42,14 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
 
   public LoadRevisionRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk)
   {
-    super(protocol);
-    this.ids = ids;
-    this.referenceChunk = referenceChunk;
+    this(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION, ids, referenceChunk);
   }
 
-  @Override
-  protected short getSignalID()
+  public LoadRevisionRequest(CDOClientProtocol protocol, short signalID, Collection<CDOID> ids, int referenceChunk)
   {
-    return CDOProtocolConstants.SIGNAL_LOAD_REVISION;
+    super(protocol, signalID);
+    this.ids = ids;
+    this.referenceChunk = referenceChunk;
   }
 
   @Override

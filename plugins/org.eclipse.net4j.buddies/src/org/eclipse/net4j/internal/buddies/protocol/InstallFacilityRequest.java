@@ -28,15 +28,9 @@ public class InstallFacilityRequest extends RequestWithConfirmation<Boolean>
 
   public InstallFacilityRequest(BuddiesClientProtocol protocol, long collaborationID, String facilityType)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_INSTALL_FACILITY);
     this.collaborationID = collaborationID;
     this.facilityType = facilityType;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_INSTALL_FACILITY;
   }
 
   @Override

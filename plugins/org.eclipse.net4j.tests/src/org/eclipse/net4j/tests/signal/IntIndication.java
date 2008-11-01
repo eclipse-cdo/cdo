@@ -23,10 +23,9 @@ public class IntIndication extends IndicationWithResponse
 {
   private int data;
 
-  @Override
-  protected short getSignalID()
+  public IntIndication(TestSignalProtocol protocol)
   {
-    return TestSignalProtocol.SIGNAL_INT;
+    super(protocol, TestSignalProtocol.SIGNAL_INT);
   }
 
   @Override

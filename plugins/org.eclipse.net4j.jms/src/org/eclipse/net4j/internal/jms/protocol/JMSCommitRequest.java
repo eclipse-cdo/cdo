@@ -34,15 +34,9 @@ public class JMSCommitRequest extends RequestWithConfirmation<String[]>
    */
   public JMSCommitRequest(JMSClientProtocol protocol, int sessionID, List<MessageImpl> messages)
   {
-    super(protocol);
+    super(protocol, JMSProtocolConstants.SIGNAL_COMMIT);
     this.sessionID = sessionID;
     this.messages = messages;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_COMMIT;
   }
 
   @Override

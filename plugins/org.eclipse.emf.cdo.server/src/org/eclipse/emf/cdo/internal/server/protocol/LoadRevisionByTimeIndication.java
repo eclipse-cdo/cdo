@@ -30,14 +30,9 @@ public class LoadRevisionByTimeIndication extends LoadRevisionIndication
 
   private long timeStamp;
 
-  public LoadRevisionByTimeIndication()
+  public LoadRevisionByTimeIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME;
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME);
   }
 
   @Override

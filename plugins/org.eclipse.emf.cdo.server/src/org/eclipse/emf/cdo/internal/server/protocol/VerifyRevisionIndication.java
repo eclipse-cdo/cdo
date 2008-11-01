@@ -32,14 +32,9 @@ public class VerifyRevisionIndication extends CDOReadIndication
 
   protected long[] timeStamps;
 
-  public VerifyRevisionIndication()
+  public VerifyRevisionIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_VERIFY_REVISION;
+    super(protocol, CDOProtocolConstants.SIGNAL_VERIFY_REVISION);
   }
 
   @Override

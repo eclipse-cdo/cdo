@@ -27,15 +27,9 @@ public class CollaborationLeftNotification extends Request
 
   public CollaborationLeftNotification(SignalProtocol<?> protocol, long collaborationID, String userID)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_COLLABORATION_LEFT);
     this.collaborationID = collaborationID;
     this.userID = userID;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_COLLABORATION_LEFT;
   }
 
   @Override

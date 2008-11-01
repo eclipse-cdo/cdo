@@ -50,70 +50,70 @@ public class CDOServerProtocol extends CDOProtocolImpl
     switch (signalID)
     {
     case CDOProtocolConstants.SIGNAL_OPEN_SESSION:
-      return new OpenSessionIndication();
+      return new OpenSessionIndication(this);
 
     case CDOProtocolConstants.SIGNAL_LOAD_LIBRARIES:
-      return new LoadLibrariesIndication();
+      return new LoadLibrariesIndication(this);
 
     case CDOProtocolConstants.SIGNAL_VIEWS_CHANGED:
-      return new ViewsChangedIndication();
+      return new ViewsChangedIndication(this);
 
     case CDOProtocolConstants.SIGNAL_RESOURCE_ID:
-      return new ResourceIDIndication();
+      return new ResourceIDIndication(this);
 
     case CDOProtocolConstants.SIGNAL_LOAD_PACKAGE:
-      return new LoadPackageIndication();
+      return new LoadPackageIndication(this);
 
     case CDOProtocolConstants.SIGNAL_LOAD_REVISION:
-      return new LoadRevisionIndication();
+      return new LoadRevisionIndication(this);
 
     case CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME:
-      return new LoadRevisionByTimeIndication();
+      return new LoadRevisionByTimeIndication(this);
 
     case CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION:
-      return new LoadRevisionByVersionIndication();
+      return new LoadRevisionByVersionIndication(this);
 
     case CDOProtocolConstants.SIGNAL_LOAD_CHUNK:
-      return new LoadChunkIndication();
+      return new LoadChunkIndication(this);
 
     case CDOProtocolConstants.SIGNAL_VERIFY_REVISION:
-      return new VerifyRevisionIndication();
+      return new VerifyRevisionIndication(this);
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION:
-      return new CommitTransactionIndication();
+      return new CommitTransactionIndication(this);
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1:
-      return new CommitTransactionPhase1Indication();
+      return new CommitTransactionPhase1Indication(this);
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2:
-      return new CommitTransactionPhase2Indication();
+      return new CommitTransactionPhase2Indication(this);
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3:
-      return new CommitTransactionPhase3Indication();
+      return new CommitTransactionPhase3Indication(this);
 
     case CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_CANCEL:
-      return new CommitTransactionCancelIndication();
+      return new CommitTransactionCancelIndication(this);
 
     case CDOProtocolConstants.SIGNAL_QUERY:
-      return new QueryIndication();
+      return new QueryIndication(this);
 
     case CDOProtocolConstants.SIGNAL_QUERY_CANCEL:
-      return new QueryCancelIndication();
+      return new QueryCancelIndication(this);
 
     case CDOProtocolConstants.SIGNAL_SYNC:
-      return new SyncRevisionIndication();
+      return new SyncRevisionIndication(this);
 
     case CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE:
-      return new SetPassiveUpdateIndication();
+      return new SetPassiveUpdateIndication(this);
 
     case CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION:
-      return new ChangeSubscriptionIndication();
+      return new ChangeSubscriptionIndication(this);
 
     case CDOProtocolConstants.SIGNAL_SET_AUDIT:
-      return new SetAuditIndication();
+      return new SetAuditIndication(this);
 
     case CDOProtocolConstants.SIGNAL_REPOSITORY_TIME:
-      return new RepositoryTimeIndication();
+      return new RepositoryTimeIndication(this);
 
     default:
       return null;

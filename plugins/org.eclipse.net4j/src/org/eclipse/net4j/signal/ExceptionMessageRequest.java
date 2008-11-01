@@ -25,15 +25,9 @@ class ExceptionMessageRequest extends Request
 
   public ExceptionMessageRequest(SignalProtocol<?> protocol, int correlationID, String message)
   {
-    super(protocol);
+    super(protocol, SignalProtocol.SIGNAL_EXCEPTION_MESSAGE);
     this.correlationID = correlationID;
     this.message = message;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return SignalProtocol.SIGNAL_EXCEPTION_MESSAGE;
   }
 
   @Override

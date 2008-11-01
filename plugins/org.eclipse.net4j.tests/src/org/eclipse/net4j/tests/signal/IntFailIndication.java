@@ -23,19 +23,14 @@ public class IntFailIndication extends IndicationWithResponse
 {
   private int data;
 
-  public IntFailIndication()
+  public IntFailIndication(TestSignalProtocol protocol)
   {
+    super(protocol, TestSignalProtocol.SIGNAL_INT_FAIL);
   }
 
   public int getData()
   {
     return data;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_INT_FAIL;
   }
 
   @Override

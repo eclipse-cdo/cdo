@@ -36,16 +36,10 @@ public class CollaborationInitiatedNotification extends Request
   public CollaborationInitiatedNotification(BuddiesServerProtocol protocol, long collaborationID,
       Collection<IBuddy> buddies, String[] facilityTypes)
   {
-    super(protocol);
+    super(protocol, ProtocolConstants.SIGNAL_COLLABORATION_INITIATED);
     this.collaborationID = collaborationID;
     this.buddies = buddies;
     this.facilityTypes = facilityTypes;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_COLLABORATION_INITIATED;
   }
 
   @Override

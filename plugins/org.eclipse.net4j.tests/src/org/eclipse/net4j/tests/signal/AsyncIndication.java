@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
@@ -22,10 +23,9 @@ public class AsyncIndication extends Indication
 {
   private String data;
 
-  @Override
-  protected short getSignalID()
+  public AsyncIndication(SignalProtocol<?> protocol)
   {
-    return TestSignalProtocol.SIGNAL_ASYNC;
+    super(protocol, TestSignalProtocol.SIGNAL_ASYNC);
   }
 
   public String getData()

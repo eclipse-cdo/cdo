@@ -25,14 +25,9 @@ import java.io.IOException;
  */
 public class JMSRollbackIndication extends IndicationWithResponse
 {
-  public JMSRollbackIndication()
+  public JMSRollbackIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_ROLLBACK;
+    super(protocol, JMSProtocolConstants.SIGNAL_ROLLBACK);
   }
 
   @Override
@@ -40,7 +35,7 @@ public class JMSRollbackIndication extends IndicationWithResponse
   {
     int sessionID = in.readInt();
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {

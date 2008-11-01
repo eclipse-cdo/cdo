@@ -34,15 +34,9 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
 
   public ResourceIDRequest(CDOClientProtocol protocol, int viewID, String path)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_RESOURCE_ID);
     this.viewID = viewID;
     this.path = path;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_RESOURCE_ID;
   }
 
   @Override

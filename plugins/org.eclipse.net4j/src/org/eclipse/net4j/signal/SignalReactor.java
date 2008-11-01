@@ -17,8 +17,12 @@ import org.eclipse.net4j.util.ReflectUtil;
  */
 public abstract class SignalReactor extends Signal
 {
-  protected SignalReactor()
+  /**
+   * @since 2.0
+   */
+  protected SignalReactor(SignalProtocol<?> protocol, short signalID)
   {
+    super(protocol, signalID);
   }
 
   @Override

@@ -25,14 +25,9 @@ import java.io.IOException;
  */
 public class JMSRecoverIndication extends IndicationWithResponse
 {
-  public JMSRecoverIndication()
+  public JMSRecoverIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_RECOVER;
+    super(protocol, JMSProtocolConstants.SIGNAL_RECOVER);
   }
 
   @Override
@@ -40,7 +35,7 @@ public class JMSRecoverIndication extends IndicationWithResponse
   {
     int sessionID = in.readInt();
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {

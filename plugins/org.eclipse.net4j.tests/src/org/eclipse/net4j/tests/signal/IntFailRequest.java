@@ -25,14 +25,8 @@ public class IntFailRequest extends RequestWithConfirmation<Integer>
 
   public IntFailRequest(TestSignalProtocol protocol, int data)
   {
-    super(protocol);
+    super(protocol, TestSignalProtocol.SIGNAL_INT_FAIL);
     this.data = data;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return TestSignalProtocol.SIGNAL_INT_FAIL;
   }
 
   @Override

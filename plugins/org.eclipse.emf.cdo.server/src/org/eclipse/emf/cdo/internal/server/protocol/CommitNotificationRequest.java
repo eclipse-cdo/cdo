@@ -44,17 +44,11 @@ public class CommitNotificationRequest extends CDOServerRequest
   public CommitNotificationRequest(IChannel channel, long timeStamp, List<CDOIDAndVersion> dirtyIDs,
       List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
-    super(channel);
+    super(channel, CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION);
     this.timeStamp = timeStamp;
     this.dirtyIDs = dirtyIDs;
     this.deltas = deltas;
     this.detachedObjects = detachedObjects;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION;
   }
 
   @Override

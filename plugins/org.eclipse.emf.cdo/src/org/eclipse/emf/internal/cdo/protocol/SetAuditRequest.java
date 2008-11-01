@@ -37,16 +37,10 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
 
   public SetAuditRequest(CDOClientProtocol protocol, int viewID, long timeStamp, List<InternalCDOObject> invalidObjects)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_SET_AUDIT);
     this.viewID = viewID;
     this.timeStamp = timeStamp;
     this.invalidObjects = invalidObjects;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_SET_AUDIT;
   }
 
   @Override

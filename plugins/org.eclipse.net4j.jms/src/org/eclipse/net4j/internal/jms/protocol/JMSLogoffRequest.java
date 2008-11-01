@@ -26,13 +26,7 @@ public class JMSLogoffRequest extends Request
    */
   public JMSLogoffRequest(JMSClientProtocol protocol)
   {
-    super(protocol);
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_LOGOFF;
+    super(protocol, JMSProtocolConstants.SIGNAL_LOGOFF);
   }
 
   @Override

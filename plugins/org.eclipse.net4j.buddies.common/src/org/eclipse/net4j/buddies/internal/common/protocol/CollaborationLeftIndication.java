@@ -15,6 +15,7 @@ import org.eclipse.net4j.buddies.common.ICollaborationProvider;
 import org.eclipse.net4j.buddies.internal.common.Buddy;
 import org.eclipse.net4j.buddies.internal.common.Collaboration;
 import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
@@ -28,16 +29,12 @@ public class CollaborationLeftIndication extends Indication
 
   private ICollaborationProvider collaborationProvider;
 
-  public CollaborationLeftIndication(IBuddyProvider buddyProvider, ICollaborationProvider collaborationProvider)
+  public CollaborationLeftIndication(SignalProtocol<?> protocol, IBuddyProvider buddyProvider,
+      ICollaborationProvider collaborationProvider)
   {
+    super(protocol, ProtocolConstants.SIGNAL_COLLABORATION_LEFT);
     this.buddyProvider = buddyProvider;
     this.collaborationProvider = collaborationProvider;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_COLLABORATION_LEFT;
   }
 
   @Override

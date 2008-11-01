@@ -25,9 +25,12 @@ import org.eclipse.net4j.util.WrappedException;
  */
 public class ServerCollaborationLeftIndication extends CollaborationLeftIndication
 {
-  public ServerCollaborationLeftIndication()
+  /**
+   * @since 2.0
+   */
+  public ServerCollaborationLeftIndication(BuddiesServerProtocol protocol)
   {
-    super(IBuddyAdmin.INSTANCE, IBuddyAdmin.INSTANCE);
+    super(protocol, IBuddyAdmin.INSTANCE, IBuddyAdmin.INSTANCE);
   }
 
   @Override

@@ -22,14 +22,9 @@ import java.io.IOException;
  */
 public class JMSSyncIndication extends IndicationWithResponse
 {
-  public JMSSyncIndication()
+  public JMSSyncIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_SYNC;
+    super(protocol, JMSProtocolConstants.SIGNAL_SYNC);
   }
 
   @Override

@@ -39,25 +39,28 @@ public class BuddiesServerProtocol extends SignalProtocol<ServerSession>
     switch (signalID)
     {
     case ProtocolConstants.SIGNAL_OPEN_SESSION:
-      return new OpenSessionIndication();
+      return new OpenSessionIndication(this);
+
+    case ProtocolConstants.SIGNAL_LOAD_ACCOUNT:
+      return new LoadAccountIndication(this);
 
     case ProtocolConstants.SIGNAL_BUDDY_STATE:
-      return new ServerBuddyStateIndication();
+      return new ServerBuddyStateIndication(this);
 
     case ProtocolConstants.SIGNAL_INSTALL_FACILITY:
-      return new InstallFacilityIndication();
+      return new InstallFacilityIndication(this);
 
     case ProtocolConstants.SIGNAL_INITIATE_COLLABORATION:
-      return new InitiateCollaborationIndication();
+      return new InitiateCollaborationIndication(this);
 
     case ProtocolConstants.SIGNAL_INVITE_BUDDIES:
-      return new InviteBuddiesIndication();
+      return new InviteBuddiesIndication(this);
 
     case ProtocolConstants.SIGNAL_COLLABORATION_LEFT:
-      return new ServerCollaborationLeftIndication();
+      return new ServerCollaborationLeftIndication(this);
 
     case ProtocolConstants.SIGNAL_MESSAGE:
-      return new MessageIndication(IBuddyAdmin.INSTANCE);
+      return new MessageIndication(this, IBuddyAdmin.INSTANCE);
 
     default:
       return null;

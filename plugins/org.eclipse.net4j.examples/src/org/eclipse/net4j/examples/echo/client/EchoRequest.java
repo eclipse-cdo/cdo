@@ -27,14 +27,8 @@ public class EchoRequest extends RequestWithConfirmation<String>
 
   public EchoRequest(EchoClientProtocol protocol, String message)
   {
-    super(protocol);
+    super(protocol, EchoProtocol.ECHO_SIGNAL);
     this.message = message;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return EchoProtocol.ECHO_SIGNAL;
   }
 
   @Override

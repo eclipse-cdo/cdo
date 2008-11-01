@@ -34,14 +34,8 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
 
   public LoadRevisionByVersionRequest(CDOClientProtocol protocol, CDOID id, int referenceChunk, int version)
   {
-    super(protocol, Collections.singleton(id), referenceChunk);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION, Collections.singleton(id), referenceChunk);
     this.version = version;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION;
   }
 
   @Override

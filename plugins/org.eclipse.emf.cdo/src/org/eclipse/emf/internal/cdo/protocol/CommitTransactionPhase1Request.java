@@ -31,13 +31,7 @@ public class CommitTransactionPhase1Request extends CommitTransactionRequest
 {
   public CommitTransactionPhase1Request(CDOClientProtocol protocol, final CDOXATransactionCommitContext xaTransaction)
   {
-    super(protocol, xaTransaction);
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1;
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1, xaTransaction);
   }
 
   @Override

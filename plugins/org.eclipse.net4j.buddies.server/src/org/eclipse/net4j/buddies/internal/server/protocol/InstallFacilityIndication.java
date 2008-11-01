@@ -34,14 +34,12 @@ public class InstallFacilityIndication extends IndicationWithResponse
 
   private boolean success;
 
-  public InstallFacilityIndication()
+  /**
+   * @since 2.0
+   */
+  public InstallFacilityIndication(BuddiesServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_INSTALL_FACILITY;
+    super(protocol, ProtocolConstants.SIGNAL_INSTALL_FACILITY);
   }
 
   @Override

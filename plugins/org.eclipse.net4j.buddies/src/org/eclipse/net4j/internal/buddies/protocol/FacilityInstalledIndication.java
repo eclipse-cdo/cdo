@@ -25,14 +25,9 @@ import java.io.IOException;
  */
 public class FacilityInstalledIndication extends Indication
 {
-  public FacilityInstalledIndication()
+  public FacilityInstalledIndication(BuddiesClientProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_FACILITY_INSTALLED;
+    super(protocol, ProtocolConstants.SIGNAL_FACILITY_INSTALLED);
   }
 
   @Override

@@ -24,14 +24,9 @@ import java.io.IOException;
  */
 public class JMSAcknowledgeIndication extends Indication
 {
-  public JMSAcknowledgeIndication()
+  public JMSAcknowledgeIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_ACKNOWLEDGE;
+    super(protocol, JMSProtocolConstants.SIGNAL_ACKNOWLEDGE);
   }
 
   @Override
@@ -40,7 +35,7 @@ public class JMSAcknowledgeIndication extends Indication
     int sessionID = in.readInt();
 
     JMSServerProtocol protocol = (JMSServerProtocol)getProtocol();
-    ServerConnection connection = (ServerConnection)protocol.getInfraStructure();
+    ServerConnection connection = protocol.getInfraStructure();
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {

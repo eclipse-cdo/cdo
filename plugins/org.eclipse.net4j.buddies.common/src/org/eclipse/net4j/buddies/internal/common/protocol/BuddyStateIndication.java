@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.common.protocol;
 
 import org.eclipse.net4j.buddies.common.IBuddy.State;
 import org.eclipse.net4j.signal.Indication;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
 import java.io.IOException;
@@ -21,14 +22,9 @@ import java.io.IOException;
  */
 public abstract class BuddyStateIndication extends Indication
 {
-  public BuddyStateIndication()
+  public BuddyStateIndication(SignalProtocol<?> protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_BUDDY_STATE;
+    super(protocol, ProtocolConstants.SIGNAL_BUDDY_STATE);
   }
 
   @Override

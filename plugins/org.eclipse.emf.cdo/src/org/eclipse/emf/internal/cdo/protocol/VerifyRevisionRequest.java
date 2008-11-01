@@ -38,19 +38,13 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
 
   public VerifyRevisionRequest(CDOClientProtocol protocol, Collection<InternalCDORevision> revisions)
   {
-    super(protocol);
+    super(protocol, CDOProtocolConstants.SIGNAL_VERIFY_REVISION);
     this.revisions = revisions;
   }
 
   public VerifyRevisionRequest(CDOClientProtocol protocol, InternalCDORevision revision)
   {
     this(protocol, Collections.singleton(revision));
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_VERIFY_REVISION;
   }
 
   @Override

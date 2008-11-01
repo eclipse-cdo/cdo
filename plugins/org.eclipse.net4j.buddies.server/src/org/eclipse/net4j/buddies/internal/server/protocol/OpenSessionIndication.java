@@ -34,14 +34,12 @@ public class OpenSessionIndication extends IndicationWithResponse
 
   private IBuddy[] buddies;
 
-  public OpenSessionIndication()
+  /**
+   * @since 2.0
+   */
+  public OpenSessionIndication(BuddiesServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return ProtocolConstants.SIGNAL_OPEN_SESSION;
+    super(protocol, ProtocolConstants.SIGNAL_OPEN_SESSION);
   }
 
   @Override

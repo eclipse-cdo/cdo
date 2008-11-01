@@ -31,14 +31,9 @@ public class LoadPackageIndication extends CDOReadIndication
 
   private boolean onlyEcore;
 
-  public LoadPackageIndication()
+  public LoadPackageIndication(CDOServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_LOAD_PACKAGE;
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_PACKAGE);
   }
 
   @Override

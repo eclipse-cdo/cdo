@@ -35,17 +35,11 @@ public class SetPassiveUpdateRequest extends SyncRevisionRequest
 
   private boolean passiveUpdateEnabled;
 
-  public SetPassiveUpdateRequest(CDOClientProtocol protocol, CDOSessionImpl session,
-      Map<CDOID, CDORevision> cdoRevisions, int referenceChunk, boolean passiveUpdateEnabled)
+  public SetPassiveUpdateRequest(CDOClientProtocol protocol, CDOSessionImpl session, Map<CDOID, CDORevision> revisions,
+      int referenceChunk, boolean passiveUpdateEnabled)
   {
-    super(protocol, session, cdoRevisions, referenceChunk);
+    super(protocol, CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE, session, revisions, referenceChunk);
     this.passiveUpdateEnabled = passiveUpdateEnabled;
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE;
   }
 
   @Override

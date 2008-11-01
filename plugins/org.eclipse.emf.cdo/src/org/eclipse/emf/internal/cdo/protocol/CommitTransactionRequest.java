@@ -51,14 +51,13 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
 
   public CommitTransactionRequest(CDOClientProtocol protocol, CDOCommitContext commitContext)
   {
-    super(protocol);
-    this.commitContext = commitContext;
+    this(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION, commitContext);
   }
 
-  @Override
-  protected short getSignalID()
+  public CommitTransactionRequest(CDOClientProtocol protocol, short signalID, CDOCommitContext commitContext)
   {
-    return CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION;
+    super(protocol, signalID);
+    this.commitContext = commitContext;
   }
 
   protected CDOCommitContext getCommitContext()

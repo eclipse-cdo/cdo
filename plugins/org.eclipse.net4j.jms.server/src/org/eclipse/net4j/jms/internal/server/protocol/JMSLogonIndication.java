@@ -27,14 +27,9 @@ public class JMSLogonIndication extends IndicationWithResponse
 {
   private boolean ok;
 
-  public JMSLogonIndication()
+  public JMSLogonIndication(JMSServerProtocol protocol)
   {
-  }
-
-  @Override
-  protected short getSignalID()
-  {
-    return JMSProtocolConstants.SIGNAL_LOGON;
+    super(protocol, JMSProtocolConstants.SIGNAL_LOGON);
   }
 
   @Override

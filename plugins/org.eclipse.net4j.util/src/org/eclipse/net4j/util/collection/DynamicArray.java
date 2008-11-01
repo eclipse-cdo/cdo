@@ -16,7 +16,7 @@ package org.eclipse.net4j.util.collection;
  */
 public class DynamicArray<E>
 {
-  private Object[] elements;
+  private Object[] elements = {};
 
   public DynamicArray()
   {

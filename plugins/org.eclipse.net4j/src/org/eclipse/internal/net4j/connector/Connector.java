@@ -364,12 +364,12 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public InternalChannel openChannel() throws ConnectorException
   {
-    return openChannel((IProtocol)null);
+    return openChannel((IProtocol<?>)null);
   }
 
   public InternalChannel openChannel(String protocolID, Object infraStructure) throws ConnectorException
   {
-    IProtocol protocol = createProtocol(protocolID, infraStructure);
+    IProtocol<?> protocol = createProtocol(protocolID, infraStructure);
     if (protocol == null)
     {
       throw new IllegalArgumentException("Unknown protocolID: " + protocolID);
@@ -378,7 +378,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     return openChannel(protocol);
   }
 
-  public InternalChannel openChannel(IProtocol protocol) throws ConnectorException
+  public InternalChannel openChannel(IProtocol<?> protocol) throws ConnectorException
   {
     long openChannelTimeout = getChannelTimeout();
     long start = System.currentTimeMillis();
@@ -418,7 +418,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
 
   public InternalChannel inverseOpenChannel(short channelIndex, String protocolID)
   {
-    IProtocol protocol = createProtocol(protocolID, null);
+    IProtocol<?> protocol = createProtocol(protocolID, null);
 
     InternalChannel channel = createChannel();
     initChannel(channel, protocol);
@@ -446,7 +446,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     return new Channel();
   }
 
-  private void initChannel(InternalChannel channel, IProtocol protocol)
+  private void initChannel(InternalChannel channel, IProtocol<?> protocol)
   {
     channel.setMultiplexer(this);
     channel.setReceiveExecutor(getConfig().getReceiveExecutor());
@@ -643,7 +643,8 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     this.negotiationException = negotiationException;
   }
 
-  protected IProtocol createProtocol(String type, Object infraStructure)
+  @SuppressWarnings("unchecked")
+  protected <INFRA_STRUCTURE> IProtocol<INFRA_STRUCTURE> createProtocol(String type, INFRA_STRUCTURE infraStructure)
   {
     if (StringUtil.isEmpty(type))
     {
@@ -656,7 +657,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
       throw new ConnectorException("No protocol provider configured");
     }
 
-    IProtocol protocol = protocolProvider.getProtocol(type);
+    IProtocol<INFRA_STRUCTURE> protocol = (IProtocol<INFRA_STRUCTURE>)protocolProvider.getProtocol(type);
     if (protocol == null)
     {
       throw new ConnectorException("Invalid protocol factory: " + type);
@@ -729,7 +730,7 @@ public abstract class Connector extends Container<IChannel> implements InternalC
     super.doDeactivate();
   }
 
-  protected abstract void registerChannelWithPeer(short channelIndex, long timeout, IProtocol protocol)
+  protected abstract void registerChannelWithPeer(short channelIndex, long timeout, IProtocol<?> protocol)
       throws ConnectorException;
 
   protected abstract void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ConnectorException;

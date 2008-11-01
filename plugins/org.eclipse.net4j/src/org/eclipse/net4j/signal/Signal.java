@@ -30,7 +30,7 @@ public abstract class Signal implements Runnable
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Signal.class);
 
-  private SignalProtocol protocol;
+  private SignalProtocol<?> protocol;
 
   private int correlationID;
 
@@ -44,7 +44,7 @@ public abstract class Signal implements Runnable
   {
   }
 
-  public SignalProtocol getProtocol()
+  public SignalProtocol<?> getProtocol()
   {
     return protocol;
   }
@@ -214,7 +214,7 @@ public abstract class Signal implements Runnable
 
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;
 
-  void setProtocol(SignalProtocol protocol)
+  void setProtocol(SignalProtocol<?> protocol)
   {
     this.protocol = protocol;
   }

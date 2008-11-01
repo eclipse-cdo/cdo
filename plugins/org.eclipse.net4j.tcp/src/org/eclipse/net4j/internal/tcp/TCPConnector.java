@@ -220,7 +220,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
       try
       {
-        writeQueue.put((InternalChannel)channel);
+        writeQueue.put(channel);
       }
       catch (InterruptedException ex)
       {
@@ -282,7 +282,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, long timeout, IProtocol protocol)
+  protected void registerChannelWithPeer(short channelIndex, long timeout, IProtocol<?> protocol)
       throws ConnectorException
   {
     try

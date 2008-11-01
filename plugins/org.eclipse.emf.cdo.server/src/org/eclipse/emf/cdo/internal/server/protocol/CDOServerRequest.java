@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.server.IStore;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.Request;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -123,11 +122,11 @@ public abstract class CDOServerRequest extends Request
 
   protected abstract void requesting(CDODataOutput out) throws IOException;
 
-  private static SignalProtocol extractProtocol(IChannel channel)
+  private static CDOServerProtocol extractProtocol(IChannel channel)
   {
     if (LifecycleUtil.isActive(channel))
     {
-      return (SignalProtocol)channel.getReceiveHandler();
+      return (CDOServerProtocol)channel.getReceiveHandler();
     }
 
     throw new IllegalStateException("Channel is inactive: " + channel);

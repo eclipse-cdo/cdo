@@ -167,7 +167,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
       {
         try
         {
-          SignalProtocol protocol = receiver.getSession().getProtocol();
+          SignalProtocol<?> protocol = (SignalProtocol<?>)receiver.getSession().getProtocol();
           new MessageNotification(protocol, collaborationID, facilityType, message).send();
         }
         catch (Exception ex)

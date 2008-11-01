@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public interface IProtocol extends ILocationAware, IBufferHandler
+public interface IProtocol<INFRA_STRUCTURE> extends ILocationAware, IBufferHandler
 {
   public String getType();
 
@@ -28,9 +28,9 @@ public interface IProtocol extends ILocationAware, IBufferHandler
 
   public void setChannel(IChannel channel);
 
-  public Object getInfraStructure();
+  public INFRA_STRUCTURE getInfraStructure();
 
-  public void setInfraStructure(Object infraStructure);
+  public void setInfraStructure(INFRA_STRUCTURE infraStructure);
 
   public IBufferProvider getBufferProvider();
 

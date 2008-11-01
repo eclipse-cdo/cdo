@@ -18,7 +18,7 @@ import org.eclipse.net4j.signal.SignalReactor;
 /**
  * @author Eike Stepper
  */
-public class JMSAdminProtocol extends SignalProtocol
+public class JMSAdminProtocol extends SignalProtocol<Object>
 {
   public JMSAdminProtocol(IConnector connector)
   {

@@ -75,7 +75,7 @@ public abstract class Indication extends SignalReactor
 
   void sendExceptionMessage(Exception ex) throws Exception
   {
-    SignalProtocol protocol = getProtocol();
+    SignalProtocol<?> protocol = getProtocol();
     int correlationID = -getCorrelationID();
     String message = getMessage(ex);
     new ExceptionMessageRequest(protocol, correlationID, message).send();

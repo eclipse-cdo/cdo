@@ -88,7 +88,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
       throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
     }
 
-    Queue<IBuffer> localQueue = ((InternalChannel)localChannel).getSendQueue();
+    Queue<IBuffer> localQueue = (localChannel).getSendQueue();
     IBuffer buffer = localQueue.poll();
     if (TRACER.isEnabled())
     {
@@ -106,7 +106,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, long timeoutIgnored, IProtocol protocol)
+  protected void registerChannelWithPeer(short channelIndex, long timeoutIgnored, IProtocol<?> protocol)
       throws ConnectorException
   {
     try

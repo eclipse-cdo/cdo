@@ -23,7 +23,7 @@ class ExceptionMessageRequest extends Request
 
   private String message;
 
-  public ExceptionMessageRequest(SignalProtocol protocol, int correlationID, String message)
+  public ExceptionMessageRequest(SignalProtocol<?> protocol, int correlationID, String message)
   {
     super(protocol);
     this.correlationID = correlationID;

@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public abstract class SignalProtocol extends Protocol
+public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 

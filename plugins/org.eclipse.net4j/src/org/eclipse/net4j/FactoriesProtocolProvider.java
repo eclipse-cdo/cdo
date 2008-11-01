@@ -58,12 +58,12 @@ public class FactoriesProtocolProvider implements IProtocolProvider
     getRegistry().put(factory.getKey().getType(), factory);
   }
 
-  public IProtocol getProtocol(String type)
+  public IProtocol<?> getProtocol(String type)
   {
     IFactory factory = registry.get(type);
     if (factory != null)
     {
-      return (IProtocol)factory.create(null);
+      return (IProtocol<?>)factory.create(null);
     }
 
     return null;

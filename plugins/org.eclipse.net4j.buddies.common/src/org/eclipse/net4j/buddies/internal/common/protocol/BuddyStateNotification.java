@@ -26,7 +26,7 @@ public class BuddyStateNotification extends Request
 
   private State state;
 
-  public BuddyStateNotification(SignalProtocol protocol, String userID, State state)
+  public BuddyStateNotification(SignalProtocol<?> protocol, String userID, State state)
   {
     super(protocol);
     this.userID = userID;

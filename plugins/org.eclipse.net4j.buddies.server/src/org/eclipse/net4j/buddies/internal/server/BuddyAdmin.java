@@ -28,7 +28,6 @@ import org.eclipse.net4j.buddies.internal.server.protocol.CollaborationInitiated
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.buddies.spi.common.ServerFacilityFactory;
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -134,7 +133,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
 
     BuddiesServerProtocol protocol = (BuddiesServerProtocol)channel.getReceiveHandler();
     ServerSession session = new ServerSession(protocol, buddy);
-    ((IProtocol)channel.getReceiveHandler()).setInfraStructure(session);
+    protocol.setInfraStructure(session);
     session.addListener(this);
     buddy.setSession(session);
     LifecycleUtil.activate(session);

@@ -28,7 +28,7 @@ public class MessageNotification extends Request
 
   private IMessage message;
 
-  public MessageNotification(SignalProtocol protocol, long collaborationID, String facilityType, IMessage message)
+  public MessageNotification(SignalProtocol<?> protocol, long collaborationID, String facilityType, IMessage message)
   {
     super(protocol);
     this.collaborationID = collaborationID;

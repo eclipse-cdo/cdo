@@ -18,5 +18,5 @@ public interface IProtocolProvider
   /**
    * @since 2.0
    */
-  public IProtocol getProtocol(String type);
+  public IProtocol<?> getProtocol(String type);
 }

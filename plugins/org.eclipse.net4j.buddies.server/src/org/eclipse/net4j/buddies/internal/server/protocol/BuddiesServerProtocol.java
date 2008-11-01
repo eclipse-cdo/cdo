@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.internal.server.protocol;
 
 import org.eclipse.net4j.buddies.internal.common.protocol.MessageIndication;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
+import org.eclipse.net4j.buddies.internal.server.ServerSession;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -21,7 +22,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  * @author Eike Stepper
  * @since 2.0
  */
-public class BuddiesServerProtocol extends SignalProtocol
+public class BuddiesServerProtocol extends SignalProtocol<ServerSession>
 {
   public BuddiesServerProtocol()
   {

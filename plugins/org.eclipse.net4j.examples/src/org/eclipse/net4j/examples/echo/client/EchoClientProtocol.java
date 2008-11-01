@@ -19,7 +19,7 @@ import org.eclipse.net4j.signal.SignalReactor;
  * @author Eike Stepper
  * @since 2.0
  */
-public class EchoClientProtocol extends SignalProtocol implements EchoProtocol
+public class EchoClientProtocol extends SignalProtocol<Object> implements EchoProtocol
 {
   public EchoClientProtocol(IConnector connector)
   {

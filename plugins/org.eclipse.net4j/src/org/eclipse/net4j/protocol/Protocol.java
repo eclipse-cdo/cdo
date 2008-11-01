@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class Protocol extends Lifecycle implements IProtocol
+public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol<INFRA_STRUCTURE>
 {
   private IChannel channel;
 
@@ -27,7 +27,7 @@ public abstract class Protocol extends Lifecycle implements IProtocol
 
   private ExecutorService executorService;
 
-  private Object infraStructure;
+  private INFRA_STRUCTURE infraStructure;
 
   public Protocol()
   {
@@ -87,12 +87,12 @@ public abstract class Protocol extends Lifecycle implements IProtocol
     this.executorService = executorService;
   }
 
-  public Object getInfraStructure()
+  public INFRA_STRUCTURE getInfraStructure()
   {
     return infraStructure;
   }
 
-  public void setInfraStructure(Object infraStructure)
+  public void setInfraStructure(INFRA_STRUCTURE infraStructure)
   {
     this.infraStructure = infraStructure;
   }

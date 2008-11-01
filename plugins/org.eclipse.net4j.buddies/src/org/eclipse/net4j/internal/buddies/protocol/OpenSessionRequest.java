@@ -68,8 +68,9 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
       return null;
     }
 
-    ClientSession session = new ClientSession((BuddiesClientProtocol)getProtocol());
-    getProtocol().setInfraStructure(session);
+    BuddiesClientProtocol protocol = (BuddiesClientProtocol)getProtocol();
+    ClientSession session = new ClientSession(protocol);
+    protocol.setInfraStructure(session);
     session.setSelf(account, facilityTypes);
 
     int size = in.readInt();

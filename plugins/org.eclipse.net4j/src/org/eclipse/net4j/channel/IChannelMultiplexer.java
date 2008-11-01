@@ -85,7 +85,7 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
    * @see #openChannel(String, Object)
    * @since 2.0
    */
-  public IChannel openChannel(IProtocol protocol) throws ConnectorException;
+  public IChannel openChannel(IProtocol<?> protocol) throws ConnectorException;
 
   /**
    * @since 2.0

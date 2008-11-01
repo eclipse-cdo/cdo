@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 /**
  * @author Eike Stepper
  */
-public class BuddiesClientProtocol extends SignalProtocol
+public class BuddiesClientProtocol extends SignalProtocol<ClientSession>
 {
   private static final long GET_SESSION_TIMEOUT = 20000;
 
@@ -72,7 +72,7 @@ public class BuddiesClientProtocol extends SignalProtocol
 
   protected Self getSelf()
   {
-    ISession session = (ISession)getInfraStructure();
+    ISession session = getInfraStructure();
     return (Self)session.getSelf();
   }
 
@@ -81,7 +81,7 @@ public class BuddiesClientProtocol extends SignalProtocol
     int max = (int)(GET_SESSION_TIMEOUT / GET_SESSION_INTERVAL);
     for (int i = 0; i < max; i++)
     {
-      ClientSession session = (ClientSession)getInfraStructure();
+      ClientSession session = getInfraStructure();
       if (session == null)
       {
         ConcurrencyUtil.sleep(GET_SESSION_INTERVAL);

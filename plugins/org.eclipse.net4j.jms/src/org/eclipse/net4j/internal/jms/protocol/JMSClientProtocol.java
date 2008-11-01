@@ -18,7 +18,7 @@ import org.eclipse.net4j.signal.SignalReactor;
 /**
  * @author Eike Stepper
  */
-public class JMSClientProtocol extends SignalProtocol
+public class JMSClientProtocol extends SignalProtocol<ConnectionImpl>
 {
   /**
    * @since 2.0

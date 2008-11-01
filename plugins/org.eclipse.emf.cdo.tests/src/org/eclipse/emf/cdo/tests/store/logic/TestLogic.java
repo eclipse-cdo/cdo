@@ -294,7 +294,7 @@ public abstract class TestLogic extends AbstractOMTest
 
     protected CDOServerProtocol createProtocol()
     {
-      return new CDOServerProtocol();
+      return new CDOServerProtocol(null);
     }
 
     protected Transaction createTransaction(Session session)

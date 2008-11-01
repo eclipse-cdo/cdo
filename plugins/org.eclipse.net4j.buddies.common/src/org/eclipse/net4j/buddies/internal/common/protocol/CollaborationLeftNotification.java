@@ -25,7 +25,7 @@ public class CollaborationLeftNotification extends Request
 
   private String userID;
 
-  public CollaborationLeftNotification(SignalProtocol protocol, long collaborationID, String userID)
+  public CollaborationLeftNotification(SignalProtocol<?> protocol, long collaborationID, String userID)
   {
     super(protocol);
     this.collaborationID = collaborationID;

@@ -42,7 +42,7 @@ public abstract class FailOverStrategy extends AbstractFailOverStrategy
     }
   }
 
-  protected void failOver(SignalProtocol protocol)
+  protected void failOver(SignalProtocol<?> protocol)
   {
     IChannel oldChannel = protocol.getChannel();
     IConnector newConnector = getNewConnector(oldChannel);

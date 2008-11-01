@@ -29,7 +29,7 @@ public abstract class SignalActor extends Signal
   /**
    * @since 2.0
    */
-  protected SignalActor(SignalProtocol protocol)
+  protected SignalActor(SignalProtocol<?> protocol)
   {
     setProtocol(protocol);
     setCorrelationID(protocol.getNextCorrelationID());

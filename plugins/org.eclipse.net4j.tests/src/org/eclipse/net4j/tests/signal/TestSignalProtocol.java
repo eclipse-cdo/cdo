@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 /**
  * @author Eike Stepper
  */
-public class TestSignalProtocol extends SignalProtocol
+public class TestSignalProtocol extends SignalProtocol<Object>
 {
   public static final String PROTOCOL_NAME = "signal.protocol";
 

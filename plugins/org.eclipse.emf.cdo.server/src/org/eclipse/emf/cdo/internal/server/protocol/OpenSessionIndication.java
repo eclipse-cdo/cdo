@@ -86,7 +86,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     try
     {
       CDOServerProtocol protocol = getProtocol();
-      IRepositoryProvider repositoryProvider = (IRepositoryProvider)protocol.getInfraStructure();
+      IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
       repository = (Repository)repositoryProvider.getRepository(repositoryName);
       if (repository == null)
       {

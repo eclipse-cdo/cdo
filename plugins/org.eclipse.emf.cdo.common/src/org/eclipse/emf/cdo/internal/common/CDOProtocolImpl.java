@@ -19,7 +19,8 @@ import org.eclipse.net4j.signal.SignalProtocol;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOProtocolImpl extends SignalProtocol implements CDOProtocol
+public abstract class CDOProtocolImpl extends SignalProtocol<CDOProtocolSession> implements
+    CDOProtocol<CDOProtocolSession>
 {
   public CDOProtocolImpl()
   {
@@ -32,6 +33,6 @@ public abstract class CDOProtocolImpl extends SignalProtocol implements CDOProto
 
   public CDOProtocolSession getSession()
   {
-    return (CDOProtocolSession)getInfraStructure();
+    return getInfraStructure();
   }
 }

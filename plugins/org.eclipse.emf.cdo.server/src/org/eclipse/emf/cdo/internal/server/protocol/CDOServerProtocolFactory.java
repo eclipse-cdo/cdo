@@ -28,9 +28,7 @@ public class CDOServerProtocolFactory extends ServerProtocolFactory
 
   public CDOServerProtocol create(String description)
   {
-    CDOServerProtocol serverProtocol = new CDOServerProtocol();
-    serverProtocol.setInfraStructure(repositoryProvider);
-    return serverProtocol;
+    return new CDOServerProtocol(repositoryProvider);
   }
 
   public static CDOServerProtocol get(IManagedContainer container, String description)

@@ -69,7 +69,7 @@ public class ControlChannel extends Channel
     return (TCPConnector)getMultiplexer();
   }
 
-  public boolean registerChannel(short channelIndex, long timeout, IProtocol protocol)
+  public boolean registerChannel(short channelIndex, long timeout, IProtocol<?> protocol)
   {
     if (TRACER.isEnabled())
     {

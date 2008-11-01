@@ -26,7 +26,7 @@ public interface IServerConsumer
 
   public ISession getSession();
 
-  public IProtocol getProtocol();
+  public IProtocol<?> getProtocol();
 
   public boolean isNoLocal();
 

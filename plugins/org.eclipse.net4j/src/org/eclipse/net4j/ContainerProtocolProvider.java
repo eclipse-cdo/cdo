@@ -45,9 +45,9 @@ public abstract class ContainerProtocolProvider implements IProtocolProvider
     return productGroup;
   }
 
-  public IProtocol getProtocol(String type)
+  public IProtocol<?> getProtocol(String type)
   {
-    return (IProtocol)container.getElement(productGroup, type, "protocol-" + counter.increment(), false);
+    return (IProtocol<?>)container.getElement(productGroup, type, "protocol-" + counter.increment(), false);
   }
 
   /**

@@ -11,13 +11,14 @@
 package org.eclipse.net4j.jms.internal.server.protocol;
 
 import org.eclipse.net4j.jms.JMSProtocolConstants;
+import org.eclipse.net4j.jms.internal.server.ServerConnection;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 
 /**
  * @author Eike Stepper
  */
-public class JMSServerProtocol extends SignalProtocol
+public class JMSServerProtocol extends SignalProtocol<ServerConnection>
 {
   public JMSServerProtocol()
   {

@@ -37,12 +37,6 @@ public abstract class RequestWithConfirmation<RESULT> extends Request
   }
 
   @Override
-  protected short getSignalID()
-  {
-    return 0;
-  }
-
-  @Override
   @SuppressWarnings("unchecked")
   public RESULT send() throws Exception
   {

@@ -115,6 +115,38 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
+   * Commits the session
+   * 
+   * @since 2.0
+   */
+  public void commitRollbackHibernateSession()
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Commiting hibernate session");
+    }
+
+    if (isErrorOccured())
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Rolling back hb transaction");
+      }
+
+      hibernateSession.getTransaction().rollback();
+    }
+    else
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Committing hb transaction");
+      }
+
+      hibernateSession.getTransaction().commit();
+    }
+  }
+
+  /**
    * commits/rollbacks and closes the session
    * 
    * @since 2.0
@@ -130,24 +162,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       try
       {
-        if (isErrorOccured())
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("Rolling back hb transaction");
-          }
-
-          hibernateSession.getTransaction().rollback();
-        }
-        else
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.trace("Committing hb transaction");
-          }
-
-          hibernateSession.getTransaction().commit();
-        }
+        commitRollbackHibernateSession();
       }
       finally
       {
@@ -324,26 +339,39 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    */
   public void commit()
   {
-    // Do nothing
+    commitRollbackHibernateSession();
+    HibernateThreadContext.setCommitContext(null);
   }
 
   @Override
   public void write(CommitContext context)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Committing transaction");
-    }
-
     HibernateThreadContext.setCommitContext(context);
-    writePackages(context.getNewPackages());
-    boolean err = true;
-
+    if (context.getNewPackages().length > 0)
+    {
+      writePackages(context.getNewPackages());
+    }
     try
     {
       // start with fresh hibernate session
       final Session session = getHibernateSession();
       session.setFlushMode(FlushMode.MANUAL);
+
+      // first repair the version for all dirty objects
+      for (CDORevision cdoRevision : context.getDirtyObjects())
+      {
+        if (cdoRevision instanceof InternalCDORevision)
+        {
+          ((InternalCDORevision)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
+        }
+      }
+
+      // delete all objects
+      for (CDOID cdoID : context.getDetachedObjects())
+      {
+        final CDORevision revision = HibernateUtil.getInstance().getCDORevision(cdoID);
+        session.delete(revision);
+      }
 
       final List<CDORevision> cdoRevisions = Arrays.asList(context.getNewObjects());
 
@@ -369,18 +397,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         }
       }
 
-      // first repair the version for all dirty objects
       for (CDORevision cdoRevision : context.getDirtyObjects())
       {
-        if (cdoRevision instanceof InternalCDORevision)
-        {
-          ((InternalCDORevision)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
-        }
-      }
-
-      for (CDORevision cdoRevision : context.getDirtyObjects())
-      {
-        session.update(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
+        session.merge(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Updated Object " + cdoRevision.getCDOClass().getName() + " id: " + cdoRevision.getID());
@@ -411,35 +430,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
       session.flush();
 
-      // does the commit
-      endHibernateSession();
-      err = false;
     }
     catch (Exception e)
     {
       OM.LOG.error(e);
       throw WrappedException.wrap(e);
     }
-    finally
-    {
-      if (err)
-      {
-        setErrorOccured(true);
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Clearing used hibernate session");
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Applying id mappings");
-      }
-
-      context.applyIDMappings();
-      HibernateThreadContext.setCommitContext(null);
-    }
+    context.applyIDMappings();
   }
 
   @Override
@@ -452,11 +449,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   protected void rollback(CommitContext context)
   {
-    // Don't do anything as the real action is done at commit (which does not happen now)
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Rollbacked called");
-    }
+    setErrorOccured(true);
+    endHibernateSession();
+    HibernateThreadContext.setCommitContext(null);
   }
 
   @Override

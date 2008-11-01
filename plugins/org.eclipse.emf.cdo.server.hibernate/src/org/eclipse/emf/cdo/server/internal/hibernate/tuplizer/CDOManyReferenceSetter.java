@@ -34,6 +34,11 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     // Do some checking
+    if (value instanceof HibernateMoveableListWrapper)
+    {
+      super.set(target, ((HibernateMoveableListWrapper)value).getDelegate(), factory);
+      return;
+    }
     if (!(value instanceof PersistentList))
     {
       throw new IllegalArgumentException("Value is not a persistentlist but a " + value.getClass().getName());

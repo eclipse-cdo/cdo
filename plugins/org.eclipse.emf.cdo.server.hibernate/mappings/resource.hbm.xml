@@ -28,13 +28,12 @@
 			<column name="name" unique-key="resourcepath"/>
 		</property>
 		<many-to-one name="folder" entity-name="CDOResourceFolder"
-			column="folderid" />
+			column="folderid" update="false" insert="false" />
 		<subclass entity-name="CDOResourceFolder" abstract="false"
 			lazy="false" discriminator-value="cdoresourcefolder">
 			<meta attribute="eclassName">CDOResourceFolder</meta>
 			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
-			<list name="nodes" lazy="true" cascade="all"
-				inverse="true">
+			<list name="nodes" lazy="true" cascade="merge, persist, save-update, refresh, lock, evict, replicate">
 				<key column="folderid" />
 				<list-index />
 				<one-to-many entity-name="CDOResourceNode" />

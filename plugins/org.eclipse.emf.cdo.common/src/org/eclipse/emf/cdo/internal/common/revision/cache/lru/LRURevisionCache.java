@@ -7,8 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/230832
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
@@ -383,7 +382,10 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         revisedLRU.add((DLRevisionHolder)nextHolder);
 
         InternalCDORevision oldRevision = nextHolder.getRevision();
-        if (oldRevision != null && oldRevision.getRevised() == 0 && oldRevision.getVersion() == holder.getVersion() - 1)
+
+        // TODO Should we even keeps revised revision with good version && not good revised ?
+        if (oldRevision != null && oldRevision.getRevised() == 0 && holder.getCreated() > 0
+            && oldRevision.getVersion() == holder.getVersion() - 1)
         {
           oldRevision.setRevised(holder.getCreated() - 1);
         }

@@ -241,10 +241,13 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     switch (toMany)
     {
     case PER_REFERENCE:
+    {
       withFeature = false;
-      table = mapReferenceTable(cdoFeature, mappingStrategy.getTableName(cdoClass) + "_" + cdoFeature.getName()
-          + "_refs");
+      String tableName = mappingStrategy.getTableName(cdoClass) + "_" + cdoFeature.getName() + "_refs";
+      Object referenceMappingKey = getReferenceMappingKey(cdoFeature);
+      table = mapReferenceTable(referenceMappingKey, tableName);
       break;
+    }
 
     case PER_CLASS:
       withFeature = true;
@@ -266,6 +269,11 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     default:
       throw new IllegalArgumentException("Invalid mapping: " + toMany);
     }
+  }
+
+  protected Object getReferenceMappingKey(CDOFeature cdoFeature)
+  {
+    return getClassMapping().createReferenceMappingKey(cdoFeature);
   }
 
   protected IDBTable mapReferenceTable(Object key, String tableName)

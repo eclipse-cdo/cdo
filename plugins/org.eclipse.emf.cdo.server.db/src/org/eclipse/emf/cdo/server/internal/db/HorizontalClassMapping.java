@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
+import org.eclipse.net4j.util.collection.Pair;
+
 /**
  * @author Eike Stepper
  */
@@ -65,6 +67,12 @@ public class HorizontalClassMapping extends ClassMapping
         throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID);
       }
     }
+  }
+
+  @Override
+  public Object createReferenceMappingKey(CDOFeature cdoFeature)
+  {
+    return new Pair<CDOClass, CDOFeature>(getCDOClass(), cdoFeature);
   }
 
   @Override

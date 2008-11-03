@@ -407,6 +407,11 @@ public abstract class ClassMapping implements IClassMapping
     return new ReferenceMapping(this, feature, ToMany.PER_REFERENCE);
   }
 
+  public Object createReferenceMappingKey(CDOFeature cdoFeature)
+  {
+    return cdoFeature;
+  }
+
   protected abstract boolean hasFullRevisionInfo();
 
   public void writeRevision(IDBStoreAccessor accessor, CDORevision revision)

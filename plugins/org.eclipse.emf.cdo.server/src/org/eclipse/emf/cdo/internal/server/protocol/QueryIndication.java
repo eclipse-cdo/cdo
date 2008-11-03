@@ -52,46 +52,32 @@ public class QueryIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    try
+    int numberOfResults = 0;
+
+    // Return queryID immediately.
+    out.writeInt(queryResult.getQueryID());
+    flush();
+
+    while (queryResult.hasNext())
     {
-      int numberOfResults = 0;
+      Object object = queryResult.next();
 
-      // Return queryID immediately.
-      out.writeInt(queryResult.getQueryID());
-      flush();
-
-      while (queryResult.hasNext())
+      // Object to return
+      numberOfResults++;
+      out.writeBoolean(true);
+      out.writeCDORevisionOrPrimitive(object);
+      if (queryResult.peek() == null)
       {
-        Object object = queryResult.next();
-
-        // Object to return
-        numberOfResults++;
-        out.writeByte(CDOProtocolConstants.QUERY_MORE_OBJECT);
-        out.writeCDORevisionOrPrimitive(object);
-        if (queryResult.peek() == null)
-        {
-          flush();
-        }
+        flush();
       }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Query had " + numberOfResults + " objects return");
-      }
-
-      // Query is done successfully
-      out.writeByte(CDOProtocolConstants.QUERY_DONE);
     }
-    catch (Exception exception)
+
+    if (TRACER.isEnabled())
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(exception);
-      }
-
-      // Exception occured during the query
-      out.writeByte(CDOProtocolConstants.QUERY_EXCEPTION);
-      out.writeString(getMessage(exception));
+      TRACER.trace("Query had " + numberOfResults + " objects return");
     }
+
+    // Query is done successfully
+    out.writeBoolean(false);
   }
 }

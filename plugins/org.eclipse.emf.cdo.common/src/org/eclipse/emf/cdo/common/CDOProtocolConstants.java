@@ -130,21 +130,6 @@ public interface CDOProtocolConstants
   /**
    * @since 2.0
    */
-  public static final byte QUERY_MORE_OBJECT = 1;
-
-  /**
-   * @since 2.0
-   */
-  public static final byte QUERY_DONE = 2;
-
-  /**
-   * @since 2.0
-   */
-  public static final byte QUERY_EXCEPTION = 3;
-
-  /**
-   * @since 2.0
-   */
   public static final String QUERY_LANGUAGE_RESOURCES = "resources";
 
   /**

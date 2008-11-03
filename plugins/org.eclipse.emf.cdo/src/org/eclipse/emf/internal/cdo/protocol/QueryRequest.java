@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.query.CDOAbstractQueryIteratorImpl;
 
-import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -65,31 +64,12 @@ public class QueryRequest extends CDOClientRequest<Object>
     try
     {
       int numberOfObjectsReceived = 0;
-      while (true)
+      while (in.readBoolean())
       {
-        byte state = in.readByte();
-        if (state == CDOProtocolConstants.QUERY_MORE_OBJECT)
-        {
-          // result
-          Object element = in.readCDORevisionOrPrimitive();
-          resultQueue.add(element);
-          numberOfObjectsReceived++;
-        }
-        else if (state == CDOProtocolConstants.QUERY_DONE)
-        {
-          // End of result
-          break;
-        }
-        else if (state == CDOProtocolConstants.QUERY_EXCEPTION)
-        {
-          // Exception on the server
-          String exceptionString = in.readString();
-          throw new IORuntimeException(exceptionString);
-        }
-        else
-        {
-          throw new IORuntimeException("Illegal state: " + state);
-        }
+        // result
+        Object element = in.readCDORevisionOrPrimitive();
+        resultQueue.add(element);
+        numberOfObjectsReceived++;
       }
 
       if (PROTOCOL_TRACER.isEnabled())

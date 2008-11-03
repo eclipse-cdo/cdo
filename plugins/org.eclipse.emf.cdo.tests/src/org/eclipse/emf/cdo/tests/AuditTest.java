@@ -16,8 +16,11 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.net4j.signal.SignalRemoteException;
+
+import org.eclipse.emf.common.util.URI;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -389,6 +392,67 @@ public class AuditTest extends AbstractCDOTest
     {
       session.close();
     }
+  }
+
+  public void testChangePath() throws Exception
+  {
+    long commitTime1;
+    long commitTime2;
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/my/resource");
+      transaction.commit();
+      commitTime1 = transaction.getLastCommitTime();
+
+      resource.setPath("/renamed");
+      transaction.commit();
+      commitTime2 = transaction.getLastCommitTime();
+      session.close();
+    }
+
+    CDOSession session = openModel1Session();
+    CDOAudit audit1 = session.openAudit(commitTime1);
+    assertEquals(true, audit1.hasResource("/my/resource"));
+    assertEquals(false, audit1.hasResource("/renamed"));
+
+    CDOAudit audit2 = session.openAudit(commitTime2);
+    assertEquals(false, audit2.hasResource("/my/resource"));
+    assertEquals(true, audit2.hasResource("/renamed"));
+    session.close();
+  }
+
+  public void testChangeURI() throws Exception
+  {
+    long commitTime1;
+    long commitTime2;
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/my/resource");
+      transaction.commit();
+      commitTime1 = transaction.getLastCommitTime();
+
+      URI uri = URI.createURI("cdo://repo1/renamed");
+      assertEquals(CDOURIUtil.createResourceURI(session, "/renamed"), uri);
+      resource.setURI(uri);
+
+      transaction.commit();
+      commitTime2 = transaction.getLastCommitTime();
+      session.close();
+    }
+
+    CDOSession session = openModel1Session();
+    CDOAudit audit1 = session.openAudit(commitTime1);
+    assertEquals(true, audit1.hasResource("/my/resource"));
+    assertEquals(false, audit1.hasResource("/renamed"));
+
+    CDOAudit audit2 = session.openAudit(commitTime2);
+    assertEquals(false, audit2.hasResource("/my/resource"));
+    assertEquals(true, audit2.hasResource("/renamed"));
+    session.close();
   }
 
   /**

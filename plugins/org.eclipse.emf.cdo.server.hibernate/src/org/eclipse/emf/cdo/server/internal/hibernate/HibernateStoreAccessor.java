@@ -346,6 +346,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   public void write(CommitContext context)
   {
+    List<InternalCDORevision> adjustRevisions = new ArrayList<InternalCDORevision>();
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackages().length > 0)
     {
@@ -362,7 +363,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       {
         if (cdoRevision instanceof InternalCDORevision)
         {
-          ((InternalCDORevision)cdoRevision).setVersion(cdoRevision.getVersion() - 1);
+          InternalCDORevision internalCDORevision = (InternalCDORevision)cdoRevision;
+          internalCDORevision.setVersion(cdoRevision.getVersion() - 1);
+          adjustRevisions.add(internalCDORevision);
         }
       }
 
@@ -435,6 +438,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       OM.LOG.error(e);
       throw WrappedException.wrap(e);
+    }
+    finally
+    {
+      for (InternalCDORevision cdoRevision : adjustRevisions)
+      {
+        cdoRevision.setVersion(cdoRevision.getVersion() + 1);
+      }
     }
     context.applyIDMappings();
   }

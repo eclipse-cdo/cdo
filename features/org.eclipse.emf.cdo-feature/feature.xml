@@ -18,7 +18,7 @@
       id="org.eclipse.emf.cdo"
       label="%featureName"
       image="eclipse_update_120.jpg"
-      version="1.0.2.qualifier"
+      version="1.0.3.qualifier"
       provider-name="%providerName">
 
    <description>

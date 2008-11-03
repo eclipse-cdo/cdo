@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.examples;singleton:=true
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.3.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.emf.cdo.internal.examples.bundle.OM$Activator
@@ -13,5 +13,5 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";resoluti
  org.eclipse.net4j.tcp;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.tests.model1;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.cdo.examples;version="1.0.1",
- org.eclipse.emf.cdo.internal.examples.bundle;version="1.0.1";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.examples;version="1.0.3",
+ org.eclipse.emf.cdo.internal.examples.bundle;version="1.0.3";x-internal:=true

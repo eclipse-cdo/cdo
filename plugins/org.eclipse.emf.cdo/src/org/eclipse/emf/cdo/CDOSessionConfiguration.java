@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
@@ -36,9 +36,9 @@ public interface CDOSessionConfiguration
 
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
 
-  public CDOPackageRegistryImpl getPackageRegistry();
+  public CDOPackageRegistry getPackageRegistry();
 
-  public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry);
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry);
 
   public void setSelfPopulatingPackageRegistry();
 

@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
@@ -86,15 +87,21 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.failOverStrategy = failOverStrategy;
   }
 
-  public CDOPackageRegistryImpl getPackageRegistry()
+  /**
+   * @since 1.0
+   */
+  public CDOPackageRegistry getPackageRegistry()
   {
     return packageRegistry;
   }
 
-  public void setPackageRegistry(CDOPackageRegistryImpl packageRegistry)
+  /**
+   * @since 1.0
+   */
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
   {
     checkNotOpen();
-    this.packageRegistry = packageRegistry;
+    this.packageRegistry = (CDOPackageRegistryImpl)packageRegistry;
   }
 
   public void setSelfPopulatingPackageRegistry()

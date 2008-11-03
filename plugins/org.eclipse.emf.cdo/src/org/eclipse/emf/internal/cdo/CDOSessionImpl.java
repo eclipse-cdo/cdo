@@ -678,18 +678,24 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private void notifyInvalidation(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
       Collection<CDOID> detachedObjects, CDOViewImpl excludedView, boolean async)
   {
-    for (CDOIDAndVersion dirtyOID : dirtyOIDs)
+
+    // revised is done automatically when postCommit is CDOTransaction.postCommit is happening
+    // Detached are not revised through postCommit
+    if (excludedView == null || timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      CDOID id = dirtyOID.getID();
-      int version = dirtyOID.getVersion();
-      InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version, false);
-      if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+      for (CDOIDAndVersion dirtyOID : dirtyOIDs)
       {
-        revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
-      }
-      else if (revision != null)
-      {
-        revision.setRevised(timeStamp - 1);
+        CDOID id = dirtyOID.getID();
+        int version = dirtyOID.getVersion();
+        InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version, false);
+        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+        {
+          revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
+        }
+        else if (revision != null)
+        {
+          revision.setRevised(timeStamp - 1);
+        }
       }
     }
 

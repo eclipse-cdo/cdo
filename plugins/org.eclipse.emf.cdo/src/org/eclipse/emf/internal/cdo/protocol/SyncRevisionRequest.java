@@ -144,7 +144,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStam
       result = new CDOTimeStampContextImpl(timestamp);
       mapOfContext.put(timestamp, result);
     }
-  
+
     return result;
   }
 }

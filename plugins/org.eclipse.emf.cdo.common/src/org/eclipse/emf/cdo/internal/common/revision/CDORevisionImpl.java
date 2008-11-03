@@ -249,7 +249,7 @@ public class CDORevisionImpl implements InternalCDORevision
 
   public void setRevised(long revised)
   {
-    if (revised != UNSPECIFIED_DATE && revised < created)
+    if (revised != UNSPECIFIED_DATE && revised < Math.max(0, created))
     {
       throw new IllegalArgumentException("created=" + created + ", revised=" + revised);
     }

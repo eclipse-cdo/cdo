@@ -7,18 +7,17 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
@@ -31,7 +30,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 
 import org.eclipse.jface.viewers.TreeViewer;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -47,15 +45,7 @@ public class CDOEventHandler
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOSessionInvalidationEvent)
-      {
-        CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
-        if (e.getView() != view)
-        {
-          sessionInvalidated(e.getDirtyOIDs());
-        }
-      }
-      else if (event instanceof IContainerEvent)
+      if (event instanceof IContainerEvent)
       {
         IContainerEvent<?> e = (IContainerEvent<?>)event;
         if (e.getDeltaElement() == view && e.getDeltaKind() == IContainerDelta.Kind.REMOVED)
@@ -78,7 +68,12 @@ public class CDOEventHandler
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOTransactionFinishedEvent)
+      if (event instanceof CDOViewInvalidationEvent)
+      {
+        CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
+        viewInvalidated(e.getDirtyObjects());
+      }
+      else if (event instanceof CDOTransactionFinishedEvent)
       {
         // CDOTransactionFinishedEvent e = (CDOTransactionFinishedEvent)event;
         // if (e.getType() == CDOTransactionFinishedEvent.Type.COMMITTED)
@@ -170,14 +165,11 @@ public class CDOEventHandler
     treeViewer = viewer;
   }
 
-  protected void sessionInvalidated(Set<CDOIDAndVersion> dirtyOIDs)
+  /**
+   * @since 2.0
+   */
+  protected void viewInvalidated(Set<? extends CDOObject> dirtyObjects)
   {
-    Set<CDOID> idsWithoutVersion = new HashSet<CDOID>();
-    for (CDOIDAndVersion idAandVersion : dirtyOIDs)
-    {
-      idsWithoutVersion.add(idAandVersion.getID());
-    }
-
     new ItemsProcessor(view)
     {
       @Override
@@ -186,7 +178,7 @@ public class CDOEventHandler
         objectInvalidated(cdoObject);
         viewer.refresh(cdoObject.cdoInternalInstance(), true);
       }
-    }.processCDOObjects(treeViewer, idsWithoutVersion);
+    }.processCDOObjects(treeViewer, dirtyObjects);
   }
 
   protected void objectInvalidated(InternalCDOObject cdoObject)

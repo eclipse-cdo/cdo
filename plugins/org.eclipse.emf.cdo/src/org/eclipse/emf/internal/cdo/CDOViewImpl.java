@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
+import org.eclipse.emf.cdo.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -78,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1032,9 +1034,10 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    *          dirtyOIDs set to be unmodifiable. It does not wrap the set (again).
    * @since 2.0
    */
-  public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
+  public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedOIDs)
   {
-    List<InternalCDOObject> dirtyObjects = invalidationNotificationEnabled ? new ArrayList<InternalCDOObject>() : null;
+    Set<InternalCDOObject> dirtyObjects = new HashSet<InternalCDOObject>();
+    Set<InternalCDOObject> detachedObjects = new HashSet<InternalCDOObject>();
     lock.lock();
 
     try
@@ -1048,40 +1051,60 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           if (dirtyObject != null)
           {
             CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
+            dirtyObjects.add(dirtyObject);
           }
-        }
-
-        if (dirtyObject != null && dirtyObjects != null && dirtyObject.eNotificationRequired())
-        {
-          dirtyObjects.add(dirtyObject);
         }
       }
 
-      for (CDOID id : detachedObjects)
+      for (CDOID id : detachedOIDs)
       {
         InternalCDOObject cdoObject = removeObject(id);
         if (cdoObject != null)
         {
           CDOStateMachine.INSTANCE.detachRemote(cdoObject);
-          if (dirtyObjects != null && cdoObject.eNotificationRequired())
-          {
-            dirtyObjects.add(cdoObject);
-          }
+          detachedObjects.add(cdoObject);
         }
       }
 
-      if (dirtyObjects != null)
+      if (invalidationNotificationEnabled)
       {
         for (InternalCDOObject dirtyObject : dirtyObjects)
         {
-          CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
-          dirtyObject.eNotify(notification);
+          if (dirtyObject.eNotificationRequired())
+          {
+            CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
+            dirtyObject.eNotify(notification);
+          }
+        }
+
+        for (InternalCDOObject detachedObject : detachedObjects)
+        {
+          if (detachedObject.eNotificationRequired())
+          {
+            CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(detachedObject);
+            detachedObject.eNotify(notification);
+          }
         }
       }
     }
     finally
     {
       lock.unlock();
+    }
+
+    fireInvalidationEvent(timeStamp, Collections.unmodifiableSet(dirtyObjects), Collections
+        .unmodifiableSet(detachedObjects));
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void fireInvalidationEvent(long timeStamp, Set<? extends CDOObject> dirtyObjects,
+      Set<? extends CDOObject> detachedObjects)
+  {
+    if (!dirtyObjects.isEmpty() || !detachedObjects.isEmpty())
+    {
+      fireEvent(new InvalidationEvent(timeStamp, dirtyObjects, detachedObjects));
     }
   }
 
@@ -1548,4 +1571,46 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   }
 
+  /**
+   * @author Simon McDuff
+   */
+  private final class InvalidationEvent extends Event implements CDOViewInvalidationEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private long timeStamp;
+
+    private Set<? extends CDOObject> dirtyObjects;
+
+    private Set<? extends CDOObject> detachedObjects;
+
+    public InvalidationEvent(long timeStamp, Set<? extends CDOObject> dirtyOIDs,
+        Set<? extends CDOObject> detachedObjects)
+    {
+      this.timeStamp = timeStamp;
+      dirtyObjects = dirtyOIDs;
+      this.detachedObjects = detachedObjects;
+    }
+
+    public long getTimeStamp()
+    {
+      return timeStamp;
+    }
+
+    public Set<? extends CDOObject> getDirtyObjects()
+    {
+      return dirtyObjects;
+    }
+
+    public Set<? extends CDOObject> getDetachedObjects()
+    {
+      return detachedObjects;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "CDOViewInvalidationEvent: " + dirtyObjects;
+    }
+  }
 }

@@ -7,11 +7,12 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -43,7 +44,7 @@ public abstract class ItemsProcessor
     processCDOObjects(viewer, null);
   }
 
-  public void processCDOObjects(final TreeViewer viewer, final Set<CDOID> ids)
+  public void processCDOObjects(final TreeViewer viewer, final Set<? extends CDOObject> ids)
   {
     try
     {
@@ -84,7 +85,7 @@ public abstract class ItemsProcessor
 
   protected abstract void processCDOObject(TreeViewer viewer, InternalCDOObject cdoObject);
 
-  private void processItems(TreeViewer viewer, Set<CDOID> ids, TreeItem[] items)
+  private void processItems(TreeViewer viewer, Set<? extends CDOObject> ids, TreeItem[] items)
   {
     for (TreeItem item : items)
     {
@@ -97,15 +98,12 @@ public abstract class ItemsProcessor
     }
   }
 
-  private void processObject(TreeViewer viewer, Set<CDOID> ids, Object object)
+  private void processObject(TreeViewer viewer, Set<? extends CDOObject> ids, Object object)
   {
     InternalCDOObject cdoObject = getCDOObject(object);
-    if (cdoObject != null)
+    if (ids.contains(cdoObject))
     {
-      if (ids == null || ids.contains(cdoObject.cdoID()))
-      {
-        processCDOObject(viewer, cdoObject);
-      }
+      processCDOObject(viewer, cdoObject);
     }
   }
 }

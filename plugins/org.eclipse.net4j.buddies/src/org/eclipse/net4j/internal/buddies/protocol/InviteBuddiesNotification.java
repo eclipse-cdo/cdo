@@ -16,7 +16,6 @@ import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -36,7 +35,7 @@ public class InviteBuddiesNotification extends Request
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeLong(collaborationID);
     ProtocolUtil.writeBuddies(out, buddies);

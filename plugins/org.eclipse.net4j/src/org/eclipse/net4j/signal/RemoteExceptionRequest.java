@@ -10,25 +10,32 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-
-import java.io.IOException;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 /**
  * @author Eike Stepper
  */
-class ExceptionMessageIndication extends Indication
+class RemoteExceptionRequest extends Request
 {
-  public ExceptionMessageIndication(SignalProtocol<?> protocol)
+  private int correlationID;
+
+  private String message;
+
+  private Throwable t;
+
+  public RemoteExceptionRequest(SignalProtocol<?> protocol, int correlationID, String message, Throwable t)
   {
-    super(protocol, SignalProtocol.SIGNAL_EXCEPTION_MESSAGE);
+    super(protocol, SignalProtocol.SIGNAL_REMOTE_EXCEPTION);
+    this.correlationID = correlationID;
+    this.message = message;
+    this.t = t;
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
-    int correlationID = in.readInt();
-    String message = in.readString();
-    getProtocol().stopSignal(correlationID, message);
+    out.writeInt(correlationID);
+    out.writeString(message);
+    out.writeObject(t);
   }
 }

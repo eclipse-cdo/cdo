@@ -14,7 +14,7 @@ import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
+import java.rmi.AlreadyBoundException;
 
 /**
  * @author Eike Stepper
@@ -36,7 +36,7 @@ public class ExceptionIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     exceptionInIndicating = in.readBoolean();
     if (exceptionInIndicating)
@@ -46,7 +46,7 @@ public class ExceptionIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(ExtendedDataOutputStream out) throws Exception
   {
     if (!exceptionInIndicating)
     {
@@ -56,8 +56,20 @@ public class ExceptionIndication extends IndicationWithResponse
     out.writeBoolean(true);
   }
 
-  private void throwException() throws RuntimeException
+  private void throwException() throws Exception
   {
-    throw new RuntimeException(SIMULATED_EXCEPTION);
+    try
+    {
+      throwNestedException();
+    }
+    catch (Exception ex)
+    {
+      throw new ClassNotFoundException(SIMULATED_EXCEPTION, ex);
+    }
+  }
+
+  private void throwNestedException() throws Exception
+  {
+    throw new AlreadyBoundException(SIMULATED_EXCEPTION);
   }
 }

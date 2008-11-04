@@ -20,7 +20,6 @@ import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -35,7 +34,7 @@ public class JMSCommitIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     int sessionID = in.readInt();
     int size = in.readInt();
@@ -58,7 +57,7 @@ public class JMSCommitIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(ExtendedDataOutputStream out) throws Exception
   {
     if (messageIDs == null)
     {

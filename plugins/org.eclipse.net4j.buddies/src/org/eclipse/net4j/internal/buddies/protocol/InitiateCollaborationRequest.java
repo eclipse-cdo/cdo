@@ -17,7 +17,6 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -34,13 +33,13 @@ public class InitiateCollaborationRequest extends RequestWithConfirmation<Long>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     ProtocolUtil.writeBuddies(out, buddies);
   }
 
   @Override
-  protected Long confirming(ExtendedDataInputStream in) throws IOException
+  protected Long confirming(ExtendedDataInputStream in) throws Exception
   {
     return in.readLong();
   }

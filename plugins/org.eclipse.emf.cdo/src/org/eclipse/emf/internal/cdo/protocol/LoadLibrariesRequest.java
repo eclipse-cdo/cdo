@@ -22,7 +22,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -44,7 +43,7 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     int size = libraryNames.size();
     if (PROTOCOL_TRACER.isEnabled())
@@ -65,7 +64,7 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
   }
 
   @Override
-  protected Integer confirming(ExtendedDataInputStream in) throws IOException
+  protected Integer confirming(ExtendedDataInputStream in) throws Exception
   {
     byte[] buffer = new byte[IOUtil.DEFAULT_BUFFER_SIZE];
     int count = 0;

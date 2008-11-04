@@ -14,6 +14,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.signal.SignalRemoteException;
 import org.eclipse.net4j.util.CheckUtil;
 
 import java.util.concurrent.TimeoutException;
@@ -27,7 +28,8 @@ public abstract class FailOverStrategy extends AbstractFailOverStrategy
   {
   }
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception
+  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception,
+      SignalRemoteException
   {
     for (;;)
     {

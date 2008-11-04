@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -43,7 +42,7 @@ public class InstallFacilityIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     long collaborationID = in.readLong();
     String facilityType = in.readString();
@@ -88,7 +87,7 @@ public class InstallFacilityIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(ExtendedDataOutputStream out) throws Exception
   {
     out.writeBoolean(success);
   }

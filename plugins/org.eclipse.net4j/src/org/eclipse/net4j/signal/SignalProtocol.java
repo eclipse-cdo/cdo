@@ -43,7 +43,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
   /**
    * @since 2.0
    */
-  public static final short SIGNAL_EXCEPTION_MESSAGE = -1;
+  public static final short SIGNAL_REMOTE_EXCEPTION = -1;
 
   private static final int MIN_CORRELATION_ID = 1;
 
@@ -245,9 +245,9 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
   protected final SignalReactor provideSignalReactor(short signalID)
   {
     checkActive();
-    if (signalID == SIGNAL_EXCEPTION_MESSAGE)
+    if (signalID == SIGNAL_REMOTE_EXCEPTION)
     {
-      return new ExceptionMessageIndication(this);
+      return new RemoteExceptionIndication(this);
     }
 
     SignalReactor signal = createSignalReactor(signalID);
@@ -314,7 +314,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     }
   }
 
-  void stopSignal(int correlationID, String message)
+  void stopSignal(int correlationID, Throwable t)
   {
     synchronized (signals)
     {
@@ -322,7 +322,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
       if (signal instanceof RequestWithConfirmation)
       {
         RequestWithConfirmation<?> request = (RequestWithConfirmation<?>)signal;
-        request.setExceptionMessage(message);
+        request.setRemoteException(t);
       }
 
       signals.notifyAll();

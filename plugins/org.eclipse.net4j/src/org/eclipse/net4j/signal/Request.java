@@ -18,7 +18,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -50,5 +49,5 @@ public abstract class Request extends SignalActor
     out.flushWithEOS();
   }
 
-  protected abstract void requesting(ExtendedDataOutputStream out) throws IOException;
+  protected abstract void requesting(ExtendedDataOutputStream out) throws Exception;
 }

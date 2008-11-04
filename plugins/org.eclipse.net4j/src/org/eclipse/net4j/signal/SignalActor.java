@@ -35,12 +35,12 @@ public abstract class SignalActor extends Signal
     setCorrelationID(protocol.getNextCorrelationID());
   }
 
-  public Object send() throws Exception
+  public Object send() throws Exception, SignalRemoteException
   {
     return send(NO_TIMEOUT);
   }
 
-  public Object send(long timeout) throws Exception
+  public Object send(long timeout) throws Exception, SignalRemoteException
   {
     if (terminated)
     {

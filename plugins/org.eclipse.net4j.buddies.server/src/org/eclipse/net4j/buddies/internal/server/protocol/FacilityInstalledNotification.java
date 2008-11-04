@@ -14,7 +14,6 @@ import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -36,7 +35,7 @@ public class FacilityInstalledNotification extends Request
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeLong(collaborationID);
     out.writeString(facilityType);

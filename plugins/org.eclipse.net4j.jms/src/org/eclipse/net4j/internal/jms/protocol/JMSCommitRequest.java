@@ -17,7 +17,6 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -40,7 +39,7 @@ public class JMSCommitRequest extends RequestWithConfirmation<String[]>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeInt(sessionID);
     out.writeInt(messages.size());
@@ -51,7 +50,7 @@ public class JMSCommitRequest extends RequestWithConfirmation<String[]>
   }
 
   @Override
-  protected String[] confirming(ExtendedDataInputStream in) throws IOException
+  protected String[] confirming(ExtendedDataInputStream in) throws Exception
   {
     int size = in.readInt();
     if (size == -1)

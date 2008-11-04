@@ -109,7 +109,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   }
 
   @Override
-  protected final void indicating(ExtendedDataInputStream in) throws IOException
+  protected final void indicating(ExtendedDataInputStream in) throws Exception
   {
     indicating(new CDODataInputImpl(in)
     {
@@ -146,7 +146,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   }
 
   @Override
-  protected final void responding(ExtendedDataOutputStream out) throws IOException
+  protected final void responding(ExtendedDataOutputStream out) throws Exception
   {
     responding(new CDODataOutputImpl(out)
     {

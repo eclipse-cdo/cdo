@@ -19,7 +19,6 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -42,7 +41,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeString(userID);
     out.writeString(password);
@@ -54,7 +53,7 @@ public class OpenSessionRequest extends RequestWithConfirmation<IBuddySession>
   }
 
   @Override
-  protected IBuddySession confirming(ExtendedDataInputStream in) throws IOException
+  protected IBuddySession confirming(ExtendedDataInputStream in) throws Exception
   {
     IAccount account = ProtocolUtil.readAccount(in);
     if (account == null)

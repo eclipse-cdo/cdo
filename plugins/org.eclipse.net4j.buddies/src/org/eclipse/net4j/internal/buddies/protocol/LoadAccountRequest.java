@@ -17,7 +17,6 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -33,13 +32,13 @@ public class LoadAccountRequest extends RequestWithConfirmation<IAccount>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeString(userID);
   }
 
   @Override
-  protected IAccount confirming(ExtendedDataInputStream in) throws IOException
+  protected IAccount confirming(ExtendedDataInputStream in) throws Exception
   {
     return ProtocolUtil.readAccount(in);
   }

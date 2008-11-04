@@ -18,7 +18,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -38,14 +37,14 @@ public abstract class RequestWithConfirmation<RESULT> extends Request
 
   @Override
   @SuppressWarnings("unchecked")
-  public RESULT send() throws Exception
+  public RESULT send() throws Exception, SignalRemoteException
   {
     return (RESULT)super.send();
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public RESULT send(long timeout) throws Exception
+  public RESULT send(long timeout) throws Exception, SignalRemoteException
   {
     return (RESULT)super.send(timeout);
   }
@@ -68,11 +67,24 @@ public abstract class RequestWithConfirmation<RESULT> extends Request
   /**
    * <b>Important Note:</b> The confirmation must not be empty, i.e. the stream must be used at least to read a
    * <code>boolean</code>. Otherwise synchronization problems will result!
+   * 
+   * @throws Exception
+   *           TODO
    */
-  protected abstract RESULT confirming(ExtendedDataInputStream in) throws IOException;
+  protected abstract RESULT confirming(ExtendedDataInputStream in) throws Exception;
 
-  void setExceptionMessage(String message)
+  void setRemoteException(Throwable t)
   {
-    getBufferInputStream().setException(new SignalRemoteException(message));
+    SignalRemoteException remoteException;
+    if (t instanceof SignalRemoteException)
+    {
+      remoteException = (SignalRemoteException)t;
+    }
+    else
+    {
+      remoteException = new SignalRemoteException(t);
+    }
+
+    getBufferInputStream().setException(remoteException);
   }
 }

@@ -8,31 +8,38 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.buddies.internal.common.protocol;
+package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.buddies.common.IBuddy.State;
-import org.eclipse.net4j.signal.Indication;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
+import org.eclipse.internal.net4j.bundle.OM;
 
 /**
  * @author Eike Stepper
  */
-public abstract class BuddyStateIndication extends Indication
+class RemoteExceptionIndication extends Indication
 {
-  public BuddyStateIndication(SignalProtocol<?> protocol)
+  public RemoteExceptionIndication(SignalProtocol<?> protocol)
   {
-    super(protocol, ProtocolConstants.SIGNAL_BUDDY_STATE);
+    super(protocol, SignalProtocol.SIGNAL_REMOTE_EXCEPTION);
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
-    String userID = in.readString();
-    State state = ProtocolUtil.readState(in);
-    stateChanged(userID, state);
-  }
+    int correlationID = in.readInt();
+    String message = in.readString();
+    Throwable t;
 
-  protected abstract void stateChanged(String userID, State state);
+    try
+    {
+      t = (Throwable)in.readObject(OM.class.getClassLoader());
+    }
+    catch (Throwable couldNotLoadExceptionClass)
+    {
+      t = new SignalRemoteException(message);
+    }
+
+    getProtocol().stopSignal(correlationID, t);
+  }
 }

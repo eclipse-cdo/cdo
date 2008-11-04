@@ -16,7 +16,6 @@ import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -38,7 +37,7 @@ public class JMSServerMessageRequest extends Request
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeInt(sessionID);
     out.writeLong(consumerID);

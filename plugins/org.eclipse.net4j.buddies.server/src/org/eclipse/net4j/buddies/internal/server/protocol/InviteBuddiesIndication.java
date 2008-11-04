@@ -20,7 +20,6 @@ import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +39,7 @@ public class InviteBuddiesIndication extends Indication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     long collaborationID = in.readLong();
     String[] userIDs = ProtocolUtil.readUserIDs(in);

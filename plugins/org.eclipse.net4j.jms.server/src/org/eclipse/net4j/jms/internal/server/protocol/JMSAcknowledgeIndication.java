@@ -17,7 +17,6 @@ import org.eclipse.net4j.jms.internal.server.bundle.OM;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -30,7 +29,7 @@ public class JMSAcknowledgeIndication extends Indication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     int sessionID = in.readInt();
 

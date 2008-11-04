@@ -80,7 +80,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   }
 
   @Override
-  protected final void requesting(ExtendedDataOutputStream out) throws IOException
+  protected final void requesting(ExtendedDataOutputStream out) throws Exception
   {
     requesting(new CDODataOutputImpl(out)
     {
@@ -98,7 +98,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   }
 
   @Override
-  protected final RESULT confirming(ExtendedDataInputStream in) throws IOException
+  protected final RESULT confirming(ExtendedDataInputStream in) throws Exception
   {
     return confirming(new CDODataInputImpl(in)
     {

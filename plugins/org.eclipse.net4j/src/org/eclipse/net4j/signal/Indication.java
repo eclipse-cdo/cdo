@@ -14,12 +14,12 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -51,14 +51,17 @@ public abstract class Indication extends SignalReactor
     {
       indicating(ExtendedDataInputStream.wrap(wrappedInputStream));
     }
-    catch (IOException ex)
+    catch (Error ex)
     {
+      OM.LOG.error(ex);
+      sendExceptionSignal(ex);
       throw ex;
     }
     catch (Exception ex)
     {
+      ex = WrappedException.unwrap(ex);
       OM.LOG.error(ex);
-      sendExceptionMessage(ex);
+      sendExceptionSignal(ex);
       throw ex;
     }
     finally
@@ -67,21 +70,21 @@ public abstract class Indication extends SignalReactor
     }
   }
 
-  protected abstract void indicating(ExtendedDataInputStream in) throws IOException;
+  protected abstract void indicating(ExtendedDataInputStream in) throws Exception;
 
   /**
    * @since 2.0
    */
-  protected String getMessage(Exception ex)
+  protected String getMessage(Throwable t)
   {
-    return StringUtil.formatException(ex);
+    return StringUtil.formatException(t);
   }
 
-  void sendExceptionMessage(Exception ex) throws Exception
+  void sendExceptionSignal(Throwable t) throws Exception
   {
     SignalProtocol<?> protocol = getProtocol();
     int correlationID = -getCorrelationID();
-    String message = getMessage(ex);
-    new ExceptionMessageRequest(protocol, correlationID, message).send();
+    String message = getMessage(t);
+    new RemoteExceptionRequest(protocol, correlationID, message, t).send();
   }
 }

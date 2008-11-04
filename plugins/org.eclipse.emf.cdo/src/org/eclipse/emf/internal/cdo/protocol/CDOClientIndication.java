@@ -71,7 +71,7 @@ public abstract class CDOClientIndication extends Indication
   }
 
   @Override
-  protected final void indicating(ExtendedDataInputStream in) throws IOException
+  protected final void indicating(ExtendedDataInputStream in) throws Exception
   {
     indicating(new CDODataInputImpl(in)
     {

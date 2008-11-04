@@ -20,7 +20,6 @@ import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -34,7 +33,7 @@ public class CollaborationInitiatedIndication extends Indication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     IBuddySession session = (IBuddySession)getProtocol().getInfraStructure();
     Self self = (Self)session.getSelf();

@@ -103,7 +103,7 @@ public abstract class CDOServerRequest extends Request
   }
 
   @Override
-  protected final void requesting(ExtendedDataOutputStream out) throws IOException
+  protected final void requesting(ExtendedDataOutputStream out) throws Exception
   {
     requesting(new CDODataOutputImpl(out)
     {

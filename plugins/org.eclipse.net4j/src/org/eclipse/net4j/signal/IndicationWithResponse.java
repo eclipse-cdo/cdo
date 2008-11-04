@@ -13,12 +13,12 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -51,14 +51,17 @@ public abstract class IndicationWithResponse extends Indication
     {
       responding(ExtendedDataOutputStream.wrap(wrappedOutputStream));
     }
-    catch (IOException ex)
+    catch (Error ex)
     {
+      OM.LOG.error(ex);
+      sendExceptionSignal(ex);
       throw ex;
     }
     catch (Exception ex)
     {
+      ex = WrappedException.unwrap(ex);
       OM.LOG.error(ex);
-      sendExceptionMessage(ex);
+      sendExceptionSignal(ex);
       throw ex;
     }
     finally
@@ -73,6 +76,7 @@ public abstract class IndicationWithResponse extends Indication
   /**
    * <b>Important Note:</b> The response must not be empty, i.e. the stream must be used at least to write a
    * <code>boolean</code>. Otherwise synchronization problems will result!
+   * @throws Exception TODO
    */
-  protected abstract void responding(ExtendedDataOutputStream out) throws IOException;
+  protected abstract void responding(ExtendedDataOutputStream out) throws Exception;
 }

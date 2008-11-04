@@ -18,7 +18,6 @@ import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -34,7 +33,7 @@ public class MessageIndication extends Indication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     long collaborationID = in.readLong();
     String facilityType = in.readString();

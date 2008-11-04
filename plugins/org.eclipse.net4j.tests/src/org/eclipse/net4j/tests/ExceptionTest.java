@@ -12,8 +12,12 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.SignalRemoteException;
+import org.eclipse.net4j.tests.signal.ExceptionIndication;
 import org.eclipse.net4j.tests.signal.ExceptionRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
+import org.eclipse.net4j.util.io.IOUtil;
+
+import java.rmi.AlreadyBoundException;
 
 /**
  * @author Eike Stepper
@@ -47,6 +51,10 @@ public class ExceptionTest extends AbstractProtocolTest
     }
     catch (SignalRemoteException success)
     {
+      IOUtil.print(success);
+      ClassNotFoundException cnfe = (ClassNotFoundException)success.getCause();
+      AlreadyBoundException abe = (AlreadyBoundException)cnfe.getCause();
+      assertEquals(ExceptionIndication.SIMULATED_EXCEPTION, abe.getMessage());
     }
   }
 }

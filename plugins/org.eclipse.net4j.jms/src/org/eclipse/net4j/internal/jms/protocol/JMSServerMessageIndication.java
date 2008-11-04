@@ -17,7 +17,6 @@ import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -33,7 +32,7 @@ public class JMSServerMessageIndication extends Indication
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     int sessionID = in.readInt();
     long consumerID = in.readLong();

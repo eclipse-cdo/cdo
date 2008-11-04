@@ -15,7 +15,6 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -32,13 +31,13 @@ public class EchoRequest extends RequestWithConfirmation<String>
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws IOException
+  protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeString(message);
   }
 
   @Override
-  protected String confirming(ExtendedDataInputStream in) throws IOException
+  protected String confirming(ExtendedDataInputStream in) throws Exception
   {
     return in.readString();
   }

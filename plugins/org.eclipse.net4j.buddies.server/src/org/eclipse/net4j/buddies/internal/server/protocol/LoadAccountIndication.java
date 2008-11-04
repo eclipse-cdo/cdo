@@ -18,7 +18,6 @@ import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -36,14 +35,14 @@ public class LoadAccountIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws IOException
+  protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     String userID = in.readString();
     account = IBuddyAdmin.INSTANCE.getAccounts().get(userID);
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws IOException
+  protected void responding(ExtendedDataOutputStream out) throws Exception
   {
     ProtocolUtil.writeAccount(out, account);
   }

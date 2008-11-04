@@ -11,6 +11,7 @@
 package org.eclipse.net4j.signal.failover;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalRemoteException;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
@@ -28,7 +29,8 @@ public interface IFailOverStrategy extends INotifier
    */
   public void setDefaultTimeout(long defaultTimeout);
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception;
+  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception, SignalRemoteException;
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception;
+  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception,
+      SignalRemoteException;
 }

@@ -86,6 +86,7 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
     {
       return result;
     }
+
     result = confirmingTransactionResult(in);
     confirmingNewPackage(in, result);
     confirmingIdMapping(in, result);

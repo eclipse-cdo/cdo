@@ -27,7 +27,9 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -297,10 +299,13 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
       table.addField(CDODBSchema.REFERENCES_FEATURE, DBType.INTEGER);
     }
 
-    table.addField(CDODBSchema.REFERENCES_SOURCE, DBType.BIGINT);
-    table.addField(CDODBSchema.REFERENCES_VERSION, DBType.INTEGER);
-    table.addField(CDODBSchema.REFERENCES_IDX, DBType.INTEGER);
+    IDBField sourceField = table.addField(CDODBSchema.REFERENCES_SOURCE, DBType.BIGINT);
+    IDBField versionField = table.addField(CDODBSchema.REFERENCES_VERSION, DBType.INTEGER);
+    IDBField idxField = table.addField(CDODBSchema.REFERENCES_IDX, DBType.INTEGER);
     table.addField(CDODBSchema.REFERENCES_TARGET, DBType.BIGINT);
+
+    table.addIndex(Type.NON_UNIQUE, sourceField, versionField);
+    table.addIndex(Type.NON_UNIQUE, idxField);
     return table;
   }
 

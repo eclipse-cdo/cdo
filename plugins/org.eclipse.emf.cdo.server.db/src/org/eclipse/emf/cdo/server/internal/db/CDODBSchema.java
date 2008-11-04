@@ -81,6 +81,9 @@ public class CDODBSchema extends DBSchema
   public static final IDBIndex INDEX_PACKAGES_URI = //
   PACKAGES.addIndex(IDBIndex.Type.UNIQUE, PACKAGES_URI);
 
+  public static final IDBIndex INDEX_PACKAGES_PARENT = //
+  PACKAGES.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGES_PARENT);
+
   /**
    * DBTable cdo_classes
    */
@@ -103,6 +106,9 @@ public class CDODBSchema extends DBSchema
 
   public static final IDBIndex INDEX_CLASSES_PK = //
   CLASSES.addIndex(IDBIndex.Type.PRIMARY_KEY, CLASSES_ID);
+
+  public static final IDBIndex INDEX_CLASSES_PACKAGE = //
+  CLASSES.addIndex(IDBIndex.Type.NON_UNIQUE, CLASSES_PACKAGE);
 
   /**
    * DBTable cdo_supertypes
@@ -158,6 +164,9 @@ public class CDODBSchema extends DBSchema
 
   public static final IDBIndex INDEX_FEATURES_PK = //
   FEATURES.addIndex(IDBIndex.Type.PRIMARY_KEY, FEATURES_ID);
+
+  public static final IDBIndex INDEX_FEATURES_CLASS = //
+  FEATURES.addIndex(IDBIndex.Type.NON_UNIQUE, FEATURES_CLASS);
 
   /**
    * Name of object table

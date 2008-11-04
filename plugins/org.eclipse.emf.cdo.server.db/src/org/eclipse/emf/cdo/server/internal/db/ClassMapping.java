@@ -30,6 +30,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -71,6 +72,7 @@ public abstract class ClassMapping implements IClassMapping
     String tableName = mappingStrategy.getTableName(cdoClass);
     table = addTable(tableName);
     initTable(table, hasFullRevisionInfo());
+
     if (features != null)
     {
       attributeMappings = createAttributeMappings(features);
@@ -129,16 +131,18 @@ public abstract class ClassMapping implements IClassMapping
 
   protected void initTable(IDBTable table, boolean full)
   {
-    table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT, true);
+    IDBField idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT, true);
     table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER, true);
     if (full)
     {
       table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.INTEGER, true);
       table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT, true);
-      table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT, true);
+      IDBField revisedField = table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT, true);
       table.addField(CDODBSchema.ATTRIBUTES_RESOURCE, DBType.BIGINT, true);
       table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, DBType.BIGINT, true);
       table.addField(CDODBSchema.ATTRIBUTES_FEATURE, DBType.INTEGER, true);
+
+      table.addIndex(IDBIndex.Type.NON_UNIQUE, idField, revisedField);
     }
   }
 

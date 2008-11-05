@@ -25,6 +25,21 @@ public interface OMMonitor
 
   public boolean hasBegun();
 
+  /**
+   * @since 2.0
+   */
+  public boolean isCanceled();
+
+  /**
+   * @since 2.0
+   */
+  public void setCanceled(boolean canceled);
+
+  /**
+   * @since 2.0
+   */
+  public void checkCanceled() throws MonitorCanceledException;
+
   public void message(String msg);
 
   public void worked(int work, String msg);

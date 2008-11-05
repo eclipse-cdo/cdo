@@ -60,6 +60,15 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
     }
   }
 
+  public void setCanceled(boolean canceled)
+  {
+    this.canceled = canceled;
+    if (child != null)
+    {
+      child.setCanceled(canceled);
+    }
+  }
+
   public String getTask()
   {
     return task;
@@ -189,15 +198,6 @@ public abstract class Monitor implements OMMonitor, OMSubMonitor
   protected void setChild(Monitor child)
   {
     this.child = child;
-  }
-
-  protected void setCanceled(boolean canceled)
-  {
-    this.canceled = canceled;
-    if (child != null)
-    {
-      child.setCanceled(canceled);
-    }
   }
 
   protected Monitor getParent()

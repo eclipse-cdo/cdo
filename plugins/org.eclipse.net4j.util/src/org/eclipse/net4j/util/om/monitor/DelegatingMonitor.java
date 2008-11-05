@@ -8,113 +8,113 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.internal.util.om.monitor;
-
-import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.monitor.OMSubMonitor;
+package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class NullMonitor implements OMMonitor, OMSubMonitor
+public abstract class DelegatingMonitor implements OMMonitor
 {
-  public static final NullMonitor INSTANCE = new NullMonitor();
-
-  private boolean canceled;
-
-  private NullMonitor()
+  public DelegatingMonitor()
   {
   }
 
   public void checkCanceled() throws MonitorCanceledException
   {
-    if (canceled)
-    {
-      throw new MonitorCanceledException();
-    }
+    getDelegate().checkCanceled();
   }
 
   public boolean isCanceled()
   {
-    return canceled;
+    return getDelegate().isCanceled();
   }
 
   public void setCanceled(boolean canceled)
   {
-    this.canceled = canceled;
-  }
-
-  public void join()
-  {
-  }
-
-  public void join(String msg)
-  {
+    getDelegate().setCanceled(canceled);
   }
 
   public OMSubMonitor fork()
   {
-    return this;
+    return getDelegate().fork();
   }
 
   public void fork(int workFromParent, Runnable runnable, String msg)
   {
+    getDelegate().fork(workFromParent, runnable, msg);
   }
 
   public void fork(int workFromParent, Runnable runnable)
   {
+    getDelegate().fork(workFromParent, runnable);
   }
 
   public OMSubMonitor fork(int workFromParent)
   {
-    return this;
+    return getDelegate().fork(workFromParent);
   }
 
   public void fork(Runnable runnable, String msg)
   {
+    getDelegate().fork(runnable, msg);
   }
 
   public void fork(Runnable runnable)
   {
+    getDelegate().fork(runnable);
   }
 
   public String getTask()
   {
-    return null;
+    return getDelegate().getTask();
   }
 
   public int getTotalWork()
   {
-    return 0;
+    return getDelegate().getTotalWork();
   }
 
   public boolean hasBegun()
   {
-    return true;
+    return getDelegate().hasBegun();
   }
 
   public void message(String msg)
   {
+    getDelegate().message(msg);
   }
 
   public void setTask(String task)
   {
+    getDelegate().setTask(task);
   }
 
   public void worked()
   {
+    getDelegate().worked();
   }
 
   public void worked(int work, String msg)
   {
+    getDelegate().worked(work, msg);
   }
 
   public void worked(int work)
   {
+    getDelegate().worked(work);
   }
 
   public void worked(String msg)
   {
+    getDelegate().worked(msg);
   }
+
+  @Override
+  public String toString()
+  {
+    return getDelegate().toString();
+  }
+
+  protected abstract OMMonitor getDelegate();
 }

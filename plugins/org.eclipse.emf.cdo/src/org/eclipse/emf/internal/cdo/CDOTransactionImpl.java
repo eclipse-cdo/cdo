@@ -1134,6 +1134,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           {
             Set<CDOID> detachedIDs = new HashSet<CDOID>(getDetachedObjects().keySet());
             Collection<CDORevisionDelta> deltasCopy = new ArrayList<CDORevisionDelta>(deltas);
+
+            // Adjust references in the deltas. Could be used in ChangeSubscription from others CDOView
+            for (CDORevisionDelta dirtyObjectDelta : deltasCopy)
+            {
+              ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(result.getReferenceAdjuster());
+            }
+
             session.handleCommitNotification(timeStamp, dirtyIDs, detachedIDs, deltasCopy, getTransaction());
           }
 

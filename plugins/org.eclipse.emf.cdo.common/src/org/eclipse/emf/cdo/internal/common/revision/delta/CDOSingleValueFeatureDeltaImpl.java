@@ -76,10 +76,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   @Override
   public void adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
-    if (newValue instanceof CDOID)
-    {
-      newValue = referenceAdjuster.adjustReference(newValue);
-    }
+    newValue = referenceAdjuster.adjustReference(newValue);
   }
 
   public void clear()

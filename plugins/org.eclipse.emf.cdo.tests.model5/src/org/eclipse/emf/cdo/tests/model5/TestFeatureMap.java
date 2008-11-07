@@ -1,0 +1,79 @@
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id: TestFeatureMap.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ */
+package org.eclipse.emf.cdo.tests.model5;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.FeatureMap;
+
+/**
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Test Feature Map</b></em>'. <!-- end-user-doc
+ * -->
+ * <p>
+ * The following features are supported:
+ * <ul>
+ * <li>{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getManagers <em>Managers</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getDoctors <em>Doctors</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getPeople <em>People</em>}</li>
+ * </ul>
+ * </p>
+ * 
+ * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap()
+ * @model
+ * @generated
+ */
+public interface TestFeatureMap extends EObject
+{
+  /**
+   * Returns the value of the '<em><b>Managers</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model5.Manager}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Managers</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Managers</em>' reference list.
+   * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Managers()
+   * @model extendedMetaData="group='#people'"
+   * @generated
+   */
+  EList<Manager> getManagers();
+
+  /**
+   * Returns the value of the '<em><b>Doctors</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model5.Doctor}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Doctors</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Doctors</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Doctors()
+   * @model containment="true" extendedMetaData="group='#people'"
+   * @generated
+   */
+  EList<Doctor> getDoctors();
+
+  /**
+   * Returns the value of the '<em><b>People</b></em>' attribute list. The list contents are of type
+   * {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>People</em>' attribute list isn't clear, there really should be more of a description
+   * here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>People</em>' attribute list.
+   * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_People()
+   * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true" extendedMetaData="kind='group'"
+   * @generated
+   */
+  FeatureMap getPeople();
+
+} // TestFeatureMap

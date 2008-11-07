@@ -1065,31 +1065,31 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           detachedObjects.add(cdoObject);
         }
       }
-
-      if (invalidationNotificationEnabled)
-      {
-        for (InternalCDOObject dirtyObject : dirtyObjects)
-        {
-          if (dirtyObject.eNotificationRequired())
-          {
-            CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
-            dirtyObject.eNotify(notification);
-          }
-        }
-
-        for (InternalCDOObject detachedObject : detachedObjects)
-        {
-          if (detachedObject.eNotificationRequired())
-          {
-            CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(detachedObject);
-            detachedObject.eNotify(notification);
-          }
-        }
-      }
     }
     finally
     {
       lock.unlock();
+    }
+
+    if (invalidationNotificationEnabled)
+    {
+      for (InternalCDOObject dirtyObject : dirtyObjects)
+      {
+        if (dirtyObject.eNotificationRequired())
+        {
+          CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(dirtyObject);
+          dirtyObject.eNotify(notification);
+        }
+      }
+
+      for (InternalCDOObject detachedObject : detachedObjects)
+      {
+        if (detachedObject.eNotificationRequired())
+        {
+          CDOInvalidationNotificationImpl notification = new CDOInvalidationNotificationImpl(detachedObject);
+          detachedObject.eNotify(notification);
+        }
+      }
     }
 
     fireInvalidationEvent(timeStamp, Collections.unmodifiableSet(dirtyObjects), Collections

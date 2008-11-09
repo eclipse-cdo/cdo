@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.internal.common.model.core.CDOFeatureMapEntryDataTypeImpl;
 
 import java.io.IOException;
 import java.util.Date;
@@ -165,6 +167,12 @@ public abstract class CDOTypeImpl implements CDOType
     public Object readValue(CDODataInput in) throws IOException
     {
       return in.readCDOID();
+    }
+
+    @Override
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    {
+      return adjuster.adjustReference(value);
     }
   };
 
@@ -350,6 +358,38 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
+  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", 36, false)
+  {
+    @Override
+    public Object copyValue(Object value)
+    {
+      return value;
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
+      out.writeString(featureMapEntry.getURI());
+      out.writeCDOID(out.getIDProvider().provideCDOID(featureMapEntry.getObject()));
+    }
+
+    public Object readValue(CDODataInput in) throws IOException
+    {
+      String uri = in.readString();
+      Object id = in.readCDOID();
+      return new CDOFeatureMapEntryDataTypeImpl(uri, id);
+    }
+
+    @Override
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    {
+      CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
+      featureMapEntry.adjustReferences(adjuster);
+      return value;
+    }
+
+  };
+
   public static final CDOType CUSTOM = new CDOTypeImpl("CUSTOM", 999, true)
   {
     @SuppressWarnings("cast")
@@ -426,6 +466,16 @@ public abstract class CDOTypeImpl implements CDOType
   public void write(CDODataOutput out) throws IOException
   {
     out.writeInt(typeID);
+  }
+
+  final public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value)
+  {
+    return value == null ? null : doAdjustReferences(adjuster, value);
+  }
+
+  protected Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+  {
+    return value;
   }
 
   /**

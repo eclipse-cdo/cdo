@@ -474,12 +474,12 @@ public class CDORevisionImpl implements InternalCDORevision
           InternalCDOList list = (InternalCDOList)getValueAsList(i);
           if (list != null)
           {
-            list.adjustReferences(revisionAdjuster);
+            list.adjustReferences(revisionAdjuster, feature.getType());
           }
         }
         else
         {
-          values[i] = revisionAdjuster.adjustReference(values[i]);
+          values[i] = feature.getType().adjustReferences(revisionAdjuster, values[i]);
         }
       }
     }

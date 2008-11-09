@@ -15,12 +15,15 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
+import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.common.model.core.CDOFeatureMapEntryDataTypeImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOClearFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl;
@@ -37,6 +40,7 @@ import org.eclipse.emf.internal.cdo.util.GenUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -44,6 +48,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -160,29 +166,7 @@ public final class CDOStore implements EStore
     view.getFeatureAnalyzer().preTraverseFeature(cdoObject, cdoFeature, index);
     InternalCDORevision revision = getRevisionForReading(cdoObject);
     Object value = revision.get(cdoFeature, index);
-    if (cdoFeature.isReference())
-    {
-      value = resolveProxy(revision, cdoFeature, index, value);
-      if (cdoFeature.isMany() && value instanceof CDOID)
-      {
-        CDOID id = (CDOID)value;
-        CDOList list = revision.getList(cdoFeature);
-        CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
-        CDORevisionPrefetchingPolicy policy = view.getRevisionPrefetchingPolicy();
-
-        Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, eFeature, list, index, id);
-        if (!listOfIDs.isEmpty())
-        {
-          revisionManager.getRevisions(listOfIDs, view.getSession().getCollectionLoadingPolicy().getInitialChunkSize());
-        }
-      }
-
-      value = view.convertIDToObject(value);
-    }
-    else if (cdoFeature.getType() == CDOType.CUSTOM)
-    {
-      value = EcoreUtil.createFromString((EDataType)eFeature.getEType(), (String)value);
-    }
+    value = convertToEMF(view, eObject, revision, eFeature, cdoFeature, index, value);
 
     view.getFeatureAnalyzer().postTraverseFeature(cdoObject, cdoFeature, index, value);
     return value;
@@ -346,14 +330,7 @@ public final class CDOStore implements EStore
       TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, cdoFeature, index, value);
     }
 
-    if (cdoFeature.getType() == CDOType.CUSTOM)
-    {
-      value = EcoreUtil.convertToString((EDataType)eFeature.getEType(), value);
-    }
-    else if (value == null && GenUtil.isPrimitiveType(eFeature.getEType()))
-    {
-      value = eFeature.getDefaultValue();
-    }
+    value = convertToCDO(getView(), eFeature, cdoFeature, value);
 
     CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(cdoFeature, index, value);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
@@ -365,12 +342,81 @@ public final class CDOStore implements EStore
     }
 
     Object oldValue = revision.set(cdoFeature, index, value);
-    if (cdoFeature.isReference())
-    {
-      oldValue = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(oldValue);
-    }
+    oldValue = convertToEMF(cdoObject.cdoView(), eObject, revision, eFeature, cdoFeature, index, oldValue);
 
     return oldValue;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Object convertToEMF(CDOView view, EObject eObject, InternalCDORevision revision, EStructuralFeature eFeature,
+      CDOFeature cdoFeature, int index, Object value)
+  {
+    if (cdoFeature.isReference())
+    {
+      if (cdoFeature.isMany() && EStore.NO_INDEX != index)
+      {
+        value = resolveProxy(revision, cdoFeature, index, value);
+        if (cdoFeature.isMany() && value instanceof CDOID)
+        {
+          CDOID id = (CDOID)value;
+          CDOList list = revision.getList(cdoFeature);
+          CDORevisionManagerImpl revisionManager = ((CDOViewImpl)view).getSession().getRevisionManager();
+          CDORevisionPrefetchingPolicy policy = view.getRevisionPrefetchingPolicy();
+
+          Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, eFeature, list, index, id);
+          if (!listOfIDs.isEmpty())
+          {
+            revisionManager.getRevisions(listOfIDs, view.getSession().getCollectionLoadingPolicy()
+                .getInitialChunkSize());
+          }
+        }
+      }
+
+      value = ((CDOViewImpl)view).convertIDToObject(value);
+    }
+    else if (cdoFeature.getType() == CDOType.CUSTOM)
+    {
+      value = EcoreUtil.createFromString((EDataType)eFeature.getEType(), (String)value);
+    }
+    else if (cdoFeature.getType() == CDOType.FEATURE_MAP_ENTRY)
+    {
+      CDOFeatureMapEntryDataTypeImpl entry = (CDOFeatureMapEntryDataTypeImpl)value;
+      EStructuralFeature feature = (EStructuralFeature)view.getResourceSet().getEObject(URI.createURI(entry.getURI()),
+          true);
+      Object object = ((CDOViewImpl)view).convertIDToObject(entry.getObject());
+      value = FeatureMapUtil.createEntry(feature, object);
+    }
+
+    return value;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Object convertToCDO(CDOView view, EStructuralFeature eFeature, CDOFeature cdoFeature, Object value)
+  {
+    if (cdoFeature.isReference())
+    {
+      value = ((CDOViewImpl)view).convertObjectToID(value, true);
+    }
+    else if (cdoFeature.getType() == CDOType.FEATURE_MAP_ENTRY)
+    {
+      FeatureMap.Entry entry = (FeatureMap.Entry)value;
+      String uri = EcoreUtil.getURI(entry.getEStructuralFeature()).toString();
+      value = CDORevisionUtil.createFeatureMapEntry(uri, entry.getValue());
+    }
+    else if (cdoFeature.getType() == CDOType.CUSTOM)
+    {
+      value = EcoreUtil.convertToString((EDataType)eFeature.getEType(), value);
+    }
+    else if (value == null && GenUtil.isPrimitiveType(eFeature.getEType()))
+    {
+      value = eFeature.getDefaultValue();
+    }
+
+    return value;
   }
 
   public void unset(InternalEObject eObject, EStructuralFeature eFeature)
@@ -397,10 +443,7 @@ public final class CDOStore implements EStore
       TRACER.format("add({0}, {1}, {2}, {3})", cdoObject, cdoFeature, index, value);
     }
 
-    if (cdoFeature.isReference())
-    {
-      value = ((CDOViewImpl)cdoObject.cdoView()).convertObjectToID(value, true);
-    }
+    value = convertToCDO(cdoObject.cdoView(), eFeature, cdoFeature, value);
 
     CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(cdoFeature, index, value);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
@@ -419,11 +462,8 @@ public final class CDOStore implements EStore
     CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(cdoFeature, index);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.remove(cdoFeature, index);
-    if (cdoFeature.isReference())
-    {
-      result = resolveProxy(revision, cdoFeature, index, result);
-      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
-    }
+
+    result = convertToEMF(cdoObject.cdoView(), eObject, revision, eFeature, cdoFeature, index, result);
 
     return result;
   }
@@ -455,12 +495,8 @@ public final class CDOStore implements EStore
     CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(cdoFeature, target, source);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.move(cdoFeature, target, source);
-    if (cdoFeature.isReference())
-    {
-      result = resolveProxy(revision, cdoFeature, target, result);
-      result = ((CDOViewImpl)cdoObject.cdoView()).convertIDToObject(result);
-    }
 
+    result = convertToEMF(cdoObject.cdoView(), eObject, revision, eFeature, cdoFeature, EStore.NO_INDEX, result);
     return result;
   }
 

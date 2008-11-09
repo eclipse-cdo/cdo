@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 
 import java.io.IOException;
 
@@ -61,6 +62,11 @@ public interface CDOType
 
   public static final CDOType BYTE_ARRAY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BYTE_ARRAY;
 
+  /**
+   * @since 2.0
+   */
+  public static final CDOType FEATURE_MAP_ENTRY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.FEATURE_MAP_ENTRY;
+
   public static final CDOType CUSTOM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.CUSTOM;
 
   public String getName();
@@ -72,6 +78,11 @@ public interface CDOType
   public Object getDefaultValue();
 
   public Object copyValue(Object value);
+
+  /**
+   * @since 2.0
+   */
+  public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value);
 
   /**
    * @since 2.0

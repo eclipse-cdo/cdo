@@ -61,14 +61,14 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     return super.get(index);
   }
 
-  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)
+  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster, CDOType type)
   {
     int size = size();
     for (int i = 0; i < size; i++)
     {
       Object element = super.get(i);
       handleAdjustReference(i, element);
-      Object newID = revisionAdjuster.adjustReference(element);
+      Object newID = type.adjustReferences(revisionAdjuster, element);
       if (newID != element)
       {
         super.set(i, newID);

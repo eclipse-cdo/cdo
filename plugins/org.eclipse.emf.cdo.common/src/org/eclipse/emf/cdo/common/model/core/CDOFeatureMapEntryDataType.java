@@ -8,25 +8,16 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
-
-import org.eclipse.emf.cdo.common.model.CDOType;
-import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+package org.eclipse.emf.cdo.common.model.core;
 
 /**
  * @author Simon McDuff
+ * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface InternalCDOList extends CDOList
+public interface CDOFeatureMapEntryDataType
 {
-  /**
-   * Adjusts references according to the passed adjuster and resynchronizes indexes.
-   */
-  public void adjustReferences(CDOReferenceAdjuster adjuster, CDOType type);
+  public String getURI();
 
-  /**
-   * Clones the list.
-   */
-  public InternalCDOList clone(CDOType type);
+  public Object getObject();
 }

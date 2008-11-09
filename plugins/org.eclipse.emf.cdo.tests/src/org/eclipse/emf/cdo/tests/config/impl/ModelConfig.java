@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.tests.model5.Model5Factory;
+import org.eclipse.emf.cdo.tests.model5.Model5Package;
 
 /**
  * @author Eike Stepper
@@ -101,13 +103,23 @@ public abstract class ModelConfig extends Config implements IModelConfig
 
     public model4Package getModel4Package()
     {
-
       return org.eclipse.emf.cdo.tests.model4.model4Package.eINSTANCE;
     }
 
     public model4interfacesPackage getModel4InterfacesPackage()
     {
       return org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage.eINSTANCE;
+    }
+
+    public Model5Factory getModel5Factory()
+    {
+      return org.eclipse.emf.cdo.tests.model5.Model5Factory.eINSTANCE;
+    }
+
+    public Model5Package getModel5Package()
+    {
+
+      return org.eclipse.emf.cdo.tests.model5.Model5Package.eINSTANCE;
     }
   }
 

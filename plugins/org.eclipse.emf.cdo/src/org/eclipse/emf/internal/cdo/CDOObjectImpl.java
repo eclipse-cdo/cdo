@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -26,7 +25,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
-import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -44,7 +42,6 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -57,7 +54,6 @@ import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -349,6 +345,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       setting = eFeature.getDefaultValue();
     }
 
+    CDOStore cdoStore = cdoStore();
     if (cdoFeature.isMany())
     {
       if (setting != null)
@@ -357,33 +354,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         EList<Object> list = (EList<Object>)setting;
         for (Object value : list)
         {
-          if (cdoFeature.isReference())
-          {
-            value = view.convertObjectToID(value, true);
-          }
-
+          value = cdoStore.convertToCDO(cdoView(), eFeature, cdoFeature, value);
           revision.add(cdoFeature, index++, value);
         }
       }
     }
     else
     {
-      if (cdoFeature.isReference())
-      {
-        setting = view.convertObjectToID(setting, true);
-      }
-      else
-      {
-        if (cdoFeature.getType() == CDOType.CUSTOM)
-        {
-          setting = EcoreUtil.convertToString((EDataType)eFeature.getEType(), setting);
-        }
-        else if (setting == null && GenUtil.isPrimitiveType(eFeature.getEType()))
-        {
-          setting = eFeature.getDefaultValue();
-        }
-      }
-
+      setting = cdoStore.convertToCDO(cdoView(), eFeature, cdoFeature, setting);
       revision.set(cdoFeature, 0, setting);
     }
   }
@@ -400,7 +378,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     CDOViewImpl view = cdoView();
-    super.eSetDirectResource(cdoDirectResource());
+    super.eSetDirectResource((Resource.Internal)cdoStore().getResource(this));
 
     CDOStore store = cdoStore();
     eContainer = store.getContainer(this);

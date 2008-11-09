@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.tests.model5.Model5Factory;
+import org.eclipse.emf.cdo.tests.model5.Model5Package;
 
 /**
  * @author Eike Stepper
@@ -48,4 +50,8 @@ public interface IModelConfig extends IConfig
   public model4Package getModel4Package();
 
   public model4interfacesPackage getModel4InterfacesPackage();
+
+  public Model5Factory getModel5Factory();
+
+  public Model5Package getModel5Package();
 }

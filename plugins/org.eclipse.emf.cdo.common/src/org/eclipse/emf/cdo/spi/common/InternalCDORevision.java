@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.spi.common;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjustable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 /**
  * @author Eike Stepper
  */
-public interface InternalCDORevision extends CDORevision, CDORevisionData
+public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable
 {
   public static final Object UNINITIALIZED = CDORevisionUtil.UNINITIALIZED;
 
@@ -58,11 +58,6 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData
   public Object set(CDOFeature feature, int index, Object value);
 
   public void unset(CDOFeature feature);
-
-  /**
-   * @since 2.0
-   */
-  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster);
 
   public Object getValue(CDOFeature feature);
 

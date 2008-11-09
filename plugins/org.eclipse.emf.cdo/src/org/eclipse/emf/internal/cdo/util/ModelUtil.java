@@ -106,6 +106,7 @@ public final class ModelUtil
       case EcorePackage.ELONG_OBJECT:
       case EcorePackage.ESHORT:
       case EcorePackage.ESHORT_OBJECT:
+      case EcorePackage.EFEATURE_MAP_ENTRY:
         CDOType type = CDOModelUtil.getType(classifierID);
         if (type == CDOType.OBJECT)
         {

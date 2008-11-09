@@ -42,6 +42,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+
     // General
     testClasses.add(InitialTest.class);
     testClasses.add(ComplexTest.class);
@@ -74,6 +75,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(TransactionHandlerTest.class);
     testClasses.add(RepositoryTest.class);
     testClasses.add(LockingManagerTest.class);
+    testClasses.add(MultiValuedOfAttributeTest.class);
 
     // Specific for MEMStore
     testClasses.add(MEMStoreQueryTest.class);

@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.ManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.security.RandomizerFactory;
 
 import org.eclipse.internal.net4j.ExecutorServiceFactory;
@@ -76,13 +77,16 @@ public class Bugzilla241463_Test extends AbstractTransportTest
       {
         fail("TimeoutRuntimeException expected");
       }
+
+      // Success
     }
     catch (TimeoutRuntimeException expected)
     {
+      // Success
     }
     catch (Throwable wrongException)
     {
-      wrongException.printStackTrace();
+      IOUtil.print(wrongException);
       fail("TimeoutRuntimeException expected");
     }
   }

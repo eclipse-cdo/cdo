@@ -69,7 +69,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
 
     boolean consumed = correlator.put("eike", true, 1000);
     msg("Consumed: " + consumed);
-    assertTrue(consumed);
+    assertEquals(true, consumed);
 
     consumer.join(1000);
     assertEquals(Boolean.TRUE, result[0]);
@@ -121,7 +121,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
     boolean consumed = correlator.put("eike", true, 50);
     msg("Consumed: " + consumed);
-    assertFalse(consumed);
+    assertEquals(false, consumed);
 
     final Thread consumer = new Thread()
     {

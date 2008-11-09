@@ -106,6 +106,21 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_REPOSITORY_TIME = 24;
 
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_LOCK_OBJECTS = 25;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_UNLOCK_OBJECTS = 26;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_OBJECT_LOCKED = 27;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Management
 
@@ -141,4 +156,12 @@ public interface CDOProtocolConstants
    * @since 2.0
    */
   public static final String QUERY_LANGUAGE_RESOURCES_EXACT_MATCH = "exactMatch";
+
+  // //////////////////////////////////////////////////////////////////////
+  // Locking Objects
+
+  /**
+   * @since 2.0
+   */
+  public static final int RELEASE_ALL_LOCKS = -1;
 }

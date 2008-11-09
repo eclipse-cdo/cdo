@@ -140,7 +140,7 @@ public class JMSSeparatedTest
       }
       catch (JMSException ex)
       {
-        ex.printStackTrace();
+        IOUtil.print(ex);
       }
     }
   }

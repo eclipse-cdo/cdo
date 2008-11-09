@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -29,6 +30,9 @@ import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -58,9 +62,12 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
 
 /**
  * @author Eike Stepper
@@ -78,7 +85,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private InternalCDORevision revision;
 
   /**
-   * CDO used this list instead of eSettings for transient objects. EMF used eSettings as cache. CDO deactivated the
+   * CDO used this list instead of eSettings for transient objects. EMF used eSettings as cache. CDO deactivates the
    * cache but EMF still used eSettings to store list wrappers. CDO needs another place to store the real list with the
    * actual data (transient mode) and accessible through EStore. This allows CDO to always use the same instance of the
    * list wrapper.
@@ -295,6 +302,34 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     cdoSettings = null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOLock cdoReadLock()
+  {
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return NOOPLockImpl.INSTANCE;
+    }
+
+    // Should we cache the locks ?
+    return new CDOLockImpl(RWLockManager.LockType.READ);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOLock cdoWriteLock()
+  {
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return NOOPLockImpl.INSTANCE;
+    }
+
+    // Should we cache the locks ?
+    return new CDOLockImpl(RWLockManager.LockType.WRITE);
   }
 
   @SuppressWarnings("unchecked")
@@ -976,7 +1011,92 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * @author Eike Stepper
+   * @author Simon McDuff
+   * @since 2.0
+   */
+  private final class CDOLockImpl implements CDOLock
+  {
+    private RWLockManager.LockType type;
+
+    public CDOLockImpl(RWLockManager.LockType type)
+    {
+      this.type = type;
+    }
+
+    public RWLockManager.LockType getType()
+    {
+      return type;
+    }
+
+    public boolean isLocked()
+    {
+      return cdoView().isLocked(CDOObjectImpl.this, type);
+    }
+
+    public void lock()
+    {
+      try
+      {
+        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), type, CDOLock.WAIT);
+      }
+      catch (InterruptedException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    public void lockInterruptibly() throws InterruptedException
+    {
+      lock();
+    }
+
+    public Condition newCondition()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean tryLock()
+    {
+      try
+      {
+        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), type, CDOLock.NO_WAIT);
+        return true;
+      }
+      catch (TimeoutRuntimeException ex)
+      {
+        return false;
+      }
+      catch (InterruptedException ex)
+      {
+        return false;
+      }
+    }
+
+    /**
+     * @throws will
+     *           throw an exception if timeout is reached.
+     */
+    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
+    {
+      try
+      {
+        cdoView().lockObjects(Collections.singletonList(CDOObjectImpl.this), type, unit.toMillis(time));
+        return true;
+      }
+      catch (TimeoutRuntimeException ex)
+      {
+        return false;
+      }
+    }
+
+    public void unlock()
+    {
+      cdoView().unlockObjects(Collections.singletonList(CDOObjectImpl.this), type);
+    }
+  }
+
+  /**
+   * @author Simon McDuff
    * @since 2.0
    */
   public static class CDOStoreSettingsImpl implements InternalEObject.EStore

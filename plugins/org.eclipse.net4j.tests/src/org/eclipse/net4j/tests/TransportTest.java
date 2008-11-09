@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -88,7 +89,7 @@ public abstract class TransportTest extends AbstractProtocolTest
       sleep(50);
     }
 
-    assertTrue(counter.await(2, TimeUnit.SECONDS));
+    assertEquals(true, counter.await(2, TimeUnit.SECONDS));
   }
 
   public void testStreaming() throws Exception
@@ -124,7 +125,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     });
 
     IChannel channel = getConnector().openChannel();
-    assertTrue(counter.await(2, TimeUnit.SECONDS));
+    assertEquals(true, counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
     ChannelOutputStream outputStream = new ChannelOutputStream(channel);
@@ -146,7 +147,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     }
     catch (RuntimeException ex)
     {
-      ex.printStackTrace();
+      IOUtil.print(ex);
     }
   }
 
@@ -186,7 +187,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     });
 
     IChannel channel = getConnector().openChannel();
-    assertTrue(counter.await(2, TimeUnit.SECONDS));
+    assertEquals(true, counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
     ChannelOutputStream outputStream = new ChannelOutputStream(channel);
@@ -215,7 +216,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     }
     catch (RuntimeException ex)
     {
-      ex.printStackTrace();
+      IOUtil.print(ex);
     }
   }
 
@@ -252,7 +253,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     });
 
     final IChannel channel = getConnector().openChannel();
-    assertTrue(counter.await(2, TimeUnit.SECONDS));
+    assertEquals(true, counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
     new Thread()
@@ -277,7 +278,7 @@ public abstract class TransportTest extends AbstractProtocolTest
         }
         catch (IOException ex)
         {
-          ex.printStackTrace();
+          IOUtil.print(ex);
           fail(ex.getLocalizedMessage());
         }
       }
@@ -297,7 +298,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     }
     catch (RuntimeException ex)
     {
-      ex.printStackTrace();
+      IOUtil.print(ex);
     }
   }
 
@@ -334,7 +335,7 @@ public abstract class TransportTest extends AbstractProtocolTest
     });
 
     IChannel channel = getConnector().openChannel();
-    assertTrue(counter.await(2, TimeUnit.SECONDS));
+    assertEquals(true, counter.await(2, TimeUnit.SECONDS));
 
     ChannelOutputStream outputStream = new ChannelOutputStream(channel);
     DataOutputStream dataOutput = new DataOutputStream(outputStream);

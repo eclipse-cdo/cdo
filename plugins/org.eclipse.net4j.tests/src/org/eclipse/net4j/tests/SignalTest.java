@@ -60,7 +60,7 @@ public class SignalTest extends AbstractProtocolTest
       protocol = new TestSignalProtocol(connector);
       byte[] data = TinyData.getBytes();
       byte[] result = new ArrayRequest(protocol, data).send();
-      assertTrue(Arrays.equals(data, result));
+      assertEquals(true, Arrays.equals(data, result));
     }
     finally
     {

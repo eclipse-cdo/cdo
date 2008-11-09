@@ -74,6 +74,18 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
+  /**
+   * @since 2.0
+   */
+  public Session getSession(int sessionID)
+  {
+    checkActive();
+    synchronized (sessions)
+    {
+      return sessions.get(sessionID);
+    }
+  }
+
   public ISession[] getElements()
   {
     return getSessions();

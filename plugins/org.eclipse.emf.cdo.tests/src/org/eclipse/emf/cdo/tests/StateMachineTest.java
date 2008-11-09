@@ -27,6 +27,8 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
@@ -588,7 +590,7 @@ public class StateMachineTest extends AbstractCDOTest
 
   private static void assertFailure(IllegalStateException ex)
   {
-    ex.printStackTrace();
+    IOUtil.print(ex);
     assertTrue("Expected FAIL transition", ex.getMessage().startsWith("Failing event "));
   }
 
@@ -693,7 +695,7 @@ public class StateMachineTest extends AbstractCDOTest
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
+      IOUtil.print(ex);
       fail("Reflection problem: " + ex.getMessage());
     }
     finally

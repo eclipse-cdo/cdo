@@ -6,22 +6,28 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Simon McDuff - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server;
+package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
+
+import java.util.concurrent.locks.Lock;
 
 /**
- * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @author Simon McDuff
+ * @since 2.0
  */
-public interface ITransaction extends IView
+public interface CDOLock extends Lock
 {
-  /**
-   * Returns the ID of this transactional view. Same as {@link CDOProtocolView#getViewID() getViewID()}.
-   */
-  public int getTransactionID();
+  public static final int WAIT = RWLockManager.WAIT;
 
+  public static final int NO_WAIT = RWLockManager.NO_WAIT;
+
+  /**
+   * Return true if it is currently lock.
+   */
+  public boolean isLocked();
+
+  public RWLockManager.LockType getType();
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EObject;
@@ -123,9 +124,9 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
     {
       transaction1.commit();
     }
-    catch (TransactionException e)
+    catch (TransactionException ex)
     {
-      e.printStackTrace();
+      IOUtil.print(ex);
       fail("Should not have an exception");
     }
   }
@@ -155,9 +156,9 @@ public class Bugzilla_250757_Test extends AbstractCDOTest
     {
       transaction1.commit();
     }
-    catch (TransactionException e)
+    catch (TransactionException ex)
     {
-      e.printStackTrace();
+      IOUtil.print(ex);
       fail("Should not have an exception");
     }
   }

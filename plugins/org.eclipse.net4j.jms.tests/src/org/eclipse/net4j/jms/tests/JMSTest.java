@@ -125,7 +125,7 @@ public class JMSTest
       }
       catch (JMSException ex)
       {
-        ex.printStackTrace();
+        IOUtil.print(ex);
       }
     }
   }

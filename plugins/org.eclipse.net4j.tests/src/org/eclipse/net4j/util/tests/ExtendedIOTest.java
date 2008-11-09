@@ -50,7 +50,7 @@ public class ExtendedIOTest extends AbstractOMTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     ExtendedDataInputStream edis = new ExtendedDataInputStream(bais);
     byte[] result = (byte[])edis.readObject();
-    assertTrue(Arrays.equals(byteArray, result));
+    assertEquals(true, Arrays.equals(byteArray, result));
   }
 
   public void testObject2() throws Exception
@@ -64,7 +64,7 @@ public class ExtendedIOTest extends AbstractOMTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     ExtendedDataInputStream edis = new ExtendedDataInputStream(bais);
     byte[] result = (byte[])edis.readObject();
-    assertTrue(Arrays.equals(byteArray, result));
+    assertEquals(true, Arrays.equals(byteArray, result));
   }
 
   public void testByteArray1() throws Exception
@@ -78,7 +78,7 @@ public class ExtendedIOTest extends AbstractOMTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     ExtendedDataInputStream edis = new ExtendedDataInputStream(bais);
     byte[] result = edis.readByteArray();
-    assertTrue(Arrays.equals(byteArray, result));
+    assertEquals(true, Arrays.equals(byteArray, result));
   }
 
   public void testByteArray2() throws Exception
@@ -92,7 +92,7 @@ public class ExtendedIOTest extends AbstractOMTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     ExtendedDataInputStream edis = new ExtendedDataInputStream(bais);
     byte[] result = edis.readByteArray();
-    assertTrue(Arrays.equals(byteArray, result));
+    assertEquals(true, Arrays.equals(byteArray, result));
   }
 
   private byte[] createByteArray1() throws IOException

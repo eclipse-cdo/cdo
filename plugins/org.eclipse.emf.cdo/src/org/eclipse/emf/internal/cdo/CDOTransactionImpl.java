@@ -95,6 +95,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private CDOTransactionStrategy transactionStrategy;
 
+  private boolean autoReleaseLocksEnabled = true;
+
   public CDOTransactionImpl(int id, CDOSessionImpl session)
   {
     super(session, id);
@@ -163,6 +165,29 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void setCommitTimeout(long timeout)
   {
     commitTimeout = timeout;
+  }
+
+  /**
+   * @since 2.0
+   */
+  synchronized public boolean setAutoReleaseLocksEnabled(boolean on)
+  {
+    try
+    {
+      return autoReleaseLocksEnabled;
+    }
+    finally
+    {
+      autoReleaseLocksEnabled = on;
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isAutoReleaseLocksEnabled()
+  {
+    return autoReleaseLocksEnabled;
   }
 
   /**
@@ -718,6 +743,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       // Load from first savepoint up to current savepoint
       loadSavepoint(lastSavepoint, idsOfNewObjectWithDeltas);
 
+      if (lastSavepoint == firstSavepoint && isAutoReleaseLocksEnabled())
+      {
+        // Unlock all objects
+        unlockObjects(null, null);
+      }
+
       Map<CDOIDTemp, CDOID> idMappings = Collections.emptyMap();
       fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings));
       for (CDOTransactionHandler handler : getHandlers())
@@ -1156,6 +1187,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         catch (Exception ex)
         {
           throw new TransactionException(ex);
+        }
+      }
+      else
+      {
+        // Removes locks even if no one touch the transaction
+        if (isAutoReleaseLocksEnabled())
+        {
+          unlockObjects(null, null);
         }
       }
     }

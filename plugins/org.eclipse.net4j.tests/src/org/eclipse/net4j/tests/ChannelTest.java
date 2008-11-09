@@ -107,7 +107,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
     byte[] data = TinyData.getBytes();
     byte[] result = new ArrayRequest(protocol, data).send();
-    assertTrue(Arrays.equals(data, result));
+    assertEquals(true, Arrays.equals(data, result));
 
     protocol.close();
     assertInactive(protocol);
@@ -172,7 +172,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
             byte[] data = TinyData.getBytes();
             byte[] result = new ArrayRequest(protocol, data).send();
-            assertTrue(Arrays.equals(data, result));
+            assertEquals(true, Arrays.equals(data, result));
             heartBeat();
 
             protocol.close();
@@ -208,7 +208,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
             {
               byte[] data = TinyData.getBytes();
               byte[] result = new ArrayRequest(protocol, data).send();
-              assertTrue(Arrays.equals(data, result));
+              assertEquals(true, Arrays.equals(data, result));
 
               heartBeat();
               ConcurrencyUtil.sleep(10L);

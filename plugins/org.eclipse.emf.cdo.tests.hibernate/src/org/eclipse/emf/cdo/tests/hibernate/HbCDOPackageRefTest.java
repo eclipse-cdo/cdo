@@ -6,6 +6,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import reference.ReferenceFactory;
 import reference.ReferencePackage;
 import interface_.InterfacePackage;
@@ -32,10 +34,10 @@ public class HbCDOPackageRefTest extends AbstractCDOTest
       resource.getContents().add(ReferenceFactory.eINSTANCE.createReference());
       transaction.commit();
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-      e.printStackTrace();
-      throw e;
+      IOUtil.print(ex);
+      throw ex;
     }
   }
 }

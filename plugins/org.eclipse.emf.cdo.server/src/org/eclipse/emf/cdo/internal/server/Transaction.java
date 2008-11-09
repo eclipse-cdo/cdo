@@ -31,6 +31,8 @@ import java.util.List;
  */
 public class Transaction extends View implements ITransaction
 {
+  private boolean autoReleaseLocksEnabled = true;
+
   public Transaction(Session session, int viewID)
   {
     super(session, viewID);
@@ -117,5 +119,10 @@ public class Transaction extends View implements ITransaction
     public void setDirtyObjectDeltas(CDORevisionDelta[] dirtyObjectDeltas);
 
     public void setDetachedObjects(CDOID[] detachedObjects);
+
+    public boolean setAutoReleaseLocksEnabled(boolean on);
+
+    public boolean isAutoReleaseLocksEnabled();
   }
+
 }

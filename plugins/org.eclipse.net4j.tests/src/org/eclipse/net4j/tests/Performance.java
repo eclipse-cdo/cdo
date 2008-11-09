@@ -1,5 +1,7 @@
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -95,7 +97,7 @@ public class Performance
           }
           catch (IOException ex)
           {
-            ex.printStackTrace();
+            IOUtil.print(ex);
             latch.countDown();
           }
         }

@@ -51,14 +51,20 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.ChangeSubscriptionRequest;
+import org.eclipse.emf.internal.cdo.protocol.LockObjectsRequest;
+import org.eclipse.emf.internal.cdo.protocol.ObjectLockedRequest;
+import org.eclipse.emf.internal.cdo.protocol.UnlockObjectsRequest;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
+import org.eclipse.net4j.signal.SignalRemoteException;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -213,6 +219,89 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public ReentrantLock getLock()
   {
     return lock;
+  }
+
+  /**
+   * @throws InterruptedException
+   * @since 2.0
+   */
+  public void lockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType, long timeout)
+      throws InterruptedException
+  {
+    InterruptedException interruptedException = null;
+    RuntimeException runtimeException = null;
+
+    try
+    {
+      LockObjectsRequest request = new LockObjectsRequest(getSession().getProtocol(), this, objects, timeout, lockType);
+      getSession().getFailOverStrategy().send(request);
+    }
+    catch (SignalRemoteException ex)
+    {
+      if (ex.getCause() instanceof RuntimeException)
+      {
+        runtimeException = (RuntimeException)ex.getCause();
+      }
+      else if (ex.getCause() instanceof InterruptedException)
+      {
+        interruptedException = (InterruptedException)ex.getCause();
+      }
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    if (interruptedException != null)
+    {
+      throw interruptedException;
+    }
+
+    if (runtimeException != null)
+    {
+      throw runtimeException;
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void unlockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType)
+  {
+    try
+    {
+      UnlockObjectsRequest request = new UnlockObjectsRequest(getSession().getProtocol(), this, objects, lockType);
+      getSession().getFailOverStrategy().send(request);
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void unlockObjects()
+  {
+    unlockObjects(null, null);
+  }
+
+  /**
+   * @throws InterruptedException
+   * @since 2.0
+   */
+  public boolean isLocked(CDOObject object, RWLockManager.LockType lockType)
+  {
+    try
+    {
+      ObjectLockedRequest request = new ObjectLockedRequest(getSession().getProtocol(), this, object, lockType);
+      return getSession().getFailOverStrategy().send(request);
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public boolean isDirty()

@@ -114,6 +114,9 @@ public class CommitTransactionIndication extends CDOServerIndication
     indicationTransaction(in);
     commitContext.preCommit();
 
+    boolean autoReleaseLocksEnabled = in.readBoolean();
+    commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
+
     TransactionPackageManager packageManager = commitContext.getPackageManager();
     CDOPackage[] newPackages = new CDOPackage[in.readInt()];
     CDORevision[] newObjects = new CDORevision[in.readInt()];

@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.internal.http;
 
+import org.eclipse.net4j.http.internal.common.bundle.OM;
+
 import org.eclipse.spi.net4j.ConnectorFactory;
 
 import java.net.MalformedURLException;
@@ -44,7 +46,7 @@ public class HTTPConnectorFactory extends ConnectorFactory
     }
     catch (MalformedURLException ex)
     {
-      ex.printStackTrace();
+      OM.LOG.error(ex);
     }
 
     HTTPClientConnector connector = new HTTPClientConnector();

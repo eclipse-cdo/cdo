@@ -25,7 +25,7 @@ public class ReferenceValueMapTest extends AbstractOMTest
       map.put("SIMON", new Object());
       System.gc();
       map.put("SIMON", new Object());
-      assertTrue(map.size() >= 0);
+      assertEquals(true, map.size() >= 0);
     }
   }
 
@@ -37,7 +37,7 @@ public class ReferenceValueMapTest extends AbstractOMTest
       map.put("SIMON", new Object());
       System.gc();
       map.put("SIMON2", new Object());
-      assertTrue(map.size() >= 1);
+      assertEquals(true, map.size() >= 1);
     }
   }
 }

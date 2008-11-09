@@ -115,6 +115,15 @@ public class CDOServerProtocol extends CDOProtocolImpl
     case CDOProtocolConstants.SIGNAL_REPOSITORY_TIME:
       return new RepositoryTimeIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOCK_OBJECTS:
+      return new LockObjectsIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS:
+      return new UnlockObjectsIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_OBJECT_LOCKED:
+      return new ObjectLockedIndication(this);
+
     default:
       return null;
     }

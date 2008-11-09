@@ -59,6 +59,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -405,6 +406,11 @@ public abstract class CDODataInputImpl implements CDODataInput
     }
 
     return readCDORevisionOrPrimitive();
+  }
+
+  public RWLockManager.LockType readCDOLockType() throws IOException
+  {
+    return readBoolean() ? RWLockManager.LockType.WRITE : RWLockManager.LockType.READ;
   }
 
   protected abstract CDOPackageManager getPackageManager();

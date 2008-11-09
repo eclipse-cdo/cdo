@@ -298,7 +298,7 @@ public class TCPConnectorTest extends AbstractOMTest
     catch (ConnectorException ex)
     {
       OM.LOG.info("Expected ConnectorException:", ex);
-      assertTrue(ex.getCause() instanceof NegotiationException);
+      assertEquals(true, ex.getCause() instanceof NegotiationException);
     }
   }
 
@@ -360,7 +360,7 @@ public class TCPConnectorTest extends AbstractOMTest
     catch (ConnectorException ex)
     {
       OM.LOG.info("Expected ConnectorException:", ex);
-      assertTrue(ex.getCause() instanceof NegotiationException);
+      assertEquals(true, ex.getCause() instanceof NegotiationException);
     }
   }
 }

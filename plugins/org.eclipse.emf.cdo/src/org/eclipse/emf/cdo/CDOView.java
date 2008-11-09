@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.common.util.URI;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -333,6 +335,26 @@ public interface CDOView extends CDOProtocolView, INotifier
   public boolean isObjectRegistered(CDOID id);
 
   public int reload(CDOObject... objects);
+
+  /**
+   * @since 2.0
+   */
+  public void lockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType, long timeout)
+      throws InterruptedException;
+
+  /**
+   * Unlocks the given locked objects of this view.
+   * 
+   * @since 2.0
+   */
+  public void unlockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType);
+
+  /**
+   * Unlocks all locked objects of this view.
+   * 
+   * @since 2.0
+   */
+  public void unlockObjects();
 
   /**
    * @since 2.0

@@ -23,6 +23,11 @@ public interface ISessionManager extends IRepositoryElement, IContainer<ISession
   public ISession[] getSessions();
 
   /**
+   * @since 2.0
+   */
+  public ISession getSession(int sessionID);
+
+  /**
    * @return Never <code>null</code>
    * @since 2.0
    */

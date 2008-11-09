@@ -39,6 +39,28 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public void setCommitTimeout(long timeout);
 
   /**
+   * Specifies whether locks in this view will be removed when {@link CDOTransaction#commit()} or
+   * {@link CDOTransaction#rollback()} is called.
+   * <p>
+   * If false all locks are kept.
+   * <p>
+   * Default value is true.
+   * 
+   * @since 2.0
+   */
+  public boolean setAutoReleaseLocksEnabled(boolean on);
+
+  /**
+   * Returns true if locks in this view will be removes when {@link CDOTransaction#commit()} or
+   * {@link CDOTransaction#rollback()} is called.
+   * <p>
+   * Default value is true.
+   * 
+   * @since 2.0
+   */
+  public boolean isAutoReleaseLocksEnabled();
+
+  /**
    * @since 2.0
    */
   public long getLastCommitTime();

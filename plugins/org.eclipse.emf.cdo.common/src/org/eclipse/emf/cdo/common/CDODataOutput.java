@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
@@ -80,4 +81,8 @@ public interface CDODataOutput extends ExtendedDataOutput
    * Write either a CDORevision, a primitive value or a CDOClass.
    */
   public void writeCDORevisionOrPrimitiveOrClass(Object value) throws IOException;
+
+  // /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  public void writeCDOLockType(RWLockManager.LockType lockType) throws IOException;
 }

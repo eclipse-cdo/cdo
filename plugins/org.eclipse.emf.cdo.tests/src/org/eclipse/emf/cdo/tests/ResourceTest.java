@@ -574,7 +574,7 @@ public class ResourceTest extends AbstractCDOTest
       assertClean(order, transaction);
       session.close();
     }
-
+    clearCache(getRepository().getRevisionManager());
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
 

@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 
@@ -120,6 +121,22 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   {
     // TODO Implement method CDOWrapperImpl.cdoInternalDynamicFeature()
     throw new UnsupportedOperationException("Not yet implemented");
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOLock cdoReadLock()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOLock cdoWriteLock()
+  {
+    throw new UnsupportedOperationException();
   }
 
   /**

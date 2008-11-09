@@ -75,6 +75,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private CommitManager commitManager;
 
+  private LockManager lockManager;
+
   private IQueryHandlerProvider queryHandlerProvider;
 
   private List<ReadAccessHandler> readAccessHandlers = new ArrayList<ReadAccessHandler>();
@@ -250,6 +252,22 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public void setCommitManager(CommitManager commitManager)
   {
     this.commitManager = commitManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public LockManager getLockManager()
+  {
+    return lockManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setLockManager(LockManager lockManager)
+  {
+    this.lockManager = lockManager;
   }
 
   /**
@@ -505,6 +523,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     checkState(queryManager, "queryManager");
     checkState(notificationManager, "notificationManager");
     checkState(commitManager, "commitManager");
+    checkState(lockManager, "lockingManager");
 
     packageManager.setRepository(this);
     sessionManager.setRepository(this);
@@ -512,6 +531,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     queryManager.setRepository(this);
     notificationManager.setRepository(this);
     commitManager.setRepository(this);
+    lockManager.setRepository(this);
 
     checkState(store, "store");
     supportingRevisionDeltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
@@ -536,7 +556,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     }
 
     elements = new IRepositoryElement[] { packageManager, sessionManager, revisionManager, queryManager,
-        notificationManager, commitManager, store };
+        notificationManager, commitManager, lockManager, store };
   }
 
   @Override
@@ -559,11 +579,14 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(notificationManager);
     LifecycleUtil.activate(commitManager);
     LifecycleUtil.activate(queryHandlerProvider);
+    LifecycleUtil.activate(lockManager);
+
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    LifecycleUtil.deactivate(lockManager);
     LifecycleUtil.deactivate(queryHandlerProvider);
     LifecycleUtil.deactivate(commitManager);
     LifecycleUtil.deactivate(notificationManager);
@@ -619,6 +642,11 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
         setCommitManager(createCommitManager());
       }
 
+      if (getLockManager() == null)
+      {
+        setLockManager(createLockManager());
+      }
+
       super.doBeforeActivate();
     }
 
@@ -650,6 +678,11 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     protected CommitManager createCommitManager()
     {
       return new CommitManager();
+    }
+
+    protected LockManager createLockManager()
+    {
+      return new LockManager();
     }
   }
 }

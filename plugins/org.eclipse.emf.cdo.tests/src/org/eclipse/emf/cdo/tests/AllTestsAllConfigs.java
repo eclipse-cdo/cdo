@@ -73,6 +73,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(XATransactionTest.class);
     testClasses.add(TransactionHandlerTest.class);
     testClasses.add(RepositoryTest.class);
+    testClasses.add(LockingManagerTest.class);
 
     // Specific for MEMStore
     testClasses.add(MEMStoreQueryTest.class);

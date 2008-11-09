@@ -6,6 +6,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import base.BaseFactory;
 import base.BasePackage;
 import derived.DerivedPackage;
@@ -35,10 +37,10 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(DerivedPackage.eINSTANCE);
       transaction.commit();
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-      e.printStackTrace();
-      throw e;
+      IOUtil.print(ex);
+      throw ex;
     }
   }
 
@@ -56,10 +58,10 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(DerivedPackage.eINSTANCE);
       transaction.commit();
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-      e.printStackTrace();
-      throw e;
+      IOUtil.print(ex);
+      throw ex;
     }
   }
 
@@ -76,10 +78,10 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
       resource.getContents().add(BaseFactory.eINSTANCE.createBaseClass());
       transaction.commit();
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-      e.printStackTrace();
-      throw e;
+      IOUtil.print(ex);
+      throw ex;
     }
   }
 
@@ -96,10 +98,10 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
       resource.getContents().add(ReferenceFactory.eINSTANCE.createReference());
       transaction.commit();
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-      e.printStackTrace();
-      throw e;
+      IOUtil.print(ex);
+      throw ex;
     }
   }
 }

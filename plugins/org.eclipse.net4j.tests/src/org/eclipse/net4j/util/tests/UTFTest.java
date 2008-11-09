@@ -33,7 +33,7 @@ public class UTFTest extends AbstractOMTest
     }
 
     String str = builder.toString();
-    assertTrue(str.length() > UNSIGNED_SHORT_MAX);
+    assertEquals(true, str.length() > UNSIGNED_SHORT_MAX);
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream(baos);

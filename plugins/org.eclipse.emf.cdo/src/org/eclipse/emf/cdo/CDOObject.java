@@ -39,5 +39,19 @@ public interface CDOObject extends EObject
    */
   public CDOResource cdoDirectResource();
 
+  /**
+   * Returns read lock associate with this object.
+   * 
+   * @since 2.0
+   */
+  public CDOLock cdoReadLock();
+
+  /**
+   * Returns write lock associate with this object.
+   * 
+   * @since 2.0
+   */
+  public CDOLock cdoWriteLock();
+
   public void cdoReload();
 }

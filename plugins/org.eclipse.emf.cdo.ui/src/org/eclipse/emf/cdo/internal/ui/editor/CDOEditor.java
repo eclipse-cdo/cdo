@@ -1044,7 +1044,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
     catch (RuntimeException ex)
     {
-      ex.printStackTrace();
+      OM.LOG.error(ex);
       throw ex;
     }
   }

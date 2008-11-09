@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -66,6 +67,8 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
   private CDOID[] detachedObjects;
 
+  private List<CDOID> lockedObjects = new ArrayList<CDOID>();
+
   private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();;
 
   private CDORevisionDelta[] dirtyObjectDeltas;
@@ -79,6 +82,8 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
   private String rollbackMessage;
 
   private Transaction transaction;
+
+  private boolean autoReleaseLocksEnabled;
 
   public TransactionCommitContextImpl(Transaction transaction)
   {
@@ -199,6 +204,23 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     this.detachedObjects = detachedObjects;
   }
 
+  public boolean setAutoReleaseLocksEnabled(boolean on)
+  {
+    try
+    {
+      return autoReleaseLocksEnabled;
+    }
+    finally
+    {
+      autoReleaseLocksEnabled = on;
+    }
+  }
+
+  public boolean isAutoReleaseLocksEnabled()
+  {
+    return autoReleaseLocksEnabled;
+  }
+
   public void commit()
   {
     try
@@ -232,12 +254,17 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
       Repository repository = (Repository)transaction.getRepository();
       computeDirtyObjects(!repository.isSupportingRevisionDeltas());
+      lockObjects();
 
       repository.notifyWriteAccessHandlers(transaction, this);
       detachObjects();
       accessor.write(this);
     }
     catch (RuntimeException ex)
+    {
+      handleException(ex);
+    }
+    catch (InterruptedException ex)
     {
       handleException(ex);
     }
@@ -331,6 +358,29 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     metaIDRanges.add(newRange);
   }
 
+  private void lockObjects() throws InterruptedException
+  {
+    lockedObjects.clear();
+    for (int i = 0; i < dirtyObjectDeltas.length; i++)
+    {
+      lockedObjects.add(dirtyObjectDeltas[i].getID());
+    }
+
+    for (int i = 0; i < detachedObjects.length; i++)
+    {
+      lockedObjects.add(detachedObjects[i]);
+    }
+
+    LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
+    lockManager.lock(RWLockManager.LockType.WRITE, transaction, lockedObjects, 1000);
+  }
+
+  private void unlockObjects()
+  {
+    LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
+    lockManager.unlock(RWLockManager.LockType.WRITE, transaction, lockedObjects);
+  }
+
   private void computeDirtyObjects(boolean failOnNull)
   {
     for (int i = 0; i < dirtyObjectDeltas.length; i++)
@@ -364,7 +414,6 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
   private void applyIDMappings(CDORevision[] revisions)
   {
-
     for (CDORevision revision : revisions)
     {
       if (revision != null)
@@ -383,6 +432,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
   protected void rollback()
   {
+    unlockObjects();
     if (accessor != null)
     {
       try
@@ -404,6 +454,12 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       addRevisions(newObjects);
       addRevisions(dirtyObjects);
       revisedDetachObjects();
+      unlockObjects();
+
+      if (isAutoReleaseLocksEnabled())
+      {
+        ((Repository)transaction.getRepository()).getLockManager().unlock(transaction);
+      }
     }
     catch (RuntimeException ex)
     {

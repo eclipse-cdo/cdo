@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Category;
 
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.ArrayList;
@@ -144,11 +145,11 @@ public class TransactionTest extends AbstractCDOTest
 
     boolean timedOut = !latch.await(TIMEOUT, TimeUnit.SECONDS);
 
-    for (Exception exp : exceptions)
+    for (Exception ex : exceptions)
     {
       System.out.println();
       System.out.println();
-      exp.printStackTrace();
+      IOUtil.print(ex);
     }
 
     if (timedOut)

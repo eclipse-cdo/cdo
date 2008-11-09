@@ -49,7 +49,6 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       assertEquals(doctor1, listForFeatureCustomers.get(0));
       assertEquals(doctor2, listForFeatureCustomers.get(1));
       transaction.commit();
-      System.out.println(featureMap.eContents());
     }
 
     clearCache(getRepository().getRevisionManager());

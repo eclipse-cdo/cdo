@@ -467,20 +467,17 @@ public class CDORevisionImpl implements InternalCDORevision
     for (int i = 0; i < features.length; i++)
     {
       CDOFeature feature = features[i];
-      if (feature.isReference())
+      if (feature.isMany())
       {
-        if (feature.isMany())
+        InternalCDOList list = (InternalCDOList)getValueAsList(i);
+        if (list != null)
         {
-          InternalCDOList list = (InternalCDOList)getValueAsList(i);
-          if (list != null)
-          {
-            list.adjustReferences(revisionAdjuster, feature.getType());
-          }
+          list.adjustReferences(revisionAdjuster, feature.getType());
         }
-        else
-        {
-          values[i] = feature.getType().adjustReferences(revisionAdjuster, values[i]);
-        }
+      }
+      else
+      {
+        values[i] = feature.getType().adjustReferences(revisionAdjuster, values[i]);
       }
     }
   }

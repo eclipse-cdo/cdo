@@ -36,6 +36,11 @@ public interface IClassMapping
   /**
    * @since 2.0
    */
+  public boolean hasFullRevisionInfo();
+
+  /**
+   * @since 2.0
+   */
   public IFeatureMapping getFeatureMapping(CDOFeature feature);
 
   public List<IAttributeMapping> getAttributeMappings();

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.jdbc.NonPreparedStatementJDBCDelegateProvider;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
@@ -29,19 +30,31 @@ import org.eclipse.core.runtime.Platform;
  */
 public final class CDODBUtil
 {
-  public static final String EXT_POINT = "mappingStrategies";
+  /**
+   * @since 2.0
+   */
+  public static final String EXT_POINT_MAPPING_STRATEGIES = "mappingStrategies";
+
+  /**
+   * @since 2.0
+   */
+  public static final String EXT_POINT_JDBC_DELEGATE_PROVIDERS = "jdbcDelegateProviders";
 
   private CDODBUtil()
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
-      IDBConnectionProvider dbConnectionProvider)
+      IDBConnectionProvider dbConnectionProvider, IJDBCDelegateProvider delegateProvider)
   {
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDbAdapter(dbAdapter);
     store.setDbConnectionProvider(dbConnectionProvider);
+    store.setJDBCDelegateProvider(delegateProvider);
     mappingStrategy.setStore(store);
     return store;
   }
@@ -49,6 +62,14 @@ public final class CDODBUtil
   public static IMappingStrategy createHorizontalMappingStrategy()
   {
     return new HorizontalMappingStrategy();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static IJDBCDelegateProvider createNonPreparedStatementJDBCDelegateProvider()
+  {
+    return new NonPreparedStatementJDBCDelegateProvider();
   }
 
   /**
@@ -60,7 +81,7 @@ public final class CDODBUtil
   public static IMappingStrategy createMappingStrategy(String type)
   {
     IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT);
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT_MAPPING_STRATEGIES);
     for (final IConfigurationElement element : elements)
     {
       if ("mappingStrategy".equals(element.getName()))
@@ -71,6 +92,36 @@ public final class CDODBUtil
           try
           {
             return (IMappingStrategy)element.createExecutableExtension("class");
+          }
+          catch (CoreException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static IJDBCDelegateProvider createDelegateProvider(String type)
+  {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID,
+        EXT_POINT_JDBC_DELEGATE_PROVIDERS);
+    for (final IConfigurationElement element : elements)
+    {
+      if ("jdbcDelegateProvider".equals(element.getName()))
+      {
+        String typeAttr = element.getAttribute("type");
+        if (ObjectUtil.equals(typeAttr, type))
+        {
+          try
+          {
+            return (IJDBCDelegateProvider)element.createExecutableExtension("class");
           }
           catch (CoreException ex)
           {

@@ -27,6 +27,11 @@ public interface IReferenceMapping extends IFeatureMapping
   /**
    * @since 2.0
    */
+  public boolean isWithFeature();
+
+  /**
+   * @since 2.0
+   */
   public void writeReference(IDBStoreAccessor accessor, CDORevision revision);
 
   /**

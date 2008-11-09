@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -55,8 +56,8 @@ import java.util.Map.Entry;
  */
 public abstract class RepositoryConfig extends Config implements IRepositoryConfig
 {
-  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHsqldb.HSQLDB_HORIZONTAL,
-      DBDerby.DERBY_HORIZONTAL, DBMysql.MYSQL_HORIZONTAL };
+  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHsqldbNonPrepStmt.HSQLDB_HORIZONTAL,
+      DBDerbyNonPrepStmt.DERBY_HORIZONTAL, DBMysqlNonPrepStmt.MYSQL_HORIZONTAL };
 
   public static final String PROP_TEST_REPOSITORY = "test.repository";
 
@@ -229,8 +230,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       IMappingStrategy mappingStrategy = createMappingStrategy();
       IDBAdapter dbAdapter = createDBAdapter();
       DataSource dataSource = createDataSource();
-      return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
+      IJDBCDelegateProvider delegateProvider = createDelegateProvider();
+      return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource),
+          delegateProvider);
     }
+
+    protected abstract IJDBCDelegateProvider createDelegateProvider();
 
     protected abstract IMappingStrategy createMappingStrategy();
 
@@ -242,10 +247,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   /**
    * @author Eike Stepper
    */
-  public static class DBHsqldb extends DB
+  public abstract static class DBHsqldb extends DB
   {
-    public static final DBHsqldb HSQLDB_HORIZONTAL = new DBHsqldb("HsqldbHorizontal");
-
     private static final long serialVersionUID = 1L;
 
     private transient HSQLDBDataSource dataSource;
@@ -316,13 +319,29 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
   }
 
+  public static class DBHsqldbNonPrepStmt extends DBHsqldb
+  {
+    private static final long serialVersionUID = 1L;
+
+    public static final DBHsqldbNonPrepStmt HSQLDB_HORIZONTAL = new DBHsqldbNonPrepStmt("HsqldbHorizontal");
+
+    public DBHsqldbNonPrepStmt(String name)
+    {
+      super(name);
+    }
+
+    @Override
+    protected IJDBCDelegateProvider createDelegateProvider()
+    {
+      return CDODBUtil.createNonPreparedStatementJDBCDelegateProvider();
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
-  public static class DBDerby extends DB
+  public abstract static class DBDerby extends DB
   {
-    public static final DBDerby DERBY_HORIZONTAL = new DBDerby("DerbyHorizontal");
-
     private static final long serialVersionUID = 1L;
 
     private transient File dbFolder;
@@ -371,13 +390,29 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
   }
 
+  public static class DBDerbyNonPrepStmt extends DBDerby
+  {
+    private static final long serialVersionUID = 1L;
+
+    public static final DBDerbyNonPrepStmt DERBY_HORIZONTAL = new DBDerbyNonPrepStmt("DerbyHorizontal");
+
+    public DBDerbyNonPrepStmt(String name)
+    {
+      super(name);
+    }
+
+    @Override
+    protected IJDBCDelegateProvider createDelegateProvider()
+    {
+      return CDODBUtil.createNonPreparedStatementJDBCDelegateProvider();
+    }
+  }
+
   /**
    * @author Simon McDuff
    */
-  public static class DBMysql extends DB
+  public static abstract class DBMysql extends DB
   {
-    public static final DBMysql MYSQL_HORIZONTAL = new DBMysql("MysqlHorizontal");
-
     private static final long serialVersionUID = 1L;
 
     private transient MysqlDataSource setupDataSource;
@@ -466,6 +501,24 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       {
         connection.close();
       }
+    }
+  }
+
+  public static class DBMysqlNonPrepStmt extends DBMysql
+  {
+    private static final long serialVersionUID = 1L;
+
+    public static final DBMysqlNonPrepStmt MYSQL_HORIZONTAL = new DBMysqlNonPrepStmt("MysqlHorizontal");
+
+    public DBMysqlNonPrepStmt(String name)
+    {
+      super(name);
+    }
+
+    @Override
+    protected IJDBCDelegateProvider createDelegateProvider()
+    {
+      return CDODBUtil.createNonPreparedStatementJDBCDelegateProvider();
     }
   }
 }

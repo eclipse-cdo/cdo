@@ -69,7 +69,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
     return objectTypeCache.getObjectType(accessor, id);
   }
 
-  protected CDOClassRef readObjectTypeFromClassesWithObjectInfo(IDBStoreAccessor accessor, CDOID id)
+  protected final CDOClassRef readObjectTypeFromClassesWithObjectInfo(IDBStoreAccessor accessor, CDOID id)
   {
     String prefix = "SELECT DISTINCT " + CDODBSchema.ATTRIBUTES_CLASS + " FROM ";
     String suffix = " WHERE " + CDODBSchema.ATTRIBUTES_ID + "=" + id;
@@ -91,7 +91,7 @@ public class HorizontalMappingStrategy extends MappingStrategy
 
           try
           {
-            resultSet = accessor.getStatement().executeQuery(sql);
+            resultSet = accessor.getJDBCDelegate().getStatement().executeQuery(sql);
             if (resultSet.next())
             {
               int classID = resultSet.getInt(1);

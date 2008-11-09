@@ -6,28 +6,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
-
 /**
- * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * Wraps the creation of JDBCDelegates.
+ * 
+ * @author Stefan Winkler
+ * @since 2.0
  */
-public interface IDBStoreAccessor extends IStoreAccessor
+public interface IJDBCDelegateProvider
 {
-  public IDBStore getStore();
-
   /**
-   * @since 2.0
-   */
-  public CDOClassRef readClassRef(int classID);
-
-  /**
-   * @since 2.0
+   * Creates and returns a JDBC delegate.
+   * <p>
+   * This is part of the org.eclipse.emf.cdo.server.db.jdbcDelegateProviders extension point.
    */
   public IJDBCDelegate getJDBCDelegate();
 }

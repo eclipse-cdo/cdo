@@ -75,8 +75,7 @@ public class HorizontalClassMapping extends ClassMapping
     return new Pair<CDOClass, CDOFeature>(getCDOClass(), cdoFeature);
   }
 
-  @Override
-  protected boolean hasFullRevisionInfo()
+  public boolean hasFullRevisionInfo()
   {
     return true;
   }

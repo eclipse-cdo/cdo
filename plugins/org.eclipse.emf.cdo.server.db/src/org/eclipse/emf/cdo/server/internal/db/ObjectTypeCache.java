@@ -61,9 +61,9 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     this.mappingStrategy = mappingStrategy;
   }
 
-  public CDOClassRef getObjectType(IDBStoreAccessor accessor, CDOID id)
+  public final CDOClassRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    Statement statement = accessor.getStatement();
+    Statement statement = accessor.getJDBCDelegate().getStatement();
     initialize(statement);
 
     StringBuilder builder = new StringBuilder();
@@ -101,9 +101,9 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
   }
 
-  public void putObjectType(IDBStoreAccessor accessor, CDOID id, CDOClass type)
+  public final void putObjectType(IDBStoreAccessor accessor, CDOID id, CDOClass type)
   {
-    Statement statement = accessor.getStatement();
+    Statement statement = accessor.getJDBCDelegate().getStatement();
     initialize(statement);
 
     StringBuilder builder = new StringBuilder();

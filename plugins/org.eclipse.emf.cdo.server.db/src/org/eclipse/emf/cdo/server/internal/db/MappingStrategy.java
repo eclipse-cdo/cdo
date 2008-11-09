@@ -266,7 +266,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     return builder.toString();
   }
 
-  public CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor accessor)
+  public final CloseableIterator<CDOID> readObjectIDs(final IDBStoreAccessor accessor)
   {
     List<CDOClass> classes = getClassesWithObjectInfo();
     final Iterator<CDOClass> classIt = classes.iterator();
@@ -293,7 +293,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
               try
               {
-                return accessor.getStatement().executeQuery(sql);
+                return accessor.getJDBCDelegate().getStatement().executeQuery(sql);
               }
               catch (SQLException ex)
               {
@@ -308,7 +308,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     };
   }
 
-  public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
+  public final void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
   {
     CDOID folderID = context.getFolderID();
     String name = context.getName();
@@ -334,7 +334,7 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
 
       try
       {
-        resultSet = accessor.getStatement().executeQuery(sql);
+        resultSet = accessor.getJDBCDelegate().getStatement().executeQuery(sql);
         while (resultSet.next())
         {
           long longID = resultSet.getLong(1);

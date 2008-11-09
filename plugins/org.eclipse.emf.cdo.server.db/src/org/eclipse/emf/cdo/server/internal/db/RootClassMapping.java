@@ -31,8 +31,7 @@ public class RootClassMapping extends ClassMapping
     return (VerticalMappingStrategy)super.getMappingStrategy();
   }
 
-  @Override
-  protected boolean hasFullRevisionInfo()
+  public boolean hasFullRevisionInfo()
   {
     return true;
   }

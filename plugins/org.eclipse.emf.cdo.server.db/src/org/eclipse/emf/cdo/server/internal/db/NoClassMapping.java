@@ -58,6 +58,11 @@ public class NoClassMapping implements IClassMapping
     return Collections.emptySet();
   }
 
+  public boolean hasFullRevisionInfo()
+  {
+    return false;
+  }
+
   public IFeatureMapping getFeatureMapping(CDOFeature feature)
   {
     return null;

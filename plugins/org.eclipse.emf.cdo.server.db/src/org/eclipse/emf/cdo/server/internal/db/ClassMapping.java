@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -22,22 +21,16 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.IReferenceMapping;
-import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -48,8 +41,6 @@ import java.util.Set;
  */
 public abstract class ClassMapping implements IClassMapping
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ClassMapping.class);
-
   private MappingStrategy mappingStrategy;
 
   private CDOClass cdoClass;
@@ -61,8 +52,6 @@ public abstract class ClassMapping implements IClassMapping
   private List<IAttributeMapping> attributeMappings;
 
   private List<IReferenceMapping> referenceMappings;
-
-  private String selectPrefix;
 
   public ClassMapping(MappingStrategy mappingStrategy, CDOClass cdoClass, CDOFeature[] features)
   {
@@ -105,8 +94,6 @@ public abstract class ClassMapping implements IClassMapping
       // }
       // }
     }
-
-    selectPrefix = createSelectPrefix();
   }
 
   public MappingStrategy getMappingStrategy()
@@ -146,46 +133,6 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void appendRevisionInfos(StringBuilder builder, InternalCDORevision revision, boolean full)
-  {
-    builder.append(CDOIDUtil.getLong(revision.getID()));
-    builder.append(", ");
-    builder.append(revision.getVersion());
-    if (full)
-    {
-      builder.append(", ");
-      builder.append(ServerInfo.getDBID(revision.getCDOClass()));
-      builder.append(", ");
-      builder.append(revision.getCreated());
-      builder.append(", ");
-      builder.append(revision.getRevised());
-      builder.append(", ");
-      builder.append(CDOIDUtil.getLong(revision.getResourceID()));
-      builder.append(", ");
-      builder.append(CDOIDUtil.getLong((CDOID)revision.getContainerID()));
-      builder.append(", ");
-      builder.append(revision.getContainingFeatureID());
-    }
-  }
-
-  protected int sqlUpdate(IDBStoreAccessor accessor, String sql) throws DBException
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
-    try
-    {
-      Statement statement = accessor.getStatement();
-      return statement.executeUpdate(sql);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
   protected IDBTable addTable(String name)
   {
     IDBTable table = mappingStrategy.getStore().getDBSchema().addTable(name);
@@ -220,51 +167,6 @@ public abstract class ClassMapping implements IClassMapping
   {
     IDBStore store = mappingStrategy.getStore();
     return store.getDBAdapter();
-  }
-
-  protected String createSelectPrefix()
-  {
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
-
-    if (hasFullRevisionInfo())
-    {
-      builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-      builder.append(", ");
-      builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-      builder.append(", ");
-      builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(", ");
-      builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
-      builder.append(", ");
-      builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-      builder.append(", ");
-      builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
-    }
-    else
-    {
-      if (attributeMappings == null)
-      {
-        // Only references
-        return null;
-      }
-    }
-
-    if (attributeMappings != null)
-    {
-      for (IAttributeMapping attributeMapping : attributeMappings)
-      {
-        builder.append(", ");
-        builder.append(attributeMapping.getField());
-      }
-    }
-
-    builder.append(" FROM ");
-    builder.append(table);
-    builder.append(" WHERE ");
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append("=");
-    return builder.toString();
   }
 
   public IFeatureMapping getFeatureMapping(CDOFeature feature)
@@ -416,8 +318,6 @@ public abstract class ClassMapping implements IClassMapping
     return cdoFeature;
   }
 
-  protected abstract boolean hasFullRevisionInfo();
-
   public void writeRevision(IDBStoreAccessor accessor, CDORevision revision)
   {
     if (revision.getVersion() > 1 && hasFullRevisionInfo())
@@ -451,64 +351,19 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void writeRevisedRow(IDBStoreAccessor accessor, InternalCDORevision revision)
+  protected final void writeRevisedRow(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append("UPDATE ");
-    builder.append(table);
-    builder.append(" SET ");
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=");
-    builder.append(revision.getCreated() - 1);
-    builder.append(" WHERE ");
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append("=");
-    builder.append(CDOIDUtil.getLong(revision.getID()));
-    builder.append(" AND ");
-    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append("=");
-    builder.append(revision.getVersion() - 1);
-    sqlUpdate(accessor, builder.toString());
+    accessor.getJDBCDelegate().updateRevised(revision, this);
   }
 
-  protected void writeRevisedRow(IDBStoreAccessor accessor, CDOID id, long revised)
+  protected final void writeRevisedRow(IDBStoreAccessor accessor, CDOID id, long revised)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append("UPDATE ");
-    builder.append(table);
-    builder.append(" SET ");
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=");
-    builder.append(revised);
-    builder.append(" WHERE ");
-    builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append("=");
-    builder.append(CDOIDUtil.getLong(id));
-    builder.append(" AND ");
-    builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append("=0");
-    sqlUpdate(accessor, builder.toString());
+    accessor.getJDBCDelegate().updateRevised(id, revised, this);
   }
 
-  protected void writeAttributes(IDBStoreAccessor accessor, InternalCDORevision revision)
+  protected final void writeAttributes(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
-    builder.append(table);
-    builder.append(" VALUES (");
-    appendRevisionInfos(builder, revision, hasFullRevisionInfo());
-
-    if (attributeMappings != null)
-    {
-      for (IAttributeMapping attributeMapping : attributeMappings)
-      {
-        builder.append(", ");
-        attributeMapping.appendValue(builder, revision);
-      }
-    }
-
-    builder.append(")");
-    sqlUpdate(accessor, builder.toString());
+    accessor.getJDBCDelegate().insertAttributes(revision, this);
   }
 
   protected void writeReferences(IDBStoreAccessor accessor, InternalCDORevision revision)
@@ -549,58 +404,9 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  protected void readAttributes(IDBStoreAccessor accessor, InternalCDORevision revision, String where)
+  protected final void readAttributes(IDBStoreAccessor accessor, InternalCDORevision revision, String where)
   {
-    long id = CDOIDUtil.getLong(revision.getID());
-    StringBuilder builder = new StringBuilder(selectPrefix);
-    builder.append(id);
-    builder.append(" AND (");
-    builder.append(where);
-    builder.append(")");
-
-    String sql = builder.toString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
-    ResultSet resultSet = null;
-
-    try
-    {
-      resultSet = accessor.getStatement().executeQuery(sql);
-      if (!resultSet.next())
-      {
-        throw new IllegalStateException("Revision not found: " + id);
-      }
-
-      int i = 0;
-      if (hasFullRevisionInfo())
-      {
-        revision.setVersion(resultSet.getInt(++i));
-        revision.setCreated(resultSet.getLong(++i));
-        revision.setRevised(resultSet.getLong(++i));
-        revision.setResourceID(CDOIDUtil.createLong(resultSet.getLong(++i)));
-        revision.setContainerID(CDOIDUtil.createLong(resultSet.getLong(++i)));
-        revision.setContainingFeatureID(resultSet.getInt(++i));
-      }
-
-      if (attributeMappings != null)
-      {
-        for (IAttributeMapping attributeMapping : attributeMappings)
-        {
-          attributeMapping.extractValue(resultSet, ++i, revision);
-        }
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-    }
+    accessor.getJDBCDelegate().selectRevisionAttributes(revision, this, where);
   }
 
   protected void readReferences(IDBStoreAccessor accessor, InternalCDORevision revision, int referenceChunk)

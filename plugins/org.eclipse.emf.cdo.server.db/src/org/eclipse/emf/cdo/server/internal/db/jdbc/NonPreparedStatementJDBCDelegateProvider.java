@@ -8,26 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.db;
+package org.eclipse.emf.cdo.server.internal.db.jdbc;
 
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IJDBCDelegate;
+import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface IDBStoreAccessor extends IStoreAccessor
+public class NonPreparedStatementJDBCDelegateProvider implements IJDBCDelegateProvider
 {
-  public IDBStore getStore();
+  public NonPreparedStatementJDBCDelegateProvider()
+  {
+  }
 
-  /**
-   * @since 2.0
-   */
-  public CDOClassRef readClassRef(int classID);
-
-  /**
-   * @since 2.0
-   */
-  public IJDBCDelegate getJDBCDelegate();
+  public IJDBCDelegate getJDBCDelegate()
+  {
+    return new NonPreparedStatementJDBCDelegate();
+  }
 }

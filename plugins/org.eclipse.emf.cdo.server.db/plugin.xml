@@ -18,6 +18,7 @@
 <plugin>
 
    <extension-point id="mappingStrategies" name="CDO Mapping Strategies" schema="schema/mappingStrategies.exsd"/>
+   <extension-point id="jdbcDelegateProviders" name="CDO JDBC Delegate Providers" schema="schema/delegateProviders.exsd"/>
 
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">
@@ -37,6 +38,14 @@
             class="org.eclipse.emf.cdo.server.internal.db.VerticalMappingStrategy"
             type="vertical">
       </mappingStrategy>
+   </extension>
+   
+   <extension
+         point="org.eclipse.emf.cdo.server.db.jdbcDelegateProviders">
+      <jdbcDelegateProvider
+            class="org.eclipse.emf.cdo.server.internal.db.jdbc.NonPreparedStatementJDBCDelegateProvider"
+            type="nonPreparedStatement">
+      </jdbcDelegateProvider>
    </extension>
 
 </plugin>

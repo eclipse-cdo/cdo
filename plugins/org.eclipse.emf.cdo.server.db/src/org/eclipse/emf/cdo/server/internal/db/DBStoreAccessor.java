@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IJDBCDelegate;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
@@ -49,10 +50,8 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -65,20 +64,25 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
-  private Connection connection;
+  private IJDBCDelegate jdbcDelegate;
 
-  private Statement statement;
+  public IJDBCDelegate getJDBCDelegate()
+  {
+    return jdbcDelegate;
+  }
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
     super(store, session);
-    initConnection();
+    jdbcDelegate = store.getJDBCDelegateProvider().getJDBCDelegate();
+    jdbcDelegate.initConnection(store.getDBConnectionProvider(), isReader());
   }
 
   public DBStoreAccessor(DBStore store, ITransaction transaction) throws DBException
   {
     super(store, transaction);
-    initConnection();
+    jdbcDelegate = store.getJDBCDelegateProvider().getJDBCDelegate();
+    jdbcDelegate.initConnection(store.getDBConnectionProvider(), isReader());
   }
 
   @Override
@@ -87,46 +91,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     return (DBStore)super.getStore();
   }
 
-  public Connection getConnection()
-  {
-    return connection;
-  }
-
-  public Statement getStatement()
-  {
-    if (statement == null)
-    {
-      try
-      {
-        statement = getConnection().createStatement();
-      }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
-    }
-
-    return statement;
-  }
-
-  public PreparedStatement prepareStatement(String sql)
-  {
-    try
-    {
-      return getConnection().prepareStatement(sql);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
   public DBStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
   {
     return new DBStoreChunkReader(this, revision, feature);
   }
 
-  public Collection<CDOPackageInfo> readPackageInfos()
+  public final Collection<CDOPackageInfo> readPackageInfos()
   {
     final Collection<CDOPackageInfo> result = new ArrayList<CDOPackageInfo>(0);
     IDBRowHandler rowHandler = new IDBRowHandler()
@@ -146,22 +116,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       }
     };
 
-    DBUtil.select(getConnection(), rowHandler, CDODBSchema.PACKAGES_URI, CDODBSchema.PACKAGES_DYNAMIC,
+    DBUtil.select(jdbcDelegate.getConnection(), rowHandler, CDODBSchema.PACKAGES_URI, CDODBSchema.PACKAGES_DYNAMIC,
         CDODBSchema.PACKAGES_RANGE_LB, CDODBSchema.PACKAGES_RANGE_UB, CDODBSchema.PACKAGES_PARENT);
     return result;
   }
 
-  public void readPackage(CDOPackage cdoPackage)
+  public final void readPackage(CDOPackage cdoPackage)
   {
     String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
-    Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ID, CDODBSchema.PACKAGES_NAME);
+    Object[] values = DBUtil.select(jdbcDelegate.getConnection(), where, CDODBSchema.PACKAGES_ID,
+        CDODBSchema.PACKAGES_NAME);
     PackageServerInfo.setDBID(cdoPackage, (Integer)values[0]);
     ((InternalCDOPackage)cdoPackage).setName((String)values[1]);
     readClasses(cdoPackage);
     mapPackages(cdoPackage);
   }
 
-  protected void readClasses(final CDOPackage cdoPackage)
+  protected final void readClasses(final CDOPackage cdoPackage)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -181,11 +152,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     };
 
     String where = CDODBSchema.CLASSES_PACKAGE.getName() + "=" + ServerInfo.getDBID(cdoPackage);
-    DBUtil.select(getConnection(), rowHandler, where, CDODBSchema.CLASSES_ID, CDODBSchema.CLASSES_CLASSIFIER,
-        CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
+    DBUtil.select(jdbcDelegate.getConnection(), rowHandler, where, CDODBSchema.CLASSES_ID,
+        CDODBSchema.CLASSES_CLASSIFIER, CDODBSchema.CLASSES_NAME, CDODBSchema.CLASSES_ABSTRACT);
   }
 
-  protected void readSuperTypes(final CDOClass cdoClass, int classID)
+  protected final void readSuperTypes(final CDOClass cdoClass, int classID)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -199,11 +170,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     };
 
     String where = CDODBSchema.SUPERTYPES_TYPE.getName() + "=" + classID;
-    DBUtil.select(getConnection(), rowHandler, where, CDODBSchema.SUPERTYPES_SUPERTYPE_PACKAGE,
+    DBUtil.select(jdbcDelegate.getConnection(), rowHandler, where, CDODBSchema.SUPERTYPES_SUPERTYPE_PACKAGE,
         CDODBSchema.SUPERTYPES_SUPERTYPE_CLASSIFIER);
   }
 
-  protected void readFeatures(final CDOClass cdoClass, int classID)
+  protected final void readFeatures(final CDOClass cdoClass, int classID)
   {
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
@@ -236,22 +207,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     };
 
     String where = CDODBSchema.FEATURES_CLASS.getName() + "=" + classID;
-    DBUtil.select(getConnection(), rowHandler, where, CDODBSchema.FEATURES_ID, CDODBSchema.FEATURES_FEATURE,
-        CDODBSchema.FEATURES_NAME, CDODBSchema.FEATURES_TYPE, CDODBSchema.FEATURES_REFERENCE_PACKAGE,
-        CDODBSchema.FEATURES_REFERENCE_CLASSIFIER, CDODBSchema.FEATURES_MANY, CDODBSchema.FEATURES_CONTAINMENT);
+    DBUtil.select(jdbcDelegate.getConnection(), rowHandler, where, CDODBSchema.FEATURES_ID,
+        CDODBSchema.FEATURES_FEATURE, CDODBSchema.FEATURES_NAME, CDODBSchema.FEATURES_TYPE,
+        CDODBSchema.FEATURES_REFERENCE_PACKAGE, CDODBSchema.FEATURES_REFERENCE_CLASSIFIER, CDODBSchema.FEATURES_MANY,
+        CDODBSchema.FEATURES_CONTAINMENT);
   }
 
-  public void readPackageEcore(CDOPackage cdoPackage)
+  public final void readPackageEcore(CDOPackage cdoPackage)
   {
     String where = CDODBSchema.PACKAGES_URI.getName() + " = '" + cdoPackage.getPackageURI() + "'";
-    Object[] values = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_ECORE);
+    Object[] values = DBUtil.select(jdbcDelegate.getConnection(), where, CDODBSchema.PACKAGES_ECORE);
     ((InternalCDOPackage)cdoPackage).setEcore((String)values[0]);
   }
 
-  public String readPackageURI(int packageID)
+  public final String readPackageURI(int packageID)
   {
     String where = CDODBSchema.PACKAGES_ID.getName() + "=" + packageID;
-    Object[] uri = DBUtil.select(getConnection(), where, CDODBSchema.PACKAGES_URI);
+    Object[] uri = DBUtil.select(jdbcDelegate.getConnection(), where, CDODBSchema.PACKAGES_URI);
     return (String)uri[0];
   }
 
@@ -275,10 +247,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     return getStore().getMappingStrategy().readObjectType(this, id);
   }
 
-  public CDOClassRef readClassRef(int classID)
+  public final CDOClassRef readClassRef(int classID)
   {
     String where = CDODBSchema.CLASSES_ID.getName() + "=" + classID;
-    Object[] res = DBUtil.select(getConnection(), where, CDODBSchema.CLASSES_CLASSIFIER, CDODBSchema.CLASSES_PACKAGE);
+    Object[] res = DBUtil.select(jdbcDelegate.getConnection(), where, CDODBSchema.CLASSES_CLASSIFIER,
+        CDODBSchema.CLASSES_PACKAGE);
     int classifierID = (Integer)res[0];
     String packageURI = readPackageURI((Integer)res[1]);
     return CDOModelUtil.createClassRef(packageURI, classifierID);
@@ -368,33 +341,19 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
   }
 
-  public void commit()
+  public final void commit()
   {
-    try
-    {
-      getConnection().commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
+    jdbcDelegate.commit();
   }
 
   @Override
-  protected void rollback(IStoreAccessor.CommitContext context)
+  protected final void rollback(IStoreAccessor.CommitContext context)
   {
-    try
-    {
-      getConnection().rollback();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
+    jdbcDelegate.rollback();
   }
 
   @Override
-  protected void writePackages(CDOPackage[] cdoPackages)
+  protected final void writePackages(CDOPackage[] cdoPackages)
   {
     new PackageWriter(cdoPackages)
     {
@@ -423,7 +382,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
         try
         {
-          pstmt = getConnection().prepareStatement(sql);
+          pstmt = jdbcDelegate.getPreparedStatement(sql);
           pstmt.setInt(1, id);
           pstmt.setString(2, packageURI);
           pstmt.setString(3, name);
@@ -454,7 +413,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       }
 
       @Override
-      protected void writeClass(InternalCDOClass cdoClass)
+      protected final void writeClass(InternalCDOClass cdoClass)
       {
         int id = getStore().getNextClassID();
         ClassServerInfo.setDBID(cdoClass, id);
@@ -464,18 +423,18 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
         int classifierID = cdoClass.getClassifierID();
         String name = cdoClass.getName();
         boolean isAbstract = cdoClass.isAbstract();
-        DBUtil.insertRow(getConnection(), getStore().getDBAdapter(), CDODBSchema.CLASSES, id, packageID, classifierID,
-            name, isAbstract);
+        DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.CLASSES, id, packageID,
+            classifierID, name, isAbstract);
       }
 
       @Override
-      protected void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
+      protected final void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
       {
         int id = ClassServerInfo.getDBID(type);
         String packageURI = superType.getPackageURI();
         int classifierID = superType.getClassifierID();
-        DBUtil.insertRow(getConnection(), getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, id, packageURI,
-            classifierID);
+        DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, id,
+            packageURI, classifierID);
       }
 
       @Override
@@ -494,13 +453,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
         boolean many = feature.isMany();
         boolean containment = feature.isContainment();
         int idx = feature.getFeatureIndex();
-        DBUtil.insertRow(getConnection(), getStore().getDBAdapter(), CDODBSchema.FEATURES, id, classID, featureID,
-            name, type, packageURI, classifierID, many, containment, idx);
+        DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.FEATURES, id, classID,
+            featureID, name, type, packageURI, classifierID, many, containment, idx);
       }
     }.run();
 
     Set<IDBTable> affectedTables = mapPackages(cdoPackages);
-    getStore().getDBAdapter().createTables(affectedTables, getConnection());
+    getStore().getDBAdapter().createTables(affectedTables, jdbcDelegate.getConnection());
   }
 
   @Override
@@ -612,19 +571,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     return affectedTables;
   }
 
-  protected void initConnection()
-  {
-    try
-    {
-      connection = getStore().getDBConnectionProvider().getConnection();
-      connection.setAutoCommit(isReader());
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
   @Override
   protected void doActivate() throws Exception
   {
@@ -634,8 +580,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   @Override
   protected void doDeactivate() throws Exception
   {
-    DBUtil.close(statement);
-    DBUtil.close(connection);
+    jdbcDelegate.release();
   }
 
   @Override

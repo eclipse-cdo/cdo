@@ -33,11 +33,11 @@ public interface IConstants
 
   public static final RepositoryConfig MEM = RepositoryConfig.MEM.INSTANCE;
 
-  public static final RepositoryConfig DB_HSQL_HORIZONTAL = RepositoryConfig.DBHsqldb.HSQLDB_HORIZONTAL;
+  public static final RepositoryConfig DB_HSQL_HORIZONTAL = RepositoryConfig.DBHsqldbNonPrepStmt.HSQLDB_HORIZONTAL;
 
-  public static final RepositoryConfig DB_DERBY_HORIZONTAL = RepositoryConfig.DBDerby.DERBY_HORIZONTAL;
+  public static final RepositoryConfig DB_DERBY_HORIZONTAL = RepositoryConfig.DBDerbyNonPrepStmt.DERBY_HORIZONTAL;
 
-  public static final RepositoryConfig DB_MYSQL_HORIZONTAL = RepositoryConfig.DBMysql.MYSQL_HORIZONTAL;
+  public static final RepositoryConfig DB_MYSQL_HORIZONTAL = RepositoryConfig.DBMysqlNonPrepStmt.MYSQL_HORIZONTAL;
 
   public static final SessionConfig JVM = SessionConfig.JVM.INSTANCE;
 

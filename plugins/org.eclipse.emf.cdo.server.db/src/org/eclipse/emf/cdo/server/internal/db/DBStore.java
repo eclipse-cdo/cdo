@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
 import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
@@ -71,6 +72,8 @@ public class DBStore extends LongIDStore implements IDBStore
   @ExcludeFromDump
   private transient int nextFeatureID;
 
+  private IJDBCDelegateProvider jdbcDelegateProvider;
+
   public DBStore()
   {
     super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.AUDITING), set(RevisionParallelism.NONE));
@@ -105,6 +108,7 @@ public class DBStore extends LongIDStore implements IDBStore
 
   public void setDbConnectionProvider(IDBConnectionProvider dbConnectionProvider)
   {
+    // FIXME: need to update provider in JDBCWrapper, too?
     this.dbConnectionProvider = dbConnectionProvider;
   }
 
@@ -173,7 +177,6 @@ public class DBStore extends LongIDStore implements IDBStore
     {
       throw new DBException("No connection from connection provider: " + dbConnectionProvider);
     }
-
     return connection;
   }
 
@@ -184,7 +187,7 @@ public class DBStore extends LongIDStore implements IDBStore
       DBStoreAccessor accessor = (DBStoreAccessor)getWriter(null);
       StoreThreadLocal.setAccessor(accessor);
 
-      Connection connection = accessor.getConnection();
+      Connection connection = accessor.getJDBCDelegate().getConnection();
       long maxObjectID = mappingStrategy.repairAfterCrash(dbAdapter, connection);
       long maxMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB);
 
@@ -396,5 +399,15 @@ public class DBStore extends LongIDStore implements IDBStore
     }
 
     throw new ImplementationError("Unrecognized CDOType: " + type);
+  }
+
+  public IJDBCDelegateProvider getJDBCDelegateProvider()
+  {
+    return jdbcDelegateProvider;
+  }
+
+  public void setJDBCDelegateProvider(IJDBCDelegateProvider provider)
+  {
+    jdbcDelegateProvider = provider;
   }
 }

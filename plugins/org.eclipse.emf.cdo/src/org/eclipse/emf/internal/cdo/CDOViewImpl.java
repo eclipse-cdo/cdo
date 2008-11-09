@@ -180,6 +180,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   public CDOStore getStore()
   {
+    checkOpen();
     return store;
   }
 

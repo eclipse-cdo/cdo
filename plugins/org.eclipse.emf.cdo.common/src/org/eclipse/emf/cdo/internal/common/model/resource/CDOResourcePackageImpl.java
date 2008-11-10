@@ -48,6 +48,7 @@ public final class CDOResourcePackageImpl extends CDOPackageImpl implements CDOR
     return cdoResourceClass;
   }
 
+  @SuppressWarnings("all")
   @Override
   public String getEcore()
   {

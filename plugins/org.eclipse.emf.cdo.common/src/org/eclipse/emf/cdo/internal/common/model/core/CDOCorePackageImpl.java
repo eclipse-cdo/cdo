@@ -32,6 +32,7 @@ public final class CDOCorePackageImpl extends CDOPackageImpl implements CDOCoreP
     return cdoObjectClass;
   }
 
+  @SuppressWarnings("all")
   @Override
   public String getEcore()
   {

@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
@@ -64,7 +63,7 @@ public interface IStoreChunkReader
 
     public int size()
     {
-      return ids instanceof Object[] ? ((CDOID[])ids).length : 1;
+      return ids instanceof Object[] ? ((Object[])ids).length : 1;
     }
 
     /**
@@ -74,7 +73,7 @@ public interface IStoreChunkReader
     {
       if (ids instanceof Object[])
       {
-        return ((CDOID[])ids)[indexInChunk];
+        return ((Object[])ids)[indexInChunk];
       }
 
       if (indexInChunk == 0)

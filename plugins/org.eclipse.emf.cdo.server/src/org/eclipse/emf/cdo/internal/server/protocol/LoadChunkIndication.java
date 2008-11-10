@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
@@ -90,12 +89,10 @@ public class LoadChunkIndication extends CDOReadIndication
     InternalCDORevision revision = getRevisionManager().getRevisionByVersion(id, 0, version);
     getRevisionManager().ensureChunk(revision, feature, fromIndex, toIndex + 1);
 
-    Session session = getSession();
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOID elementID = session.provideCDOID(list.get(i));
-      out.writeCDOID(elementID);
+      feature.getType().writeValue(out, list.get(i));
     }
   }
 }

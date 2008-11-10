@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import java.util.List;
 
@@ -82,6 +83,36 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     CDOSession session = openSession(getModel5Package());
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/res1");
+
+    GenListOfString listOfString = (GenListOfString)resource.getContents().get(0);
+    assertEquals("Ottawa", listOfString.getElements().get(0));
+    assertEquals("Toronto", listOfString.getElements().get(1));
+
+    listOfString.getElements().add("Vancouver");
+    transaction.commit();
+  }
+
+  public void testListOfStringProxy() throws Exception
+  {
+    {
+      CDOSession session = openSession(getModel5Package());
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+
+      GenListOfString listOfString = getModel5Factory().createGenListOfString();
+
+      listOfString.getElements().add("Ottawa");
+      listOfString.getElements().add("Toronto");
+      resource.getContents().add(listOfString);
+      transaction.commit();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession session = openSession(getModel5Package());
+    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 100));
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/res1");
 

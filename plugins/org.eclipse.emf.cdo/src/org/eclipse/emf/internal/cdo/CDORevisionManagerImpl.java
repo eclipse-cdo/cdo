@@ -65,7 +65,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   /**
    * @since 2.0
    */
-  public CDOID resolveReferenceProxy(CDORevision revision, CDOFeature feature, int accessIndex, int serverIndex)
+  public Object resolveReferenceProxy(CDORevision revision, CDOFeature feature, int accessIndex, int serverIndex)
   {
     return session.getCollectionLoadingPolicy().resolveProxy(this, revision, feature, accessIndex, serverIndex);
   }
@@ -73,7 +73,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   /**
    * @since 2.0
    */
-  public CDOID loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
+  public Object loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
     try

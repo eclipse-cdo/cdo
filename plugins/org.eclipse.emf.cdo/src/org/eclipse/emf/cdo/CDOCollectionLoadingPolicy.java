@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
@@ -28,7 +27,7 @@ public interface CDOCollectionLoadingPolicy
       return CDORevision.UNCHUNKED;
     }
 
-    public CDOID resolveProxy(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature,
+    public Object resolveProxy(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature,
         int accessIndex, int serverIndex)
     {
       return revisionManager.loadChunkByRange(revision, feature, accessIndex, serverIndex, accessIndex, accessIndex);
@@ -45,6 +44,6 @@ public interface CDOCollectionLoadingPolicy
    * {@link CDORevisionManager#loadChunkByRange(CDORevision, CDOFeature, int, int, int, int)} should be used to resolve
    * them.
    */
-  public CDOID resolveProxy(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature,
+  public Object resolveProxy(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature,
       int accessIndex, int serverIndex);
 }

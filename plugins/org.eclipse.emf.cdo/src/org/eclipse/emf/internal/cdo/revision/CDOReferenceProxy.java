@@ -12,7 +12,6 @@
 package org.eclipse.emf.internal.cdo.revision;
 
 import org.eclipse.emf.cdo.CDORevisionManager;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
@@ -27,6 +26,6 @@ public interface CDOReferenceProxy
   /**
    * @since 2.0
    */
-  public CDOID resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index);
+  public Object resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index);
 
 }

@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -43,7 +42,7 @@ public class MEMStoreChunkReader extends StoreChunkReader
       for (int i = 0; i < chunk.size(); i++)
       {
         Object object = revision.get(getFeature(), startIndex + i);
-        chunk.addID(i, (CDOID)object);
+        chunk.add(i, object);
       }
     }
 

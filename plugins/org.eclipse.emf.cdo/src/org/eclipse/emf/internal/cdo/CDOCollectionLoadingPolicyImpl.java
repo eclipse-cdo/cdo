@@ -12,7 +12,6 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDORevisionManager;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -47,7 +46,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
     return resolveChunkSize;
   }
 
-  public CDOID resolveProxy(CDORevisionManager revisionManager, CDORevision rev, CDOFeature feature, int accessIndex,
+  public Object resolveProxy(CDORevisionManager revisionManager, CDORevision rev, CDOFeature feature, int accessIndex,
       int serverIndex)
   {
     // Get proxy values

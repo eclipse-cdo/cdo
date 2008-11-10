@@ -54,7 +54,7 @@ public interface IStoreChunkReader
     public Chunk(int startIndex, int size)
     {
       this(startIndex);
-      ids = new CDOID[size];
+      ids = new Object[size];
     }
 
     public int getStartIndex()
@@ -64,43 +64,45 @@ public interface IStoreChunkReader
 
     public int size()
     {
-      if (ids instanceof CDOID || ids == null)
-      {
-        return 1;
-      }
-
-      return ((CDOID[])ids).length;
+      return ids instanceof Object[] ? ((CDOID[])ids).length : 1;
     }
 
-    public CDOID getID(int indexInChunk)
+    /**
+     * @since 2.0
+     */
+    public Object get(int indexInChunk)
     {
-      if (ids instanceof CDOID || ids == null)
+      if (ids instanceof Object[])
+      {
+        return ((CDOID[])ids)[indexInChunk];
+      }
+
+      if (indexInChunk == 0)
+      {
+        return ids;
+      }
+
+      throw new ArrayIndexOutOfBoundsException(indexInChunk);
+    }
+
+    /**
+     * @since 2.0
+     */
+    public void add(int indexInChunk, Object value)
+    {
+      if (ids instanceof Object[])
+      {
+        ((Object[])ids)[indexInChunk] = value;
+      }
+      else
       {
         if (indexInChunk == 0)
         {
-          return (CDOID)ids;
-        }
-
-        throw new ArrayIndexOutOfBoundsException(indexInChunk);
-      }
-
-      return ((CDOID[])ids)[indexInChunk];
-    }
-
-    public void addID(int indexInChunk, CDOID id)
-    {
-      if (ids instanceof CDOID || ids == null)
-      {
-        if (indexInChunk == 0)
-        {
-          ids = id;
+          ids = value;
           return;
         }
-
         throw new ArrayIndexOutOfBoundsException(indexInChunk);
       }
-
-      ((CDOID[])ids)[indexInChunk] = id;
     }
   }
 }

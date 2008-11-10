@@ -268,7 +268,7 @@ public abstract class AbstractJDBCDelegate implements IJDBCDelegate
           chunkSize = chunk.size();
         }
 
-        chunk.addID(indexInChunk++, CDOIDUtil.createLong(target));
+        chunk.add(indexInChunk++, CDOIDUtil.createLong(target));
         if (indexInChunk == chunkSize)
         {
           chunk = null;

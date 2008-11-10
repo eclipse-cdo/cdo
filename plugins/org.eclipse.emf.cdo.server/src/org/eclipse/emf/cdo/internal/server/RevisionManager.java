@@ -186,7 +186,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
         int startIndex = chunk.getStartIndex();
         for (int indexInChunk = 0; indexInChunk < chunk.size(); indexInChunk++)
         {
-          CDOID id = chunk.getID(indexInChunk);
+          Object id = chunk.get(indexInChunk);
           list.set(startIndex + indexInChunk, id);
         }
       }

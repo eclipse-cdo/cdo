@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadChunkRequest extends CDOClientRequest<CDOID>
+public class LoadChunkRequest extends CDOClientRequest<Object>
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
 
@@ -99,17 +99,17 @@ public class LoadChunkRequest extends CDOClientRequest<CDOID>
   }
 
   @Override
-  protected CDOID confirming(CDODataInput in) throws IOException
+  protected Object confirming(CDODataInput in) throws IOException
   {
-    CDOID accessID = null;
+    Object accessID = null;
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      CDOID id = in.readCDOID();
-      list.set(i, id);
+      Object value = feature.getType().readValue(in);
+      list.set(i, value);
       if (i == accessIndex)
       {
-        accessID = id;
+        accessID = value;
       }
     }
 

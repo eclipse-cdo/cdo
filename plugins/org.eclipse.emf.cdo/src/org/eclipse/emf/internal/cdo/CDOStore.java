@@ -353,27 +353,25 @@ public final class CDOStore implements EStore
   public Object convertToEMF(CDOView view, EObject eObject, InternalCDORevision revision, EStructuralFeature eFeature,
       CDOFeature cdoFeature, int index, Object value)
   {
-    if (cdoFeature.isReference())
+    if (cdoFeature.isMany() && EStore.NO_INDEX != index)
     {
-      if (cdoFeature.isMany() && EStore.NO_INDEX != index)
+      value = resolveProxy(revision, cdoFeature, index, value);
+      if (cdoFeature.isMany() && value instanceof CDOID)
       {
-        value = resolveProxy(revision, cdoFeature, index, value);
-        if (cdoFeature.isMany() && value instanceof CDOID)
+        CDOID id = (CDOID)value;
+        CDOList list = revision.getList(cdoFeature);
+        CDORevisionManagerImpl revisionManager = ((CDOViewImpl)view).getSession().getRevisionManager();
+        CDORevisionPrefetchingPolicy policy = view.getRevisionPrefetchingPolicy();
+        Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, eFeature, list, index, id);
+        if (!listOfIDs.isEmpty())
         {
-          CDOID id = (CDOID)value;
-          CDOList list = revision.getList(cdoFeature);
-          CDORevisionManagerImpl revisionManager = ((CDOViewImpl)view).getSession().getRevisionManager();
-          CDORevisionPrefetchingPolicy policy = view.getRevisionPrefetchingPolicy();
-
-          Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, eFeature, list, index, id);
-          if (!listOfIDs.isEmpty())
-          {
-            revisionManager.getRevisions(listOfIDs, view.getSession().getCollectionLoadingPolicy()
-                .getInitialChunkSize());
-          }
+          revisionManager.getRevisions(listOfIDs, view.getSession().getCollectionLoadingPolicy().getInitialChunkSize());
         }
       }
+    }
 
+    if (cdoFeature.isReference())
+    {
       value = ((CDOViewImpl)view).convertIDToObject(value);
     }
     else if (cdoFeature.getType() == CDOType.CUSTOM)

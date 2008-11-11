@@ -31,8 +31,6 @@ import java.util.List;
  */
 public class Transaction extends View implements ITransaction
 {
-  private boolean autoReleaseLocksEnabled = true;
-
   public Transaction(Session session, int viewID)
   {
     super(session, viewID);

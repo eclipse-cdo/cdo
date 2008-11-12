@@ -396,7 +396,10 @@ public class RWLockManager<K, V> extends Lifecycle
 
     public LockEntry<K, V> clearLock(V context)
     {
-      return null;
+      while (contexts.remove(context))
+      {
+      }
+      return contexts.isEmpty() ? null : this;
     }
   }
 
@@ -490,7 +493,14 @@ public class RWLockManager<K, V> extends Lifecycle
 
     public LockEntry<K, V> clearLock(V context)
     {
-      return null;
+      if (readLock != null)
+      {
+        if (getReadLock().clearLock(context) == null)
+        {
+          readLock = null;
+        }
+      }
+      return readLock;
     }
   }
 

@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -371,8 +372,16 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       lockedObjects.add(detachedObjects[i]);
     }
 
-    LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
-    lockManager.lock(RWLockManager.LockType.WRITE, transaction, lockedObjects, 1000);
+    try
+    {
+      LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
+      lockManager.lock(RWLockManager.LockType.WRITE, transaction, lockedObjects, 1000);
+    }
+    catch (TimeoutRuntimeException exception)
+    {
+      lockedObjects.clear();
+      throw exception;
+    }
   }
 
   private void unlockObjects()

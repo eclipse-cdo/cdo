@@ -122,6 +122,9 @@ public abstract class Signal implements Runnable
     return correlationID;
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public String toString()
   {

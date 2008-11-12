@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
@@ -52,7 +53,7 @@ public abstract class RegisterPackagesAction extends SessionAction
   }
 
   @Override
-  protected void doRun() throws Exception
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     errors = 0;
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();

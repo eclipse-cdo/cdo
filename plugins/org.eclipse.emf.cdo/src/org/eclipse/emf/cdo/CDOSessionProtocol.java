@@ -8,19 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.protocol;
+package org.eclipse.emf.cdo;
 
-import org.eclipse.net4j.util.factory.Factory;
+import org.eclipse.emf.cdo.common.CDOProtocolSession;
+
+import org.eclipse.net4j.signal.ISignalProtocol;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public abstract class ClientProtocolFactory extends Factory
+public interface CDOSessionProtocol extends ISignalProtocol<CDOProtocolSession>
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.clientProtocols";
-
-  public ClientProtocolFactory(String type)
-  {
-    super(PRODUCT_GROUP, type);
-  }
+  public CDOSession getSession();
 }

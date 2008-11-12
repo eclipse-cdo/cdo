@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -43,7 +44,7 @@ public final class RollbackTransactionAction extends ViewAction
   }
 
   @Override
-  protected void doRun() throws Exception
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     getTransaction().rollback();
   }

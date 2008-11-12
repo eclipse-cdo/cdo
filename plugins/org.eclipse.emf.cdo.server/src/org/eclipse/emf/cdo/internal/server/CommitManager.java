@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.IRepositoryElement;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -37,7 +38,7 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
   private transient ExecutorService executors;
 
   @ExcludeFromDump
-  private transient Map<Transaction, TransactionCommitContextEntry> commitContextMap = new ConcurrentHashMap<Transaction, TransactionCommitContextEntry>();
+  private transient Map<Transaction, TransactionCommitContextEntry> contextEntries = new ConcurrentHashMap<Transaction, TransactionCommitContextEntry>();
 
   public CommitManager()
   {
@@ -71,16 +72,15 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
   /**
    * Create a future to execute commitContext in a different thread.
    */
-  public void preCommit(InternalCommitContext commitContext)
+  public void preCommit(InternalCommitContext commitContext, IMonitor monitor)
   {
-    TransactionCommitContextEntry contextEntry = new TransactionCommitContextEntry();
+    TransactionCommitContextEntry contextEntry = new TransactionCommitContextEntry(monitor);
     contextEntry.setContext(commitContext);
 
     Future<Object> future = getExecutors().submit(contextEntry.createCallable());
-
     contextEntry.setFuture(future);
 
-    commitContextMap.put(commitContext.getTransaction(), contextEntry);
+    contextEntries.put(commitContext.getTransaction(), contextEntry);
   }
 
   /**
@@ -88,12 +88,12 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
    */
   public void remove(InternalCommitContext commitContext)
   {
-    commitContextMap.remove(commitContext.getTransaction());
+    contextEntries.remove(commitContext.getTransaction());
   }
 
   public void rollback(InternalCommitContext commitContext)
   {
-    TransactionCommitContextEntry contextEntry = commitContextMap.get(commitContext.getTransaction());
+    TransactionCommitContextEntry contextEntry = contextEntries.get(commitContext.getTransaction());
     if (contextEntry != null)
     {
       contextEntry.getFuture().cancel(true);
@@ -106,13 +106,13 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
    */
   public void waitForTermination(Transaction transaction) throws InterruptedException, ExecutionException
   {
-    TransactionCommitContextEntry contextEntry = commitContextMap.get(transaction);
+    TransactionCommitContextEntry contextEntry = contextEntries.get(transaction);
     contextEntry.getFuture().get();
   }
 
   public InternalCommitContext get(Transaction transaction)
   {
-    TransactionCommitContextEntry contextEntry = commitContextMap.get(transaction);
+    TransactionCommitContextEntry contextEntry = contextEntries.get(transaction);
     if (contextEntry != null)
     {
       return contextEntry.getContext();
@@ -130,18 +130,20 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
 
     private Future<Object> future;
 
-    public TransactionCommitContextEntry()
+    private IMonitor monitor;
+
+    public TransactionCommitContextEntry(IMonitor monitor)
     {
+      this.monitor = monitor;
     }
 
     public Callable<Object> createCallable()
     {
       return new Callable<Object>()
       {
-
         public Object call() throws Exception
         {
-          context.write();
+          context.write(monitor);
           return null;
         }
       };
@@ -166,6 +168,5 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
     {
       this.future = future;
     }
-
   }
 }

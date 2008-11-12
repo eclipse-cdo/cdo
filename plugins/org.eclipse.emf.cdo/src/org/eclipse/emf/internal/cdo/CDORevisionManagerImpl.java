@@ -29,7 +29,6 @@ import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByTimeRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
 
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
 import java.util.Collection;
@@ -79,11 +78,8 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     try
     {
       CDOClientProtocol protocol = session.getProtocol();
-      LoadChunkRequest request = new LoadChunkRequest(protocol, (InternalCDORevision)revision, feature, accessIndex,
-          fetchIndex, fromIndex, toIndex);
-
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      return failOverStrategy.send(request);
+      return new LoadChunkRequest(protocol, (InternalCDORevision)revision, feature, accessIndex, fetchIndex, fromIndex,
+          toIndex).send();
     }
     catch (RuntimeException ex)
     {
@@ -144,8 +140,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     try
     {
       LOADING.start(request);
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      return failOverStrategy.send(request);
+      return request.send();
     }
     catch (RuntimeException ex)
     {

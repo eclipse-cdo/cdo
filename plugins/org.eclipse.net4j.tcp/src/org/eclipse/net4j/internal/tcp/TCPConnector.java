@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
@@ -27,8 +28,7 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.NegotiationContext;
 import org.eclipse.net4j.util.security.NegotiationException;
 
-import org.eclipse.internal.net4j.connector.Connector;
-
+import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalChannel;
 
 import java.io.IOException;
@@ -171,9 +171,9 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       ByteBuffer byteBuffer = inputBuffer.startGetting(socketChannel);
       if (byteBuffer != null)
       {
-        short channelIndex = inputBuffer.getChannelIndex();
-        InternalChannel channel = channelIndex == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel
-            : getChannel(channelIndex);
+        short channelID = inputBuffer.getChannelID();
+        InternalChannel channel = channelID == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel
+            : getChannel(channelID);
         if (channel != null)
         {
           channel.handleBufferFromMultiplexer(inputBuffer);
@@ -282,14 +282,13 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, long timeout, IProtocol<?> protocol)
-      throws ConnectorException
+  protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
   {
     try
     {
-      if (!controlChannel.registerChannel(channelIndex, timeout, protocol))
+      if (!controlChannel.registerChannel(channelID, timeout, protocol))
       {
-        throw new ConnectorException("Failed to register channel with peer"); //$NON-NLS-1$
+        throw new ChannelException("Failed to register channel with peer"); //$NON-NLS-1$
       }
     }
     catch (RuntimeException ex)
@@ -303,13 +302,13 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ConnectorException
+  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ChannelException
   {
     if (channel != null && channel.getClass() != ControlChannel.class)
     {
       if (controlChannel != null && isConnected())
       {
-        controlChannel.deregisterChannel(channel.getIndex(), getChannelTimeout());
+        controlChannel.deregisterChannel(channel.getID(), getChannelTimeout());
       }
     }
   }
@@ -365,7 +364,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
     if (selectionKey == null)
     {
-      throw new IllegalStateException("selectionKey == null");
+      throw new IllegalStateException("No selection key for connector " + this);
     }
   }
 

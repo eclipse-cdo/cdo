@@ -48,6 +48,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.PreparedStatement;
@@ -341,9 +342,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
   }
 
-  public final void commit()
+  public final void commit(IMonitor monitor)
   {
-    jdbcDelegate.commit();
+    jdbcDelegate.commit(monitor);
   }
 
   @Override
@@ -353,9 +354,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  protected final void writePackages(CDOPackage[] cdoPackages)
+  protected final void writePackages(CDOPackage[] cdoPackages, IMonitor monitor)
   {
-    new PackageWriter(cdoPackages)
+    new PackageWriter(cdoPackages, monitor)
     {
       @Override
       protected void writePackage(InternalCDOPackage cdoPackage)
@@ -463,21 +464,29 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created)
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, IMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  protected void writeRevisions(CDORevision[] revisions)
+  protected void writeRevisions(CDORevision[] revisions, IMonitor monitor)
   {
-    for (CDORevision revision : revisions)
+    try
     {
-      writeRevision(revision);
+      monitor.begin(revisions.length);
+      for (CDORevision revision : revisions)
+      {
+        writeRevision(revision, monitor.fork(1));
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
-  protected void writeRevision(CDORevision revision)
+  protected void writeRevision(CDORevision revision, IMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -486,23 +495,30 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
     CDOClass cdoClass = revision.getCDOClass();
     IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(cdoClass);
-    mapping.writeRevision(this, revision);
+    mapping.writeRevision(this, revision, monitor);
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects, long revised)
+  protected void detachObjects(CDOID[] detachedObjects, long revised, IMonitor monitor)
   {
-    for (CDOID id : detachedObjects)
+    try
     {
-      detachObject(id, revised);
+      monitor.begin(detachedObjects.length);
+      for (CDOID id : detachedObjects)
+      {
+        detachObject(id, revised, monitor.fork(1));
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
   /**
-   * @param revised
    * @since 2.0
    */
-  protected void detachObject(CDOID id, long revised)
+  protected void detachObject(CDOID id, long revised, IMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -511,7 +527,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
     CDOClass cdoClass = getObjectType(id);
     IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(cdoClass);
-    mapping.detachObject(this, id, revised);
+    mapping.detachObject(this, id, revised, monitor);
   }
 
   /**

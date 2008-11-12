@@ -70,7 +70,7 @@ public class BuddiesServerProtocol extends SignalProtocol<ServerSession>
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends org.eclipse.net4j.protocol.ServerProtocolFactory
+  public static class Factory extends org.eclipse.spi.net4j.ServerProtocolFactory
   {
     public Factory()
     {

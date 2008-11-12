@@ -99,7 +99,7 @@ public class ServerConsumer implements IServerConsumer
         messages.put(messageID, message);
       }
 
-      new JMSServerMessageRequest(getProtocol(), session.getID(), id, message).send();
+      new JMSServerMessageRequest(getProtocol(), session.getID(), id, message).sendAsync();
       transaction.messageSent(message, id);
       return true;
     }

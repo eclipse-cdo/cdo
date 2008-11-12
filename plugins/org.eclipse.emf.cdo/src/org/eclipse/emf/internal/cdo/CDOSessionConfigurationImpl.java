@@ -143,9 +143,9 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       session = new CDOSessionImpl();
       session.setConnector(connector);
       session.setRepositoryName(repositoryName);
-      session.setFailOverStrategy(failOverStrategy);
       session.setPackageRegistry(packageRegistry);
       session.getRevisionManager().setCache(revisionCache);
+      session.getProtocol().setFailOverStrategy(failOverStrategy);
 
       if (activateOnOpen)
       {

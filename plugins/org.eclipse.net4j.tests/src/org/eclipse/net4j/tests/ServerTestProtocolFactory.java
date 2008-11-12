@@ -10,8 +10,9 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
+
+import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 import java.util.concurrent.CountDownLatch;
 

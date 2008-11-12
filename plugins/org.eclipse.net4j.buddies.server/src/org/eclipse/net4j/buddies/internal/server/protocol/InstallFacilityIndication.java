@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-
 /**
  * @author Eike Stepper
  */
@@ -68,7 +67,7 @@ public class InstallFacilityIndication extends IndicationWithResponse
             try
             {
               BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
-              new FacilityInstalledNotification(protocol, collaborationID, facilityType).send();
+              new FacilityInstalledNotification(protocol, collaborationID, facilityType).sendAsync();
             }
             catch (Exception ex)
             {

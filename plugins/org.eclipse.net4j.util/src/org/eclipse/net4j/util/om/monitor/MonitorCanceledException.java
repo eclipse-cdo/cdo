@@ -12,8 +12,9 @@ package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class MonitorCanceledException extends MonitorException
+public class MonitorCanceledException extends RuntimeException
 {
   private static final long serialVersionUID = 1L;
 
@@ -21,9 +22,9 @@ public class MonitorCanceledException extends MonitorException
   {
   }
 
-  public MonitorCanceledException(String s)
+  public MonitorCanceledException(String message)
   {
-    super(s);
+    super(message);
   }
 
   public MonitorCanceledException(Throwable cause)

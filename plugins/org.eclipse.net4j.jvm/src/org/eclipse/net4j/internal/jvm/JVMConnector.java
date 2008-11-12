@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.jvm.bundle.OM;
@@ -19,8 +20,7 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.connector.Connector;
-
+import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalChannel;
 
 import java.util.Queue;
@@ -81,14 +81,14 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
 
   public void multiplexChannel(InternalChannel localChannel)
   {
-    short channelIndex = localChannel.getIndex();
-    InternalChannel peerChannel = peer.getChannel(channelIndex);
+    short channelID = localChannel.getID();
+    InternalChannel peerChannel = peer.getChannel(channelID);
     if (peerChannel == null)
     {
       throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
     }
 
-    Queue<IBuffer> localQueue = (localChannel).getSendQueue();
+    Queue<IBuffer> localQueue = localChannel.getSendQueue();
     IBuffer buffer = localQueue.poll();
     if (TRACER.isEnabled())
     {
@@ -106,42 +106,42 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, long timeoutIgnored, IProtocol<?> protocol)
-      throws ConnectorException
+  protected void registerChannelWithPeer(short channelID, long timeoutIgnored, IProtocol<?> protocol)
+      throws ChannelException
   {
     try
     {
       String protocolID = protocol == null ? null : protocol.getType();
-      InternalChannel channel = getPeer().inverseOpenChannel(channelIndex, protocolID);
+      InternalChannel channel = getPeer().inverseOpenChannel(channelID, protocolID);
       if (channel == null)
       {
-        throw new ConnectorException("Failed to register channel with peer");
+        throw new ChannelException("Failed to register channel with peer");
       }
     }
-    catch (ConnectorException ex)
+    catch (ChannelException ex)
     {
       throw ex;
     }
     catch (Exception ex)
     {
-      throw new ConnectorException(ex);
+      throw new ChannelException(ex);
     }
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ConnectorException
+  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ChannelException
   {
     try
     {
-      getPeer().inverseCloseChannel(channel.getIndex());
+      getPeer().inverseCloseChannel(channel.getID());
     }
-    catch (ConnectorException ex)
+    catch (ChannelException ex)
     {
       throw ex;
     }
     catch (Exception ex)
     {
-      throw new ConnectorException(ex);
+      throw new ChannelException(ex);
     }
   }
 

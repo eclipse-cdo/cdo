@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buffer;
 
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.util.IErrorHandler;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -51,7 +52,7 @@ import java.nio.channels.SocketChannel;
  * An example for <b>putting</b> values into a buffer and writing it to a {@link SocketChannel}:
  * <p>
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Obtain a fresh buffer
- * Buffer buffer = bufferProvider.getBuffer(); // Start filling the buffer for channelIndex 4711 ByteBuffer byteBuffer =
+ * Buffer buffer = bufferProvider.getBuffer(); // Start filling the buffer for channelID 4711 ByteBuffer byteBuffer =
  * buffer.startPutting(4711); byteBuffer.putDouble(15.47); // Write the contents of the Buffer to a // SocketChannel
  * without blocking while (!buffer.write(socketChannel)) { // Do something else } </pre> An example for reading a buffer
  * from a {@link SocketChannel} and <b>getting</b> values from it:
@@ -72,8 +73,8 @@ import java.nio.channels.SocketChannel;
 public interface IBuffer
 {
   /**
-   * Possible argument value of {@link #startPutting(short)} and possible return value of {@link #getChannelIndex()}
-   * that indicates that this buffer is not intended to be passed to a {@link SocketChannel}.
+   * Possible argument value of {@link #startPutting(short)} and possible return value of {@link #getChannelID()} that
+   * indicates that this buffer is not intended to be passed to a {@link SocketChannel}.
    */
   public static final short NO_CHANNEL = Short.MIN_VALUE;
 
@@ -102,8 +103,10 @@ public interface IBuffer
 
   /**
    * Returns the channel index value stored in the header of this buffer.
+   * 
+   * @since 2.0
    */
-  public short getChannelIndex();
+  public short getChannelID();
 
   /**
    * Returns the capacity of this buffer.
@@ -191,16 +194,16 @@ public interface IBuffer
    * {@link ByteBuffer#capacity()}
    * </ul>
    * 
-   * @param channelIndex
+   * @param channelID
    *          The index of an {@link IChannel} that this buffer is intended to be passed to later or {@link #NO_CHANNEL}
    *          .
    * @return A {@link ByteBuffer} that can be used for putting data.
    * @throws IllegalStateException
    *           If the state of this buffer is not {@link BufferState#INITIAL INITIAL} ({@link BufferState#PUTTING
-   *           PUTTING} is allowed but meaningless if and only if the given <code>channelIndex</code> is equal to the
-   *           existing <code>channelIndex</code> of this buffer).
+   *           PUTTING} is allowed but meaningless if and only if the given <code>channelID</code> is equal to the
+   *           existing <code>channelID</code> of this buffer).
    */
-  public ByteBuffer startPutting(short channelIndex) throws IllegalStateException;
+  public ByteBuffer startPutting(short channelID) throws IllegalStateException;
 
   /**
    * Tries to write the data of this buffer to a {@link SocketChannel}.
@@ -259,4 +262,14 @@ public interface IBuffer
   public void clear();
 
   public String formatContent(boolean showHeader);
+
+  /**
+   * @since 2.0
+   */
+  public IErrorHandler getErrorHandler();
+
+  /**
+   * @since 2.0
+   */
+  public void setErrorHandler(IErrorHandler errorHandler);
 }

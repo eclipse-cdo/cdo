@@ -44,7 +44,7 @@ public class ServerCollaborationLeftIndication extends CollaborationLeftIndicati
         try
         {
           BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
-          new CollaborationLeftNotification(protocol, collaboration.getID(), buddy.getUserID()).send();
+          new CollaborationLeftNotification(protocol, collaboration.getID(), buddy.getUserID()).sendAsync();
         }
         catch (Exception ex)
         {

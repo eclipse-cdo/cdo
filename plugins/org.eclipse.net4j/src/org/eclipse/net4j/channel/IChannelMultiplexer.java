@@ -12,14 +12,13 @@ package org.eclipse.net4j.channel;
 
 import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBufferHandler;
-import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -37,18 +36,7 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
    * 
    * @since 2.0
    */
-  public static final long DEFAULT_CHANNEL_TIMEOUT = -1L;
-
-  /**
-   * Returns a list of currently open channels. Note that the resulting list does not contain <code>null</code> values.
-   * Generally the {@link IChannel#getIndex() index} of a channel <b>must not</b> be used as an index into this list.
-   * Each call to this method creates a new copy of the internal channels array, so it can safely be modified bz the
-   * caller.
-   * <p>
-   * 
-   * @since 2.0
-   */
-  public List<IChannel> getChannels();
+  public static final long DEFAULT_CHANNEL_TIMEOUT = -1;
 
   /**
    * Synchronous request to open a new {@link IChannel} with an undefined channel protocol. Since the peer connector
@@ -61,7 +49,7 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
    * @see #openChannel(IProtocol)
    * @since 2.0
    */
-  public IChannel openChannel() throws ConnectorException;
+  public IChannel openChannel() throws ChannelException;
 
   /**
    * Synchronous request to open a new {@link IChannel} with a channel protocol defined by a given protocol identifier.
@@ -73,7 +61,7 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
    * @see #openChannel(IProtocol)
    * @since 2.0
    */
-  public IChannel openChannel(String protocolID, Object infraStructure) throws ConnectorException;
+  public IChannel openChannel(String protocolID, Object infraStructure) throws ChannelException;
 
   /**
    * Synchronous request to open a new {@link IChannel} with the given channel protocol . The peer connector will lookup
@@ -85,7 +73,14 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
    * @see #openChannel(String, Object)
    * @since 2.0
    */
-  public IChannel openChannel(IProtocol<?> protocol) throws ConnectorException;
+  public IChannel openChannel(IProtocol<?> protocol) throws ChannelException;
+
+  /**
+   * Returns a collection of currently open channels.
+   * 
+   * @since 2.0
+   */
+  public Collection<IChannel> getChannels();
 
   /**
    * @since 2.0

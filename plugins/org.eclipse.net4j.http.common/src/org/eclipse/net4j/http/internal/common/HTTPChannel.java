@@ -12,7 +12,7 @@ package org.eclipse.net4j.http.internal.common;
 
 import org.eclipse.net4j.http.internal.common.HTTPConnector.ChannelOperation;
 
-import org.eclipse.internal.net4j.channel.Channel;
+import org.eclipse.spi.net4j.Channel;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

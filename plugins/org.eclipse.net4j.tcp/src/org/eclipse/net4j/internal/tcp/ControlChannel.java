@@ -24,8 +24,8 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
 import org.eclipse.internal.net4j.buffer.BufferUtil;
-import org.eclipse.internal.net4j.channel.Channel;
 
+import org.eclipse.spi.net4j.Channel;
 import org.eclipse.spi.net4j.InternalChannel;
 
 import java.nio.ByteBuffer;
@@ -46,8 +46,6 @@ public class ControlChannel extends Channel
 
   public static final byte OPCODE_DEREGISTRATION = 4;
 
-  public static final byte OPCODE_DEREGISTRATION_ACK = 5;
-
   public static final byte SUCCESS = 1;
 
   public static final byte FAILURE = 0;
@@ -58,7 +56,7 @@ public class ControlChannel extends Channel
 
   public ControlChannel(TCPConnector connector)
   {
-    setChannelIndex(CONTROL_CHANNEL_INDEX);
+    setID(CONTROL_CHANNEL_INDEX);
     setMultiplexer(connector);
     setReceiveExecutor(connector.getConfig().getReceiveExecutor());
     setUserID(connector.getUserID());
@@ -69,20 +67,20 @@ public class ControlChannel extends Channel
     return (TCPConnector)getMultiplexer();
   }
 
-  public boolean registerChannel(short channelIndex, long timeout, IProtocol<?> protocol)
+  public boolean registerChannel(short channelID, long timeout, IProtocol<?> protocol)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Registering channel {0} with protocol {1}", channelIndex, protocol);
+      TRACER.format("Registering channel {0} with protocol {1}", channelID, protocol);
     }
 
-    assertValidChannelIndex(channelIndex);
-    ISynchronizer<Boolean> acknowledgement = acknowledgements.correlate(channelIndex);
+    assertValidChannelID(channelID);
+    ISynchronizer<Boolean> acknowledgement = acknowledgements.correlate(channelID);
 
     IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
     byteBuffer.put(OPCODE_REGISTRATION);
-    byteBuffer.putShort(channelIndex);
+    byteBuffer.putShort(channelID);
     BufferUtil.putUTF8(byteBuffer, protocol == null ? null : protocol.getType());
     handleBuffer(buffer);
 
@@ -95,29 +93,19 @@ public class ControlChannel extends Channel
     return acknowledged;
   }
 
-  public boolean deregisterChannel(short channelIndex, long timeout)
+  public void deregisterChannel(short channelID, long timeout)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Deregistering channel {0}", channelIndex);
+      TRACER.format("Deregistering channel {0}", channelID);
     }
 
-    assertValidChannelIndex(channelIndex);
-    ISynchronizer<Boolean> acknowledgement = acknowledgements.correlate(channelIndex);
-
+    assertValidChannelID(channelID);
     IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
     byteBuffer.put(OPCODE_DEREGISTRATION);
-    byteBuffer.putShort(channelIndex);
+    byteBuffer.putShort(channelID);
     handleBuffer(buffer);
-
-    Boolean acknowledged = acknowledgement.get(timeout);
-    if (acknowledged == null)
-    {
-      throw new TimeoutRuntimeException("Deregistration timeout after " + timeout + " milliseconds");
-    }
-
-    return acknowledged;
   }
 
   @Override
@@ -147,15 +135,15 @@ public class ControlChannel extends Channel
       case OPCODE_REGISTRATION:
       {
         assertConnected();
-        short channelIndex = byteBuffer.getShort();
-        assertValidChannelIndex(channelIndex);
+        short channelID = byteBuffer.getShort();
+        assertValidChannelID(channelID);
         boolean success = true;
 
         try
         {
           byte[] handlerFactoryUTF8 = BufferUtil.getByteArray(byteBuffer);
           String protocolID = BufferUtil.fromUTF8(handlerFactoryUTF8);
-          InternalChannel channel = getConnector().inverseOpenChannel(channelIndex, protocolID);
+          InternalChannel channel = getConnector().inverseOpenChannel(channelID, protocolID);
           if (channel == null)
           {
             throw new ConnectorException("Could not open channel");
@@ -167,41 +155,37 @@ public class ControlChannel extends Channel
           success = false;
         }
 
-        sendStatus(OPCODE_REGISTRATION_ACK, channelIndex, success);
+        sendStatus(OPCODE_REGISTRATION_ACK, channelID, success);
         break;
       }
 
       case OPCODE_DEREGISTRATION:
       {
         assertConnected();
-        boolean success = true;
-        short channelIndex = byteBuffer.getShort();
-        if (channelIndex == CONTROL_CHANNEL_INDEX)
+        short channelID = byteBuffer.getShort();
+        if (channelID == CONTROL_CHANNEL_INDEX)
         {
           throw new ImplementationError();
         }
 
         try
         {
-          getConnector().inverseCloseChannel(channelIndex);
+          getConnector().inverseCloseChannel(channelID);
         }
         catch (Exception ex)
         {
           OM.LOG.error(ex);
-          success = false;
         }
 
-        sendStatus(OPCODE_DEREGISTRATION_ACK, channelIndex, success);
         break;
       }
 
       case OPCODE_REGISTRATION_ACK:
-      case OPCODE_DEREGISTRATION_ACK:
       {
         assertConnected();
-        short channelIndex = byteBuffer.getShort();
+        short channelID = byteBuffer.getShort();
         boolean success = byteBuffer.get() == SUCCESS;
-        acknowledgements.put(channelIndex, success);
+        acknowledgements.put(channelID, success);
         break;
       }
 
@@ -225,15 +209,15 @@ public class ControlChannel extends Channel
   @Override
   protected void doDeactivate() throws Exception
   {
-    finishDeactivate(true);
+    // Do nothing
   }
 
-  private void sendStatus(byte opcode, short channelIndex, boolean status)
+  private void sendStatus(byte opcode, short channelID, boolean status)
   {
     IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_INDEX);
     byteBuffer.put(opcode);
-    byteBuffer.putShort(channelIndex);
+    byteBuffer.putShort(channelID);
     byteBuffer.put(status ? SUCCESS : FAILURE);
     handleBuffer(buffer);
   }
@@ -255,11 +239,11 @@ public class ControlChannel extends Channel
     }
   }
 
-  private void assertValidChannelIndex(short channelIndex)
+  private void assertValidChannelID(short channelID)
   {
-    if (channelIndex <= CONTROL_CHANNEL_INDEX)
+    if (channelID <= CONTROL_CHANNEL_INDEX)
     {
-      throw new IllegalArgumentException("channelIndex <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
+      throw new IllegalArgumentException("channelID <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
     }
   }
 }

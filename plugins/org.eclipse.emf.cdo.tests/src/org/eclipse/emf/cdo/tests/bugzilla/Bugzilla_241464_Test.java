@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 
-import org.eclipse.net4j.signal.SignalRemoteException;
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
@@ -44,7 +44,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     }
 
     CDOSession session = openModel1Session();
-    session.getFailOverStrategy().setDefaultTimeout(2000L);
+    session.getProtocol().setTimeout(2000L);
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
@@ -57,7 +57,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
       System.out.println(customer.getName());
       fail("SignalRemoteException expected");
     }
-    catch (SignalRemoteException success)
+    catch (RemoteException success)
     {
     }
     finally

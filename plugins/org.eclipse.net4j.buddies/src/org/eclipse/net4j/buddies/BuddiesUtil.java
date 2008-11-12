@@ -14,7 +14,7 @@ import org.eclipse.net4j.buddies.spi.common.ClientFacilityFactory;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;
-import org.eclipse.net4j.signal.SignalActor;
+import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
@@ -50,6 +50,6 @@ public final class BuddiesUtil
 
   public static IBuddySession openSession(IConnector connector, String userID, String password)
   {
-    return openSession(connector, userID, password, SignalActor.NO_TIMEOUT);
+    return openSession(connector, userID, password, RequestWithConfirmation.NO_TIMEOUT);
   }
 }

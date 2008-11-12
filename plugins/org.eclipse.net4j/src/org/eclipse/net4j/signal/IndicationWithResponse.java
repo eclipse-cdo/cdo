@@ -12,21 +12,22 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
-
-import org.eclipse.internal.net4j.bundle.OM;
-
-import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
  */
-public abstract class IndicationWithResponse extends Indication
+public abstract class IndicationWithResponse extends SignalReactor
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, IndicationWithResponse.class);
+  /**
+   * @since 2.0
+   */
+  public IndicationWithResponse(SignalProtocol<?> protocol, short id, String name)
+  {
+    super(protocol, id, name);
+  }
 
   /**
    * @since 2.0
@@ -36,47 +37,70 @@ public abstract class IndicationWithResponse extends Indication
     super(protocol, signalID);
   }
 
+  /**
+   * @since 2.0
+   */
+  public IndicationWithResponse(SignalProtocol<?> protocol, Enum<?> literal)
+  {
+    super(protocol, literal);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected String getExceptionMessage(Throwable t)
+  {
+    return StringUtil.formatException(t);
+  }
+
   @Override
   protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    super.execute(in, out);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("================ Responding " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
-    }
-
-    OutputStream wrappedOutputStream = wrapOutputStream(out);
+    boolean responding = false;
 
     try
     {
-      responding(ExtendedDataOutputStream.wrap(wrappedOutputStream));
+      doInput(in);
+      responding = true;
+      doOutput(out);
     }
     catch (Error ex)
     {
-      OM.LOG.error(ex);
-      sendExceptionSignal(ex);
+      sendExceptionSignal(ex, responding);
       throw ex;
     }
     catch (Exception ex)
     {
-      ex = WrappedException.unwrap(ex);
-      OM.LOG.error(ex);
-      sendExceptionSignal(ex);
+      sendExceptionSignal(ex, responding);
       throw ex;
     }
-    finally
-    {
-      finishOutputStream(wrappedOutputStream);
-    }
-
-    // End response
-    out.flushWithEOS();
   }
+
+  protected abstract void indicating(ExtendedDataInputStream in) throws Exception;
 
   /**
    * <b>Important Note:</b> The response must not be empty, i.e. the stream must be used at least to write a
    * <code>boolean</code>. Otherwise synchronization problems will result!
-   * @throws Exception TODO
    */
   protected abstract void responding(ExtendedDataOutputStream out) throws Exception;
+
+  @Override
+  void doExtendedInput(ExtendedDataInputStream in) throws Exception
+  {
+    indicating(in);
+  }
+
+  @Override
+  void doExtendedOutput(ExtendedDataOutputStream out) throws Exception
+  {
+    responding(out);
+  }
+
+  void sendExceptionSignal(Throwable t, boolean responding) throws Exception
+  {
+    SignalProtocol<?> protocol = getProtocol();
+    int correlationID = -getCorrelationID();
+    String message = getExceptionMessage(t);
+    new RemoteExceptionRequest(protocol, correlationID, responding, message, t).sendAsync();
+  }
 }

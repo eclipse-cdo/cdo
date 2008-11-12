@@ -27,6 +27,8 @@ import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,8 @@ import java.util.concurrent.Callable;
 public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDProvider, CDOCommitContext
 {
   private CDOXATransactionImpl transactionManager;
+
+  private IProgressMonitor progressMonitor;
 
   private CDOXAState state;
 
@@ -59,6 +63,11 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
   public CDOXATransactionImpl getTransactionManager()
   {
     return transactionManager;
+  }
+
+  public void setProgressMonitor(IProgressMonitor progressMonitor)
+  {
+    this.progressMonitor = progressMonitor;
   }
 
   public CDOXAState getState()
@@ -123,7 +132,7 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
 
   public Object call() throws Exception
   {
-    state.handle(this);
+    state.handle(this, progressMonitor);
     return true;
   }
 

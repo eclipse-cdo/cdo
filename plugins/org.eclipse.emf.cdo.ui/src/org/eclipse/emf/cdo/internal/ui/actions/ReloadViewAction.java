@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -30,7 +31,7 @@ public final class ReloadViewAction extends ViewAction
   }
 
   @Override
-  protected void doRun() throws Exception
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     if (getView().reload() != 0)
     {

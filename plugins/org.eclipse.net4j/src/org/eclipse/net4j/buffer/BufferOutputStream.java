@@ -11,6 +11,9 @@
 package org.eclipse.net4j.buffer;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.IErrorHandler;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -29,15 +32,33 @@ public class BufferOutputStream extends OutputStream
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferOutputStream.class);
 
-  private IBufferHandler bufferHandler;
-
   private IBufferProvider bufferProvider;
+
+  private IBufferHandler bufferHandler;
 
   private IBuffer currentBuffer;
 
-  private short channelIndex;
+  private short channelID;
 
-  public BufferOutputStream(IBufferHandler bufferHandler, IBufferProvider bufferProvider, short channelIndex)
+  private RuntimeException exception;
+
+  @ExcludeFromDump
+  private transient IErrorHandler writeErrorHandler = new IErrorHandler()
+  {
+    public void handleError(Throwable t)
+    {
+      if (t instanceof RuntimeException)
+      {
+        setException((RuntimeException)t);
+      }
+      else
+      {
+        setException(new IORuntimeException(t));
+      }
+    }
+  };
+
+  public BufferOutputStream(IBufferHandler bufferHandler, IBufferProvider bufferProvider, short channelID)
   {
     if (bufferHandler == null)
     {
@@ -51,12 +72,28 @@ public class BufferOutputStream extends OutputStream
 
     this.bufferHandler = bufferHandler;
     this.bufferProvider = bufferProvider;
-    this.channelIndex = channelIndex;
+    this.channelID = channelID;
   }
 
-  public BufferOutputStream(IBufferHandler bufferHandler, short channelIndex)
+  public BufferOutputStream(IBufferHandler bufferHandler, short channelID)
   {
-    this(bufferHandler, extractBufferProvider(bufferHandler), channelIndex);
+    this(bufferHandler, extractBufferProvider(bufferHandler), channelID);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public RuntimeException getException()
+  {
+    return exception;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setException(RuntimeException exception)
+  {
+    this.exception = exception;
   }
 
   @SuppressWarnings("deprecation")
@@ -123,10 +160,16 @@ public class BufferOutputStream extends OutputStream
 
   protected void ensureBuffer()
   {
+    if (exception != null)
+    {
+      throw exception;
+    }
+
     if (currentBuffer == null)
     {
       currentBuffer = bufferProvider.provideBuffer();
-      currentBuffer.startPutting(channelIndex);
+      currentBuffer.setErrorHandler(writeErrorHandler);
+      currentBuffer.startPutting(channelID);
     }
   }
 

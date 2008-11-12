@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.signal.failover;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalRemoteException;
 import org.eclipse.net4j.util.event.IListener;
 
 /**
@@ -23,8 +23,7 @@ public class NOOPFailOverStrategy extends AbstractFailOverStrategy
   {
   }
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception,
-      SignalRemoteException
+  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception, RemoteException
   {
     return request.send(timeout);
   }

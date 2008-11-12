@@ -10,57 +10,47 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.buffer.BufferInputStream;
-import org.eclipse.net4j.util.ReflectUtil;
-
-import java.text.MessageFormat;
-
 /**
  * @author Eike Stepper
  */
 public abstract class SignalActor extends Signal
 {
-  public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
-
-  private boolean terminated;
-
-  private Object result;
+  /**
+   * @since 2.0
+   */
+  public SignalActor(SignalProtocol<?> protocol, short id, String name)
+  {
+    super(protocol, id, name);
+    setCorrelationID(protocol.getNextCorrelationID());
+  }
 
   /**
    * @since 2.0
    */
-  public SignalActor(SignalProtocol<?> protocol, short signalID)
+  public SignalActor(SignalProtocol<?> protocol, short id)
   {
-    super(protocol, signalID);
+    super(protocol, id);
     setCorrelationID(protocol.getNextCorrelationID());
   }
 
-  public Object send() throws Exception, SignalRemoteException
+  /**
+   * @since 2.0
+   */
+  public SignalActor(SignalProtocol<?> protocol, Enum<?> literal)
   {
-    return send(NO_TIMEOUT);
-  }
-
-  public Object send(long timeout) throws Exception, SignalRemoteException
-  {
-    if (terminated)
-    {
-      throw new IllegalStateException("Terminated"); //$NON-NLS-1$
-    }
-
-    getProtocol().startSignal(this, timeout);
-    terminated = true;
-    return result;
+    super(protocol, literal);
+    setCorrelationID(protocol.getNextCorrelationID());
   }
 
   @Override
-  public String toString()
+  String getInputMeaning()
   {
-    return MessageFormat.format("{0}[{1}, {2}, correlation={3} {4}]", ReflectUtil.getSimpleName(getClass()),
-        getSignalID(), getProtocol(), getCorrelationID(), terminated ? "SENT" : "UNSENT");
+    return "Confirming";
   }
 
-  protected void setResult(Object result)
+  @Override
+  String getOutputMeaning()
   {
-    this.result = result;
+    return "Requesting";
   }
 }

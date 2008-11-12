@@ -14,62 +14,41 @@ import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.rmi.AlreadyBoundException;
-
 /**
  * @author Eike Stepper
  */
 public class ExceptionIndication extends IndicationWithResponse
 {
-  public static final String SIMULATED_EXCEPTION = "Simulated exception";
-
-  private boolean exceptionInIndicating;
+  private int phase;
 
   public ExceptionIndication(TestSignalProtocol protocol)
   {
     super(protocol, TestSignalProtocol.SIGNAL_EXCEPTION);
   }
 
-  public boolean isExceptionInIndicating()
+  public int getPhase()
   {
-    return exceptionInIndicating;
+    return phase;
   }
 
   @Override
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
-    exceptionInIndicating = in.readBoolean();
-    if (exceptionInIndicating)
+    phase = in.readInt();
+    if (phase == 2)
     {
-      throwException();
+      ((TestSignalProtocol)getProtocol()).throwException();
     }
   }
 
   @Override
   protected void responding(ExtendedDataOutputStream out) throws Exception
   {
-    if (!exceptionInIndicating)
+    if (phase == 3)
     {
-      throwException();
+      ((TestSignalProtocol)getProtocol()).throwException();
     }
 
     out.writeBoolean(true);
-  }
-
-  private void throwException() throws Exception
-  {
-    try
-    {
-      throwNestedException();
-    }
-    catch (Exception ex)
-    {
-      throw new ClassNotFoundException(SIMULATED_EXCEPTION, ex);
-    }
-  }
-
-  private void throwNestedException() throws Exception
-  {
-    throw new AlreadyBoundException(SIMULATED_EXCEPTION);
   }
 }

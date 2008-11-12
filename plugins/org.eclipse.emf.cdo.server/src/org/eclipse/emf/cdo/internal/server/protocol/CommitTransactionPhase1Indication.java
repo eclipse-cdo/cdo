@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
 
-import java.io.IOException;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 
 /**
  * @author Simon McDuff
@@ -28,14 +28,14 @@ public class CommitTransactionPhase1Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicatingCommit()
+  protected void indicatingCommit(IMonitor monitor)
   {
     // Register transactionContext
-    getRepository().getCommitManager().preCommit(commitContext);
+    getRepository().getCommitManager().preCommit(commitContext, monitor);
   }
 
   @Override
-  protected void responding(CDODataOutput out) throws IOException
+  protected void responding(CDODataOutput out, IMonitor monitor) throws Exception
   {
     String exceptionMessage = null;
 
@@ -62,7 +62,7 @@ public class CommitTransactionPhase1Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicationTransaction(CDODataInput in) throws IOException
+  protected void indicationTransaction(CDODataInput in) throws Exception
   {
     int viewID = in.readInt();
     commitContext = new XATransactionCommitContext(getTransaction(viewID));

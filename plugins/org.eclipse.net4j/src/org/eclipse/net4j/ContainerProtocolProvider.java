@@ -10,12 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j;
 
-import org.eclipse.net4j.protocol.ClientProtocolFactory;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.protocol.IProtocolProvider;
-import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.concurrent.NonBlockingLongCounter;
 import org.eclipse.net4j.util.container.IManagedContainer;
+
+import org.eclipse.spi.net4j.ClientProtocolFactory;
+import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper

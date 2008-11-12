@@ -81,8 +81,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     try
     {
       CDOSessionImpl session = view.getSession();
-      QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryResult);
-      session.getFailOverStrategy().send(request);
+      new QueryRequest(session.getProtocol(), view.getViewID(), queryResult).send();
     }
     catch (Exception exception)
     {
@@ -103,8 +102,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
         try
         {
           CDOSessionImpl session = view.getSession();
-          QueryRequest request = new QueryRequest(session.getProtocol(), view.getViewID(), queryResult);
-          session.getFailOverStrategy().send(request);
+          new QueryRequest(session.getProtocol(), view.getViewID(), queryResult).send();
         }
         catch (Exception ex)
         {

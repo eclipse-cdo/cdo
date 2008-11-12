@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 
 import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 
+import org.eclipse.net4j.util.om.monitor.IMonitor;
+
 import java.io.IOException;
 
 /**
@@ -29,13 +31,19 @@ import java.io.IOException;
  */
 public class CommitTransactionPhase1Request extends CommitTransactionRequest
 {
-  public CommitTransactionPhase1Request(CDOClientProtocol protocol, final CDOXATransactionCommitContext xaTransaction)
+  public CommitTransactionPhase1Request(CDOClientProtocol protocol, CDOXATransactionCommitContext xaContext)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1, xaTransaction);
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE1, xaContext);
   }
 
   @Override
-  protected CommitTransactionResult confirming(CDODataInput in) throws IOException
+  protected CDOIDProvider getIDProvider()
+  {
+    return (CDOIDProvider)commitContext;
+  }
+
+  @Override
+  protected CommitTransactionResult confirming(CDODataInput in, IMonitor monitor) throws IOException
   {
     CommitTransactionResult result = confirmingCheckError(in);
     if (result != null)
@@ -46,11 +54,5 @@ public class CommitTransactionPhase1Request extends CommitTransactionRequest
     result = confirmingTransactionResult(in);
     confirmingIdMapping(in, result);
     return result;
-  }
-
-  @Override
-  protected CDOIDProvider getIDProvider()
-  {
-    return (CDOIDProvider)commitContext;
   }
 }

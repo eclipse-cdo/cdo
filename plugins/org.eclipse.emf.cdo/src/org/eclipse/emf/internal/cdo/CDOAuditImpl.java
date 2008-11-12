@@ -82,8 +82,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
     try
     {
       CDOSessionImpl session = getSession();
-      SetAuditRequest request = new SetAuditRequest(session.getProtocol(), getViewID(), timeStamp, invalidObjects);
-      return session.getFailOverStrategy().send(request);
+      return new SetAuditRequest(session.getProtocol(), getViewID(), timeStamp, invalidObjects).send();
     }
     catch (Exception ex)
     {

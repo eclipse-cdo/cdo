@@ -12,20 +12,27 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import org.eclipse.internal.net4j.bundle.OM;
-
-import java.io.InputStream;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * @author Eike Stepper
  */
-public abstract class RequestWithConfirmation<RESULT> extends Request
+public abstract class RequestWithConfirmation<RESULT> extends SignalActor
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RequestWithConfirmation.class);
+  private RESULT result;
+
+  /**
+   * @since 2.0
+   */
+  public RequestWithConfirmation(SignalProtocol<?> protocol, short id, String name)
+  {
+    super(protocol, id, name);
+  }
 
   /**
    * @since 2.0
@@ -35,56 +42,84 @@ public abstract class RequestWithConfirmation<RESULT> extends Request
     super(protocol, signalID);
   }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public RESULT send() throws Exception, SignalRemoteException
+  /**
+   * @since 2.0
+   */
+  public RequestWithConfirmation(SignalProtocol<?> protocol, Enum<?> literal)
   {
-    return (RESULT)super.send();
+    super(protocol, literal);
   }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  public RESULT send(long timeout) throws Exception, SignalRemoteException
+  /**
+   * @since 2.0
+   */
+  public Future<RESULT> sendAsync()
   {
-    return (RESULT)super.send(timeout);
-  }
-
-  @Override
-  protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
-  {
-    super.execute(in, out);
-    if (TRACER.isEnabled())
+    ExecutorService executorService = getAsyncExecutorService();
+    return executorService.submit(new Callable<RESULT>()
     {
-      TRACER.trace("================ Confirming " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
-    }
-
-    InputStream wrappedInputStream = wrapInputStream(in);
-    RESULT result = confirming(ExtendedDataInputStream.wrap(wrappedInputStream));
-    finishInputStream(wrappedInputStream);
-    setResult(result);
+      public RESULT call() throws Exception
+      {
+        return send();
+      }
+    });
   }
+
+  /**
+   * @since 2.0
+   */
+  public RESULT send() throws Exception, RemoteException
+  {
+    return send(getProtocol().getTimeout());
+  }
+
+  /**
+   * @since 2.0
+   */
+  public RESULT send(long timeout) throws Exception, RemoteException
+  {
+    result = null;
+    getProtocol().startSignal(this, timeout);
+    return result;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected ExecutorService getAsyncExecutorService()
+  {
+    return getProtocol().getExecutorService();
+  }
+
+  @Override
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  {
+    doOutput(out);
+    doInput(in);
+  }
+
+  protected abstract void requesting(ExtendedDataOutputStream out) throws Exception;
 
   /**
    * <b>Important Note:</b> The confirmation must not be empty, i.e. the stream must be used at least to read a
    * <code>boolean</code>. Otherwise synchronization problems will result!
-   * 
-   * @throws Exception
-   *           TODO
    */
   protected abstract RESULT confirming(ExtendedDataInputStream in) throws Exception;
 
-  void setRemoteException(Throwable t)
+  @Override
+  void doExtendedOutput(ExtendedDataOutputStream out) throws Exception
   {
-    SignalRemoteException remoteException;
-    if (t instanceof SignalRemoteException)
-    {
-      remoteException = (SignalRemoteException)t;
-    }
-    else
-    {
-      remoteException = new SignalRemoteException(t);
-    }
+    requesting(out);
+  }
 
-    getBufferInputStream().setException(remoteException);
+  @Override
+  void doExtendedInput(ExtendedDataInputStream in) throws Exception
+  {
+    result = confirming(in);
+  }
+
+  void setRemoteException(Throwable t, boolean responding)
+  {
+    getBufferInputStream().setException(new RemoteException(t, responding));
   }
 }

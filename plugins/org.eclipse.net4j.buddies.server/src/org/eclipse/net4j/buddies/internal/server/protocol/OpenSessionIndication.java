@@ -90,7 +90,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       {
         try
         {
-          new BuddyAddedNotification(protocol, account.getUserID()).send();
+          new BuddyAddedNotification(protocol, account.getUserID()).sendAsync();
         }
         catch (Exception ex)
         {

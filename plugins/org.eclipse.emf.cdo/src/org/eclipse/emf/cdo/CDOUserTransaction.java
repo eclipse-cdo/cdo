@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 /**
  * Only deal with transaction process.
  * 
@@ -21,6 +23,8 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 public interface CDOUserTransaction
 {
   public void commit() throws TransactionException;
+
+  public void commit(IProgressMonitor progressMonitor) throws TransactionException;
 
   public void rollback();
 

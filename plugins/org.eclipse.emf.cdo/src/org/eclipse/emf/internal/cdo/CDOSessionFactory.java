@@ -104,7 +104,7 @@ public class CDOSessionFactory extends Factory
     }
 
     session.setRepositoryName(repositoryName);
-    session.setFailOverStrategy(failOverStrategy);
+    session.getProtocol().setFailOverStrategy(failOverStrategy);
     return session;
   }
 }

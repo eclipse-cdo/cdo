@@ -87,6 +87,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IStatusLineManager;
@@ -95,6 +96,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -139,6 +141,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1552,72 +1555,80 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public void doSave(IProgressMonitor progressMonitor)
   {
+    Display.getCurrent().syncExec(null);
     // Save only resources that have actually changed.
     //
     final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 
-    // Do the work within an operation because this is a long running activity
-    // that modifies the workbench.
-    //
-    WorkspaceModifyOperation operation = new WorkspaceModifyOperation()
+    IRunnableWithProgress operation = new IRunnableWithProgress()
     {
-      // This is the method that gets invoked when the operation runs.
-      //
-      @Override
-      public void execute(IProgressMonitor monitor)
+      public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
       {
-        // Save the resources to the file system.
-        //
         boolean first = true;
-        for (Resource resource : CDOUtil.getResources(editingDomain.getResourceSet()))
+        EList<Resource> resources = CDOUtil.getResources(editingDomain.getResourceSet());
+        monitor.beginTask("", resources.size());
+        try
         {
-          if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
-              && !editingDomain.isReadOnly(resource))
+          for (Resource resource : resources)
           {
-            try
+            if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
+                && !editingDomain.isReadOnly(resource))
             {
-              savedResources.add(resource);
-              resource.save(saveOptions);
-            }
-            catch (final TransactionException exception)
-            {
-              OM.LOG.error(exception);
-              final Shell shell = getSite().getShell();
-              shell.getDisplay().syncExec(new Runnable()
+              try
               {
-                public void run()
+                savedResources.add(resource);
+                saveOptions.put(CDOResource.OPTION_SAVE_PROGRESS_MONITOR, new SubProgressMonitor(monitor, 1));
+                resource.save(saveOptions);
+              }
+              catch (final TransactionException exception)
+              {
+                OM.LOG.error(exception);
+                final Shell shell = getSite().getShell();
+                shell.getDisplay().syncExec(new Runnable()
                 {
-                  CDOTransaction transaction = (CDOTransaction)view;
-                  String title = "Transaction Error";
-                  String message = "An error occured while committing the tranasaction (see Error Log for details)";
-                  RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
-                      message, transaction);
-                  if (dialog.open() == RollbackTransactionDialog.OK)
+                  public void run()
                   {
-                    transaction.rollback();
+                    CDOTransaction transaction = (CDOTransaction)view;
+                    String title = "Transaction Error";
+                    String message = "An error occured while committing the tranasaction (see Error Log for details)";
+                    RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
+                        message, transaction);
+                    if (dialog.open() == RollbackTransactionDialog.OK)
+                    {
+                      transaction.rollback();
+                    }
                   }
-                }
-              });
-            }
-            catch (Exception exception)
-            {
-              OM.LOG.error(exception);
-              resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
-            }
+                });
+              }
+              catch (Exception exception)
+              {
+                OM.LOG.error(exception);
+                resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
+              }
 
-            first = false;
+              first = false;
+            }
+            else
+            {
+              monitor.worked(1);
+            }
           }
+        }
+        finally
+        {
+          monitor.done();
         }
       }
     };
 
     updateProblemIndication = false;
+
     try
     {
       // This runs the options, and shows progress.
       //
-      new ProgressMonitorDialog(getSite().getShell()).run(true, false, operation);
+      new ProgressMonitorDialog(getSite().getShell()).run(true, true, operation);
 
       // Refresh the necessary state.
       //
@@ -1629,6 +1640,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       //
       PluginDelegator.INSTANCE.log(exception);
     }
+
     updateProblemIndication = true;
     updateProblemIndication();
   }
@@ -1961,7 +1973,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
               @SuppressWarnings("unchecked")
               @Override
-              protected void doRun() throws Exception
+              protected void doRun(IProgressMonitor progressMonitor) throws Exception
               {
                 List<EObject> children = new ArrayList<EObject>();
                 for (int i = 0; i < instances; i++)
@@ -2314,7 +2326,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
 
     @Override
-    protected void doRun() throws Exception
+    protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
       Resource resource = null;
       IStructuredSelection ssel = (IStructuredSelection)editorSelection;

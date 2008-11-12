@@ -16,7 +16,8 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.protocol.Protocol;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -24,26 +25,36 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.spi.net4j.InternalConnector;
+import org.eclipse.spi.net4j.Protocol;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
  */
-public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
+public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements
+    ISignalProtocol<INFRA_STRUCTURE>
 {
-  public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
-
   /**
    * @since 2.0
    */
   public static final short SIGNAL_REMOTE_EXCEPTION = -1;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_MONITOR_CANCELED = -2;
+
+  /**
+   * @since 2.0
+   */
+  public static final short SIGNAL_MONITOR_PROGRESS = -3;
 
   private static final int MIN_CORRELATION_ID = 1;
 
@@ -53,14 +64,34 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
   private static final ContextTracer STREAM_TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, SignalProtocol.class);
 
+  private long timeout = NO_TIMEOUT;
+
   private IStreamWrapper streamWrapper;
 
-  private Map<Integer, Signal> signals = new ConcurrentHashMap<Integer, Signal>(0);
+  private IFailOverStrategy failOverStrategy;
+
+  private Map<Integer, Signal> signals = new HashMap<Integer, Signal>();
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
   protected SignalProtocol()
   {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public long getTimeout()
+  {
+    return timeout;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setTimeout(long timeout)
+  {
+    this.timeout = timeout;
   }
 
   /**
@@ -105,6 +136,22 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     {
       this.streamWrapper = new StreamWrapperChain(streamWrapper, this.streamWrapper);
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IFailOverStrategy getFailOverStrategy()
+  {
+    return failOverStrategy;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
+  {
+    this.failOverStrategy = failOverStrategy;
   }
 
   public boolean waitForSignals(long timeout)
@@ -189,7 +236,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
           signal = provideSignalReactor(signalID);
           signal.setCorrelationID(-correlationID);
-          signal.setBufferInputStream(new SignalInputStream(getInputStreamTimeout()));
+          signal.setBufferInputStream(new SignalInputStream(getTimeout()));
           signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
           signals.put(-correlationID, signal);
           getExecutorService().execute(signal);
@@ -218,11 +265,6 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     }
   }
 
-  public long getInputStreamTimeout()
-  {
-    return NO_TIMEOUT;
-  }
-
   @Override
   public String toString()
   {
@@ -245,18 +287,26 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
   protected final SignalReactor provideSignalReactor(short signalID)
   {
     checkActive();
-    if (signalID == SIGNAL_REMOTE_EXCEPTION)
+    switch (signalID)
     {
+    case SIGNAL_REMOTE_EXCEPTION:
       return new RemoteExceptionIndication(this);
-    }
 
-    SignalReactor signal = createSignalReactor(signalID);
-    if (signal == null)
-    {
-      throw new IllegalArgumentException("Invalid signalID " + signalID);
-    }
+    case SIGNAL_MONITOR_CANCELED:
+      return new MonitorCanceledIndication(this);
 
-    return signal;
+    case SIGNAL_MONITOR_PROGRESS:
+      return new MonitorProgressIndication(this);
+
+    default:
+      SignalReactor signal = createSignalReactor(signalID);
+      if (signal == null)
+      {
+        throw new IllegalArgumentException("Invalid signalID " + signalID);
+      }
+
+      return signal;
+    }
   }
 
   /**
@@ -292,10 +342,10 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
       throw new IllegalArgumentException("signalActor.getProtocol() != this"); //$NON-NLS-1$
     }
 
-    short signalID = signalActor.getSignalID();
+    short signalID = signalActor.getID();
     int correlationID = signalActor.getCorrelationID();
-    signalActor.setBufferInputStream(new SignalInputStream(timeout));
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
+    signalActor.setBufferInputStream(new SignalInputStream(timeout));
     synchronized (signals)
     {
       signals.put(correlationID, signalActor);
@@ -314,7 +364,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     }
   }
 
-  void stopSignal(int correlationID, Throwable t)
+  void handleRemoteException(int correlationID, Throwable t, boolean responding)
   {
     synchronized (signals)
     {
@@ -322,10 +372,36 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
       if (signal instanceof RequestWithConfirmation)
       {
         RequestWithConfirmation<?> request = (RequestWithConfirmation<?>)signal;
-        request.setRemoteException(t);
+        request.setRemoteException(t, responding);
       }
 
       signals.notifyAll();
+    }
+  }
+
+  void handleMonitorProgress(int correlationID, int totalWork, int work)
+  {
+    synchronized (signals)
+    {
+      Signal signal = signals.get(correlationID);
+      if (signal instanceof RequestWithMonitoring)
+      {
+        RequestWithMonitoring<?> request = (RequestWithMonitoring<?>)signal;
+        request.setMonitorProgress(totalWork, work);
+      }
+    }
+  }
+
+  void handleMonitorCanceled(int correlationID)
+  {
+    synchronized (signals)
+    {
+      Signal signal = signals.get(correlationID);
+      if (signal instanceof IndicationWithMonitoring)
+      {
+        IndicationWithMonitoring indication = (IndicationWithMonitoring)signal;
+        indication.setMonitorCanceled();
+      }
     }
   }
 
@@ -368,8 +444,14 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
         public IBuffer provideBuffer()
         {
+          IChannel channel = getChannel();
+          if (channel == null)
+          {
+            throw new IORuntimeException("No channel for protocol " + SignalProtocol.this);
+          }
+
           IBuffer buffer = delegate.provideBuffer();
-          ByteBuffer byteBuffer = buffer.startPutting(getChannel().getIndex());
+          ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
           if (STREAM_TRACER.isEnabled())
           {
             STREAM_TRACER.trace("Providing buffer for correlation " + correlationID); //$NON-NLS-1$

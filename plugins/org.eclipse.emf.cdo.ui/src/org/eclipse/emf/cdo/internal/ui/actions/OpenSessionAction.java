@@ -21,6 +21,7 @@ import org.eclipse.emf.internal.cdo.CDOSessionFactory;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -64,7 +65,7 @@ public final class OpenSessionAction extends LongRunningAction
   }
 
   @Override
-  protected void doRun() throws Exception
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     CDOSession session = null;
 

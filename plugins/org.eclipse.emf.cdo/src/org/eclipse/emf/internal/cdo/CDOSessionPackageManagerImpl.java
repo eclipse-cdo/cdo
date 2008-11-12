@@ -24,11 +24,8 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
-
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -155,12 +152,7 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
 
     try
     {
-      CDOClientProtocol protocol = session.getProtocol();
-      LoadPackageRequest request = new LoadPackageRequest(protocol, cdoPackage, false);
-
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      failOverStrategy.send(request);
-
+      new LoadPackageRequest(session.getProtocol(), cdoPackage, false).send();
       if (!cdoPackage.isDynamic())
       {
         OM.LOG.info("Dynamic package created for " + cdoPackage.getPackageURI());
@@ -183,11 +175,7 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
   {
     try
     {
-      CDOClientProtocol protocol = session.getProtocol();
-      LoadPackageRequest request = new LoadPackageRequest(protocol, cdoPackage, true);
-
-      IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-      String ecore = failOverStrategy.send(request);
+      String ecore = new LoadPackageRequest(session.getProtocol(), cdoPackage, true).send();
       ((InternalCDOPackage)cdoPackage).setEcore(ecore);
     }
     catch (RuntimeException ex)

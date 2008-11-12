@@ -84,7 +84,7 @@ public class SignalTest extends AbstractProtocolTest
       for (int i = 0; i < 10000; i++)
       {
         msg("Loop " + i);
-        new AsyncRequest(protocol, data).send();
+        new AsyncRequest(protocol, data).sendAsync();
         String result = new StringRequest(protocol, data).send();
         assertEquals(data, result);
       }

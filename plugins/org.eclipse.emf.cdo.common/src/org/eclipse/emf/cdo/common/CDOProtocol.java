@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common;
 
-import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.signal.ISignalProtocol;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCTURE>
+public interface CDOProtocol<INFRA_STRUCTURE> extends ISignalProtocol<INFRA_STRUCTURE>
 {
   public CDOProtocolSession getSession();
 }

@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.util.concurrent;
 
-import org.eclipse.net4j.util.om.monitor.MonitorUtil;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -43,11 +41,6 @@ public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>
           {
             final long remaining = stop - System.currentTimeMillis();
             if (remaining <= 0)
-            {
-              return null;
-            }
-
-            if (MonitorUtil.isCanceled())
             {
               return null;
             }

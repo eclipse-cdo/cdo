@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -65,7 +66,7 @@ public class ReloadObjectsAction extends EditingDomainAction
   }
 
   @Override
-  protected void doRun() throws Exception
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     if (!objects.isEmpty())
     {

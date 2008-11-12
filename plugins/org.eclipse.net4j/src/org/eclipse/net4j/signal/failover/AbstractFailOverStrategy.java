@@ -10,9 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.signal.failover;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalActor;
-import org.eclipse.net4j.signal.SignalRemoteException;
 import org.eclipse.net4j.util.event.Notifier;
 
 /**
@@ -21,7 +20,7 @@ import org.eclipse.net4j.util.event.Notifier;
  */
 public abstract class AbstractFailOverStrategy extends Notifier implements IFailOverStrategy
 {
-  private long defaultTimeout = SignalActor.NO_TIMEOUT;
+  private long defaultTimeout = RequestWithConfirmation.NO_TIMEOUT;
 
   public AbstractFailOverStrategy()
   {
@@ -37,7 +36,7 @@ public abstract class AbstractFailOverStrategy extends Notifier implements IFail
     this.defaultTimeout = defaultTimeout;
   }
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception, SignalRemoteException
+  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception, RemoteException
   {
     return send(request, defaultTimeout);
   }

@@ -19,19 +19,33 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageManager;
+import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
+import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.emf.internal.cdo.CDOCommitContext;
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.revision.CDOListReferenceProxyImpl;
 
+import org.eclipse.net4j.signal.RequestWithMonitoring;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -42,7 +56,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CommitTransactionRequest extends CDOClientRequest<CommitTransactionResult>
+public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransactionResult>
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionRequest.class);
@@ -66,20 +80,104 @@ public class CommitTransactionRequest extends CDOClientRequest<CommitTransaction
   }
 
   @Override
+  public CDOClientProtocol getProtocol()
+  {
+    return (CDOClientProtocol)super.getProtocol();
+  }
+
+  protected CDOSessionImpl getSession()
+  {
+    return (CDOSessionImpl)getProtocol().getInfraStructure();
+  }
+
+  protected CDORevisionManagerImpl getRevisionManager()
+  {
+    return getSession().getRevisionManager();
+  }
+
+  protected CDOSessionPackageManagerImpl getPackageManager()
+  {
+    return getSession().getPackageManager();
+  }
+
+  protected CDOPackageURICompressor getPackageURICompressor()
+  {
+    return getSession();
+  }
+
   protected CDOIDProvider getIDProvider()
   {
     return commitContext.getTransaction();
   }
 
+  protected CDOIDObjectFactory getIDFactory()
+  {
+    return getSession();
+  }
+
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected final void requesting(ExtendedDataOutputStream out, IMonitor monitor) throws Exception
+  {
+    requesting(new CDODataOutputImpl(out)
+    {
+      @Override
+      protected CDOPackageURICompressor getPackageURICompressor()
+      {
+        return CommitTransactionRequest.this.getPackageURICompressor();
+      }
+
+      public CDOIDProvider getIDProvider()
+      {
+        return CommitTransactionRequest.this.getIDProvider();
+      }
+    }, monitor);
+  }
+
+  @Override
+  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, IMonitor monitor)
+      throws Exception
+  {
+    return confirming(new CDODataInputImpl(in)
+    {
+      @Override
+      protected CDORevisionResolver getRevisionResolver()
+      {
+        return CommitTransactionRequest.this.getRevisionManager();
+      }
+
+      @Override
+      protected CDOPackageManager getPackageManager()
+      {
+        return CommitTransactionRequest.this.getPackageManager();
+      }
+
+      @Override
+      protected CDOPackageURICompressor getPackageURICompressor()
+      {
+        return CommitTransactionRequest.this.getPackageURICompressor();
+      }
+
+      @Override
+      protected CDOIDObjectFactory getIDFactory()
+      {
+        return CommitTransactionRequest.this.getIDFactory();
+      }
+
+      @Override
+      protected CDOListFactory getListFactory()
+      {
+        return CDOListReferenceProxyImpl.FACTORY;
+      }
+    }, monitor);
+  }
+
+  protected void requesting(CDODataOutput out, IMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
     requestingCommit(out);
   }
 
-  @Override
-  protected CommitTransactionResult confirming(CDODataInput in) throws IOException
+  protected CommitTransactionResult confirming(CDODataInput in, IMonitor monitor) throws IOException
   {
     CommitTransactionResult result = confirmingCheckError(in);
     if (result != null)

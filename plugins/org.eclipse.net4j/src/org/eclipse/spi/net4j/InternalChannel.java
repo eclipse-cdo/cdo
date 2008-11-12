@@ -27,9 +27,12 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.I
   /**
    * @since 2.0
    */
-  public void setUserID(String userID);
+  public void setID(short id);
 
-  public void setChannelIndex(short channelIndex);
+  /**
+   * @since 2.0
+   */
+  public void setUserID(String userID);
 
   public ExecutorService getReceiveExecutor();
 
@@ -43,9 +46,4 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.I
   public void handleBufferFromMultiplexer(IBuffer buffer);
 
   public Queue<IBuffer> getSendQueue();
-
-  /**
-   * @since 2.0
-   */
-  public void finishDeactivate(boolean inverse);
 }

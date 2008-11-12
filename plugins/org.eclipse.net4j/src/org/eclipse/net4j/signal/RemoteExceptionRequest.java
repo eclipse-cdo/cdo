@@ -11,31 +11,67 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.internal.net4j.bundle.OM;
 
 /**
  * @author Eike Stepper
  */
 class RemoteExceptionRequest extends Request
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RemoteExceptionRequest.class);
+
   private int correlationID;
+
+  private boolean responding;
 
   private String message;
 
   private Throwable t;
 
-  public RemoteExceptionRequest(SignalProtocol<?> protocol, int correlationID, String message, Throwable t)
+  public RemoteExceptionRequest(SignalProtocol<?> protocol, int correlationID, boolean responding, String message,
+      Throwable t)
   {
     super(protocol, SignalProtocol.SIGNAL_REMOTE_EXCEPTION);
     this.correlationID = correlationID;
     this.message = message;
     this.t = t;
+    this.responding = responding;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
+    if (TRACER.isEnabled())
+    {
+      String msg = getFirstLine(message);
+      TRACER.format("Writing remote exception for signal {0}: {1}", correlationID, msg);
+    }
+
     out.writeInt(correlationID);
+    out.writeBoolean(responding);
     out.writeString(message);
     out.writeObject(t);
+  }
+
+  public static String getFirstLine(String message)
+  {
+    if (message == null)
+    {
+      return null;
+    }
+
+    int nl = message.indexOf('\n');
+    if (nl == -1)
+    {
+      nl = message.length();
+    }
+    if (nl > 100)
+    {
+      nl = 100;
+    }
+
+    return message.substring(0, nl);
   }
 }

@@ -23,8 +23,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.IRandomizer;
 
-import org.eclipse.internal.net4j.acceptor.Acceptor;
-
+import org.eclipse.spi.net4j.Acceptor;
 import org.eclipse.spi.net4j.InternalConnector;
 
 import java.io.IOException;

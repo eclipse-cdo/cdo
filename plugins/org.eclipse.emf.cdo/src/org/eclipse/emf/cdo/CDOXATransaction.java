@@ -23,14 +23,13 @@ public interface CDOXATransaction extends CDOUserTransaction
   /**
    * see {@link CDOXATransaction#isAllowRequestFromTransactionEnabled()}
    */
-
   public void setAllowRequestFromTransactionEnabled(boolean allRequest);
 
   /**
    * Allow request that come from contains {@link CDOTransaction}. Default value is true.
    * <p>
    * If the value is true, cdoTransaction.commit() will call xaTransaction.commit and all {@link CDOXATransaction} part
-   * of XATransaction will be committed.
+   * of xaTransaction will be committed.
    * <p>
    * If the value is false, the user will receive an exception by calling cdoTransaction.commit(). The user can only
    * commit from {@link CDOXATransaction}.

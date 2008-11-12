@@ -12,20 +12,20 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
-
-import org.eclipse.internal.net4j.bundle.OM;
-
-import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
  */
 public abstract class Request extends SignalActor
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Request.class);
+  /**
+   * @since 2.0
+   */
+  public Request(SignalProtocol<?> protocol, short id, String name)
+  {
+    super(protocol, id, name);
+  }
 
   /**
    * @since 2.0
@@ -35,18 +35,33 @@ public abstract class Request extends SignalActor
     super(protocol, signalID);
   }
 
+  /**
+   * @since 2.0
+   */
+  public Request(SignalProtocol<?> protocol, Enum<?> literal)
+  {
+    super(protocol, literal);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void sendAsync() throws Exception
+  {
+    getProtocol().startSignal(this, getProtocol().getTimeout());
+
+  }
+
   @Override
   protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("================ Requesting " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
-    }
+    doOutput(out);
+  }
 
-    OutputStream wrappedOutputStream = wrapOutputStream(out);
-    requesting(ExtendedDataOutputStream.wrap(wrappedOutputStream));
-    finishOutputStream(wrappedOutputStream);
-    out.flushWithEOS();
+  @Override
+  void doExtendedOutput(ExtendedDataOutputStream out) throws Exception
+  {
+    requesting(out);
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out) throws Exception;

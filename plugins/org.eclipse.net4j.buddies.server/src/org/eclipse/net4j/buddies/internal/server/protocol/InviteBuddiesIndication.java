@@ -79,7 +79,7 @@ public class InviteBuddiesIndication extends Indication
           try
           {
             BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
-            new CollaborationInitiatedNotification(protocol, collaborationID, set, facilityTypes).send();
+            new CollaborationInitiatedNotification(protocol, collaborationID, set, facilityTypes).sendAsync();
           }
           catch (Exception ex)
           {

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.internal.db.jdbc.AbstractJDBCDelegate;
 
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,7 +83,7 @@ public interface IJDBCDelegate
   /**
    * Do a commit on the JDBC connection.
    */
-  public void commit();
+  public void commit(IMonitor monitor);
 
   /**
    * Do a rollback on the JDBC connection.

@@ -12,6 +12,9 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
+import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -21,6 +24,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.MessageFormat;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -28,11 +32,18 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class Signal implements Runnable
 {
+  /**
+   * @since 2.0
+   */
+  public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Signal.class);
 
   private SignalProtocol<?> protocol;
 
-  private short signalID;
+  private short id;
+
+  private String name;
 
   private int correlationID;
 
@@ -48,10 +59,29 @@ public abstract class Signal implements Runnable
    * 
    * @since 2.0
    */
-  protected Signal(SignalProtocol<?> protocol, short signalID)
+  public Signal(SignalProtocol<?> protocol, short id, String name)
   {
     this.protocol = protocol;
-    this.signalID = signalID;
+    this.id = id;
+    this.name = name;
+  }
+
+  /**
+   * @since 2.0
+   * @see #Signal(SignalProtocol, short, String)
+   */
+  public Signal(SignalProtocol<?> protocol, short id)
+  {
+    this(protocol, id, null);
+  }
+
+  /**
+   * @since 2.0
+   * @see #Signal(SignalProtocol, short, String)
+   */
+  public Signal(SignalProtocol<?> protocol, Enum<?> literal)
+  {
+    this(protocol, (short)literal.ordinal(), literal.name());
   }
 
   public SignalProtocol<?> getProtocol()
@@ -60,18 +90,69 @@ public abstract class Signal implements Runnable
   }
 
   /**
-   * Returns the short integer ID of this signal.
+   * Returns the short integer ID of this signal that is unique among all signals of the associated
+   * {@link #getProtocol() protocol}.
    * 
    * @since 2.0
    */
-  public final short getSignalID()
+  public final short getID()
   {
-    return signalID;
+    return id;
   }
 
-  protected final int getCorrelationID()
+  /**
+   * @since 2.0
+   */
+  public String getName()
+  {
+    if (name == null)
+    {
+      // Needs no synchronization because any thread would set the same value.
+      name = ReflectUtil.getSimpleClassName(this);
+    }
+
+    return name;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public final int getCorrelationID()
   {
     return correlationID;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}]", getProtocol().getType(),
+        getID(), getName(), getCorrelationID());
+  }
+
+  public final void run()
+  {
+    String threadName = null;
+    try
+    {
+      if (OM.SET_SIGNAL_THREAD_NAME)
+      {
+        threadName = getClass().getSimpleName();
+        Thread.currentThread().setName(threadName);
+      }
+
+      runSync();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+    finally
+    {
+      if (threadName != null)
+      {
+        Thread.currentThread().setName(threadName + "(FINISHED)");
+      }
+    }
   }
 
   protected final BufferInputStream getBufferInputStream()
@@ -173,33 +254,9 @@ public abstract class Signal implements Runnable
     }
   }
 
-  public final void run()
-  {
-    String threadName = null;
-    try
-    {
-      if (OM.SET_SIGNAL_THREAD_NAME)
-      {
-        threadName = getClass().getSimpleName();
-        Thread.currentThread().setName(threadName);
-      }
+  protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;
 
-      runSync();
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
-    finally
-    {
-      if (threadName != null)
-      {
-        Thread.currentThread().setName(threadName + "(FINISHED)");
-      }
-    }
-  }
-
-  protected void runSync() throws Exception
+  void runSync() throws Exception
   {
     try
     {
@@ -224,8 +281,6 @@ public abstract class Signal implements Runnable
     }
   }
 
-  protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;
-
   void setCorrelationID(int correlationID)
   {
     this.correlationID = correlationID;
@@ -240,4 +295,78 @@ public abstract class Signal implements Runnable
   {
     bufferOutputStream = outputStream;
   }
+
+  void doOutput(BufferOutputStream out) throws Exception
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("================ {0}: {1}", getOutputMeaning(), this); //$NON-NLS-1$
+    }
+
+    OutputStream wrappedOutputStream = wrapOutputStream(out);
+    ExtendedDataOutputStream extended = ExtendedDataOutputStream.wrap(wrappedOutputStream);
+
+    try
+    {
+      doExtendedOutput(extended);
+    }
+    catch (Error ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
+    finally
+    {
+      finishOutputStream(wrappedOutputStream);
+    }
+
+    out.flushWithEOS();
+  }
+
+  void doInput(BufferInputStream in) throws Exception
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("================ {0}: {1}", getInputMeaning(), this); //$NON-NLS-1$
+    }
+
+    InputStream wrappedInputStream = wrapInputStream(in);
+    ExtendedDataInputStream extended = ExtendedDataInputStream.wrap(wrappedInputStream);
+
+    try
+    {
+      doExtendedInput(extended);
+    }
+    catch (Error ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
+    finally
+    {
+      finishInputStream(wrappedInputStream);
+    }
+  }
+
+  void doExtendedOutput(ExtendedDataOutputStream out) throws Exception
+  {
+  }
+
+  void doExtendedInput(ExtendedDataInputStream in) throws Exception
+  {
+  }
+
+  abstract String getOutputMeaning();
+
+  abstract String getInputMeaning();
 }

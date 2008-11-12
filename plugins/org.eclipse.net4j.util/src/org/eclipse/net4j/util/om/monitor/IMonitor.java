@@ -8,19 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.protocol;
-
-import org.eclipse.net4j.util.factory.Factory;
+package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public abstract class ServerProtocolFactory extends Factory
+public interface IMonitor
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.serverProtocols";
+  public boolean isCanceled();
 
-  public ServerProtocolFactory(String type)
-  {
-    super(PRODUCT_GROUP, type);
-  }
+  public void checkCanceled() throws MonitorCanceledException;
+
+  public void begin(int totalWork) throws MonitorCanceledException;
+
+  public void worked(int work) throws MonitorCanceledException;
+
+  public void done();
+
+  public int getTotalWork();
+
+  public int getWork();
+
+  public IMonitor fork(int work);
 }

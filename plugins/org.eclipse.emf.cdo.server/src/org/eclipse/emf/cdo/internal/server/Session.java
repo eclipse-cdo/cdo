@@ -270,7 +270,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         IChannel channel = protocol.getChannel();
         if (LifecycleUtil.isActive(channel))
         {
-          new CommitNotificationRequest(channel, timeStamp, dirtyIDs, detachedObjects, newDeltas).send();
+          new CommitNotificationRequest(channel, timeStamp, dirtyIDs, detachedObjects, newDeltas).sendAsync();
         }
         else
         {

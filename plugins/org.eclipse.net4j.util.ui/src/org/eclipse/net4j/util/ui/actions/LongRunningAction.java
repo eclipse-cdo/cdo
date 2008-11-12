@@ -11,11 +11,12 @@
 package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
-import org.eclipse.net4j.util.om.monitor.MonitorUtil;
-import org.eclipse.net4j.util.om.monitor.MonitoredJob;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
@@ -153,20 +154,20 @@ public abstract class LongRunningAction extends SafeAction
     preRun();
     if (totalWork != 0)
     {
-      new MonitoredJob(getBundleID(), getText())
+      new Job(getText())
       {
         @Override
-        protected void run() throws Exception
+        protected IStatus run(IProgressMonitor progressMonitor)
         {
           try
           {
-            MonitorUtil.begin(totalWork);
-            doRun();
+            doRun(progressMonitor);
+            return Status.OK_STATUS;
           }
           catch (Exception ex)
           {
             OM.LOG.error(ex);
-            throw ex;
+            return new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
           }
         }
       }.schedule();
@@ -182,7 +183,10 @@ public abstract class LongRunningAction extends SafeAction
     return OM.BUNDLE_ID;
   }
 
-  protected abstract void doRun() throws Exception;
+  /**
+   * @since 2.0
+   */
+  protected abstract void doRun(IProgressMonitor progressMonitor) throws Exception;
 
   protected final void checkCancelation(IProgressMonitor monitor)
   {

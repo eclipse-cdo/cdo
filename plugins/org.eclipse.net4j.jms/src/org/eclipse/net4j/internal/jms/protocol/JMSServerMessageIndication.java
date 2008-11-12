@@ -17,7 +17,6 @@ import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 
-
 /**
  * @author Eike Stepper
  */

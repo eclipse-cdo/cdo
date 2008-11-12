@@ -14,6 +14,7 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.IErrorHandler;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -36,9 +37,11 @@ public class Buffer implements InternalBuffer
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, Buffer.class);
 
+  private IErrorHandler errorHandler;
+
   private IBufferProvider bufferProvider;
 
-  private short channelIndex;
+  private short channelID;
 
   private boolean eos;
 
@@ -72,14 +75,14 @@ public class Buffer implements InternalBuffer
     this.bufferProvider = bufferProvider;
   }
 
-  public short getChannelIndex()
+  public short getChannelID()
   {
     if (state == BufferState.INITIAL || state == BufferState.READING_HEADER)
     {
       throw new IllegalStateException("state == " + state); //$NON-NLS-1$
     }
 
-    return channelIndex;
+    return channelID;
   }
 
   public short getCapacity()
@@ -107,6 +110,7 @@ public class Buffer implements InternalBuffer
    */
   public void release()
   {
+    errorHandler = null;
     if (bufferProvider != null)
     {
       bufferProvider.retainBuffer(this);
@@ -117,7 +121,7 @@ public class Buffer implements InternalBuffer
   {
     byteBuffer.clear();
     state = BufferState.INITIAL;
-    channelIndex = NO_CHANNEL;
+    channelID = NO_CHANNEL;
     eos = false;
   }
 
@@ -129,21 +133,50 @@ public class Buffer implements InternalBuffer
 
   public ByteBuffer startGetting(SocketChannel socketChannel) throws IOException
   {
-    if (state != BufferState.INITIAL && state != BufferState.READING_HEADER && state != BufferState.READING_BODY)
+    try
     {
-      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
-    }
+      if (state != BufferState.INITIAL && state != BufferState.READING_HEADER && state != BufferState.READING_BODY)
+      {
+        throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+      }
 
-    if (state == BufferState.INITIAL)
-    {
-      byteBuffer.limit(IBuffer.HEADER_SIZE);
-      state = BufferState.READING_HEADER;
-    }
+      if (state == BufferState.INITIAL)
+      {
+        byteBuffer.limit(IBuffer.HEADER_SIZE);
+        state = BufferState.READING_HEADER;
+      }
 
-    if (state == BufferState.READING_HEADER)
-    {
-      int num = socketChannel.read(byteBuffer);
-      if (num == -1)
+      if (state == BufferState.READING_HEADER)
+      {
+        int num = socketChannel.read(byteBuffer);
+        if (num == -1)
+        {
+          throw new ClosedChannelException();
+        }
+
+        if (byteBuffer.hasRemaining())
+        {
+          return null;
+        }
+
+        byteBuffer.flip();
+        channelID = byteBuffer.getShort();
+        short payloadSize = byteBuffer.getShort();
+        if (payloadSize < 0)
+        {
+          eos = true;
+          payloadSize = (short)-payloadSize;
+        }
+
+        payloadSize -= EOS_OFFSET;
+
+        byteBuffer.clear();
+        byteBuffer.limit(payloadSize);
+        state = BufferState.READING_BODY;
+      }
+
+      // state == State.READING_BODY
+      if (socketChannel.read(byteBuffer) == -1)
       {
         throw new ClosedChannelException();
       }
@@ -153,67 +186,69 @@ public class Buffer implements InternalBuffer
         return null;
       }
 
-      byteBuffer.flip();
-      channelIndex = byteBuffer.getShort();
-      short payloadSize = byteBuffer.getShort();
-      if (payloadSize < 0)
+      if (TRACER.isEnabled())
       {
-        eos = true;
-        payloadSize = (short)-payloadSize;
+        TRACER.trace("Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+            + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
-      payloadSize -= EOS_OFFSET;
-
-      byteBuffer.clear();
-      byteBuffer.limit(payloadSize);
-      state = BufferState.READING_BODY;
+      byteBuffer.flip();
+      state = BufferState.GETTING;
+      return byteBuffer;
     }
-
-    // state == State.READING_BODY
-    if (socketChannel.read(byteBuffer) == -1)
+    catch (IOException ex)
     {
-      throw new ClosedChannelException();
+      handleError(ex);
+      throw ex;
     }
-
-    if (byteBuffer.hasRemaining())
+    catch (RuntimeException ex)
     {
-      return null;
+      handleError(ex);
+      throw ex;
     }
-
-    if (TRACER.isEnabled())
+    catch (Error ex)
     {
-      TRACER.trace("Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-          + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
+      handleError(ex);
+      throw ex;
     }
-
-    byteBuffer.flip();
-    state = BufferState.GETTING;
-    return byteBuffer;
   }
 
-  public ByteBuffer startPutting(short channelIndex)
+  public ByteBuffer startPutting(short channelID)
   {
-    if (state == BufferState.PUTTING)
+    try
     {
-      if (channelIndex != this.channelIndex)
+      if (state == BufferState.PUTTING)
       {
-        throw new IllegalArgumentException("channelIndex != this.channelIndex"); //$NON-NLS-1$
+        if (channelID != this.channelID)
+        {
+          throw new IllegalArgumentException("channelID != this.channelID"); //$NON-NLS-1$
+        }
       }
-    }
-    else if (state != BufferState.INITIAL)
-    {
-      throw new IllegalStateException("state: " + state); //$NON-NLS-1$
-    }
-    else
-    {
-      state = BufferState.PUTTING;
-      this.channelIndex = channelIndex;
+      else if (state != BufferState.INITIAL)
+      {
+        throw new IllegalStateException("state: " + state); //$NON-NLS-1$
+      }
+      else
+      {
+        state = BufferState.PUTTING;
+        this.channelID = channelID;
 
-      byteBuffer.clear();
-      byteBuffer.position(IBuffer.HEADER_SIZE);
-    }
+        byteBuffer.clear();
+        byteBuffer.position(IBuffer.HEADER_SIZE);
+      }
 
-    return byteBuffer;
+      return byteBuffer;
+    }
+    catch (RuntimeException ex)
+    {
+      handleError(ex);
+      throw ex;
+    }
+    catch (Error ex)
+    {
+      handleError(ex);
+      throw ex;
+    }
   }
 
   /**
@@ -221,62 +256,93 @@ public class Buffer implements InternalBuffer
    */
   public boolean write(SocketChannel socketChannel) throws IOException
   {
-    if (state != BufferState.PUTTING && state != BufferState.WRITING)
+    try
     {
-      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
-    }
-
-    if (state == BufferState.PUTTING)
-    {
-      if (channelIndex == NO_CHANNEL)
+      if (state != BufferState.PUTTING && state != BufferState.WRITING)
       {
-        throw new IllegalStateException("channelIndex == NO_CHANNEL"); //$NON-NLS-1$
+        throw new IllegalStateException("state == " + state); //$NON-NLS-1$
       }
 
-      int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + EOS_OFFSET;
-      if (eos)
+      if (state == BufferState.PUTTING)
       {
-        payloadSize = -payloadSize;
+        if (channelID == NO_CHANNEL)
+        {
+          throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
+        }
+
+        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + EOS_OFFSET;
+        if (eos)
+        {
+          payloadSize = -payloadSize;
+        }
+
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Writing " + (Math.abs(payloadSize) - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
+              + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
+        byteBuffer.flip();
+        byteBuffer.putShort(channelID);
+        byteBuffer.putShort((short)payloadSize);
+        byteBuffer.position(0);
+        state = BufferState.WRITING;
       }
 
-      if (TRACER.isEnabled())
+      int numBytes = socketChannel.write(byteBuffer);
+      if (numBytes == -1)
       {
-        TRACER.trace("Writing " + (Math.abs(payloadSize) - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-            + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
+        throw new IOException("Channel closed"); //$NON-NLS-1$
       }
 
-      byteBuffer.flip();
-      byteBuffer.putShort(channelIndex);
-      byteBuffer.putShort((short)payloadSize);
-      byteBuffer.position(0);
-      state = BufferState.WRITING;
-    }
+      if (byteBuffer.hasRemaining())
+      {
+        return false;
+      }
 
-    int numBytes = socketChannel.write(byteBuffer);
-    if (numBytes == -1)
+      clear();
+      return true;
+    }
+    catch (IOException ex)
     {
-      throw new IOException("Channel closed"); //$NON-NLS-1$
+      handleError(ex);
+      throw ex;
     }
-
-    if (byteBuffer.hasRemaining())
+    catch (RuntimeException ex)
     {
-      return false;
+      handleError(ex);
+      throw ex;
     }
-
-    clear();
-    return true;
+    catch (Error ex)
+    {
+      handleError(ex);
+      throw ex;
+    }
   }
 
   public void flip()
   {
-    if (state != BufferState.PUTTING)
+    try
     {
-      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
-    }
+      if (state != BufferState.PUTTING)
+      {
+        throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+      }
 
-    byteBuffer.flip();
-    byteBuffer.position(IBuffer.HEADER_SIZE);
-    state = BufferState.GETTING;
+      byteBuffer.flip();
+      byteBuffer.position(IBuffer.HEADER_SIZE);
+      state = BufferState.GETTING;
+    }
+    catch (RuntimeException ex)
+    {
+      handleError(ex);
+      throw ex;
+    }
+    catch (Error ex)
+    {
+      handleError(ex);
+      throw ex;
+    }
   }
 
   @Override
@@ -317,6 +383,26 @@ public class Buffer implements InternalBuffer
     {
       byteBuffer.position(oldPosition);
       byteBuffer.limit(oldLimit);
+    }
+  }
+
+  public IErrorHandler getErrorHandler()
+  {
+    return errorHandler;
+  }
+
+  public void setErrorHandler(IErrorHandler errorHandler)
+  {
+    this.errorHandler = errorHandler;
+  }
+
+  private void handleError(Throwable t)
+  {
+    OM.LOG.error(t);
+    if (errorHandler != null)
+    {
+      errorHandler.handleError(t);
+      release();
     }
   }
 }

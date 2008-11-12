@@ -11,10 +11,13 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.factory.ProductCreationException;
+
+import org.eclipse.spi.net4j.ServerProtocolFactory;
+
+import java.rmi.AlreadyBoundException;
 
 /**
  * @author Eike Stepper
@@ -34,6 +37,8 @@ public class TestSignalProtocol extends SignalProtocol<Object>
   public static final short SIGNAL_ASYNC = 5;
 
   public static final short SIGNAL_EXCEPTION = 6;
+
+  public static final String SIMULATED_EXCEPTION = "Simulated exception";
 
   public TestSignalProtocol(IConnector connector)
   {
@@ -75,6 +80,23 @@ public class TestSignalProtocol extends SignalProtocol<Object>
     default:
       return null;
     }
+  }
+
+  public void throwException() throws Exception
+  {
+    try
+    {
+      throwNestedException();
+    }
+    catch (Exception ex)
+    {
+      throw new ClassNotFoundException(SIMULATED_EXCEPTION, ex);
+    }
+  }
+
+  public void throwNestedException() throws Exception
+  {
+    throw new AlreadyBoundException(SIMULATED_EXCEPTION);
   }
 
   /**

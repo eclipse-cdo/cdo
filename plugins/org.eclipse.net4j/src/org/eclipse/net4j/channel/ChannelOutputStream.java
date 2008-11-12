@@ -11,6 +11,7 @@
 package org.eclipse.net4j.channel;
 
 import org.eclipse.net4j.buffer.BufferOutputStream;
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 
 /**
@@ -20,11 +21,11 @@ public class ChannelOutputStream extends BufferOutputStream
 {
   public ChannelOutputStream(IChannel channel)
   {
-    super(channel, channel.getIndex());
+    super(channel, channel.getID());
   }
 
   public ChannelOutputStream(IChannel channel, IBufferProvider bufferProvider)
   {
-    super(channel, bufferProvider, channel.getIndex());
+    super(channel, bufferProvider, channel == null ? IBuffer.NO_CHANNEL : channel.getID());
   }
 }

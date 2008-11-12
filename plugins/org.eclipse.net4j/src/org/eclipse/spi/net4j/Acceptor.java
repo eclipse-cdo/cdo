@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.internal.net4j.acceptor;
+package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.connector.IConnector;
@@ -23,14 +23,12 @@ import org.eclipse.net4j.util.security.INegotiator;
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
 
-import org.eclipse.spi.net4j.InternalAcceptor;
-import org.eclipse.spi.net4j.InternalConnector;
-
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class Acceptor extends Container<IConnector> implements InternalAcceptor
 {

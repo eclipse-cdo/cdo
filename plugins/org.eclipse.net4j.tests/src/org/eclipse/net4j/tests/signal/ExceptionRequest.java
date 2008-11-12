@@ -14,29 +14,38 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-
 /**
  * @author Eike Stepper
  */
 public class ExceptionRequest extends RequestWithConfirmation<Boolean>
 {
-  private boolean exceptionInIndicating;
+  private int phase;
 
-  public ExceptionRequest(TestSignalProtocol protocol, boolean exceptionInIndicating)
+  public ExceptionRequest(TestSignalProtocol protocol, int phase)
   {
     super(protocol, TestSignalProtocol.SIGNAL_EXCEPTION);
-    this.exceptionInIndicating = exceptionInIndicating;
+    this.phase = phase;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
-    out.writeBoolean(exceptionInIndicating);
+    out.writeInt(phase);
+    if (phase == 1)
+    {
+      ((TestSignalProtocol)getProtocol()).throwException();
+    }
+
   }
 
   @Override
   protected Boolean confirming(ExtendedDataInputStream in) throws Exception
   {
+    if (phase == 4)
+    {
+      ((TestSignalProtocol)getProtocol()).throwException();
+    }
+
     return in.readBoolean();
   }
 }

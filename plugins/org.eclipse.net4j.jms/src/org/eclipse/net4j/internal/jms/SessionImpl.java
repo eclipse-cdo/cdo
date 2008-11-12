@@ -387,7 +387,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
   {
     try
     {
-      new JMSAcknowledgeRequest(connection.getProtocol(), id).send();
+      new JMSAcknowledgeRequest(connection.getProtocol(), id).sendAsync();
       return true;
     }
     catch (Exception ex)

@@ -11,8 +11,7 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.SignalRemoteException;
-import org.eclipse.net4j.tests.signal.ExceptionIndication;
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.tests.signal.ExceptionRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -28,17 +27,27 @@ public class ExceptionTest extends AbstractProtocolTest
   {
   }
 
+  public void testExceptionInIRequesting() throws Exception
+  {
+    exceptionInPhase(1);
+  }
+
   public void testExceptionInIndicating() throws Exception
   {
-    run(true);
+    exceptionInPhase(2);
   }
 
   public void testExceptionInResponding() throws Exception
   {
-    run(false);
+    exceptionInPhase(3);
   }
 
-  private void run(boolean exceptionInIndicating) throws Exception
+  public void testExceptionInConfirming() throws Exception
+  {
+    exceptionInPhase(4);
+  }
+
+  private void exceptionInPhase(int phase) throws Exception
   {
     IConnector connector = startTransport();
     TestSignalProtocol protocol = new TestSignalProtocol(connector);
@@ -46,15 +55,31 @@ public class ExceptionTest extends AbstractProtocolTest
 
     try
     {
-      new ExceptionRequest(protocol, exceptionInIndicating).send();
-      fail("SignalRemoteException expected");
+      new ExceptionRequest(protocol, phase).send();
+      fail("Exception expected");
     }
-    catch (SignalRemoteException success)
+    catch (Exception ex)
     {
-      IOUtil.print(success);
-      ClassNotFoundException cnfe = (ClassNotFoundException)success.getCause();
+      IOUtil.print(ex);
+      ClassNotFoundException cnfe = null;
+      if (phase == 2 || phase == 3)
+      {
+        if (ex instanceof RemoteException)
+        {
+          cnfe = (ClassNotFoundException)ex.getCause();
+        }
+        else
+        {
+          fail("RemoteException expected");
+        }
+      }
+      else
+      {
+        cnfe = (ClassNotFoundException)ex;
+      }
+
       AlreadyBoundException abe = (AlreadyBoundException)cnfe.getCause();
-      assertEquals(ExceptionIndication.SIMULATED_EXCEPTION, abe.getMessage());
+      assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, abe.getMessage());
     }
   }
 }

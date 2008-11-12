@@ -12,6 +12,8 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSavepoint;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 /**
  * @author Simon McDuff
  * @since 2.0
@@ -24,7 +26,7 @@ public interface CDOTransactionStrategy
 
   public void unsetTarget(InternalCDOTransaction transaction);
 
-  public void commit(InternalCDOTransaction transaction) throws Exception;
+  public void commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception;
 
   public void rollback(InternalCDOTransaction transaction, CDOSavepoint savepoint);
 

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -19,6 +20,10 @@ import org.eclipse.internal.net4j.bundle.OM;
  */
 class RemoteExceptionIndication extends Indication
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, RemoteExceptionIndication.class);
+
+  private Throwable t;
+
   public RemoteExceptionIndication(SignalProtocol<?> protocol)
   {
     super(protocol, SignalProtocol.SIGNAL_REMOTE_EXCEPTION);
@@ -28,8 +33,13 @@ class RemoteExceptionIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     int correlationID = in.readInt();
+    boolean responding = in.readBoolean();
     String message = in.readString();
-    Throwable t;
+    if (TRACER.isEnabled())
+    {
+      String msg = RemoteExceptionRequest.getFirstLine(message);
+      TRACER.format("Reading remote exception for signal {0}: {1}", correlationID, msg);
+    }
 
     try
     {
@@ -37,9 +47,9 @@ class RemoteExceptionIndication extends Indication
     }
     catch (Throwable couldNotLoadExceptionClass)
     {
-      t = new SignalRemoteException(message);
+      t = new RemoteException(message, responding);
     }
 
-    getProtocol().stopSignal(correlationID, t);
+    getProtocol().handleRemoteException(correlationID, t, responding);
   }
 }

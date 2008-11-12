@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 
-import java.io.IOException;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 
 /**
  * @author Simon McDuff
@@ -27,15 +27,15 @@ public class CommitTransactionPhase3Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicating(CDODataInput in) throws IOException
+  protected void indicating(CDODataInput in, IMonitor monitor) throws Exception
   {
     indicationTransaction(in);
   }
 
   @Override
-  protected void responding(CDODataOutput out) throws IOException
+  protected void responding(CDODataOutput out, IMonitor monitor) throws Exception
   {
-    commitContext.commit();
+    commitContext.commit(monitor);
     boolean success = respondingException(out, commitContext.getRollbackMessage());
     if (success)
     {
@@ -46,7 +46,7 @@ public class CommitTransactionPhase3Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicationTransaction(CDODataInput in) throws IOException
+  protected void indicationTransaction(CDODataInput in) throws Exception
   {
     int viewID = in.readInt();
     commitContext = getRepository().getCommitManager().get(getTransaction(viewID));

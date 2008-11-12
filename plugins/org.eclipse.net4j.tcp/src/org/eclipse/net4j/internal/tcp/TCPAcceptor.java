@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.internal.net4j.acceptor.Acceptor;
+import org.eclipse.spi.net4j.Acceptor;
 
 import java.io.IOException;
 import java.net.InetAddress;

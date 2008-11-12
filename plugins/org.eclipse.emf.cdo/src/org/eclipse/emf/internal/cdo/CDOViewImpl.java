@@ -58,7 +58,7 @@ import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.signal.SignalRemoteException;
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -234,10 +234,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     try
     {
-      LockObjectsRequest request = new LockObjectsRequest(getSession().getProtocol(), this, objects, timeout, lockType);
-      getSession().getFailOverStrategy().send(request);
+      new LockObjectsRequest(getSession().getProtocol(), this, objects, timeout, lockType).send();
     }
-    catch (SignalRemoteException ex)
+    catch (RemoteException ex)
     {
       if (ex.getCause() instanceof RuntimeException)
       {
@@ -271,8 +270,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     try
     {
-      UnlockObjectsRequest request = new UnlockObjectsRequest(getSession().getProtocol(), this, objects, lockType);
-      getSession().getFailOverStrategy().send(request);
+      new UnlockObjectsRequest(getSession().getProtocol(), this, objects, lockType).send();
     }
     catch (Exception ex)
     {
@@ -296,8 +294,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     try
     {
-      ObjectLockedRequest request = new ObjectLockedRequest(getSession().getProtocol(), this, object, lockType);
-      return getSession().getFailOverStrategy().send(request);
+      return new ObjectLockedRequest(getSession().getProtocol(), this, object, lockType).send();
     }
     catch (Exception ex)
     {
@@ -1513,9 +1510,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     {
       try
       {
-        ChangeSubscriptionRequest request = new ChangeSubscriptionRequest(getSession().getProtocol(), getViewID(),
-            cdoIDs, subscribeMode, clear);
-        session.getFailOverStrategy().send(request);
+        new ChangeSubscriptionRequest(getSession().getProtocol(), getViewID(), cdoIDs, subscribeMode, clear).send();
       }
       catch (Exception ex)
       {

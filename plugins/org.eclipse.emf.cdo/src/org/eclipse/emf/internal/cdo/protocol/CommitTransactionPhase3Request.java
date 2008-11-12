@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 
 import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 
+import org.eclipse.net4j.util.om.monitor.IMonitor;
+
 import java.io.IOException;
 
 /**
@@ -30,19 +32,19 @@ import java.io.IOException;
  */
 public class CommitTransactionPhase3Request extends CommitTransactionRequest
 {
-  public CommitTransactionPhase3Request(CDOClientProtocol protocol, final CDOXATransactionCommitContext xaTransaction)
+  public CommitTransactionPhase3Request(CDOClientProtocol protocol, CDOXATransactionCommitContext xaContext)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3, xaTransaction);
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE3, xaContext);
   }
 
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected void requesting(CDODataOutput out, IMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
   }
 
   @Override
-  protected CommitTransactionResult confirming(CDODataInput in) throws IOException
+  protected CommitTransactionResult confirming(CDODataInput in, IMonitor monitor) throws IOException
   {
     CommitTransactionResult result = confirmingCheckError(in);
     if (result != null)

@@ -181,7 +181,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
         {
           invitations.remove(buddy);
           BuddiesServerProtocol protocol = (BuddiesServerProtocol)buddy.getSession().getProtocol();
-          new CollaborationInitiatedNotification(protocol, collaborationID, invitations, null).send();
+          new CollaborationInitiatedNotification(protocol, collaborationID, invitations, null).sendAsync();
         }
         catch (Exception ex)
         {
@@ -219,7 +219,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
                 try
                 {
                   BuddiesServerProtocol protocol = (BuddiesServerProtocol)session.getProtocol();
-                  new BuddyRemovedNotification(protocol, userID).send();
+                  new BuddyRemovedNotification(protocol, userID).sendAsync();
                 }
                 catch (Exception ex)
                 {
@@ -245,7 +245,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
               if (!ObjectUtil.equals(session.getSelf(), e.getBuddy()))
               {
                 BuddiesServerProtocol protocol = (BuddiesServerProtocol)session.getProtocol();
-                new BuddyStateNotification(protocol, e.getBuddy().getUserID(), e.getNewState()).send();
+                new BuddyStateNotification(protocol, e.getBuddy().getUserID(), e.getNewState()).sendAsync();
               }
             }
             catch (Exception ex)

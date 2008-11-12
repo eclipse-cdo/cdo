@@ -12,7 +12,6 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.tests.bugzilla.Bugzilla241463_Test;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
-import org.eclipse.net4j.util.tests.MonitorTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
 import org.eclipse.net4j.util.tests.SecurityTest;
@@ -30,7 +29,6 @@ public class AllTests
   public static Test suite()
   {
     TestSuite suite = new TestSuite("Tests for Net4j");
-    suite.addTestSuite(MonitorTest.class);
     suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
@@ -44,6 +42,7 @@ public class AllTests
     suite.addTestSuite(TransportTest.JVM.class);
     suite.addTestSuite(TransportTest.TCP.class);
     suite.addTestSuite(SignalTest.class);
+    suite.addTestSuite(SignalMonitorTest.class);
     suite.addTestSuite(ExceptionTest.class);
     suite.addTestSuite(SecurityTest.class);
     return suite;

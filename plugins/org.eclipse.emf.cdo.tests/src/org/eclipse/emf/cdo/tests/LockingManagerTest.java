@@ -455,6 +455,8 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     cdoCompany.cdoReadLock().lock();
     session.close();
+
+    sleep(100);
     assertEquals(false, repo.getLockManager().hasLock(RWLockManager.LockType.READ, view, cdoCompany.cdoID()));
   }
 

@@ -18,7 +18,6 @@ Export-Package: org.eclipse.net4j.internal.util.bundle;version="2.0.0";x-friends
  org.eclipse.net4j.internal.util.container;version="2.0.0";x-internal:=true,
  org.eclipse.net4j.internal.util.factory;version="2.0.0";x-internal:=true,
  org.eclipse.net4j.internal.util.om;version="2.0.0";x-internal:=true,
- org.eclipse.net4j.internal.util.om.monitor;version="2.0.0";x-internal:=true,
  org.eclipse.net4j.internal.util.om.pref;version="2.0.0";x-internal:=true,
  org.eclipse.net4j.util;version="2.0.0",
  org.eclipse.net4j.util.cache;version="2.0.0",

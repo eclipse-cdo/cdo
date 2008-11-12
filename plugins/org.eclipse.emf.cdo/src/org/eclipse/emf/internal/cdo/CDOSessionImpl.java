@@ -55,9 +55,6 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.failover.IFailOverEvent;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -65,7 +62,6 @@ import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
-import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -106,21 +102,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private boolean passiveUpdateEnabled = true;
 
   private CDOCollectionLoadingPolicy collectionLoadingPolicy;
-
-  private IFailOverStrategy failOverStrategy;
-
-  @ExcludeFromDump
-  private IListener failOverStrategyListener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof IFailOverEvent)
-      {
-        IFailOverEvent e = (IFailOverEvent)event;
-        handleFailOver(e.getOldChannel(), e.getNewChannel(), e.getNewConnector());
-      }
-    }
-  };
 
   private IConnector connector;
 
@@ -235,30 +216,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     collectionLoadingPolicy = policy;
   }
 
-  public synchronized IFailOverStrategy getFailOverStrategy()
-  {
-    if (failOverStrategy == null)
-    {
-      failOverStrategy = new NOOPFailOverStrategy();
-    }
-
-    return failOverStrategy;
-  }
-
-  public synchronized void setFailOverStrategy(IFailOverStrategy strategy)
-  {
-    if (failOverStrategy != null)
-    {
-      failOverStrategy.removeListener(failOverStrategyListener);
-    }
-
-    failOverStrategy = strategy;
-    if (failOverStrategy != null)
-    {
-      failOverStrategy.addListener(failOverStrategyListener);
-    }
-  }
-
   public IConnector getConnector()
   {
     return connector;
@@ -327,8 +284,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   {
     try
     {
-      RepositoryTimeRequest request = new RepositoryTimeRequest(protocol);
-      return getFailOverStrategy().send(request);
+      return new RepositoryTimeRequest(protocol).send();
     }
     catch (Exception ex)
     {
@@ -448,9 +404,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     {
       try
       {
-        ViewsChangedRequest request = new ViewsChangedRequest(protocol, view.getViewID(),
-            CDOProtocolConstants.VIEW_CLOSED, CDOProtocolView.UNSPECIFIED_DATE);
-        getFailOverStrategy().send(request);
+        new ViewsChangedRequest(protocol, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED,
+            CDOProtocolView.UNSPECIFIED_DATE).send();
       }
       catch (Exception ex)
       {
@@ -473,8 +428,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
         timeStamp = ((CDOAudit)view).getTimeStamp();
       }
 
-      ViewsChangedRequest request = new ViewsChangedRequest(protocol, id, kind, timeStamp);
-      getFailOverStrategy().send(request);
+      new ViewsChangedRequest(protocol, id, kind, timeStamp).send();
     }
     catch (Exception ex)
     {
@@ -855,17 +809,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     fireElementAddedEvent(view);
   }
 
-  protected void handleFailOver(IChannel oldChannel, IChannel newChannel, IConnector newConnector)
-  {
-    // TODO: implement CDOSessionImpl.handleFailOver(oldChannel, newChannel, newConnector)
-    throw new UnsupportedOperationException();
-
-    // EventUtil.removeListener(oldChannel, channelListener);
-    // EventUtil.addListener(newChannel, channelListener);
-    // channel = newChannel;
-    // connector = newConnector;
-  }
-
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -886,8 +829,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     packageRegistry.setSession(this);
     IChannel channel = protocol.open(connector);
 
-    OpenSessionRequest request = new OpenSessionRequest(protocol, repositoryName, passiveUpdateEnabled);
-    OpenSessionResult result = getFailOverStrategy().send(request);
+    OpenSessionResult result = new OpenSessionRequest(protocol, repositoryName, passiveUpdateEnabled).send();
 
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
@@ -958,8 +900,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       missingLibraries.removeAll(existingLibraries);
       if (!missingLibraries.isEmpty())
       {
-        LoadLibrariesRequest request = new LoadLibrariesRequest(protocol, missingLibraries, cacheFolder);
-        getFailOverStrategy().send(request);
+        new LoadLibrariesRequest(protocol, missingLibraries, cacheFolder).send();
       }
     }
 
@@ -1053,9 +994,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         if (!allRevisions.isEmpty())
         {
-          SetPassiveUpdateRequest request = new SetPassiveUpdateRequest(protocol, this, allRevisions,
-              collectionLoadingPolicy.getInitialChunkSize(), passiveUpdateEnabled);
-          getFailOverStrategy().send(request);
+          new SetPassiveUpdateRequest(protocol, this, allRevisions, collectionLoadingPolicy.getInitialChunkSize(),
+              passiveUpdateEnabled).send();
         }
       }
       catch (Exception ex)
@@ -1071,7 +1011,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public Collection<CDOTimeStampContext> refresh()
   {
     // If passive update is turned on we don`t need to refresh.
-    // We do not throw an exception since the client could turn that feature on or off without affecting their code.
+    // We do not throw an exception since the client could turn
+    // that feature on or off without affecting their code.
     checkActive();
     if (!isPassiveUpdateEnabled())
     {
@@ -1081,9 +1022,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
       {
         if (!allRevisions.isEmpty())
         {
-          SyncRevisionRequest request = new SyncRevisionRequest(protocol, this, allRevisions, collectionLoadingPolicy
-              .getInitialChunkSize());
-          return getFailOverStrategy().send(request);
+          return new SyncRevisionRequest(protocol, this, allRevisions, collectionLoadingPolicy.getInitialChunkSize())
+              .send();
         }
       }
       catch (Exception ex)

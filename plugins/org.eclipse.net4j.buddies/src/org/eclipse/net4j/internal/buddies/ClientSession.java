@@ -96,7 +96,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
       {
         try
         {
-          new BuddyStateNotification(protocol, self.getUserID(), ((IBuddyStateEvent)event).getNewState()).send();
+          new BuddyStateNotification(protocol, self.getUserID(), ((IBuddyStateEvent)event).getNewState()).sendAsync();
         }
         catch (Exception ex)
         {

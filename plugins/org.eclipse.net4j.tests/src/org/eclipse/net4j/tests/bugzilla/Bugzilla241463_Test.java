@@ -11,7 +11,6 @@
 package org.eclipse.net4j.tests.bugzilla;
 
 import org.eclipse.net4j.TransportInjector;
-import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
@@ -23,10 +22,8 @@ import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.ManagedContainer;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.security.RandomizerFactory;
 
 import org.eclipse.internal.net4j.ExecutorServiceFactory;
@@ -69,25 +66,10 @@ public class Bugzilla241463_Test extends AbstractTransportTest
     try
     {
       new TestSignalProtocol(connector);
-      fail("TimeoutRuntimeException expected");
+      fail("Exception expected");
     }
-    catch (ConnectorException expected)
+    catch (Exception expected)
     {
-      if (expected.getCause().getClass() != TimeoutRuntimeException.class)
-      {
-        fail("TimeoutRuntimeException expected");
-      }
-
-      // Success
-    }
-    catch (TimeoutRuntimeException expected)
-    {
-      // Success
-    }
-    catch (Throwable wrongException)
-    {
-      IOUtil.print(wrongException);
-      fail("TimeoutRuntimeException expected");
     }
   }
 

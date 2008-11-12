@@ -19,9 +19,9 @@ import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext.CommitState;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -38,10 +38,10 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicating(CDODataInput in) throws IOException
+  protected void indicating(CDODataInput in, IMonitor monitor) throws Exception
   {
     indicationTransaction(in);
-    XATransactionCommitContext xaTransactionContext = (XATransactionCommitContext)commitContext;
+    XATransactionCommitContext xaContextContext = (XATransactionCommitContext)commitContext;
 
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
@@ -53,15 +53,15 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
     {
       CDOIDTemp oldID = (CDOIDTemp)in.readCDOID();
       CDOID newID = in.readCDOID();
-      xaTransactionContext.addIDMapping(oldID, newID);
+      xaContextContext.addIDMapping(oldID, newID);
     }
 
     // Mapping information from others CDOTransactions was added. Notify the commit process to continue.
-    xaTransactionContext.getState().set(CommitState.APPLY_ID_MAPPING_DONE);
+    xaContextContext.getState().set(CommitState.APPLY_ID_MAPPING_DONE);
   }
 
   @Override
-  protected void responding(CDODataOutput out) throws IOException
+  protected void responding(CDODataOutput out, IMonitor monitor) throws Exception
   {
     String exceptionMessage = null;
 
@@ -88,7 +88,7 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicationTransaction(CDODataInput in) throws IOException
+  protected void indicationTransaction(CDODataInput in) throws Exception
   {
     int viewID = in.readInt();
     commitContext = getRepository().getCommitManager().get(getTransaction(viewID));

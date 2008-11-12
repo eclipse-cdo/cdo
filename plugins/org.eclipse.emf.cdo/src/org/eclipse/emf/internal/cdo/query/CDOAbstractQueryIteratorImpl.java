@@ -77,8 +77,7 @@ public abstract class CDOAbstractQueryIteratorImpl<T> extends AbstractQueryResul
       try
       {
         CDOSessionImpl session = (CDOSessionImpl)getView().getSession();
-        QueryCancelRequest request = new QueryCancelRequest(session.getProtocol(), getQueryID());
-        session.getFailOverStrategy().send(request);
+        new QueryCancelRequest(session.getProtocol(), getQueryID()).send();
       }
       catch (Exception ignore)
       {

@@ -30,6 +30,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -318,36 +319,61 @@ public abstract class ClassMapping implements IClassMapping
     return cdoFeature;
   }
 
-  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision)
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, IMonitor monitor)
   {
-    if (revision.getVersion() > 1 && hasFullRevisionInfo())
+    try
     {
-      writeRevisedRow(accessor, (InternalCDORevision)revision);
+      // TODO Better monitoring
+      monitor.begin(10);
+      if (revision.getVersion() > 1 && hasFullRevisionInfo())
+      {
+        writeRevisedRow(accessor, (InternalCDORevision)revision);
+      }
+
+      monitor.worked(1);
+
+      if (revision.isResourceFolder() || revision.isResource())
+      {
+        checkDuplicateResources(accessor, revision);
+      }
+
+      monitor.worked(1);
+
+      // Write attribute table always (even without modeled attributes!)
+      writeAttributes(accessor, (InternalCDORevision)revision);
+
+      monitor.worked(1);
+
+      // Write reference tables only if they exist
+      if (referenceMappings != null)
+      {
+        writeReferences(accessor, (InternalCDORevision)revision);
+      }
+
+      monitor.worked(7);
     }
-
-    if (revision.isResourceFolder() || revision.isResource())
+    finally
     {
-      checkDuplicateResources(accessor, revision);
-    }
-
-    // Write attribute table always (even without modeled attributes!)
-    writeAttributes(accessor, (InternalCDORevision)revision);
-
-    // Write reference tables only if they exist
-    if (referenceMappings != null)
-    {
-      writeReferences(accessor, (InternalCDORevision)revision);
+      monitor.done();
     }
   }
 
   protected abstract void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision)
       throws IllegalStateException;
 
-  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised)
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, IMonitor monitor)
   {
-    if (hasFullRevisionInfo())
+    try
     {
-      writeRevisedRow(accessor, id, revised);
+      monitor.begin(1);
+      if (hasFullRevisionInfo())
+      {
+        writeRevisedRow(accessor, id, revised);
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 

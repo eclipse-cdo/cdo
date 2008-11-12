@@ -42,6 +42,8 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private RuntimeException exception;
 
+  private long stopTimeMillis;
+
   public BufferInputStream()
   {
   }
@@ -54,6 +56,14 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   public long getMillisInterruptCheck()
   {
     return DEFAULT_MILLIS_INTERRUPT_CHECK;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void restartTimeout()
+  {
+    stopTimeMillis = System.currentTimeMillis() + getMillisBeforeTimeout();
   }
 
   /**
@@ -129,11 +139,10 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   protected boolean ensureBuffer() throws IOException
   {
     final long check = getMillisInterruptCheck();
-    final long timeout = getMillisBeforeTimeout();
 
     try
     {
-      if (timeout == NO_TIMEOUT)
+      if (getMillisBeforeTimeout() == NO_TIMEOUT)
       {
         while (currentBuffer == null)
         {
@@ -153,8 +162,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       }
       else
       {
-        // TODO Consider something faster than currentTimeMillis(), maybe less accurate?
-        final long stop = System.currentTimeMillis() + timeout;
+        restartTimeout();
         while (currentBuffer == null)
         {
           if (exception != null)
@@ -168,7 +176,13 @@ public class BufferInputStream extends InputStream implements IBufferHandler
             return false;
           }
 
-          final long remaining = stop - System.currentTimeMillis();
+          long remaining;
+          synchronized (this)
+          {
+            remaining = stopTimeMillis;
+          }
+
+          remaining -= System.currentTimeMillis();
           if (remaining <= 0)
           {
             return false;

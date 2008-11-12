@@ -25,6 +25,7 @@ import org.eclipse.spi.net4j.InternalConnector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,10 +60,10 @@ public abstract class ChannelTest extends AbstractProtocolTest
     assertActive(channel);
 
     InternalConnector serverConnector = (InternalConnector)getAcceptor().getAcceptedConnectors()[0];
-    List<IChannel> serverChannels = serverConnector.getChannels();
+    Collection<IChannel> serverChannels = serverConnector.getChannels();
     assertEquals(1, serverChannels.size());
 
-    IChannel serverChannel = serverChannels.get(0);
+    IChannel serverChannel = serverChannels.iterator().next();
     serverChannel.addListener(deactivationListener);
     assertActive(serverChannel);
 
@@ -72,9 +73,10 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
     protocol.close();
     assertInactive(protocol);
-    assertEquals(0, serverConnector.getChannels().size());
     assertInactive(channel);
-    assertInactive(protocol);
+
+    sleep(50);
+    assertEquals(0, serverConnector.getChannels().size());
     assertInactive(serverChannel);
     assertInactive(serverProtocol);
 
@@ -90,10 +92,10 @@ public abstract class ChannelTest extends AbstractProtocolTest
     }
   }
 
-  public void testSingleThreadNoData1000() throws Exception
+  public void testSingleThreadNoData100() throws Exception
   {
     disableConsole();
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 100; i++)
     {
       IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i);
       testSingleThreadNoData();
@@ -113,10 +115,10 @@ public abstract class ChannelTest extends AbstractProtocolTest
     assertInactive(protocol);
   }
 
-  public void testSingleThreadTinyData1000() throws Exception
+  public void testSingleThreadTinyData100() throws Exception
   {
     disableConsole();
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 100; i++)
     {
       IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i);
       testSingleThreadTinyData();

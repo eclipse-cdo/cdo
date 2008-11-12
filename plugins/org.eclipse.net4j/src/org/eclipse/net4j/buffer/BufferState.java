@@ -35,8 +35,8 @@ public enum BufferState
    * <p>
    * A transition to {@link #PUTTING} can be triggered by calling {@link IBuffer#startPutting(short)} once. If the
    * buffer is intended to be passed to an {@link org.eclipse.net4j.channel.IChannel IChannel} later the
-   * {@link org.eclipse.net4j.channel.IChannel#getChannelIndex() channel index} of that Channel has to be passed because
-   * it is part of the buffer's header. A {@link ByteBuffer} is returned that can be used for putting data.
+   * {@link org.eclipse.net4j.channel.IChannel#getChannelID() channel index} of that Channel has to be passed because it
+   * is part of the buffer's header. A {@link ByteBuffer} is returned that can be used for putting data.
    * <p>
    * A transition to {@link #GETTING} can be triggered by calling {@link IBuffer#startGetting(SocketChannel)} repeatedly
    * until it finally returns a {@link ByteBuffer} that can be used for getting data.

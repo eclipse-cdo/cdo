@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
 
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class ImportRootsAction extends EditingDomainAction
   }
 
   @Override
-  protected void doRun() throws Exception
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     EList<EObject> targetContents = targetResource.getContents();
     List<Resource> resources = getSourceResources();

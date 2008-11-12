@@ -22,6 +22,7 @@ import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.URI;
@@ -32,7 +33,7 @@ import java.util.Map.Entry;
 
 /**
  * <p>
- * Phase 2 consist of sending the mapping of temporary CDOID/final CDOID from other CDOTransaction.
+ * Phase 2 consist of sending the mapping of temporary/persistent CDOID from other CDOTransaction.
  * <p>
  * It will return confirmation only when the commit is ready to flush to disk.
  * 
@@ -43,9 +44,9 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
   private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionPhase1Request.class);
 
-  public CommitTransactionPhase2Request(CDOClientProtocol protocol, final CDOXATransactionCommitContext xaTransaction)
+  public CommitTransactionPhase2Request(CDOClientProtocol protocol, CDOXATransactionCommitContext xaContext)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2, xaTransaction);
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION_PHASE2, xaContext);
   }
 
   @Override
@@ -55,14 +56,14 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
   }
 
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected void requesting(CDODataOutput out, IMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
     requestingIdMapping(out);
   }
 
   @Override
-  protected CommitTransactionResult confirming(CDODataInput in) throws IOException
+  protected CommitTransactionResult confirming(CDODataInput in, IMonitor monitor) throws IOException
   {
     return confirmingCheckError(in);
   }

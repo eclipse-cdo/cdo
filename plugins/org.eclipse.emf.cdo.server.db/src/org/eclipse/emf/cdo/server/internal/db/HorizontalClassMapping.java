@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 
 /**
  * @author Eike Stepper
@@ -38,14 +39,25 @@ public class HorizontalClassMapping extends ClassMapping
   }
 
   @Override
-  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision)
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, IMonitor monitor)
   {
-    super.writeRevision(accessor, revision);
-    if (revision.getVersion() == 1)
+    try
     {
-      CDOID id = revision.getID();
-      CDOClass type = revision.getCDOClass();
-      getMappingStrategy().getObjectTypeCache().putObjectType(accessor, id, type);
+      monitor.begin(5);
+      super.writeRevision(accessor, revision, monitor.fork(4));
+      if (revision.getVersion() == 1)
+      {
+        CDOID id = revision.getID();
+        CDOClass type = revision.getCDOClass();
+        getMappingStrategy().getObjectTypeCache().putObjectType(accessor, id, type);
+      }
+
+      // TODO Better monitoring
+      monitor.worked(1);
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 

@@ -47,6 +47,8 @@ import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -674,7 +676,8 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     if (view instanceof CDOTransaction)
     {
       CDOTransaction transaction = (CDOTransaction)view;
-      transaction.commit();
+      IProgressMonitor progressMonitor = (IProgressMonitor)options.get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR);
+      transaction.commit(progressMonitor);
       setModified(false);
     }
     else

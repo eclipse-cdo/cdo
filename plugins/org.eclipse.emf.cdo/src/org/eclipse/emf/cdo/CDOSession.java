@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.common.CDOProtocolSession;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -27,7 +26,10 @@ import java.util.Collection;
  */
 public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
 {
-  public IFailOverStrategy getFailOverStrategy();
+  /**
+   * @since 2.0
+   */
+  public CDOSessionProtocol getProtocol();
 
   public boolean isOpen();
 

@@ -12,22 +12,20 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
-
-import org.eclipse.internal.net4j.bundle.OM;
-
-import java.io.InputStream;
 
 /**
  * @author Eike Stepper
  */
 public abstract class Indication extends SignalReactor
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Indication.class);
+  /**
+   * @since 2.0
+   */
+  public Indication(SignalProtocol<?> protocol, short id, String name)
+  {
+    super(protocol, id, name);
+  }
 
   /**
    * @since 2.0
@@ -37,54 +35,25 @@ public abstract class Indication extends SignalReactor
     super(protocol, signalID);
   }
 
-  @Override
-  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("================ Indicating " + ReflectUtil.getSimpleClassName(this)); //$NON-NLS-1$
-    }
-
-    InputStream wrappedInputStream = wrapInputStream(in);
-
-    try
-    {
-      indicating(ExtendedDataInputStream.wrap(wrappedInputStream));
-    }
-    catch (Error ex)
-    {
-      OM.LOG.error(ex);
-      sendExceptionSignal(ex);
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      ex = WrappedException.unwrap(ex);
-      OM.LOG.error(ex);
-      sendExceptionSignal(ex);
-      throw ex;
-    }
-    finally
-    {
-      finishInputStream(wrappedInputStream);
-    }
-  }
-
-  protected abstract void indicating(ExtendedDataInputStream in) throws Exception;
-
   /**
    * @since 2.0
    */
-  protected String getMessage(Throwable t)
+  public Indication(SignalProtocol<?> protocol, Enum<?> literal)
   {
-    return StringUtil.formatException(t);
+    super(protocol, literal);
   }
 
-  void sendExceptionSignal(Throwable t) throws Exception
+  @Override
+  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    SignalProtocol<?> protocol = getProtocol();
-    int correlationID = -getCorrelationID();
-    String message = getMessage(t);
-    new RemoteExceptionRequest(protocol, correlationID, message, t).send();
+    doInput(in);
   }
+
+  @Override
+  void doExtendedInput(ExtendedDataInputStream in) throws Exception
+  {
+    indicating(in);
+  }
+
+  protected abstract void indicating(ExtendedDataInputStream in) throws Exception;
 }

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.http.internal.server;
 
-import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 
@@ -67,8 +67,7 @@ public class HTTPServerConnector extends HTTPConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, long timeout, IProtocol<?> protocol)
-      throws ConnectorException
+  protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
   {
     throw new UnsupportedOperationException();
   }

@@ -42,9 +42,9 @@ import org.eclipse.net4j.util.security.IUserAware;
  * An example for opening a channel on an {@link IConnector} and sending an {@link IBuffer}:
  * <p>
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Open a channel
- * IChannel channel = connector.openChannel(); short channelIndex = channel.getIndex(); // Fill a buffer Buffer buffer =
- * bufferProvider.getBuffer(); ByteBuffer byteBuffer = buffer.startPutting(channelIndex); byteBuffer.putDouble(15.47);
- * // Let the channel send the buffer without blocking channel.sendBuffer(buffer); </pre>
+ * IChannel channel = connector.openChannel(); short channelID = channel.getIndex(); // Fill a buffer Buffer buffer =
+ * bufferProvider.getBuffer(); ByteBuffer byteBuffer = buffer.startPutting(channelID); byteBuffer.putDouble(15.47); //
+ * Let the channel send the buffer without blocking channel.sendBuffer(buffer); </pre>
  * <p>
  * An example for receiving {@link IBuffer}s from channels on an {@link IConnector}:
  * <p>
@@ -63,12 +63,12 @@ import org.eclipse.net4j.util.security.IUserAware;
 public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, INotifier
 {
   /**
-   * Returns the index of this channel within the array of channels returned from the
-   * {@link IChannelMultiplexer#getChannels() getChannels()} method of the multiplexer of this channel.
+   * Returns the ID of this channel. The ID is unique at any time among all channels of the associated
+   * {@link IChannelMultiplexer multiplexer}.
    * 
    * @since 2.0
    */
-  public short getIndex();
+  public short getID();
 
   /**
    * Returns the multiplexer this channel is associated with. This channel multiplexer can be used, for example, to open

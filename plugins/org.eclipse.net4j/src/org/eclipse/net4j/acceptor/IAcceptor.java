@@ -13,7 +13,7 @@ package org.eclipse.net4j.acceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainer;
 
-import org.eclipse.internal.net4j.acceptor.Acceptor;
+import org.eclipse.spi.net4j.Acceptor;
 
 /**
  * Accepts incoming connection requests from {@link Location#CLIENT client} {@link IConnector connectors} and creates

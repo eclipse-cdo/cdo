@@ -11,6 +11,7 @@
 package org.eclipse.net4j.http.internal.common;
 
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.bundle.OM;
@@ -20,8 +21,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
-import org.eclipse.internal.net4j.connector.Connector;
-
+import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalChannel;
 
 import java.io.IOException;
@@ -107,7 +107,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       TRACER.format("Multiplexing {0} (count={1})", buffer.formatContent(true), outputOperationCount);
     }
 
-    outputOperations.add(new BufferChannelOperation(httpChannel.getIndex(), outputOperationCount, buffer));
+    outputOperations.add(new BufferChannelOperation(httpChannel.getID(), outputOperationCount, buffer));
   }
 
   /**
@@ -188,18 +188,17 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelIndex, long timeout, IProtocol<?> protocol)
-      throws ConnectorException
+  protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
   {
-    ChannelOperation operation = new OpenChannelOperation(channelIndex, protocol.getType());
+    ChannelOperation operation = new OpenChannelOperation(channelID, protocol.getType());
     outputOperations.add(operation);
 
-    HTTPChannel channel = (HTTPChannel)getChannel(channelIndex);
+    HTTPChannel channel = (HTTPChannel)getChannel(channelID);
     channel.waitForOpenAck(timeout);
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ConnectorException
+  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ChannelException
   {
     HTTPChannel httpChannel = (HTTPChannel)channel;
     if (!httpChannel.isInverseRemoved())
@@ -224,34 +223,34 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
    */
   public abstract class ChannelOperation
   {
-    private short channelIndex;
+    private short channelID;
 
     private long operationCount;
 
-    public ChannelOperation(short channelIndex, long operationCount)
+    public ChannelOperation(short channelID, long operationCount)
     {
-      this.channelIndex = channelIndex;
+      this.channelID = channelID;
       this.operationCount = operationCount;
     }
 
     public ChannelOperation(ExtendedDataInputStream in) throws IOException
     {
-      channelIndex = in.readShort();
+      channelID = in.readShort();
       operationCount = in.readLong();
     }
 
     public void write(ExtendedDataOutputStream out) throws IOException
     {
       out.writeByte(getOperation());
-      out.writeShort(channelIndex);
+      out.writeShort(channelID);
       out.writeLong(operationCount);
     }
 
     public abstract byte getOperation();
 
-    public short getChannelIndex()
+    public short getChannelID()
     {
-      return channelIndex;
+      return channelID;
     }
 
     public long getOperationCount()
@@ -261,7 +260,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
     public void execute()
     {
-      HTTPChannel channel = (HTTPChannel)getChannel(getChannelIndex());
+      HTTPChannel channel = (HTTPChannel)getChannel(getChannelID());
       long operationCount = getOperationCount();
       synchronized (channel)
       {
@@ -322,9 +321,9 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   {
     private String protocolID;
 
-    public OpenChannelOperation(short channelIndex, String protocolID)
+    public OpenChannelOperation(short channelID, String protocolID)
     {
-      super(channelIndex, 0);
+      super(channelID, 0);
       this.protocolID = protocolID;
     }
 
@@ -355,7 +354,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     @Override
     public void execute()
     {
-      HTTPChannel channel = (HTTPChannel)inverseOpenChannel(getChannelIndex(), protocolID);
+      HTTPChannel channel = (HTTPChannel)inverseOpenChannel(getChannelID(), protocolID);
       if (channel == null)
       {
         throw new ConnectorException("Could not open channel");
@@ -368,7 +367,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     @Override
     public void doEexecute(HTTPChannel channel)
     {
-      ChannelOperation operation = new OpenAckChannelOperation(getChannelIndex(), true);
+      ChannelOperation operation = new OpenAckChannelOperation(getChannelID(), true);
       outputOperations.add(operation);
     }
   }
@@ -380,9 +379,9 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   {
     private boolean success;
 
-    public OpenAckChannelOperation(short channelIndex, boolean success)
+    public OpenAckChannelOperation(short channelID, boolean success)
     {
-      super(channelIndex, 0);
+      super(channelID, 0);
       this.success = success;
     }
 
@@ -419,7 +418,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   {
     public CloseChannelOperation(HTTPChannel channel)
     {
-      super(channel.getIndex(), channel.getOutputOperationCount());
+      super(channel.getID(), channel.getOutputOperationCount());
       channel.increaseOutputOperationCount();
     }
 
@@ -438,7 +437,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     public void doEexecute(HTTPChannel channel)
     {
       channel.setInverseRemoved();
-      inverseCloseChannel(channel.getIndex());
+      inverseCloseChannel(channel.getID());
     }
   }
 
@@ -449,9 +448,9 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   {
     private IBuffer buffer;
 
-    public BufferChannelOperation(short channelIndex, long operationCount, IBuffer buffer)
+    public BufferChannelOperation(short channelID, long operationCount, IBuffer buffer)
     {
-      super(channelIndex, operationCount);
+      super(channelID, operationCount);
       this.buffer = buffer;
     }
 
@@ -465,7 +464,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       }
 
       buffer = getConfig().getBufferProvider().provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(getChannelIndex());
+      ByteBuffer byteBuffer = buffer.startPutting(getChannelID());
       for (int i = 0; i < length; i++)
       {
         byte b = in.readByte();

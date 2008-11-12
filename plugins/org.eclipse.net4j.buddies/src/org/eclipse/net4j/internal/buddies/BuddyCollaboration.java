@@ -97,7 +97,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     try
     {
       BuddiesClientProtocol protocol = (BuddiesClientProtocol)session.getProtocol();
-      new MessageNotification(protocol, collaborationID, facilityType, message).send();
+      new MessageNotification(protocol, collaborationID, facilityType, message).sendAsync();
     }
     catch (Exception ex)
     {
@@ -135,7 +135,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
       try
       {
         BuddiesClientProtocol protocol = (BuddiesClientProtocol)session.getProtocol();
-        new InviteBuddiesNotification(protocol, getID(), invitations).send();
+        new InviteBuddiesNotification(protocol, getID(), invitations).sendAsync();
       }
       catch (Exception ex)
       {
@@ -149,7 +149,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
     try
     {
       BuddiesClientProtocol protocol = (BuddiesClientProtocol)session.getProtocol();
-      new CollaborationLeftNotification(protocol, getID(), session.getSelf().getUserID()).send();
+      new CollaborationLeftNotification(protocol, getID(), session.getSelf().getUserID()).sendAsync();
     }
     catch (Exception ex)
     {

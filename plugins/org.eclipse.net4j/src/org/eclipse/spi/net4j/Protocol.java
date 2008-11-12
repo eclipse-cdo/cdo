@@ -8,29 +8,75 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.protocol;
+package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol<INFRA_STRUCTURE>
 {
-  private IChannel channel;
+  private ExecutorService executorService;
 
   private IBufferProvider bufferProvider;
 
-  private ExecutorService executorService;
-
   private INFRA_STRUCTURE infraStructure;
+
+  private IChannel channel;
+
+  @ExcludeFromDump
+  private transient IListener channelListener = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      handleChannelDeactivation();
+    };
+  };
 
   public Protocol()
   {
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return executorService;
+  }
+
+  public void setExecutorService(ExecutorService executorService)
+  {
+    this.executorService = executorService;
+  }
+
+  public IBufferProvider getBufferProvider()
+  {
+    return bufferProvider;
+  }
+
+  public void setBufferProvider(IBufferProvider bufferProvider)
+  {
+    this.bufferProvider = bufferProvider;
+  }
+
+  public INFRA_STRUCTURE getInfraStructure()
+  {
+    return infraStructure;
+  }
+
+  public void setInfraStructure(INFRA_STRUCTURE infraStructure)
+  {
+    this.infraStructure = infraStructure;
   }
 
   /**
@@ -62,39 +108,29 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
     return channel;
   }
 
-  public void setChannel(IChannel channel)
+  public void setChannel(IChannel newChannel)
   {
-    this.channel = channel;
+    if (channel != newChannel)
+    {
+      if (channel != null)
+      {
+        channel.removeListener(channelListener);
+      }
+
+      channel = newChannel;
+      if (channel != null)
+      {
+        channel.addListener(channelListener);
+      }
+    }
   }
 
-  public IBufferProvider getBufferProvider()
+  /**
+   * @since 2.0
+   */
+  protected void handleChannelDeactivation()
   {
-    return bufferProvider;
-  }
-
-  public void setBufferProvider(IBufferProvider bufferProvider)
-  {
-    this.bufferProvider = bufferProvider;
-  }
-
-  public ExecutorService getExecutorService()
-  {
-    return executorService;
-  }
-
-  public void setExecutorService(ExecutorService executorService)
-  {
-    this.executorService = executorService;
-  }
-
-  public INFRA_STRUCTURE getInfraStructure()
-  {
-    return infraStructure;
-  }
-
-  public void setInfraStructure(INFRA_STRUCTURE infraStructure)
-  {
-    this.infraStructure = infraStructure;
+    deactivate();
   }
 
   @Override
@@ -109,7 +145,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   @Override
   protected void doDeactivate() throws Exception
   {
-    channel = null;
+    setChannel(null);
     super.doDeactivate();
   }
 }

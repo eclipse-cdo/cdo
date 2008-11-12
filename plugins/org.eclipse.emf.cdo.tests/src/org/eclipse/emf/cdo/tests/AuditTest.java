@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
-import org.eclipse.net4j.signal.SignalRemoteException;
+import org.eclipse.net4j.signal.RemoteException;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -349,7 +349,7 @@ public class AuditTest extends AbstractCDOTest
       session.openAudit(timeStampPriorToRepoCreation);
       fail("SignalRemoteException expected");
     }
-    catch (SignalRemoteException eexpected)
+    catch (RemoteException eexpected)
     {
       // Success
     }
@@ -384,7 +384,7 @@ public class AuditTest extends AbstractCDOTest
       audit.setTimeStamp(timeStampPriorToRepoCreation);
       fail("SignalRemoteException expected");
     }
-    catch (SignalRemoteException expected)
+    catch (RemoteException expected)
     {
       // Success
     }

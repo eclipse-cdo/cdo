@@ -57,6 +57,9 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -457,13 +460,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOCommitContextImpl();
   }
 
-  public void commit() throws TransactionException
+  /**
+   * @since 2.0
+   */
+  public void commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     checkOpen();
+    if (progressMonitor == null)
+    {
+      progressMonitor = new NullProgressMonitor();
+    }
 
     try
     {
-      getTransactionStrategy().commit(this);
+      getTransactionStrategy().commit(this, progressMonitor);
     }
     catch (TransactionException ex)
     {
@@ -473,6 +483,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       throw new TransactionException(ex);
     }
+  }
+
+  public void commit() throws TransactionException
+  {
+    commit(null);
   }
 
   /**

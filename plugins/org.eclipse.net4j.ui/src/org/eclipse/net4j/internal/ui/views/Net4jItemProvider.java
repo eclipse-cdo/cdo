@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.swt.graphics.Image;
@@ -87,7 +88,7 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
 
     @Override
-    protected void doRun() throws Exception
+    protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
       LifecycleUtil.deactivateNoisy(object);
     }

@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource</b></em>'.
  * 
@@ -40,6 +42,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOResource extends CDOResourceNode, Resource
 {
+  /**
+   * @ADDED
+   * @since 2.0
+   */
+  public static final String OPTION_SAVE_PROGRESS_MONITOR = IProgressMonitor.class.getName();
+
   /**
    * Returns the value of the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc -->
    * <p>

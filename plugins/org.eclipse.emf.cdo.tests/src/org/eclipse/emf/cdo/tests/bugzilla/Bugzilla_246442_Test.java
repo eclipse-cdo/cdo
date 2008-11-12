@@ -66,7 +66,7 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
     }
 
     CDOSession session = openSession();
-    session.getFailOverStrategy().setDefaultTimeout(2000L);
+    session.getProtocol().setTimeout(2000L);
 
     CDOTransaction transaction = session.openTransaction();
     transaction.getObject(lookupObject);

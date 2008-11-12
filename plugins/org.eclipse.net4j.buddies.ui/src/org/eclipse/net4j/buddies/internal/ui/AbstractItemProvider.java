@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ITreeSelection;
@@ -220,8 +221,11 @@ public abstract class AbstractItemProvider extends ContainerItemProvider<IContai
       this.object = object;
     }
 
+    /**
+     * @since 2.0
+     */
     @Override
-    protected void doRun() throws Exception
+    protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
       LifecycleUtil.deactivateNoisy(object);
     }

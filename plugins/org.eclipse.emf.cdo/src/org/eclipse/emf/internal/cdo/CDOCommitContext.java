@@ -44,7 +44,7 @@ public interface CDOCommitContext
 
   public Map<CDOID, CDOObject> getDirtyObjects();
 
-  public Map<CDOID, CDOObject> getDetachedObjects();
-
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
+
+  public Map<CDOID, CDOObject> getDetachedObjects();
 }

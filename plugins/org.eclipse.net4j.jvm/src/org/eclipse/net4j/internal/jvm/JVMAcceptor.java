@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.jvm;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.util.StringUtil;
 
-import org.eclipse.internal.net4j.acceptor.Acceptor;
+import org.eclipse.spi.net4j.Acceptor;
 
 import java.text.MessageFormat;
 

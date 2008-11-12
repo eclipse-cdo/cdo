@@ -10,30 +10,23 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.buffer.BufferInputStream;
+import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public class SignalRemoteException extends RuntimeException
+public interface ISignalProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCTURE>
 {
-  private static final long serialVersionUID = 1L;
+  public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
 
-  public SignalRemoteException()
-  {
-  }
+  public long getTimeout();
 
-  public SignalRemoteException(String message)
-  {
-    super(message);
-  }
+  public void setTimeout(long timeout);
 
-  public SignalRemoteException(Throwable cause)
-  {
-    super(cause);
-  }
+  public IFailOverStrategy getFailOverStrategy();
 
-  public SignalRemoteException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
+  public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
 }

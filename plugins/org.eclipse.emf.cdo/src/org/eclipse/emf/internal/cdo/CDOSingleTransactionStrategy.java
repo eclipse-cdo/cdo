@@ -16,9 +16,11 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author Simon McDuff
@@ -34,7 +36,7 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
   {
   }
 
-  public void commit(InternalCDOTransaction transaction) throws Exception
+  public void commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception
   {
     CDOCommitContext commitContext = transaction.createCommitContext();
     if (TRACER.isEnabled())
@@ -51,8 +53,7 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
       TRACER.format("Sending commit request");
     }
 
-    IFailOverStrategy failOverStrategy = session.getFailOverStrategy();
-    CommitTransactionResult result = failOverStrategy.send(request, transaction.getCommitTimeout());
+    CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
     String rollbackMessage = result.getRollbackMessage();
     if (rollbackMessage != null)
     {

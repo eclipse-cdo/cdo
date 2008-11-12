@@ -3,8 +3,9 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
-import org.eclipse.net4j.protocol.ServerProtocolFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
+
+import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 /**
  * @author Eike Stepper

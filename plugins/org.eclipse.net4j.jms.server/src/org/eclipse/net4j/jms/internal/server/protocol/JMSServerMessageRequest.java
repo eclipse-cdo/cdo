@@ -16,7 +16,6 @@ import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-
 /**
  * @author Eike Stepper
  */

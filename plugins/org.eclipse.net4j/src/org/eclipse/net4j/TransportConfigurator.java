@@ -16,10 +16,10 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiator;
 import org.eclipse.net4j.util.security.NegotiatorFactory;
 
-import org.eclipse.internal.net4j.acceptor.Acceptor;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.spi.net4j.Acceptor;
 import org.eclipse.spi.net4j.AcceptorFactory;
 
 import org.w3c.dom.Document;

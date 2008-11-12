@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.Criteria;
@@ -337,20 +338,20 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   /**
    * Is handled through {@link #endHibernateSession()}.
    */
-  public void commit()
+  public void commit(IMonitor monitor)
   {
     commitRollbackHibernateSession();
     HibernateThreadContext.setCommitContext(null);
   }
 
   @Override
-  public void write(CommitContext context)
+  public void write(CommitContext context, IMonitor monitor)
   {
     List<InternalCDORevision> adjustRevisions = new ArrayList<InternalCDORevision>();
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackages().length > 0)
     {
-      writePackages(context.getNewPackages());
+      writePackages(context.getNewPackages(), monitor);
     }
     try
     {
@@ -450,7 +451,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects, long revised)
+  protected void detachObjects(CDOID[] detachedObjects, long revised, IMonitor monitor)
   {
     // TODO: implement HibernateStoreAccessor.detachObjects(detachedObjects)
     throw new UnsupportedOperationException();
@@ -465,7 +466,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void writePackages(CDOPackage[] cdoPackages)
+  protected void writePackages(CDOPackage[] cdoPackages, IMonitor monitor)
   {
     if (cdoPackages != null && cdoPackages.length != 0)
     {
@@ -477,13 +478,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void writeRevisions(CDORevision[] revisions)
+  protected void writeRevisions(CDORevision[] revisions, IMonitor monitor)
   {
     // Don't do anything it is done at commit
   }
 
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created)
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, IMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

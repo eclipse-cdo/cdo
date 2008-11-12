@@ -108,7 +108,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private CDOClientProtocol protocol;
 
   @ExcludeFromDump
-  private IListener channelListener = new LifecycleEventAdapter()
+  private IListener protocolListener = new LifecycleEventAdapter()
   {
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
@@ -840,26 +840,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     packageManager.addPackageProxies(result.getPackageInfos());
     packageManager.activate();
     revisionManager.activate();
-    EventUtil.addListener(channel, channelListener);
+    EventUtil.addListener(channel, protocolListener);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    IChannel channel = protocol.getChannel();
-    EventUtil.removeListener(channel, channelListener);
-    if (invalidationRunner != null)
-    {
-      invalidationRunner.deactivate();
-      invalidationRunner = null;
-    }
-
-    revisionManager.deactivate();
-    revisionManager = null;
-
-    packageManager.deactivate();
-    packageManager = null;
-
     for (CDOViewImpl view : views.toArray(new CDOViewImpl[views.size()]))
     {
       try
@@ -874,8 +860,21 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     views.clear();
     views = null;
 
-    channel.close();
-    channel = null;
+    if (invalidationRunner != null)
+    {
+      invalidationRunner.deactivate();
+      invalidationRunner = null;
+    }
+
+    revisionManager.deactivate();
+    revisionManager = null;
+
+    packageManager.deactivate();
+    packageManager = null;
+
+    EventUtil.removeListener(protocol, protocolListener);
+    protocol.close();
+    protocol = null;
     super.doDeactivate();
   }
 

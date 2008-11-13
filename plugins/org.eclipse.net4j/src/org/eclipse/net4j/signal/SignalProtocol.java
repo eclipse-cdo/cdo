@@ -74,6 +74,8 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
+  private boolean failingOver;
+
   protected SignalProtocol()
   {
   }
@@ -310,35 +312,10 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
   @Override
   protected void handleChannelDeactivation()
   {
-    if (failOverStrategy != null)
+    if (!failingOver)
     {
-      try
-      {
-        synchronized (signals)
-        {
-          failOverStrategy.handleFailOver(this);
-          for (Signal signal : signals.values())
-          {
-            if (signal instanceof SignalActor)
-            {
-              stopSignal(signal);
-            }
-          }
-
-          return;
-        }
-      }
-      catch (UnsupportedOperationException ex)
-      {
-        // Do nothing
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
+      super.handleChannelDeactivation();
     }
-
-    super.handleChannelDeactivation();
   }
 
   protected final SignalReactor provideSignalReactor(short signalID)
@@ -415,6 +392,40 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
       signals.remove(correlationID);
       signals.notifyAll();
     }
+  }
+
+  boolean handleFailOver(SignalActor signalActor, IChannel originalChannel)
+  {
+    if (failOverStrategy != null)
+    {
+      try
+      {
+        synchronized (failOverStrategy)
+        {
+          if (!failingOver && originalChannel == getChannel())
+          {
+            failingOver = true;
+            failOverStrategy.handleFailOver(this);
+          }
+
+          return true;
+        }
+      }
+      catch (UnsupportedOperationException ex)
+      {
+        // Do nothing
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+      finally
+      {
+        failingOver = false;
+      }
+    }
+
+    return false;
   }
 
   void handleRemoteException(int correlationID, Throwable t, boolean responding)

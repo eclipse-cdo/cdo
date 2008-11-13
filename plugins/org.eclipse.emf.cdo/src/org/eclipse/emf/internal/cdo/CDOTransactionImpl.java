@@ -173,7 +173,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  synchronized public boolean setAutoReleaseLocksEnabled(boolean on)
+  public synchronized boolean setAutoReleaseLocksEnabled(boolean on)
   {
     try
     {

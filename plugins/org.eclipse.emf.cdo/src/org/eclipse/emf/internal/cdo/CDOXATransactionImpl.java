@@ -124,7 +124,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     transaction.setTransactionStrategy(null);
   }
 
-  synchronized public void add(CDOViewSet viewSet)
+  public synchronized void add(CDOViewSet viewSet)
   {
     CDOXATransaction transSet = CDOUtil.getXATransaction(viewSet);
     if (transSet != null)
@@ -140,7 +140,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     }
   }
 
-  synchronized public void remove(CDOViewSet viewSet)
+  public synchronized void remove(CDOViewSet viewSet)
   {
     CDOXATransaction transSet = CDOUtil.getXATransaction(viewSet);
     if (transSet != this)

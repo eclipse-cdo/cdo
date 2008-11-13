@@ -628,7 +628,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
          * Ensures that the entry data is created and is populated with contents of the delegate list.
          */
         @Override
-        synchronized protected void ensureEntryDataExists()
+        protected synchronized void ensureEntryDataExists()
         {
           checkListForReading();
           super.ensureEntryDataExists();

@@ -83,7 +83,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   }
 
   @Override
-  synchronized public void rollback(String message)
+  public synchronized void rollback(String message)
   {
     super.rollback(message);
 

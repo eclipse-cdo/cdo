@@ -59,7 +59,7 @@ public class CDOViewSetPackageRegistryImpl extends EPackageRegistryImpl
   }
 
   @Override
-  synchronized public Object get(Object key)
+  public synchronized Object get(Object key)
   {
     Object ePackage = super.get(key);
     if (ePackage == null)

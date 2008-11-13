@@ -404,7 +404,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  synchronized private void unlockObjects()
+  private synchronized void unlockObjects()
   {
     if (!lockedObjects.isEmpty())
     {
@@ -463,7 +463,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  synchronized public void rollback(String message)
+  public synchronized void rollback(String message)
   {
     // Check if we already rolledBack
     if (rollbackMessage == null)

@@ -302,13 +302,13 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ChannelException
+  protected void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException
   {
     if (channel != null && channel.getClass() != ControlChannel.class)
     {
       if (controlChannel != null && isConnected())
       {
-        controlChannel.deregisterChannel(channel.getID(), getChannelTimeout());
+        controlChannel.deregisterChannel(channel.getID());
       }
     }
   }

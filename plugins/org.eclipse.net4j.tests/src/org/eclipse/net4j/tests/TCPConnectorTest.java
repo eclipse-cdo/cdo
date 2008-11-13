@@ -81,28 +81,66 @@ public class TCPConnectorTest extends AbstractOMTest
   private void cleanup() throws Exception
   {
     sleep(100);
-    LifecycleUtil.deactivate(connector);
-    LifecycleUtil.deactivate(responseNegotiator);
-    LifecycleUtil.deactivate(credentialsProvider);
-    connector = null;
-    responseNegotiator = null;
-    credentialsProvider = null;
 
-    LifecycleUtil.deactivate(acceptor);
-    LifecycleUtil.deactivate(challengeNegotiator);
-    LifecycleUtil.deactivate(userManager);
-    LifecycleUtil.deactivate(randomizer);
-    acceptor = null;
-    challengeNegotiator = null;
-    userManager = null;
-    randomizer = null;
+    if (connector != null)
+    {
+      connector.close();
+      connector = null;
+    }
 
-    LifecycleUtil.deactivate(selector);
-    LifecycleUtil.deactivate(bufferPool);
-    LifecycleUtil.deactivate(threadPool);
-    selector = null;
-    bufferPool = null;
-    threadPool = null;
+    if (responseNegotiator != null)
+    {
+      LifecycleUtil.deactivate(responseNegotiator);
+      responseNegotiator = null;
+    }
+
+    if (credentialsProvider != null)
+    {
+      LifecycleUtil.deactivate(credentialsProvider);
+      credentialsProvider = null;
+    }
+
+    if (acceptor != null)
+    {
+      acceptor.close();
+      acceptor = null;
+    }
+
+    if (challengeNegotiator != null)
+    {
+      LifecycleUtil.deactivate(challengeNegotiator);
+      challengeNegotiator = null;
+    }
+
+    if (userManager != null)
+    {
+      LifecycleUtil.deactivate(userManager);
+      userManager = null;
+    }
+
+    if (randomizer != null)
+    {
+      LifecycleUtil.deactivate(randomizer);
+      randomizer = null;
+    }
+
+    if (selector != null)
+    {
+      LifecycleUtil.deactivate(selector);
+      selector = null;
+    }
+
+    if (bufferPool != null)
+    {
+      LifecycleUtil.deactivate(bufferPool);
+      bufferPool = null;
+    }
+
+    if (threadPool != null)
+    {
+      LifecycleUtil.deactivate(threadPool);
+      threadPool = null;
+    }
   }
 
   public void testDeferredActivation() throws Exception

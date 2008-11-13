@@ -61,7 +61,7 @@ public class Bugzilla241463_Test extends AbstractTransportTest
   public void testBugzilla241463() throws Exception
   {
     IConnector connector = startTransport();
-    connector.setChannelTimeout(2000L);
+    connector.setOpenChannelTimeout(2000L);
 
     try
     {

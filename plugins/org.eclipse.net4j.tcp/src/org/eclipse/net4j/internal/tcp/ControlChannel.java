@@ -93,7 +93,7 @@ public class ControlChannel extends Channel
     return acknowledged;
   }
 
-  public void deregisterChannel(short channelID, long timeout)
+  public void deregisterChannel(short channelID)
   {
     if (TRACER.isEnabled())
     {

@@ -14,6 +14,7 @@ import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.security.IUserAware;
 
 /**
@@ -45,7 +46,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  * 
  * @author Eike Stepper
  */
-public interface IConnector extends IChannelMultiplexer, IUserAware
+public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
 {
   /**
    * @since 2.0
@@ -65,6 +66,22 @@ public interface IConnector extends IChannelMultiplexer, IUserAware
   public boolean isConnected();
 
   /**
+   * Synchronous connect with infinite timeout value. Same as {@link #connect() connect(NO_TIMEOUT)}.
+   * 
+   * @since 2.0
+   */
+  public boolean connect() throws ConnectorException;
+
+  /**
+   * Synchronous connect. Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
+   * 
+   * @param timeout
+   *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
+   *          connection occurs.
+   */
+  public boolean connect(long timeout) throws ConnectorException;
+
+  /**
    * Asynchronous connect. May leave this {@link IConnector} in a state where <code>{@link #isConnected()} == false
    * </code>.
    * 
@@ -82,22 +99,4 @@ public interface IConnector extends IChannelMultiplexer, IUserAware
    * @throws ConnectorException
    */
   public boolean waitForConnection(long timeout) throws ConnectorException;
-
-  /**
-   * Synchronous connect. Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
-   * 
-   * @param timeout
-   *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
-   *          connection occurs.
-   */
-  public boolean connect(long timeout) throws ConnectorException;
-
-  /**
-   * Synchronous connect with infinite timeout value. Same as {@link #connect() connect(NO_TIMEOUT)}.
-   * 
-   * @since 2.0
-   */
-  public boolean connect() throws ConnectorException;
-
-  public ConnectorException disconnect();
 }

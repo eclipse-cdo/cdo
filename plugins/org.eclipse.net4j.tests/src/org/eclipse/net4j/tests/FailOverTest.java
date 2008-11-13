@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.RetryFailOverStrategy;
 import org.eclipse.net4j.tests.signal.IntFailRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
@@ -29,52 +29,48 @@ public class FailOverTest extends AbstractProtocolTest
 
   public void testFailingBefore() throws Exception
   {
+    int data = 0x0a;
     IConnector connector = startTransport();
-    TestSignalProtocol protocol = new TestSignalProtocol(connector);
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Simulate a disconnect from the server.
-    LifecycleUtil.deactivate(getAcceptor());
-
-    int data = 0x0a;
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    IAcceptor acceptor = getAcceptor();
+    acceptor.close();
 
     // Exception HERE
     IntRequest request = new IntRequest(protocol, data);
-
-    int result = failOverStrategy.send(request);
+    int result = request.send();
     assertEquals(data, result);
   }
 
   public void testFailingDuring() throws Exception
   {
-    IConnector connector = startTransport();
-    TestSignalProtocol protocol = new TestSignalProtocol(connector);
-
     int data = 0x0a;
+    IConnector connector = startTransport();
     IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Exception HERE
     IntRequest request = new IntRequest(protocol, data);
 
     // Simulate a disconnect from the server.
-    LifecycleUtil.deactivate(getAcceptor());
+    IAcceptor acceptor = getAcceptor();
+    acceptor.close();
 
-    int result = failOverStrategy.send(request);
+    int result = request.send();
     assertEquals(data, result);
   }
 
   public void testFailingDuring2() throws Exception
   {
-    IConnector connector = startTransport();
-    TestSignalProtocol protocol = new TestSignalProtocol(connector);
-
     int data = 0x0a;
+    IConnector connector = startTransport();
     IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Exception HERE
-    IntFailRequest request = new IntFailRequest(protocol, data);
-
-    int result = failOverStrategy.send(request, 1000);
+    int result = new IntFailRequest(protocol, data).send(1000);
     assertEquals(data, result);
   }
 }

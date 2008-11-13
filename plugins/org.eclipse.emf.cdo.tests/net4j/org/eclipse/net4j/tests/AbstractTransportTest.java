@@ -126,10 +126,10 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
   protected void stopTransport() throws Exception
   {
-    LifecycleUtil.deactivate(connector);
+    connector.close();
     connector = null;
 
-    LifecycleUtil.deactivate(acceptor);
+    acceptor.close();
     acceptor = null;
   }
 

@@ -34,8 +34,6 @@ public interface IProtocol<INFRA_STRUCTURE> extends ILocationAware, IBufferHandl
 
   public IBufferProvider getBufferProvider();
 
-  public void setBufferProvider(IBufferProvider bufferProvider);
-
   public ExecutorService getExecutorService();
 
   public void setExecutorService(ExecutorService executorService);

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.acceptor;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.spi.net4j.Acceptor;
@@ -42,7 +43,7 @@ import org.eclipse.spi.net4j.Acceptor;
  * 
  * @author Eike Stepper
  */
-public interface IAcceptor extends IContainer<IConnector>
+public interface IAcceptor extends IContainer<IConnector>, Closeable
 {
   /**
    * Returns an array of the connectors that have been accepted by this acceptor and not been closed since.

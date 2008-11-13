@@ -12,11 +12,11 @@ package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiator;
 
@@ -132,6 +132,20 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
     fireElementRemovedEvent(connector);
   }
 
+  public void close()
+  {
+    Exception exception = deactivate();
+    if (exception != null)
+    {
+      throw WrappedException.wrap(exception);
+    }
+  }
+
+  public boolean isClosed()
+  {
+    return !isActive();
+  }
+
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -147,7 +161,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   {
     for (IConnector connector : getAcceptedConnectors())
     {
-      LifecycleUtil.deactivate(connector);
+      connector.close();
     }
 
     super.doDeactivate();

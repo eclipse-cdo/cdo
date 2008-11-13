@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
 /**
@@ -25,12 +26,12 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 public interface CDOSessionConfiguration
 {
   /**
-   * @see CDOSession#getConnector()
+   * @see CDOSession#open(ISignalProtocol)
    */
   public IConnector getConnector();
 
   /**
-   * @see CDOSession#getConnector()
+   * @see CDOSession#open(ISignalProtocol)
    */
   public void setConnector(IConnector connector);
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -36,10 +37,7 @@ public class ChannelInjector implements IElementProcessor
     if (element instanceof CDOSessionImpl)
     {
       CDOSessionImpl session = (CDOSessionImpl)element;
-      if (session.getConnector() == null)
-      {
-        session.setConnector(getConnector(container, description));
-      }
+      session.getProtocol().setFailOverStrategy(new NOOPFailOverStrategy(getConnector(container, description)));
     }
 
     return element;

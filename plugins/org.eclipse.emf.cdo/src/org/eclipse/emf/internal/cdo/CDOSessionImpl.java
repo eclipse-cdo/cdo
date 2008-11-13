@@ -54,7 +54,6 @@ import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -102,8 +101,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private boolean passiveUpdateEnabled = true;
 
   private CDOCollectionLoadingPolicy collectionLoadingPolicy;
-
-  private IConnector connector;
 
   private CDOClientProtocol protocol;
 
@@ -214,16 +211,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     collectionLoadingPolicy = policy;
-  }
-
-  public IConnector getConnector()
-  {
-    return connector;
-  }
-
-  public void setConnector(IConnector connector)
-  {
-    this.connector = connector;
   }
 
   /**
@@ -813,7 +800,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(connector, "connector == null");
     checkState(repositoryName, "repositoryName == null");
   }
 
@@ -827,10 +813,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     packageRegistry.setSession(this);
-    IChannel channel = protocol.open(connector);
+    protocol.open();
 
     OpenSessionResult result = new OpenSessionRequest(protocol, repositoryName, passiveUpdateEnabled).send();
-
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
     repositoryCreationTime = result.getRepositoryCreationTime();
@@ -840,7 +825,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     packageManager.addPackageProxies(result.getPackageInfos());
     packageManager.activate();
     revisionManager.activate();
-    EventUtil.addListener(channel, protocolListener);
+    EventUtil.addListener(protocol, protocolListener);
   }
 
   @Override

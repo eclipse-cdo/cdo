@@ -40,21 +40,14 @@ public class BufferOutputStream extends OutputStream
 
   private short channelID;
 
-  private RuntimeException exception;
+  private Throwable error;
 
   @ExcludeFromDump
-  private transient IErrorHandler writeErrorHandler = new IErrorHandler()
+  private transient IErrorHandler errorHandler = new IErrorHandler()
   {
     public void handleError(Throwable t)
     {
-      if (t instanceof RuntimeException)
-      {
-        setException((RuntimeException)t);
-      }
-      else
-      {
-        setException(new IORuntimeException(t));
-      }
+      setError(t);
     }
   };
 
@@ -83,17 +76,17 @@ public class BufferOutputStream extends OutputStream
   /**
    * @since 2.0
    */
-  public RuntimeException getException()
+  public Throwable getError()
   {
-    return exception;
+    return error;
   }
 
   /**
    * @since 2.0
    */
-  public void setException(RuntimeException exception)
+  public void setError(Throwable error)
   {
-    this.exception = exception;
+    this.error = error;
   }
 
   @SuppressWarnings("deprecation")
@@ -158,17 +151,27 @@ public class BufferOutputStream extends OutputStream
     return "BufferOutputStream"; //$NON-NLS-1$
   }
 
-  protected void ensureBuffer()
+  protected void ensureBuffer() throws IOException
   {
-    if (exception != null)
+    if (error != null)
     {
-      throw exception;
+      if (error instanceof IOException)
+      {
+        throw (IOException)error;
+      }
+
+      if (error instanceof RuntimeException)
+      {
+        throw (RuntimeException)error;
+      }
+
+      throw new IORuntimeException(error);
     }
 
     if (currentBuffer == null)
     {
       currentBuffer = bufferProvider.provideBuffer();
-      currentBuffer.setErrorHandler(writeErrorHandler);
+      currentBuffer.setErrorHandler(errorHandler);
       currentBuffer.startPutting(channelID);
     }
   }

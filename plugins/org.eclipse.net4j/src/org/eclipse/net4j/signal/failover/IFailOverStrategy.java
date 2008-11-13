@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.net4j.signal.failover;
 
-import org.eclipse.net4j.signal.RemoteException;
-import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
@@ -22,14 +22,10 @@ public interface IFailOverStrategy extends INotifier
   /**
    * @since 2.0
    */
-  public long getDefaultTimeout();
+  public IConnector open(ISignalProtocol<?> protocol);
 
   /**
    * @since 2.0
    */
-  public void setDefaultTimeout(long defaultTimeout);
-
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request) throws Exception, RemoteException;
-
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception, RemoteException;
+  public void failOver(ISignalProtocol<?> protocol) throws UnsupportedOperationException;
 }

@@ -198,7 +198,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ChannelException
+  protected void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException
   {
     HTTPChannel httpChannel = (HTTPChannel)channel;
     if (!httpChannel.isInverseRemoved())

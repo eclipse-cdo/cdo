@@ -129,7 +129,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ChannelException
+  protected void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException
   {
     try
     {

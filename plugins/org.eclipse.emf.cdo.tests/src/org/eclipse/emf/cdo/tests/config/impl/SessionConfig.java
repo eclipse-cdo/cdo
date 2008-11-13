@@ -59,13 +59,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     if (currentTest.hasClientContainer())
     {
       IConnector connector = getConnector();
-      LifecycleUtil.deactivate(connector);
+      connector.close();
     }
 
     if (currentTest.hasServerContainer())
     {
       IAcceptor acceptor = getAcceptor();
-      LifecycleUtil.deactivate(acceptor);
+      acceptor.close();
     }
   }
 

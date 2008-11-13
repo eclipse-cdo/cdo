@@ -14,6 +14,7 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
@@ -264,7 +265,16 @@ public class Channel extends Lifecycle implements InternalChannel
 
   public void close()
   {
-    deactivate();
+    Exception exception = deactivate();
+    if (exception != null)
+    {
+      throw WrappedException.wrap(exception);
+    }
+  }
+
+  public boolean isClosed()
+  {
+    return !isActive();
   }
 
   /**

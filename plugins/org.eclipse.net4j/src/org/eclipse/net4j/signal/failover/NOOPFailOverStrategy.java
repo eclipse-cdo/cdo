@@ -10,33 +10,54 @@
  **************************************************************************/
 package org.eclipse.net4j.signal.failover;
 
-import org.eclipse.net4j.signal.RemoteException;
-import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.event.Notifier;
 
 /**
  * @author Eike Stepper
  */
-public class NOOPFailOverStrategy extends AbstractFailOverStrategy
+public class NOOPFailOverStrategy extends Notifier implements IFailOverStrategy
 {
-  public NOOPFailOverStrategy()
+  private IConnector connector;
+
+  /**
+   * @since 2.0
+   */
+  public NOOPFailOverStrategy(IConnector connector)
   {
+    setConnector(connector);
   }
 
-  public <RESULT> RESULT send(RequestWithConfirmation<RESULT> request, long timeout) throws Exception, RemoteException
+  /**
+   * @since 2.0
+   */
+  public IConnector getConnector()
   {
-    return request.send(timeout);
+    return connector;
   }
 
-  @Override
-  public void addListener(IListener listener)
+  /**
+   * @since 2.0
+   */
+  public void setConnector(IConnector connector)
   {
-    // Do nothing
+    this.connector = connector;
   }
 
-  @Override
-  public void removeListener(IListener listener)
+  /**
+   * @since 2.0
+   */
+  public IConnector open(ISignalProtocol<?> protocol)
   {
-    // Do nothing
+    return connector;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void failOver(ISignalProtocol<?> protocol)
+  {
+    throw new UnsupportedOperationException();
   }
 }

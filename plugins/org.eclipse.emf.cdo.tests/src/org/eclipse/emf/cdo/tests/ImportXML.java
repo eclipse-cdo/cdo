@@ -73,7 +73,7 @@ public class ImportXML
     resource.getContents().add(inputModel);
     transaction.commit();
     session.close();
-    connector.disconnect();
+    connector.close();
   }
 
   private static IRepository createRepository()

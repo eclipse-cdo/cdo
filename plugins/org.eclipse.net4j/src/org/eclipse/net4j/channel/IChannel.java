@@ -14,6 +14,7 @@ import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.security.IUserAware;
 
@@ -60,7 +61,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  *              for new physical connection types) have to extend/subclass {@link org.eclipse.spi.net4j.InternalChannel
  *              InternalChannel}.
  */
-public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, INotifier
+public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, INotifier, Closeable
 {
   /**
    * Returns the ID of this channel. The ID is unique at any time among all channels of the associated
@@ -92,11 +93,4 @@ public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, IN
    * Sets the <code>IBufferHandler</code> to handle buffers received from the peer channel.
    */
   public void setReceiveHandler(IBufferHandler receiveHandler);
-
-  /**
-   * Closes this channel and removes it from its {@link IConnector}.
-   * <p>
-   * Once a channel has been closed it is <b>not</b> allowed anymore to call its {@link #sendBuffer(IBuffer)} method.
-   */
-  public void close();
 }

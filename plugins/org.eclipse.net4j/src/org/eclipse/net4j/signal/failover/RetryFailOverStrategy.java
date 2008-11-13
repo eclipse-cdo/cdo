@@ -10,29 +10,15 @@
  **************************************************************************/
 package org.eclipse.net4j.signal.failover;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 
 /**
  * @author Eike Stepper
  */
-public class RetryFailOverStrategy extends FailOverStrategy
+public class RetryFailOverStrategy extends NOOPFailOverStrategy
 {
-  private IConnector connector;
-
   public RetryFailOverStrategy(IConnector connector)
   {
-    this.connector = connector;
-  }
-
-  public IConnector getConnector()
-  {
-    return connector;
-  }
-
-  @Override
-  protected IConnector getNewConnector(IChannel oldChannel)
-  {
-    return connector;
+    super(connector);
   }
 }

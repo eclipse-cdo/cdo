@@ -17,6 +17,7 @@ import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
@@ -94,28 +95,6 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     this.timeout = timeout;
   }
 
-  /**
-   * @since 2.0
-   */
-  public IChannel open(IConnector connector)
-  {
-    InternalConnector conn = (InternalConnector)connector;
-    setBufferProvider(conn.getConfig().getBufferProvider());
-    setExecutorService(conn.getConfig().getReceiveExecutor());
-
-    IChannel channel = connector.openChannel(this);
-    setChannel(channel);
-    return channel;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void close()
-  {
-    deactivate();
-  }
-
   public IStreamWrapper getStreamWrapper()
   {
     return streamWrapper;
@@ -152,6 +131,43 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
   {
     this.failOverStrategy = failOverStrategy;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IChannel open(IFailOverStrategy failOverStrategy)
+  {
+    setFailOverStrategy(failOverStrategy);
+    return open();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IChannel open(IConnector connector)
+  {
+    return open(new NOOPFailOverStrategy(connector));
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IChannel open()
+  {
+    checkState(failOverStrategy, "failOverStrategy");
+    InternalConnector connector = (InternalConnector)failOverStrategy.open(this);
+
+    checkState(connector, "connector");
+    return connector.openChannel(this);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void close()
+  {
+    deactivate();
   }
 
   public boolean waitForSignals(long timeout)
@@ -274,6 +290,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
   @Override
   protected void doDeactivate() throws Exception
   {
+    failOverStrategy = null;
     IChannel channel = getChannel();
     if (channel != null)
     {
@@ -282,6 +299,29 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     }
 
     super.doDeactivate();
+  }
+
+  @Override
+  protected void handleChannelDeactivation()
+  {
+    if (failOverStrategy != null)
+    {
+      try
+      {
+        failOverStrategy.failOver(this);
+        return;
+      }
+      catch (UnsupportedOperationException ex)
+      {
+        // Do nothing
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
+    super.handleChannelDeactivation();
   }
 
   protected final SignalReactor provideSignalReactor(short signalID)
@@ -322,7 +362,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Correlation wrap around"); //$NON-NLS-1$
+        TRACER.trace("Correlation ID wrap-around"); //$NON-NLS-1$
       }
 
       nextCorrelationID = MIN_CORRELATION_ID;
@@ -337,11 +377,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
   void startSignal(SignalActor signalActor, long timeout) throws Exception
   {
-    if (signalActor.getProtocol() != this)
-    {
-      throw new IllegalArgumentException("signalActor.getProtocol() != this"); //$NON-NLS-1$
-    }
-
+    checkArg(signalActor.getProtocol() == this, "Wrong protocol");
     short signalID = signalActor.getID();
     int correlationID = signalActor.getCorrelationID();
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));

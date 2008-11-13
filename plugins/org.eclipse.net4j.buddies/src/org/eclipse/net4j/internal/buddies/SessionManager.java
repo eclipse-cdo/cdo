@@ -27,7 +27,6 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.text.MessageFormat;
 
@@ -137,7 +136,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
             }
             else
             {
-              LifecycleUtil.deactivate(connector);
+              connector.close();
             }
           }
         }

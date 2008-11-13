@@ -48,7 +48,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   private ITransportConfig config;
 
-  private long channelTimeout = IChannelMultiplexer.DEFAULT_CHANNEL_TIMEOUT;
+  private long openChannelTimeout = IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT;
 
   @ExcludeFromDump
   private transient ConcurrentMap<Short, IChannel> channels = new ConcurrentHashMap<Short, IChannel>();
@@ -79,19 +79,19 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     this.config = config;
   }
 
-  public long getChannelTimeout()
+  public long getOpenChannelTimeout()
   {
-    if (channelTimeout == IChannelMultiplexer.DEFAULT_CHANNEL_TIMEOUT)
+    if (openChannelTimeout == IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT)
     {
       return OM.BUNDLE.getDebugSupport().getDebugOption("channel.timeout", 10000);
     }
 
-    return channelTimeout;
+    return openChannelTimeout;
   }
 
-  public void setChannelTimeout(long channelTimeout)
+  public void setOpenChannelTimeout(long openChannelTimeout)
   {
-    this.channelTimeout = channelTimeout;
+    this.openChannelTimeout = openChannelTimeout;
   }
 
   public final InternalChannel getChannel(short channelID)
@@ -134,6 +134,9 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   public InternalChannel openChannel(IProtocol<?> protocol) throws ChannelException
   {
+    long start = System.currentTimeMillis();
+    doBeforeOpenChannel(protocol);
+
     InternalChannel channel = createChannel();
     initChannel(channel, protocol);
     channel.setID(getNextChannelID());
@@ -141,14 +144,16 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
     try
     {
+
       try
       {
-        registerChannelWithPeer(channel.getID(), getChannelTimeout(), protocol);
+        long timeout = getOpenChannelTimeout() - System.currentTimeMillis() + start;
+        registerChannelWithPeer(channel.getID(), timeout, protocol);
       }
       catch (TimeoutRuntimeException ex)
       {
         // Adjust the message for the complete timeout time
-        throw new TimeoutRuntimeException("Registration timeout  after " + getChannelTimeout() + " milliseconds");
+        throw new TimeoutRuntimeException("Registration timeout  after " + getOpenChannelTimeout() + " milliseconds");
       }
     }
     catch (ChannelException ex)
@@ -177,7 +182,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   public void closeChannel(InternalChannel channel) throws ChannelException
   {
     InternalChannel internalChannel = channel;
-    deregisterChannelFromPeer(internalChannel, getChannelTimeout());
+    deregisterChannelFromPeer(internalChannel);
     removeChannel(internalChannel);
   }
 
@@ -238,8 +243,6 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       throw new ChannelException("Invalid protocol factory: " + type);
     }
 
-    protocol.setBufferProvider(getConfig().getBufferProvider());
-    protocol.setExecutorService(getConfig().getReceiveExecutor());
     if (infraStructure != null)
     {
       protocol.setInfraStructure(infraStructure);
@@ -261,10 +264,9 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     }
   }
 
-  @Override
-  protected boolean isDeferredActivation()
+  protected void doBeforeOpenChannel(IProtocol<?> protocol)
   {
-    return true;
+    // Do nothing
   }
 
   @Override
@@ -288,7 +290,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   protected abstract void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol)
       throws ChannelException;
 
-  protected abstract void deregisterChannelFromPeer(InternalChannel channel, long timeout) throws ChannelException;
+  protected abstract void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException;
 
   private short getNextChannelID()
   {

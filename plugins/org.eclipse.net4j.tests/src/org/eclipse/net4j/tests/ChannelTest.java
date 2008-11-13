@@ -238,7 +238,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
   {
     super.doSetUp();
     connector = startTransport();
-    connector.setChannelTimeout(TIMEOUT);
+    connector.setOpenChannelTimeout(TIMEOUT);
     protocols = new ArrayList<TestSignalProtocol>();
   }
 
@@ -250,9 +250,10 @@ public abstract class ChannelTest extends AbstractProtocolTest
       protocol.close();
     }
 
-    connector.disconnect();
-    connector = null;
     protocols = null;
+
+    connector.close();
+    connector = null;
     super.doTearDown();
   }
 

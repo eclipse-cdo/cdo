@@ -36,7 +36,7 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
    * 
    * @since 2.0
    */
-  public static final long DEFAULT_CHANNEL_TIMEOUT = -1;
+  public static final long DEFAULT_OPEN_CHANNEL_TIMEOUT = -1;
 
   /**
    * Synchronous request to open a new {@link IChannel} with an undefined channel protocol. Since the peer connector
@@ -85,10 +85,10 @@ public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel
   /**
    * @since 2.0
    */
-  public long getChannelTimeout();
+  public long getOpenChannelTimeout();
 
   /**
    * @since 2.0
    */
-  public void setChannelTimeout(long channelTimeout);
+  public void setOpenChannelTimeout(long openChannelTimeout);
 }

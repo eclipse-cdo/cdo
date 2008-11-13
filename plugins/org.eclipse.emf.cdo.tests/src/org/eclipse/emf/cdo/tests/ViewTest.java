@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.revision.CDOReferenceProxy;
+import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -111,8 +111,8 @@ public class ViewTest extends AbstractCDOTest
     CDORevisionData revision = resource.cdoRevision().getData();
     CDOResourcePackage resourcePackage = session.getPackageManager().getCDOResourcePackage();
     CDOContentsFeature contentsFeature = resourcePackage.getCDOResourceClass().getCDOContentsFeature();
-    assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOReferenceProxy);
-    assertEquals(false, revision.get(contentsFeature, 100) instanceof CDOReferenceProxy);
+    assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOElementProxy);
+    assertEquals(false, revision.get(contentsFeature, 100) instanceof CDOElementProxy);
     session.close();
   }
 
@@ -151,11 +151,11 @@ public class ViewTest extends AbstractCDOTest
     CDORevisionData revision = resource.cdoRevision().getData();
     CDOResourcePackage resourcePackage = session.getPackageManager().getCDOResourcePackage();
     CDOContentsFeature contentsFeature = resourcePackage.getCDOResourceClass().getCDOContentsFeature();
-    assertEquals(false, revision.get(contentsFeature, 0) instanceof CDOReferenceProxy);
-    assertEquals(false, revision.get(contentsFeature, 1) instanceof CDOReferenceProxy);
-    assertEquals(true, revision.get(contentsFeature, 2) instanceof CDOReferenceProxy);
-    assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOReferenceProxy);
-    assertEquals(false, revision.get(contentsFeature, 100) instanceof CDOReferenceProxy);
+    assertEquals(false, revision.get(contentsFeature, 0) instanceof CDOElementProxy);
+    assertEquals(false, revision.get(contentsFeature, 1) instanceof CDOElementProxy);
+    assertEquals(true, revision.get(contentsFeature, 2) instanceof CDOElementProxy);
+    assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOElementProxy);
+    assertEquals(false, revision.get(contentsFeature, 100) instanceof CDOElementProxy);
     session.close();
   }
 

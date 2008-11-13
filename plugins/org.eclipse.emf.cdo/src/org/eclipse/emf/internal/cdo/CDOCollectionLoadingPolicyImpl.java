@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.emf.internal.cdo.revision.CDOReferenceProxy;
+import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 
@@ -71,7 +71,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
     {
       if (alternation)
       {
-        if (!maxReached && toIndex < size - 1 && list.get(toIndex + 1) instanceof CDOReferenceProxy)
+        if (!maxReached && toIndex < size - 1 && list.get(toIndex + 1) instanceof CDOElementProxy)
         {
           ++toIndex;
         }
@@ -87,7 +87,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
       }
       else
       {
-        if (!minReached && fromIndex > 0 && list.get(fromIndex - 1) instanceof CDOReferenceProxy)
+        if (!minReached && fromIndex > 0 && list.get(fromIndex - 1) instanceof CDOElementProxy)
         {
           --fromIndex;
         }

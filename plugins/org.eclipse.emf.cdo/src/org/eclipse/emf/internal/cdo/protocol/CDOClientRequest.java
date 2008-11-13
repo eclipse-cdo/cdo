@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
-import org.eclipse.emf.internal.cdo.revision.CDOListReferenceProxyImpl;
+import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -129,7 +129,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       @Override
       protected CDOListFactory getListFactory()
       {
-        return CDOListReferenceProxyImpl.FACTORY;
+        return CDOListWithElementProxiesImpl.FACTORY;
       }
     });
   }

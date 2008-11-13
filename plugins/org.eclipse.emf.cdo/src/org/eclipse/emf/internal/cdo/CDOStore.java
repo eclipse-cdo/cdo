@@ -34,7 +34,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaIm
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.revision.CDOReferenceProxy;
+import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
 
@@ -519,10 +519,10 @@ public final class CDOStore implements EStore
    */
   public Object resolveProxy(InternalCDORevision revision, CDOFeature cdoFeature, int index, Object value)
   {
-    if (value instanceof CDOReferenceProxy)
+    if (value instanceof CDOElementProxy)
     {
-      value = ((CDOReferenceProxy)value).resolve(getView().getSession().getRevisionManager(), revision, cdoFeature,
-          index);
+      value = ((CDOElementProxy)value)
+          .resolve(getView().getSession().getRevisionManager(), revision, cdoFeature, index);
     }
 
     return value;

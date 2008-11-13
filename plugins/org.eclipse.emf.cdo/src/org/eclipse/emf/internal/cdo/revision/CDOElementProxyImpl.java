@@ -15,17 +15,40 @@ import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOReferenceProxy
+public final class CDOElementProxyImpl implements CDOElementProxy
 {
-  public int getIndex();
+  private int index;
 
-  /**
-   * @since 2.0
-   */
-  public Object resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index);
+  public CDOElementProxyImpl(int index)
+  {
+    this.index = index;
+  }
 
+  public int getIndex()
+  {
+    return index;
+  }
+
+  public void setIndex(int index)
+  {
+    this.index = index;
+  }
+
+  public Object resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index)
+  {
+    return ((CDORevisionManagerImpl)revisionManager).resolveElementProxy(revision, feature, index, getIndex());
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("CDOElementProxy[{0}]", index);
+  }
 }

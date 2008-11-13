@@ -40,7 +40,7 @@ import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.revision.CDOListReferenceProxyImpl;
+import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -165,7 +165,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       @Override
       protected CDOListFactory getListFactory()
       {
-        return CDOListReferenceProxyImpl.FACTORY;
+        return CDOListWithElementProxiesImpl.FACTORY;
       }
     }, monitor);
   }

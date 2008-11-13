@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImp
 import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
-import org.eclipse.emf.internal.cdo.revision.CDOReferenceProxy;
+import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
 
 /**
  * @author Simon McDuff
@@ -67,7 +67,7 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
   {
     CDOFeature feature = delta.getFeature();
     Object value = delta.getValue();
-    if (value != null && feature.isReference() && !(value instanceof CDOReferenceProxy))
+    if (value != null && feature.isReference() && !(value instanceof CDOElementProxy))
     {
       revision.setValue(feature, referenceAdjuster.adjustReference(value));
     }
@@ -86,7 +86,7 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
       {
         int index = indices[i];
         Object value = list.get(index);
-        if (value != null && !(value instanceof CDOReferenceProxy))
+        if (value != null && !(value instanceof CDOElementProxy))
         {
           value = referenceAdjuster.adjustReference(value);
           list.set(index, value);

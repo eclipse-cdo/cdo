@@ -20,25 +20,25 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 /**
  * @author Simon McDuff
  */
-public class CDOListReferenceProxyImpl extends CDOListImpl
+public class CDOListWithElementProxiesImpl extends CDOListImpl
 {
 
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {
     public CDOList createList(int initialCapacity, int size, int initialChunk)
     {
-      return new CDOListReferenceProxyImpl(initialCapacity, size, initialChunk);
+      return new CDOListWithElementProxiesImpl(initialCapacity, size, initialChunk);
     }
   };
 
   private static final long serialVersionUID = 1L;
 
-  public CDOListReferenceProxyImpl(int initialCapacity, int size, int initialChunk)
+  public CDOListWithElementProxiesImpl(int initialCapacity, int size, int initialChunk)
   {
     super(initialCapacity, initialChunk);
     for (int j = initialChunk; j < size; j++)
     {
-      this.add(new CDOReferenceProxyImpl(j));
+      this.add(new CDOElementProxyImpl(j));
     }
   }
 
@@ -52,15 +52,15 @@ public class CDOListReferenceProxyImpl extends CDOListImpl
 
     Object element = super.get(index);
 
-    return element instanceof CDOReferenceProxy ? InternalCDORevision.UNINITIALIZED : element;
+    return element instanceof CDOElementProxy ? InternalCDORevision.UNINITIALIZED : element;
   }
 
   @Override
   protected void handleAdjustReference(int index, Object element)
   {
-    if (element instanceof CDOReferenceProxy)
+    if (element instanceof CDOElementProxy)
     {
-      ((CDOReferenceProxyImpl)element).setIndex(index);
+      ((CDOElementProxyImpl)element).setIndex(index);
     }
   }
 
@@ -68,14 +68,14 @@ public class CDOListReferenceProxyImpl extends CDOListImpl
   public InternalCDOList clone(CDOType type)
   {
     int size = size();
-    InternalCDOList list = new CDOListReferenceProxyImpl(size, 0, 0);
+    InternalCDOList list = new CDOListWithElementProxiesImpl(size, 0, 0);
     for (int j = 0; j < size; j++)
     {
       Object value = this.get(j);
 
-      if (value instanceof CDOReferenceProxy)
+      if (value instanceof CDOElementProxy)
       {
-        list.add(j, new CDOReferenceProxyImpl(((CDOReferenceProxy)value).getIndex()));
+        list.add(j, new CDOElementProxyImpl(((CDOElementProxy)value).getIndex()));
       }
       else
       {

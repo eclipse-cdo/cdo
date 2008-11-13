@@ -218,7 +218,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   public Object get(int index, boolean resolve)
   {
-    // Since delegate is a hibernate list, it is never a CDOReferenceProxy
+    // Since delegate is a hibernate list, it is never a CDOElementProxy
     // so the parameter resolve can be ignored
     return get(index);
   }

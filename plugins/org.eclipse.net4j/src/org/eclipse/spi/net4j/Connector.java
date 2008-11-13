@@ -16,6 +16,8 @@ import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
+import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.INotifier;
@@ -273,20 +275,18 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     return connect(NO_TIMEOUT);
   }
 
-  public ConnectorException disconnect()
+  public void close()
   {
-    Exception ex = deactivate();
-    if (ex == null)
+    Exception exception = deactivate();
+    if (exception != null)
     {
-      return null;
+      throw WrappedException.wrap(exception);
     }
+  }
 
-    if (ex instanceof ConnectorException)
-    {
-      return (ConnectorException)ex;
-    }
-
-    return new ConnectorException(ex);
+  public boolean isClosed()
+  {
+    return !isActive();
   }
 
   public short getBufferCapacity()
@@ -333,6 +333,13 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   protected boolean isDeferredActivation()
   {
     return true;
+  }
+
+  @Override
+  protected void doBeforeOpenChannel(IProtocol<?> protocol)
+  {
+    super.doBeforeOpenChannel(protocol);
+    waitForConnection(getOpenChannelTimeout());
   }
 
   @Override

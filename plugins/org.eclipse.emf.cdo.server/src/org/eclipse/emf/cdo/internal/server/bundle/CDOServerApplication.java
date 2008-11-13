@@ -76,7 +76,7 @@ public class CDOServerApplication extends OSGiApplication
     {
       for (IAcceptor acceptor : acceptors)
       {
-        LifecycleUtil.deactivate(acceptor);
+        acceptor.close();
       }
     }
 

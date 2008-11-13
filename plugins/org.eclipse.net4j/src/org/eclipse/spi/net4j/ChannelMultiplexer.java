@@ -83,7 +83,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     if (openChannelTimeout == IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT)
     {
-      return OM.BUNDLE.getDebugSupport().getDebugOption("channel.timeout", 10000);
+      return OM.BUNDLE.getDebugSupport().getDebugOption("open.channel.timeout", 10000);
     }
 
     return openChannelTimeout;

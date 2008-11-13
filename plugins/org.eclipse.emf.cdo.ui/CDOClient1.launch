@@ -77,7 +77,7 @@
 <mapEntry key="org.eclipse.update.core/debug/parsing" value="false"/>
 <mapEntry key="org.eclipse.jdt.core/debug/postaction" value="false"/>
 <mapEntry key="org.eclipse.jdt.apt.core/debug/generatedFileMaps" value="false"/>
-<mapEntry key="org.eclipse.net4j/channel.timeout" value="10000"/>
+<mapEntry key="org.eclipse.net4j/open.channel.timeout" value="10000"/>
 <mapEntry key="org.eclipse.ui/trace/graphics" value="false"/>
 <mapEntry key="org.eclipse.osgi/defaultprofile/logsynchronously" value="false"/>
 <mapEntry key="org.eclipse.net4j.pop.ui/debug" value="true"/>

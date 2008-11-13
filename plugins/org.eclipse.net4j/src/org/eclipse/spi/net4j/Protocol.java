@@ -64,11 +64,6 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
     return bufferProvider;
   }
 
-  public void setBufferProvider(IBufferProvider bufferProvider)
-  {
-    this.bufferProvider = bufferProvider;
-  }
-
   public INFRA_STRUCTURE getInfraStructure()
   {
     return infraStructure;
@@ -112,6 +107,8 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   {
     if (channel != newChannel)
     {
+      executorService = null;
+      bufferProvider = null;
       if (channel != null)
       {
         channel.removeListener(channelListener);
@@ -121,6 +118,8 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
       if (channel != null)
       {
         channel.addListener(channelListener);
+        executorService = ((InternalChannel)channel).getReceiveExecutor();
+        bufferProvider = (InternalChannel)channel;
       }
     }
   }

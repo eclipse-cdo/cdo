@@ -21,21 +21,24 @@ public class ExceptionRequest extends RequestWithConfirmation<Boolean>
 {
   private int phase;
 
-  public ExceptionRequest(TestSignalProtocol protocol, int phase)
+  private boolean ioProblem;
+
+  public ExceptionRequest(TestSignalProtocol protocol, int phase, boolean ioProblem)
   {
     super(protocol, TestSignalProtocol.SIGNAL_EXCEPTION);
     this.phase = phase;
+    this.ioProblem = ioProblem;
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     out.writeInt(phase);
+    out.writeBoolean(ioProblem);
     if (phase == 1)
     {
-      ((TestSignalProtocol)getProtocol()).throwException();
+      ((TestSignalProtocol)getProtocol()).throwException(ioProblem);
     }
-
   }
 
   @Override
@@ -43,7 +46,7 @@ public class ExceptionRequest extends RequestWithConfirmation<Boolean>
   {
     if (phase == 4)
     {
-      ((TestSignalProtocol)getProtocol()).throwException();
+      ((TestSignalProtocol)getProtocol()).throwException(ioProblem);
     }
 
     return in.readBoolean();

@@ -314,8 +314,19 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     {
       try
       {
-        failOverStrategy.handleFailOver(this);
-        return;
+        synchronized (signals)
+        {
+          failOverStrategy.handleFailOver(this);
+          for (Signal signal : signals.values())
+          {
+            if (signal instanceof SignalActor)
+            {
+              stopSignal(signal);
+            }
+          }
+
+          return;
+        }
       }
       catch (UnsupportedOperationException ex)
       {

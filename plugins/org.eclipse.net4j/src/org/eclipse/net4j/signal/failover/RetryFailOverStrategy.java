@@ -11,6 +11,7 @@
 package org.eclipse.net4j.signal.failover;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.ISignalProtocol;
 
 /**
  * @author Eike Stepper
@@ -20,5 +21,11 @@ public class RetryFailOverStrategy extends NOOPFailOverStrategy
   public RetryFailOverStrategy(IConnector connector)
   {
     super(connector);
+  }
+
+  @Override
+  public void handleFailOver(ISignalProtocol<?> protocol)
+  {
+    handleOpen(protocol);
   }
 }

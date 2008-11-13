@@ -13,6 +13,7 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.signal.failover.RetryFailOverStrategy;
 import org.eclipse.net4j.tests.signal.IntFailRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
@@ -31,7 +32,7 @@ public class FailOverTest extends AbstractProtocolTest
   {
     int data = 0x0a;
     IConnector connector = startTransport();
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    IFailOverStrategy failOverStrategy = new NOOPFailOverStrategy(connector);
     TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Simulate a disconnect from the server.

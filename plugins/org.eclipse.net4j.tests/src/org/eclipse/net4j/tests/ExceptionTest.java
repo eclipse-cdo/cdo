@@ -16,6 +16,7 @@ import org.eclipse.net4j.tests.signal.ExceptionRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 
 /**
@@ -29,25 +30,45 @@ public class ExceptionTest extends AbstractProtocolTest
 
   public void testExceptionInIRequesting() throws Exception
   {
-    exceptionInPhase(1);
+    exceptionInPhase(1, false);
   }
 
   public void testExceptionInIndicating() throws Exception
   {
-    exceptionInPhase(2);
+    exceptionInPhase(2, false);
   }
 
   public void testExceptionInResponding() throws Exception
   {
-    exceptionInPhase(3);
+    exceptionInPhase(3, false);
   }
 
   public void testExceptionInConfirming() throws Exception
   {
-    exceptionInPhase(4);
+    exceptionInPhase(4, false);
   }
 
-  private void exceptionInPhase(int phase) throws Exception
+  public void testIOExceptionInIRequesting() throws Exception
+  {
+    exceptionInPhase(1, true);
+  }
+
+  public void testIOExceptionInIndicating() throws Exception
+  {
+    exceptionInPhase(2, true);
+  }
+
+  public void testIOExceptionInResponding() throws Exception
+  {
+    exceptionInPhase(3, true);
+  }
+
+  public void testIOExceptionInConfirming() throws Exception
+  {
+    exceptionInPhase(4, true);
+  }
+
+  private void exceptionInPhase(int phase, boolean ioProblem) throws Exception
   {
     IConnector connector = startTransport();
     TestSignalProtocol protocol = new TestSignalProtocol(connector);
@@ -55,31 +76,57 @@ public class ExceptionTest extends AbstractProtocolTest
 
     try
     {
-      new ExceptionRequest(protocol, phase).send();
+      new ExceptionRequest(protocol, phase, ioProblem).send();
       fail("Exception expected");
     }
     catch (Exception ex)
     {
       IOUtil.print(ex);
-      ClassNotFoundException cnfe = null;
-      if (phase == 2 || phase == 3)
+      if (ioProblem)
       {
-        if (ex instanceof RemoteException)
+        IOException ioe = null;
+        if (phase == 2 || phase == 3)
         {
-          cnfe = (ClassNotFoundException)ex.getCause();
+          if (ex instanceof RemoteException)
+          {
+            assertEquals(((RemoteException)ex).whileResponding(), phase == 3);
+            ioe = (IOException)ex.getCause();
+          }
+          else
+          {
+            fail("RemoteException expected");
+          }
         }
         else
         {
-          fail("RemoteException expected");
+          ioe = (IOException)ex;
         }
+
+        assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, ioe.getMessage());
       }
       else
       {
-        cnfe = (ClassNotFoundException)ex;
-      }
+        ClassNotFoundException cnfe = null;
+        if (phase == 2 || phase == 3)
+        {
+          if (ex instanceof RemoteException)
+          {
+            assertEquals(((RemoteException)ex).whileResponding(), phase == 3);
+            cnfe = (ClassNotFoundException)ex.getCause();
+          }
+          else
+          {
+            fail("RemoteException expected");
+          }
+        }
+        else
+        {
+          cnfe = (ClassNotFoundException)ex;
+        }
 
-      AlreadyBoundException abe = (AlreadyBoundException)cnfe.getCause();
-      assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, abe.getMessage());
+        AlreadyBoundException abe = (AlreadyBoundException)cnfe.getCause();
+        assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, abe.getMessage());
+      }
     }
   }
 }

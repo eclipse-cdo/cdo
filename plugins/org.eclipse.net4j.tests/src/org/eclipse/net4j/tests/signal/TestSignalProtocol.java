@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
+import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 
 /**
@@ -91,8 +92,13 @@ public class TestSignalProtocol extends SignalProtocol<Object>
     }
   }
 
-  public void throwException() throws Exception
+  public void throwException(boolean ioProblem) throws Exception
   {
+    if (ioProblem)
+    {
+      throw new IOException(SIMULATED_EXCEPTION);
+    }
+
     try
     {
       throwNestedException();

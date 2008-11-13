@@ -21,6 +21,8 @@ public class ExceptionIndication extends IndicationWithResponse
 {
   private int phase;
 
+  private boolean ioProblem;
+
   public ExceptionIndication(TestSignalProtocol protocol)
   {
     super(protocol, TestSignalProtocol.SIGNAL_EXCEPTION);
@@ -35,9 +37,10 @@ public class ExceptionIndication extends IndicationWithResponse
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     phase = in.readInt();
+    ioProblem = in.readBoolean();
     if (phase == 2)
     {
-      ((TestSignalProtocol)getProtocol()).throwException();
+      ((TestSignalProtocol)getProtocol()).throwException(ioProblem);
     }
   }
 
@@ -46,7 +49,7 @@ public class ExceptionIndication extends IndicationWithResponse
   {
     if (phase == 3)
     {
-      ((TestSignalProtocol)getProtocol()).throwException();
+      ((TestSignalProtocol)getProtocol()).throwException(ioProblem);
     }
 
     out.writeBoolean(true);

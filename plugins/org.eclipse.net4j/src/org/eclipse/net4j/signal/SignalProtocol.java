@@ -190,42 +190,6 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     return true;
   }
 
-  public InputStream wrapInputStream(InputStream in) throws IOException
-  {
-    if (streamWrapper != null)
-    {
-      in = streamWrapper.wrapInputStream(in);
-    }
-
-    return in;
-  }
-
-  public OutputStream wrapOutputStream(OutputStream out) throws IOException
-  {
-    if (streamWrapper != null)
-    {
-      out = streamWrapper.wrapOutputStream(out);
-    }
-
-    return out;
-  }
-
-  public void finishInputStream(InputStream in) throws IOException
-  {
-    if (streamWrapper != null)
-    {
-      streamWrapper.finishInputStream(in);
-    }
-  }
-
-  public void finishOutputStream(OutputStream out) throws IOException
-  {
-    if (streamWrapper != null)
-    {
-      streamWrapper.finishOutputStream(out);
-    }
-  }
-
   public void handleBuffer(IBuffer buffer)
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
@@ -247,13 +211,17 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
           short signalID = byteBuffer.getShort();
           if (TRACER.isEnabled())
           {
-            TRACER.trace("Got signal id " + signalID); //$NON-NLS-1$
+            TRACER.trace("Got signalID: " + signalID); //$NON-NLS-1$
           }
 
           signal = provideSignalReactor(signalID);
           signal.setCorrelationID(-correlationID);
           signal.setBufferInputStream(new SignalInputStream(getTimeout()));
-          signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
+          if (signal instanceof IndicationWithResponse)
+          {
+            signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
+          }
+
           signals.put(-correlationID, signal);
           getExecutorService().execute(signal);
         }
@@ -369,13 +337,53 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     return correlationID;
   }
 
+  InputStream wrapInputStream(InputStream in) throws IOException
+  {
+    if (streamWrapper != null)
+    {
+      in = streamWrapper.wrapInputStream(in);
+    }
+
+    return in;
+  }
+
+  OutputStream wrapOutputStream(OutputStream out) throws IOException
+  {
+    if (streamWrapper != null)
+    {
+      out = streamWrapper.wrapOutputStream(out);
+    }
+
+    return out;
+  }
+
+  void finishInputStream(InputStream in) throws IOException
+  {
+    if (streamWrapper != null)
+    {
+      streamWrapper.finishInputStream(in);
+    }
+  }
+
+  void finishOutputStream(OutputStream out) throws IOException
+  {
+    if (streamWrapper != null)
+    {
+      streamWrapper.finishOutputStream(out);
+    }
+  }
+
   void startSignal(SignalActor signalActor, long timeout) throws Exception
   {
     checkArg(signalActor.getProtocol() == this, "Wrong protocol");
     short signalID = signalActor.getID();
     int correlationID = signalActor.getCorrelationID();
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
-    signalActor.setBufferInputStream(new SignalInputStream(timeout));
+    if (signalActor instanceof RequestWithConfirmation)
+    {
+      signalActor.setBufferInputStream(new SignalInputStream(timeout));
+    }
+
     synchronized (signals)
     {
       signals.put(correlationID, signalActor);
@@ -402,10 +410,22 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
       {
         synchronized (failOverStrategy)
         {
-          if (!failingOver && originalChannel == getChannel())
+          failingOver = true;
+          if (originalChannel == getChannel())
           {
-            failingOver = true;
             failOverStrategy.handleFailOver(this);
+          }
+
+          // Set new OutputStream
+          int correlationID = signalActor.getCorrelationID();
+          short signalID = signalActor.getID();
+          signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
+
+          // Set new InputStream
+          if (signalActor instanceof RequestWithConfirmation)
+          {
+            long timeout = signalActor.getBufferInputStream().getMillisBeforeTimeout();
+            signalActor.setBufferInputStream(new SignalInputStream(timeout));
           }
 
           return true;

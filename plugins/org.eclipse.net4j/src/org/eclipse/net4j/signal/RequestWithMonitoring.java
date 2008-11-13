@@ -16,8 +16,8 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.Monitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
@@ -102,23 +102,6 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   {
     initMainMonitor(monitor);
     return super.send(timeout);
-  }
-
-  @Override
-  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
-  {
-    try
-    {
-      super.execute(in, out);
-    }
-    finally
-    {
-      remoteMonitor.done();
-      remoteMonitor = null;
-
-      mainMonitor.done();
-      mainMonitor = null;
-    }
   }
 
   @Override
@@ -217,6 +200,23 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   protected int getConfirmingWorkPercent()
   {
     return 25;
+  }
+
+  @Override
+  void doExecute(BufferInputStream in, BufferOutputStream out) throws Exception
+  {
+    try
+    {
+      super.doExecute(in, out);
+    }
+    finally
+    {
+      remoteMonitor.done();
+      remoteMonitor = null;
+
+      mainMonitor.done();
+      mainMonitor = null;
+    }
   }
 
   void setMonitorProgress(int totalWork, int work)

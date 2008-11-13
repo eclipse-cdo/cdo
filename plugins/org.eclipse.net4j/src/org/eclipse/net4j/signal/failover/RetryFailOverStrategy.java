@@ -12,20 +12,65 @@ package org.eclipse.net4j.signal.failover;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.WrappedException;
+
+import org.eclipse.internal.net4j.bundle.OM;
 
 /**
  * @author Eike Stepper
  */
 public class RetryFailOverStrategy extends NOOPFailOverStrategy
 {
-  public RetryFailOverStrategy(IConnector connector)
+  /**
+   * @since 2.0
+   */
+  public static final int RETRY_FOREVER = Integer.MAX_VALUE;
+
+  private int retries;
+
+  /**
+   * @since 2.0
+   */
+  public RetryFailOverStrategy(IConnector connector, int retries)
   {
     super(connector);
+    this.retries = retries;
+  }
+
+  public RetryFailOverStrategy(IConnector connector)
+  {
+    this(connector, RETRY_FOREVER);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public int getRetries()
+  {
+    return retries;
   }
 
   @Override
   public void handleFailOver(ISignalProtocol<?> protocol)
   {
-    handleOpen(protocol);
+    Exception exception = null;
+    for (int i = 0; i < retries; i++)
+    {
+      try
+      {
+        handleOpen(protocol);
+        return;
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        exception = ex;
+      }
+    }
+
+    if (exception != null)
+    {
+      throw WrappedException.wrap(exception);
+    }
   }
 }

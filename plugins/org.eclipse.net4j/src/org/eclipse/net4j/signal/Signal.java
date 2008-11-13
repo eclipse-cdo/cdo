@@ -15,7 +15,6 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -205,56 +204,28 @@ public abstract class Signal implements Runnable
     return null;
   }
 
-  protected InputStream wrapInputStream(InputStream in)
+  protected InputStream wrapInputStream(InputStream in) throws IOException
   {
-    try
-    {
-      currentStream = protocol.wrapInputStream(in);
-      return (InputStream)currentStream;
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    currentStream = protocol.wrapInputStream(in);
+    return (InputStream)currentStream;
   }
 
-  protected OutputStream wrapOutputStream(OutputStream out)
+  protected OutputStream wrapOutputStream(OutputStream out) throws IOException
   {
-    try
-    {
-      currentStream = protocol.wrapOutputStream(out);
-      return (OutputStream)currentStream;
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    currentStream = protocol.wrapOutputStream(out);
+    return (OutputStream)currentStream;
   }
 
-  protected void finishInputStream(InputStream in)
+  protected void finishInputStream(InputStream in) throws IOException
   {
-    try
-    {
-      currentStream = null;
-      protocol.finishInputStream(in);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    currentStream = null;
+    protocol.finishInputStream(in);
   }
 
-  protected void finishOutputStream(OutputStream out)
+  protected void finishOutputStream(OutputStream out) throws IOException
   {
-    try
-    {
-      currentStream = null;
-      protocol.finishOutputStream(out);
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    currentStream = null;
+    protocol.finishOutputStream(out);
   }
 
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;

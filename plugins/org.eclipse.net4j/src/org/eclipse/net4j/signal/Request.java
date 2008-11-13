@@ -12,10 +12,7 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -56,37 +53,9 @@ public abstract class Request extends SignalActor
   }
 
   @Override
-  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  void doExecute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    IChannel channel = null;
-
-    for (;;)
-    {
-      try
-      {
-        channel = getProtocol().getChannel();
-        doOutput(out);
-        break;
-      }
-      catch (IOException ex)
-      {
-        if (getProtocol().handleFailOver(this, channel))
-        {
-          resetting();
-        }
-        else
-        {
-          throw ex;
-        }
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected void resetting()
-  {
+    doOutput(out);
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out) throws Exception;

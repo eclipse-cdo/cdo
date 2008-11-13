@@ -12,11 +12,9 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
-import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -94,38 +92,10 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor
   }
 
   @Override
-  protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  void doExecute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    IChannel channel = null;
-
-    for (;;)
-    {
-      try
-      {
-        channel = getProtocol().getChannel();
-        doOutput(out);
-        doInput(in);
-        break;
-      }
-      catch (IOException ex)
-      {
-        if (getProtocol().handleFailOver(this, channel))
-        {
-          resetting();
-        }
-        else
-        {
-          throw ex;
-        }
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected void resetting()
-  {
+    doOutput(out);
+    doInput(in);
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out) throws Exception;

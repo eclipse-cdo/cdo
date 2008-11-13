@@ -10,6 +10,12 @@
  **************************************************************************/
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.buffer.BufferInputStream;
+import org.eclipse.net4j.buffer.BufferOutputStream;
+import org.eclipse.net4j.channel.IChannel;
+
+import java.io.IOException;
+
 /**
  * @author Eike Stepper
  */
@@ -41,6 +47,42 @@ public abstract class SignalActor extends Signal
     super(protocol, literal);
     setCorrelationID(protocol.getNextCorrelationID());
   }
+
+  /**
+   * @since 2.0
+   */
+  protected void resetting()
+  {
+  }
+
+  @Override
+  protected final void execute(BufferInputStream in, BufferOutputStream out) throws Exception
+  {
+    IChannel channel = null;
+
+    for (;;)
+    {
+      try
+      {
+        channel = getProtocol().getChannel();
+        doExecute(in, out);
+        break;
+      }
+      catch (IOException ex)
+      {
+        if (getProtocol().handleFailOver(this, channel))
+        {
+          resetting();
+        }
+        else
+        {
+          throw ex;
+        }
+      }
+    }
+  }
+
+  abstract void doExecute(BufferInputStream in, BufferOutputStream out) throws Exception;
 
   @Override
   String getInputMeaning()

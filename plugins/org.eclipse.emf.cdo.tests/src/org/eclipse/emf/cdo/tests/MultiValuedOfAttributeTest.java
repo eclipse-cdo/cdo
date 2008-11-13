@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -121,6 +123,66 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     assertEquals("Toronto", listOfString.getElements().get(1));
 
     listOfString.getElements().add("Vancouver");
+    transaction.commit();
+  }
+
+  public void testListOfInt() throws Exception
+  {
+    {
+      CDOSession session = openSession(getModel5Package());
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+
+      GenListOfInt genList = getModel5Factory().createGenListOfInt();
+
+      genList.getElements().add(1);
+      genList.getElements().add(2);
+      resource.getContents().add(genList);
+      transaction.commit();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession session = openSession(getModel5Package());
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/res1");
+
+    GenListOfInt genList = (GenListOfInt)resource.getContents().get(0);
+    assertEquals((Integer)1, genList.getElements().get(0));
+    assertEquals((Integer)2, genList.getElements().get(1));
+
+    genList.getElements().add(3);
+    transaction.commit();
+  }
+
+  public void testListOfInteger() throws Exception
+  {
+    {
+      CDOSession session = openSession(getModel5Package());
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/res1");
+
+      GenListOfInteger genList = getModel5Factory().createGenListOfInteger();
+
+      genList.getElements().add(1);
+      genList.getElements().add(2);
+      genList.getElements().add(null);
+      resource.getContents().add(genList);
+      transaction.commit();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession session = openSession(getModel5Package());
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/res1");
+
+    GenListOfInteger genList = (GenListOfInteger)resource.getContents().get(0);
+    assertEquals((Integer)1, genList.getElements().get(0));
+    assertEquals((Integer)2, genList.getElements().get(1));
+    assertEquals(null, genList.getElements().get(2));
+
+    genList.getElements().add(3);
     transaction.commit();
   }
 }

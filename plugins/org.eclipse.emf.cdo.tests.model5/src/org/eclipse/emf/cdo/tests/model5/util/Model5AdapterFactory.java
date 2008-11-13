@@ -2,12 +2,15 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5AdapterFactory.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ * $Id: Model5AdapterFactory.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.util;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
+import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
+import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
@@ -95,15 +98,33 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseGenListOfString(GenListOfString object)
+    {
+      return createGenListOfStringAdapter();
+    }
+
+    @Override
     public Adapter caseGenListOfInt(GenListOfInt object)
     {
       return createGenListOfIntAdapter();
     }
 
     @Override
-    public Adapter caseGenListOfString(GenListOfString object)
+    public Adapter caseGenListOfInteger(GenListOfInteger object)
     {
-      return createGenListOfStringAdapter();
+      return createGenListOfIntegerAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfLong(GenListOfLong object)
+    {
+      return createGenListOfLongAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfBoolean(GenListOfBoolean object)
+    {
+      return createGenListOfBooleanAdapter();
     }
 
     @Override
@@ -179,6 +200,50 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createGenListOfIntAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfInteger
+   * <em>Gen List Of Integer</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfInteger
+   * @generated
+   */
+  public Adapter createGenListOfIntegerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfLong
+   * <em>Gen List Of Long</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfLong
+   * @generated
+   */
+  public Adapter createGenListOfLongAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfBoolean
+   * <em>Gen List Of Boolean</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfBoolean
+   * @generated
+   */
+  public Adapter createGenListOfBooleanAdapter()
   {
     return null;
   }

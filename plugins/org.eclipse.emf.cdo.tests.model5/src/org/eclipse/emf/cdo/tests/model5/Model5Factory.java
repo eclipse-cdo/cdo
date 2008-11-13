@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5Factory.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ * $Id: Model5Factory.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5;
 
@@ -55,6 +55,30 @@ public interface Model5Factory extends EFactory
    * @generated
    */
   GenListOfInt createGenListOfInt();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Integer</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Integer</em>'.
+   * @generated
+   */
+  GenListOfInteger createGenListOfInteger();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Long</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Long</em>'.
+   * @generated
+   */
+  GenListOfLong createGenListOfLong();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Boolean</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Boolean</em>'.
+   * @generated
+   */
+  GenListOfBoolean createGenListOfBoolean();
 
   /**
    * Returns a new object of class '<em>Gen List Of String</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

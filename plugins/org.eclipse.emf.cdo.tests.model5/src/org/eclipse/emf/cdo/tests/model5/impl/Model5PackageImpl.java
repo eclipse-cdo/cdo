@@ -2,12 +2,15 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5PackageImpl.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ * $Id: Model5PackageImpl.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.impl;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
+import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
+import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
@@ -54,6 +57,27 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * @generated
    */
   private EClass genListOfIntEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfIntegerEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfLongEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfBooleanEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -216,6 +240,66 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * 
    * @generated
    */
+  public EClass getGenListOfInteger()
+  {
+    return genListOfIntegerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfInteger_Elements()
+  {
+    return (EAttribute)genListOfIntegerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getGenListOfLong()
+  {
+    return genListOfLongEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfLong_Elements()
+  {
+    return (EAttribute)genListOfLongEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getGenListOfBoolean()
+  {
+    return genListOfBooleanEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfBoolean_Elements()
+  {
+    return (EAttribute)genListOfBooleanEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getGenListOfString()
   {
     return genListOfStringEClass;
@@ -272,11 +356,20 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
     doctorEClass = createEClass(DOCTOR);
 
+    genListOfStringEClass = createEClass(GEN_LIST_OF_STRING);
+    createEAttribute(genListOfStringEClass, GEN_LIST_OF_STRING__ELEMENTS);
+
     genListOfIntEClass = createEClass(GEN_LIST_OF_INT);
     createEAttribute(genListOfIntEClass, GEN_LIST_OF_INT__ELEMENTS);
 
-    genListOfStringEClass = createEClass(GEN_LIST_OF_STRING);
-    createEAttribute(genListOfStringEClass, GEN_LIST_OF_STRING__ELEMENTS);
+    genListOfIntegerEClass = createEClass(GEN_LIST_OF_INTEGER);
+    createEAttribute(genListOfIntegerEClass, GEN_LIST_OF_INTEGER__ELEMENTS);
+
+    genListOfLongEClass = createEClass(GEN_LIST_OF_LONG);
+    createEAttribute(genListOfLongEClass, GEN_LIST_OF_LONG__ELEMENTS);
+
+    genListOfBooleanEClass = createEClass(GEN_LIST_OF_BOOLEAN);
+    createEAttribute(genListOfBooleanEClass, GEN_LIST_OF_BOOLEAN__ELEMENTS);
   }
 
   /**
@@ -328,15 +421,32 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
     initEClass(doctorEClass, Doctor.class, "Doctor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(genListOfStringEClass, GenListOfString.class, "GenListOfString", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfString_Elements(), ecorePackage.getEString(), "elements", null, 0, -1,
+        GenListOfString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
     initEClass(genListOfIntEClass, GenListOfInt.class, "GenListOfInt", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGenListOfInt_Elements(), ecorePackage.getEInt(), "elements", null, 0, -1, GenListOfInt.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(genListOfStringEClass, GenListOfString.class, "GenListOfString", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(genListOfIntegerEClass, GenListOfInteger.class, "GenListOfInteger", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getGenListOfString_Elements(), ecorePackage.getEString(), "elements", null, 0, -1,
-        GenListOfString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+    initEAttribute(getGenListOfInteger_Elements(), ecorePackage.getEIntegerObject(), "elements", null, 0, -1,
+        GenListOfInteger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfLongEClass, GenListOfLong.class, "GenListOfLong", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfLong_Elements(), ecorePackage.getELong(), "elements", null, 0, -1, GenListOfLong.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfBooleanEClass, GenListOfBoolean.class, "GenListOfBoolean", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfBoolean_Elements(), ecorePackage.getEBoolean(), "elements", null, 0, -1,
+        GenListOfBoolean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     // Create resource

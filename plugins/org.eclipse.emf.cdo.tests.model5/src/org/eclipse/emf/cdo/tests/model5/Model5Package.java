@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5Package.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ * $Id: Model5Package.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5;
 
@@ -143,7 +143,64 @@ public interface Model5Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfInt()
    * @generated
    */
-  int GEN_LIST_OF_INT = 3;
+  int GEN_LIST_OF_INT = 4;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfIntegerImpl
+   * <em>Gen List Of Integer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfIntegerImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfInteger()
+   * @generated
+   */
+  int GEN_LIST_OF_INTEGER = 5;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfLongImpl
+   * <em>Gen List Of Long</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfLongImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfLong()
+   * @generated
+   */
+  int GEN_LIST_OF_LONG = 6;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfBooleanImpl
+   * <em>Gen List Of Boolean</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfBooleanImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfBoolean()
+   * @generated
+   */
+  int GEN_LIST_OF_BOOLEAN = 7;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfStringImpl
+   * <em>Gen List Of String</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfStringImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfString()
+   * @generated
+   */
+  int GEN_LIST_OF_STRING = 3;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_STRING__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of String</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_STRING_FEATURE_COUNT = 1;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -163,14 +220,21 @@ public interface Model5Package extends EPackage
   int GEN_LIST_OF_INT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfStringImpl
-   * <em>Gen List Of String</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfStringImpl
-   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfString()
    * @generated
+   * @ordered
    */
-  int GEN_LIST_OF_STRING = 4;
+  int GEN_LIST_OF_INTEGER__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Integer</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_INTEGER_FEATURE_COUNT = 1;
 
   /**
    * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -178,16 +242,33 @@ public interface Model5Package extends EPackage
    * @generated
    * @ordered
    */
-  int GEN_LIST_OF_STRING__ELEMENTS = 0;
+  int GEN_LIST_OF_LONG__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>Gen List Of String</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Gen List Of Long</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int GEN_LIST_OF_STRING_FEATURE_COUNT = 1;
+  int GEN_LIST_OF_LONG_FEATURE_COUNT = 1;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_BOOLEAN__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Boolean</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_BOOLEAN_FEATURE_COUNT = 1;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap
@@ -273,6 +354,71 @@ public interface Model5Package extends EPackage
    * @generated
    */
   EAttribute getGenListOfInt_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfInteger
+   * <em>Gen List Of Integer</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Integer</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfInteger
+   * @generated
+   */
+  EClass getGenListOfInteger();
+
+  /**
+   * Returns the meta object for the attribute list '
+   * {@link org.eclipse.emf.cdo.tests.model5.GenListOfInteger#getElements <em>Elements</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfInteger#getElements()
+   * @see #getGenListOfInteger()
+   * @generated
+   */
+  EAttribute getGenListOfInteger_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfLong <em>Gen List Of Long</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Long</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfLong
+   * @generated
+   */
+  EClass getGenListOfLong();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfLong#getElements
+   * <em>Elements</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfLong#getElements()
+   * @see #getGenListOfLong()
+   * @generated
+   */
+  EAttribute getGenListOfLong_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfBoolean
+   * <em>Gen List Of Boolean</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Boolean</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfBoolean
+   * @generated
+   */
+  EClass getGenListOfBoolean();
+
+  /**
+   * Returns the meta object for the attribute list '
+   * {@link org.eclipse.emf.cdo.tests.model5.GenListOfBoolean#getElements <em>Elements</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfBoolean#getElements()
+   * @see #getGenListOfBoolean()
+   * @generated
+   */
+  EAttribute getGenListOfBoolean_Elements();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString
@@ -389,6 +535,60 @@ public interface Model5Package extends EPackage
      * @generated
      */
     EAttribute GEN_LIST_OF_INT__ELEMENTS = eINSTANCE.getGenListOfInt_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfIntegerImpl
+     * <em>Gen List Of Integer</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfIntegerImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfInteger()
+     * @generated
+     */
+    EClass GEN_LIST_OF_INTEGER = eINSTANCE.getGenListOfInteger();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_INTEGER__ELEMENTS = eINSTANCE.getGenListOfInteger_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfLongImpl
+     * <em>Gen List Of Long</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfLongImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfLong()
+     * @generated
+     */
+    EClass GEN_LIST_OF_LONG = eINSTANCE.getGenListOfLong();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_LONG__ELEMENTS = eINSTANCE.getGenListOfLong_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfBooleanImpl
+     * <em>Gen List Of Boolean</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfBooleanImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfBoolean()
+     * @generated
+     */
+    EClass GEN_LIST_OF_BOOLEAN = eINSTANCE.getGenListOfBoolean();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_BOOLEAN__ELEMENTS = eINSTANCE.getGenListOfBoolean_Elements();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfStringImpl

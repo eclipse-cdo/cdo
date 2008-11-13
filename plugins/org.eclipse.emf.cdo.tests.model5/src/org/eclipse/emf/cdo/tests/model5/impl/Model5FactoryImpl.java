@@ -2,12 +2,15 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5FactoryImpl.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ * $Id: Model5FactoryImpl.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.impl;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
+import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
+import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
@@ -76,10 +79,16 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
       return createManager();
     case Model5Package.DOCTOR:
       return createDoctor();
-    case Model5Package.GEN_LIST_OF_INT:
-      return createGenListOfInt();
     case Model5Package.GEN_LIST_OF_STRING:
       return createGenListOfString();
+    case Model5Package.GEN_LIST_OF_INT:
+      return createGenListOfInt();
+    case Model5Package.GEN_LIST_OF_INTEGER:
+      return createGenListOfInteger();
+    case Model5Package.GEN_LIST_OF_LONG:
+      return createGenListOfLong();
+    case Model5Package.GEN_LIST_OF_BOOLEAN:
+      return createGenListOfBoolean();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -127,6 +136,39 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   {
     GenListOfIntImpl genListOfInt = new GenListOfIntImpl();
     return genListOfInt;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfInteger createGenListOfInteger()
+  {
+    GenListOfIntegerImpl genListOfInteger = new GenListOfIntegerImpl();
+    return genListOfInteger;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfLong createGenListOfLong()
+  {
+    GenListOfLongImpl genListOfLong = new GenListOfLongImpl();
+    return genListOfLong;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfBoolean createGenListOfBoolean()
+  {
+    GenListOfBooleanImpl genListOfBoolean = new GenListOfBooleanImpl();
+    return genListOfBoolean;
   }
 
   /**

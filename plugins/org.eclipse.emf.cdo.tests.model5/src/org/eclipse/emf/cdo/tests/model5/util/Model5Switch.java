@@ -2,12 +2,15 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5Switch.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ * $Id: Model5Switch.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.util;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
+import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
+import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
@@ -122,6 +125,16 @@ public class Model5Switch<T>
       }
       return result;
     }
+    case Model5Package.GEN_LIST_OF_STRING:
+    {
+      GenListOfString genListOfString = (GenListOfString)theEObject;
+      T result = caseGenListOfString(genListOfString);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case Model5Package.GEN_LIST_OF_INT:
     {
       GenListOfInt genListOfInt = (GenListOfInt)theEObject;
@@ -132,10 +145,30 @@ public class Model5Switch<T>
       }
       return result;
     }
-    case Model5Package.GEN_LIST_OF_STRING:
+    case Model5Package.GEN_LIST_OF_INTEGER:
     {
-      GenListOfString genListOfString = (GenListOfString)theEObject;
-      T result = caseGenListOfString(genListOfString);
+      GenListOfInteger genListOfInteger = (GenListOfInteger)theEObject;
+      T result = caseGenListOfInteger(genListOfInteger);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model5Package.GEN_LIST_OF_LONG:
+    {
+      GenListOfLong genListOfLong = (GenListOfLong)theEObject;
+      T result = caseGenListOfLong(genListOfLong);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model5Package.GEN_LIST_OF_BOOLEAN:
+    {
+      GenListOfBoolean genListOfBoolean = (GenListOfBoolean)theEObject;
+      T result = caseGenListOfBoolean(genListOfBoolean);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -203,6 +236,51 @@ public class Model5Switch<T>
    * @generated
    */
   public T caseGenListOfInt(GenListOfInt object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Integer</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Integer</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfInteger(GenListOfInteger object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Long</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Long</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfLong(GenListOfLong object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Boolean</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Boolean</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfBoolean(GenListOfBoolean object)
   {
     return null;
   }

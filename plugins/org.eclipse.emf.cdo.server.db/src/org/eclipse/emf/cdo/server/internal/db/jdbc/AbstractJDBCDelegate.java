@@ -26,7 +26,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.collection.MoveableList;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,7 +58,7 @@ public abstract class AbstractJDBCDelegate implements IJDBCDelegate
     return connection;
   }
 
-  public final void commit(IMonitor monitor)
+  public final void commit(OMMonitor monitor)
   {
     try
     {

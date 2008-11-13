@@ -12,23 +12,40 @@ package org.eclipse.net4j.util.om.monitor;
 
 /**
  * @author Eike Stepper
- * @since 2.0
  */
-public interface IMonitor
+public interface OMMonitor
 {
+  /**
+   * @since 2.0
+   */
   public boolean isCanceled();
 
+  /**
+   * @since 2.0
+   */
   public void checkCanceled() throws MonitorCanceledException;
 
+  /**
+   * @since 2.0
+   */
   public void begin(int totalWork) throws MonitorCanceledException;
 
   public void worked(int work) throws MonitorCanceledException;
 
+  /**
+   * @since 2.0
+   */
   public void done();
 
   public int getTotalWork();
 
+  /**
+   * @since 2.0
+   */
   public int getWork();
 
-  public IMonitor fork(int work);
+  /**
+   * @since 2.0
+   */
+  public OMMonitor fork(int work);
 }

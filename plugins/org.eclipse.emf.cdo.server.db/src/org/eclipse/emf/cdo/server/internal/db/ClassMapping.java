@@ -30,7 +30,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -319,7 +319,7 @@ public abstract class ClassMapping implements IClassMapping
     return cdoFeature;
   }
 
-  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, IMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, OMMonitor monitor)
   {
     try
     {
@@ -361,7 +361,7 @@ public abstract class ClassMapping implements IClassMapping
   protected abstract void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision)
       throws IllegalStateException;
 
-  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, IMonitor monitor)
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, OMMonitor monitor)
   {
     try
     {

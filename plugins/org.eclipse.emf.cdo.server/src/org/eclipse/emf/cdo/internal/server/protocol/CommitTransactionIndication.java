@@ -47,7 +47,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -141,7 +141,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   }
 
   @Override
-  protected final void indicating(ExtendedDataInputStream in, IMonitor monitor) throws Exception
+  protected final void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     indicating(new CDODataInputImpl(in)
     {
@@ -178,7 +178,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   }
 
   @Override
-  protected final void responding(ExtendedDataOutputStream out, IMonitor monitor) throws Exception
+  protected final void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
   {
     responding(new CDODataOutputImpl(out)
     {
@@ -195,7 +195,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }, monitor);
   }
 
-  protected void indicating(CDODataInput in, IMonitor monitor) throws Exception
+  protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     try
     {
@@ -218,7 +218,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
   }
 
-  protected void responding(CDODataOutput out, IMonitor monitor) throws Exception
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     boolean success = false;
 
@@ -244,7 +244,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     commitContext = getTransaction(viewID).createCommitContext();
   }
 
-  protected void indicatingCommit(CDODataInput in, IMonitor monitor) throws Exception
+  protected void indicatingCommit(CDODataInput in, OMMonitor monitor) throws Exception
   {
     // Create transaction context
     indicationTransaction(in);
@@ -320,7 +320,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
   }
 
-  protected void indicatingCommit(IMonitor monitor)
+  protected void indicatingCommit(OMMonitor monitor)
   {
     monitor.begin(2);
     try

@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
@@ -56,7 +56,7 @@ public class SignalMonitorTest extends AbstractTransportTest
               return new IndicationWithMonitoring(this, SIGNAL_ID)
               {
                 @Override
-                protected void indicating(ExtendedDataInputStream in, IMonitor monitor) throws Exception
+                protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
                 {
                   monitor.begin(101);
 
@@ -83,7 +83,7 @@ public class SignalMonitorTest extends AbstractTransportTest
                 }
 
                 @Override
-                protected void responding(ExtendedDataOutputStream out, IMonitor monitor) throws Exception
+                protected void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
                 {
                   monitor.begin(1);
 
@@ -119,7 +119,7 @@ public class SignalMonitorTest extends AbstractTransportTest
     RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<Boolean>(protocol, SIGNAL_ID)
     {
       @Override
-      protected void requesting(ExtendedDataOutputStream out, IMonitor monitor) throws Exception
+      protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
       {
         monitor.begin(1);
 
@@ -135,7 +135,7 @@ public class SignalMonitorTest extends AbstractTransportTest
       }
 
       @Override
-      protected Boolean confirming(ExtendedDataInputStream in, IMonitor monitor) throws Exception
+      protected Boolean confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
       {
         monitor.begin(1);
 

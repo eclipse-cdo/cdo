@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.Transact
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -102,9 +102,9 @@ public class Transaction extends View implements ITransaction
 
     public void preCommit();
 
-    public void write(IMonitor monitor);
+    public void write(OMMonitor monitor);
 
-    public void commit(IMonitor monitor);
+    public void commit(OMMonitor monitor);
 
     public void rollback(String message);
 

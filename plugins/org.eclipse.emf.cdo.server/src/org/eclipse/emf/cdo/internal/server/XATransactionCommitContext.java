@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrentValue;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
@@ -46,7 +46,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   }
 
   @Override
-  public void commit(IMonitor monitor)
+  public void commit(OMMonitor monitor)
   {
     StoreThreadLocal.setAccessor(getAccessor());
     try
@@ -60,7 +60,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   }
 
   @Override
-  public void write(IMonitor monitor)
+  public void write(OMMonitor monitor)
   {
     StoreThreadLocal.setAccessor(getAccessor());
     try

@@ -29,7 +29,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -142,13 +142,13 @@ public class MEMStoreAccessor extends StoreAccessor
   /**
    * @since 2.0
    */
-  public void commit(IMonitor monitor)
+  public void commit(OMMonitor monitor)
   {
     // Do nothing
   }
 
   @Override
-  public void write(CommitContext context, IMonitor monitor)
+  public void write(CommitContext context, OMMonitor monitor)
   {
     MEMStore store = getStore();
     synchronized (store)
@@ -171,13 +171,13 @@ public class MEMStoreAccessor extends StoreAccessor
   }
 
   @Override
-  protected void writePackages(CDOPackage[] cdoPackages, IMonitor monitor)
+  protected void writePackages(CDOPackage[] cdoPackages, OMMonitor monitor)
   {
     // Do nothing
   }
 
   @Override
-  protected void writeRevisions(CDORevision[] revisions, IMonitor monitor)
+  protected void writeRevisions(CDORevision[] revisions, OMMonitor monitor)
   {
     for (CDORevision revision : revisions)
     {
@@ -195,7 +195,7 @@ public class MEMStoreAccessor extends StoreAccessor
    * @since 2.0
    */
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, IMonitor monitor)
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor)
   {
     for (CDORevisionDelta revisionDelta : revisionDeltas)
     {
@@ -216,7 +216,7 @@ public class MEMStoreAccessor extends StoreAccessor
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects, long revised, IMonitor monitor)
+  protected void detachObjects(CDOID[] detachedObjects, long revised, OMMonitor monitor)
   {
     for (CDOID id : detachedObjects)
     {

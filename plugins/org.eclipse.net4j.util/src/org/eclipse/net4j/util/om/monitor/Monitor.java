@@ -14,7 +14,7 @@ package org.eclipse.net4j.util.om.monitor;
  * @author Eike Stepper
  * @since 2.0
  */
-public class Monitor implements IMonitor
+public class Monitor implements OMMonitor
 {
   private int totalWork;
 
@@ -49,7 +49,7 @@ public class Monitor implements IMonitor
     this.work += work;
   }
 
-  public synchronized IMonitor fork(int work)
+  public synchronized OMMonitor fork(int work)
   {
     return new NestedMonitor(this, work);
   }

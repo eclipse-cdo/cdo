@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class VerticalClassMapping extends ClassMapping
   }
 
   @Override
-  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, IMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, OMMonitor monitor)
   {
     if (superMappings != null)
     {

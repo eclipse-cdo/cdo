@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext.CommitState;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.concurrent.ExecutionException;
@@ -38,7 +38,7 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicating(CDODataInput in, IMonitor monitor) throws Exception
+  protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     indicationTransaction(in);
     XATransactionCommitContext xaContextContext = (XATransactionCommitContext)commitContext;
@@ -61,7 +61,7 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void responding(CDODataOutput out, IMonitor monitor) throws Exception
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     String exceptionMessage = null;
 

@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.server.IRepositoryElement;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -72,7 +72,7 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
   /**
    * Create a future to execute commitContext in a different thread.
    */
-  public void preCommit(InternalCommitContext commitContext, IMonitor monitor)
+  public void preCommit(InternalCommitContext commitContext, OMMonitor monitor)
   {
     TransactionCommitContextEntry contextEntry = new TransactionCommitContextEntry(monitor);
     contextEntry.setContext(commitContext);
@@ -131,9 +131,9 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
 
     private Future<Object> future;
 
-    private IMonitor monitor;
+    private OMMonitor monitor;
 
-    public TransactionCommitContextEntry(IMonitor monitor)
+    public TransactionCommitContextEntry(OMMonitor monitor)
     {
       this.monitor = monitor;
     }

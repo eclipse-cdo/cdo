@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 
 import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ public class CommitTransactionPhase1Request extends CommitTransactionRequest
   }
 
   @Override
-  protected CommitTransactionResult confirming(CDODataInput in, IMonitor monitor) throws IOException
+  protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     CommitTransactionResult result = confirmingCheckError(in);
     if (result != null)

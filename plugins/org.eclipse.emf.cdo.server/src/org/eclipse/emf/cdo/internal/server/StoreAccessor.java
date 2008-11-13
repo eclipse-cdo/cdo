@@ -32,7 +32,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.ArrayList;
@@ -126,7 +126,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 2.0
    */
-  public void write(CommitContext context, IMonitor monitor)
+  public void write(CommitContext context, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -181,7 +181,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 2.0
    */
-  protected void addIDMappings(IStoreAccessor.CommitContext context, IMonitor monitor)
+  protected void addIDMappings(IStoreAccessor.CommitContext context, OMMonitor monitor)
   {
     try
     {
@@ -213,22 +213,22 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 2.0
    */
-  protected abstract void writePackages(CDOPackage[] cdoPackages, IMonitor monitor);
+  protected abstract void writePackages(CDOPackage[] cdoPackages, OMMonitor monitor);
 
   /**
    * @since 2.0
    */
-  protected abstract void writeRevisions(CDORevision[] revisions, IMonitor monitor);
+  protected abstract void writeRevisions(CDORevision[] revisions, OMMonitor monitor);
 
   /**
    * @since 2.0
    */
-  protected abstract void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, IMonitor monitor);
+  protected abstract void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor);
 
   /**
    * @since 2.0
    */
-  protected abstract void detachObjects(CDOID[] detachedObjects, long revised, IMonitor monitor);
+  protected abstract void detachObjects(CDOID[] detachedObjects, long revised, OMMonitor monitor);
 
   /**
    * @since 2.0
@@ -260,9 +260,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   {
     private CDOPackage[] cdoPackages;
 
-    private IMonitor monitor;
+    private OMMonitor monitor;
 
-    public PackageWriter(CDOPackage[] cdoPackages, IMonitor monitor)
+    public PackageWriter(CDOPackage[] cdoPackages, OMMonitor monitor)
     {
       this.cdoPackages = cdoPackages;
       this.monitor = monitor;
@@ -273,7 +273,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       return cdoPackages;
     }
 
-    public IMonitor getMonitor()
+    public OMMonitor getMonitor()
     {
       return monitor;
     }
@@ -294,7 +294,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       }
     }
 
-    protected void runPackage(CDOPackage cdoPackage, IMonitor monitor)
+    protected void runPackage(CDOPackage cdoPackage, OMMonitor monitor)
     {
       try
       {
@@ -315,7 +315,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       }
     }
 
-    protected void runClass(InternalCDOClass cdoClass, IMonitor signalMonitor)
+    protected void runClass(InternalCDOClass cdoClass, OMMonitor signalMonitor)
     {
       try
       {

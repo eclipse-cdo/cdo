@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.List;
 import java.util.Set;
@@ -55,12 +55,12 @@ public interface IClassMapping
   /**
    * @since 2.0
    */
-  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, IMonitor monitor);
+  public void writeRevision(IDBStoreAccessor accessor, CDORevision revision, OMMonitor monitor);
 
   /**
    * @since 2.0
    */
-  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, IMonitor monitor);
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, OMMonitor monitor);
 
   /**
    * @since 2.0

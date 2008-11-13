@@ -15,7 +15,7 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 
@@ -119,9 +119,9 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     responding(out, monitor.fork(getRespondingWorkPercent()));
   }
 
-  protected abstract void indicating(ExtendedDataInputStream in, IMonitor monitor) throws Exception;
+  protected abstract void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception;
 
-  protected abstract void responding(ExtendedDataOutputStream out, IMonitor monitor) throws Exception;
+  protected abstract void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception;
 
   /**
    * @since 2.0

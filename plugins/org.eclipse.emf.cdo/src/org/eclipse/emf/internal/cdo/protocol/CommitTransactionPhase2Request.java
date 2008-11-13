@@ -22,7 +22,7 @@ import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
 import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.URI;
@@ -56,14 +56,14 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
   }
 
   @Override
-  protected void requesting(CDODataOutput out, IMonitor monitor) throws IOException
+  protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
     requestingIdMapping(out);
   }
 
   @Override
-  protected CommitTransactionResult confirming(CDODataInput in, IMonitor monitor) throws IOException
+  protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     return confirmingCheckError(in);
   }

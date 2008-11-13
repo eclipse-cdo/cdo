@@ -36,7 +36,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.ArrayList;
@@ -223,7 +223,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     return autoReleaseLocksEnabled;
   }
 
-  public void commit(IMonitor monitor)
+  public void commit(OMMonitor monitor)
   {
     monitor.begin(5);
 
@@ -249,7 +249,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
   /**
    * @since 2.0
    */
-  public void write(IMonitor monitor)
+  public void write(OMMonitor monitor)
   {
     monitor.begin(10);
 
@@ -489,7 +489,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     return accessor;
   }
 
-  private void updateInfraStructure(IMonitor monitor)
+  private void updateInfraStructure(OMMonitor monitor)
   {
     monitor.begin(4);
 

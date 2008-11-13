@@ -48,7 +48,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.CloseableIterator;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.PreparedStatement;
@@ -342,7 +342,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
   }
 
-  public final void commit(IMonitor monitor)
+  public final void commit(OMMonitor monitor)
   {
     jdbcDelegate.commit(monitor);
   }
@@ -354,7 +354,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  protected final void writePackages(CDOPackage[] cdoPackages, IMonitor monitor)
+  protected final void writePackages(CDOPackage[] cdoPackages, OMMonitor monitor)
   {
     new PackageWriter(cdoPackages, monitor)
     {
@@ -464,13 +464,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, IMonitor monitor)
+  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  protected void writeRevisions(CDORevision[] revisions, IMonitor monitor)
+  protected void writeRevisions(CDORevision[] revisions, OMMonitor monitor)
   {
     try
     {
@@ -486,7 +486,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     }
   }
 
-  protected void writeRevision(CDORevision revision, IMonitor monitor)
+  protected void writeRevision(CDORevision revision, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -499,7 +499,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  protected void detachObjects(CDOID[] detachedObjects, long revised, IMonitor monitor)
+  protected void detachObjects(CDOID[] detachedObjects, long revised, OMMonitor monitor)
   {
     try
     {
@@ -518,7 +518,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   /**
    * @since 2.0
    */
-  protected void detachObject(CDOID id, long revised, IMonitor monitor)
+  protected void detachObject(CDOID id, long revised, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {

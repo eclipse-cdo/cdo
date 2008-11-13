@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -40,9 +40,9 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
    */
   public static final long DEFAULT_MONITOR_PROGRESS_INTERVAL = 2000;
 
-  private IMonitor mainMonitor;
+  private OMMonitor mainMonitor;
 
-  private IMonitor remoteMonitor;
+  private OMMonitor remoteMonitor;
 
   /**
    * @since 2.0
@@ -86,19 +86,19 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     return send(timeout, null);
   }
 
-  public Future<RESULT> sendAsync(IMonitor monitor)
+  public Future<RESULT> sendAsync(OMMonitor monitor)
   {
     initMainMonitor(monitor);
     return super.sendAsync();
   }
 
-  public RESULT send(IMonitor monitor) throws Exception, RemoteException
+  public RESULT send(OMMonitor monitor) throws Exception, RemoteException
   {
     initMainMonitor(monitor);
     return super.send();
   }
 
-  public RESULT send(long timeout, IMonitor monitor) throws Exception, RemoteException
+  public RESULT send(long timeout, OMMonitor monitor) throws Exception, RemoteException
   {
     initMainMonitor(monitor);
     return super.send(timeout);
@@ -171,13 +171,13 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     return confirming(in, mainMonitor.fork(getConfirmingWorkPercent()));
   }
 
-  protected abstract void requesting(ExtendedDataOutputStream out, IMonitor monitor) throws Exception;
+  protected abstract void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception;
 
   /**
    * <b>Important Note:</b> The confirmation must not be empty, i.e. the stream must be used at least to read a
    * <code>boolean</code>. Otherwise synchronization problems will result!
    */
-  protected abstract RESULT confirming(ExtendedDataInputStream in, IMonitor monitor) throws Exception;
+  protected abstract RESULT confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception;
 
   /**
    * @since 2.0
@@ -247,7 +247,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     }
   }
 
-  private void initMainMonitor(IMonitor monitor)
+  private void initMainMonitor(OMMonitor monitor)
   {
     mainMonitor = monitor == null ? new Monitor() : monitor;
   }

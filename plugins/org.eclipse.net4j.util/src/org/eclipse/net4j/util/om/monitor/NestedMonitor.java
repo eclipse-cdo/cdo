@@ -16,19 +16,19 @@ package org.eclipse.net4j.util.om.monitor;
  */
 public class NestedMonitor extends Monitor
 {
-  private IMonitor parent;
+  private OMMonitor parent;
 
   private int parentWork;
 
   private float propagateWork;
 
-  public NestedMonitor(IMonitor parent, int parentWork)
+  public NestedMonitor(OMMonitor parent, int parentWork)
   {
     this.parent = parent;
     this.parentWork = parentWork;
   }
 
-  public IMonitor getParent()
+  public OMMonitor getParent()
   {
     return parent;
   }

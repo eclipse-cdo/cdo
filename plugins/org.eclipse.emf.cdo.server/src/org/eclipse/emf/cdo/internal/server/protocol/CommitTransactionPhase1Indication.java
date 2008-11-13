@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
 
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
  * @author Simon McDuff
@@ -28,14 +28,14 @@ public class CommitTransactionPhase1Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicatingCommit(IMonitor monitor)
+  protected void indicatingCommit(OMMonitor monitor)
   {
     // Register transactionContext
     getRepository().getCommitManager().preCommit(commitContext, monitor);
   }
 
   @Override
-  protected void responding(CDODataOutput out, IMonitor monitor) throws Exception
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     String exceptionMessage = null;
 

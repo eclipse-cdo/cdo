@@ -45,7 +45,7 @@ import org.eclipse.emf.internal.cdo.revision.CDOListReferenceProxyImpl;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -116,7 +116,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   }
 
   @Override
-  protected final void requesting(ExtendedDataOutputStream out, IMonitor monitor) throws Exception
+  protected final void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
   {
     requesting(new CDODataOutputImpl(out)
     {
@@ -134,7 +134,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   }
 
   @Override
-  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, IMonitor monitor) throws Exception
+  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     return confirming(new CDODataInputImpl(in)
     {
@@ -170,13 +170,13 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     }, monitor);
   }
 
-  protected void requesting(CDODataOutput out, IMonitor monitor) throws IOException
+  protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
     requestingCommit(out);
   }
 
-  protected CommitTransactionResult confirming(CDODataInput in, IMonitor monitor) throws IOException
+  protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     CommitTransactionResult result = confirmingCheckError(in);
     if (result != null)

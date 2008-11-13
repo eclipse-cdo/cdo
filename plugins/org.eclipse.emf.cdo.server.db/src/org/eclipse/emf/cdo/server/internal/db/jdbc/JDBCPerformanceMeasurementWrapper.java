@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.util.om.monitor.IMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.Connection;
@@ -48,7 +48,7 @@ public class JDBCPerformanceMeasurementWrapper implements IJDBCDelegate
     this.delegate = delegate;
   }
 
-  public void commit(IMonitor monitor)
+  public void commit(OMMonitor monitor)
   {
     delegate.commit(monitor);
   }

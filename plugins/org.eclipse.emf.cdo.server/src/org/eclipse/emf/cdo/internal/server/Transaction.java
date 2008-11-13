@@ -106,6 +106,8 @@ public class Transaction extends View implements ITransaction
 
     public void commit(IMonitor monitor);
 
+    public void rollback(String message);
+
     public void postCommit(boolean success);
 
     public String getRollbackMessage();

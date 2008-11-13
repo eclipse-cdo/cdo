@@ -134,8 +134,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   }
 
   @Override
-  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, IMonitor monitor)
-      throws Exception
+  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, IMonitor monitor) throws Exception
   {
     return confirming(new CDODataInputImpl(in)
     {

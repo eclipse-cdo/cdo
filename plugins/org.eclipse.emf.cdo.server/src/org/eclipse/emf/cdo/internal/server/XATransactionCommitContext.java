@@ -11,9 +11,11 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrentValue;
+import org.eclipse.net4j.util.om.monitor.IMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
@@ -37,17 +39,53 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   }
 
   @Override
+  public void preCommit()
+  {
+    super.preCommit();
+    StoreThreadLocal.setAccessor(null);
+  }
+
+  @Override
+  public void commit(IMonitor monitor)
+  {
+    StoreThreadLocal.setAccessor(getAccessor());
+    try
+    {
+      super.commit(monitor);
+    }
+    finally
+    {
+      StoreThreadLocal.setAccessor(null);
+    }
+  }
+
+  @Override
+  public void write(IMonitor monitor)
+  {
+    StoreThreadLocal.setAccessor(getAccessor());
+    try
+    {
+      super.write(monitor);
+    }
+    finally
+    {
+      StoreThreadLocal.setAccessor(null);
+    }
+  }
+
+  @Override
   public void postCommit(boolean success)
   {
+    StoreThreadLocal.setAccessor(getAccessor());
     Repository repository = (Repository)getTransaction().getRepository();
     repository.getCommitManager().remove(this);
     super.postCommit(success);
   }
 
   @Override
-  protected void rollback()
+  synchronized public void rollback(String message)
   {
-    super.rollback();
+    super.rollback(message);
 
     // Change the state to unblock call.
     state.set(CommitState.ROLLED_BACK);
@@ -95,7 +133,11 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
     @Override
     public boolean equals(Object object)
     {
-      return CommitState.ROLLED_BACK == object || CommitState.APPLY_ID_MAPPING == object;
+      if (object == CommitState.ROLLED_BACK)
+      {
+        throw new RuntimeException("RolledBack");
+      }
+      return CommitState.APPLY_ID_MAPPING == object;
     }
   };
 
@@ -107,7 +149,12 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
     @Override
     public boolean equals(Object object)
     {
-      return CommitState.ROLLED_BACK == object || CommitState.APPLY_ID_MAPPING_DONE == object;
+      if (object == CommitState.ROLLED_BACK)
+      {
+        throw new RuntimeException("RolledBack");
+      }
+
+      return CommitState.APPLY_ID_MAPPING_DONE == object;
     }
   };
 

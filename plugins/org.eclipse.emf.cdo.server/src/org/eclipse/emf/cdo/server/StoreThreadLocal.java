@@ -50,7 +50,7 @@ public final class StoreThreadLocal
 
   public static void setAccessor(IStoreAccessor accessor)
   {
-    SESSION.set(accessor.getSession());
+    SESSION.set(accessor == null ? null : accessor.getSession());
     ACCESSOR.set(accessor);
   }
 

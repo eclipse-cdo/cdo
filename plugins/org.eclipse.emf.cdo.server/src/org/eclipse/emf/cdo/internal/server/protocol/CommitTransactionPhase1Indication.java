@@ -43,7 +43,7 @@ public class CommitTransactionPhase1Indication extends CommitTransactionIndicati
     {
       ((XATransactionCommitContext)commitContext).getState().acquire(XATransactionCommitContext.PHASEAPPLYMAPPING);
     }
-    catch (InterruptedException ex)
+    catch (Throwable ex)
     {
       exceptionMessage = ex.getMessage();
     }
@@ -66,5 +66,6 @@ public class CommitTransactionPhase1Indication extends CommitTransactionIndicati
   {
     int viewID = in.readInt();
     commitContext = new XATransactionCommitContext(getTransaction(viewID));
+
   }
 }

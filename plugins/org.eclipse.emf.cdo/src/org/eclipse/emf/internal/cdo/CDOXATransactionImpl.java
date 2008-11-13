@@ -48,6 +48,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Three-phase commit.
@@ -194,10 +196,22 @@ public class CDOXATransactionImpl implements CDOXATransaction
         futures.add(executorService.submit(xaContext));
       }
 
-      for (Future<Object> future : futures)
+      int nbProcessDone;
+      do
       {
-        future.get();
-      }
+        nbProcessDone = 0;
+        for (Future<Object> future : futures)
+        {
+          try
+          {
+            future.get(1, TimeUnit.MILLISECONDS);
+            nbProcessDone++;
+          }
+          catch (TimeoutException ex)
+          {
+          }
+        }
+      } while (xaContexts.size() != nbProcessDone);
     }
     finally
     {

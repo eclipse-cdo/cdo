@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -30,6 +31,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.Date;
+
+import junit.framework.Assert;
 
 /**
  * @author Simon McDuff
@@ -219,4 +222,111 @@ public class XATransactionTest extends AbstractCDOTest
       transactionA1.commit();
     }
   }
+
+  public void test_ExceptionInReadingStream() throws Exception
+  {
+    getRepository(REPOSITORY2_NAME);
+
+    CDOSession sessionA = openSession();
+    CDOSession sessionB = openSession(REPOSITORY2_NAME);
+
+    ResourceSet resourceSet = new ResourceSetImpl();
+    CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
+
+    CDOSessionImpl.prepareResourceSet(resourceSet);
+    xaTransaction.add(CDOUtil.getViewSet(resourceSet));
+
+    sessionA.getPackageRegistry().putEPackage(getModel1Package());
+    sessionB.getPackageRegistry().putEPackage(getModel1Package());
+
+    CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
+    CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
+
+    CDOResource resA = transactionA1.createResource("/resA");
+    CDOResource resB = transactionB1.createResource("/resB");
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+
+    supplier.getPurchaseOrders().add(purchaseOrder);
+    resB.getContents().add(supplier);
+    resA.getContents().add(purchaseOrder);
+
+    assertNew(resA, transactionA1);
+    assertNew(resB, transactionB1);
+
+    xaTransaction.commit();
+    SpecialPurchaseOrder order = getModel2Factory().createSpecialPurchaseOrder();
+    resB.getContents().add(order);
+    try
+    {
+      xaTransaction.commit();
+    }
+    catch (Exception ignore)
+    {
+    }
+  }
+
+  public void test_ExceptionInWrite() throws Exception
+  {
+    getRepository(REPOSITORY2_NAME);
+    getRepository("repo3");
+
+    CDOSession sessionA = openSession();
+    CDOSession sessionB = openSession(REPOSITORY2_NAME);
+    CDOSession sessionC = openSession("repo3");
+
+    ResourceSet resourceSet = new ResourceSetImpl();
+    CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
+
+    CDOSessionImpl.prepareResourceSet(resourceSet);
+    xaTransaction.add(CDOUtil.getViewSet(resourceSet));
+
+    sessionA.getPackageRegistry().putEPackage(getModel1Package());
+    sessionB.getPackageRegistry().putEPackage(getModel1Package());
+
+    CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
+    CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
+
+    CDOResource resA = transactionA1.createResource("/resA");
+    CDOResource resB = transactionB1.createResource("/resB");
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+
+    supplier.getPurchaseOrders().add(purchaseOrder);
+    resB.getContents().add(supplier);
+    resA.getContents().add(purchaseOrder);
+
+    assertNew(resA, transactionA1);
+    assertNew(resB, transactionB1);
+
+    xaTransaction.commit();
+
+    CDOTransaction transactionC1 = sessionC.openTransaction();
+    sessionC.getPackageRegistry().putEPackage(getModel1Package());
+
+    PurchaseOrder purchaseOrder3 = getModel1Factory().createPurchaseOrder();
+    CDOResource resC = transactionC1.createResource("/resC");
+    resC.getContents().add(purchaseOrder3);
+    supplier.getPurchaseOrders().add(purchaseOrder3);
+    purchaseOrder.setDate(new Date());
+    try
+    {
+
+      xaTransaction.commit();
+      fail("Should fail");
+    }
+    catch (Exception ignore)
+    {
+    }
+    Assert.assertEquals(false, CDOUtil.getCDOObject(supplier).cdoWriteLock().isLocked());
+    Assert.assertEquals(false, CDOUtil.getCDOObject(purchaseOrder).cdoWriteLock().isLocked());
+
+    xaTransaction.rollback();
+
+    assertEquals(null, purchaseOrder.getDate());
+    assertEquals(1, supplier.getPurchaseOrders().size());
+  }
+
 }

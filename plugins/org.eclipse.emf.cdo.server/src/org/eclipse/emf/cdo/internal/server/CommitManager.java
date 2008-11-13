@@ -97,6 +97,7 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
     if (contextEntry != null)
     {
       contextEntry.getFuture().cancel(true);
+      commitContext.rollback("Remote rollback");
       commitContext.postCommit(false);
     }
   }

@@ -286,6 +286,10 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     {
       handleException(ex);
     }
+    catch (Throwable ex)
+    {
+      handleException(ex);
+    }
     finally
     {
       monitor.done();
@@ -296,8 +300,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
   {
     OM.LOG.error(ex);
     String storeClass = transaction.getRepository().getStore().getClass().getSimpleName();
-    rollbackMessage = "Rollback in " + storeClass + ": " + StringUtil.formatException(ex);
-    rollback();
+    rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex));
   }
 
   protected long createTimeStamp()
@@ -401,10 +404,14 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  private void unlockObjects()
+  synchronized private void unlockObjects()
   {
-    LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
-    lockManager.unlock(RWLockManager.LockType.WRITE, transaction, lockedObjects);
+    if (!lockedObjects.isEmpty())
+    {
+      LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
+      lockManager.unlock(RWLockManager.LockType.WRITE, transaction, lockedObjects);
+      lockedObjects.clear();
+    }
   }
 
   private void computeDirtyObjects(boolean failOnNull)
@@ -456,20 +463,30 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  protected void rollback()
+  synchronized public void rollback(String message)
   {
-    unlockObjects();
-    if (accessor != null)
+    // Check if we already rolledBack
+    if (rollbackMessage == null)
     {
-      try
+      rollbackMessage = message;
+      unlockObjects();
+      if (accessor != null)
       {
-        accessor.rollback();
-      }
-      catch (RuntimeException ex)
-      {
-        OM.LOG.warn("Problem while rolling back  the transaction", ex);
+        try
+        {
+          accessor.rollback();
+        }
+        catch (RuntimeException ex)
+        {
+          OM.LOG.warn("Problem while rolling back  the transaction", ex);
+        }
       }
     }
+  }
+
+  protected IStoreAccessor getAccessor()
+  {
+    return accessor;
   }
 
   private void updateInfraStructure(IMonitor monitor)

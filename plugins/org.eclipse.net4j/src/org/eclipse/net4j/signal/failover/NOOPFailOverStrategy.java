@@ -48,15 +48,15 @@ public class NOOPFailOverStrategy extends Notifier implements IFailOverStrategy
   /**
    * @since 2.0
    */
-  public IConnector open(ISignalProtocol<?> protocol)
+  public void handleOpen(ISignalProtocol<?> protocol)
   {
-    return connector;
+    connector.openChannel(protocol);
   }
 
   /**
    * @since 2.0
    */
-  public void failOver(ISignalProtocol<?> protocol)
+  public void handleFailOver(ISignalProtocol<?> protocol)
   {
     throw new UnsupportedOperationException();
   }

@@ -153,7 +153,8 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       catch (TimeoutRuntimeException ex)
       {
         // Adjust the message for the complete timeout time
-        throw new TimeoutRuntimeException("Registration timeout  after " + getOpenChannelTimeout() + " milliseconds");
+        String message = "Registration timeout  after " + getOpenChannelTimeout() + " milliseconds";
+        throw new TimeoutRuntimeException(message, ex);
       }
     }
     catch (ChannelException ex)

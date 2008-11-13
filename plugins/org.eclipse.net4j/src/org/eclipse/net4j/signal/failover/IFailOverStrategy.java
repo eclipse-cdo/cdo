@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.net4j.signal.failover;
 
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.util.event.INotifier;
 
@@ -22,10 +21,10 @@ public interface IFailOverStrategy extends INotifier
   /**
    * @since 2.0
    */
-  public IConnector open(ISignalProtocol<?> protocol);
+  public void handleOpen(ISignalProtocol<?> protocol);
 
   /**
    * @since 2.0
    */
-  public void failOver(ISignalProtocol<?> protocol) throws UnsupportedOperationException;
+  public void handleFailOver(ISignalProtocol<?> protocol) throws UnsupportedOperationException;
 }

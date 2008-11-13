@@ -25,7 +25,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import org.eclipse.spi.net4j.InternalConnector;
 import org.eclipse.spi.net4j.Protocol;
 
 import java.io.IOException;
@@ -147,7 +146,8 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
    */
   public IChannel open(IConnector connector)
   {
-    return open(new NOOPFailOverStrategy(connector));
+    IFailOverStrategy failOverStrategy = createFailOverStrategy(connector);
+    return open(failOverStrategy);
   }
 
   /**
@@ -156,10 +156,8 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
   public IChannel open()
   {
     checkState(failOverStrategy, "failOverStrategy");
-    InternalConnector connector = (InternalConnector)failOverStrategy.open(this);
-
-    checkState(connector, "connector");
-    return connector.openChannel(this);
+    failOverStrategy.handleOpen(this);
+    return getChannel();
   }
 
   /**
@@ -301,6 +299,14 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     super.doDeactivate();
   }
 
+  /**
+   * @since 2.0
+   */
+  protected IFailOverStrategy createFailOverStrategy(IConnector connector)
+  {
+    return new NOOPFailOverStrategy(connector);
+  }
+
   @Override
   protected void handleChannelDeactivation()
   {
@@ -308,7 +314,7 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
     {
       try
       {
-        failOverStrategy.failOver(this);
+        failOverStrategy.handleFailOver(this);
         return;
       }
       catch (UnsupportedOperationException ex)

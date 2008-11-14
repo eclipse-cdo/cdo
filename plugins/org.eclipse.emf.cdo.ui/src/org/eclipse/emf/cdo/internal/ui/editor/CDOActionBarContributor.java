@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
+import org.eclipse.emf.cdo.internal.ui.actions.ReadLockObjectsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadObjectsAction;
+import org.eclipse.emf.cdo.internal.ui.actions.WriteLockObjectsAction;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -72,6 +74,16 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * @ADDED
    */
   protected ReloadObjectsAction reloadObjectsAction;
+
+  /**
+   * @ADDED
+   */
+  protected ReadLockObjectsAction readLockObjectsAction;
+
+  /**
+   * @ADDED
+   */
+  protected WriteLockObjectsAction writeLockObjectsAction;
 
   /**
    * This keeps track of the active editor. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -185,6 +197,9 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
     reloadObjectsAction = new ReloadObjectsAction();
 
+    readLockObjectsAction = new ReadLockObjectsAction();
+    writeLockObjectsAction = new WriteLockObjectsAction();
+
     validateAction = new ValidateAction();
     controlAction = new ControlAction();
   }
@@ -211,6 +226,9 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   public void contributeToMenu(IMenuManager menuManager)
   {
     super.contributeToMenu(menuManager);
+
+    writeLockObjectsAction.setPage(getPage());
+    readLockObjectsAction.setPage(getPage());
 
     IMenuManager submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CDOEditor_menu"),
         "org.eclipse.emf.cdo.internal.ui.editorMenuID");
@@ -359,6 +377,16 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
       if (reloadObjectsAction != null)
       {
         reloadObjectsAction.selectionChanged((IStructuredSelection)selection);
+      }
+
+      if (readLockObjectsAction != null)
+      {
+        readLockObjectsAction.selectionChanged((IStructuredSelection)selection);
+      }
+
+      if (writeLockObjectsAction != null)
+      {
+        writeLockObjectsAction.selectionChanged((IStructuredSelection)selection);
       }
 
       if (((IStructuredSelection)selection).size() == 1)
@@ -553,6 +581,17 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     refreshViewerAction.setId(REFRESH_VIEWER_ID);
     menuManager.insertAfter("ui-actions", refreshViewerAction);
     menuManager.insertBefore(refreshViewerAction.getId(), reloadObjectsAction);
+
+    MenuManager lockingSubMenu = new MenuManager("Locking");
+    lockingSubMenu.add(new Separator("ui-actions"));
+
+    lockingSubMenu.insertAfter("ui-actions", writeLockObjectsAction);
+    writeLockObjectsAction.update();
+
+    lockingSubMenu.insertAfter("ui-actions", readLockObjectsAction);
+    readLockObjectsAction.update();
+
+    menuManager.insertAfter("ui-actions", lockingSubMenu);
     super.addGlobalActions(menuManager);
 
     if (loadResourceAction != null)

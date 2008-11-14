@@ -12,13 +12,18 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+
+import java.util.List;
 
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public interface InternalCDOTransaction extends CDOTransaction, CDOIDProvider
+public interface InternalCDOTransaction extends CDOTransaction, InternalCDOView
 {
   public CDOCommitContext createCommitContext();
 
@@ -29,4 +34,23 @@ public interface InternalCDOTransaction extends CDOTransaction, CDOIDProvider
   public CDOTransactionStrategy getTransactionStrategy();
 
   public void setTransactionStrategy(CDOTransactionStrategy transactionStrategy);
+
+  /**
+   * @return never <code>null</code>;
+   */
+  public CDOResourceFolder getOrCreateResourceFolder(List<String> names);
+
+  public void detachObject(InternalCDOObject object);
+
+  public CDOIDTemp getNextTemporaryID();
+
+  public void registerNew(InternalCDOObject object);
+
+  public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta);
+
+  public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta);
+
+  public void registerRevisionDelta(CDORevisionDelta revisionDelta);
+
+  public void setConflict(InternalCDOObject object);
 }

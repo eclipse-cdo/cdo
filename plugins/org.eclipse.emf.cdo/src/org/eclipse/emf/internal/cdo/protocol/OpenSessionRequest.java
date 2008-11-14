@@ -22,8 +22,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -52,7 +52,7 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
   }
 
   @Override
-  protected CDOSessionImpl getSession()
+  protected InternalCDOSession getSession()
   {
     throw new UnsupportedOperationException();
   }

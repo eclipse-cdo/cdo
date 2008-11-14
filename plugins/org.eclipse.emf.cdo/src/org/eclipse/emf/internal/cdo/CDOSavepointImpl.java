@@ -74,7 +74,7 @@ public class CDOSavepointImpl extends CDOAbstractSavepoint
 
   private boolean isDirty;
 
-  public CDOSavepointImpl(CDOTransactionImpl transaction, CDOSavepointImpl lastSavepoint)
+  public CDOSavepointImpl(InternalCDOTransaction transaction, CDOSavepointImpl lastSavepoint)
   {
     super(transaction, lastSavepoint);
     isDirty = transaction.isDirty();

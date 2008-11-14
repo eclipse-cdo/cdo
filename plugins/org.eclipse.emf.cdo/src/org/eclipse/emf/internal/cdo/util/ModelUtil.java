@@ -33,8 +33,8 @@ import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -190,7 +190,7 @@ public final class ModelUtil
    */
   static CDOPackage createCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
   {
-    CDOSessionImpl session = packageManager.getSession();
+    InternalCDOSession session = packageManager.getSession();
     String uri = ePackage.getNsURI();
     String parentURI = getParentURI(ePackage);
     String name = ePackage.getName();

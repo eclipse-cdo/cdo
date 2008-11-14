@@ -22,8 +22,8 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.InternalCDOView;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
@@ -115,10 +115,10 @@ public final class FSMUtil
       object = (InternalEObject)EcoreUtil.resolve(object, view.getResourceSet());
     }
 
-    CDOID id = ((CDOViewImpl)view).getSession().lookupMetaInstanceID(object);
+    CDOID id = ((InternalCDOView)view).getSession().lookupMetaInstanceID(object);
     if (id != null)
     {
-      return new CDOMetaWrapper((CDOViewImpl)view, object, id);
+      return new CDOMetaWrapper((InternalCDOView)view, object, id);
     }
 
     return null;
@@ -229,7 +229,7 @@ public final class FSMUtil
     };
   }
 
-  public static Iterator<InternalCDOObject> iterator(final Iterator<?> delegate, final CDOViewImpl view)
+  public static Iterator<InternalCDOObject> iterator(final Iterator<?> delegate, final InternalCDOView view)
   {
     return new Iterator<InternalCDOObject>()
     {
@@ -261,7 +261,7 @@ public final class FSMUtil
     };
   }
 
-  public static Iterator<InternalCDOObject> iterator(Collection<?> instances, final CDOViewImpl view)
+  public static Iterator<InternalCDOObject> iterator(Collection<?> instances, final InternalCDOView view)
   {
     return iterator(instances.iterator(), view);
   }

@@ -12,14 +12,14 @@
 package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.CDOQuery;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.InternalCDOView;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.QueryRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
@@ -36,15 +36,15 @@ import java.util.Map.Entry;
  */
 public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 {
-  private CDOViewImpl view;
+  private InternalCDOView view;
 
-  public CDOQueryImpl(CDOViewImpl view, String queryLanguage, String queryString)
+  public CDOQueryImpl(InternalCDOView view, String queryLanguage, String queryString)
   {
     super(queryLanguage, queryString);
     this.view = view;
   }
 
-  public CDOView getView()
+  public InternalCDOView getView()
   {
     return view;
   }
@@ -80,8 +80,8 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 
     try
     {
-      CDOSessionImpl session = view.getSession();
-      new QueryRequest(session.getProtocol(), view.getViewID(), queryResult).send();
+      CDOClientProtocol protocol = (CDOClientProtocol)view.getSession().getProtocol();
+      new QueryRequest(protocol, view.getViewID(), queryResult).send();
     }
     catch (Exception exception)
     {
@@ -101,8 +101,8 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       {
         try
         {
-          CDOSessionImpl session = view.getSession();
-          new QueryRequest(session.getProtocol(), view.getViewID(), queryResult).send();
+          CDOClientProtocol protocol = (CDOClientProtocol)view.getSession().getProtocol();
+          new QueryRequest(protocol, view.getViewID(), queryResult).send();
         }
         catch (Exception ex)
         {
@@ -151,7 +151,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     if (object instanceof EClass)
     {
       EClass eClass = (EClass)object;
-      return ModelUtil.getCDOClass(eClass, view.getSession().getPackageManager());
+      return ModelUtil.getCDOClass(eClass, (CDOSessionPackageManagerImpl)view.getSession().getPackageManager());
     }
     else if (object instanceof InternalCDOObject)
     {

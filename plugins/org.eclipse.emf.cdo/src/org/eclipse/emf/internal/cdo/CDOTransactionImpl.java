@@ -37,7 +37,6 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
@@ -100,7 +99,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private boolean autoReleaseLocksEnabled = true;
 
-  public CDOTransactionImpl(int id, CDOSessionImpl session)
+  /**
+   * @since 2.0
+   */
+  public CDOTransactionImpl(InternalCDOSession session, int id)
   {
     super(session, id);
     commitTimeout = OM.PREF_DEFAULT_COMMIT_TIMEOUT.getValue();
@@ -625,7 +627,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
 
       // Go back to the previous state
-      cleanObject(object, (InternalCDORevision)object.cdoRevision());
+      cleanObject(object, object.cdoRevision());
       object.cdoInternalSetState(CDOState.NEW);
     }
 
@@ -929,7 +931,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @SuppressWarnings("unchecked")
   private List<CDOPackage> analyzeNewPackages()
   {
-    CDOSessionPackageManagerImpl packageManager = getSession().getPackageManager();
+    CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)getSession().getPackageManager();
     Set<EPackage> usedPackages = new HashSet<EPackage>();
     Set<EPackage> usedNewPackages = new HashSet<EPackage>();
     for (CDOObject object : getNewObjects().values())
@@ -1072,6 +1074,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       newPackages = transaction.analyzeNewPackages();
     }
 
+    public CDOTransactionImpl getTransaction()
+    {
+      return CDOTransactionImpl.this;
+    }
+
     public Map<CDOID, CDOObject> getDirtyObjects()
     {
       return dirtyObjects;
@@ -1102,21 +1109,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return revisionDeltas;
     }
 
-    public CDOTransactionImpl getTransaction()
-    {
-      return CDOTransactionImpl.this;
-    }
-
     public void preCommit()
     {
-      if (getTransaction().isDirty())
+      if (isDirty())
       {
         if (TRACER.isEnabled())
         {
           TRACER.trace("commit()");
         }
 
-        for (CDOTransactionHandler handler : getTransaction().getHandlers())
+        for (CDOTransactionHandler handler : getHandlers())
         {
           handler.committingTransaction(getTransaction());
         }
@@ -1140,7 +1142,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public void postCommit(CommitTransactionResult result)
     {
-      if (getTransaction().isDirty())
+      if (isDirty())
       {
         try
         {
@@ -1154,13 +1156,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             removeObject(entry.getKey());
           }
 
-          CDOSessionImpl session = getTransaction().getSession();
+          InternalCDOSession session = getSession();
           for (CDOPackage newPackage : newPackages)
           {
             ((InternalCDOPackage)newPackage).setPersistent(true);
           }
 
-          ChangeSubscriptionManager changeSubscriptionManager = getTransaction().getChangeSubscriptionManager();
+          ChangeSubscriptionManager changeSubscriptionManager = getChangeSubscriptionManager();
           changeSubscriptionManager.handleNewObjects(getNewObjects().values());
           changeSubscriptionManager.handleNewObjects(getNewResources().values());
           changeSubscriptionManager.handleDetachedObjects(getDetachedObjects().keySet());
@@ -1190,10 +1192,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             session.handleCommitNotification(timeStamp, dirtyIDs, detachedIDs, deltasCopy, getTransaction());
           }
 
-          getTransaction().cleanUp();
+          cleanUp();
           lastCommitTime = timeStamp;
           Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
-          getTransaction().fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
+          fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
         }
         catch (RuntimeException ex)
         {

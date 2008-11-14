@@ -12,7 +12,6 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl;
@@ -22,7 +21,6 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.CDOViewSetPackageRegistryImpl;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
@@ -44,11 +42,11 @@ import java.util.Set;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
+public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 {
-  private Set<CDOViewImpl> views = new HashSet<CDOViewImpl>();
+  private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
-  private Map<String, CDOViewImpl> mapOfViews = new HashMap<String, CDOViewImpl>();
+  private Map<String, InternalCDOView> mapOfViews = new HashMap<String, InternalCDOView>();
 
   private CDOResourceFactoryImpl resourceFactory = new CDOResourceFactoryImpl(this);
 
@@ -87,9 +85,9 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
    * @throws IllegalArgumentException
    *           if repositoryUUID doesn't match any CDOView.
    */
-  public CDOViewImpl resolveView(String repositoryUUID)
+  public InternalCDOView resolveView(String repositoryUUID)
   {
-    CDOViewImpl view = null;
+    InternalCDOView view = null;
     synchronized (views)
     {
       view = mapOfViews.get(repositoryUUID);
@@ -117,7 +115,7 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
     return view;
   }
 
-  public CDOViewImpl getView(String repositoryUUID)
+  public InternalCDOView getView(String repositoryUUID)
   {
     synchronized (views)
     {
@@ -125,7 +123,7 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
     }
   }
 
-  public void add(CDOViewImpl view)
+  public void add(InternalCDOView view)
   {
     synchronized (views)
     {
@@ -151,25 +149,7 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
     }
   }
 
-  private void initializeResources(CDOView cdoView)
-  {
-    // Intialize the resourceset correctly when it get connected to the first time to a view.
-    for (Resource resource : resourceSet.getResources())
-    {
-      if (resource instanceof CDOResourceImpl)
-      {
-        CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
-        if (cdoResource.cdoView() == null)
-        {
-          URI newURI = CDOURIUtil.createResourceURI(cdoView, cdoResource.getPath());
-          cdoResource.setURI(newURI);
-          notifyAdd(cdoResource);
-        }
-      }
-    }
-  }
-
-  public void remove(CDOViewImpl view)
+  public void remove(InternalCDOView view)
   {
     List<Resource> resToRemove = new ArrayList<Resource>();
     synchronized (views)
@@ -279,10 +259,28 @@ public class CDOViewSetImpl extends NotifierImpl implements CDOViewSet, Adapter
   private void notifyAdd(CDOResourceImpl resource)
   {
     String respositoryUUID = CDOURIUtil.extractRepositoryUUID(resource.getURI());
-    CDOViewImpl view = resolveView(respositoryUUID);
+    InternalCDOView view = resolveView(respositoryUUID);
     if (view != null)
     {
       view.attachResource(resource);
+    }
+  }
+
+  private void initializeResources(CDOView cdoView)
+  {
+    // Intialize the resourceset correctly when it get connected to the first time to a view.
+    for (Resource resource : resourceSet.getResources())
+    {
+      if (resource instanceof CDOResourceImpl)
+      {
+        CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
+        if (cdoResource.cdoView() == null)
+        {
+          URI newURI = CDOURIUtil.createResourceURI(cdoView, cdoResource.getPath());
+          cdoResource.setURI(newURI);
+          notifyAdd(cdoResource);
+        }
+      }
     }
   }
 }

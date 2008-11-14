@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.event.IEvent;
@@ -480,7 +480,7 @@ public class InvalidationTest extends AbstractCDOTest
     CDOSession sessionA = openModel1Session();
 
     msg("Opening transactionA");
-    final CDOTransactionImpl transactionA = (CDOTransactionImpl)sessionA.openTransaction();
+    final CDOTransaction transactionA = sessionA.openTransaction();
     final CDOID cdoidA;
 
     // *************************************************************
@@ -505,7 +505,7 @@ public class InvalidationTest extends AbstractCDOTest
       transactionA.commit();
 
       cdoidA = CDOUtil.getCDOObject(categoryA).cdoID();
-      transactionA.removeObject(cdoidA);
+      ((InternalCDOTransaction)transactionA).removeObject(cdoidA);
     }
 
     // *************************************************************

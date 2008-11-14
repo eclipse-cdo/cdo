@@ -25,9 +25,9 @@ import org.eclipse.emf.internal.cdo.CDOCollectionLoadingPolicyImpl;
 import org.eclipse.emf.internal.cdo.CDORevisionPrefetchingPolicyImpl;
 import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.InternalCDOView;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -218,7 +218,7 @@ public final class CDOUtil
     InternalCDOObject cdoObject = FSMUtil.adapt(eObject, view);
     CDOStateMachine.INSTANCE.read(cdoObject);
 
-    for (Iterator<InternalCDOObject> it = FSMUtil.iterator(cdoObject.eContents(), (CDOViewImpl)view); it.hasNext();)
+    for (Iterator<InternalCDOObject> it = FSMUtil.iterator(cdoObject.eContents(), (InternalCDOView)view); it.hasNext();)
     {
       InternalCDOObject content = it.next();
       load(content, view);

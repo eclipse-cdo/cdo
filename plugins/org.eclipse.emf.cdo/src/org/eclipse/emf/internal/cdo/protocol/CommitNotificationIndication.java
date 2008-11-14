@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -56,7 +56,7 @@ public class CommitNotificationIndication extends CDOClientIndication
       PROTOCOL_TRACER.format("Reading {0} dirty IDs", size);
     }
 
-    CDOSessionImpl session = getSession();
+    InternalCDOSession session = getSession();
     Set<CDOIDAndVersion> dirtyOIDs = new HashSet<CDOIDAndVersion>();
     for (int i = 0; i < size; i++)
     {

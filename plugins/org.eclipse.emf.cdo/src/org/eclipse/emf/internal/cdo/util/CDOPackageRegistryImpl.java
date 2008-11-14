@@ -25,7 +25,8 @@ import org.eclipse.emf.cdo.util.CDOPackageType;
 import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -57,20 +58,20 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
   private final ContextTracer tracer = new ContextTracer(OM.DEBUG_MODEL, CDOPackageRegistryImpl.class);
 
-  private CDOSessionImpl session;
+  private InternalCDOSession session;
 
   public CDOPackageRegistryImpl()
   {
   }
 
-  public CDOSessionImpl getSession()
+  public InternalCDOSession getSession()
   {
     return session;
   }
 
   public void setSession(CDOSession session)
   {
-    this.session = (CDOSessionImpl)session;
+    this.session = (InternalCDOSession)session;
   }
 
   public void putPackageDescriptor(CDOPackage cdoPackage)
@@ -125,7 +126,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
 
       EPackage ePackage = (EPackage)value;
       EMFUtil.prepareDynamicEPackage(ePackage);
-      CDOPackage cdoPackage = ModelUtil.getCDOPackage(ePackage, session.getPackageManager());
+
+      CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)session.getPackageManager();
+      CDOPackage cdoPackage = ModelUtil.getCDOPackage(ePackage, packageManager);
       CDOIDMetaRange metaIDRange = cdoPackage.getTopLevelPackage().getMetaIDRange();
       ((InternalCDOPackage)cdoPackage).setPersistent(metaIDRange != null && !metaIDRange.isTemporary());
     }

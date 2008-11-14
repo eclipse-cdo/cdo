@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSession;
 
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
+import org.eclipse.emf.internal.cdo.util.SessionUtil;
 
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
@@ -92,10 +93,10 @@ public class CDOSessionFactory extends Factory
   /**
    * @since 2.0
    */
-  public static CDOSessionImpl createSession(String repositoryName, boolean automaticPackageRegistry,
+  public static InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry,
       IFailOverStrategy failOverStrategy)
   {
-    CDOSessionImpl session = new CDOSessionImpl();
+    InternalCDOSession session = SessionUtil.createSession();
     if (automaticPackageRegistry)
     {
       CDOPackageRegistryImpl.Eager packageRegistry = new CDOPackageRegistryImpl.Eager();

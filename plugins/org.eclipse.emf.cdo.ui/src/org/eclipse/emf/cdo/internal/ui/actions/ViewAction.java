@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOView;
 
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
@@ -42,6 +42,6 @@ public abstract class ViewAction extends LongRunningAction
 
   public CDOTransaction getTransaction()
   {
-    return ((CDOViewImpl)view).toTransaction();
+    return ((InternalCDOView)view).toTransaction();
   }
 }

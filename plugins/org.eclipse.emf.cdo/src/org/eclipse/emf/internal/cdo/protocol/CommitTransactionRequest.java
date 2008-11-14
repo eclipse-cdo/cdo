@@ -14,6 +14,8 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDORevisionManager;
+import org.eclipse.emf.cdo.CDOSessionPackageManager;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
@@ -36,9 +38,7 @@ import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.emf.internal.cdo.CDOCommitContext;
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
@@ -85,17 +85,17 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     return (CDOClientProtocol)super.getProtocol();
   }
 
-  protected CDOSessionImpl getSession()
+  protected InternalCDOSession getSession()
   {
-    return (CDOSessionImpl)getProtocol().getInfraStructure();
+    return (InternalCDOSession)getProtocol().getInfraStructure();
   }
 
-  protected CDORevisionManagerImpl getRevisionManager()
+  protected CDORevisionManager getRevisionManager()
   {
     return getSession().getRevisionManager();
   }
 
-  protected CDOSessionPackageManagerImpl getPackageManager()
+  protected CDOSessionPackageManager getPackageManager()
   {
     return getSession().getPackageManager();
   }
@@ -272,7 +272,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
   protected void confirmingNewPackage(CDODataInput in, CommitTransactionResult result) throws IOException
   {
-    CDOSessionImpl session = (CDOSessionImpl)commitContext.getTransaction().getSession();
+    InternalCDOSession session = commitContext.getTransaction().getSession();
     List<CDOPackage> newPackages = commitContext.getNewPackages();
     for (CDOPackage newPackage : newPackages)
     {

@@ -20,8 +20,9 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -82,12 +83,13 @@ public class ContentAdapterTest extends AbstractCDOTest
     }
 
     {
-      CDOSessionImpl session = (CDOSessionImpl)openModel1Session();
+      InternalCDOSession session = (InternalCDOSession)openModel1Session();
 
       CDOFetchRuleManagerInfo info = new CDOFetchRuleManagerInfo();
-      session.getRevisionManager().setRuleManager(info);
+      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)session.getRevisionManager();
+      revisionManager.setRuleManager(info);
 
-      CDOTransactionImpl transaction = session.openTransaction();
+      InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
       CDOResource resource = transaction.getResource("/test2");
 
       // I don't want to fetch my objects!!

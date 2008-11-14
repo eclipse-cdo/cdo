@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -24,7 +25,7 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public class CDOMetaWrapper extends CDOObjectWrapper
 {
-  public CDOMetaWrapper(CDOViewImpl view, InternalEObject instance, CDOID id)
+  public CDOMetaWrapper(InternalCDOView view, InternalEObject instance, CDOID id)
   {
     this.view = view;
     this.instance = instance;
@@ -36,7 +37,7 @@ public class CDOMetaWrapper extends CDOObjectWrapper
     return CDOState.CLEAN;
   }
 
-  public CDORevision cdoRevision()
+  public InternalCDORevision cdoRevision()
   {
     throw new UnsupportedOperationException();
   }

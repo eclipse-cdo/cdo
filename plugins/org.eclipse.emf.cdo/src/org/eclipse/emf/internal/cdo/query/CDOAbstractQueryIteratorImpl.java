@@ -14,7 +14,8 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
 
 import org.eclipse.net4j.util.concurrent.ConcurrentValue;
@@ -76,8 +77,8 @@ public abstract class CDOAbstractQueryIteratorImpl<T> extends AbstractQueryResul
 
       try
       {
-        CDOSessionImpl session = (CDOSessionImpl)getView().getSession();
-        new QueryCancelRequest(session.getProtocol(), getQueryID()).send();
+        CDOClientProtocol protocol = (CDOClientProtocol)((InternalCDOSession)getView().getSession()).getProtocol();
+        new QueryCancelRequest(protocol, getQueryID()).send();
       }
       catch (Exception ignore)
       {

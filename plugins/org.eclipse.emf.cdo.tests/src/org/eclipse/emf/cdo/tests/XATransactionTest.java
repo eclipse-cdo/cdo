@@ -22,8 +22,8 @@ import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
+import org.eclipse.emf.internal.cdo.util.SessionUtil;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -51,7 +51,7 @@ public class XATransactionTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
 
-    CDOSessionImpl.prepareResourceSet(resourceSet);
+    SessionUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
     sessionA.getPackageRegistry().putEPackage(getModel1Package());
@@ -91,7 +91,7 @@ public class XATransactionTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
 
-    CDOSessionImpl.prepareResourceSet(resourceSet);
+    SessionUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
     sessionA.getPackageRegistry().putEPackage(getModel1Package());
@@ -153,13 +153,13 @@ public class XATransactionTest extends AbstractCDOTest
       ResourceSet resourceSet = new ResourceSetImpl();
       sessionA.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
       sessionB.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
-      CDOTransactionImpl transactionA1 = (CDOTransactionImpl)sessionA.openTransaction(resourceSet);
-      CDOTransactionImpl transactionB1 = (CDOTransactionImpl)sessionB.openTransaction(resourceSet);
+      CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
+      CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
       CDOResource resA = transactionA1.createResource("/resA");
       CDOResource resB = transactionB1.createResource("/resB");
 
-      transactionA1.setTransactionStrategy(null);
+      ((InternalCDOTransaction)transactionA1).setTransactionStrategy(null);
       GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
       GenRefSingleNonContained objectFromResB = getModel4Factory().createGenRefSingleNonContained();
 
@@ -196,8 +196,8 @@ public class XATransactionTest extends AbstractCDOTest
       ResourceSet resourceSet = new ResourceSetImpl();
       sessionA.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
       sessionB.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
-      CDOTransactionImpl transactionA1 = (CDOTransactionImpl)sessionA.openTransaction(resourceSet);
-      CDOTransactionImpl transactionB1 = (CDOTransactionImpl)sessionB.openTransaction(resourceSet);
+      CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
+      CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
       CDOResource resA = transactionA1.createResource("/resA");
       CDOResource resB = transactionB1.createResource("/resB");
@@ -233,7 +233,7 @@ public class XATransactionTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
 
-    CDOSessionImpl.prepareResourceSet(resourceSet);
+    SessionUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
     sessionA.getPackageRegistry().putEPackage(getModel1Package());
@@ -279,7 +279,7 @@ public class XATransactionTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
 
-    CDOSessionImpl.prepareResourceSet(resourceSet);
+    SessionUtil.prepareResourceSet(resourceSet);
     xaTransaction.add(CDOUtil.getViewSet(resourceSet));
 
     sessionA.getPackageRegistry().putEPackage(getModel1Package());

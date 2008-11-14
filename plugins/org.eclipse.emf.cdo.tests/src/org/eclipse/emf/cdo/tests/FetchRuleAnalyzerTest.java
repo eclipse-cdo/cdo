@@ -22,8 +22,9 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerModelBased;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
@@ -86,13 +87,12 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     }
 
     msg("Opening session");
-    CDOSessionImpl session = (CDOSessionImpl)openModel1Session();
-
-    session.getRevisionManager().setRuleManager(new CDOFetchRuleManagerThreadLocal());
+    InternalCDOSession session = (InternalCDOSession)openModel1Session();
+    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)session.getRevisionManager();
+    revisionManager.setRuleManager(new CDOFetchRuleManagerThreadLocal());
 
     msg("Opening transaction");
-    CDOTransactionImpl transaction = session.openTransaction();
-
+    InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
     CDOFeatureAnalyzerModelBased featureanalyzerModelBased = new CDOFeatureAnalyzerModelBased();
     transaction.setFeatureAnalyzer(featureanalyzerModelBased);
     transaction.setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));

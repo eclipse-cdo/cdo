@@ -11,6 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
+import org.eclipse.emf.cdo.CDORevisionManager;
+import org.eclipse.emf.cdo.CDOSessionPackageManager;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
@@ -19,9 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
 import org.eclipse.net4j.signal.Indication;
@@ -45,17 +45,17 @@ public abstract class CDOClientIndication extends Indication
     return (CDOClientProtocol)super.getProtocol();
   }
 
-  protected CDOSessionImpl getSession()
+  protected InternalCDOSession getSession()
   {
-    return (CDOSessionImpl)getProtocol().getInfraStructure();
+    return (InternalCDOSession)getProtocol().getInfraStructure();
   }
 
-  protected CDORevisionManagerImpl getRevisionManager()
+  protected CDORevisionManager getRevisionManager()
   {
     return getSession().getRevisionManager();
   }
 
-  protected CDOSessionPackageManagerImpl getPackageManager()
+  protected CDOSessionPackageManager getPackageManager()
   {
     return getSession().getPackageManager();
   }

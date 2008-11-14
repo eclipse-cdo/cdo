@@ -42,16 +42,22 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
 {
   private static final PerfTracer LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDORevisionManagerImpl.class);
 
-  private CDOSessionImpl session;
+  private InternalCDOSession session;
 
   private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
 
-  public CDORevisionManagerImpl(CDOSessionImpl session)
+  /**
+   * @since 2.0
+   */
+  public CDORevisionManagerImpl(InternalCDOSession session)
   {
     this.session = session;
   }
 
-  public CDOSessionImpl getSession()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOSession getSession()
   {
     return session;
   }
@@ -77,7 +83,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   {
     try
     {
-      CDOClientProtocol protocol = session.getProtocol();
+      CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
       return new LoadChunkRequest(protocol, (InternalCDORevision)revision, feature, accessIndex, fetchIndex, fromIndex,
           toIndex).send();
     }
@@ -94,35 +100,35 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   @Override
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    CDOClientProtocol protocol = session.getProtocol();
+    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
     return send(new LoadRevisionRequest(protocol, Collections.singleton(id), referenceChunk)).get(0);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    CDOClientProtocol protocol = session.getProtocol();
+    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
     return send(new LoadRevisionByTimeRequest(protocol, Collections.singleton(id), referenceChunk, timeStamp)).get(0);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    CDOClientProtocol protocol = session.getProtocol();
+    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
     return send(new LoadRevisionByVersionRequest(protocol, id, referenceChunk, version)).get(0);
   }
 
   @Override
   protected List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    CDOClientProtocol protocol = session.getProtocol();
+    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
     return send(new LoadRevisionRequest(protocol, ids, referenceChunk));
   }
 
   @Override
   protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    CDOClientProtocol protocol = session.getProtocol();
+    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
     return send(new LoadRevisionByTimeRequest(protocol, ids, referenceChunk, timeStamp));
   }
 

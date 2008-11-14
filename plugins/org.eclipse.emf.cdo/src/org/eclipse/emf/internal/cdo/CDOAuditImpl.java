@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.SetAuditRequest;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -30,7 +31,10 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
 {
   private long timeStamp;
 
-  public CDOAuditImpl(int id, CDOSessionImpl session, long timeStamp)
+  /**
+   * @since 2.0
+   */
+  public CDOAuditImpl(InternalCDOSession session, int id, long timeStamp)
   {
     super(session, id);
     this.timeStamp = timeStamp;
@@ -81,8 +85,8 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   {
     try
     {
-      CDOSessionImpl session = getSession();
-      return new SetAuditRequest(session.getProtocol(), getViewID(), timeStamp, invalidObjects).send();
+      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
+      return new SetAuditRequest(protocol, getViewID(), timeStamp, invalidObjects).send();
     }
     catch (Exception ex)
     {
@@ -94,7 +98,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     checkOpen();
-    CDOSessionImpl session = getSession();
+    InternalCDOSession session = getSession();
     int initialChunkSize = session.getCollectionLoadingPolicy().getInitialChunkSize();
 
     CDORevisionResolver revisionManager = session.getRevisionManager();

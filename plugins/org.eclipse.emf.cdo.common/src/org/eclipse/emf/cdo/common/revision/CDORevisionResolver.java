@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOClass;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import java.util.Collection;
 import java.util.List;
@@ -60,4 +61,14 @@ public interface CDORevisionResolver
    * @since 2.0
    */
   public CDOID getResourceID(CDOID folderID, String name, long timeStamp);
+
+  /**
+   * @since 2.0
+   */
+  public CDORevisionCache getCache();
+
+  /**
+   * @since 2.0
+   */
+  public void setCache(CDORevisionCache cache);
 }

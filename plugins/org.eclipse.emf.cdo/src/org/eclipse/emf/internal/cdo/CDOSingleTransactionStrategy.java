@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOSavepoint;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
@@ -46,8 +47,8 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
 
     commitContext.preCommit();
 
-    CDOSessionImpl session = (CDOSessionImpl)transaction.getSession();
-    CommitTransactionRequest request = new CommitTransactionRequest(session.getProtocol(), commitContext);
+    CDOClientProtocol protocol = (CDOClientProtocol)transaction.getSession().getProtocol();
+    CommitTransactionRequest request = new CommitTransactionRequest(protocol, commitContext);
     if (TRACER.isEnabled())
     {
       TRACER.format("Sending commit request");

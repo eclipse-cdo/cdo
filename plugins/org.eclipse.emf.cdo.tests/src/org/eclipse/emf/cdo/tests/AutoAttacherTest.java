@@ -12,14 +12,13 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOAutoAttacher;
-
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 
 /**
  * @author Simon McDuff
@@ -33,7 +32,7 @@ public class AutoAttacherTest extends AbstractCDOTest
   public void testSimple() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     new CDOAutoAttacher(transaction);
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
     Product1 product = getModel1Factory().createProduct1();
@@ -60,7 +59,7 @@ public class AutoAttacherTest extends AbstractCDOTest
   public void testAddingObjectAndCrawl() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     new CDOAutoAttacher(transaction);
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
 

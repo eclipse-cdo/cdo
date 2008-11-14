@@ -159,7 +159,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     instanceToRevision();
     if (cdoState() == CDOState.DIRTY) // NEW is handled in PrepareTransition
     {
-      CDORevisionManagerImpl revisionManager = cdoView().getSession().getRevisionManager();
+      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)cdoView().getSession().getRevisionManager();
       InternalCDORevision originRevision = revisionManager.getRevisionByVersion(revision.getID(),
           CDORevision.UNCHUNKED, revision.getVersion() - 1, false);
       CDORevisionDelta delta = revision.compare(originRevision);
@@ -516,7 +516,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
    *          that will be used later to resolve the proxy. <code>null</code> indicates that proxy creation will be
    *          avoided!
    */
-  private InternalEObject getEObjectFromPotentialID(CDOViewImpl view, CDOFeature feature, Object potentialID)
+  private InternalEObject getEObjectFromPotentialID(InternalCDOView view, CDOFeature feature, Object potentialID)
   {
     if (potentialID instanceof CDOID)
     {
@@ -557,7 +557,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
    * <p>
    * TODO {@link InternalEObject#eResolveProxy(InternalEObject) 
    */
-  private InternalEObject createProxy(CDOViewImpl view, CDOFeature feature, CDOID id)
+  private InternalEObject createProxy(InternalCDOView view, CDOFeature feature, CDOID id)
   {
     CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
     EStructuralFeature eFeature = ModelUtil.getEFeature(feature, packageRegistry);
@@ -611,7 +611,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
           if (element instanceof LegacyProxy)
           {
             CDOID id = ((LegacyProxy)element).getID();
-            InternalCDOObject resolved = view.getObject(id);
+            InternalCDOObject resolved = (InternalCDOObject)view.getObject(id);
             InternalEObject instance = resolved.cdoInternalInstance();
 
             // TODO LEGACY
@@ -637,7 +637,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
         if (value instanceof LegacyProxy)
         {
           CDOID id = ((LegacyProxy)value).getID();
-          InternalCDOObject resolved = view.getObject(id);
+          InternalCDOObject resolved = (InternalCDOObject)view.getObject(id);
           InternalEObject instance = resolved.cdoInternalInstance();
           setInstanceValue(instance, feature, instance);
         }

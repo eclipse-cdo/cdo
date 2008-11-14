@@ -76,7 +76,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   private CDOState state;
 
-  private CDOViewImpl view;
+  private InternalCDOView view;
 
   private InternalCDORevision revision;
 
@@ -137,7 +137,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return getCDOClass(this);
   }
 
-  public CDOViewImpl cdoView()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOView cdoView()
   {
     return view;
   }
@@ -217,7 +220,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public void cdoInternalSetView(CDOView view)
   {
-    this.view = (CDOViewImpl)view;
+    this.view = (InternalCDOView)view;
     if (this.view != null)
     {
       eSetStore(this.view.getStore());
@@ -276,7 +279,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Populating revision for {0}", this);
     }
 
-    CDOViewImpl view = cdoView();
+    InternalCDOView view = cdoView();
     revision.setContainerID(eContainer == null ? CDOID.NULL : cdoView().convertObjectToID(eContainer, true));
     revision.setContainingFeatureID(eContainerFeatureID);
 
@@ -329,10 +332,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   @SuppressWarnings("unchecked")
-  private void populateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
+  private void populateRevisionFeature(InternalCDOView view, InternalCDORevision revision, EStructuralFeature eFeature,
       Object[] eSettings, int i)
   {
-    CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
+    CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)view.getSession().getPackageManager();
     CDOFeature cdoFeature = packageManager.getCDOFeature(eFeature);
     if (TRACER.isEnabled())
     {
@@ -377,7 +380,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Depopulating revision for {0}", this);
     }
 
-    CDOViewImpl view = cdoView();
+    InternalCDOView view = cdoView();
     super.eSetDirectResource((Resource.Internal)cdoStore().getResource(this));
 
     CDOStore store = cdoStore();
@@ -408,8 +411,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     cdoSettings();
   }
 
-  private void depopulateRevisionFeature(CDOViewImpl view, InternalCDORevision revision, EStructuralFeature eFeature,
-      Object[] eSettings, int i)
+  private void depopulateRevisionFeature(InternalCDOView view, InternalCDORevision revision,
+      EStructuralFeature eFeature, Object[] eSettings, int i)
   {
     if (TRACER.isEnabled())
     {
@@ -978,8 +981,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   static CDOClass getCDOClass(InternalCDOObject cdoObject)
   {
-    CDOViewImpl view = (CDOViewImpl)cdoObject.cdoView();
-    CDOSessionPackageManagerImpl packageManager = view.getSession().getPackageManager();
+    InternalCDOView view = cdoObject.cdoView();
+    CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)view.getSession().getPackageManager();
     return ModelUtil.getCDOClass(cdoObject.eClass(), packageManager);
   }
 

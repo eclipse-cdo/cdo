@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOResourceNodeImpl.java,v 1.3 2008-10-20 22:47:22 smcduff Exp $
+ * $Id: CDOResourceNodeImpl.java,v 1.4 2008-11-14 20:16:06 estepper Exp $
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
@@ -13,7 +13,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -198,7 +198,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   public void setPath(String newPath)
   {
-    CDOTransactionImpl transaction = cdoView().toTransaction();
+    InternalCDOTransaction transaction = cdoView().toTransaction();
     if (newPath == null)
     {
       throw new CDOException("Null path is not allowed");

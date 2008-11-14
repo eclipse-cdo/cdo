@@ -43,7 +43,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
 
   protected CDOID id;
 
-  protected CDOViewImpl view;
+  protected InternalCDOView view;
 
   protected InternalEObject instance;
 
@@ -57,7 +57,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
     return id;
   }
 
-  public CDOViewImpl cdoView()
+  public InternalCDOView cdoView()
   {
     return view;
   }
@@ -109,7 +109,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
       TRACER.format("Setting view: {0} for {1}", view, instance);
     }
 
-    this.view = (CDOViewImpl)view;
+    this.view = (InternalCDOView)view;
   }
 
   public InternalEObject cdoInternalInstance()

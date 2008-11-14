@@ -16,8 +16,9 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCa
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 
 /**
  * @author Simon McDuff
@@ -27,14 +28,13 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
   public void testBugzilla_246456() throws Exception
   {
     msg("Opening session");
-    CDOSessionImpl session = (CDOSessionImpl)openModel1Session();
+    InternalCDOSession session = (InternalCDOSession)openModel1Session();
 
     msg("Opening transaction");
-    CDOTransactionImpl transaction = session.openTransaction();
-    ((LRURevisionCache)((TwoLevelRevisionCache)transaction.getSession().getRevisionManager().getCache()).getLevel1())
-        .setCapacityRevised(10);
-    ((LRURevisionCache)((TwoLevelRevisionCache)transaction.getSession().getRevisionManager().getCache()).getLevel1())
-        .setCapacityCurrent(10);
+    InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
+    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)transaction.getSession().getRevisionManager();
+    ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityRevised(10);
+    ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityCurrent(10);
 
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");

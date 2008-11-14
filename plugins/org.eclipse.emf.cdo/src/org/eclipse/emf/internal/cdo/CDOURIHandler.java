@@ -26,14 +26,14 @@ import java.util.Map;
  */
 public class CDOURIHandler implements URIHandler
 {
-  private CDOViewImpl view;
+  private InternalCDOView view;
 
-  public CDOURIHandler(CDOViewImpl view)
+  public CDOURIHandler(InternalCDOView view)
   {
     this.view = view;
   }
 
-  public CDOViewImpl getView()
+  public InternalCDOView getView()
   {
     return view;
   }

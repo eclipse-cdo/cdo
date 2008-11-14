@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
@@ -40,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implements CDOSessionPackageManager
 {
-  private CDOSessionImpl session;
+  private InternalCDOSession session;
 
   /**
    * For optimization only. Instead of doing 3 lookups we are doing only one.
@@ -54,13 +55,19 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
    */
   private Map<EStructuralFeature, CDOFeature> featureCache = new ConcurrentHashMap<EStructuralFeature, CDOFeature>();
 
-  public CDOSessionPackageManagerImpl(CDOSessionImpl session)
+  /**
+   * @since 2.0
+   */
+  public CDOSessionPackageManagerImpl(InternalCDOSession session)
   {
     this.session = session;
     ModelUtil.addModelInfos(this);
   }
 
-  public CDOSessionImpl getSession()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOSession getSession()
   {
     return session;
   }
@@ -152,7 +159,8 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
 
     try
     {
-      new LoadPackageRequest(session.getProtocol(), cdoPackage, false).send();
+      CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
+      new LoadPackageRequest(protocol, cdoPackage, false).send();
       if (!cdoPackage.isDynamic())
       {
         OM.LOG.info("Dynamic package created for " + cdoPackage.getPackageURI());
@@ -175,7 +183,8 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
   {
     try
     {
-      String ecore = new LoadPackageRequest(session.getProtocol(), cdoPackage, true).send();
+      CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
+      String ecore = new LoadPackageRequest(protocol, cdoPackage, true).send();
       ((InternalCDOPackage)cdoPackage).setEcore(ecore);
     }
     catch (RuntimeException ex)

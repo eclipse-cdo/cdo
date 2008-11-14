@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.util.SessionUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -91,7 +91,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Creating resourceSet");
     ResourceSet resourceSet = new ResourceSetImpl();
-    CDOSessionImpl.prepareResourceSet(resourceSet);
+    SessionUtil.prepareResourceSet(resourceSet);
 
     msg("Creating resource");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
@@ -124,7 +124,7 @@ public class InitialTest extends AbstractCDOTest
   public void testOpenSession() throws Exception
   {
     msg("Opening session");
-    CDOSessionImpl session = (CDOSessionImpl)openModel1Session();
+    CDOSession session = openModel1Session();
     assertNotNull(session);
     assertEquals(true, session.isOpen());
   }
@@ -166,7 +166,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Creating resourceSet");
     ResourceSet resourceSet = new ResourceSetImpl();
-    CDOSessionImpl.prepareResourceSet(resourceSet);
+    SessionUtil.prepareResourceSet(resourceSet);
 
     msg("Creating resource");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
@@ -196,7 +196,7 @@ public class InitialTest extends AbstractCDOTest
 
     msg("Creating resourceSet");
     ResourceSet resourceSet = new ResourceSetImpl();
-    CDOSessionImpl.prepareResourceSet(resourceSet);
+    SessionUtil.prepareResourceSet(resourceSet);
 
     msg("Creating resource");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);

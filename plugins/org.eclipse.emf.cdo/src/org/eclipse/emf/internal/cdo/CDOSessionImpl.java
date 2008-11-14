@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOTimeStampContext;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -33,7 +32,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -52,6 +50,7 @@ import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
 import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
+import org.eclipse.emf.internal.cdo.util.SessionUtil;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ImplementationError;
@@ -70,7 +69,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -91,8 +89,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CDOIDObjectFactory,
-    CDOPackageURICompressor
+public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -128,7 +125,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   private CDORevisionManagerImpl revisionManager;
 
-  private Set<CDOViewImpl> views = new HashSet<CDOViewImpl>();
+  private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
   private QueueRunner invalidationRunner;
 
@@ -213,9 +210,6 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     collectionLoadingPolicy = policy;
   }
 
-  /**
-   * @noreference This method is not intended to be referenced by clients.
-   */
   public CDOClientProtocol getProtocol()
   {
     return protocol;
@@ -321,38 +315,56 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return revisionManager;
   }
 
-  public CDOTransactionImpl openTransaction(ResourceSet resourceSet)
+  /**
+   * @since 2.0
+   */
+  public InternalCDOTransaction openTransaction(ResourceSet resourceSet)
   {
     checkActive();
-    CDOTransactionImpl transaction = createTransaction(++lastViewID);
+    InternalCDOTransaction transaction = createTransaction(++lastViewID);
     attach(resourceSet, transaction);
     return transaction;
   }
 
-  public CDOTransactionImpl openTransaction()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOTransaction openTransaction()
   {
     return openTransaction(createResourceSet());
   }
 
-  protected CDOTransactionImpl createTransaction(int id)
+  /**
+   * @since 2.0
+   */
+  protected InternalCDOTransaction createTransaction(int id)
   {
-    return new CDOTransactionImpl(id, this);
+    return new CDOTransactionImpl(this, id);
   }
 
-  public CDOViewImpl openView(ResourceSet resourceSet)
+  /**
+   * @since 2.0
+   */
+  public InternalCDOView openView(ResourceSet resourceSet)
   {
     checkActive();
-    CDOViewImpl view = createView(++lastViewID);
+    InternalCDOView view = createView(++lastViewID);
     attach(resourceSet, view);
     return view;
   }
 
-  public CDOViewImpl openView()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOView openView()
   {
     return openView(createResourceSet());
   }
 
-  protected CDOViewImpl createView(int id)
+  /**
+   * @since 2.0
+   */
+  protected InternalCDOView createView(int id)
   {
     return new CDOViewImpl(this, id);
   }
@@ -372,13 +384,16 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   protected CDOAuditImpl createAudit(int id, long timeStamp)
   {
-    return new CDOAuditImpl(id, this, timeStamp);
+    return new CDOAuditImpl(this, id, timeStamp);
   }
 
-  public void viewDetached(CDOViewImpl view)
+  /**
+   * @since 2.0
+   */
+  public void viewDetached(InternalCDOView view)
   {
     // Detach viewset from the view
-    ((CDOViewSetImpl)view.getViewSet()).remove(view);
+    view.getViewSet().remove(view);
     synchronized (views)
     {
       if (!views.remove(view))
@@ -403,7 +418,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     fireElementRemovedEvent(view);
   }
 
-  private void sendViewsChangedRequest(CDOViewImpl view)
+  private void sendViewsChangedRequest(InternalCDOView view)
   {
     try
     {
@@ -423,7 +438,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
   }
 
-  private byte getKind(CDOViewImpl view)
+  private byte getKind(InternalCDOView view)
   {
     CDOView.Type type = view.getViewType();
     switch (type)
@@ -445,7 +460,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   public CDOView getView(int viewID)
   {
     checkActive();
-    for (CDOViewImpl view : getViews())
+    for (InternalCDOView view : getViews())
     {
       if (view.getViewID() == viewID)
       {
@@ -456,12 +471,15 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return null;
   }
 
-  public CDOViewImpl[] getViews()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOView[] getViews()
   {
     checkActive();
     synchronized (views)
     {
-      return views.toArray(new CDOViewImpl[views.size()]);
+      return views.toArray(new InternalCDOView[views.size()]);
     }
   }
 
@@ -519,7 +537,8 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     }
 
     CDOIDMetaRange range = CDOIDUtil.createMetaRange(metaIDRange.getLowerBound(), 0);
-    range = registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstanceMap, metaInstanceToIDMap);
+    range = SessionUtil
+        .registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstanceMap, metaInstanceToIDMap);
     if (range.size() != metaIDRange.size())
     {
       throw new IllegalStateException("range.size() != metaIDRange.size()");
@@ -528,51 +547,9 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
   public CDOIDMetaRange registerEPackage(EPackage ePackage)
   {
-    CDOIDMetaRange range = registerEPackage(ePackage, lastTempMetaID + 1, idToMetaInstanceMap, metaInstanceToIDMap);
+    CDOIDMetaRange range = SessionUtil.registerEPackage(ePackage, lastTempMetaID + 1, idToMetaInstanceMap,
+        metaInstanceToIDMap);
     lastTempMetaID = ((CDOIDTempMeta)range.getUpperBound()).getIntValue();
-    return range;
-  }
-
-  public static CDOIDMetaRange registerEPackage(EPackage ePackage, int firstMetaID,
-      Map<CDOID, InternalEObject> idToMetaInstances, Map<InternalEObject, CDOID> metaInstanceToIDs)
-  {
-    CDOIDTemp lowerBound = CDOIDUtil.createTempMeta(firstMetaID);
-    CDOIDMetaRange range = CDOIDUtil.createMetaRange(lowerBound, 0);
-    range = registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstances, metaInstanceToIDs);
-    return range;
-  }
-
-  public static CDOIDMetaRange registerMetaInstance(InternalEObject metaInstance, CDOIDMetaRange range,
-      Map<CDOID, InternalEObject> idToMetaInstances, Map<InternalEObject, CDOID> metaInstanceToIDs)
-  {
-    range = range.increase();
-    CDOID id = range.getUpperBound();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
-    }
-
-    if (idToMetaInstances != null)
-    {
-      if (idToMetaInstances.put(id, metaInstance) != null)
-      {
-        throw new IllegalStateException("Duplicate meta ID: " + id + " --> " + metaInstance);
-      }
-    }
-
-    if (metaInstanceToIDs != null)
-    {
-      if (metaInstanceToIDs.put(metaInstance, id) != null)
-      {
-        throw new IllegalStateException("Duplicate metaInstance: " + metaInstance + " --> " + id);
-      }
-    }
-
-    for (EObject content : metaInstance.eContents())
-    {
-      range = registerMetaInstance((InternalEObject)content, range, idToMetaInstances, metaInstanceToIDs);
-    }
-
     return range;
   }
 
@@ -597,7 +574,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    * @since 2.0
    */
   public void handleCommitNotification(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas, CDOViewImpl excludedView)
+      Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas, InternalCDOView excludedView)
   {
     if (isPassiveUpdateEnabled())
     {
@@ -617,7 +594,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   }
 
   private void notifyInvalidation(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects, CDOViewImpl excludedView, boolean async)
+      Collection<CDOID> detachedObjects, InternalCDOView excludedView, boolean async)
   {
 
     // revised is done automatically when postCommit is CDOTransaction.postCommit is happening
@@ -656,7 +633,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
     final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
 
-    for (final CDOViewImpl view : getViews())
+    for (final InternalCDOView view : getViews())
     {
       if (view != excludedView)
       {
@@ -703,13 +680,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   }
 
   private void handleChangeSubcription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects,
-      CDOViewImpl excludedView)
+      InternalCDOView excludedView)
   {
     if ((deltas == null || deltas.size() <= 0) && (detachedObjects == null || detachedObjects.size() <= 0))
     {
       return;
     }
-    for (CDOViewImpl view : getViews())
+    for (InternalCDOView view : getViews())
     {
       if (view != excludedView)
       {
@@ -729,7 +706,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
    * @since 2.0
    */
   public void fireInvalidationEvent(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
-      CDOViewImpl excludedView)
+      InternalCDOView excludedView)
   {
     fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs, detachedObjects));
   }
@@ -780,9 +757,12 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
     return new ResourceSetImpl();
   }
 
-  protected void attach(ResourceSet resourceSet, CDOViewImpl view)
+  /**
+   * @since 2.0
+   */
+  protected void attach(ResourceSet resourceSet, InternalCDOView view)
   {
-    CDOViewSet viewSet = CDOSessionImpl.prepareResourceSet(resourceSet);
+    InternalCDOViewSet viewSet = SessionUtil.prepareResourceSet(resourceSet);
     synchronized (views)
     {
       views.add(view);
@@ -790,7 +770,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     // Link ViewSet with View
     view.setViewSet(viewSet);
-    ((CDOViewSetImpl)viewSet).add(view);
+    viewSet.add(view);
 
     sendViewsChangedRequest(view);
     fireElementAddedEvent(view);
@@ -831,7 +811,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (CDOViewImpl view : views.toArray(new CDOViewImpl[views.size()]))
+    for (InternalCDOView view : views.toArray(new InternalCDOView[views.size()]))
     {
       try
       {
@@ -938,7 +918,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   private Map<CDOID, CDORevision> getAllRevisions()
   {
     Map<CDOID, CDORevision> uniqueObjects = new HashMap<CDOID, CDORevision>();
-    for (CDOViewImpl view : getViews())
+    for (InternalCDOView view : getViews())
     {
       for (InternalCDOObject internalCDOObject : view.getObjectsArray())
       {
@@ -1020,32 +1000,13 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
   }
 
   /**
-   * @since 2.0
-   */
-  public static CDOViewSet prepareResourceSet(ResourceSet resourceSet)
-  {
-    CDOViewSetImpl viewSet = null;
-    synchronized (resourceSet)
-    {
-      viewSet = (CDOViewSetImpl)CDOUtil.getViewSet(resourceSet);
-      if (viewSet == null)
-      {
-        viewSet = new CDOViewSetImpl();
-        resourceSet.eAdapters().add(viewSet);
-      }
-    }
-
-    return viewSet;
-  }
-
-  /**
    * @author Eike Stepper
    */
   private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent
   {
     private static final long serialVersionUID = 1L;
 
-    private CDOViewImpl view;
+    private InternalCDOView view;
 
     private long timeStamp;
 
@@ -1053,7 +1014,7 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     private Collection<CDOID> detachedObjects;
 
-    public InvalidationEvent(CDOViewImpl view, long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+    public InvalidationEvent(InternalCDOView view, long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
         Collection<CDOID> detachedObjects)
     {
       super(CDOSessionImpl.this);
@@ -1065,10 +1026,10 @@ public class CDOSessionImpl extends Container<CDOView> implements CDOSession, CD
 
     public CDOSession getSession()
     {
-      return CDOSessionImpl.this;
+      return (CDOSession)getSource();
     }
 
-    public CDOViewImpl getView()
+    public InternalCDOView getView()
     {
       return view;
     }

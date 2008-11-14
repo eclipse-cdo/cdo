@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionCancelRequest;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase1Request;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase2Request;
@@ -464,17 +465,15 @@ public class CDOXATransactionImpl implements CDOXATransaction
     protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       xaContext.preCommit();
-      CDOSessionImpl session = (CDOSessionImpl)xaContext.getTransaction().getSession();
 
       // Phase 1
-      {
-        CommitTransactionResult result = new CommitTransactionPhase1Request(session.getProtocol(), xaContext)
-            .send(new EclipseMonitor(progressMonitor));
-        check_result(result);
+      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
+      CommitTransactionPhase1Request request = new CommitTransactionPhase1Request(protocol, xaContext);
+      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+      check_result(result);
 
-        xaContext.setResult(result);
-        xaContext.setState(CDOXAPhase2State.INSTANCE);
-      }
+      xaContext.setResult(result);
+      xaContext.setState(CDOXAPhase2State.INSTANCE);
     }
   };
 
@@ -492,15 +491,13 @@ public class CDOXATransactionImpl implements CDOXATransaction
     @Override
     protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
-      CDOSessionImpl session = (CDOSessionImpl)xaContext.getTransaction().getSession();
-
       // Phase 2
-      {
-        CommitTransactionResult result = new CommitTransactionPhase2Request(session.getProtocol(), xaContext)
-            .send(new EclipseMonitor(progressMonitor));
-        check_result(result);
-        xaContext.setState(CDOXAPhase3State.INSTANCE);
-      }
+      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
+      CommitTransactionPhase2Request request = new CommitTransactionPhase2Request(protocol, xaContext);
+      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+      check_result(result);
+
+      xaContext.setState(CDOXAPhase3State.INSTANCE);
     }
   };
 
@@ -518,16 +515,13 @@ public class CDOXATransactionImpl implements CDOXATransaction
     @Override
     protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
-      CDOSessionImpl session = (CDOSessionImpl)xaContext.getTransaction().getSession();
-
       // Phase 2
-      {
-        CommitTransactionResult result = new CommitTransactionPhase3Request(session.getProtocol(), xaContext)
-            .send(new EclipseMonitor(progressMonitor));
-        check_result(result);
-        xaContext.postCommit(xaContext.getResult());
-        xaContext.setState(null);
-      }
+      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
+      CommitTransactionPhase3Request request = new CommitTransactionPhase3Request(protocol, xaContext);
+      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+      check_result(result);
+      xaContext.postCommit(xaContext.getResult());
+      xaContext.setState(null);
     }
   };
 
@@ -545,14 +539,11 @@ public class CDOXATransactionImpl implements CDOXATransaction
     @Override
     protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
-      CDOSessionImpl session = (CDOSessionImpl)xaContext.getTransaction().getSession();
-
       // Phase 2
-      {
-        CommitTransactionResult result = new CommitTransactionCancelRequest(session.getProtocol(), xaContext)
-            .send(new EclipseMonitor(progressMonitor));
-        check_result(result);
-      }
+      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
+      CommitTransactionCancelRequest request = new CommitTransactionCancelRequest(protocol, xaContext);
+      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+      check_result(result);
     }
   };
 

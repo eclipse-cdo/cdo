@@ -22,12 +22,10 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewInvalidationEvent;
-import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -50,6 +48,7 @@ import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.ChangeSubscriptionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LockObjectsRequest;
 import org.eclipse.emf.internal.cdo.protocol.ObjectLockedRequest;
@@ -96,15 +95,15 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implements CDOView, CDOIDProvider
+public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implements InternalCDOView
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
   private int viewID;
 
-  private CDOSessionImpl session;
+  private InternalCDOSession session;
 
-  private CDOViewSet viewSet;
+  private InternalCDOViewSet viewSet;
 
   private CDOURIHandler uriHandler = new CDOURIHandler(this);
 
@@ -141,7 +140,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public CDOViewImpl(CDOSessionImpl session, int viewID)
+  public CDOViewImpl(InternalCDOSession session, int viewID)
   {
     this.session = session;
     this.viewID = viewID;
@@ -168,12 +167,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public CDOViewSet getViewSet()
+  public InternalCDOViewSet getViewSet()
   {
     return viewSet;
   }
 
-  public CDOSessionImpl getSession()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOSession getSession()
   {
     return session;
   }
@@ -234,7 +236,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     try
     {
-      new LockObjectsRequest(getSession().getProtocol(), this, objects, timeout, lockType).send();
+      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
+      new LockObjectsRequest(protocol, this, objects, timeout, lockType).send();
     }
     catch (RemoteException ex)
     {
@@ -270,7 +273,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     try
     {
-      new UnlockObjectsRequest(getSession().getProtocol(), this, objects, lockType).send();
+      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
+      new UnlockObjectsRequest(protocol, this, objects, lockType).send();
     }
     catch (Exception ex)
     {
@@ -294,7 +298,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     try
     {
-      return new ObjectLockedRequest(getSession().getProtocol(), this, object, lockType).send();
+      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
+      return new ObjectLockedRequest(protocol, this, object, lockType).send();
     }
     catch (Exception ex)
     {
@@ -390,12 +395,15 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     this.featureAnalyzer = featureAnalyzer == null ? CDOFeatureAnalyzer.NOOP : featureAnalyzer;
   }
 
-  public CDOTransactionImpl toTransaction()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOTransaction toTransaction()
   {
     checkOpen();
-    if (this instanceof CDOTransactionImpl)
+    if (this instanceof InternalCDOTransaction)
     {
-      return (CDOTransactionImpl)this;
+      return (InternalCDOTransaction)this;
     }
 
     throw new ReadOnlyException("CDO view is read only: " + this);
@@ -567,7 +575,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     InternalCDOObject object = getObject(id, false);
     if (object != null && object.cdoState() != CDOState.PROXY)
     {
-      revision = (InternalCDORevision)object.cdoRevision();
+      revision = object.cdoRevision();
     }
 
     if (revision == null)
@@ -1376,7 +1384,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public void setViewSet(CDOViewSet viewSet)
+  public void setViewSet(InternalCDOViewSet viewSet)
   {
     this.viewSet = viewSet;
     if (viewSet != null)
@@ -1510,7 +1518,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     {
       try
       {
-        new ChangeSubscriptionRequest(getSession().getProtocol(), getViewID(), cdoIDs, subscribeMode, clear).send();
+        CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
+        new ChangeSubscriptionRequest(protocol, getViewID(), cdoIDs, subscribeMode, clear).send();
       }
       catch (Exception ex)
       {
@@ -1549,6 +1558,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           {
             throw new CDOException("Object " + internalCDOObject + " doesn`t belong to this view.");
           }
+
           subscribe(internalCDOObject.cdoID(), internalCDOObject, adjust);
         }
       }

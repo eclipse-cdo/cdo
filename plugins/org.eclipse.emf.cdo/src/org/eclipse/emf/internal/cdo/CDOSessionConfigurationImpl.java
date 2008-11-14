@@ -10,11 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
+
+import org.eclipse.emf.internal.cdo.util.SessionUtil;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
@@ -26,7 +27,7 @@ import org.eclipse.net4j.util.CheckUtil;
  */
 public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 {
-  private CDOSessionImpl session;
+  private InternalCDOSession session;
 
   private IConnector connector;
 
@@ -138,14 +139,17 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.activateOnOpen = activateOnOpen;
   }
 
-  public CDOSession openSession()
+  /**
+   * @since 2.0
+   */
+  public InternalCDOSession openSession()
   {
     CheckUtil.checkState(connector != null ^ failOverStrategy != null,
         "Specify exactly one of connector or failOverStrategy");
 
     if (!isSessionOpen())
     {
-      session = new CDOSessionImpl();
+      session = SessionUtil.createSession();
       if (connector != null)
       {
         session.getProtocol().setFailOverStrategy(new NOOPFailOverStrategy(connector));

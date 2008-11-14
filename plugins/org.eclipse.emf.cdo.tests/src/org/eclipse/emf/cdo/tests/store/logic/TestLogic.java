@@ -37,8 +37,8 @@ import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
+import org.eclipse.emf.internal.cdo.util.SessionUtil;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -252,7 +252,7 @@ public abstract class TestLogic extends AbstractOMTest
           ecore = EMFUtil.ePackageToString(ePackage, EPackage.Registry.INSTANCE);
         }
 
-        idRange = CDOSessionImpl.registerEPackage(ePackage, 1, null, null);
+        idRange = SessionUtil.registerEPackage(ePackage, 1, null, null);
       }
 
       TransactionPackageManager packageManager = transactionCommitContext.getPackageManager();

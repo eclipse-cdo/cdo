@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.CDOViewSetImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOView;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -49,7 +49,7 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
     String repositoryUUID = CDOURIUtil.extractRepositoryUUID(uri);
 
     // repoUUID can be null but can be null
-    CDOViewImpl view = viewSet.resolveView(repositoryUUID);
+    InternalCDOView view = viewSet.resolveView(repositoryUUID);
     String path = CDOURIUtil.extractResourcePath(uri);
 
     // Build a new URI with the view and the path

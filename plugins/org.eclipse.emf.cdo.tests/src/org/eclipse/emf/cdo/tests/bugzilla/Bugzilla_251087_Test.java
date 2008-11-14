@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -79,14 +79,14 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     res.getContents().add(obj2);
     transaction1.commit();
 
-    CDOTransactionImpl transB1 = (CDOTransactionImpl)sessionB.openTransaction();
+    CDOTransaction transB1 = sessionB.openTransaction();
     CDOID companyID = CDOUtil.getCDOObject(obj2).cdoID();
     Company companyB = (Company)transB1.getObject(companyID);
     sessionB.setPassiveUpdateEnabled(false);
     transB1.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);
     final TestAdapter testAdapter = new TestAdapter();
     companyB.eAdapters().add(testAdapter);
-    assertEquals(true, transB1.hasSubscription(companyID));
+    assertEquals(true, ((InternalCDOTransaction)transB1).hasSubscription(companyID));
 
     res.getContents().remove(obj2);
     transaction1.commit();
@@ -102,7 +102,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     }.timedOut();
 
     assertEquals(false, timedOut);
-    assertEquals(false, transB1.hasSubscription(companyID));
+    assertEquals(false, ((InternalCDOTransaction)transB1).hasSubscription(companyID));
   }
 
   /**

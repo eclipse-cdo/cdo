@@ -32,7 +32,7 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 
 import junit.framework.Assert;
 
@@ -142,7 +142,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
   public void testBugzilla214431() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test1");
 
     SalesOrder salesOrder = getModel1Factory().createSalesOrder();
@@ -150,8 +150,8 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     transaction.commit();
 
     salesOrder.setId(4711);
-    assertNotSame(CDOUtil.getCDOObject(salesOrder).cdoRevision(), transaction.getRevision(CDOUtil.getCDOObject(
-        salesOrder).cdoID(), true));
+    assertNotSame(CDOUtil.getCDOObject(salesOrder).cdoRevision(), ((InternalCDOTransaction)transaction).getRevision(
+        CDOUtil.getCDOObject(salesOrder).cdoID(), true));
     assertEquals(CDOUtil.getCDOObject(salesOrder).cdoRevision(), transaction.getDirtyObjects().get(
         CDOUtil.getCDOObject(salesOrder).cdoID()).cdoRevision());
     transaction.close();

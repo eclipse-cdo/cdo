@@ -22,8 +22,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.CDOTimeStampContextImpl;
+import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -45,17 +45,17 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStam
 
   private Map<CDOID, CDORevision> revisions;
 
-  private CDOSessionImpl session;
+  private InternalCDOSession session;
 
   private int referenceChunk;
 
-  public SyncRevisionRequest(CDOClientProtocol protocol, CDOSessionImpl session, Map<CDOID, CDORevision> revisions,
+  public SyncRevisionRequest(CDOClientProtocol protocol, InternalCDOSession session, Map<CDOID, CDORevision> revisions,
       int referenceChunk)
   {
     this(protocol, CDOProtocolConstants.SIGNAL_SYNC, session, revisions, referenceChunk);
   }
 
-  public SyncRevisionRequest(CDOClientProtocol protocol, short signalID, CDOSessionImpl session,
+  public SyncRevisionRequest(CDOClientProtocol protocol, short signalID, InternalCDOSession session,
       Map<CDOID, CDORevision> revisions, int referenceChunk)
   {
     super(protocol, signalID);
@@ -84,7 +84,7 @@ public class SyncRevisionRequest extends CDOClientRequest<Collection<CDOTimeStam
   @Override
   protected Collection<CDOTimeStampContext> confirming(CDODataInput in) throws IOException
   {
-    CDORevisionManagerImpl revisionManager = getRevisionManager();
+    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getRevisionManager();
     TreeMap<Long, CDOTimeStampContext> mapofContext = new TreeMap<Long, CDOTimeStampContext>();
 
     int size = in.readInt();

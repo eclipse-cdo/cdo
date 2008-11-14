@@ -22,9 +22,9 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
-import org.eclipse.emf.internal.cdo.CDOViewImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
+import org.eclipse.emf.internal.cdo.InternalCDOView;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -564,7 +564,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   {
     if (!isLoaded())
     {
-      CDOViewImpl view = cdoView();
+      InternalCDOView view = cdoView();
       if (!FSMUtil.isTransient(this))
       {
         CDOID id = cdoID();
@@ -720,7 +720,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
       if (getFolder() == null)
       {
-        CDOViewImpl view = cdoView();
+        InternalCDOView view = cdoView();
         view.getRootResource().getContents().remove(this);
       }
       else
@@ -764,7 +764,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   /**
    * @ADDED
    */
-  private void attached(InternalCDOObject cdoObject, CDOTransactionImpl transaction)
+  private void attached(InternalCDOObject cdoObject, InternalCDOTransaction transaction)
   {
     CDOStateMachine.INSTANCE.attach(cdoObject, transaction);
   }
@@ -903,7 +903,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       }
       else
       {
-        CDOTransactionImpl transaction = cdoView().toTransaction();
+        InternalCDOTransaction transaction = cdoView().toTransaction();
         InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
         notifications = cdoObject.eSetResource(CDOResourceImpl.this, notifications);
 

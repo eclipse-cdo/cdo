@@ -28,8 +28,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -2352,7 +2352,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       if (resource != null)
       {
-        InternalCDOObject object = ((CDOTransactionImpl)view).newInstance(cdoClass);
+        InternalCDOObject object = (InternalCDOObject)((InternalCDOTransaction)view).newInstance(cdoClass);
         resource.getContents().add(object.cdoInternalInstance());
       }
     }

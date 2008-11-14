@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 /**
@@ -88,7 +87,7 @@ public class SavePointTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
-    CDOTransactionImpl transaction1 = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction1 = session.openTransaction();
     // Client1
     CDOResource resource1 = transaction1.createResource("/test1");
     Company company1 = getModel1Factory().createCompany();
@@ -126,7 +125,7 @@ public class SavePointTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
-    CDOTransactionImpl transaction1 = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction1 = session.openTransaction();
     CDOSavepoint savePoint0 = transaction1.setSavepoint();
 
     // Client1
@@ -167,7 +166,7 @@ public class SavePointTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
-    CDOTransactionImpl transaction1 = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction1 = session.openTransaction();
 
     // Client1
     CDOResource resource1 = transaction1.createResource("/test1");

@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.util.CDODefaultTransactionHandler;
 
-import org.eclipse.emf.internal.cdo.CDOTransactionImpl;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
@@ -64,7 +62,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   public void testAttachingResourceVeto() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
@@ -96,7 +94,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   public void testAttachingObjectVeto() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
 
     Order order = getModel1Factory().createOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
@@ -132,7 +130,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
@@ -158,7 +156,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   public void testDetachingObjectVeto() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
@@ -195,7 +193,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
@@ -218,7 +216,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   public void testModifyingResourceVeto() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(new CDODefaultTransactionHandler()
     {
       @Override
@@ -250,7 +248,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   public void testModifyingObjectVeto() throws Exception
   {
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
 
     Order order = getModel1Factory().createOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
@@ -288,7 +286,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(handler);
 
     transaction.getOrCreateResource("/test1");
@@ -304,7 +302,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
 
     CDOSession session = openModel1Session();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
     transaction.addHandler(handler);
 
     transaction.getOrCreateResource("/test1");

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -174,10 +175,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * 
    * @since 2.0
    */
-  public void attach(InternalCDOObject object, CDOTransactionImpl transaction)
+  public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
     List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
-    attach1(object, new Pair<CDOTransactionImpl, List<InternalCDOObject>>(transaction, contents));
+    attach1(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
     attach2(object);
 
     for (InternalCDOObject content : contents)
@@ -190,7 +191,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * Phase 1: TRANSIENT --> PREPARED
    */
   private void attach1(InternalCDOObject object,
-      Pair<CDOTransactionImpl, List<InternalCDOObject>> transactionAndMapOfContents)
+      Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndMapOfContents)
   {
     if (TRACER.isEnabled())
     {
@@ -221,7 +222,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
 
     List<InternalCDOObject> objectsToDetach = new ArrayList<InternalCDOObject>();
-    CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
+    InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
 
     // Accumulate objects that needs to be detached
     // If we have an error, we will keep the graph exactly like it was before.
@@ -289,7 +290,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           view = object.cdoView();
         }
 
-        InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+        InternalCDORevision revision = object.cdoRevision();
         if (revision.isCurrent())
         {
           revisions.add(revision);
@@ -307,8 +308,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       try
       {
-        CDOSessionImpl session = (CDOSessionImpl)view.getSession();
-        revisions = new VerifyRevisionRequest(session.getProtocol(), revisions).send();
+        CDOClientProtocol protocol = (CDOClientProtocol)view.getSession().getProtocol();
+        revisions = new VerifyRevisionRequest(protocol, revisions).send();
       }
       catch (Exception ex)
       {
@@ -433,12 +434,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    */
   private final class PrepareTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<CDOTransactionImpl, List<InternalCDOObject>>>
+      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<InternalCDOTransaction, List<InternalCDOObject>>>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
-        Pair<CDOTransactionImpl, List<InternalCDOObject>> transactionAndMapOfContents)
+        Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndMapOfContents)
     {
-      CDOTransactionImpl transaction = transactionAndMapOfContents.getElement1();
+      InternalCDOTransaction transaction = transactionAndMapOfContents.getElement1();
       List<InternalCDOObject> contents = transactionAndMapOfContents.getElement2();
 
       // Prepare object
@@ -504,7 +505,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
         List<InternalCDOObject> objectsToDetach)
     {
-      CDOTransactionImpl transaction = (CDOTransactionImpl)object.cdoView();
+      InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
       objectsToDetach.add(object);
       boolean isResource = object instanceof Resource;
 
@@ -540,11 +541,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CommitTransactionResult data)
     {
-
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
-
-      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-
+      InternalCDOView view = object.cdoView();
+      InternalCDORevision revision = object.cdoRevision();
       Map<CDOIDTemp, CDOID> idMappings = data.getIDMappings();
 
       // Adjust object
@@ -576,12 +574,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         revision.adjustReferences(data.getReferenceAdjuster());
       }
 
-      CDORevisionManagerImpl revisionManager = view.getSession().getRevisionManager();
+      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)view.getSession().getRevisionManager();
       revisionManager.addCachedRevision(revision);
-
       changeState(object, CDOState.CLEAN);
     }
-
   }
 
   /**
@@ -607,8 +603,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.setTransactional();
       object.cdoInternalSetRevision(revision);
 
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDOTransactionImpl transaction = view.toTransaction();
+      InternalCDOView view = object.cdoView();
+      InternalCDOTransaction transaction = view.toTransaction();
       transaction.registerDirty(object, (CDOFeatureDelta)featureDelta);
       changeState(object, CDOState.DIRTY);
     }
@@ -621,8 +617,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDOTransactionImpl transaction = view.toTransaction();
+      InternalCDOView view = object.cdoView();
+      InternalCDOTransaction transaction = view.toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -634,8 +630,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDOTransactionImpl transaction = view.toTransaction();
+      InternalCDOView view = object.cdoView();
+      InternalCDOTransaction transaction = view.toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
   }
@@ -660,7 +656,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      InternalCDOView view = object.cdoView();
       view.deregisterObject(object);
 
       object.cdoInternalSetState(CDOState.INVALID);
@@ -675,7 +671,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
     {
-      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+      InternalCDORevision revision = object.cdoRevision();
       if (version == CDORevision.UNSPECIFIED_VERSION || revision.getVersion() <= version)
       {
         changeState(object, CDOState.PROXY);
@@ -693,11 +689,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
     {
-      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+      InternalCDORevision revision = object.cdoRevision();
       if (version == 0 || revision.getVersion() <= version + 1)
       {
-        CDOViewImpl view = (CDOViewImpl)object.cdoView();
-        CDOTransactionImpl transaction = view.toTransaction();
+        InternalCDOView view = object.cdoView();
+        InternalCDOTransaction transaction = view.toTransaction();
         transaction.setConflict(object);
         changeState(object, CDOState.CONFLICT);
       }
@@ -712,8 +708,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)
     {
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
-      CDOTransactionImpl transaction = view.toTransaction();
+      InternalCDOView view = object.cdoView();
+      InternalCDOTransaction transaction = view.toTransaction();
       transaction.setConflict(object);
       changeState(object, CDOState.INVALID_CONFLICT);
     }
@@ -734,7 +730,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object delta)
     {
       CDOID id = object.cdoID();
-      CDOViewImpl view = (CDOViewImpl)object.cdoView();
+      InternalCDOView view = object.cdoView();
       InternalCDORevision revision = view.getRevision(id, true);
       FSMUtil.validate(object, revision);
       object.cdoInternalSetRevision(revision);

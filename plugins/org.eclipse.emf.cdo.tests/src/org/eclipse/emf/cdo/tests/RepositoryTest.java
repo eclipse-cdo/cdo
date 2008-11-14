@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -34,6 +35,22 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class RepositoryTest extends AbstractCDOTest
 {
+  public void testSessionClosed() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    resource.getContents().add(createCustomer("Eike"));
+    transaction.commit(); // Ensure that model1 is committed to the repository
+
+    ISessionManager sessionManager = getRepository().getSessionManager();
+    assertEquals(1, sessionManager.getSessions().length);
+
+    session.close();
+    sleep(100);
+    assertEquals(0, sessionManager.getSessions().length);
+  }
+
   public void testWriteAccessHandlers() throws Exception
   {
     CDOSession session = openModel1Session();

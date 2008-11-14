@@ -43,8 +43,12 @@
    <extension
          point="org.eclipse.emf.cdo.server.db.jdbcDelegateProviders">
       <jdbcDelegateProvider
-            class="org.eclipse.emf.cdo.server.internal.db.jdbc.NonPreparedStatementJDBCDelegateProvider"
-            type="nonPreparedStatement">
+            class="org.eclipse.emf.cdo.server.internal.db.jdbc.StatementJDBCDelegateProvider"
+            type="statement">
+      </jdbcDelegateProvider>
+      <jdbcDelegateProvider
+            class="org.eclipse.emf.cdo.server.internal.db.jdbc.PreparedStatementJDBCDelegateProvider"
+            type="preparedStatement">
       </jdbcDelegateProvider>
    </extension>
 

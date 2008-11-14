@@ -21,7 +21,7 @@
 				<property name="toOneReferences" value="LIKE_ATTRIBUTES"/>
 			</mappingStrategy>
 			
-			<jdbcDelegate type="nonPreparedStatement" />
+			<jdbcDelegate type="statement" />
 			<dbAdapter name="derby-embedded"/>
 			<dataSource class="org.apache.derby.jdbc.EmbeddedDataSource"
 				databaseName="/temp/cdodb1"

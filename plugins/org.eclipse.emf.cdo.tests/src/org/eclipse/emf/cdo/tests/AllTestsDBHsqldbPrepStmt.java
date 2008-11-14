@@ -8,23 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.server.internal.db.jdbc;
+package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.server.db.IJDBCDelegate;
-import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Eike Stepper
- * @since 2.0
  */
-public class NonPreparedStatementJDBCDelegateProvider implements IJDBCDelegateProvider
+public class AllTestsDBHsqldbPrepStmt extends AllTestsAllConfigs
 {
-  public NonPreparedStatementJDBCDelegateProvider()
+  public static Test suite()
   {
+    return new AllTestsDBHsqldbPrepStmt().getTestSuite("CDO Tests (DB Hsql Horizontal PrepStmt)");
   }
 
-  public IJDBCDelegate getJDBCDelegate()
+  @Override
+  protected void initConfigSuites(TestSuite parent)
   {
-    return new NonPreparedStatementJDBCDelegate();
+    addScenario(parent, COMBINED, DB_HSQL_HORIZONTAL_PREPSTMT, TCP, NATIVE);
   }
 }

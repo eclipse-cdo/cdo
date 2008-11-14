@@ -13,7 +13,8 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.jdbc.NonPreparedStatementJDBCDelegateProvider;
+import org.eclipse.emf.cdo.server.internal.db.jdbc.StatementJDBCDelegateProvider;
+import org.eclipse.emf.cdo.server.internal.db.jdbc.PreparedStatementJDBCDelegateProvider;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
@@ -67,9 +68,17 @@ public final class CDODBUtil
   /**
    * @since 2.0
    */
-  public static IJDBCDelegateProvider createNonPreparedStatementJDBCDelegateProvider()
+  public static IJDBCDelegateProvider createStatementJDBCDelegateProvider()
   {
-    return new NonPreparedStatementJDBCDelegateProvider();
+    return new StatementJDBCDelegateProvider();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static IJDBCDelegateProvider createPreparedStatementJDBCDelegateProvider()
+  {
+    return new PreparedStatementJDBCDelegateProvider();
   }
 
   /**

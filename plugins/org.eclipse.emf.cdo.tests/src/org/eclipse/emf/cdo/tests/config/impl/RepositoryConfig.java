@@ -56,8 +56,10 @@ import java.util.Map.Entry;
  */
 public abstract class RepositoryConfig extends Config implements IRepositoryConfig
 {
-  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, DBHsqldbNonPrepStmt.HSQLDB_HORIZONTAL,
-      DBDerbyNonPrepStmt.DERBY_HORIZONTAL, DBMysqlNonPrepStmt.MYSQL_HORIZONTAL };
+  public static final RepositoryConfig[] CONFIGS = { MEM.INSTANCE, //
+      DB.Hsqldb.Stmt.INSTANCE, DB.Hsqldb.PrepStmt.INSTANCE, //
+      DB.Derby.Stmt.INSTANCE, DB.Derby.PrepStmt.INSTANCE, //
+      DB.Mysql.Stmt.INSTANCE, DB.Mysql.PrepStmt.INSTANCE };
 
   public static final String PROP_TEST_REPOSITORY = "test.repository";
 
@@ -242,283 +244,338 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     protected abstract IDBAdapter createDBAdapter();
 
     protected abstract DataSource createDataSource();
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  public abstract static class DBHsqldb extends DB
-  {
-    private static final long serialVersionUID = 1L;
-
-    private transient HSQLDBDataSource dataSource;
-
-    public DBHsqldb(String name)
+    /**
+     * @author Eike Stepper
+     */
+    public abstract static class Hsqldb extends DB
     {
-      super(name);
-    }
+      private static final long serialVersionUID = 1L;
 
-    @Override
-    protected IMappingStrategy createMappingStrategy()
-    {
-      return CDODBUtil.createHorizontalMappingStrategy();
-    }
+      private transient HSQLDBDataSource dataSource;
 
-    @Override
-    protected IDBAdapter createDBAdapter()
-    {
-      return new HSQLDBAdapter();
-    }
-
-    @Override
-    protected DataSource createDataSource()
-    {
-      dataSource = new HSQLDBDataSource();
-      dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
-      dataSource.setUser("sa");
-
-      try
+      public Hsqldb(String name)
       {
-        dataSource.setLogWriter(new PrintWriter(System.err));
-      }
-      catch (SQLException ex)
-      {
-        OM.LOG.warn(ex.getMessage());
+        super(name);
       }
 
-      return dataSource;
-    }
-
-    @Override
-    public void tearDown() throws Exception
-    {
-      super.tearDown();
-      shutDownHsqldb();
-    }
-
-    private void shutDownHsqldb() throws SQLException
-    {
-      if (dataSource != null)
+      @Override
+      protected IMappingStrategy createMappingStrategy()
       {
-        Connection connection = null;
-        Statement statement = null;
+        return CDODBUtil.createHorizontalMappingStrategy();
+      }
+
+      @Override
+      protected IDBAdapter createDBAdapter()
+      {
+        return new HSQLDBAdapter();
+      }
+
+      @Override
+      protected DataSource createDataSource()
+      {
+        dataSource = new HSQLDBDataSource();
+        dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
+        dataSource.setUser("sa");
 
         try
         {
-          connection = dataSource.getConnection();
-          statement = connection.createStatement();
-          statement.execute("SHUTDOWN");
+          dataSource.setLogWriter(new PrintWriter(System.err));
+        }
+        catch (SQLException ex)
+        {
+          OM.LOG.warn(ex.getMessage());
+        }
+
+        return dataSource;
+      }
+
+      @Override
+      public void tearDown() throws Exception
+      {
+        super.tearDown();
+        shutDownHsqldb();
+      }
+
+      private void shutDownHsqldb() throws SQLException
+      {
+        if (dataSource != null)
+        {
+          Connection connection = null;
+          Statement statement = null;
+
+          try
+          {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            statement.execute("SHUTDOWN");
+          }
+          finally
+          {
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+            dataSource = null;
+          }
+        }
+      }
+
+      public static class Stmt extends Hsqldb
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final Stmt INSTANCE = new Stmt("HsqldbHorizontalStmt");
+
+        public Stmt(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createStatementJDBCDelegateProvider();
+        }
+      }
+
+      public static class PrepStmt extends Hsqldb
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final PrepStmt INSTANCE = new PrepStmt("HsqldbHorizontalPrepStmt");
+
+        public PrepStmt(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createPreparedStatementJDBCDelegateProvider();
+        }
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public abstract static class Derby extends DB
+    {
+      private static final long serialVersionUID = 1L;
+
+      private transient File dbFolder;
+
+      private transient EmbeddedDataSource dataSource;
+
+      public Derby(String name)
+      {
+        super(name);
+      }
+
+      @Override
+      protected IMappingStrategy createMappingStrategy()
+      {
+        return CDODBUtil.createHorizontalMappingStrategy();
+      }
+
+      @Override
+      protected IDBAdapter createDBAdapter()
+      {
+        return new EmbeddedDerbyAdapter();
+      }
+
+      @Override
+      protected DataSource createDataSource()
+      {
+        dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
+        deleteDBFolder();
+
+        dataSource = new EmbeddedDataSource();
+        dataSource.setDatabaseName(dbFolder.getAbsolutePath());
+        dataSource.setCreateDatabase("create");
+        return dataSource;
+      }
+
+      @Override
+      public void tearDown() throws Exception
+      {
+        deleteDBFolder();
+        super.tearDown();
+      }
+
+      private void deleteDBFolder()
+      {
+        IOUtil.delete(dbFolder);
+      }
+
+      public static class Stmt extends Derby
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final Stmt INSTANCE = new Stmt("DerbyHorizontalStmt");
+
+        public Stmt(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createStatementJDBCDelegateProvider();
+        }
+      }
+
+      public static class PrepStmt extends Derby
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final PrepStmt INSTANCE = new PrepStmt("DerbyHorizontalPrepStmt");
+
+        public PrepStmt(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createPreparedStatementJDBCDelegateProvider();
+        }
+      }
+    }
+
+    /**
+     * @author Simon McDuff
+     */
+    public static abstract class Mysql extends DB
+    {
+      private static final long serialVersionUID = 1L;
+
+      private transient MysqlDataSource setupDataSource;
+
+      private transient MysqlDataSource dataSource;
+
+      public Mysql(String name)
+      {
+        super(name);
+      }
+
+      @Override
+      protected IMappingStrategy createMappingStrategy()
+      {
+        return CDODBUtil.createHorizontalMappingStrategy();
+      }
+
+      @Override
+      protected IDBAdapter createDBAdapter()
+      {
+        return new MYSQLAdapter();
+      }
+
+      private MysqlDataSource getSetupDataSource()
+      {
+        if (setupDataSource == null)
+        {
+          setupDataSource = new MysqlDataSource();
+          setupDataSource.setUrl("jdbc:mysql://localhost");
+          setupDataSource.setUser("sa");
+        }
+
+        return setupDataSource;
+      }
+
+      @Override
+      public void setUp() throws Exception
+      {
+        dropDatabase();
+        Connection connection = null;
+        try
+        {
+          connection = getSetupDataSource().getConnection();
+          connection.prepareStatement("create database cdodb1").execute();
+        }
+        catch (SQLException ignore)
+        {
+
         }
         finally
         {
-          DBUtil.close(statement);
-          DBUtil.close(connection);
-          dataSource = null;
+          connection.close();
+        }
+        super.setUp();
+      }
+
+      @Override
+      protected DataSource createDataSource()
+      {
+        dataSource = new MysqlDataSource();
+        dataSource.setUrl("jdbc:mysql://localhost/cdodb1");
+        dataSource.setUser("sa");
+        return dataSource;
+      }
+
+      @Override
+      public void tearDown() throws Exception
+      {
+        super.tearDown();
+        dropDatabase();
+      }
+
+      private void dropDatabase() throws Exception
+      {
+        Connection connection = null;
+        try
+        {
+          connection = getSetupDataSource().getConnection();
+          connection.prepareStatement("DROP database cdodb1").execute();
+        }
+        catch (SQLException ignore)
+        {
+
+        }
+        finally
+        {
+          connection.close();
+        }
+      }
+
+      public static class Stmt extends Mysql
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final Stmt INSTANCE = new Stmt("MysqlHorizontalStmt");
+
+        public Stmt(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createStatementJDBCDelegateProvider();
+        }
+      }
+
+      public static class PrepStmt extends Mysql
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final PrepStmt INSTANCE = new PrepStmt("MysqlHorizontalPrepStmt");
+
+        public PrepStmt(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createPreparedStatementJDBCDelegateProvider();
         }
       }
     }
   }
 
-  public static class DBHsqldbNonPrepStmt extends DBHsqldb
-  {
-    private static final long serialVersionUID = 1L;
-
-    public static final DBHsqldbNonPrepStmt HSQLDB_HORIZONTAL = new DBHsqldbNonPrepStmt("HsqldbHorizontal");
-
-    public DBHsqldbNonPrepStmt(String name)
-    {
-      super(name);
-    }
-
-    @Override
-    protected IJDBCDelegateProvider createDelegateProvider()
-    {
-      return CDODBUtil.createNonPreparedStatementJDBCDelegateProvider();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public abstract static class DBDerby extends DB
-  {
-    private static final long serialVersionUID = 1L;
-
-    private transient File dbFolder;
-
-    private transient EmbeddedDataSource dataSource;
-
-    public DBDerby(String name)
-    {
-      super(name);
-    }
-
-    @Override
-    protected IMappingStrategy createMappingStrategy()
-    {
-      return CDODBUtil.createHorizontalMappingStrategy();
-    }
-
-    @Override
-    protected IDBAdapter createDBAdapter()
-    {
-      return new EmbeddedDerbyAdapter();
-    }
-
-    @Override
-    protected DataSource createDataSource()
-    {
-      dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
-      deleteDBFolder();
-
-      dataSource = new EmbeddedDataSource();
-      dataSource.setDatabaseName(dbFolder.getAbsolutePath());
-      dataSource.setCreateDatabase("create");
-      return dataSource;
-    }
-
-    @Override
-    public void tearDown() throws Exception
-    {
-      deleteDBFolder();
-      super.tearDown();
-    }
-
-    private void deleteDBFolder()
-    {
-      IOUtil.delete(dbFolder);
-    }
-  }
-
-  public static class DBDerbyNonPrepStmt extends DBDerby
-  {
-    private static final long serialVersionUID = 1L;
-
-    public static final DBDerbyNonPrepStmt DERBY_HORIZONTAL = new DBDerbyNonPrepStmt("DerbyHorizontal");
-
-    public DBDerbyNonPrepStmt(String name)
-    {
-      super(name);
-    }
-
-    @Override
-    protected IJDBCDelegateProvider createDelegateProvider()
-    {
-      return CDODBUtil.createNonPreparedStatementJDBCDelegateProvider();
-    }
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  public static abstract class DBMysql extends DB
-  {
-    private static final long serialVersionUID = 1L;
-
-    private transient MysqlDataSource setupDataSource;
-
-    private transient MysqlDataSource dataSource;
-
-    public DBMysql(String name)
-    {
-      super(name);
-    }
-
-    @Override
-    protected IMappingStrategy createMappingStrategy()
-    {
-      return CDODBUtil.createHorizontalMappingStrategy();
-    }
-
-    @Override
-    protected IDBAdapter createDBAdapter()
-    {
-      return new MYSQLAdapter();
-    }
-
-    private MysqlDataSource getSetupDataSource()
-    {
-      if (setupDataSource == null)
-      {
-        setupDataSource = new MysqlDataSource();
-        setupDataSource.setUrl("jdbc:mysql://localhost");
-        setupDataSource.setUser("sa");
-      }
-
-      return setupDataSource;
-    }
-
-    @Override
-    public void setUp() throws Exception
-    {
-      dropDatabase();
-      Connection connection = null;
-      try
-      {
-        connection = getSetupDataSource().getConnection();
-        connection.prepareStatement("create database cdodb1").execute();
-      }
-      catch (SQLException ignore)
-      {
-
-      }
-      finally
-      {
-        connection.close();
-      }
-      super.setUp();
-    }
-
-    @Override
-    protected DataSource createDataSource()
-    {
-      dataSource = new MysqlDataSource();
-      dataSource.setUrl("jdbc:mysql://localhost/cdodb1");
-      dataSource.setUser("sa");
-      return dataSource;
-    }
-
-    @Override
-    public void tearDown() throws Exception
-    {
-      super.tearDown();
-      dropDatabase();
-    }
-
-    private void dropDatabase() throws Exception
-    {
-      Connection connection = null;
-      try
-      {
-        connection = getSetupDataSource().getConnection();
-        connection.prepareStatement("DROP database cdodb1").execute();
-      }
-      catch (SQLException ignore)
-      {
-
-      }
-      finally
-      {
-        connection.close();
-      }
-    }
-  }
-
-  public static class DBMysqlNonPrepStmt extends DBMysql
-  {
-    private static final long serialVersionUID = 1L;
-
-    public static final DBMysqlNonPrepStmt MYSQL_HORIZONTAL = new DBMysqlNonPrepStmt("MysqlHorizontal");
-
-    public DBMysqlNonPrepStmt(String name)
-    {
-      super(name);
-    }
-
-    @Override
-    protected IJDBCDelegateProvider createDelegateProvider()
-    {
-      return CDODBUtil.createNonPreparedStatementJDBCDelegateProvider();
-    }
-  }
 }

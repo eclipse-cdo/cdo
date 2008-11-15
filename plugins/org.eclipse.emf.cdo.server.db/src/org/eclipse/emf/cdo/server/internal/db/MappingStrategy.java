@@ -207,6 +207,29 @@ public abstract class MappingStrategy extends Lifecycle implements IMappingStrat
     return getTableName(name, "C" + ClassServerInfo.getDBID(cdoClass));
   }
 
+  public String getReferenceTableName(CDOClass cdoClass, CDOFeature cdoFeature)
+  {
+    String name = isQualifiedNames() ? cdoClass.getQualifiedName().replace('.', '_') : cdoClass.getName();
+    name += "_";
+    name += cdoFeature.getName();
+    name += "_refs";
+    return getTableName(name, "F" + FeatureServerInfo.getDBID(cdoFeature));
+  }
+
+  public String getReferenceTableName(CDOClass cdoClass)
+  {
+    String name = isQualifiedNames() ? cdoClass.getQualifiedName().replace('.', '_') : cdoClass.getName();
+    name += "_refs";
+    return getTableName(name, "F" + ClassServerInfo.getDBID(cdoClass));
+  }
+
+  public String getReferenceTableName(CDOPackage cdoPackage)
+  {
+    String name = isQualifiedNames() ? cdoPackage.getQualifiedName().replace('.', '_') : cdoPackage.getName();
+    name += "_refs";
+    return getTableName(name, "F" + PackageServerInfo.getDBID(cdoPackage));
+  }
+
   public String getFieldName(CDOFeature cdoFeature)
   {
     return getName(cdoFeature.getName(), "F" + FeatureServerInfo.getDBID(cdoFeature), getMaxFieldNameLength());

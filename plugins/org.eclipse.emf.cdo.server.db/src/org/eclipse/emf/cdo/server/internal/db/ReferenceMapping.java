@@ -83,7 +83,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     case PER_REFERENCE:
     {
       withFeature = false;
-      String tableName = mappingStrategy.getTableName(cdoClass) + "_" + cdoFeature.getName() + "_refs";
+      String tableName = mappingStrategy.getReferenceTableName(cdoClass, cdoFeature);
       Object referenceMappingKey = getReferenceMappingKey(cdoFeature);
       table = mapReferenceTable(referenceMappingKey, tableName);
       break;
@@ -91,13 +91,13 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
 
     case PER_CLASS:
       withFeature = true;
-      table = mapReferenceTable(cdoClass, mappingStrategy.getTableName(cdoClass) + "_refs");
+      table = mapReferenceTable(cdoClass, mappingStrategy.getReferenceTableName(cdoClass));
       break;
 
     case PER_PACKAGE:
       withFeature = true;
       CDOPackage cdoPackage = cdoClass.getContainingPackage();
-      table = mapReferenceTable(cdoPackage, mappingStrategy.getTableName(cdoPackage) + "_refs");
+      table = mapReferenceTable(cdoPackage, mappingStrategy.getReferenceTableName(cdoPackage));
       break;
 
     case PER_REPOSITORY:

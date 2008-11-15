@@ -18,6 +18,11 @@ import java.io.IOException;
  */
 public final class TMPUtil
 {
+  /**
+   * @since 2.0
+   */
+  public static final String SYSTEM_TEMP_FOLDER = System.getProperty("java.io.tmpdir");
+
   private TMPUtil()
   {
   }

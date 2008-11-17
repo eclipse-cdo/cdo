@@ -46,6 +46,7 @@ public class StandaloneContainerExample
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
     CDOUtil.prepareContainer(container); // Register CDO factories
+    container.activate();
 
     // Create connector
     IConnector connector = TCPUtil.getConnector(container, "localhost:2036");
@@ -73,5 +74,6 @@ public class StandaloneContainerExample
     // Cleanup
     session.close();
     connector.close();
+    container.deactivate();
   }
 }

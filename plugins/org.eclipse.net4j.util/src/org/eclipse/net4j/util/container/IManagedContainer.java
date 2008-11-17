@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface IManagedContainer extends IContainer<Object>
+public interface IManagedContainer extends IContainer<Object>, ILifecycle.Introspection
 {
   public IRegistry<IFactoryKey, IFactory> getFactoryRegistry();
 

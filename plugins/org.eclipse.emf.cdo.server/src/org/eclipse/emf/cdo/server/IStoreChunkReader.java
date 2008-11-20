@@ -32,6 +32,12 @@ public interface IStoreChunkReader
 
   public void addSimpleChunk(int index);
 
+  /**
+   * @param fromIndex
+   *          Inclusive value.
+   * @param toIndex
+   *          Exclusive value.
+   */
   public void addRangedChunk(int fromIndex, int toIndex);
 
   public List<Chunk> executeRead();

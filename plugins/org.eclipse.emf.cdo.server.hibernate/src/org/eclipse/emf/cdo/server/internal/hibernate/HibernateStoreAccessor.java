@@ -163,7 +163,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       try
       {
-        commitRollbackHibernateSession();
+        if (hibernateSession.getTransaction().isActive())
+        {
+          commitRollbackHibernateSession();
+        }
       }
       finally
       {

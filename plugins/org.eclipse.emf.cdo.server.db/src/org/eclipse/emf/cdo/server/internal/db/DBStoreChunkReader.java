@@ -63,7 +63,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     builder.append(" BETWEEN ");
     builder.append(fromIndex);
     builder.append(" AND ");
-    builder.append(toIndex);
+    builder.append(toIndex - 1);
   }
 
   public List<Chunk> executeRead()

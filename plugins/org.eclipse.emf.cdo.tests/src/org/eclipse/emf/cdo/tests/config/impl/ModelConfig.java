@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
+import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
@@ -96,6 +98,16 @@ public abstract class ModelConfig extends Config implements IModelConfig
       return org.eclipse.emf.cdo.tests.model3.Model3Package.eINSTANCE;
     }
 
+    public SubpackageFactory getModel3SubPackageFactory()
+    {
+      return org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory.eINSTANCE;
+    }
+
+    public SubpackagePackage getModel3SubPackagePackage()
+    {
+      return org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage.eINSTANCE;
+    }
+
     public model4Factory getModel4Factory()
     {
       return org.eclipse.emf.cdo.tests.model4.model4Factory.eINSTANCE;
@@ -121,6 +133,7 @@ public abstract class ModelConfig extends Config implements IModelConfig
 
       return org.eclipse.emf.cdo.tests.model5.Model5Package.eINSTANCE;
     }
+
   }
 
   // TODO LEGACY

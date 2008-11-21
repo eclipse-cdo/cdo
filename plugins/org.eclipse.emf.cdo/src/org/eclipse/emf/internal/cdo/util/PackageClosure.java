@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,11 @@ public abstract class PackageClosure implements IPackageClosure
   {
   }
 
+  public Set<EPackage> calculate(EPackage ePackage)
+  {
+    return calculate(Collections.singletonList(ePackage));
+  }
+
   public Set<EPackage> calculate(Collection<EPackage> ePackages)
   {
     // Optimize no packages
@@ -40,14 +46,6 @@ public abstract class PackageClosure implements IPackageClosure
       return EMPTY_CLOSURE;
     }
 
-    // Optimize 1 package
-    if (ePackages.size() == 1)
-    {
-      EPackage ePackage = ePackages.iterator().next();
-      return calculate(ePackage);
-    }
-
-    // Handle >1 packages
     Set<EPackage> visited = new HashSet<EPackage>();
     for (EPackage ePackage : ePackages)
     {
@@ -57,20 +55,12 @@ public abstract class PackageClosure implements IPackageClosure
     return visited;
   }
 
-  public Set<EPackage> calculate(EPackage ePackage)
+  private void doCollectContents(EPackage ePackage, Set<EPackage> visited)
   {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Package closure for " + ePackage.getNsURI());
     }
-
-    Set<EPackage> visited = new HashSet<EPackage>();
-    doCollectContents(ePackage, visited);
-    return visited;
-  }
-
-  private void doCollectContents(EPackage ePackage, Set<EPackage> visited)
-  {
     collectContents(ePackage, visited);
     for (EPackage subPackage : ePackage.getESubpackages())
     {

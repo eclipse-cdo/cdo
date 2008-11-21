@@ -87,6 +87,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
     put(uri, descriptor);
   }
 
+  /**
+   * Insert the topPackage and its sub-packages by their URI
+   */
   public EPackage putEPackage(EPackage ePackage) throws IllegalArgumentException
   {
     checkSession();
@@ -427,16 +430,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       if (!containsKey(ePackage.getNsURI()))
       {
         EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
-        addPackageRecursively(topLevelPackage);
-      }
-    }
-
-    private void addPackageRecursively(EPackage ePackage)
-    {
-      putEPackage(ePackage);
-      for (EPackage subPackage : ePackage.getESubpackages())
-      {
-        addPackageRecursively(subPackage);
+        // PutEPackage
+        putEPackage(topLevelPackage);
       }
     }
   }

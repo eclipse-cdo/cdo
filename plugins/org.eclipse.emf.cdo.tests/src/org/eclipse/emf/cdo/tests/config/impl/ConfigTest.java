@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
+import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
@@ -386,6 +388,22 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public Model3Package getModel3Package()
   {
     return getModelConfig().getModel3Package();
+  }
+
+  /**
+   *@category Model
+   */
+  public SubpackageFactory getModel3SubpackageFactory()
+  {
+    return getModelConfig().getModel3SubPackageFactory();
+  }
+
+  /**
+   *@category Model
+   */
+  public SubpackagePackage getModel3SubpackagePackage()
+  {
+    return getModelConfig().getModel3SubPackagePackage();
   }
 
   /**

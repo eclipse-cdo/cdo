@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.tests.model2.Model2Factory;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
+import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
@@ -44,6 +46,10 @@ public interface IModelConfig extends IConfig
   public Model3Factory getModel3Factory();
 
   public Model3Package getModel3Package();
+
+  public SubpackageFactory getModel3SubPackageFactory();
+
+  public SubpackagePackage getModel3SubPackagePackage();
 
   public model4Factory getModel4Factory();
 

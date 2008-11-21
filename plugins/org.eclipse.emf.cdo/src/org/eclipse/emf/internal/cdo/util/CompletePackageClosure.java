@@ -50,7 +50,7 @@ public class CompletePackageClosure extends PackageClosure
   @Override
   protected void collectContents(EPackage ePackage, Set<EPackage> visited)
   {
-    if (ePackage != null)
+    if (ePackage != null && visited.add(ePackage))
     {
       if (excludeEcore && ePackage == EcorePackage.eINSTANCE)
       {

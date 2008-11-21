@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_241464_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_243310_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252909_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_256132_Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,7 +26,7 @@ public class AllTests
   public static Test suite()
   {
     TestSuite suite = new TestSuite("Tests for CDO");
-
+    
     // $JUnit-BEGIN$
     suite.addTestSuite(InitialTest.class);
     suite.addTestSuite(ComplexTest.class);
@@ -50,6 +51,7 @@ public class AllTests
     suite.addTestSuite(Bugzilla_241464_Test.class);
     suite.addTestSuite(Bugzilla_243310_Test.class);
     suite.addTestSuite(Bugzilla_252909_Test.class);
+    suite.addTestSuite(Bugzilla_256132_Test.class);
     // TODO suite.addTestSuite(GeneratedEcoreTest.class);
     // $JUnit-END$
 

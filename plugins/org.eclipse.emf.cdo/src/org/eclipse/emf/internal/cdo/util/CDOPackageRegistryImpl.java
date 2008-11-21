@@ -423,16 +423,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
       if (!containsKey(ePackage.getNsURI()))
       {
         EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
-        addPackageRecursively(topLevelPackage);
-      }
-    }
-
-    private void addPackageRecursively(EPackage ePackage)
-    {
-      putEPackage(ePackage);
-      for (EPackage subPackage : ePackage.getESubpackages())
-      {
-        addPackageRecursively(subPackage);
+        putEPackage(topLevelPackage);
       }
     }
   }

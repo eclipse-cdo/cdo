@@ -39,22 +39,14 @@ public abstract class PackageClosure implements IPackageClosure
       return EMPTY_CLOSURE;
     }
 
-    // Optimize 1 package
-    if (ePackages.size() == 1)
-    {
-      EPackage ePackage = ePackages.iterator().next();
-      return calculate(ePackage);
-    }
-
     // Handle >1 packages
-    Set<EPackage> result = new HashSet<EPackage>();
+    Set<EPackage> visited = new HashSet<EPackage>();
     for (EPackage ePackage : ePackages)
     {
-      Set<EPackage> packages = calculate(ePackage);
-      result.addAll(packages);
+      doCollectContents(ePackage, visited);
     }
 
-    return result;
+    return visited;
   }
 
   public Set<EPackage> calculate(EPackage ePackage)
@@ -65,8 +57,17 @@ public abstract class PackageClosure implements IPackageClosure
     }
 
     Set<EPackage> visited = new HashSet<EPackage>();
-    collectContents(ePackage, visited);
+    doCollectContents(ePackage, visited);
     return visited;
+  }
+
+  private void doCollectContents(EPackage ePackage, Set<EPackage> visited)
+  {
+    collectContents(ePackage, visited);
+    for (EPackage subPackage : ePackage.getESubpackages())
+    {
+      doCollectContents(subPackage, visited);
+    }
   }
 
   protected abstract void collectContents(EPackage ePackage, Set<EPackage> visited);

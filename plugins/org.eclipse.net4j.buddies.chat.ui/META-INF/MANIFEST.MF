@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.buddies.chat.ui;singleton:=true
-Bundle-Version: 1.0.3.qualifier
+Bundle-Version: 1.0.4.qualifier
 Bundle-Activator: org.eclipse.net4j.buddies.chat.internal.ui.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
@@ -11,6 +11,6 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.buddies.ui;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.net4j.buddies.chat;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
-Export-Package: org.eclipse.net4j.buddies.chat.internal.ui;version="1.0.3",
- org.eclipse.net4j.buddies.chat.internal.ui.bundle;version="1.0.3";x-internal:=true
+Export-Package: org.eclipse.net4j.buddies.chat.internal.ui;version="1.0.4",
+ org.eclipse.net4j.buddies.chat.internal.ui.bundle;version="1.0.4";x-internal:=true
 Bundle-ActivationPolicy: lazy

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.ui;singleton:=true
-Bundle-Version: 1.0.3.qualifier
+Bundle-Version: 1.0.4.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -12,6 +12,6 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.net4j.util.ui;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
-Export-Package: org.eclipse.net4j.internal.ui;version="1.0.3",
- org.eclipse.net4j.internal.ui.bundle;version="1.0.3";x-internal:=true,
- org.eclipse.net4j.internal.ui.views;version="1.0.3"
+Export-Package: org.eclipse.net4j.internal.ui;version="1.0.4",
+ org.eclipse.net4j.internal.ui.bundle;version="1.0.4";x-internal:=true,
+ org.eclipse.net4j.internal.ui.views;version="1.0.4"

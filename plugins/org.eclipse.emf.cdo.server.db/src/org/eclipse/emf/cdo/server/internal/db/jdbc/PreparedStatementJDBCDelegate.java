@@ -21,20 +21,39 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
- * @author Stefan WInkler
+ * @author Stefan Winkler
  * @since 2.0
  */
 public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
 {
+  /**
+   * Value for {@link #cachingFlag}: Guess if caching is needed
+   */
+  public static final String CACHE_STMTS_GUESS = "guess";
+
+  /**
+   * Value for {@link #cachingFlag}: Turn caching on
+   */
+  public static final String CACHE_STMTS_TRUE = "true";
+
+  /**
+   * Value for {@link #cachingFlag}: Turn caching off
+   */
+  public static final String CACHE_STMTS_FALSE = "false";
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, PreparedStatementJDBCDelegate.class);
 
   private static final String SQL_UPDATE_REVISE_VERSION = " SET " + CDODBSchema.ATTRIBUTES_REVISED + " = ? WHERE "
@@ -47,47 +66,160 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
 
   private static final String SQL_INSERT_REFERENCE = " VALUES (?, ?, ?, ?)";
 
+  /**
+   * Cache for preparedStatements used in diverse methods
+   */
+  private Map<CacheKey, WrappedPreparedStatement> statementCache = null;
+
+  /**
+   * This flag determines, if prepared statements should be cached within this delegate. Its value is guessed in
+   * {@link #postInitConnection()} based on the fact if the JDBC driver supports pooled statements. If it does, caching
+   * in the delegate is unnecessary.
+   */
+  private boolean cacheStatements;
+
+  private CachingEnablement cachingEnablement;
+
   public PreparedStatementJDBCDelegate()
   {
+  }
+
+  public CachingEnablement getCachingEnablement()
+  {
+    return cachingEnablement;
+  }
+
+  public void setCachingEnablement(CachingEnablement cachingEnablement)
+  {
+    checkInactive();
+    this.cachingEnablement = cachingEnablement;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+
+    switch (cachingEnablement)
+    {
+    case ENABLED:
+      cacheStatements = true;
+      break;
+
+    case DISABLED:
+      cacheStatements = false;
+      break;
+
+    case GUESS:
+      try
+      {
+        cacheStatements = !getConnection().getMetaData().supportsStatementPooling();
+      }
+      catch (SQLException ex)
+      {
+        OM.LOG.warn("Failed to guess JDBC statement pooling. Activating cache, just to be sure ...", ex);
+        cacheStatements = true;
+      }
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("JDBC PreparedStatement caching is " + (cacheStatements ? "enabled." : "NOT enabled."));
+    }
+
+    if (cacheStatements)
+    {
+      // initialize cache ...
+      statementCache = new ReferenceValueMap.Soft<CacheKey, WrappedPreparedStatement>();
+    }
+  }
+
+  @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    if (cacheStatements)
+    {
+      for (WrappedPreparedStatement ps : statementCache.values())
+      {
+        DBUtil.close(ps.getWrappedStatement());
+      }
+
+      statementCache.clear();
+    }
+
+    super.doBeforeDeactivate();
+  }
+
+  @Override
+  protected void releaseStatement(Statement stmt)
+  {
+    // leave open cached statements
+    if (!cacheStatements || !(stmt instanceof PreparedStatement))
+    {
+      super.releaseStatement(stmt);
+    }
+
+    // /* This code would guarantee that releaseStatement is only called
+    // for cached statements. However this looks through the whole hashmap
+    // and is thus too expensive to do in non-debugging mode. */
+    //
+    // else {
+    // if(!selectStatementsCache.containsValue(stmt)) {
+    // super.releaseStatement(stmt);
+    // }
+    // }
   }
 
   @Override
   protected void doInsertAttributes(String tableName, CDORevision rev, List<IAttributeMapping> attributeMappings,
       boolean withFullRevisionInfo)
   {
-    PreparedStatement stmt = null;
-    StringBuilder sql = new StringBuilder();
     InternalCDORevision revision = (InternalCDORevision)rev;
-
     if (attributeMappings == null)
     {
       attributeMappings = Collections.emptyList();
     }
 
-    sql.append("INSERT INTO ");
-    sql.append(tableName);
-    sql.append(" VALUES (?, ?, ");
-    if (withFullRevisionInfo)
+    PreparedStatement stmt = null;
+    if (cacheStatements)
     {
-      sql.append("?, ?, ?, ?, ?, ?");
+      stmt = getCachedStatement(StmtType.INSERT_ATTRIBUTES, tableName);
     }
-
-    for (int i = 0; i < attributeMappings.size(); i++)
-    {
-      sql.append(", ?");
-    }
-
-    sql.append(")");
-    int col = 1;
 
     try
     {
-      if (TRACER.isEnabled())
+      if (stmt == null)
       {
-        TRACER.format("{0} ({1})", sql.toString(), revision.toString());
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("INSERT INTO ");
+        sql.append(tableName);
+        sql.append(" VALUES (?, ?, ");
+        if (withFullRevisionInfo)
+        {
+          sql.append("?, ?, ?, ?, ?, ?");
+        }
+
+        for (int i = 0; i < attributeMappings.size(); i++)
+        {
+          sql.append(", ?");
+        }
+
+        sql.append(")");
+        stmt = getConnection().prepareStatement(sql.toString());
+
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.INSERT_ATTRIBUTES, tableName, stmt);
+        }
       }
 
-      stmt = getConnection().prepareStatement(sql.toString());
+      int col = 1;
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
       stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
       stmt.setInt(col++, revision.getVersion());
       if (withFullRevisionInfo)
@@ -114,7 +246,10 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     }
     finally
     {
-      DBUtil.close(stmt);
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
     }
   }
 
@@ -122,15 +257,27 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   protected void doInsertReference(String tableName, int dbID, long source, int version, int index, long target)
   {
     PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.INSERT_REFERENCES, tableName);
+    }
 
     try
     {
-      StringBuilder sql = new StringBuilder("INSERT INTO ");
-      sql.append(tableName);
-      sql.append(dbID != 0 ? SQL_INSERT_REFERENCE_WITH_DBID : SQL_INSERT_REFERENCE);
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("INSERT INTO ");
+        sql.append(tableName);
+        sql.append(dbID != 0 ? SQL_INSERT_REFERENCE_WITH_DBID : SQL_INSERT_REFERENCE);
+        stmt = getConnection().prepareStatement(sql.toString());
+
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.INSERT_REFERENCES, tableName, stmt);
+        }
+      }
 
       int idx = 1;
-      stmt = getConnection().prepareStatement(sql.toString());
       if (dbID != 0)
       {
         stmt.setInt(idx++, dbID);
@@ -142,7 +289,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
       stmt.setLong(idx++, target);
       if (TRACER.isEnabled())
       {
-        TRACER.format("{0} ({1},{2},{3},{4},{5})", sql.toString(), dbID, source, version, index, target);
+        TRACER.trace(stmt.toString());
       }
 
       stmt.execute();
@@ -153,7 +300,10 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     }
     finally
     {
-      DBUtil.close(stmt);
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
     }
   }
 
@@ -161,20 +311,32 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   protected void doUpdateRevised(String tableName, long revisedStamp, long cdoid, int version)
   {
     PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.REVISE_VERSION, tableName);
+    }
 
     try
     {
-      StringBuilder sql = new StringBuilder("UPDATE ");
-      sql.append(tableName);
-      sql.append(SQL_UPDATE_REVISE_VERSION);
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("UPDATE ");
+        sql.append(tableName);
+        sql.append(SQL_UPDATE_REVISE_VERSION);
+        stmt = getConnection().prepareStatement(sql.toString());
 
-      stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.REVISE_VERSION, tableName, stmt);
+        }
+      }
+
       stmt.setLong(1, revisedStamp);
       stmt.setLong(2, cdoid);
       stmt.setInt(3, version);
       if (TRACER.isEnabled())
       {
-        TRACER.format("{0} ({1},{2},{3})", sql.toString(), revisedStamp, cdoid, version);
+        TRACER.trace(stmt.toString());
       }
 
       stmt.execute();
@@ -185,7 +347,10 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     }
     finally
     {
-      DBUtil.close(stmt);
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
     }
   }
 
@@ -193,19 +358,31 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   protected void doUpdateRevised(String tableName, long revisedStamp, long cdoid)
   {
     PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.REVISE_UNREVISED, tableName);
+    }
 
     try
     {
-      StringBuilder sql = new StringBuilder("UPDATE ");
-      sql.append(tableName);
-      sql.append(SQL_UPDATE_REVISE_UNREVISED);
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("UPDATE ");
+        sql.append(tableName);
+        sql.append(SQL_UPDATE_REVISE_UNREVISED);
+        stmt = getConnection().prepareStatement(sql.toString());
 
-      stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.REVISE_UNREVISED, tableName, stmt);
+        }
+      }
+
       stmt.setLong(1, revisedStamp);
       stmt.setLong(2, cdoid);
       if (TRACER.isEnabled())
       {
-        TRACER.format("{0} ({1},{2})", sql.toString(), revisedStamp, cdoid);
+        TRACER.trace(stmt.toString());
       }
 
       stmt.execute();
@@ -216,7 +393,10 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     }
     finally
     {
-      DBUtil.close(stmt);
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
     }
   }
 
@@ -224,6 +404,10 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   protected ResultSet doSelectRevisionAttributes(String tableName, long revisionId,
       List<IAttributeMapping> attributeMappings, boolean hasFullRevisionInfo, String where) throws SQLException
   {
+    // Because of the variable where clause, statement caching can not be
+    // based on table names. Instead, we build the sql in any case and
+    // use this as key (similar to what JDBC3 does ...).
+
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
@@ -261,7 +445,22 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
       TRACER.format("{0} ({1})", sql, revisionId);
     }
 
-    PreparedStatement pstmt = getConnection().prepareStatement(sql);
+    PreparedStatement pstmt = null;
+    if (cacheStatements)
+    {
+      pstmt = getCachedStatement(StmtType.GENERAL, sql);
+      if (pstmt == null)
+      {
+        pstmt = getConnection().prepareStatement(sql);
+        cacheStatement(StmtType.GENERAL, sql, pstmt);
+      }
+    }
+    else
+    {
+      /* no caching */
+      pstmt = getConnection().prepareStatement(sql);
+    }
+
     pstmt.setLong(1, revisionId);
     return pstmt.executeQuery();
   }
@@ -300,9 +499,23 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
       TRACER.trace(sql);
     }
 
-    PreparedStatement pstmt = getConnection().prepareStatement(sql);
-    int idx = 1;
+    PreparedStatement pstmt = null;
+    if (cacheStatements)
+    {
+      pstmt = getCachedStatement(StmtType.GENERAL, sql);
+      if (pstmt == null)
+      {
+        pstmt = getConnection().prepareStatement(sql);
+        cacheStatement(StmtType.GENERAL, sql, pstmt);
+      }
+    }
+    else
+    {
+      /* no caching */
+      pstmt = getConnection().prepareStatement(sql);
+    }
 
+    int idx = 1;
     if (dbFeatureID != 0)
     {
       pstmt.setInt(idx++, dbFeatureID);
@@ -311,5 +524,77 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     pstmt.setLong(idx++, sourceId);
     pstmt.setInt(idx++, version);
     return pstmt.executeQuery();
+  }
+
+  /**
+   * Cache a prepared statement.
+   */
+  private void cacheStatement(StmtType type, String subKey, PreparedStatement stmt)
+  {
+    statementCache.put(new CacheKey(type, subKey), new WrappedPreparedStatement(stmt));
+  }
+
+  /**
+   * Query the cache of prepared statements.
+   */
+  private PreparedStatement getCachedStatement(StmtType type, String subKey)
+  {
+    WrappedPreparedStatement wrapped = statementCache.get(CacheKey.useOnce(type, subKey));
+    if (wrapped == null)
+    {
+      return null;
+    }
+
+    PreparedStatement stmt = wrapped.getWrappedStatement();
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Using cached statement: " + stmt);
+    }
+
+    return stmt;
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  public static enum CachingEnablement
+  {
+    ENABLED, DISABLED, GUESS
+  }
+
+  /**
+   * Statement type as first part of the statement cache key.
+   * 
+   * @author Stefan Winkler
+   */
+  private static enum StmtType
+  {
+    INSERT_ATTRIBUTES, INSERT_REFERENCES, REVISE_VERSION, REVISE_UNREVISED, GENERAL
+  }
+
+  /**
+   * Convenience definition for Pair<StmtType, String>
+   * 
+   * @author Stefan Winkler
+   */
+  private static class CacheKey extends Pair<StmtType, String>
+  {
+    public CacheKey(StmtType type, String subKey)
+    {
+      super(type, subKey);
+    }
+
+    private static CacheKey useOnceKey = new CacheKey(StmtType.GENERAL, "");
+
+    /**
+     * Memory-resource-friendly method which uses a single static field, modifies it and returns it to be used at once,
+     * e.g., to use it in a cache lookup. Do not store a reference to the result!!!
+     */
+    public static CacheKey useOnce(StmtType type, String subKey)
+    {
+      useOnceKey.setElement1(type);
+      useOnceKey.setElement2(subKey);
+      return useOnceKey;
+    }
   }
 }

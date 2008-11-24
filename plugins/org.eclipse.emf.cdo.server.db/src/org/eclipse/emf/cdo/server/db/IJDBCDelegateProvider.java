@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
+import java.util.Map;
+
 /**
  * Wraps the creation of JDBCDelegates.
  * 
@@ -24,4 +26,8 @@ public interface IJDBCDelegateProvider
    * This is part of the org.eclipse.emf.cdo.server.db.jdbcDelegateProviders extension point.
    */
   public IJDBCDelegate getJDBCDelegate();
+  /**
+   * Set configuration properties
+   */
+  public void setProperties(Map<String, String> properties);
 }

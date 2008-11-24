@@ -48,6 +48,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -76,14 +77,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
     super(store, session);
     jdbcDelegate = store.getJDBCDelegateProvider().getJDBCDelegate();
-    jdbcDelegate.initConnection(store.getDBConnectionProvider(), isReader());
+    jdbcDelegate.setConnectionProvider(store.getDBConnectionProvider());
+    jdbcDelegate.setReadOnly(isReader());
   }
 
   public DBStoreAccessor(DBStore store, ITransaction transaction) throws DBException
   {
     super(store, transaction);
     jdbcDelegate = store.getJDBCDelegateProvider().getJDBCDelegate();
-    jdbcDelegate.initConnection(store.getDBConnectionProvider(), isReader());
+    jdbcDelegate.setConnectionProvider(store.getDBConnectionProvider());
+    jdbcDelegate.setReadOnly(isReader());
   }
 
   @Override
@@ -590,13 +593,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   @Override
   protected void doActivate() throws Exception
   {
-    // Do nothing
+    LifecycleUtil.activate(jdbcDelegate);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    jdbcDelegate.release();
+    LifecycleUtil.deactivate(jdbcDelegate);
   }
 
   @Override

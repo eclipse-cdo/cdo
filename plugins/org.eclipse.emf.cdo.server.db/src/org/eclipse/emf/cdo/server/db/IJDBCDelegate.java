@@ -96,18 +96,14 @@ public interface IJDBCDelegate
   public PreparedStatement getPreparedStatement(String sql);
 
   /**
-   * Initialize the connection. This must be called once and only once immediately after creating.
-   * 
-   * @param connectionProvider
-   *          a provider for the DB connection
-   * @param readOnly
-   *          if this is true, all accessors of this instance must not call directly or indirectly any writing
-   *          operations. Setting readOnly to true leads to the connection's autoCommit property set to true.
+   * Set a connection provider to provide the delegate with the DB connection. This may only be called before
+   * activation.
    */
-  public void initConnection(IDBConnectionProvider connectionProvider, boolean readOnly);
+  public void setConnectionProvider(IDBConnectionProvider connectionProvider);
 
   /**
-   * Release the DB resources. This has to be called when the delegate is no longer to be used.
+   * Set a flag indicating that this delegate maintains a read-only DB connection. This may only be called before
+   * activation.
    */
-  public void release();
+  public void setReadOnly(boolean reader);
 }

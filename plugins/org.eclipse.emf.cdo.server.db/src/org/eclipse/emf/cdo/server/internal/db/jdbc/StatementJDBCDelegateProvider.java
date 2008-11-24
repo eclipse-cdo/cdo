@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server.internal.db.jdbc;
 import org.eclipse.emf.cdo.server.db.IJDBCDelegate;
 import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
 
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  * @since 2.0
@@ -25,6 +27,11 @@ public class StatementJDBCDelegateProvider implements IJDBCDelegateProvider
 
   public IJDBCDelegate getJDBCDelegate()
   {
-    return new NonPreparedStatementJDBCDelegate();
+    return new StatementJDBCDelegate();
+  }
+
+  public void setProperties(Map<String, String> properties)
+  {
+    // ignore -- no properties for this delegate
   }
 }

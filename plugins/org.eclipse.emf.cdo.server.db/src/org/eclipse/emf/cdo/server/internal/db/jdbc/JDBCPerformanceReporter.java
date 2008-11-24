@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.server.db.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -32,19 +34,31 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * This class is only to be used in tests (there is a static data aggregation member!).
+ * 
  * @author Stefan Winkler
  * @since 2.0
  */
-public class JDBCPerformanceMeasurementWrapper implements IJDBCDelegate
+public class JDBCPerformanceReporter extends Lifecycle implements IJDBCDelegate
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, JDBCPerformanceMeasurementWrapper.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, JDBCPerformanceReporter.class);
 
   private static Map<String, TimeData> timeData = Collections.synchronizedMap(new HashMap<String, TimeData>());
 
   private IJDBCDelegate delegate;
 
-  public JDBCPerformanceMeasurementWrapper(IJDBCDelegate delegate)
+  public JDBCPerformanceReporter()
   {
+  }
+
+  public IJDBCDelegate getDelegate()
+  {
+    return delegate;
+  }
+
+  public void setDelegate(IJDBCDelegate delegate)
+  {
+    checkInactive();
     this.delegate = delegate;
   }
 
@@ -68,11 +82,6 @@ public class JDBCPerformanceMeasurementWrapper implements IJDBCDelegate
     return delegate.getStatement();
   }
 
-  public void initConnection(IDBConnectionProvider connectionProvider, boolean readOnly)
-  {
-    delegate.initConnection(connectionProvider, readOnly);
-  }
-
   public void insertAttributes(CDORevision revision, IClassMapping classMapping)
   {
     long time = System.currentTimeMillis();
@@ -88,11 +97,6 @@ public class JDBCPerformanceMeasurementWrapper implements IJDBCDelegate
     delegate.insertReference(sourceRevision, index, targetId, referenceMapping);
     time = System.currentTimeMillis() - time;
     registerCall("insertReferenceDbId", time);
-  }
-
-  public void release()
-  {
-    delegate.release();
   }
 
   public void rollback()
@@ -141,6 +145,38 @@ public class JDBCPerformanceMeasurementWrapper implements IJDBCDelegate
     registerCall("updateRevisedID", time);
   }
 
+  public void setConnectionProvider(IDBConnectionProvider connectionProvider)
+  {
+    delegate.setConnectionProvider(connectionProvider);
+  }
+
+  public void setReadOnly(boolean reader)
+  {
+    delegate.setReadOnly(reader);
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(delegate, "delegate");
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    LifecycleUtil.activate(delegate);
+    super.doActivate();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    report();
+    super.doDeactivate();
+    LifecycleUtil.deactivate(delegate);
+  }
+
   public static void report()
   {
     for (TimeData td : timeData.values())
@@ -157,45 +193,50 @@ public class JDBCPerformanceMeasurementWrapper implements IJDBCDelegate
       data = new TimeData(method);
       timeData.put(method, data);
     }
+
     data.registerCall(time);
   }
-}
 
-class TimeData
-{
-  private String method;
-
-  private long numberOfCalls = 0;
-
-  private long timeMax = Integer.MIN_VALUE;
-
-  private long timeMin = Integer.MAX_VALUE;
-
-  private long timeTotal = 0;
-
-  public TimeData(String method)
+  /**
+   * @author Stefan Winkler
+   * @since 2.0
+   */
+  private static final class TimeData
   {
-    this.method = method;
-  }
+    private String method;
 
-  public synchronized void registerCall(long time)
-  {
-    if (timeMin > time)
+    private long numberOfCalls = 0;
+
+    private long timeMax = Integer.MIN_VALUE;
+
+    private long timeMin = Integer.MAX_VALUE;
+
+    private long timeTotal = 0;
+
+    public TimeData(String method)
     {
-      timeMin = time;
-    }
-    if (timeMax < time)
-    {
-      timeMax = time;
+      this.method = method;
     }
 
-    numberOfCalls++;
-    timeTotal += time;
-  }
+    public synchronized void registerCall(long time)
+    {
+      if (timeMin > time)
+      {
+        timeMin = time;
+      }
+      if (timeMax < time)
+      {
+        timeMax = time;
+      }
 
-  public void report(ContextTracer tracer)
-  {
-    tracer.format("{0}: {1} calls, {2} avg, {3} min, {4} max", method, numberOfCalls, timeTotal / numberOfCalls,
-        timeMin, timeMax);
+      numberOfCalls++;
+      timeTotal += time;
+    }
+
+    public void report(ContextTracer tracer)
+    {
+      tracer.format("{0}: {1} calls, {2} avg, {3} min, {4} max", method, numberOfCalls, timeTotal / numberOfCalls,
+          timeMin, timeMax);
+    }
   }
 }

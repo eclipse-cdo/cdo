@@ -31,11 +31,11 @@ import java.util.List;
  * @author Stefan Winkler
  * @since 2.0
  */
-public class NonPreparedStatementJDBCDelegate extends AbstractJDBCDelegate
+public class StatementJDBCDelegate extends AbstractJDBCDelegate
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, NonPreparedStatementJDBCDelegate.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StatementJDBCDelegate.class);
 
-  public NonPreparedStatementJDBCDelegate()
+  public StatementJDBCDelegate()
   {
   }
 

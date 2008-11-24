@@ -71,6 +71,9 @@ public class DBStoreFactory implements IStoreFactory
       throw new IllegalArgumentException("Unknown JDBC delegate type: " + delegateProviderType);
     }
 
+    Map<String, String> properties = RepositoryConfigurator.getProperties(delegateProviderConfig, 1);
+    delegateProvider.setProperties(properties);
+
     return delegateProvider;
   }
 

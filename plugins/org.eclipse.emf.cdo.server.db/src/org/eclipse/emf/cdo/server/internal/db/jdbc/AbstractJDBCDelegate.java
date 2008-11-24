@@ -26,6 +26,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.sql.Connection;
@@ -47,39 +48,45 @@ import java.util.List;
  * @author Stefan Winkler
  * @since 2.0
  */
-public abstract class AbstractJDBCDelegate implements IJDBCDelegate
+public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDelegate
 {
+  private IDBConnectionProvider connectionProvider;
+
+  private boolean readOnly;
+
   private Connection connection;
 
   private Statement statement;
 
+  public AbstractJDBCDelegate()
+  {
+  }
+
+  public IDBConnectionProvider getConnectionProvider()
+  {
+    return connectionProvider;
+  }
+
+  public void setConnectionProvider(IDBConnectionProvider connectionProvider)
+  {
+    checkInactive();
+    this.connectionProvider = connectionProvider;
+  }
+
+  public boolean isReadOnly()
+  {
+    return readOnly;
+  }
+
+  public void setReadOnly(boolean readOnly)
+  {
+    checkInactive();
+    this.readOnly = readOnly;
+  }
+
   public final Connection getConnection()
   {
     return connection;
-  }
-
-  public final void commit(OMMonitor monitor)
-  {
-    try
-    {
-      getConnection().commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
-  public final void rollback()
-  {
-    try
-    {
-      getConnection().rollback();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
   }
 
   public final Statement getStatement()
@@ -111,12 +118,11 @@ public abstract class AbstractJDBCDelegate implements IJDBCDelegate
     }
   }
 
-  public void initConnection(IDBConnectionProvider connectionProvider, boolean readOnly)
+  public final void commit(OMMonitor monitor)
   {
     try
     {
-      connection = connectionProvider.getConnection();
-      connection.setAutoCommit(readOnly);
+      getConnection().commit();
     }
     catch (SQLException ex)
     {
@@ -124,10 +130,16 @@ public abstract class AbstractJDBCDelegate implements IJDBCDelegate
     }
   }
 
-  public void release()
+  public final void rollback()
   {
-    DBUtil.close(statement);
-    DBUtil.close(connection);
+    try
+    {
+      getConnection().rollback();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
   public final void insertAttributes(CDORevision revision, IClassMapping classMapping)
@@ -287,6 +299,39 @@ public abstract class AbstractJDBCDelegate implements IJDBCDelegate
     }
   }
 
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    connection = connectionProvider.getConnection();
+    connection.setAutoCommit(readOnly);
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    DBUtil.close(statement);
+    statement = null;
+
+    DBUtil.close(connection);
+    connection = null;
+
+    super.doDeactivate();
+  }
+
+  /**
+   * Release a statement which has been used by the doSelectXxx implementations to create the respective ResultSet. This
+   * must only be called with statements created by subclasses. Subclasses should override to handle special cases like
+   * cached statements which are kept open.
+   * 
+   * @param stmt
+   *          the statement to close
+   */
+  protected void releaseStatement(Statement stmt)
+  {
+    DBUtil.close(stmt);
+  }
+
   /**
    * Insert an attribute row.
    */
@@ -335,7 +380,7 @@ public abstract class AbstractJDBCDelegate implements IJDBCDelegate
     {
       stmt = resultSet.getStatement();
     }
-    catch (SQLException ex)
+    catch (Exception ex)
     {
       // Ignore
     }
@@ -348,7 +393,8 @@ public abstract class AbstractJDBCDelegate implements IJDBCDelegate
     // release it.
     if (stmt != statement)
     {
-      DBUtil.close(stmt);
+      releaseStatement(stmt);
     }
   }
+
 }

@@ -51,6 +51,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(AttributeTest.class);
     testClasses.add(EnumTest.class);
     testClasses.add(StateMachineTest.class);
+    testClasses.add(SessionTest.class);
     testClasses.add(ViewTest.class);
     testClasses.add(TransactionTest.class);
     testClasses.add(AuditTest.class);

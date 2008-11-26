@@ -107,6 +107,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
 
       out.writeString(repository.getUUID());
       out.writeLong(repository.getCreationTime());
+      out.writeBoolean(repository.isSupportingAudits());
       repository.getStore().getCDOIDLibraryDescriptor().write(out);
       writePackageInfos(out);
     }

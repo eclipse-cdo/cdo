@@ -119,6 +119,8 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
 
   private RepositoryTimeResult repositoryTimeResult;
 
+  private boolean repositorySupportingAudits;
+
   private CDOPackageRegistry packageRegistry;
 
   private CDOSessionPackageManagerImpl packageManager;
@@ -271,6 +273,14 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isRepositorySupportingAudits()
+  {
+    return repositorySupportingAudits;
   }
 
   public boolean isOpen()
@@ -800,6 +810,7 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     repositoryUUID = result.getRepositoryUUID();
     repositoryCreationTime = result.getRepositoryCreationTime();
     repositoryTimeResult = result.getRepositoryTimeResult();
+    repositorySupportingAudits = result.isRepositorySupportingAudits();
     handleLibraryDescriptor(result.getLibraryDescriptor());
     packageURICompressor = result.getCompressor();
     packageManager.addPackageProxies(result.getPackageInfos());

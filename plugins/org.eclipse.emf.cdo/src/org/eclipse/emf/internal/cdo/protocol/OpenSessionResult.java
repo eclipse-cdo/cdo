@@ -36,6 +36,8 @@ public final class OpenSessionResult implements CDOPackageURICompressor
 
   private RepositoryTimeResult repositoryTimeResult;
 
+  private boolean repositorySupportingAudits;
+
   private CDOIDLibraryDescriptor libraryDescriptor;
 
   private List<CDOPackageInfo> packageInfos = new ArrayList<CDOPackageInfo>();
@@ -43,11 +45,12 @@ public final class OpenSessionResult implements CDOPackageURICompressor
   private StringCompressor compressor = new StringCompressor(true);
 
   public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime,
-      CDOIDLibraryDescriptor libraryDescriptor)
+      boolean repositorySupportingAudits, CDOIDLibraryDescriptor libraryDescriptor)
   {
     this.sessionID = sessionID;
     this.repositoryUUID = repositoryUUID;
     this.repositoryCreationTime = repositoryCreationTime;
+    this.repositorySupportingAudits = repositorySupportingAudits;
     this.libraryDescriptor = libraryDescriptor;
   }
 
@@ -64,6 +67,11 @@ public final class OpenSessionResult implements CDOPackageURICompressor
   public long getRepositoryCreationTime()
   {
     return repositoryCreationTime;
+  }
+
+  public boolean isRepositorySupportingAudits()
+  {
+    return repositorySupportingAudits;
   }
 
   public RepositoryTimeResult getRepositoryTimeResult()

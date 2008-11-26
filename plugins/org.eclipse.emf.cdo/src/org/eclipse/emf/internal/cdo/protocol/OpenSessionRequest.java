@@ -138,13 +138,21 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       PROTOCOL_TRACER.format("Read repositoryCreationTime: {0,date} {0,time}", repositoryCreationTime);
     }
 
+    boolean repositorySupportingAudits = in.readBoolean();
+    if (PROTOCOL_TRACER.isEnabled())
+    {
+      PROTOCOL_TRACER.format("Read repositorySupportingAudits: {0}", repositorySupportingAudits);
+    }
+
     CDOIDLibraryDescriptor libraryDescriptor = CDOIDUtil.readLibraryDescriptor(in);
     if (PROTOCOL_TRACER.isEnabled())
     {
       PROTOCOL_TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor);
     }
 
-    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, libraryDescriptor);
+    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, repositorySupportingAudits,
+        libraryDescriptor);
+
     for (;;)
     {
       boolean readInfo = in.readBoolean();

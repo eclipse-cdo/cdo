@@ -235,7 +235,15 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
       for (IAttributeMapping attributeMapping : attributeMappings)
       {
         Object value = attributeMapping.getRevisionValue(revision);
-        stmt.setObject(col++, value);
+
+        if (value == null)
+        {
+          stmt.setNull(col++, attributeMapping.getField().getType().getCode());
+        }
+        else
+        {
+          stmt.setObject(col++, value);
+        }
       }
 
       stmt.execute();

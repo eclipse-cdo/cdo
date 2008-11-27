@@ -147,7 +147,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("getContainer({0})", cdoObject);
+      TRACER.format("getResource({0})", cdoObject);
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);

@@ -20,13 +20,12 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}&#13;&#10;-debug&#13;&#10;-console&#13;&#10;--launcher.XXMaxPermSize&#13;&#10;128M"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}&#13;&#10;-debug&#13;&#10;-console"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Ddebug=true&#13;&#10;-Dnet4j.config=${resource_loc:/org.eclipse.emf.cdo.server.product/rootfiles/configuration}&#13;&#10;-Dorg.osgi.service.http.port=8080"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx1024m&#13;&#10;-Ddebug=true&#13;&#10;-Dnet4j.config=${resource_loc:/org.eclipse.emf.cdo.server.product/rootfiles/configuration}&#13;&#10;-Dorg.osgi.service.http.port=8080"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.sdk.ide"/>
-<stringAttribute key="selectedPlugin" value="org.eclipse.net4j.http.server"/>
-<stringAttribute key="selected_target_plugins" value="com.springsource.com.mysql.jdbc,javax.servlet,org.mortbay.jetty,org.eclipse.equinox.http.jetty,org.eclipse.equinox.preferences,com.springsource.org.apache.commons.logging,org.eclipse.equinox.common,org.eclipse.equinox.app,org.eclipse.core.contenttype,org.eclipse.core.runtime.compatibility.registry,com.springsource.org.hsqldb,org.eclipse.core.runtime,org.apache.derby,org.eclipse.osgi.services,com.springsource.javax.xml.stream,org.eclipse.core.runtime.compatibility.auth,org.eclipse.equinox.registry,org.apache.commons.logging,org.eclipse.equinox.http.servlet,org.eclipse.core.jobs,org.eclipse.osgi,org.eclipse.equinox.http.registry"/>
+<stringAttribute key="selected_target_plugins" value="org.eclipse.osgi.services,org.eclipse.core.runtime.compatibility.auth,com.springsource.org.apache.commons.logging,org.eclipse.equinox.http.jetty,com.springsource.javax.xml.stream,org.apache.commons.logging,org.eclipse.core.contenttype,javax.servlet,org.eclipse.equinox.http.registry,org.eclipse.equinox.registry,com.springsource.org.hsqldb,org.eclipse.equinox.preferences,org.eclipse.equinox.common,org.mortbay.jetty,org.eclipse.osgi,org.eclipse.core.runtime,com.springsource.com.mysql.jdbc,org.eclipse.core.runtime.compatibility.registry,org.eclipse.core.jobs,org.apache.derby,org.eclipse.equinox.http.servlet,org.eclipse.equinox.app"/>
 <stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.server.db,org.eclipse.emf.cdo.common,org.eclipse.net4j.db,org.eclipse.net4j.tcp,org.eclipse.net4j.db.hsqldb,org.eclipse.net4j.util,org.eclipse.emf.cdo.server,org.eclipse.net4j.db.mysql,org.eclipse.net4j.db.derby,org.eclipse.net4j"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>

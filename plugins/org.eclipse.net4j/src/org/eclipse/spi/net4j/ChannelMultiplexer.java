@@ -148,6 +148,11 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       try
       {
         long timeout = getOpenChannelTimeout() - System.currentTimeMillis() + start;
+        if (timeout <= 0)
+        {
+          throw new TimeoutRuntimeException();
+        }
+
         registerChannelWithPeer(channel.getID(), timeout, protocol);
       }
       catch (TimeoutRuntimeException ex)

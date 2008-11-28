@@ -44,6 +44,8 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
 
   private OMMonitor remoteMonitor;
 
+  private Object monitorLock = new Object();
+
   /**
    * @since 2.0
    */
@@ -114,7 +116,11 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     }
 
     mainMonitor.begin(100);
-    remoteMonitor = mainMonitor.fork(remoteWork);
+    OMMonitor subMonitor = mainMonitor.fork(remoteWork);
+    synchronized (monitorLock)
+    {
+      remoteMonitor = subMonitor;
+    }
 
     ExecutorService executorService = getCancelationExecutorService();
     if (executorService != null)
@@ -211,37 +217,49 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     }
     finally
     {
-      remoteMonitor.done();
-      remoteMonitor = null;
+      synchronized (monitorLock)
+      {
+        if (remoteMonitor != null)
+        {
+          remoteMonitor.done();
+          remoteMonitor = null;
+        }
+      }
 
-      mainMonitor.done();
-      mainMonitor = null;
+      if (mainMonitor != null)
+      {
+        mainMonitor.done();
+        mainMonitor = null;
+      }
     }
   }
 
   void setMonitorProgress(int totalWork, int work)
   {
     getBufferInputStream().restartTimeout();
-    if (remoteMonitor != null)
+    synchronized (monitorLock)
     {
-      if (remoteMonitor.getTotalWork() == 0)
+      if (remoteMonitor != null)
       {
-        remoteMonitor.begin(totalWork);
-        remoteMonitor.worked(work);
-      }
-      else
-      {
-        float oldRatio = remoteMonitor.getWork();
-        oldRatio /= remoteMonitor.getTotalWork();
-
-        float newRatio = work;
-        newRatio /= totalWork;
-
-        float newWork = newRatio - oldRatio;
-        newWork *= remoteMonitor.getTotalWork();
-        if (newWork >= 1.0)
+        if (remoteMonitor.getTotalWork() == 0)
         {
-          remoteMonitor.worked((int)newWork);
+          remoteMonitor.begin(totalWork);
+          remoteMonitor.worked(work);
+        }
+        else
+        {
+          float oldRatio = remoteMonitor.getWork();
+          oldRatio /= remoteMonitor.getTotalWork();
+
+          float newRatio = work;
+          newRatio /= totalWork;
+
+          float newWork = newRatio - oldRatio;
+          newWork *= remoteMonitor.getTotalWork();
+          if (newWork >= 1.0)
+          {
+            remoteMonitor.worked((int)newWork);
+          }
         }
       }
     }

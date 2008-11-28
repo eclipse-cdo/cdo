@@ -324,8 +324,7 @@ public interface CDOView extends CDOProtocolView, INotifier
    * <li>If the given object can not be cast to {@link CDOObject} it is returned unmodified.
    * <li>If the view of the given object is contained in a different session an <code>IllegalArgumentException</code> is
    * thrown.
-   * <li>If <code>null</code> is passed <code>null
-   * </code> is returned.
+   * <li>If <code>null</code> is passed <code>null</code> is returned.
    * </ul>
    * 
    * @since 2.0

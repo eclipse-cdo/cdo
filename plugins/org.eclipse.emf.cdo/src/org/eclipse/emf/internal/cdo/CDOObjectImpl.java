@@ -951,7 +951,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     if (FSMUtil.isTransient(this))
     {
       super.eBasicSetContainer(newEContainer, newContainerFeatureID);
-
     }
     else
     {

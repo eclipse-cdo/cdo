@@ -74,8 +74,7 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
       for (IAttributeMapping attributeMapping : attributeMappings)
       {
         builder.append(", ");
-        Object value = attributeMapping.getRevisionValue(revision);
-        attributeMapping.getField().appendValue(builder, value);
+        attributeMapping.appendValue(builder, revision);
       }
     }
 

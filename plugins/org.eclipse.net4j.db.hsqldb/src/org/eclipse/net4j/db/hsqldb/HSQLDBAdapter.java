@@ -19,6 +19,7 @@ import org.hsqldb.jdbcDriver;
 import javax.sql.DataSource;
 
 import java.sql.Driver;
+import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -94,5 +95,55 @@ public class HSQLDBAdapter extends DBAdapter
   public String[] getReservedWords()
   {
     return getSQL92ReservedWords();
+  }
+
+  @Override
+  public void appendValue(StringBuilder builder, IDBField field, Object value)
+  {
+    Object newValue = value;
+
+    if (value instanceof String)
+    {
+      // HSQLDB just adds one additional single quote for a single quote
+      String str = (String)value;
+      StringTokenizer tokenizer = new StringTokenizer(str, "\'", true); // split on single quote
+      StringBuilder newValueBuilder = new StringBuilder();
+
+      while (tokenizer.hasMoreTokens())
+      {
+        String current = tokenizer.nextToken();
+        if (current.length() == 0)
+        {
+          continue;
+        }
+
+        if (current.length() > 1) // >1 -> can not be token -> normal string
+        {
+          newValueBuilder.append(current);
+        }
+        else
+        { // length == 1
+          newValueBuilder.append(processEscape(current.charAt(0)));
+        }
+      }
+
+      newValue = newValueBuilder.toString();
+    }
+    else if (value instanceof Character)
+    {
+      newValue = processEscape((Character)value);
+    }
+
+    super.appendValue(builder, field, newValue);
+  }
+
+  private Object processEscape(char c)
+  {
+    if (c == '\'') // one single quote -->
+    {
+      return "\'\'"; // results two single quotes
+    }
+
+    return c; // no escape character --> return as is
   }
 }

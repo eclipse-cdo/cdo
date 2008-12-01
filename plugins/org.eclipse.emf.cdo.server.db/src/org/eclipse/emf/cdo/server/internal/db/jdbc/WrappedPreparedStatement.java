@@ -10,7 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.db.jdbc;
 
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
+
 import java.sql.PreparedStatement;
+import java.text.MessageFormat;
 
 /**
  * Wrapper for a prepared statement that is cleaned up when it is cached in a WeakReferenceCache and gc'd. Note that
@@ -22,11 +28,17 @@ import java.sql.PreparedStatement;
  */
 public class WrappedPreparedStatement
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, WrappedPreparedStatement.class);
+
   private PreparedStatement wrappedStatement = null;
 
   public WrappedPreparedStatement(PreparedStatement ps)
   {
     wrappedStatement = ps;
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Wrapping Statement: {0}", wrappedStatement);
+    }
   }
 
   public PreparedStatement getWrappedStatement()
@@ -34,15 +46,36 @@ public class WrappedPreparedStatement
     return wrappedStatement;
   }
 
-  @Override
-  protected void finalize() throws Throwable
+  public PreparedStatement unwrapStatement()
   {
-    wrappedStatement.close();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("UnWrapping Statement: {0}", wrappedStatement);
+    }
+
+    PreparedStatement result = wrappedStatement;
+    wrappedStatement = null;
+    return result;
   }
 
   @Override
   public String toString()
   {
-    return "[Wrapped " + wrappedStatement.toString() + "]";
+    return MessageFormat.format("Wrapped[{0}]", wrappedStatement);
+  }
+
+  @Override
+  protected void finalize() throws Throwable
+  {
+    if (wrappedStatement != null)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Closing statement: {0}", wrappedStatement);
+      }
+
+      DBUtil.close(wrappedStatement);
+      wrappedStatement = null;
+    }
   }
 }

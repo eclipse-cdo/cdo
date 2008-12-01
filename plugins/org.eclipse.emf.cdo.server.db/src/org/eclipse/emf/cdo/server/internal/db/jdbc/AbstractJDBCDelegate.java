@@ -118,6 +118,11 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
     }
   }
 
+  public void write(OMMonitor monitor)
+  {
+    // Do nothing
+  }
+
   public final void commit(OMMonitor monitor)
   {
     try
@@ -396,5 +401,4 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
       releaseStatement(stmt);
     }
   }
-
 }

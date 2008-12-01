@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.internal.db.jdbc.AbstractJDBCDelegate;
 
@@ -79,6 +80,14 @@ public interface IJDBCDelegate
    * Get the one omnipresent statement object of this JDBC delegate
    */
   public Statement getStatement();
+
+  /**
+   * Do any outstanding writes (e.g. execute batches). Called any number of times - but at least once immediately before
+   * commit().
+   * 
+   * @see IStoreAccessor#write(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, OMMonitor)
+   */
+  public void write(OMMonitor monitor);
 
   /**
    * Do a commit on the JDBC connection.

@@ -591,6 +591,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
+  public void write(CommitContext context, OMMonitor monitor)
+  {
+    super.write(context, monitor);
+    jdbcDelegate.write(monitor);
+  }
+
+  @Override
   protected void doActivate() throws Exception
   {
     LifecycleUtil.activate(jdbcDelegate);

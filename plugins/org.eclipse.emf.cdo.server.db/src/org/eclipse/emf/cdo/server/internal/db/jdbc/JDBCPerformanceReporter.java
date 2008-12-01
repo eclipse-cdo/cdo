@@ -62,11 +62,6 @@ public class JDBCPerformanceReporter extends Lifecycle implements IJDBCDelegate
     this.delegate = delegate;
   }
 
-  public void commit(OMMonitor monitor)
-  {
-    delegate.commit(monitor);
-  }
-
   public Connection getConnection()
   {
     return delegate.getConnection();
@@ -97,6 +92,19 @@ public class JDBCPerformanceReporter extends Lifecycle implements IJDBCDelegate
     delegate.insertReference(sourceRevision, index, targetId, referenceMapping);
     time = System.currentTimeMillis() - time;
     registerCall("insertReferenceDbId", time);
+  }
+
+  public void write(OMMonitor monitor)
+  {
+    long time = System.currentTimeMillis();
+    delegate.write(monitor);
+    time = System.currentTimeMillis() - time;
+    registerCall("write", time);
+  }
+
+  public void commit(OMMonitor monitor)
+  {
+    delegate.commit(monitor);
   }
 
   public void rollback()

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
@@ -32,6 +33,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Stefan Winkler
@@ -72,6 +74,11 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   private Map<CacheKey, WrappedPreparedStatement> statementCache = null;
 
   /**
+   * Container for dirty statements. A statement is considered 'dirty', if addBatch was called, but not executeBatch.
+   */
+  private Map<CacheKey, PreparedStatement> dirtyStatements = null;
+
+  /**
    * This flag determines, if prepared statements should be cached within this delegate. Its value is guessed in
    * {@link #postInitConnection()} based on the fact if the JDBC driver supports pooled statements. If it does, caching
    * in the delegate is unnecessary.
@@ -96,9 +103,77 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
+  public void write(OMMonitor monitor)
+  {
+    monitor.begin(dirtyStatements.size() + 1);
+    super.write(monitor.fork(1));
+
+    try
+    {
+      for (Entry<CacheKey, PreparedStatement> entry : dirtyStatements.entrySet())
+      {
+        try
+        {
+          int[] results;
+          results = entry.getValue().executeBatch();
+
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Executing batch for {0} [{1}]", entry.getKey().toString(), entry.getValue());
+          }
+
+          for (int result : results)
+          {
+            checkState(result == 1, "Batch execution did not return '1' for " + entry.getKey().toString());
+          }
+        }
+        catch (SQLException ex)
+        {
+          throw new DBException("Batch execution failed for " + entry.getKey().toString() + " [" + entry.getValue()
+              + "]", ex);
+        }
+
+        monitor.worked(1);
+      }
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Closing prepared statements.");
+        }
+
+        for (PreparedStatement ps : dirtyStatements.values())
+        {
+          DBUtil.close(ps);
+        }
+      }
+      else
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Re-caching prepared statements.");
+        }
+
+        for (Entry<CacheKey, PreparedStatement> entry : dirtyStatements.entrySet())
+        {
+          cacheStatement(entry.getKey(), entry.getValue());
+        }
+      }
+
+      dirtyStatements.clear();
+      monitor.done();
+    }
+  }
+
+  @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    dirtyStatements = new ReferenceValueMap.Strong<CacheKey, PreparedStatement>();
 
     switch (cachingEnablement)
     {
@@ -137,6 +212,12 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   @Override
   protected void doBeforeDeactivate() throws Exception
   {
+    for (PreparedStatement ps : dirtyStatements.values())
+    {
+      DBUtil.close(ps);
+    }
+
+    dirtyStatements.clear();
     if (cacheStatements)
     {
       for (WrappedPreparedStatement ps : statementCache.values())
@@ -150,6 +231,9 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     super.doBeforeDeactivate();
   }
 
+  /**
+   * Implementation of the hook which is called after selects.
+   */
   @Override
   protected void releaseStatement(Statement stmt)
   {
@@ -174,20 +258,24 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   protected void doInsertAttributes(String tableName, CDORevision rev, List<IAttributeMapping> attributeMappings,
       boolean withFullRevisionInfo)
   {
+    boolean firstBatch = false;
+
     InternalCDORevision revision = (InternalCDORevision)rev;
     if (attributeMappings == null)
     {
       attributeMappings = Collections.emptyList();
     }
 
-    PreparedStatement stmt = null;
-    if (cacheStatements)
+    PreparedStatement stmt = getDirtyStatement(StmtType.INSERT_ATTRIBUTES, tableName);
+    if (stmt == null && cacheStatements)
     {
-      stmt = getCachedStatement(StmtType.INSERT_ATTRIBUTES, tableName);
+      firstBatch = true;
+      stmt = getAndRemoveCachedStatement(StmtType.INSERT_ATTRIBUTES, tableName);
     }
 
     try
     {
+      firstBatch = true;
       if (stmt == null)
       {
         StringBuilder sql = new StringBuilder();
@@ -207,11 +295,6 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
 
         sql.append(")");
         stmt = getConnection().prepareStatement(sql.toString());
-
-        if (cacheStatements)
-        {
-          cacheStatement(StmtType.INSERT_ATTRIBUTES, tableName, stmt);
-        }
       }
 
       int col = 1;
@@ -246,43 +329,40 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
         }
       }
 
-      stmt.execute();
+      if (firstBatch)
+      {
+        addDirtyStatement(StmtType.INSERT_ATTRIBUTES, tableName, stmt);
+      }
+
+      stmt.addBatch();
     }
     catch (SQLException e)
     {
       throw new DBException(e);
-    }
-    finally
-    {
-      if (!cacheStatements)
-      {
-        DBUtil.close(stmt);
-      }
     }
   }
 
   @Override
   protected void doInsertReference(String tableName, int dbID, long source, int version, int index, long target)
   {
-    PreparedStatement stmt = null;
-    if (cacheStatements)
+    boolean firstBatch = false;
+
+    PreparedStatement stmt = getDirtyStatement(StmtType.INSERT_REFERENCES, tableName);
+    if (stmt == null && cacheStatements)
     {
-      stmt = getCachedStatement(StmtType.INSERT_REFERENCES, tableName);
+      firstBatch = true;
+      stmt = getAndRemoveCachedStatement(StmtType.INSERT_REFERENCES, tableName);
     }
 
     try
     {
       if (stmt == null)
       {
+        firstBatch = true;
         StringBuilder sql = new StringBuilder("INSERT INTO ");
         sql.append(tableName);
         sql.append(dbID != 0 ? SQL_INSERT_REFERENCE_WITH_DBID : SQL_INSERT_REFERENCE);
         stmt = getConnection().prepareStatement(sql.toString());
-
-        if (cacheStatements)
-        {
-          cacheStatement(StmtType.INSERT_REFERENCES, tableName, stmt);
-        }
       }
 
       int idx = 1;
@@ -300,18 +380,16 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
         TRACER.trace(stmt.toString());
       }
 
-      stmt.execute();
+      if (firstBatch)
+      {
+        addDirtyStatement(StmtType.INSERT_REFERENCES, tableName, stmt);
+      }
+
+      stmt.addBatch();
     }
     catch (SQLException e)
     {
       throw new DBException(e);
-    }
-    finally
-    {
-      if (!cacheStatements)
-      {
-        DBUtil.close(stmt);
-      }
     }
   }
 
@@ -535,11 +613,47 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   /**
+   * Add a dirty statement to the dirty statements container.
+   */
+  private void addDirtyStatement(StmtType type, String subKey, PreparedStatement stmt)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Adding dirty statement: ({0},{1}) -> {2}", type, subKey, stmt);
+    }
+
+    dirtyStatements.put(new CacheKey(type, subKey), stmt);
+  }
+
+  /**
+   * Query the dirty statements container.
+   * 
+   * @return
+   */
+  private PreparedStatement getDirtyStatement(StmtType type, String subKey)
+  {
+    return dirtyStatements.get(CacheKey.useOnce(type, subKey));
+  }
+
+  /**
    * Cache a prepared statement.
    */
   private void cacheStatement(StmtType type, String subKey, PreparedStatement stmt)
   {
-    statementCache.put(new CacheKey(type, subKey), new WrappedPreparedStatement(stmt));
+    cacheStatement(new CacheKey(type, subKey), stmt);
+  }
+
+  /**
+   * Cache a prepared statement with given key.
+   */
+  private void cacheStatement(CacheKey key, PreparedStatement stmt)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Adding cached statement: {0} -> {1}", key, stmt);
+    }
+
+    statementCache.put(key, new WrappedPreparedStatement(stmt));
   }
 
   /**
@@ -556,7 +670,24 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     PreparedStatement stmt = wrapped.getWrappedStatement();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Using cached statement: " + stmt);
+      TRACER.format("Using cached statement: ({0},{1}) -> {2}", type, subKey, stmt);
+    }
+
+    return stmt;
+  }
+
+  private PreparedStatement getAndRemoveCachedStatement(StmtType type, String subKey)
+  {
+    WrappedPreparedStatement wrapped = statementCache.remove(CacheKey.useOnce(type, subKey));
+    if (wrapped == null)
+    {
+      return null;
+    }
+
+    PreparedStatement stmt = wrapped.unwrapStatement();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Removing cached statement: ({0},{1}) -> {2}", type, subKey, stmt);
     }
 
     return stmt;

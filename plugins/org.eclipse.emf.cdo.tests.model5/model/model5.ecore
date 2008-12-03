@@ -45,4 +45,24 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenListOfShort">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenListOfFloat">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenListOfDouble">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenListOfDate">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenListOfChar">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elements" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EChar"/>
+  </eClassifiers>
 </ecore:EPackage>

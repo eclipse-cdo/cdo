@@ -14,12 +14,17 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
-import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
-import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
-import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,120 +74,144 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfString() throws Exception
   {
-    {
-      CDOSession session = openSession(getModel5Package());
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
-
-      GenListOfString listOfString = getModel5Factory().createGenListOfString();
-
-      listOfString.getElements().add("Ottawa");
-      listOfString.getElements().add("Toronto");
-      resource.getContents().add(listOfString);
-      transaction.commit();
-    }
-
-    clearCache(getRepository().getRevisionManager());
-
-    CDOSession session = openSession(getModel5Package());
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
-
-    GenListOfString listOfString = (GenListOfString)resource.getContents().get(0);
-    assertEquals("Ottawa", listOfString.getElements().get(0));
-    assertEquals("Toronto", listOfString.getElements().get(1));
-
-    listOfString.getElements().add("Vancouver");
-    transaction.commit();
+    List<String> list = new ArrayList<String>();
+    list.add("Ottawa");
+    list.add("Toronto");
+    list.add("Berlin");
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfString(), getModel5Package()
+        .getGenListOfString_Elements());
   }
 
-  public void testListOfStringProxy() throws Exception
+  public void testListOfDate() throws Exception
   {
-    {
-      CDOSession session = openSession(getModel5Package());
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
-
-      GenListOfString listOfString = getModel5Factory().createGenListOfString();
-
-      listOfString.getElements().add("Ottawa");
-      listOfString.getElements().add("Toronto");
-      resource.getContents().add(listOfString);
-      transaction.commit();
-    }
-
-    clearCache(getRepository().getRevisionManager());
-
-    CDOSession session = openSession(getModel5Package());
-    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 100));
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
-
-    GenListOfString listOfString = (GenListOfString)resource.getContents().get(0);
-    assertEquals("Ottawa", listOfString.getElements().get(0));
-    assertEquals("Toronto", listOfString.getElements().get(1));
-
-    listOfString.getElements().add("Vancouver");
-    transaction.commit();
+    List<Date> list = new ArrayList<Date>();
+    list.add(new Date(1000));
+    list.add(new Date());
+    list.add(new Date(new Date().getTime() - 100));
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfDate(), getModel5Package()
+        .getGenListOfDate_Elements());
   }
 
   public void testListOfInt() throws Exception
   {
-    {
-      CDOSession session = openSession(getModel5Package());
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+    List<Integer> list = new ArrayList<Integer>();
+    list.add(10);
+    list.add(11);
+    list.add(20);
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInt(), getModel5Package()
+        .getGenListOfInt_Elements());
+  }
 
-      GenListOfInt genList = getModel5Factory().createGenListOfInt();
+  public void testListOfShort() throws Exception
+  {
+    List<Short> list = new ArrayList<Short>();
+    list.add((short)10);
+    list.add((short)11);
+    list.add((short)20);
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfShort(), getModel5Package()
+        .getGenListOfShort_Elements());
+  }
 
-      genList.getElements().add(1);
-      genList.getElements().add(2);
-      resource.getContents().add(genList);
-      transaction.commit();
-    }
+  public void testListOfFloat() throws Exception
+  {
+    List<Float> list = new ArrayList<Float>();
+    list.add((float)10);
+    list.add((float)11);
+    list.add((float)20);
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfFloat(), getModel5Package()
+        .getGenListOfFloat_Elements());
+  }
 
-    clearCache(getRepository().getRevisionManager());
+  public void testListOfChar() throws Exception
+  {
+    List<Character> list = new ArrayList<Character>();
+    list.add('c');
+    list.add('d');
+    list.add('z');
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfChar(), getModel5Package()
+        .getGenListOfChar_Elements());
+  }
 
-    CDOSession session = openSession(getModel5Package());
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
+  public void testListOfBoolean() throws Exception
+  {
+    List<Boolean> list = new ArrayList<Boolean>();
+    list.add(true);
+    list.add(false);
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfBoolean(), getModel5Package()
+        .getGenListOfBoolean_Elements());
+  }
 
-    GenListOfInt genList = (GenListOfInt)resource.getContents().get(0);
-    assertEquals((Integer)1, genList.getElements().get(0));
-    assertEquals((Integer)2, genList.getElements().get(1));
-
-    genList.getElements().add(3);
-    transaction.commit();
+  public void testListOfDouble() throws Exception
+  {
+    List<Double> list = new ArrayList<Double>();
+    list.add(10.1928);
+    list.add(11.12);
+    list.add(20.99991);
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfDouble(), getModel5Package()
+        .getGenListOfDouble_Elements());
   }
 
   public void testListOfInteger() throws Exception
+  {
+    List<Integer> list = new ArrayList<Integer>();
+    list.add(10);
+    list.add(null);
+    list.add(20);
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInteger(), getModel5Package()
+        .getGenListOfInteger_Elements());
+  }
+
+  @SuppressWarnings("unchecked")
+  private <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature)
   {
     {
       CDOSession session = openSession(getModel5Package());
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/res1");
 
-      GenListOfInteger genList = getModel5Factory().createGenListOfInteger();
+      EObject eGenObject = EcoreUtil.create(containerClass);
+      EList<T> elements = (EList<T>)eGenObject.eGet(feature);
+      for (int i = 0; i < list.size() - 1; i++)
+      {
+        elements.add(list.get(i));
+      }
+      resource.getContents().add(eGenObject);
+      transaction.commit();
+    }
 
-      genList.getElements().add(1);
-      genList.getElements().add(2);
-      genList.getElements().add(null);
-      resource.getContents().add(genList);
+    clearCache(getRepository().getRevisionManager());
+    {
+      CDOSession session = openSession(getModel5Package());
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/res1");
+
+      EObject eGenObject = resource.getContents().get(0);
+      EList<T> elements = (EList<T>)eGenObject.eGet(feature);
+
+      for (int i = 0; i < list.size() - 1; i++)
+      {
+        assertEquals(elements.get(i), list.get(i));
+      }
+      elements.add(list.get(list.size() - 1));
       transaction.commit();
     }
 
     clearCache(getRepository().getRevisionManager());
 
-    CDOSession session = openSession(getModel5Package());
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
+    {
+      CDOSession session = openSession(getModel5Package());
+      session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 100));
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/res1");
 
-    GenListOfInteger genList = (GenListOfInteger)resource.getContents().get(0);
-    assertEquals((Integer)1, genList.getElements().get(0));
-    assertEquals((Integer)2, genList.getElements().get(1));
-    assertEquals(null, genList.getElements().get(2));
+      EObject eGenObject = resource.getContents().get(0);
+      EList<T> elements = (EList<T>)eGenObject.eGet(feature);
 
-    genList.getElements().add(3);
-    transaction.commit();
+      for (int i = 0; i < list.size() - 1; i++)
+      {
+        assertEquals(elements.get(i), list.get(i));
+      }
+      transaction.commit();
+    }
   }
 }

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5Factory.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
+ * $Id: Model5Factory.java,v 1.3 2008-12-03 03:06:15 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5;
 
@@ -79,6 +79,46 @@ public interface Model5Factory extends EFactory
    * @generated
    */
   GenListOfBoolean createGenListOfBoolean();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Short</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Short</em>'.
+   * @generated
+   */
+  GenListOfShort createGenListOfShort();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Float</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Float</em>'.
+   * @generated
+   */
+  GenListOfFloat createGenListOfFloat();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Double</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Double</em>'.
+   * @generated
+   */
+  GenListOfDouble createGenListOfDouble();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Date</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Date</em>'.
+   * @generated
+   */
+  GenListOfDate createGenListOfDate();
+
+  /**
+   * Returns a new object of class '<em>Gen List Of Char</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Gen List Of Char</em>'.
+   * @generated
+   */
+  GenListOfChar createGenListOfChar();
 
   /**
    * Returns a new object of class '<em>Gen List Of String</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

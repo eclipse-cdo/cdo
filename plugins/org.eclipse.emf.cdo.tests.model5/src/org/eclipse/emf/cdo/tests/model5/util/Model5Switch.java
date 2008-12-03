@@ -2,15 +2,20 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5Switch.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
+ * $Id: Model5Switch.java,v 1.3 2008-12-03 03:06:15 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.util;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
+import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
+import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
+import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
@@ -175,6 +180,56 @@ public class Model5Switch<T>
       }
       return result;
     }
+    case Model5Package.GEN_LIST_OF_SHORT:
+    {
+      GenListOfShort genListOfShort = (GenListOfShort)theEObject;
+      T result = caseGenListOfShort(genListOfShort);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model5Package.GEN_LIST_OF_FLOAT:
+    {
+      GenListOfFloat genListOfFloat = (GenListOfFloat)theEObject;
+      T result = caseGenListOfFloat(genListOfFloat);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model5Package.GEN_LIST_OF_DOUBLE:
+    {
+      GenListOfDouble genListOfDouble = (GenListOfDouble)theEObject;
+      T result = caseGenListOfDouble(genListOfDouble);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model5Package.GEN_LIST_OF_DATE:
+    {
+      GenListOfDate genListOfDate = (GenListOfDate)theEObject;
+      T result = caseGenListOfDate(genListOfDate);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model5Package.GEN_LIST_OF_CHAR:
+    {
+      GenListOfChar genListOfChar = (GenListOfChar)theEObject;
+      T result = caseGenListOfChar(genListOfChar);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -281,6 +336,81 @@ public class Model5Switch<T>
    * @generated
    */
   public T caseGenListOfBoolean(GenListOfBoolean object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Short</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Short</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfShort(GenListOfShort object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Float</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Float</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfFloat(GenListOfFloat object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Double</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Double</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfDouble(GenListOfDouble object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Date</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Date</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfDate(GenListOfDate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Gen List Of Char</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Gen List Of Char</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenListOfChar(GenListOfChar object)
   {
     return null;
   }

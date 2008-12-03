@@ -2,15 +2,20 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5FactoryImpl.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
+ * $Id: Model5FactoryImpl.java,v 1.3 2008-12-03 03:06:15 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.impl;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
+import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
+import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
+import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
@@ -89,6 +94,16 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
       return createGenListOfLong();
     case Model5Package.GEN_LIST_OF_BOOLEAN:
       return createGenListOfBoolean();
+    case Model5Package.GEN_LIST_OF_SHORT:
+      return createGenListOfShort();
+    case Model5Package.GEN_LIST_OF_FLOAT:
+      return createGenListOfFloat();
+    case Model5Package.GEN_LIST_OF_DOUBLE:
+      return createGenListOfDouble();
+    case Model5Package.GEN_LIST_OF_DATE:
+      return createGenListOfDate();
+    case Model5Package.GEN_LIST_OF_CHAR:
+      return createGenListOfChar();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -169,6 +184,61 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   {
     GenListOfBooleanImpl genListOfBoolean = new GenListOfBooleanImpl();
     return genListOfBoolean;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfShort createGenListOfShort()
+  {
+    GenListOfShortImpl genListOfShort = new GenListOfShortImpl();
+    return genListOfShort;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfFloat createGenListOfFloat()
+  {
+    GenListOfFloatImpl genListOfFloat = new GenListOfFloatImpl();
+    return genListOfFloat;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfDouble createGenListOfDouble()
+  {
+    GenListOfDoubleImpl genListOfDouble = new GenListOfDoubleImpl();
+    return genListOfDouble;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfDate createGenListOfDate()
+  {
+    GenListOfDateImpl genListOfDate = new GenListOfDateImpl();
+    return genListOfDate;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public GenListOfChar createGenListOfChar()
+  {
+    GenListOfCharImpl genListOfChar = new GenListOfCharImpl();
+    return genListOfChar;
   }
 
   /**

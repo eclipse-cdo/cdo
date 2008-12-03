@@ -2,15 +2,20 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5PackageImpl.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
+ * $Id: Model5PackageImpl.java,v 1.3 2008-12-03 03:06:15 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.impl;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
+import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
+import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
+import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
@@ -78,6 +83,41 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * @generated
    */
   private EClass genListOfBooleanEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfShortEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfFloatEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfDoubleEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfDateEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass genListOfCharEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -300,6 +340,106 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * 
    * @generated
    */
+  public EClass getGenListOfShort()
+  {
+    return genListOfShortEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfShort_Elements()
+  {
+    return (EAttribute)genListOfShortEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getGenListOfFloat()
+  {
+    return genListOfFloatEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfFloat_Elements()
+  {
+    return (EAttribute)genListOfFloatEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getGenListOfDouble()
+  {
+    return genListOfDoubleEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfDouble_Elements()
+  {
+    return (EAttribute)genListOfDoubleEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getGenListOfDate()
+  {
+    return genListOfDateEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfDate_Elements()
+  {
+    return (EAttribute)genListOfDateEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getGenListOfChar()
+  {
+    return genListOfCharEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getGenListOfChar_Elements()
+  {
+    return (EAttribute)genListOfCharEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getGenListOfString()
   {
     return genListOfStringEClass;
@@ -370,6 +510,21 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
     genListOfBooleanEClass = createEClass(GEN_LIST_OF_BOOLEAN);
     createEAttribute(genListOfBooleanEClass, GEN_LIST_OF_BOOLEAN__ELEMENTS);
+
+    genListOfShortEClass = createEClass(GEN_LIST_OF_SHORT);
+    createEAttribute(genListOfShortEClass, GEN_LIST_OF_SHORT__ELEMENTS);
+
+    genListOfFloatEClass = createEClass(GEN_LIST_OF_FLOAT);
+    createEAttribute(genListOfFloatEClass, GEN_LIST_OF_FLOAT__ELEMENTS);
+
+    genListOfDoubleEClass = createEClass(GEN_LIST_OF_DOUBLE);
+    createEAttribute(genListOfDoubleEClass, GEN_LIST_OF_DOUBLE__ELEMENTS);
+
+    genListOfDateEClass = createEClass(GEN_LIST_OF_DATE);
+    createEAttribute(genListOfDateEClass, GEN_LIST_OF_DATE__ELEMENTS);
+
+    genListOfCharEClass = createEClass(GEN_LIST_OF_CHAR);
+    createEAttribute(genListOfCharEClass, GEN_LIST_OF_CHAR__ELEMENTS);
   }
 
   /**
@@ -448,6 +603,34 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     initEAttribute(getGenListOfBoolean_Elements(), ecorePackage.getEBoolean(), "elements", null, 0, -1,
         GenListOfBoolean.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfShortEClass, GenListOfShort.class, "GenListOfShort", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfShort_Elements(), ecorePackage.getEShort(), "elements", null, 0, -1,
+        GenListOfShort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfFloatEClass, GenListOfFloat.class, "GenListOfFloat", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfFloat_Elements(), ecorePackage.getEFloat(), "elements", null, 0, -1,
+        GenListOfFloat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfDoubleEClass, GenListOfDouble.class, "GenListOfDouble", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfDouble_Elements(), ecorePackage.getEDouble(), "elements", null, 0, -1,
+        GenListOfDouble.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfDateEClass, GenListOfDate.class, "GenListOfDate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfDate_Elements(), ecorePackage.getEDate(), "elements", null, 0, -1, GenListOfDate.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genListOfCharEClass, GenListOfChar.class, "GenListOfChar", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenListOfChar_Elements(), ecorePackage.getEChar(), "elements", null, 0, -1, GenListOfChar.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

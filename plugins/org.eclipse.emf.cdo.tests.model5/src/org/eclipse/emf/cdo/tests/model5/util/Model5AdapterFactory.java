@@ -2,15 +2,20 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5AdapterFactory.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
+ * $Id: Model5AdapterFactory.java,v 1.3 2008-12-03 03:06:15 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.util;
 
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
+import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDate;
+import org.eclipse.emf.cdo.tests.model5.GenListOfDouble;
+import org.eclipse.emf.cdo.tests.model5.GenListOfFloat;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInteger;
 import org.eclipse.emf.cdo.tests.model5.GenListOfLong;
+import org.eclipse.emf.cdo.tests.model5.GenListOfShort;
 import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
@@ -125,6 +130,36 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
     public Adapter caseGenListOfBoolean(GenListOfBoolean object)
     {
       return createGenListOfBooleanAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfShort(GenListOfShort object)
+    {
+      return createGenListOfShortAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfFloat(GenListOfFloat object)
+    {
+      return createGenListOfFloatAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfDouble(GenListOfDouble object)
+    {
+      return createGenListOfDoubleAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfDate(GenListOfDate object)
+    {
+      return createGenListOfDateAdapter();
+    }
+
+    @Override
+    public Adapter caseGenListOfChar(GenListOfChar object)
+    {
+      return createGenListOfCharAdapter();
     }
 
     @Override
@@ -244,6 +279,79 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createGenListOfBooleanAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfShort
+   * <em>Gen List Of Short</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfShort
+   * @generated
+   */
+  public Adapter createGenListOfShortAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfFloat
+   * <em>Gen List Of Float</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfFloat
+   * @generated
+   */
+  public Adapter createGenListOfFloatAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDouble
+   * <em>Gen List Of Double</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfDouble
+   * @generated
+   */
+  public Adapter createGenListOfDoubleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDate
+   * <em>Gen List Of Date</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfDate
+   * @generated
+   */
+  public Adapter createGenListOfDateAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfChar
+   * <em>Gen List Of Char</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfChar
+   * @generated
+   */
+  public Adapter createGenListOfCharAdapter()
   {
     return null;
   }

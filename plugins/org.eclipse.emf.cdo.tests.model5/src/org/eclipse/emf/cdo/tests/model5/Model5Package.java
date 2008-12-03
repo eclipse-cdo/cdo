@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Model5Package.java,v 1.2 2008-11-13 14:48:46 smcduff Exp $
+ * $Id: Model5Package.java,v 1.3 2008-12-03 03:06:15 smcduff Exp $
  */
 package org.eclipse.emf.cdo.tests.model5;
 
@@ -271,6 +271,141 @@ public interface Model5Package extends EPackage
   int GEN_LIST_OF_BOOLEAN_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfShortImpl
+   * <em>Gen List Of Short</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfShortImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfShort()
+   * @generated
+   */
+  int GEN_LIST_OF_SHORT = 8;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_SHORT__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Short</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_SHORT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfFloatImpl
+   * <em>Gen List Of Float</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfFloatImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfFloat()
+   * @generated
+   */
+  int GEN_LIST_OF_FLOAT = 9;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_FLOAT__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Float</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_FLOAT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfDoubleImpl
+   * <em>Gen List Of Double</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfDoubleImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfDouble()
+   * @generated
+   */
+  int GEN_LIST_OF_DOUBLE = 10;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_DOUBLE__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Double</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_DOUBLE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfDateImpl
+   * <em>Gen List Of Date</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfDateImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfDate()
+   * @generated
+   */
+  int GEN_LIST_OF_DATE = 11;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_DATE__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Date</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_DATE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfCharImpl
+   * <em>Gen List Of Char</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfCharImpl
+   * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfChar()
+   * @generated
+   */
+  int GEN_LIST_OF_CHAR = 12;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_CHAR__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Gen List Of Char</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int GEN_LIST_OF_CHAR_FEATURE_COUNT = 1;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap
    * <em>Test Feature Map</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -419,6 +554,112 @@ public interface Model5Package extends EPackage
    * @generated
    */
   EAttribute getGenListOfBoolean_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfShort
+   * <em>Gen List Of Short</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Short</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfShort
+   * @generated
+   */
+  EClass getGenListOfShort();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfShort#getElements
+   * <em>Elements</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfShort#getElements()
+   * @see #getGenListOfShort()
+   * @generated
+   */
+  EAttribute getGenListOfShort_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfFloat
+   * <em>Gen List Of Float</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Float</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfFloat
+   * @generated
+   */
+  EClass getGenListOfFloat();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfFloat#getElements
+   * <em>Elements</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfFloat#getElements()
+   * @see #getGenListOfFloat()
+   * @generated
+   */
+  EAttribute getGenListOfFloat_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDouble
+   * <em>Gen List Of Double</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Double</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfDouble
+   * @generated
+   */
+  EClass getGenListOfDouble();
+
+  /**
+   * Returns the meta object for the attribute list '
+   * {@link org.eclipse.emf.cdo.tests.model5.GenListOfDouble#getElements <em>Elements</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfDouble#getElements()
+   * @see #getGenListOfDouble()
+   * @generated
+   */
+  EAttribute getGenListOfDouble_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDate <em>Gen List Of Date</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Date</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfDate
+   * @generated
+   */
+  EClass getGenListOfDate();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDate#getElements
+   * <em>Elements</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfDate#getElements()
+   * @see #getGenListOfDate()
+   * @generated
+   */
+  EAttribute getGenListOfDate_Elements();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfChar <em>Gen List Of Char</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Gen List Of Char</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfChar
+   * @generated
+   */
+  EClass getGenListOfChar();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfChar#getElements
+   * <em>Elements</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfChar#getElements()
+   * @see #getGenListOfChar()
+   * @generated
+   */
+  EAttribute getGenListOfChar_Elements();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString
@@ -589,6 +830,96 @@ public interface Model5Package extends EPackage
      * @generated
      */
     EAttribute GEN_LIST_OF_BOOLEAN__ELEMENTS = eINSTANCE.getGenListOfBoolean_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfShortImpl
+     * <em>Gen List Of Short</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfShortImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfShort()
+     * @generated
+     */
+    EClass GEN_LIST_OF_SHORT = eINSTANCE.getGenListOfShort();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_SHORT__ELEMENTS = eINSTANCE.getGenListOfShort_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfFloatImpl
+     * <em>Gen List Of Float</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfFloatImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfFloat()
+     * @generated
+     */
+    EClass GEN_LIST_OF_FLOAT = eINSTANCE.getGenListOfFloat();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_FLOAT__ELEMENTS = eINSTANCE.getGenListOfFloat_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfDoubleImpl
+     * <em>Gen List Of Double</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfDoubleImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfDouble()
+     * @generated
+     */
+    EClass GEN_LIST_OF_DOUBLE = eINSTANCE.getGenListOfDouble();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_DOUBLE__ELEMENTS = eINSTANCE.getGenListOfDouble_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfDateImpl
+     * <em>Gen List Of Date</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfDateImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfDate()
+     * @generated
+     */
+    EClass GEN_LIST_OF_DATE = eINSTANCE.getGenListOfDate();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_DATE__ELEMENTS = eINSTANCE.getGenListOfDate_Elements();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfCharImpl
+     * <em>Gen List Of Char</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model5.impl.GenListOfCharImpl
+     * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getGenListOfChar()
+     * @generated
+     */
+    EClass GEN_LIST_OF_CHAR = eINSTANCE.getGenListOfChar();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' attribute list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute GEN_LIST_OF_CHAR__ELEMENTS = eINSTANCE.getGenListOfChar_Elements();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfStringImpl

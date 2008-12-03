@@ -83,122 +83,6 @@ public class ResourceTest extends AbstractCDOTest
     attachDetachResourceDepth1(3, false, 1);
   }
 
-  /**
-   * Create resource with the following pattern /test1/test2/test3 for a depth 3. <br>
-   * After it will remove the resource with the following rule:<br>
-   * if calldelete is true <code>resource.delete(null)</code> <br>
-   * if calldelete is false it will use the depthtoRemove to call <code>object.remove(resource)</code><br>
-   * deptToRemove = /0/1/2/...<br>
-   * It will remove it from parent folder (depthtoRemove - 1);
-   */
-  private void attachDetachResourceDepth1(int depth, boolean callDelete, int depthtoRemove) throws Exception
-  {
-    CDOSession session = openModel1Session();
-    ResourceSet resourceSet = new ResourceSetImpl();
-    CDOTransaction transaction = session.openTransaction(resourceSet);
-    CDOResource rootResource = transaction.getRootResource();
-    assertSame(rootResource, rootResource.eResource());
-    String path = "";
-    List<String> names = new ArrayList<String>();
-    for (int i = 0; i < depth; i++)
-    {
-      String name = "test" + String.valueOf(i + 1);
-      names.add(name);
-      path += "/" + name;
-    }
-
-    final URI uri = URI.createURI("cdo:" + path);
-    CDOResource resource = (CDOResource)resourceSet.createResource(uri);
-    assertEquals(names.get(names.size() - 1), resource.getName());
-
-    transaction.commit();
-    List<CDOResourceNode> nodesList = new ArrayList<CDOResourceNode>();
-    CDOResource resourceByLookup = null;
-    CDOResourceNode next = null;
-    for (int i = 0; i < depth; i++)
-    {
-      if (i == 0)
-      {
-        next = (CDOResourceNode)rootResource.getContents().get(0);
-      }
-      else
-      {
-        next = ((CDOResourceFolder)next).getNodes().get(0);
-      }
-
-      nodesList.add(next);
-    }
-
-    resourceByLookup = (CDOResource)next;
-    assertSame(resource, resourceByLookup);
-    assertClean(resourceByLookup, transaction);
-    assertEquals(true, resourceSet.getResources().contains(resourceByLookup));
-
-    CDOObject cdoParent = null;
-    CDOObject cdoRootResource = CDOUtil.getCDOObject(rootResource);
-    for (int i = 0; i < depth; i++)
-    {
-      CDOResourceNode resourceNode = nodesList.get(i);
-      CDOObject cdoResourceNode = CDOUtil.getCDOObject(resourceNode);
-
-      if (i == 0)
-      {
-        assertEquals(cdoRootResource.cdoID(), cdoResourceNode.cdoRevision().getData().getResourceID());
-        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().getData().getContainerID());
-      }
-      else
-      {
-        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().getData().getResourceID());
-        assertEquals(cdoParent.cdoID(), cdoResourceNode.cdoRevision().getData().getContainerID());
-      }
-
-      cdoParent = cdoResourceNode;
-    }
-
-    if (callDelete)
-    {
-      resource.delete(null);
-      depthtoRemove = depth;
-    }
-    else
-    {
-      CDOResourceNode node = nodesList.get(depthtoRemove);
-      if (depthtoRemove == 0)
-      {
-        rootResource.getContents().remove(node);
-      }
-      else
-      {
-        CDOResourceFolder parentFolder = (CDOResourceFolder)nodesList.get(depthtoRemove - 1);
-        assertEquals(parentFolder, node.getFolder());
-        parentFolder.getNodes().remove(node);
-      }
-    }
-    for (int i = depthtoRemove; i < depth; i++)
-    {
-      CDOResourceNode transientNode = nodesList.get(i);
-      assertTransient(transientNode);
-      if (transientNode instanceof CDOResource)
-      {
-        assertEquals(false, resourceSet.getResources().contains(transientNode));
-      }
-
-      assertEquals(null, transientNode.eResource());
-      if (i == depthtoRemove)
-      {
-        assertEquals(null, transientNode.eContainer());
-      }
-      else
-      {
-        assertEquals(cdoParent, transientNode.eContainer());
-      }
-
-      cdoParent = transientNode;
-    }
-
-    transaction.commit();
-  }
-
   public void testRootResourceFromURI() throws Exception
   {
     URI rootResourceURI = null;
@@ -320,6 +204,28 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(CDOURIUtil.createResourceURI(session, "/org/eclipse/net4j/core"), resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
     session.close();
+  }
+
+  public void testLoadAbsentResource_FromResourceSet() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    ResourceSet resourceSet = new ResourceSetImpl();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+
+    final URI uri = URI.createURI("cdo:/test1");
+    CDOResource resource = (CDOResource)resourceSet.getResource(uri, false);
+    assertEquals(null, resource);
+
+    try
+    {
+      resourceSet.getResource(uri, true);
+    }
+    catch (Exception ignore)
+    {
+
+    }
+
+    transaction.close();
   }
 
   public void testRemoveResourceWithCloseView() throws Exception
@@ -530,79 +436,6 @@ public class ResourceTest extends AbstractCDOTest
     changePath(3, 0);
   }
 
-  private void changePath(int depthFrom, int depthTo) throws Exception
-  {
-    String prefixA = "testA";
-    String prefixB = "testB";
-
-    String oldPath = createPath(prefixA, depthFrom, "test");
-    String newPath = createPath(prefixB, depthTo, "test2");
-    {
-      CDOSession session = openModel1Session();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource(oldPath);
-      Order order = getModel1Factory().createOrder();
-      resource.getContents().add(order);
-
-      String path = CDOURIUtil.extractResourcePath(resource.getURI());
-      assertEquals(oldPath, path);
-      assertEquals(depthFrom, CDOURIUtil.analyzePath(resource.getURI()).size() - 1);
-
-      transaction.commit();
-
-      CDOID idBeforeChangePath = CDOUtil.getCDOObject(resource).cdoID();
-      CDOID idBeforeChangePathOrder = CDOUtil.getCDOObject(order).cdoID();
-
-      msg("New path");
-      resource.setPath(newPath);
-      path = CDOURIUtil.extractResourcePath(resource.getURI());
-      assertEquals(depthTo, CDOURIUtil.analyzePath(resource.getURI()).size() - 1);
-      assertEquals(newPath, path);
-      transaction.commit();
-
-      CDOID idAfterChangePath = CDOUtil.getCDOObject(resource).cdoID();
-      assertEquals(idBeforeChangePath, idAfterChangePath);
-
-      CDOID idAfterChangePathOrder = CDOUtil.getCDOObject(order).cdoID();
-      assertEquals(idBeforeChangePathOrder, idAfterChangePathOrder);
-
-      Resource resourceRenamed = transaction.getResourceSet().getResource(
-          CDOURIUtil.createResourceURI(session, newPath), false);
-
-      assertEquals(resource, resourceRenamed);
-      assertClean(resource, transaction);
-      assertClean(order, transaction);
-      session.close();
-    }
-    clearCache(getRepository().getRevisionManager());
-    CDOSession session = openModel1Session();
-    CDOTransaction transaction = session.openTransaction();
-
-    try
-    {
-      transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(session, oldPath), true);
-      fail("Doesn't exist");
-    }
-    catch (Exception ex)
-    {
-    }
-    Resource resource = transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(session, newPath), true);
-    assertNotNull(resource);
-  }
-
-  private String createPath(String namePrefix, int depth, String name)
-  {
-    String path = "";
-    for (int i = 0; i < depth; i++)
-    {
-      String localName = namePrefix + String.valueOf(i + 1);
-      path += "/" + localName;
-    }
-
-    path += "/" + name;
-    return path;
-  }
-
   public void testChangeURI() throws Exception
   {
     {
@@ -778,6 +611,195 @@ public class ResourceTest extends AbstractCDOTest
     queryResources(view, "be", 3);
     queryResources(view, "ca", 3);
     session.close();
+  }
+
+  /**
+   * Create resource with the following pattern /test1/test2/test3 for a depth 3. <br>
+   * After it will remove the resource with the following rule:<br>
+   * if calldelete is true <code>resource.delete(null)</code> <br>
+   * if calldelete is false it will use the depthtoRemove to call <code>object.remove(resource)</code><br>
+   * deptToRemove = /0/1/2/...<br>
+   * It will remove it from parent folder (depthtoRemove - 1);
+   */
+  private void attachDetachResourceDepth1(int depth, boolean callDelete, int depthtoRemove) throws Exception
+  {
+    CDOSession session = openModel1Session();
+    ResourceSet resourceSet = new ResourceSetImpl();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+    CDOResource rootResource = transaction.getRootResource();
+    assertSame(rootResource, rootResource.eResource());
+    String path = "";
+    List<String> names = new ArrayList<String>();
+    for (int i = 0; i < depth; i++)
+    {
+      String name = "test" + String.valueOf(i + 1);
+      names.add(name);
+      path += "/" + name;
+    }
+
+    final URI uri = URI.createURI("cdo:" + path);
+    CDOResource resource = (CDOResource)resourceSet.createResource(uri);
+    assertEquals(names.get(names.size() - 1), resource.getName());
+
+    transaction.commit();
+    List<CDOResourceNode> nodesList = new ArrayList<CDOResourceNode>();
+    CDOResource resourceByLookup = null;
+    CDOResourceNode next = null;
+    for (int i = 0; i < depth; i++)
+    {
+      if (i == 0)
+      {
+        next = (CDOResourceNode)rootResource.getContents().get(0);
+      }
+      else
+      {
+        next = ((CDOResourceFolder)next).getNodes().get(0);
+      }
+
+      nodesList.add(next);
+    }
+
+    resourceByLookup = (CDOResource)next;
+    assertSame(resource, resourceByLookup);
+    assertClean(resourceByLookup, transaction);
+    assertEquals(true, resourceSet.getResources().contains(resourceByLookup));
+
+    CDOObject cdoParent = null;
+    CDOObject cdoRootResource = CDOUtil.getCDOObject(rootResource);
+    for (int i = 0; i < depth; i++)
+    {
+      CDOResourceNode resourceNode = nodesList.get(i);
+      CDOObject cdoResourceNode = CDOUtil.getCDOObject(resourceNode);
+
+      if (i == 0)
+      {
+        assertEquals(cdoRootResource.cdoID(), cdoResourceNode.cdoRevision().getData().getResourceID());
+        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().getData().getContainerID());
+      }
+      else
+      {
+        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().getData().getResourceID());
+        assertEquals(cdoParent.cdoID(), cdoResourceNode.cdoRevision().getData().getContainerID());
+      }
+
+      cdoParent = cdoResourceNode;
+    }
+
+    if (callDelete)
+    {
+      resource.delete(null);
+      depthtoRemove = depth;
+    }
+    else
+    {
+      CDOResourceNode node = nodesList.get(depthtoRemove);
+      if (depthtoRemove == 0)
+      {
+        rootResource.getContents().remove(node);
+      }
+      else
+      {
+        CDOResourceFolder parentFolder = (CDOResourceFolder)nodesList.get(depthtoRemove - 1);
+        assertEquals(parentFolder, node.getFolder());
+        parentFolder.getNodes().remove(node);
+      }
+    }
+    for (int i = depthtoRemove; i < depth; i++)
+    {
+      CDOResourceNode transientNode = nodesList.get(i);
+      assertTransient(transientNode);
+      if (transientNode instanceof CDOResource)
+      {
+        assertEquals(false, resourceSet.getResources().contains(transientNode));
+      }
+
+      assertEquals(null, transientNode.eResource());
+      if (i == depthtoRemove)
+      {
+        assertEquals(null, transientNode.eContainer());
+      }
+      else
+      {
+        assertEquals(cdoParent, transientNode.eContainer());
+      }
+
+      cdoParent = transientNode;
+    }
+
+    transaction.commit();
+  }
+
+  private void changePath(int depthFrom, int depthTo) throws Exception
+  {
+    String prefixA = "testA";
+    String prefixB = "testB";
+
+    String oldPath = createPath(prefixA, depthFrom, "test");
+    String newPath = createPath(prefixB, depthTo, "test2");
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(oldPath);
+      Order order = getModel1Factory().createOrder();
+      resource.getContents().add(order);
+
+      String path = CDOURIUtil.extractResourcePath(resource.getURI());
+      assertEquals(oldPath, path);
+      assertEquals(depthFrom, CDOURIUtil.analyzePath(resource.getURI()).size() - 1);
+
+      transaction.commit();
+
+      CDOID idBeforeChangePath = CDOUtil.getCDOObject(resource).cdoID();
+      CDOID idBeforeChangePathOrder = CDOUtil.getCDOObject(order).cdoID();
+
+      msg("New path");
+      resource.setPath(newPath);
+      path = CDOURIUtil.extractResourcePath(resource.getURI());
+      assertEquals(depthTo, CDOURIUtil.analyzePath(resource.getURI()).size() - 1);
+      assertEquals(newPath, path);
+      transaction.commit();
+
+      CDOID idAfterChangePath = CDOUtil.getCDOObject(resource).cdoID();
+      assertEquals(idBeforeChangePath, idAfterChangePath);
+
+      CDOID idAfterChangePathOrder = CDOUtil.getCDOObject(order).cdoID();
+      assertEquals(idBeforeChangePathOrder, idAfterChangePathOrder);
+
+      Resource resourceRenamed = transaction.getResourceSet().getResource(
+          CDOURIUtil.createResourceURI(session, newPath), false);
+
+      assertEquals(resource, resourceRenamed);
+      assertClean(resource, transaction);
+      assertClean(order, transaction);
+      session.close();
+    }
+    clearCache(getRepository().getRevisionManager());
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    try
+    {
+      transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(session, oldPath), true);
+      fail("Doesn't exist");
+    }
+    catch (Exception ex)
+    {
+    }
+    Resource resource = transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(session, newPath), true);
+    assertNotNull(resource);
+  }
+
+  private String createPath(String namePrefix, int depth, String name)
+  {
+    String path = "";
+    for (int i = 0; i < depth; i++)
+    {
+      String localName = namePrefix + String.valueOf(i + 1);
+      path += "/" + localName;
+    }
+
+    path += "/" + name;
+    return path;
   }
 
   private CDOResource createResource(CDOTransaction transaction, String path)

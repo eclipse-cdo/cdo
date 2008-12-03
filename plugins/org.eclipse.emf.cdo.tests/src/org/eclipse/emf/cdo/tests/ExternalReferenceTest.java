@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.DanglingReferenceException;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -329,7 +330,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
     }
     catch (TransactionException success)
     {
-      assertEquals(true, success.getCause() instanceof IllegalStateException);
+      assertEquals(true, success.getCause() instanceof DanglingReferenceException);
+      assertSame(purchaseOrder, ((DanglingReferenceException)success.getCause()).getTarget());
     }
   }
 

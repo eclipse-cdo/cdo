@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
@@ -954,6 +955,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       {
         return CDOIDUtil.createExternal(uri);
       }
+
+      throw new DanglingReferenceException(eObject);
     }
 
     throw new IllegalStateException("Unable to provideCDOID: " + idOrObject.getClass().getName());

@@ -37,6 +37,8 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
   @ExcludeFromDump
   private transient ExecutorService executors;
 
+  private boolean shutdownExecutorService = false;
+
   @ExcludeFromDump
   private transient Map<Transaction, TransactionCommitContextEntry> contextEntries = new ConcurrentHashMap<Transaction, TransactionCommitContextEntry>();
 
@@ -58,15 +60,29 @@ public class CommitManager extends Lifecycle implements IRepositoryElement
   {
     if (executors == null)
     {
+      shutdownExecutorService = true;
       executors = Executors.newFixedThreadPool(10);
     }
 
     return executors;
   }
 
-  public void setExecutors(ExecutorService executors)
+  public synchronized void setExecutors(ExecutorService executors)
   {
+    if (shutdownExecutorService)
+    {
+      this.executors.shutdown();
+      shutdownExecutorService = false;
+    }
+
     this.executors = executors;
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    super.doDeactivate();
+    setExecutors(null);
   }
 
   /**

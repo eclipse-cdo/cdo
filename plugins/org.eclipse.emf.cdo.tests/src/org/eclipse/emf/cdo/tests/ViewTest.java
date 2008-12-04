@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
 
+import org.eclipse.net4j.util.ref.ReferenceType;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -212,5 +214,39 @@ public class ViewTest extends AbstractCDOTest
       session.close();
       session2.close();
     }
+  }
+
+  public void testCacheReferences() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.createResource("/my/test1");
+    transaction.commit();
+
+    transaction.createResource("/my/test2");
+    transaction.createResource("/my/test3");
+    transaction.createResource("/my/test4");
+    transaction.createResource("/my/test5");
+
+    boolean done;
+    done = transaction.setCacheReferenceType(ReferenceType.SOFT);
+    assertEquals(false, done);
+
+    done = transaction.setCacheReferenceType(null);
+    assertEquals(false, done);
+
+    done = transaction.setCacheReferenceType(ReferenceType.STRONG);
+    assertEquals(true, done);
+
+    done = transaction.setCacheReferenceType(ReferenceType.SOFT);
+    assertEquals(true, done);
+
+    done = transaction.setCacheReferenceType(ReferenceType.WEAK);
+    assertEquals(true, done);
+
+    done = transaction.setCacheReferenceType(null);
+    assertEquals(true, done);
+
+    session.close();
   }
 }

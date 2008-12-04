@@ -66,6 +66,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -90,6 +91,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -147,7 +149,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     this.viewID = viewID;
     invalidationNotificationEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.getValue();
     revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(OM.PREF_REVISION_LOADING_CHUNK_SIZE.getValue());
-    objects = createObjectsMap();
+    setCacheReferenceType(null);
   }
 
   public int getViewID()
@@ -1280,9 +1282,73 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return changeSubscriptionManager;
   }
 
-  protected ConcurrentMap<CDOID, InternalCDOObject> createObjectsMap()
+  /**
+   * @since 2.0
+   */
+  public boolean setCacheReferenceType(ReferenceType referenceType)
   {
-    return new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
+    if (referenceType == null)
+    {
+      referenceType = ReferenceType.SOFT;
+    }
+
+    ReferenceValueMap<CDOID, InternalCDOObject> newObjects;
+    switch (referenceType)
+    {
+    case STRONG:
+      if (objects instanceof ReferenceValueMap.Strong)
+      {
+        return false;
+      }
+
+      newObjects = new ReferenceValueMap.Strong<CDOID, InternalCDOObject>();
+      break;
+
+    case SOFT:
+      if (objects instanceof ReferenceValueMap.Soft)
+      {
+        return false;
+      }
+
+      newObjects = new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
+      break;
+
+    case WEAK:
+      if (objects instanceof ReferenceValueMap.Weak)
+      {
+        return false;
+      }
+
+      newObjects = new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
+      break;
+
+    default:
+      throw new IllegalArgumentException("referenceType");
+    }
+
+    if (objects == null)
+    {
+      objects = newObjects;
+      return true;
+    }
+
+    for (Entry<CDOID, InternalCDOObject> entry : objects.entrySet())
+    {
+      InternalCDOObject object = entry.getValue();
+      if (object != null)
+      {
+        newObjects.put(entry.getKey(), object);
+      }
+    }
+
+    ConcurrentMap<CDOID, InternalCDOObject> oldObjects = objects;
+    synchronized (objects)
+    {
+      objects = newObjects;
+    }
+
+    oldObjects.clear();
+    return true;
   }
 
   /**

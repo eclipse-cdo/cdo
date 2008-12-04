@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -165,6 +166,17 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @see CDOTransaction#hasConflict()
    */
   public boolean hasConflict();
+
+  /**
+   * Sets the type of references to be used in the internal object cache to either {@link ReferenceType#STRONG STRONG},
+   * {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK WEAK}. If <code>null</code> is passed the default
+   * reference type {@link ReferenceType#SOFT SOFT} is set. If the given reference type does not differ from the one
+   * being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
+   * references are converted to the new type and <code>true</code> is returned.
+   * 
+   * @since 2.0
+   */
+  public boolean setCacheReferenceType(ReferenceType referenceType);
 
   /**
    * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their

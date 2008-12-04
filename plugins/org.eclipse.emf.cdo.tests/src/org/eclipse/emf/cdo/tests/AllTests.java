@@ -20,7 +20,7 @@ public class AllTests extends AllTestsAllConfigs
 {
   public static Test suite()
   {
-    return new AllTests().getTestSuite("CDO Tests");
+    return new AllTests().getTestSuite(AllTestsAllConfigs.class.getName());
   }
 
   @Override

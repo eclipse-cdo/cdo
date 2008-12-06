@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
 
-import org.eclipse.emf.internal.cdo.CDOCommitContext;
+import org.eclipse.emf.internal.cdo.InternalCDOCommitContext;
 import org.eclipse.emf.internal.cdo.revision.CDOPostCommitReferenceAdjuster;
 
 import java.util.HashMap;
@@ -26,7 +26,6 @@ import java.util.Map;
  */
 public final class CommitTransactionResult
 {
-
   private String rollbackMessage;
 
   private long timeStamp;
@@ -35,15 +34,15 @@ public final class CommitTransactionResult
 
   private CDOReferenceAdjuster referenceAdjuster;
 
-  private CDOCommitContext commitContext;
+  private InternalCDOCommitContext commitContext;
 
-  public CommitTransactionResult(CDOCommitContext commitContext, String rollbackMessage)
+  public CommitTransactionResult(InternalCDOCommitContext commitContext, String rollbackMessage)
   {
     this.rollbackMessage = rollbackMessage;
     this.commitContext = commitContext;
   }
 
-  public CommitTransactionResult(CDOCommitContext commitContext, long timeStamp)
+  public CommitTransactionResult(InternalCDOCommitContext commitContext, long timeStamp)
   {
     this.timeStamp = timeStamp;
     this.commitContext = commitContext;
@@ -65,7 +64,7 @@ public final class CommitTransactionResult
     this.referenceAdjuster = referenceAdjuster;
   }
 
-  public CDOCommitContext getCommitContext()
+  public InternalCDOCommitContext getCommitContext()
   {
     return commitContext;
   }

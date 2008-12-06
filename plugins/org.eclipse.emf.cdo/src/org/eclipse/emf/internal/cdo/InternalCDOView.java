@@ -78,6 +78,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider
 
   public boolean isLocked(CDOObject object, RWLockManager.LockType lockType);
 
+  public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter);
+
+  public void handleRemoveAdapter(InternalCDOObject eObject, Adapter adapter);
+
   public void subscribe(EObject eObject, Adapter adapter);
 
   public void unsubscribe(EObject eObject, Adapter adapter);

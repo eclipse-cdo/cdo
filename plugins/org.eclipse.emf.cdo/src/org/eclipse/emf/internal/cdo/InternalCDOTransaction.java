@@ -25,7 +25,7 @@ import java.util.List;
  */
 public interface InternalCDOTransaction extends CDOTransaction, InternalCDOView
 {
-  public CDOCommitContext createCommitContext();
+  public InternalCDOCommitContext createCommitContext();
 
   public void handleRollback(CDOSavepoint savepoint);
 

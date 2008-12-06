@@ -37,7 +37,7 @@ import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
 
-import org.eclipse.emf.internal.cdo.CDOCommitContext;
+import org.eclipse.emf.internal.cdo.InternalCDOCommitContext;
 import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
@@ -61,20 +61,20 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionRequest.class);
 
-  protected CDOCommitContext commitContext;
+  protected InternalCDOCommitContext commitContext;
 
-  public CommitTransactionRequest(CDOClientProtocol protocol, CDOCommitContext commitContext)
+  public CommitTransactionRequest(CDOClientProtocol protocol, InternalCDOCommitContext commitContext)
   {
     this(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION, commitContext);
   }
 
-  public CommitTransactionRequest(CDOClientProtocol protocol, short signalID, CDOCommitContext commitContext)
+  public CommitTransactionRequest(CDOClientProtocol protocol, short signalID, InternalCDOCommitContext commitContext)
   {
     super(protocol, signalID);
     this.commitContext = commitContext;
   }
 
-  protected CDOCommitContext getCommitContext()
+  protected InternalCDOCommitContext getCommitContext()
   {
     return commitContext;
   }

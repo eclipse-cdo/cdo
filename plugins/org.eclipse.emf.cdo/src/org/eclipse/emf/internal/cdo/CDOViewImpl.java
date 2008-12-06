@@ -129,7 +129,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private ChangeSubscriptionManager changeSubscriptionManager = createChangeSubscriptionManager();
 
-  private ViewAdapterManager adapterPolicyManager = createAdapterManager();
+  private AdapterManager adapterPolicyManager = createAdapterManager();
 
   private CDOAdapterPolicy changeSubscriptionPolicy = CDOAdapterPolicy.NONE;
 
@@ -1287,7 +1287,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public ViewAdapterManager getAdapterManager()
+  public AdapterManager getAdapterManager()
   {
     return adapterPolicyManager;
   }
@@ -1295,9 +1295,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  protected ViewAdapterManager createAdapterManager()
+  protected AdapterManager createAdapterManager()
   {
-    return new ViewAdapterManager();
+    return new AdapterManager();
   }
 
   /**
@@ -1568,13 +1568,9 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    * @author Simon McDuff
    * @since 2.0
    */
-  protected class ViewAdapterManager
+  protected class AdapterManager
   {
-    protected Set<CDOObject> objects = new HashBag<CDOObject>();
-
-    public ViewAdapterManager()
-    {
-    }
+    private Set<CDOObject> objects = new HashBag<CDOObject>();
 
     public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {

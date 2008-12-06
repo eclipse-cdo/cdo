@@ -38,7 +38,7 @@ import java.util.concurrent.Callable;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDProvider, CDOCommitContext
+public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDProvider, InternalCDOCommitContext
 {
   private CDOXATransactionImpl transactionManager;
 
@@ -48,13 +48,13 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
 
   private CommitTransactionResult result;
 
-  private CDOCommitContext delegateCommitContext;
+  private InternalCDOCommitContext delegateCommitContext;
 
   private Map<CDOIDExternalTempImpl, InternalCDOTransaction> requestedIDs = new HashMap<CDOIDExternalTempImpl, InternalCDOTransaction>();
 
   private Map<InternalCDOObject, CDOIDExternalTempImpl> objectToID = new HashMap<InternalCDOObject, CDOIDExternalTempImpl>();
 
-  public CDOXATransactionCommitContext(CDOXATransactionImpl manager, CDOCommitContext commitContext)
+  public CDOXATransactionCommitContext(CDOXATransactionImpl manager, InternalCDOCommitContext commitContext)
   {
     transactionManager = manager;
     delegateCommitContext = commitContext;

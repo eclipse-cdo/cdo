@@ -257,7 +257,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
 
     for (InternalCDOTransaction transaction : transactions)
     {
-      CDOCommitContext context = transaction.createCommitContext();
+      InternalCDOCommitContext context = transaction.createCommitContext();
       CDOXATransactionCommitContext xaContext = new CDOXATransactionCommitContext(this, context);
       xaContext.setState(CDOXAPhase1State.INSTANCE);
       activeContext.put(transaction, xaContext);

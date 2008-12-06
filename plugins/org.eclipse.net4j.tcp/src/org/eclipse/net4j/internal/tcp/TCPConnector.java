@@ -132,8 +132,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
-      deactivate();
+      if (isActive())
+      {
+        OM.LOG.error(ex);
+        deactivate();
+      }
     }
   }
 
@@ -154,8 +157,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
-      deactivate();
+      if (isActive())
+      {
+        OM.LOG.error(ex);
+        deactivate();
+      }
     }
   }
 
@@ -203,8 +209,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
-      deactivate();
+      if (isActive())
+      {
+        OM.LOG.error(ex);
+        deactivate();
+      }
     }
   }
 
@@ -276,8 +285,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
-      deactivate();
+      if (isActive())
+      {
+        OM.LOG.error(ex);
+        deactivate();
+      }
     }
   }
 

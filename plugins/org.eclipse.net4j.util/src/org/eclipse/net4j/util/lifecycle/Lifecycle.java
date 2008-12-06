@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * @author Eike Stepper
  */
@@ -29,7 +31,11 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   private static final boolean TRACE_IGNORING = false;
 
+  private static final boolean LOCKING = true;
+
   private ILifecycleState lifecycleState = ILifecycleState.INACTIVE;
+
+  private Semaphore lifecycleSemaphore = new Semaphore(1);
 
   protected Lifecycle()
   {
@@ -37,55 +43,67 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   public final void activate() throws LifecycleException
   {
-    if (lifecycleState == ILifecycleState.INACTIVE)
+    try
     {
-      if (TRACER.isEnabled())
+      if (lifecycleState == ILifecycleState.INACTIVE)
       {
-        TRACER.trace("Activating " + this);//$NON-NLS-1$
-      }
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Activating " + this);
+        }
 
-      lifecycleState = ILifecycleState.ACTIVATING;
-      fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
+        if (LOCKING)
+        {
+          lock();
+        }
 
-      try
-      {
+        lifecycleState = ILifecycleState.ACTIVATING;
+        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
+
         doBeforeActivate();
         doActivate();
-      }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        throw new LifecycleException(ex);
-      }
 
-      if (!isDeferredActivation())
+        if (!isDeferredActivation())
+        {
+          deferredActivate();
+        }
+
+        dump();
+      }
+      else
       {
-        deferredActivate();
+        if (TRACE_IGNORING && TRACER.isEnabled())
+        {
+          TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this);
+        }
       }
     }
-    else
+    catch (RuntimeException ex)
     {
-      if (TRACE_IGNORING && TRACER.isEnabled())
-      {
-        TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this);//$NON-NLS-1$
-      }
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new LifecycleException(ex);
     }
   }
 
   public final Exception deactivate()
   {
-    if (lifecycleState == ILifecycleState.ACTIVE || lifecycleState == ILifecycleState.ACTIVATING)
+    try
     {
-      if (TRACER.isEnabled())
+      if (lifecycleState == ILifecycleState.ACTIVE || lifecycleState == ILifecycleState.ACTIVATING)
       {
-        TRACER.trace("Deactivating " + this);//$NON-NLS-1$
-      }
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Deactivating " + this);
+        }
 
-      try
-      {
+        if (LOCKING)
+        {
+          lock();
+        }
+
         lifecycleState = ILifecycleState.DEACTIVATING;
         doBeforeDeactivate();
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE));
@@ -94,22 +112,21 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         {
           deferredDeactivate();
         }
+
+        return null;
       }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-        return ex;
-      }
-    }
-    else
-    {
+
       if (TRACE_IGNORING && TRACER.isEnabled())
       {
-        TRACER.format("Ignoring deactivation in state {0} for {1}", lifecycleState, this);//$NON-NLS-1$
+        TRACER.format("Ignoring deactivation in state {0} for {1}", lifecycleState, this);
       }
-    }
 
-    return null;
+      return null;
+    }
+    catch (Exception ex)
+    {
+      return ex;
+    }
   }
 
   public final ILifecycleState getLifecycleState()
@@ -137,7 +154,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
     if (DUMPER.isEnabled())
     {
-      DUMPER.trace("DUMP" + ReflectUtil.toString(this)); //$NON-NLS-1$
+      DUMPER.trace("DUMP" + ReflectUtil.toString(this));
     }
   }
 
@@ -185,14 +202,23 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   protected final void deferredActivate()
   {
     lifecycleState = ILifecycleState.ACTIVE;
+    if (LOCKING)
+    {
+      unlock();
+    }
+
     fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED));
-    dump();
   }
 
   protected final void deferredDeactivate() throws Exception
   {
     doDeactivate();
     lifecycleState = ILifecycleState.INACTIVE;
+    if (LOCKING)
+    {
+      unlock();
+    }
+
     fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
   }
 
@@ -220,5 +246,15 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   protected void doDeactivate() throws Exception
   {
+  }
+
+  private void lock() throws InterruptedException
+  {
+    lifecycleSemaphore.acquire();
+  }
+
+  private void unlock()
+  {
+    lifecycleSemaphore.release();
   }
 }

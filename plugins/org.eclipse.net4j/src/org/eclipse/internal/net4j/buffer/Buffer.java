@@ -398,7 +398,6 @@ public class Buffer implements InternalBuffer
 
   private void handleError(Throwable t)
   {
-    OM.LOG.error(t);
     if (errorHandler != null)
     {
       errorHandler.handleError(t);

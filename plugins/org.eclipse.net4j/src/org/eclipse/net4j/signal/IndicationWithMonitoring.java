@@ -106,23 +106,16 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
               break;
             }
 
-            int monitorTotalWork = 0;
-            int monitorWork = 0;
-
             synchronized (monitorLock)
             {
               if (monitor != null)
               {
-                monitorTotalWork = monitor.getTotalWork();
-                monitorWork = monitor.getWork();
+                sendProgress(monitor.getTotalWork(), monitor.getWork());
               }
             }
 
             if (monitor != null)
             {
-              // Keep sendProgress outside the monitorLock, so it doesn't block execute method.
-              sendProgress(monitorTotalWork, monitorWork);
-
               ConcurrencyUtil.sleep(monitorProgressInterval);
             }
           }

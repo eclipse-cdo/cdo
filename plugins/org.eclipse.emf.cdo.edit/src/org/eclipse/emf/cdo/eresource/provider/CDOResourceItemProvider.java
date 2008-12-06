@@ -4,18 +4,18 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource.provider;
 
-import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -194,7 +194,28 @@ public class CDOResourceItemProvider extends CDOResourceNodeItemProvider impleme
   public String getText(Object object)
   {
     CDOResource resource = (CDOResource)object;
-    return CDOProtocolConstants.PROTOCOL_NAME + ":" + resource.getPath();
+    URI uri = resource.getURI();
+    return uri == null ? resource.toString() : uri.toString();
+  }
+
+  /**
+   * Returns the parent of the argument CDOResource
+   * 
+   * @ADDED
+   * @since 2.0
+   */
+  @Override
+  public Object getParent(Object object)
+  {
+    CDOResource resource = (CDOResource)object;
+    if (resource.isRoot())
+    {
+      return resource.getResourceSet();
+    }
+    else
+    {
+      return resource.getFolder();
+    }
   }
 
   /**

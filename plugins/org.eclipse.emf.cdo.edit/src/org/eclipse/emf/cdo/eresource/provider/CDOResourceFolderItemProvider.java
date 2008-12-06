@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOResourceFolderItemProvider.java,v 1.2 2008-10-19 01:29:03 smcduff Exp $
+ * $Id: CDOResourceFolderItemProvider.java,v 1.3 2008-12-06 12:41:41 vroldanbet Exp $
  */
 package org.eclipse.emf.cdo.eresource.provider;
 
@@ -107,14 +107,24 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     String label = ((CDOResourceFolder)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_CDOResourceFolder_type")
-        : getString("_UI_CDOResourceFolder_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_CDOResourceFolder_type") + "?" : "/" + label;
+  }
+
+  /**
+   * Returns the parent of the folder. Might be another folder, or the root resource
+   * 
+   * @ADDED
+   */
+  @Override
+  public Object getParent(Object object)
+  {
+    return ((CDOResourceFolder)object).eContainer();
   }
 
   /**

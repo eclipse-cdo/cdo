@@ -20,7 +20,7 @@ import java.util.Set;
  * 
  * @author Simon McDuff
  * @see CDOInvalidationNotification
- * @see CDOChangeSubscriptionPolicy
+ * @see CDOAdapterPolicy
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */

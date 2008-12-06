@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOCommitContext;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
@@ -25,7 +26,7 @@ public abstract class CDODefaultTransactionHandler implements CDOTransactionHand
   {
   }
 
-  /**
+  /*
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
   public void attachingObject(CDOTransaction transaction, CDOObject object)
@@ -33,7 +34,7 @@ public abstract class CDODefaultTransactionHandler implements CDOTransactionHand
     // Do nothing
   }
 
-  /**
+  /*
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
   public void detachingObject(CDOTransaction transaction, CDOObject object)
@@ -41,7 +42,7 @@ public abstract class CDODefaultTransactionHandler implements CDOTransactionHand
     // Do nothing
   }
 
-  /**
+  /*
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
@@ -49,18 +50,26 @@ public abstract class CDODefaultTransactionHandler implements CDOTransactionHand
     // Do nothing
   }
 
-  /**
+  /*
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
-  public void committingTransaction(CDOTransaction transaction)
+  public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
     // Do nothing
   }
 
-  /**
+  /*
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
   public void rolledBackTransaction(CDOTransaction transaction)
+  {
+    // Do nothing
+  }
+
+  /*
+   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   */
+  public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
     // Do nothing
   }

@@ -11,7 +11,7 @@
 
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOChangeSubscriptionPolicy;
+import org.eclipse.emf.cdo.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -55,7 +55,7 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
 
     transaction1.commit();
 
-    transaction2.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);
+    transaction2.setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     CDOResource res2 = transaction2.getResource("/res1");
     Company companyA2 = (Company)res2.getContents().get(0);
     final TestAdapter companyA2Adapter = new TestAdapter();

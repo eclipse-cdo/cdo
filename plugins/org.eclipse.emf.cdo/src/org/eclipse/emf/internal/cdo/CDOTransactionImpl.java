@@ -457,7 +457,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOCommitContext createCommitContext()
+  public InternalCDOCommitContext createCommitContext()
   {
     return new CDOCommitContextImpl();
   }
@@ -1049,7 +1049,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @author Simon McDuff
    */
-  private class CDOCommitContextImpl implements CDOCommitContext
+  private class CDOCommitContextImpl implements InternalCDOCommitContext
   {
     private Map<CDOID, CDOResource> newResources;
 
@@ -1120,7 +1120,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         for (CDOTransactionHandler handler : getHandlers())
         {
-          handler.committingTransaction(getTransaction());
+          handler.committingTransaction(getTransaction(), this);
         }
 
         try
@@ -1162,11 +1162,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             ((InternalCDOPackage)newPackage).setPersistent(true);
           }
 
-          ChangeSubscriptionManager changeSubscriptionManager = getChangeSubscriptionManager();
-          changeSubscriptionManager.handleNewObjects(getNewObjects().values());
-          changeSubscriptionManager.handleNewObjects(getNewResources().values());
-          changeSubscriptionManager.handleDetachedObjects(getDetachedObjects().keySet());
-
           long timeStamp = result.getTimeStamp();
 
           Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
@@ -1191,6 +1186,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
             session.handleCommitNotification(timeStamp, dirtyIDs, detachedIDs, deltasCopy, getTransaction());
           }
+
+          for (CDOTransactionHandler handler : getHandlers())
+          {
+            handler.committedTransaction(getTransaction(), this);
+          }
+
+          getChangeSubscriptionManager().committedTransaction(getTransaction(), this);
+          getAdapterManager().committedTransaction(getTransaction(), this);
 
           cleanUp();
           lastCommitTime = timeStamp;

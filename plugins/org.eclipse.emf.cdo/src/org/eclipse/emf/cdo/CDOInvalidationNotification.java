@@ -25,7 +25,7 @@ import org.eclipse.emf.common.notify.Notification;
  * 
  * @author Simon McDuff
  * @see CDOSessionInvalidationEvent
- * @see CDOChangeSubscriptionPolicy
+ * @see CDOAdapterPolicy
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOInvalidationNotification extends CDONotification

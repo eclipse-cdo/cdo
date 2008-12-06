@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOCommitContext;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
@@ -377,7 +378,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
       listOfAddingObject.add(object);
     }
 
-    public void committingTransaction(CDOTransaction transaction)
+    public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
       numberOfCommit++;
     }
@@ -395,6 +396,10 @@ public class TransactionHandlerTest extends AbstractCDOTest
     public void rolledBackTransaction(CDOTransaction transaction)
     {
       numberOfRollback++;
+    }
+
+    public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+    {
     }
   }
 }

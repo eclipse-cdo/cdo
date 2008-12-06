@@ -18,6 +18,38 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/InternalCDOCommitContext.java" type="org.eclipse.emf.internal.cdo.InternalCDOCommitContext">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="InternalCDOCommitContext"/>
+                <message_argument value="postCommit(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionCommitContext.java" type="org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext">
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXATransactionCommitContext"/>
+                <message_argument value="setResult(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXATransactionCommitContext"/>
+                <message_argument value="getResult()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="CommitTransactionResult"/>
+                <message_argument value="CDOXATransactionCommitContext"/>
+                <message_argument value="postCommit(CommitTransactionResult)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionImpl.java" type="org.eclipse.emf.internal.cdo.CDOXATransactionImpl$CDOXAState">
         <filter id="643846161">
             <message_arguments>
@@ -36,29 +68,6 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="cdoInternalPostLoad(boolean)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionCommitContext.java" type="org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext">
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="CommitTransactionResult"/>
-                <message_argument value="CDOXATransactionCommitContext"/>
-                <message_argument value="setResult(CommitTransactionResult)"/>
-            </message_arguments>
-        </filter>
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="CommitTransactionResult"/>
-                <message_argument value="CDOXATransactionCommitContext"/>
-                <message_argument value="postCommit(CommitTransactionResult)"/>
-            </message_arguments>
-        </filter>
-        <filter id="643842064">
-            <message_arguments>
-                <message_argument value="CommitTransactionResult"/>
-                <message_argument value="CDOXATransactionCommitContext"/>
-                <message_argument value="getResult()"/>
             </message_arguments>
         </filter>
     </resource>

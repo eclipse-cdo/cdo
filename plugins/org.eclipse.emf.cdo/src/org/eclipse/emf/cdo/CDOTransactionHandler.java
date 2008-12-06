@@ -48,8 +48,18 @@ public interface CDOTransactionHandler
    * Called by a <code>CDOTransaction</code> <b>before</b> it is being committed. The implementor of this method is
    * allowed to throw an unchecked exception that will propagate up to the operation that is about to commit the
    * transaction.
+   * 
+   * @since 2.0
    */
-  public void committingTransaction(CDOTransaction transaction);
+  public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext);
+
+  /**
+   * Called by a <code>CDOTransaction</code> <b>after</b> it is being committed. The implementor of this method is
+   * <b>not</b> allowed to throw an unchecked exception.
+   * 
+   * @since 2.0
+   */
+  public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext);
 
   /**
    * Called by a <code>CDOTransaction</code> <b>after</b> it is rolled back. If the implementor of this method throws an

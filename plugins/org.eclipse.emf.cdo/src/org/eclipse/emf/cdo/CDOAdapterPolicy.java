@@ -15,10 +15,10 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Specifies a change subscription policy.
+ * Specifies an adapter policy.
  * <p>
  * To activate a policy, you must do the following: <br>
- * <code>view.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
+ * <code>view.setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);</code>
  * <p>
  * To register an object, you must add an adapter to the object in which you are interested:<br>
  * <code>eObject.eAdapters().add(myAdapter);</code>
@@ -26,11 +26,10 @@ import org.eclipse.emf.ecore.EObject;
  * By activating this feature, each object having at least one adapter that matches the current policy will be
  * registered with the server and will be notified for each change occurring in the scope of any other transaction.
  * <p>
- * {@link CDOChangeSubscriptionPolicy#NONE} - Disabled. <br>
- * {@link CDOChangeSubscriptionPolicy#ALL} - Enabled for all adapters used.<br>
- * {@link CDOChangeSubscriptionPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
- * Any other class that implement {@link CDOChangeSubscriptionPolicy} will enable for whatever rules defined in that
- * class. <br>
+ * {@link CDOAdapterPolicy#NONE} - Disabled. <br>
+ * {@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.<br>
+ * {@link CDOAdapterPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
+ * Any other class that implement {@link CDOAdapterPolicy} will enable for whatever rules defined in that class. <br>
  * <p>
  * If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be registered
  * with the server and you will receive all changes from other transaction.
@@ -48,31 +47,31 @@ import org.eclipse.emf.ecore.EObject;
  * @see CDOInvalidationNotification
  * @since 2.0
  */
-public interface CDOChangeSubscriptionPolicy
+public interface CDOAdapterPolicy
 {
-  public static final CDOChangeSubscriptionPolicy NONE = new CDOChangeSubscriptionPolicy()
+  public static final CDOAdapterPolicy NONE = new CDOAdapterPolicy()
   {
-    public boolean shouldSubscribe(EObject eObject, Adapter adapter)
+    public boolean isValid(EObject eObject, Adapter adapter)
     {
       return false;
     }
   };
 
-  public static final CDOChangeSubscriptionPolicy ONLY_CDO_ADAPTER = new CDOChangeSubscriptionPolicy()
+  public static final CDOAdapterPolicy ONLY_CDO_ADAPTER = new CDOAdapterPolicy()
   {
-    public boolean shouldSubscribe(EObject eObject, Adapter adapter)
+    public boolean isValid(EObject eObject, Adapter adapter)
     {
       return adapter instanceof CDOAdapter;
     }
   };
 
-  public static final CDOChangeSubscriptionPolicy ALL = new CDOChangeSubscriptionPolicy()
+  public static final CDOAdapterPolicy ALL = new CDOAdapterPolicy()
   {
-    public boolean shouldSubscribe(EObject eObject, Adapter adapter)
+    public boolean isValid(EObject eObject, Adapter adapter)
     {
       return true;
     }
   };
 
-  public boolean shouldSubscribe(EObject eObject, Adapter adapter);
+  public boolean isValid(EObject eObject, Adapter adapter);
 }

@@ -26,7 +26,7 @@ import java.util.Set;
  * 
  * @author Eike Stepper
  * @see CDOInvalidationNotification
- * @see CDOChangeSubscriptionPolicy
+ * @see CDOAdapterPolicy
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSessionInvalidationEvent extends CDOSessionEvent

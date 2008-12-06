@@ -12,13 +12,15 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDOChangeSubscriptionPolicy;
+import org.eclipse.emf.cdo.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.CDOCommitContext;
 import org.eclipse.emf.cdo.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOQuery;
 import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewEvent;
 import org.eclipse.emf.cdo.CDOViewInvalidationEvent;
@@ -64,6 +66,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceType;
@@ -124,21 +127,19 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private CDOResourceImpl rootResource;
 
+  private ChangeSubscriptionManager changeSubscriptionManager = createChangeSubscriptionManager();
+
+  private ViewAdapterManager adapterPolicyManager = createAdapterManager();
+
+  private CDOAdapterPolicy changeSubscriptionPolicy = CDOAdapterPolicy.NONE;
+
+  private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.NONE;
+
   @ExcludeFromDump
   private transient CDOID lastLookupID;
 
   @ExcludeFromDump
   private transient InternalCDOObject lastLookupObject;
-
-  /**
-   * @since 2.0
-   */
-  private ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
-
-  /**
-   * @since 2.0
-   */
-  private CDOChangeSubscriptionPolicy changeSubscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
 
   /**
    * @since 2.0
@@ -339,7 +340,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public CDOChangeSubscriptionPolicy getChangeSubscriptionPolicy()
+  public CDOAdapterPolicy getChangeSubscriptionPolicy()
   {
     return changeSubscriptionPolicy;
   }
@@ -347,17 +348,42 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public void setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy subscriptionPolicy)
+  public void setChangeSubscriptionPolicy(CDOAdapterPolicy subscriptionPolicy)
   {
     if (subscriptionPolicy == null)
     {
-      subscriptionPolicy = CDOChangeSubscriptionPolicy.NONE;
+      subscriptionPolicy = CDOAdapterPolicy.NONE;
     }
 
     if (changeSubscriptionPolicy != subscriptionPolicy)
     {
       changeSubscriptionPolicy = subscriptionPolicy;
       changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOAdapterPolicy getStrongReferencePolicy()
+  {
+    return adapterReferencePolicy;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setStrongReferencePolicy(CDOAdapterPolicy adapterPolicy)
+  {
+    if (adapterPolicy == null)
+    {
+      adapterPolicy = CDOAdapterPolicy.NONE;
+    }
+
+    if (adapterReferencePolicy != adapterPolicy)
+    {
+      adapterReferencePolicy = adapterPolicy;
+      adapterPolicyManager.reset();
     }
   }
 
@@ -1213,7 +1239,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public void handleChangeSubscription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects)
   {
-    if (getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
+    if (getChangeSubscriptionPolicy() != CDOAdapterPolicy.NONE)
     {
       if (deltas != null)
       {
@@ -1248,6 +1274,56 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         getChangeSubscriptionManager().handleDetachedObjects(detachedObjects);
       }
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected ChangeSubscriptionManager createChangeSubscriptionManager()
+  {
+    return new ChangeSubscriptionManager();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public ViewAdapterManager getAdapterManager()
+  {
+    return adapterPolicyManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected ViewAdapterManager createAdapterManager()
+  {
+    return new ViewAdapterManager();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter)
+  {
+    if (!FSMUtil.isNew(eObject))
+    {
+      subscribe(eObject, adapter);
+    }
+
+    adapterPolicyManager.attachAdapter(eObject, adapter);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleRemoveAdapter(InternalCDOObject eObject, Adapter adapter)
+  {
+    if (!FSMUtil.isNew(eObject))
+    {
+      unsubscribe(eObject, adapter);
+    }
+
+    adapterPolicyManager.detachAdapter(eObject, adapter);
   }
 
   /**
@@ -1492,12 +1568,112 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    * @author Simon McDuff
    * @since 2.0
    */
+  protected class ViewAdapterManager
+  {
+    protected Set<CDOObject> objects = new HashBag<CDOObject>();
+
+    public ViewAdapterManager()
+    {
+    }
+
+    public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+    {
+      if (getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
+      {
+        for (CDOObject object : commitContext.getNewObjects().values())
+        {
+          attachObject(object);
+        }
+
+        for (CDOObject object : commitContext.getNewResources().values())
+        {
+          attachObject(object);
+        }
+
+        for (CDOObject object : commitContext.getDetachedObjects().values())
+        {
+          detachObject(object);
+        }
+      }
+    }
+
+    protected synchronized void attachObject(CDOObject object)
+    {
+      int count = 0;
+      for (Adapter adapter : object.eAdapters())
+      {
+        if (adapterReferencePolicy.isValid(object, adapter))
+        {
+          count++;
+        }
+      }
+
+      for (int i = 0; i < count; i++)
+      {
+        objects.add(object);
+      }
+    }
+
+    protected synchronized void detachObject(CDOObject object)
+    {
+      while (objects.remove(object))
+      {
+        // Do nothing
+      }
+    }
+
+    protected synchronized void attachAdapter(CDOObject object, Adapter adapter)
+    {
+      if (getStrongReferencePolicy().isValid(object, adapter))
+      {
+        objects.add(object);
+      }
+    }
+
+    protected synchronized void detachAdapter(CDOObject object, Adapter adapter)
+    {
+      if (getStrongReferencePolicy().isValid(object, adapter))
+      {
+        objects.add(object);
+      }
+    }
+
+    public synchronized void reset()
+    {
+      // Keep the object in memory
+      Set<CDOObject> oldObject = objects;
+      objects = new HashBag<CDOObject>();
+      if (getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
+      {
+        InternalCDOObject objects[] = getObjectsArray();
+        for (int i = 0; i < objects.length; i++)
+        {
+          InternalCDOObject object = objects[i];
+          attachObject(object);
+        }
+      }
+
+      oldObject.clear();
+    }
+  };
+
+  /**
+   * @author Simon McDuff
+   * @since 2.0
+   */
   protected class ChangeSubscriptionManager
   {
     private Map<CDOID, SubscribeEntry> subscriptions = new HashMap<CDOID, SubscribeEntry>()
     {
       private static final long serialVersionUID = 1L;
     };
+
+    public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+    {
+      handleNewObjects(commitContext.getNewObjects().values());
+      handleNewObjects(commitContext.getNewObjects().values());
+      handleDetachedObjects(commitContext.getDetachedObjects().keySet());
+    }
 
     public void subscribe(EObject eObject, Adapter adapter)
     {
@@ -1518,7 +1694,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       {
         subscriptions.clear();
         List<CDOID> cdoIDs = new ArrayList<CDOID>();
-        if (changeSubscriptionPolicy != CDOChangeSubscriptionPolicy.NONE)
+        if (changeSubscriptionPolicy != CDOAdapterPolicy.NONE)
         {
           for (InternalCDOObject cdoObject : getObjectsArray())
           {
@@ -1605,7 +1781,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         {
           for (Adapter adapter : object.eAdapters())
           {
-            if (changeSubscriptionPolicy.shouldSubscribe(object, adapter))
+            if (changeSubscriptionPolicy.isValid(object, adapter))
             {
               count++;
             }
@@ -1620,7 +1796,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     {
       synchronized (subscriptions)
       {
-        if (getChangeSubscriptionPolicy().shouldSubscribe(eObject, adapter))
+        if (getChangeSubscriptionPolicy().isValid(eObject, adapter))
         {
           InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, CDOViewImpl.this);
           if (internalCDOObject.cdoView() != CDOViewImpl.this)
@@ -1648,7 +1824,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           }
 
           // Notification need to be enable to send correct value to the server
-          if (getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
+          if (getChangeSubscriptionPolicy() != CDOAdapterPolicy.NONE)
           {
             request(Collections.singletonList(id), false, true);
           }
@@ -1666,7 +1842,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           subscriptions.remove(id);
 
           // Notification need to be enable to send correct value to the server
-          if (getChangeSubscriptionPolicy() != CDOChangeSubscriptionPolicy.NONE)
+          if (getChangeSubscriptionPolicy() != CDOAdapterPolicy.NONE)
           {
             request(Collections.singletonList(id), false, false);
           }

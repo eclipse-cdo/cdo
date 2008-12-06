@@ -39,7 +39,7 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
 
   public void commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception
   {
-    CDOCommitContext commitContext = transaction.createCommitContext();
+    InternalCDOCommitContext commitContext = transaction.createCommitContext();
     if (TRACER.isEnabled())
     {
       TRACER.format("CDOCommitContext.preCommit");

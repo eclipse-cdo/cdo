@@ -15,13 +15,14 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * @author Eike Stepper
@@ -30,6 +31,10 @@ import java.util.concurrent.ExecutorService;
 public abstract class IndicationWithMonitoring extends IndicationWithResponse
 {
   private Monitor monitor;
+
+  private Object monitorLock = new Object();
+
+  private Future<?> monitorFuture;
 
   private long lastMonitorAccess;
 
@@ -66,7 +71,17 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     }
     finally
     {
-      monitor = null;
+      synchronized (monitorLock)
+      {
+        if (monitor != null)
+        {
+          monitor = null;
+          if (monitorFuture != null)
+          {
+            monitorFuture.cancel(true);
+          }
+        }
+      }
     }
   }
 
@@ -79,7 +94,7 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     {
       monitor = new LastAccessMonitor();
       setLastMonitorAccess();
-      executorService.execute(new Runnable()
+      monitorFuture = executorService.submit(new Runnable()
       {
         public void run()
         {
@@ -91,8 +106,25 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
               break;
             }
 
-            sendProgress(monitor.getTotalWork(), monitor.getWork());
-            ConcurrencyUtil.sleep(monitorProgressInterval);
+            int monitorTotalWork = 0;
+            int monitorWork = 0;
+
+            synchronized (monitorLock)
+            {
+              if (monitor != null)
+              {
+                monitorTotalWork = monitor.getTotalWork();
+                monitorWork = monitor.getWork();
+              }
+            }
+
+            if (monitor != null)
+            {
+              // Keep sendProgress outside the monitorLock, so it doesn't block execute method.
+              sendProgress(monitorTotalWork, monitorWork);
+
+              ConcurrencyUtil.sleep(monitorProgressInterval);
+            }
           }
         }
 
@@ -143,9 +175,12 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
 
   void setMonitorCanceled()
   {
-    if (monitor != null)
+    synchronized (monitorLock)
     {
-      monitor.cancel();
+      if (monitor != null)
+      {
+        monitor.cancel();
+      }
     }
   }
 

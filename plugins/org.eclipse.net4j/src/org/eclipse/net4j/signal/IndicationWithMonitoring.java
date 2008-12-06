@@ -110,6 +110,7 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
             {
               if (monitor != null)
               {
+                // Keep sendProgress into the locks... otherwise when interrupt it seems to freeze.
                 sendProgress(monitor.getTotalWork(), monitor.getWork());
               }
             }

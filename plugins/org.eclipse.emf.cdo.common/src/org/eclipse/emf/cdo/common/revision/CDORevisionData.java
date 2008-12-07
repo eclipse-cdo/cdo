@@ -19,7 +19,10 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
  */
 public interface CDORevisionData
 {
-  public CDORevision getRevision();
+  /**
+   * @since 2.0
+   */
+  public CDORevision revision();
 
   public CDOID getResourceID();
 

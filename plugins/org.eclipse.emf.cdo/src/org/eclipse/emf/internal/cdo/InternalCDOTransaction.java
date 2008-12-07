@@ -23,7 +23,7 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public interface InternalCDOTransaction extends CDOTransaction, InternalCDOView
+public interface InternalCDOTransaction extends CDOTransaction, InternalCDOView, CDOTransaction.Options
 {
   public InternalCDOCommitContext createCommitContext();
 

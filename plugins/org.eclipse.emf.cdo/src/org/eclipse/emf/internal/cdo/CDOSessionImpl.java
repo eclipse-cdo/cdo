@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOTimeStampContext;
 import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.CDOSession.Repository;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -89,7 +90,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession
+public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession, Repository
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -172,6 +173,22 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
+  public CDOSession.Options options()
+  {
+    return this;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Repository repository()
+  {
+    return this;
+  }
+
+  /**
+   * @since 2.0
+   */
   public String getUserID()
   {
     IChannel channel = protocol.getChannel();
@@ -217,7 +234,10 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     return protocol;
   }
 
-  public String getRepositoryName()
+  /**
+   * @since 2.0
+   */
+  public String getName()
   {
     return repositoryName;
   }
@@ -227,7 +247,10 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     this.repositoryName = repositoryName;
   }
 
-  public String getRepositoryUUID()
+  /**
+   * @since 2.0
+   */
+  public String getUUID()
   {
     return repositoryUUID;
   }
@@ -235,7 +258,7 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  public long getRepositoryCreationTime()
+  public long getCreationTime()
   {
     checkActive();
     return repositoryCreationTime;
@@ -244,15 +267,15 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  public long getRepositoryTime()
+  public long getCurrentTime()
   {
-    return getRepositoryTime(false);
+    return getCurrentTime(false);
   }
 
   /**
    * @since 2.0
    */
-  public long getRepositoryTime(boolean forceRefresh)
+  public long getCurrentTime(boolean forceRefresh)
   {
     checkActive();
     if (repositoryTimeResult == null || forceRefresh)
@@ -278,15 +301,9 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  public boolean isRepositorySupportingAudits()
+  public boolean isSupportingAudits()
   {
     return repositorySupportingAudits;
-  }
-
-  public boolean isOpen()
-  {
-    IChannel channel = protocol.getChannel();
-    return channel != null;
   }
 
   public void close()

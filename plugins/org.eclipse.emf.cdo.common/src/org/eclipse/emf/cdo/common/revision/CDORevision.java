@@ -58,7 +58,10 @@ public interface CDORevision
 
   public boolean isResource();
 
-  public CDORevisionData getData();
+  /**
+   * @since 2.0
+   */
+  public CDORevisionData data();
 
   public CDORevisionDelta compare(CDORevision origin);
 

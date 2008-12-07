@@ -125,16 +125,17 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void add(InternalCDOView view)
   {
+    String repositoryUUID = view.getSession().repository().getUUID();
     synchronized (views)
     {
-      CDOView lookupView = mapOfViews.get(view.getSession().getRepositoryUUID());
+      CDOView lookupView = mapOfViews.get(repositoryUUID);
       if (lookupView != null)
       {
         throw new RuntimeException("Only one view/transaction per repository can be open for the same resource set");
       }
 
       views.add(view);
-      mapOfViews.put(view.getSession().getRepositoryUUID(), view);
+      mapOfViews.put(repositoryUUID, view);
 
       if (views.size() == 1)
       {
@@ -151,12 +152,13 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void remove(InternalCDOView view)
   {
+    String repositoryUUID = view.getSession().repository().getUUID();
     List<Resource> resToRemove = new ArrayList<Resource>();
     synchronized (views)
     {
       // It is important to remove view from the list first. It is the way we can differentiate close and detach.
       views.remove(view);
-      mapOfViews.remove(view.getSession().getRepositoryUUID());
+      mapOfViews.remove(repositoryUUID);
 
       for (Resource resource : getResourceSet().getResources())
       {

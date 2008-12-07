@@ -27,15 +27,24 @@ public interface CDOProtocolSession extends IUserAware
   /**
    * @since 2.0
    */
-  public boolean isPassiveUpdateEnabled();
-
-  /**
-   * @since 2.0
-   */
   public void close();
 
   /**
    * @since 2.0
    */
   public boolean isClosed();
+
+  /**
+   * @since 2.0
+   */
+  public Options options();
+
+  /**
+   * @author Simon McDuff
+   * @since 2.0
+   */
+  public interface Options
+  {
+    public boolean isPassiveUpdateEnabled();
+  }
 }

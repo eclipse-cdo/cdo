@@ -200,7 +200,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
     {
       CDOSession session = openSession(getModel5Package());
-      session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 100));
+      session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 100));
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/res1");
 

@@ -14,6 +14,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOProtocolSession;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -56,7 +57,8 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class Session extends Container<IView> implements ISession, CDOIDProvider, CDOPackageURICompressor
+public class Session extends Container<IView> implements ISession, CDOIDProvider, CDOPackageURICompressor,
+    CDOProtocolSession.Options
 {
   private SessionManager sessionManager;
 
@@ -100,6 +102,14 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     {
       throw new SessionCreationException(ex);
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Options options()
+  {
+    return this;
   }
 
   public SessionManager getSessionManager()

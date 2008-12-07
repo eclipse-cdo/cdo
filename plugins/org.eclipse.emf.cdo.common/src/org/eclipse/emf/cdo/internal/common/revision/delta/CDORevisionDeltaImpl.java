@@ -84,8 +84,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
     compare(originRevision, dirtyRevision);
 
-    CDORevisionData originData = originRevision.getData();
-    CDORevisionData dirtyData = dirtyRevision.getData();
+    CDORevisionData originData = originRevision.data();
+    CDORevisionData dirtyData = dirtyRevision.data();
     if (!compare(originData.getContainerID(), dirtyData.getContainerID())
         || !compare(originData.getContainingFeatureID(), dirtyData.getContainingFeatureID())
         || !compare(originData.getResourceID(), dirtyData.getResourceID()))
@@ -219,8 +219,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       CDOFeature feature = features[i];
       if (feature.isMany())
       {
-        int originSize = originRevision.getData().size(feature);
-        int dirtySize = dirtyRevision.getData().size(feature);
+        int originSize = originRevision.data().size(feature);
+        int dirtySize = dirtyRevision.data().size(feature);
         if (dirtySize == 0 && originSize > 0)
         {
           addFeatureDelta(new CDOClearFeatureDeltaImpl(feature));
@@ -233,8 +233,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
           {
             for (; originIndex < originSize && dirtyIndex < dirtySize; dirtyIndex++, originIndex++)
             {
-              Object originValue = originRevision.getData().get(feature, originIndex);
-              Object dirtyValue = dirtyRevision.getData().get(feature, dirtyIndex);
+              Object originValue = originRevision.data().get(feature, originIndex);
+              Object dirtyValue = dirtyRevision.data().get(feature, dirtyIndex);
 
               if (!compare(originValue, dirtyValue))
               {
@@ -256,7 +256,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
             for (int k = 0; k < dirtySize; k++)
             {
-              Object dirtyValue = dirtyRevision.getData().get(feature, k);
+              Object dirtyValue = dirtyRevision.data().get(feature, k);
               addFeatureDelta(new CDOAddFeatureDeltaImpl(feature, k, dirtyValue));
             }
           }
@@ -264,8 +264,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       }
       else
       {
-        Object originValue = originRevision.getData().get(feature, 0);
-        Object dirtyValue = dirtyRevision.getData().get(feature, 0);
+        Object originValue = originRevision.data().get(feature, 0);
+        Object dirtyValue = dirtyRevision.data().get(feature, 0);
         if (!compare(originValue, dirtyValue))
         {
           if (dirtyValue == null)

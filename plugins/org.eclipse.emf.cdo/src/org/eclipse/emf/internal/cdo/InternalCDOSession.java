@@ -33,7 +33,7 @@ import java.util.Set;
  * @since 2.0
  */
 public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, CDOPackageURICompressor,
-    ILifecycle.Introspection
+    ILifecycle.Introspection, CDOSession.Options
 {
   public CDOSessionProtocol getProtocol();
 

@@ -29,66 +29,18 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   /**
    * @since 2.0
    */
+  public Repository repository();
+
+  /**
+   * @since 2.0
+   */
   public CDOSessionProtocol getProtocol();
-
-  public boolean isOpen();
-
-  public String getRepositoryName();
-
-  public String getRepositoryUUID();
-
-  /**
-   * @since 2.0
-   */
-  public long getRepositoryCreationTime();
-
-  /**
-   * @since 2.0
-   */
-  public long getRepositoryTime();
-
-  /**
-   * @since 2.0
-   */
-  public long getRepositoryTime(boolean forceRefresh);
-
-  /**
-   * @since 2.0
-   */
-  public boolean isRepositorySupportingAudits();
 
   public CDOPackageRegistry getPackageRegistry();
 
   public CDOSessionPackageManager getPackageManager();
 
   public CDORevisionManager getRevisionManager();
-
-  /**
-   * @since 2.0
-   */
-  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
-
-  /**
-   * @since 2.0
-   */
-  public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
-
-  /**
-   * Specifies whether objects will be invalidated due by other users changes.
-   * <p>
-   * E.g.: <code>session.setPassiveUpdateEnabled(false);</code>
-   * <p>
-   * By default this property is enabled. If this property is disabled the latest versions of objects can still be
-   * obtained by calling {@link #refresh()}.
-   * <p>
-   * Passive update can be disabled in cases where more performance is needed and/or more control over when objects will
-   * be refreshed.
-   * <p>
-   * When enabled again, a refresh will be automatically performed to be in sync with the server.
-   * 
-   * @since 2.0
-   */
-  public void setPassiveUpdateEnabled(boolean enabled);
 
   public CDOView[] getViews();
 
@@ -114,4 +66,58 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * @since 2.0
    */
   public Collection<CDOTimeStampContext> refresh();
+
+  /**
+   * @since 2.0
+   */
+  public CDOSession.Options options();
+
+  /**
+   * @author Simon McDuff
+   * @since 2.0
+   */
+  public interface Options extends CDOProtocolSession.Options
+  {
+    /**
+     * Specifies whether objects will be invalidated due by other users changes.
+     * <p>
+     * E.g.: <code>session.setPassiveUpdateEnabled(false);</code>
+     * <p>
+     * By default this property is enabled. If this property is disabled the latest versions of objects can still be
+     * obtained by calling {@link #refresh()}.
+     * <p>
+     * Passive update can be disabled in cases where more performance is needed and/or more control over when objects
+     * will be refreshed.
+     * <p>
+     * When enabled again, a refresh will be automatically performed to be in sync with the server.
+     */
+    public void setPassiveUpdateEnabled(boolean enabled);
+
+    /**
+     */
+    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
+
+    /**
+     */
+    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface Repository
+  {
+    public String getName();
+
+    public String getUUID();
+
+    public long getCreationTime();
+
+    public long getCurrentTime();
+
+    public long getCurrentTime(boolean forceRefresh);
+
+    public boolean isSupportingAudits();
+  }
 }

@@ -137,9 +137,9 @@ public class ResourceTest extends AbstractCDOTest
     CDOObject cdoRootResource = CDOUtil.getCDOObject(transaction.getRootResource());
     assertClean(cdoResource, transaction);
     assertClean(cdoRootResource, transaction);
-    assertEquals(CDOID.NULL, cdoResource.cdoRevision().getData().getContainerID());
-    assertEquals(cdoRootResource.cdoID(), cdoResource.cdoRevision().getData().getResourceID());
-    assertEquals(cdoRootResource.cdoID(), cdoRootResource.cdoRevision().getData().getResourceID());
+    assertEquals(CDOID.NULL, cdoResource.cdoRevision().data().getContainerID());
+    assertEquals(cdoRootResource.cdoID(), cdoResource.cdoRevision().data().getResourceID());
+    assertEquals(cdoRootResource.cdoID(), cdoRootResource.cdoRevision().data().getResourceID());
     assertEquals(true, transaction.getResourceSet().getResources().contains(resource));
     assertEquals(true, transaction.getResourceSet().getResources().contains(transaction.getRootResource()));
 
@@ -673,13 +673,13 @@ public class ResourceTest extends AbstractCDOTest
 
       if (i == 0)
       {
-        assertEquals(cdoRootResource.cdoID(), cdoResourceNode.cdoRevision().getData().getResourceID());
-        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().getData().getContainerID());
+        assertEquals(cdoRootResource.cdoID(), cdoResourceNode.cdoRevision().data().getResourceID());
+        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().data().getContainerID());
       }
       else
       {
-        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().getData().getResourceID());
-        assertEquals(cdoParent.cdoID(), cdoResourceNode.cdoRevision().getData().getContainerID());
+        assertEquals(CDOID.NULL, cdoResourceNode.cdoRevision().data().getResourceID());
+        assertEquals(cdoParent.cdoID(), cdoResourceNode.cdoRevision().data().getContainerID());
       }
 
       cdoParent = cdoResourceNode;

@@ -341,7 +341,7 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public CDORevisionData getData()
+    public CDORevisionData data()
     {
       throw new UnsupportedOperationException();
     }
@@ -431,7 +431,7 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public CDORevision getRevision()
+    public CDORevision revision()
     {
       throw new UnsupportedOperationException();
     }

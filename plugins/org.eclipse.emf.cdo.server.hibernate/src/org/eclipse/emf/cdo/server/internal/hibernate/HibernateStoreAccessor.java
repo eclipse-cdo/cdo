@@ -290,7 +290,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     for (Object o : result)
     {
       final CDORevision revision = (CDORevision)o;
-      String revisionName = (String)revision.getData().get(getResourceNameFeature(), 0);
+      String revisionName = (String)revision.data().get(getResourceNameFeature(), 0);
       boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
           : revisionName.startsWith(name);
 

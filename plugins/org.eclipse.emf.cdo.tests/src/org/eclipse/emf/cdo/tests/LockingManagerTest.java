@@ -469,7 +469,7 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
     transaction.commit();
-    transaction.setAutoReleaseLocksEnabled(false);
+    transaction.options().setAutoReleaseLocksEnabled(false);
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     cdoCompany.cdoWriteLock().lock();
@@ -495,7 +495,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.commit();
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
 
-    transaction.setAutoReleaseLocksEnabled(true);
+    transaction.options().setAutoReleaseLocksEnabled(true);
     transaction.commit();
     assertEquals(false, cdoCompany.cdoReadLock().isLocked());
   }
@@ -509,7 +509,7 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOResource res = transaction.createResource("/res1");
     res.getContents().add(company);
     transaction.commit();
-    transaction.setAutoReleaseLocksEnabled(false);
+    transaction.options().setAutoReleaseLocksEnabled(false);
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     cdoCompany.cdoWriteLock().lock();
@@ -535,7 +535,7 @@ public class LockingManagerTest extends AbstractCDOTest
     transaction.rollback();
     assertEquals(true, cdoCompany.cdoReadLock().isLocked());
 
-    transaction.setAutoReleaseLocksEnabled(true);
+    transaction.options().setAutoReleaseLocksEnabled(true);
     transaction.rollback();
     assertEquals(false, cdoCompany.cdoReadLock().isLocked());
   }

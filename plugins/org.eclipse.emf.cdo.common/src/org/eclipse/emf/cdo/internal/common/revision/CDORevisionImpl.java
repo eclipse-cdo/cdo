@@ -287,12 +287,12 @@ public class CDORevisionImpl implements InternalCDORevision
     return cdoClass.isResource();
   }
 
-  public CDORevisionData getData()
+  public CDORevisionData data()
   {
     return this;
   }
 
-  public CDORevision getRevision()
+  public CDORevision revision()
   {
     return this;
   }

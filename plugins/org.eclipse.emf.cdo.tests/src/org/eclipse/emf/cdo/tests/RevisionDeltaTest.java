@@ -128,7 +128,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     CDORevision salesRevision = CDOUtil.getCDOObject(salesOrder2).cdoRevision();
     CDOFeature customerFeature = session.getPackageManager().convert(getModel1Package().getSalesOrder_Customer());
 
-    Object value = salesRevision.getData().get(customerFeature, 0);
+    Object value = salesRevision.data().get(customerFeature, 0);
     Assert.assertEquals(true, value instanceof CDOID);
     transaction2.close();
     session.close();

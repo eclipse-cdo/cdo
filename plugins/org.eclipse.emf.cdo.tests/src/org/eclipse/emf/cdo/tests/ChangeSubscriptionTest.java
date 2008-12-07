@@ -52,7 +52,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -69,7 +69,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
 
-    transaction.setChangeSubscriptionPolicy(enabled);
+    transaction.options().setChangeSubscriptionPolicy(enabled);
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -113,7 +113,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // Switching policy to the other
     final CDOAdapterPolicy enabled2 = enabled == CDOAdapterPolicy.ALL ? CDOAdapterPolicy.NONE : CDOAdapterPolicy.ALL;
 
-    transaction.setChangeSubscriptionPolicy(enabled2);
+    transaction.options().setChangeSubscriptionPolicy(enabled2);
 
     adapter.getNotifications().clear();
 
@@ -155,7 +155,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -171,7 +171,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
-    transaction.setChangeSubscriptionPolicy(enabled);
+    transaction.options().setChangeSubscriptionPolicy(enabled);
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -188,7 +188,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.setPassiveUpdateEnabled(false);
+    session2.options().setPassiveUpdateEnabled(false);
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
@@ -218,7 +218,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     // Switching policy to the other
     final CDOAdapterPolicy enabled2 = enabled == CDOAdapterPolicy.ALL ? CDOAdapterPolicy.NONE : CDOAdapterPolicy.ALL;
 
-    transaction.setChangeSubscriptionPolicy(enabled2);
+    transaction.options().setChangeSubscriptionPolicy(enabled2);
 
     adapter.getNotifications().clear();
 
@@ -250,7 +250,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -266,7 +266,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
-    transaction.setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
 
@@ -284,10 +284,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.setPassiveUpdateEnabled(false);
+    session2.options().setPassiveUpdateEnabled(false);
 
     final CDOTransaction transaction2 = session2.openTransaction();
-    transaction.setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
 
@@ -320,7 +320,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -337,7 +337,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
 
-    transaction.setChangeSubscriptionPolicy(customPolicy);
+    transaction.options().setChangeSubscriptionPolicy(customPolicy);
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -359,7 +359,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.setPassiveUpdateEnabled(false);
+    session2.options().setPassiveUpdateEnabled(false);
 
     final CDOTransaction transaction2 = session2.openTransaction();
 
@@ -388,7 +388,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     assertEquals(false, timedOut);
 
     // Switching policy to the other
-    transaction.setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     adapter.getNotifications().clear();
 
@@ -420,7 +420,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -437,7 +437,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
 
-    transaction.setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -456,7 +456,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening view");
     final CDOSession session2 = openModel1Session();
-    session2.setPassiveUpdateEnabled(false);
+    session2.options().setPassiveUpdateEnabled(false);
 
     final CDOTransaction transaction2 = session2.openTransaction();
 

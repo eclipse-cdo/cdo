@@ -75,7 +75,7 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
     }
     final TestAdapter counter = new TestAdapter();
     genRefMap.eAdapters().add(counter);
-    transaction2.setInvalidationNotificationEnabled(true);
+    transaction2.options().setInvalidationNotificationEnabled(true);
 
     /********* transaction 1 ***************/
     for (int i = 10; i < 20; i++)

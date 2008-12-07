@@ -177,8 +177,8 @@ public class MEMStore extends LongIDStore implements IMEMStore
 
     if (revision.isResource())
     {
-      CDOID revisionFolder = (CDOID)revision.getData().getContainerID();
-      String revisionName = (String)revision.getData().get(getResourceNameFeature(), 0);
+      CDOID revisionFolder = (CDOID)revision.data().getContainerID();
+      String revisionName = (String)revision.data().get(getResourceNameFeature(), 0);
 
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       CDOID resourceID = accessor.readResourceID(revisionFolder, revisionName, revision.getCreated());
@@ -261,10 +261,10 @@ public class MEMStore extends LongIDStore implements IMEMStore
           revision = getRevisionByTime(list, context.getTimeStamp());
           if (revision != null)
           {
-            CDOID revisionFolder = (CDOID)revision.getData().getContainerID();
+            CDOID revisionFolder = (CDOID)revision.data().getContainerID();
             if (CDOIDUtil.equals(revisionFolder, folderID))
             {
-              String revisionName = (String)revision.getData().get(getResourceNameFeature(), 0);
+              String revisionName = (String)revision.data().get(getResourceNameFeature(), 0);
               boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil
                   .equals(revisionName, name) : revisionName.startsWith(name);
 

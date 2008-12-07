@@ -589,7 +589,7 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Opening sessionB");
     final CDOSession sessionB = openModel1Session();
 
-    sessionB.setPassiveUpdateEnabled(false);
+    sessionB.options().setPassiveUpdateEnabled(false);
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
@@ -668,7 +668,7 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Opening sessionB");
     final CDOSession sessionB = openModel1Session();
 
-    sessionB.setPassiveUpdateEnabled(false);
+    sessionB.options().setPassiveUpdateEnabled(false);
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
@@ -679,7 +679,7 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Opening sessionB");
     final CDOSession sessionC = openModel1Session();
 
-    assertEquals(true, sessionC.isPassiveUpdateEnabled());
+    assertEquals(true, sessionC.options().isPassiveUpdateEnabled());
 
     msg("Attaching viewB");
     final CDOView viewC = sessionC.openTransaction();
@@ -719,7 +719,7 @@ public class InvalidationTest extends AbstractCDOTest
     assertEquals(false, timeOuterC.timedOut());
 
     // It should refresh the session
-    sessionB.setPassiveUpdateEnabled(true);
+    sessionB.options().setPassiveUpdateEnabled(true);
 
     msg("Checking after sync");
     assertEquals(false, timeOuterB.timedOut());
@@ -784,7 +784,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
-    viewB.setInvalidationNotificationEnabled(true);
+    viewB.options().setInvalidationNotificationEnabled(true);
 
     msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");
@@ -864,11 +864,11 @@ public class InvalidationTest extends AbstractCDOTest
 
     msg("Opening sessionB");
     final CDOSession sessionB = openModel1Session();
-    sessionB.setPassiveUpdateEnabled(false);
+    sessionB.options().setPassiveUpdateEnabled(false);
 
     msg("Attaching viewB");
     final CDOView viewB = sessionB.openTransaction();
-    viewB.setInvalidationNotificationEnabled(true);
+    viewB.options().setInvalidationNotificationEnabled(true);
 
     msg("Loading resource");
     final CDOResource resourceB = viewB.getResource("/test1");

@@ -171,6 +171,14 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
+  public Options options()
+  {
+    return this;
+  }
+
+  /**
+   * @since 2.0
+   */
   public InternalCDOViewSet getViewSet()
   {
     return viewSet;
@@ -550,14 +558,14 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     CDOFeature nodesFeature = resourceFolderClass.getCDONodesFeature();
     CDOFeature nameFeature = resourcePackage.getCDOResourceNodeClass().getCDONameFeature();
 
-    int size = folderRevision.getData().size(nodesFeature);
+    int size = folderRevision.data().size(nodesFeature);
     for (int i = 0; i < size; i++)
     {
-      Object value = folderRevision.getData().get(nodesFeature, i);
+      Object value = folderRevision.data().get(nodesFeature, i);
       value = getStore().resolveProxy(folderRevision, nodesFeature, i, value);
 
       CDORevision childRevision = getLocalRevision((CDOID)value);
-      if (name.equals(childRevision.getData().get(nameFeature, 0)))
+      if (name.equals(childRevision.data().get(nameFeature, 0)))
       {
         return childRevision.getID();
       }
@@ -915,8 +923,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     CDOResourceNodeClass resourceNodeClass = resourcePackage.getCDOResourceNodeClass();
     CDONameFeature nameFeature = resourceNodeClass.getCDONameFeature();
 
-    CDOID folderID = (CDOID)revision.getData().getContainerID();
-    String name = (String)revision.getData().get(nameFeature, 0);
+    CDOID folderID = (CDOID)revision.data().getContainerID();
+    String name = (String)revision.data().get(nameFeature, 0);
     if (CDOIDUtil.isNull(folderID))
     {
       if (name == null)
@@ -1356,6 +1364,29 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   protected ChangeSubscriptionManager getChangeSubscriptionManager()
   {
     return changeSubscriptionManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public ReferenceType getCacheReferenceType()
+  {
+    if (objects instanceof ReferenceValueMap.Strong)
+    {
+      return ReferenceType.STRONG;
+    }
+
+    if (objects instanceof ReferenceValueMap.Soft)
+    {
+      return ReferenceType.SOFT;
+    }
+
+    if (objects instanceof ReferenceValueMap.Weak)
+    {
+      return ReferenceType.WEAK;
+    }
+
+    throw new IllegalStateException("referenceType");
   }
 
   /**

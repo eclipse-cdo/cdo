@@ -95,7 +95,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
     CDOFeatureAnalyzerModelBased featureanalyzerModelBased = new CDOFeatureAnalyzerModelBased();
     transaction.setFeatureAnalyzer(featureanalyzerModelBased);
-    transaction.setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
+    transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
 
     msg("Getting resource");
 

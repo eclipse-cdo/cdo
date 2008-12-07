@@ -100,9 +100,9 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().getCreated();
   }
 
-  public CDORevisionData getData()
+  public CDORevisionData data()
   {
-    return li.getRevision().getData();
+    return li.getRevision().data();
   }
 
   public CDOID getID()
@@ -135,9 +135,9 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().getRevised();
   }
 
-  public CDORevision getRevision()
+  public CDORevision revision()
   {
-    return li.getRevision().getRevision();
+    return li.getRevision().revision();
   }
 
   public Object getValue(CDOFeature feature)

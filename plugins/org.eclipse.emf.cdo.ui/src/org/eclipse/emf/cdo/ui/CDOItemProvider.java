@@ -154,7 +154,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
   public static String getSessionLabel(CDOSession session)
   {
-    return "Session " + session.getRepositoryName() + " [" + session.getSessionID() + "]";
+    return "Session " + session.repository().getName() + " [" + session.getSessionID() + "]";
   }
 
   public static String getViewLabel(CDOView view)

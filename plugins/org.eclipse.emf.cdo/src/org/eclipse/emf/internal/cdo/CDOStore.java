@@ -367,7 +367,7 @@ public final class CDOStore implements EStore
         CDOID id = (CDOID)value;
         CDOList list = revision.getList(cdoFeature);
         CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)view.getSession().getRevisionManager();
-        CDORevisionPrefetchingPolicy policy = view.getRevisionPrefetchingPolicy();
+        CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
         Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, eFeature, list, index, id);
         if (!listOfIDs.isEmpty())
         {

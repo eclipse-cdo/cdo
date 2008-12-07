@@ -64,11 +64,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public interface CDOView extends CDOProtocolView, INotifier
 {
   /**
-   * @since 2.0
-   */
-  public static final int NO_REVISION_PREFETCHING = 1;
-
-  /**
    * Returns the {@link CDOSession session} this view was opened by.
    * 
    * @return The session this view was opened by, or <code>null</code> if this view is closed.
@@ -166,98 +161,6 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @see CDOTransaction#hasConflict()
    */
   public boolean hasConflict();
-
-  /**
-   * Sets the type of references to be used in the internal object cache to either {@link ReferenceType#STRONG STRONG},
-   * {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK WEAK}. If <code>null</code> is passed the default
-   * reference type {@link ReferenceType#SOFT SOFT} is set. If the given reference type does not differ from the one
-   * being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
-   * references are converted to the new type and <code>true</code> is returned.
-   * 
-   * @since 2.0
-   */
-  public boolean setCacheReferenceType(ReferenceType referenceType);
-
-  /**
-   * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
-   * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
-   * remote changes), <code>false</code> otherwise.
-   * 
-   * @see CDOInvalidationNotification
-   * @since 2.0
-   */
-  public boolean isInvalidationNotificationEnabled();
-
-  /**
-   * Specifies whether the {@link CDOObject objects} in this view will notify their
-   * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
-   * remote changes) or not.
-   * 
-   * @see CDOInvalidationNotification
-   * @since 2.0
-   */
-  public void setInvalidationNotificationEnabled(boolean enabled);
-
-  /**
-   * Returns the current {@link CDOAdapterPolicy change subscription policy}.
-   * 
-   * @return The current change subscription policy, never <code>null</code>.
-   * @see #setChangeSubscriptionPolicy(CDOAdapterPolicy)
-   * @since 2.0
-   */
-  public CDOAdapterPolicy getChangeSubscriptionPolicy();
-
-  /**
-   * Specifies the change subscription policy. By default, the value is set to {@link CDOAdapterPolicy#NONE}.
-   * <p>
-   * To activate the policy, you must do the following: <br>
-   * <code>view.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
-   * <p>
-   * To register an object, you must add an adapter to the object in which you are interested:<br>
-   * <code>eObject.eAdapters().add(myAdapter);</code>
-   * <p>
-   * By activating this feature, each object having at least one adapter that matches the current policy will be
-   * registered with the server and will be notified for each change occurring in the scope of any other transaction.
-   * <p>
-   * {@link CDOAdapterPolicy#NONE} - Disabled. <br>
-   * {@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.<br>
-   * {@link CDOAdapterPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
-   * Any other class that implement {@link CDOAdapterPolicy} will enable for whatever rules defined in that class. <br>
-   * <p>
-   * If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be registered
-   * with the server and you will receive all changes from other transaction.
-   * <p>
-   * When the policy is changed all objects in the cache will automatically be recalculated.
-   * <p>
-   * You can subscribe to temporary objects. Even if you cannot receive notifications from other {@link CDOTransaction}
-   * for these because they are only local to you, at commit time these objects will be registered automatically.
-   * <p>
-   * <b>Note:</b> It can be used with <code>CDOSession.setPassiveUpdate(false)</code>. In this case, it will receive
-   * changes without having the objects changed.
-   * 
-   * @since 2.0
-   */
-  public void setChangeSubscriptionPolicy(CDOAdapterPolicy policy);
-
-  /**
-   * @since 2.0
-   */
-  public CDOAdapterPolicy getStrongReferencePolicy();
-
-  /**
-   * @since 2.0
-   */
-  public void setStrongReferencePolicy(CDOAdapterPolicy policy);
-
-  /**
-   * @since 2.0
-   */
-  public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy();
-
-  /**
-   * @since 2.0
-   */
-  public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
   /**
    * Returns <code>true</code> if a resource with the given path exists in the repository, <code>false</code>.
@@ -379,4 +282,111 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @since 2.0
    */
   public CDOQuery createQuery(String language, String queryString);
+
+  /**
+   * @since 2.0
+   */
+  public Options options();
+
+  /**
+   * @author Simon McDuff
+   * @since 2.0
+   */
+  public interface Options
+  {
+    /**
+     */
+    public static final int NO_REVISION_PREFETCHING = 1;
+
+    /**
+     * Returns the reference type to be used in the internal object cache.
+     * 
+     * @return Either {@link ReferenceType#STRONG STRONG}, {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK
+     *         WEAK}.
+     */
+    public ReferenceType getCacheReferenceType();
+
+    /**
+     * Sets the reference type to be used in the internal object cache to either {@link ReferenceType#STRONG STRONG},
+     * {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK WEAK}. If <code>null</code> is passed the default
+     * reference type {@link ReferenceType#SOFT SOFT} is set. If the given reference type does not differ from the one
+     * being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
+     * references are converted to the new type and <code>true</code> is returned.
+     */
+    public boolean setCacheReferenceType(ReferenceType referenceType);
+
+    /**
+     * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
+     * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
+     * remote changes), <code>false</code> otherwise.
+     * 
+     * @see CDOInvalidationNotification
+     */
+    public boolean isInvalidationNotificationEnabled();
+
+    /**
+     * Specifies whether the {@link CDOObject objects} in this view will notify their
+     * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
+     * remote changes) or not.
+     * 
+     * @see CDOInvalidationNotification
+     */
+    public void setInvalidationNotificationEnabled(boolean enabled);
+
+    /**
+     * Returns the current {@link CDOAdapterPolicy change subscription policy}.
+     * 
+     * @return The current change subscription policy, never <code>null</code>.
+     * @see #setChangeSubscriptionPolicy(CDOAdapterPolicy)
+     */
+    public CDOAdapterPolicy getChangeSubscriptionPolicy();
+
+    /**
+     * Specifies the change subscription policy. By default, the value is set to {@link CDOAdapterPolicy#NONE}.
+     * <p>
+     * To activate the policy, you must do the following: <br>
+     * <code>view.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
+     * <p>
+     * To register an object, you must add an adapter to the object in which you are interested:<br>
+     * <code>eObject.eAdapters().add(myAdapter);</code>
+     * <p>
+     * By activating this feature, each object having at least one adapter that matches the current policy will be
+     * registered with the server and will be notified for each change occurring in the scope of any other transaction.
+     * <p>
+     * {@link CDOAdapterPolicy#NONE} - Disabled. <br>
+     * {@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.<br>
+     * {@link CDOAdapterPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
+     * Any other class that implement {@link CDOAdapterPolicy} will enable for whatever rules defined in that class.
+     * <br>
+     * <p>
+     * If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be
+     * registered with the server and you will receive all changes from other transaction.
+     * <p>
+     * When the policy is changed all objects in the cache will automatically be recalculated.
+     * <p>
+     * You can subscribe to temporary objects. Even if you cannot receive notifications from other
+     * {@link CDOTransaction} for these because they are only local to you, at commit time these objects will be
+     * registered automatically.
+     * <p>
+     * <b>Note:</b> It can be used with <code>CDOSession.setPassiveUpdate(false)</code>. In this case, it will receive
+     * changes without having the objects changed.
+     */
+    public void setChangeSubscriptionPolicy(CDOAdapterPolicy policy);
+
+    /**
+     */
+    public CDOAdapterPolicy getStrongReferencePolicy();
+
+    /**
+     */
+    public void setStrongReferencePolicy(CDOAdapterPolicy policy);
+
+    /**
+     */
+    public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy();
+
+    /**
+     */
+    public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
+  }
 }

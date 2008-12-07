@@ -75,7 +75,7 @@ public class RepositoryTest extends AbstractCDOTest
         {
           if (revision.getCDOClass() == customerClass)
           {
-            String name = (String)revision.getData().get(nameFeature, 0);
+            String name = (String)revision.data().get(nameFeature, 0);
             if ("Admin".equals(name))
             {
               throw new IllegalStateException("Adding a customer with name 'Admin' is not allowed");
@@ -135,7 +135,7 @@ public class RepositoryTest extends AbstractCDOTest
       {
         if (revision.getCDOClass() == customerClass)
         {
-          String name = (String)revision.getData().get(nameFeature, 0);
+          String name = (String)revision.data().get(nameFeature, 0);
           if ("Admin".equals(name))
           {
             return "Confidential!";

@@ -77,7 +77,7 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
       return new Path(resourcePath).lastSegment();
     }
 
-    return view.getSession().getRepositoryName();
+    return view.getSession().repository().getName();
   }
 
   public IPersistableElement getPersistable()
@@ -88,7 +88,7 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
   public String getToolTipText()
   {
     CDOSession session = view.getSession();
-    String repositoryName = session.getRepositoryName();
+    String repositoryName = session.repository().getName();
 
     StringBuilder builder = new StringBuilder();
     builder.append(repositoryName);

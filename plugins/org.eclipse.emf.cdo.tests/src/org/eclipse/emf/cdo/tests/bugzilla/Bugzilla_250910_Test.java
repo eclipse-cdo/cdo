@@ -60,7 +60,7 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
 
       transaction1.commit();
 
-      transaction2.setInvalidationNotificationEnabled(true);
+      transaction2.options().setInvalidationNotificationEnabled(true);
       Company company2 = (Company)transaction2.getObject(id, true);
       company2.eAdapters().add(testAdapter);
 

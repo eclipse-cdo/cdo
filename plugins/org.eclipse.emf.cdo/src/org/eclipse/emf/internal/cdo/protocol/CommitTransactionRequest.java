@@ -203,7 +203,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     Collection<CDORevisionDelta> revisionDeltas = commitContext.getRevisionDeltas().values();
     Collection<CDOID> detachedObjects = commitContext.getDetachedObjects().keySet();
 
-    out.writeBoolean(commitContext.getTransaction().isAutoReleaseLocksEnabled());
+    out.writeBoolean(commitContext.getTransaction().options().isAutoReleaseLocksEnabled());
     out.writeInt(newPackages.size());
     out.writeInt(newResources.size() + newObjects.size());
     out.writeInt(revisionDeltas.size());

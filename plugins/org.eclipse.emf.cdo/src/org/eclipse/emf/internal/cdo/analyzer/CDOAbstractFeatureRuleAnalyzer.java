@@ -67,7 +67,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
       TRACER.format("preTraverseFeature : {0}.{1}", cdoObject.cdoClass(), feature.getName());
     }
 
-    loadCollectionPolicy = cdoObject.cdoView().getSession().getCollectionLoadingPolicy();
+    loadCollectionPolicy = cdoObject.cdoView().getSession().options().getCollectionLoadingPolicy();
     lastTraverseFeature = feature;
     lastTraverseCDOObject = cdoObject;
     lastTraverseIndex = index;

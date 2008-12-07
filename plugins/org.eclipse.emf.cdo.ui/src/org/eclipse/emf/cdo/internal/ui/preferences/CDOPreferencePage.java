@@ -13,13 +13,11 @@ package org.eclipse.emf.cdo.internal.ui.preferences;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
-import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
 import org.eclipse.net4j.util.ui.widgets.TextAndDisable;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -44,8 +42,6 @@ public class CDOPreferencePage extends OMPreferencePage
   private TextAndDisable preloadChunkSize;
 
   private Button invalidationNotifications;
-
-  private TextAndDisable commitTimeout;
 
   public CDOPreferencePage()
   {
@@ -86,7 +82,8 @@ public class CDOPreferencePage extends OMPreferencePage
     viewGroup.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(viewGroup, SWT.NONE).setText("Preload chunk size:");
-    preloadChunkSize = new TextAndDisable(viewGroup, SWT.BORDER, String.valueOf(CDOView.NO_REVISION_PREFETCHING));
+    preloadChunkSize = new TextAndDisable(viewGroup, SWT.BORDER, String
+        .valueOf(CDOView.Options.NO_REVISION_PREFETCHING));
     preloadChunkSize.setLayoutData(UIUtil.createGridData(true, false));
 
     new Label(viewGroup, SWT.NONE).setText("EMF invalidation notifications:");
@@ -96,19 +93,6 @@ public class CDOPreferencePage extends OMPreferencePage
     transactionGroup.setLayout(new GridLayout(2, false));
     transactionGroup.setText("Transaction Defaults");
     transactionGroup.setLayoutData(UIUtil.createGridData(true, false));
-
-    new Label(transactionGroup, SWT.NONE).setText("Commit timeout (millis):");
-    commitTimeout = new TextAndDisable(transactionGroup, SWT.BORDER, String.valueOf(BufferInputStream.NO_TIMEOUT))
-    {
-      @Override
-      protected GridData createTextLayoutData()
-      {
-        GridData gd = super.createTextLayoutData();
-        gd.widthHint = 64;
-        return gd;
-      }
-    };
-    commitTimeout.setLayoutData(UIUtil.createGridData(true, false));
 
     initValues();
     return composite;
@@ -125,8 +109,6 @@ public class CDOPreferencePage extends OMPreferencePage
         .getValue()));
     invalidationNotifications.setSelection(org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATION
         .getValue());
-    commitTimeout.setValue(String
-        .valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_DEFAULT_COMMIT_TIMEOUT.getValue()));
   }
 
   @Override
@@ -141,8 +123,6 @@ public class CDOPreferencePage extends OMPreferencePage
         .getValue()));
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.setValue(invalidationNotifications
         .getSelection());
-    org.eclipse.emf.internal.cdo.bundle.OM.PREF_DEFAULT_COMMIT_TIMEOUT.setValue(Long
-        .parseLong(commitTimeout.getValue()));
     return super.performOk();
   }
 }

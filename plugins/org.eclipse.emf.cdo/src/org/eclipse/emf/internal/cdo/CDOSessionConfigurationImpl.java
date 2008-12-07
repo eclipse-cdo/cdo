@@ -179,7 +179,7 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
       return false;
     }
 
-    if (session.isOpen())
+    if (!session.isClosed())
     {
       return true;
     }

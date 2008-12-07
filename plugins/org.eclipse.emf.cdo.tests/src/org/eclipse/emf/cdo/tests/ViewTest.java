@@ -97,7 +97,7 @@ public class ViewTest extends AbstractCDOTest
     }
 
     CDOSession session = openModel1Session();
-    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
 
     CDOTransaction transaction = session.openTransaction();
 
@@ -110,7 +110,7 @@ public class ViewTest extends AbstractCDOTest
       contents.add(company);
     }
 
-    CDORevisionData revision = resource.cdoRevision().getData();
+    CDORevisionData revision = resource.cdoRevision().data();
     CDOResourcePackage resourcePackage = session.getPackageManager().getCDOResourcePackage();
     CDOContentsFeature contentsFeature = resourcePackage.getCDOResourceClass().getCDOContentsFeature();
     assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOElementProxy);
@@ -137,7 +137,7 @@ public class ViewTest extends AbstractCDOTest
     }
 
     CDOSession session = openModel1Session();
-    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(2, 2));
 
     CDOTransaction transaction = session.openTransaction();
 
@@ -150,7 +150,7 @@ public class ViewTest extends AbstractCDOTest
       contents.add(company);
     }
 
-    CDORevisionData revision = resource.cdoRevision().getData();
+    CDORevisionData revision = resource.cdoRevision().data();
     CDOResourcePackage resourcePackage = session.getPackageManager().getCDOResourcePackage();
     CDOContentsFeature contentsFeature = resourcePackage.getCDOResourceClass().getCDOContentsFeature();
     assertEquals(false, revision.get(contentsFeature, 0) instanceof CDOElementProxy);
@@ -229,22 +229,22 @@ public class ViewTest extends AbstractCDOTest
     transaction.createResource("/my/test5");
 
     boolean done;
-    done = transaction.setCacheReferenceType(ReferenceType.SOFT);
+    done = transaction.options().setCacheReferenceType(ReferenceType.SOFT);
     assertEquals(false, done);
 
-    done = transaction.setCacheReferenceType(null);
+    done = transaction.options().setCacheReferenceType(null);
     assertEquals(false, done);
 
-    done = transaction.setCacheReferenceType(ReferenceType.STRONG);
+    done = transaction.options().setCacheReferenceType(ReferenceType.STRONG);
     assertEquals(true, done);
 
-    done = transaction.setCacheReferenceType(ReferenceType.SOFT);
+    done = transaction.options().setCacheReferenceType(ReferenceType.SOFT);
     assertEquals(true, done);
 
-    done = transaction.setCacheReferenceType(ReferenceType.WEAK);
+    done = transaction.options().setCacheReferenceType(ReferenceType.WEAK);
     assertEquals(true, done);
 
-    done = transaction.setCacheReferenceType(null);
+    done = transaction.options().setCacheReferenceType(null);
     assertEquals(true, done);
 
     session.close();

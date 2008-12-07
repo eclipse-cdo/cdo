@@ -56,7 +56,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
@@ -101,7 +101,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
@@ -142,7 +142,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     CDOTransaction transaction = session.openTransaction();
-    transaction.setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
+    transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
 
     CDOResource resource = transaction.getResource("/test1");
 
@@ -179,7 +179,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource("/test1");
@@ -221,7 +221,7 @@ public class ChunkingTest extends AbstractCDOTest
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-    session.setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     msg("Creating resource");
     CDOTransaction transaction = session.openTransaction();

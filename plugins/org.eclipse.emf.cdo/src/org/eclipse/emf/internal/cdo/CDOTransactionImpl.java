@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.CDOTransactionHandler;
@@ -89,8 +90,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private boolean conflict;
 
-  private long commitTimeout;
-
   private long lastCommitTime = CDORevision.UNSPECIFIED_DATE;
 
   private int lastTemporaryID;
@@ -105,13 +104,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public CDOTransactionImpl(InternalCDOSession session, int id)
   {
     super(session, id);
-    commitTimeout = OM.PREF_DEFAULT_COMMIT_TIMEOUT.getValue();
   }
 
   @Override
   public Type getViewType()
   {
     return Type.TRANSACTION;
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  public CDOTransaction.Options options()
+  {
+    return this;
   }
 
   public void addHandler(CDOTransactionHandler handler)
@@ -160,16 +167,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     ConflictEvent event = new ConflictEvent(object, !conflict);
     conflict = true;
     fireEvent(event);
-  }
-
-  public long getCommitTimeout()
-  {
-    return commitTimeout;
-  }
-
-  public void setCommitTimeout(long timeout)
-  {
-    commitTimeout = timeout;
   }
 
   /**

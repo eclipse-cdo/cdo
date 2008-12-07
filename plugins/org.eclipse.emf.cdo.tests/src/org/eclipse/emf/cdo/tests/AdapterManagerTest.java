@@ -37,7 +37,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -46,7 +46,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     TestAdapter testAdapter = new TestAdapter();
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-    transaction.setCacheReferenceType(ReferenceType.WEAK);
+    transaction.options().setCacheReferenceType(ReferenceType.WEAK);
 
     transaction.createResource("/resA").getContents().add(companyA);
 
@@ -71,7 +71,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -80,8 +80,8 @@ public class AdapterManagerTest extends AbstractCDOTest
     TestAdapter testAdapter = new TestAdapter();
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-    transaction.setCacheReferenceType(ReferenceType.WEAK);
-    transaction.setStrongReferencePolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setCacheReferenceType(ReferenceType.WEAK);
+    transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
 
     transaction.createResource("/resA").getContents().add(companyA);
 
@@ -107,7 +107,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -119,8 +119,8 @@ public class AdapterManagerTest extends AbstractCDOTest
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-    transaction.setCacheReferenceType(ReferenceType.WEAK);
-    transaction.setStrongReferencePolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setCacheReferenceType(ReferenceType.WEAK);
+    transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
 
     transaction.createResource("/resA").getContents().add(companyA);
 
@@ -146,7 +146,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -160,8 +160,8 @@ public class AdapterManagerTest extends AbstractCDOTest
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-    transaction.setCacheReferenceType(ReferenceType.WEAK);
-    transaction.setStrongReferencePolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setCacheReferenceType(ReferenceType.WEAK);
+    transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
 
     transaction.createResource("/resA").getContents().add(companyA);
 
@@ -192,7 +192,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     msg("Opening session");
     final CDOSession session = openModel1Session();
 
-    session.setPassiveUpdateEnabled(false);
+    session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
 
@@ -204,20 +204,20 @@ public class AdapterManagerTest extends AbstractCDOTest
 
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
-    transaction.setCacheReferenceType(ReferenceType.WEAK);
+    transaction.options().setCacheReferenceType(ReferenceType.WEAK);
     transaction.createResource("/resA").getContents().add(companyA);
 
     msg("Committing");
     transaction.commit();
     CDOID id = CDOUtil.getCDOObject(companyA).cdoID();
-    transaction.setStrongReferencePolicy(CDOAdapterPolicy.ALL);
+    transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
     companyA = null;
 
     testAdapter.getNotifications().clear();
     System.gc();
 
     assertEquals(true, transaction.isObjectRegistered(id));
-    transaction.setStrongReferencePolicy(CDOAdapterPolicy.NONE);
+    transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.NONE);
 
     System.gc();
 

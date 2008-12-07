@@ -82,13 +82,13 @@ public class RollbackTest extends AbstractCDOTest
     CDOObject cdoObjectProduct1 = CDOUtil.getCDOObject(product1);
 
     msg("Object should contains internalEObject");
-    Object testObject = cdoObjectCategory1.cdoRevision().getData().get(category_Products1, 0);
+    Object testObject = cdoObjectCategory1.cdoRevision().data().get(category_Products1, 0);
     assertEquals(product1, testObject);
 
     transaction1.commit();
 
     msg("Object should contains CDOID");
-    testObject = cdoObjectCategory1.cdoRevision().getData().get(category_Products1, 0);
+    testObject = cdoObjectCategory1.cdoRevision().data().get(category_Products1, 0);
     assertEquals(cdoObjectProduct1.cdoID(), testObject);
 
     sleep(500);
@@ -106,7 +106,7 @@ public class RollbackTest extends AbstractCDOTest
     {
       // Commit process should no have changed state of the object
       CDOObject cdoObjectCategory2 = CDOUtil.getCDOObject(category2);
-      testObject = cdoObjectCategory2.cdoRevision().getData().get(category_Products2, 0);
+      testObject = cdoObjectCategory2.cdoRevision().data().get(category_Products2, 0);
       assertEquals(product2, testObject);
       transaction2.rollback();
     }

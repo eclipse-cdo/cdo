@@ -126,14 +126,14 @@ public class CDOURIUtil
     return URI.createURI(stringBuilder.toString());
   }
 
-  public static URI createResourceURI(CDOView cdoView, String path)
+  public static URI createResourceURI(CDOView view, String path)
   {
-    return createResourceURI(cdoView == null ? null : cdoView.getSession(), path);
+    return createResourceURI(view == null ? null : view.getSession(), path);
   }
 
-  public static URI createResourceURI(CDOSession cdoSession, String path)
+  public static URI createResourceURI(CDOSession session, String path)
   {
-    return createResourceURI(cdoSession == null ? null : cdoSession.getRepositoryUUID(), path);
+    return createResourceURI(session == null ? null : session.repository().getUUID(), path);
   }
 
   /**

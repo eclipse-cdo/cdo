@@ -36,12 +36,12 @@ public interface CDOSessionConfiguration
   public void setConnector(IConnector connector);
 
   /**
-   * @see CDOSession#getRepositoryName()
+   * @see CDOSession#getName()
    */
   public String getRepositoryName();
 
   /**
-   * @see CDOSession#getRepositoryName()
+   * @see CDOSession#getName()
    */
   public void setRepositoryName(String repositoryName);
 

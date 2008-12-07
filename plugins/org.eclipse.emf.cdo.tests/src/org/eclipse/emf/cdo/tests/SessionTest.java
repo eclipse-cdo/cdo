@@ -20,7 +20,7 @@ public class SessionTest extends AbstractCDOTest
   public void testIsSupportingAudits() throws Exception
   {
     CDOSession session = openModel1Session();
-    assertEquals(getRepository().isSupportingAudits(), session.isRepositorySupportingAudits());
+    assertEquals(getRepository().isSupportingAudits(), session.repository().isSupportingAudits());
     session.close();
   }
 }

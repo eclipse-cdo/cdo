@@ -71,8 +71,8 @@ public class HorizontalClassMapping extends ClassMapping
       CDOResourceNodeClass resourceNodeClass = packageManager.getCDOResourcePackage().getCDOResourceNodeClass();
       CDOFeature resourceNameFeature = resourceNodeClass.getCDONameFeature();
 
-      CDOID folderID = (CDOID)revision.getData().getContainerID();
-      String name = (String)revision.getData().get(resourceNameFeature, 0);
+      CDOID folderID = (CDOID)revision.data().getContainerID();
+      String name = (String)revision.data().get(resourceNameFeature, 0);
 
       if (accessor.readResourceID(folderID, name, revision.getCreated()) != null)
       {

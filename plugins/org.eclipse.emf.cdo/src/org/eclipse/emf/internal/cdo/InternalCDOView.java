@@ -32,7 +32,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOView extends CDOView, CDOIDProvider
+public interface InternalCDOView extends CDOView, CDOIDProvider, CDOView.Options
 {
   public InternalCDOSession getSession();
 

@@ -157,6 +157,8 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
   public Collection<CDOTimeStampContext> refresh();
 
   /**
+   * Returns the {@link Options options} of this session.
+   * 
    * @since 2.0
    */
   public CDOSession.Options options();

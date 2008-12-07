@@ -133,7 +133,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private CDOAdapterPolicy changeSubscriptionPolicy = CDOAdapterPolicy.NONE;
 
-  private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.NONE;
+  private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.ALL;
 
   @ExcludeFromDump
   private transient CDOID lastLookupID;
@@ -385,7 +385,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     if (adapterPolicy == null)
     {
-      adapterPolicy = CDOAdapterPolicy.NONE;
+      adapterPolicy = CDOAdapterPolicy.ALL;
     }
 
     if (adapterReferencePolicy != adapterPolicy)

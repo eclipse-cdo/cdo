@@ -374,18 +374,29 @@ public interface CDOView extends CDOProtocolView, INotifier
     public void setChangeSubscriptionPolicy(CDOAdapterPolicy policy);
 
     /**
-     */
-    public CDOAdapterPolicy getStrongReferencePolicy();
-
-    /**
+     * Sets the reference type to be used when an adapter is used to an object.
+     * <p>
+     * When <code>CDOView.setStrongReference(CDOAdapterPolicy.ALL)</code> is used, it is possible that the target object
+     * will be GC. In that case, the adapter will never received notifications. By Default the value is at
+     * <code>CDOAdapterPolicy.ALL</code>
      */
     public void setStrongReferencePolicy(CDOAdapterPolicy policy);
 
     /**
+     * Returns the CDORevisionPrefetchingPolicy in used.
      */
     public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy();
 
     /**
+     * The CDORevisionPrefetchingPolicy feature of the CDOView allows CDO users to fetch many objects at a time.
+     * <p>
+     * The difference between the CDOCollectionLoadingPolicy feature and the CDORevisionPrefetchingPolicy feature is
+     * subtle. The CDOCollectionLoadingPolicy feature determines how and when to fetch CDOIDs, while the
+     * CDORevisionPrefetchingPolicy feature determines how and when to resolve CDOIDs (i.e. fetch the target objects).
+     * <p>
+     * <code>view.options().setRevisionPrefetchingPolicy (CDOUtil.createRevisionPrefetchingPolicy(10));</code>
+     * <p>
+     * The end-user could provide its own implementation of the CDORevisionPrefetchingPolicy interface.
      */
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
   }

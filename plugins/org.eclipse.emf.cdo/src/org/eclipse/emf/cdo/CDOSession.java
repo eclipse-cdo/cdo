@@ -94,10 +94,25 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
     public void setPassiveUpdateEnabled(boolean enabled);
 
     /**
+     * The CDOCollectionLoadingPolicy feature of the CDOSession controls how a list gets populated. By default, when an
+     * object is fetched, all its fields are filled with the proper values.
+     * <p>
+     * This could be time-consuming, especially if the ref1 reference does not need to be accessed. In CDO it is
+     * possible to fetch collections partially. The CDOCollectionLoadingPolicy feature defines how a list will be
+     * loaded. The implementation that is shipped with CDO makes a distinction between the two following situations:
+     * <p>
+     * How many CDOIDs to fill when an object is loaded for the first time;
+     * <p>
+     * Which elements to fill with CDOIDs when the accessed element is not yet filled.
+     * <p>
+     * <code>CDOUtil.createCollectionLoadingPolicy (initialChunkSize, numberOfIndexToResolve);</code>
+     * <p>
+     * The end-user could provide its own implementation of the CDOCollectionLoadingPolicy interface.
      */
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
 
     /**
+     * Returns the CDOCollectionLoadingPolicy in used.
      */
     public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
   }

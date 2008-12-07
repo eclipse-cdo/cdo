@@ -47,6 +47,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);
+    transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.NONE);
 
     transaction.createResource("/resA").getContents().add(companyA);
 

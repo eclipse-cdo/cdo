@@ -254,8 +254,15 @@ public interface CDOView extends CDOProtocolView, INotifier
    */
   public <T extends EObject> T getObject(T objectFromDifferentView);
 
+  /**
+   * Returns <code>true</code> if an {@link CDOObject object} with the given {@link CDOID id} is currently registered in
+   * this view, <code>false</code> otherwise.
+   */
   public boolean isObjectRegistered(CDOID id);
 
+  /**
+   * Reloads the given {@link CDOObject objects} from the repository.
+   */
   public int reload(CDOObject... objects);
 
   /**

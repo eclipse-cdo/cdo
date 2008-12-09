@@ -110,8 +110,7 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
       protocol.open(connector);
 
       UploadRequest request = new UploadRequest(protocol, file);
-      EclipseMonitor e = new EclipseMonitor(monitor);
-      return request.send(e);
+      return request.send(new EclipseMonitor(monitor));
     }
     finally
     {

@@ -13,7 +13,6 @@ package org.eclipse.net4j.examples.echo.client;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.examples.echo.EchoProtocol;
 import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.signal.SignalReactor;
 
 /**
  * @author Eike Stepper
@@ -23,18 +22,7 @@ public class EchoClientProtocol extends SignalProtocol<Object> implements EchoPr
 {
   public EchoClientProtocol(IConnector connector)
   {
+    super(PROTOCOL_NAME);
     open(connector);
-  }
-
-  public String getType()
-  {
-    return PROTOCOL_NAME;
-  }
-
-  @Override
-  protected SignalReactor createSignalReactor(short signalID)
-  {
-    // On client side only needed for server initiated requests
-    return null;
   }
 }

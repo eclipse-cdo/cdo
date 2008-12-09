@@ -198,8 +198,8 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 
   private IFilter createExtensionPointFilter()
   {
-    final IExtensionPoint xpt = Platform.getExtensionRegistry().getExtensionPoint(
-        EcorePlugin.getPlugin().getBundle().getSymbolicName(), EcorePlugin.GENERATED_PACKAGE_PPID);
+    final IExtensionPoint xpt = Platform.getExtensionRegistry().getExtensionPoint("org.eclipse.emf.ecore",
+        EcorePlugin.GENERATED_PACKAGE_PPID);
     return new IFilter()
     {
       public boolean matches(IExtensionPoint target)

@@ -18,8 +18,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.Monitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
@@ -40,13 +40,8 @@ public class SignalMonitorTest extends AbstractTransportTest
     {
       public Object create(String description) throws ProductCreationException
       {
-        return new SignalProtocol<Object>()
+        return new SignalProtocol<Object>(PROTOCOL_TYPE)
         {
-          public String getType()
-          {
-            return PROTOCOL_TYPE;
-          }
-
           @Override
           protected SignalReactor createSignalReactor(short signalID)
           {
@@ -100,7 +95,7 @@ public class SignalMonitorTest extends AbstractTransportTest
               };
 
             default:
-              return null;
+              return super.createSignalReactor(signalID);
             }
           }
         };
@@ -162,15 +157,9 @@ public class SignalMonitorTest extends AbstractTransportTest
    */
   public static final class ClientProtocol extends SignalProtocol<Object>
   {
-    public String getType()
+    public ClientProtocol()
     {
-      return PROTOCOL_TYPE;
-    }
-
-    @Override
-    protected SignalReactor createSignalReactor(short signalID)
-    {
-      return null;
+      super(PROTOCOL_TYPE);
     }
   }
 

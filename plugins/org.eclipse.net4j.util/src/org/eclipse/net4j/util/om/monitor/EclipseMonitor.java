@@ -64,4 +64,11 @@ public class EclipseMonitor extends Monitor
     super.worked(work);
     progressMonitor.worked(work);
   }
+
+  @Override
+  public synchronized void done()
+  {
+    super.done();
+    progressMonitor.done();
+  }
 }

@@ -24,12 +24,8 @@ public final class TestProtocol extends Protocol<CountDownLatch>
 {
   public TestProtocol(CountDownLatch counter)
   {
+    super(ServerTestProtocolFactory.TYPE);
     setInfraStructure(counter);
-  }
-
-  public String getType()
-  {
-    return ServerTestProtocolFactory.TYPE;
   }
 
   public void handleBuffer(IBuffer buffer)

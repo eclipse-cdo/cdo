@@ -44,11 +44,13 @@ public class TestSignalProtocol extends SignalProtocol<Object>
 
   public TestSignalProtocol(IConnector connector)
   {
+    this();
     open(connector);
   }
 
   public TestSignalProtocol(IFailOverStrategy failOverStrategy)
   {
+    this();
     open(failOverStrategy);
   }
 
@@ -57,11 +59,7 @@ public class TestSignalProtocol extends SignalProtocol<Object>
    */
   private TestSignalProtocol()
   {
-  }
-
-  public String getType()
-  {
-    return PROTOCOL_NAME;
+    super(PROTOCOL_NAME);
   }
 
   @Override
@@ -88,7 +86,7 @@ public class TestSignalProtocol extends SignalProtocol<Object>
       return new ExceptionIndication(this);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 

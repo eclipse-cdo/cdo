@@ -25,11 +25,7 @@ public class EchoServerProtocol extends SignalProtocol<Object> implements EchoPr
 {
   public EchoServerProtocol()
   {
-  }
-
-  public String getType()
-  {
-    return PROTOCOL_NAME;
+    super(PROTOCOL_NAME);
   }
 
   @Override
@@ -41,7 +37,7 @@ public class EchoServerProtocol extends SignalProtocol<Object> implements EchoPr
       return new EchoIndication(this);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 

@@ -41,21 +41,25 @@ public class Monitor implements OMMonitor
 
   public synchronized void begin(int totalWork) throws MonitorCanceledException
   {
+    checkCanceled();
     this.totalWork = totalWork;
   }
 
   public synchronized void worked(int work) throws MonitorCanceledException
   {
+    checkCanceled();
     this.work += work;
   }
 
   public synchronized OMMonitor fork(int work)
   {
+    checkCanceled();
     return new NestedMonitor(this, work);
   }
 
   public synchronized void done()
   {
+    checkCanceled();
     int rest = totalWork - work;
     if (rest > 0)
     {

@@ -26,11 +26,7 @@ public class BuddiesServerProtocol extends SignalProtocol<ServerSession>
 {
   public BuddiesServerProtocol()
   {
-  }
-
-  public String getType()
-  {
-    return ProtocolConstants.PROTOCOL_NAME;
+    super(ProtocolConstants.PROTOCOL_NAME);
   }
 
   @Override
@@ -63,7 +59,7 @@ public class BuddiesServerProtocol extends SignalProtocol<ServerSession>
       return new MessageIndication(this, IBuddyAdmin.INSTANCE);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 

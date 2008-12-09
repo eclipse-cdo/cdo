@@ -22,11 +22,7 @@ public class JMSAdminServerProtocol extends SignalProtocol<Object>
 {
   public JMSAdminServerProtocol()
   {
-  }
-
-  public String getType()
-  {
-    return JMSAdminProtocolConstants.PROTOCOL_NAME;
+    super(JMSAdminProtocolConstants.PROTOCOL_NAME);
   }
 
   @Override
@@ -38,7 +34,7 @@ public class JMSAdminServerProtocol extends SignalProtocol<Object>
       return new JMSCreateDestinationIndication(this);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 

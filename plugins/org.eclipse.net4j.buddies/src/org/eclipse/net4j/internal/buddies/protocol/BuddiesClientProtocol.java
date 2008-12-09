@@ -31,12 +31,8 @@ public class BuddiesClientProtocol extends SignalProtocol<ClientSession>
 
   public BuddiesClientProtocol(IConnector connector)
   {
+    super(ProtocolConstants.PROTOCOL_NAME);
     open(connector);
-  }
-
-  public String getType()
-  {
-    return ProtocolConstants.PROTOCOL_NAME;
   }
 
   @Override
@@ -66,7 +62,7 @@ public class BuddiesClientProtocol extends SignalProtocol<ClientSession>
       return new MessageIndication(this, getSelf());
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 

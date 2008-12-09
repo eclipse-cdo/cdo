@@ -41,7 +41,7 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
       return new CommitNotificationIndication(this);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 

@@ -22,11 +22,7 @@ public class JMSServerProtocol extends SignalProtocol<ServerConnection>
 {
   public JMSServerProtocol()
   {
-  }
-
-  public String getType()
-  {
-    return JMSProtocolConstants.PROTOCOL_NAME;
+    super(JMSProtocolConstants.PROTOCOL_NAME);
   }
 
   @Override
@@ -62,7 +58,7 @@ public class JMSServerProtocol extends SignalProtocol<ServerConnection>
       return new JMSRollbackIndication(this);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 }

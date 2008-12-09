@@ -176,7 +176,7 @@ public class SignalMonitorTest extends AbstractTransportTest
     }
 
     @Override
-    public void worked(int work)
+    public void worked(double work)
     {
       super.worked(work);
       System.out.println("work: " + getWork());

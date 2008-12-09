@@ -30,7 +30,10 @@ public interface OMMonitor
    */
   public void begin(int totalWork) throws MonitorCanceledException;
 
-  public void worked(int work) throws MonitorCanceledException;
+  /**
+   * @since 2.0
+   */
+  public void worked(double work) throws MonitorCanceledException;
 
   /**
    * @since 2.0
@@ -42,7 +45,7 @@ public interface OMMonitor
   /**
    * @since 2.0
    */
-  public int getWork();
+  public double getWork();
 
   /**
    * @since 2.0

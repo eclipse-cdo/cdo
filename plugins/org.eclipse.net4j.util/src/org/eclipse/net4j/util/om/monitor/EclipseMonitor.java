@@ -59,10 +59,10 @@ public class EclipseMonitor extends Monitor
   }
 
   @Override
-  public synchronized void worked(int work) throws MonitorCanceledException
+  public synchronized void worked(double work) throws MonitorCanceledException
   {
     super.worked(work);
-    progressMonitor.worked(work);
+    progressMonitor.internalWorked(work);
   }
 
   @Override

@@ -18,7 +18,7 @@ public class Monitor implements OMMonitor
 {
   private int totalWork;
 
-  private int work;
+  private double work;
 
   private boolean canceled;
 
@@ -45,7 +45,7 @@ public class Monitor implements OMMonitor
     this.totalWork = totalWork;
   }
 
-  public synchronized void worked(int work) throws MonitorCanceledException
+  public synchronized void worked(double work) throws MonitorCanceledException
   {
     checkCanceled();
     this.work += work;
@@ -60,7 +60,7 @@ public class Monitor implements OMMonitor
   public synchronized void done()
   {
     checkCanceled();
-    int rest = totalWork - work;
+    double rest = totalWork - work;
     if (rest > 0)
     {
       worked(rest);
@@ -72,7 +72,7 @@ public class Monitor implements OMMonitor
     return totalWork;
   }
 
-  public synchronized int getWork()
+  public synchronized double getWork()
   {
     return work;
   }

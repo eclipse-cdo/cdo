@@ -16,16 +16,22 @@ package org.eclipse.net4j.util.om.monitor;
  */
 public class NestedMonitor extends Monitor
 {
+  private static final double ZERO = 0.0d;
+
   private OMMonitor parent;
 
   private int parentWork;
 
-  private float propagateWork;
+  private double sentToParent;
+
+  private double scale;
+
+  private boolean usedUp;
 
   public NestedMonitor(OMMonitor parent, int parentWork)
   {
     this.parent = parent;
-    this.parentWork = parentWork;
+    this.parentWork = parentWork > 0 ? parentWork : 0;
   }
 
   public OMMonitor getParent()
@@ -39,20 +45,32 @@ public class NestedMonitor extends Monitor
   }
 
   @Override
-  public synchronized void worked(int work) throws MonitorCanceledException
+  public synchronized void begin(int totalWork) throws MonitorCanceledException
   {
-    super.worked(work);
-    float ratio = getWork();
-    ratio /= getTotalWork();
-    propagateWork += ratio;
+    super.begin(totalWork);
+    scale = totalWork > ZERO ? (double)parentWork / (double)totalWork : ZERO;
+  }
 
-    int parentTicks = (int)Math.floor(propagateWork * getParentWork());
-    if (parentTicks > 0)
+  @Override
+  public synchronized void worked(double work) throws MonitorCanceledException
+  {
+    if (!usedUp)
     {
-      parent.worked(parentTicks);
-      float rest = parentTicks;
-      rest /= getParentWork();
-      propagateWork -= rest;
+      super.worked(work);
+      double realWork = work > ZERO ? scale * work : ZERO;
+      parent.worked(realWork);
+      sentToParent += realWork;
+      if (sentToParent >= parentWork)
+      {
+        usedUp = true;
+      }
     }
+  }
+
+  @Override
+  public synchronized void done()
+  {
+    super.done();
+    sentToParent = ZERO;
   }
 }

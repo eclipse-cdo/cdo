@@ -258,13 +258,13 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
         }
         else
         {
-          float oldRatio = remoteMonitor.getWork();
+          double oldRatio = remoteMonitor.getWork();
           oldRatio /= remoteMonitor.getTotalWork();
 
-          float newRatio = work;
+          double newRatio = work;
           newRatio /= totalWork;
 
-          float newWork = newRatio - oldRatio;
+          double newWork = newRatio - oldRatio;
           newWork *= remoteMonitor.getTotalWork();
           if (newWork >= 1.0)
           {

@@ -112,7 +112,7 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
               if (monitor != null)
               {
                 // Keep sendProgress into the locks... otherwise when interrupt it seems to freeze.
-                sendProgress(monitor.getTotalWork(), monitor.getWork());
+                sendProgress(monitor.getTotalWork(), (int)monitor.getWork());
               }
             }
 
@@ -211,7 +211,7 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     }
 
     @Override
-    public synchronized void worked(int work)
+    public synchronized void worked(double work)
     {
       setLastMonitorAccess();
       super.worked(work);

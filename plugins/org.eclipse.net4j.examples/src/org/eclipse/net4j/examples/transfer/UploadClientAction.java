@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
+import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -68,6 +69,10 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
             boolean replaced = transferFile(file, monitor);
             OM.LOG.info("File " + path + (replaced ? " replaced" : " stored") + " on the Net4j server.");
             return Status.OK_STATUS;
+          }
+          catch (MonitorCanceledException ex)
+          {
+            return Status.CANCEL_STATUS;
           }
           catch (Exception ex)
           {

@@ -15,6 +15,7 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -131,7 +132,10 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
           }
           catch (Exception ex)
           {
-            OM.LOG.error(ex);
+            if (LifecycleUtil.isActive(getProtocol().getChannel()))
+            {
+              OM.LOG.error(ex);
+            }
           }
         }
       });

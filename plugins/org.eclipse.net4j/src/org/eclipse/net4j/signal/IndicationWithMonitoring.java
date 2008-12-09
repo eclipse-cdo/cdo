@@ -75,6 +75,7 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
       {
         if (monitor != null)
         {
+          monitor.done();
           monitor = null;
           if (monitorFuture != null)
           {
@@ -136,13 +137,14 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
       });
     }
 
+    monitor.begin(100);
     indicating(in, monitor.fork(getIndicatingWorkPercent()));
   }
 
   @Override
   protected final void responding(ExtendedDataOutputStream out) throws Exception
   {
-    responding(out, monitor.fork(getRespondingWorkPercent()));
+    responding(out, monitor.fork(100 - getIndicatingWorkPercent()));
   }
 
   protected abstract void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception;
@@ -159,12 +161,7 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
 
   protected int getIndicatingWorkPercent()
   {
-    return 50;
-  }
-
-  protected int getRespondingWorkPercent()
-  {
-    return 50;
+    return 100;
   }
 
   void setMonitorCanceled()
@@ -188,6 +185,10 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
    */
   private final class LastAccessMonitor extends Monitor
   {
+    public LastAccessMonitor()
+    {
+    }
+
     @Override
     public synchronized void begin(int totalWork)
     {

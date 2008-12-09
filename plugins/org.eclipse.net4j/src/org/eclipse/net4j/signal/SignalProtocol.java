@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements
+public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements
     ISignalProtocol<INFRA_STRUCTURE>
 {
   /**
@@ -76,8 +76,12 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
 
   private boolean failingOver;
 
-  protected SignalProtocol()
+  /**
+   * @since 2.0
+   */
+  public SignalProtocol(String type)
   {
+    super(type);
   }
 
   /**
@@ -315,7 +319,10 @@ public abstract class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STR
    * Returns a new signal instance to serve the given signal ID or <code>null</code> if the signal ID is invalid/unknown
    * for this protocol.
    */
-  protected abstract SignalReactor createSignalReactor(short signalID);
+  protected SignalReactor createSignalReactor(short signalID)
+  {
+    return null;
+  }
 
   synchronized int getNextCorrelationID()
   {

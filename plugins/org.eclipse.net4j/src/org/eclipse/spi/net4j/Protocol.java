@@ -27,6 +27,8 @@ import java.util.concurrent.ExecutorService;
  */
 public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol<INFRA_STRUCTURE>
 {
+  private String type;
+
   private ExecutorService executorService;
 
   private IBufferProvider bufferProvider;
@@ -45,8 +47,14 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
     };
   };
 
-  public Protocol()
+  public Protocol(String type)
   {
+    this.type = type;
+  }
+
+  public final String getType()
+  {
+    return type;
   }
 
   public ExecutorService getExecutorService()

@@ -73,25 +73,28 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   @Override
   public Future<RESULT> sendAsync()
   {
-    return sendAsync(null);
-  }
-
-  @Override
-  public RESULT send() throws Exception, RemoteException
-  {
-    return send(null);
-  }
-
-  @Override
-  public RESULT send(long timeout) throws Exception, RemoteException
-  {
-    return send(timeout, null);
+    initMainMonitor(null);
+    return super.sendAsync();
   }
 
   public Future<RESULT> sendAsync(OMMonitor monitor)
   {
     initMainMonitor(monitor);
     return super.sendAsync();
+  }
+
+  @Override
+  public RESULT send() throws Exception, RemoteException
+  {
+    initMainMonitor(null);
+    return super.send();
+  }
+
+  @Override
+  public RESULT send(long timeout) throws Exception, RemoteException
+  {
+    initMainMonitor(null);
+    return super.send(timeout);
   }
 
   public RESULT send(OMMonitor monitor) throws Exception, RemoteException
@@ -157,7 +160,14 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   @Override
   protected final RESULT confirming(ExtendedDataInputStream in) throws Exception
   {
-    return confirming(in, mainMonitor.fork(getConfirmingWorkPercent()));
+    try
+    {
+      return confirming(in, mainMonitor.fork(getConfirmingWorkPercent()));
+    }
+    finally
+    {
+      mainMonitor.done();
+    }
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception;
@@ -197,7 +207,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
    */
   protected int getRequestingWorkPercent()
   {
-    return 25;
+    return 50;
   }
 
   /**
@@ -205,7 +215,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
    */
   protected int getConfirmingWorkPercent()
   {
-    return 25;
+    return 0;
   }
 
   @Override

@@ -25,12 +25,8 @@ public class JMSClientProtocol extends SignalProtocol<ConnectionImpl>
    */
   public JMSClientProtocol(ConnectionImpl connection)
   {
+    super(JMSProtocolConstants.PROTOCOL_NAME);
     setInfraStructure(connection);
-  }
-
-  public String getType()
-  {
-    return JMSProtocolConstants.PROTOCOL_NAME;
   }
 
   @Override
@@ -42,7 +38,7 @@ public class JMSClientProtocol extends SignalProtocol<ConnectionImpl>
       return new JMSServerMessageIndication(this);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 }

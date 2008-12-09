@@ -34,6 +34,10 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
+/**
+ * @author Eike Stepper
+ * @since 2.0
+ */
 public class UploadClientAction implements IWorkbenchWindowActionDelegate, UploadProtocol
 {
   private IWorkbenchWindow window;

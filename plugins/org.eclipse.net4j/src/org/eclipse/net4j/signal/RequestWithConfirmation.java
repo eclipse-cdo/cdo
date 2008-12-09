@@ -60,7 +60,7 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor
     {
       public RESULT call() throws Exception
       {
-        return send();
+        return doSend(getProtocol().getTimeout());
       }
     });
   }
@@ -70,13 +70,18 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor
    */
   public RESULT send() throws Exception, RemoteException
   {
-    return send(getProtocol().getTimeout());
+    return doSend(getProtocol().getTimeout());
   }
 
   /**
    * @since 2.0
    */
   public RESULT send(long timeout) throws Exception, RemoteException
+  {
+    return doSend(timeout);
+  }
+
+  RESULT doSend(long timeout) throws Exception
   {
     result = null;
     getProtocol().startSignal(this, timeout);

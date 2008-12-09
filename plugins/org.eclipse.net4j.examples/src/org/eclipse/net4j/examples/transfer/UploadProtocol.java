@@ -8,20 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.net4j.jms.internal.admin.protocol;
-
-import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
-import org.eclipse.net4j.signal.SignalProtocol;
+package org.eclipse.net4j.examples.transfer;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class JMSAdminProtocol extends SignalProtocol<Object>
+public interface UploadProtocol
 {
-  public JMSAdminProtocol(IConnector connector)
-  {
-    super(JMSAdminProtocolConstants.PROTOCOL_NAME);
-    open(connector);
-  }
+  public static final String PROTOCOL_NAME = "upload";
+
+  public static final short UPLOAD_SIGNAL_ID = 1;
+
+  public static final int BUFFER_SIZE = 8192;
 }

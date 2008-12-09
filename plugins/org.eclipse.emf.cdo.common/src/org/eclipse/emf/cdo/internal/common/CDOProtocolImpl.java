@@ -24,11 +24,7 @@ public abstract class CDOProtocolImpl extends SignalProtocol<CDOProtocolSession>
 {
   public CDOProtocolImpl()
   {
-  }
-
-  public String getType()
-  {
-    return CDOProtocolConstants.PROTOCOL_NAME;
+    super(CDOProtocolConstants.PROTOCOL_NAME);
   }
 
   public CDOProtocolSession getSession()

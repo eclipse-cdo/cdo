@@ -125,7 +125,7 @@ public class CDOServerProtocol extends CDOProtocolImpl
       return new ObjectLockedIndication(this);
 
     default:
-      return null;
+      return super.createSignalReactor(signalID);
     }
   }
 }

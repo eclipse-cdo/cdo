@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model1.Customer;
 
 /**
  * : Multiple resources creation bug
@@ -30,8 +29,8 @@ public class Bugzilla_258278_Test extends AbstractCDOTest
     {
       CDOSession session = openModel1Session();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource1 = transaction.createResource("/root/folder1/resource1");
-      CDOResource resource2 = transaction.createResource("/root/folder1/resource2");
+      transaction.createResource("/root/folder1/resource1");
+      transaction.createResource("/root/folder1/resource2");
       transaction.commit();
       session.close();
     }
@@ -39,10 +38,9 @@ public class Bugzilla_258278_Test extends AbstractCDOTest
     CDOSession session = openModel1Session();
 
     CDOTransaction transaction = session.openTransaction();
-		CDOResource resource1 = transaction.getResource("/root/folder1/resource1");
+    CDOResource resource1 = transaction.getResource("/root/folder1/resource1");
     assertNotNull(resource1);
     CDOResource resource2 = transaction.getResource("/root/folder1/resource2");
     assertNotNull(resource2);
-
   }
 }

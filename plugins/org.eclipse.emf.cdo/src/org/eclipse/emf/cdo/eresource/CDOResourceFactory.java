@@ -11,6 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource;
 
+import org.eclipse.emf.cdo.CDOViewSet;
+
 import org.eclipse.emf.ecore.resource.Resource;
 
 /**
@@ -18,4 +20,13 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public interface CDOResourceFactory extends Resource.Factory
 {
+  /**
+   * @since 2.0
+   */
+  public CDOViewSet getViewSet();
+
+  /**
+   * @since 2.0
+   */
+  public void setViewSet(CDOViewSet viewSet);
 }

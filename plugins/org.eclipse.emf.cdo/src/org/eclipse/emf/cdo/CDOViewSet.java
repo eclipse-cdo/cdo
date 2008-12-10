@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOViewSet extends Notifier
 {
+  public CDOView resolveView(String repositoryUUID);
+
   public CDOView[] getViews();
 
   public CDOResourceFactory getResourceFactory();

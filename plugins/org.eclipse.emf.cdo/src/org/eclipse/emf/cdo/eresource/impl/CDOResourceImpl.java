@@ -802,6 +802,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       {
         notifications = new NotificationChainImpl(2);
       }
+
       notifications.add(new NotificationImpl(Notification.SET, oldResourceSet, resourceSet)
       {
         @Override

@@ -564,7 +564,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       Object value = folderRevision.data().get(nodesFeature, i);
       value = getStore().resolveProxy(folderRevision, nodesFeature, i, value);
 
-      CDORevision childRevision = getLocalRevision((CDOID)value);
+      CDORevision childRevision = getLocalRevision((CDOID)convertObjectToID(value, false));
       if (name.equals(childRevision.data().get(nameFeature, 0)))
       {
         return childRevision.getID();

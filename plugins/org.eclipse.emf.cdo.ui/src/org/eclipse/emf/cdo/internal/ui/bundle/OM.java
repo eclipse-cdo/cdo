@@ -4,9 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
@@ -55,6 +56,9 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTY = //
   PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTY", true); //$NON-NLS-1$
+
+  public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
+  PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$
 
   /**
    * @author Eike Stepper

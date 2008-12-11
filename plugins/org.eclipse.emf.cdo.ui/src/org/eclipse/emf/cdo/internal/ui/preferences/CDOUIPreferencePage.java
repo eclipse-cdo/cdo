@@ -4,9 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.preferences;
 
@@ -23,6 +24,7 @@ import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -35,6 +37,8 @@ import org.eclipse.ui.fieldassist.ContentAssistCommandAdapter;
 public class CDOUIPreferencePage extends OMPreferencePage
 {
   private TextAndDisable decoration;
+
+  private Button autoReload;
 
   public CDOUIPreferencePage()
   {
@@ -64,6 +68,9 @@ public class CDOUIPreferencePage extends OMPreferencePage
     new ContentAssistCommandAdapter(text, contentAdapter, provider, null, new char[] { '$' }, true);
     UIUtil.addDecorationMargin(text);
 
+    autoReload = new Button(composite, SWT.CHECK);
+    autoReload.setText("Enable CDOEditor Auto-Reload");
+
     initValues();
     return composite;
   }
@@ -71,12 +78,14 @@ public class CDOUIPreferencePage extends OMPreferencePage
   protected void initValues()
   {
     decoration.setValue(OM.PREF_LABEL_DECORATION.getValue());
+    autoReload.setSelection(OM.PREF_EDITOR_AUTO_RELOAD.getValue());
   }
 
   @Override
   public boolean performOk()
   {
     OM.PREF_LABEL_DECORATION.setValue(decoration.getValue());
+    OM.PREF_EDITOR_AUTO_RELOAD.setValue(autoReload.getSelection());
     return super.performOk();
   }
 }

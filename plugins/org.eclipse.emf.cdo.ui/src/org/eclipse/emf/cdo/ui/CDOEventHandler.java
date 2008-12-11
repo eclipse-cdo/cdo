@@ -4,10 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.ui;
 
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
@@ -27,6 +29,7 @@ import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
 import org.eclipse.jface.viewers.TreeViewer;
 
@@ -91,25 +94,7 @@ public class CDOEventHandler
         // }
         // else
         {
-          try
-          {
-            treeViewer.getControl().getDisplay().syncExec(new Runnable()
-            {
-              public void run()
-              {
-                try
-                {
-                  treeViewer.refresh(true);
-                }
-                catch (Exception ignore)
-                {
-                }
-              }
-            });
-          }
-          catch (Exception ignore)
-          {
-          }
+          refreshTreeViewer();
         }
 
         viewDirtyStateChanged();
@@ -126,10 +111,27 @@ public class CDOEventHandler
     }
   };
 
+  private IListener preferenceListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      @SuppressWarnings("unchecked")
+      OMPreferencesChangeEvent<Boolean> preferenceChangeEvent = (OMPreferencesChangeEvent<Boolean>)event;
+      if (OM.PREF_EDITOR_AUTO_RELOAD.getName().equals(preferenceChangeEvent.getPreference().getName()))
+      {
+        if (preferenceChangeEvent.getNewValue().booleanValue())
+        {
+          refreshTreeViewer();
+        }
+      }
+    }
+  };
+
   public CDOEventHandler(CDOView view, TreeViewer treeViewer)
   {
     this.view = view;
     this.treeViewer = treeViewer;
+    wirePreferences();
     view.getSession().addListener(sessionListener);
     view.addListener(viewListener);
   }
@@ -146,6 +148,7 @@ public class CDOEventHandler
       }
     }
 
+    unwirePreferences();
     view = null;
     treeViewer = null;
   }
@@ -160,9 +163,62 @@ public class CDOEventHandler
     return treeViewer;
   }
 
-  public void setViewer(TreeViewer viewer)
+  /**
+   * @since 2.0
+   */
+  public void setTreeViewer(TreeViewer viewer)
   {
     treeViewer = viewer;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void refreshTreeViewer()
+  {
+    try
+    {
+      treeViewer.getControl().getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            treeViewer.refresh(true);
+          }
+          catch (Exception ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (Exception ignore)
+    {
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isAutoReloadEnabled()
+  {
+    return OM.PREF_EDITOR_AUTO_RELOAD.getValue();
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void wirePreferences()
+  {
+    OM.PREFS.addListener(preferenceListener);
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void unwirePreferences()
+  {
+    OM.PREFS.removeListener(preferenceListener);
   }
 
   /**
@@ -176,7 +232,10 @@ public class CDOEventHandler
       protected void processCDOObject(TreeViewer viewer, InternalCDOObject cdoObject)
       {
         objectInvalidated(cdoObject);
-        viewer.refresh(cdoObject.cdoInternalInstance(), true);
+        if (isAutoReloadEnabled())
+        {
+          viewer.refresh(cdoObject.cdoInternalInstance(), true);
+        }
       }
     }.processCDOObjects(treeViewer, dirtyObjects);
   }

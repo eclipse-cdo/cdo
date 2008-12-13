@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
@@ -209,7 +208,7 @@ public class MEMStoreAccessor extends StoreAccessor
   protected void writeRevisionDelta(CDORevisionDelta revisionDelta, long created)
   {
     CDORevision revision = getStore().getRevision(revisionDelta.getID());
-    CDORevision newRevision = CDORevisionUtil.copy(revision);
+    CDORevision newRevision = revision.copy();
     revisionDelta.apply(newRevision);
     ((InternalCDORevision)newRevision).setCreated(created);
     writeRevision(newRevision);

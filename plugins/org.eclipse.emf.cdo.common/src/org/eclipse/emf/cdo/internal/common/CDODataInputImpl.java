@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -44,7 +45,6 @@ import org.eclipse.emf.cdo.internal.common.model.CDOClassImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassRefImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOFeatureImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOClearFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl;
@@ -306,7 +306,7 @@ public abstract class CDODataInputImpl implements CDODataInput
     boolean notNull = readBoolean();
     if (notNull)
     {
-      return new CDORevisionImpl(this);
+      return readCDORevisionData();
     }
 
     return null;
@@ -411,6 +411,11 @@ public abstract class CDODataInputImpl implements CDODataInput
   public RWLockManager.LockType readCDOLockType() throws IOException
   {
     return readBoolean() ? RWLockManager.LockType.WRITE : RWLockManager.LockType.READ;
+  }
+
+  protected CDORevision readCDORevisionData() throws IOException
+  {
+    return CDORevisionUtil.read(this);
   }
 
   protected abstract CDOPackageManager getPackageManager();

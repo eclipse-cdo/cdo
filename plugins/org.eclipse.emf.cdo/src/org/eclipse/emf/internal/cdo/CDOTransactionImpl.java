@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
@@ -608,7 +607,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevision revision = newBaseRevision.get(id);
       if (revision != null)
       {
-        object.cdoInternalSetRevision(CDORevisionUtil.copy(revision));
+        object.cdoInternalSetRevision(revision.copy());
         object.cdoInternalSetView(this);
         object.cdoInternalSetID(revision.getID());
         object.cdoInternalSetState(CDOState.NEW);
@@ -815,7 +814,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       // Load instance to revision
       ((InternalCDOObject)object).cdoInternalPreCommit();
-      lastSavepoint.getBaseNewObjects().put(object.cdoID(), CDORevisionUtil.copy(object.cdoRevision()));
+      lastSavepoint.getBaseNewObjects().put(object.cdoID(), object.cdoRevision().copy());
     }
   }
 

@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.DLRevisionHolder;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
@@ -28,8 +27,6 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.RevisionHolder;
 import org.eclipse.emf.cdo.spi.common.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -346,11 +343,6 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public CDORevisionResolver getRevisionResolver()
-    {
-      throw new UnsupportedOperationException();
-    }
-
     public boolean isResourceNode()
     {
       throw new UnsupportedOperationException();
@@ -376,7 +368,12 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public void write(ExtendedDataOutput out, CDOIDProvider idProvider, int referenceChunk) throws IOException
+    public CDORevision copy()
+    {
+      return new TestRevision(CDOIDUtil.getLong(id), version, created, revised);
+    }
+
+    public void write(CDODataOutput out, int referenceChunk) throws IOException
     {
       throw new UnsupportedOperationException();
     }

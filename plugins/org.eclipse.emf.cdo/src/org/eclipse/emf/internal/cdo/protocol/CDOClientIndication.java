@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.CDODataInputImpl;
 
@@ -75,6 +77,13 @@ public abstract class CDOClientIndication extends Indication
   {
     indicating(new CDODataInputImpl(in)
     {
+      @Override
+      protected CDORevision readCDORevisionData() throws IOException
+      {
+        CDORevisionFactory factory = getSession().options().getRevisionFactory();
+        return factory.createRevision(this);
+      }
+
       @Override
       protected CDORevisionResolver getRevisionResolver()
       {

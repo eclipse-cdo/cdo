@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.common.CDOProtocolSession;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -209,6 +210,16 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
      * Returns the CDOCollectionLoadingPolicy currently being used by this session.
      */
     public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
+
+    /**
+     * Returns the CDORevisionFactory currently being used by this session.
+     */
+    public CDORevisionFactory getRevisionFactory();
+
+    /**
+     * Sets the CDORevisionFactory to be used by this session.
+     */
+    public void setRevisionFactory(CDORevisionFactory factory);
   }
 
   /**

@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
@@ -450,7 +450,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       // Create new revision
       CDOClass cdoClass = object.cdoClass();
-      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(cdoClass, id);
+      CDORevisionFactory factory = transaction.getSession().options().getRevisionFactory();
+      InternalCDORevision revision = (InternalCDORevision)factory.createRevision(cdoClass, id);
       revision.setVersion(-1);
 
       object.cdoInternalSetRevision(revision);
@@ -599,7 +600,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
       // Copy revision
-      InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.copy(object.cdoRevision());
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();
       revision.setTransactional();
       object.cdoInternalSetRevision(revision);
 

@@ -66,4 +66,9 @@ public interface CDORevision
   public CDORevisionDelta compare(CDORevision origin);
 
   public void merge(CDORevisionDelta delta);
+
+  /**
+   * @since 2.0
+   */
+  public CDORevision copy();
 }

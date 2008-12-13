@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -218,7 +217,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
 
   private InternalCDORevision getCopyCDORevision(Object object)
   {
-    return (InternalCDORevision)CDORevisionUtil.copy(((CDOObject)object).cdoRevision());
+    return (InternalCDORevision)((CDOObject)object).cdoRevision().copy();
   }
 
   /**

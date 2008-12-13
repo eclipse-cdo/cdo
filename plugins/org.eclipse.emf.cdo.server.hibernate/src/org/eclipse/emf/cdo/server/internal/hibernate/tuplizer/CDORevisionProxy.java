@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -38,6 +40,16 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   CDORevisionProxy(CDORevisionLazyInitializer li)
   {
     this.li = li;
+  }
+
+  public CDORevision copy()
+  {
+    return new CDORevisionProxy(li);
+  }
+
+  public void write(CDODataOutput out, int referenceChunk) throws IOException
+  {
+    li.getRevision().write(out, referenceChunk);
   }
 
   public Object writeReplace()
@@ -245,6 +257,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().setID(id);
   }
 
+  @SuppressWarnings("deprecation")
   public void setListSize(CDOFeature feature, int size)
   {
     li.getRevision().setListSize(feature, size);

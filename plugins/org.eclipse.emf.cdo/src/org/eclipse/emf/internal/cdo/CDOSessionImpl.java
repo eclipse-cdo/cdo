@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOTimeStampContext;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOSession.Repository;
+import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.CDOProtocolView;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -32,8 +33,11 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
@@ -99,6 +103,8 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   private boolean passiveUpdateEnabled = true;
 
   private CDOCollectionLoadingPolicy collectionLoadingPolicy;
+
+  private CDORevisionFactory revisionFactory;
 
   private CDOClientProtocol protocol;
 
@@ -227,6 +233,44 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     }
 
     collectionLoadingPolicy = policy;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized CDORevisionFactory getRevisionFactory()
+  {
+    if (revisionFactory == null)
+    {
+      revisionFactory = new CDORevisionFactory()
+      {
+        public CDORevision createRevision(CDOClass cdoClass, CDOID id)
+        {
+          return CDORevisionUtil.create(cdoClass, id);
+        }
+
+        public CDORevision createRevision(CDODataInput in) throws IOException
+        {
+          return CDORevisionUtil.read(in);
+        }
+
+        @Override
+        public String toString()
+        {
+          return "DefaultRevisionFactory";
+        }
+      };
+    }
+
+    return revisionFactory;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized void setRevisionFactory(CDORevisionFactory revisionFactory)
+  {
+    this.revisionFactory = revisionFactory;
   }
 
   public CDOClientProtocol getProtocol()

@@ -12,7 +12,6 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
@@ -28,7 +27,7 @@ public class CDOObjectMerger extends CDORevisionMerger
 
   public void merge(InternalCDOObject object, CDORevisionDelta delta)
   {
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.copy(object.cdoRevision());
+    InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();
     revision.setTransactional();
     object.cdoInternalSetRevision(revision);
 

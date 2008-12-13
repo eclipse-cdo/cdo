@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -435,7 +434,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     CDORevision originObject = revisionResolver.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
     if (originObject != null)
     {
-      InternalCDORevision dirtyObject = (InternalCDORevision)CDORevisionUtil.copy(originObject);
+      InternalCDORevision dirtyObject = (InternalCDORevision)originObject.copy();
       dirtyObjectDelta.apply(dirtyObject);
       dirtyObject.setCreated(timeStamp);
       // dirtyObject.setVersion(originObject.getVersion() + 1);

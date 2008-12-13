@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -18,6 +19,8 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjustable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -83,4 +86,9 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   @Deprecated
   public void setListSize(CDOFeature feature, int size);
+
+  /**
+   * @since 2.0
+   */
+  public void write(CDODataOutput out, int referenceChunk) throws IOException;
 }

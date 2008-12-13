@@ -222,6 +222,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements CDOTransaction
         TRACER.trace("commit()");
       }
 
+      if (hasConflict())
+      {
+        throw new TransactionException("This transaction has conflicts");
+      }
+
       for (CDOTransactionHandler handler : getHandlers())
       {
         handler.committingTransaction(this);

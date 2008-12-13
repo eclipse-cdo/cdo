@@ -10,9 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.spi.cdo.ObjectConflictResolver;
+
 import java.util.Set;
 
 /**
+ * A strategy used to customize the default conflict resolution behaviour of {@link CDOTransaction transactions}.
+ * 
+ * @see CDOTransaction.Options#setConflictResolver(CDOConflictResolver)
  * @author Eike Stepper
  * @since 2.0
  */
@@ -29,7 +34,7 @@ public interface CDOConflictResolver
   /**
    * Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.
    * <p>
-   * The implementor might want to use API in {@link CDOConflictUtil}.
+   * The implementor might want to use/extend {@link ObjectConflictResolver}.
    * <p>
    * <b>Important:</b> Those conflicts that are resolved by the implementation of this method <b>must</b> be removed
    * from the passed set of conflicts!

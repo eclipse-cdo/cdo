@@ -1187,7 +1187,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           {
             CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
             dirtyObjects.add(dirtyObject);
-            if (dirtyObject.cdoState() == CDOState.CONFLICT)
+            if (FSMUtil.isConflict(dirtyObject))
             {
               if (conflicts == null)
               {
@@ -1207,7 +1207,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         {
           CDOStateMachine.INSTANCE.detachRemote(detachedObject);
           detachedObjects.add(detachedObject);
-          if (detachedObject.cdoState() == CDOState.INVALID_CONFLICT)
+          if (FSMUtil.isConflict(detachedObject))
           {
             if (conflicts == null)
             {

@@ -26,4 +26,14 @@ public interface InternalCDORevisionDelta extends CDORevisionDelta
    * @since 2.0
    */
   public void adjustReferences(CDOReferenceAdjuster idMappings);
+
+  /**
+   * @since 2.0
+   */
+  public void setOriginVersion(int originVersion);
+
+  /**
+   * @since 2.0
+   */
+  public void setDirtyVersion(int dirtyVersion);
 }

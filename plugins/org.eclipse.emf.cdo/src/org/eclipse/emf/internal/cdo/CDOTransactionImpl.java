@@ -50,6 +50,7 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -65,6 +66,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -88,7 +90,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private boolean dirty;
 
-  private boolean conflict;
+  private int conflict;
 
   private CDOConflictResolver conflictResolver;
 
@@ -161,14 +163,48 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public boolean hasConflict()
   {
     checkOpen();
-    return conflict;
+    return conflict != 0;
   }
 
   public void setConflict(InternalCDOObject object)
   {
-    ConflictEvent event = new ConflictEvent(object, !conflict);
-    conflict = true;
+    ConflictEvent event = new ConflictEvent(object, conflict == 0);
+    ++conflict;
     fireEvent(event);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Set<CDOObject> getConflicts()
+  {
+    Set<CDOObject> conflicts = new HashSet<CDOObject>();
+    for (CDOObject object : getDirtyObjects().values())
+    {
+      if (FSMUtil.isConflict(object))
+      {
+        conflicts.add(object);
+      }
+    }
+
+    for (CDOObject object : getDetachedObjects().values())
+    {
+      if (FSMUtil.isConflict(object))
+      {
+        conflicts.add(object);
+      }
+    }
+
+    return conflicts;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void resolveConflicts(CDOConflictResolver resolver)
+  {
+    Set<CDOObject> conflicts = getConflicts();
+    handleConflicts(conflicts, resolver);
   }
 
   /**
@@ -203,10 +239,42 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected void handleConflicts(Set<CDOObject> conflicts)
   {
-    getConflictResolver().resolveConflicts(this, conflicts);
-    if (conflicts.isEmpty())
+    handleConflicts(conflicts, getConflictResolver());
+  }
+
+  private void handleConflicts(Set<CDOObject> conflicts, CDOConflictResolver resolver)
+  {
+    List<CDOState> states = new ArrayList<CDOState>(conflicts.size());
+    List<CDORevision> revisions = new ArrayList<CDORevision>(conflicts.size());
+    for (CDOObject conflict : conflicts)
     {
-      conflict = false;
+      states.add(conflict.cdoState());
+      revisions.add(conflict.cdoRevision());
+    }
+
+    try
+    {
+      resolver.resolveConflicts(this, Collections.unmodifiableSet(conflicts));
+    }
+    catch (Exception ex)
+    {
+      Iterator<CDOState> state = states.iterator();
+      Iterator<CDORevision> revision = revisions.iterator();
+      for (CDOObject object : conflicts)
+      {
+        ((InternalCDOObject)object).cdoInternalSetState(state.next());
+        ((InternalCDOObject)object).cdoInternalSetRevision(revision.next());
+      }
+
+      throw WrappedException.wrap(ex);
+    }
+
+    for (CDOObject object : conflicts)
+    {
+      if (!FSMUtil.isConflict(object))
+      {
+        --conflict;
+      }
     }
   }
 
@@ -1030,7 +1098,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     firstSavepoint.setNextSavepoint(null);
     firstSavepoint.getSharedDetachedObjects().clear();
     dirty = false;
-    conflict = false;
+    conflict = 0;
     lastTemporaryID = 0;
   }
 

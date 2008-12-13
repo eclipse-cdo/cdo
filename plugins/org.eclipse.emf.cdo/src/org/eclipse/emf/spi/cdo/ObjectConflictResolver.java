@@ -14,13 +14,15 @@ import org.eclipse.emf.cdo.CDOConflictResolver;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionMerger;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
 
+import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +32,8 @@ import java.util.Set;
  */
 public abstract class ObjectConflictResolver implements CDOConflictResolver
 {
+  public static final CDORevisionMerger REVISION_MERGER = new CDORevisionMerger();
+
   public ObjectConflictResolver()
   {
   }
@@ -37,39 +41,59 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
   public void resolveConflicts(CDOTransaction transaction, Set<CDOObject> conflicts)
   {
     Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas();
-    for (Iterator<CDOObject> it = conflicts.iterator(); it.hasNext();)
+    for (CDOObject conflict : conflicts)
     {
-      CDOObject conflict = it.next();
       CDORevisionDelta revisionDelta = revisionDeltas.get(conflict.cdoID());
-      if (resolveConflict(transaction, conflict, revisionDelta))
-      {
-        it.remove();
-      }
+      resolveConflict(transaction, conflict, revisionDelta);
     }
   }
 
   /**
-   * Resolves the conflict of a single object in the current transaction and returns <code>true</code> if successful,
-   * <code>false</code> otherwise.
+   * Resolves the conflict of a single object in the current transaction.
    */
-  protected abstract boolean resolveConflict(CDOTransaction transaction, CDOObject conflict,
-      CDORevisionDelta revisionDelta);
+  protected abstract void resolveConflict(CDOTransaction transaction, CDOObject conflict, CDORevisionDelta revisionDelta);
 
   public static void rollbackObject(CDOObject object)
   {
     CDOStateMachine.INSTANCE.rollback((InternalCDOObject)object);
   }
 
+  /**
+   * TODO See {@link CDOObjectMerger}!!!
+   */
   public static void changeObject(CDOObject object, CDORevisionDelta revisionDelta)
   {
-    for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
-    {
-      changeObject(object, featureDelta);
-    }
+    CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
+
+    InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();
+    int originVersion = revision.getVersion();
+    revision.setTransactional();
+
+    ((InternalCDORevisionDelta)revisionDelta).setOriginVersion(originVersion);
+    ((InternalCDORevisionDelta)revisionDelta).setDirtyVersion(revision.getVersion());
+
+    REVISION_MERGER.merge(revision, revisionDelta);
+    ((InternalCDOObject)object).cdoInternalSetRevision(revision);
   }
 
-  public static void changeObject(CDOObject object, CDOFeatureDelta featureDelta)
+  /**
+   * A conflict resolver implementation that takes all the new remote state of the conflicting objects and then applies
+   * the locally existing changes of the current transaction.
+   * 
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static class TakeRemoteChangesThenApplyLocalChanges extends ObjectConflictResolver
   {
-    CDOStateMachine.INSTANCE.write((InternalCDOObject)object, featureDelta);
+    public TakeRemoteChangesThenApplyLocalChanges()
+    {
+    }
+
+    @Override
+    protected void resolveConflict(CDOTransaction transaction, CDOObject conflict, CDORevisionDelta revisionDelta)
+    {
+      rollbackObject(conflict);
+      changeObject(conflict, revisionDelta);
+    }
   }
 }

@@ -133,9 +133,19 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     return originVersion;
   }
 
+  public void setOriginVersion(int originVersion)
+  {
+    this.originVersion = originVersion;
+  }
+
   public int getDirtyVersion()
   {
     return dirtyVersion;
+  }
+
+  public void setDirtyVersion(int dirtyVersion)
+  {
+    this.dirtyVersion = dirtyVersion;
   }
 
   public List<CDOFeatureDelta> getFeatureDeltas()

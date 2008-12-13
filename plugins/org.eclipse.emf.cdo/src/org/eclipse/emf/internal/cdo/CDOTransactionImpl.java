@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOConflictResolver;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOState;
@@ -89,6 +90,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private boolean conflict;
 
+  private CDOConflictResolver conflictResolver;
+
   private long lastCommitTime = CDORevision.UNSPECIFIED_DATE;
 
   private int lastTemporaryID;
@@ -166,6 +169,45 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     ConflictEvent event = new ConflictEvent(object, !conflict);
     conflict = true;
     fireEvent(event);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized CDOConflictResolver getConflictResolver()
+  {
+    if (conflictResolver == null)
+    {
+      conflictResolver = createConflictResolver();
+    }
+
+    return conflictResolver;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public synchronized void setConflictResolver(CDOConflictResolver resolver)
+  {
+    conflictResolver = resolver;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected CDOConflictResolver createConflictResolver()
+  {
+    return CDOConflictResolver.NOOP;
+  }
+
+  @Override
+  protected void handleConflicts(Set<CDOObject> conflicts)
+  {
+    getConflictResolver().resolveConflicts(this, conflicts);
+    if (conflicts.isEmpty())
+    {
+      conflict = false;
+    }
   }
 
   /**

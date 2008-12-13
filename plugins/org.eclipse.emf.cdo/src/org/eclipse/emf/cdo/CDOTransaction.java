@@ -94,6 +94,16 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public interface Options extends CDOView.Options
   {
     /**
+     * Returns the current conflict resolver of this transaction.
+     */
+    public CDOConflictResolver getConflictResolver();
+
+    /**
+     * Sets the conflict resolver of this transaction.
+     */
+    public void setConflictResolver(CDOConflictResolver resolver);
+
+    /**
      * Returns true if locks in this view will be removes when {@link CDOTransaction#commit()} or
      * {@link CDOTransaction#rollback()} is called.
      * <p>

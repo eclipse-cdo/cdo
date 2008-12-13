@@ -1176,6 +1176,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     try
     {
+      Set<CDOObject> conflicts = null;
       for (CDOIDAndVersion dirtyOID : dirtyOIDs)
       {
         InternalCDOObject dirtyObject;
@@ -1186,18 +1187,41 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           {
             CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
             dirtyObjects.add(dirtyObject);
+            if (dirtyObject.cdoState() == CDOState.CONFLICT)
+            {
+              if (conflicts == null)
+              {
+                conflicts = new HashSet<CDOObject>();
+              }
+
+              conflicts.add(dirtyObject);
+            }
           }
         }
       }
 
       for (CDOID id : detachedOIDs)
       {
-        InternalCDOObject cdoObject = removeObject(id);
-        if (cdoObject != null)
+        InternalCDOObject detachedObject = removeObject(id);
+        if (detachedObject != null)
         {
-          CDOStateMachine.INSTANCE.detachRemote(cdoObject);
-          detachedObjects.add(cdoObject);
+          CDOStateMachine.INSTANCE.detachRemote(detachedObject);
+          detachedObjects.add(detachedObject);
+          if (detachedObject.cdoState() == CDOState.INVALID_CONFLICT)
+          {
+            if (conflicts == null)
+            {
+              conflicts = new HashSet<CDOObject>();
+            }
+
+            conflicts.add(detachedObject);
+          }
         }
+      }
+
+      if (conflicts != null)
+      {
+        handleConflicts(conflicts);
       }
     }
     finally
@@ -1228,6 +1252,14 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     fireInvalidationEvent(timeStamp, Collections.unmodifiableSet(dirtyObjects), Collections
         .unmodifiableSet(detachedObjects));
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void handleConflicts(Set<CDOObject> conflicts)
+  {
+    // Do nothing here (see CDOTransactionImpl)
   }
 
   /**

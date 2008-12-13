@@ -283,7 +283,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       CDOState state = object.cdoState();
       if (state != CDOState.TRANSIENT && state != CDOState.PREPARED && state != CDOState.NEW
-          && state != CDOState.CONFLICT)
+          && state != CDOState.CONFLICT && state != CDOState.INVALID_CONFLICT && state != CDOState.INVALID)
       {
         if (view == null)
         {

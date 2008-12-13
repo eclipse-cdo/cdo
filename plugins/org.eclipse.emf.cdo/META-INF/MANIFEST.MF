@@ -23,5 +23,6 @@ Export-Package: org.eclipse.emf.cdo;version="2.0.0",
  org.eclipse.emf.internal.cdo.protocol;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.internal.cdo.query;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.internal.cdo.revision;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.internal.cdo.util;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui"
+ org.eclipse.emf.internal.cdo.util;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui",
+ org.eclipse.emf.spi.cdo;version="2.0.0"
 Bundle-ActivationPolicy: lazy

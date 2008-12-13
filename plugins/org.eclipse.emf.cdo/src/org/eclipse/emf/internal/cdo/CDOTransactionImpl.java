@@ -574,6 +574,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void commit(IProgressMonitor progressMonitor) throws TransactionException
   {
     checkOpen();
+    if (hasConflict())
+    {
+      throw new TransactionException("This transaction has conflicts");
+    }
+
     if (progressMonitor == null)
     {
       progressMonitor = new NullProgressMonitor();

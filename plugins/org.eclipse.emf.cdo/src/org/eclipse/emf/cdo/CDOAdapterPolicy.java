@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * {@link CDOAdapterPolicy#NONE} - Disabled. <br>
  * {@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.<br>
- * {@link CDOAdapterPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
+ * {@link CDOAdapterPolicy#CDO} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
  * Any other class that implement {@link CDOAdapterPolicy} will enable for whatever rules defined in that class. <br>
  * <p>
  * If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be registered
@@ -57,7 +57,7 @@ public interface CDOAdapterPolicy
     }
   };
 
-  public static final CDOAdapterPolicy ONLY_CDO_ADAPTER = new CDOAdapterPolicy()
+  public static final CDOAdapterPolicy CDO = new CDOAdapterPolicy()
   {
     public boolean isValid(EObject eObject, Adapter adapter)
     {

@@ -55,6 +55,8 @@ import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -92,7 +94,35 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private int conflict;
 
-  private CDOConflictResolver conflictResolver;
+  private EList<CDOConflictResolver> conflictResolvers = new BasicEList<CDOConflictResolver>()
+  {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected CDOConflictResolver validate(int index, CDOConflictResolver newResolver)
+    {
+      if (newResolver.getTransaction() != null)
+      {
+        throw new IllegalArgumentException("New conflict resolver is already associated with a transaction");
+      }
+
+      return super.validate(index, newResolver);
+    }
+
+    @Override
+    protected void didAdd(int index, CDOConflictResolver newResolver)
+    {
+      super.didAdd(index, newResolver);
+      newResolver.setTransaction(CDOTransactionImpl.this);
+    }
+
+    @Override
+    protected void didRemove(int index, CDOConflictResolver oldResolver)
+    {
+      super.didRemove(index, oldResolver);
+      oldResolver.setTransaction(null);
+    }
+  };
 
   private long lastCommitTime = CDORevision.UNSPECIFIED_DATE;
 
@@ -153,6 +183,33 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
+  public void close()
+  {
+    try
+    {
+      for (CDOConflictResolver resolver : conflictResolvers)
+      {
+        try
+        {
+          resolver.setTransaction(null);
+        }
+        catch (Exception ignore)
+        {
+        }
+      }
+    }
+    catch (Exception ignore)
+    {
+    }
+
+    conflictResolvers = null;
+    lastSavepoint = null;
+    firstSavepoint = null;
+    transactionStrategy = null;
+    super.close();
+  }
+
+  @Override
   public boolean isDirty()
   {
     checkOpen();
@@ -201,49 +258,40 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public void resolveConflicts(CDOConflictResolver resolver)
+  public void resolveConflicts(CDOConflictResolver... resolvers)
   {
     Set<CDOObject> conflicts = getConflicts();
-    handleConflicts(conflicts, resolver);
+    handleConflicts(conflicts, resolvers);
   }
 
   /**
    * @since 2.0
    */
-  public synchronized CDOConflictResolver getConflictResolver()
+  public EList<CDOConflictResolver> getConflictResolvers()
   {
-    if (conflictResolver == null)
-    {
-      conflictResolver = createConflictResolver();
-    }
-
-    return conflictResolver;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public synchronized void setConflictResolver(CDOConflictResolver resolver)
-  {
-    conflictResolver = resolver;
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected CDOConflictResolver createConflictResolver()
-  {
-    return CDOConflictResolver.NOOP;
+    return conflictResolvers;
   }
 
   @Override
   protected void handleConflicts(Set<CDOObject> conflicts)
   {
-    handleConflicts(conflicts, getConflictResolver());
+    CDOConflictResolver[] resolvers;
+    synchronized (conflictResolvers)
+    {
+      resolvers = conflictResolvers.toArray(new CDOConflictResolver[conflictResolvers.size()]);
+    }
+
+    handleConflicts(conflicts, resolvers);
   }
 
-  private void handleConflicts(Set<CDOObject> conflicts, CDOConflictResolver resolver)
+  private void handleConflicts(Set<CDOObject> conflicts, CDOConflictResolver[] resolvers)
   {
+    if (resolvers.length == 0)
+    {
+      return;
+    }
+
+    // Remember original state to be able to restore it after an exception
     List<CDOState> states = new ArrayList<CDOState>(conflicts.size());
     List<CDORevision> revisions = new ArrayList<CDORevision>(conflicts.size());
     for (CDOObject conflict : conflicts)
@@ -254,10 +302,24 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     try
     {
-      resolver.resolveConflicts(this, Collections.unmodifiableSet(conflicts));
+      Set<CDOObject> remaining = new HashSet<CDOObject>(conflicts);
+      for (CDOConflictResolver resolver : resolvers)
+      {
+        resolver.resolveConflicts(Collections.unmodifiableSet(remaining));
+        for (Iterator<CDOObject> it = remaining.iterator(); it.hasNext();)
+        {
+          CDOObject object = it.next();
+          if (!FSMUtil.isConflict(object))
+          {
+            --conflict;
+            it.remove();
+          }
+        }
+      }
     }
     catch (Exception ex)
     {
+      // Restore original state
       Iterator<CDOState> state = states.iterator();
       Iterator<CDORevision> revision = revisions.iterator();
       for (CDOObject object : conflicts)
@@ -267,14 +329,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       throw WrappedException.wrap(ex);
-    }
-
-    for (CDOObject object : conflicts)
-    {
-      if (!FSMUtil.isConflict(object))
-      {
-        --conflict;
-      }
     }
   }
 

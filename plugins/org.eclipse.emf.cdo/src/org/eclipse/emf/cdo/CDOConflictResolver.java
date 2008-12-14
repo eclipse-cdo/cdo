@@ -23,18 +23,14 @@ import java.util.Set;
  */
 public interface CDOConflictResolver
 {
-  public static final CDOConflictResolver NOOP = new CDOConflictResolver()
-  {
-    public void resolveConflicts(CDOTransaction transaction, Set<CDOObject> conflicts)
-    {
-      // Do nothing
-    }
-  };
+  public CDOTransaction getTransaction();
+
+  public void setTransaction(CDOTransaction transaction);
 
   /**
    * Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.
    * <p>
    * The implementor might want to use/extend {@link ObjectConflictResolver}.
    */
-  public void resolveConflicts(CDOTransaction transaction, Set<CDOObject> conflicts);
+  public void resolveConflicts(Set<CDOObject> conflicts);
 }

@@ -55,7 +55,7 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
 
     transaction1.commit();
 
-    transaction2.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction2.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     CDOResource res2 = transaction2.getResource("/res1");
     Company companyA2 = (Company)res2.getContents().get(0);
     final TestAdapter companyA2Adapter = new TestAdapter();

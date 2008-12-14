@@ -131,7 +131,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private AdapterManager adapterPolicyManager = createAdapterManager();
 
-  private CDOAdapterPolicy changeSubscriptionPolicy = CDOAdapterPolicy.NONE;
+  private List<CDOAdapterPolicy> changeSubscriptionPolicies = new ArrayList<CDOAdapterPolicy>();
 
   private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.ALL;
 
@@ -348,25 +348,40 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   /**
    * @since 2.0
    */
-  public CDOAdapterPolicy getChangeSubscriptionPolicy()
+  public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
   {
-    return changeSubscriptionPolicy;
+    synchronized (changeSubscriptionPolicies)
+    {
+      return changeSubscriptionPolicies.toArray(new CDOAdapterPolicy[changeSubscriptionPolicies.size()]);
+    }
   }
 
   /**
    * @since 2.0
    */
-  public void setChangeSubscriptionPolicy(CDOAdapterPolicy subscriptionPolicy)
+  public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy)
   {
-    if (subscriptionPolicy == null)
+    synchronized (changeSubscriptionPolicies)
     {
-      subscriptionPolicy = CDOAdapterPolicy.NONE;
+      if (!changeSubscriptionPolicies.contains(policy))
+      {
+        changeSubscriptionPolicies.add(policy);
+        changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+      }
     }
+  }
 
-    if (changeSubscriptionPolicy != subscriptionPolicy)
+  /**
+   * @since 2.0
+   */
+  public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy)
+  {
+    synchronized (changeSubscriptionPolicies)
     {
-      changeSubscriptionPolicy = subscriptionPolicy;
-      changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+      if (changeSubscriptionPolicies.remove(policy))
+      {
+        changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+      }
     }
   }
 
@@ -1279,40 +1294,44 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public void handleChangeSubscription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects)
   {
-    if (getChangeSubscriptionPolicy() != CDOAdapterPolicy.NONE)
+    synchronized (changeSubscriptionPolicies)
     {
-      if (deltas != null)
+      if (changeSubscriptionPolicies.isEmpty())
       {
-        CDONotificationBuilder builder = new CDONotificationBuilder(getSession().getPackageRegistry());
-        for (CDORevisionDelta delta : deltas)
-        {
-          InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(delta.getID());
-          if (object != null && object.eNotificationRequired())
-          {
-            NotificationImpl notification = builder.buildNotification(object, delta);
-            if (notification != null)
-            {
-              notification.dispatch();
-            }
-          }
-        }
+        return;
       }
-
-      if (detachedObjects != null)
+    }
+    if (deltas != null)
+    {
+      CDONotificationBuilder builder = new CDONotificationBuilder(getSession().getPackageRegistry());
+      for (CDORevisionDelta delta : deltas)
       {
-        for (CDOID id : detachedObjects)
+        InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(delta.getID());
+        if (object != null && object.eNotificationRequired())
         {
-          InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(id);
-          if (object != null && object.eNotificationRequired())
+          NotificationImpl notification = builder.buildNotification(object, delta);
+          if (notification != null)
           {
-            NotificationImpl notification = new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT,
-                Notification.NO_FEATURE_ID, null, null);
             notification.dispatch();
           }
         }
-
-        getChangeSubscriptionManager().handleDetachedObjects(detachedObjects);
       }
+    }
+
+    if (detachedObjects != null)
+    {
+      for (CDOID id : detachedObjects)
+      {
+        InternalCDOObject object = changeSubscriptionManager.getSubcribeObject(id);
+        if (object != null && object.eNotificationRequired())
+        {
+          NotificationImpl notification = new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT,
+              Notification.NO_FEATURE_ID, null, null);
+          notification.dispatch();
+        }
+      }
+
+      getChangeSubscriptionManager().handleDetachedObjects(detachedObjects);
     }
   }
 
@@ -1558,7 +1577,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     store = null;
     viewSet = null;
     changeSubscriptionManager = null;
-    changeSubscriptionPolicy = null;
+    changeSubscriptionPolicies = null;
     revisionPrefetchingPolicy = null;
     featureAnalyzer = null;
     lastLookupID = null;
@@ -1753,7 +1772,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       {
         subscriptions.clear();
         List<CDOID> cdoIDs = new ArrayList<CDOID>();
-        if (changeSubscriptionPolicy != CDOAdapterPolicy.NONE)
+        if (!changeSubscriptionPolicies.isEmpty()) // TODO Synchronize this?
         {
           for (InternalCDOObject cdoObject : getObjectsArray())
           {
@@ -1840,7 +1859,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         {
           for (Adapter adapter : object.eAdapters())
           {
-            if (changeSubscriptionPolicy.isValid(object, adapter))
+            if (shouldSubscribe(object, adapter))
             {
               count++;
             }
@@ -1855,7 +1874,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     {
       synchronized (subscriptions)
       {
-        if (getChangeSubscriptionPolicy().isValid(eObject, adapter))
+        if (shouldSubscribe(eObject, adapter))
         {
           InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, CDOViewImpl.this);
           if (internalCDOObject.cdoView() != CDOViewImpl.this)
@@ -1868,8 +1887,22 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       }
     }
 
+    private boolean shouldSubscribe(EObject eObject, Adapter adapter)
+    {
+      for (CDOAdapterPolicy policy : getChangeSubscriptionPolicies())
+      {
+        if (policy.isValid(eObject, adapter))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     private void subscribe(CDOID id, InternalCDOObject cdoObject, int adjust)
     {
+      boolean policiesPresent = !changeSubscriptionPolicies.isEmpty(); // TODO Synchronize this?
       synchronized (subscriptions)
       {
         int count = 0;
@@ -1883,7 +1916,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           }
 
           // Notification need to be enable to send correct value to the server
-          if (getChangeSubscriptionPolicy() != CDOAdapterPolicy.NONE)
+          if (policiesPresent)
           {
             request(Collections.singletonList(id), false, true);
           }
@@ -1901,7 +1934,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           subscriptions.remove(id);
 
           // Notification need to be enable to send correct value to the server
-          if (getChangeSubscriptionPolicy() != CDOAdapterPolicy.NONE)
+          if (policiesPresent)
           {
             request(Collections.singletonList(id), false, false);
           }

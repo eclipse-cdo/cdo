@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -61,7 +62,7 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   /**
    * @since 2.0
    */
-  public void resolveConflicts(CDOConflictResolver resolver);
+  public void resolveConflicts(CDOConflictResolver... resolver);
 
   /**
    * @see ResourceSet#createResource(URI)
@@ -105,14 +106,12 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public interface Options extends CDOView.Options
   {
     /**
-     * Returns the current conflict resolver of this transaction.
+     * Returns the conflict resolver list of this transaction. The list can be used to add, move or remove conflict
+     * handlers.
+     * <p>
+     * Note that you must synchronize on the returned list if you want possible modifications to be thread-safe!
      */
-    public CDOConflictResolver getConflictResolver();
-
-    /**
-     * Sets the conflict resolver of this transaction.
-     */
-    public void setConflictResolver(CDOConflictResolver resolver);
+    public EList<CDOConflictResolver> getConflictResolvers();
 
     /**
      * Returns true if locks in this view will be removes when {@link CDOTransaction#commit()} or

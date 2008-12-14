@@ -346,10 +346,10 @@ public interface CDOView extends CDOProtocolView, INotifier
      * @return The current change subscription policy, never <code>null</code>.
      * @see #setChangeSubscriptionPolicy(CDOAdapterPolicy)
      */
-    public CDOAdapterPolicy getChangeSubscriptionPolicy();
+    public CDOAdapterPolicy[] getChangeSubscriptionPolicies();
 
     /**
-     * Specifies the change subscription policy. By default, the value is set to {@link CDOAdapterPolicy#NONE}.
+     * Adds a change subscription policy to this view. By default, the value is set to {@link CDOAdapterPolicy#NONE}.
      * <p>
      * To activate the policy, you must do the following: <br>
      * <code>view.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
@@ -362,7 +362,7 @@ public interface CDOView extends CDOProtocolView, INotifier
      * <p>
      * {@link CDOAdapterPolicy#NONE} - Disabled. <br>
      * {@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.<br>
-     * {@link CDOAdapterPolicy#ONLY_CDO_ADAPTER} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
+     * {@link CDOAdapterPolicy#CDO} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
      * Any other class that implement {@link CDOAdapterPolicy} will enable for whatever rules defined in that class.
      * <br>
      * <p>
@@ -378,7 +378,12 @@ public interface CDOView extends CDOProtocolView, INotifier
      * <b>Note:</b> It can be used with <code>CDOSession.setPassiveUpdate(false)</code>. In this case, it will receive
      * changes without having the objects changed.
      */
-    public void setChangeSubscriptionPolicy(CDOAdapterPolicy policy);
+    public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy);
+
+    /**
+     * Removes a change subscription policy from this view.
+     */
+    public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy);
 
     /**
      * Sets the reference type to be used when an adapter is used to an object.

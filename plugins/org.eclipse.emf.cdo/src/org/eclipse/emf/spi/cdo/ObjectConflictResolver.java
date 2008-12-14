@@ -10,19 +10,39 @@
  **************************************************************************/
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.CDOCommitContext;
 import org.eclipse.emf.cdo.CDOConflictResolver;
+import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.CDOTransactionHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.util.CDODefaultTransactionHandler;
 
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,28 +54,66 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
 {
   public static final CDORevisionMerger REVISION_MERGER = new CDORevisionMerger();
 
+  private CDOTransaction transaction;
+
   public ObjectConflictResolver()
   {
   }
 
-  public void resolveConflicts(CDOTransaction transaction, Set<CDOObject> conflicts)
+  public CDOTransaction getTransaction()
+  {
+    return transaction;
+  }
+
+  public void setTransaction(CDOTransaction transaction)
+  {
+    if (this.transaction != transaction)
+    {
+      if (this.transaction != null)
+      {
+        unhookTransaction(this.transaction);
+      }
+
+      this.transaction = transaction;
+
+      if (this.transaction != null)
+      {
+        hookTransaction(this.transaction);
+      }
+    }
+  }
+
+  public void resolveConflicts(Set<CDOObject> conflicts)
   {
     Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas();
     for (CDOObject conflict : conflicts)
     {
       CDORevisionDelta revisionDelta = revisionDeltas.get(conflict.cdoID());
-      resolveConflict(transaction, conflict, revisionDelta);
+      resolveConflict(conflict, revisionDelta);
     }
   }
 
   /**
    * Resolves the conflict of a single object in the current transaction.
    */
-  protected abstract void resolveConflict(CDOTransaction transaction, CDOObject conflict, CDORevisionDelta revisionDelta);
+  protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta revisionDelta);
+
+  protected void hookTransaction(CDOTransaction transaction)
+  {
+  }
+
+  protected void unhookTransaction(CDOTransaction transaction)
+  {
+  }
 
   public static void rollbackObject(CDOObject object)
   {
     CDOStateMachine.INSTANCE.rollback((InternalCDOObject)object);
+  }
+
+  public static void readObject(CDOObject object)
+  {
+    CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
   }
 
   /**
@@ -63,7 +121,7 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
    */
   public static void changeObject(CDOObject object, CDORevisionDelta revisionDelta)
   {
-    CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
+    readObject(object);
 
     InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();
     int originVersion = revision.getVersion();
@@ -90,10 +148,222 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
     }
 
     @Override
-    protected void resolveConflict(CDOTransaction transaction, CDOObject conflict, CDORevisionDelta revisionDelta)
+    protected void resolveConflict(CDOObject conflict, CDORevisionDelta revisionDelta)
     {
       rollbackObject(conflict);
       changeObject(conflict, revisionDelta);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static abstract class ThreeWayMerge extends ObjectConflictResolver implements CDOAdapterPolicy
+  {
+    private ChangeSubscriptionAdapter adapter = new ChangeSubscriptionAdapter();
+
+    private CDOTransactionHandler handler = new CDODefaultTransactionHandler()
+    {
+      @Override
+      public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta ignored)
+      {
+        if (getTransaction() == transaction)
+        {
+          if (object.cdoState() == CDOState.DIRTY || FSMUtil.isConflict(object))
+          {
+            adapter.attach(object);
+          }
+        }
+      }
+
+      @Override
+      public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+      {
+        if (getTransaction() == transaction)
+        {
+          adapter.reset();
+        }
+      }
+
+      @Override
+      public void rolledBackTransaction(CDOTransaction transaction)
+      {
+        if (getTransaction() == transaction)
+        {
+          adapter.reset();
+        }
+      }
+    };
+
+    public ThreeWayMerge()
+    {
+    }
+
+    public boolean isValid(EObject object, Adapter adapter)
+    {
+      return adapter instanceof ChangeSubscriptionAdapter;
+    }
+
+    @Override
+    protected void hookTransaction(CDOTransaction transaction)
+    {
+      transaction.options().addChangeSubscriptionPolicy(this);
+      transaction.addHandler(handler);
+    }
+
+    @Override
+    protected void unhookTransaction(CDOTransaction transaction)
+    {
+      transaction.removeHandler(handler);
+      transaction.options().removeChangeSubscriptionPolicy(this);
+    }
+
+    @Override
+    protected void resolveConflict(CDOObject conflict, CDORevisionDelta revisionDelta)
+    {
+      resolveConflict(conflict, revisionDelta, adapter.getRevisionDeltas(conflict));
+    }
+
+    protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta,
+        List<CDORevisionDelta> remoteDeltas);
+
+    /**
+     * @author Eike Stepper
+     * @since 2.0
+     */
+    public static class ChangeSubscriptionAdapter extends AdapterImpl
+    {
+      private Set<CDOObject> notifiers = new HashSet<CDOObject>();
+
+      private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<CDOObject, List<CDORevisionDelta>>();
+
+      public ChangeSubscriptionAdapter()
+      {
+      }
+
+      public List<CDORevisionDelta> getRevisionDeltas(CDOObject notifier)
+      {
+        List<CDORevisionDelta> list = deltas.get(notifier);
+        if (list == null)
+        {
+          return Collections.emptyList();
+        }
+
+        return list;
+      }
+
+      public Set<CDOObject> getNotifiers()
+      {
+        return notifiers;
+      }
+
+      public Map<CDOObject, List<CDORevisionDelta>> getDeltas()
+      {
+        return deltas;
+      }
+
+      public void attach(CDOObject notifier)
+      {
+        if (notifiers.add(notifier))
+        {
+          notifier.eAdapters().add(this);
+        }
+      }
+
+      public void reset()
+      {
+        for (CDOObject notifier : notifiers)
+        {
+          notifier.eAdapters().remove(this);
+        }
+
+        notifiers.clear();
+        deltas.clear();
+      }
+
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        try
+        {
+          CDODeltaNotification deltaNotification = (CDODeltaNotification)msg;
+          Object notifier = deltaNotification.getNotifier();
+          if (notifiers.contains(notifier))
+          {
+            CDORevisionDelta revisionDelta = deltaNotification.getRevisionDelta();
+            List<CDORevisionDelta> list = deltas.get(notifier);
+            if (list == null)
+            {
+              list = new ArrayList<CDORevisionDelta>(1);
+              deltas.put((CDOObject)notifier, list);
+            }
+
+            list.add(revisionDelta);
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static class MergeLocalChangesPerFeature extends ThreeWayMerge
+  {
+    public MergeLocalChangesPerFeature()
+    {
+    }
+
+    @Override
+    protected void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
+    {
+      if (hasFeatureConflicts(localDelta, remoteDeltas))
+      {
+        // Leave object in CONFLICT state
+        return;
+      }
+
+      rollbackObject(conflict);
+
+      // Add remote deltas to local delta
+      for (CDORevisionDelta remoteDelta : remoteDeltas)
+      {
+        for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
+        {
+          ((InternalCDORevisionDelta)localDelta).addFeatureDelta(remoteFeatureDelta);
+        }
+      }
+
+      changeObject(conflict, localDelta);
+    }
+
+    protected boolean hasFeatureConflicts(CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
+    {
+      Set<CDOFeature> features = new HashSet<CDOFeature>();
+      for (CDOFeatureDelta localFeatureDelta : localDelta.getFeatureDeltas())
+      {
+        features.add(localFeatureDelta.getFeature());
+      }
+
+      for (CDORevisionDelta remoteDelta : remoteDeltas)
+      {
+        for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
+        {
+          CDOFeature feature = remoteFeatureDelta.getFeature();
+          if (features.contains(feature))
+          {
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
   }
 }

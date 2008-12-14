@@ -45,7 +45,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
 
     transaction1.options().setInvalidationNotificationEnabled(true);
-    transaction1.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -71,7 +71,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     CDOTransaction transaction1 = sessionA.openTransaction();
 
     transaction1.options().setInvalidationNotificationEnabled(true);
-    transaction1.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
@@ -83,7 +83,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     CDOID companyID = CDOUtil.getCDOObject(obj2).cdoID();
     Company companyB = (Company)transB1.getObject(companyID);
     sessionB.options().setPassiveUpdateEnabled(false);
-    transB1.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transB1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     final TestAdapter testAdapter = new TestAdapter();
     companyB.eAdapters().add(testAdapter);
     assertEquals(true, ((InternalCDOTransaction)transB1).hasSubscription(companyID));

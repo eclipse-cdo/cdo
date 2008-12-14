@@ -44,10 +44,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
   public void testSameSession_disable() throws Exception
   {
-    testSameSession(CDOAdapterPolicy.NONE);
+    testSameSession(null);
   }
 
-  public void testSameSession(final CDOAdapterPolicy enabled) throws Exception
+  private void testSameSession(final CDOAdapterPolicy policy) throws Exception
   {
     msg("Opening session");
     final CDOSession session = openModel1Session();
@@ -69,7 +69,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
 
-    transaction.options().setChangeSubscriptionPolicy(enabled);
+    if (policy != null)
+    {
+      transaction.options().addChangeSubscriptionPolicy(policy);
+    }
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -103,17 +106,20 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return enabled == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1
-            || enabled == CDOAdapterPolicy.NONE && adapter.getNotifications().size() == 0;
+        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || policy == null
+            && adapter.getNotifications().size() == 0;
       }
     }.timedOut();
 
     assertEquals(false, timedOut);
 
     // Switching policy to the other
-    final CDOAdapterPolicy enabled2 = enabled == CDOAdapterPolicy.ALL ? CDOAdapterPolicy.NONE : CDOAdapterPolicy.ALL;
-
-    transaction.options().setChangeSubscriptionPolicy(enabled2);
+    transaction.options().removeChangeSubscriptionPolicy(policy);
+    final CDOAdapterPolicy enabled2 = policy == CDOAdapterPolicy.ALL ? null : CDOAdapterPolicy.ALL;
+    if (enabled2 != null)
+    {
+      transaction.options().addChangeSubscriptionPolicy(enabled2);
+    }
 
     adapter.getNotifications().clear();
 
@@ -131,8 +137,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1
-            || enabled2 == CDOAdapterPolicy.NONE && adapter.getNotifications().size() == 0;
+        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || enabled2 == null
+            && adapter.getNotifications().size() == 0;
       }
     }.timedOut();
 
@@ -147,10 +153,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
   public void testSeparateSession_disable() throws Exception
   {
-    testSeparateSession(CDOAdapterPolicy.NONE);
+    testSeparateSession(null);
   }
 
-  public void testSeparateSession(final CDOAdapterPolicy enabled) throws Exception
+  private void testSeparateSession(final CDOAdapterPolicy policy) throws Exception
   {
     msg("Opening session");
     final CDOSession session = openModel1Session();
@@ -171,7 +177,11 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
-    transaction.options().setChangeSubscriptionPolicy(enabled);
+
+    if (policy != null)
+    {
+      transaction.options().addChangeSubscriptionPolicy(policy);
+    }
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -208,17 +218,20 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return enabled == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1
-            || enabled == CDOAdapterPolicy.NONE && adapter.getNotifications().size() == 0;
+        return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || policy == null
+            && adapter.getNotifications().size() == 0;
       }
     }.timedOut();
 
     assertEquals(false, timedOut);
 
     // Switching policy to the other
-    final CDOAdapterPolicy enabled2 = enabled == CDOAdapterPolicy.ALL ? CDOAdapterPolicy.NONE : CDOAdapterPolicy.ALL;
-
-    transaction.options().setChangeSubscriptionPolicy(enabled2);
+    transaction.options().removeChangeSubscriptionPolicy(policy);
+    final CDOAdapterPolicy enabled2 = policy == CDOAdapterPolicy.ALL ? null : CDOAdapterPolicy.ALL;
+    if (enabled2 != null)
+    {
+      transaction.options().addChangeSubscriptionPolicy(enabled2);
+    }
 
     adapter.getNotifications().clear();
 
@@ -236,8 +249,8 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1
-            || enabled2 == CDOAdapterPolicy.NONE && adapter.getNotifications().size() == 0;
+        return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || enabled2 == null
+            && adapter.getNotifications().size() == 0;
       }
     }.timedOut();
 
@@ -266,7 +279,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
-    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
 
@@ -287,7 +300,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     session2.options().setPassiveUpdateEnabled(false);
 
     final CDOTransaction transaction2 = session2.openTransaction();
-    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     final Category category1B = (Category)transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true);
 
@@ -337,7 +350,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
 
-    transaction.options().setChangeSubscriptionPolicy(customPolicy);
+    transaction.options().addChangeSubscriptionPolicy(customPolicy);
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");
@@ -388,7 +401,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     assertEquals(false, timedOut);
 
     // Switching policy to the other
-    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     adapter.getNotifications().clear();
 
@@ -437,7 +450,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
 
-    transaction.options().setChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     msg("Creating resource");
     final CDOResource resourceA = transaction.createResource("/test1");

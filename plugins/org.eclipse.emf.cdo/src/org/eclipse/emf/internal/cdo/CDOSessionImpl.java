@@ -644,30 +644,80 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas, InternalCDOView excludedView)
+  public void handleSyncResponse(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
-    if (isPassiveUpdateEnabled())
-    {
-      notifyInvalidation(timeStamp, dirtyOIDs, detachedObjects, excludedView, true);
-    }
-
-    handleChangeSubcription(deltas, detachedObjects, excludedView);
-
+    handleCommitNotification(timestamp, dirtyOIDs, detachedObjects, null, null, true, false);
   }
 
   /**
    * @since 2.0
    */
-  public void handleSyncResponse(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
+  public void handleCommitNotification(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      final Collection<CDOID> detachedObjects, final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView)
   {
-    notifyInvalidation(timestamp, dirtyOIDs, detachedObjects, null, false);
+    handleCommitNotification(timeStamp, dirtyOIDs, detachedObjects, deltas, excludedView, isPassiveUpdateEnabled(),
+        true);
   }
 
-  private void notifyInvalidation(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects, InternalCDOView excludedView, boolean async)
+  private void handleCommitNotification(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      final Collection<CDOID> detachedObjects, final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView,
+      final boolean passiveUpdate, boolean async)
   {
+    if (passiveUpdate)
+    {
+      updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+    }
 
+    final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
+    final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
+    final boolean skipChangeSubscription = (deltas == null || deltas.size() <= 0)
+        && (detachedObjects == null || detachedObjects.size() <= 0);
+
+    for (final InternalCDOView view : getViews())
+    {
+      if (view != excludedView)
+      {
+        Runnable runnable = new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              if (passiveUpdate)
+              {
+                view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+              }
+
+              if (!skipChangeSubscription)
+              {
+                view.handleChangeSubscription(deltas, detachedObjects);
+              }
+            }
+            catch (RuntimeException ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        };
+
+        if (async)
+        {
+          QueueRunner runner = getInvalidationRunner();
+          runner.addWork(runnable);
+        }
+        else
+        {
+          runnable.run();
+        }
+      }
+    }
+
+    fireInvalidationEvent(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+  }
+
+  private void updateRevisionForRemoteChanges(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      Collection<CDOID> detachedObjects, InternalCDOView excludedView)
+  {
     // revised is done automatically when postCommit is CDOTransaction.postCommit is happening
     // Detached are not revised through postCommit
     if (excludedView == null || timeStamp == CDORevision.UNSPECIFIED_DATE)
@@ -700,40 +750,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
         revision.setRevised(timeStamp - 1);
       }
     }
-
-    final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
-    final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
-
-    for (final InternalCDOView view : getViews())
-    {
-      if (view != excludedView)
-      {
-        if (async)
-        {
-          QueueRunner runner = getInvalidationRunner();
-          runner.addWork(new Runnable()
-          {
-            public void run()
-            {
-              try
-              {
-                view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
-              }
-              catch (RuntimeException ex)
-              {
-                OM.LOG.error(ex);
-              }
-            }
-          });
-        }
-        else
-        {
-          view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
-        }
-      }
-    }
-
-    fireInvalidationEvent(timeStamp, dirtyOIDs, detachedObjects, excludedView);
   }
 
   private QueueRunner getInvalidationRunner()
@@ -748,29 +764,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     }
 
     return invalidationRunner;
-  }
-
-  private void handleChangeSubcription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects,
-      InternalCDOView excludedView)
-  {
-    if ((deltas == null || deltas.size() <= 0) && (detachedObjects == null || detachedObjects.size() <= 0))
-    {
-      return;
-    }
-    for (InternalCDOView view : getViews())
-    {
-      if (view != excludedView)
-      {
-        try
-        {
-          view.handleChangeSubscription(deltas, detachedObjects);
-        }
-        catch (RuntimeException ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-    }
   }
 
   /**

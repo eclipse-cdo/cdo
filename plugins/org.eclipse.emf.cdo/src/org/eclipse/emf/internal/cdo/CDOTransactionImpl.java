@@ -182,6 +182,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public void close()
   {
@@ -300,6 +303,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       revisions.add(conflict.cdoRevision());
     }
 
+    int resolved = 0;
+
     try
     {
       Set<CDOObject> remaining = new HashSet<CDOObject>(conflicts);
@@ -311,7 +316,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           CDOObject object = it.next();
           if (!FSMUtil.isConflict(object))
           {
-            --conflict;
+            ++resolved;
             it.remove();
           }
         }
@@ -330,6 +335,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       throw WrappedException.wrap(ex);
     }
+
+    conflict -= resolved;
   }
 
   /**

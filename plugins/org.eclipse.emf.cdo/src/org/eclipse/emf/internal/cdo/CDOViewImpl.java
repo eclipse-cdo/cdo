@@ -131,7 +131,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private AdapterManager adapterPolicyManager = createAdapterManager();
 
-  private List<CDOAdapterPolicy> changeSubscriptionPolicies = new ArrayList<CDOAdapterPolicy>();
+  private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
 
   private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.ALL;
 
@@ -363,9 +363,8 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     synchronized (changeSubscriptionPolicies)
     {
-      if (!changeSubscriptionPolicies.contains(policy))
+      if (changeSubscriptionPolicies.add(policy))
       {
-        changeSubscriptionPolicies.add(policy);
         changeSubscriptionManager.notifyChangeSubcriptionPolicy();
       }
     }
@@ -378,7 +377,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     synchronized (changeSubscriptionPolicies)
     {
-      if (changeSubscriptionPolicies.remove(policy))
+      if (changeSubscriptionPolicies.remove(policy) && !changeSubscriptionPolicies.contains(policy))
       {
         changeSubscriptionManager.notifyChangeSubcriptionPolicy();
       }
@@ -1301,6 +1300,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
         return;
       }
     }
+
     if (deltas != null)
     {
       CDONotificationBuilder builder = new CDONotificationBuilder(getSession().getPackageRegistry());

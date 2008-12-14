@@ -100,6 +100,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Committing");
     transaction2.commit();
 
+    // Be sure the threading is done before changing the policy... since if we change the policy before the
+    // notifications happens... it will not produce the desire effect!
+    Thread.sleep(1000);
+
     msg("Checking after commit");
     boolean timedOut = new PollingTimeOuter(10, 100)
     {
@@ -130,6 +134,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Committing");
     transaction2.commit();
+
+    // Be sure the threading is done before changing the policy... since if we change the policy before the
+    // notifications happens... it will not produce the desire effect!
+    Thread.sleep(1000);
 
     msg("Checking after commit");
     timedOut = new PollingTimeOuter(10, 100)

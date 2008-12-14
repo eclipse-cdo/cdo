@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
@@ -52,8 +53,6 @@ import java.util.Set;
  */
 public abstract class ObjectConflictResolver implements CDOConflictResolver
 {
-  public static final CDORevisionMerger REVISION_MERGER = new CDORevisionMerger();
-
   private CDOTransaction transaction;
 
   public ObjectConflictResolver()
@@ -130,7 +129,8 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
     ((InternalCDORevisionDelta)revisionDelta).setOriginVersion(originVersion);
     ((InternalCDORevisionDelta)revisionDelta).setDirtyVersion(revision.getVersion());
 
-    REVISION_MERGER.merge(revision, revisionDelta);
+    CDORevisionMerger merger = new CDORevisionMerger();
+    merger.merge(revision, revisionDelta);
     ((InternalCDOObject)object).cdoInternalSetRevision(revision);
   }
 
@@ -189,6 +189,7 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
       @Override
       public void rolledBackTransaction(CDOTransaction transaction)
       {
+        // TODO Simon: Consider save points!
         if (getTransaction() == transaction)
         {
           adapter.reset();
@@ -287,19 +288,22 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
       {
         try
         {
-          CDODeltaNotification deltaNotification = (CDODeltaNotification)msg;
-          Object notifier = deltaNotification.getNotifier();
-          if (notifiers.contains(notifier))
+          if (msg instanceof CDODeltaNotification)
           {
-            CDORevisionDelta revisionDelta = deltaNotification.getRevisionDelta();
-            List<CDORevisionDelta> list = deltas.get(notifier);
-            if (list == null)
+            CDODeltaNotification deltaNotification = (CDODeltaNotification)msg;
+            Object notifier = deltaNotification.getNotifier();
+            if (!deltaNotification.hasNext() && notifiers.contains(notifier))
             {
-              list = new ArrayList<CDORevisionDelta>(1);
-              deltas.put((CDOObject)notifier, list);
-            }
+              CDORevisionDelta revisionDelta = deltaNotification.getRevisionDelta();
+              List<CDORevisionDelta> list = deltas.get(notifier);
+              if (list == null)
+              {
+                list = new ArrayList<CDORevisionDelta>(1);
+                deltas.put((CDOObject)notifier, list);
+              }
 
-            list.add(revisionDelta);
+              list.add(revisionDelta);
+            }
           }
         }
         catch (Exception ex)
@@ -325,8 +329,8 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
     {
       if (hasFeatureConflicts(localDelta, remoteDeltas))
       {
-        // Leave object in CONFLICT state
-        return;
+        // TODO localDelta may be corrupt already and the transaction will not be able to restore it!!!
+        throw new CDOException("Object has feature-level conflicts");
       }
 
       rollbackObject(conflict);
@@ -336,6 +340,7 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
       {
         for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
         {
+          // TODO Add public API for this:
           ((InternalCDORevisionDelta)localDelta).addFeatureDelta(remoteFeatureDelta);
         }
       }

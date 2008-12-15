@@ -32,7 +32,6 @@ import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -187,8 +186,8 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
       @Override
       public void rolledBackTransaction(CDOTransaction transaction)
       {
-        // TODO Simon: Consider save points!
-        if (getTransaction() == transaction)
+        // Reset the accumulation only if it rolled back the transaction completely
+        if (getTransaction() == transaction && transaction.getLastSavepoint().getPreviousSavepoint() == null)
         {
           adapter.reset();
         }

@@ -1182,15 +1182,16 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    *          dirtyOIDs set to be unmodifiable. It does not wrap the set (again).
    * @since 2.0
    */
-  public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedOIDs)
+  public Set<CDOObject> handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      Collection<CDOID> detachedOIDs)
   {
+    Set<CDOObject> conflicts = null;
     Set<InternalCDOObject> dirtyObjects = new HashSet<InternalCDOObject>();
     Set<InternalCDOObject> detachedObjects = new HashSet<InternalCDOObject>();
     lock.lock();
 
     try
     {
-      Set<CDOObject> conflicts = null;
       for (CDOIDAndVersion dirtyOID : dirtyOIDs)
       {
         InternalCDOObject dirtyObject;
@@ -1232,11 +1233,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
           }
         }
       }
-
-      if (conflicts != null)
-      {
-        handleConflicts(conflicts);
-      }
     }
     finally
     {
@@ -1266,14 +1262,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     fireInvalidationEvent(timeStamp, Collections.unmodifiableSet(dirtyObjects), Collections
         .unmodifiableSet(detachedObjects));
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected void handleConflicts(Set<CDOObject> conflicts)
-  {
-    // Do nothing here (see CDOTransactionImpl)
+    return conflicts;
   }
 
   /**

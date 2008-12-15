@@ -50,7 +50,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOView.Options
 
   public void attachResource(CDOResourceImpl resource);
 
-  public void handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedOIDs);
+  /**
+   * Returns the conflicting objects.
+   */
+  public Set<CDOObject> handleInvalidation(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      Collection<CDOID> detachedOIDs);
 
   public void handleChangeSubscription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects);
 

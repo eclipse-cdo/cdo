@@ -26,6 +26,7 @@ public interface IJDBCDelegateProvider
    * This is part of the org.eclipse.emf.cdo.server.db.jdbcDelegateProviders extension point.
    */
   public IJDBCDelegate getJDBCDelegate();
+
   /**
    * Set configuration properties
    */

@@ -16,6 +16,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOAudit;
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.CDOTimeStampContext;
@@ -683,14 +684,20 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
           {
             try
             {
+              Set<CDOObject> conflicts = null;
               if (passiveUpdate)
               {
-                view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+                conflicts = view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
               }
 
               if (!skipChangeSubscription)
               {
                 view.handleChangeSubscription(deltas, detachedObjects);
+              }
+
+              if (conflicts != null)
+              {
+                ((InternalCDOTransaction)view).handleConflicts(conflicts);
               }
             }
             catch (RuntimeException ex)

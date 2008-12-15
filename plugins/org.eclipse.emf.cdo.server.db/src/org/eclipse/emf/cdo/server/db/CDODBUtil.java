@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.jdbc.StatementJDBCDelegateProvider;
 import org.eclipse.emf.cdo.server.internal.db.jdbc.PreparedStatementJDBCDelegateProvider;
+import org.eclipse.emf.cdo.server.internal.db.jdbc.StatementJDBCDelegateProvider;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;

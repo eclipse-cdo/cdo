@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOSavepoint;
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Simon McDuff
@@ -53,4 +55,6 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOView,
   public void registerRevisionDelta(CDORevisionDelta revisionDelta);
 
   public void setConflict(InternalCDOObject object);
+
+  public void handleConflicts(Set<CDOObject> conflicts);
 }

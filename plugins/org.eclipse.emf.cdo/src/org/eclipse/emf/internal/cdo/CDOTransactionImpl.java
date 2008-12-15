@@ -275,8 +275,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return conflictResolvers;
   }
 
-  @Override
-  protected void handleConflicts(Set<CDOObject> conflicts)
+  public void handleConflicts(Set<CDOObject> conflicts)
   {
     CDOConflictResolver[] resolvers;
     synchronized (conflictResolvers)

@@ -35,13 +35,12 @@ public class EchoClient
 
     // Use this container to create and wire the components
     IManagedContainer container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container);
+    TCPUtil.prepareContainer(container);
+    container.activate();
 
     try
     {
-      Net4jUtil.prepareContainer(container);
-      TCPUtil.prepareContainer(container);
-      LifecycleUtil.activate(container);
-
       // Start a connector that represents the client side of a physical connection
       IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
 

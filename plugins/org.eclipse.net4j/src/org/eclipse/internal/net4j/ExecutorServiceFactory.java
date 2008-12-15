@@ -41,7 +41,7 @@ public class ExecutorServiceFactory extends Factory
     }
 
     final ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
-    return Executors.newCachedThreadPool(new ThreadFactory()
+    ThreadFactory threadFactory = new ThreadFactory()
     {
       public Thread newThread(Runnable r)
       {
@@ -49,7 +49,15 @@ public class ExecutorServiceFactory extends Factory
         thread.setDaemon(true);
         return thread;
       }
-    });
+    };
+
+    return Executors.newCachedThreadPool(threadFactory);
+
+    // return new ThreadPoolExecutor(10, Integer.MAX_VALUE, 10L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
+    // threadFactory);
+
+    // return new ThreadPoolExecutor(10, Integer.MAX_VALUE, 10L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(),
+    // threadFactory);
   }
 
   public static ExecutorService get(IManagedContainer container)

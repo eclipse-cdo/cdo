@@ -42,6 +42,7 @@ public class TransactionMonitoringTest
     Net4jUtil.prepareContainer(container);
     TCPUtil.prepareContainer(container);
     CDOUtil.prepareContainer(container);
+    container.activate();
 
     CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
     configuration.setConnector(TCPUtil.getConnector(container, "localhost"));

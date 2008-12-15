@@ -27,6 +27,11 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
 
   public boolean isEmpty()
   {
+    if (!isActive())
+    {
+      return true;
+    }
+
     E[] elements = getElements();
     return elements == null || elements.length == 0;
   }

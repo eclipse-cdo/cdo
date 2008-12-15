@@ -36,13 +36,13 @@ public class EchoServer
 
     // Use this container to create and wire the components
     IManagedContainer container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container);
+    TCPUtil.prepareContainer(container);
+    container.registerFactory(new EchoServerProtocol.Factory());
+    container.activate();
 
     try
     {
-      Net4jUtil.prepareContainer(container);
-      TCPUtil.prepareContainer(container);
-      container.registerFactory(new EchoServerProtocol.Factory());
-      LifecycleUtil.activate(container);
 
       // Start an acceptor
       IAcceptor acceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "tcp", "0.0.0.0:2036");

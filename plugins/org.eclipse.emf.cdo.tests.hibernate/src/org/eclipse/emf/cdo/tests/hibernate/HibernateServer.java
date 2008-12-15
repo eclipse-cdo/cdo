@@ -84,6 +84,7 @@ public class HibernateServer
     Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
     TCPUtil.prepareContainer(container); // Prepare the TCP transport
     CDOServerUtil.prepareContainer(container); // Prepare the CDO server
+    container.activate();
     return container;
   }
 }

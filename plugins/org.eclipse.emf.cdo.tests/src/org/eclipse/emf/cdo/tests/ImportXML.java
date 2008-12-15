@@ -55,6 +55,7 @@ public class ImportXML
     JVMUtil.prepareContainer(container); // Prepare the JVM transport
     CDOServerUtil.prepareContainer(container); // Prepare the CDO server
     CDOUtil.prepareContainer(container); // Prepare the CDO client
+    container.activate();
 
     // Start the transport and create a repository
     JVMUtil.getAcceptor(container, "default"); // Start the JVM transport

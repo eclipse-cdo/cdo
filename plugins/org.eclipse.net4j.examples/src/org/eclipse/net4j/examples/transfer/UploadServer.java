@@ -51,14 +51,13 @@ public class UploadServer implements UploadProtocol
 
     // Use this container to create and wire the components
     IManagedContainer container = ContainerUtil.createContainer();
+    Net4jUtil.prepareContainer(container);
+    TCPUtil.prepareContainer(container);
+    container.registerFactory(new ProtocolFactory());
+    container.activate();
 
     try
     {
-      Net4jUtil.prepareContainer(container);
-      TCPUtil.prepareContainer(container);
-      container.registerFactory(new ProtocolFactory());
-
-      LifecycleUtil.activate(container);
 
       // Start an acceptor
       IAcceptor acceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "tcp", "0.0.0.0:2036");

@@ -143,6 +143,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Set<String> getProductGroups()
   {
+    checkActive();
     Set<String> result = new HashSet<String>();
     for (IFactoryKey key : factoryRegistry.keySet())
     {
@@ -159,6 +160,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Set<String> getFactoryTypes(String productGroup)
   {
+    checkActive();
     Set<String> result = new HashSet<String>();
     for (IFactoryKey key : factoryRegistry.keySet())
     {
@@ -193,6 +195,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public boolean isEmpty()
   {
+    checkActive();
     synchronized (elementRegistry)
     {
       return elementRegistry.isEmpty();
@@ -201,6 +204,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public String[] getElementKey(Object element)
   {
+    checkActive();
     for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       if (entry.getValue() == element)
@@ -216,11 +220,13 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object[] getElements()
   {
+    checkActive();
     return getElementRegistryValues();
   }
 
   public Object[] getElements(String productGroup)
   {
+    checkActive();
     List<Object> result = new ArrayList<Object>();
     for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
@@ -236,6 +242,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object[] getElements(String productGroup, String factoryType)
   {
+    checkActive();
     List<Object> result = new ArrayList<Object>();
     for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
@@ -260,6 +267,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
    */
   public Object getElement(String productGroup, String factoryType, String description, boolean activate)
   {
+    checkActive();
     ElementKey key = new ElementKey(productGroup, factoryType, description);
     Object element;
     synchronized (elementRegistry)
@@ -283,6 +291,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object putElement(String productGroup, String factoryType, String description, Object element)
   {
+    checkActive();
     ElementKey key = new ElementKey(productGroup, factoryType, description);
     return putElement(key, element);
   }
@@ -311,6 +320,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public Object removeElement(String productGroup, String factoryType, String description)
   {
+    checkActive();
     ElementKey key = new ElementKey(productGroup, factoryType, description);
     return removeElement(key);
   }
@@ -334,6 +344,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public void clearElements()
   {
+    checkActive();
     ContainerEvent<Object> event = null;
     synchronized (elementRegistry)
     {
@@ -358,6 +369,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public void loadElements(InputStream stream) throws IOException
   {
+    checkActive();
     synchronized (elementRegistry)
     {
       clearElements();
@@ -388,6 +400,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public void saveElements(OutputStream stream) throws IOException
   {
+    checkActive();
     synchronized (elementRegistry)
     {
       ObjectOutputStream oos = new ObjectOutputStream(stream);

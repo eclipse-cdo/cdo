@@ -1591,7 +1591,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                   {
                     CDOTransaction transaction = (CDOTransaction)view;
                     String title = "Transaction Error";
-                    String message = "An error occured while committing the tranasaction (see Error Log for details)";
+                    String message = "An error occured while committing the transaction.\nSee Error Log for details.";
                     RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
                         message, transaction);
                     if (dialog.open() == RollbackTransactionDialog.OK)

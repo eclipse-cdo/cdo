@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.util.FSMUtil;
-
 import org.eclipse.emf.spi.cdo.ObjectConflictResolver.MergeLocalChangesPerFeature;
 
 /**
@@ -50,7 +48,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     // Resolver should be triggered. Should we always used a timer ?
     Thread.sleep(1000);
 
-    assertFalse(FSMUtil.isConflict(CDOUtil.getCDOObject(address2)));
+    assertFalse(CDOUtil.getCDOObject(address2).cdoConflict());
     assertFalse(transaction2.hasConflict());
 
     assertEquals("NAME1", address2.getName());
@@ -84,7 +82,7 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     // Resolver should be triggered. Should we always used a timer ?
     Thread.sleep(1000);
-    assertTrue(FSMUtil.isConflict(CDOUtil.getCDOObject(address2)));
+    assertTrue(CDOUtil.getCDOObject(address2).cdoConflict());
     assertTrue(transaction2.hasConflict());
     assertEquals("OTTAWA", address2.getCity());
 

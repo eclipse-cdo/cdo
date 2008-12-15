@@ -241,7 +241,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     Set<CDOObject> conflicts = new HashSet<CDOObject>();
     for (CDOObject object : getDirtyObjects().values())
     {
-      if (FSMUtil.isConflict(object))
+      if (object.cdoConflict())
       {
         conflicts.add(object);
       }
@@ -249,7 +249,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     for (CDOObject object : getDetachedObjects().values())
     {
-      if (FSMUtil.isConflict(object))
+      if (object.cdoConflict())
       {
         conflicts.add(object);
       }
@@ -313,7 +313,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         for (Iterator<CDOObject> it = remaining.iterator(); it.hasNext();)
         {
           CDOObject object = it.next();
-          if (!FSMUtil.isConflict(object))
+          if (!object.cdoConflict())
           {
             ++resolved;
             it.remove();

@@ -54,4 +54,14 @@ public interface CDOObject extends EObject
   public CDOLock cdoWriteLock();
 
   public void cdoReload();
+
+  /**
+   * @since 2.0
+   */
+  public boolean cdoConflict();
+
+  /**
+   * @since 2.0
+   */
+  public boolean cdoInvalid();
 }

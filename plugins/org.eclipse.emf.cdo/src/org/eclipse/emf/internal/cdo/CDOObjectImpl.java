@@ -175,6 +175,22 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     CDOStateMachine.INSTANCE.reload(this);
   }
 
+  /**
+   * @since 2.0
+   */
+  public boolean cdoConflict()
+  {
+    return FSMUtil.isConflict(this);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean cdoInvalid()
+  {
+    return FSMUtil.isInvalid(this);
+  }
+
   public void cdoInternalSetID(CDOID id)
   {
     if (TRACER.isEnabled())

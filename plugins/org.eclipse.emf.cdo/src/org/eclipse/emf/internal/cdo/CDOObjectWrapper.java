@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -115,6 +116,22 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   public InternalEObject cdoInternalInstance()
   {
     return instance;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean cdoConflict()
+  {
+    return FSMUtil.isConflict(this);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean cdoInvalid()
+  {
+    return FSMUtil.isInvalid(this);
   }
 
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)

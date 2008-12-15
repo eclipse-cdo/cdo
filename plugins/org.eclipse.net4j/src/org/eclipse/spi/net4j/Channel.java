@@ -247,7 +247,7 @@ public class Channel extends Lifecycle implements InternalChannel
   @Override
   protected void doDeactivate() throws Exception
   {
-    channelMultiplexer.closeChannel(this);
+    unregisterFromMultiplexer();
     if (receiveSerializer != null)
     {
       receiveSerializer.dispose();
@@ -261,6 +261,11 @@ public class Channel extends Lifecycle implements InternalChannel
     }
 
     super.doDeactivate();
+  }
+
+  protected void unregisterFromMultiplexer()
+  {
+    channelMultiplexer.closeChannel(this);
   }
 
   public void close()

@@ -90,6 +90,11 @@ public interface IJDBCDelegate
   public void write(OMMonitor monitor);
 
   /**
+   * Used by the framework to determine the effort distribution between the store accessor and this JDBC delegate.
+   */
+  public int getWriteEffortPercent();
+
+  /**
    * Do a commit on the JDBC connection.
    */
   public void commit(OMMonitor monitor);

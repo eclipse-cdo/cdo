@@ -450,7 +450,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         cdoRevision.setVersion(cdoRevision.getVersion() + 1);
       }
     }
-    context.applyIDMappings();
+
+    context.applyIDMappings(monitor);
   }
 
   @Override

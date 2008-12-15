@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.List;
 import java.util.Map;
@@ -146,12 +147,14 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
      * @param commitContext
      *          The context of the commit operation that is to be executed against the backend store. The context can be
      *          used to introspect all aspects of the current commit operation.
+     * @param monitor
+     *          A monitor that should be used by the implementor to avoid timeouts.
      * @throws RuntimeException
      *           to indicate that the commit operation must not be executed against the backend store. This exception
      *           will be visible at the client side!
      */
-    public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext)
-        throws RuntimeException;
+    public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
+        OMMonitor monitor) throws RuntimeException;
   }
 
   /**

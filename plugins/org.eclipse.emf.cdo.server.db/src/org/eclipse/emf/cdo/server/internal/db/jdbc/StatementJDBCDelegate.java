@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.internal.db.ServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.ResultSet;
@@ -37,6 +38,16 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
 
   public StatementJDBCDelegate()
   {
+  }
+
+  public int getWriteEffortPercent()
+  {
+    return 50;
+  }
+
+  public void write(OMMonitor monitor)
+  {
+    // Do nothing
   }
 
   @Override
@@ -146,39 +157,6 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
     sqlUpdate(builder.toString());
   }
 
-  private int sqlUpdate(String sql) throws DBException
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(sql);
-    }
-
-    Statement statement = null;
-    try
-    {
-      statement = getConnection().createStatement();
-      return statement.executeUpdate(sql);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      try
-      {
-        statement.close();
-      }
-      catch (SQLException e)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(e);
-        }
-      }
-    }
-  }
-
   @Override
   protected ResultSet doSelectRevisionAttributes(String tableName, long revisionId,
       List<IAttributeMapping> attributeMappings, boolean hasFullRevisionInfo, String where) throws SQLException
@@ -278,5 +256,38 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
     }
 
     return getStatement().executeQuery(sql);
+  }
+
+  private int sqlUpdate(String sql) throws DBException
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
+    }
+
+    Statement statement = null;
+    try
+    {
+      statement = getConnection().createStatement();
+      return statement.executeUpdate(sql);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      try
+      {
+        statement.close();
+      }
+      catch (SQLException e)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(e);
+        }
+      }
+    }
   }
 }

@@ -31,7 +31,7 @@ import java.util.concurrent.Future;
  */
 public abstract class IndicationWithMonitoring extends IndicationWithResponse
 {
-  private Monitor monitor;
+  private LastAccessMonitor monitor;
 
   private Object monitorLock = new Object();
 
@@ -102,9 +102,10 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
         {
           while (monitor != null)
           {
-            if (System.currentTimeMillis() - lastMonitorAccess > monitorProgressInterval)
+            long passedMillis = System.currentTimeMillis() - lastMonitorAccess;
+            if (passedMillis > monitorProgressInterval)
             {
-              setMonitorCanceled();
+              setMonitorCanceled("Timeout after " + passedMillis + " millis");
               break;
             }
 
@@ -168,12 +169,13 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     return 100;
   }
 
-  void setMonitorCanceled()
+  void setMonitorCanceled(String message)
   {
     synchronized (monitorLock)
     {
       if (monitor != null)
       {
+        monitor.setCancelationMessage(message);
         monitor.cancel();
       }
     }
@@ -189,6 +191,8 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
    */
   private final class LastAccessMonitor extends Monitor
   {
+    private String cancelationMessage;
+
     public LastAccessMonitor()
     {
     }
@@ -201,10 +205,15 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     }
 
     @Override
-    public synchronized void checkCanceled() throws MonitorCanceledException
+    public synchronized void worked(double work)
     {
       setLastMonitorAccess();
-      super.checkCanceled();
+      super.worked(work);
+    }
+
+    public void setCancelationMessage(String message)
+    {
+      cancelationMessage = message;
     }
 
     @Override
@@ -215,10 +224,22 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     }
 
     @Override
-    public synchronized void worked(double work)
+    public synchronized void checkCanceled() throws MonitorCanceledException
     {
-      setLastMonitorAccess();
-      super.worked(work);
+      try
+      {
+        setLastMonitorAccess();
+        super.checkCanceled();
+      }
+      catch (MonitorCanceledException ex)
+      {
+        if (cancelationMessage != null)
+        {
+          throw new MonitorCanceledException(cancelationMessage);
+        }
+
+        throw ex;
+      }
     }
   }
 }

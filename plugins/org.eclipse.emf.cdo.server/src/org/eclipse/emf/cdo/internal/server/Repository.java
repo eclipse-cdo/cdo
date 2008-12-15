@@ -35,6 +35,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -485,7 +486,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   /**
    * @since 2.0
    */
-  public void notifyWriteAccessHandlers(Transaction transaction, IStoreAccessor.CommitContext commitContext)
+  public void notifyWriteAccessHandlers(Transaction transaction, IStoreAccessor.CommitContext commitContext,
+      OMMonitor monitor)
   {
     WriteAccessHandler[] handlers;
     synchronized (writeAccessHandlers)
@@ -499,10 +501,18 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       handlers = writeAccessHandlers.toArray(new WriteAccessHandler[size]);
     }
 
-    for (WriteAccessHandler handler : handlers)
+    try
     {
-      // Do *not* protect against unchecked exceptions from handlers!
-      handler.handleTransactionBeforeCommitting(transaction, commitContext);
+      monitor.begin(handlers.length);
+      for (WriteAccessHandler handler : handlers)
+      {
+        // Do *not* protect against unchecked exceptions from handlers!
+        handler.handleTransactionBeforeCommitting(transaction, commitContext, monitor.fork(1));
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 

@@ -102,14 +102,16 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     this.cachingEnablement = cachingEnablement;
   }
 
-  @Override
+  public int getWriteEffortPercent()
+  {
+    return 50;
+  }
+
   public void write(OMMonitor monitor)
   {
-    monitor.begin(dirtyStatements.size() + 1);
-    super.write(monitor.fork(1));
-
     try
     {
+      monitor.begin(dirtyStatements.size());
       for (Entry<CacheKey, PreparedStatement> entry : dirtyStatements.entrySet())
       {
         try
@@ -172,7 +174,6 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   protected void doActivate() throws Exception
   {
     super.doActivate();
-
     dirtyStatements = new ReferenceValueMap.Strong<CacheKey, PreparedStatement>();
 
     switch (cachingEnablement)

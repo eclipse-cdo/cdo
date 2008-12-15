@@ -322,9 +322,9 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected void indicatingCommit(OMMonitor monitor)
   {
-    monitor.begin(2);
     try
     {
+      monitor.begin(2);
       commitContext.write(monitor.fork(1));
       if (commitContext.getRollbackMessage() == null)
       {

@@ -161,13 +161,22 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  public void applyIDMappings()
+  public void applyIDMappings(OMMonitor monitor)
   {
-    applyIDMappings(newObjects);
-    applyIDMappings(dirtyObjects);
-    for (CDORevisionDelta dirtyObjectDelta : dirtyObjectDeltas)
+    try
     {
-      ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMapper);
+      monitor.begin(newObjects.length + dirtyObjects.length + dirtyObjectDeltas.length);
+      applyIDMappings(newObjects, monitor.fork(newObjects.length));
+      applyIDMappings(dirtyObjects, monitor.fork(dirtyObjects.length));
+      for (CDORevisionDelta dirtyObjectDelta : dirtyObjectDeltas)
+      {
+        ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMapper);
+        monitor.worked(1);
+      }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
@@ -224,11 +233,10 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
   public void commit(OMMonitor monitor)
   {
-    monitor.begin(5);
-
     try
     {
-      accessor.commit(monitor.fork(4));
+      monitor.begin(101);
+      accessor.commit(monitor.fork(100));
       updateInfraStructure(monitor.fork(1));
     }
     catch (RuntimeException ex)
@@ -250,44 +258,31 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
    */
   public void write(OMMonitor monitor)
   {
-    monitor.begin(10);
-
     try
     {
+      monitor.begin(106);
+
       // Could throw an exception
       timeStamp = createTimeStamp();
       dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
 
-      adjustMetaRanges();
-      monitor.worked(1);
-
-      adjustTimeStamps();
-      monitor.worked(1);
+      adjustMetaRanges(monitor.fork(1));
+      adjustTimeStamps(monitor.fork(1));
 
       Repository repository = (Repository)transaction.getRepository();
-      computeDirtyObjects(!repository.isSupportingRevisionDeltas());
+      computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork(1));
+
       lockObjects();
       monitor.worked(1);
 
-      repository.notifyWriteAccessHandlers(transaction, this);
-      monitor.worked(1);
+      repository.notifyWriteAccessHandlers(transaction, this, monitor.fork(1));
+      detachObjects(monitor.fork(1));
 
-      detachObjects();
-      monitor.worked(1);
-
-      accessor.write(this, monitor.fork(5));
+      accessor.write(this, monitor.fork(100));
     }
-    catch (RuntimeException ex)
+    catch (Throwable t)
     {
-      handleException(ex);
-    }
-    catch (InterruptedException ex)
-    {
-      handleException(ex);
-    }
-    catch (Throwable ex)
-    {
-      handleException(ex);
+      handleException(t);
     }
     finally
     {
@@ -333,27 +328,44 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  private void adjustTimeStamps()
+  private void adjustTimeStamps(OMMonitor monitor)
   {
-    for (CDORevision newObject : newObjects)
+    try
     {
-      InternalCDORevision revision = (InternalCDORevision)newObject;
-      revision.setCreated(timeStamp);
-    }
-  }
-
-  private void adjustMetaRanges()
-  {
-    for (CDOPackage newPackage : newPackages)
-    {
-      if (newPackage.getParentURI() == null)
+      monitor.begin(newObjects.length);
+      for (CDORevision newObject : newObjects)
       {
-        adjustMetaRange(newPackage);
+        InternalCDORevision revision = (InternalCDORevision)newObject;
+        revision.setCreated(timeStamp);
+        monitor.worked(1);
       }
     }
+    finally
+    {
+      monitor.done();
+    }
   }
 
-  private void adjustMetaRange(CDOPackage newPackage)
+  private void adjustMetaRanges(OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(newPackages.length);
+      for (CDOPackage newPackage : newPackages)
+      {
+        if (newPackage.getParentURI() == null)
+        {
+          adjustMetaRange(newPackage, monitor.fork(1));
+        }
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void adjustMetaRange(CDOPackage newPackage, OMMonitor monitor)
   {
     CDOIDMetaRange oldRange = newPackage.getMetaIDRange();
     if (!oldRange.isTemporary())
@@ -361,21 +373,30 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       throw new IllegalStateException("!oldRange.isTemporary()");
     }
 
-    CDOIDMetaRange newRange = transaction.getRepository().getMetaIDRange(oldRange.size());
-    ((InternalCDOPackage)newPackage).setMetaIDRange(newRange);
-    for (int l = 0; l < oldRange.size(); l++)
+    try
     {
-      CDOIDTemp oldID = (CDOIDTemp)oldRange.get(l);
-      CDOID newID = newRange.get(l);
-      if (TRACER.isEnabled())
+      monitor.begin(oldRange.size());
+      CDOIDMetaRange newRange = transaction.getRepository().getMetaIDRange(oldRange.size());
+      ((InternalCDOPackage)newPackage).setMetaIDRange(newRange);
+      for (int l = 0; l < oldRange.size(); l++)
       {
-        TRACER.format("Mapping meta ID: {0} --> {1}", oldID, newID);
+        CDOIDTemp oldID = (CDOIDTemp)oldRange.get(l);
+        CDOID newID = newRange.get(l);
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Mapping meta ID: {0} --> {1}", oldID, newID);
+        }
+
+        idMappings.put(oldID, newID);
+        monitor.worked(1);
       }
 
-      idMappings.put(oldID, newID);
+      metaIDRanges.add(newRange);
     }
-
-    metaIDRanges.add(newRange);
+    finally
+    {
+      monitor.done();
+    }
   }
 
   private void lockObjects() throws InterruptedException
@@ -413,15 +434,25 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  private void computeDirtyObjects(boolean failOnNull)
+  private void computeDirtyObjects(boolean failOnNull, OMMonitor monitor)
   {
-    for (int i = 0; i < dirtyObjectDeltas.length; i++)
+    try
     {
-      dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i], failOnNull);
-      if (dirtyObjects[i] == null && failOnNull)
+      monitor.begin(dirtyObjectDeltas.length);
+      for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
-        throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]);
+        dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i], failOnNull);
+        if (dirtyObjects[i] == null && failOnNull)
+        {
+          throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]);
+        }
+
+        monitor.worked(1);
       }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
@@ -444,21 +475,30 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     return null;
   }
 
-  private void applyIDMappings(CDORevision[] revisions)
+  private void applyIDMappings(CDORevision[] revisions, OMMonitor monitor)
   {
-    for (CDORevision revision : revisions)
+    try
     {
-      if (revision != null)
+      monitor.begin(revisions.length);
+      for (CDORevision revision : revisions)
       {
-        InternalCDORevision internal = (InternalCDORevision)revision;
-        CDOID newID = idMappings.get(internal.getID());
-        if (newID != null)
+        if (revision != null)
         {
-          internal.setID(newID);
-        }
+          InternalCDORevision internalRevision = (InternalCDORevision)revision;
+          CDOID newID = idMappings.get(internalRevision.getID());
+          if (newID != null)
+          {
+            internalRevision.setID(newID);
+          }
 
-        internal.adjustReferences(idMapper);
+          internalRevision.adjustReferences(idMapper);
+          monitor.worked(1);
+        }
       }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
@@ -490,21 +530,15 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
   private void updateInfraStructure(OMMonitor monitor)
   {
-    monitor.begin(4);
-
     try
     {
-      addNewPackages();
-      monitor.worked(1);
-
-      addRevisions(newObjects);
-      monitor.worked(1);
-
-      addRevisions(dirtyObjects);
-      monitor.worked(1);
-
-      revisedDetachObjects();
+      monitor.begin(6);
+      addNewPackages(monitor.fork(1));
+      addRevisions(newObjects, monitor.fork(1));
+      addRevisions(dirtyObjects, monitor.fork(1));
+      revisedDetachObjects(monitor.fork(1));
       unlockObjects();
+      monitor.worked(1);
 
       if (isAutoReleaseLocksEnabled())
       {
@@ -524,47 +558,87 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     }
   }
 
-  private void addNewPackages()
+  private void addNewPackages(OMMonitor monitor)
   {
-    PackageManager packageManager = (PackageManager)transaction.getRepository().getPackageManager();
-    for (int i = 0; i < newPackages.length; i++)
+    try
     {
-      CDOPackage cdoPackage = newPackages[i];
-      packageManager.addPackage(cdoPackage);
-    }
-  }
-
-  private void addRevisions(CDORevision[] revisions)
-  {
-    RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
-    for (CDORevision revision : revisions)
-    {
-      if (revision != null)
+      monitor.begin(newPackages.length);
+      PackageManager packageManager = (PackageManager)transaction.getRepository().getPackageManager();
+      for (int i = 0; i < newPackages.length; i++)
       {
-        revisionManager.addCachedRevision((InternalCDORevision)revision);
+        CDOPackage cdoPackage = newPackages[i];
+        packageManager.addPackage(cdoPackage);
+        monitor.worked(1);
       }
     }
-  }
-
-  private void revisedDetachObjects()
-  {
-    for (InternalCDORevision revision : detachedRevisions)
+    finally
     {
-      revision.setRevised(getTimeStamp() - 1);
+      monitor.done();
     }
   }
 
-  private void detachObjects()
+  private void addRevisions(CDORevision[] revisions, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(revisions.length);
+      RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
+      for (CDORevision revision : revisions)
+      {
+        if (revision != null)
+        {
+          revisionManager.addCachedRevision((InternalCDORevision)revision);
+        }
+
+        monitor.worked(1);
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void revisedDetachObjects(OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(detachedRevisions.size());
+      for (InternalCDORevision revision : detachedRevisions)
+      {
+        revision.setRevised(getTimeStamp() - 1);
+        monitor.worked(1);
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void detachObjects(OMMonitor monitor)
   {
     detachedRevisions.clear();
     RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
-    for (CDOID id : getDetachedObjects())
+    CDOID[] detachedObjects = getDetachedObjects();
+
+    try
     {
-      InternalCDORevision revision = revisionManager.getRevision(id, CDORevision.UNCHUNKED, false);
-      if (revision != null)
+      monitor.begin(detachedObjects.length);
+      for (CDOID id : detachedObjects)
       {
-        detachedRevisions.add(revision);
+        InternalCDORevision revision = revisionManager.getRevision(id, CDORevision.UNCHUNKED, false);
+        if (revision != null)
+        {
+          detachedRevisions.add(revision);
+        }
+
+        monitor.worked(1);
       }
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 

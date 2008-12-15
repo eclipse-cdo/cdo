@@ -94,6 +94,11 @@ public class JDBCPerformanceReporter extends Lifecycle implements IJDBCDelegate
     registerCall("insertReferenceDbId", time);
   }
 
+  public int getWriteEffortPercent()
+  {
+    return delegate.getWriteEffortPercent();
+  }
+
   public void write(OMMonitor monitor)
   {
     long time = System.currentTimeMillis();

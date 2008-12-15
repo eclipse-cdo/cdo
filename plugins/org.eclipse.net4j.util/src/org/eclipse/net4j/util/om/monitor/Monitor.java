@@ -59,11 +59,13 @@ public class Monitor implements OMMonitor
 
   public synchronized void done()
   {
-    checkCanceled();
-    double rest = totalWork - work;
-    if (rest > 0)
+    if (!isCanceled())
     {
-      worked(rest);
+      double rest = totalWork - work;
+      if (rest > 0)
+      {
+        work += work;
+      }
     }
   }
 

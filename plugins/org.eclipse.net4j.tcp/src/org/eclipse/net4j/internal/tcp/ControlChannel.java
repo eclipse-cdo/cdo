@@ -207,7 +207,7 @@ public class ControlChannel extends Channel
   }
 
   @Override
-  protected void doDeactivate() throws Exception
+  protected void unregisterFromMultiplexer()
   {
     // Do nothing
   }

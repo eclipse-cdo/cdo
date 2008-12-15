@@ -357,6 +357,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
+  public void write(CommitContext context, OMMonitor monitor)
+  {
+    int delegateEffort = jdbcDelegate.getWriteEffortPercent();
+
+    try
+    {
+      monitor.begin(100);
+      super.write(context, monitor.fork(100 - delegateEffort));
+      jdbcDelegate.write(monitor.fork(delegateEffort));
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
   protected final void writePackages(CDOPackage[] cdoPackages, OMMonitor monitor)
   {
     new PackageWriter(cdoPackages, monitor)
@@ -588,13 +605,6 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     }
 
     return affectedTables;
-  }
-
-  @Override
-  public void write(CommitContext context, OMMonitor monitor)
-  {
-    super.write(context, monitor);
-    jdbcDelegate.write(monitor);
   }
 
   @Override

@@ -135,23 +135,35 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
     commitContexts.add(context);
     long timeStamp = context.getTimeStamp();
+    boolean deltas = store.getRepository().isSupportingRevisionDeltas();
+    CDOPackage[] newPackages = context.getNewPackages();
+    CDORevision[] newObjects = context.getNewObjects();
+    CDOID[] detachedObjects = context.getDetachedObjects();
+    int dirtyCount = deltas ? context.getDirtyObjectDeltas().length : context.getDirtyObjects().length;
 
-    writePackages(context.getNewPackages(), monitor.fork(1));
-    addIDMappings(context, monitor.fork(1));
-
-    context.applyIDMappings();
-
-    writeRevisions(context.getNewObjects(), monitor.fork(1));
-    if (store.getRepository().isSupportingRevisionDeltas())
+    try
     {
-      writeRevisionDeltas(context.getDirtyObjectDeltas(), timeStamp, monitor.fork(1));
-    }
-    else
-    {
-      writeRevisions(context.getDirtyObjects(), monitor.fork(1));
-    }
+      monitor.begin(newPackages.length + newObjects.length + detachedObjects.length + dirtyCount + 2);
+      writePackages(newPackages, monitor.fork(newPackages.length));
+      addIDMappings(context, monitor.fork(1));
+      context.applyIDMappings(monitor.fork(1));
 
-    detachObjects(context.getDetachedObjects(), timeStamp - 1, monitor.fork(1));
+      writeRevisions(newObjects, monitor.fork(newObjects.length));
+      if (deltas)
+      {
+        writeRevisionDeltas(context.getDirtyObjectDeltas(), timeStamp, monitor.fork(dirtyCount));
+      }
+      else
+      {
+        writeRevisions(context.getDirtyObjects(), monitor.fork(dirtyCount));
+      }
+
+      detachObjects(detachedObjects, timeStamp - 1, monitor.fork(detachedObjects.length));
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   /**
@@ -299,7 +311,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       try
       {
         CDOClass[] classes = cdoPackage.getClasses();
-        monitor.begin(1 + cdoPackages.length);
+        monitor.begin(1 + classes.length);
 
         writePackage((InternalCDOPackage)cdoPackage);
         monitor.worked(1);

@@ -95,7 +95,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
    * Wait until another thread fills ID mapping for external objects.
    */
   @Override
-  public void applyIDMappings()
+  public void applyIDMappings(OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -122,7 +122,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
       TRACER.format("Received signal to continue.");
     }
 
-    super.applyIDMappings();
+    super.applyIDMappings(monitor);
   }
 
   /**

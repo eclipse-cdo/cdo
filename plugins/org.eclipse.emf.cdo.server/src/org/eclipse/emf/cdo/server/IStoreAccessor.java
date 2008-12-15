@@ -306,6 +306,6 @@ public interface IStoreAccessor extends IQueryHandler
 
     public void addIDMapping(CDOIDTemp oldID, CDOID newID);
 
-    public void applyIDMappings();
+    public void applyIDMappings(OMMonitor monitor);
   }
 }

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EObject;
@@ -67,8 +68,8 @@ public class RepositoryTest extends AbstractCDOTest
 
       CDOFeature nameFeature = customerClass.lookupFeature("name");
 
-      public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext)
-          throws RuntimeException
+      public void handleTransactionBeforeCommitting(ITransaction transaction,
+          IStoreAccessor.CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
         CDORevision[] newObjects = commitContext.getNewObjects();
         for (CDORevision revision : newObjects)

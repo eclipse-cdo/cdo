@@ -132,6 +132,7 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
     CDORevisionMerger merger = new CDORevisionMerger();
     merger.merge(revision, revisionDelta);
     ((InternalCDOObject)object).cdoInternalSetRevision(revision);
+    ((InternalCDOObject)object).cdoInternalSetState(CDOState.DIRTY);
   }
 
   /**
@@ -170,10 +171,7 @@ public abstract class ObjectConflictResolver implements CDOConflictResolver
       {
         if (getTransaction() == transaction)
         {
-          if (object.cdoState() == CDOState.DIRTY || FSMUtil.isConflict(object))
-          {
-            adapter.attach(object);
-          }
+          adapter.attach(object);
         }
       }
 

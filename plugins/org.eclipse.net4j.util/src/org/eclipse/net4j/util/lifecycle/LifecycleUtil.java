@@ -11,7 +11,6 @@
 package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 

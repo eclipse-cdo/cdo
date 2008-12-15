@@ -341,18 +341,18 @@ public interface CDOView extends CDOProtocolView, INotifier
     public void setInvalidationNotificationEnabled(boolean enabled);
 
     /**
-     * Returns the current {@link CDOAdapterPolicy change subscription policy}.
+     * Returns the current set of {@link CDOAdapterPolicy change subscription policies}.
      * 
-     * @return The current change subscription policy, never <code>null</code>.
+     * @return The current set of change subscription policies, never <code>null</code>.
      * @see #setChangeSubscriptionPolicy(CDOAdapterPolicy)
      */
     public CDOAdapterPolicy[] getChangeSubscriptionPolicies();
 
     /**
-     * Adds a change subscription policy to this view. By default, the value is set to {@link CDOAdapterPolicy#NONE}.
+     * Adds a change subscription policy to this view.
      * <p>
-     * To activate the policy, you must do the following: <br>
-     * <code>view.setChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
+     * To activate a policy, you must do the following: <br>
+     * <code>view.options().addChangeSubscriptionPolicy(CDOChangeSubscriptionPolicy.ALL);</code>
      * <p>
      * To register an object, you must add an adapter to the object in which you are interested:<br>
      * <code>eObject.eAdapters().add(myAdapter);</code>
@@ -360,7 +360,7 @@ public interface CDOView extends CDOProtocolView, INotifier
      * By activating this feature, each object having at least one adapter that matches the current policy will be
      * registered with the server and will be notified for each change occurring in the scope of any other transaction.
      * <p>
-     * {@link CDOAdapterPolicy#NONE} - Disabled. <br>
+     * {@link CDOAdapterPolicy#NONE} - Ignored. <br>
      * {@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.<br>
      * {@link CDOAdapterPolicy#CDO} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
      * Any other class that implement {@link CDOAdapterPolicy} will enable for whatever rules defined in that class.
@@ -375,8 +375,8 @@ public interface CDOView extends CDOProtocolView, INotifier
      * {@link CDOTransaction} for these because they are only local to you, at commit time these objects will be
      * registered automatically.
      * <p>
-     * <b>Note:</b> It can be used with <code>CDOSession.setPassiveUpdate(false)</code>. In this case, it will receive
-     * changes without having the objects changed.
+     * <b>Note:</b> It can be used with <code>CDOSession.options().setPassiveUpdate(false)</code>. In this case, it will
+     * receive changes without having the objects changed.
      */
     public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy);
 

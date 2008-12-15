@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -19,7 +20,9 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -180,6 +183,22 @@ public final class LifecycleUtil
     }
   }
 
+  /**
+   * @since 2.0
+   */
+  public static <T> T delegateLifecycle(ClassLoader loader, T pojo, Class<?> pojoInterface, ILifecycle delegate)
+  {
+    return Delegator.newProxy(loader, pojo, pojoInterface, delegate);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static <T> T delegateLifecycle(ClassLoader loader, T pojo, ILifecycle delegate)
+  {
+    return Delegator.newProxy(loader, pojo, pojo.getClass(), delegate);
+  }
+
   private static <T extends Annotation> void invokeAnnotation(Object object, Class<T> annotationClass)
   {
     Class<?> c = object.getClass();
@@ -258,5 +277,63 @@ public final class LifecycleUtil
   public @interface Deactivator
   {
     boolean propagate() default true;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static final class Delegator<T> implements InvocationHandler
+  {
+    private static final Class<ILifecycle> INTERFACE = ILifecycle.class;
+
+    private T pojo;
+
+    private ILifecycle delegate;
+
+    public Delegator(T pojo, ILifecycle delegate)
+    {
+      this.pojo = pojo;
+      this.delegate = delegate;
+    }
+
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+    {
+      String name = method.getName();
+      if (name.equals("activate"))
+      {
+        delegate.activate();
+        return null;
+      }
+
+      if (name.equals("deactivate"))
+      {
+        return delegate.deactivate();
+      }
+
+      try
+      {
+        return method.invoke(pojo, args);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
+
+    public static <T> T newProxy(ClassLoader loader, T pojo, Class<?> pojoInterface, ILifecycle delegate)
+    {
+      if (pojo == null)
+      {
+        return pojo;
+      }
+
+      Delegator<T> h = new Delegator<T>(pojo, delegate);
+      final Class<?>[] interfaces = { pojoInterface, INTERFACE };
+
+      @SuppressWarnings("unchecked")
+      T proxy = (T)Proxy.newProxyInstance(loader, interfaces, h);
+      return proxy;
+    }
   }
 }

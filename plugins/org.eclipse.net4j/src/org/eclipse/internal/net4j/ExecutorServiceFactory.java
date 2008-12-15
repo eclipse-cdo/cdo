@@ -12,6 +12,9 @@ package org.eclipse.internal.net4j;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.Factory;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,13 +54,28 @@ public class ExecutorServiceFactory extends Factory
       }
     };
 
-    return Executors.newCachedThreadPool(threadFactory);
+    final ExecutorService executorService = Executors.newCachedThreadPool(threadFactory);
+    return LifecycleUtil.delegateLifecycle(getClass().getClassLoader(), executorService, ExecutorService.class,
+        new ILifecycle()
+        {
+          public void activate() throws LifecycleException
+          {
+            // Do nothing
+          }
 
-    // return new ThreadPoolExecutor(10, Integer.MAX_VALUE, 10L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
-    // threadFactory);
-
-    // return new ThreadPoolExecutor(10, Integer.MAX_VALUE, 10L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(),
-    // threadFactory);
+          public Exception deactivate()
+          {
+            try
+            {
+              executorService.shutdown();
+              return null;
+            }
+            catch (Exception ex)
+            {
+              return ex;
+            }
+          }
+        });
   }
 
   public static ExecutorService get(IManagedContainer container)

@@ -168,7 +168,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
       case CONNECTED:
         negotiationContext = null;
-        deferredActivate();
+        deferredActivate(true);
         finishedConnecting.countDown();
         finishedNegotiating.countDown();
         break;

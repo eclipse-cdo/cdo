@@ -126,17 +126,9 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         leaveConnecting();
       }
     }
-    catch (ClosedChannelException ex)
-    {
-      deactivate();
-    }
     catch (Exception ex)
     {
-      if (isActive())
-      {
-        OM.LOG.error(ex);
-        deactivate();
-      }
+      deferredActivate(false);
     }
   }
 
@@ -151,17 +143,9 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         leaveConnecting();
       }
     }
-    catch (ClosedChannelException ex)
-    {
-      deactivate();
-    }
     catch (Exception ex)
     {
-      if (isActive())
-      {
-        OM.LOG.error(ex);
-        deactivate();
-      }
+      deferredActivate(false);
     }
   }
 

@@ -52,11 +52,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
           TRACER.trace("Activating " + this);
         }
 
-        if (LOCKING)
-        {
-          lock();
-        }
-
+        lock();
         lifecycleState = ILifecycleState.ACTIVATING;
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
 
@@ -65,7 +61,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
         if (!isDeferredActivation())
         {
-          deferredActivate();
+          deferredActivate(true);
         }
 
         dump();
@@ -80,10 +76,12 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     }
     catch (RuntimeException ex)
     {
+      deferredActivate(false);
       throw ex;
     }
     catch (Exception ex)
     {
+      deferredActivate(false);
       throw new LifecycleException(ex);
     }
   }
@@ -92,27 +90,22 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
     try
     {
-      if (lifecycleState == ILifecycleState.ACTIVE || lifecycleState == ILifecycleState.ACTIVATING)
+      if (lifecycleState == ILifecycleState.ACTIVE)
       {
         if (TRACER.isEnabled())
         {
           TRACER.trace("Deactivating " + this);
         }
 
-        if (LOCKING)
-        {
-          lock();
-        }
-
+        lock();
         lifecycleState = ILifecycleState.DEACTIVATING;
         doBeforeDeactivate();
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE));
 
-        if (!isDeferredDeactivation())
-        {
-          deferredDeactivate();
-        }
-
+        doDeactivate();
+        lifecycleState = ILifecycleState.INACTIVE;
+        unlock();
+        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
         return null;
       }
 
@@ -125,6 +118,8 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     }
     catch (Exception ex)
     {
+      lifecycleState = ILifecycleState.INACTIVE;
+      unlock();
       return ex;
     }
   }
@@ -199,35 +194,25 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     CheckUtil.checkState(handle, handleName);
   }
 
-  protected final void deferredActivate()
+  /**
+   * @since 2.0
+   */
+  protected final void deferredActivate(boolean successful)
   {
-    lifecycleState = ILifecycleState.ACTIVE;
-    if (LOCKING)
+    if (successful)
     {
+      lifecycleState = ILifecycleState.ACTIVE;
+      unlock();
+      fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED));
+    }
+    else
+    {
+      lifecycleState = ILifecycleState.INACTIVE;
       unlock();
     }
-
-    fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED));
-  }
-
-  protected final void deferredDeactivate() throws Exception
-  {
-    doDeactivate();
-    lifecycleState = ILifecycleState.INACTIVE;
-    if (LOCKING)
-    {
-      unlock();
-    }
-
-    fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
   }
 
   protected boolean isDeferredActivation()
-  {
-    return false;
-  }
-
-  protected boolean isDeferredDeactivation()
   {
     return false;
   }
@@ -250,11 +235,17 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   private void lock() throws InterruptedException
   {
-    lifecycleSemaphore.acquire();
+    if (LOCKING)
+    {
+      lifecycleSemaphore.acquire();
+    }
   }
 
   private void unlock()
   {
-    lifecycleSemaphore.release();
+    if (LOCKING)
+    {
+      lifecycleSemaphore.release();
+    }
   }
 }

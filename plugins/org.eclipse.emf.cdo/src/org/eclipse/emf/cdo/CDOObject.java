@@ -22,11 +22,21 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface CDOObject extends EObject
 {
-  public CDOState cdoState();
+  public CDOID cdoID();
 
   public CDOClass cdoClass();
 
-  public CDOID cdoID();
+  public CDOState cdoState();
+
+  /**
+   * @since 2.0
+   */
+  public boolean cdoConflict();
+
+  /**
+   * @since 2.0
+   */
+  public boolean cdoInvalid();
 
   public CDOView cdoView();
 
@@ -54,14 +64,4 @@ public interface CDOObject extends EObject
   public CDOLock cdoWriteLock();
 
   public void cdoReload();
-
-  /**
-   * @since 2.0
-   */
-  public boolean cdoConflict();
-
-  /**
-   * @since 2.0
-   */
-  public boolean cdoInvalid();
 }

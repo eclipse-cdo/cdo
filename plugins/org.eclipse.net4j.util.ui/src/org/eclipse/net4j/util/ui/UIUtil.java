@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -219,6 +219,34 @@ public final class UIUtil
       FieldDecorationRegistry registry = FieldDecorationRegistry.getDefault();
       FieldDecoration dec = registry.getFieldDecoration(FieldDecorationRegistry.DEC_CONTENT_PROPOSAL);
       gd.horizontalIndent = dec.getImage().getBounds().width;
+    }
+  }
+
+  /**
+   * Adds indentation to the control. if indent value is < 0, the control indentation is left unchanged.
+   * 
+   * @since 2.0
+   */
+  public static void setIndentation(Control control, int horizontalIndent, int verticalIndent)
+  {
+    if (control == null)
+    {
+      throw new IllegalArgumentException("control == null");
+    }
+
+    Object data = control.getLayoutData();
+    if (data instanceof GridData)
+    {
+      GridData gd = (GridData)data;
+      if (verticalIndent >= 0)
+      {
+        gd.verticalIndent = verticalIndent;
+      }
+
+      if (horizontalIndent >= 0)
+      {
+        gd.horizontalIndent = horizontalIndent;
+      }
     }
   }
 }

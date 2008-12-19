@@ -102,12 +102,12 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
         {
           while (monitor != null)
           {
-            long passedMillis = System.currentTimeMillis() - lastMonitorAccess;
-            if (passedMillis > monitorProgressInterval)
-            {
-              setMonitorCanceled("Timeout after " + passedMillis + " millis");
-              break;
-            }
+            // long passedMillis = System.currentTimeMillis() - lastMonitorAccess;
+            // if (passedMillis > monitorProgressInterval)
+            // {
+            // setMonitorCanceled("Timeout after " + passedMillis + " millis");
+            // break;
+            // }
 
             synchronized (monitorLock)
             {

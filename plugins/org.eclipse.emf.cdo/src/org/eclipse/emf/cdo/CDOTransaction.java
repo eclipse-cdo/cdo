@@ -40,7 +40,8 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public long getLastCommitTime();
 
   /**
-   * Returns <code>true</code> if this transaction contains local modifications, <code>false</code> otherwise.
+   * Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>
+   * otherwise.
    * 
    * @since 2.0
    */

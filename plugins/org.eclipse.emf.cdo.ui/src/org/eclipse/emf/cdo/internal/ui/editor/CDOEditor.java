@@ -2146,9 +2146,29 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void dispose()
   {
     updateProblemIndication = false;
-    eventHandler.dispose();
+
+    if (!view.isClosed())
+    {
+      try
+      {
+        eventHandler.dispose();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
+      try
+      {
+        adapterFactory.dispose();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
     getSite().getPage().removePartListener(partListener);
-    adapterFactory.dispose();
 
     if (getActionBarContributor().getActiveEditor() == this)
     {

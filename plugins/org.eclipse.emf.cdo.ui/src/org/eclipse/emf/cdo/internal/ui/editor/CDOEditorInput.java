@@ -4,9 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
@@ -87,6 +88,11 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
 
   public String getToolTipText()
   {
+    if (view.isClosed())
+    {
+      return "View closed";
+    }
+    
     CDOSession session = view.getSession();
     String repositoryName = session.repository().getName();
 

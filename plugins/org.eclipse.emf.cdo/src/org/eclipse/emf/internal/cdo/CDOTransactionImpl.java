@@ -215,7 +215,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public boolean isDirty()
   {
-    checkOpen();
+    if (isClosed())
+    {
+      return false;
+    }
+
     return dirty;
   }
 

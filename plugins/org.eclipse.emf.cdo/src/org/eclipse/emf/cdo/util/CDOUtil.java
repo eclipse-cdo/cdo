@@ -4,17 +4,20 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
+import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.CDOXATransaction;
@@ -299,5 +302,25 @@ public final class CDOUtil
     }
 
     return result;
+  }
+
+  /**
+   * Returns <code>true</code> if the given {@link CDOSession session} contains a dirty {@link CDOTransaction
+   * transaction}, <code>false</code> otherwise.
+   * 
+   * @since 2.0
+   * @see CDOTransaction
+   */
+  public static boolean isSessionDirty(CDOSession session)
+  {
+    for (CDOView view : session.getElements())
+    {
+      if (view.isDirty())
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

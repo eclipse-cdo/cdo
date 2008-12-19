@@ -4,9 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui;
 
@@ -67,6 +68,15 @@ public class SharedIcons
     Image image = REGISTRY.get(key);
     if (image == null)
     {
+      createDescriptor(key);
+      image = REGISTRY.get(key);
+    }
+    
+    // For some reason, sometimes images get disposed.
+    // In that case, create and put in registry again.
+    if (image.isDisposed())
+    {
+      REGISTRY.remove(key);
       createDescriptor(key);
       image = REGISTRY.get(key);
     }

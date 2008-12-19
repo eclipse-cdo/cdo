@@ -77,4 +77,23 @@
      </page>
   </extension>
   
+  <extension
+        point="org.eclipse.ui.decorators">
+     <decorator
+           class="org.eclipse.emf.cdo.ui.CDOLabelDecorator"
+           id="org.eclipse.emf.cdo.ui.cdolabeldecorator"
+           label="%_UI_CDOLabelDecorator_label"
+           lightweight="false"
+           state="true">
+        <enablement>
+           <objectClass
+                 name="org.eclipse.emf.cdo.CDOObject">
+           </objectClass>
+        </enablement>
+        <description>
+           %_UI_CDOLabelDecorator_description
+        </description>
+     </decorator>
+  </extension>
+  
 </plugin>

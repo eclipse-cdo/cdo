@@ -32,6 +32,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.Set;
 
@@ -122,6 +123,29 @@ public class CDOEventHandler
         if (preferenceChangeEvent.getNewValue().booleanValue())
         {
           refreshTreeViewer();
+        }
+      }
+      else if (OM.PREF_LABEL_DECORATION.getName().equals(preferenceChangeEvent.getPreference().getName()))
+      {
+        // Fire a LabelProviderChangedEvent in case user changed decoration pattern
+        try
+        {
+          treeViewer.getControl().getDisplay().syncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                PlatformUI.getWorkbench().getDecoratorManager().update(CDOLabelDecorator.DECORATOR_ID);
+              }
+              catch (Exception ignore)
+              {
+              }
+            }
+          });
+        }
+        catch (Exception ignore)
+        {
         }
       }
     }

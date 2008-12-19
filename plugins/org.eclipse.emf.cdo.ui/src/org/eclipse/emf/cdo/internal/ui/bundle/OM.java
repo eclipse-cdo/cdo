@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
-import org.eclipse.emf.cdo.ui.CDOLabelProvider;
+import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -43,7 +43,7 @@ public abstract class OM
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
   public static final OMPreference<String> PREF_LABEL_DECORATION = //
-  PREFS.init("PREF_LABEL_DECORATION", CDOLabelProvider.DEFAULT_DECORATION); //$NON-NLS-1$
+  PREFS.init("PREF_LABEL_DECORATION", CDOLabelDecorator.DEFAULT_DECORATION); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_SELECT_PACKAGES = //
   PREFS.initArray("PREF_HISTORY_SELECT_PACKAGES"); //$NON-NLS-1$

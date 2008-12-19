@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.preferences;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-import org.eclipse.emf.cdo.ui.CDOLabelProvider;
+import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
@@ -52,7 +52,7 @@ public class CDOUIPreferencePage extends OMPreferencePage
     composite.setLayoutData(UIUtil.createGridData());
 
     new Label(composite, SWT.NONE).setText("Label decoration:");
-    decoration = new TextAndDisable(composite, SWT.BORDER, CDOLabelProvider.NO_DECORATION)
+    decoration = new TextAndDisable(composite, SWT.BORDER, CDOLabelDecorator.NO_DECORATION)
     {
       @Override
       protected GridData createTextLayoutData()
@@ -63,13 +63,21 @@ public class CDOUIPreferencePage extends OMPreferencePage
     decoration.setLayoutData(UIUtil.createGridData(true, false));
 
     Text text = decoration.getText();
+    StringBuffer tags = new StringBuffer();
+    for (String tag : CDOLabelDecorator.DECORATION_PROPOSALS)
+    {
+      tags.append(tag + " ");
+    }
+    text.setToolTipText("Available tags: " + tags.toString());
     IControlContentAdapter contentAdapter = new TextContentAdapter();
-    IContentProposalProvider provider = new SimpleContentProposalProvider(CDOLabelProvider.DECORATION_PROPOSALS);
+    IContentProposalProvider provider = new SimpleContentProposalProvider(CDOLabelDecorator.DECORATION_PROPOSALS);
     new ContentAssistCommandAdapter(text, contentAdapter, provider, null, new char[] { '$' }, true);
     UIUtil.addDecorationMargin(text);
 
     autoReload = new Button(composite, SWT.CHECK);
     autoReload.setText("Enable CDOEditor Auto-Reload");
+    autoReload.setLayoutData(UIUtil.createGridData(false, false));
+    UIUtil.setIndentation(autoReload, -1, 10);
 
     initValues();
     return composite;

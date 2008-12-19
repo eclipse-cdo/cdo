@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -88,11 +88,6 @@ public class CDOPreferencePage extends OMPreferencePage
 
     new Label(viewGroup, SWT.NONE).setText("EMF invalidation notifications:");
     invalidationNotifications = new Button(viewGroup, SWT.CHECK);
-
-    Group transactionGroup = new Group(composite, SWT.NONE);
-    transactionGroup.setLayout(new GridLayout(2, false));
-    transactionGroup.setText("Transaction Defaults");
-    transactionGroup.setLayoutData(UIUtil.createGridData(true, false));
 
     initValues();
     return composite;

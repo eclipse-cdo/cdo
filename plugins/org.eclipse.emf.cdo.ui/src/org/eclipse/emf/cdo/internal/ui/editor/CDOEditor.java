@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -97,6 +97,10 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.ILabelDecorator;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -127,6 +131,7 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.ide.IGotoMarker;
@@ -1101,7 +1106,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       selectionViewer = new TreeViewer(tree);
       setCurrentViewer(selectionViewer);
 
-      selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+      selectionViewer.setContentProvider(createContentProvider());
       selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
       selectionViewer.setInput(editingDomain.getResourceSet());
       selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
@@ -1167,8 +1172,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       selectionViewer = new TreeViewer(tree);
       setCurrentViewer(selectionViewer);
 
-      selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer.setLabelProvider(new CDOLabelProvider(adapterFactory, view, selectionViewer));
+      selectionViewer.setContentProvider(createContentProvider());
+      selectionViewer.setLabelProvider(createLabelProvider());
+
       selectionViewer.setInput(viewerInput);
       // selectionViewer.setSelection(new StructuredSelection(viewerInput),
       // true);
@@ -1246,6 +1252,31 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       OM.LOG.error(ex);
       throw ex;
     }
+  }
+
+  /**
+   * @ADDED
+   */
+  protected IContentProvider createContentProvider()
+  {
+    return new AdapterFactoryContentProvider(adapterFactory);
+  }
+
+  /**
+   * @ADDED
+   */
+  protected ILabelProvider createLabelProvider()
+  {
+    return new DecoratingLabelProvider(new CDOLabelProvider(adapterFactory, view, selectionViewer),
+        createLabelDecorator());
+  }
+
+  /**
+   * @ADDED
+   */
+  protected ILabelDecorator createLabelDecorator()
+  {
+    return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
   }
 
   /**

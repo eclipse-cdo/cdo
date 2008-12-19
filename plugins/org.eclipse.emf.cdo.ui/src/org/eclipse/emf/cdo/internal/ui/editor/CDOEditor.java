@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
@@ -40,8 +41,10 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
@@ -1036,6 +1039,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       ResourceSet resourceSet = view.getResourceSet();
       editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
+
+      // This adapter provides the EditingDomain of the Editor
+      resourceSet.eAdapters().add(new EditingDomainProviderAdapter());
 
       String resourcePath = editorInput.getResourcePath();
       if (resourcePath == null)
@@ -2388,4 +2394,40 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
     }
   }
+
+  /**
+   * Adapter that provides the current EditingDomain
+   * 
+   * @since 2.0
+   */
+  private class EditingDomainProviderAdapter implements Adapter, IEditingDomainProvider
+  {
+    public boolean isAdapterForType(Object arg0)
+    {
+      if (arg0 == IEditingDomainProvider.class)
+      {
+        return true;
+      }
+      return false;
+    }
+
+    public EditingDomain getEditingDomain()
+    {
+      return editingDomain;
+    }
+
+    public Notifier getTarget()
+    {
+      return null;
+    }
+
+    public void notifyChanged(Notification notification)
+    {
+    }
+
+    public void setTarget(Notifier newTarget)
+    {
+    }
+  }
+
 }

@@ -92,7 +92,7 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
     {
       return "View closed";
     }
-    
+
     CDOSession session = view.getSession();
     String repositoryName = session.repository().getName();
 

@@ -71,7 +71,7 @@ public class SharedIcons
       createDescriptor(key);
       image = REGISTRY.get(key);
     }
-    
+
     // For some reason, sometimes images get disposed.
     // In that case, create and put in registry again.
     if (image.isDisposed())

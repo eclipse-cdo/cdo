@@ -52,5 +52,5 @@ public final class CloseSessionAction extends SessionAction
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     getSession().close();
-    }
+  }
 }

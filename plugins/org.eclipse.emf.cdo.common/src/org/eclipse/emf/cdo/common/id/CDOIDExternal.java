@@ -17,5 +17,5 @@ package org.eclipse.emf.cdo.common.id;
  */
 public interface CDOIDExternal extends CDOID
 {
-  String getURI();
+  public String getURI();
 }

@@ -182,6 +182,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
   }
 
+  /**
+   * @since 2.0
+   */
   protected abstract void rollback(IStoreAccessor.CommitContext commitContext);
 
   public final void release()

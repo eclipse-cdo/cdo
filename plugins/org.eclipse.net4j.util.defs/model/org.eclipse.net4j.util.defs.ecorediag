@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_R5E7MbueEd2h0phgI_C1DA" type="EcoreTools" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_R7A04LueEd2h0phgI_C1DA" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_R7EfQLueEd2h0phgI_C1DA" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_R7FGULueEd2h0phgI_C1DA" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_R7FGUbueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_R7FGUrueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_R7FGU7ueEd2h0phgI_C1DA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_R7FtYLueEd2h0phgI_C1DA" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_R7FtYbueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_R7FtYrueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_R7FtY7ueEd2h0phgI_C1DA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_R7A04bueEd2h0phgI_C1DA" fontName="UnDotum" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="org.eclipse.net4j.util.defs.ecore#//DefsContainer"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_R7A04rueEd2h0phgI_C1DA" x="760" y="44"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_R7FtZLueEd2h0phgI_C1DA" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_R7GUcLueEd2h0phgI_C1DA" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_R7GUcbueEd2h0phgI_C1DA" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_R7GUcrueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_R7GUc7ueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_R7GUdLueEd2h0phgI_C1DA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_R7G7gLueEd2h0phgI_C1DA" type="5002">
+      <children xmi:type="notation:Node" xmi:id="_R7G7hLueEd2h0phgI_C1DA" type="2002">
+        <element xmi:type="ecore:EOperation" href="org.eclipse.net4j.util.defs.ecore#//Def/getInstance"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_R7G7hbueEd2h0phgI_C1DA"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_R7G7gbueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_R7G7grueEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_R7G7g7ueEd2h0phgI_C1DA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_R7FtZbueEd2h0phgI_C1DA" fontName="UnDotum" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="org.eclipse.net4j.util.defs.ecore#//Def"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_R7FtZrueEd2h0phgI_C1DA" x="352" y="32"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_Nc51YLufEd2h0phgI_C1DA" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_Nc7DgLufEd2h0phgI_C1DA" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_Nc7DgbufEd2h0phgI_C1DA" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_Nc7DgrufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_Nc7Dg7ufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_Nc7DhLufEd2h0phgI_C1DA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_Nc7qkLufEd2h0phgI_C1DA" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_Nc7qkbufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_Nc7qkrufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_Nc7qk7ufEd2h0phgI_C1DA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_Nc51YbufEd2h0phgI_C1DA" fontName="UnDotum" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="org.eclipse.net4j.util.defs.ecore#//ExecutorServiceDef"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Nc51YrufEd2h0phgI_C1DA" x="208" y="144"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_SgsfYLufEd2h0phgI_C1DA" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_SgtGcLufEd2h0phgI_C1DA" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_SgtGcbufEd2h0phgI_C1DA" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_SgtGcrufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_SgtGc7ufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_SgtGdLufEd2h0phgI_C1DA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_SgttgLufEd2h0phgI_C1DA" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_SgttgbufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_SgttgrufEd2h0phgI_C1DA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_Sgttg7ufEd2h0phgI_C1DA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_SgsfYbufEd2h0phgI_C1DA" fontName="UnDotum" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="org.eclipse.net4j.util.defs.ecore#//ThreadPoolDef"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SgsfYrufEd2h0phgI_C1DA" x="224" y="240"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_R5E7MrueEd2h0phgI_C1DA"/>
+  <element xmi:type="ecore:EPackage" href="org.eclipse.net4j.util.defs.ecore#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_R7IwsLueEd2h0phgI_C1DA" type="3002" source="_R7A04LueEd2h0phgI_C1DA" target="_R7FtZLueEd2h0phgI_C1DA">
+    <children xmi:type="notation:Node" xmi:id="_R7JXwLueEd2h0phgI_C1DA" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_R7JXwbueEd2h0phgI_C1DA" x="-10" y="-10"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_R7J-0LueEd2h0phgI_C1DA" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_R7J-0bueEd2h0phgI_C1DA" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_R7IwsbueEd2h0phgI_C1DA" lineColor="0"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_R7IwsrueEd2h0phgI_C1DA" fontName="UnDotum" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="org.eclipse.net4j.util.defs.ecore#//DefsContainer/definitions"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_R7Iws7ueEd2h0phgI_C1DA" points="[0, 0, 1, 60]$[0, -60, 1, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_R8I2QLueEd2h0phgI_C1DA" id="(0.5,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_R8JdULueEd2h0phgI_C1DA" id="(0.49726775,1.0)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_R7J-0rueEd2h0phgI_C1DA" type="3002" source="_R7A04LueEd2h0phgI_C1DA" target="_R7FtZLueEd2h0phgI_C1DA">
+    <children xmi:type="notation:Node" xmi:id="_R7Kl4LueEd2h0phgI_C1DA" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_R7Kl4bueEd2h0phgI_C1DA" x="-38" y="29"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_R7Kl4rueEd2h0phgI_C1DA" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_R7Kl47ueEd2h0phgI_C1DA" x="10" y="10"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_R7J-07ueEd2h0phgI_C1DA" lineColor="0"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_R7J-1LueEd2h0phgI_C1DA" fontName="UnDotum" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="org.eclipse.net4j.util.defs.ecore#//DefsContainer/defaultDefinition"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_R7J-1bueEd2h0phgI_C1DA" points="[0, 0, 1, 60]$[0, -60, 1, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_R8KEYLueEd2h0phgI_C1DA" id="(0.5,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_R8KEYbueEd2h0phgI_C1DA" id="(0.49726775,1.0)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_Qs4_cLufEd2h0phgI_C1DA" type="3003" source="_Nc51YLufEd2h0phgI_C1DA" target="_R7FtZLueEd2h0phgI_C1DA">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_Qs4_cbufEd2h0phgI_C1DA" routing="Tree" lineColor="0"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_Qs4_crufEd2h0phgI_C1DA" fontName="UnDotum"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Qs4_c7ufEd2h0phgI_C1DA" points="[0, 0, -142, 60]$[0, -30, -142, 30]$[143, -30, 1, 30]$[143, -60, 1, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y6_pULufEd2h0phgI_C1DA" id="(0.5,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qs60oLufEd2h0phgI_C1DA" id="(0.32786885,1.0)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_USOHYLufEd2h0phgI_C1DA" type="3003" source="_SgsfYLufEd2h0phgI_C1DA" target="_Nc51YLufEd2h0phgI_C1DA">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_USOHYbufEd2h0phgI_C1DA" routing="Tree" lineColor="0"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_USOHYrufEd2h0phgI_C1DA" fontName="UnDotum"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_USOHY7ufEd2h0phgI_C1DA" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y7GXALufEd2h0phgI_C1DA" id="(0.5,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_USQjoLufEd2h0phgI_C1DA" id="(0.5,1.0)"/>
+  </edges>
+</notation:Diagram>

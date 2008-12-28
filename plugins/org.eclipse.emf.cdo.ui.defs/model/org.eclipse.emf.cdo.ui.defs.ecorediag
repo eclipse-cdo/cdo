@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_IICdgchYEd2cL7seIDpZRw" type="EcoreTools" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_ILuDoMhYEd2cL7seIDpZRw" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_IMxzkMhYEd2cL7seIDpZRw" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_IM4hQMhYEd2cL7seIDpZRw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_IPMOYMhYEd2cL7seIDpZRw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.emf.cdo.ui.defs.ecore#//EditorDef/editorID"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_IPMOYchYEd2cL7seIDpZRw"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_IM4hQchYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_IM4hQshYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_IM4hQ8hYEd2cL7seIDpZRw"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_IM69gMhYEd2cL7seIDpZRw" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_IM69gchYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_IM69gshYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_IM69g8hYEd2cL7seIDpZRw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_ILuDochYEd2cL7seIDpZRw" fontName="Sans" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="org.eclipse.emf.cdo.ui.defs.ecore#//EditorDef"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ILuDoshYEd2cL7seIDpZRw" x="16"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_IPPRsMhYEd2cL7seIDpZRw" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_IPZpwMhYEd2cL7seIDpZRw" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_IPaQ0MhYEd2cL7seIDpZRw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_IPizsMhYEd2cL7seIDpZRw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="org.eclipse.emf.cdo.ui.defs.ecore#//CDOEditorDef/resourcePath"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_IPizschYEd2cL7seIDpZRw"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_IPaQ0chYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_IPaQ0shYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_IPaQ08hYEd2cL7seIDpZRw"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_IPaQ1MhYEd2cL7seIDpZRw" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_IPaQ1chYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_IPaQ1shYEd2cL7seIDpZRw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_IPaQ18hYEd2cL7seIDpZRw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_IPPRschYEd2cL7seIDpZRw" fontName="Sans" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="org.eclipse.emf.cdo.ui.defs.ecore#//CDOEditorDef"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IPPRsshYEd2cL7seIDpZRw" y="109"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_IIDroMhYEd2cL7seIDpZRw"/>
+  <element xmi:type="ecore:EPackage" href="org.eclipse.emf.cdo.ui.defs.ecore#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_IPty0MhYEd2cL7seIDpZRw" type="3003" source="_IPPRsMhYEd2cL7seIDpZRw" target="_ILuDoMhYEd2cL7seIDpZRw">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_IPty0chYEd2cL7seIDpZRw" routing="Tree" lineColor="0"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_IPuZ4MhYEd2cL7seIDpZRw" fontName="Sans"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IPuZ4chYEd2cL7seIDpZRw" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JEdpgMhYEd2cL7seIDpZRw" id="(0.49707603,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JEeQkMhYEd2cL7seIDpZRw" id="(0.4964029,1.0)"/>
+  </edges>
+</notation:Diagram>

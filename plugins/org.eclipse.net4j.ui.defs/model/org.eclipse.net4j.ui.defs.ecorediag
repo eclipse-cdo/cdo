@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_lCfqoMeoEd28bMYta3MXHg" type="EcoreTools" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_lDgXQMeoEd28bMYta3MXHg" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_lDkosMeoEd28bMYta3MXHg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_lDlPwMeoEd28bMYta3MXHg" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_lDlPwceoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_lDlPwseoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_lDlPw8eoEd28bMYta3MXHg"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_lDl20MeoEd28bMYta3MXHg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_lDl20ceoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_lDl20seoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_lDl208eoEd28bMYta3MXHg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_lDgXQceoEd28bMYta3MXHg" fontName="Sans" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="org.eclipse.net4j.ui.defs.ecore#//InteractiveCredentialsProviderDef"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lDgXQseoEd28bMYta3MXHg" x="304" y="176"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_l50UMMeoEd28bMYta3MXHg" type="1001">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_l53-kMeoEd28bMYta3MXHg" source="Shortcut">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_l6GBAMeoEd28bMYta3MXHg" key="modelID" value="EcoreTools"/>
+    </eAnnotations>
+    <children xmi:type="notation:Node" xmi:id="_l51iUMeoEd28bMYta3MXHg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_l52JYMeoEd28bMYta3MXHg" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_l52JYceoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_l52JYseoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_l52JY8eoEd28bMYta3MXHg"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_l52wcMeoEd28bMYta3MXHg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_l52wcceoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_l52wcseoEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_l52wc8eoEd28bMYta3MXHg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_l50UMceoEd28bMYta3MXHg" fontName="Sans" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.net4j.defs/model/org.eclipse.net4j.defs.ecore#//PasswordCredentialsProviderDef"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_l507QMeoEd28bMYta3MXHg" x="32" y="32"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_WKx-wMfEEd28bMYta3MXHg" type="1001">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WK0bAMfEEd28bMYta3MXHg" source="Shortcut">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WK0bAcfEEd28bMYta3MXHg" key="modelID" value="EcoreTools"/>
+    </eAnnotations>
+    <children xmi:type="notation:Node" xmi:id="_WKzM4MfEEd28bMYta3MXHg" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_WKzM4cfEEd28bMYta3MXHg" type="5001">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_WKzM4sfEEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_WKzM48fEEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_WKzM5MfEEd28bMYta3MXHg"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_WKzz8MfEEd28bMYta3MXHg" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_WKzz8cfEEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_WKzz8sfEEd28bMYta3MXHg"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_WKzz88fEEd28bMYta3MXHg"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_WKx-wcfEEd28bMYta3MXHg" fontName="Sans" fontHeight="10" fillColor="13761016" lineColor="0"/>
+    <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.ecore#//Def"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WKx-wsfEEd28bMYta3MXHg" x="320" y="32"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_lCfqoceoEd28bMYta3MXHg"/>
+  <element xmi:type="ecore:EPackage" href="org.eclipse.net4j.ui.defs.ecore#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_WLDrkMfEEd28bMYta3MXHg" type="3003" source="_lDgXQMeoEd28bMYta3MXHg" target="_WKx-wMfEEd28bMYta3MXHg">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_WLDrkcfEEd28bMYta3MXHg" routing="Tree" lineColor="0"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_WLDrksfEEd28bMYta3MXHg" fontName="Sans"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_WLDrk8fEEd28bMYta3MXHg" points="[0, 0, 0, 60]$[0, -60, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WLS8IMfEEd28bMYta3MXHg" id="(0.5,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WLTjMMfEEd28bMYta3MXHg" id="(0.49756098,1.0)"/>
+  </edges>
+</notation:Diagram>

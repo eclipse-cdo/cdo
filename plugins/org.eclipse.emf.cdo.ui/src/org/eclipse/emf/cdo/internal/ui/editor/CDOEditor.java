@@ -169,6 +169,13 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     IMenuListener, IViewerProvider, IGotoMarker
 {
   /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public static final String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
+  /**
    * @ADDED
    */
   public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor";
@@ -1112,7 +1119,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       selectionViewer = new TreeViewer(tree);
       setCurrentViewer(selectionViewer);
 
-      selectionViewer.setContentProvider(createContentProvider());
+      selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
       selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
       selectionViewer.setInput(editingDomain.getResourceSet());
       selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);

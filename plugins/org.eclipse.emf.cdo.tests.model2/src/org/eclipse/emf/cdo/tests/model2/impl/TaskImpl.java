@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: TaskImpl.java,v 1.2 2008-10-19 01:28:55 smcduff Exp $
+ * $Id: TaskImpl.java,v 1.3 2008-12-28 17:56:56 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -19,19 +25,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getTaskContainer <em>Task Container</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getDescription <em>Description</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#isDone <em>Done</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getTaskContainer <em>Task Container</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#isDone <em>Done</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TaskImpl extends CDOObjectImpl implements Task
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected TaskImpl()
@@ -41,7 +46,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -52,7 +56,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -63,7 +66,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TaskContainer getTaskContainer()
@@ -73,7 +75,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTaskContainer(TaskContainer newTaskContainer)
@@ -83,7 +84,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getDescription()
@@ -93,7 +93,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDescription(String newDescription)
@@ -103,7 +102,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isDone()
@@ -113,7 +111,6 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDone(boolean newDone)

@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: Model2FactoryImpl.java,v 1.5 2008-10-19 01:28:55 smcduff Exp $
+ * $Id: Model2FactoryImpl.java,v 1.6 2008-12-28 17:56:56 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -20,14 +26,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Model2Factory init()
@@ -49,8 +54,8 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Model2FactoryImpl()
@@ -60,7 +65,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -81,7 +85,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SpecialPurchaseOrder createSpecialPurchaseOrder()
@@ -92,7 +95,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TaskContainer createTaskContainer()
@@ -103,7 +105,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Task createTask()
@@ -114,7 +115,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model2Package getModel2Package()
@@ -124,7 +124,6 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

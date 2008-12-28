@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: OrderAddressImpl.java,v 1.3 2008-09-18 12:57:07 estepper Exp $
+ * $Id: OrderAddressImpl.java,v 1.4 2008-12-28 17:56:46 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
@@ -20,21 +26,27 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getOrderDetails <em>Order Details</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getOrder <em>Order</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getProduct <em>Product</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getPrice <em>Price</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#isTestAttribute <em>Test Attribute</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getOrderDetails <em>Order Details</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getOrder <em>Order</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getProduct <em>Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#getPrice <em>Price</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderAddressImpl#isTestAttribute <em>Test Attribute</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class OrderAddressImpl extends AddressImpl implements OrderAddress
 {
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public static final String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected OrderAddressImpl()
@@ -44,7 +56,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -55,7 +66,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -66,7 +76,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Order getOrder()
@@ -76,7 +85,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setOrder(Order newOrder)
@@ -86,7 +94,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product1 getProduct()
@@ -96,7 +103,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setProduct(Product1 newProduct)
@@ -106,7 +112,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public float getPrice()
@@ -116,7 +121,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPrice(float newPrice)
@@ -126,7 +130,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isTestAttribute()
@@ -136,7 +139,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTestAttribute(boolean newTestAttribute)
@@ -146,7 +148,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -181,7 +182,6 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

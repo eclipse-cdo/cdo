@@ -1,8 +1,14 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: RefSingleNonContainedNPLImpl.java,v 1.3 2008-09-18 12:56:49 estepper Exp $
+ * $Id: RefSingleNonContainedNPLImpl.java,v 1.4 2008-12-28 17:56:41 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
@@ -20,17 +26,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleNonContainedNPLImpl#getElement <em>Element</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleNonContainedNPLImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSingleNonContainedNPL
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RefSingleNonContainedNPLImpl()
@@ -40,7 +45,6 @@ public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -51,7 +55,6 @@ public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -62,7 +65,6 @@ public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ContainedElementNoOpposite getElement()
@@ -72,7 +74,6 @@ public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setElement(ContainedElementNoOpposite newElement)

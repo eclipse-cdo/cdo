@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: DerivedAdapterFactory.java,v 1.1 2008-07-02 14:09:49 estepper Exp $
+ * $Id: DerivedAdapterFactory.java,v 1.2 2008-12-28 17:57:01 estepper Exp $
  */
 package derived.util;
 

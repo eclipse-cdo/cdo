@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: Model2PackageImpl.java,v 1.7 2008-10-19 01:28:55 smcduff Exp $
+ * $Id: Model2PackageImpl.java,v 1.8 2008-12-28 17:56:56 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -21,28 +27,24 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model2PackageImpl extends EPackageImpl implements Model2Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass specialPurchaseOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass taskContainerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass taskEClass = null;
@@ -67,24 +69,27 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
-   * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * Simple dependencies are satisfied by calling this method on all dependent packages before doing anything else. This
-   * method drives initialization for interdependent packages directly, in parallel with this package, itself.
-   * <p>
-   * Of this package and its interdependencies, all packages which have not yet been registered by their URI values are
-   * first created and registered. The packages are then initialized in two steps: meta-model objects for all of the
-   * packages are created before any are initialized, since one package's meta-model objects may refer to those of
-   * another.
-   * <p>
-   * Invocation of this method will not affect any packages that have already been initialized. <!-- begin-user-doc -->
+   * Creates, registers, and initializes the <b>Package</b> for this
+   * model, and for any others upon which it depends.  Simple
+   * dependencies are satisfied by calling this method on all
+   * dependent packages before doing anything else.  This method drives
+   * initialization for interdependent packages directly, in parallel
+   * with this package, itself.
+   * <p>Of this package and its interdependencies, all packages which
+   * have not yet been registered by their URI values are first created
+   * and registered.  The packages are then initialized in two steps:
+   * meta-model objects for all of the packages are created before any
+   * are initialized, since one package's meta-model objects may refer to
+   * those of another.
+   * <p>Invocation of this method will not affect any packages that have
+   * already been initialized.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -93,9 +98,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   public static Model2Package init()
   {
     if (isInited)
-    {
       return (Model2Package)EPackage.Registry.INSTANCE.getEPackage(Model2Package.eNS_URI);
-    }
 
     // Obtain or create and register package
     Model2PackageImpl theModel2Package = (Model2PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof Model2PackageImpl ? EPackage.Registry.INSTANCE
@@ -121,7 +124,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getSpecialPurchaseOrder()
@@ -131,7 +133,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getSpecialPurchaseOrder_DiscountCode()
@@ -141,7 +142,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getSpecialPurchaseOrder_ShippingAddress()
@@ -151,7 +151,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getTaskContainer()
@@ -161,7 +160,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getTaskContainer_Tasks()
@@ -171,7 +169,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getTask()
@@ -181,7 +178,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getTask_TaskContainer()
@@ -191,7 +187,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getTask_Description()
@@ -201,7 +196,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getTask_Done()
@@ -211,7 +205,6 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model2Factory getModel2Factory()
@@ -221,23 +214,20 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -256,23 +246,20 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -302,14 +289,14 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
 
     initEClass(taskContainerEClass, TaskContainer.class, "TaskContainer", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTaskContainer_Tasks(), getTask(), getTask_TaskContainer(), "tasks", null, 0, -1,
+    initEReference(getTaskContainer_Tasks(), this.getTask(), this.getTask_TaskContainer(), "tasks", null, 0, -1,
         TaskContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTask_TaskContainer(), getTaskContainer(), getTaskContainer_Tasks(), "taskContainer", null, 0, 1,
-        Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTask_TaskContainer(), this.getTaskContainer(), this.getTaskContainer_Tasks(), "taskContainer",
+        null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTask_Description(), ecorePackage.getEString(), "description", null, 0, 1, Task.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTask_Done(), ecorePackage.getEBoolean(), "done", null, 0, 1, Task.class, !IS_TRANSIENT,

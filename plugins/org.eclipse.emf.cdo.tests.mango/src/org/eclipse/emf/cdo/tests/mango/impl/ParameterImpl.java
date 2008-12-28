@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: ParameterImpl.java,v 1.2 2008-09-18 12:56:15 estepper Exp $
+ * $Id: ParameterImpl.java,v 1.3 2008-12-28 17:56:34 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
@@ -19,18 +25,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl#getPassing <em>Passing</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl#getPassing <em>Passing</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ParameterImpl extends CDOObjectImpl implements Parameter
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ParameterImpl()
@@ -40,7 +45,6 @@ public class ParameterImpl extends CDOObjectImpl implements Parameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -51,7 +55,6 @@ public class ParameterImpl extends CDOObjectImpl implements Parameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -62,7 +65,6 @@ public class ParameterImpl extends CDOObjectImpl implements Parameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -72,7 +74,6 @@ public class ParameterImpl extends CDOObjectImpl implements Parameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -82,7 +83,6 @@ public class ParameterImpl extends CDOObjectImpl implements Parameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ParameterPassing getPassing()
@@ -92,7 +92,6 @@ public class ParameterImpl extends CDOObjectImpl implements Parameter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPassing(ParameterPassing newPassing)

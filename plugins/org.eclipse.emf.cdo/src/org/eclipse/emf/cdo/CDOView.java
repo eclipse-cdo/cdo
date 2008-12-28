@@ -23,8 +23,8 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.options.IOptions;
-import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.options.IOptionsContainer;
+import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.common.util.URI;

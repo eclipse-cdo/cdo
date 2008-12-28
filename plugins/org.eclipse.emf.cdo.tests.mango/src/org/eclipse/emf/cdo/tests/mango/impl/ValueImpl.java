@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: ValueImpl.java,v 1.3 2008-09-18 12:56:15 estepper Exp $
+ * $Id: ValueImpl.java,v 1.4 2008-12-28 17:56:34 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 
@@ -18,17 +24,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ValueImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.ValueImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ValueImpl extends CDOObjectImpl implements Value
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ValueImpl()
@@ -38,7 +43,6 @@ public class ValueImpl extends CDOObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -49,7 +53,6 @@ public class ValueImpl extends CDOObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -60,7 +63,6 @@ public class ValueImpl extends CDOObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -70,7 +72,6 @@ public class ValueImpl extends CDOObjectImpl implements Value
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)

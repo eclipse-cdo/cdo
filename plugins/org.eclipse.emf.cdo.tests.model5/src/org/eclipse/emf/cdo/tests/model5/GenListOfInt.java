@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: GenListOfInt.java,v 1.1 2008-11-07 02:50:07 smcduff Exp $
+ * $Id: GenListOfInt.java,v 1.2 2008-12-28 17:57:09 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model5;
 
@@ -11,13 +17,14 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Gen List Of Int</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model5.GenListOfInt#getElements <em>Elements</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.GenListOfInt#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getGenListOfInt()
  * @model
  * @generated
@@ -25,14 +32,21 @@ import org.eclipse.emf.ecore.EObject;
 public interface GenListOfInt extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Elements</b></em>' attribute list. The list contents are of type
-   * {@link java.lang.Integer}. <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
+  /**
+   * Returns the value of the '<em><b>Elements</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.Integer}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Elements</em>' attribute list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Elements</em>' attribute list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getGenListOfInt_Elements()
    * @model

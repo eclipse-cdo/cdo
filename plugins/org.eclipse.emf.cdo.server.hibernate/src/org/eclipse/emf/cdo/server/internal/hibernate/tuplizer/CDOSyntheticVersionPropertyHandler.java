@@ -1,6 +1,4 @@
 /**
- * <copyright>
- *
  * Copyright (c) 2005, 2006, 2007, 2008 Springsite BV (The Netherlands) and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,9 +7,8 @@
  *
  * Contributors:
  *   Martin Taal
- * </copyright>
  *
- * $Id: CDOSyntheticVersionPropertyHandler.java,v 1.3 2008-06-03 09:45:56 estepper Exp $
+ * $Id: CDOSyntheticVersionPropertyHandler.java,v 1.4 2008-12-28 17:56:54 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -34,7 +31,7 @@ import java.util.Map;
  * Reads the version from the internal version cache.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, PropertyAccessor

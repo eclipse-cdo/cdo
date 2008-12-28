@@ -1,8 +1,14 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  *
- * $Id: ValueList.java,v 1.4 2008-09-18 12:56:15 estepper Exp $
+ * $Id: ValueList.java,v 1.5 2008-12-28 17:56:34 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
@@ -11,14 +17,15 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.ValueList#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.mango.ValueList#getValues <em>Values</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.ValueList#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.mango.ValueList#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getValueList()
  * @model
  * @generated
@@ -26,12 +33,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface ValueList extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getValueList_Name()
@@ -52,14 +59,14 @@ public interface ValueList extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Values</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.mango.Value}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Values</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.mango.Value}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Values</em>' reference list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Values</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getValueList_Values()
    * @model

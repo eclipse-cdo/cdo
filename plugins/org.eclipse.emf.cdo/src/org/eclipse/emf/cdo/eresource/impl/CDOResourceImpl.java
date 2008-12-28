@@ -59,25 +59,32 @@ import java.util.Map;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
  * 
  * @extends Resource.Internal<!-- end-user-doc -->
- *          <p>
- *          The following features are implemented:
- *          <ul>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking
- *          Modification</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
- *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
- *          </ul>
- *          </p>
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @generated
  */
 public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource, Resource.Internal
 {
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public static final String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
   /**
    * The default URI converter when there is no resource set.
    * 
@@ -131,7 +138,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOResourceImpl()
@@ -141,7 +147,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -181,7 +186,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ResourceSet getResourceSet()
@@ -191,7 +195,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setResourceSet(ResourceSet newResourceSet)
@@ -274,7 +277,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isModified()
@@ -358,7 +360,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isTrackingModification()
@@ -368,7 +369,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTrackingModification(boolean newTrackingModification)
@@ -450,7 +450,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public long getTimeStamp()
@@ -460,7 +459,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTimeStamp(long newTimeStamp)

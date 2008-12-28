@@ -68,9 +68,12 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       }
       else
       {
-        if (TRACE_IGNORING && TRACER.isEnabled())
+        if (TRACE_IGNORING)
         {
-          TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this);
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this);
+          }
         }
       }
     }
@@ -109,9 +112,12 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         return null;
       }
 
-      if (TRACE_IGNORING && TRACER.isEnabled())
+      if (TRACE_IGNORING)
       {
-        TRACER.format("Ignoring deactivation in state {0} for {1}", lifecycleState, this);
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Ignoring deactivation in state {0} for {1}", lifecycleState, this);
+        }
       }
 
       return null;

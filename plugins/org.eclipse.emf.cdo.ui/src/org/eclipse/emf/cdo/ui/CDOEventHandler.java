@@ -49,7 +49,7 @@ public class CDOEventHandler
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof IContainerEvent)
+      if (event instanceof IContainerEvent<?>)
       {
         IContainerEvent<?> e = (IContainerEvent<?>)event;
         if (e.getDeltaElement() == view && e.getDeltaKind() == IContainerDelta.Kind.REMOVED)

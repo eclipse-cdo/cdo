@@ -173,7 +173,7 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof SingleDeltaContainerEvent)
+        if (event instanceof SingleDeltaContainerEvent<?>)
         {
           IView view = getQueryResult().getView();
           SingleDeltaContainerEvent<?> deltaEvent = (SingleDeltaContainerEvent<?>)event;

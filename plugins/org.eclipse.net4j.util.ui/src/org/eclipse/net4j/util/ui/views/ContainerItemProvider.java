@@ -189,7 +189,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
   protected Node createNode(Node parent, Object element)
   {
-    if (element instanceof IContainer)
+    if (element instanceof IContainer<?>)
     {
       return createContaineNode(parent, element);
     }

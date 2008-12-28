@@ -37,7 +37,7 @@ public class OMPreferenceStore implements IPreferenceStore
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof OMPreferencesChangeEvent)
+      if (event instanceof OMPreferencesChangeEvent<?>)
       {
         OMPreferencesChangeEvent<?> e = (OMPreferencesChangeEvent<?>)event;
         firePropertyChangeEvent(e.getPreference().getName(), e.getOldValue(), e.getNewValue());

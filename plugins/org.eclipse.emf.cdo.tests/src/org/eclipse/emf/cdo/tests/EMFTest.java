@@ -44,11 +44,11 @@ public class EMFTest extends AbstractOMTest
 
     IOUtil.OUT().println();
 
-    if (false)
-    {
-      model2.eResource().getResourceSet().getResources().get(1).unload();
-    }
-    else
+    // if (false)
+    // {
+    // model2.eResource().getResourceSet().getResources().get(1).unload();
+    // }
+    // else
     {
       ((InternalEObject)type).eSetProxyURI(URI.createURI("model1.ecore#//Company"));
     }

@@ -540,12 +540,12 @@ public final class ReflectUtil
       builder.append(" = "); //$NON-NLS-1$
 
       Object value = getValue(field, object);
-      if (value instanceof Map)
+      if (value instanceof Map<?, ?>)
       {
         value = ((Map<?, ?>)value).entrySet();
       }
 
-      if (value instanceof Collection)
+      if (value instanceof Collection<?>)
       {
         builder.append(StringUtil.NL);
         for (Object element : (Collection<?>)value)

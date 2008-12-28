@@ -92,7 +92,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
       E element = delta.getElement();
 
       boolean filtered = true;
-      if (visitor instanceof Filtered)
+      if (visitor instanceof Filtered<?>)
       {
         filtered = ((Filtered<E>)visitor).filter(element);
       }

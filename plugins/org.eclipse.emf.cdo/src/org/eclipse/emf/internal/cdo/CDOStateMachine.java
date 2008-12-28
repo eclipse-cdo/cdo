@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
@@ -30,7 +29,6 @@ import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
-import org.eclipse.emf.internal.cdo.util.RevisionAdjuster;
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
@@ -562,15 +560,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       revision.setUntransactional();
       revision.setCreated(data.getTimeStamp());
 
-      if (useDeltas && false)
-      {
-        // Cannot use that yet, since we need to change adjust index for list.
-        // TODO Simon Implement a way to adjust indexes as fast as possible.
-        RevisionAdjuster revisionAdjuster = new RevisionAdjuster(data.getReferenceAdjuster());
-        CDORevisionDelta delta = data.getCommitContext().getRevisionDeltas().get(oldID);
-        revisionAdjuster.adjustRevision(revision, delta);
-      }
-      else
+      // if (useDeltas)
+      // {
+      // // Cannot use that yet, since we need to change adjust index for list.
+      // // TODO Simon Implement a way to adjust indexes as fast as possible.
+      // RevisionAdjuster revisionAdjuster = new RevisionAdjuster(data.getReferenceAdjuster());
+      // CDORevisionDelta delta = data.getCommitContext().getRevisionDeltas().get(oldID);
+      // revisionAdjuster.adjustRevision(revision, delta);
+      // }
+      // else
       {
         revision.adjustReferences(data.getReferenceAdjuster());
       }

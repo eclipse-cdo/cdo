@@ -44,7 +44,7 @@ public class StreamWrapperInjector implements IElementProcessor
   public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
       Object element)
   {
-    if (element instanceof SignalProtocol)
+    if (element instanceof SignalProtocol<?>)
     {
       SignalProtocol<?> signalProtocol = (SignalProtocol<?>)element;
       if (shouldInject(container, productGroup, factoryType, description, signalProtocol))

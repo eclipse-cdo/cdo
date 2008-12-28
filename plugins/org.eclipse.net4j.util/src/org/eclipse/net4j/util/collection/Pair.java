@@ -62,7 +62,7 @@ public class Pair<T1, T2>
       return true;
     }
 
-    if (obj instanceof Pair)
+    if (obj instanceof Pair<?, ?>)
     {
       Pair<?, ?> that = (Pair<?, ?>)obj;
       return ObjectUtil.equals(element1, that.getElement1()) && ObjectUtil.equals(element2, that.getElement2());

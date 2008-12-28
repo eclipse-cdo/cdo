@@ -67,7 +67,7 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
     E element = deltas[0].getElement();
 
     boolean filtered = true;
-    if (visitor instanceof Filtered)
+    if (visitor instanceof Filtered<?>)
     {
       filtered = ((Filtered<E>)visitor).filter(element);
     }

@@ -62,7 +62,7 @@ public final class ContainerUtil
 
   public static boolean isEmpty(Object container)
   {
-    if (container instanceof IContainer)
+    if (container instanceof IContainer<?>)
     {
       return ((IContainer<?>)container).isEmpty();
     }
@@ -72,7 +72,7 @@ public final class ContainerUtil
 
   public static Object[] getElements(Object container)
   {
-    if (container instanceof IContainer)
+    if (container instanceof IContainer<?>)
     {
       return ((IContainer<?>)container).getElements();
     }

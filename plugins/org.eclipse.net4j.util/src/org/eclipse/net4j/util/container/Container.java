@@ -99,7 +99,7 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
   @Override
   public void fireEvent(IEvent event)
   {
-    if (event instanceof IContainerEvent)
+    if (event instanceof IContainerEvent<?>)
     {
       if (((IContainerEvent<?>)event).isEmpty())
       {

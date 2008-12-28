@@ -349,11 +349,11 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
     classLabel.getParent().layout();
     backAction.setEnabled(elements.size() >= 2);
 
-    if (object instanceof Map)
+    if (object instanceof Map<?, ?>)
     {
       setCurrentViewer(mapViewer);
     }
-    else if (object instanceof Iterable)
+    else if (object instanceof Iterable<?>)
     {
       setCurrentViewer(iterableViewer);
     }
@@ -576,7 +576,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
       if (!elements.isEmpty())
       {
         Object element = elements.peek();
-        if (element instanceof Iterable)
+        if (element instanceof Iterable<?>)
         {
           List<Object> result = new ArrayList<Object>();
           for (Object object : (Iterable<?>)element)
@@ -683,7 +683,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
       if (!elements.isEmpty())
       {
         Object element = elements.peek();
-        if (element instanceof Map)
+        if (element instanceof Map<?, ?>)
         {
           return ((Map<?, ?>)element).entrySet().toArray();
         }
@@ -700,7 +700,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   {
     public String getColumnText(Object obj, int index)
     {
-      if (obj instanceof Map.Entry)
+      if (obj instanceof Map.Entry<?, ?>)
       {
         Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
         Object key = entry.getKey();

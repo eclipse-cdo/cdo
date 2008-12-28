@@ -152,7 +152,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
         writer.write(String.valueOf(channel.getID()));
         writer.write(": ");
         IBufferHandler receiveHandler = channel.getReceiveHandler();
-        if (receiveHandler instanceof IProtocol)
+        if (receiveHandler instanceof IProtocol<?>)
         {
           writer.write(((IProtocol<?>)receiveHandler).getType());
         }

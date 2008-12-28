@@ -21,7 +21,7 @@ public final class RegistryUtil
 
   public <K, V> IRegistry<K, V> unmodifiableRegistry(IRegistry<K, V> registry)
   {
-    if (registry instanceof UnmodifiableRegistry)
+    if (registry instanceof UnmodifiableRegistry<?, ?>)
     {
       return registry;
     }

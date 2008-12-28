@@ -386,7 +386,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     short signalID = signalActor.getID();
     int correlationID = signalActor.getCorrelationID();
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
-    if (signalActor instanceof RequestWithConfirmation)
+    if (signalActor instanceof RequestWithConfirmation<?>)
     {
       signalActor.setBufferInputStream(new SignalInputStream(timeout));
     }
@@ -429,7 +429,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
           signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
 
           // Set new InputStream
-          if (signalActor instanceof RequestWithConfirmation)
+          if (signalActor instanceof RequestWithConfirmation<?>)
           {
             long timeout = signalActor.getBufferInputStream().getMillisBeforeTimeout();
             signalActor.setBufferInputStream(new SignalInputStream(timeout));
@@ -460,7 +460,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     synchronized (signals)
     {
       Signal signal = signals.remove(correlationID);
-      if (signal instanceof RequestWithConfirmation)
+      if (signal instanceof RequestWithConfirmation<?>)
       {
         RequestWithConfirmation<?> request = (RequestWithConfirmation<?>)signal;
         request.setRemoteException(t, responding);
@@ -475,7 +475,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     synchronized (signals)
     {
       Signal signal = signals.get(correlationID);
-      if (signal instanceof RequestWithMonitoring)
+      if (signal instanceof RequestWithMonitoring<?>)
       {
         RequestWithMonitoring<?> request = (RequestWithMonitoring<?>)signal;
         request.setMonitorProgress(totalWork, work);

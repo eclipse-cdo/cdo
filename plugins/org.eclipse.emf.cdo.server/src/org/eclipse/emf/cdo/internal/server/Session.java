@@ -44,6 +44,7 @@ import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.options.IOptionsContainer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -108,6 +109,14 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    * @since 2.0
    */
   public Options options()
+  {
+    return this;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public IOptionsContainer getContainer()
   {
     return this;
   }

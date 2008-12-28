@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
- *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -68,14 +68,15 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -101,7 +102,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implements InternalCDOView
+public class CDOViewImpl extends Notifier implements InternalCDOView
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -112,10 +113,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   private InternalCDOViewSet viewSet;
 
   private CDOURIHandler uriHandler = new CDOURIHandler(this);
-
-  private boolean invalidationNotificationEnabled;
-
-  private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy;
 
   private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
@@ -131,9 +128,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
   private AdapterManager adapterPolicyManager = createAdapterManager();
 
-  private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
-
-  private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.ALL;
+  private OptionsImpl options;
 
   @ExcludeFromDump
   private transient CDOID lastLookupID;
@@ -148,9 +143,23 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   {
     this.session = session;
     this.viewID = viewID;
-    invalidationNotificationEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.getValue();
-    revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(OM.PREF_REVISION_LOADING_CHUNK_SIZE.getValue());
-    setCacheReferenceType(null);
+    options = initOptions();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public OptionsImpl options()
+  {
+    return options;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected OptionsImpl initOptions()
+  {
+    return new OptionsImpl();
   }
 
   public int getViewID()
@@ -166,14 +175,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public ResourceSet getResourceSet()
   {
     return viewSet.getResourceSet();
-  }
-
-  /**
-   * @since 2.0
-   */
-  public Options options()
-  {
-    return this;
   }
 
   /**
@@ -327,107 +328,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public boolean hasConflict()
   {
     return false;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public boolean isInvalidationNotificationEnabled()
-  {
-    return invalidationNotificationEnabled;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setInvalidationNotificationEnabled(boolean enabled)
-  {
-    invalidationNotificationEnabled = enabled;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
-  {
-    synchronized (changeSubscriptionPolicies)
-    {
-      return changeSubscriptionPolicies.toArray(new CDOAdapterPolicy[changeSubscriptionPolicies.size()]);
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy)
-  {
-    synchronized (changeSubscriptionPolicies)
-    {
-      if (changeSubscriptionPolicies.add(policy))
-      {
-        changeSubscriptionManager.notifyChangeSubcriptionPolicy();
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy)
-  {
-    synchronized (changeSubscriptionPolicies)
-    {
-      if (changeSubscriptionPolicies.remove(policy) && !changeSubscriptionPolicies.contains(policy))
-      {
-        changeSubscriptionManager.notifyChangeSubcriptionPolicy();
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOAdapterPolicy getStrongReferencePolicy()
-  {
-    return adapterReferencePolicy;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setStrongReferencePolicy(CDOAdapterPolicy adapterPolicy)
-  {
-    if (adapterPolicy == null)
-    {
-      adapterPolicy = CDOAdapterPolicy.ALL;
-    }
-
-    if (adapterReferencePolicy != adapterPolicy)
-    {
-      adapterReferencePolicy = adapterPolicy;
-      adapterPolicyManager.reset();
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy()
-  {
-    return revisionPrefetchingPolicy;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy)
-  {
-    if (prefetchingPolicy == null)
-    {
-      prefetchingPolicy = CDORevisionPrefetchingPolicy.NO_PREFETCHING;
-    }
-
-    revisionPrefetchingPolicy = prefetchingPolicy;
   }
 
   /**
@@ -761,7 +661,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     CDORevisionResolver revisionManager = session.getRevisionManager();
-    int initialChunkSize = session.getCollectionLoadingPolicy().getInitialChunkSize();
+    int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
     return (InternalCDORevision)revisionManager.getRevision(id, initialChunkSize, loadOnDemand);
   }
 
@@ -1239,7 +1139,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       lock.unlock();
     }
 
-    if (invalidationNotificationEnabled)
+    if (options().isInvalidationNotificationEnabled())
     {
       for (InternalCDOObject dirtyObject : dirtyObjects)
       {
@@ -1282,12 +1182,10 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
    */
   public void handleChangeSubscription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects)
   {
-    synchronized (changeSubscriptionPolicies)
+    boolean policiesPresent = options().hasChangeSubscriptionPolicies();
+    if (!policiesPresent)
     {
-      if (changeSubscriptionPolicies.isEmpty())
-      {
-        return;
-      }
+      return;
     }
 
     if (deltas != null)
@@ -1407,98 +1305,6 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
   }
 
   /**
-   * @since 2.0
-   */
-  public ReferenceType getCacheReferenceType()
-  {
-    if (objects instanceof ReferenceValueMap.Strong)
-    {
-      return ReferenceType.STRONG;
-    }
-
-    if (objects instanceof ReferenceValueMap.Soft)
-    {
-      return ReferenceType.SOFT;
-    }
-
-    if (objects instanceof ReferenceValueMap.Weak)
-    {
-      return ReferenceType.WEAK;
-    }
-
-    throw new IllegalStateException("referenceType");
-  }
-
-  /**
-   * @since 2.0
-   */
-  public boolean setCacheReferenceType(ReferenceType referenceType)
-  {
-    if (referenceType == null)
-    {
-      referenceType = ReferenceType.SOFT;
-    }
-
-    ReferenceValueMap<CDOID, InternalCDOObject> newObjects;
-    switch (referenceType)
-    {
-    case STRONG:
-      if (objects instanceof ReferenceValueMap.Strong)
-      {
-        return false;
-      }
-
-      newObjects = new ReferenceValueMap.Strong<CDOID, InternalCDOObject>();
-      break;
-
-    case SOFT:
-      if (objects instanceof ReferenceValueMap.Soft)
-      {
-        return false;
-      }
-
-      newObjects = new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
-      break;
-
-    case WEAK:
-      if (objects instanceof ReferenceValueMap.Weak)
-      {
-        return false;
-      }
-
-      newObjects = new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
-      break;
-
-    default:
-      throw new IllegalArgumentException("referenceType");
-    }
-
-    if (objects == null)
-    {
-      objects = newObjects;
-      return true;
-    }
-
-    for (Entry<CDOID, InternalCDOObject> entry : objects.entrySet())
-    {
-      InternalCDOObject object = entry.getValue();
-      if (object != null)
-      {
-        newObjects.put(entry.getKey(), object);
-      }
-    }
-
-    ConcurrentMap<CDOID, InternalCDOObject> oldObjects = objects;
-    synchronized (objects)
-    {
-      objects = newObjects;
-    }
-
-    oldObjects.clear();
-    return true;
-  }
-
-  /**
    * Needed for {@link CDOAuditImpl#setTimeStamp(long)}.
    * 
    * @since 2.0
@@ -1566,11 +1372,10 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     store = null;
     viewSet = null;
     changeSubscriptionManager = null;
-    changeSubscriptionPolicies = null;
-    revisionPrefetchingPolicy = null;
     featureAnalyzer = null;
     lastLookupID = null;
     lastLookupObject = null;
+    options = null;
   }
 
   /**
@@ -1592,7 +1397,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     return type instanceof ResourceSet;
   }
 
-  public Notifier getTarget()
+  public org.eclipse.emf.common.notify.Notifier getTarget()
   {
     return getResourceSet();
   }
@@ -1645,7 +1450,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
-      if (getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
+      if (options().getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
       {
         for (CDOObject object : commitContext.getNewObjects().values())
         {
@@ -1666,10 +1471,11 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     protected synchronized void attachObject(CDOObject object)
     {
+      CDOAdapterPolicy strongReferencePolicy = options().getStrongReferencePolicy();
       int count = 0;
       for (Adapter adapter : object.eAdapters())
       {
-        if (adapterReferencePolicy.isValid(object, adapter))
+        if (strongReferencePolicy.isValid(object, adapter))
         {
           count++;
         }
@@ -1691,7 +1497,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     protected synchronized void attachAdapter(CDOObject object, Adapter adapter)
     {
-      if (getStrongReferencePolicy().isValid(object, adapter))
+      if (options().getStrongReferencePolicy().isValid(object, adapter))
       {
         objects.add(object);
       }
@@ -1699,7 +1505,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     protected synchronized void detachAdapter(CDOObject object, Adapter adapter)
     {
-      if (getStrongReferencePolicy().isValid(object, adapter))
+      if (options().getStrongReferencePolicy().isValid(object, adapter))
       {
         objects.add(object);
       }
@@ -1710,7 +1516,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
       // Keep the object in memory
       Set<CDOObject> oldObject = objects;
       objects = new HashBag<CDOObject>();
-      if (getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
+      if (options().getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
       {
         InternalCDOObject objects[] = getObjectsArray();
         for (int i = 0; i < objects.length; i++)
@@ -1757,11 +1563,12 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
      */
     protected void notifyChangeSubcriptionPolicy()
     {
+      boolean policiesPresent = options().hasChangeSubscriptionPolicies();
       synchronized (subscriptions)
       {
         subscriptions.clear();
         List<CDOID> cdoIDs = new ArrayList<CDOID>();
-        if (!changeSubscriptionPolicies.isEmpty()) // TODO Synchronize this?
+        if (policiesPresent)
         {
           for (InternalCDOObject cdoObject : getObjectsArray())
           {
@@ -1878,7 +1685,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     private boolean shouldSubscribe(EObject eObject, Adapter adapter)
     {
-      for (CDOAdapterPolicy policy : getChangeSubscriptionPolicies())
+      for (CDOAdapterPolicy policy : options().getChangeSubscriptionPolicies())
       {
         if (policy.isValid(eObject, adapter))
         {
@@ -1891,7 +1698,7 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
 
     private void subscribe(CDOID id, InternalCDOObject cdoObject, int adjust)
     {
-      boolean policiesPresent = !changeSubscriptionPolicies.isEmpty(); // TODO Synchronize this?
+      boolean policiesPresent = options().hasChangeSubscriptionPolicies();
       synchronized (subscriptions)
       {
         int count = 0;
@@ -2032,6 +1839,294 @@ public class CDOViewImpl extends org.eclipse.net4j.util.event.Notifier implement
     public String toString()
     {
       return "CDOViewInvalidationEvent: " + dirtyObjects;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  protected class OptionsImpl extends Notifier implements Options
+  {
+    private boolean invalidationNotificationEnabled;
+
+    private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy;
+
+    private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
+
+    private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.ALL;
+
+    public OptionsImpl()
+    {
+      setCacheReferenceType(null);
+      invalidationNotificationEnabled = OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.getValue();
+      revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(OM.PREF_REVISION_LOADING_CHUNK_SIZE
+          .getValue());
+    }
+
+    public CDOViewImpl getContainer()
+    {
+      return CDOViewImpl.this;
+    }
+
+    public boolean isInvalidationNotificationEnabled()
+    {
+      return invalidationNotificationEnabled;
+    }
+
+    public void setInvalidationNotificationEnabled(boolean enabled)
+    {
+      if (invalidationNotificationEnabled != enabled)
+      {
+        invalidationNotificationEnabled = enabled;
+        fireEvent(new InvalidationNotificationEventImpl());
+      }
+    }
+
+    public boolean hasChangeSubscriptionPolicies()
+    {
+      synchronized (changeSubscriptionPolicies)
+      {
+        return !changeSubscriptionPolicies.isEmpty();
+      }
+    }
+
+    public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
+    {
+      synchronized (changeSubscriptionPolicies)
+      {
+        return changeSubscriptionPolicies.toArray(new CDOAdapterPolicy[changeSubscriptionPolicies.size()]);
+      }
+    }
+
+    public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy)
+    {
+      boolean changed = false;
+      synchronized (changeSubscriptionPolicies)
+      {
+        if (changeSubscriptionPolicies.add(policy))
+        {
+          changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+          changed = true;
+        }
+      }
+
+      if (changed)
+      {
+        fireEvent(new ChangeSubscriptionPoliciesEventImpl());
+      }
+    }
+
+    public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy)
+    {
+      boolean changed = false;
+      synchronized (changeSubscriptionPolicies)
+      {
+        if (changeSubscriptionPolicies.remove(policy) && !changeSubscriptionPolicies.contains(policy))
+        {
+          changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+          changed = true;
+        }
+      }
+
+      if (changed)
+      {
+        fireEvent(new ChangeSubscriptionPoliciesEventImpl());
+      }
+    }
+
+    public CDOAdapterPolicy getStrongReferencePolicy()
+    {
+      return adapterReferencePolicy;
+    }
+
+    public void setStrongReferencePolicy(CDOAdapterPolicy adapterPolicy)
+    {
+      if (adapterPolicy == null)
+      {
+        adapterPolicy = CDOAdapterPolicy.ALL;
+      }
+
+      if (adapterReferencePolicy != adapterPolicy)
+      {
+        adapterReferencePolicy = adapterPolicy;
+        adapterPolicyManager.reset();
+        fireEvent(new ReferencePolicyEventImpl());
+      }
+    }
+
+    public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy()
+    {
+      return revisionPrefetchingPolicy;
+    }
+
+    public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy)
+    {
+      if (prefetchingPolicy == null)
+      {
+        prefetchingPolicy = CDORevisionPrefetchingPolicy.NO_PREFETCHING;
+      }
+
+      if (revisionPrefetchingPolicy != prefetchingPolicy)
+      {
+        revisionPrefetchingPolicy = prefetchingPolicy;
+        fireEvent(new RevisionPrefetchingPolicyEventImpl());
+      }
+    }
+
+    public ReferenceType getCacheReferenceType()
+    {
+      if (objects instanceof ReferenceValueMap.Strong<?, ?>)
+      {
+        return ReferenceType.STRONG;
+      }
+
+      if (objects instanceof ReferenceValueMap.Soft<?, ?>)
+      {
+        return ReferenceType.SOFT;
+      }
+
+      if (objects instanceof ReferenceValueMap.Weak<?, ?>)
+      {
+        return ReferenceType.WEAK;
+      }
+
+      throw new IllegalStateException("referenceType");
+    }
+
+    public boolean setCacheReferenceType(ReferenceType referenceType)
+    {
+      if (referenceType == null)
+      {
+        referenceType = ReferenceType.SOFT;
+      }
+
+      ReferenceValueMap<CDOID, InternalCDOObject> newObjects;
+      switch (referenceType)
+      {
+      case STRONG:
+        if (objects instanceof ReferenceValueMap.Strong<?, ?>)
+        {
+          return false;
+        }
+
+        newObjects = new ReferenceValueMap.Strong<CDOID, InternalCDOObject>();
+        break;
+
+      case SOFT:
+        if (objects instanceof ReferenceValueMap.Soft<?, ?>)
+        {
+          return false;
+        }
+
+        newObjects = new ReferenceValueMap.Soft<CDOID, InternalCDOObject>();
+        break;
+
+      case WEAK:
+        if (objects instanceof ReferenceValueMap.Weak<?, ?>)
+        {
+          return false;
+        }
+
+        newObjects = new ReferenceValueMap.Weak<CDOID, InternalCDOObject>();
+        break;
+
+      default:
+        throw new IllegalArgumentException("referenceType");
+      }
+
+      if (objects == null)
+      {
+        objects = newObjects;
+        fireEvent(new CacheReferenceTypeEventImpl());
+        return true;
+      }
+
+      for (Entry<CDOID, InternalCDOObject> entry : objects.entrySet())
+      {
+        InternalCDOObject object = entry.getValue();
+        if (object != null)
+        {
+          newObjects.put(entry.getKey(), object);
+        }
+      }
+
+      ConcurrentMap<CDOID, InternalCDOObject> oldObjects = objects;
+      synchronized (objects)
+      {
+        objects = newObjects;
+      }
+
+      oldObjects.clear();
+      fireEvent(new CacheReferenceTypeEventImpl());
+      return true;
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class CacheReferenceTypeEventImpl extends OptionsEvent implements CacheReferenceTypeEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public CacheReferenceTypeEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class ChangeSubscriptionPoliciesEventImpl extends OptionsEvent implements
+        ChangeSubscriptionPoliciesEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public ChangeSubscriptionPoliciesEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class InvalidationNotificationEventImpl extends OptionsEvent implements InvalidationNotificationEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public InvalidationNotificationEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class RevisionPrefetchingPolicyEventImpl extends OptionsEvent implements
+        RevisionPrefetchingPolicyEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public RevisionPrefetchingPolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class ReferencePolicyEventImpl extends OptionsEvent implements ReferencePolicyEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public ReferencePolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
     }
   }
 }

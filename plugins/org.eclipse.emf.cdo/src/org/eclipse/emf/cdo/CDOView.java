@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
- *    Victor Roldan Betancort - http://bugs.eclipse.org/208689
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -22,6 +22,9 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.options.IOptions;
+import org.eclipse.net4j.util.options.IOptionsEvent;
+import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.common.util.URI;
@@ -61,7 +64,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOView extends CDOProtocolView, INotifier
+public interface CDOView extends CDOProtocolView, INotifier, IOptionsContainer
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.
@@ -113,13 +116,11 @@ public interface CDOView extends CDOProtocolView, INotifier
    * <pre>
    *    CDOResource resource = view.getResource(&quot;/orders/order-4711&quot;);
    *    PurchaseOrder order = (PurchaseOrder)resource.getContents().get(0);
-   * 
    *    ReentrantLock lock = view.getLock();
    *    if (!lock.tryLock(5L, TimeUnit.SECONDS))
    *    {
    *      throw new TimeoutException();
    *    }
-   * 
    *    try
    *    {
    *      float sum = 0;
@@ -127,7 +128,6 @@ public interface CDOView extends CDOProtocolView, INotifier
    *      {
    *        sum += detail.getPrice();
    *      }
-   * 
    *      System.out.println(&quot;Sum: &quot; + sum);
    *    }
    *    finally
@@ -299,7 +299,7 @@ public interface CDOView extends CDOProtocolView, INotifier
    * @author Simon McDuff
    * @since 2.0
    */
-  public interface Options
+  public interface Options extends IOptions
   {
     /**
      */
@@ -385,6 +385,9 @@ public interface CDOView extends CDOProtocolView, INotifier
      */
     public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy);
 
+    // TODO
+    public CDOAdapterPolicy getStrongReferencePolicy();
+
     /**
      * Sets the reference type to be used when an adapter is used to an object.
      * <p>
@@ -411,5 +414,40 @@ public interface CDOView extends CDOProtocolView, INotifier
      * The end-user could provide its own implementation of the CDORevisionPrefetchingPolicy interface.
      */
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
+
+    /**
+     * @since 2.0
+     */
+    public interface CacheReferenceTypeEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @since 2.0
+     */
+    public interface ReferencePolicyEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @since 2.0
+     */
+    public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @since 2.0
+     */
+    public interface InvalidationNotificationEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @since 2.0
+     */
+    public interface RevisionPrefetchingPolicyEvent extends IOptionsEvent, CDOEvent
+    {
+    }
   }
 }

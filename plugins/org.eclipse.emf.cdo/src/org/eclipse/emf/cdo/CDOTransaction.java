@@ -4,12 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/215688    
+ *    Simon McDuff - http://bugs.eclipse.org/215688
  *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -18,7 +19,8 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.net4j.util.options.IOptionsEvent;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -98,7 +100,7 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   /**
    * @since 2.0
    */
-  public CDOTransaction.Options options();
+  public Options options();
 
   /**
    * @author Simon McDuff
@@ -107,20 +109,30 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
   public interface Options extends CDOView.Options
   {
     /**
-     * Returns the conflict resolver list of this transaction. The list can be used to add, move or remove conflict
-     * handlers.
-     * <p>
-     * Note that you must synchronize on the returned list if you want possible modifications to be thread-safe!
+     * Returns a copy of the conflict resolver list of this transaction.
      */
-    public EList<CDOConflictResolver> getConflictResolvers();
+    public CDOConflictResolver[] getConflictResolvers();
+
+    /**
+     * Sets the conflict resolver list of this transaction.
+     */
+    public void setConflictResolvers(CDOConflictResolver[] resolvers);
+
+    /**
+     * Adds a conflict resolver to the list of conflict resolvers of this transaction.
+     */
+    public void addConflictResolver(CDOConflictResolver resolver);
+
+    /**
+     * Removes a conflict resolver from the list of conflict resolvers of this transaction.
+     */
+    public void removeConflictResolver(CDOConflictResolver resolver);
 
     /**
      * Returns true if locks in this view will be removes when {@link CDOTransaction#commit()} or
      * {@link CDOTransaction#rollback()} is called.
      * <p>
      * Default value is true.
-     * 
-     * @since 2.0
      */
     public boolean isAutoReleaseLocksEnabled();
 
@@ -131,9 +143,21 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
      * If false all locks are kept.
      * <p>
      * Default value is true.
-     * 
-     * @since 2.0
      */
-    public boolean setAutoReleaseLocksEnabled(boolean on);
+    public void setAutoReleaseLocksEnabled(boolean on);
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface ConflictResolversEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface AutoReleaseLockEvent extends IOptionsEvent, CDOEvent
+    {
+    }
   }
 }

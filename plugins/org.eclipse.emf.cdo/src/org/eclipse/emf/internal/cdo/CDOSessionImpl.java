@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778
  *    Simon McDuff - http://bugs.eclipse.org/230832
  *    Simon McDuff - http://bugs.eclipse.org/233490
  *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -67,6 +68,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -74,6 +76,9 @@ import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.options.IOptions;
+import org.eclipse.net4j.util.options.IOptionsContainer;
+import org.eclipse.net4j.util.options.OptionsEvent;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -100,12 +105,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
   private int sessionID;
-
-  private boolean passiveUpdateEnabled = true;
-
-  private CDOCollectionLoadingPolicy collectionLoadingPolicy;
-
-  private CDORevisionFactory revisionFactory;
 
   private CDOClientProtocol protocol;
 
@@ -159,6 +158,11 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   @ExcludeFromDump
   private CDOIDObjectFactory cdoidObjectFactory;
 
+  /**
+   * @since 2.0
+   */
+  protected IOptions options = new OptionsImpl();
+
   public CDOSessionImpl()
   {
     protocol = new CDOClientProtocol();
@@ -166,10 +170,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
 
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
-
-    // TODO Remove preferences from core
-    collectionLoadingPolicy = CDOUtil.createCollectionLoadingPolicy(OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue(),
-        OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue());
   }
 
   public int getSessionID()
@@ -180,9 +180,9 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  public CDOSession.Options options()
+  public Options options()
   {
-    return this;
+    return (Options)options;
   }
 
   /**
@@ -213,65 +213,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   public CDOIDObject createCDOIDObject(String in)
   {
     return cdoidObjectFactory.createCDOIDObject(in);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
-  {
-    return collectionLoadingPolicy;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
-  {
-    if (policy == null)
-    {
-      policy = CDOCollectionLoadingPolicy.DEFAULT;
-    }
-
-    collectionLoadingPolicy = policy;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public synchronized CDORevisionFactory getRevisionFactory()
-  {
-    if (revisionFactory == null)
-    {
-      revisionFactory = new CDORevisionFactory()
-      {
-        public CDORevision createRevision(CDOClass cdoClass, CDOID id)
-        {
-          return CDORevisionUtil.create(cdoClass, id);
-        }
-
-        public CDORevision createRevision(CDODataInput in) throws IOException
-        {
-          return CDORevisionUtil.read(in);
-        }
-
-        @Override
-        public String toString()
-        {
-          return "DefaultRevisionFactory";
-        }
-      };
-    }
-
-    return revisionFactory;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public synchronized void setRevisionFactory(CDORevisionFactory revisionFactory)
-  {
-    this.revisionFactory = revisionFactory;
   }
 
   public CDOClientProtocol getProtocol()
@@ -656,8 +597,8 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   public void handleCommitNotification(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
       final Collection<CDOID> detachedObjects, final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView)
   {
-    handleCommitNotification(timeStamp, dirtyOIDs, detachedObjects, deltas, excludedView, isPassiveUpdateEnabled(),
-        true);
+    handleCommitNotification(timeStamp, dirtyOIDs, detachedObjects, deltas, excludedView, options()
+        .isPassiveUpdateEnabled(), true);
   }
 
   private void handleCommitNotification(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
@@ -866,6 +807,7 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     packageRegistry.setSession(this);
     protocol.open();
 
+    boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
     OpenSessionResult result = new OpenSessionRequest(protocol, repositoryName, passiveUpdateEnabled).send();
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
@@ -979,14 +921,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     return set;
   }
 
-  /**
-   * @since 2.0
-   */
-  public boolean isPassiveUpdateEnabled()
-  {
-    return passiveUpdateEnabled;
-  }
-
   private Map<CDOID, CDORevision> getAllRevisions()
   {
     Map<CDOID, CDORevision> uniqueObjects = new HashMap<CDOID, CDORevision>();
@@ -1017,40 +951,13 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
-  {
-    if (this.passiveUpdateEnabled != passiveUpdateEnabled)
-    {
-      this.passiveUpdateEnabled = passiveUpdateEnabled;
-
-      // Need to refresh if we change state
-      Map<CDOID, CDORevision> allRevisions = getAllRevisions();
-
-      try
-      {
-        if (!allRevisions.isEmpty())
-        {
-          new SetPassiveUpdateRequest(protocol, this, allRevisions, collectionLoadingPolicy.getInitialChunkSize(),
-              passiveUpdateEnabled).send();
-        }
-      }
-      catch (Exception ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
   public Collection<CDOTimeStampContext> refresh()
   {
     // If passive update is turned on we don`t need to refresh.
     // We do not throw an exception since the client could turn
     // that feature on or off without affecting their code.
     checkActive();
-    if (!isPassiveUpdateEnabled())
+    if (!options().isPassiveUpdateEnabled())
     {
       Map<CDOID, CDORevision> allRevisions = getAllRevisions();
 
@@ -1058,8 +965,8 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
       {
         if (!allRevisions.isEmpty())
         {
-          return new SyncRevisionRequest(protocol, this, allRevisions, collectionLoadingPolicy.getInitialChunkSize())
-              .send();
+          int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
+          return new SyncRevisionRequest(protocol, this, allRevisions, initialChunkSize).send();
         }
       }
       catch (Exception ex)
@@ -1125,6 +1032,156 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     public String toString()
     {
       return "CDOSessionInvalidationEvent: " + dirtyOIDs;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  protected class OptionsImpl extends Notifier implements Options
+  {
+    private boolean passiveUpdateEnabled = true;
+
+    private CDOCollectionLoadingPolicy collectionLoadingPolicy;
+
+    private CDORevisionFactory revisionFactory;
+
+    public OptionsImpl()
+    {
+      // TODO Remove preferences from core
+      int value = OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue();
+      collectionLoadingPolicy = CDOUtil.createCollectionLoadingPolicy(value, value);
+    }
+
+    public IOptionsContainer getContainer()
+    {
+      return CDOSessionImpl.this;
+    }
+
+    public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+    {
+      if (this.passiveUpdateEnabled != passiveUpdateEnabled)
+      {
+        this.passiveUpdateEnabled = passiveUpdateEnabled;
+
+        // Need to refresh if we change state
+        Map<CDOID, CDORevision> allRevisions = getAllRevisions();
+
+        try
+        {
+          if (!allRevisions.isEmpty())
+          {
+            new SetPassiveUpdateRequest(protocol, CDOSessionImpl.this, allRevisions, collectionLoadingPolicy
+                .getInitialChunkSize(), passiveUpdateEnabled).send();
+          }
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+
+        fireEvent(new PassiveUpdateEventImpl());
+      }
+    }
+
+    public boolean isPassiveUpdateEnabled()
+    {
+      return passiveUpdateEnabled;
+    }
+
+    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+    {
+      return collectionLoadingPolicy;
+    }
+
+    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
+    {
+      if (policy == null)
+      {
+        policy = CDOCollectionLoadingPolicy.DEFAULT;
+      }
+
+      if (collectionLoadingPolicy != policy)
+      {
+        collectionLoadingPolicy = policy;
+        fireEvent(new CollectionLoadingPolicyEventImpl());
+      }
+    }
+
+    public synchronized CDORevisionFactory getRevisionFactory()
+    {
+      if (revisionFactory == null)
+      {
+        revisionFactory = new CDORevisionFactory()
+        {
+          public CDORevision createRevision(CDOClass cdoClass, CDOID id)
+          {
+            return CDORevisionUtil.create(cdoClass, id);
+          }
+
+          public CDORevision createRevision(CDODataInput in) throws IOException
+          {
+            return CDORevisionUtil.read(in);
+          }
+
+          @Override
+          public String toString()
+          {
+            return "DefaultRevisionFactory";
+          }
+        };
+      }
+
+      return revisionFactory;
+    }
+
+    public synchronized void setRevisionFactory(CDORevisionFactory revisionFactory)
+    {
+      if (this.revisionFactory != revisionFactory)
+      {
+        this.revisionFactory = revisionFactory;
+        fireEvent(new RevisionFactoryEventImpl());
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class PassiveUpdateEventImpl extends OptionsEvent implements PassiveUpdateEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public PassiveUpdateEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class CollectionLoadingPolicyEventImpl extends OptionsEvent implements CollectionLoadingPolicyEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public CollectionLoadingPolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class RevisionFactoryEventImpl extends OptionsEvent implements RevisionFactoryEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public RevisionFactoryEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
     }
   }
 }

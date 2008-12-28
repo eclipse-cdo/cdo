@@ -4,10 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
@@ -53,10 +54,9 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -94,43 +94,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private int conflict;
 
-  private EList<CDOConflictResolver> conflictResolvers = new BasicEList<CDOConflictResolver>()
-  {
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    protected CDOConflictResolver validate(int index, CDOConflictResolver newResolver)
-    {
-      if (newResolver.getTransaction() != null)
-      {
-        throw new IllegalArgumentException("New conflict resolver is already associated with a transaction");
-      }
-
-      return super.validate(index, newResolver);
-    }
-
-    @Override
-    protected void didAdd(int index, CDOConflictResolver newResolver)
-    {
-      super.didAdd(index, newResolver);
-      newResolver.setTransaction(CDOTransactionImpl.this);
-    }
-
-    @Override
-    protected void didRemove(int index, CDOConflictResolver oldResolver)
-    {
-      super.didRemove(index, oldResolver);
-      oldResolver.setTransaction(null);
-    }
-  };
-
   private long lastCommitTime = CDORevision.UNSPECIFIED_DATE;
 
   private int lastTemporaryID;
 
   private CDOTransactionStrategy transactionStrategy;
-
-  private boolean autoReleaseLocksEnabled = true;
 
   /**
    * @since 2.0
@@ -140,19 +108,28 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     super(session, id);
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
-  public Type getViewType()
+  public OptionsImpl options()
   {
-    return Type.TRANSACTION;
+    return (OptionsImpl)super.options();
   }
 
   /**
    * @since 2.0
    */
   @Override
-  public CDOTransaction.Options options()
+  protected OptionsImpl initOptions()
   {
-    return this;
+    return new OptionsImpl();
+  }
+
+  @Override
+  public Type getViewType()
+  {
+    return Type.TRANSACTION;
   }
 
   public void addHandler(CDOTransactionHandler handler)
@@ -188,24 +165,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public void close()
   {
-    try
-    {
-      for (CDOConflictResolver resolver : conflictResolvers)
-      {
-        try
-        {
-          resolver.setTransaction(null);
-        }
-        catch (Exception ignore)
-        {
-        }
-      }
-    }
-    catch (Exception ignore)
-    {
-    }
-
-    conflictResolvers = null;
+    options().disposeConflictResolvers();
     lastSavepoint = null;
     firstSavepoint = null;
     transactionStrategy = null;
@@ -271,23 +231,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     handleConflicts(conflicts, resolvers);
   }
 
-  /**
-   * @since 2.0
-   */
-  public EList<CDOConflictResolver> getConflictResolvers()
-  {
-    return conflictResolvers;
-  }
-
   public void handleConflicts(Set<CDOObject> conflicts)
   {
-    CDOConflictResolver[] resolvers;
-    synchronized (conflictResolvers)
-    {
-      resolvers = conflictResolvers.toArray(new CDOConflictResolver[conflictResolvers.size()]);
-    }
-
-    handleConflicts(conflicts, resolvers);
+    handleConflicts(conflicts, options().getConflictResolvers());
   }
 
   private void handleConflicts(Set<CDOObject> conflicts, CDOConflictResolver[] resolvers)
@@ -340,29 +286,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     conflict -= resolved;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public synchronized boolean setAutoReleaseLocksEnabled(boolean on)
-  {
-    try
-    {
-      return autoReleaseLocksEnabled;
-    }
-    finally
-    {
-      autoReleaseLocksEnabled = on;
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public boolean isAutoReleaseLocksEnabled()
-  {
-    return autoReleaseLocksEnabled;
   }
 
   /**
@@ -935,7 +858,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       // Load from first savepoint up to current savepoint
       loadSavepoint(lastSavepoint, idsOfNewObjectWithDeltas);
 
-      if (lastSavepoint == firstSavepoint && isAutoReleaseLocksEnabled())
+      if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
       {
         // Unlock all objects
         unlockObjects(null, null);
@@ -1387,7 +1310,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       else
       {
         // Removes locks even if no one touch the transaction
-        if (isAutoReleaseLocksEnabled())
+        if (options().isAutoReleaseLocksEnabled())
         {
           unlockObjects(null, null);
         }
@@ -1538,6 +1461,153 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     public String toString()
     {
       return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  protected final class OptionsImpl extends CDOViewImpl.OptionsImpl implements CDOTransaction.Options
+  {
+    private List<CDOConflictResolver> conflictResolvers = new ArrayList<CDOConflictResolver>();
+
+    private boolean autoReleaseLocksEnabled = true;
+
+    public OptionsImpl()
+    {
+    }
+
+    public CDOConflictResolver[] getConflictResolvers()
+    {
+      synchronized (conflictResolvers)
+      {
+        return conflictResolvers.toArray(new CDOConflictResolver[conflictResolvers.size()]);
+      }
+    }
+
+    public void setConflictResolvers(CDOConflictResolver[] resolvers)
+    {
+      synchronized (conflictResolvers)
+      {
+        for (CDOConflictResolver resolver : conflictResolvers)
+        {
+          resolver.setTransaction(null);
+        }
+
+        conflictResolvers.clear();
+        for (CDOConflictResolver resolver : resolvers)
+        {
+          validateResolver(resolver);
+          conflictResolvers.add(resolver);
+        }
+      }
+
+      fireEvent(new ConflictResolversEventImpl());
+    }
+
+    public void addConflictResolver(CDOConflictResolver resolver)
+    {
+      boolean changed = false;
+      synchronized (conflictResolvers)
+      {
+        if (!conflictResolvers.contains(resolver))
+        {
+          validateResolver(resolver);
+          conflictResolvers.add(resolver);
+          changed = true;
+        }
+      }
+
+      if (changed)
+      {
+        fireEvent(new ConflictResolversEventImpl());
+      }
+    }
+
+    public void removeConflictResolver(CDOConflictResolver resolver)
+    {
+      boolean changed = false;
+      synchronized (conflictResolvers)
+      {
+        changed = conflictResolvers.remove(resolver);
+      }
+
+      if (changed)
+      {
+        resolver.setTransaction(null);
+        fireEvent(new ConflictResolversEventImpl());
+      }
+    }
+
+    public void disposeConflictResolvers()
+    {
+      try
+      {
+        for (CDOConflictResolver resolver : options().getConflictResolvers())
+        {
+          try
+          {
+            resolver.setTransaction(null);
+          }
+          catch (Exception ignore)
+          {
+          }
+        }
+      }
+      catch (Exception ignore)
+      {
+      }
+    }
+
+    private void validateResolver(CDOConflictResolver resolver)
+    {
+      if (resolver.getTransaction() != null)
+      {
+        throw new IllegalArgumentException("New conflict resolver is already associated with a transaction");
+      }
+
+      resolver.setTransaction(CDOTransactionImpl.this);
+    }
+
+    public boolean isAutoReleaseLocksEnabled()
+    {
+      return autoReleaseLocksEnabled;
+    }
+
+    public void setAutoReleaseLocksEnabled(boolean on)
+    {
+      if (autoReleaseLocksEnabled != on)
+      {
+        autoReleaseLocksEnabled = on;
+        fireEvent(new AutoReleaseLockEventImpl());
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class ConflictResolversEventImpl extends OptionsEvent implements ConflictResolversEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public ConflictResolversEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class AutoReleaseLockEventImpl extends OptionsEvent implements AutoReleaseLockEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public AutoReleaseLockEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
     }
   }
 }

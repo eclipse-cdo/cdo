@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *		Simon McDuff - maintenance
@@ -72,7 +72,8 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
    */
   public Object resolveElementProxy(CDORevision revision, CDOFeature feature, int accessIndex, int serverIndex)
   {
-    return session.getCollectionLoadingPolicy().resolveProxy(this, revision, feature, accessIndex, serverIndex);
+    return session.options().getCollectionLoadingPolicy().resolveProxy(this, revision, feature, accessIndex,
+        serverIndex);
   }
 
   /**

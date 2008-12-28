@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server" version="2">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/View.java" type="org.eclipse.emf.cdo.internal.server.View">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="IView"/>
+                <message_argument value="CDOProtocolView"/>
+                <message_argument value="View"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/RevisionManager.java" type="org.eclipse.emf.cdo.internal.server.RevisionManager">
         <filter id="576720909">
             <message_arguments>
@@ -93,6 +102,13 @@
                 <message_argument value="Session(SessionManager, CDOServerProtocol, int, boolean)"/>
             </message_arguments>
         </filter>
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="ISession"/>
+                <message_argument value="CDOProtocolSession"/>
+                <message_argument value="Session"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/PackageManager.java" type="org.eclipse.emf.cdo.internal.server.PackageManager">
         <filter id="576720909">
@@ -103,6 +119,13 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContextImpl.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl$TransactionPackageManager">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="InternalCDOPackageManager"/>
+                <message_argument value="CDOPackageManager"/>
+                <message_argument value="TransactionPackageManager"/>
+            </message_arguments>
+        </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOPackageManager"/>

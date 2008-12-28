@@ -36,7 +36,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    transaction2.options().getConflictResolvers().add(new MergeLocalChangesPerFeature());
+    transaction2.options().addConflictResolver(new MergeLocalChangesPerFeature());
     Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
     address2.setCity("OTTAWA");
@@ -71,7 +71,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    transaction2.options().getConflictResolvers().add(new MergeLocalChangesPerFeature());
+    transaction2.options().addConflictResolver(new MergeLocalChangesPerFeature());
     Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
     address2.setCity("OTTAWA");

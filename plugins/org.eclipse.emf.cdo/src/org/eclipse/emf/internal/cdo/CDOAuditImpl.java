@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -99,7 +99,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   {
     checkOpen();
     InternalCDOSession session = getSession();
-    int initialChunkSize = session.getCollectionLoadingPolicy().getInitialChunkSize();
+    int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
 
     CDORevisionResolver revisionManager = session.getRevisionManager();
     return (InternalCDORevision)revisionManager.getRevisionByTime(id, initialChunkSize, timeStamp, loadOnDemand);

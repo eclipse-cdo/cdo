@@ -4,10 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Victor Roldan Betancort - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
@@ -18,6 +19,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.options.IOptionsEvent;
+import org.eclipse.net4j.util.options.IOptionsContainer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -44,7 +47,7 @@ import java.util.Collection;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
+public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>, IOptionsContainer
 {
   /**
    * Returns an instance of {@link Repository} that describes the model repository this {@link CDOSession session} is
@@ -162,7 +165,7 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
    * 
    * @since 2.0
    */
-  public CDOSession.Options options();
+  public Options options();
 
   /**
    * @author Simon McDuff
@@ -220,6 +223,27 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>
      * Sets the CDORevisionFactory to be used by this session.
      */
     public void setRevisionFactory(CDORevisionFactory factory);
+
+    /**
+     * @since 2.0
+     */
+    public interface PassiveUpdateEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @since 2.0
+     */
+    public interface CollectionLoadingPolicyEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @since 2.0
+     */
+    public interface RevisionFactoryEvent extends IOptionsEvent, CDOEvent
+    {
+    }
   }
 
   /**

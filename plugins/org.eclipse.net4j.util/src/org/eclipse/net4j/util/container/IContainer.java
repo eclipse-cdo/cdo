@@ -20,4 +20,15 @@ public interface IContainer<E> extends INotifier
   public boolean isEmpty();
 
   public E[] getElements();
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface Modifiable<E> extends IContainer<E>
+  {
+    public void addElement(E element);
+
+    public void removeElement(E element);
+  }
 }

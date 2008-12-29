@@ -7,7 +7,7 @@
     editorPluginClass="" updateClasspath="false" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
     rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+    featureDelegation="Reflective" complianceLevel="5.0" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>eresource.ecore</foreignModel>
   <genPackages prefix="Eresource" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="eresource.ecore#/">

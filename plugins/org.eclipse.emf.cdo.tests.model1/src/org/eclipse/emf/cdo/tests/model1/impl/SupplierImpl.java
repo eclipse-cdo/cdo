@@ -75,7 +75,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
    */
   public boolean isPreferred()
   {
-    return ((Boolean)eGet(Model1Package.Literals.SUPPLIER__PREFERRED, true)).booleanValue();
+    return (Boolean)eGet(Model1Package.Literals.SUPPLIER__PREFERRED, true);
   }
 
   /**
@@ -84,7 +84,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
    */
   public void setPreferred(boolean newPreferred)
   {
-    eSet(Model1Package.Literals.SUPPLIER__PREFERRED, new Boolean(newPreferred));
+    eSet(Model1Package.Literals.SUPPLIER__PREFERRED, newPreferred);
   }
 
 } // SupplierImpl

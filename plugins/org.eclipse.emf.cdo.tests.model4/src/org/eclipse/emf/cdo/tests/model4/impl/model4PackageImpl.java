@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: model4PackageImpl.java,v 1.7 2008-12-28 17:56:41 estepper Exp $
+ * $Id: model4PackageImpl.java,v 1.8 2008-12-29 15:06:17 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
@@ -1249,7 +1249,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGenRefMapNonContained_Elements(), this.getStringToEObject(), null, "elements", null, 0, -1,
         GenRefMapNonContained.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stringToEObjectEClass, Map.Entry.class, "StringToEObject", !IS_ABSTRACT, !IS_INTERFACE,
         !IS_GENERATED_INSTANCE_CLASS);

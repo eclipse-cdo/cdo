@@ -27,8 +27,8 @@
         defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="#//Address">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" unique="false"
-        upperBound="-1" eType="#//SalesOrder" eOpposite="#//SalesOrder/customer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1"
+        eType="#//SalesOrder" eOpposite="#//SalesOrder/customer"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Order">
     <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1"

@@ -64,7 +64,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    */
   public int getId()
   {
-    return ((Integer)eGet(Model1Package.Literals.SALES_ORDER__ID, true)).intValue();
+    return (Integer)eGet(Model1Package.Literals.SALES_ORDER__ID, true);
   }
 
   /**
@@ -73,7 +73,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    */
   public void setId(int newId)
   {
-    eSet(Model1Package.Literals.SALES_ORDER__ID, new Integer(newId));
+    eSet(Model1Package.Literals.SALES_ORDER__ID, newId);
   }
 
   /**

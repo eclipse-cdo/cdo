@@ -30,5 +30,7 @@ public interface SupplierValidator
 
   boolean validatePurchaseOrders(EList<PurchaseOrder> value);
 
+  boolean validatePreferred(boolean value);
+
   boolean validateName(String value);
 }

@@ -114,7 +114,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    */
   public float getPrice()
   {
-    return ((Float)eGet(Model1Package.Literals.ORDER_DETAIL__PRICE, true)).floatValue();
+    return (Float)eGet(Model1Package.Literals.ORDER_DETAIL__PRICE, true);
   }
 
   /**
@@ -123,7 +123,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    */
   public void setPrice(float newPrice)
   {
-    eSet(Model1Package.Literals.ORDER_DETAIL__PRICE, new Float(newPrice));
+    eSet(Model1Package.Literals.ORDER_DETAIL__PRICE, newPrice);
   }
 
 } // OrderDetailImpl

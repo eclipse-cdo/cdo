@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: OrderAddressImpl.java,v 1.4 2008-12-28 17:56:46 estepper Exp $
+ * $Id: OrderAddressImpl.java,v 1.5 2008-12-29 15:06:22 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 
@@ -116,7 +116,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public float getPrice()
   {
-    return ((Float)eGet(Model1Package.Literals.ORDER_DETAIL__PRICE, true)).floatValue();
+    return (Float)eGet(Model1Package.Literals.ORDER_DETAIL__PRICE, true);
   }
 
   /**
@@ -125,7 +125,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public void setPrice(float newPrice)
   {
-    eSet(Model1Package.Literals.ORDER_DETAIL__PRICE, new Float(newPrice));
+    eSet(Model1Package.Literals.ORDER_DETAIL__PRICE, newPrice);
   }
 
   /**
@@ -134,7 +134,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public boolean isTestAttribute()
   {
-    return ((Boolean)eGet(Model1Package.Literals.ORDER_ADDRESS__TEST_ATTRIBUTE, true)).booleanValue();
+    return (Boolean)eGet(Model1Package.Literals.ORDER_ADDRESS__TEST_ATTRIBUTE, true);
   }
 
   /**
@@ -143,7 +143,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public void setTestAttribute(boolean newTestAttribute)
   {
-    eSet(Model1Package.Literals.ORDER_ADDRESS__TEST_ATTRIBUTE, new Boolean(newTestAttribute));
+    eSet(Model1Package.Literals.ORDER_ADDRESS__TEST_ATTRIBUTE, newTestAttribute);
   }
 
   /**

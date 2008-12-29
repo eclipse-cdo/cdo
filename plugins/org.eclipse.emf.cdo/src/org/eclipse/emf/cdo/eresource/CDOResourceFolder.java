@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: CDOResourceFolder.java,v 1.3 2008-12-28 17:56:53 estepper Exp $
+ * $Id: CDOResourceFolder.java,v 1.4 2008-12-29 14:53:09 estepper Exp $
  */
 package org.eclipse.emf.cdo.eresource;
 
@@ -32,22 +32,15 @@ import org.eclipse.emf.common.util.EList;
 public interface CDOResourceFolder extends CDOResourceNode
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * Returns the value of the '<em><b>Nodes</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.eresource.CDOResourceNode}. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.eresource.CDOResourceNode}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Nodes</em>' containment reference list.
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceFolder_Nodes()
    * @see org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder

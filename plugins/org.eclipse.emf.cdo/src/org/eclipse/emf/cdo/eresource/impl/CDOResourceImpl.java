@@ -79,13 +79,6 @@ import java.util.Map;
 public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource, Resource.Internal
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
    * The default URI converter when there is no resource set.
    * 
    * @ADDED
@@ -281,7 +274,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public boolean isModified()
   {
-    return ((Boolean)eGet(EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, true)).booleanValue();
+    return (Boolean)eGet(EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, true);
   }
 
   /**
@@ -364,7 +357,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public boolean isTrackingModification()
   {
-    return ((Boolean)eGet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, true)).booleanValue();
+    return (Boolean)eGet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, true);
   }
 
   /**
@@ -373,7 +366,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public void setTrackingModification(boolean newTrackingModification)
   {
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, new Boolean(newTrackingModification));
+    eSet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, newTrackingModification);
   }
 
   /**
@@ -454,7 +447,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public long getTimeStamp()
   {
-    return ((Long)eGet(EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true)).longValue();
+    return (Long)eGet(EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true);
   }
 
   /**
@@ -463,7 +456,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public void setTimeStamp(long newTimeStamp)
   {
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, new Long(newTimeStamp));
+    eSet(EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, newTimeStamp);
   }
 
   /**

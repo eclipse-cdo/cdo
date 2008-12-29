@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EDynamicPackageDefImpl.java,v 1.1 2008-12-28 18:05:25 estepper Exp $
+ * $Id: EDynamicPackageDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -30,138 +30,142 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicPackageDef
 {
   /**
-	 * The default value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @see #getResourceURI()
-	 * @generated
-	 * @ordered
-	 */
+   * @see #getResourceURI()
+   * @generated
+   * @ordered
+   */
   protected static final String RESOURCE_URI_EDEFAULT = null;
 
   /**
-	 * The cached value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getResourceURI() <em>Resource URI</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @see #getResourceURI()
-	 * @generated
-	 * @ordered
-	 */
+   * @see #getResourceURI()
+   * @generated
+   * @ordered
+   */
   protected String resourceURI = RESOURCE_URI_EDEFAULT;
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected EDynamicPackageDefImpl()
   {
-		super();
-	}
+    super();
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-		return CDODefsPackage.Literals.EDYNAMIC_PACKAGE_DEF;
-	}
+    return CDODefsPackage.Literals.EDYNAMIC_PACKAGE_DEF;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String getResourceURI()
   {
-		return resourceURI;
-	}
+    return resourceURI;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setResourceURI(String newResourceURI)
   {
-		String oldResourceURI = resourceURI;
-		resourceURI = newResourceURI;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI, oldResourceURI, resourceURI));
-	}
+    String oldResourceURI = resourceURI;
+    resourceURI = newResourceURI;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI, oldResourceURI, resourceURI));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-		switch (featureID) {
-			case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
-				return getResourceURI();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
+        return getResourceURI();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-		switch (featureID) {
-			case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
-				setResourceURI((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
+        setResourceURI((String)newValue);
+        return;
+    }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
-				setResourceURI(RESOURCE_URI_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
+        setResourceURI(RESOURCE_URI_EDEFAULT);
+        return;
+    }
+    super.eUnset(featureID);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
-				return RESOURCE_URI_EDEFAULT == null ? resourceURI != null : !RESOURCE_URI_EDEFAULT.equals(resourceURI);
-		}
-		return super.eIsSet(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI:
+        return RESOURCE_URI_EDEFAULT == null ? resourceURI != null : !RESOURCE_URI_EDEFAULT.equals(resourceURI);
+    }
+    return super.eIsSet(featureID);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String toString()
   {
-		if (eIsProxy()) return super.toString();
+    if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (resourceURI: ");
-		result.append(resourceURI);
-		result.append(')');
-		return result.toString();
-	}
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (resourceURI: ");
+    result.append(resourceURI);
+    result.append(')');
+    return result.toString();
+  }
 
   @Override
   protected Object createInstance()

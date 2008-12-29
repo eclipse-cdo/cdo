@@ -49,13 +49,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EGlobalPackageDef" eSuperTypes="#//EPackageDef"/>
   <eClassifiers xsi:type="ecore:EClass" name="CDOClientProtocolFactoryDef" eSuperTypes="../../org.eclipse.net4j.defs/model/org.eclipse.net4j.defs.ecore#//ClientProtocolFactoryDef"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CDOServerProtocolFactoryDef" eSuperTypes="../../org.eclipse.net4j.defs/model/org.eclipse.net4j.defs.ecore#//ServerProtocolFactoryDef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="repositoryProviderDef"
-        lowerBound="1" eType="#//RepositoryProviderDef"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RepositoryProviderDef" abstract="true"
-      eSuperTypes="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.ecore#//Def"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PluginRepositoryProviderDef" eSuperTypes="#//RepositoryProviderDef"/>
   <eClassifiers xsi:type="ecore:EClass" name="CDOResourceDef" eSuperTypes="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.ecore#//Def">
     <eStructuralFeatures xsi:type="ecore:EReference" name="cdoTransaction" lowerBound="1"
         eType="#//CDOTransactionDef"/>

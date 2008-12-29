@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOEagerPackageRegistryDefImpl.java,v 1.1 2008-12-28 18:05:25 estepper Exp $
+ * $Id: CDOEagerPackageRegistryDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -25,23 +25,23 @@ import org.eclipse.emf.ecore.EClass;
 public class CDOEagerPackageRegistryDefImpl extends CDOPackageRegistryDefImpl implements CDOEagerPackageRegistryDef
 {
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected CDOEagerPackageRegistryDefImpl()
   {
-		super();
-	}
+    super();
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-		return CDODefsPackage.Literals.CDO_EAGER_PACKAGE_REGISTRY_DEF;
-	}
+    return CDODefsPackage.Literals.CDO_EAGER_PACKAGE_REGISTRY_DEF;
+  }
 
   /**
    * Creates a {@link Eager}.

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDODefsFactory.java,v 1.1 2008-12-28 18:05:24 estepper Exp $
+ * $Id: CDODefsFactory.java,v 1.2 2008-12-29 14:01:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs;
 
@@ -18,146 +18,128 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface CDODefsFactory extends EFactory {
 	/**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
+   * The singleton instance of the factory.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
 	CDODefsFactory eINSTANCE = org.eclipse.emf.cdo.cdodefs.impl.CDODefsFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>CDO View Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO View Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO View Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO View Def</em>'.
+   * @generated
+   */
 	CDOViewDef createCDOViewDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Transaction Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Transaction Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Transaction Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Transaction Def</em>'.
+   * @generated
+   */
 	CDOTransactionDef createCDOTransactionDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Audit Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Audit Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Audit Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Audit Def</em>'.
+   * @generated
+   */
 	CDOAuditDef createCDOAuditDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Session Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Session Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Session Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Session Def</em>'.
+   * @generated
+   */
 	CDOSessionDef createCDOSessionDef();
 
 	/**
-	 * Returns a new object of class '<em>Retry Fail Over Strategy Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Retry Fail Over Strategy Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Retry Fail Over Strategy Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>Retry Fail Over Strategy Def</em>'.
+   * @generated
+   */
 	RetryFailOverStrategyDef createRetryFailOverStrategyDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Package Registry Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Package Registry Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Package Registry Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Package Registry Def</em>'.
+   * @generated
+   */
 	CDOPackageRegistryDef createCDOPackageRegistryDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Eager Package Registry Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Eager Package Registry Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Eager Package Registry Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Eager Package Registry Def</em>'.
+   * @generated
+   */
 	CDOEagerPackageRegistryDef createCDOEagerPackageRegistryDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Lazy Package Registry Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Lazy Package Registry Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Lazy Package Registry Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Lazy Package Registry Def</em>'.
+   * @generated
+   */
 	CDOLazyPackageRegistryDef createCDOLazyPackageRegistryDef();
 
 	/**
-	 * Returns a new object of class '<em>EDynamic Package Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>EDynamic Package Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>EDynamic Package Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>EDynamic Package Def</em>'.
+   * @generated
+   */
 	EDynamicPackageDef createEDynamicPackageDef();
 
 	/**
-	 * Returns a new object of class '<em>EGlobal Package Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>EGlobal Package Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>EGlobal Package Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>EGlobal Package Def</em>'.
+   * @generated
+   */
 	EGlobalPackageDef createEGlobalPackageDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Client Protocol Factory Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Client Protocol Factory Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Client Protocol Factory Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Client Protocol Factory Def</em>'.
+   * @generated
+   */
 	CDOClientProtocolFactoryDef createCDOClientProtocolFactoryDef();
 
 	/**
-	 * Returns a new object of class '<em>CDO Server Protocol Factory Def</em>'.
-	 * <!-- begin-user-doc -->
+   * Returns a new object of class '<em>CDO Resource Def</em>'.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Server Protocol Factory Def</em>'.
-	 * @generated
-	 */
-	CDOServerProtocolFactoryDef createCDOServerProtocolFactoryDef();
-
-	/**
-	 * Returns a new object of class '<em>Plugin Repository Provider Def</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Plugin Repository Provider Def</em>'.
-	 * @generated
-	 */
-	PluginRepositoryProviderDef createPluginRepositoryProviderDef();
-
-	/**
-	 * Returns a new object of class '<em>CDO Resource Def</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CDO Resource Def</em>'.
-	 * @generated
-	 */
+   * @return a new object of class '<em>CDO Resource Def</em>'.
+   * @generated
+   */
 	CDOResourceDef createCDOResourceDef();
 
 	/**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the package supported by this factory.
-	 * @generated
-	 */
+   * @return the package supported by this factory.
+   * @generated
+   */
 	CDODefsPackage getCDODefsPackage();
 
 } //CDODefsFactory

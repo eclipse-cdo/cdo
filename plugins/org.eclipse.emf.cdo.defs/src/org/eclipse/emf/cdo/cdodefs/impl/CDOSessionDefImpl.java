@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOSessionDefImpl.java,v 1.1 2008-12-28 18:05:25 estepper Exp $
+ * $Id: CDOSessionDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -50,41 +50,41 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 {
   /**
-	 * The cached value of the '{@link #getConnectorDef() <em>Connector Def</em>}' reference.
-	 * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getConnectorDef() <em>Connector Def</em>}' reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @see #getConnectorDef()
-	 * @generated
-	 * @ordered
-	 */
+   * @see #getConnectorDef()
+   * @generated
+   * @ordered
+   */
   protected ConnectorDef connectorDef;
 
   /**
-	 * This is true if the Connector Def reference has been set.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+   * This is true if the Connector Def reference has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
   protected boolean connectorDefESet;
 
   /**
-	 * The default value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
+   * The default value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-	 * @see #getRepositoryName()
-	 * @generated
-	 * @ordered
-	 */
+   * @see #getRepositoryName()
+   * @generated
+   * @ordered
+   */
   protected static final String REPOSITORY_NAME_EDEFAULT = null;
 
   /**
-	 * The cached value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-	 * @see #getRepositoryName()
-	 * @generated
-	 * @ordered
-	 */
+   * @see #getRepositoryName()
+   * @generated
+   * @ordered
+   */
   protected String repositoryName = REPOSITORY_NAME_EDEFAULT;
 
   /**
@@ -128,57 +128,59 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected FailOverStrategyDef failOverStrategyDef;
 
   /**
-	 * This is true if the Fail Over Strategy Def reference has been set.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+   * This is true if the Fail Over Strategy Def reference has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
   protected boolean failOverStrategyDefESet;
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected CDOSessionDefImpl()
   {
-		super();
-	}
+    super();
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-		return CDODefsPackage.Literals.CDO_SESSION_DEF;
-	}
+    return CDODefsPackage.Literals.CDO_SESSION_DEF;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public ConnectorDef getConnectorDef()
   {
-		if (connectorDef != null && connectorDef.eIsProxy()) {
-			InternalEObject oldConnectorDef = (InternalEObject)connectorDef;
-			connectorDef = (ConnectorDef)eResolveProxy(oldConnectorDef);
-			if (connectorDef != oldConnectorDef) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF, oldConnectorDef, connectorDef));
-			}
-		}
-		return connectorDef;
-	}
+    if (connectorDef != null && connectorDef.eIsProxy())
+    {
+      InternalEObject oldConnectorDef = (InternalEObject)connectorDef;
+      connectorDef = (ConnectorDef)eResolveProxy(oldConnectorDef);
+      if (connectorDef != oldConnectorDef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF, oldConnectorDef, connectorDef));
+      }
+    }
+    return connectorDef;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public ConnectorDef basicGetConnectorDef()
   {
-		return connectorDef;
-	}
+    return connectorDef;
+  }
 
   /**
    * <!-- begin-user-doc --> Sets the {@link ConnectorDef} for this {@link CDOSessionDef}. If a
@@ -203,147 +205,151 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setConnectorDefGen(ConnectorDef newConnectorDef)
   {
-		ConnectorDef oldConnectorDef = connectorDef;
-		connectorDef = newConnectorDef;
-		boolean oldConnectorDefESet = connectorDefESet;
-		connectorDefESet = true;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF, oldConnectorDef, connectorDef, !oldConnectorDefESet));
-	}
+    ConnectorDef oldConnectorDef = connectorDef;
+    connectorDef = newConnectorDef;
+    boolean oldConnectorDefESet = connectorDefESet;
+    connectorDefESet = true;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF, oldConnectorDef, connectorDef, !oldConnectorDefESet));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void unsetConnectorDef()
   {
-		ConnectorDef oldConnectorDef = connectorDef;
-		boolean oldConnectorDefESet = connectorDefESet;
-		connectorDef = null;
-		connectorDefESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF, oldConnectorDef, null, oldConnectorDefESet));
-	}
+    ConnectorDef oldConnectorDef = connectorDef;
+    boolean oldConnectorDefESet = connectorDefESet;
+    connectorDef = null;
+    connectorDefESet = false;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF, oldConnectorDef, null, oldConnectorDefESet));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public boolean isSetConnectorDef()
   {
-		return connectorDefESet;
-	}
+    return connectorDefESet;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String getRepositoryName()
   {
-		return repositoryName;
-	}
+    return repositoryName;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setRepositoryName(String newRepositoryName)
   {
-		String oldRepositoryName = repositoryName;
-		repositoryName = newRepositoryName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME, oldRepositoryName, repositoryName));
-	}
+    String oldRepositoryName = repositoryName;
+    repositoryName = newRepositoryName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME, oldRepositoryName, repositoryName));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public CDOPackageRegistryDef getCdoPackageRegistryDef()
   {
-		if (cdoPackageRegistryDef != null && cdoPackageRegistryDef.eIsProxy()) {
-			InternalEObject oldCdoPackageRegistryDef = (InternalEObject)cdoPackageRegistryDef;
-			cdoPackageRegistryDef = (CDOPackageRegistryDef)eResolveProxy(oldCdoPackageRegistryDef);
-			if (cdoPackageRegistryDef != oldCdoPackageRegistryDef) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, cdoPackageRegistryDef));
-			}
-		}
-		return cdoPackageRegistryDef;
-	}
+    if (cdoPackageRegistryDef != null && cdoPackageRegistryDef.eIsProxy())
+    {
+      InternalEObject oldCdoPackageRegistryDef = (InternalEObject)cdoPackageRegistryDef;
+      cdoPackageRegistryDef = (CDOPackageRegistryDef)eResolveProxy(oldCdoPackageRegistryDef);
+      if (cdoPackageRegistryDef != oldCdoPackageRegistryDef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, cdoPackageRegistryDef));
+      }
+    }
+    return cdoPackageRegistryDef;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public CDOPackageRegistryDef basicGetCdoPackageRegistryDef()
   {
-		return cdoPackageRegistryDef;
-	}
+    return cdoPackageRegistryDef;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setCdoPackageRegistryDef(CDOPackageRegistryDef newCdoPackageRegistryDef)
   {
-		CDOPackageRegistryDef oldCdoPackageRegistryDef = cdoPackageRegistryDef;
-		cdoPackageRegistryDef = newCdoPackageRegistryDef;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, cdoPackageRegistryDef));
-	}
+    CDOPackageRegistryDef oldCdoPackageRegistryDef = cdoPackageRegistryDef;
+    cdoPackageRegistryDef = newCdoPackageRegistryDef;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, cdoPackageRegistryDef));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public boolean isLegacySupportEnabled()
   {
-		return legacySupportEnabled;
-	}
+    return legacySupportEnabled;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setLegacySupportEnabled(boolean newLegacySupportEnabled)
   {
-		boolean oldLegacySupportEnabled = legacySupportEnabled;
-		legacySupportEnabled = newLegacySupportEnabled;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED, oldLegacySupportEnabled, legacySupportEnabled));
-	}
+    boolean oldLegacySupportEnabled = legacySupportEnabled;
+    legacySupportEnabled = newLegacySupportEnabled;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED, oldLegacySupportEnabled, legacySupportEnabled));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public FailOverStrategyDef getFailOverStrategyDef()
   {
-		if (failOverStrategyDef != null && failOverStrategyDef.eIsProxy()) {
-			InternalEObject oldFailOverStrategyDef = (InternalEObject)failOverStrategyDef;
-			failOverStrategyDef = (FailOverStrategyDef)eResolveProxy(oldFailOverStrategyDef);
-			if (failOverStrategyDef != oldFailOverStrategyDef) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, failOverStrategyDef));
-			}
-		}
-		return failOverStrategyDef;
-	}
+    if (failOverStrategyDef != null && failOverStrategyDef.eIsProxy())
+    {
+      InternalEObject oldFailOverStrategyDef = (InternalEObject)failOverStrategyDef;
+      failOverStrategyDef = (FailOverStrategyDef)eResolveProxy(oldFailOverStrategyDef);
+      if (failOverStrategyDef != oldFailOverStrategyDef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, failOverStrategyDef));
+      }
+    }
+    return failOverStrategyDef;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public FailOverStrategyDef basicGetFailOverStrategyDef()
   {
-		return failOverStrategyDef;
-	}
+    return failOverStrategyDef;
+  }
 
   /**
    * <!-- begin-user-doc --> Sets the {@link FailOverStrategyDef} for this {@link CDOSessionDef}. If a ConnectorDef was
@@ -367,160 +373,164 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setFailOverStrategyDefGen(FailOverStrategyDef newFailOverStrategyDef)
   {
-		FailOverStrategyDef oldFailOverStrategyDef = failOverStrategyDef;
-		failOverStrategyDef = newFailOverStrategyDef;
-		boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
-		failOverStrategyDefESet = true;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, failOverStrategyDef, !oldFailOverStrategyDefESet));
-	}
+    FailOverStrategyDef oldFailOverStrategyDef = failOverStrategyDef;
+    failOverStrategyDef = newFailOverStrategyDef;
+    boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
+    failOverStrategyDefESet = true;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, failOverStrategyDef, !oldFailOverStrategyDefESet));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void unsetFailOverStrategyDef()
   {
-		FailOverStrategyDef oldFailOverStrategyDef = failOverStrategyDef;
-		boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
-		failOverStrategyDef = null;
-		failOverStrategyDefESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, null, oldFailOverStrategyDefESet));
-	}
+    FailOverStrategyDef oldFailOverStrategyDef = failOverStrategyDef;
+    boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
+    failOverStrategyDef = null;
+    failOverStrategyDefESet = false;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, null, oldFailOverStrategyDefESet));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public boolean isSetFailOverStrategyDef()
   {
-		return failOverStrategyDefESet;
-	}
+    return failOverStrategyDefESet;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
-				if (resolve) return getConnectorDef();
-				return basicGetConnectorDef();
-			case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
-				return getRepositoryName();
-			case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
-				if (resolve) return getCdoPackageRegistryDef();
-				return basicGetCdoPackageRegistryDef();
-			case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
-				return isLegacySupportEnabled() ? Boolean.TRUE : Boolean.FALSE;
-			case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-				if (resolve) return getFailOverStrategyDef();
-				return basicGetFailOverStrategyDef();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
+        if (resolve) return getConnectorDef();
+        return basicGetConnectorDef();
+      case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
+        return getRepositoryName();
+      case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
+        if (resolve) return getCdoPackageRegistryDef();
+        return basicGetCdoPackageRegistryDef();
+      case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
+        return isLegacySupportEnabled();
+      case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
+        if (resolve) return getFailOverStrategyDef();
+        return basicGetFailOverStrategyDef();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
-				setConnectorDef((ConnectorDef)newValue);
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
-				setRepositoryName((String)newValue);
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
-				setCdoPackageRegistryDef((CDOPackageRegistryDef)newValue);
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
-				setLegacySupportEnabled(((Boolean)newValue).booleanValue());
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-				setFailOverStrategyDef((FailOverStrategyDef)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
+        setConnectorDef((ConnectorDef)newValue);
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
+        setRepositoryName((String)newValue);
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
+        setCdoPackageRegistryDef((CDOPackageRegistryDef)newValue);
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
+        setLegacySupportEnabled((Boolean)newValue);
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
+        setFailOverStrategyDef((FailOverStrategyDef)newValue);
+        return;
+    }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
-				unsetConnectorDef();
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
-				setRepositoryName(REPOSITORY_NAME_EDEFAULT);
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
-				setCdoPackageRegistryDef((CDOPackageRegistryDef)null);
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
-				setLegacySupportEnabled(LEGACY_SUPPORT_ENABLED_EDEFAULT);
-				return;
-			case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-				unsetFailOverStrategyDef();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
+        unsetConnectorDef();
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
+        setRepositoryName(REPOSITORY_NAME_EDEFAULT);
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
+        setCdoPackageRegistryDef((CDOPackageRegistryDef)null);
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
+        setLegacySupportEnabled(LEGACY_SUPPORT_ENABLED_EDEFAULT);
+        return;
+      case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
+        unsetFailOverStrategyDef();
+        return;
+    }
+    super.eUnset(featureID);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
-				return isSetConnectorDef();
-			case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
-				return REPOSITORY_NAME_EDEFAULT == null ? repositoryName != null : !REPOSITORY_NAME_EDEFAULT.equals(repositoryName);
-			case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
-				return cdoPackageRegistryDef != null;
-			case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
-				return legacySupportEnabled != LEGACY_SUPPORT_ENABLED_EDEFAULT;
-			case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
-				return isSetFailOverStrategyDef();
-		}
-		return super.eIsSet(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
+        return isSetConnectorDef();
+      case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
+        return REPOSITORY_NAME_EDEFAULT == null ? repositoryName != null : !REPOSITORY_NAME_EDEFAULT.equals(repositoryName);
+      case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
+        return cdoPackageRegistryDef != null;
+      case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
+        return legacySupportEnabled != LEGACY_SUPPORT_ENABLED_EDEFAULT;
+      case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
+        return isSetFailOverStrategyDef();
+    }
+    return super.eIsSet(featureID);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String toString()
   {
-		if (eIsProxy()) return super.toString();
+    if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (repositoryName: ");
-		result.append(repositoryName);
-		result.append(", legacySupportEnabled: ");
-		result.append(legacySupportEnabled);
-		result.append(')');
-		return result.toString();
-	}
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (repositoryName: ");
+    result.append(repositoryName);
+    result.append(", legacySupportEnabled: ");
+    result.append(legacySupportEnabled);
+    result.append(')');
+    return result.toString();
+  }
 
   @Override
   protected CDOSession createInstance()

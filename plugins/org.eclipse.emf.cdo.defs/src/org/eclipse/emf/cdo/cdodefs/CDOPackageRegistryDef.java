@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOPackageRegistryDef.java,v 1.1 2008-12-28 18:05:24 estepper Exp $
+ * $Id: CDOPackageRegistryDef.java,v 1.2 2008-12-29 14:01:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs;
 
@@ -28,19 +28,19 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface CDOPackageRegistryDef extends Def {
 	/**
-	 * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.cdo.cdodefs.EPackageDef}.
-	 * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.cdodefs.EPackageDef}.
+   * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Packages</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Packages</em>' containment reference list.
-	 * @see org.eclipse.emf.cdo.cdodefs.CDODefsPackage#getCDOPackageRegistryDef_Packages()
-	 * @model containment="true"
-	 * @generated
-	 */
+   * @return the value of the '<em>Packages</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.cdodefs.CDODefsPackage#getCDOPackageRegistryDef_Packages()
+   * @model containment="true"
+   * @generated
+   */
 	EList<EPackageDef> getPackages();
 
 } // CDOPackageRegistryDef

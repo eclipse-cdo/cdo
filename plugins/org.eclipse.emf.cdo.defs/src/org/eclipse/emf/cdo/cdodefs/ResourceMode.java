@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ResourceMode.java,v 1.1 2008-12-28 18:05:24 estepper Exp $
+ * $Id: ResourceMode.java,v 1.2 2008-12-29 14:01:20 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs;
 
@@ -74,185 +74,191 @@ public enum ResourceMode implements Enumerator
   };
 
   /**
-	 * The '<em><b>GET</b></em>' literal value.
-	 * <!-- begin-user-doc -->
+   * The '<em><b>GET</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>GET</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-	 * @see #GET
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
+   * @see #GET
+   * @model
+   * @generated
+   * @ordered
+   */
   public static final int GET_VALUE = 0;
 
   /**
-	 * The '<em><b>CREATE</b></em>' literal value.
-	 * <!-- begin-user-doc -->
+   * The '<em><b>CREATE</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>CREATE</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-	 * @see #CREATE
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
+   * @see #CREATE
+   * @model
+   * @generated
+   * @ordered
+   */
   public static final int CREATE_VALUE = 0;
 
   /**
-	 * The '<em><b>GET OR CREATE</b></em>' literal value.
-	 * <!-- begin-user-doc -->
+   * The '<em><b>GET OR CREATE</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>GET OR CREATE</b></em>' literal object isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-	 * @see #GET_OR_CREATE
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
+   * @see #GET_OR_CREATE
+   * @model
+   * @generated
+   * @ordered
+   */
   public static final int GET_OR_CREATE_VALUE = 0;
 
   /**
-	 * An array of all the '<em><b>Resource Mode</b></em>' enumerators.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-  private static final ResourceMode[] VALUES_ARRAY = new ResourceMode[] {
-			GET,
-			CREATE,
-			GET_OR_CREATE,
-		};
+   * An array of all the '<em><b>Resource Mode</b></em>' enumerators.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  private static final ResourceMode[] VALUES_ARRAY = new ResourceMode[]
+    {
+      GET,
+      CREATE,
+      GET_OR_CREATE,
+    };
 
   /**
-	 * A public read-only list of all the '<em><b>Resource Mode</b></em>' enumerators.
-	 * <!-- begin-user-doc --> <!--
+   * A public read-only list of all the '<em><b>Resource Mode</b></em>' enumerators.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
   public static final List<ResourceMode> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-	 * Returns the '<em><b>Resource Mode</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified literal value.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
   public static ResourceMode get(String literal)
   {
-		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			ResourceMode result = VALUES_ARRAY[i];
-			if (result.toString().equals(literal)) {
-				return result;
-			}
-		}
-		return null;
-	}
+    for (int i = 0; i < VALUES_ARRAY.length; ++i)
+    {
+      ResourceMode result = VALUES_ARRAY[i];
+      if (result.toString().equals(literal))
+      {
+        return result;
+      }
+    }
+    return null;
+  }
 
   /**
-	 * Returns the '<em><b>Resource Mode</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified name.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
   public static ResourceMode getByName(String name)
   {
-		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			ResourceMode result = VALUES_ARRAY[i];
-			if (result.getName().equals(name)) {
-				return result;
-			}
-		}
-		return null;
-	}
+    for (int i = 0; i < VALUES_ARRAY.length; ++i)
+    {
+      ResourceMode result = VALUES_ARRAY[i];
+      if (result.getName().equals(name))
+      {
+        return result;
+      }
+    }
+    return null;
+  }
 
   /**
-	 * Returns the '<em><b>Resource Mode</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified integer value.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
   public static ResourceMode get(int value)
   {
-		switch (value) {
-			case GET_VALUE: return GET;
-		}
-		return null;
-	}
+    switch (value)
+    {
+      case GET_VALUE: return GET;
+    }
+    return null;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   private final int value;
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   private final String name;
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   private final String literal;
 
   /**
-	 * Only this class can construct instances.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * Only this class can construct instances.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   private ResourceMode(int value, String name, String literal)
   {
-		this.value = value;
-		this.name = name;
-		this.literal = literal;
-	}
+    this.value = value;
+    this.name = name;
+    this.literal = literal;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public int getValue()
   {
-	  return value;
-	}
+    return value;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String getName()
   {
-	  return name;
-	}
+    return name;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String getLiteral()
   {
-	  return literal;
-	}
+    return literal;
+  }
 
   /**
-	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc --> <!--
+   * Returns the literal value of the enumerator, which is its string representation.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
   @Override
   public String toString()
   {
-		return literal;
-	}
+    return literal;
+  }
 
   public CDOResource getResource(String path, CDOTransaction cdoTransaction)
   {

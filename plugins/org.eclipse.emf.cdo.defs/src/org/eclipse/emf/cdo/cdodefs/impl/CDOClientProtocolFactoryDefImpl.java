@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOClientProtocolFactoryDefImpl.java,v 1.1 2008-12-28 18:05:25 estepper Exp $
+ * $Id: CDOClientProtocolFactoryDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -26,23 +26,23 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class CDOClientProtocolFactoryDefImpl extends ClientProtocolFactoryDefImpl implements CDOClientProtocolFactoryDef {
 	/**
-	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
 	protected CDOClientProtocolFactoryDefImpl() {
-		super();
-	}
+    super();
+  }
 
 	/**
-	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+   * @generated
+   */
 	@Override
 	protected EClass eStaticClass() {
-		return CDODefsPackage.Literals.CDO_CLIENT_PROTOCOL_FACTORY_DEF;
-	}
+    return CDODefsPackage.Literals.CDO_CLIENT_PROTOCOL_FACTORY_DEF;
+  }
 
 	@Override
 	protected Object createInstance() {

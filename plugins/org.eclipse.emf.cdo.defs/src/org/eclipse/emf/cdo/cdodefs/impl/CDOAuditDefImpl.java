@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOAuditDefImpl.java,v 1.1 2008-12-28 18:05:25 estepper Exp $
+ * $Id: CDOAuditDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -32,138 +32,142 @@ import java.util.Date;
 public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 {
   /**
-	 * The default value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @see #getTimeStamp()
-	 * @generated
-	 * @ordered
-	 */
+   * @see #getTimeStamp()
+   * @generated
+   * @ordered
+   */
   protected static final Date TIME_STAMP_EDEFAULT = null;
 
   /**
-	 * The cached value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
-	 * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-	 * @see #getTimeStamp()
-	 * @generated
-	 * @ordered
-	 */
+   * @see #getTimeStamp()
+   * @generated
+   * @ordered
+   */
   protected Date timeStamp = TIME_STAMP_EDEFAULT;
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected CDOAuditDefImpl()
   {
-		super();
-	}
+    super();
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-		return CDODefsPackage.Literals.CDO_AUDIT_DEF;
-	}
+    return CDODefsPackage.Literals.CDO_AUDIT_DEF;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Date getTimeStamp()
   {
-		return timeStamp;
-	}
+    return timeStamp;
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setTimeStamp(Date newTimeStamp)
   {
-		Date oldTimeStamp = timeStamp;
-		timeStamp = newTimeStamp;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP, oldTimeStamp, timeStamp));
-	}
+    Date oldTimeStamp = timeStamp;
+    timeStamp = newTimeStamp;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP, oldTimeStamp, timeStamp));
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
-				return getTimeStamp();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
+        return getTimeStamp();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
-				setTimeStamp((Date)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
+        setTimeStamp((Date)newValue);
+        return;
+    }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
-				setTimeStamp(TIME_STAMP_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
+        setTimeStamp(TIME_STAMP_EDEFAULT);
+        return;
+    }
+    super.eUnset(featureID);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
-				return TIME_STAMP_EDEFAULT == null ? timeStamp != null : !TIME_STAMP_EDEFAULT.equals(timeStamp);
-		}
-		return super.eIsSet(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_AUDIT_DEF__TIME_STAMP:
+        return TIME_STAMP_EDEFAULT == null ? timeStamp != null : !TIME_STAMP_EDEFAULT.equals(timeStamp);
+    }
+    return super.eIsSet(featureID);
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String toString()
   {
-		if (eIsProxy()) return super.toString();
+    if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (timeStamp: ");
-		result.append(timeStamp);
-		result.append(')');
-		return result.toString();
-	}
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (timeStamp: ");
+    result.append(timeStamp);
+    result.append(')');
+    return result.toString();
+  }
 
   @Override
   protected Object createInstance()

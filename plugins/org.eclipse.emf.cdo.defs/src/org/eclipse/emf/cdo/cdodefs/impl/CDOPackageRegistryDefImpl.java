@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOPackageRegistryDefImpl.java,v 1.1 2008-12-28 18:05:24 estepper Exp $
+ * $Id: CDOPackageRegistryDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -52,8 +52,8 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
    */
   protected CDOPackageRegistryDefImpl()
   {
-		super();
-	}
+    super();
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
@@ -64,8 +64,8 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   @Override
   protected EClass eStaticClass()
   {
-		return CDODefsPackage.Literals.CDO_PACKAGE_REGISTRY_DEF;
-	}
+    return CDODefsPackage.Literals.CDO_PACKAGE_REGISTRY_DEF;
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
@@ -76,11 +76,12 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   @SuppressWarnings("unchecked")
   public EList<EPackageDef> getPackages()
   {
-		if (packages == null) {
-			packages = new EObjectContainmentEList<EPackageDef>(EPackageDef.class, this, CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES);
-		}
-		return packages;
-	}
+    if (packages == null)
+    {
+      packages = new EObjectContainmentEList<EPackageDef>(EPackageDef.class, this, CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES);
+    }
+    return packages;
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
@@ -97,12 +98,13 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
@@ -119,12 +121,13 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-				return getPackages();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        return getPackages();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
@@ -139,14 +142,15 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   @Override
   public void eSet(int featureID, Object newValue)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-				getPackages().clear();
-				getPackages().addAll((Collection<? extends EPackageDef>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        getPackages().clear();
+        getPackages().addAll((Collection<? extends EPackageDef>)newValue);
+        return;
+    }
+    super.eSet(featureID, newValue);
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
@@ -158,13 +162,14 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   @Override
   public void eUnset(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-				getPackages().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        getPackages().clear();
+        return;
+    }
+    super.eUnset(featureID);
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
@@ -177,12 +182,13 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   @Override
   public boolean eIsSet(int featureID)
   {
-		switch (featureID) {
-			case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-				return packages != null && !packages.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        return packages != null && !packages.isEmpty();
+    }
+    return super.eIsSet(featureID);
+  }
 
   /**
    * Creates the instance.

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CDOTransactionDefImpl.java,v 1.1 2008-12-28 18:05:24 estepper Exp $
+ * $Id: CDOTransactionDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -24,23 +24,23 @@ public class CDOTransactionDefImpl extends CDOViewDefImpl implements CDOTransact
 {
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected CDOTransactionDefImpl()
   {
-		super();
-	}
+    super();
+  }
 
   /**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-		return CDODefsPackage.Literals.CDO_TRANSACTION_DEF;
-	}
+    return CDODefsPackage.Literals.CDO_TRANSACTION_DEF;
+  }
 
   @Override
   protected Object createInstance()

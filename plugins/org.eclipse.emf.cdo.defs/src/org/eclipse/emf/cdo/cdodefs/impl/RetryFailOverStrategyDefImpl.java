@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RetryFailOverStrategyDefImpl.java,v 1.1 2008-12-28 18:05:25 estepper Exp $
+ * $Id: RetryFailOverStrategyDefImpl.java,v 1.2 2008-12-29 14:01:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.cdodefs.impl;
 
@@ -32,159 +32,163 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl
 		implements RetryFailOverStrategyDef {
 	/**
-	 * The default value of the '{@link #getRetries() <em>Retries</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getRetries()
-	 * @generated
-	 * @ordered
-	 */
+   * The default value of the '{@link #getRetries() <em>Retries</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getRetries()
+   * @generated
+   * @ordered
+   */
 	protected static final int RETRIES_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getRetries() <em>Retries</em>}' attribute.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @see #getRetries()
-	 * @generated
-	 * @ordered
-	 */
+   * The cached value of the '{@link #getRetries() <em>Retries</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getRetries()
+   * @generated
+   * @ordered
+   */
 	protected int retries = RETRIES_EDEFAULT;
 
 	/**
-	 * This is true if the Retries attribute has been set.
-	 * <!-- begin-user-doc
+   * This is true if the Retries attribute has been set.
+   * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+   * @generated
+   * @ordered
+   */
 	protected boolean retriesESet;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	protected RetryFailOverStrategyDefImpl() {
-		super();
-	}
+    super();
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	@Override
 	protected EClass eStaticClass() {
-		return CDODefsPackage.Literals.RETRY_FAIL_OVER_STRATEGY_DEF;
-	}
+    return CDODefsPackage.Literals.RETRY_FAIL_OVER_STRATEGY_DEF;
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	public int getRetries() {
-		return retries;
-	}
+    return retries;
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	public void setRetries(int newRetries) {
-		int oldRetries = retries;
-		retries = newRetries;
-		boolean oldRetriesESet = retriesESet;
-		retriesESet = true;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES, oldRetries, retries, !oldRetriesESet));
-	}
+    int oldRetries = retries;
+    retries = newRetries;
+    boolean oldRetriesESet = retriesESet;
+    retriesESet = true;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES, oldRetries, retries, !oldRetriesESet));
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	public void unsetRetries() {
-		int oldRetries = retries;
-		boolean oldRetriesESet = retriesESet;
-		retries = RETRIES_EDEFAULT;
-		retriesESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES, oldRetries, RETRIES_EDEFAULT, oldRetriesESet));
-	}
+    int oldRetries = retries;
+    boolean oldRetriesESet = retriesESet;
+    retries = RETRIES_EDEFAULT;
+    retriesESet = false;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES, oldRetries, RETRIES_EDEFAULT, oldRetriesESet));
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	public boolean isSetRetries() {
-		return retriesESet;
-	}
+    return retriesESet;
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-				return new Integer(getRetries());
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        return getRetries();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-				setRetries(((Integer)newValue).intValue());
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        setRetries((Integer)newValue);
+        return;
+    }
+    super.eSet(featureID, newValue);
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-				unsetRetries();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        unsetRetries();
+        return;
+    }
+    super.eUnset(featureID);
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-				return isSetRetries();
-		}
-		return super.eIsSet(featureID);
-	}
+    switch (featureID)
+    {
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        return isSetRetries();
+    }
+    return super.eIsSet(featureID);
+  }
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+    if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (retries: ");
-		if (retriesESet) result.append(retries); else result.append("<unset>");
-		result.append(')');
-		return result.toString();
-	}
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (retries: ");
+    if (retriesESet) result.append(retries); else result.append("<unset>");
+    result.append(')');
+    return result.toString();
+  }
 
 	@Override
 	protected IFailOverStrategy createInstance() {

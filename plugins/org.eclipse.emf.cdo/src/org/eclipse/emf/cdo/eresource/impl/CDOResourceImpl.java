@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CDOViewAdapter;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -27,6 +29,7 @@ import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 import org.eclipse.emf.internal.cdo.InternalCDOView;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
@@ -798,6 +801,28 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     }
 
     setResourceSet(resourceSet);
+
+    // ResourceSet isn't prepared, try to look for a CDOViewAdapter
+    if (resourceSet != null && CDOUtil.getViewSet(resourceSet) == null)
+    {
+      InternalCDOView view = cdoView();
+      if (view == null)
+      {
+        for (Iterator<Adapter> it = eAdapters().iterator(); it.hasNext();)
+        {
+          Adapter adapter = it.next();
+          if (adapter instanceof CDOViewAdapter)
+          {
+            view = (InternalCDOView)((CDOViewAdapter)adapter).getView();
+            cdoInternalSetView(view);
+            view.attachResource(this);
+
+            it.remove();
+            break;
+          }
+        }
+      }
+    }
 
     if (eNotificationRequired())
     {

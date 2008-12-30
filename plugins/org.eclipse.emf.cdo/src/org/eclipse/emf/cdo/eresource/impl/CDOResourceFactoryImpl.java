@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.CDOViewProvider;
+import org.eclipse.emf.cdo.util.CDOViewAdapter;
 import org.eclipse.emf.cdo.util.CDOViewProviderRegistry;
 
 import org.eclipse.emf.internal.cdo.InternalCDOViewSet;
@@ -67,8 +67,7 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
 
   public Resource createResource(URI uri)
   {
-    CDOViewProvider viewProvider = CDOViewProviderRegistry.INSTANCE.getViewProvider(uri);
-    CDOView view = viewProvider.getView(uri, viewSet);
+    CDOView view = CDOViewProviderRegistry.INSTANCE.provideView(uri, viewSet);
 
     // Build a new URI with the view and the path
     String path = CDOURIUtil.extractResourcePath(uri);
@@ -78,6 +77,12 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
     CDOResourceImpl resource = new CDOResourceImpl(newURI);
     resource.setRoot(CDOURIUtil.SEGMENT_SEPARATOR.equals(path));
     resource.setExisting(isGetResource());
+    if (view != null)
+    {
+      CDOViewAdapter adapter = new CDOViewAdapter(view);
+      resource.eAdapters().add(adapter);
+    }
+
     return resource;
   }
 

@@ -38,6 +38,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -59,25 +60,27 @@ import java.util.Map;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
  * 
  * @extends Resource.Internal<!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking Modification</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
- * </ul>
- * </p>
- *
+ *          <p>
+ *          The following features are implemented:
+ *          <ul>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getContents <em>Contents</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isModified <em>Modified</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isLoaded <em>Loaded</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#isTrackingModification <em>Tracking
+ *          Modification</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getErrors <em>Errors</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
+ *          <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
+ *          </ul>
+ *          </p>
  * @generated
  */
 public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource, Resource.Internal
 {
+  private static final EReference CDO_RESOURCE_CONTENTS = EresourcePackage.eINSTANCE.getCDOResource_Contents();
+
   /**
    * The default URI converter when there is no resource set.
    * 
@@ -131,6 +134,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CDOResourceImpl()
@@ -140,6 +144,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -179,6 +184,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ResourceSet getResourceSet()
@@ -188,6 +194,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setResourceSet(ResourceSet newResourceSet)
@@ -270,6 +277,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isModified()
@@ -353,6 +361,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isTrackingModification()
@@ -362,6 +371,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTrackingModification(boolean newTrackingModification)
@@ -443,6 +453,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public long getTimeStamp()
@@ -452,6 +463,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTimeStamp(long newTimeStamp)
@@ -843,13 +855,84 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   @Override
   protected EList<?> createList(EStructuralFeature eStructuralFeature)
   {
-    if (eStructuralFeature == EresourcePackage.eINSTANCE.getCDOResource_Contents())
+    if (eStructuralFeature == CDO_RESOURCE_CONTENTS)
     {
-      return new ContentsCDOList(eStructuralFeature);
+      return new ContentsCDOList(CDO_RESOURCE_CONTENTS);
+      // return new _ContentsCDOList<EObject>();
     }
 
     return super.createList(eStructuralFeature);
   }
+
+  // /**
+  // * A notifying list implementation for supporting {@link Resource#getContents}.
+  // */
+  // protected class _ContentsCDOList<E extends Object & EObject> extends ResourceContentsEList<E>
+  // {
+  // private static final long serialVersionUID = 1L;
+  //
+  // @Override
+  // public int getFeatureID()
+  // {
+  // return CDO_RESOURCE_CONTENTS.getFeatureID();
+  // }
+  //
+  // @Override
+  // protected CDOResourceImpl getResource()
+  // {
+  // return CDOResourceImpl.this;
+  // }
+  //
+  // @Override
+  // protected Notification setLoaded(boolean loaded)
+  // {
+  // return getResource().setLoaded(loaded);
+  // }
+  //
+  // @Override
+  // protected boolean isNotificationRequired()
+  // {
+  // return getResource().eNotificationRequired();
+  // }
+  //
+  // @Override
+  // public NotificationChain inverseAdd(E object, NotificationChain notifications)
+  // {
+  // if (FSMUtil.isTransient(getResource()))
+  // {
+  // InternalEObject eObject = (InternalEObject)object;
+  // return eObject.eSetResource(CDOResourceImpl.this, notifications);
+  // // return super.inverseAdd(object, notifications);
+  // }
+  //
+  // InternalCDOTransaction transaction = cdoView().toTransaction();
+  // InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
+  // notifications = cdoObject.eSetResource(getResource(), notifications);
+  //
+  // // Attach here instead of in CDOObjectImpl.eSetResource because EMF does it also here
+  // if (FSMUtil.isTransient(cdoObject))
+  // {
+  // attached(cdoObject, transaction);
+  // }
+  //
+  // return notifications;
+  // }
+  //
+  // @Override
+  // public NotificationChain inverseRemove(E object, NotificationChain notifications)
+  // {
+  // if (FSMUtil.isTransient(getResource()))
+  // {
+  // InternalEObject eObject = (InternalEObject)object;
+  // return eObject.eSetResource(null, notifications);
+  // // return super.inverseRemove(object, notifications);
+  // }
+  //
+  // InternalEObject eObject = (InternalEObject)object;
+  // detached(eObject);
+  // return eObject.eSetResource(null, notifications);
+  // }
+  // }
 
   /**
    * {@link ResourceImpl.ContentsEList}!!! --> Bugzilla!

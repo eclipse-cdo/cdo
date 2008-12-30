@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
 
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.common.util.EList;
@@ -247,6 +249,26 @@ public class ViewTest extends AbstractCDOTest
     done = transaction.options().setCacheReferenceType(null);
     assertEquals(true, done);
 
+    session.close();
+  }
+
+  public void testViewNotifiesDeactivation()
+  {
+    CDOSession session = openModel1Session();
+    CDOView view = session.openView();
+
+    final boolean[] deactivated = { false };
+    view.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        deactivated[0] = true;
+      }
+    });
+
+    view.close();
+    assertTrue(deactivated[0]);
     session.close();
   }
 }

@@ -56,6 +56,7 @@ import org.eclipse.emf.internal.cdo.protocol.ChangeSubscriptionRequest;
 import org.eclipse.emf.internal.cdo.protocol.LockObjectsRequest;
 import org.eclipse.emf.internal.cdo.protocol.ObjectLockedRequest;
 import org.eclipse.emf.internal.cdo.protocol.UnlockObjectsRequest;
+import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
@@ -69,6 +70,7 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
@@ -102,7 +104,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends Notifier implements InternalCDOView
+public class CDOViewImpl extends Lifecycle implements InternalCDOView
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -136,13 +138,8 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
   @ExcludeFromDump
   private transient InternalCDOObject lastLookupObject;
 
-  /**
-   * @since 2.0
-   */
-  public CDOViewImpl(InternalCDOSession session, int viewID)
+  public CDOViewImpl()
   {
-    this.session = session;
-    this.viewID = viewID;
     options = initOptions();
   }
 
@@ -167,6 +164,11 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
     return viewID;
   }
 
+  public void setViewID(int viewId)
+  {
+    viewID = viewId;
+  }
+
   public Type getViewType()
   {
     return Type.READONLY;
@@ -188,14 +190,31 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
   /**
    * @since 2.0
    */
+  public void setViewSet(InternalCDOViewSet viewSet)
+  {
+    this.viewSet = viewSet;
+    if (viewSet != null)
+    {
+      viewSet.getResourceSet().getURIConverter().getURIHandlers().add(getURIHandler());
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
   public InternalCDOSession getSession()
   {
     return session;
   }
 
+  public void setSession(InternalCDOSession session)
+  {
+    this.session = session;
+  }
+
   public CDOStore getStore()
   {
-    checkOpen();
+    checkActive();
     return store;
   }
 
@@ -204,6 +223,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public synchronized CDOResourceImpl getRootResource()
   {
+    checkActive();
     if (rootResource == null)
     {
       rootResource = createRootResource();
@@ -244,6 +264,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
   public void lockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType, long timeout)
       throws InterruptedException
   {
+    checkActive();
     InterruptedException interruptedException = null;
     RuntimeException runtimeException = null;
 
@@ -284,6 +305,8 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public void unlockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType)
   {
+    checkActive();
+
     try
     {
       CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
@@ -307,8 +330,10 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    * @throws InterruptedException
    * @since 2.0
    */
-  public boolean isLocked(CDOObject object, RWLockManager.LockType lockType)
+  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType)
   {
+    checkActive();
+
     try
     {
       CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
@@ -318,6 +343,11 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  public long getTimeStamp()
+  {
+    return UNSPECIFIED_DATE;
   }
 
   public boolean isDirty()
@@ -351,18 +381,18 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public InternalCDOTransaction toTransaction()
   {
-    checkOpen();
+    checkActive();
     if (this instanceof InternalCDOTransaction)
     {
       return (InternalCDOTransaction)this;
     }
 
-    throw new ReadOnlyException("CDO view is read only: " + this);
+    throw new ReadOnlyException("CDO view is read-only: " + this);
   }
 
   public boolean hasResource(String path)
   {
-    checkOpen();
+    checkActive();
 
     try
     {
@@ -380,7 +410,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public CDOQuery createQuery(String language, String queryString)
   {
-    checkOpen();
+    checkActive();
     return new CDOQueryImpl(this, language, queryString);
   }
 
@@ -598,7 +628,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public CDOResource getResource(String path, boolean loadInDemand)
   {
-    checkOpen();
+    checkActive();
     URI uri = CDOURIUtil.createResourceURI(this, path);
     return (CDOResource)getResourceSet().getResource(uri, loadInDemand);
   }
@@ -608,6 +638,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch)
   {
+    checkActive();
     CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
     return resourceQuery.getResult(CDOResourceNode.class);
   }
@@ -618,6 +649,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
   public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
       boolean exactMatch)
   {
+    checkActive();
     CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
     return resourceQuery.getResultAsync(CDOResourceNode.class);
   }
@@ -641,12 +673,6 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
     return (CDOResourceImpl)getObject(resourceID);
   }
 
-  public InternalCDOObject newInstance(EClass eClass)
-  {
-    EObject eObject = EcoreUtil.create(eClass);
-    return FSMUtil.adapt(eObject, this);
-  }
-
   public InternalCDOObject newInstance(CDOClass cdoClass)
   {
     EClass eClass = ModelUtil.getEClass(cdoClass, session.getPackageRegistry());
@@ -656,6 +682,12 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
     }
 
     return newInstance(eClass);
+  }
+
+  public InternalCDOObject newInstance(EClass eClass)
+  {
+    EObject eObject = EcoreUtil.create(eClass);
+    return FSMUtil.adapt(eObject, this);
   }
 
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
@@ -675,7 +707,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
-    checkOpen();
+    checkActive();
     if (CDOIDUtil.isNull(id))
     {
       return null;
@@ -727,7 +759,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
   @SuppressWarnings("unchecked")
   public <T extends EObject> T getObject(T objectFromDifferentView)
   {
-    checkOpen();
+    checkActive();
     if (objectFromDifferentView instanceof CDOObject)
     {
       CDOObject object = (CDOObject)objectFromDifferentView;
@@ -749,8 +781,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
 
   public boolean isObjectRegistered(CDOID id)
   {
-    checkOpen();
-
+    checkActive();
     if (CDOIDUtil.isNull(id))
     {
       return false;
@@ -1366,16 +1397,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
 
   public void close()
   {
-    session.viewDetached(this);
-    session = null;
-    objects = null;
-    store = null;
-    viewSet = null;
-    changeSubscriptionManager = null;
-    featureAnalyzer = null;
-    lastLookupID = null;
-    lastLookupObject = null;
-    options = null;
+    deactivate();
   }
 
   /**
@@ -1383,7 +1405,7 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
    */
   public boolean isClosed()
   {
-    return session == null;
+    return !isActive();
   }
 
   @Override
@@ -1402,23 +1424,61 @@ public class CDOViewImpl extends Notifier implements InternalCDOView
     return getResourceSet();
   }
 
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(session, "session");
+    checkState(viewID > 0, "viewID");
+  }
+
   /**
    * @since 2.0
    */
-  public void setViewSet(InternalCDOViewSet viewSet)
+  @Override
+  protected void doActivate() throws Exception
   {
-    this.viewSet = viewSet;
-    if (viewSet != null)
-    {
-      viewSet.getResourceSet().getURIConverter().getURIHandlers().add(getURIHandler());
-    }
+    CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
+    new ViewsChangedRequest(protocol, getViewID(), getProtocolViewType(), getTimeStamp()).send();
   }
 
-  private void checkOpen()
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected void doDeactivate() throws Exception
   {
-    if (isClosed())
+    CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
+    new ViewsChangedRequest(protocol, getViewID()).send();
+
+    session.viewDetached(this);
+    session = null;
+    objects = null;
+    store = null;
+    viewSet = null;
+    changeSubscriptionManager = null;
+    featureAnalyzer = null;
+    lastLookupID = null;
+    lastLookupObject = null;
+    options = null;
+  }
+
+  private byte getProtocolViewType()
+  {
+    Type viewType = getViewType();
+    switch (viewType)
     {
-      throw new IllegalStateException("View closed");
+    case READONLY:
+      return CDOProtocolConstants.VIEW_READONLY;
+
+    case TRANSACTION:
+      return CDOProtocolConstants.VIEW_TRANSACTION;
+
+    case AUDIT:
+      return CDOProtocolConstants.VIEW_AUDIT;
+
+    default:
+      throw new IllegalStateException("Invalid view type: " + viewType);
     }
   }
 

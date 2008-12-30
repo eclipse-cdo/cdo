@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
@@ -32,9 +33,13 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOView extends CDOView, CDOIDProvider
+public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle.Introspection
 {
+  public void setViewID(int viewId);
+
   public InternalCDOSession getSession();
+
+  public void setSession(InternalCDOSession session);
 
   public InternalCDOViewSet getViewSet();
 
@@ -80,7 +85,7 @@ public interface InternalCDOView extends CDOView, CDOIDProvider
 
   public Object convertIDToObject(Object potentialID);
 
-  public boolean isLocked(CDOObject object, RWLockManager.LockType lockType);
+  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType);
 
   public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter);
 

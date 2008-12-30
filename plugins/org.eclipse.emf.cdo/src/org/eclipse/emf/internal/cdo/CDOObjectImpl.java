@@ -1029,7 +1029,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     public boolean isLocked()
     {
-      return cdoView().isLocked(CDOObjectImpl.this, type);
+      return cdoView().isObjectLocked(CDOObjectImpl.this, type);
     }
 
     public void lock()

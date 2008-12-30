@@ -40,6 +40,11 @@ public interface CDOProtocolView
   public boolean isClosed();
 
   /**
+   * @since 2.0
+   */
+  public long getTimeStamp();
+
+  /**
    * @author Eike Stepper
    */
   public enum Type

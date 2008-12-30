@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.protocol;
 import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.CDOProtocolView;
 
 import java.io.IOException;
 
@@ -33,6 +34,11 @@ public class ViewsChangedRequest extends CDOClientRequest<Boolean>
     this.viewID = viewID;
     this.kind = kind;
     this.timeStamp = timeStamp;
+  }
+
+  public ViewsChangedRequest(CDOClientProtocol protocol, int viewID)
+  {
+    this(protocol, viewID, CDOProtocolConstants.VIEW_CLOSED, CDOProtocolView.UNSPECIFIED_DATE);
   }
 
   @Override

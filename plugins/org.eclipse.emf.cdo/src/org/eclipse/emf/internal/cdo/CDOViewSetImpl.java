@@ -131,7 +131,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       CDOView lookupView = mapOfViews.get(repositoryUUID);
       if (lookupView != null)
       {
-        throw new RuntimeException("Only one view/transaction per repository can be open for the same resource set");
+        throw new RuntimeException("Only one view per repository can be open for the same resource set");
       }
 
       views.add(view);

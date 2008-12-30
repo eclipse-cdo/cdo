@@ -100,12 +100,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private CDOTransactionStrategy transactionStrategy;
 
-  /**
-   * @since 2.0
-   */
-  public CDOTransactionImpl(InternalCDOSession session, int id)
+  public CDOTransactionImpl()
   {
-    super(session, id);
   }
 
   /**
@@ -159,19 +155,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  /**
-   * @since 2.0
-   */
-  @Override
-  public void close()
-  {
-    options().disposeConflictResolvers();
-    lastSavepoint = null;
-    firstSavepoint = null;
-    transactionStrategy = null;
-    super.close();
-  }
-
   @Override
   public boolean isDirty()
   {
@@ -186,7 +169,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public boolean hasConflict()
   {
-    checkOpen();
+    checkActive();
     return conflict != 0;
   }
 
@@ -312,14 +295,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOResource createResource(String path)
   {
-    checkOpen();
+    checkActive();
     URI uri = CDOURIUtil.createResourceURI(this, path);
     return (CDOResource)getResourceSet().createResource(uri);
   }
 
   public CDOResource getOrCreateResource(String path)
   {
-    checkOpen();
+    checkActive();
 
     try
     {
@@ -434,7 +417,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public CDOSavepointImpl getLastSavepoint()
   {
-    checkOpen();
+    checkActive();
     return lastSavepoint;
   }
 
@@ -528,7 +511,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
-    checkOpen();
+    checkActive();
     if (CDOIDUtil.isNull(id))
     {
       return null;
@@ -560,7 +543,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public void commit(IProgressMonitor progressMonitor) throws TransactionException
   {
-    checkOpen();
+    checkActive();
     if (hasConflict())
     {
       throw new TransactionException("This transaction has conflicts");
@@ -595,7 +578,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public void rollback()
   {
-    checkOpen();
+    checkActive();
     rollback(firstSavepoint);
     cleanUp();
   }
@@ -816,7 +799,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public void rollback(CDOSavepoint savepoint)
   {
-    checkOpen();
+    checkActive();
     getTransactionStrategy().rollback(this, savepoint);
   }
 
@@ -906,7 +889,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public CDOSavepoint setSavepoint()
   {
-    checkOpen();
+    checkActive();
     return getTransactionStrategy().setSavepoint(this);
   }
 
@@ -1096,19 +1079,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
-    checkOpen();
+    checkActive();
     return lastSavepoint.getAllDirtyObjects();
   }
 
   public Map<CDOID, CDOObject> getNewObjects()
   {
-    checkOpen();
+    checkActive();
     return lastSavepoint.getAllNewObjects();
   }
 
   public Map<CDOID, CDOResource> getNewResources()
   {
-    checkOpen();
+    checkActive();
     return lastSavepoint.getAllNewResources();
   }
 
@@ -1117,13 +1100,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public Map<CDOID, CDORevision> getBaseNewObjects()
   {
-    checkOpen();
+    checkActive();
     return lastSavepoint.getAllBaseNewObjects();
   }
 
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
-    checkOpen();
+    checkActive();
     return lastSavepoint.getAllRevisionDeltas();
   }
 
@@ -1132,16 +1115,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
-    checkOpen();
+    checkActive();
     return lastSavepoint.getAllDetachedObjects();
   }
 
-  private void checkOpen()
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected void doDeactivate() throws Exception
   {
-    if (isClosed())
-    {
-      throw new IllegalStateException("View closed");
-    }
+    options().disposeConflictResolvers();
+    lastSavepoint = null;
+    firstSavepoint = null;
+    transactionStrategy = null;
+    super.doDeactivate();
   }
 
   /**

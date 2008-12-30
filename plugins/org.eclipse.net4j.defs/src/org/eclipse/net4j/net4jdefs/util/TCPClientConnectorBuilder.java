@@ -1,3 +1,13 @@
+/***************************************************************************
+ * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ **************************************************************************/
 package org.eclipse.net4j.net4jdefs.util;
 
 import org.eclipse.net4j.net4jdefs.BufferPoolDef;
@@ -11,18 +21,24 @@ import org.eclipse.net4j.util.net4jutildefs.ExecutorServiceDef;
 import org.eclipse.net4j.util.net4jutildefs.Net4jUtilDefsFactory;
 import org.eclipse.net4j.util.net4jutildefs.ThreadPoolDef;
 
+/**
+ * @author Eike Stepper
+ */
 public class TCPClientConnectorBuilder
 {
+  private String host;
 
   private int port = ITCPConnector.DEFAULT_PORT;
-
-  private String host;
 
   private BufferProviderDef bufferProviderDef = Net4jDefsFactory.eINSTANCE.createBufferPoolDef();
 
   private ExecutorServiceDef executorService = Net4jUtilDefsFactory.eINSTANCE.createThreadPoolDef();
 
   private TCPSelectorDef tcpSelectorDef = Net4jDefsFactory.eINSTANCE.createTCPSelectorDef();
+
+  public TCPClientConnectorBuilder()
+  {
+  }
 
   public TCPClientConnectorBuilder port(int port)
   {
@@ -38,13 +54,13 @@ public class TCPClientConnectorBuilder
 
   public TCPClientConnectorBuilder executorServiceDef(ThreadPoolDef threadPoolDef)
   {
-    this.executorService = threadPoolDef;
+    executorService = threadPoolDef;
     return this;
   }
 
   public TCPClientConnectorBuilder bufferDef(BufferPoolDef bufferPoolDef)
   {
-    this.bufferProviderDef = bufferPoolDef;
+    bufferProviderDef = bufferPoolDef;
     return this;
   }
 

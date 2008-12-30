@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: HTTPConnectorDefImpl.java,v 1.1 2008-12-28 18:07:28 estepper Exp $
+ * $Id: HTTPConnectorDefImpl.java,v 1.2 2008-12-30 08:43:13 estepper Exp $
  */
 package org.eclipse.net4j.net4jdefs.impl;
 
@@ -17,156 +17,191 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>HTTP Connector Def</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object ' <em><b>HTTP Connector Def</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.net4j.net4jdefs.impl.HTTPConnectorDefImpl#getUrl <em>Url</em>}</li>
+ * <li>{@link org.eclipse.net4j.net4jdefs.impl.HTTPConnectorDefImpl#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class HTTPConnectorDefImpl extends ConnectorDefImpl implements
-		HTTPConnectorDef {
-	/**
-	 * The default value of the '{@link #getUrl() <em>Url</em>}' attribute. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getUrl()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String URL_EDEFAULT = null;
-	/**
-	 * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @see #getUrl()
-	 * @generated
-	 * @ordered
-	 */
-	protected String url = URL_EDEFAULT;
+public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnectorDef
+{
+  /**
+   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getUrl()
+   * @generated
+   * @ordered
+   */
+  protected static final String URL_EDEFAULT = null;
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected HTTPConnectorDefImpl() {
-		super();
-	}
+  /**
+   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getUrl()
+   * @generated
+   * @ordered
+   */
+  protected String url = URL_EDEFAULT;
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return Net4jDefsPackage.Literals.HTTP_CONNECTOR_DEF;
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected HTTPConnectorDefImpl()
+  {
+    super();
+  }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getUrl() {
-		return url;
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return Net4jDefsPackage.Literals.HTTP_CONNECTOR_DEF;
+  }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUrl(String newUrl) {
-		String oldUrl = url;
-		url = newUrl;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL, oldUrl, url));
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String getUrl()
+  {
+    return url;
+  }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-				return getUrl();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setUrl(String newUrl)
+  {
+    String oldUrl = url;
+    url = newUrl;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL, oldUrl, url));
+    }
+  }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-				setUrl((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Object eGet(int featureID, boolean resolve, boolean coreType)
+  {
+    switch (featureID)
+    {
+    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+      return getUrl();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-				setUrl(URL_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public void eSet(int featureID, Object newValue)
+  {
+    switch (featureID)
+    {
+    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+      setUrl((String)newValue);
+      return;
+    }
+    super.eSet(featureID, newValue);
+  }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-				return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
-		}
-		return super.eIsSet(featureID);
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public void eUnset(int featureID)
+  {
+    switch (featureID)
+    {
+    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+      setUrl(URL_EDEFAULT);
+      return;
+    }
+    super.eUnset(featureID);
+  }
 
-	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public boolean eIsSet(int featureID)
+  {
+    switch (featureID)
+    {
+    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+      return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+    }
+    return super.eIsSet(featureID);
+  }
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (url: ");
-		result.append(url);
-		result.append(')');
-		return result.toString();
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
 
-	protected IHTTPConnector createInstance() {
-		HTTPClientConnector connector = new HTTPClientConnector();
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (url: ");
+    result.append(url);
+    result.append(')');
+    return result.toString();
+  }
 
-		configure(connector.getConfig());
-		connector.setURL(getUrl());
-		connector.activate();
+  /**
+   * @ADDED
+   */
+  @Override
+  protected IHTTPConnector createInstance()
+  {
+    HTTPClientConnector connector = new HTTPClientConnector();
 
-		return connector;
-	}
+    configure(connector.getConfig());
+    connector.setURL(getUrl());
+    connector.activate();
 
-	@Override
-	protected void validateDefinition() {
-		super.validateDefinition();
-		CheckUtil.checkState(eIsSet(Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL), "url not set!");
-	}
+    return connector;
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  protected void validateDefinition()
+  {
+    super.validateDefinition();
+    CheckUtil.checkState(eIsSet(Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL), "url not set!");
+  }
 } // HTTPConnectorDefImpl

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.net4j.util.security;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.security.SecureRandom;
@@ -27,80 +28,113 @@ public class Randomizer extends Lifecycle implements IRandomizer
 
   private String providerName;
 
+  @ExcludeFromDump
+  private byte[] seed;
+
+  @ExcludeFromDump
   private transient SecureRandom secureRandom;
 
-  public String getAlgorithmName()
+  public Randomizer()
+  {
+  }
+
+  public synchronized String getAlgorithmName()
   {
     return algorithmName;
   }
 
-  public void setAlgorithmName(String algorithmName)
+  public synchronized void setAlgorithmName(String algorithmName)
   {
     this.algorithmName = algorithmName;
   }
 
-  public String getProviderName()
+  public synchronized String getProviderName()
   {
     return providerName;
   }
 
-  public void setProviderName(String providerName)
+  public synchronized void setProviderName(String providerName)
   {
     this.providerName = providerName;
   }
 
-  public boolean nextBoolean()
+  public synchronized void setSeed(byte[] seed)
   {
+    this.seed = seed;
+    if (isActive())
+    {
+      setSeed();
+    }
+  }
+
+  public synchronized void setSeed(long seed)
+  {
+    setSeed(String.valueOf(seed).getBytes());
+  }
+
+  public synchronized boolean nextBoolean()
+  {
+    checkActive();
     return secureRandom.nextBoolean();
   }
 
-  public double nextDouble()
+  public synchronized double nextDouble()
   {
+    checkActive();
     return secureRandom.nextDouble();
   }
 
-  public float nextFloat()
+  public synchronized float nextFloat()
   {
+    checkActive();
     return secureRandom.nextFloat();
   }
 
   public synchronized double nextGaussian()
   {
+    checkActive();
     return secureRandom.nextGaussian();
   }
 
-  public int nextInt()
+  public synchronized int nextInt()
   {
+    checkActive();
     return secureRandom.nextInt();
   }
 
-  public int nextInt(int n)
+  public synchronized int nextInt(int n)
   {
+    checkActive();
     return secureRandom.nextInt(n);
   }
 
-  public long nextLong()
+  public synchronized long nextLong()
   {
+    checkActive();
     return secureRandom.nextLong();
   }
 
-  public byte[] generateSeed(int numBytes)
+  public synchronized byte[] generateSeed(int numBytes)
   {
+    checkActive();
     return secureRandom.generateSeed(numBytes);
   }
 
-  public String getAlgorithm()
+  public synchronized String getAlgorithm()
   {
+    checkActive();
     return secureRandom.getAlgorithm();
   }
 
   public synchronized void nextBytes(byte[] bytes)
   {
+    checkActive();
     secureRandom.nextBytes(bytes);
   }
 
-  public String nextString(int length, String alphabet)
+  public synchronized String nextString(int length, String alphabet)
   {
+    checkActive();
     int n = alphabet.length();
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; i++)
@@ -113,23 +147,14 @@ public class Randomizer extends Lifecycle implements IRandomizer
     return builder.toString();
   }
 
-  public synchronized void setSeed(byte[] seed)
-  {
-    secureRandom.setSeed(seed);
-  }
-
-  public void setSeed(long seed)
-  {
-    secureRandom.setSeed(seed);
-  }
-
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (algorithmName == null)
+    checkState(algorithmName, "algorithmName");
+    if (seed == null)
     {
-      throw new IllegalStateException("algorithmName == null");
+      setSeed(System.currentTimeMillis());
     }
   }
 
@@ -146,7 +171,7 @@ public class Randomizer extends Lifecycle implements IRandomizer
       secureRandom = SecureRandom.getInstance(algorithmName, providerName);
     }
 
-    secureRandom.setSeed(System.currentTimeMillis());
+    setSeed();
   }
 
   @Override
@@ -154,5 +179,10 @@ public class Randomizer extends Lifecycle implements IRandomizer
   {
     secureRandom = null;
     super.doDeactivate();
+  }
+
+  private void setSeed()
+  {
+    secureRandom.setSeed(seed);
   }
 }

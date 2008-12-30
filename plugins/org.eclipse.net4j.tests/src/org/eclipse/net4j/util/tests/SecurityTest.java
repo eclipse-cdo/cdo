@@ -43,6 +43,12 @@ public class SecurityTest extends AbstractOMTest
 
   private IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
 
+  public void testRandomizerAcceptsSeedsBeforeActivation()
+  {
+    Randomizer randomizer = new Randomizer();
+    randomizer.setSeed(2l);
+  }
+
   public void testSuccess() throws Exception
   {
     // Prepare randomizer

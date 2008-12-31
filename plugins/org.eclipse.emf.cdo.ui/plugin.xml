@@ -36,6 +36,13 @@
             id="org.eclipse.emf.cdo.CDOSessionsView"
             name="CDO Sessions">
       </view>
+      <view
+            category="org.eclipse.emf.cdo"
+            class="org.eclipse.emf.cdo.internal.ui.views.CDOSubscriptionsView"
+            icon="icons/full/view16/watch_list.gif"
+            id="org.eclipse.emf.cdo.CDOSubscriptionsView"
+            name="CDO Subscriptions">
+      </view>
    </extension>
    
    <extension

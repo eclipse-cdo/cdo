@@ -285,7 +285,10 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements CDOP
           try
           {
             EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(uri);
-            putEPackage(ePackage);
+            if (ePackage.getESuperPackage() == null)
+            {
+              putEPackage(ePackage);
+            }
           }
           catch (RuntimeException ex)
           {

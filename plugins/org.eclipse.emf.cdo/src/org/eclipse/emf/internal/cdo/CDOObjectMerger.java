@@ -28,7 +28,10 @@ public class CDOObjectMerger extends CDORevisionMerger
   public void merge(InternalCDOObject object, CDORevisionDelta delta)
   {
     InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();
-    revision.setTransactional();
+    if (!revision.isTransactional())
+    {
+      revision.setTransactional();
+    }
     object.cdoInternalSetRevision(revision);
 
     // NEW object should stay that state.

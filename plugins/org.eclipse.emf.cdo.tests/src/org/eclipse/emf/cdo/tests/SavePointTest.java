@@ -41,18 +41,23 @@ public class SavePointTest extends AbstractCDOTest
     Category category1 = getModel1Factory().createCategory();
     company1.getCategories().add(category1);
 
+    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
     transaction1.setSavepoint();
+    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
 
     Category category2 = getModel1Factory().createCategory();
     company1.getCategories().add(category2);
 
     CDOSavepoint savePoint2 = transaction1.setSavepoint();
+    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
 
     Category category3 = getModel1Factory().createCategory();
     company1.getCategories().add(category3);
 
     transaction1.setSavepoint();
+    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
     transaction1.rollback(savePoint2);
+    assertEquals(1, CDOUtil.getCDOObject(company1).cdoRevision().getVersion());
 
     assertNew(category1, transaction1);
     assertNew(company1, transaction1);

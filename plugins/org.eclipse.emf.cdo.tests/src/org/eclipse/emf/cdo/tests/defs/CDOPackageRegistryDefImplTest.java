@@ -1,19 +1,19 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2008 André Dietisheim, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    André Dietisheim - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.defs;
 
-import org.eclipse.emf.cdo.cdodefs.CDODefsFactory;
-import org.eclipse.emf.cdo.cdodefs.CDOPackageRegistryDef;
-import org.eclipse.emf.cdo.cdodefs.EGlobalPackageDef;
-import org.eclipse.emf.cdo.cdodefs.EPackageDef;
+import org.eclipse.emf.cdo.defs.CDODefsFactory;
+import org.eclipse.emf.cdo.defs.CDOPackageRegistryDef;
+import org.eclipse.emf.cdo.defs.EGlobalPackageDef;
+import org.eclipse.emf.cdo.defs.EPackageDef;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
- * @author Eike Stepper
+ * @author André Dietisheim
  */
 public class CDOPackageRegistryDefImplTest extends AbstractCDOTest
 {

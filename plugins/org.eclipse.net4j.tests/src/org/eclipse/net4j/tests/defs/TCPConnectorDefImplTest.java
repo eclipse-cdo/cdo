@@ -1,27 +1,27 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2008 André Dietisheim, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    André Dietisheim - initial API and implementation
  **************************************************************************/
 package org.eclipse.net4j.tests.defs;
 
+import org.eclipse.net4j.defs.Net4jDefsFactory;
+import org.eclipse.net4j.defs.TCPConnectorDef;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
-import org.eclipse.net4j.net4jdefs.Net4jDefsFactory;
-import org.eclipse.net4j.net4jdefs.PasswordCredentialsProviderDef;
-import org.eclipse.net4j.net4jdefs.ResponseNegotiatorDef;
-import org.eclipse.net4j.net4jdefs.TCPConnectorDef;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tests.AbstractProtocolTest;
+import org.eclipse.net4j.util.defs.Net4jUtilDefsFactory;
+import org.eclipse.net4j.util.defs.PasswordCredentialsProviderDef;
+import org.eclipse.net4j.util.defs.ResponseNegotiatorDef;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.net4jutildefs.Net4jUtilDefsFactory;
 
 /**
- * @author Eike Stepper
+ * @author André Dietisheim
  */
 public class TCPConnectorDefImplTest extends AbstractProtocolTest
 {
@@ -108,12 +108,12 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
     tcpConnectorDef.setExecutorService(Net4jUtilDefsFactory.eINSTANCE.createThreadPoolDef());
     tcpConnectorDef.setTcpSelectorDef(Net4jDefsFactory.eINSTANCE.createTCPSelectorDef());
 
-    PasswordCredentialsProviderDef credentialsProviderDef = Net4jDefsFactory.eINSTANCE
+    PasswordCredentialsProviderDef credentialsProviderDef = Net4jUtilDefsFactory.eINSTANCE
         .createPasswordCredentialsProviderDef();
     credentialsProviderDef.setUserID(USERID);
     credentialsProviderDef.setPassword(PASSWORD);
 
-    ResponseNegotiatorDef negotiatorDef = Net4jDefsFactory.eINSTANCE.createResponseNegotiatorDef();
+    ResponseNegotiatorDef negotiatorDef = Net4jUtilDefsFactory.eINSTANCE.createResponseNegotiatorDef();
     negotiatorDef.setCredentialsProvider(credentialsProviderDef);
     tcpConnectorDef.setNegotiator(negotiatorDef);
 

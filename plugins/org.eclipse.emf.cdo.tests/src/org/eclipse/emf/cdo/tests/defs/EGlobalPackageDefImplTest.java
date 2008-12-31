@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.defs;
 
-import org.eclipse.emf.cdo.cdodefs.CDODefsFactory;
-import org.eclipse.emf.cdo.cdodefs.EGlobalPackageDef;
+import org.eclipse.emf.cdo.defs.CDODefsFactory;
+import org.eclipse.emf.cdo.defs.EGlobalPackageDef;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
 import org.eclipse.emf.ecore.EPackage;

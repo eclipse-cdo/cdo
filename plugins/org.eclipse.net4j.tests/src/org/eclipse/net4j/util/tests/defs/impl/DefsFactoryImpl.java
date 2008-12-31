@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2008 André Dietisheim, Switzerland.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    André Dietisheim - initial API and implementation
  *
- * $Id: DefsFactoryImpl.java,v 1.1 2008-12-30 08:43:08 estepper Exp $
+ * $Id: DefsFactoryImpl.java,v 1.2 2008-12-31 14:43:24 estepper Exp $
  */
 package org.eclipse.net4j.util.tests.defs.impl;
 
@@ -23,24 +23,23 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static DefsFactory init()
   {
     try
     {
-      DefsFactory theDefsFactory = (DefsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/NET4J/defs/tests/1.0.0"); 
+      DefsFactory theDefsFactory = (DefsFactory)EPackage.Registry.INSTANCE
+          .getEFactory("http://www.eclipse.org/NET4J/defs/tests/1.0.0");
       if (theDefsFactory != null)
       {
         return theDefsFactory;
@@ -54,9 +53,8 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DefsFactoryImpl()
@@ -65,8 +63,8 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -74,15 +72,16 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
   {
     switch (eClass.getClassifierID())
     {
-      case DefsPackage.TEST_DEF: return createTestDef();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    case DefsPackage.TEST_DEF:
+      return createTestDef();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public TestDef createTestDef()
@@ -92,8 +91,8 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DefsPackage getDefsPackage()
@@ -102,8 +101,8 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -113,4 +112,4 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
     return DefsPackage.eINSTANCE;
   }
 
-} //DefsFactoryImpl
+} // DefsFactoryImpl

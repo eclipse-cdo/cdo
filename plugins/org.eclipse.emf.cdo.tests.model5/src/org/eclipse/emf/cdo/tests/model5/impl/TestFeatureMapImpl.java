@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: TestFeatureMapImpl.java,v 1.2 2008-12-28 17:57:09 estepper Exp $
+ * $Id: TestFeatureMapImpl.java,v 1.3 2008-12-31 14:43:41 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.impl;
 
@@ -40,14 +40,15 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected TestFeatureMapImpl()
@@ -57,6 +58,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -67,6 +69,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,6 +80,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -87,6 +91,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -97,9 +102,9 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * 
+   * @generated NOT
    */
-  @SuppressWarnings("unchecked")
   public FeatureMap getPeople()
   {
     return (FeatureMap)eGet(Model5Package.Literals.TEST_FEATURE_MAP__PEOPLE, true);

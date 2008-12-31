@@ -1,31 +1,31 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2008 André Dietisheim, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    André Dietisheim - initial API and implementation
  **************************************************************************/
 package org.eclipse.net4j.tests.defs;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBufferPool;
+import org.eclipse.net4j.defs.JVMAcceptorDef;
+import org.eclipse.net4j.defs.Net4jDefsFactory;
 import org.eclipse.net4j.internal.jvm.JVMClientConnector;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
-import org.eclipse.net4j.net4jdefs.JVMAcceptorDef;
-import org.eclipse.net4j.net4jdefs.Net4jDefsFactory;
+import org.eclipse.net4j.util.defs.Net4jUtilDefsFactory;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.net4jutildefs.Net4jUtilDefsFactory;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @author Eike Stepper
+ * @author André Dietisheim
  */
 public class JVMAcceptorDefImplTest extends AbstractOMTest
 {

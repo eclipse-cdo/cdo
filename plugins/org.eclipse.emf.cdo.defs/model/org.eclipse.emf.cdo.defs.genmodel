@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+<<<<<<< org.eclipse.emf.cdo.defs.genmodel
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText=" * Copyright (c) 2004 - 2008 André Dietisheim, Switzerland.&#xA; * All rights reserved. This program and the accompanying materials&#xA; * are made available under the terms of the Eclipse Public License v1.0&#xA; * which accompanies this distribution, and is available at&#xA; * http://www.eclipse.org/legal/epl-v10.html&#xA; * &#xA; * Contributors:&#xA; *    André Dietisheim - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.cdo.defs/src" modelPluginID="org.eclipse.emf.cdo.defs"
+    modelName="Org.eclipse.emf.cdo" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" usedGenPackages="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//defs ../../org.eclipse.net4j.defs/model/org.eclipse.net4j.defs.genmodel#//defs">
+=======
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.defs/src"
     editDirectory="" editorDirectory="" modelPluginID="org.eclipse.emf.cdo.defs" modelName="Org.eclipse.emf.cdo"
     testsDirectory="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
     copyrightFields="false" usedGenPackages="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//net4jutildefs ../../org.eclipse.net4j.defs/model/org.eclipse.net4j.defs.genmodel#//net4jdefs">
+>>>>>>> 1.2
   <foreignModel>org.eclipse.emf.cdo.defs.ecore</foreignModel>
   <genPackages prefix="CDODefs" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       ecorePackage="org.eclipse.emf.cdo.defs.ecore#/">

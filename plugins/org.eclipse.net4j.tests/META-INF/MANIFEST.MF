@@ -26,5 +26,4 @@ Export-Package: org.eclipse.net4j.tests;version="2.0.0",
  org.eclipse.net4j.util.tests.cache;version="2.0.0",
  org.eclipse.net4j.util.tests.defs;version="2.0.0",
  org.eclipse.net4j.util.tests.defs.impl;version="2.0.0",
- org.eclipse.net4j.util.tests.defs.util;version="2.0.0",
- org.eclipse.net4j.util.tests.defs.validation;version="2.0.0"
+ org.eclipse.net4j.util.tests.defs.util;version="2.0.0"

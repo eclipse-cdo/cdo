@@ -1,20 +1,20 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2008 André Dietisheim, Switzerland.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    André Dietisheim - initial API and implementation
  **************************************************************************/
 package org.eclipse.net4j.util.tests.defs;
 
+import org.eclipse.net4j.util.defs.Def;
+import org.eclipse.net4j.util.defs.impl.DefImpl;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.net4jutildefs.Def;
-import org.eclipse.net4j.util.net4jutildefs.impl.DefImpl;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -23,7 +23,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author Eike Stepper
+ * @author André Dietisheim
  */
 public class TestDefTest extends AbstractOMTest
 {
@@ -48,8 +48,16 @@ public class TestDefTest extends AbstractOMTest
 
   public void testInstanceCreatedIsActivated()
   {
-    Object thisInstance = def.getInstance();
-    assertTrue(LifecycleUtil.isActive(thisInstance));
+    Object instance = def.getInstance();
+    assertTrue(LifecycleUtil.isActive(instance));
+  }
+
+  public void testInstanceDeactivatesIfUnset()
+  {
+    Object instance = def.getInstance();
+    def.unsetInstance();
+    assertTrue(((DefImpl)def).getInternalInstance() == null);
+    assertTrue(!LifecycleUtil.isActive(instance));
   }
 
   public void testNewInstanceIsCreatedIfDefWasTouchedAfterwards() throws Exception

@@ -1,28 +1,28 @@
 /***************************************************************************
- * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2008 André Dietisheim, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    André Dietisheim - initial API and implementation
  **************************************************************************/
 package org.eclipse.net4j.tests.defs;
 
+import org.eclipse.net4j.defs.Net4jDefsFactory;
+import org.eclipse.net4j.defs.TCPAcceptorDef;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
-import org.eclipse.net4j.net4jdefs.ChallengeNegotiatorDef;
-import org.eclipse.net4j.net4jdefs.Net4jDefsFactory;
-import org.eclipse.net4j.net4jdefs.TCPAcceptorDef;
-import org.eclipse.net4j.net4jdefs.User;
-import org.eclipse.net4j.net4jdefs.UserManagerDef;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
+import org.eclipse.net4j.util.defs.ChallengeNegotiatorDef;
+import org.eclipse.net4j.util.defs.Net4jUtilDefsFactory;
+import org.eclipse.net4j.util.defs.User;
+import org.eclipse.net4j.util.defs.UserManagerDef;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.net4jutildefs.Net4jUtilDefsFactory;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 /**
- * @author Eike Stepper
+ * @author André Dietisheim
  */
 public class TCPAcceptorDefImplTest extends AbstractOMTest
 {
@@ -76,15 +76,15 @@ public class TCPAcceptorDefImplTest extends AbstractOMTest
   {
     TCPAcceptorDef tcpAcceptorDef = createTCPAcceptorDef();
 
-    User user = Net4jDefsFactory.eINSTANCE.createUser();
+    User user = Net4jUtilDefsFactory.eINSTANCE.createUser();
     user.setUserID(USERID);
     user.setPassword(PASSWORD);
 
-    UserManagerDef userManagerDef = Net4jDefsFactory.eINSTANCE.createUserManagerDef();
+    UserManagerDef userManagerDef = Net4jUtilDefsFactory.eINSTANCE.createUserManagerDef();
     userManagerDef.getUser().add(user);
 
-    ChallengeNegotiatorDef challengeNegotiatorDef = Net4jDefsFactory.eINSTANCE.createChallengeNegotiatorDef();
-    challengeNegotiatorDef.setRandomizer(Net4jDefsFactory.eINSTANCE.createRandomizerDef());
+    ChallengeNegotiatorDef challengeNegotiatorDef = Net4jUtilDefsFactory.eINSTANCE.createChallengeNegotiatorDef();
+    challengeNegotiatorDef.setRandomizer(Net4jUtilDefsFactory.eINSTANCE.createRandomizerDef());
     challengeNegotiatorDef.setUserManager(userManagerDef);
 
     tcpAcceptorDef.setNegotiator(challengeNegotiatorDef);

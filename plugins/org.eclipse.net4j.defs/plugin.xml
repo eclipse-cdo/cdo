@@ -5,7 +5,7 @@
  <copyright>
  </copyright>
 
- $Id: plugin.xml,v 1.1 2008-12-28 18:07:30 estepper Exp $
+ $Id: plugin.xml,v 1.2 2008-12-31 14:43:19 estepper Exp $
 -->
 
 <plugin>
@@ -13,7 +13,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/NET4J/util/defs/1.0.0"
-            class="org.eclipse.net4j.net4jdefs.Net4jDefsPackage"
+            class="org.eclipse.net4j.defs.Net4jDefsPackage"
             genModel="model/org.eclipse.net4j.defs.genmodel"/>
    </extension>
 

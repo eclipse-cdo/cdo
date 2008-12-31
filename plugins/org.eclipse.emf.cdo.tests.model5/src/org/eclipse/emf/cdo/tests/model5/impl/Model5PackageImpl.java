@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model5PackageImpl.java,v 1.4 2008-12-28 17:57:09 estepper Exp $
+ * $Id: Model5PackageImpl.java,v 1.5 2008-12-31 14:43:41 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.impl;
 
@@ -36,91 +36,105 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class Model5PackageImpl extends EPackageImpl implements Model5Package
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass testFeatureMapEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass managerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass doctorEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfIntEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfIntegerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfLongEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfBooleanEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfShortEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfFloatEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfDoubleEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfDateEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfCharEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass genListOfStringEClass = null;
@@ -145,27 +159,24 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
-   * Creates, registers, and initializes the <b>Package</b> for this
-   * model, and for any others upon which it depends.  Simple
-   * dependencies are satisfied by calling this method on all
-   * dependent packages before doing anything else.  This method drives
-   * initialization for interdependent packages directly, in parallel
-   * with this package, itself.
-   * <p>Of this package and its interdependencies, all packages which
-   * have not yet been registered by their URI values are first created
-   * and registered.  The packages are then initialized in two steps:
-   * meta-model objects for all of the packages are created before any
-   * are initialized, since one package's meta-model objects may refer to
-   * those of another.
-   * <p>Invocation of this method will not affect any packages that have
-   * already been initialized.
-   * <!-- begin-user-doc -->
+   * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+   * Simple dependencies are satisfied by calling this method on all dependent packages before doing anything else. This
+   * method drives initialization for interdependent packages directly, in parallel with this package, itself.
+   * <p>
+   * Of this package and its interdependencies, all packages which have not yet been registered by their URI values are
+   * first created and registered. The packages are then initialized in two steps: meta-model objects for all of the
+   * packages are created before any are initialized, since one package's meta-model objects may refer to those of
+   * another.
+   * <p>
+   * Invocation of this method will not affect any packages that have already been initialized. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -197,6 +208,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getTestFeatureMap()
@@ -206,6 +218,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getTestFeatureMap_Managers()
@@ -215,6 +228,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getTestFeatureMap_Doctors()
@@ -224,6 +238,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getTestFeatureMap_People()
@@ -233,6 +248,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getManager()
@@ -242,6 +258,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getDoctor()
@@ -251,6 +268,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfInt()
@@ -260,6 +278,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfInt_Elements()
@@ -269,6 +288,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfInteger()
@@ -278,6 +298,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfInteger_Elements()
@@ -287,6 +308,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfLong()
@@ -296,6 +318,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfLong_Elements()
@@ -305,6 +328,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfBoolean()
@@ -314,6 +338,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfBoolean_Elements()
@@ -323,6 +348,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfShort()
@@ -332,6 +358,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfShort_Elements()
@@ -341,6 +368,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfFloat()
@@ -350,6 +378,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfFloat_Elements()
@@ -359,6 +388,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfDouble()
@@ -368,6 +398,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfDouble_Elements()
@@ -377,6 +408,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfDate()
@@ -386,6 +418,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfDate_Elements()
@@ -395,6 +428,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfChar()
@@ -404,6 +438,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfChar_Elements()
@@ -413,6 +448,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getGenListOfString()
@@ -422,6 +458,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getGenListOfString_Elements()
@@ -431,6 +468,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Model5Factory getModel5Factory()
@@ -440,14 +478,15 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
+   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -499,14 +538,15 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
+   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()
@@ -608,9 +648,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   }
 
   /**
-   * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
-   * <!-- begin-user-doc -->
+   * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected void createExtendedMetaDataAnnotations()

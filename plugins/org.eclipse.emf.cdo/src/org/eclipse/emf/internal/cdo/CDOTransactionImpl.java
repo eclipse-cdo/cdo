@@ -100,6 +100,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private CDOTransactionStrategy transactionStrategy;
 
+  /**
+   * @since 2.0
+   */
   public CDOTransactionImpl()
   {
   }

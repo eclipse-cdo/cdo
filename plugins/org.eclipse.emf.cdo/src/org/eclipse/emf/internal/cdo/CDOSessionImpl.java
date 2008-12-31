@@ -391,6 +391,9 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     return openAudit(createResourceSet(), timeStamp);
   }
 
+  /**
+   * @since 2.0
+   */
   protected CDOAuditImpl createAudit(long timeStamp)
   {
     return new CDOAuditImpl(timeStamp);

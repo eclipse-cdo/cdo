@@ -138,6 +138,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @ExcludeFromDump
   private transient InternalCDOObject lastLookupObject;
 
+  /**
+   * @since 2.0
+   */
   public CDOViewImpl()
   {
     options = initOptions();
@@ -164,6 +167,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return viewID;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setViewID(int viewId)
   {
     viewID = viewId;
@@ -207,6 +213,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return session;
   }
 
+  /**
+   * @since 2.0
+   */
   public void setSession(InternalCDOSession session)
   {
     this.session = session;
@@ -345,6 +354,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public long getTimeStamp()
   {
     return UNSPECIFIED_DATE;
@@ -1424,6 +1436,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return getResourceSet();
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected void doBeforeActivate() throws Exception
   {

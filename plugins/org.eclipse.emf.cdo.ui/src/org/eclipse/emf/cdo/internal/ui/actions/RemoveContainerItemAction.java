@@ -31,6 +31,7 @@ public class RemoveContainerItemAction<E> extends AbstractContainerAction<E>
   public RemoveContainerItemAction(IContainer.Modifiable<E> container, ISelectionProvider selectionProvider)
   {
     super(container);
+    this.selectionProvider = selectionProvider;
   }
 
   @Override

@@ -749,8 +749,8 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
 
     try
     {
-      fireElementAddedEvent(view);
       view.activate();
+      fireElementAddedEvent(view);
     }
     catch (RuntimeException ex)
     {

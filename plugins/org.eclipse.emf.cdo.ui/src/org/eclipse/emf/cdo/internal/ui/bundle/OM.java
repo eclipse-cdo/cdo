@@ -54,8 +54,8 @@ public abstract class OM
   public static final OMPreference<String[]> PREF_HISTORY_REPOSITORIES = //
   PREFS.initArray("PREF_HISTORY_REPOSITORIES"); //$NON-NLS-1$
 
-  public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTY = //
-  PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTY", true); //$NON-NLS-1$
+  public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTRY = //
+  PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTRY", true); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
   PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$

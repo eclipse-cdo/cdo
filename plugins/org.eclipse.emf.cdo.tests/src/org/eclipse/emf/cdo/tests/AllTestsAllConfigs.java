@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_254489_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_255662_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_256141_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258278_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259695_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;

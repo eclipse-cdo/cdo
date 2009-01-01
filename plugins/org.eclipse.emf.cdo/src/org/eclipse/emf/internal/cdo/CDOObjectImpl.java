@@ -635,6 +635,22 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           size = delegateEList.size();
         }
 
+        // Temporary fix. A fix should be available in EMF for that.
+        @Override
+        protected BasicEList<Entry<Object, Object>> newList()
+        {
+          return new BasicEList<Entry<Object, Object>>()
+          {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Object[] newData(int listCapacity)
+            {
+              return new BasicEMap.Entry[listCapacity];
+            }
+          };
+        }
+
         private void checkListForReading()
         {
           if (!FSMUtil.isTransient(CDOObjectImpl.this))

@@ -33,6 +33,7 @@ import org.eclipse.net4j.spi.db.DBSchema;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 import javax.sql.DataSource;
 
@@ -57,6 +58,24 @@ public class DBStore extends LongIDStore implements IDBStore
 
   private IDBConnectionProvider dbConnectionProvider;
 
+  private IJDBCDelegateProvider jdbcDelegateProvider;
+
+  @ExcludeFromDump
+  private transient ProgressDistributor accessorWriteDistributor = new ProgressDistributor.Geometric()
+  {
+    @Override
+    public String toString()
+    {
+      String result = "accessorWriteDistributor";
+      if (getRepository() != null)
+      {
+        result += ": " + getRepository().getName();
+      }
+
+      return result;
+    }
+  };
+
   @ExcludeFromDump
   private transient StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
 
@@ -71,8 +90,6 @@ public class DBStore extends LongIDStore implements IDBStore
 
   @ExcludeFromDump
   private transient int nextFeatureID;
-
-  private IJDBCDelegateProvider jdbcDelegateProvider;
 
   public DBStore()
   {
@@ -115,6 +132,21 @@ public class DBStore extends LongIDStore implements IDBStore
   public void setDataSource(DataSource dataSource)
   {
     dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
+  }
+
+  public IJDBCDelegateProvider getJDBCDelegateProvider()
+  {
+    return jdbcDelegateProvider;
+  }
+
+  public void setJDBCDelegateProvider(IJDBCDelegateProvider provider)
+  {
+    jdbcDelegateProvider = provider;
+  }
+
+  public ProgressDistributor getAccessorWriteDistributor()
+  {
+    return accessorWriteDistributor;
   }
 
   public synchronized IDBSchema getDBSchema()
@@ -399,15 +431,5 @@ public class DBStore extends LongIDStore implements IDBStore
     }
 
     throw new ImplementationError("Unrecognized CDOType: " + type);
-  }
-
-  public IJDBCDelegateProvider getJDBCDelegateProvider()
-  {
-    return jdbcDelegateProvider;
-  }
-
-  public void setJDBCDelegateProvider(IJDBCDelegateProvider provider)
-  {
-    jdbcDelegateProvider = provider;
   }
 }

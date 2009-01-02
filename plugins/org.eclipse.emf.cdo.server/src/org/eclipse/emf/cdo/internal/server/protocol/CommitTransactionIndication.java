@@ -48,6 +48,8 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -62,6 +64,30 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 {
   private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       CommitTransactionIndication.class);
+
+  @SuppressWarnings("unchecked")
+  private static final ProgressDistributable<InternalCommitContext>[] ops = ProgressDistributor.array( //
+      new ProgressDistributable.Default<InternalCommitContext>()
+      {
+        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          commitContext.write(monitor.fork());
+        }
+      }, //
+      new ProgressDistributable.Default<InternalCommitContext>()
+      {
+        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          if (commitContext.getRollbackMessage() == null)
+          {
+            commitContext.commit(monitor.fork());
+          }
+          else
+          {
+            monitor.worked();
+          }
+        }
+      });
 
   protected InternalCommitContext commitContext;
 
@@ -319,19 +345,8 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected void indicatingCommit(OMMonitor monitor)
   {
-    try
-    {
-      monitor.begin(101);
-      commitContext.write(monitor.fork(100));
-      if (commitContext.getRollbackMessage() == null)
-      {
-        commitContext.commit(monitor.fork());
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
+    ProgressDistributor distributor = getStore().getIndicatingCommitDistributor();
+    distributor.run(ops, commitContext, monitor);
   }
 
   protected boolean respondingException(CDODataOutput out, String rollbackMessage) throws Exception

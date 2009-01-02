@@ -40,11 +40,6 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
   {
   }
 
-  public int getFlushEffortPercent()
-  {
-    return 1;
-  }
-
   public void flush(OMMonitor monitor)
   {
     // Do nothing

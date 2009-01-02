@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
+
 import java.util.Set;
 
 /**
@@ -110,6 +112,11 @@ public interface IStore extends IRepositoryElement
    * @since 2.0
    */
   public IStoreAccessor getWriter(ITransaction transaction);
+
+  /**
+   * @since 2.0
+   */
+  public ProgressDistributor getIndicatingCommitDistributor();
 
   /**
    * @author Eike Stepper

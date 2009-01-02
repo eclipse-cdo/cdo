@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,6 +56,22 @@ public abstract class Store extends Lifecycle implements IStore
 
   @ExcludeFromDump
   private transient long lastMetaID;
+
+  @ExcludeFromDump
+  private transient ProgressDistributor indicatingCommitDistributor = new ProgressDistributor.Geometric()
+  {
+    @Override
+    public String toString()
+    {
+      String result = "indicatingCommitDistributor";
+      if (repository != null)
+      {
+        result += ": " + repository.getName();
+      }
+
+      return result;
+    }
+  };
 
   /**
    * @since 2.0
@@ -224,6 +241,14 @@ public abstract class Store extends Lifecycle implements IStore
     }
 
     return writer;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public ProgressDistributor getIndicatingCommitDistributor()
+  {
+    return indicatingCommitDistributor;
   }
 
   protected void releaseAccessor(StoreAccessor accessor)

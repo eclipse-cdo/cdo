@@ -49,6 +49,8 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
+import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -67,6 +69,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
   private IJDBCDelegate jdbcDelegate;
+
+  @SuppressWarnings("unchecked")
+  private final ProgressDistributable<CommitContext>[] ops = ProgressDistributor.array( //
+      new ProgressDistributable.Default<CommitContext>()
+      {
+        public void runLoop(int index, CommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          DBStoreAccessor.super.write(commitContext, monitor.fork());
+        }
+      }, //
+      new ProgressDistributable.Default<CommitContext>()
+      {
+        public void runLoop(int index, CommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          jdbcDelegate.flush(monitor.fork());
+        }
+      });
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
@@ -351,18 +370,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   @Override
   public void write(CommitContext context, OMMonitor monitor)
   {
-    int delegateEffort = jdbcDelegate.getFlushEffortPercent();
-
-    try
-    {
-      monitor.begin(100);
-      super.write(context, monitor.fork(100 - delegateEffort));
-      jdbcDelegate.flush(monitor.fork(delegateEffort));
-    }
-    finally
-    {
-      monitor.done();
-    }
+    ProgressDistributor distributor = getStore().getAccessorWriteDistributor();
+    distributor.run(ops, context, monitor);
   }
 
   @Override

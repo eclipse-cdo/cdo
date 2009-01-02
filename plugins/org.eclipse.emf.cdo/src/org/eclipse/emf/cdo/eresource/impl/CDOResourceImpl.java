@@ -687,10 +687,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       transaction.commit(progressMonitor);
       setModified(false);
     }
-    else
-    {
-      throw new IOException("CDO view is read-only: " + view);
-    }
   }
 
   /**

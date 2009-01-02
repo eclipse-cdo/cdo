@@ -90,11 +90,6 @@ public interface IJDBCDelegate
   public void flush(OMMonitor monitor);
 
   /**
-   * Used by the framework to determine the effort distribution between the store accessor and this JDBC delegate.
-   */
-  public int getFlushEffortPercent();
-
-  /**
    * Do a commit on the JDBC connection.
    */
   public void commit(OMMonitor monitor);

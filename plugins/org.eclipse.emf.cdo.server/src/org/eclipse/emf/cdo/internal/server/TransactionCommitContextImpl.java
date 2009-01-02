@@ -231,6 +231,43 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     return autoReleaseLocksEnabled;
   }
 
+  /**
+   * @since 2.0
+   */
+  public void write(OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(106);
+  
+      // Could throw an exception
+      timeStamp = createTimeStamp();
+      dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
+  
+      adjustMetaRanges(monitor.fork());
+      adjustTimeStamps(monitor.fork());
+  
+      Repository repository = (Repository)transaction.getRepository();
+      computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());
+  
+      lockObjects();
+      monitor.worked();
+  
+      repository.notifyWriteAccessHandlers(transaction, this, monitor.fork());
+      detachObjects(monitor.fork());
+  
+      accessor.write(this, monitor.fork(100));
+    }
+    catch (Throwable t)
+    {
+      handleException(t);
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
   public void commit(OMMonitor monitor)
   {
     try
@@ -246,43 +283,6 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     catch (Error ex)
     {
       handleException(ex);
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void write(OMMonitor monitor)
-  {
-    try
-    {
-      monitor.begin(106);
-
-      // Could throw an exception
-      timeStamp = createTimeStamp();
-      dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
-
-      adjustMetaRanges(monitor.fork());
-      adjustTimeStamps(monitor.fork());
-
-      Repository repository = (Repository)transaction.getRepository();
-      computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());
-
-      lockObjects();
-      monitor.worked();
-
-      repository.notifyWriteAccessHandlers(transaction, this, monitor.fork());
-      detachObjects(monitor.fork());
-
-      accessor.write(this, monitor.fork(100));
-    }
-    catch (Throwable t)
-    {
-      handleException(t);
     }
     finally
     {

@@ -10,7 +10,10 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.Arrays;
 
@@ -18,40 +21,32 @@ import java.util.Arrays;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class ProgressDistributor<CONTEXT>
+public abstract class ProgressDistributor
 {
-  private ProgressDistributable<CONTEXT>[] distributables;
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MONITOR, ProgressDistributor.class);
 
   private double[] distribution;
 
-  public ProgressDistributor(ProgressDistributable<CONTEXT>[] distributables, double[] distribution)
+  public ProgressDistributor()
   {
-    CheckUtil.checkArg(distributables, "distributables");
-    CheckUtil.checkArg(distribution, "distribution");
-    if (distributables.length == 0)
-    {
-      throw new IllegalArgumentException("distributables.length == 0");
-    }
-
-    if (distributables.length != distribution.length)
-    {
-      throw new IllegalArgumentException("distributables.length != distribution.length");
-    }
-
-    this.distributables = distributables;
-    this.distribution = distribution;
   }
 
-  public ProgressDistributor(ProgressDistributable<CONTEXT>[] distributables)
-  {
-    this(distributables, createDefaultDistribution(distributables.length));
-  }
-
-  public final void run(CONTEXT context, OMMonitor monitor) throws Exception
+  public final <CONTEXT> void run(ProgressDistributable<CONTEXT>[] distributables, CONTEXT context, OMMonitor monitor)
+      throws RuntimeException, WrappedException
   {
     double[] distributionCopy;
     synchronized (this)
     {
+      if (distribution == null)
+      {
+        distribution = new double[distributables.length];
+        Arrays.fill(distribution, OMMonitor.ONE);
+      }
+      else
+      {
+        CheckUtil.checkArg(distribution.length == distributables.length, "distributables.length");
+      }
+
       distributionCopy = new double[distribution.length];
       System.arraycopy(distribution, 0, distributionCopy, 0, distribution.length);
     }
@@ -60,6 +55,22 @@ public abstract class ProgressDistributor<CONTEXT>
     for (int i = 0; i < distributionCopy.length; i++)
     {
       total += distributionCopy[i];
+    }
+
+    if (TRACER.isEnabled())
+    {
+      StringBuilder builder = new StringBuilder("Distribution: ");
+      for (int i = 0; i < distributionCopy.length; i++)
+      {
+        builder.append(distributionCopy[i] * OMMonitor.HUNDRED / total);
+        builder.append("%, ");
+      }
+
+      builder.append("(");
+      builder.append(this);
+      builder.append(")");
+      TRACER.trace(builder.toString());
+      // IOUtil.OUT().println(builder.toString());
     }
 
     monitor.begin(total);
@@ -81,7 +92,14 @@ public abstract class ProgressDistributor<CONTEXT>
           long start = System.currentTimeMillis();
           for (int loop = 0; loop < count; loop++)
           {
-            distributable.runLoop(loop, context, distributableMonitor);
+            try
+            {
+              distributable.runLoop(loop, context, distributableMonitor);
+            }
+            catch (Exception ex)
+            {
+              throw WrappedException.wrap(ex);
+            }
           }
 
           times[i] = (double)(System.currentTimeMillis() - start) / count;
@@ -105,30 +123,22 @@ public abstract class ProgressDistributor<CONTEXT>
 
   protected abstract void distribute(double[] distribution, double[] times);
 
-  private static double[] createDefaultDistribution(int count)
+  public static <CONTEXT> ProgressDistributable<CONTEXT>[] array(ProgressDistributable<CONTEXT>... ops)
   {
-    double[] distribution = new double[count];
-    Arrays.fill(distribution, OMMonitor.ONE);
-    return distribution;
+    return ops;
   }
 
   /**
    * @author Eike Stepper
    */
-  public static class Arithmetic<CONTEXT> extends ProgressDistributor<CONTEXT>
+  public static class Arithmetic extends ProgressDistributor
   {
     private long count;
 
     private double[] times;
 
-    public Arithmetic(ProgressDistributable<CONTEXT>[] distributables, double[] distribution)
+    public Arithmetic()
     {
-      super(distributables, distribution);
-    }
-
-    public Arithmetic(ProgressDistributable<CONTEXT>[] distributables)
-    {
-      super(distributables);
     }
 
     @Override
@@ -146,16 +156,10 @@ public abstract class ProgressDistributor<CONTEXT>
   /**
    * @author Eike Stepper
    */
-  public static class Geometric<CONTEXT> extends ProgressDistributor<CONTEXT>
+  public static class Geometric extends ProgressDistributor
   {
-    public Geometric(ProgressDistributable<CONTEXT>[] distributables, double[] distribution)
+    public Geometric()
     {
-      super(distributables, distribution);
-    }
-
-    public Geometric(ProgressDistributable<CONTEXT>[] distributables)
-    {
-      super(distributables);
     }
 
     @Override

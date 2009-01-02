@@ -103,12 +103,6 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     this.cachingEnablement = cachingEnablement;
   }
 
-  public int getFlushEffortPercent()
-  {
-    // TODO Calculate dynamically
-    return 10;
-  }
-
   public void flush(OMMonitor monitor)
   {
     try

@@ -12,18 +12,16 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.monitor.Monitor;
-import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.TimeoutMonitor;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 /**
  * @author Eike Stepper
@@ -31,13 +29,7 @@ import java.util.concurrent.Future;
  */
 public abstract class IndicationWithMonitoring extends IndicationWithResponse
 {
-  private LastAccessMonitor monitor;
-
-  private Object monitorLock = new Object();
-
-  private Future<?> monitorFuture;
-
-  private long lastMonitorAccess;
+  private ReportingMonitor monitor;
 
   /**
    * @since 2.0
@@ -72,17 +64,10 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
     }
     finally
     {
-      synchronized (monitorLock)
+      if (monitor != null)
       {
-        if (monitor != null)
-        {
-          monitor.done();
-          monitor = null;
-          if (monitorFuture != null)
-          {
-            monitorFuture.cancel(true);
-          }
-        }
+        monitor.done();
+        monitor = null;
       }
     }
   }
@@ -90,66 +75,19 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
   @Override
   protected final void indicating(ExtendedDataInputStream in) throws Exception
   {
-    final long monitorProgressInterval = in.readLong();
-    ExecutorService executorService = getMonitoringExecutorService();
-    if (executorService != null)
-    {
-      monitor = new LastAccessMonitor();
-      setLastMonitorAccess();
-      monitorFuture = executorService.submit(new Runnable()
-      {
-        public void run()
-        {
-          while (monitor != null)
-          {
-            // long passedMillis = System.currentTimeMillis() - lastMonitorAccess;
-            // if (passedMillis > monitorProgressInterval)
-            // {
-            // setMonitorCanceled("Timeout after " + passedMillis + " millis");
-            // break;
-            // }
+    int monitorProgressSeconds = in.readInt();
+    int monitorTimeoutSeconds = in.readInt();
 
-            synchronized (monitorLock)
-            {
-              if (monitor != null)
-              {
-                // Keep sendProgress into the locks... otherwise when interrupt it seems to freeze.
-                sendProgress(monitor.getTotalWork(), (int)monitor.getWork());
-              }
-            }
+    monitor = new ReportingMonitor(monitorProgressSeconds, monitorTimeoutSeconds);
+    monitor.begin(OMMonitor.HUNDRED);
 
-            if (monitor != null)
-            {
-              ConcurrencyUtil.sleep(monitorProgressInterval);
-            }
-          }
-        }
-
-        private void sendProgress(int totalWork, int work)
-        {
-          try
-          {
-            new MonitorProgressRequest(getProtocol(), -getCorrelationID(), totalWork, work).sendAsync();
-          }
-          catch (Exception ex)
-          {
-            if (LifecycleUtil.isActive(getProtocol().getChannel()))
-            {
-              OM.LOG.error(ex);
-            }
-          }
-        }
-      });
-    }
-
-    monitor.begin(100);
     indicating(in, monitor.fork(getIndicatingWorkPercent()));
   }
 
   @Override
   protected final void responding(ExtendedDataOutputStream out) throws Exception
   {
-    responding(out, monitor.fork(100 - getIndicatingWorkPercent()));
+    responding(out, monitor.fork(OMMonitor.HUNDRED - getIndicatingWorkPercent()));
   }
 
   protected abstract void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception;
@@ -166,79 +104,61 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
 
   protected int getIndicatingWorkPercent()
   {
-    return 100;
+    return 99;
   }
 
-  void setMonitorCanceled(String message)
+  void setMonitorCanceled()
   {
-    synchronized (monitorLock)
-    {
-      if (monitor != null)
-      {
-        monitor.setCancelationMessage(message);
-        monitor.cancel();
-      }
-    }
-  }
-
-  void setLastMonitorAccess()
-  {
-    lastMonitorAccess = System.currentTimeMillis();
+    monitor.cancel();
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class LastAccessMonitor extends Monitor
+  private final class ReportingMonitor extends TimeoutMonitor
   {
-    private String cancelationMessage;
-
-    public LastAccessMonitor()
+    private TimerTask sendProgressTask = new TimerTask()
     {
+      @Override
+      public void run()
+      {
+        sendProgress();
+      }
+    };
+
+    public ReportingMonitor(int monitorProgressSeconds, int monitorTimeoutSeconds)
+    {
+      super(monitorTimeoutSeconds * 1000L);
+      long period = monitorProgressSeconds * 1000L;
+      getTimer().scheduleAtFixedRate(sendProgressTask, period, period);
     }
 
     @Override
-    public synchronized void begin(int totalWork)
+    public void cancel(RuntimeException cancelException)
     {
-      setLastMonitorAccess();
-      super.begin(totalWork);
+      sendProgressTask.cancel();
+      super.cancel(cancelException);
     }
 
     @Override
-    public synchronized void worked(double work)
+    public void done()
     {
-      setLastMonitorAccess();
-      super.worked(work);
+      sendProgressTask.cancel();
+      super.done();
     }
 
-    public void setCancelationMessage(String message)
-    {
-      cancelationMessage = message;
-    }
-
-    @Override
-    public synchronized boolean isCanceled()
-    {
-      setLastMonitorAccess();
-      return super.isCanceled();
-    }
-
-    @Override
-    public synchronized void checkCanceled() throws MonitorCanceledException
+    private void sendProgress()
     {
       try
       {
-        setLastMonitorAccess();
-        super.checkCanceled();
+        new MonitorProgressRequest(getProtocol(), -getCorrelationID(), getTotalWork(), getWork()).sendAsync();
       }
-      catch (MonitorCanceledException ex)
+      catch (Exception ex)
       {
-        if (cancelationMessage != null)
+        if (LifecycleUtil.isActive(getProtocol().getChannel()))
         {
-          throw new MonitorCanceledException(cancelationMessage);
+          OM.LOG.error(ex);
         }
-
-        throw ex;
       }
     }
   }

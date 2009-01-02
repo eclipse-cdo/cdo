@@ -121,6 +121,7 @@ public interface CDOView extends CDOProtocolView, INotifier, IOptionsContainer
    *    {
    *      throw new TimeoutException();
    *    }
+   *    
    *    try
    *    {
    *      float sum = 0;
@@ -128,6 +129,7 @@ public interface CDOView extends CDOProtocolView, INotifier, IOptionsContainer
    *      {
    *        sum += detail.getPrice();
    *      }
+   *      
    *      System.out.println(&quot;Sum: &quot; + sum);
    *    }
    *    finally

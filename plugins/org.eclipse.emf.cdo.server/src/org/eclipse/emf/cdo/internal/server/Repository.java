@@ -507,7 +507,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       for (WriteAccessHandler handler : handlers)
       {
         // Do *not* protect against unchecked exceptions from handlers!
-        handler.handleTransactionBeforeCommitting(transaction, commitContext, monitor.fork(1));
+        handler.handleTransactionBeforeCommitting(transaction, commitContext, monitor.fork());
       }
     }
     finally

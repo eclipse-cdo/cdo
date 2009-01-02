@@ -18,6 +18,36 @@ public interface OMMonitor
   /**
    * @since 2.0
    */
+  public static final double ZERO = 0;
+
+  /**
+   * @since 2.0
+   */
+  public static final double ONE = 1;
+
+  /**
+   * @since 2.0
+   */
+  public static final double TEN = 10;
+
+  /**
+   * @since 2.0
+   */
+  public static final double HUNDRED = 100;
+
+  /**
+   * @since 2.0
+   */
+  public static final int THOUSAND = 1000;
+
+  /**
+   * @since 2.0
+   */
+  public static final double DEFAULT_TIME_FACTOR = THOUSAND;
+
+  /**
+   * @since 2.0
+   */
   public boolean isCanceled();
 
   /**
@@ -28,7 +58,19 @@ public interface OMMonitor
   /**
    * @since 2.0
    */
-  public void begin(int totalWork) throws MonitorCanceledException;
+  public boolean hasBegun() throws MonitorCanceledException;
+
+  /**
+   * @since 2.0
+   */
+  public OMMonitor begin(double totalWork) throws MonitorCanceledException;
+
+  /**
+   * Same as calling <code>begin(ONE)</code>.
+   * 
+   * @since 2.0
+   */
+  public OMMonitor begin() throws MonitorCanceledException;
 
   /**
    * @since 2.0
@@ -36,11 +78,45 @@ public interface OMMonitor
   public void worked(double work) throws MonitorCanceledException;
 
   /**
+   * Same as calling <code>worked(ONE)</code>.
+   * 
+   * @since 2.0
+   */
+  public void worked() throws MonitorCanceledException;
+
+  /**
+   * @since 2.0
+   */
+  public OMMonitor fork(double work);
+
+  /**
+   * Same as calling <code>fork(ONE)</code>.
+   * 
+   * @since 2.0
+   */
+  public OMMonitor fork();
+
+  /**
+   * @since 2.0
+   */
+  public Async forkAsync(double work);
+
+  /**
+   * Same as calling <code>forkAsync(ONE)</code>.
+   * 
+   * @since 2.0
+   */
+  public Async forkAsync();
+
+  /**
    * @since 2.0
    */
   public void done();
 
-  public int getTotalWork();
+  /**
+   * @since 2.0
+   */
+  public double getTotalWork();
 
   /**
    * @since 2.0
@@ -50,5 +126,14 @@ public interface OMMonitor
   /**
    * @since 2.0
    */
-  public OMMonitor fork(int work);
+  public double getWorkPercent();
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public interface Async
+  {
+    public void stop();
+  }
 }

@@ -13,6 +13,8 @@ package org.eclipse.net4j.util.om.monitor;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.SubProgressMonitor;
 
 /**
  * @author Eike Stepper
@@ -52,23 +54,129 @@ public class EclipseMonitor extends Monitor
   }
 
   @Override
-  public synchronized void begin(int totalWork) throws MonitorCanceledException
+  public OMMonitor begin(double totalWork) throws MonitorCanceledException
   {
     super.begin(totalWork);
-    progressMonitor.beginTask(taskName, totalWork);
+    int eclipseWork = totalWork > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)totalWork;
+    progressMonitor.beginTask(taskName, eclipseWork);
+    return this;
   }
 
   @Override
-  public synchronized void worked(double work) throws MonitorCanceledException
+  public void worked(double work) throws MonitorCanceledException
   {
     super.worked(work);
     progressMonitor.internalWorked(work);
   }
 
   @Override
-  public synchronized void done()
+  public void done()
   {
     super.done();
     progressMonitor.done();
+  }
+
+  /**
+   * A sub progress monitor that synchronizes all methods on the parent monitor instance.
+   * 
+   * @author Eike Stepper
+   * @since 2.0
+   */
+  public static class SynchonizedSubProgressMonitor extends SubProgressMonitor
+  {
+    public SynchonizedSubProgressMonitor(IProgressMonitor monitor, int ticks)
+    {
+      super(monitor, ticks);
+    }
+
+    @Override
+    public void beginTask(String name, int totalWork)
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.beginTask(name, totalWork);
+      }
+    }
+
+    @Override
+    public void clearBlocked()
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.clearBlocked();
+      }
+    }
+
+    @Override
+    public void done()
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.done();
+      }
+    }
+
+    @Override
+    public void internalWorked(double work)
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.internalWorked(work);
+      }
+    }
+
+    @Override
+    public boolean isCanceled()
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        return super.isCanceled();
+      }
+    }
+
+    @Override
+    public void setBlocked(IStatus reason)
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.setBlocked(reason);
+      }
+    }
+
+    @Override
+    public void setCanceled(boolean b)
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.setCanceled(b);
+      }
+    }
+
+    @Override
+    public void setTaskName(String name)
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.setTaskName(name);
+      }
+    }
+
+    @Override
+    public void subTask(String name)
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.subTask(name);
+      }
+    }
+
+    @Override
+    public void worked(int work)
+    {
+      synchronized (getWrappedProgressMonitor())
+      {
+        super.worked(work);
+      }
+    }
   }
 }

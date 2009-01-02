@@ -171,7 +171,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       for (CDORevisionDelta dirtyObjectDelta : dirtyObjectDeltas)
       {
         ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMapper);
-        monitor.worked(1);
+        monitor.worked();
       }
     }
     finally
@@ -237,7 +237,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     {
       monitor.begin(101);
       accessor.commit(monitor.fork(100));
-      updateInfraStructure(monitor.fork(1));
+      updateInfraStructure(monitor.fork());
     }
     catch (RuntimeException ex)
     {
@@ -266,17 +266,17 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       timeStamp = createTimeStamp();
       dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
 
-      adjustMetaRanges(monitor.fork(1));
-      adjustTimeStamps(monitor.fork(1));
+      adjustMetaRanges(monitor.fork());
+      adjustTimeStamps(monitor.fork());
 
       Repository repository = (Repository)transaction.getRepository();
-      computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork(1));
+      computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());
 
       lockObjects();
-      monitor.worked(1);
+      monitor.worked();
 
-      repository.notifyWriteAccessHandlers(transaction, this, monitor.fork(1));
-      detachObjects(monitor.fork(1));
+      repository.notifyWriteAccessHandlers(transaction, this, monitor.fork());
+      detachObjects(monitor.fork());
 
       accessor.write(this, monitor.fork(100));
     }
@@ -337,7 +337,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       {
         InternalCDORevision revision = (InternalCDORevision)newObject;
         revision.setCreated(timeStamp);
-        monitor.worked(1);
+        monitor.worked();
       }
     }
     finally
@@ -355,7 +355,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       {
         if (newPackage.getParentURI() == null)
         {
-          adjustMetaRange(newPackage, monitor.fork(1));
+          adjustMetaRange(newPackage, monitor.fork());
         }
       }
     }
@@ -388,7 +388,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
         }
 
         idMappings.put(oldID, newID);
-        monitor.worked(1);
+        monitor.worked();
       }
 
       metaIDRanges.add(newRange);
@@ -447,7 +447,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
           throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]);
         }
 
-        monitor.worked(1);
+        monitor.worked();
       }
     }
     finally
@@ -492,7 +492,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
           }
 
           internalRevision.adjustReferences(idMapper);
-          monitor.worked(1);
+          monitor.worked();
         }
       }
     }
@@ -533,19 +533,19 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     try
     {
       monitor.begin(6);
-      addNewPackages(monitor.fork(1));
-      addRevisions(newObjects, monitor.fork(1));
-      addRevisions(dirtyObjects, monitor.fork(1));
-      revisedDetachObjects(monitor.fork(1));
+      addNewPackages(monitor.fork());
+      addRevisions(newObjects, monitor.fork());
+      addRevisions(dirtyObjects, monitor.fork());
+      revisedDetachObjects(monitor.fork());
       unlockObjects();
-      monitor.worked(1);
+      monitor.worked();
 
       if (isAutoReleaseLocksEnabled())
       {
         ((Repository)transaction.getRepository()).getLockManager().unlock(transaction);
       }
 
-      monitor.worked(1);
+      monitor.worked();
     }
     catch (RuntimeException ex)
     {
@@ -568,7 +568,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       {
         CDOPackage cdoPackage = newPackages[i];
         packageManager.addPackage(cdoPackage);
-        monitor.worked(1);
+        monitor.worked();
       }
     }
     finally
@@ -590,7 +590,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
           revisionManager.addCachedRevision((InternalCDORevision)revision);
         }
 
-        monitor.worked(1);
+        monitor.worked();
       }
     }
     finally
@@ -607,7 +607,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
       for (InternalCDORevision revision : detachedRevisions)
       {
         revision.setRevised(getTimeStamp() - 1);
-        monitor.worked(1);
+        monitor.worked();
       }
     }
     finally
@@ -633,7 +633,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
           detachedRevisions.add(revision);
         }
 
-        monitor.worked(1);
+        monitor.worked();
       }
     }
     finally

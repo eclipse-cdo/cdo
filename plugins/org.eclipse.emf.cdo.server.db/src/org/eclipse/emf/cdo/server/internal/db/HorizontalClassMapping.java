@@ -53,7 +53,7 @@ public class HorizontalClassMapping extends ClassMapping
       }
 
       // TODO Better monitoring
-      monitor.worked(1);
+      monitor.worked();
     }
     finally
     {

@@ -42,7 +42,7 @@ public interface IStoreAccessor extends IQueryHandler
   public void release();
 
   /**
-   * Returns <code>true</code> if this accessor has been configured for read-only access to the backend,
+   * Returns <code>true</code> if this accessor has been configured for read-only access to the back-end,
    * <code>false</code> otherwise.
    * 
    * @since 2.0
@@ -105,7 +105,7 @@ public interface IStoreAccessor extends IQueryHandler
   public CDOClassRef readObjectType(CDOID id);
 
   /**
-   * Reads a current revision (i.e. one with revised == 0) from the backend. Returns <code>null</code> if the id is
+   * Reads a current revision (i.e. one with revised == 0) from the back-end. Returns <code>null</code> if the id is
    * invalid.
    * 
    * @since 2.0
@@ -113,18 +113,17 @@ public interface IStoreAccessor extends IQueryHandler
   public CDORevision readRevision(CDOID id, int referenceChunk);
 
   /**
-   * Reads a revision with the given version from the backend. This method will only be called by the framework if
-   * {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
-   * {@link IStore#hasAuditingSupport()} to be <code>true</code>). Returns <code>null</code> if the id is invalid.
+   * Reads a revision with the given version from the back-end. This method will only be called by the framework if
+   * {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is invalid.
    * 
    * @since 2.0
    */
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 
   /**
-   * Reads a revision from the backend that was valid at the given timeStamp. This method will only be called by the
-   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code> (which in turn requires
-   * {@link IStore#hasAuditingSupport()} to be <code>true</code>). Returns <code>null</code> if the id is invalid.
+   * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
+   * framework if {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is
+   * invalid.
    * 
    * @since 2.0
    */
@@ -207,30 +206,31 @@ public interface IStoreAccessor extends IQueryHandler
   public ITransaction getTransaction();
 
   /**
-   * Called before committing. An Instance of a accessor represents an instance of back-end Transaction. Could be called
-   * multiple times before commit it called. {@link IStoreAccessor#commit()} or {@link IStoreAccessor#rollback()} will
-   * be called after any numbers of {@link IStoreAccessor#write(CommitContext)}.
+   * Called before committing. An instance of this accessor represents an instance of a back-end transaction. Could be
+   * called multiple times before commit it called. {@link IStoreAccessor#commit(OMMonitor)} or
+   * {@link IStoreAccessor#rollback()} will be called after any numbers of
+   * {@link IStoreAccessor#write(CommitContext, OMMonitor)}.
    * <p>
-   * <b>Note</b> : {@link IStoreAccessor#write(CommitContext)} and {@link IStoreAccessor#commit()} could be called from
-   * different thread.
+   * <b>Note</b>: {@link IStoreAccessor#write(CommitContext, OMMonitor)} and {@link IStoreAccessor#commit(OMMonitor)}
+   * could be called from different threads.
    * 
    * @since 2.0
    */
   public void write(CommitContext context, OMMonitor monitor);
 
   /**
-   * It will flush to the backend and make available the data for others.
+   * Flushes to the back-end and makes available the data for others.
    * <p>
-   * <b>Note</b> : {@link IStoreAccessor#write(CommitContext)} and {@link IStoreAccessor#commit()} could be called from
-   * different thread.
+   * <b>Note</b>: {@link IStoreAccessor#write(CommitContext, OMMonitor)} and {@link IStoreAccessor#commit(OMMonitor)}
+   * could be called from different threads.
    * 
    * @since 2.0
    */
   public void commit(OMMonitor monitor);
 
   /**
-   * <b>Note</b> : {@link IStoreAccessor#write(CommitContext)} and {@link IStoreAccessor#rollback()} could be called
-   * from different thread.
+   * <b>Note</b>: {@link IStoreAccessor#write(CommitContext, OMMonitor)} and {@link IStoreAccessor#rollback()} could be
+   * called from different threads.
    * 
    * @since 2.0
    */

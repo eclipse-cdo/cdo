@@ -69,10 +69,10 @@ public class VerticalClassMapping extends ClassMapping
       try
       {
         monitor.begin(1 + superMappings.size());
-        super.writeRevision(accessor, revision, monitor.fork(1));
+        super.writeRevision(accessor, revision, monitor.fork());
         for (IClassMapping superMapping : superMappings)
         {
-          superMapping.writeRevision(accessor, revision, monitor.fork(1));
+          superMapping.writeRevision(accessor, revision, monitor.fork());
         }
       }
       finally

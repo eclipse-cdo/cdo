@@ -10,17 +10,17 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.monitor;
 
+import java.util.Timer;
+
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public class NestedMonitor extends Monitor
+public class NestedMonitor extends AbstractMonitor
 {
-  private static final double ZERO = 0.0d;
+  private AbstractMonitor parent;
 
-  private OMMonitor parent;
-
-  private int parentWork;
+  private double parentWork;
 
   private double sentToParent;
 
@@ -28,31 +28,42 @@ public class NestedMonitor extends Monitor
 
   private boolean usedUp;
 
-  public NestedMonitor(OMMonitor parent, int parentWork)
+  public NestedMonitor(AbstractMonitor parent, double parentWork)
   {
     this.parent = parent;
-    this.parentWork = parentWork > 0 ? parentWork : 0;
+    this.parentWork = parentWork > ZERO ? parentWork : ZERO;
   }
 
-  public OMMonitor getParent()
+  public AbstractMonitor getParent()
   {
     return parent;
   }
 
-  public int getParentWork()
+  public double getParentWork()
   {
     return parentWork;
   }
 
-  @Override
-  public synchronized void begin(int totalWork) throws MonitorCanceledException
+  public boolean isCanceled()
   {
-    super.begin(totalWork);
-    scale = totalWork > ZERO ? (double)parentWork / (double)totalWork : ZERO;
+    return parent.isCanceled();
+  }
+
+  public void checkCanceled() throws MonitorCanceledException
+  {
+    parent.checkCanceled();
   }
 
   @Override
-  public synchronized void worked(double work) throws MonitorCanceledException
+  public OMMonitor begin(double totalWork) throws MonitorCanceledException
+  {
+    super.begin(totalWork);
+    scale = totalWork > ZERO ? parentWork / totalWork : ZERO;
+    return this;
+  }
+
+  @Override
+  public void worked(double work) throws MonitorCanceledException
   {
     if (!usedUp)
     {
@@ -68,9 +79,22 @@ public class NestedMonitor extends Monitor
   }
 
   @Override
-  public synchronized void done()
+  public void done()
   {
     super.done();
     sentToParent = ZERO;
+    usedUp = true;
+  }
+
+  @Override
+  protected long getAsyncSchedulePeriod()
+  {
+    return parent.getAsyncSchedulePeriod();
+  }
+
+  @Override
+  protected Timer getTimer()
+  {
+    return parent.getTimer();
   }
 }

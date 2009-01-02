@@ -120,7 +120,7 @@ public class OpenSessionDialog extends TitleAreaDialog
 
     new Label(composite, SWT.NONE);
     automaticButton = new PreferenceButton(composite, SWT.CHECK, "Automatic Package Registry",
-        OM.PREF_AUTOMATIC_PACKAGE_REGISTY);
+        OM.PREF_AUTOMATIC_PACKAGE_REGISTRY);
 
     connectorText.setFocus();
     connectorText.getCombo().addFocusListener(new FocusListener()

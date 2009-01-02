@@ -40,12 +40,12 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
   {
   }
 
-  public int getWriteEffortPercent()
+  public int getFlushEffortPercent()
   {
-    return 50;
+    return 1;
   }
 
-  public void write(OMMonitor monitor)
+  public void flush(OMMonitor monitor)
   {
     // Do nothing
   }

@@ -27,7 +27,7 @@ import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
-import org.eclipse.net4j.util.om.monitor.SynchonizedSubProgressMonitor;
+import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchonizedSubProgressMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;

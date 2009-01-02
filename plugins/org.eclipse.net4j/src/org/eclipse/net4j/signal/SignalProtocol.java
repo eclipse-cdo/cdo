@@ -470,7 +470,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     }
   }
 
-  void handleMonitorProgress(int correlationID, int totalWork, int work)
+  void handleMonitorProgress(int correlationID, double totalWork, double work)
   {
     synchronized (signals)
     {
@@ -491,7 +491,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       if (signal instanceof IndicationWithMonitoring)
       {
         IndicationWithMonitoring indication = (IndicationWithMonitoring)signal;
-        indication.setMonitorCanceled(null);
+        indication.setMonitorCanceled();
       }
     }
   }

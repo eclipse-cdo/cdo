@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.server.IPackageManager;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -50,6 +49,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.PreparedStatement;
@@ -68,25 +68,28 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
   private IJDBCDelegate jdbcDelegate;
 
-  public IJDBCDelegate getJDBCDelegate()
-  {
-    return jdbcDelegate;
-  }
-
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
     super(store, session);
-    jdbcDelegate = store.getJDBCDelegateProvider().getJDBCDelegate();
-    jdbcDelegate.setConnectionProvider(store.getDBConnectionProvider());
-    jdbcDelegate.setReadOnly(isReader());
+    initJDBCDelegate(store);
   }
 
   public DBStoreAccessor(DBStore store, ITransaction transaction) throws DBException
   {
     super(store, transaction);
+    initJDBCDelegate(store);
+  }
+
+  private void initJDBCDelegate(DBStore store)
+  {
     jdbcDelegate = store.getJDBCDelegateProvider().getJDBCDelegate();
     jdbcDelegate.setConnectionProvider(store.getDBConnectionProvider());
     jdbcDelegate.setReadOnly(isReader());
+  }
+
+  public IJDBCDelegate getJDBCDelegate()
+  {
+    return jdbcDelegate;
   }
 
   @Override
@@ -345,27 +348,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   {
   }
 
-  public final void commit(OMMonitor monitor)
-  {
-    jdbcDelegate.commit(monitor);
-  }
-
-  @Override
-  protected final void rollback(IStoreAccessor.CommitContext context)
-  {
-    jdbcDelegate.rollback();
-  }
-
   @Override
   public void write(CommitContext context, OMMonitor monitor)
   {
-    int delegateEffort = jdbcDelegate.getWriteEffortPercent();
+    int delegateEffort = jdbcDelegate.getFlushEffortPercent();
 
     try
     {
       monitor.begin(100);
       super.write(context, monitor.fork(100 - delegateEffort));
-      jdbcDelegate.write(monitor.fork(delegateEffort));
+      jdbcDelegate.flush(monitor.fork(delegateEffort));
     }
     finally
     {
@@ -376,10 +368,25 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   @Override
   protected final void writePackages(CDOPackage[] cdoPackages, OMMonitor monitor)
   {
+    try
+    {
+      monitor.begin(2);
+      fillSystemTables(cdoPackages, monitor.fork());
+
+      createModelTables(cdoPackages, monitor);
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void fillSystemTables(CDOPackage[] cdoPackages, OMMonitor monitor)
+  {
     new PackageWriter(cdoPackages, monitor)
     {
       @Override
-      protected void writePackage(InternalCDOPackage cdoPackage)
+      protected void writePackage(InternalCDOPackage cdoPackage, OMMonitor monitor)
       {
         int id = getStore().getNextPackageID();
         PackageServerInfo.setDBID(cdoPackage, id);
@@ -400,6 +407,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
         String sql = "INSERT INTO " + CDODBSchema.PACKAGES + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         DBUtil.trace(sql);
         PreparedStatement pstmt = null;
+
+        monitor.begin();
+        Async async = monitor.forkAsync();
 
         try
         {
@@ -430,57 +440,106 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
         finally
         {
           DBUtil.close(pstmt);
+          async.stop();
+          monitor.done();
         }
       }
 
       @Override
-      protected final void writeClass(InternalCDOClass cdoClass)
+      protected final void writeClass(InternalCDOClass cdoClass, OMMonitor monitor)
       {
-        int id = getStore().getNextClassID();
-        ClassServerInfo.setDBID(cdoClass, id);
+        monitor.begin();
+        Async async = monitor.forkAsync();
 
-        CDOPackage cdoPackage = cdoClass.getContainingPackage();
-        int packageID = ServerInfo.getDBID(cdoPackage);
-        int classifierID = cdoClass.getClassifierID();
-        String name = cdoClass.getName();
-        boolean isAbstract = cdoClass.isAbstract();
-        DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.CLASSES, id, packageID,
-            classifierID, name, isAbstract);
+        try
+        {
+          int id = getStore().getNextClassID();
+          ClassServerInfo.setDBID(cdoClass, id);
+
+          CDOPackage cdoPackage = cdoClass.getContainingPackage();
+          int packageID = ServerInfo.getDBID(cdoPackage);
+          int classifierID = cdoClass.getClassifierID();
+          String name = cdoClass.getName();
+          boolean isAbstract = cdoClass.isAbstract();
+          DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.CLASSES, id, packageID,
+              classifierID, name, isAbstract);
+        }
+        finally
+        {
+          async.stop();
+          monitor.done();
+        }
       }
 
       @Override
-      protected final void writeSuperType(InternalCDOClass type, CDOClassProxy superType)
+      protected final void writeSuperType(InternalCDOClass type, CDOClassProxy superType, OMMonitor monitor)
       {
-        int id = ClassServerInfo.getDBID(type);
-        String packageURI = superType.getPackageURI();
-        int classifierID = superType.getClassifierID();
-        DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, id,
-            packageURI, classifierID);
+        monitor.begin();
+        Async async = monitor.forkAsync();
+
+        try
+        {
+          int id = ClassServerInfo.getDBID(type);
+          String packageURI = superType.getPackageURI();
+          int classifierID = superType.getClassifierID();
+          DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.SUPERTYPES, id,
+              packageURI, classifierID);
+        }
+        finally
+        {
+          async.stop();
+          monitor.done();
+        }
       }
 
       @Override
-      protected void writeFeature(InternalCDOFeature feature)
+      protected void writeFeature(InternalCDOFeature feature, OMMonitor monitor)
       {
-        int id = getStore().getNextFeatureID();
-        FeatureServerInfo.setDBID(feature, id);
+        monitor.begin();
+        Async async = monitor.forkAsync();
 
-        int classID = ServerInfo.getDBID(feature.getContainingClass());
-        String name = feature.getName();
-        int featureID = feature.getFeatureID();
-        int type = feature.getType().getTypeID();
-        CDOClassProxy reference = feature.getReferenceTypeProxy();
-        String packageURI = reference == null ? null : reference.getPackageURI();
-        int classifierID = reference == null ? 0 : reference.getClassifierID();
-        boolean many = feature.isMany();
-        boolean containment = feature.isContainment();
-        int idx = feature.getFeatureIndex();
-        DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.FEATURES, id, classID,
-            featureID, name, type, packageURI, classifierID, many, containment, idx);
+        try
+        {
+          int id = getStore().getNextFeatureID();
+          FeatureServerInfo.setDBID(feature, id);
+
+          int classID = ServerInfo.getDBID(feature.getContainingClass());
+          String name = feature.getName();
+          int featureID = feature.getFeatureID();
+          int type = feature.getType().getTypeID();
+          CDOClassProxy reference = feature.getReferenceTypeProxy();
+          String packageURI = reference == null ? null : reference.getPackageURI();
+          int classifierID = reference == null ? 0 : reference.getClassifierID();
+          boolean many = feature.isMany();
+          boolean containment = feature.isContainment();
+          int idx = feature.getFeatureIndex();
+          DBUtil.insertRow(jdbcDelegate.getConnection(), getStore().getDBAdapter(), CDODBSchema.FEATURES, id, classID,
+              featureID, name, type, packageURI, classifierID, many, containment, idx);
+        }
+        finally
+        {
+          async.stop();
+          monitor.done();
+        }
       }
     }.run();
+  }
 
-    Set<IDBTable> affectedTables = mapPackages(cdoPackages);
-    getStore().getDBAdapter().createTables(affectedTables, jdbcDelegate.getConnection());
+  private void createModelTables(CDOPackage[] cdoPackages, OMMonitor monitor)
+  {
+    monitor.begin();
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      Set<IDBTable> affectedTables = mapPackages(cdoPackages);
+      getStore().getDBAdapter().createTables(affectedTables, jdbcDelegate.getConnection());
+    }
+    finally
+    {
+      async.stop();
+      monitor.done();
+    }
   }
 
   @Override
@@ -497,7 +556,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       monitor.begin(revisions.length);
       for (CDORevision revision : revisions)
       {
-        writeRevision(revision, monitor.fork(1));
+        writeRevision(revision, monitor.fork());
       }
     }
     finally
@@ -526,7 +585,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       monitor.begin(detachedObjects.length);
       for (CDOID id : detachedObjects)
       {
-        detachObject(id, revised, monitor.fork(1));
+        detachObject(id, revised, monitor.fork());
       }
     }
     finally
@@ -605,6 +664,17 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     }
 
     return affectedTables;
+  }
+
+  public final void commit(OMMonitor monitor)
+  {
+    jdbcDelegate.commit(monitor);
+  }
+
+  @Override
+  protected final void rollback(CommitContext context)
+  {
+    jdbcDelegate.rollback();
   }
 
   @Override

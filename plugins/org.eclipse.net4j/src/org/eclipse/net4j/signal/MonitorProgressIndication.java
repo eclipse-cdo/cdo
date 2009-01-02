@@ -31,8 +31,8 @@ class MonitorProgressIndication extends Indication
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     int correlationID = in.readInt();
-    int totalWork = in.readInt();
-    int work = in.readInt();
+    double totalWork = in.readDouble();
+    double work = in.readDouble();
     if (TRACER.isEnabled())
     {
       TRACER.format("Progress of signal {0}: totalWork={1}, work={2}", correlationID, totalWork, work);

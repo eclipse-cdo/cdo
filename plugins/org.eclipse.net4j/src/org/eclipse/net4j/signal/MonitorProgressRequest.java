@@ -24,11 +24,11 @@ class MonitorProgressRequest extends Request
 
   private int correlationID;
 
-  private int totalWork;
+  private double totalWork;
 
-  private int work;
+  private double work;
 
-  public MonitorProgressRequest(SignalProtocol<?> protocol, int correlationID, int totalWork, int work)
+  public MonitorProgressRequest(SignalProtocol<?> protocol, int correlationID, double totalWork, double work)
   {
     super(protocol, SignalProtocol.SIGNAL_MONITOR_PROGRESS);
     this.correlationID = correlationID;
@@ -45,7 +45,7 @@ class MonitorProgressRequest extends Request
     }
 
     out.writeInt(correlationID);
-    out.writeInt(totalWork);
-    out.writeInt(work);
+    out.writeDouble(totalWork);
+    out.writeDouble(work);
   }
 }

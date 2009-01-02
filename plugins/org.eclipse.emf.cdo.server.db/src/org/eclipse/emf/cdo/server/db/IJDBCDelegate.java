@@ -87,12 +87,12 @@ public interface IJDBCDelegate
    * 
    * @see IStoreAccessor#write(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, OMMonitor)
    */
-  public void write(OMMonitor monitor);
+  public void flush(OMMonitor monitor);
 
   /**
    * Used by the framework to determine the effort distribution between the store accessor and this JDBC delegate.
    */
-  public int getWriteEffortPercent();
+  public int getFlushEffortPercent();
 
   /**
    * Do a commit on the JDBC connection.

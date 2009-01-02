@@ -53,22 +53,17 @@ public class SignalMonitorTest extends AbstractTransportTest
                 @Override
                 protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
                 {
-                  monitor.begin(101);
+                  monitor.begin(1 + 100);
 
                   try
                   {
                     in.readBoolean();
-                    monitor.worked(1);
+                    monitor.worked();
 
                     for (int i = 0; i < 100; i++)
                     {
-                      // if (i == 60)
-                      // {
-                      // Thread.sleep(5000);
-                      // }
-
-                      Thread.sleep(100);
-                      monitor.worked(1);
+                      sleep(100);
+                      monitor.worked();
                     }
                   }
                   finally
@@ -80,12 +75,12 @@ public class SignalMonitorTest extends AbstractTransportTest
                 @Override
                 protected void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
                 {
-                  monitor.begin(1);
+                  monitor.begin();
 
                   try
                   {
                     out.writeBoolean(true);
-                    monitor.worked(1);
+                    monitor.worked();
                   }
                   finally
                   {
@@ -116,12 +111,12 @@ public class SignalMonitorTest extends AbstractTransportTest
       @Override
       protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
       {
-        monitor.begin(1);
+        monitor.begin();
 
         try
         {
           out.writeBoolean(true);
-          monitor.worked(1);
+          monitor.worked();
         }
         finally
         {
@@ -132,23 +127,23 @@ public class SignalMonitorTest extends AbstractTransportTest
       @Override
       protected Boolean confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
       {
-        monitor.begin(1);
+        monitor.begin();
 
         try
         {
           boolean result = in.readBoolean();
-          monitor.worked(1);
+          monitor.worked();
           return result;
         }
         finally
         {
           monitor.done();
         }
-
       }
     };
 
     request.send(4000L, new TestMonitor());
+    sleep(200);
     protocol.close();
   }
 
@@ -169,10 +164,11 @@ public class SignalMonitorTest extends AbstractTransportTest
   private static final class TestMonitor extends Monitor
   {
     @Override
-    public void begin(int totalWork)
+    public OMMonitor begin(double totalWork)
     {
       super.begin(totalWork);
       System.out.println("totalWork: " + getTotalWork());
+      return this;
     }
 
     @Override

@@ -330,19 +330,19 @@ public abstract class ClassMapping implements IClassMapping
         writeRevisedRow(accessor, (InternalCDORevision)revision);
       }
 
-      monitor.worked(1);
+      monitor.worked();
 
       if (revision.isResourceFolder() || revision.isResource())
       {
         checkDuplicateResources(accessor, revision);
       }
 
-      monitor.worked(1);
+      monitor.worked();
 
       // Write attribute table always (even without modeled attributes!)
       writeAttributes(accessor, (InternalCDORevision)revision);
 
-      monitor.worked(1);
+      monitor.worked();
 
       // Write reference tables only if they exist
       if (referenceMappings != null)
@@ -365,7 +365,7 @@ public abstract class ClassMapping implements IClassMapping
   {
     try
     {
-      monitor.begin(1);
+      monitor.begin();
       if (hasFullRevisionInfo())
       {
         writeRevisedRow(accessor, id, revised);

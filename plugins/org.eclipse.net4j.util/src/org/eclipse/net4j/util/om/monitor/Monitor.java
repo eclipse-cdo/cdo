@@ -10,77 +10,72 @@
  **************************************************************************/
 package org.eclipse.net4j.util.om.monitor;
 
+import java.util.Timer;
+
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public class Monitor implements OMMonitor
+public class Monitor extends AbstractMonitor
 {
-  private int totalWork;
+  public static final long DEFAULT_ASYNC_SCHEDULE_PERIOD = 1000;
 
-  private double work;
+  private static Timer TIMER;
 
   private boolean canceled;
+
+  private RuntimeException cancelException;
 
   public Monitor()
   {
   }
 
-  public synchronized void cancel()
+  public void cancel()
   {
+    cancel(null);
+  }
+
+  public void cancel(RuntimeException cancelException)
+  {
+    this.cancelException = cancelException;
     canceled = true;
   }
 
-  public synchronized void checkCanceled() throws MonitorCanceledException
+  public boolean isCanceled()
   {
-    if (isCanceled())
+    return canceled;
+  }
+
+  public void checkCanceled() throws MonitorCanceledException
+  {
+    if (cancelException != null)
+    {
+      throw cancelException;
+    }
+
+    if (canceled)
     {
       throw new MonitorCanceledException();
     }
   }
 
-  public synchronized void begin(int totalWork) throws MonitorCanceledException
+  @Override
+  protected long getAsyncSchedulePeriod()
   {
-    checkCanceled();
-    this.totalWork = totalWork;
+    return DEFAULT_ASYNC_SCHEDULE_PERIOD;
   }
 
-  public synchronized void worked(double work) throws MonitorCanceledException
+  @Override
+  protected Timer getTimer()
   {
-    checkCanceled();
-    this.work += work;
-  }
-
-  public synchronized OMMonitor fork(int work)
-  {
-    checkCanceled();
-    return new NestedMonitor(this, work);
-  }
-
-  public synchronized void done()
-  {
-    if (!isCanceled())
+    synchronized (Monitor.class)
     {
-      double rest = totalWork - work;
-      if (rest > 0)
+      if (TIMER == null)
       {
-        work += work;
+        TIMER = new Timer("monitor-timer", true);
       }
+
+      return TIMER;
     }
-  }
-
-  public synchronized int getTotalWork()
-  {
-    return totalWork;
-  }
-
-  public synchronized double getWork()
-  {
-    return work;
-  }
-
-  public synchronized boolean isCanceled()
-  {
-    return canceled;
   }
 }

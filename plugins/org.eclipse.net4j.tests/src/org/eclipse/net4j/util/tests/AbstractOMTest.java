@@ -108,26 +108,44 @@ public abstract class AbstractOMTest extends TestCase
     // Guaranteed to be empty
   }
 
+  public static void sleep(long millis)
+  {
+    ConcurrencyUtil.sleep(millis);
+  }
+
+  public static void assertActive(Object object)
+  {
+    assertEquals(true, LifecycleUtil.isActive(object));
+  }
+
+  public static void assertInactive(Object object)
+  {
+    assertEquals(false, LifecycleUtil.isActive(object));
+  }
+
+  public static void assertSimilar(double expected, double actual, int precision)
+  {
+    final double factor = 10 * precision;
+    if (Math.round(expected * factor) != Math.round(actual * factor))
+    {
+      assertEquals(expected, actual);
+    }
+  }
+
+  public static void assertSimilar(float expected, float actual, int precision)
+  {
+    final float factor = 10 * precision;
+    if (Math.round(expected * factor) != Math.round(actual * factor))
+    {
+      assertEquals(expected, actual);
+    }
+  }
+
   protected static void msg(Object m)
   {
     if (consoleEnabled)
     {
       IOUtil.OUT().println("--> " + m);
     }
-  }
-
-  protected static void sleep(long millis)
-  {
-    ConcurrencyUtil.sleep(millis);
-  }
-
-  protected static void assertActive(Object object)
-  {
-    assertEquals(true, LifecycleUtil.isActive(object));
-  }
-
-  protected static void assertInactive(Object object)
-  {
-    assertEquals(false, LifecycleUtil.isActive(object));
   }
 }

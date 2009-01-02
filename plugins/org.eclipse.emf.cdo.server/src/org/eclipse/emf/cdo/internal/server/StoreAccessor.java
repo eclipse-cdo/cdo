@@ -145,8 +145,8 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     {
       monitor.begin(newPackages.length + newObjects.length + detachedObjects.length + dirtyCount + 2);
       writePackages(newPackages, monitor.fork(newPackages.length));
-      addIDMappings(context, monitor.fork(1));
-      context.applyIDMappings(monitor.fork(1));
+      addIDMappings(context, monitor.fork());
+      context.applyIDMappings(monitor.fork());
 
       writeRevisions(newObjects, monitor.fork(newObjects.length));
       if (deltas)
@@ -196,7 +196,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   /**
    * @since 2.0
    */
-  protected void addIDMappings(IStoreAccessor.CommitContext context, OMMonitor monitor)
+  protected void addIDMappings(CommitContext context, OMMonitor monitor)
   {
     try
     {
@@ -215,7 +215,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
           }
 
           context.addIDMapping(oldID, newID);
-          monitor.worked(1);
+          monitor.worked();
         }
       }
     }
@@ -275,12 +275,12 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   {
     private CDOPackage[] cdoPackages;
 
-    private OMMonitor monitor;
+    private OMMonitor mainMonitor;
 
     public PackageWriter(CDOPackage[] cdoPackages, OMMonitor monitor)
     {
       this.cdoPackages = cdoPackages;
-      this.monitor = monitor;
+      mainMonitor = monitor;
     }
 
     public CDOPackage[] getCDOPackages()
@@ -290,22 +290,22 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
     public OMMonitor getMonitor()
     {
-      return monitor;
+      return mainMonitor;
     }
 
     public void run()
     {
       try
       {
-        monitor.begin(cdoPackages.length);
+        mainMonitor.begin(cdoPackages.length);
         for (CDOPackage cdoPackage : cdoPackages)
         {
-          runPackage(cdoPackage, monitor.fork(1));
+          runPackage(cdoPackage, mainMonitor.fork());
         }
       }
       finally
       {
-        monitor.done();
+        mainMonitor.done();
       }
     }
 
@@ -316,12 +316,10 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
         CDOClass[] classes = cdoPackage.getClasses();
         monitor.begin(1 + classes.length);
 
-        writePackage((InternalCDOPackage)cdoPackage);
-        monitor.worked(1);
-
+        writePackage((InternalCDOPackage)cdoPackage, monitor.fork());
         for (CDOClass cdoClass : classes)
         {
-          runClass((InternalCDOClass)cdoClass, monitor.fork(1));
+          runClass((InternalCDOClass)cdoClass, monitor.fork());
         }
       }
       finally
@@ -330,7 +328,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       }
     }
 
-    protected void runClass(InternalCDOClass cdoClass, OMMonitor signalMonitor)
+    protected void runClass(InternalCDOClass cdoClass, OMMonitor monitor)
     {
       try
       {
@@ -338,19 +336,16 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
         CDOFeature[] features = cdoClass.getFeatures();
         monitor.begin(1 + superTypeProxies.size() + features.length);
 
-        writeClass(cdoClass);
-        monitor.worked(1);
+        writeClass(cdoClass, monitor.fork());
 
         for (CDOClassProxy superType : superTypeProxies)
         {
-          writeSuperType(cdoClass, superType);
-          monitor.worked(1);
+          writeSuperType(cdoClass, superType, monitor.fork());
         }
 
         for (CDOFeature feature : features)
         {
-          writeFeature((InternalCDOFeature)feature);
-          monitor.worked(1);
+          writeFeature((InternalCDOFeature)feature, monitor.fork());
         }
       }
       finally
@@ -359,12 +354,12 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       }
     }
 
-    protected abstract void writePackage(InternalCDOPackage cdoPackage);
+    protected abstract void writePackage(InternalCDOPackage cdoPackage, OMMonitor monitor);
 
-    protected abstract void writeClass(InternalCDOClass cdoClass);
+    protected abstract void writeClass(InternalCDOClass cdoClass, OMMonitor monitor);
 
-    protected abstract void writeSuperType(InternalCDOClass type, CDOClassProxy superType);
+    protected abstract void writeSuperType(InternalCDOClass type, CDOClassProxy superType, OMMonitor monitor);
 
-    protected abstract void writeFeature(InternalCDOFeature feature);
+    protected abstract void writeFeature(InternalCDOFeature feature, OMMonitor monitor);
   }
 }

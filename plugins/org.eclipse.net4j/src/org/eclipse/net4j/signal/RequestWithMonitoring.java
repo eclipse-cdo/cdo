@@ -33,12 +33,17 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   /**
    * @since 2.0
    */
-  public static final long DEFAULT_CANCELATION_POLL_INTERVAL = 100L;
+  public static final long DEFAULT_CANCELATION_POLL_INTERVAL = 100;
 
   /**
    * @since 2.0
    */
-  public static final long DEFAULT_MONITOR_PROGRESS_INTERVAL = 2000;
+  public static final int DEFAULT_MONITOR_PROGRESS_SECONDS = 1;
+
+  /**
+   * @since 2.0
+   */
+  public static final int DEFAULT_MONITOR_TIMEOUT_SECONDS = 10;
 
   private OMMonitor mainMonitor;
 
@@ -112,13 +117,13 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   @Override
   protected final void requesting(ExtendedDataOutputStream out) throws Exception
   {
-    int remoteWork = 100 - getRequestingWorkPercent() - getConfirmingWorkPercent();
-    if (remoteWork < 0)
+    double remoteWork = OMMonitor.HUNDRED - getRequestingWorkPercent() - getConfirmingWorkPercent();
+    if (remoteWork < OMMonitor.ZERO)
     {
       throw new ImplementationError("Remote work must not be negative: " + remoteWork);
     }
 
-    mainMonitor.begin(100);
+    mainMonitor.begin(OMMonitor.HUNDRED);
     OMMonitor subMonitor = mainMonitor.fork(remoteWork);
     synchronized (monitorLock)
     {
@@ -153,21 +158,15 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
       });
     }
 
-    out.writeLong(getMonitorProgressInterval());
+    out.writeInt(getMonitorProgressSeconds());
+    out.writeInt(getMonitorTimeoutSeconds());
     requesting(out, mainMonitor.fork(getRequestingWorkPercent()));
   }
 
   @Override
   protected final RESULT confirming(ExtendedDataInputStream in) throws Exception
   {
-    try
-    {
-      return confirming(in, mainMonitor.fork(getConfirmingWorkPercent()));
-    }
-    finally
-    {
-      mainMonitor.done();
-    }
+    return confirming(in, mainMonitor.fork(getConfirmingWorkPercent()));
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception;
@@ -197,9 +196,17 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   /**
    * @since 2.0
    */
-  protected long getMonitorProgressInterval()
+  protected int getMonitorProgressSeconds()
   {
-    return DEFAULT_MONITOR_PROGRESS_INTERVAL;
+    return DEFAULT_MONITOR_PROGRESS_SECONDS;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected int getMonitorTimeoutSeconds()
+  {
+    return DEFAULT_MONITOR_TIMEOUT_SECONDS;
   }
 
   /**
@@ -207,7 +214,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
    */
   protected int getRequestingWorkPercent()
   {
-    return 50;
+    return 2;
   }
 
   /**
@@ -215,7 +222,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
    */
   protected int getConfirmingWorkPercent()
   {
-    return 0;
+    return 1;
   }
 
   @Override
@@ -244,31 +251,28 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     }
   }
 
-  void setMonitorProgress(int totalWork, int work)
+  void setMonitorProgress(double totalWork, double work)
   {
     getBufferInputStream().restartTimeout();
     synchronized (monitorLock)
     {
       if (remoteMonitor != null)
       {
-        if (remoteMonitor.getTotalWork() == 0)
+        if (!remoteMonitor.hasBegun())
         {
           remoteMonitor.begin(totalWork);
           remoteMonitor.worked(work);
         }
         else
         {
-          double oldRatio = remoteMonitor.getWork();
-          oldRatio /= remoteMonitor.getTotalWork();
-
-          double newRatio = work;
-          newRatio /= totalWork;
+          double oldRatio = remoteMonitor.getWork() / remoteMonitor.getTotalWork();
+          double newRatio = work / totalWork;
 
           double newWork = newRatio - oldRatio;
           newWork *= remoteMonitor.getTotalWork();
-          if (newWork >= 1.0)
+          if (newWork >= OMMonitor.ZERO)
           {
-            remoteMonitor.worked((int)newWork);
+            remoteMonitor.worked(newWork);
           }
         }
       }

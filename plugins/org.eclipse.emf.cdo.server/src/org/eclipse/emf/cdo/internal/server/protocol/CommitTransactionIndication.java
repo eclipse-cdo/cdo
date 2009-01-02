@@ -65,8 +65,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected InternalCommitContext commitContext;
 
-  private int halfWork;
-
   public CommitTransactionIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION);
@@ -199,9 +197,9 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   {
     try
     {
-      monitor.begin(2);
-      indicatingCommit(in, monitor.fork(1));
-      indicatingCommit(monitor.fork(1));
+      monitor.begin(OMMonitor.TEN);
+      indicatingCommit(in, monitor.fork(OMMonitor.ONE));
+      indicatingCommit(monitor.fork(OMMonitor.TEN - OMMonitor.ONE));
     }
     catch (IOException ex)
     {
@@ -265,8 +263,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       PROTOCOL_TRACER.format("Reading {0} new packages", newPackages.length);
     }
 
-    halfWork = newPackages.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length;
-    monitor.begin(2 * halfWork);
+    monitor.begin(newPackages.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
 
     try
     {
@@ -276,7 +273,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
         newPackage.setEcore(in.readString());
         newPackages[i] = newPackage;
         packageManager.addPackage(newPackage);
-        monitor.worked(1);
+        monitor.worked();
       }
 
       // New objects
@@ -288,7 +285,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       for (int i = 0; i < newObjects.length; i++)
       {
         newObjects[i] = in.readCDORevision();
-        monitor.worked(1);
+        monitor.worked();
       }
 
       // Dirty objects
@@ -300,13 +297,13 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
         dirtyObjectDeltas[i] = in.readCDORevisionDelta();
-        monitor.worked(1);
+        monitor.worked();
       }
 
       for (int i = 0; i < detachedObjects.length; i++)
       {
         detachedObjects[i] = in.readCDOID();
-        monitor.worked(1);
+        monitor.worked();
       }
 
       commitContext.setNewPackages(newPackages);
@@ -324,15 +321,11 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   {
     try
     {
-      monitor.begin(2);
-      commitContext.write(monitor.fork(1));
+      monitor.begin(101);
+      commitContext.write(monitor.fork(100));
       if (commitContext.getRollbackMessage() == null)
       {
-        commitContext.commit(monitor.fork(1));
-      }
-      else
-      {
-        monitor.worked(1);
+        commitContext.commit(monitor.fork());
       }
     }
     finally

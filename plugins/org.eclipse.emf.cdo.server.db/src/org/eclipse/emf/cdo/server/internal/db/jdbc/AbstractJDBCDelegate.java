@@ -28,6 +28,7 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -120,6 +121,9 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
 
   public final void commit(OMMonitor monitor)
   {
+    monitor.begin();
+    Async async = monitor.forkAsync();
+
     try
     {
       getConnection().commit();
@@ -127,6 +131,11 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
     catch (SQLException ex)
     {
       throw new DBException(ex);
+    }
+    finally
+    {
+      async.stop();
+      monitor.done();
     }
   }
 

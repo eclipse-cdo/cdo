@@ -23,6 +23,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
@@ -102,12 +103,13 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     this.cachingEnablement = cachingEnablement;
   }
 
-  public int getWriteEffortPercent()
+  public int getFlushEffortPercent()
   {
-    return 50;
+    // TODO Calculate dynamically
+    return 10;
   }
 
-  public void write(OMMonitor monitor)
+  public void flush(OMMonitor monitor)
   {
     try
     {
@@ -117,7 +119,16 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
         try
         {
           int[] results;
-          results = entry.getValue().executeBatch();
+          Async async = monitor.forkAsync();
+
+          try
+          {
+            results = entry.getValue().executeBatch();
+          }
+          finally
+          {
+            async.stop();
+          }
 
           if (TRACER.isEnabled())
           {
@@ -134,8 +145,6 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
           throw new DBException("Batch execution failed for " + entry.getKey().toString() + " [" + entry.getValue()
               + "]", ex);
         }
-
-        monitor.worked(1);
       }
     }
     finally

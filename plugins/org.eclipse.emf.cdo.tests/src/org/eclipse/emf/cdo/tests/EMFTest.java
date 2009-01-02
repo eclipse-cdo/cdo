@@ -16,10 +16,14 @@ import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 
 /**
@@ -31,7 +35,7 @@ public class EMFTest extends AbstractOMTest
   {
   }
 
-  public void testProxy()
+  public void testProxy() throws Exception
   {
     EPackage model2 = (EPackage)EMFUtil.loadXMI("model2.ecore");
     EClass companyProxy = (EClass)model2.getEClassifier("CompanyProxy");
@@ -61,6 +65,38 @@ public class EMFTest extends AbstractOMTest
     dumpProxy(type);
     IOUtil.OUT().println(type.getName());
     dumpProxy(type);
+  }
+
+  public void testDefaultValue() throws Exception
+  {
+    final String DEFAULT = "Simon";
+
+    EAttribute assignee = EcoreFactory.eINSTANCE.createEAttribute();
+    assignee.setName("assignee");
+    assignee.setEType(EcorePackage.eINSTANCE.getEString());
+    assignee.setDefaultValueLiteral(DEFAULT);
+    assignee.setUnsettable(true);
+
+    EClass bugzilla = EcoreFactory.eINSTANCE.createEClass();
+    bugzilla.setName("Bugzilla");
+    bugzilla.getEStructuralFeatures().add(assignee);
+
+    EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+    p.setName("p");
+    p.getEClassifiers().add(bugzilla);
+
+    EFactory f = p.getEFactoryInstance();
+    EObject object = f.create(bugzilla);
+    assertEquals(DEFAULT, object.eGet(assignee));
+    assertEquals(false, object.eIsSet(assignee));
+
+    object.eSet(assignee, DEFAULT);
+    assertEquals(DEFAULT, object.eGet(assignee));
+    assertEquals(true, object.eIsSet(assignee));
+
+    object.eUnset(assignee);
+    assertEquals(DEFAULT, object.eGet(assignee));
+    assertEquals(false, object.eIsSet(assignee));
   }
 
   private void dumpProxy(EObject object)

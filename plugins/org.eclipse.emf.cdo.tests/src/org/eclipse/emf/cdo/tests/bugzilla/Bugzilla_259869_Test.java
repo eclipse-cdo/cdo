@@ -45,10 +45,14 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
     resource1.getContents().add(company);
 
     transaction.commit();
-    company.setName("Simon");
+
     long start = System.currentTimeMillis();
-    transaction.commit();
-    long timeCommitOnce = System.currentTimeMillis() - start;
+    for (int i = 0; i < 500; i++)
+    {
+      company.setName(String.valueOf(i));
+      transaction.commit();
+    }
+    long timeCommitWithChanges = System.currentTimeMillis() - start;
 
     start = System.currentTimeMillis();
     for (int i = 0; i < 500; i++)
@@ -56,8 +60,8 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
       transaction.commit();
     }
 
-    long timeToCommit500Times = System.currentTimeMillis() - start;
-    assertTrue(timeCommitOnce * 500 > timeToCommit500Times * 1.5);
+    long timeToCommitNoChange = System.currentTimeMillis() - start;
+    assertTrue(timeCommitWithChanges > timeToCommitNoChange * 1.2);
   }
 
   public void testBugzilla_259869_XA() throws InterruptedException
@@ -92,11 +96,14 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
 
     transactionB1.commit();
 
-    companyA.setName("Simon");
-    companyB.setName("Simon");
     long start = System.currentTimeMillis();
-    xaTransaction.commit();
-    long timeCommitOnce = System.currentTimeMillis() - start;
+    for (int i = 0; i < 500; i++)
+    {
+      companyA.setName(String.valueOf(i));
+      companyB.setName(String.valueOf(i));
+      xaTransaction.commit();
+    }
+    long timeCommitWithChanges = System.currentTimeMillis() - start;
 
     start = System.currentTimeMillis();
     for (int i = 0; i < 500; i++)
@@ -104,7 +111,7 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
       xaTransaction.commit();
     }
 
-    long timeToCommit500Times = System.currentTimeMillis() - start;
-    assertTrue(timeCommitOnce * 500 > timeToCommit500Times * 1.5);
+    long timeToCommitNoChange = System.currentTimeMillis() - start;
+    assertTrue(timeCommitWithChanges > timeToCommitNoChange * 1.2);
   }
 }

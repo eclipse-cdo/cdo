@@ -278,14 +278,20 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   @Override
   protected void doDeactivate() throws Exception
   {
+    IChannel[] channels;
     synchronized (channelIDs)
     {
-      for (IChannel channel : getChannels())
-      {
-        LifecycleUtil.deactivate(channel);
-      }
+      channels = getElements();
+    }
 
-      channels.clear();
+    for (IChannel channel : channels)
+    {
+      LifecycleUtil.deactivate(channel);
+    }
+
+    synchronized (channelIDs)
+    {
+      this.channels.clear();
     }
 
     super.doDeactivate();

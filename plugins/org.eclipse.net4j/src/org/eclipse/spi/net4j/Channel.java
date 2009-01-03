@@ -172,7 +172,7 @@ public class Channel extends Lifecycle implements InternalChannel
         TRACER.format("Handling buffer from multiplexer: {0} --> {1}", buffer, this); //$NON-NLS-1$
       }
 
-      receiveSerializer.addWork(craeteReceiverWork(buffer));
+      receiveSerializer.addWork(createReceiverWork(buffer));
     }
     else
     {
@@ -181,7 +181,7 @@ public class Channel extends Lifecycle implements InternalChannel
     }
   }
 
-  protected ReceiverWork craeteReceiverWork(IBuffer buffer)
+  protected ReceiverWork createReceiverWork(IBuffer buffer)
   {
     return new ReceiverWork(this, buffer);
   }

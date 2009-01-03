@@ -119,6 +119,8 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -1265,6 +1267,31 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       OM.LOG.error(ex);
       throw ex;
     }
+
+    getViewer().getControl().addMouseListener(new MouseListener()
+    {
+      public void mouseDoubleClick(MouseEvent e)
+      {
+        try
+        {
+          getSite().getPage().showView("org.eclipse.ui.views.PropertySheet");
+        }
+        catch (PartInitException ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+
+      public void mouseDown(MouseEvent e)
+      {
+        // do nothing
+      }
+
+      public void mouseUp(MouseEvent e)
+      {
+        // do nothing
+      }
+    });
   }
 
   /**

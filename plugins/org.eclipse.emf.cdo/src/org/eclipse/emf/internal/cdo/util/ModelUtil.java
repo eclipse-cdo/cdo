@@ -278,7 +278,7 @@ public final class ModelUtil
     {
       defaultValue = EcoreUtil.convertToString((EDataType)eFeature.getEType(), defaultValue);
     }
-    
+
     return CDOModelUtil.createAttribute(containingClass, featureID, name, type, defaultValue, many);
   }
 

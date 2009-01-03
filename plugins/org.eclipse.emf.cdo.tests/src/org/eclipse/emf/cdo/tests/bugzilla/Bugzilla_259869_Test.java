@@ -55,14 +55,13 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
     {
       transaction.commit();
     }
-    long timeToCommit500Times = System.currentTimeMillis() - start;
 
+    long timeToCommit500Times = System.currentTimeMillis() - start;
     assertTrue(timeCommitOnce * 500 > timeToCommit500Times * 1.5);
   }
 
   public void testBugzilla_259869_XA() throws InterruptedException
   {
-
     getRepository(REPOSITORY2_NAME);
 
     CDOSession sessionA = openSession();
@@ -104,9 +103,8 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
     {
       xaTransaction.commit();
     }
-    long timeToCommit500Times = System.currentTimeMillis() - start;
 
+    long timeToCommit500Times = System.currentTimeMillis() - start;
     assertTrue(timeCommitOnce * 500 > timeToCommit500Times * 1.5);
   }
-
 }

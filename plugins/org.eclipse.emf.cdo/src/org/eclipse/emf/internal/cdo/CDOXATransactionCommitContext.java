@@ -170,20 +170,23 @@ public class CDOXATransactionCommitContext implements Callable<Object>, CDOIDPro
 
   public void postCommit(CommitTransactionResult result)
   {
-    final CDOReferenceAdjuster defaultReferenceAdjuster = result.getReferenceAdjuster();
-    result.setReferenceAdjuster(new CDOReferenceAdjuster()
+    if (result != null)
     {
-      public Object adjustReference(Object id)
+      final CDOReferenceAdjuster defaultReferenceAdjuster = result.getReferenceAdjuster();
+      result.setReferenceAdjuster(new CDOReferenceAdjuster()
       {
-        CDOIDExternalTempImpl externalID = objectToID.get(id);
-        if (externalID != null)
+        public Object adjustReference(Object id)
         {
-          id = externalID;
-        }
+          CDOIDExternalTempImpl externalID = objectToID.get(id);
+          if (externalID != null)
+          {
+            id = externalID;
+          }
 
-        return defaultReferenceAdjuster.adjustReference(id);
-      }
-    });
+          return defaultReferenceAdjuster.adjustReference(id);
+        }
+      });
+    }
 
     delegateCommitContext.postCommit(result);
   }

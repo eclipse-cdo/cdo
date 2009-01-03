@@ -46,26 +46,27 @@ public class CDOSingleTransactionStrategy implements CDOTransactionStrategy
     }
 
     commitContext.preCommit();
-
-    CDOClientProtocol protocol = (CDOClientProtocol)transaction.getSession().getProtocol();
-    CommitTransactionRequest request = new CommitTransactionRequest(protocol, commitContext);
-    if (TRACER.isEnabled())
+    CommitTransactionResult result = null;
+    if (commitContext.getTransaction().isDirty())
     {
-      TRACER.format("Sending commit request");
-    }
+      CDOClientProtocol protocol = (CDOClientProtocol)transaction.getSession().getProtocol();
+      CommitTransactionRequest request = new CommitTransactionRequest(protocol, commitContext);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Sending commit request");
+      }
 
-    CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
-    String rollbackMessage = result.getRollbackMessage();
-    if (rollbackMessage != null)
-    {
-      throw new TransactionException(rollbackMessage);
+      result = request.send(new EclipseMonitor(progressMonitor));
+      String rollbackMessage = result.getRollbackMessage();
+      if (rollbackMessage != null)
+      {
+        throw new TransactionException(rollbackMessage);
+      }
     }
-
     if (TRACER.isEnabled())
     {
       TRACER.format("CDOCommitContext.postCommit");
     }
-
     commitContext.postCommit(result);
   }
 

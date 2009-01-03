@@ -465,13 +465,15 @@ public class CDOXATransactionImpl implements CDOXATransaction
     protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       xaContext.preCommit();
-
-      // Phase 1
-      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
-      CommitTransactionPhase1Request request = new CommitTransactionPhase1Request(protocol, xaContext);
-      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
-      check_result(result);
-
+      CommitTransactionResult result = null;
+      if (xaContext.getTransaction().isDirty())
+      {
+        // Phase 1
+        CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
+        CommitTransactionPhase1Request request = new CommitTransactionPhase1Request(protocol, xaContext);
+        result = request.send(new EclipseMonitor(progressMonitor));
+        check_result(result);
+      }
       xaContext.setResult(result);
       xaContext.setState(CDOXAPhase2State.INSTANCE);
     }
@@ -491,12 +493,14 @@ public class CDOXATransactionImpl implements CDOXATransaction
     @Override
     protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
-      // Phase 2
-      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
-      CommitTransactionPhase2Request request = new CommitTransactionPhase2Request(protocol, xaContext);
-      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
-      check_result(result);
-
+      if (xaContext.getTransaction().isDirty())
+      {
+        // Phase 2
+        CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
+        CommitTransactionPhase2Request request = new CommitTransactionPhase2Request(protocol, xaContext);
+        CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+        check_result(result);
+      }
       xaContext.setState(CDOXAPhase3State.INSTANCE);
     }
   };
@@ -516,10 +520,13 @@ public class CDOXATransactionImpl implements CDOXATransaction
     protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       // Phase 2
-      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
-      CommitTransactionPhase3Request request = new CommitTransactionPhase3Request(protocol, xaContext);
-      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
-      check_result(result);
+      if (xaContext.getTransaction().isDirty())
+      {
+        CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
+        CommitTransactionPhase3Request request = new CommitTransactionPhase3Request(protocol, xaContext);
+        CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+        check_result(result);
+      }
       xaContext.postCommit(xaContext.getResult());
       xaContext.setState(null);
     }

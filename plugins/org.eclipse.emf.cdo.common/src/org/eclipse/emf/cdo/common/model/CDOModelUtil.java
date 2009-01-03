@@ -56,10 +56,13 @@ public final class CDOModelUtil
     return new CDOClassImpl(containingPackage, classifierID, name, isAbstract);
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOFeature createAttribute(CDOClass containingClass, int featureID, String name, CDOType type,
-      boolean many)
+      Object defaultValue, boolean many)
   {
-    return new CDOFeatureImpl(containingClass, featureID, name, type, many);
+    return new CDOFeatureImpl(containingClass, featureID, name, type, defaultValue, many);
   }
 
   public static CDOFeature createReference(CDOClass containingClass, int featureID, String name,

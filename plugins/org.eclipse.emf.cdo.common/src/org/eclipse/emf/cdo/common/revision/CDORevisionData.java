@@ -45,8 +45,6 @@ public interface CDORevisionData
 
   public int lastIndexOf(CDOFeature feature, Object value);
 
-  public boolean isSet(CDOFeature feature);
-
   public <T> T[] toArray(CDOFeature feature, T[] array);
 
   public Object[] toArray(CDOFeature feature);

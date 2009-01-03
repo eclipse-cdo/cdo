@@ -29,6 +29,13 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 {
   public static final Object UNINITIALIZED = CDORevisionUtil.UNINITIALIZED;
 
+  /**
+   * The equivalent of <code>EStructuralFeatureImpl.NIL</code> (i.e. explicit <code>null</code>).
+   * 
+   * @since 2.0
+   */
+  public static final Object NIL = new Object();
+
   public void setID(CDOID id);
 
   public void setVersion(int version);
@@ -62,9 +69,26 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   public void unset(CDOFeature feature);
 
+  /**
+   * Should never return {@link InternalCDORevision#NIL}
+   */
   public Object getValue(CDOFeature feature);
 
   public Object setValue(CDOFeature feature, Object value);
+
+  /**
+   * Use this method to retrieved {@link InternalCDORevision#NIL} object in some cases.
+   * 
+   * @since 2.0
+   */
+  public Object basicGet(CDOFeature feature, int index);
+
+  /**
+   * Use this method to retrieved {@link InternalCDORevision#NIL} object in some cases.
+   * 
+   * @since 2.0
+   */
+  public Object basicSet(CDOFeature feature, int index, Object value);
 
   /**
    * @since 2.0

@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
@@ -363,6 +362,16 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     return getValue(feature);
   }
 
+  public Object basicGet(CDOFeature feature, int index)
+  {
+    if (feature.isMany())
+    {
+      return getList(feature).get(index);
+    }
+
+    return basicGet(feature);
+  }
+
   public boolean contains(CDOFeature feature, Object value)
   {
     return getList(feature).contains(value);
@@ -376,11 +385,6 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   public boolean isEmpty(CDOFeature feature)
   {
     return getList(feature).isEmpty();
-  }
-
-  public boolean isSet(CDOFeature feature)
-  {
-    return getValue(feature) != null;
   }
 
   public int lastIndexOf(CDOFeature feature, Object value)
@@ -443,6 +447,16 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     return setValue(feature, value);
   }
 
+  public Object basicSet(CDOFeature feature, int index, Object value)
+  {
+    if (feature.isMany())
+    {
+      return getList(feature).set(index, value);
+    }
+
+    return basicSet(feature, value);
+  }
+
   public void unset(CDOFeature feature)
   {
     setValue(feature, null);
@@ -485,18 +499,42 @@ public abstract class AbstractCDORevision implements InternalCDORevision
 
   public Object getValue(CDOFeature feature)
   {
-    int i = cdoClass.getFeatureID(feature);
-    return getValue(i);
+    return convertValue(feature, basicGet(feature));
   }
 
   public Object setValue(CDOFeature feature, Object value)
   {
-    int i = cdoClass.getFeatureID(feature);
+    return convertValue(feature, basicSet(feature, value));
+  }
+
+  protected Object convertValue(CDOFeature feature, Object value)
+  {
+    if (value == null)
+    {
+      value = feature.getDefaultValue();
+    }
+    else if (value == InternalCDORevision.NIL)
+    {
+      value = null;
+    }
+
+    return value;
+  }
+
+  protected Object basicGet(CDOFeature feature)
+  {
+    int featureID = cdoClass.getFeatureID(feature);
+    return getValue(featureID);
+  }
+
+  protected Object basicSet(CDOFeature feature, Object value)
+  {
+    int featureID = cdoClass.getFeatureID(feature);
 
     try
     {
-      Object old = getValue(i);
-      setValue(i, value);
+      Object old = getValue(featureID);
+      setValue(featureID, value);
       return old;
     }
     catch (ArrayIndexOutOfBoundsException ex)
@@ -555,14 +593,13 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     for (int i = 0; i < features.length; i++)
     {
       CDOFeature feature = features[i];
-      CDOType type = feature.getType();
       if (feature.isMany())
       {
         setValue(i, in.readCDOList(this, feature));
       }
       else
       {
-        setValue(i, type.readValue(in));
+        setValue(i, ((InternalCDOFeature)feature).readValue(in));
         if (TRACER.isEnabled())
         {
           TRACER.format("Read feature {0}: {1}", feature, getValue(i));
@@ -594,7 +631,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
           TRACER.format("Writing feature {0}: {1}", feature, value);
         }
 
-        feature.getType().writeValue(out, value);
+        ((InternalCDOFeature)feature).writeValue(out, value);
       }
     }
   }

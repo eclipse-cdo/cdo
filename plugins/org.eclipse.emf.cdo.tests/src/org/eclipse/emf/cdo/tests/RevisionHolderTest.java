@@ -537,5 +537,15 @@ public class RevisionHolderTest extends AbstractCDOTest
     {
       throw new UnsupportedOperationException();
     }
+
+    public Object basicGet(CDOFeature feature, int index)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public Object basicSet(CDOFeature feature, int index, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
   }
 }

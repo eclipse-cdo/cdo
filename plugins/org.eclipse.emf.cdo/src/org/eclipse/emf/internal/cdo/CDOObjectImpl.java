@@ -359,12 +359,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
-    if (setting == null)
-    {
-      setting = eFeature.getDefaultValue();
-    }
 
     CDOStore cdoStore = cdoStore();
+
     if (cdoFeature.isMany())
     {
       if (setting != null)
@@ -442,7 +439,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     EStore eStore = eStore();
     if (eFeature.isMany())
     {
-
       int size = cdoStore.size(this, eFeature);
       for (int index = 0; index < size; index++)
       {
@@ -594,7 +590,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
         public EStoreEcoreEMap()
         {
-          super((EClass)eType, eType.getInstanceClass(), null);
+          super((EClass)eType, BasicEMap.Entry.class, null);
           delegateEList = new BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
           {
             private static final long serialVersionUID = 1L;
@@ -633,22 +629,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           };
 
           size = delegateEList.size();
-        }
-
-        // Temporary fix. A fix should be available in EMF for that.
-        @Override
-        protected BasicEList<Entry<Object, Object>> newList()
-        {
-          return new BasicEList<Entry<Object, Object>>()
-          {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Object[] newData(int listCapacity)
-            {
-              return new BasicEMap.Entry[listCapacity];
-            }
-          };
         }
 
         private void checkListForReading()
@@ -759,6 +739,37 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return (Resource.Internal)cdoStore().getResource(this);
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
+  {
+    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
+        dynamicFeatureID);
+  }
+
+  /**
+   * TODO: TO BE REMOVED once https://bugs.eclipse.org/bugs/show_bug.cgi?id=259855 is available to downloads
+   */
+  @Override
+  public void dynamicSet(int dynamicFeatureID, Object value)
+  {
+    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+    if (eStructuralFeature.isTransient())
+    {
+      eSettings[dynamicFeatureID] = value;
+    }
+    else
+    {
+      eStore().set(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX, value);
+      if (eIsCaching())
+      {
+        eSettings[dynamicFeatureID] = value;
+      }
+    }
   }
 
   /**

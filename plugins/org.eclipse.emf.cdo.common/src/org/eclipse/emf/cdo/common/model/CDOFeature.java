@@ -30,6 +30,11 @@ public interface CDOFeature extends CDOModelElement
 
   public CDOClass getReferenceType();
 
+  /**
+   * @since 2.0
+   */
+  public Object getDefaultValue();
+
   public CDOClass getContainingClass();
 
   public CDOPackage getContainingPackage();

@@ -197,11 +197,6 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().isResource();
   }
 
-  public boolean isSet(CDOFeature feature)
-  {
-    return li.getRevision().isSet(feature);
-  }
-
   public boolean isTransactional()
   {
     return li.getRevision().isTransactional();
@@ -311,5 +306,15 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public void unset(CDOFeature feature)
   {
     li.getRevision().unset(feature);
+  }
+
+  public Object basicGet(CDOFeature feature, int index)
+  {
+    return li.getRevision().basicGet(feature, index);
+  }
+
+  public Object basicSet(CDOFeature feature, int index, Object value)
+  {
+    return li.getRevision().basicSet(feature, index, value);
   }
 }

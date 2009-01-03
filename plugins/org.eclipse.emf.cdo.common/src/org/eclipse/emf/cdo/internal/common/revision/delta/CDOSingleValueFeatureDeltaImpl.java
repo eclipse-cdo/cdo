@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
 
 import java.io.IOException;
 
@@ -41,7 +42,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   {
     super(in, cdoClass);
     index = in.readInt();
-    newValue = getFeature().getType().readValue(in);
+    newValue = ((InternalCDOFeature)getFeature()).readValue(in);
   }
 
   @Override
@@ -54,8 +55,8 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     {
       valueToWrite = out.getIDProvider().provideCDOID(newValue);
     }
-
-    getFeature().getType().writeValue(out, valueToWrite);
+    
+    ((InternalCDOFeature)getFeature()).writeValue(out, valueToWrite);
   }
 
   public int getIndex()

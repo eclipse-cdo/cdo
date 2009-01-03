@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.InternalCDOFeature;
+import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -52,11 +53,20 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
 
   private CDOClassProxy referenceTypeProxy;
 
+  private Object defaultValue;
+
+  /**
+   * Creates an uninitialized instance.
+   */
   public CDOFeatureImpl()
   {
   }
 
-  public CDOFeatureImpl(CDOClass containingClass, int featureID, String name, CDOType type, boolean many)
+  /**
+   * Creates an attribute feature.
+   */
+  public CDOFeatureImpl(CDOClass containingClass, int featureID, String name, CDOType type, Object defaultValue,
+      boolean many)
   {
     super(name);
     if (type == CDOType.OBJECT)
@@ -67,6 +77,7 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     this.containingClass = containingClass;
     this.featureID = featureID;
     this.type = type;
+    this.defaultValue = defaultValue;
     this.many = many;
     if (MODEL_TRACER.isEnabled())
     {
@@ -74,6 +85,9 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     }
   }
 
+  /**
+   * Creates a reference feature.
+   */
   public CDOFeatureImpl(CDOClass containingClass, int featureID, String name, CDOClassProxy referenceTypeProxy,
       boolean many, boolean containment)
   {
@@ -95,6 +109,9 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     }
   }
 
+  /**
+   * Reads a feature from a stream.
+   */
   public CDOFeatureImpl(CDOClass containingClass, CDODataInput in) throws IOException
   {
     this.containingClass = containingClass;
@@ -107,6 +124,11 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     super.read(in);
     featureID = in.readInt();
     type = in.readCDOType();
+    if (in.readBoolean())
+    {
+      defaultValue = type.readValue(in);
+    }
+
     many = in.readBoolean();
     containment = in.readBoolean();
     if (PROTOCOL_TRACER.isEnabled())
@@ -139,6 +161,16 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     super.write(out);
     out.writeInt(featureID);
     out.writeCDOType(type);
+    if (defaultValue != null)
+    {
+      out.writeBoolean(true);
+      type.writeValue(out, defaultValue);
+    }
+    else
+    {
+      out.writeBoolean(false);
+    }
+
     out.writeBoolean(many);
     out.writeBoolean(containment);
 
@@ -219,6 +251,16 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     return many;
   }
 
+  public Object getDefaultValue()
+  {
+    return defaultValue;
+  }
+
+  public void setDefaultValue(Object defaultValue)
+  {
+    this.defaultValue = defaultValue;
+  }
+
   public void setMany(boolean many)
   {
     this.many = many;
@@ -254,11 +296,6 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     referenceTypeProxy = new CDOClassProxy(cdoClassRef, getPackageManager());
   }
 
-  public void setReferenceType(CDOClass cdoClass)
-  {
-    referenceTypeProxy = new CDOClassProxy(cdoClass);
-  }
-
   public CDOClassProxy getReferenceTypeProxy()
   {
     return referenceTypeProxy;
@@ -275,5 +312,49 @@ public class CDOFeatureImpl extends CDOModelElementImpl implements InternalCDOFe
     {
       return MessageFormat.format("CDOFeature(ID={0}, name={1}, type={2})", featureID, getName(), type);
     }
+  }
+
+  public Object readValue(CDODataInput in) throws IOException
+  {
+    CDOType type = getType();
+    if (type.canBeNull() && !isMany())
+    {
+      if (in.readBoolean())
+      {
+        return InternalCDORevision.NIL;
+      }
+    }
+
+    return type.readValue(in);
+  }
+
+  public void writeValue(CDODataOutput out, Object value) throws IOException
+  {
+    // TODO We could certainly optimized this: When a feature is a reference, NIL is only possible in the case where
+    // unsettable == true. (TO be verified)
+    if (type.canBeNull())
+    {
+      if (!isMany())
+      {
+        if (value == InternalCDORevision.NIL)
+        {
+          out.writeBoolean(true);
+          return;
+        }
+        else
+        {
+          out.writeBoolean(false);
+        }
+      }
+    }
+    else
+    {
+      if (value == null)
+      {
+        value = getDefaultValue();
+      }
+    }
+
+    type.writeValue(out, value);
   }
 }

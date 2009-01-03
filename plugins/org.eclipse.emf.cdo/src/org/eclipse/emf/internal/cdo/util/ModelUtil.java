@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * @author Eike Stepper
@@ -272,7 +273,13 @@ public final class ModelUtil
     String name = eFeature.getName();
     CDOType type = getCDOType(eFeature);
     boolean many = EMFUtil.isMany(eFeature);
-    return CDOModelUtil.createAttribute(containingClass, featureID, name, type, many);
+    Object defaultValue = eFeature.getDefaultValue();
+    if (type == CDOType.CUSTOM)
+    {
+      defaultValue = EcoreUtil.convertToString((EDataType)eFeature.getEType(), defaultValue);
+    }
+    
+    return CDOModelUtil.createAttribute(containingClass, featureID, name, type, defaultValue, many);
   }
 
   public static EPackage getEPackage(CDOPackage cdoPackage, CDOPackageRegistry packageRegistry)

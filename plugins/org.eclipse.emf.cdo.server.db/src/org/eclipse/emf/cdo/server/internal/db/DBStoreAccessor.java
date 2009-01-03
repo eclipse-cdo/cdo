@@ -223,7 +223,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
         }
         else
         {
-          feature = CDOModelUtil.createAttribute(cdoClass, featureID, name, type, many);
+          feature = CDOModelUtil.createAttribute(cdoClass, featureID, name, type, null, many);
         }
 
         FeatureServerInfo.setDBID(feature, (Integer)values[0]);

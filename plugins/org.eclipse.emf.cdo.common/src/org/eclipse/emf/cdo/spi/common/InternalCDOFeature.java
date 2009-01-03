@@ -10,10 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.spi.common;
 
+import org.eclipse.emf.cdo.common.CDODataInput;
+import org.eclipse.emf.cdo.common.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOClassProxy;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -29,6 +33,18 @@ public interface InternalCDOFeature extends CDOFeature, InternalCDOModelElement
 
   public void setReferenceType(CDOClassRef cdoClassRef);
 
-  @Deprecated
-  public void setReferenceType(CDOClass cdoClass);
+  /**
+   * @since 2.0
+   */
+  public void setDefaultValue(Object defaultValue);
+
+  /**
+   * @since 2.0
+   */
+  public void writeValue(CDODataOutput out, Object value) throws IOException;
+
+  /**
+   * @since 2.0
+   */
+  public Object readValue(CDODataInput in) throws IOException;
 }

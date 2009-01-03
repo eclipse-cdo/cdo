@@ -202,5 +202,10 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     {
       return "CONTAINER_FEATURE";
     }
+
+    public Object getDefaultValue()
+    {
+      return null;
+    }
   }
 }

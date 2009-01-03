@@ -22,6 +22,6 @@ public class CDONameFeatureImpl extends CDOFeatureImpl implements CDONameFeature
 {
   public CDONameFeatureImpl(CDOClass containingClass)
   {
-    super(containingClass, FEATURE_ID, NAME, CDOTypeImpl.STRING, false);
+    super(containingClass, FEATURE_ID, NAME, CDOTypeImpl.STRING, null, false);
   }
 }

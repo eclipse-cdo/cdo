@@ -54,7 +54,10 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
   public CDOViewProviderRegistryImpl()
   {
-    addViewProvider(new PluginContainerViewProvider());
+    if (OMPlatform.INSTANCE.isOSGiRunning())
+    {
+      addViewProvider(new PluginContainerViewProvider());
+    }
   }
 
   public CDOView provideView(URI uri, CDOViewSet viewSet)

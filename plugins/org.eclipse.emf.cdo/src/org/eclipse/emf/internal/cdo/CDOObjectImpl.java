@@ -809,13 +809,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       container = cdoStore().getContainer(this);
     }
 
-    // TODO Eike: It is still needed ?? Since we do not use container as two possibles value (container or resource)
-    // I think it should be removed!
-    if (container instanceof CDOResource)
-    {
-      return null;
-    }
-
     return container;
   }
 

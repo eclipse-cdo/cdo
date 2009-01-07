@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -295,8 +295,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
-    mapping.readRevision(this, revision, referenceChunk);
-    return revision;
+    if (mapping.readRevision(this, revision, referenceChunk))
+    {
+      return revision;
+    }
+
+    // Reading failed - revision does not exist.
+    return null;
   }
 
   public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
@@ -311,8 +316,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
-    mapping.readRevisionByTime(this, revision, timeStamp, referenceChunk);
-    return revision;
+    if (mapping.readRevisionByTime(this, revision, timeStamp, referenceChunk))
+    {
+      return revision;
+    }
+
+    // Reading failed - revision does not exist.
+    return null;
   }
 
   public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
@@ -327,8 +337,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(cdoClass);
-    mapping.readRevisionByVersion(this, revision, version, referenceChunk);
-    return revision;
+    if (mapping.readRevisionByVersion(this, revision, version, referenceChunk))
+    {
+      return revision;
+    }
+
+    // Reading failed - revision does not exist.
+    return null;
   }
 
   /**

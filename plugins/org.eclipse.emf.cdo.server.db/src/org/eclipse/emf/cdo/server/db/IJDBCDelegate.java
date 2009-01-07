@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  **************************************************************************/
@@ -57,8 +57,11 @@ public interface IJDBCDelegate
 
   /**
    * Select a revision's attributes
+   * 
+   * @return <code>true</code> if the revision attributes have been successfully loaded.<br>
+   *         <code>false</code> if the revision does not exist in the database.
    */
-  public void selectRevisionAttributes(CDORevision revision, IClassMapping classMapping, String where);
+  public boolean selectRevisionAttributes(CDORevision revision, IClassMapping classMapping, String where);
 
   /**
    * Select a revision's references (or a part thereof)

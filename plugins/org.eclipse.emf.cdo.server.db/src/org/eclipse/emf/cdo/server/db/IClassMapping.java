@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -64,16 +64,22 @@ public interface IClassMapping
 
   /**
    * @since 2.0
+   * @return <code>true</code> if the revision has been loaded sucessfully.<br>
+   *         <code>false</code> if the revision does not exist in the DB.
    */
-  public void readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk);
+  public boolean readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk);
 
   /**
    * @since 2.0
+   * @return <code>true</code> if the revision has been loaded sucessfully.<br>
+   *         <code>false</code> if the revision does not exist in the DB.
    */
-  public void readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk);
+  public boolean readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk);
 
   /**
    * @since 2.0
+   * @return <code>true</code> if the revision has been loaded sucessfully.<br>
+   *         <code>false</code> if the revision does not exist in the DB.
    */
-  public void readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk);
+  public boolean readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk);
 }

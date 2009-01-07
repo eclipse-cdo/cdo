@@ -32,9 +32,11 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_254489_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_255662_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_256141_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258278_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258850_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259695_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259949_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
@@ -114,9 +116,11 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_255662_Test.class);
     testClasses.add(Bugzilla_256141_Test.class);
     testClasses.add(Bugzilla_258278_Test.class);
+    testClasses.add(Bugzilla_258850_Test.class);
     testClasses.add(Bugzilla_258933_Test.class);
     testClasses.add(Bugzilla_259695_Test.class);
     testClasses.add(Bugzilla_259869_Test.class);
+    testClasses.add(Bugzilla_259949_Test.class);
 
     // TODO testClasses.add(NonCDOResourceTest.class);
     // TODO testClasses.add(GeneratedEcoreTest.class);

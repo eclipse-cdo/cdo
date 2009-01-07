@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  **************************************************************************/
@@ -176,7 +176,7 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
     doUpdateRevised(classMapping.getTable().getName(), revised, CDOIDUtil.getLong(id));
   }
 
-  public final void selectRevisionAttributes(CDORevision revision, IClassMapping classMapping, String where)
+  public final boolean selectRevisionAttributes(CDORevision revision, IClassMapping classMapping, String where)
   {
     List<IAttributeMapping> attributeMappings = classMapping.getAttributeMappings();
     if (attributeMappings == null)
@@ -193,7 +193,7 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
 
       if (!resultSet.next())
       {
-        throw new IllegalStateException("Revision not found: " + CDOIDUtil.getLong(revision.getID()));
+        return false;
       }
 
       int i = 0;
@@ -215,6 +215,8 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
           attributeMapping.extractValue(resultSet, ++i, revision);
         }
       }
+
+      return true;
     }
     catch (SQLException ex)
     {

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -400,39 +400,54 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
-  public void readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk)
+  public boolean readRevision(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk)
   {
     String where = mappingStrategy.createWhereClause(CDORevision.UNSPECIFIED_DATE);
-    readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
+    return readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
   }
 
-  public void readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk)
+  public boolean readRevisionByTime(IDBStoreAccessor accessor, CDORevision revision, long timeStamp, int referenceChunk)
   {
     String where = mappingStrategy.createWhereClause(timeStamp);
-    readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
+    return readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
   }
 
-  public void readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk)
+  public boolean readRevisionByVersion(IDBStoreAccessor accessor, CDORevision revision, int version, int referenceChunk)
   {
     String where = CDODBSchema.ATTRIBUTES_VERSION + "=" + version;
-    readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
+    return readRevision(accessor, (InternalCDORevision)revision, where, referenceChunk);
   }
 
-  protected void readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, String where, int referenceChunk)
+  /**
+   * Read a revision.
+   * 
+   * @return <code>true</code> if the revision has been read successfully.<br>
+   *         <code>false</code> if the revision does not exist in the DB.
+   */
+  protected boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, String where,
+      int referenceChunk)
   {
     // Read attribute table always (even without modeled attributes!)
-    readAttributes(accessor, revision, where);
+    boolean success = readAttributes(accessor, revision, where);
 
-    // Read reference tables only if they exist
-    if (referenceMappings != null)
+    // Read reference tables only if revision exists and if references exist
+    if (success && referenceMappings != null)
     {
       readReferences(accessor, revision, referenceChunk);
     }
+
+    return success;
   }
 
-  protected final void readAttributes(IDBStoreAccessor accessor, InternalCDORevision revision, String where)
+  /**
+   * Read the revision's attributes from the DB.
+   * 
+   * @return <code>true</code> if the revision has been read successfully.<br>
+   *         <code>false</code> if the revision does not exist in the DB.
+   */
+  protected final boolean readAttributes(IDBStoreAccessor accessor, InternalCDORevision revision, String where)
   {
-    accessor.getJDBCDelegate().selectRevisionAttributes(revision, this, where);
+    return accessor.getJDBCDelegate().selectRevisionAttributes(revision, this, where);
   }
 
   protected void readReferences(IDBStoreAccessor accessor, InternalCDORevision revision, int referenceChunk)

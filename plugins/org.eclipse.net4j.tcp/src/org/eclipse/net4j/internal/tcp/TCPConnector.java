@@ -21,6 +21,7 @@ import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -51,6 +52,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
   private ITCPSelector selector;
 
+  @ExcludeFromDump
   private SelectionKey selectionKey;
 
   private BlockingQueue<InternalChannel> writeQueue = new LinkedBlockingQueue<InternalChannel>();

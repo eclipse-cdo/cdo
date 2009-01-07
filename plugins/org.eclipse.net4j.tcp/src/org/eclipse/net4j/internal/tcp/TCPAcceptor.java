@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPPassiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelector;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -45,12 +46,14 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
 
   private TCPSelector selector;
 
+  @ExcludeFromDump
   private SelectionKey selectionKey;
 
   private boolean startSynchronously = DEFAULT_START_SYNCHRONOUSLY;
 
   private long synchronousStartTimeout = DEFAULT_SYNCHRONOUS_START_TIMEOUT;
 
+  @ExcludeFromDump
   private CountDownLatch startLatch;
 
   private ServerSocketChannel serverSocketChannel;

@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.lifecycle;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -35,6 +36,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   private ILifecycleState lifecycleState = ILifecycleState.INACTIVE;
 
+  @ExcludeFromDump
   private Semaphore lifecycleSemaphore = new Semaphore(1);
 
   protected Lifecycle()

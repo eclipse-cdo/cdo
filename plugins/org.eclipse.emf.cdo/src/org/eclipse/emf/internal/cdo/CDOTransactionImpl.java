@@ -1276,6 +1276,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             session.handleCommitNotification(timeStamp, dirtyIDs, detachedIDs, deltasCopy, getTransaction());
           }
 
+          lastCommitTime = timeStamp;
           for (CDOTransactionHandler handler : getHandlers())
           {
             handler.committedTransaction(getTransaction(), this);
@@ -1285,7 +1286,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           getAdapterManager().committedTransaction(getTransaction(), this);
 
           cleanUp();
-          lastCommitTime = timeStamp;
           Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
           fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
         }

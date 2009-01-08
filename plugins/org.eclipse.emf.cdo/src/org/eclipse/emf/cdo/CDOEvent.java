@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * A marker interface for all {@link IEvent events} sent by CDO client facilities, like {@link CDOSession sessions},
+ * {@link CDOView views}, {@link CDOTransaction transactions} and others.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */

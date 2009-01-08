@@ -16,19 +16,28 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFeatureAnalyzer;
 
 /**
+ * TODO Simon: JavaDoc
+ * 
  * @author Simon McDuff
  * @since 2.0
  */
 public interface CDOFeatureAnalyzer
 {
+  /**
+   * TODO Simon: JavaDoc
+   */
   public static final CDOFeatureAnalyzer NOOP = new NOOPFeatureAnalyzer();
 
   /**
+   * TODO Simon: JavaDoc
+   * 
    * @since 2.0
    */
   public void preTraverseFeature(CDOObject revision, CDOFeature feature, int index);
 
   /**
+   * TODO Simon: JavaDoc
+   * 
    * @since 2.0
    */
   public void postTraverseFeature(CDOObject revision, CDOFeature feature, int index, Object value);

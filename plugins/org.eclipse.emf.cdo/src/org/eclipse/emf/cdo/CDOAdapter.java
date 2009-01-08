@@ -11,13 +11,21 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.CDOView.Options;
+
 import org.eclipse.emf.common.notify.Adapter;
 
 /**
+ * A marker interface for {@link Adapter adpters} to indicate that change subscriptions should be registered with the
+ * repository if they are attached to {@link CDOObject objects}.
+ * <p>
+ * This special marker interface is intended to be used with {@link CDOAdapterPolicy#CDO}. Note that you can also define
+ * your own {@link CDOAdapterPolicy adapter policy} and {@link Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)
+ * register} it with the {@link CDOView view} to make your own adapters trigger change subscription.
+ * 
  * @author Simon McDuff
  * @since 2.0
  */
 public interface CDOAdapter extends Adapter
 {
-
 }

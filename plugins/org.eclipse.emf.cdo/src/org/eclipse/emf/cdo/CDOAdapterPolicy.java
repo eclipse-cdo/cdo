@@ -49,29 +49,55 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface CDOAdapterPolicy
 {
+  /**
+   * A default adapter policy that never triggers any special behaviour.
+   */
   public static final CDOAdapterPolicy NONE = new CDOAdapterPolicy()
   {
+    /**
+     * Always returns <code>false</code>.
+     */
     public boolean isValid(EObject eObject, Adapter adapter)
     {
       return false;
     }
   };
 
+  /**
+   * A default adapter policy that only triggers special behaviour if the adapter under test implements
+   * {@link CDOAdapter}.
+   */
   public static final CDOAdapterPolicy CDO = new CDOAdapterPolicy()
   {
+    /**
+     * Returns <code>true</code> if the given adapter implements {@link CDOAdapter}.
+     */
     public boolean isValid(EObject eObject, Adapter adapter)
     {
       return adapter instanceof CDOAdapter;
     }
   };
 
+  /**
+   * A default adapter policy that always triggers special behaviour.
+   */
   public static final CDOAdapterPolicy ALL = new CDOAdapterPolicy()
   {
+    /**
+     * Always returns <code>true</code>.
+     */
     public boolean isValid(EObject eObject, Adapter adapter)
     {
       return true;
     }
   };
 
+  /**
+   * Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behaviour,
+   * <code>false</code> otherwise.
+   * 
+   * @see CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)
+   * @see CDOView.Options#setStrongReferencePolicy(CDOAdapterPolicy)
+   */
   public boolean isValid(EObject eObject, Adapter adapter);
 }

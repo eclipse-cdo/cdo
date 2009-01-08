@@ -23,8 +23,14 @@ import java.util.Set;
  */
 public interface CDOConflictResolver
 {
+  /**
+   * Returns the {@link CDOTransaction transaction} this conflict resolver is associated with.
+   */
   public CDOTransaction getTransaction();
 
+  /**
+   * Sets the {@link CDOTransaction transaction} this conflict resolver is to be associated with.
+   */
   public void setTransaction(CDOTransaction transaction);
 
   /**

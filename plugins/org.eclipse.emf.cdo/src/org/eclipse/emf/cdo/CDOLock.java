@@ -15,19 +15,30 @@ import org.eclipse.net4j.util.concurrent.RWLockManager;
 import java.util.concurrent.locks.Lock;
 
 /**
+ * TODO Simon: JavaDoc
+ * 
  * @author Simon McDuff
  * @since 2.0
  */
 public interface CDOLock extends Lock
 {
+  /**
+   * TODO Simon: JavaDoc
+   */
   public static final int WAIT = RWLockManager.WAIT;
 
+  /**
+   * TODO Simon: JavaDoc
+   */
   public static final int NO_WAIT = RWLockManager.NO_WAIT;
 
   /**
-   * Return true if it is currently lock.
+   * Returns <code>true</code> if this lock is currently lock, <code>false</code> otherwise.
    */
   public boolean isLocked();
 
+  /**
+   * TODO Simon: JavaDoc
+   */
   public RWLockManager.LockType getType();
 }

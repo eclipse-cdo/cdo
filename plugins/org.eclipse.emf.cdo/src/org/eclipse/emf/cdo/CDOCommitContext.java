@@ -20,24 +20,45 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provides a context for a commit operation.
+ * Provides a context for commit operations.
  * 
  * @author Simon McDuff
  * @since 2.0
  */
 public interface CDOCommitContext
 {
+  /**
+   * Returns the {@link CDOTransaction transaction} associated with this commit context.
+   */
   public CDOTransaction getTransaction();
 
+  /**
+   * Returns a list of the new {@link CDOPackage packages} that are to be committed with this commit context.
+   */
   public List<CDOPackage> getNewPackages();
 
+  /**
+   * Returns a map of the new {@link CDOResource resources} that are to be committed with this commit context.
+   */
   public Map<CDOID, CDOResource> getNewResources();
 
+  /**
+   * Returns a map of the new {@link CDOObject objects} that are to be committed with this commit context.
+   */
   public Map<CDOID, CDOObject> getNewObjects();
 
+  /**
+   * Returns a map of the dirty {@link CDOObject objects} that are to be committed with this commit context.
+   */
   public Map<CDOID, CDOObject> getDirtyObjects();
 
+  /**
+   * Returns a map of the {@link CDORevisionDelta revision deltas} that are to be committed with this commit context.
+   */
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas();
 
+  /**
+   * Returns a map of the detached {@link CDOObject objects} that are to be committed with this commit context.
+   */
   public Map<CDOID, CDOObject> getDetachedObjects();
 }

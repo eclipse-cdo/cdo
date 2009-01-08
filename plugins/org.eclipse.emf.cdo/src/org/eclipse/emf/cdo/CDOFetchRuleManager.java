@@ -20,18 +20,31 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * TODO Simon: JavaDoc
+ * 
  * @author Simon McDuff
  * @since 2.0
  */
 public interface CDOFetchRuleManager
 {
+  /**
+   * TODO Simon: JavaDoc
+   */
   public static final CDOFetchRuleManager NOOP = new NOOPFetchRuleManager();
 
+  /**
+   * TODO Simon: JavaDoc
+   */
   public CDOID getContext();
 
+  /**
+   * TODO Simon: JavaDoc
+   */
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids);
 
   /**
+   * TODO Simon: JavaDoc
+   * 
    * @since 2.0
    */
   public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();

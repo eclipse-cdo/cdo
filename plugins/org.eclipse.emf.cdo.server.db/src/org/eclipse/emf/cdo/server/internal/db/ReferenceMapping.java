@@ -65,6 +65,11 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     }
   }
 
+  public void deleteReference(IDBStoreAccessor accessor, CDOID id)
+  {
+    accessor.getJDBCDelegate().deleteReferences(id, this);
+  }
+
   public final void readReference(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk)
   {
     accessor.getJDBCDelegate().selectRevisionReferences(revision, this, referenceChunk);

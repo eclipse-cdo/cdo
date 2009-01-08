@@ -131,6 +131,35 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
   }
 
+  public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
+  {
+    Statement statement = accessor.getJDBCDelegate().getStatement();
+    initialize(statement);
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("DELETE FROM ");
+    builder.append(table);
+    builder.append(" WHERE ");
+    builder.append(idField);
+    builder.append(" = ");
+    builder.append(CDOIDUtil.getLong(id));
+    String sql = builder.toString();
+    DBUtil.trace(sql);
+
+    try
+    {
+      statement.execute(sql);
+      if (statement.getUpdateCount() != 1)
+      {
+        throw new DBException("Object type could not be deleted: " + id);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
   private void initialize(Statement statement)
   {
     synchronized (initializeLock)

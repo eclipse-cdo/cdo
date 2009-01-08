@@ -131,7 +131,8 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
 
           for (int result : results)
           {
-            checkState(result == 1, "Batch execution did not return '1' for " + entry.getKey().toString());
+            checkState(entry.getKey().getElement1() != StmtType.DELETE_REFERENCES && result == 1,
+                "Batch execution did not return '1' for " + entry.getKey().toString());
           }
         }
         catch (SQLException ex)
@@ -347,6 +348,150 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
+  protected void doUpdateAttributes(String tableName, CDORevision rev, List<IAttributeMapping> attributeMappings,
+      boolean withFullRevisionInfo)
+  {
+    boolean firstBatch = false;
+
+    InternalCDORevision revision = (InternalCDORevision)rev;
+    if (attributeMappings == null)
+    {
+      attributeMappings = Collections.emptyList();
+    }
+
+    PreparedStatement stmt = getDirtyStatement(StmtType.UPDATE_ATTRIBUTES, tableName);
+    if (stmt == null && cacheStatements)
+    {
+      firstBatch = true;
+      stmt = getAndRemoveCachedStatement(StmtType.UPDATE_ATTRIBUTES, tableName);
+    }
+
+    try
+    {
+      firstBatch = true;
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("UPDATE ");
+        sql.append(tableName);
+        sql.append(" SET ");
+        sql.append(CDODBSchema.ATTRIBUTES_VERSION);
+        sql.append(" = ? ");
+        if (withFullRevisionInfo)
+        {
+          sql.append(", ");
+          sql.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+          sql.append(" = ?,");
+          sql.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+          sql.append(" = ?,");
+          sql.append(CDODBSchema.ATTRIBUTES_FEATURE);
+          sql.append(" = ?");
+        }
+
+        for (IAttributeMapping attributeMapping : attributeMappings)
+        {
+          sql.append(", ");
+          sql.append(attributeMapping.getField());
+          sql.append(" = ?");
+        }
+
+        sql.append(" WHERE ");
+        sql.append(CDODBSchema.ATTRIBUTES_ID);
+        sql.append(" = ? ");
+
+        stmt = getConnection().prepareStatement(sql.toString());
+      }
+
+      int col = 1;
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.setInt(col++, revision.getVersion());
+      if (withFullRevisionInfo)
+      {
+        stmt.setLong(col++, CDOIDUtil.getLong(revision.getResourceID()));
+        stmt.setLong(col++, CDOIDUtil.getLong((CDOID)revision.getContainerID()));
+        stmt.setInt(col++, revision.getContainingFeatureID());
+      }
+
+      for (IAttributeMapping attributeMapping : attributeMappings)
+      {
+        Object value = attributeMapping.getRevisionValue(revision);
+        if (value == null)
+        {
+          stmt.setNull(col++, attributeMapping.getField().getType().getCode());
+        }
+        else
+        {
+          stmt.setObject(col++, value);
+        }
+      }
+
+      stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
+      if (firstBatch)
+      {
+        addDirtyStatement(StmtType.UPDATE_ATTRIBUTES, tableName, stmt);
+      }
+
+      stmt.addBatch();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+  }
+
+  @Override
+  protected void doDeleteAttributes(String tableName, long cdoid)
+  {
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.DELETE_ATTRIBUTES, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("DELETE FROM ");
+        sql.append(tableName);
+        sql.append(" WHERE ");
+        sql.append(CDODBSchema.ATTRIBUTES_ID);
+        sql.append(" = ? ");
+
+        stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.DELETE_ATTRIBUTES, tableName, stmt);
+        }
+      }
+
+      stmt.setLong(1, cdoid);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  @Override
   protected void doInsertReference(String tableName, int dbID, long source, int version, int index, long target)
   {
     boolean firstBatch = false;
@@ -398,7 +543,66 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
-  protected void doUpdateRevised(String tableName, long revisedStamp, long cdoid, int version)
+  protected void doDeleteReferences(String tableName, int dbId, long cdoid)
+  {
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.DELETE_REFERENCES, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("DELETE FROM ");
+        sql.append(tableName);
+        sql.append(" WHERE ");
+        sql.append(CDODBSchema.REFERENCES_SOURCE);
+        sql.append(" = ? ");
+
+        if (dbId != 0)
+        {
+          sql.append("AND");
+          sql.append(CDODBSchema.REFERENCES_FEATURE);
+          sql.append(" = ? ");
+        }
+
+        stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.DELETE_REFERENCES, tableName, stmt);
+        }
+      }
+
+      stmt.setLong(1, cdoid);
+      if (dbId != 0)
+      {
+        stmt.setInt(2, dbId);
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  @Override
+  protected void doUpdateRevisedForReplace(String tableName, long revisedStamp, long cdoid, int version)
   {
     PreparedStatement stmt = null;
     if (cacheStatements)
@@ -445,7 +649,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
-  protected void doUpdateRevised(String tableName, long revisedStamp, long cdoid)
+  protected void doUpdateRevisedForDetach(String tableName, long revisedStamp, long cdoid)
   {
     PreparedStatement stmt = null;
     if (cacheStatements)
@@ -712,7 +916,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
    */
   private static enum StmtType
   {
-    INSERT_ATTRIBUTES, INSERT_REFERENCES, REVISE_VERSION, REVISE_UNREVISED, GENERAL
+    INSERT_ATTRIBUTES, UPDATE_ATTRIBUTES, DELETE_ATTRIBUTES, INSERT_REFERENCES, DELETE_REFERENCES, REVISE_VERSION, REVISE_UNREVISED, GENERAL
   }
 
   /**

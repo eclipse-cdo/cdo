@@ -28,4 +28,9 @@ public interface IObjectTypeCache
    * @since 2.0
    */
   public void putObjectType(IDBStoreAccessor accessor, CDOID id, CDOClass type);
+
+  /**
+   * @since 2.0
+   */
+  public void removeObjectType(IDBStoreAccessor accessor, CDOID id);
 }

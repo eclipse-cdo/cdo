@@ -157,6 +157,17 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
         .hasFullRevisionInfo());
   }
 
+  public final void updateAttributes(CDORevision revision, IClassMapping classMapping)
+  {
+    doUpdateAttributes(classMapping.getTable().getName(), revision, classMapping.getAttributeMappings(), classMapping
+        .hasFullRevisionInfo());
+  }
+
+  public void deleteAttributes(CDOID id, IClassMapping classMapping)
+  {
+    doDeleteAttributes(classMapping.getTable().getName(), CDOIDUtil.getLong(id));
+  }
+
   public final void insertReference(CDORevision sourceRevision, int index, CDOID targetId,
       IReferenceMapping referenceMapping)
   {
@@ -165,15 +176,21 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
         .getVersion(), index, CDOIDUtil.getLong(targetId));
   }
 
-  public final void updateRevised(CDORevision revision, IClassMapping classMapping)
+  public void deleteReferences(CDOID id, IReferenceMapping referenceMapping)
   {
-    doUpdateRevised(classMapping.getTable().getName(), revision.getCreated() - 1, CDOIDUtil.getLong(revision.getID()),
-        revision.getVersion() - 1);
+    doDeleteReferences(referenceMapping.getTable().getName(), referenceMapping.isWithFeature() ? FeatureServerInfo
+        .getDBID(referenceMapping.getFeature()) : 0, CDOIDUtil.getLong(id));
   }
 
-  public final void updateRevised(CDOID id, long revised, IClassMapping classMapping)
+  public final void updateRevisedForReplace(CDORevision revision, IClassMapping classMapping)
   {
-    doUpdateRevised(classMapping.getTable().getName(), revised, CDOIDUtil.getLong(id));
+    doUpdateRevisedForReplace(classMapping.getTable().getName(), revision.getCreated() - 1, CDOIDUtil.getLong(revision
+        .getID()), revision.getVersion() - 1);
+  }
+
+  public final void updateRevisedForDetach(CDOID id, long revised, IClassMapping classMapping)
+  {
+    doUpdateRevisedForDetach(classMapping.getTable().getName(), revised, CDOIDUtil.getLong(id));
   }
 
   public final boolean selectRevisionAttributes(CDORevision revision, IClassMapping classMapping, String where)
@@ -350,20 +367,36 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
       List<IAttributeMapping> attributeMappings, boolean withFullRevisionInfo);
 
   /**
+   * Update an attribute row.
+   */
+  protected abstract void doUpdateAttributes(String name, CDORevision revision,
+      List<IAttributeMapping> attributeMappings, boolean hasFullRevisionInfo);
+
+  /**
+   * Delete an attribute row.
+   */
+  protected abstract void doDeleteAttributes(String name, long cdoid1);
+
+  /**
    * Insert a reference row. Note: this is likely to be replaced by an implementation that supports storing multiple
    * references in one batch.
    */
   protected abstract void doInsertReference(String tableName, int dbId, long source, int version, int i, long target);
 
   /**
-   * Set the revised date of all unrevised rows of cdoid
+   * Delete all references of a particular CDOID.
    */
-  protected abstract void doUpdateRevised(String tableName, long revised, long cdoid);
+  protected abstract void doDeleteReferences(String name, int dbId, long cdoid);
 
   /**
-   * Set the revised date of a specific revision's previous version.
+   * Set the revised date of a cdoid (the cdoid is to be detached)
    */
-  protected abstract void doUpdateRevised(String tableName, long revisedStamp, long cdoid, int version);
+  protected abstract void doUpdateRevisedForDetach(String tableName, long revised, long cdoid);
+
+  /**
+   * Set the revised date of a specific revision's previous version (the previous version is to be replaced).
+   */
+  protected abstract void doUpdateRevisedForReplace(String tableName, long revisedStamp, long cdoid, int version);
 
   /**
    * Select a revision's attributes. The caller is resposible for closing resultSet and associated statement, if

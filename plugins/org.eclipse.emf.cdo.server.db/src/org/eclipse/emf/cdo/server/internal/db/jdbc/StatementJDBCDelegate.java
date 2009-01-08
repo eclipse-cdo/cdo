@@ -89,7 +89,55 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
-  protected void doUpdateRevised(String table, long revisedStamp, long cdoid, int version)
+  protected void doUpdateAttributes(String tableName, CDORevision revision, List<IAttributeMapping> attributeMappings,
+      boolean withFullRevisionInfo)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("UPDATE ");
+    builder.append(tableName);
+    builder.append(" SET ");
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(" = ");
+    builder.append(revision.getVersion());
+
+    if (withFullRevisionInfo)
+    {
+      CDORevisionData data = revision.data();
+      builder.append(", ");
+      builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+      builder.append(" = ");
+      builder.append(CDOIDUtil.getLong(data.getResourceID()));
+      builder.append(", ");
+      builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+      builder.append(" = ");
+      builder.append(CDOIDUtil.getLong((CDOID)data.getContainerID()));
+      builder.append(", ");
+      builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+      builder.append(" = ");
+      builder.append(data.getContainingFeatureID());
+    }
+
+    if (attributeMappings != null)
+    {
+      for (IAttributeMapping attributeMapping : attributeMappings)
+      {
+        builder.append(", ");
+        builder.append(attributeMapping.getField());
+        builder.append(" = ");
+        attributeMapping.appendValue(builder, revision);
+      }
+    }
+
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" = ");
+    builder.append(CDOIDUtil.getLong(revision.getID()));
+
+    sqlUpdate(builder.toString());
+  }
+
+  @Override
+  protected void doUpdateRevisedForReplace(String table, long revisedStamp, long cdoid, int version)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE ");
@@ -110,7 +158,20 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
-  protected void doUpdateRevised(String table, long revisedStamp, long cdoid)
+  protected void doDeleteAttributes(String name, long cdoid)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("DELETE FROM ");
+    builder.append(name);
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" = ");
+    builder.append(cdoid);
+    sqlUpdate(builder.toString());
+  }
+
+  @Override
+  protected void doUpdateRevisedForDetach(String table, long revisedStamp, long cdoid)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("UPDATE ");
@@ -149,6 +210,26 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
     builder.append(", ");
     builder.append(target);
     builder.append(")");
+    sqlUpdate(builder.toString());
+  }
+
+  @Override
+  protected void doDeleteReferences(String name, int dbId, long cdoid)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("DELETE FROM ");
+    builder.append(name);
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.REFERENCES_SOURCE);
+    builder.append(" = ");
+    builder.append(cdoid);
+    if (dbId != 0)
+    {
+      builder.append(" AND ");
+      builder.append(CDODBSchema.REFERENCES_FEATURE);
+      builder.append(" = ");
+      builder.append(dbId);
+    }
     sqlUpdate(builder.toString());
   }
 

@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 
@@ -40,4 +41,9 @@ public interface IReferenceMapping extends IFeatureMapping
   public void readReference(IDBStoreAccessor accessor, CDORevision revision, int referenceChunk);
 
   public void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String string);
+
+  /**
+   * @since 2.0
+   */
+  public void deleteReference(IDBStoreAccessor accessor, CDOID id);
 }

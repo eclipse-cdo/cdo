@@ -65,19 +65,17 @@ public class HorizontalClassMapping extends ClassMapping
   protected void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException
   {
     IRepository repository = getMappingStrategy().getStore().getRepository();
-    if (repository.isSupportingAudits())
+    IPackageManager packageManager = repository.getPackageManager();
+    CDOResourceNodeClass resourceNodeClass = packageManager.getCDOResourcePackage().getCDOResourceNodeClass();
+    CDOFeature resourceNameFeature = resourceNodeClass.getCDONameFeature();
+
+    CDOID folderID = (CDOID)revision.data().getContainerID();
+    String name = (String)revision.data().get(resourceNameFeature, 0);
+
+    CDOID existingID = accessor.readResourceID(folderID, name, revision.getCreated());
+    if (existingID != null && !existingID.equals(revision.getID()))
     {
-      IPackageManager packageManager = repository.getPackageManager();
-      CDOResourceNodeClass resourceNodeClass = packageManager.getCDOResourcePackage().getCDOResourceNodeClass();
-      CDOFeature resourceNameFeature = resourceNodeClass.getCDONameFeature();
-
-      CDOID folderID = (CDOID)revision.data().getContainerID();
-      String name = (String)revision.data().get(resourceNameFeature, 0);
-
-      if (accessor.readResourceID(folderID, name, revision.getCreated()) != null)
-      {
-        throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID);
-      }
+      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID);
     }
   }
 
@@ -90,5 +88,21 @@ public class HorizontalClassMapping extends ClassMapping
   public boolean hasFullRevisionInfo()
   {
     return true;
+  }
+
+  @Override
+  protected void deleteRevision(IDBStoreAccessor accessor, CDOID id, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(2);
+      super.deleteRevision(accessor, id, monitor.fork(1));
+      getMappingStrategy().getObjectTypeCache().removeObjectType(accessor, id);
+      monitor.worked(1);
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 }

@@ -138,20 +138,44 @@ public class JDBCPerformanceReporter extends Lifecycle implements IJDBCDelegate
     registerCall("selectReferences", time);
   }
 
-  public final void updateRevised(CDORevision revision, IClassMapping classMapping)
+  public final void updateRevisedForReplace(CDORevision revision, IClassMapping classMapping)
   {
     long time = System.currentTimeMillis();
-    delegate.updateRevised(revision, classMapping);
+    delegate.updateRevisedForReplace(revision, classMapping);
     time = System.currentTimeMillis() - time;
-    registerCall("updateRevisedRevision", time);
+    registerCall("updateRevisedForReplace", time);
   }
 
-  public final void updateRevised(CDOID cdoid, long revised, IClassMapping classMapping)
+  public final void updateRevisedForDetach(CDOID cdoid, long revised, IClassMapping classMapping)
   {
     long time = System.currentTimeMillis();
-    delegate.updateRevised(cdoid, revised, classMapping);
+    delegate.updateRevisedForDetach(cdoid, revised, classMapping);
     time = System.currentTimeMillis() - time;
-    registerCall("updateRevisedID", time);
+    registerCall("updateRevisedForDetach", time);
+  }
+
+  public void deleteAttributes(CDOID id, IClassMapping classMapping)
+  {
+    long time = System.currentTimeMillis();
+    delegate.deleteAttributes(id, classMapping);
+    time = System.currentTimeMillis() - time;
+    registerCall("deleteAttributes", time);
+  }
+
+  public void deleteReferences(CDOID id, IReferenceMapping referenceMapping)
+  {
+    long time = System.currentTimeMillis();
+    delegate.deleteReferences(id, referenceMapping);
+    time = System.currentTimeMillis() - time;
+    registerCall("deleteReferences", time);
+  }
+
+  public void updateAttributes(CDORevision revision, IClassMapping classMapping)
+  {
+    long time = System.currentTimeMillis();
+    delegate.updateAttributes(revision, classMapping);
+    time = System.currentTimeMillis() - time;
+    registerCall("updateAttributes", time);
   }
 
   public void setConnectionProvider(IDBConnectionProvider connectionProvider)

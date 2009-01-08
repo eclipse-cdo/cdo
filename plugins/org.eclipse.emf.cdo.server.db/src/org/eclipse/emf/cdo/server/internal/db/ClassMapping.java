@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.IAttributeMapping;
 import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -325,7 +326,8 @@ public abstract class ClassMapping implements IClassMapping
     {
       // TODO Better monitoring
       monitor.begin(10);
-      if (revision.getVersion() > 1 && hasFullRevisionInfo())
+
+      if (revision.getVersion() > 1 && hasFullRevisionInfo() && isAuditing())
       {
         writeRevisedRow(accessor, (InternalCDORevision)revision);
       }
@@ -358,6 +360,11 @@ public abstract class ClassMapping implements IClassMapping
     }
   }
 
+  private boolean isAuditing()
+  {
+    return mappingStrategy.getStore().getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
+  }
+
   protected abstract void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision)
       throws IllegalStateException;
 
@@ -368,8 +375,33 @@ public abstract class ClassMapping implements IClassMapping
       monitor.begin();
       if (hasFullRevisionInfo())
       {
-        writeRevisedRow(accessor, id, revised);
+        if (isAuditing())
+        {
+          writeRevisedRow(accessor, id, revised);
+          monitor.worked(1);
+        }
+        else
+        {
+          deleteRevision(accessor, id, monitor.fork(1));
+        }
       }
+      // TODO handle !hasFullRevisionInfo() case
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  protected void deleteRevision(IDBStoreAccessor accessor, CDOID id, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(2);
+      deleteAttributes(accessor, id);
+      monitor.worked(1);
+      deleteReferences(accessor, id);
+      monitor.worked(1);
     }
     finally
     {
@@ -379,21 +411,49 @@ public abstract class ClassMapping implements IClassMapping
 
   protected final void writeRevisedRow(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    accessor.getJDBCDelegate().updateRevised(revision, this);
+    accessor.getJDBCDelegate().updateRevisedForReplace(revision, this);
   }
 
   protected final void writeRevisedRow(IDBStoreAccessor accessor, CDOID id, long revised)
   {
-    accessor.getJDBCDelegate().updateRevised(id, revised, this);
+    accessor.getJDBCDelegate().updateRevisedForDetach(id, revised, this);
   }
 
   protected final void writeAttributes(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    accessor.getJDBCDelegate().insertAttributes(revision, this);
+    if (revision.getVersion() == 1 || isAuditing())
+    {
+      accessor.getJDBCDelegate().insertAttributes(revision, this);
+    }
+    else
+    {
+      accessor.getJDBCDelegate().updateAttributes(revision, this);
+    }
+  }
+
+  protected final void deleteAttributes(IDBStoreAccessor accessor, CDOID id)
+  {
+    accessor.getJDBCDelegate().deleteAttributes(id, this);
+  }
+
+  protected final void deleteReferences(IDBStoreAccessor accessor, CDOID id)
+  {
+    if (referenceMappings != null)
+    {
+      for (IReferenceMapping referenceMapping : referenceMappings)
+      {
+        referenceMapping.deleteReference(accessor, id);
+      }
+    }
   }
 
   protected void writeReferences(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
+    if (mappingStrategy.getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE)
+    {
+      deleteReferences(accessor, revision.getID());
+    }
+
     for (IReferenceMapping referenceMapping : referenceMappings)
     {
       referenceMapping.writeReference(accessor, revision);

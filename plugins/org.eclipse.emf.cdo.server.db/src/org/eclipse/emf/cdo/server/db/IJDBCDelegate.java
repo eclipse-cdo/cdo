@@ -35,10 +35,14 @@ import java.util.List;
 public interface IJDBCDelegate
 {
   /**
-   * Insert a reference row. Note: this is likely to be replaced by an implementation that supports storing multiple
-   * references in one batch.
+   * Insert a reference row.
    */
   public void insertReference(CDORevision sourceRevision, int index, CDOID targetId, IReferenceMapping referenceMapping);
+
+  /**
+   * Delete all reference rows of a cdoid.
+   */
+  public void deleteReferences(CDOID id, IReferenceMapping referenceMapping);
 
   /**
    * Insert an attribute row.
@@ -46,14 +50,24 @@ public interface IJDBCDelegate
   public void insertAttributes(CDORevision revision, IClassMapping classMapping);
 
   /**
+   * Update an attribute row.
+   */
+  public void updateAttributes(CDORevision revision, IClassMapping classMapping);
+
+  /**
+   * Remove an attribute row.
+   */
+  public void deleteAttributes(CDOID id, IClassMapping classMapping);
+
+  /**
    * Set the revised date of a specific revision's previous version.
    */
-  public void updateRevised(CDORevision revision, IClassMapping classMapping);
+  public void updateRevisedForReplace(CDORevision revision, IClassMapping classMapping);
 
   /**
    * Set the revised date of all unrevised rows of cdoid
    */
-  public void updateRevised(CDOID cdoid, long revised, IClassMapping classMapping);
+  public void updateRevisedForDetach(CDOID id, long revised, IClassMapping classMapping);
 
   /**
    * Select a revision's attributes

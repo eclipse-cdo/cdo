@@ -93,7 +93,8 @@ public class DBStore extends LongIDStore implements IDBStore
 
   public DBStore()
   {
-    super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.AUDITING), set(RevisionParallelism.NONE));
+    super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.AUDITING, RevisionTemporality.NONE),
+        set(RevisionParallelism.NONE));
     setRevisionTemporality(RevisionTemporality.AUDITING);
   }
 

@@ -399,7 +399,7 @@ public class DBStore extends LongIDStore implements IDBStore
     }
     else if (type == CDOType.DATE)
     {
-      return DBType.DATE;
+      return DBType.TIMESTAMP;
     }
     else if (type == CDOType.DOUBLE || type == CDOType.DOUBLE_OBJECT)
     {

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -212,8 +212,7 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
     @Override
     protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
     {
-      // TODO Is getDate() correct?
-      return resultSet.getDate(column);
+      return resultSet.getTimestamp(column);
     }
   }
 

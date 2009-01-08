@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  **************************************************************************/
@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+
+import java.util.GregorianCalendar;
 
 /**
  * @author Stefan Winkler
@@ -101,5 +104,31 @@ public class DBStoreTest extends AbstractCDOTest
     assertEquals(1, resource.getContents().size());
     e = (Company)resource.getContents().get(0);
     assertEquals(s, e.getName());
+  }
+
+  // Bug 217255
+  public void testStoreDate()
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource("/test");
+
+    PurchaseOrder o = Model1Factory.eINSTANCE.createPurchaseOrder();
+    o.setDate(new GregorianCalendar(2008, 11, 24, 12, 34, 56).getTime());
+
+    resource.getContents().add(o);
+    transaction.commit();
+
+    transaction.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    session = openModel1Session();
+    CDOView view = session.openView();
+    resource = view.getResource("/test");
+
+    assertEquals(1, resource.getContents().size());
+    o = (PurchaseOrder)resource.getContents().get(0);
+    assertEquals(new GregorianCalendar(2008, 11, 24, 12, 34, 56).getTime(), o.getDate());
   }
 }

@@ -4,11 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
 package org.eclipse.net4j.db;
+
+import java.util.Date;
 
 /**
  * @author Eike Stepper
@@ -29,9 +31,40 @@ public enum DBType
   CHAR(1), //
   VARCHAR(12), //
   LONGVARCHAR(-1, "LONG VARCHAR"), //
-  DATE(91), //
-  TIME(92), //
-  TIMESTAMP(93), //
+  DATE(91)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }, //
+  TIME(92)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }, //
+  TIMESTAMP(93)
+  {
+    @Override
+    public void appendValue(StringBuilder builder, Object value)
+    {
+      if (value instanceof Date)
+      {
+        Date date = (Date)value;
+        builder.append("'");
+        builder.append(new java.sql.Timestamp(date.getTime()));
+        builder.append("'");
+      }
+      else
+      {
+        throw new IllegalArgumentException("Not a java.util.Date: " + value);
+      }
+    }
+  }, //
   BINARY(-2)
   {
     @Override

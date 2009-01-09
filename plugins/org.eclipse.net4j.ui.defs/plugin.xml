@@ -5,16 +5,16 @@
  <copyright>
  </copyright>
 
- $Id: plugin.xml,v 1.2 2008-12-31 14:43:13 estepper Exp $
+ $Id: plugin.xml,v 1.3 2009-01-09 14:00:53 estepper Exp $
 -->
 
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://www.eclipse.org/NET4J/util/defs/1.0.0"
+            uri="http://www.eclipse.org/NET4J/ui/defs/1.0.0"
             class="org.eclipse.net4j.ui.defs.Net4JUIDefsPackage"
-            genModel="model/org.eclipse.net4j.defs.genmodel"/>
+            genModel="model/org.eclipse.net4j.ui.defs.genmodel"/>
    </extension>
 
 </plugin>

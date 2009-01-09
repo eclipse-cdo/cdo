@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.http.tests;singleton:=true
-Bundle-Version: 1.0.4.qualifier
+Bundle-Version: 1.0.5.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -17,4 +17,4 @@ Import-Package: javax.servlet;version="2.4.0",
  javax.servlet.http;version="2.4.0",
  org.apache.commons.httpclient;version="3.0.1",
  org.apache.commons.httpclient.methods;version="3.0.1"
-Export-Package: org.eclipse.net4j.http.tests;version="1.0.4"
+Export-Package: org.eclipse.net4j.http.tests;version="1.0.5"

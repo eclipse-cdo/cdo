@@ -33,6 +33,12 @@
     <resource path="META-INF/MANIFEST.MF">
         <filter id="924844039">
             <message_arguments>
+                <message_argument value="1.0.4.qualifier"/>
+                <message_argument value="1.0.0.v200806180411"/>
+            </message_arguments>
+        </filter>
+        <filter id="924844039">
+            <message_arguments>
                 <message_argument value="1.0.3.qualifier"/>
                 <message_argument value="1.0.0.v200806180411"/>
             </message_arguments>
@@ -68,6 +74,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl"/>
                 <message_argument value="setPackageRegistry(CDOPackageRegistryImpl)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl">
+        <filter id="438431863">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
+                <message_argument value="equals(Object)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -120,14 +134,6 @@
                 <message_argument value="SelfPopulating"/>
                 <message_argument value="CDOUtil"/>
                 <message_argument value="createSelfPopulatingPackageRegistry()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl">
-        <filter id="438431863">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
-                <message_argument value="equals(Object)"/>
             </message_arguments>
         </filter>
     </resource>

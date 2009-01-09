@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.examples;singleton:=true
-Bundle-Version: 1.0.4.qualifier
+Bundle-Version: 1.0.5.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.net4j.internal.examples.bundle.OM$Activator
@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";resoluti
  org.eclipse.net4j.tcp;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.net4j.jvm;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.net4j.examples.echo;version="1.0.4";x-internal:=true,
- org.eclipse.net4j.examples.echo.client;version="1.0.4";x-internal:=true,
- org.eclipse.net4j.examples.echo.server;version="1.0.4";x-internal:=true,
- org.eclipse.net4j.internal.examples.bundle;version="1.0.4";x-internal:=true
+Export-Package: org.eclipse.net4j.examples.echo;version="1.0.5";x-internal:=true,
+ org.eclipse.net4j.examples.echo.client;version="1.0.5";x-internal:=true,
+ org.eclipse.net4j.examples.echo.server;version="1.0.5";x-internal:=true,
+ org.eclipse.net4j.internal.examples.bundle;version="1.0.5";x-internal:=true

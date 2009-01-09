@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.http;singleton:=true
-Bundle-Version: 1.0.4.qualifier
+Bundle-Version: 1.0.5.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -13,6 +13,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)";resoluti
  org.eclipse.net4j.http.common;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Import-Package: org.apache.commons.httpclient;version="[3.0.0,4.0.0)",
  org.apache.commons.httpclient.methods;version="[3.0.0,4.0.0)"
-Export-Package: org.eclipse.net4j.http;version="1.0.4",
- org.eclipse.net4j.internal.http;version="1.0.4";x-friends:="org.eclipse.net4j.http.tests",
- org.eclipse.net4j.internal.http.bundle;version="1.0.4";x-internal:=true
+Export-Package: org.eclipse.net4j.http;version="1.0.5",
+ org.eclipse.net4j.internal.http;version="1.0.5";x-friends:="org.eclipse.net4j.http.tests",
+ org.eclipse.net4j.internal.http.bundle;version="1.0.5";x-internal:=true

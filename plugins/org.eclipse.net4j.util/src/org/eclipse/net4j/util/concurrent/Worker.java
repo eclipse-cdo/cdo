@@ -24,7 +24,7 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class Worker extends Lifecycle
 {
-  public static final int DEFAULT_TIMEOUT = 2000;
+  public static final int DEFAULT_TIMEOUT = 10000;
 
   private boolean daemon;
 

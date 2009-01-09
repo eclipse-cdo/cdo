@@ -50,7 +50,6 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
-
     // General
     testClasses.add(InitialTest.class);
     testClasses.add(ComplexTest.class);

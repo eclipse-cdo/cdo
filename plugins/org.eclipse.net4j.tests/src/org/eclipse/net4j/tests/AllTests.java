@@ -11,17 +11,12 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.tests.bugzilla.Bugzilla241463_Test;
-import org.eclipse.net4j.tests.defs.JVMAcceptorDefImplTest;
-import org.eclipse.net4j.tests.defs.JVMConnectorDefImplTest;
-import org.eclipse.net4j.tests.defs.TCPAcceptorDefImplTest;
-import org.eclipse.net4j.tests.defs.TCPConnectorDefImplTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
 import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
 import org.eclipse.net4j.util.tests.SynchronizingCorrelatorTest;
-import org.eclipse.net4j.util.tests.defs.TestDefTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -52,11 +47,11 @@ public class AllTests
     suite.addTestSuite(SecurityTest.class);
 
     // defs
-    suite.addTestSuite(TestDefTest.class);
-    suite.addTestSuite(TCPAcceptorDefImplTest.class);
-    suite.addTestSuite(TCPConnectorDefImplTest.class);
-    suite.addTestSuite(JVMAcceptorDefImplTest.class);
-    suite.addTestSuite(JVMConnectorDefImplTest.class);
+    // suite.addTestSuite(TestDefTest.class);
+    // suite.addTestSuite(TCPAcceptorDefImplTest.class);
+    // suite.addTestSuite(TCPConnectorDefImplTest.class);
+    // suite.addTestSuite(JVMAcceptorDefImplTest.class);
+    // suite.addTestSuite(JVMConnectorDefImplTest.class);
 
     return suite;
   }

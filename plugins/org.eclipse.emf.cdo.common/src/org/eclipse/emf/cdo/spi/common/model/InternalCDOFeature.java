@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.model;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -22,6 +22,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface InternalCDOFeature extends CDOFeature, InternalCDOModelElement
 {
@@ -33,18 +34,9 @@ public interface InternalCDOFeature extends CDOFeature, InternalCDOModelElement
 
   public void setReferenceType(CDOClassRef cdoClassRef);
 
-  /**
-   * @since 2.0
-   */
   public void setDefaultValue(Object defaultValue);
 
-  /**
-   * @since 2.0
-   */
   public void writeValue(CDODataOutput out, Object value) throws IOException;
 
-  /**
-   * @since 2.0
-   */
   public Object readValue(CDODataInput in) throws IOException;
 }

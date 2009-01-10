@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 
@@ -67,6 +67,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return repository.getStore().getCDOIDObjectFactory();
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
   {
@@ -195,6 +198,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return accessor;
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
@@ -202,6 +208,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     return (InternalCDORevision)accessor.readRevision(id, referenceChunk);
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
@@ -224,6 +233,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     throw new UnsupportedOperationException("No support for auditing mode");
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {

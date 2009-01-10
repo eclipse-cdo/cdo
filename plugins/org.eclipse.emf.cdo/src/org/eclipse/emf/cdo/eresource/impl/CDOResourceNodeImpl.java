@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: CDOResourceNodeImpl.java,v 1.6 2008-12-29 14:53:10 estepper Exp $
+ * $Id: CDOResourceNodeImpl.java,v 1.7 2009-01-10 07:09:05 estepper Exp $
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
@@ -46,6 +46,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CDOResourceNodeImpl()
@@ -55,6 +56,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,6 +67,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -75,6 +78,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOResourceFolder getFolder()
@@ -84,6 +88,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setFolderGen(CDOResourceFolder newFolder)
@@ -123,6 +128,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -132,6 +138,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setNameGen(String newName)

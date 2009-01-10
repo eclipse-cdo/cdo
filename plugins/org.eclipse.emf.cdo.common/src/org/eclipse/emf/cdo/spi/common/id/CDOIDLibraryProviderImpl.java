@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
@@ -17,6 +17,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class CDOIDLibraryProviderImpl implements CDOIDLibraryProvider
 {

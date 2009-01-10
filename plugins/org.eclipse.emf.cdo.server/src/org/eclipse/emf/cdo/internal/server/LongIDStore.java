@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.spi.common.CDOIDLongFactoryImpl;
+import org.eclipse.emf.cdo.spi.common.id.CDOIDLongFactoryImpl;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 

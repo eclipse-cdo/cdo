@@ -8,12 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class CDOIDLongImpl extends AbstractCDOIDLong implements CDOIDObject
 {

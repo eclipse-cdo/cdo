@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
-import org.eclipse.emf.cdo.spi.common.AbstractCDOIDInteger;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDInteger;
 
 /**
  * @author Eike Stepper

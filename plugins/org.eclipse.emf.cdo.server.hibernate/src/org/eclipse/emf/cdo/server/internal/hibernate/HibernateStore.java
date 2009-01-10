@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImp
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateLibraryHandler;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
-import org.eclipse.emf.cdo.spi.common.CDOIDLibraryProviderImpl;
+import org.eclipse.emf.cdo.spi.common.id.CDOIDLibraryProviderImpl;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;

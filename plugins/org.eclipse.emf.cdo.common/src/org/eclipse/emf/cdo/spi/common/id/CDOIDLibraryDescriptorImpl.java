@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -21,6 +21,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class CDOIDLibraryDescriptorImpl implements CDOIDLibraryDescriptor
 {

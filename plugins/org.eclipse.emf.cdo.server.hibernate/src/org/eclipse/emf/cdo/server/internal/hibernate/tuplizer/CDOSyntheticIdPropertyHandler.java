@@ -8,7 +8,7 @@
  * Contributors:
  *   Martin Taal
  *
- * $Id: CDOSyntheticIdPropertyHandler.java,v 1.6 2008-12-28 17:56:54 estepper Exp $
+ * $Id: CDOSyntheticIdPropertyHandler.java,v 1.7 2009-01-10 07:08:55 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImp
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyNotFoundException;
@@ -38,7 +38,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor

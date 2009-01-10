@@ -21,10 +21,10 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
-import org.eclipse.emf.cdo.spi.common.AbstractCDOID;
-import org.eclipse.emf.cdo.spi.common.AbstractCDOIDLong;
-import org.eclipse.emf.cdo.spi.common.CDOIDLibraryDescriptorImpl;
-import org.eclipse.emf.cdo.spi.common.CDOIDLongImpl;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
+import org.eclipse.emf.cdo.spi.common.id.CDOIDLibraryDescriptorImpl;
+import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;

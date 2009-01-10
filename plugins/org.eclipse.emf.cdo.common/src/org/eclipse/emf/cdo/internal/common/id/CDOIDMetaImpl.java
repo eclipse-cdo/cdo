@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.spi.common.AbstractCDOIDLong;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 
 /**
  * @author Eike Stepper

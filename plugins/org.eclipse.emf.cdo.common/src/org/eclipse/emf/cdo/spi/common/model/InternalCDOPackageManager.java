@@ -8,35 +8,26 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.model;
 
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 
-import java.util.List;
-
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface InternalCDOPackage extends CDOPackage, InternalCDOModelElement
+public interface InternalCDOPackageManager extends CDOPackageManager
 {
-  public void setPackageManager(CDOPackageManager packageManager);
-
-  public void setPersistent(boolean persistent);
-
-  public void setMetaIDRange(CDOIDMetaRange metaIDRange);
-
-  public void setEcore(String ecore);
+  /**
+   * @param cdoPackage
+   *          A proxy CDO package.
+   */
+  public void loadPackage(CDOPackage cdoPackage);
 
   /**
-   * @since 2.0
+   * @param cdoPackage
+   *          A CDO package with <code>ecore == null</code>.
    */
-  public String basicGetEcore();
-
-  public void addClass(CDOClass cdoClass);
-
-  public void setClasses(List<CDOClass> classes);
+  public void loadPackageEcore(CDOPackage cdoPackage);
 }

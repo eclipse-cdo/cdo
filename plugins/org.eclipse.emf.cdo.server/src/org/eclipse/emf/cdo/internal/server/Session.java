@@ -32,7 +32,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -310,6 +310,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   /**
    * TODO I can't see how recursion is controlled/limited
+   * 
+   * @since 2.0
    */
   public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
       List<CDORevision> additionalRevisions)

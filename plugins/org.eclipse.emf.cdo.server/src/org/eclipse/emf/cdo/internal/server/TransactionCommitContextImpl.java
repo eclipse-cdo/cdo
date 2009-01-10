@@ -25,10 +25,10 @@ import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
-import org.eclipse.emf.cdo.spi.common.InternalCDOPackageManager;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -239,23 +239,23 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
     try
     {
       monitor.begin(106);
-  
+
       // Could throw an exception
       timeStamp = createTimeStamp();
       dirtyObjects = new CDORevision[dirtyObjectDeltas.length];
-  
+
       adjustMetaRanges(monitor.fork());
       adjustTimeStamps(monitor.fork());
-  
+
       Repository repository = (Repository)transaction.getRepository();
       computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());
-  
+
       lockObjects();
       monitor.worked();
-  
+
       repository.notifyWriteAccessHandlers(transaction, this, monitor.fork());
       detachObjects(monitor.fork());
-  
+
       accessor.write(this, monitor.fork(100));
     }
     catch (Throwable t)

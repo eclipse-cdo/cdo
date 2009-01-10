@@ -8,13 +8,13 @@
  * Contributors:
  *   Martin Taal
  *
- * $Id: CDOSyntheticVersionPropertyHandler.java,v 1.4 2008-12-28 17:56:54 estepper Exp $
+ * $Id: CDOSyntheticVersionPropertyHandler.java,v 1.5 2009-01-10 07:08:55 estepper Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
-import org.eclipse.emf.cdo.spi.common.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyNotFoundException;
@@ -31,7 +31,7 @@ import java.util.Map;
  * Reads the version from the internal version cache.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, PropertyAccessor

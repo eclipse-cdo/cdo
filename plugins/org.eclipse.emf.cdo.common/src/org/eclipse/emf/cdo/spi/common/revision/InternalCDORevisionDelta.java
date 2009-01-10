@@ -8,33 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.revision;
 
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOModelElement;
-
-import java.io.IOException;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface InternalCDOModelElement extends CDOModelElement
+public interface InternalCDORevisionDelta extends CDORevisionDelta
 {
-  public void setName(String name);
+  public void addFeatureDelta(CDOFeatureDelta delta);
 
-  public void setClientInfo(Object clientInfo);
+  public void adjustReferences(CDOReferenceAdjuster idMappings);
 
-  public void setServerInfo(Object serverInfo);
+  public void setOriginVersion(int originVersion);
 
-  /**
-   * @since 2.0
-   */
-  public void read(CDODataInput in) throws IOException;
-
-  /**
-   * @since 2.0
-   */
-  public void write(CDODataOutput out) throws IOException;
+  public void setDirtyVersion(int dirtyVersion);
 }

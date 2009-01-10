@@ -35,7 +35,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
-import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
 
 import org.eclipse.emf.internal.cdo.InternalCDOCommitContext;
 import org.eclipse.emf.internal.cdo.InternalCDOSession;

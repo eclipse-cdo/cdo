@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.spi.common.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;

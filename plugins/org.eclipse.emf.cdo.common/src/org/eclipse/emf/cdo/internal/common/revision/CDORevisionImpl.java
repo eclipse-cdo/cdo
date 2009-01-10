@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.spi.common.AbstractCDORevision;
-import org.eclipse.emf.cdo.spi.common.InternalCDOList;
+import org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
 import java.io.IOException;
 

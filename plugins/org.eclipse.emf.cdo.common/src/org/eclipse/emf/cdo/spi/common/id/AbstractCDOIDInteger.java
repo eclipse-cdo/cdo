@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -18,6 +18,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class AbstractCDOIDInteger extends AbstractCDOID implements Comparable<AbstractCDOIDInteger>
 {
@@ -44,17 +45,11 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID implements Comp
     return value;
   }
 
-  /**
-   * @since 2.0
-   */
   public String toURIFragment()
   {
     return String.valueOf(value);
   }
 
-  /**
-   * @since 2.0
-   */
   @Override
   public void read(String fragmentPart)
   {

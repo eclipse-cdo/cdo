@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: CDOResourceNodeItemProvider.java,v 1.4 2008-12-29 14:53:11 estepper Exp $
+ * $Id: CDOResourceNodeItemProvider.java,v 1.5 2009-01-10 07:08:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.eresource.provider;
 
@@ -44,8 +44,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
-   * This constructs an instance from a factory and a notifier.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOResourceNodeItemProvider(AdapterFactory adapterFactory)
@@ -54,8 +54,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * This returns the property descriptors for the adapted class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -72,8 +72,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * This adds a property descriptor for the Name feature.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected void addNamePropertyDescriptor(Object object)
@@ -86,8 +86,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * This adds a property descriptor for the Path feature.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds a property descriptor for the Path feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected void addPathPropertyDescriptor(Object object)
@@ -100,8 +100,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * This returns the label text for the adapted class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -113,9 +113,9 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * This handles model notifications by calling {@link #updateChildren} to update any cached
-   * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
+   * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -134,9 +134,9 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-   * that can be created under this object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
+   * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -146,8 +146,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   }
 
   /**
-   * Return the resource locator for this item provider's resources.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

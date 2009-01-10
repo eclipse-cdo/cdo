@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.model.core.CDOCorePackageImpl;
 import org.eclipse.emf.cdo.internal.common.model.resource.CDOResourcePackageImpl;
-import org.eclipse.emf.cdo.spi.common.InternalCDOPackageManager;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageManager;
 
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.trace.ContextTracer;

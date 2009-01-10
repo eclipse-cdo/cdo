@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
-import org.eclipse.emf.cdo.spi.common.InternalCDOList;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
 import java.util.ArrayList;
 import java.util.Collection;

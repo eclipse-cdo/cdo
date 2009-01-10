@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 
@@ -20,6 +20,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class AbstractCDOID implements CDOID
 {
@@ -81,9 +82,6 @@ public abstract class AbstractCDOID implements CDOID
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public boolean isExternal()
   {
     switch (getType())
@@ -99,8 +97,6 @@ public abstract class AbstractCDOID implements CDOID
 
   /**
    * <b>Note:</b> {@link CDOID#toURIFragment()} and {@link AbstractCDOID#read(String)} need to match.
-   * 
-   * @since 2.0
    */
   public abstract void read(String fragmentPart);
 

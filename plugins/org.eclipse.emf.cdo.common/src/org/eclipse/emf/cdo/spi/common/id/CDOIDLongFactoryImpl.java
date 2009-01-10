@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778    
  **************************************************************************/
-package org.eclipse.emf.cdo.spi.common;
+package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class CDOIDLongFactoryImpl implements CDOIDObjectFactory
 {
@@ -36,9 +37,6 @@ public class CDOIDLongFactoryImpl implements CDOIDObjectFactory
     return new CDOIDLongImpl();
   }
 
-  /**
-   * @since 2.0
-   */
   public CDOIDObject createCDOIDObject(String fragmentPart)
   {
     return new CDOIDLongImpl();

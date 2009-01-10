@@ -83,6 +83,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
 
   private InternalCDORevision revision;
 
+  @SuppressWarnings("unused")
   private boolean allProxiesResolved;
 
   private boolean handlingCallback;

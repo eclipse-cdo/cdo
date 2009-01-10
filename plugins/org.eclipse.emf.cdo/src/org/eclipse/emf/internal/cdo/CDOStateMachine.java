@@ -535,11 +535,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   final private class CommitTransition implements
       ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
   {
-    private boolean useDeltas = false;
-
     public CommitTransition(boolean useDeltas)
     {
-      this.useDeltas = useDeltas;
     }
 
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CommitTransactionResult data)

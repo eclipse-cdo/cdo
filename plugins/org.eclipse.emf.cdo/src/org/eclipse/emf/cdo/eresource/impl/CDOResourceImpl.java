@@ -651,6 +651,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    * @return the URI converter.
    * @ADDED
    */
+  @SuppressWarnings("unused")
   private URIConverter getURIConverter()
   {
     return getResourceSet() == null ? getDefaultURIConverter() : getResourceSet().getURIConverter();

@@ -10,21 +10,21 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.util.SessionUtil;
+import org.eclipse.emf.internal.cdo.session.SessionUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;

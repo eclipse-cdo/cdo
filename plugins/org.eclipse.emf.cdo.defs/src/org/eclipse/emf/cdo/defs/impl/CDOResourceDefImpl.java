@@ -10,16 +10,16 @@
  *    André Dietisheim - initial API and implementation
  * </copyright>
  *
- * $Id: CDOResourceDefImpl.java,v 1.1 2008-12-31 14:43:30 estepper Exp $
+ * $Id: CDOResourceDefImpl.java,v 1.2 2009-01-10 07:56:10 estepper Exp $
  */
 package org.eclipse.emf.cdo.defs.impl;
 
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.defs.CDODefsPackage;
 import org.eclipse.emf.cdo.defs.CDOResourceDef;
 import org.eclipse.emf.cdo.defs.CDOTransactionDef;
 import org.eclipse.emf.cdo.defs.ResourceMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.defs.impl.DefImpl;

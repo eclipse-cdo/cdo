@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;

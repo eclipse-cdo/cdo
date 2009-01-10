@@ -11,10 +11,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.editor;
 
-import org.eclipse.emf.cdo.CDOAudit;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.view.CDOAudit;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 

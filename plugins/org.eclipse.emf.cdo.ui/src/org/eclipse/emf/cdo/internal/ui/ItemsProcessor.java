@@ -12,10 +12,11 @@
 package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.TreeItem;

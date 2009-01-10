@@ -10,11 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
  * @author Eike Stepper

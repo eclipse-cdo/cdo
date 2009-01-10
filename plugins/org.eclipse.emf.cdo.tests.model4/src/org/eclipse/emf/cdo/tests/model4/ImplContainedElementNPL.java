@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplContainedElementNPL.java,v 1.4 2008-12-28 17:56:41 estepper Exp $
+ * $Id: ImplContainedElementNPL.java,v 1.5 2009-01-10 07:56:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4;
 
@@ -18,8 +18,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.INamedElement;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Impl Contained Element NPL</b></em>'. <!--
  * end-user-doc -->
- *
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplContainedElementNPL()
  * @model
  * @generated

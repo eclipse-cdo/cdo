@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.InternalCDOView;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -23,6 +21,9 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
+
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;

@@ -11,10 +11,10 @@
 package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 

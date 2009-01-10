@@ -17,10 +17,11 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
-import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.util.ArrayList;

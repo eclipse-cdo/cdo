@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-import org.eclipse.emf.cdo.util.CDOPackageType;
-import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
+import org.eclipse.emf.cdo.session.CDOPackageType;
+import org.eclipse.emf.cdo.session.CDOPackageTypeRegistry;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.BaseDialog;

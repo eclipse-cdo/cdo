@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: StringToEObjectImpl.java,v 1.2 2008-12-28 17:56:41 estepper Exp $
+ * $Id: StringToEObjectImpl.java,v 1.3 2009-01-10 07:56:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
@@ -38,6 +38,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected StringToEObjectImpl()
@@ -47,6 +48,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -57,6 +59,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -67,6 +70,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getTypedKey()
@@ -76,6 +80,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedKey(String newKey)
@@ -85,6 +90,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject getTypedValue()
@@ -94,6 +100,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedValue(EObject newValue)
@@ -103,12 +110,14 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getHash()
@@ -123,6 +132,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setHash(int hash)
@@ -132,6 +142,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getKey()
@@ -141,6 +152,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setKey(String key)
@@ -150,6 +162,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject getValue()
@@ -159,6 +172,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject setValue(EObject value)
@@ -170,6 +184,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

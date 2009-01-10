@@ -12,21 +12,18 @@
 package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.util.CDOViewAdapter;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewAdapter;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
-import org.eclipse.emf.internal.cdo.InternalCDOView;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -50,6 +47,9 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 

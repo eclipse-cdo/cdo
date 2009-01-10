@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImp
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
+import org.eclipse.emf.spi.cdo.CDOElementProxy;
 
 /**
  * @author Simon McDuff

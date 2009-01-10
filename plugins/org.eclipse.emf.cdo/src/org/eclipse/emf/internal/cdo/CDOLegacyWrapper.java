@@ -20,10 +20,11 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.GenUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
@@ -48,6 +49,8 @@ import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 import org.eclipse.emf.ecore.impl.ETypedElementImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;

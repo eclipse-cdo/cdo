@@ -12,18 +12,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource.impl;
 
-import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewSet;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.CDOViewAdapter;
-import org.eclipse.emf.cdo.util.CDOViewProviderRegistry;
-
-import org.eclipse.emf.internal.cdo.InternalCDOViewSet;
+import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewAdapter;
+import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
+import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 /**
  * @author Eike Stepper

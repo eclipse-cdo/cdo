@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
-import org.eclipse.emf.cdo.util.CDOPackageType;
+import org.eclipse.emf.cdo.session.CDOPackageType;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.ecore.EPackage;
 

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenAuditDialog;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 

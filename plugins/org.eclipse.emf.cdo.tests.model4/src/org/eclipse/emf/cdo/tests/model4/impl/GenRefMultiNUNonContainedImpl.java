@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: GenRefMultiNUNonContainedImpl.java,v 1.2 2008-12-28 17:56:41 estepper Exp $
+ * $Id: GenRefMultiNUNonContainedImpl.java,v 1.3 2009-01-10 07:56:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
@@ -27,16 +27,17 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMultiNUNonContainedImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMultiNUNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefMultiNUNonContainedImpl extends CDOObjectImpl implements GenRefMultiNUNonContained
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected GenRefMultiNUNonContainedImpl()
@@ -46,6 +47,7 @@ public class GenRefMultiNUNonContainedImpl extends CDOObjectImpl implements GenR
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -56,6 +58,7 @@ public class GenRefMultiNUNonContainedImpl extends CDOObjectImpl implements GenR
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -66,6 +69,7 @@ public class GenRefMultiNUNonContainedImpl extends CDOObjectImpl implements GenR
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

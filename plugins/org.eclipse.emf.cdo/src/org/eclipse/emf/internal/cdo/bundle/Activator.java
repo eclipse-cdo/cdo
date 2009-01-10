@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.bundle;
 
-import org.eclipse.emf.internal.cdo.util.CDOPackageTypeRegistryImpl;
-import org.eclipse.emf.internal.cdo.util.CDOViewProviderRegistryImpl;
+import org.eclipse.emf.internal.cdo.session.CDOPackageTypeRegistryImpl;
+import org.eclipse.emf.internal.cdo.view.CDOViewProviderRegistryImpl;
 
 import org.eclipse.net4j.util.om.OSGiActivator;
 

@@ -11,11 +11,11 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
-import org.eclipse.emf.cdo.CDOFeatureAnalyzer;
-import org.eclipse.emf.cdo.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 

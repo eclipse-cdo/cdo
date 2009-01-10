@@ -11,7 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.CDOView.Options;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOView.Options;
 
 import org.eclipse.emf.common.notify.Adapter;
 

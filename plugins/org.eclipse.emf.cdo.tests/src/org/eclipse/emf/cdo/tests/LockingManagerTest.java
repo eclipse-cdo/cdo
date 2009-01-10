@@ -12,12 +12,12 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.concurrent.RWLockManager;

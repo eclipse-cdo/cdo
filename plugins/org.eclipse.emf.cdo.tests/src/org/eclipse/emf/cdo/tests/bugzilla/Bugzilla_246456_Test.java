@@ -16,9 +16,10 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCa
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOSession;
-import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 /**
  * @author Simon McDuff

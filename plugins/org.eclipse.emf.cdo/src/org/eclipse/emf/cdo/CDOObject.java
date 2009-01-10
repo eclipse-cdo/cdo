@@ -15,11 +15,11 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 /**
  * A specialalized subinterface of {@link EObject} that is exposed by all CDO objects and allows access to special CDO

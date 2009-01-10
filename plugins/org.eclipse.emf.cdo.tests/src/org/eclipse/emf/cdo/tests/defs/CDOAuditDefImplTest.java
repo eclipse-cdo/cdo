@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.defs;
 
-import org.eclipse.emf.cdo.CDOAudit;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.defs.CDOAuditDef;
 import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOAudit;
 
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;

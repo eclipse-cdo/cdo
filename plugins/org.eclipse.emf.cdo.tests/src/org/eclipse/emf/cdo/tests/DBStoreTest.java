@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import java.util.GregorianCalendar;
 

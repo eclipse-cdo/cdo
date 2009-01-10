@@ -11,10 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.ui;
 
-import org.eclipse.emf.cdo.CDOAudit;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
@@ -33,8 +29,12 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
-import org.eclipse.emf.cdo.util.CDOPackageType;
-import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
+import org.eclipse.emf.cdo.session.CDOPackageType;
+import org.eclipse.emf.cdo.session.CDOPackageTypeRegistry;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOAudit;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.actions.SafeAction;

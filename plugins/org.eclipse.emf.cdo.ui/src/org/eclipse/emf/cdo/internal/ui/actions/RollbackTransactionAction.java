@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;

@@ -10,16 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterFilesystemPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
+import org.eclipse.emf.cdo.session.CDOPackageRegistry;
+import org.eclipse.emf.cdo.session.CDOPackageType;
+import org.eclipse.emf.cdo.session.CDOPackageTypeRegistry;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
-import org.eclipse.emf.cdo.util.CDOPackageType;
-import org.eclipse.emf.cdo.util.CDOPackageTypeRegistry;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ui.UIUtil;

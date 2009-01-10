@@ -11,22 +11,22 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.query;
 
-import org.eclipse.emf.cdo.CDOQuery;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
+import org.eclipse.emf.cdo.view.CDOQuery;
 
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.InternalCDOView;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.QueryRequest;
+import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.List;
 import java.util.Map.Entry;

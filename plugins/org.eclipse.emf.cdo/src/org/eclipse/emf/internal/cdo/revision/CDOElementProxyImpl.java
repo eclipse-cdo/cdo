@@ -11,11 +11,13 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.revision;
 
-import org.eclipse.emf.cdo.CDORevisionManager;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.session.CDORevisionManager;
 
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
+
+import org.eclipse.emf.spi.cdo.CDOElementProxy;
 
 import java.text.MessageFormat;
 

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+
 /**
  * @author Simon McDuff
  */

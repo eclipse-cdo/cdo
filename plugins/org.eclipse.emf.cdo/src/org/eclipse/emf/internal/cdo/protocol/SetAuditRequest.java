@@ -14,10 +14,11 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.io.IOException;
 import java.util.List;

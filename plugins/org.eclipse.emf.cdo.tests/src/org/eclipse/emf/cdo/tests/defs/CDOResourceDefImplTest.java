@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.defs;
 
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.defs.CDOResourceDef;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
 import org.eclipse.emf.cdo.defs.ResourceMode;
@@ -19,6 +18,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;

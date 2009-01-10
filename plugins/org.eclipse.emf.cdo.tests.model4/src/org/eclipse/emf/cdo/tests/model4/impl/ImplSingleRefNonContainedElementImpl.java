@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplSingleRefNonContainedElementImpl.java,v 1.4 2008-12-28 17:56:41 estepper Exp $
+ * $Id: ImplSingleRefNonContainedElementImpl.java,v 1.5 2009-01-10 07:56:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
@@ -27,17 +27,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefNonContainedElementImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefNonContainedElementImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefNonContainedElementImpl#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefNonContainedElementImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implements ImplSingleRefNonContainedElement
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ImplSingleRefNonContainedElementImpl()
@@ -47,6 +48,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -57,6 +59,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -67,6 +70,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ISingleRefNonContainer getParent()
@@ -77,6 +81,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setParent(ISingleRefNonContainer newParent)
@@ -86,6 +91,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -95,6 +101,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)

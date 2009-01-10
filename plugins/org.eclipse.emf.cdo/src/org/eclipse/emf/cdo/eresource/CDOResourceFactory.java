@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource;
 
-import org.eclipse.emf.cdo.CDOViewSet;
+import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.ecore.resource.Resource;
 

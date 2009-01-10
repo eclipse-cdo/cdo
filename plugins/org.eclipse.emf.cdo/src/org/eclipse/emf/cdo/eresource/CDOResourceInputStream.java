@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.eresource;
 
-import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
 

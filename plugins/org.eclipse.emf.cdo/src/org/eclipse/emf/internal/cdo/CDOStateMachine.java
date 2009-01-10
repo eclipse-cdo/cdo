@@ -12,8 +12,6 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClass;
@@ -22,12 +20,15 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.collection.Pair;
@@ -39,6 +40,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

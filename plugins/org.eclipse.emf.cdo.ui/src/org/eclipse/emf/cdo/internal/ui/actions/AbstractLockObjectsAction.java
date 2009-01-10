@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOLock;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
+import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;

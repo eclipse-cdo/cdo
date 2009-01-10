@@ -11,9 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.query;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
 

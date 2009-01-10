@@ -12,8 +12,6 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -24,14 +22,16 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import junit.framework.Assert;
 

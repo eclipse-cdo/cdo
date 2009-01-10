@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.preferences;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;

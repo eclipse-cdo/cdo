@@ -14,7 +14,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo;
 
-import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -31,9 +30,11 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaI
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.revision.CDOElementProxy;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -50,6 +51,9 @@ import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.spi.cdo.CDOElementProxy;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.text.MessageFormat;
 import java.util.Collection;

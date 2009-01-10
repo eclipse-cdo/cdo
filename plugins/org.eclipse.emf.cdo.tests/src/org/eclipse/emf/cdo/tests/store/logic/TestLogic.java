@@ -37,8 +37,8 @@ import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
+import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
-import org.eclipse.emf.internal.cdo.util.SessionUtil;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.om.monitor.Monitor;

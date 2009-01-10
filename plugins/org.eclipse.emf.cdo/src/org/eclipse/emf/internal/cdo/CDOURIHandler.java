@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceInputStream;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIHandler;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.IOException;
 import java.io.InputStream;

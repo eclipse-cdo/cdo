@@ -27,15 +27,14 @@ import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClass;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOFeature;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -51,6 +50,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
  * @author Eike Stepper
@@ -172,7 +172,7 @@ public final class ModelUtil
     return cdoClass.lookupFeature(eFeature.getFeatureID());
   }
 
-  static CDOPackage addCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
+  public static CDOPackage addCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
   {
     CDOPackage cdoPackage = createCDOPackage(ePackage, packageManager);
     packageManager.addPackage(cdoPackage);
@@ -189,7 +189,7 @@ public final class ModelUtil
    * @see EMFUtil#getPersistentFeatures(org.eclipse.emf.common.util.EList)
    * @see http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
    */
-  static CDOPackage createCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
+  public static CDOPackage createCDOPackage(EPackage ePackage, CDOSessionPackageManagerImpl packageManager)
   {
     InternalCDOSession session = packageManager.getSession();
     String uri = ePackage.getNsURI();
@@ -214,7 +214,7 @@ public final class ModelUtil
     return cdoPackage;
   }
 
-  static CDOClass createCDOClass(EClass eClass, CDOPackage containingPackage)
+  public static CDOClass createCDOClass(EClass eClass, CDOPackage containingPackage)
   {
     InternalCDOClass cdoClass = (InternalCDOClass)CDOModelUtil.createClass(containingPackage, eClass.getClassifierID(),
         eClass.getName(), eClass.isAbstract());
@@ -238,7 +238,7 @@ public final class ModelUtil
     return cdoClass;
   }
 
-  static CDOFeature createCDOFeature(EStructuralFeature eFeature, CDOClass containingClass)
+  public static CDOFeature createCDOFeature(EStructuralFeature eFeature, CDOClass containingClass)
   {
     InternalCDOFeature cdoFeature = (InternalCDOFeature)(EMFUtil.isReference(eFeature) ? createCDOReference(
         (EReference)eFeature, containingClass) : createCDOAttribute((EAttribute)eFeature, containingClass));
@@ -246,7 +246,7 @@ public final class ModelUtil
     return cdoFeature;
   }
 
-  static CDOFeature createCDOReference(EReference eFeature, CDOClass containingClass)
+  public static CDOFeature createCDOReference(EReference eFeature, CDOClass containingClass)
   {
     CDOPackageManager packageManager = containingClass.getPackageManager();
     int featureID = eFeature.getFeatureID();
@@ -267,7 +267,7 @@ public final class ModelUtil
     return cdoFeature;
   }
 
-  static CDOFeature createCDOAttribute(EAttribute eFeature, CDOClass containingClass)
+  public static CDOFeature createCDOAttribute(EAttribute eFeature, CDOClass containingClass)
   {
     int featureID = eFeature.getFeatureID();
     String name = eFeature.getName();
@@ -327,7 +327,7 @@ public final class ModelUtil
     return eFeature;
   }
 
-  static EPackage createEPackage(CDOPackage cdoPackage)
+  public static EPackage createEPackage(CDOPackage cdoPackage)
   {
     if (cdoPackage.isDynamic())
     {
@@ -343,7 +343,7 @@ public final class ModelUtil
     return ePackage;
   }
 
-  static EPackage getGeneratedEPackage(CDOPackage cdoPackage)
+  public static EPackage getGeneratedEPackage(CDOPackage cdoPackage)
   {
     String packageURI = cdoPackage.getPackageURI();
     if (packageURI.equals(EcorePackage.eINSTANCE.getNsURI()))
@@ -355,7 +355,7 @@ public final class ModelUtil
     return registry.getEPackage(packageURI);
   }
 
-  static EPackage createDynamicEPackage(CDOPackage cdoPackage)
+  public static EPackage createDynamicEPackage(CDOPackage cdoPackage)
   {
     CDOPackage topLevelPackage = cdoPackage.getTopLevelPackage();
     String ecore = topLevelPackage.getEcore();
@@ -364,7 +364,7 @@ public final class ModelUtil
     return ePackage;
   }
 
-  static EPackageImpl prepareDynamicEPackage(EPackageImpl ePackage, String nsURI)
+  public static EPackageImpl prepareDynamicEPackage(EPackageImpl ePackage, String nsURI)
   {
     EMFUtil.prepareDynamicEPackage(ePackage);
     EPackageImpl result = ObjectUtil.equals(ePackage.getNsURI(), nsURI) ? ePackage : null;

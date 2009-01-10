@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: CDOResourceNodeImpl.java,v 1.7 2009-01-10 07:09:05 estepper Exp $
+ * $Id: CDOResourceNodeImpl.java,v 1.8 2009-01-10 07:56:37 estepper Exp $
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
@@ -19,11 +19,11 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.List;
 

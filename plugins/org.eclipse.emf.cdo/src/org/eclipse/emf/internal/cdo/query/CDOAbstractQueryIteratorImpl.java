@@ -10,15 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.query;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.spi.common.AbstractQueryResult;
+import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.protocol.QueryCancelRequest;
 
 import org.eclipse.net4j.util.concurrent.ConcurrentValue;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.List;
 

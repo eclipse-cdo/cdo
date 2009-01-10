@@ -9,7 +9,7 @@
  * Contributors:
  *    André Dietisheim - initial API and implementation
  * </copyright> *
- * $Id: CDOLazyPackageRegistryDefImpl.java,v 1.1 2008-12-31 14:43:30 estepper Exp $
+ * $Id: CDOLazyPackageRegistryDefImpl.java,v 1.2 2009-01-10 07:56:10 estepper Exp $
  */
 package org.eclipse.emf.cdo.defs.impl;
 
@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.defs.CDODefsPackage;
 import org.eclipse.emf.cdo.defs.CDOLazyPackageRegistryDef;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl.Lazy;
+import org.eclipse.emf.internal.cdo.session.CDOPackageRegistryImpl.Lazy;
 
 import org.eclipse.emf.ecore.EClass;
 

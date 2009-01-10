@@ -13,16 +13,14 @@
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransactionConflictEvent;
-import org.eclipse.emf.cdo.CDOTransactionFinishedEvent;
-import org.eclipse.emf.cdo.CDOTransactionStartedEvent;
-import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
+import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -30,6 +28,8 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
+
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.PlatformUI;

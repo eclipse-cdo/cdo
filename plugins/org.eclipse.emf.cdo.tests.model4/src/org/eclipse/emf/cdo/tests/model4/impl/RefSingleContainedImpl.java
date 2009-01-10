@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: RefSingleContainedImpl.java,v 1.4 2008-12-28 17:56:41 estepper Exp $
+ * $Id: RefSingleContainedImpl.java,v 1.5 2009-01-10 07:56:19 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 
@@ -26,16 +26,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleContainedImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleContainedImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleContained
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RefSingleContainedImpl()
@@ -45,6 +46,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -55,6 +57,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,6 +68,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SingleContainedElement getElement()
@@ -74,6 +78,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(SingleContainedElement newElement)

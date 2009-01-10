@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Address;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.spi.cdo.ObjectConflictResolver.MergeLocalChangesPerFeature;
+import org.eclipse.emf.spi.cdo.CDOObjectConflictResolver.MergeLocalChangesPerFeature;
 
 /**
  * @author Simon McDuff

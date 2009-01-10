@@ -11,15 +11,15 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.emf.ecore.EAttribute;

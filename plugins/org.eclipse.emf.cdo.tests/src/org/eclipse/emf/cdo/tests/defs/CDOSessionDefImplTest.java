@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.defs;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.defs.CDODefsFactory;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
 import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;

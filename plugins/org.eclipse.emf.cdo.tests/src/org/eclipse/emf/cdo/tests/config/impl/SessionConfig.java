@@ -10,14 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.config.impl;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.util.CDOPackageTypeRegistryImpl;
+import org.eclipse.emf.internal.cdo.session.CDOPackageTypeRegistryImpl;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;

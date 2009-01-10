@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.spi.cdo.CDOElementProxy;
+
 /**
  * @author Simon McDuff
  */

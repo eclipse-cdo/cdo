@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
-import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.ecore.EPackage;
 

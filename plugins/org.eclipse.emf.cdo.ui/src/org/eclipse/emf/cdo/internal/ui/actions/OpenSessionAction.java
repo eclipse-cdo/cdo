@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
+import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.emf.internal.cdo.CDOSessionFactory;
+import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;

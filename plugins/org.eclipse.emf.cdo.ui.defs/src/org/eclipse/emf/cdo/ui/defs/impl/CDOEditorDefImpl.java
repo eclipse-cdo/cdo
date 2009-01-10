@@ -10,16 +10,16 @@
  *    André Dietisheim - initial API and implementation
  * </copyright>
  *
- * $Id: CDOEditorDefImpl.java,v 1.1 2008-12-31 14:43:07 estepper Exp $
+ * $Id: CDOEditorDefImpl.java,v 1.2 2009-01-10 07:56:13 estepper Exp $
  */
 package org.eclipse.emf.cdo.ui.defs.impl;
 
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.defs.CDOViewDef;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.defs.CDOEditorDef;
 import org.eclipse.emf.cdo.ui.defs.CDOUIDefsPackage;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.defs.DefException;

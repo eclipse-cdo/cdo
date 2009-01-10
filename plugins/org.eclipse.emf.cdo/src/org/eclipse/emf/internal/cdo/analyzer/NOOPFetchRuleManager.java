@@ -11,10 +11,10 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
-import org.eclipse.emf.cdo.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.common.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import java.util.Collection;
 import java.util.List;

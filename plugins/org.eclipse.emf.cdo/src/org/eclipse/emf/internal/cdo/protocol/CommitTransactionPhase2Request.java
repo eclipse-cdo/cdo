@@ -18,14 +18,14 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
-import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
-import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionCommitContext;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.io.IOException;
 import java.util.Map;

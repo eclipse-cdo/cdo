@@ -10,8 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.defs;
 
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.CDOCommonView.Type;
 import org.eclipse.emf.cdo.defs.CDODefsFactory;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
@@ -21,6 +19,8 @@ import org.eclipse.emf.cdo.defs.util.CDODefsUtil;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.defs.TCPConnectorDef;
 import org.eclipse.net4j.defs.util.Net4jDefsUtil;

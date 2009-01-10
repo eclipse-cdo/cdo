@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 /**
  * @author Eike Stepper

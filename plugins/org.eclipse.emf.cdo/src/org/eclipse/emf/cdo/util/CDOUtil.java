@@ -12,28 +12,27 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDORevisionPrefetchingPolicy;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOSessionConfiguration;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.CDOViewSet;
-import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.session.CDOPackageRegistry;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOXATransaction;
+import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
+import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewSet;
 
-import org.eclipse.emf.internal.cdo.CDOCollectionLoadingPolicyImpl;
-import org.eclipse.emf.internal.cdo.CDORevisionPrefetchingPolicyImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.CDOXATransactionImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.InternalCDOView;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
-import org.eclipse.emf.internal.cdo.util.CDOPackageRegistryImpl;
+import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
+import org.eclipse.emf.internal.cdo.session.CDOPackageRegistryImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -53,6 +52,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Iterator;
 

@@ -10,13 +10,13 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.emf.cdo.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.internal.ui.actions.CDOObjectFilterAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveAllContainerItemAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveContainerItemAction;
 import org.eclipse.emf.cdo.internal.ui.dnd.CDOObjectDropAdapter;
 import org.eclipse.emf.cdo.internal.ui.filters.CDOStateFilter;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IContainer;

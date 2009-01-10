@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.CDOTimeStampContext;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -20,13 +19,15 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOTimeStampContextImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOTimeStampContextImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.util.Collection;

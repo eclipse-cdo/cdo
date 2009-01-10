@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
-
-import org.eclipse.emf.internal.cdo.InternalCDOView;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
+
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;

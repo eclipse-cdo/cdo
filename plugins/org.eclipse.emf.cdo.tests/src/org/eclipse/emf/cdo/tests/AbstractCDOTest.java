@@ -12,11 +12,11 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;

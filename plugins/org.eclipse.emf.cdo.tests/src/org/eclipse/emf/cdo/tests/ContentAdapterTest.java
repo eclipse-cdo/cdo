@@ -10,24 +10,24 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
-import org.eclipse.emf.cdo.CDOFetchRuleManager;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOSession;
-import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.Collection;
 import java.util.HashSet;

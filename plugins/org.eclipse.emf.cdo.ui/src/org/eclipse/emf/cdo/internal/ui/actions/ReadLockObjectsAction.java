@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOLock;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 /**
  * @author Simon McDuff

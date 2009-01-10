@@ -10,25 +10,25 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOSavepoint;
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
-import org.eclipse.emf.cdo.CDOXATransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
 import org.eclipse.emf.cdo.tests.model4.model4Package;
+import org.eclipse.emf.cdo.transaction.CDOSavepoint;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.InternalCDOTransaction;
-import org.eclipse.emf.internal.cdo.util.SessionUtil;
+import org.eclipse.emf.internal.cdo.session.SessionUtil;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.Date;
 

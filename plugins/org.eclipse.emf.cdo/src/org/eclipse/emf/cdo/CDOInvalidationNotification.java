@@ -12,6 +12,9 @@
 package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;

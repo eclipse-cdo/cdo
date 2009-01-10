@@ -10,9 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
@@ -52,6 +51,7 @@ import org.eclipse.emf.cdo.tests.model4interfaces.INamedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;

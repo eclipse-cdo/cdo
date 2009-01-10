@@ -21,12 +21,13 @@ import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.util.ServerException;
 
-import org.eclipse.emf.internal.cdo.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
-import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.text.MessageFormat;

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.util;
 
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
  * Exception occurs when an object isn't valid anymore. It was valid when we create it, but not anymore. The cause could

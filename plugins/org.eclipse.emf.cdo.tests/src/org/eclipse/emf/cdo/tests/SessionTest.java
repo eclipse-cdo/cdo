@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 /**
  * @author Eike Stepper

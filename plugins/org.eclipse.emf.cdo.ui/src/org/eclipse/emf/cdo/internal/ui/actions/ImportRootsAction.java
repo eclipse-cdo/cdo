@@ -10,10 +10,10 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
+import org.eclipse.emf.cdo.session.CDOPackageRegistry;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
 import org.eclipse.emf.common.util.EList;

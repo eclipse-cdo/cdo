@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.internal.ui.dialogs.PackageManagerDialog;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;

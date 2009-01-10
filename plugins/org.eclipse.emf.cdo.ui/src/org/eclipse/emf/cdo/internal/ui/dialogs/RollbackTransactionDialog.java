@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
-import org.eclipse.emf.cdo.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 

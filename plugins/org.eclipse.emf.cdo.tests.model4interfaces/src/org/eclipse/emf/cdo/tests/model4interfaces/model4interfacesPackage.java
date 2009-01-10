@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: model4interfacesPackage.java,v 1.4 2008-12-28 17:57:05 estepper Exp $
+ * $Id: model4interfacesPackage.java,v 1.5 2009-01-10 07:56:24 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4interfaces;
 
@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesFactory
  * @model kind="package"
  * @generated
@@ -33,37 +34,38 @@ import org.eclipse.emf.ecore.EReference;
 public interface model4interfacesPackage extends EPackage
 {
   /**
-   * The package name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNAME = "model4interfaces";
 
   /**
-   * The package namespace URI.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/model4interfaces/1.0.0";
 
   /**
-   * The package namespace name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_PREFIX = "model4interfaces";
 
   /**
-   * The singleton instance of the package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   model4interfacesPackage eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl
       .init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer <em>ISingle Ref Container</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer
+   * <em>ISingle Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefContainer()
    * @generated
@@ -80,17 +82,18 @@ public interface model4interfacesPackage extends EPackage
   int ISINGLE_REF_CONTAINER__ELEMENT = 0;
 
   /**
-   * The number of structural features of the '<em>ISingle Ref Container</em>' class.
-   * <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>ISingle Ref Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_CONTAINER_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement <em>ISingle Ref Contained Element</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
+   * <em>ISingle Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefContainedElement()
    * @generated
@@ -98,25 +101,26 @@ public interface model4interfacesPackage extends EPackage
   int ISINGLE_REF_CONTAINED_ELEMENT = 1;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' container reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_CONTAINED_ELEMENT__PARENT = 0;
 
   /**
-   * The number of structural features of the '<em>ISingle Ref Contained Element</em>' class.
-   * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>ISingle Ref Contained Element</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_CONTAINED_ELEMENT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer <em>ISingle Ref Non Container</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer
+   * <em>ISingle Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefNonContainer()
    * @generated
@@ -124,25 +128,26 @@ public interface model4interfacesPackage extends EPackage
   int ISINGLE_REF_NON_CONTAINER = 2;
 
   /**
-   * The feature id for the '<em><b>Element</b></em>' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_NON_CONTAINER__ELEMENT = 0;
 
   /**
-   * The number of structural features of the '<em>ISingle Ref Non Container</em>' class.
-   * <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>ISingle Ref Non Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_NON_CONTAINER_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement <em>ISingle Ref Non Contained Element</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
+   * <em>ISingle Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefNonContainedElement()
    * @generated
@@ -150,25 +155,26 @@ public interface model4interfacesPackage extends EPackage
   int ISINGLE_REF_NON_CONTAINED_ELEMENT = 3;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT = 0;
 
   /**
-   * The number of structural features of the '<em>ISingle Ref Non Contained Element</em>' class.
-   * <!-- begin-user-doc
+   * The number of structural features of the '<em>ISingle Ref Non Contained Element</em>' class. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer <em>IMulti Ref Container</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
+   * <em>IMulti Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefContainer()
    * @generated
@@ -176,26 +182,27 @@ public interface model4interfacesPackage extends EPackage
   int IMULTI_REF_CONTAINER = 4;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-   * <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_CONTAINER__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>IMulti Ref Container</em>' class.
-   * <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>IMulti Ref Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_CONTAINER_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement <em>IMulti Ref Contained Element</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement
+   * <em>IMulti Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefContainedElement()
    * @generated
@@ -203,25 +210,26 @@ public interface model4interfacesPackage extends EPackage
   int IMULTI_REF_CONTAINED_ELEMENT = 5;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' container reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_CONTAINED_ELEMENT__PARENT = 0;
 
   /**
-   * The number of structural features of the '<em>IMulti Ref Contained Element</em>' class.
-   * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>IMulti Ref Contained Element</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_CONTAINED_ELEMENT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer <em>IMulti Ref Non Container</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer
+   * <em>IMulti Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefNonContainer()
    * @generated
@@ -229,25 +237,26 @@ public interface model4interfacesPackage extends EPackage
   int IMULTI_REF_NON_CONTAINER = 6;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_NON_CONTAINER__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>IMulti Ref Non Container</em>' class.
-   * <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>IMulti Ref Non Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_NON_CONTAINER_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement <em>IMulti Ref Non Contained Element</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
+   * <em>IMulti Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefNonContainedElement()
    * @generated
@@ -255,25 +264,26 @@ public interface model4interfacesPackage extends EPackage
   int IMULTI_REF_NON_CONTAINED_ELEMENT = 7;
 
   /**
-   * The feature id for the '<em><b>Parent</b></em>' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Parent</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_NON_CONTAINED_ELEMENT__PARENT = 0;
 
   /**
-   * The number of structural features of the '<em>IMulti Ref Non Contained Element</em>' class.
-   * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>IMulti Ref Non Contained Element</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement <em>INamed Element</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
+   * <em>INamed Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getINamedElement()
    * @generated
@@ -281,8 +291,8 @@ public interface model4interfacesPackage extends EPackage
   int INAMED_ELEMENT = 8;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -298,8 +308,9 @@ public interface model4interfacesPackage extends EPackage
   int INAMED_ELEMENT_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink <em>IContained Element No Parent Link</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
+   * <em>IContained Element No Parent Link</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIContainedElementNoParentLink()
    * @generated
@@ -307,17 +318,18 @@ public interface model4interfacesPackage extends EPackage
   int ICONTAINED_ELEMENT_NO_PARENT_LINK = 9;
 
   /**
-   * The number of structural features of the '<em>IContained Element No Parent Link</em>' class.
-   * <!-- begin-user-doc
+   * The number of structural features of the '<em>IContained Element No Parent Link</em>' class. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ICONTAINED_ELEMENT_NO_PARENT_LINK_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL <em>ISingle Ref Container NPL</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL
+   * <em>ISingle Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefContainerNPL()
    * @generated
@@ -334,17 +346,18 @@ public interface model4interfacesPackage extends EPackage
   int ISINGLE_REF_CONTAINER_NPL__ELEMENT = 0;
 
   /**
-   * The number of structural features of the '<em>ISingle Ref Container NPL</em>' class.
-   * <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>ISingle Ref Container NPL</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_CONTAINER_NPL_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL <em>ISingle Ref Non Container NPL</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL
+   * <em>ISingle Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefNonContainerNPL()
    * @generated
@@ -352,25 +365,26 @@ public interface model4interfacesPackage extends EPackage
   int ISINGLE_REF_NON_CONTAINER_NPL = 11;
 
   /**
-   * The feature id for the '<em><b>Element</b></em>' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_NON_CONTAINER_NPL__ELEMENT = 0;
 
   /**
-   * The number of structural features of the '<em>ISingle Ref Non Container NPL</em>' class.
-   * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>ISingle Ref Non Container NPL</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int ISINGLE_REF_NON_CONTAINER_NPL_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL <em>IMulti Ref Container NPL</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL
+   * <em>IMulti Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefContainerNPL()
    * @generated
@@ -378,26 +392,27 @@ public interface model4interfacesPackage extends EPackage
   int IMULTI_REF_CONTAINER_NPL = 12;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' containment reference list.
-   * <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_CONTAINER_NPL__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>IMulti Ref Container NPL</em>' class.
-   * <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>IMulti Ref Container NPL</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_CONTAINER_NPL_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL <em>IMulti Ref Non Container NPL</em>}' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL
+   * <em>IMulti Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL
    * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefNonContainerNPL()
    * @generated
@@ -405,25 +420,26 @@ public interface model4interfacesPackage extends EPackage
   int IMULTI_REF_NON_CONTAINER_NPL = 13;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Elements</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_NON_CONTAINER_NPL__ELEMENTS = 0;
 
   /**
-   * The number of structural features of the '<em>IMulti Ref Non Container NPL</em>' class.
-   * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>IMulti Ref Non Container NPL</em>' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int IMULTI_REF_NON_CONTAINER_NPL_FEATURE_COUNT = 1;
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer <em>ISingle Ref Container</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer
+   * <em>ISingle Ref Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>ISingle Ref Container</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer
    * @generated
@@ -443,8 +459,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getISingleRefContainer_Element();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement <em>ISingle Ref Contained Element</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
+   * <em>ISingle Ref Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>ISingle Ref Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
    * @generated
@@ -464,8 +481,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getISingleRefContainedElement_Parent();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer <em>ISingle Ref Non Container</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer
+   * <em>ISingle Ref Non Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>ISingle Ref Non Container</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer
    * @generated
@@ -485,8 +503,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getISingleRefNonContainer_Element();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement <em>ISingle Ref Non Contained Element</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
+   * <em>ISingle Ref Non Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>ISingle Ref Non Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
    * @generated
@@ -506,8 +525,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getISingleRefNonContainedElement_Parent();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer <em>IMulti Ref Container</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
+   * <em>IMulti Ref Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>IMulti Ref Container</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
    * @generated
@@ -527,8 +547,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getIMultiRefContainer_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement <em>IMulti Ref Contained Element</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement
+   * <em>IMulti Ref Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>IMulti Ref Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement
    * @generated
@@ -548,8 +569,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getIMultiRefContainedElement_Parent();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer <em>IMulti Ref Non Container</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer
+   * <em>IMulti Ref Non Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>IMulti Ref Non Container</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer
    * @generated
@@ -569,8 +591,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getIMultiRefNonContainer_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement <em>IMulti Ref Non Contained Element</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
+   * <em>IMulti Ref Non Contained Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>IMulti Ref Non Contained Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
    * @generated
@@ -590,8 +613,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getIMultiRefNonContainedElement_Parent();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement <em>INamed Element</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
+   * <em>INamed Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>INamed Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
    * @generated
@@ -599,8 +623,9 @@ public interface model4interfacesPackage extends EPackage
   EClass getINamedElement();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.INamedElement#getName()
    * @see #getINamedElement()
@@ -609,8 +634,9 @@ public interface model4interfacesPackage extends EPackage
   EAttribute getINamedElement_Name();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink <em>IContained Element No Parent Link</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
+   * <em>IContained Element No Parent Link</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>IContained Element No Parent Link</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
    * @generated
@@ -618,8 +644,9 @@ public interface model4interfacesPackage extends EPackage
   EClass getIContainedElementNoParentLink();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL <em>ISingle Ref Container NPL</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL
+   * <em>ISingle Ref Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>ISingle Ref Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL
    * @generated
@@ -639,8 +666,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getISingleRefContainerNPL_Element();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL <em>ISingle Ref Non Container NPL</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL
+   * <em>ISingle Ref Non Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>ISingle Ref Non Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL
    * @generated
@@ -660,8 +688,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getISingleRefNonContainerNPL_Element();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL <em>IMulti Ref Container NPL</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL
+   * <em>IMulti Ref Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>IMulti Ref Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL
    * @generated
@@ -681,8 +710,9 @@ public interface model4interfacesPackage extends EPackage
   EReference getIMultiRefContainerNPL_Elements();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL <em>IMulti Ref Non Container NPL</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL
+   * <em>IMulti Ref Non Container NPL</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for class '<em>IMulti Ref Non Container NPL</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL
    * @generated
@@ -702,8 +732,8 @@ public interface model4interfacesPackage extends EPackage
   EReference getIMultiRefNonContainerNPL_Elements();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -718,13 +748,15 @@ public interface model4interfacesPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer <em>ISingle Ref Container</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer
+     * <em>ISingle Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefContainer()
      * @generated
@@ -732,16 +764,17 @@ public interface model4interfacesPackage extends EPackage
     EClass ISINGLE_REF_CONTAINER = eINSTANCE.getISingleRefContainer();
 
     /**
-     * The meta object literal for the '<em><b>Element</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Element</b></em>' containment reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference ISINGLE_REF_CONTAINER__ELEMENT = eINSTANCE.getISingleRefContainer_Element();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement <em>ISingle Ref Contained Element</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
+     * <em>ISingle Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefContainedElement()
      * @generated
@@ -749,16 +782,17 @@ public interface model4interfacesPackage extends EPackage
     EClass ISINGLE_REF_CONTAINED_ELEMENT = eINSTANCE.getISingleRefContainedElement();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference ISINGLE_REF_CONTAINED_ELEMENT__PARENT = eINSTANCE.getISingleRefContainedElement_Parent();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer <em>ISingle Ref Non Container</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer
+     * <em>ISingle Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefNonContainer()
      * @generated
@@ -766,16 +800,17 @@ public interface model4interfacesPackage extends EPackage
     EClass ISINGLE_REF_NON_CONTAINER = eINSTANCE.getISingleRefNonContainer();
 
     /**
-     * The meta object literal for the '<em><b>Element</b></em>' reference feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Element</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference ISINGLE_REF_NON_CONTAINER__ELEMENT = eINSTANCE.getISingleRefNonContainer_Element();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement <em>ISingle Ref Non Contained Element</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
+     * <em>ISingle Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefNonContainedElement()
      * @generated
@@ -783,16 +818,17 @@ public interface model4interfacesPackage extends EPackage
     EClass ISINGLE_REF_NON_CONTAINED_ELEMENT = eINSTANCE.getISingleRefNonContainedElement();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Parent</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT = eINSTANCE.getISingleRefNonContainedElement_Parent();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer <em>IMulti Ref Container</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
+     * <em>IMulti Ref Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefContainer()
      * @generated
@@ -808,8 +844,9 @@ public interface model4interfacesPackage extends EPackage
     EReference IMULTI_REF_CONTAINER__ELEMENTS = eINSTANCE.getIMultiRefContainer_Elements();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement <em>IMulti Ref Contained Element</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement
+     * <em>IMulti Ref Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefContainedElement()
      * @generated
@@ -817,16 +854,17 @@ public interface model4interfacesPackage extends EPackage
     EClass IMULTI_REF_CONTAINED_ELEMENT = eINSTANCE.getIMultiRefContainedElement();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference IMULTI_REF_CONTAINED_ELEMENT__PARENT = eINSTANCE.getIMultiRefContainedElement_Parent();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer <em>IMulti Ref Non Container</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer
+     * <em>IMulti Ref Non Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefNonContainer()
      * @generated
@@ -834,16 +872,17 @@ public interface model4interfacesPackage extends EPackage
     EClass IMULTI_REF_NON_CONTAINER = eINSTANCE.getIMultiRefNonContainer();
 
     /**
-     * The meta object literal for the '<em><b>Elements</b></em>' reference list feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference IMULTI_REF_NON_CONTAINER__ELEMENTS = eINSTANCE.getIMultiRefNonContainer_Elements();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement <em>IMulti Ref Non Contained Element</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
+     * <em>IMulti Ref Non Contained Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefNonContainedElement()
      * @generated
@@ -851,16 +890,17 @@ public interface model4interfacesPackage extends EPackage
     EClass IMULTI_REF_NON_CONTAINED_ELEMENT = eINSTANCE.getIMultiRefNonContainedElement();
 
     /**
-     * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Parent</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference IMULTI_REF_NON_CONTAINED_ELEMENT__PARENT = eINSTANCE.getIMultiRefNonContainedElement_Parent();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement <em>INamed Element</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
+     * <em>INamed Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getINamedElement()
      * @generated
@@ -868,16 +908,17 @@ public interface model4interfacesPackage extends EPackage
     EClass INAMED_ELEMENT = eINSTANCE.getINamedElement();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute INAMED_ELEMENT__NAME = eINSTANCE.getINamedElement_Name();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink <em>IContained Element No Parent Link</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
+     * <em>IContained Element No Parent Link</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIContainedElementNoParentLink()
      * @generated
@@ -885,8 +926,9 @@ public interface model4interfacesPackage extends EPackage
     EClass ICONTAINED_ELEMENT_NO_PARENT_LINK = eINSTANCE.getIContainedElementNoParentLink();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL <em>ISingle Ref Container NPL</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL
+     * <em>ISingle Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefContainerNPL()
      * @generated
@@ -894,16 +936,17 @@ public interface model4interfacesPackage extends EPackage
     EClass ISINGLE_REF_CONTAINER_NPL = eINSTANCE.getISingleRefContainerNPL();
 
     /**
-     * The meta object literal for the '<em><b>Element</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Element</b></em>' containment reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * 
      * @generated
      */
     EReference ISINGLE_REF_CONTAINER_NPL__ELEMENT = eINSTANCE.getISingleRefContainerNPL_Element();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL <em>ISingle Ref Non Container NPL</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL
+     * <em>ISingle Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getISingleRefNonContainerNPL()
      * @generated
@@ -911,16 +954,17 @@ public interface model4interfacesPackage extends EPackage
     EClass ISINGLE_REF_NON_CONTAINER_NPL = eINSTANCE.getISingleRefNonContainerNPL();
 
     /**
-     * The meta object literal for the '<em><b>Element</b></em>' reference feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Element</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference ISINGLE_REF_NON_CONTAINER_NPL__ELEMENT = eINSTANCE.getISingleRefNonContainerNPL_Element();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL <em>IMulti Ref Container NPL</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL
+     * <em>IMulti Ref Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefContainerNPL()
      * @generated
@@ -936,8 +980,9 @@ public interface model4interfacesPackage extends EPackage
     EReference IMULTI_REF_CONTAINER_NPL__ELEMENTS = eINSTANCE.getIMultiRefContainerNPL_Elements();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL <em>IMulti Ref Non Container NPL</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL
+     * <em>IMulti Ref Non Container NPL</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL
      * @see org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl#getIMultiRefNonContainerNPL()
      * @generated
@@ -945,9 +990,9 @@ public interface model4interfacesPackage extends EPackage
     EClass IMULTI_REF_NON_CONTAINER_NPL = eINSTANCE.getIMultiRefNonContainerNPL();
 
     /**
-     * The meta object literal for the '<em><b>Elements</b></em>' reference list feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Elements</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference IMULTI_REF_NON_CONTAINER_NPL__ELEMENTS = eINSTANCE.getIMultiRefNonContainerNPL_Elements();

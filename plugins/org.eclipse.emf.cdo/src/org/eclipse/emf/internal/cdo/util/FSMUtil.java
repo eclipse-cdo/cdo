@@ -13,17 +13,15 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.CDOView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
-import org.eclipse.emf.internal.cdo.InternalCDOView;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
@@ -32,6 +30,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Collection;
 import java.util.Iterator;

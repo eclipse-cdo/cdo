@@ -10,12 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.protocol;
 
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.emf.internal.cdo.CDOXATransactionCommitContext;
+import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionCommitContext;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 

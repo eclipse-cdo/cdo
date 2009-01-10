@@ -10,9 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.ui;
 
-import org.eclipse.emf.cdo.CDOView;
+import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.InternalCDOObject;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -20,6 +19,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IFontProvider;

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ISingleRefNonContainer.java,v 1.4 2008-12-28 17:57:05 estepper Exp $
+ * $Id: ISingleRefNonContainer.java,v 1.5 2009-01-10 07:56:24 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4interfaces;
 
@@ -17,14 +17,13 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>ISingle Ref Non Container</b></em>'. <!--
  * end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getISingleRefNonContainer()
  * @model interface="true" abstract="true"
  * @generated
@@ -51,9 +50,11 @@ public interface ISingleRefNonContainer extends EObject
   ISingleRefNonContainedElement getElement();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer#getElement <em>Element</em>}' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @param value the new value of the '<em>Element</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer#getElement
+   * <em>Element</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Element</em>' reference.
    * @see #getElement()
    * @generated
    */

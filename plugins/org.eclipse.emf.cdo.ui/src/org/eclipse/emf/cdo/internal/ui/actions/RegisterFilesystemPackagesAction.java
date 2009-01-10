@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.common.util.URI;

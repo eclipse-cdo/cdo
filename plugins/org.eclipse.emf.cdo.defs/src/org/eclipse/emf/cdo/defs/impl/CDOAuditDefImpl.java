@@ -10,13 +10,13 @@
  *    André Dietisheim - initial API and implementation
  * </copyright>
  *
- * $Id: CDOAuditDefImpl.java,v 1.1 2008-12-31 14:43:30 estepper Exp $
+ * $Id: CDOAuditDefImpl.java,v 1.2 2009-01-10 07:56:10 estepper Exp $
  */
 package org.eclipse.emf.cdo.defs.impl;
 
-import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.defs.CDOAuditDef;
 import org.eclipse.emf.cdo.defs.CDODefsPackage;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.CheckUtil;
 

@@ -10,9 +10,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -35,6 +35,6 @@ public final class OpenTransactionAction extends AbstractOpenViewAction
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     CDOTransaction transaction = getSession().openTransaction();
-    // transaction.options().getConflictResolvers().add(new ObjectConflictResolver.MergeLocalChangesPerFeature());
+    // transaction.options().getConflictResolvers().add(new CDOObjectConflictResolver.MergeLocalChangesPerFeature());
   }
 }

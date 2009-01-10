@@ -10,12 +10,12 @@
  *    André Dietisheim - initial API and implementation
  * </copyright>
  *
- * $Id: ResourceMode.java,v 1.1 2008-12-31 14:43:30 estepper Exp $
+ * $Id: ResourceMode.java,v 1.2 2009-01-10 07:56:10 estepper Exp $
  */
 package org.eclipse.emf.cdo.defs;
 
-import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.util.Enumerator;
 

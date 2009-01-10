@@ -15,8 +15,9 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
 
-import org.eclipse.emf.internal.cdo.InternalCDOCommitContext;
 import org.eclipse.emf.internal.cdo.revision.CDOPostCommitReferenceAdjuster;
+
+import org.eclipse.emf.spi.cdo.InternalCDOCommitContext;
 
 import java.util.HashMap;
 import java.util.Map;

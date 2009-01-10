@@ -10,20 +10,20 @@
  *    André Dietisheim - initial API and implementation
  * </copyright>
  *
- * $Id: CDOSessionDefImpl.java,v 1.1 2008-12-31 14:43:30 estepper Exp $
+ * $Id: CDOSessionDefImpl.java,v 1.2 2009-01-10 07:56:10 estepper Exp $
  */
 package org.eclipse.emf.cdo.defs.impl;
 
-import org.eclipse.emf.cdo.CDOSession;
-import org.eclipse.emf.cdo.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.defs.CDODefsPackage;
 import org.eclipse.emf.cdo.defs.CDOPackageRegistryDef;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
 import org.eclipse.emf.cdo.defs.FailOverStrategyDef;
-import org.eclipse.emf.cdo.util.CDOPackageRegistry;
+import org.eclipse.emf.cdo.session.CDOPackageRegistry;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.internal.cdo.CDOSessionConfigurationImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.defs.ConnectorDef;

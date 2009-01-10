@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 
 /**
  * @author Eike Stepper
@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.CDOProtocolView;
 public interface ITransaction extends IView
 {
   /**
-   * Returns the ID of this transactional view. Same as {@link CDOProtocolView#getViewID() getViewID()}.
+   * Returns the ID of this transactional view. Same as {@link CDOCommonView#getViewID() getViewID()}.
    */
   public int getTransactionID();
 

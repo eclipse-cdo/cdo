@@ -8,14 +8,15 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.common.util;
+package org.eclipse.emf.cdo.common.io;
 
-import org.eclipse.emf.cdo.common.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.signal.wrapping.GZIPStreamWrapperInjector;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class CDOGZIPStreamWrapperInjector extends GZIPStreamWrapperInjector
 {

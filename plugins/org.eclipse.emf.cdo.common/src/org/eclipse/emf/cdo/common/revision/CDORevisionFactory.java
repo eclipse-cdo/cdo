@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.revision;
 
-import org.eclipse.emf.cdo.common.CDODataInput;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 
 import java.io.IOException;

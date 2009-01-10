@@ -15,33 +15,22 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface CDOProtocolView
+public interface CDOCommonView
 {
-  /**
-   * @since 2.0
-   */
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
   public int getViewID();
 
   public Type getViewType();
 
-  public CDOProtocolSession getSession();
+  public CDOCommonSession getSession();
 
-  /**
-   * @since 2.0
-   */
   public void close();
 
-  /**
-   * @since 2.0
-   */
   public boolean isClosed();
 
-  /**
-   * @since 2.0
-   */
   public long getTimeStamp();
 
   /**

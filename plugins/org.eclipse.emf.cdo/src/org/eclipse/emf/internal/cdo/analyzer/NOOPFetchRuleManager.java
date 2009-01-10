@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.CDOFetchRuleManager;
-import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
+import org.eclipse.emf.cdo.common.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import java.util.Collection;

@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.CDOQueryInfo;
 
 /**
  * @author Eike Stepper

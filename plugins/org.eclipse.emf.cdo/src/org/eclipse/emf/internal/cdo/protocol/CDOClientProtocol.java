@@ -12,8 +12,8 @@ package org.eclipse.emf.internal.cdo.protocol;
 
 import org.eclipse.emf.cdo.CDOSession;
 import org.eclipse.emf.cdo.CDOSessionProtocol;
-import org.eclipse.emf.cdo.common.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.common.CDOProtocolImpl;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 
 import org.eclipse.net4j.signal.SignalReactor;
 

@@ -12,7 +12,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -64,7 +64,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOView extends CDOProtocolView, INotifier, IOptionsContainer
+public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.

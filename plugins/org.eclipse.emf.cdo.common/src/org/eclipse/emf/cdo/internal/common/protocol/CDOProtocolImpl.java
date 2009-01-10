@@ -8,15 +8,27 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.cdo.common;
+package org.eclipse.emf.cdo.internal.common.protocol;
 
-import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+
+import org.eclipse.net4j.signal.SignalProtocol;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOProtocol<INFRA_STRUCTURE> extends ISignalProtocol<INFRA_STRUCTURE>
+public abstract class CDOProtocolImpl extends SignalProtocol<CDOCommonSession> implements
+    CDOProtocol<CDOCommonSession>
 {
-  public CDOProtocolSession getSession();
+  public CDOProtocolImpl()
+  {
+    super(CDOProtocolConstants.PROTOCOL_NAME);
+  }
+
+  public CDOCommonSession getSession()
+  {
+    return getInfraStructure();
+  }
 }

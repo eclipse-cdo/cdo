@@ -17,33 +17,24 @@ import org.eclipse.net4j.util.security.IUserAware;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
-public interface CDOProtocolSession extends IUserAware, IOptionsContainer
+public interface CDOCommonSession extends IUserAware, IOptionsContainer
 {
   public int getSessionID();
 
-  public CDOProtocolView[] getViews();
+  public CDOCommonView[] getViews();
 
-  public CDOProtocolView getView(int viewID);
+  public CDOCommonView getView(int viewID);
 
-  /**
-   * @since 2.0
-   */
   public void close();
 
-  /**
-   * @since 2.0
-   */
   public boolean isClosed();
 
-  /**
-   * @since 2.0
-   */
   public Options options();
 
   /**
    * @author Simon McDuff
-   * @since 2.0
    */
   public interface Options extends IOptions
   {

@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  * 		Simon McDuff - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.common;
+package org.eclipse.emf.cdo.common.io;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;

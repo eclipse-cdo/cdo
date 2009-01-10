@@ -4,7 +4,7 @@
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="IView"/>
-                <message_argument value="CDOProtocolView"/>
+                <message_argument value="CDOCommonView"/>
                 <message_argument value="View"/>
             </message_arguments>
         </filter>
@@ -65,14 +65,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/QueryResult.java" type="org.eclipse.emf.cdo.internal.server.QueryResult">
-        <filter id="576720909">
-            <message_arguments>
-                <message_argument value="AbstractQueryResult"/>
-                <message_argument value="QueryResult"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IView.java" type="org.eclipse.emf.cdo.server.IView">
         <filter id="574619656">
             <message_arguments>
@@ -92,6 +84,13 @@
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOIDProvider"/>
+                <message_argument value="Session"/>
+            </message_arguments>
+        </filter>
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="ISession"/>
+                <message_argument value="CDOCommonSession"/>
                 <message_argument value="Session"/>
             </message_arguments>
         </filter>
@@ -134,6 +133,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/server/ISession.java" type="org.eclipse.emf.cdo.server.ISession">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOCommonSession"/>
+                <message_argument value="ISession"/>
+            </message_arguments>
+        </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="CDOProtocolSession"/>

@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.tests.defs;
 
 import org.eclipse.emf.cdo.CDOTransaction;
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.common.CDOProtocolView.Type;
+import org.eclipse.emf.cdo.common.CDOCommonView.Type;
 import org.eclipse.emf.cdo.defs.CDODefsFactory;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
 import org.eclipse.emf.cdo.defs.CDOViewDef;

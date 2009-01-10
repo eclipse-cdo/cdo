@@ -12,7 +12,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
@@ -41,7 +41,7 @@ public class Transaction extends View implements ITransaction
   @Override
   public Type getViewType()
   {
-    return CDOProtocolView.Type.TRANSACTION;
+    return CDOCommonView.Type.TRANSACTION;
   }
 
   public int getTransactionID()

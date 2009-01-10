@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 
 /**
  * @author Eike Stepper
@@ -21,8 +21,8 @@ public interface IQueryContext
   public IView getView();
 
   /**
-   * The timeStamp of the view or ({@link CDOProtocolView#UNSPECIFIED_DATE} if the view is <b>not</b> an
-   * {@link CDOProtocolView.Type#AUDIT audit} view.
+   * The timeStamp of the view or ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is <b>not</b> an
+   * {@link CDOCommonView.Type#AUDIT audit} view.
    */
   public long getTimeStamp();
 

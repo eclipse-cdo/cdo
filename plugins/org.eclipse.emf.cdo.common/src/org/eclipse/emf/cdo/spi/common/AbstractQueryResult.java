@@ -9,10 +9,10 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.common.query;
+package org.eclipse.emf.cdo.spi.common;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 
@@ -24,7 +24,7 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
 {
   private int queryID;
 
-  private CDOProtocolView view;
+  private CDOCommonView view;
 
   private CDOQueryInfo queryInfo;
 
@@ -32,7 +32,7 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
 
   private BlockingCloseableIterator<Object> queueItr = linkQueue.iterator();
 
-  public AbstractQueryResult(CDOProtocolView view, CDOQueryInfo queryInfo, int queryID)
+  public AbstractQueryResult(CDOCommonView view, CDOQueryInfo queryInfo, int queryID)
   {
     this.queryID = queryID;
     this.view = view;
@@ -49,7 +49,7 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
     return linkQueue;
   }
 
-  public CDOProtocolView getView()
+  public CDOCommonView getView()
   {
     return view;
   }

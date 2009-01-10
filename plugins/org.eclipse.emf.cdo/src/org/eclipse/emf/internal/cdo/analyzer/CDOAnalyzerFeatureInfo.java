@@ -12,7 +12,7 @@
 
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.common.analyzer.CDOFetchRule;
+import org.eclipse.emf.cdo.common.CDOFetchRule;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 

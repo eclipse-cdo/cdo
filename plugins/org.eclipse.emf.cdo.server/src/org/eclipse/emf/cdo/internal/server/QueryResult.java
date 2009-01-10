@@ -11,9 +11,9 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
+import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.common.AbstractQueryResult;
 
 /**
  * @author Simon McDuff

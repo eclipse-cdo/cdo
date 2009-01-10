@@ -11,7 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -58,9 +58,12 @@ public class View implements IView
     return viewID;
   }
 
-  public CDOProtocolView.Type getViewType()
+  /**
+   * @since 2.0
+   */
+  public Type getViewType()
   {
-    return CDOProtocolView.Type.READONLY;
+    return Type.READONLY;
   }
 
   /**
@@ -111,8 +114,8 @@ public class View implements IView
   }
 
   /**
-   * The timeStamp of the view ({@link CDOProtocolView#UNSPECIFIED_DATE} if the view is an
-   * {@link CDOProtocolView.Type#AUDIT audit} view.
+   * The timeStamp of the view ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is an
+   * {@link CDOCommonView.Type#AUDIT audit} view.
    * 
    * @since 2.0
    */

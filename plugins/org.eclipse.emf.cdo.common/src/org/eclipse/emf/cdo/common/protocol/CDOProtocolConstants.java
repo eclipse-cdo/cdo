@@ -11,11 +11,12 @@
  *    Simon McDuff - http://bugs.eclipse.org/233490    
  *    Simon McDuff - http://bugs.eclipse.org/213402
  **************************************************************************/
-package org.eclipse.emf.cdo.common;
+package org.eclipse.emf.cdo.common.protocol;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOProtocolConstants
 {
@@ -46,79 +47,34 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_COMMIT_TRANSACTION = 12;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_COMMIT_TRANSACTION_PHASE1 = 13;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_COMMIT_TRANSACTION_PHASE2 = 14;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_COMMIT_TRANSACTION_PHASE3 = 15;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_COMMIT_TRANSACTION_CANCEL = 16;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_COMMIT_NOTIFICATION = 17;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_QUERY = 18;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_QUERY_CANCEL = 19;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_SYNC = 20;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_PASSIVE_UPDATE = 21;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_CHANGE_SUBSCRIPTION = 22;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_SET_AUDIT = 23;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_REPOSITORY_TIME = 24;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_LOCK_OBJECTS = 25;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_UNLOCK_OBJECTS = 26;
 
-  /**
-   * @since 2.0
-   */
   public static final short SIGNAL_OBJECT_LOCKED = 27;
 
   // //////////////////////////////////////////////////////////////////////
@@ -142,26 +98,14 @@ public interface CDOProtocolConstants
   // //////////////////////////////////////////////////////////////////////
   // Query Support
 
-  /**
-   * @since 2.0
-   */
   public static final String QUERY_LANGUAGE_RESOURCES = "resources";
 
-  /**
-   * @since 2.0
-   */
   public static final String QUERY_LANGUAGE_RESOURCES_FOLDER_ID = "folder";
 
-  /**
-   * @since 2.0
-   */
   public static final String QUERY_LANGUAGE_RESOURCES_EXACT_MATCH = "exactMatch";
 
   // //////////////////////////////////////////////////////////////////////
   // Locking Objects
 
-  /**
-   * @since 2.0
-   */
   public static final int RELEASE_ALL_LOCKS = -1;
 }

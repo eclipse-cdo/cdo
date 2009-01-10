@@ -10,7 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOClassRef;
@@ -18,7 +19,6 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.InternalCDOPackage;
@@ -162,8 +162,8 @@ public interface IStoreAccessor extends IQueryHandler
   public interface QueryResourcesContext
   {
     /**
-     * The timeStamp of the view ({@link CDOProtocolView#UNSPECIFIED_DATE} if the view is an
-     * {@link CDOProtocolView.Type#AUDIT audit} view.
+     * The timeStamp of the view ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is an
+     * {@link CDOCommonView.Type#AUDIT audit} view.
      */
     public long getTimeStamp();
 

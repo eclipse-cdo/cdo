@@ -11,8 +11,8 @@
 package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
-import org.eclipse.emf.cdo.internal.common.query.AbstractQueryResult;
+import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.spi.common.AbstractQueryResult;
 
 import org.eclipse.emf.internal.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;

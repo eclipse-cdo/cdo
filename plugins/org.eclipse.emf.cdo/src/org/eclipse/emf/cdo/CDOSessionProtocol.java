@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.common.CDOProtocolSession;
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
 
@@ -18,7 +18,7 @@ import org.eclipse.net4j.signal.ISignalProtocol;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDOSessionProtocol extends ISignalProtocol<CDOProtocolSession>
+public interface CDOSessionProtocol extends ISignalProtocol<CDOCommonSession>
 {
   public CDOSession getSession();
 }

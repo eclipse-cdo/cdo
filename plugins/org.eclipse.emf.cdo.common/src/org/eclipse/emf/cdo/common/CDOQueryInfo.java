@@ -9,7 +9,7 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.common.query;
+package org.eclipse.emf.cdo.common;
 
 import java.util.Map;
 

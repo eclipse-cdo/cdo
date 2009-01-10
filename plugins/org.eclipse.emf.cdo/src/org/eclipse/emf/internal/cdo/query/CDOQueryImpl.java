@@ -14,7 +14,7 @@ package org.eclipse.emf.internal.cdo.query;
 import org.eclipse.emf.cdo.CDOQuery;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
-import org.eclipse.emf.cdo.internal.common.query.CDOQueryInfoImpl;
+import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
 
 import org.eclipse.emf.internal.cdo.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.InternalCDOObject;

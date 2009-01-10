@@ -9,10 +9,10 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.common.analyzer;
+package org.eclipse.emf.cdo.common;
 
-import org.eclipse.emf.cdo.common.CDODataInput;
-import org.eclipse.emf.cdo.common.CDODataOutput;
+import org.eclipse.emf.cdo.common.io.CDODataInput;
+import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public final class CDOFetchRule
 {
@@ -35,9 +36,6 @@ public final class CDOFetchRule
     this.cdoClass = cdoClass;
   }
 
-  /**
-   * @since 2.0
-   */
   public CDOFetchRule(CDODataInput in, CDOPackageManager packageManager) throws IOException
   {
     cdoClass = in.readCDOClassRefAndResolve();
@@ -50,9 +48,6 @@ public final class CDOFetchRule
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public void write(CDODataOutput out) throws IOException
   {
     out.writeCDOClassRef(cdoClass);

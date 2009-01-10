@@ -11,7 +11,7 @@
 package org.eclipse.emf.internal.cdo.query;
 
 import org.eclipse.emf.cdo.CDOView;
-import org.eclipse.emf.cdo.common.query.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.CDOQueryInfo;
 
 import java.util.ArrayList;
 import java.util.List;

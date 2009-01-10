@@ -12,7 +12,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IAudit;
@@ -39,7 +39,7 @@ public class Audit extends View implements IAudit
   @Override
   public Type getViewType()
   {
-    return CDOProtocolView.Type.AUDIT;
+    return CDOCommonView.Type.AUDIT;
   }
 
   @Override

@@ -12,7 +12,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.common.CDOProtocolSession;
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
@@ -47,7 +47,7 @@ import java.util.Collection;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>, IOptionsContainer
+public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOptionsContainer
 {
   /**
    * Returns an instance of {@link Repository} that describes the model repository this {@link CDOSession session} is
@@ -171,7 +171,7 @@ public interface CDOSession extends CDOProtocolSession, IContainer<CDOView>, IOp
    * @author Simon McDuff
    * @since 2.0
    */
-  public interface Options extends CDOProtocolSession.Options
+  public interface Options extends CDOCommonSession.Options
   {
     /**
      * Specifies whether objects will be invalidated due by other users changes.

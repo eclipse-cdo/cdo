@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOProtocolView;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -198,8 +198,8 @@ public abstract class Store extends Lifecycle implements IStore
 
     if (reader == null && session != null)
     {
-      CDOProtocolView[] views = session.getViews();
-      for (CDOProtocolView view : views)
+      CDOCommonView[] views = session.getViews();
+      for (CDOCommonView view : views)
       {
         pool = getWriterPool((IView)view, false);
         if (pool != null)

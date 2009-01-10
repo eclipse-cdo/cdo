@@ -39,7 +39,7 @@
 			overview="${overview}"
 
 			windowtitle="${windowTitle}"
-			footer="Copyright (c) 2004 - 2008 Eike Stepper, Germany.&lt;br&gt; All Rights Reserved."
+			footer="Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.&lt;br&gt; All Rights Reserved."
 
 			access="protected" 
 			additionalparam="-breakiterator -tag model:X -tag generated:X -tag ordered:X"

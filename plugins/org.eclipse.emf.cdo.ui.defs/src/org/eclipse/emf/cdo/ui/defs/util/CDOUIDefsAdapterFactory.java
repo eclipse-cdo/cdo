@@ -1,16 +1,16 @@
 /**
  * <copyright>
- * Copyright (c) 2004 - 2008 André Dietisheim, Switzerland.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    André Dietisheim - initial API and implementation
+ *    Andre Dietisheim - initial API and implementation
  * </copyright>
  *
- * $Id: CDOUIDefsAdapterFactory.java,v 1.1 2008-12-31 14:43:07 estepper Exp $
+ * $Id: CDOUIDefsAdapterFactory.java,v 1.2 2009-01-10 14:54:44 estepper Exp $
  */
 package org.eclipse.emf.cdo.ui.defs.util;
 

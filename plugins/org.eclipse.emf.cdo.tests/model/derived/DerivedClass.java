@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2008 Eike Stepper, Germany.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: DerivedClass.java,v 1.2 2008-12-28 17:57:00 estepper Exp $
+ * $Id: DerivedClass.java,v 1.3 2009-01-10 14:55:30 estepper Exp $
  */
 package derived;
 

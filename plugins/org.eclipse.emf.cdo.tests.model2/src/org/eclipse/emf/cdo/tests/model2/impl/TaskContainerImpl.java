@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: TaskContainerImpl.java,v 1.3 2008-12-28 17:56:56 estepper Exp $
+ * $Id: TaskContainerImpl.java,v 1.4 2009-01-10 13:55:50 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2.impl;
 
@@ -26,16 +26,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl#getTasks <em>Tasks</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl#getTasks <em>Tasks</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected TaskContainerImpl()
@@ -45,6 +46,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -55,6 +57,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,6 +68,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Class2.java,v 1.4 2008-12-28 17:57:14 estepper Exp $
+ * $Id: Class2.java,v 1.5 2009-01-10 13:55:48 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.subpackage;
 
@@ -19,14 +19,13 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Class2</b></em>'. <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1 <em>Class1</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1 <em>Class1</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage#getClass2()
  * @model
  * @generated
@@ -34,15 +33,15 @@ import org.eclipse.emf.ecore.EObject;
 public interface Class2 extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Class1</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model3.Class1}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2 <em>Class2</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Class1</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model3.Class1}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2 <em>Class2</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Class1</em>' reference list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Class1</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage#getClass2_Class1()
    * @see org.eclipse.emf.cdo.tests.model3.Class1#getClass2

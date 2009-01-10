@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: VAT.java,v 1.5 2008-12-28 17:56:46 estepper Exp $
+ * $Id: VAT.java,v 1.6 2009-01-10 13:55:59 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1;
 
@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>VAT</b></em>', and utility
  * methods for working with them. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getVAT()
  * @model
  * @generated
@@ -28,8 +29,8 @@ import java.util.List;
 public enum VAT implements Enumerator
 {
   /**
-   * The '<em><b>Vat0</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>Vat0</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #VAT0_VALUE
    * @generated
    * @ordered
@@ -37,8 +38,8 @@ public enum VAT implements Enumerator
   VAT0(0, "vat0", "vat0"),
 
   /**
-   * The '<em><b>Vat7</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>Vat7</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #VAT7_VALUE
    * @generated
    * @ordered
@@ -46,8 +47,8 @@ public enum VAT implements Enumerator
   VAT7(7, "vat7", "vat7"),
 
   /**
-   * The '<em><b>Vat15</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>Vat15</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #VAT15_VALUE
    * @generated
    * @ordered
@@ -55,20 +56,20 @@ public enum VAT implements Enumerator
   VAT15(15, "vat15", "vat15");
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2008 Eike Stepper, Germany.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The '<em><b>Vat0</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>Vat0</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Vat0</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #VAT0
    * @model name="vat0"
    * @generated
@@ -77,13 +78,13 @@ public enum VAT implements Enumerator
   public static final int VAT0_VALUE = 0;
 
   /**
-   * The '<em><b>Vat7</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>Vat7</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Vat7</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #VAT7
    * @model name="vat7"
    * @generated
@@ -92,13 +93,13 @@ public enum VAT implements Enumerator
   public static final int VAT7_VALUE = 7;
 
   /**
-   * The '<em><b>Vat15</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>Vat15</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Vat15</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #VAT15
    * @model name="vat15"
    * @generated
@@ -107,23 +108,23 @@ public enum VAT implements Enumerator
   public static final int VAT15_VALUE = 15;
 
   /**
-   * An array of all the '<em><b>VAT</b></em>' enumerators.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * An array of all the '<em><b>VAT</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static final VAT[] VALUES_ARRAY = new VAT[] { VAT0, VAT7, VAT15, };
 
   /**
-   * A public read-only list of all the '<em><b>VAT</b></em>' enumerators.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * A public read-only list of all the '<em><b>VAT</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final List<VAT> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>VAT</b></em>' literal with the specified literal value.
-   * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>VAT</b></em>' literal with the specified literal value. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static VAT get(String literal)
@@ -140,8 +141,8 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>VAT</b></em>' literal with the specified name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the '<em><b>VAT</b></em>' literal with the specified name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static VAT getByName(String name)
@@ -158,9 +159,9 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>VAT</b></em>' literal with the specified integer value.
-   * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>VAT</b></em>' literal with the specified integer value. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static VAT get(int value)
@@ -179,25 +180,28 @@ public enum VAT implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final int value;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String name;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String literal;
 
   /**
-   * Only this class can construct instances.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Only this class can construct instances. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private VAT(int value, String name, String literal)
@@ -209,6 +213,7 @@ public enum VAT implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getValue()
@@ -218,6 +223,7 @@ public enum VAT implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -227,6 +233,7 @@ public enum VAT implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getLiteral()
@@ -235,9 +242,9 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * Returns the literal value of the enumerator, which is its string representation.
-   * <!-- begin-user-doc --> <!--
+   * Returns the literal value of the enumerator, which is its string representation. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   @Override

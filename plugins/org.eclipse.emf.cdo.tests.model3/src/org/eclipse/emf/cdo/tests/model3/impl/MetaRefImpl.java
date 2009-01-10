@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MetaRefImpl.java,v 1.3 2008-12-28 17:57:14 estepper Exp $
+ * $Id: MetaRefImpl.java,v 1.4 2009-01-10 13:55:48 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 
@@ -36,6 +36,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MetaRefImpl()
@@ -45,6 +46,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -55,6 +57,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,6 +68,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage getEPackageRef()
@@ -74,6 +78,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEPackageRef(EPackage newEPackageRef)

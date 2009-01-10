@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MangoSwitch.java,v 1.7 2008-12-28 17:56:34 estepper Exp $
+ * $Id: MangoSwitch.java,v 1.8 2009-01-10 13:55:54 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.util;
 
@@ -27,21 +27,22 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage
  * @generated
  */
 public class MangoSwitch<T>
 {
   /**
-   * The cached model package
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected static MangoPackage modelPackage;
 
   /**
-   * Creates an instance of the switch.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public MangoSwitch()
@@ -55,6 +56,7 @@ public class MangoSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -66,6 +68,7 @@ public class MangoSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -85,6 +88,7 @@ public class MangoSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -122,10 +126,11 @@ public class MangoSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Value List</em>'.
-   * <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Value List</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Value List</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -136,10 +141,11 @@ public class MangoSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Value</em>'.
-   * <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Value</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Value</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -150,10 +156,11 @@ public class MangoSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Parameter</em>'.
-   * <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Parameter</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Parameter</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -164,11 +171,12 @@ public class MangoSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-   * <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated

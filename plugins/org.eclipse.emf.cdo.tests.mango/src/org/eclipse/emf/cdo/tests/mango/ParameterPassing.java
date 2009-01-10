@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ParameterPassing.java,v 1.3 2008-12-28 17:56:34 estepper Exp $
+ * $Id: ParameterPassing.java,v 1.4 2009-01-10 13:55:54 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 
@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>Parameter Passing</b></em>', and
  * utility methods for working with them. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getParameterPassing()
  * @model
  * @generated
@@ -28,8 +29,8 @@ import java.util.List;
 public enum ParameterPassing implements Enumerator
 {
   /**
-   * The '<em><b>By Value</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>By Value</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #BY_VALUE_VALUE
    * @generated
    * @ordered
@@ -37,8 +38,8 @@ public enum ParameterPassing implements Enumerator
   BY_VALUE(0, "ByValue", "ByValue"),
 
   /**
-   * The '<em><b>By Reference</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>By Reference</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #BY_REFERENCE_VALUE
    * @generated
    * @ordered
@@ -46,13 +47,13 @@ public enum ParameterPassing implements Enumerator
   BY_REFERENCE(1, "ByReference", "ByReference");
 
   /**
-   * The '<em><b>By Value</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>By Value</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>By Value</b></em>' literal object isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #BY_VALUE
    * @model name="ByValue"
    * @generated
@@ -61,13 +62,13 @@ public enum ParameterPassing implements Enumerator
   public static final int BY_VALUE_VALUE = 0;
 
   /**
-   * The '<em><b>By Reference</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>By Reference</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>By Reference</b></em>' literal object isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #BY_REFERENCE
    * @model name="ByReference"
    * @generated
@@ -76,24 +77,24 @@ public enum ParameterPassing implements Enumerator
   public static final int BY_REFERENCE_VALUE = 1;
 
   /**
-   * An array of all the '<em><b>Parameter Passing</b></em>' enumerators.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * An array of all the '<em><b>Parameter Passing</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static final ParameterPassing[] VALUES_ARRAY = new ParameterPassing[] { BY_VALUE, BY_REFERENCE, };
 
   /**
-   * A public read-only list of all the '<em><b>Parameter Passing</b></em>' enumerators.
-   * <!-- begin-user-doc --> <!--
+   * A public read-only list of all the '<em><b>Parameter Passing</b></em>' enumerators. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static final List<ParameterPassing> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>Parameter Passing</b></em>' literal with the specified literal value.
-   * <!-- begin-user-doc -->
+   * Returns the '<em><b>Parameter Passing</b></em>' literal with the specified literal value. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static ParameterPassing get(String literal)
@@ -110,9 +111,9 @@ public enum ParameterPassing implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Parameter Passing</b></em>' literal with the specified name.
-   * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Parameter Passing</b></em>' literal with the specified name. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static ParameterPassing getByName(String name)
@@ -129,9 +130,9 @@ public enum ParameterPassing implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Parameter Passing</b></em>' literal with the specified integer value.
-   * <!-- begin-user-doc -->
+   * Returns the '<em><b>Parameter Passing</b></em>' literal with the specified integer value. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static ParameterPassing get(int value)
@@ -148,25 +149,28 @@ public enum ParameterPassing implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final int value;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String name;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String literal;
 
   /**
-   * Only this class can construct instances.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Only this class can construct instances. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private ParameterPassing(int value, String name, String literal)
@@ -178,6 +182,7 @@ public enum ParameterPassing implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getValue()
@@ -187,6 +192,7 @@ public enum ParameterPassing implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -196,6 +202,7 @@ public enum ParameterPassing implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getLiteral()
@@ -204,9 +211,9 @@ public enum ParameterPassing implements Enumerator
   }
 
   /**
-   * Returns the literal value of the enumerator, which is its string representation.
-   * <!-- begin-user-doc --> <!--
+   * Returns the literal value of the enumerator, which is its string representation. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   @Override

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: TaskContainer.java,v 1.3 2008-12-28 17:56:56 estepper Exp $
+ * $Id: TaskContainer.java,v 1.4 2009-01-10 13:55:50 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 
@@ -17,14 +17,13 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Task Container</b></em>'. <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model2.TaskContainer#getTasks <em>Tasks</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.TaskContainer#getTasks <em>Tasks</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTaskContainer()
  * @model
  * @generated
@@ -32,15 +31,15 @@ import org.eclipse.emf.ecore.EObject;
 public interface TaskContainer extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Tasks</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model2.Task}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model2.Task#getTaskContainer <em>Task Container</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Tasks</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.model2.Task}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.model2.Task#getTaskContainer <em>Task Container</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Tasks</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Tasks</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getTaskContainer_Tasks()
    * @see org.eclipse.emf.cdo.tests.model2.Task#getTaskContainer

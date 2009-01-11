@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: GenListOfString.java,v 1.4 2009-01-10 14:56:03 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model5;
 

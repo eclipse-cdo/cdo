@@ -7,8 +7,8 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
-
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;

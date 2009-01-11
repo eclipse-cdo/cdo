@@ -6,7 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Andre Dietisheim - initial API and implementation
+ *    André Dietisheim - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.net4j.util.tests.defs;
 
@@ -23,7 +24,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author Andre Dietisheim
+ * @author André Dietisheim
  */
 public class TestDefTest extends AbstractOMTest
 {

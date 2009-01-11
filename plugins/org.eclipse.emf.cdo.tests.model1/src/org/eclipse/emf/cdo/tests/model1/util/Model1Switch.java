@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id$
  */
 package org.eclipse.emf.cdo.tests.model1.util;
 

@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: BaseClassImpl.java,v 1.3 2009-01-10 14:55:30 estepper Exp $
  */
 package base.impl;
 

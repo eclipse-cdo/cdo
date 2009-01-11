@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: InterfaceFactory.java,v 1.3 2009-01-10 14:55:31 estepper Exp $
  */
 package interface_;
 

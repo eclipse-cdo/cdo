@@ -6,11 +6,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Martin Taal
- *
- * $Id: CDOSyntheticVersionPropertyHandler.java,v 1.5 2009-01-10 07:08:55 estepper Exp $
+ *   Martin Taal - initial API and implementation
+ *   Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
@@ -31,7 +29,7 @@ import java.util.Map;
  * Reads the version from the internal version cache.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, PropertyAccessor

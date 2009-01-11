@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Parameter.java,v 1.5 2009-01-10 14:54:02 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango;
 

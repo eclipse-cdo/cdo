@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: CDOResourceNode.java,v 1.6 2009-01-10 14:57:17 estepper Exp $
  */
 package org.eclipse.emf.cdo.eresource;
 

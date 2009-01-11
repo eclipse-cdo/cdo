@@ -8,6 +8,7 @@
  * Contributors:
  *    Paul Richardson - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.tests.bugzilla;
 

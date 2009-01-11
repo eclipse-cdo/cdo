@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: ReferencePackage.java,v 1.3 2009-01-10 14:55:31 estepper Exp $
  */
 package reference;
 

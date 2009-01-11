@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Eike Stepper - maintenance
  *******************************************************************************/
 
 package org.eclipse.net4j.util.ui.proposals;

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 

@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Simon McDuff - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/246619
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.view;
 

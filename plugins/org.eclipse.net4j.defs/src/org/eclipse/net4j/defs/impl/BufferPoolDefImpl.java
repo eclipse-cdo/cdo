@@ -6,7 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *   Andre Dietisheim - initial API and implementation
+ *   André Dietisheim - initial API and implementation
+ *   Eike Stepper - maintenance
  *
  */
 package org.eclipse.net4j.defs.impl;

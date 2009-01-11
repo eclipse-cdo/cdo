@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: MangoPackageImpl.java,v 1.9 2009-01-10 14:54:02 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 

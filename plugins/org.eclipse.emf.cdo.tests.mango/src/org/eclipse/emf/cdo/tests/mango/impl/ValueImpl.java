@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: ValueImpl.java,v 1.6 2009-01-10 14:54:02 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.mango.impl;
 

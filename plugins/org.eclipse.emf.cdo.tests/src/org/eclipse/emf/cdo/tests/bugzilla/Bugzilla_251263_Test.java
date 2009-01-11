@@ -8,8 +8,8 @@
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Eike Stepper - maintenance
  **************************************************************************/
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;

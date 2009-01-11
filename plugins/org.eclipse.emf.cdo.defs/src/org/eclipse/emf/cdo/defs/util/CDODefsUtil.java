@@ -6,7 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Andre Dietisheim - initial API and implementation
+ *    André Dietisheim - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.defs.util;
 
@@ -23,7 +24,7 @@ import org.eclipse.net4j.defs.TCPConnectorDef;
 import java.util.Date;
 
 /**
- * @author Andre Dietisheim
+ * @author André Dietisheim
  */
 public class CDODefsUtil
 {

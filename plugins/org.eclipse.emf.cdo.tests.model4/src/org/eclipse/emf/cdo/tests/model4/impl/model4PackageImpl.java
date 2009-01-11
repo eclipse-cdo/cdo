@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: model4PackageImpl.java,v 1.10 2009-01-10 14:55:01 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.impl;
 

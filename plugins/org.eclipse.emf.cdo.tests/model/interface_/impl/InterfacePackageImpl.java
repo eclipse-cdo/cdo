@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: InterfacePackageImpl.java,v 1.4 2009-01-10 14:55:30 estepper Exp $
  */
 package interface_.impl;
 

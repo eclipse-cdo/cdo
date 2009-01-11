@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Model5AdapterFactory.java,v 1.6 2009-01-10 14:56:04 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model5.util;
 

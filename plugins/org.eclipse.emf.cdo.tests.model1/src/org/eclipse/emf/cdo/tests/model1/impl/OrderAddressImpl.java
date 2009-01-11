@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: OrderAddressImpl.java,v 1.7 2009-01-10 14:54:40 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model1.impl;
 

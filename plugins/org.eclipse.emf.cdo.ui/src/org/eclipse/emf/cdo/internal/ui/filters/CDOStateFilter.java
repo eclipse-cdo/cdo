@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.ui.filters;
 

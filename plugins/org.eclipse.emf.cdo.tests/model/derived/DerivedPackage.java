@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: DerivedPackage.java,v 1.3 2009-01-10 14:55:30 estepper Exp $
  */
 package derived;
 

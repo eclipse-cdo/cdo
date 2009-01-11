@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Stefan Winkler - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.server.db;
 

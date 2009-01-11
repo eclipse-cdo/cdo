@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: Model2Package.java,v 1.9 2009-01-10 14:55:14 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model2;
 

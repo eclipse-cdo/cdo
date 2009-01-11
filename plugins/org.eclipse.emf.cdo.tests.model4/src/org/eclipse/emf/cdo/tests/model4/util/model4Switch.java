@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: model4Switch.java,v 1.8 2009-01-10 14:55:02 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.model4.util;
 

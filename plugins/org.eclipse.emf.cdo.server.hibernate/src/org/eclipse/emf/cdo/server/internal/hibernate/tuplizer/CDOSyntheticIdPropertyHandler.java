@@ -6,9 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *   Martin Taal
- *
- * $Id: CDOSyntheticIdPropertyHandler.java,v 1.7 2009-01-10 07:08:55 estepper Exp $
+ *   Martin Taal - initial API and implementation
+ *   Eike Stepper - maintenance
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
@@ -38,7 +37,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor

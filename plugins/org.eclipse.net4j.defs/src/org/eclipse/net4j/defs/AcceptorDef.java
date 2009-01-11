@@ -6,9 +6,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Andre Dietisheim - initial API and implementation
- *
- * $Id: AcceptorDef.java,v 1.2 2009-01-10 14:57:25 estepper Exp $
+ *    André Dietisheim - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.net4j.defs;
 

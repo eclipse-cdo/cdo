@@ -1,5 +1,4 @@
 /**
- * <copyright>
  * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,9 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- * </copyright>
- *
- * $Id: CDOResourceNodeValidator.java,v 1.3 2009-01-10 14:57:18 estepper Exp $
  */
 package org.eclipse.emf.cdo.eresource.validation;
 

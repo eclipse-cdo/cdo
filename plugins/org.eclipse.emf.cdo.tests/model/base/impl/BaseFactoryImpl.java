@@ -7,8 +7,6 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *
- * $Id: BaseFactoryImpl.java,v 1.4 2009-01-10 14:55:31 estepper Exp $
  */
 package base.impl;
 

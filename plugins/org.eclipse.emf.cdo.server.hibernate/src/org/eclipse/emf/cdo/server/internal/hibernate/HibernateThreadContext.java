@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Martin Taal - initial API and implementation
+ *    Eike Stepper - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.server.internal.hibernate;
 

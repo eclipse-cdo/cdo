@@ -1,4 +1,4 @@
-/***************************************************************************
+/**
  * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- **************************************************************************/
+ */
 package org.eclipse.net4j.tests;
 
 import java.util.StringTokenizer;
@@ -36,14 +36,14 @@ public final class HugeData
 
   public static String getText()
   {
-    return "/***************************************************************************" + NL
+    return "/**" + NL
         + " * COPYRIGHT (C) 2004 - 2008 EIKE STEPPER, GERMANY." + NL
         + " * ALL RIGHTS RESERVED. THIS PROGRAM AND THE ACCOMPANYING MATERIALS" + NL
         + " * ARE MADE AVAILABLE UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE V1.0" + NL
         + " * WHICH ACCOMPANIES THIS DISTRIBUTION, AND IS AVAILABLE AT" + NL
         + " * HTTP://WWW.ECLIPSE.ORG/LEGAL/EPL-V10.HTML" + NL + " * " + NL + " * CONTRIBUTORS:" + NL
         + " *    EIKE STEPPER - INITIAL API AND IMPLEMENTATION" + NL
-        + " **************************************************************************/" + NL
+        + " */" + NL
         + "PACKAGE ORG.ECLIPSE.INTERNAL.NET4J.TRANSPORT.CONNECTOR;" + NL + "" + NL
         + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.BUFFER.BUFFERPROVIDER;" + NL
         + "IMPORT ORG.ECLIPSE.NET4J.TRANSPORT.CHANNEL.CHANNEL;" + NL

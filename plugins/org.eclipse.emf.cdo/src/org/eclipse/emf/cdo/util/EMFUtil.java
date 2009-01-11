@@ -1,4 +1,4 @@
-/***************************************************************************
+/**
  * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - http://bugs.eclipse.org/244801
  *    Simon McDuff - maintenance
- **************************************************************************/
+ */
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;

@@ -1,4 +1,4 @@
-/***************************************************************************
+/**
  * Copyright (c) 2004 - 2009 André Dietisheim, Germany.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * Contributors:
  *    André Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
- **************************************************************************/
+ */
 package org.eclipse.emf.cdo.tests.defs;
 
 import org.eclipse.emf.cdo.defs.CDOAuditDef;

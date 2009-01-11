@@ -1,4 +1,4 @@
-/***************************************************************************
+/**
  * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +10,7 @@
  *    Eike Stepper - maintenance
  *    Simon McDuff - http://bugs.eclipse.org/204890 
  *    Simon McDuff - http://bugs.eclipse.org/213402
- **************************************************************************/
+ */
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.id.CDOID;

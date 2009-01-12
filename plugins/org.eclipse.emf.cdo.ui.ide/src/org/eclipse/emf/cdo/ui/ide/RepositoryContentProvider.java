@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.ui.ide;
 
+import org.eclipse.emf.cdo.team.IRepositoryManager;
+import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
 
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
@@ -17,7 +20,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,12 +31,52 @@ import java.util.Map;
 public class RepositoryContentProvider extends StructuredContentProvider<IWorkspaceRoot> implements
     ITreeContentProvider
 {
-  static final Object[] EMPTY = {};
+  private static final Object[] EMPTY = {};
 
-  private Map<IProject, Repository> repositories = new HashMap<IProject, Repository>();
+  private Map<IRepositoryProject, Node> sessionNodes = new HashMap<IRepositoryProject, Node>();
+
+  private Map<IRepositoryProject, Node> packageNodes = new HashMap<IRepositoryProject, Node>();
+
+  private Map<IRepositoryProject, Node> resourceNodes = new HashMap<IRepositoryProject, Node>();
+
+  private boolean sessionNodesHidden;
+
+  private boolean packageNodesHidden;
+
+  private boolean resourceNodesHidden;
 
   public RepositoryContentProvider()
   {
+  }
+
+  public boolean isSessionNodesHidden()
+  {
+    return sessionNodesHidden;
+  }
+
+  public void setSessionNodesHidden(boolean sessionNodesHidden)
+  {
+    this.sessionNodesHidden = sessionNodesHidden;
+  }
+
+  public boolean isPackageNodesHidden()
+  {
+    return packageNodesHidden;
+  }
+
+  public void setPackageNodesHidden(boolean packageNodesHidden)
+  {
+    this.packageNodesHidden = packageNodesHidden;
+  }
+
+  public boolean isResourceNodesHidden()
+  {
+    return resourceNodesHidden;
+  }
+
+  public void setResourceNodesHidden(boolean resourceNodesHidden)
+  {
+    this.resourceNodesHidden = resourceNodesHidden;
   }
 
   public Object[] getChildren(Object parentElement)
@@ -39,23 +84,81 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     if (parentElement instanceof IProject)
     {
       IProject project = (IProject)parentElement;
-      Repository repository = repositories.get(project);
-      if (repository == null)
+      IRepositoryProject repositoryProject = IRepositoryManager.INSTANCE.getElement(project);
+      if (repositoryProject != null)
       {
-        repository = new Repository(project, null);
-        repositories.put(project, repository);
+        return getChildren(repositoryProject);
       }
-
-      return repository.getRoots();
     }
 
-    if (parentElement instanceof Repository.Content)
+    if (parentElement instanceof Node)
     {
-      Repository.Content content = (Repository.Content)parentElement;
-      return content.getChildren();
+      Node node = (Node)parentElement;
+      return node.getChildren();
     }
 
     return EMPTY;
+  }
+
+  public Object[] getChildren(IRepositoryProject repositoryProject)
+  {
+    List<Object> children = new ArrayList<Object>();
+
+    Node sessionNode = getNode(repositoryProject, sessionNodes);
+    if (!isSessionNodesHidden())
+    {
+      children.add(sessionNode);
+    }
+
+    Node packageNode = getNode(repositoryProject, packageNodes);
+    if (!isPackageNodesHidden())
+    {
+      children.add(packageNode);
+    }
+
+    Node resourceNode = getNode(repositoryProject, resourceNodes);
+    if (!isResourceNodesHidden())
+    {
+      children.add(resourceNode);
+    }
+
+    if (isSessionNodesHidden())
+    {
+      addChildren(children, sessionNode);
+    }
+
+    if (isPackageNodesHidden())
+    {
+      addChildren(children, packageNode);
+    }
+
+    if (isResourceNodesHidden())
+    {
+      addChildren(children, resourceNode);
+    }
+
+    return children.toArray(new Object[children.size()]);
+  }
+
+  private void addChildren(List<Object> result, Node node)
+  {
+    Object[] children = node.getChildren();
+    for (Object child : children)
+    {
+      result.add(child);
+    }
+  }
+
+  private Node getNode(IRepositoryProject repositoryProject, Map<IRepositoryProject, Node> nodes)
+  {
+    Node node = nodes.get(repositoryProject);
+    if (node == null)
+    {
+      node = new SessionsNode(repositoryProject);
+      nodes.put(repositoryProject, node);
+    }
+
+    return node;
   }
 
   public boolean hasChildren(Object parentElement)
@@ -71,26 +174,12 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 
   public Object getParent(Object element)
   {
-    if (element instanceof Repository.Content)
+    if (element instanceof Node)
     {
-      Repository.Content content = (Repository.Content)element;
-      return content.getParent();
+      Node node = (Node)element;
+      return node.getRepositoryProject().getProject();
     }
 
     return null;
-  }
-
-  @Override
-  protected void connectInput(IWorkspaceRoot wsRoot)
-  {
-    // view.addListener(viewListener);
-    // view.getSession().addListener(sessionListener);
-  }
-
-  @Override
-  protected void disconnectInput(IWorkspaceRoot wsRoot)
-  {
-    // view.getSession().removeListener(sessionListener);
-    // view.removeListener(viewListener);
   }
 }

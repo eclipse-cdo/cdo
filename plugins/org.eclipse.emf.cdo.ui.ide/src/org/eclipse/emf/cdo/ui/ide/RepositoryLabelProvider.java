@@ -29,10 +29,10 @@ public class RepositoryLabelProvider extends LabelProvider implements ILabelProv
   @Override
   public String getText(Object element)
   {
-    if (element instanceof Repository.Content)
+    if (element instanceof Node)
     {
-      Repository.Content content = (Repository.Content)element;
-      return content.getText();
+      Node node = (Node)element;
+      return node.getText();
     }
 
     return super.getText(element);
@@ -41,10 +41,10 @@ public class RepositoryLabelProvider extends LabelProvider implements ILabelProv
   @Override
   public Image getImage(Object element)
   {
-    if (element instanceof Repository.Content)
+    if (element instanceof Node)
     {
-      Repository.Content content = (Repository.Content)element;
-      String imageKey = content.getImageKey();
+      Node node = (Node)element;
+      String imageKey = node.getImageKey();
       ImageDescriptor imageDescriptor = OM.Activator.imageDescriptorFromPlugin(OM.BUNDLE_ID, imageKey);
       return imageDescriptor.createImage();
     }

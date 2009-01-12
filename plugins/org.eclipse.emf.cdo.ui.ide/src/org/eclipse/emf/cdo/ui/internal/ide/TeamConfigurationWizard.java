@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.ui.IWorkbench;
@@ -45,7 +43,7 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
     {
       RepositoryTeamProvider.map(project);
       RepositoryManager.INSTANCE.addElement(project);
-      project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+      // project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
       return true;
     }
     catch (Exception ex)

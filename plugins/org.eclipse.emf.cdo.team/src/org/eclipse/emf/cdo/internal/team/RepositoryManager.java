@@ -110,25 +110,34 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
     IResourceDelta delta = event.getDelta();
     if (delta != null)
     {
-      IResourceDelta[] children = delta.getAffectedChildren(IResourceDelta.OPEN);
-      for (IResourceDelta child : children)
+      for (IResourceDelta child : delta.getAffectedChildren())
       {
         if (child instanceof IProject)
         {
           IProject project = (IProject)child;
-          if (project.isOpen())
+          switch (delta.getKind())
           {
-            if (RepositoryTeamProvider.isMapped(project))
-            {
-              addElement(project);
-            }
-          }
-          else
-          {
-            removeElement(project);
+          case IResourceDelta.OPEN:
+            resourceChangedOpen(project);
+            break;
           }
         }
       }
+    }
+  }
+
+  private void resourceChangedOpen(IProject project)
+  {
+    if (project.isOpen())
+    {
+      if (RepositoryTeamProvider.isMapped(project))
+      {
+        addElement(project);
+      }
+    }
+    else
+    {
+      removeElement(project);
     }
   }
 

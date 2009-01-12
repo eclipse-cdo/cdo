@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
 import org.eclipse.emf.cdo.ui.ide.Node.Type;
 
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 import org.eclipse.core.resources.IProject;
@@ -48,8 +51,36 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 
   private boolean resourceNodesHidden;
 
+  private IListener repositoryManagerListener = new ContainerEventAdapter<IRepositoryProject>()
+  {
+    @Override
+    protected void onAdded(IContainer<IRepositoryProject> container, IRepositoryProject element)
+    {
+      refreshViewer(element);
+    }
+
+    @Override
+    protected void onRemoved(IContainer<IRepositoryProject> container, IRepositoryProject element)
+    {
+      refreshViewer(element);
+    }
+
+    private void refreshViewer(IRepositoryProject element)
+    {
+      getViewer().refresh(element.getProject());
+    }
+  };
+
   public RepositoryContentProvider()
   {
+    IRepositoryManager.INSTANCE.addListener(repositoryManagerListener);
+  }
+
+  @Override
+  public void dispose()
+  {
+    IRepositoryManager.INSTANCE.removeListener(repositoryManagerListener);
+    super.dispose();
   }
 
   public boolean isSessionNodesHidden()
@@ -182,7 +213,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
       node = createNode(repositoryProject, type);
       nodes.put(repositoryProject, node);
     }
-  
+
     return node;
   }
 
@@ -192,13 +223,13 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     {
     case SESSIONS:
       return new SessionsNode(repositoryProject);
-  
+
     case PACKAGES:
       return new PackagesNode(repositoryProject);
-  
+
     case RESOURCES:
       return new ResourcesNode(repositoryProject);
-  
+
     default:
       return null;
     }

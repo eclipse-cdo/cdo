@@ -12,19 +12,12 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
-import org.eclipse.net4j.util.collection.IHistory;
-import org.eclipse.net4j.util.collection.PreferenceHistory;
-import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.widgets.HistoryText;
 import org.eclipse.net4j.util.ui.widgets.PreferenceButton;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -40,23 +33,15 @@ public class OpenSessionDialog extends TitleAreaDialog
 
   private IWorkbenchPage page;
 
-  private IHistory<String> connectorHistory = new PreferenceHistory(OM.PREF_HISTORY_CONNECTORS);
-
-  private IHistory<String> repositoryHistory = new PreferenceHistory(OM.PREF_HISTORY_REPOSITORIES);
-
-  private HistoryText connectorText;
-
-  private Label exampleLabel;
-
-  private HistoryText repositoryText;
-
   private PreferenceButton automaticButton;
+
+  private SessionComposite composite;
+
+  private boolean automaticPackageRegistry;
 
   private String serverDescription;
 
   private String repositoryName;
-
-  private boolean automaticPackageRegistry;
 
   public OpenSessionDialog(IWorkbenchPage page)
   {
@@ -95,52 +80,14 @@ public class OpenSessionDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    Composite composite = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
-    composite.setLayoutData(UIUtil.createGridData());
-    composite.setLayout(new GridLayout(2, false));
+    composite = new SessionComposite(parent, SWT.NONE);
 
     setTitle(TITLE);
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
 
-    new Label(composite, SWT.NONE).setText("Server Description:");
-    connectorText = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, connectorHistory);
-    connectorText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-
-    if (connectorHistory.isEmpty())
-    {
-      new Label(composite, SWT.NONE);
-      exampleLabel = new Label(composite, SWT.NONE);
-      exampleLabel.setText("for example 'tcp://estepper@dev.eclipse.org:2036'");
-      exampleLabel.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
-    }
-
-    new Label(composite, SWT.NONE).setText("Repository Name:");
-    repositoryText = new HistoryText(composite, SWT.BORDER | SWT.SINGLE, repositoryHistory);
-    repositoryText.getCombo().setLayoutData(new GridData(150, SWT.DEFAULT));
-
     new Label(composite, SWT.NONE);
     automaticButton = new PreferenceButton(composite, SWT.CHECK, "Automatic Package Registry",
         OM.PREF_AUTOMATIC_PACKAGE_REGISTRY);
-
-    connectorText.setFocus();
-    connectorText.getCombo().addFocusListener(new FocusListener()
-    {
-      public void focusGained(FocusEvent e)
-      {
-        if (exampleLabel != null)
-        {
-          exampleLabel.setVisible(true);
-        }
-      }
-
-      public void focusLost(FocusEvent e)
-      {
-        if (exampleLabel != null)
-        {
-          exampleLabel.setVisible(false);
-        }
-      }
-    });
 
     return composite;
   }
@@ -148,8 +95,8 @@ public class OpenSessionDialog extends TitleAreaDialog
   @Override
   protected void okPressed()
   {
-    serverDescription = connectorText.getText(true);
-    repositoryName = repositoryText.getText(true);
+    serverDescription = composite.getServerDescription();
+    repositoryName = composite.getRepositoryName();
     automaticPackageRegistry = automaticButton.getSelection(true);
     super.okPressed();
   }

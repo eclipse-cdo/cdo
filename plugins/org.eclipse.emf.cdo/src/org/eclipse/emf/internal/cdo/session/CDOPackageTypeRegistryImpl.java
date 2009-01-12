@@ -20,6 +20,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 
@@ -56,7 +57,8 @@ public final class CDOPackageTypeRegistryImpl extends HashMapRegistry<String, CD
 
   private static final String ECORE_ID = "org.eclipse.emf.ecore";
 
-  private Object extensionTracker;
+  @ExcludeFromDump
+  private transient Object extensionTracker;
 
   private CDOPackageTypeRegistryImpl()
   {

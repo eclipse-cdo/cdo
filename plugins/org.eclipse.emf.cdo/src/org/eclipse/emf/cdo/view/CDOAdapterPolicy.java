@@ -66,6 +66,12 @@ public interface CDOAdapterPolicy
     {
       return false;
     }
+
+    @Override
+    public String toString()
+    {
+      return "NONE";
+    }
   };
 
   /**
@@ -81,6 +87,12 @@ public interface CDOAdapterPolicy
     {
       return adapter instanceof CDOAdapter;
     }
+
+    @Override
+    public String toString()
+    {
+      return "CDO";
+    }
   };
 
   /**
@@ -94,6 +106,12 @@ public interface CDOAdapterPolicy
     public boolean isValid(EObject eObject, Adapter adapter)
     {
       return true;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "ALL";
     }
   };
 

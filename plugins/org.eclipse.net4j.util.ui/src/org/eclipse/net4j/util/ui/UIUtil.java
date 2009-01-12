@@ -177,6 +177,22 @@ public final class UIUtil
     return null;
   }
 
+  /**
+   * @since 2.0
+   */
+  public static <T> T getElement(ISelection selection, Class<T> type)
+  {
+    Object element = getElement(selection);
+    if (element != null && type.isInstance(element))
+    {
+      @SuppressWarnings("unchecked")
+      T result = (T)element;
+      return result;
+    }
+
+    return null;
+  }
+
   public static IPasswordCredentialsProvider createInteractiveCredentialsProvider()
   {
     return new InteractiveCredentialsProvider();

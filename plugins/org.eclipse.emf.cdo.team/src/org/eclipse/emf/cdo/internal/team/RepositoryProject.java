@@ -10,14 +10,20 @@
  */
 package org.eclipse.emf.cdo.internal.team;
 
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.spi.net4j.ConnectorFactory;
 
 /**
  * @author Eike Stepper
@@ -38,12 +44,47 @@ public class RepositoryProject extends PlatformObject implements IRepositoryProj
     return project;
   }
 
-  public CDOView getView()
+  public synchronized CDOView getView()
   {
+    if (view == null)
+    {
+      view = openView();
+    }
+
     return view;
   }
 
   public void notifyEvent(IEvent event)
   {
+  }
+
+  protected CDOView openView()
+  {
+    String connectorDescription = RepositoryTeamProvider.getConnectorDescription(project);
+    String repositoryName = RepositoryTeamProvider.getRepositoryName(project);
+
+    IConnector connector = getConnector(connectorDescription);
+    if (connector == null)
+    {
+      throw new IllegalStateException("No connector for " + connectorDescription);
+    }
+
+    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    configuration.setConnector(connector);
+    configuration.setRepositoryName(repositoryName);
+    configuration.setLazyPackageRegistry();
+
+    CDOSession session = configuration.openSession();
+    return session.openView();
+  }
+
+  protected IConnector getConnector(String connectorDescription)
+  {
+    return (IConnector)getContainer().getElement(ConnectorFactory.PRODUCT_GROUP, "tcp", connectorDescription);
+  }
+
+  protected IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 }

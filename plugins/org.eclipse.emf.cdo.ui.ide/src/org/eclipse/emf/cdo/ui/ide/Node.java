@@ -10,7 +10,15 @@
  */
 package org.eclipse.emf.cdo.ui.ide;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.ecore.EPackage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -106,6 +114,21 @@ public abstract class Node
     {
       return "icons/full/obj16/Packages.gif";
     }
+
+    @Override
+    public EPackage[] getChildren()
+    {
+      CDOView view = getRepositoryProject().getView();
+      CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
+      List<EPackage> children = new ArrayList<EPackage>();
+      for (String nsURI : packageRegistry.keySet())
+      {
+        EPackage ePackage = packageRegistry.getEPackage(nsURI);
+        children.add(ePackage);
+      }
+
+      return children.toArray(new EPackage[children.size()]);
+    }
   }
 
   /**
@@ -135,6 +158,13 @@ public abstract class Node
     {
       return "icons/full/obj16/Resources.gif";
     }
-  }
 
+    @Override
+    public CDOResourceNode[] getChildren()
+    {
+      CDOView view = getRepositoryProject().getView();
+      List<CDOResourceNode> children = view.queryResources(null, null, false);
+      return children.toArray(new CDOResourceNode[children.size()]);
+    }
+  }
 }

@@ -85,6 +85,7 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
     public void createControl(Composite parent)
     {
       sessionComposite = new SessionComposite(parent, SWT.NONE);
+      setControl(sessionComposite);
     }
   }
 }

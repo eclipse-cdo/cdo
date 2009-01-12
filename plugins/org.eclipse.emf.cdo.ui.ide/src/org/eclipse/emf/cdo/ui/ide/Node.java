@@ -163,7 +163,13 @@ public abstract class Node
     public CDOResourceNode[] getChildren()
     {
       CDOView view = getRepositoryProject().getView();
-      List<CDOResourceNode> children = view.queryResources(null, null, false);
+      List<CDOResourceNode> resources = view.queryResources(null, null, false);
+      List<CDOResourceNode> children = new ArrayList<CDOResourceNode>();
+      for (CDOResourceNode resourceNode : resources)
+      {
+        children.add(resourceNode);
+      }
+
       return children.toArray(new CDOResourceNode[children.size()]);
     }
   }

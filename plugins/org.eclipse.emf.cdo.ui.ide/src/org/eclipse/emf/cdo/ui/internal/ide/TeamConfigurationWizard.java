@@ -11,12 +11,12 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide;
 
+import org.eclipse.emf.cdo.internal.team.RepositoryManager;
 import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -41,7 +41,8 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
   {
     try
     {
-      RepositoryProvider.map(project, RepositoryTeamProvider.PROVIDER_ID);
+      RepositoryTeamProvider.map(project);
+      RepositoryManager.INSTANCE.addElement(project);
       return true;
     }
     catch (Exception ex)

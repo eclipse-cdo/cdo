@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.team.core.RepositoryProvider;
+import org.eclipse.team.core.TeamException;
 
 /**
  * @author Eike Stepper
@@ -95,5 +96,15 @@ public class RepositoryTeamProvider extends RepositoryProvider
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  public static boolean isMapped(IProject project)
+  {
+    return RepositoryProvider.getProvider(project, PROVIDER_ID) != null;
+  }
+
+  public static void map(IProject project) throws TeamException
+  {
+    RepositoryProvider.map(project, PROVIDER_ID);
   }
 }

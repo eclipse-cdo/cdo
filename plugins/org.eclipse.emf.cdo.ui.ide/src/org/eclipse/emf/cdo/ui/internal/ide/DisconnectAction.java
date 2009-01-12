@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide;
 
+import org.eclipse.emf.cdo.internal.team.RepositoryManager;
+import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -18,7 +20,6 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.team.core.RepositoryProvider;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -46,7 +47,8 @@ public class DisconnectAction implements IObjectActionDelegate
   {
     try
     {
-      RepositoryProvider.unmap(project);
+      RepositoryManager.INSTANCE.removeElement(project);
+      RepositoryTeamProvider.unmap(project);
     }
     catch (Exception ex)
     {

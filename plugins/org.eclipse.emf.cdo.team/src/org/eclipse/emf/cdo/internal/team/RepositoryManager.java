@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,13 +31,40 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
 {
   public static final RepositoryManager INSTANCE = new RepositoryManager();
 
-  private Map<IProject, IRepositoryProject> map = new HashMap<IProject, IRepositoryProject>();
+  private Map<IProject, RepositoryProject> map = new HashMap<IProject, RepositoryProject>();
 
   public RepositoryManager()
   {
   }
 
-  public IRepositoryProject getElement(IProject project)
+  public IRepositoryProject addElement(IProject project)
+  {
+    RepositoryProject element = new RepositoryProject(project);
+    synchronized (map)
+    {
+      map.put(project, element);
+    }
+
+    fireElementAddedEvent(element);
+    return element;
+  }
+
+  public void removeElement(IProject project)
+  {
+    RepositoryProject element = null;
+    synchronized (map)
+    {
+      element = map.remove(project);
+    }
+
+    if (element != null)
+    {
+      fireElementRemovedEvent(element);
+      element.dispose();
+    }
+  }
+
+  public RepositoryProject getElement(IProject project)
   {
     synchronized (map)
     {
@@ -44,11 +72,11 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
     }
   }
 
-  public IRepositoryProject[] getElements()
+  public RepositoryProject[] getElements()
   {
     synchronized (map)
     {
-      return map.values().toArray(new IRepositoryProject[map.size()]);
+      return map.values().toArray(new RepositoryProject[map.size()]);
     }
   }
 
@@ -63,17 +91,28 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
 
   public void resourceChanged(IResourceChangeEvent event)
   {
-  }
-
-  protected IRepositoryProject addElement(IProject project)
-  {
-    IRepositoryProject element = new RepositoryProject(project);
-    synchronized (map)
+    IResourceDelta delta = event.getDelta();
+    if (delta != null)
     {
-      map.put(project, element);
+      IResourceDelta[] children = delta.getAffectedChildren(IResourceDelta.OPEN);
+      for (IResourceDelta child : children)
+      {
+        if (child instanceof IProject)
+        {
+          IProject project = (IProject)child;
+          if (project.isOpen())
+          {
+            if (RepositoryTeamProvider.isMapped(project))
+            {
+              addElement(project);
+            }
+          }
+          else
+          {
+            removeElement(project);
+          }
+        }
+      }
     }
-
-    fireElementAddedEvent(element);
-    return element;
   }
 }

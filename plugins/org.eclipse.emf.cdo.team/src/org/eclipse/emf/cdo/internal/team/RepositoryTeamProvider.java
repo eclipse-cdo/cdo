@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.team;
 import org.eclipse.emf.cdo.internal.team.bundle.OM;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -31,6 +32,8 @@ public class RepositoryTeamProvider extends RepositoryProvider
 
   private static final QualifiedName REPOSITORY_NAME_KEY = new QualifiedName(OM.BUNDLE_ID, "repositoryName");
 
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, RepositoryTeamProvider.class);
+
   public RepositoryTeamProvider()
   {
   }
@@ -44,10 +47,18 @@ public class RepositoryTeamProvider extends RepositoryProvider
   @Override
   public void configureProject() throws CoreException
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Configuring project {0}", getProject());
+    }
   }
 
   public void deconfigure() throws CoreException
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Deconfiguring project {0}", getProject());
+    }
   }
 
   public static String getConnectorDescription(IProject project)

@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.team.core.RepositoryProvider;
-import org.eclipse.team.core.TeamException;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -45,7 +44,7 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
       RepositoryProvider.map(project, RepositoryTeamProvider.PROVIDER_ID);
       return true;
     }
-    catch (TeamException ex)
+    catch (Exception ex)
     {
       OM.LOG.error(ex);
       return false;

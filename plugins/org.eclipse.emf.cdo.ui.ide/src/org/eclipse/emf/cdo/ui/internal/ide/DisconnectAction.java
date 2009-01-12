@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide;
 
-import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -20,7 +19,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.team.core.RepositoryProvider;
-import org.eclipse.team.core.TeamException;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -37,13 +35,11 @@ public class DisconnectAction implements IObjectActionDelegate
 
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
-    setEnablement(action);
   }
 
   public void selectionChanged(IAction action, ISelection selection)
   {
     project = UIUtil.getElement(selection, IProject.class);
-    setEnablement(action);
   }
 
   public void run(IAction action)
@@ -52,22 +48,9 @@ public class DisconnectAction implements IObjectActionDelegate
     {
       RepositoryProvider.unmap(project);
     }
-    catch (TeamException ex)
+    catch (Exception ex)
     {
       OM.LOG.error(ex);
-    }
-  }
-
-  private void setEnablement(IAction action)
-  {
-    if (project == null)
-    {
-      action.setEnabled(false);
-    }
-    else
-    {
-      RepositoryProvider provider = RepositoryProvider.getProvider(project, RepositoryTeamProvider.PROVIDER_ID);
-      action.setEnabled(provider != null);
     }
   }
 }

@@ -10,10 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.team;
 
+import org.eclipse.emf.cdo.internal.team.bundle.OM;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
 
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -32,6 +34,8 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
     IResourceChangeListener
 {
   public static final RepositoryManager INSTANCE = new RepositoryManager();
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, RepositoryManager.class);
 
   private Map<IProject, RepositoryProject> map = new HashMap<IProject, RepositoryProject>();
 
@@ -61,6 +65,11 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
 
     if (element != null)
     {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Removed repository for project {0}", project.getName());
+      }
+
       fireElementRemovedEvent(element);
       element.dispose();
     }

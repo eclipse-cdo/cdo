@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.ui.actions.ChangePassiveUpdateAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReadLockObjectsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadObjectsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.WriteLockObjectsAction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -91,6 +93,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * @ADDED
    */
   protected WriteLockObjectsAction writeLockObjectsAction;
+
+  /**
+   * @ADDED
+   */
+  protected ChangePassiveUpdateAction changePassiveUpdateAction;
 
   /**
    * This keeps track of the active editor. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -203,6 +210,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     importRootsAction.setId(ImportRootsAction.ID);
 
     reloadObjectsAction = new ReloadObjectsAction();
+    changePassiveUpdateAction = new ChangePassiveUpdateAction();
 
     readLockObjectsAction = new ReadLockObjectsAction();
     writeLockObjectsAction = new WriteLockObjectsAction();
@@ -596,6 +604,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     readLockObjectsAction.update();
 
     menuManager.insertAfter("ui-actions", lockingSubMenu);
+
+    menuManager.insertAfter("ui-actions", changePassiveUpdateAction);
+    changePassiveUpdateAction.update();
+    changePassiveUpdateAction.setEnabled(true);
+
     super.addGlobalActions(menuManager);
 
     if (loadResourceAction != null)
@@ -651,6 +664,16 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     if (reloadObjectsAction != null)
     {
       reloadObjectsAction.setActiveWorkbenchPart(activeEditor);
+    }
+
+    if (changePassiveUpdateAction != null)
+    {
+      Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
+      if (input instanceof CDOResource)
+      {
+        CDOView view = ((CDOResource)input).cdoView();
+        changePassiveUpdateAction.setSession(view.getSession());
+      }
     }
 
     super.activate();

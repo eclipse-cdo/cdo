@@ -28,10 +28,9 @@ public class RepositoryProject extends PlatformObject implements IRepositoryProj
 
   private CDOView view;
 
-  public RepositoryProject(IProject project, CDOView view)
+  public RepositoryProject(IProject project)
   {
     this.project = project;
-    this.view = view;
   }
 
   public IProject getProject()

@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.internal.team;
 
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.Container;
 
@@ -66,9 +65,9 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
   {
   }
 
-  protected IRepositoryProject addElement(IProject project, CDOView view)
+  protected IRepositoryProject addElement(IProject project)
   {
-    IRepositoryProject element = new RepositoryProject(project, view);
+    IRepositoryProject element = new RepositoryProject(project);
     synchronized (map)
     {
       map.put(project, element);

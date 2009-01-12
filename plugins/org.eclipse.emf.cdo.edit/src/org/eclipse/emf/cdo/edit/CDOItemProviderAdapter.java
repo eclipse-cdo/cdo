@@ -77,7 +77,6 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   /**
    * @since 2.0
    */
-
   @Override
   public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
   {

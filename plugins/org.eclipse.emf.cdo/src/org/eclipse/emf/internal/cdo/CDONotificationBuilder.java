@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo;
 
+import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -61,38 +62,34 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   public void visit(CDOMoveFeatureDelta delta)
   {
-    EStructuralFeature eFeature = ModelUtil.getEFeature(delta.getFeature(), packageRegistry);
     int oldPosition = delta.getOldPosition();
     int newPosition = delta.getNewPosition();
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.MOVE, eFeature.getFeatureID(), new Integer(
-        oldPosition), null, newPosition));
+    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.MOVE, getEFeatureID(delta.getFeature()),
+        new Integer(oldPosition), null, newPosition));
   }
 
   public void visit(CDOAddFeatureDelta delta)
   {
-    EStructuralFeature eFeature = ModelUtil.getEFeature(delta.getFeature(), packageRegistry);
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.ADD, eFeature.getFeatureID(), null, delta
-        .getValue(), delta.getIndex()));
+    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.ADD, getEFeatureID(delta.getFeature()), null,
+        delta.getValue(), delta.getIndex()));
   }
 
   public void visit(CDORemoveFeatureDelta delta)
   {
-    EStructuralFeature eFeature = ModelUtil.getEFeature(delta.getFeature(), packageRegistry);
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.REMOVE, eFeature.getFeatureID(), null, null,
-        delta.getIndex()));
+    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.REMOVE, getEFeatureID(delta.getFeature()), null,
+        null, delta.getIndex()));
   }
 
   public void visit(CDOSetFeatureDelta delta)
   {
-    EStructuralFeature eFeature = ModelUtil.getEFeature(delta.getFeature(), packageRegistry);
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.SET, eFeature.getFeatureID(), null, delta
-        .getValue()));
+    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.SET, getEFeatureID(delta.getFeature()), null,
+        delta.getValue()));
   }
 
   public void visit(CDOUnsetFeatureDelta delta)
   {
-    EStructuralFeature eFeature = ModelUtil.getEFeature(delta.getFeature(), packageRegistry);
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.UNSET, eFeature.getFeatureID(), null, null));
+    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.UNSET, getEFeatureID(delta.getFeature()), null,
+        null));
   }
 
   public void visit(CDOListFeatureDelta deltas)
@@ -105,8 +102,8 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
 
   public void visit(CDOClearFeatureDelta delta)
   {
-    EStructuralFeature eFeature = ModelUtil.getEFeature(delta.getFeature(), packageRegistry);
-    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.REMOVE_MANY, eFeature.getFeatureID(), null, null));
+    add(new CDODeltaNotificationImpl(internalObject, NotificationImpl.REMOVE_MANY, getEFeatureID(delta.getFeature()),
+        null, null));
   }
 
   public void visit(CDOContainerFeatureDelta delta)
@@ -126,5 +123,11 @@ public class CDONotificationBuilder implements CDOFeatureDeltaVisitor
     {
       notification.add(newNotificaton);
     }
+  }
+
+  private int getEFeatureID(CDOFeature cdoFeature)
+  {
+    EStructuralFeature eFeature = ModelUtil.getEFeature(cdoFeature, packageRegistry);
+    return internalObject.eClass().getFeatureID(eFeature);
   }
 }

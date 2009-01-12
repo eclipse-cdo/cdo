@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<!--
+	Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+	
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+
+<plugin>
+   <extension
+         point="org.eclipse.team.ui.configurationWizards">
+      <wizard
+            class="org.eclipse.emf.cdo.ui.internal.ide.TeamConfigurationWizard"
+            icon="org.eclipse.emf.cdo.ui.ide.wizard1"
+            id="org.eclipse.emf.cdo.ui.ide.TeamConfigurationWizard"
+            name="CDO">
+      </wizard>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="org.eclipse.emf.cdo.ui.ide.RepositoryContentProvider"
+            id="org.eclipse.emf.cdo.ui.ide.RepositoryContent"
+            labelProvider="org.eclipse.emf.cdo.ui.ide.RepositoryLabelProvider"
+            name="CDO Repository Content"
+            priority="normal"
+            providesSaveables="false">
+         <triggerPoints>
+            <adapt type="org.eclipse.core.resources.IProject"/>
+         </triggerPoints>
+         <possibleChildren>
+            <instanceof
+                  value="org.eclipse.emf.cdo.ui.ide.RepositoryContentProvider$Repository$Content">
+            </instanceof>
+         </possibleChildren>
+      </navigatorContent>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+         <includes>
+            <contentExtension
+                  isRoot="false"
+                  pattern="org.eclipse.emf.cdo.ui.ide.RepositoryContent">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.core.resources.IProjectContributions"
+            objectClass="org.eclipse.core.resources.IProject">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.DisconnectAction"
+               id="org.eclipse.emf.cdo.ui.ide.DisconnectAction"
+               label="Disconnect"
+               menubarPath="team.main/projectGroup">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>

@@ -35,8 +35,7 @@ public class Bugzilla_260756_Test extends AbstractCDOTest
 
   public void testBugzilla_260756() throws Exception
   {
-
-    // skipUnlessConfig(MEM);
+    skipUnlessConfig(MEM);
 
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openModel1Session();

@@ -12,11 +12,15 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionProvider;
 
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.PreferenceHistory;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.HistoryText;
+import org.eclipse.net4j.util.ui.widgets.PreferenceButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -29,7 +33,7 @@ import org.eclipse.swt.widgets.Label;
 /**
  * @author Victor Roldan Betancort
  */
-public class SessionComposite extends Composite
+public class SessionComposite extends Composite implements CDOSessionProvider
 {
   private IHistory<String> connectorHistory = new PreferenceHistory(OM.PREF_HISTORY_CONNECTORS);
 
@@ -40,6 +44,10 @@ public class SessionComposite extends Composite
   private Label exampleLabel;
 
   private HistoryText repositoryText;
+
+  private PreferenceButton automaticButton;
+
+  private String sessionDescription;
 
   public SessionComposite(Composite parent, int style)
   {
@@ -55,7 +63,7 @@ public class SessionComposite extends Composite
     {
       new Label(this, SWT.NONE);
       exampleLabel = new Label(this, SWT.NONE);
-      exampleLabel.setText("for example 'tcp://estepper@dev.eclipse.org:2036'");
+      exampleLabel.setText("for example 'tcp://dev.eclipse.org:2036'");
       exampleLabel.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     }
 
@@ -82,15 +90,59 @@ public class SessionComposite extends Composite
         }
       }
     });
+
+    new Label(this, SWT.NONE);
+    automaticButton = new PreferenceButton(this, SWT.CHECK, "Automatic Package Registry",
+        OM.PREF_AUTOMATIC_PACKAGE_REGISTRY);
   }
 
-  public String getServerDescription()
+  @Override
+  public void dispose()
   {
-    return connectorText.getText(true);
+    assembleSessionDescription();
+    super.dispose();
   }
 
-  public String getRepositoryName()
+  public CDOSession getSession()
   {
-    return repositoryText.getText(true);
+    String description = getSessionDescription();
+    return (CDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", "cdo", description);
+  }
+
+  public String getSessionDescription()
+  {
+    try
+    {
+      String description = sessionDescription;
+      if (description == null)
+      {
+        description = assembleSessionDescription();
+      }
+
+      return description;
+    }
+    finally
+    {
+      sessionDescription = null;
+    }
+  }
+
+  protected IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
+  }
+
+  protected String assembleSessionDescription()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(connectorText.getText(true));
+    builder.append("?repositoryName=");
+    builder.append(repositoryText.getText(true));
+    if (automaticButton.getSelection(true))
+    {
+      builder.append("&automaticPackageRegistry=true");
+    }
+
+    return builder.toString();
   }
 }

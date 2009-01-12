@@ -28,9 +28,7 @@ public class RepositoryTeamProvider extends RepositoryProvider
 {
   public static final String PROVIDER_ID = "org.eclipse.emf.cdo.team.TeamProvider";
 
-  private static final QualifiedName CONNECTOR_DESCRIPTION_KEY = new QualifiedName(OM.BUNDLE_ID, "connectorDescription");
-
-  private static final QualifiedName REPOSITORY_NAME_KEY = new QualifiedName(OM.BUNDLE_ID, "repositoryName");
+  private static final QualifiedName SESSION_DESCRIPTION_KEY = new QualifiedName(OM.BUNDLE_ID, "sessionDescription");
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, RepositoryTeamProvider.class);
 
@@ -61,11 +59,11 @@ public class RepositoryTeamProvider extends RepositoryProvider
     }
   }
 
-  public static String getConnectorDescription(IProject project)
+  public static String getSessionDescription(IProject project)
   {
     try
     {
-      return project.getPersistentProperty(CONNECTOR_DESCRIPTION_KEY);
+      return project.getPersistentProperty(SESSION_DESCRIPTION_KEY);
     }
     catch (Exception ex)
     {
@@ -73,35 +71,11 @@ public class RepositoryTeamProvider extends RepositoryProvider
     }
   }
 
-  public static void setConnectorDescription(IProject project, String value)
+  public static void setSessionDescription(IProject project, String value)
   {
     try
     {
-      project.setPersistentProperty(CONNECTOR_DESCRIPTION_KEY, value);
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-  }
-
-  public static String getRepositoryName(IProject project)
-  {
-    try
-    {
-      return project.getPersistentProperty(REPOSITORY_NAME_KEY);
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-  }
-
-  public static void setRepositoryName(IProject project, String value)
-  {
-    try
-    {
-      project.setPersistentProperty(REPOSITORY_NAME_KEY, value);
+      project.setPersistentProperty(SESSION_DESCRIPTION_KEY, value);
     }
     catch (Exception ex)
     {
@@ -114,15 +88,15 @@ public class RepositoryTeamProvider extends RepositoryProvider
     return RepositoryProvider.getProvider(project, PROVIDER_ID) != null;
   }
 
-  public static void map(IProject project) throws TeamException
+  public static void mapProject(IProject project, String sessionDescription) throws TeamException
   {
-    RepositoryProvider.map(project, PROVIDER_ID);
+    map(project, PROVIDER_ID);
+    setSessionDescription(project, sessionDescription);
   }
 
-  public static void unmap(IProject project) throws TeamException
+  public static void unmapProject(IProject project) throws TeamException
   {
-    RepositoryProvider.unmap(project);
-    setConnectorDescription(project, null);
-    setRepositoryName(project, null);
+    unmap(project);
+    setSessionDescription(project, null);
   }
 }

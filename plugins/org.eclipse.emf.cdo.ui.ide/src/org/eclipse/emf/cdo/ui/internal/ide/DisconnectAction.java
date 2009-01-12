@@ -48,7 +48,7 @@ public class DisconnectAction implements IObjectActionDelegate
     try
     {
       RepositoryManager.INSTANCE.removeElement(project);
-      RepositoryTeamProvider.unmap(project);
+      RepositoryTeamProvider.unmapProject(project);
     }
     catch (Exception ex)
     {

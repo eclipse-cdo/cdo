@@ -11,16 +11,12 @@
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
-import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
-
-import org.eclipse.net4j.util.ui.widgets.PreferenceButton;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -33,15 +29,7 @@ public class OpenSessionDialog extends TitleAreaDialog
 
   private IWorkbenchPage page;
 
-  private PreferenceButton automaticButton;
-
-  private SessionComposite composite;
-
-  private boolean automaticPackageRegistry;
-
-  private String serverDescription;
-
-  private String repositoryName;
+  private SessionComposite sessionComposite;
 
   public OpenSessionDialog(IWorkbenchPage page)
   {
@@ -55,19 +43,9 @@ public class OpenSessionDialog extends TitleAreaDialog
     return page;
   }
 
-  public String getServerDescription()
+  public SessionComposite getSessionComposite()
   {
-    return serverDescription;
-  }
-
-  public String getRepositoryName()
-  {
-    return repositoryName;
-  }
-
-  public boolean isAutomaticPackageRegistry()
-  {
-    return automaticPackageRegistry;
+    return sessionComposite;
   }
 
   @Override
@@ -80,28 +58,9 @@ public class OpenSessionDialog extends TitleAreaDialog
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    composite = new SessionComposite(parent, SWT.NONE);
-
     setTitle(TITLE);
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
-
-    new Label(composite, SWT.NONE);
-    automaticButton = new PreferenceButton(composite, SWT.CHECK, "Automatic Package Registry",
-        OM.PREF_AUTOMATIC_PACKAGE_REGISTRY);
-
-    return composite;
-  }
-
-  @Override
-  protected void okPressed()
-  {
-    serverDescription = composite.getServerDescription();
-    repositoryName = composite.getRepositoryName();
-    automaticPackageRegistry = automaticButton.getSelection(true);
-    super.okPressed();
-  }
-
-  public void closeWithSuccess()
-  {
+    sessionComposite = new SessionComposite(parent, SWT.NONE);
+    return sessionComposite;
   }
 }

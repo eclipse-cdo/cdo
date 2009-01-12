@@ -14,9 +14,13 @@ package org.eclipse.emf.cdo.ui.internal.ide;
 import org.eclipse.emf.cdo.internal.team.RepositoryManager;
 import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
+import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.team.ui.IConfigurationWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -26,6 +30,8 @@ import org.eclipse.ui.IWorkbench;
 public class TeamConfigurationWizard extends Wizard implements IConfigurationWizard
 {
   private IProject project;
+
+  private Page1 page1;
 
   public TeamConfigurationWizard()
   {
@@ -37,19 +43,48 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
   }
 
   @Override
+  public void addPages()
+  {
+    addPage(page1 = new Page1());
+  }
+
+  @Override
   public boolean performFinish()
   {
     try
     {
-      RepositoryTeamProvider.map(project);
+      String sessionDescription = page1.getSessionComposite().getSessionDescription();
+      RepositoryTeamProvider.mapProject(project, sessionDescription);
       RepositoryManager.INSTANCE.addElement(project);
-      // project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
       return true;
     }
     catch (Exception ex)
     {
       OM.LOG.error(ex);
       return false;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class Page1 extends WizardPage
+  {
+    private SessionComposite sessionComposite;
+
+    private Page1()
+    {
+      super("page1");
+    }
+
+    public SessionComposite getSessionComposite()
+    {
+      return sessionComposite;
+    }
+
+    public void createControl(Composite parent)
+    {
+      sessionComposite = new SessionComposite(parent, SWT.NONE);
     }
   }
 }

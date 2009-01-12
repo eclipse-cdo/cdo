@@ -10,15 +10,11 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
-import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionProvider;
 
-import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
-
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -34,7 +30,7 @@ public final class OpenSessionAction extends LongRunningAction
 
   private static final String TOOL_TIP = "Open a new CDO session";
 
-  private String description;
+  private CDOSessionProvider sessionProvider;
 
   public OpenSessionAction(IWorkbenchPage page)
   {
@@ -47,16 +43,7 @@ public final class OpenSessionAction extends LongRunningAction
     OpenSessionDialog dialog = new OpenSessionDialog(getPage());
     if (dialog.open() == OpenSessionDialog.OK)
     {
-      StringBuilder builder = new StringBuilder();
-      builder.append(dialog.getServerDescription());
-      builder.append("?repositoryName=");
-      builder.append(dialog.getRepositoryName());
-      if (dialog.isAutomaticPackageRegistry())
-      {
-        builder.append("&automaticPackageRegistry=true");
-      }
-
-      description = builder.toString();
+      sessionProvider = dialog.getSessionComposite();
     }
     else
     {
@@ -67,41 +54,21 @@ public final class OpenSessionAction extends LongRunningAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    CDOSession session = null;
-
     try
     {
-      String productGroup = CDOSessionFactory.PRODUCT_GROUP;
-      String type = CDOProtocolConstants.PROTOCOL_NAME;
-      session = (CDOSession)IPluginContainer.INSTANCE.getElement(productGroup, type, description);
+      sessionProvider.getSession();
     }
-    catch (RuntimeException ex)
+    catch (final RuntimeException ex)
     {
       OM.LOG.error(ex);
-    }
-
-    if (session == null)
-    {
-      try
+      getShell().getDisplay().syncExec(new Runnable()
       {
-        getShell().getDisplay().syncExec(new Runnable()
+        public void run()
         {
-          public void run()
-          {
-            try
-            {
-              MessageDialog.openError(getShell(), getText(), "Unable to open a session on the specified repository.\n"
-                  + description);
-            }
-            catch (RuntimeException ignoe)
-            {
-            }
-          }
-        });
-      }
-      catch (RuntimeException ignoe)
-      {
-      }
+          MessageDialog.openError(getShell(), getText(), "Unable to open a session on the specified repository.\n"
+              + ex.getMessage());
+        }
+      });
     }
   }
 }

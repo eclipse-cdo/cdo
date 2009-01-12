@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -174,13 +175,30 @@ public class CDOEList<T> implements EList<T>
 
   public Object[] toArray()
   {
-    throw new UnsupportedOperationException();
+    Object array[] = new Object[size()];
+    return toArray(array);
   }
 
-  @SuppressWarnings("hiding")
-  public <T> T[] toArray(T[] arg0)
+  @SuppressWarnings("unchecked")
+  public <E> E[] toArray(E[] input)
   {
-    throw new UnsupportedOperationException();
+    int size = size();
+    if (input.length < size)
+    {
+      input = (E[])Array.newInstance(input.getClass(), size);
+    }
+
+    // TODO It will be more efficient to load all objects at once.
+    for (int i = 0; i < size; i++)
+    {
+      input[i] = (E)get(i);
+    }
+
+    if (input.length > size)
+    {
+      input[size] = null;
+    }
+    return input;
   }
 
   /**

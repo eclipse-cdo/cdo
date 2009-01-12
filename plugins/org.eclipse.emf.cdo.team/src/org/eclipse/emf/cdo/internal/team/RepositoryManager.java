@@ -51,6 +51,11 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
       map.put(project, element);
     }
 
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Added repository for project {0}", project.getName());
+    }
+
     fireElementAddedEvent(element);
     return element;
   }

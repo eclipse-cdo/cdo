@@ -107,4 +107,11 @@ public class RepositoryTeamProvider extends RepositoryProvider
   {
     RepositoryProvider.map(project, PROVIDER_ID);
   }
+
+  public static void unmap(IProject project) throws TeamException
+  {
+    RepositoryProvider.unmap(project);
+    setConnectorDescription(project, null);
+    setRepositoryName(project, null);
+  }
 }

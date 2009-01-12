@@ -12,7 +12,10 @@ package org.eclipse.emf.cdo.ui.ide;
 
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.ui.ide.Node.PackagesNode;
+import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
+import org.eclipse.emf.cdo.ui.ide.Node.Type;
 
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
@@ -103,20 +106,20 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
   public Object[] getChildren(IRepositoryProject repositoryProject)
   {
     List<Object> children = new ArrayList<Object>();
+    Node sessionNode = getNode(repositoryProject, Type.SESSIONS, sessionNodes);
+    Node packageNode = getNode(repositoryProject, Type.PACKAGES, packageNodes);
+    Node resourceNode = getNode(repositoryProject, Type.RESOURCES, resourceNodes);
 
-    Node sessionNode = getNode(repositoryProject, sessionNodes);
     if (!isSessionNodesHidden())
     {
       children.add(sessionNode);
     }
 
-    Node packageNode = getNode(repositoryProject, packageNodes);
     if (!isPackageNodesHidden())
     {
       children.add(packageNode);
     }
 
-    Node resourceNode = getNode(repositoryProject, resourceNodes);
     if (!isResourceNodesHidden())
     {
       children.add(resourceNode);
@@ -140,27 +143,6 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     return children.toArray(new Object[children.size()]);
   }
 
-  private void addChildren(List<Object> result, Node node)
-  {
-    Object[] children = node.getChildren();
-    for (Object child : children)
-    {
-      result.add(child);
-    }
-  }
-
-  private Node getNode(IRepositoryProject repositoryProject, Map<IRepositoryProject, Node> nodes)
-  {
-    Node node = nodes.get(repositoryProject);
-    if (node == null)
-    {
-      node = new SessionsNode(repositoryProject);
-      nodes.put(repositoryProject, node);
-    }
-
-    return node;
-  }
-
   public boolean hasChildren(Object parentElement)
   {
     Object[] children = getChildren(parentElement);
@@ -181,5 +163,44 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     }
 
     return null;
+  }
+
+  private void addChildren(List<Object> result, Node node)
+  {
+    Object[] children = node.getChildren();
+    for (Object child : children)
+    {
+      result.add(child);
+    }
+  }
+
+  private Node getNode(IRepositoryProject repositoryProject, Node.Type type, Map<IRepositoryProject, Node> nodes)
+  {
+    Node node = nodes.get(repositoryProject);
+    if (node == null)
+    {
+      node = createNode(repositoryProject, type);
+      nodes.put(repositoryProject, node);
+    }
+  
+    return node;
+  }
+
+  private Node createNode(IRepositoryProject repositoryProject, Type type)
+  {
+    switch (type)
+    {
+    case SESSIONS:
+      return new SessionsNode(repositoryProject);
+  
+    case PACKAGES:
+      return new PackagesNode(repositoryProject);
+  
+    case RESOURCES:
+      return new ResourcesNode(repositoryProject);
+  
+    default:
+      return null;
+    }
   }
 }

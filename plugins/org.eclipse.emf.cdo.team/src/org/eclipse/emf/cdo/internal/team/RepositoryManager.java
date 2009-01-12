@@ -19,6 +19,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -114,5 +116,25 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
         }
       }
     }
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+    for (IProject project : root.getProjects())
+    {
+      if (RepositoryTeamProvider.isMapped(project))
+      {
+        addElement(project);
+      }
+    }
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    super.doDeactivate();
   }
 }

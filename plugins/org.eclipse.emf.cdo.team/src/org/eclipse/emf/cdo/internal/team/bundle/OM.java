@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.team.bundle;
 
+import org.eclipse.emf.cdo.internal.team.RepositoryManager;
+
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -39,6 +41,20 @@ public abstract class OM
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      super.doStart();
+      RepositoryManager.INSTANCE.activate();
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      RepositoryManager.INSTANCE.deactivate();
+      super.doStop();
     }
   }
 }

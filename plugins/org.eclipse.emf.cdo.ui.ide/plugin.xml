@@ -16,7 +16,7 @@
          point="org.eclipse.team.ui.configurationWizards">
       <wizard
             class="org.eclipse.emf.cdo.ui.internal.ide.TeamConfigurationWizard"
-            icon="org.eclipse.emf.cdo.ui.ide.wizard1"
+            icon="icons/full/obj16/CDOResource.gif"
             id="org.eclipse.emf.cdo.ui.ide.TeamConfigurationWizard"
             name="CDO">
       </wizard>
@@ -39,7 +39,7 @@
          </triggerPoints>
          <possibleChildren>
             <instanceof
-                  value="org.eclipse.emf.cdo.ui.ide.RepositoryContentProvider$Repository$Content">
+                  value="org.eclipse.emf.cdo.ui.ide.Node">
             </instanceof>
          </possibleChildren>
       </navigatorContent>

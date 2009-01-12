@@ -49,13 +49,37 @@ public class RepositoryProject extends PlatformObject implements IRepositoryProj
     if (view == null)
     {
       view = openView();
+      view.addListener(this);
+      view.getSession().addListener(this);
     }
 
     return view;
   }
 
+  public void dispose()
+  {
+    project = null;
+    if (view != null)
+    {
+      view.removeListener(this);
+      view.getSession().removeListener(this);
+      view.getSession().close();
+      view = null;
+    }
+  }
+
   public void notifyEvent(IEvent event)
   {
+    // if (event instanceof ILifecycleEvent)
+    // {
+    // ILifecycleEvent e = (ILifecycleEvent)event;
+    // if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+    // {
+    // view.removeListener(this);
+    // view.getSession().removeListener(this);
+    // view = null;
+    // }
+    // }
   }
 
   protected CDOView openView()

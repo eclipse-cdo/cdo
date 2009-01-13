@@ -10,17 +10,12 @@
  */
 package org.eclipse.emf.cdo.session.remote;
 
+import org.eclipse.emf.cdo.util.CDOEvent;
+
 /**
  * @author Eike Stepper
- * @since 2.0
  */
-public interface CDORemoteSession extends Comparable<CDORemoteSession>
+public interface CDORemoteSessionEvent extends CDOEvent
 {
-  public CDORemoteSessionManager getManager();
-
-  public int getSessionID();
-
-  public String getUserID();
-
-  public boolean isSubscribed();
+  public CDORemoteSession getRemoteSession();
 }

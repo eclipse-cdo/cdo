@@ -43,7 +43,7 @@ public class Notifier implements INotifier.Introspection
 
     if (wasNotEmpty ^ isNotEmpty)
     {
-      emptyChanged(!isNotEmpty);
+      listenersEmptyChanged(!isNotEmpty);
     }
   }
 
@@ -60,7 +60,7 @@ public class Notifier implements INotifier.Introspection
 
     if (wasEmpty ^ isEmpty)
     {
-      emptyChanged(isEmpty);
+      listenersEmptyChanged(isEmpty);
     }
   }
 
@@ -102,7 +102,7 @@ public class Notifier implements INotifier.Introspection
   /**
    * @since 2.0
    */
-  protected void emptyChanged(boolean empty)
+  protected void listenersEmptyChanged(boolean empty)
   {
   }
 

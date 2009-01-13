@@ -21,6 +21,12 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.edit.EMFEditPlugin;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -37,6 +43,8 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     ITreeContentProvider
 {
   private static final Object[] EMPTY = {};
+
+  private ComposedAdapterFactory adapterFactory;
 
   private Map<IRepositoryProject, RepositoryInfo> infos = new HashMap<IRepositoryProject, RepositoryInfo>();
 
@@ -68,6 +76,9 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 
   public RepositoryContentProvider()
   {
+    adapterFactory = new ComposedAdapterFactory(EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
+    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+
     IRepositoryManager.INSTANCE.addListener(repositoryManagerListener);
   }
 
@@ -126,10 +137,54 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
       return node.getChildren();
     }
 
+    if (parentElement instanceof Notifier)
+    {
+      Notifier notifier = (Notifier)parentElement;
+      ITreeItemContentProvider adapter = (ITreeItemContentProvider)adapterFactory.adapt(notifier,
+          ITreeItemContentProvider.class);
+      if (adapter != null)
+      {
+        return adapter.getChildren(notifier).toArray();
+      }
+    }
+
     return EMPTY;
   }
 
-  public Object[] getChildren(IRepositoryProject repositoryProject)
+  public boolean hasChildren(Object parentElement)
+  {
+    Object[] children = getChildren(parentElement);
+    return children != null && children.length != 0;
+  }
+
+  public Object[] getElements(Object parentElement)
+  {
+    return getChildren(parentElement);
+  }
+
+  public Object getParent(Object element)
+  {
+    if (element instanceof Node)
+    {
+      Node node = (Node)element;
+      return node.getRepositoryProject().getProject();
+    }
+
+    if (element instanceof Notifier)
+    {
+      Notifier notifier = (Notifier)element;
+      ITreeItemContentProvider adapter = (ITreeItemContentProvider)adapterFactory.adapt(notifier,
+          ITreeItemContentProvider.class);
+      if (adapter != null)
+      {
+        return adapter.getParent(notifier);
+      }
+    }
+
+    return null;
+  }
+
+  private Object[] getChildren(IRepositoryProject repositoryProject)
   {
     List<Object> children = new ArrayList<Object>();
     RepositoryInfo info = getRepositoryInfo(repositoryProject);
@@ -167,28 +222,6 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     }
 
     return children.toArray(new Object[children.size()]);
-  }
-
-  public boolean hasChildren(Object parentElement)
-  {
-    Object[] children = getChildren(parentElement);
-    return children != null && children.length != 0;
-  }
-
-  public Object[] getElements(Object parentElement)
-  {
-    return getChildren(parentElement);
-  }
-
-  public Object getParent(Object element)
-  {
-    if (element instanceof Node)
-    {
-      Node node = (Node)element;
-      return node.getRepositoryProject().getProject();
-    }
-
-    return null;
   }
 
   private void addChildren(List<Object> result, Node node)

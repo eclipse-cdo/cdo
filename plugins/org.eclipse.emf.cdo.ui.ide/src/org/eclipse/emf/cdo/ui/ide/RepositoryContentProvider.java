@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory.Descriptor.Registry;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -76,9 +77,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 
   public RepositoryContentProvider()
   {
-    adapterFactory = new ComposedAdapterFactory(EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
-    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-
+    adapterFactory = createAdapterFactory();
     IRepositoryManager.INSTANCE.addListener(repositoryManagerListener);
   }
 
@@ -86,6 +85,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
   public void dispose()
   {
     IRepositoryManager.INSTANCE.removeListener(repositoryManagerListener);
+    adapterFactory.dispose();
     super.dispose();
   }
 
@@ -244,6 +244,14 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     }
 
     return info;
+  }
+
+  public static ComposedAdapterFactory createAdapterFactory()
+  {
+    Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
+    ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
+    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+    return adapterFactory;
   }
 
   /**

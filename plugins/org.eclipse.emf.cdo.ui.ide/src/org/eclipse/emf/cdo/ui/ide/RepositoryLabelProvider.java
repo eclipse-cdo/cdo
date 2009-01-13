@@ -12,18 +12,32 @@ package org.eclipse.emf.cdo.ui.ide;
 
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Eike Stepper
  */
-public class RepositoryLabelProvider extends LabelProvider implements ILabelProvider
+public class RepositoryLabelProvider extends LabelProvider
 {
+  private ComposedAdapterFactory adapterFactory;
+
   public RepositoryLabelProvider()
   {
+    adapterFactory = RepositoryContentProvider.createAdapterFactory();
+  }
+
+  @Override
+  public void dispose()
+  {
+    adapterFactory.dispose();
+    super.dispose();
   }
 
   @Override
@@ -33,6 +47,16 @@ public class RepositoryLabelProvider extends LabelProvider implements ILabelProv
     {
       Node node = (Node)element;
       return node.getText();
+    }
+
+    if (element instanceof Notifier)
+    {
+      Notifier notifier = (Notifier)element;
+      IItemLabelProvider adapter = (IItemLabelProvider)adapterFactory.adapt(notifier, IItemLabelProvider.class);
+      if (adapter != null)
+      {
+        return adapter.getText(notifier);
+      }
     }
 
     return super.getText(element);
@@ -47,6 +71,16 @@ public class RepositoryLabelProvider extends LabelProvider implements ILabelProv
       String imageKey = node.getImageKey();
       ImageDescriptor imageDescriptor = OM.Activator.imageDescriptorFromPlugin(OM.BUNDLE_ID, imageKey);
       return imageDescriptor.createImage();
+    }
+
+    if (element instanceof Notifier)
+    {
+      Notifier notifier = (Notifier)element;
+      IItemLabelProvider adapter = (IItemLabelProvider)adapterFactory.adapt(notifier, IItemLabelProvider.class);
+      if (adapter != null)
+      {
+        return ExtendedImageRegistry.getInstance().getImage(adapter.getImage(notifier));
+      }
     }
 
     return super.getImage(element);

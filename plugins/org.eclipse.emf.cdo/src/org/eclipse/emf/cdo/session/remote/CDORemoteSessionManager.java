@@ -22,9 +22,9 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
 {
   public CDOSession getLocalSession();
 
-  public CDORemoteSession[] getRemoteSessions();
-
   public CDORemoteSession getRemoteSession(int sessionID);
+
+  public CDORemoteSession[] getRemoteSessions();
 
   public boolean isSubscribed();
 

@@ -43,38 +43,14 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     return localSession;
   }
 
-  public boolean isSubscribed()
+  public synchronized CDORemoteSession getRemoteSession(int sessionId)
   {
-    return subscribed;
+    return remoteSessions.get(sessionId);
   }
 
-  public boolean isForceSubscription()
+  public synchronized CDORemoteSession[] getRemoteSessions()
   {
-    return forceSubscription;
-  }
-
-  public void setForceSubscription(boolean forceSubscription)
-  {
-    this.forceSubscription = forceSubscription;
-    if (forceSubscription)
-    {
-    }
-  }
-
-  public CDORemoteSession[] getRemoteSessions()
-  {
-    synchronized (remoteSessions)
-    {
-      return remoteSessions.values().toArray(new CDORemoteSession[remoteSessions.size()]);
-    }
-  }
-
-  public CDORemoteSession getRemoteSession(int sessionId)
-  {
-    synchronized (remoteSessions)
-    {
-      return remoteSessions.get(sessionId);
-    }
+    return remoteSessions.values().toArray(new CDORemoteSession[remoteSessions.size()]);
   }
 
   public CDORemoteSession[] getElements()
@@ -82,13 +58,26 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     return getRemoteSessions();
   }
 
-  public void close()
+  public synchronized boolean isSubscribed()
   {
-    deactivate();
+    return subscribed;
   }
 
-  public boolean isClosed()
+  public synchronized boolean isForceSubscription()
   {
-    return !isActive();
+    return forceSubscription;
+  }
+
+  public synchronized void setForceSubscription(boolean forceSubscription)
+  {
+    this.forceSubscription = forceSubscription;
+    if (forceSubscription && !subscribed)
+    {
+      subscribe();
+    }
+  }
+
+  private void subscribe()
+  {
   }
 }

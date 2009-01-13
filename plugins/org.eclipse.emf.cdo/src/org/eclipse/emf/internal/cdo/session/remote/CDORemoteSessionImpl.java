@@ -27,6 +27,8 @@ public class CDORemoteSessionImpl implements CDORemoteSession
 
   private String userID;
 
+  private boolean subscribed;
+
   public CDORemoteSessionImpl(InternalCDORemoteSessionManager manager, int sessionID, String userID)
   {
     this.manager = manager;
@@ -47,6 +49,16 @@ public class CDORemoteSessionImpl implements CDORemoteSession
   public String getUserID()
   {
     return userID;
+  }
+
+  public boolean isSubscribed()
+  {
+    return subscribed;
+  }
+
+  public void setSubscribed(boolean subscribed)
+  {
+    this.subscribed = subscribed;
   }
 
   public int compareTo(CDORemoteSession obj)

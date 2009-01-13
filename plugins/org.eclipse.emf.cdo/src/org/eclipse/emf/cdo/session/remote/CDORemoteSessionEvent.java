@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.util.CDOEvent;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface CDORemoteSessionEvent extends CDOEvent
 {

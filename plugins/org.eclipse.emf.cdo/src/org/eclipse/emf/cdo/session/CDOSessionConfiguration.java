@@ -75,6 +75,17 @@ public interface CDOSessionConfiguration
   public void setRevisionCache(CDORevisionCache revisionCache);
 
   /**
+   * Returns <code>true</code> if the session opened by {@link #openSession()} will be automatically activated,
+   * <code>false</code> otherwise.
+   */
+  public boolean isActivateOnOpen();
+
+  /**
+   * Specifies whether the session opened by {@link #openSession()} will be automatically activated or not.
+   */
+  public void setActivateOnOpen(boolean activateOnOpen);
+
+  /**
    * Returns <code>true</code> if the session for this configuration is currently open, <code>false</code> otherwise.
    */
   public boolean isSessionOpen();

@@ -12,7 +12,6 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.Factory;
 
@@ -73,7 +72,7 @@ public abstract class CDOSessionFactory extends Factory
 
       String repositoryName = result.get("repositoryName");
       boolean automaticPackageRegistry = TRUE.equals(result.get("automaticPackageRegistry"));
-      return createSession(repositoryName, automaticPackageRegistry, null);
+      return createSession(repositoryName, automaticPackageRegistry);
     }
     catch (URISyntaxException ex)
     {
@@ -84,6 +83,5 @@ public abstract class CDOSessionFactory extends Factory
   /**
    * @since 2.0
    */
-  protected abstract InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry,
-      IFailOverStrategy failOverStrategy);
+  protected abstract InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry);
 }

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.session.remote;
 
+import org.eclipse.emf.cdo.session.CDOSession;
+
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
@@ -17,5 +19,15 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
 {
+  public CDOSession getLocalSession();
 
+  public CDORemoteSession[] getRemoteSessions();
+
+  public CDORemoteSession getRemoteSession(int sessionID);
+
+  public boolean isSubscribed();
+
+  public boolean isForceSubscription();
+
+  public void setForceSubscription(boolean forceSubscription);
 }

@@ -30,7 +30,7 @@
    <extension
          point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor
-            class="org.eclipse.emf.internal.cdo.net4j.protocol.ChannelInjector">
+            class="org.eclipse.emf.internal.cdo.net4j.FailOverStrategyInjector">
       </elementProcessor>
    </extension>
 

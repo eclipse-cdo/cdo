@@ -12,12 +12,14 @@ package org.eclipse.emf.cdo.common;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
+import org.eclipse.net4j.util.collection.Closeable;
+
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOCommonView
+public interface CDOCommonView extends Closeable
 {
   public static final long UNSPECIFIED_DATE = CDORevision.UNSPECIFIED_DATE;
 
@@ -26,10 +28,6 @@ public interface CDOCommonView
   public Type getViewType();
 
   public CDOCommonSession getSession();
-
-  public void close();
-
-  public boolean isClosed();
 
   public long getTimeStamp();
 

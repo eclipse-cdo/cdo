@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
-package org.eclipse.emf.internal.cdo.net4j.protocol;
+package org.eclipse.emf.internal.cdo.net4j;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
@@ -21,11 +21,11 @@ import org.eclipse.spi.net4j.ConnectorFactory;
 /**
  * @author Eike Stepper
  */
-public class ChannelInjector implements IElementProcessor
+public class FailOverStrategyInjector implements IElementProcessor
 {
   private static final String SCHEME_SEPARATOR = "://";
 
-  public ChannelInjector()
+  public FailOverStrategyInjector()
   {
   }
 

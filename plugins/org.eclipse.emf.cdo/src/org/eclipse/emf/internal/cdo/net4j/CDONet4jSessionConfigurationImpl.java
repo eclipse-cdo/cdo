@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j;
 
+import org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 
 import org.eclipse.net4j.connector.IConnector;
@@ -64,17 +65,21 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   @Override
   protected InternalCDOSession createSession()
   {
-    CheckUtil.checkState(connector != null ^ failOverStrategy != null,
-        "Specify exactly one of connector or failOverStrategy");
+    if (isActivateOnOpen())
+    {
+      CheckUtil.checkState(connector != null ^ failOverStrategy != null,
+          "Specify exactly one of connector or failOverStrategy");
+    }
 
     CDONet4jSessionImpl session = new CDONet4jSessionImpl();
+    CDOClientProtocol protocol = session.options().getProtocol();
     if (connector != null)
     {
-      session.options().getProtocol().setFailOverStrategy(new NOOPFailOverStrategy(connector));
+      protocol.setFailOverStrategy(new NOOPFailOverStrategy(connector));
     }
-    else
+    else if (failOverStrategy != null)
     {
-      session.options().getProtocol().setFailOverStrategy(failOverStrategy);
+      protocol.setFailOverStrategy(failOverStrategy);
     }
 
     return session;

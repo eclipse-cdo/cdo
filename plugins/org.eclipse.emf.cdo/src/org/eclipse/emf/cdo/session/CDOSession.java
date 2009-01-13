@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOEvent;
@@ -80,14 +81,10 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
   public CDORevisionManager getRevisionManager();
 
   /**
-   * Returns an array of all open {@link CDOView views}, {@link CDOTransaction transactions} and {@link CDOAudit audits}
-   * of this session.
-   * 
-   * @see #openView()
-   * @see #openTransaction()
-   * @see #openAudit(long)
+   * Returns the CDO {@link CDORemoteSessionManager remote session manager} that keeps track of the other remote
+   * sessions served by the repository of this local session.
    */
-  public CDOView[] getViews();
+  public CDORemoteSessionManager getRemoteSessionManager();
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
@@ -136,6 +133,16 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    * @see #openAudit(ResourceSet, long)
    */
   public CDOAudit openAudit(long timeStamp);
+
+  /**
+   * Returns an array of all open {@link CDOView views}, {@link CDOTransaction transactions} and {@link CDOAudit audits}
+   * of this session.
+   * 
+   * @see #openView()
+   * @see #openTransaction()
+   * @see #openAudit(long)
+   */
+  public CDOView[] getViews();
 
   /**
    * Refreshes the objects cache.

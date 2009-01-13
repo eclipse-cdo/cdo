@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.internal.cdo.session.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -44,12 +43,14 @@ public class CDONet4jSessionFactory extends CDOSessionFactory
    * @since 2.0
    */
   @Override
-  protected InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry,
-      IFailOverStrategy failOverStrategy)
+  protected InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry)
   {
     CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+
+    // Give the FailOverStrategyInjector a chance
+    // The session will be activated by the container
+    configuration.setActivateOnOpen(false);
     configuration.setRepositoryName(repositoryName);
-    configuration.setFailOverStrategy(failOverStrategy);
     if (automaticPackageRegistry)
     {
       configuration.setPackageRegistry(new CDOPackageRegistryImpl.Eager());

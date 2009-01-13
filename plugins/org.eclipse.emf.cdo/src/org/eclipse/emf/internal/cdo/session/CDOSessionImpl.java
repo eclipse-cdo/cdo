@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.view.CDOAuditImpl;
@@ -69,6 +70,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -113,6 +115,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private CDORevisionManagerImpl revisionManager;
 
+  private InternalCDORemoteSessionManager remoteSessionManager;
+
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
   private QueueRunner invalidationRunner;
@@ -147,6 +151,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     options = createOptions();
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
+    remoteSessionManager = createRemoteSessionManager();
   }
 
   public int getSessionID()
@@ -290,6 +295,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public CDORevisionManagerImpl getRevisionManager()
   {
     return revisionManager;
+  }
+
+  public InternalCDORemoteSessionManager getRemoteSessionManager()
+  {
+    return remoteSessionManager;
   }
 
   /**
@@ -690,6 +700,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected CDORevisionManagerImpl createRevisionManager()
   {
     return new CDORevisionManagerImpl(this);
+  }
+
+  protected InternalCDORemoteSessionManager createRemoteSessionManager()
+  {
+    return new CDORemoteSessionManagerImpl(this);
   }
 
   protected ResourceSet createResourceSet()

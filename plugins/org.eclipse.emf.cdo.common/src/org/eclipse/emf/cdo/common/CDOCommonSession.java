@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common;
 
+import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.security.IUserAware;
@@ -19,17 +20,13 @@ import org.eclipse.net4j.util.security.IUserAware;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOCommonSession extends IUserAware, IOptionsContainer
+public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeable
 {
   public int getSessionID();
 
   public CDOCommonView[] getViews();
 
   public CDOCommonView getView(int viewID);
-
-  public void close();
-
-  public boolean isClosed();
 
   public Options options();
 

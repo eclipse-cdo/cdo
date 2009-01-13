@@ -8,16 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.session.remote;
+package org.eclipse.emf.spi.cdo;
+
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 
 /**
  * @author Eike Stepper
  */
-public interface CDORemoteSession extends Comparable<CDORemoteSession>
+public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
 {
-  public CDORemoteSessionManager getManager();
-
-  public int getSessionID();
-
-  public String getUserID();
 }

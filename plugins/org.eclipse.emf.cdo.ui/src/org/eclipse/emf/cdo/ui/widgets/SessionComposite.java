@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Victor Roldan Betancort
+ * @since 2.0
  */
 public class SessionComposite extends Composite
 {

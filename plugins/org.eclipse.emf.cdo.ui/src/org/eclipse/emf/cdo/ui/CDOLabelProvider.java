@@ -43,6 +43,9 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
 
   private TreeViewer viewer;
 
+  /**
+   * @since 2.0
+   */
   public CDOLabelProvider(AdapterFactory adapterFactory, CDOView view, TreeViewer viewer)
   {
     super(adapterFactory);
@@ -51,6 +54,9 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     bold = UIUtil.getBoldFont(viewer.getControl());
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOView getView()
   {
     return view;

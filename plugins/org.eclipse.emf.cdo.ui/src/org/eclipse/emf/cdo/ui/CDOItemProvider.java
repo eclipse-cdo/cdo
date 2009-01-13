@@ -152,11 +152,17 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return super.getImage(obj);
   }
 
+  /**
+   * @since 2.0
+   */
   public static String getSessionLabel(CDOSession session)
   {
     return "Session " + session.repository().getName() + " [" + session.getSessionID() + "]";
   }
 
+  /**
+   * @since 2.0
+   */
   public static String getViewLabel(CDOView view)
   {
     if (view instanceof CDOTransaction)
@@ -192,6 +198,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
   }
 
+  /**
+   * @since 2.0
+   */
   protected void fillSession(IMenuManager manager, CDOSession session)
   {
     manager.add(new OpenTransactionAction(page, session));
@@ -218,6 +227,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new CloseSessionAction(page, session));
   }
 
+  /**
+   * @since 2.0
+   */
   protected boolean fillGenerated(MenuManager manager, CDOSession session)
   {
     Set<Map.Entry<String, CDOPackageType>> entrySet = CDOPackageTypeRegistry.INSTANCE.entrySet();
@@ -245,6 +257,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return added;
   }
 
+  /**
+   * @since 2.0
+   */
   protected void fillView(IMenuManager manager, CDOView view)
   {
     manager.add(new OpenViewEditorAction(page, view));

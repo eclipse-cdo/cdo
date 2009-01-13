@@ -151,6 +151,9 @@ public class CDOEventHandler
     }
   };
 
+  /**
+   * @since 2.0
+   */
   public CDOEventHandler(CDOView view, TreeViewer treeViewer)
   {
     this.view = view;
@@ -160,6 +163,9 @@ public class CDOEventHandler
     view.addListener(viewListener);
   }
 
+  /**
+   * @since 2.0
+   */
   public void dispose()
   {
     if (view != null)
@@ -177,6 +183,9 @@ public class CDOEventHandler
     treeViewer = null;
   }
 
+  /**
+   * @since 2.0
+   */
   public CDOView getView()
   {
     return view;
@@ -264,6 +273,9 @@ public class CDOEventHandler
     }.processCDOObjects(treeViewer, dirtyObjects);
   }
 
+  /**
+   * @since 2.0
+   */
   protected void objectInvalidated(InternalCDOObject cdoObject)
   {
   }

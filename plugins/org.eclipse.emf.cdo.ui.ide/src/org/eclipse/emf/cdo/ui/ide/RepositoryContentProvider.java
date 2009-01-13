@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.ui.ide.Node.PackagesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
-import org.eclipse.emf.cdo.ui.ide.Node.Type;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -39,17 +38,13 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 {
   private static final Object[] EMPTY = {};
 
-  private Map<IRepositoryProject, Node> sessionNodes = new HashMap<IRepositoryProject, Node>();
+  private Map<IRepositoryProject, RepositoryInfo> infos = new HashMap<IRepositoryProject, RepositoryInfo>();
 
-  private Map<IRepositoryProject, Node> packageNodes = new HashMap<IRepositoryProject, Node>();
+  private boolean sessionsNodeHidden;
 
-  private Map<IRepositoryProject, Node> resourceNodes = new HashMap<IRepositoryProject, Node>();
+  private boolean packagesNodeHidden;
 
-  private boolean sessionNodesHidden;
-
-  private boolean packageNodesHidden;
-
-  private boolean resourceNodesHidden;
+  private boolean resourcesNodeHidden;
 
   private IListener repositoryManagerListener = new ContainerEventAdapter<IRepositoryProject>()
   {
@@ -83,34 +78,34 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     super.dispose();
   }
 
-  public boolean isSessionNodesHidden()
+  public boolean isSessionsNodeHidden()
   {
-    return sessionNodesHidden;
+    return sessionsNodeHidden;
   }
 
-  public void setSessionNodesHidden(boolean sessionNodesHidden)
+  public void setSessionsNodeHidden(boolean sessionNodesHidden)
   {
-    this.sessionNodesHidden = sessionNodesHidden;
+    sessionsNodeHidden = sessionNodesHidden;
   }
 
-  public boolean isPackageNodesHidden()
+  public boolean isPackagesNodeHidden()
   {
-    return packageNodesHidden;
+    return packagesNodeHidden;
   }
 
-  public void setPackageNodesHidden(boolean packageNodesHidden)
+  public void setPackagesNodeHidden(boolean packageNodesHidden)
   {
-    this.packageNodesHidden = packageNodesHidden;
+    packagesNodeHidden = packageNodesHidden;
   }
 
-  public boolean isResourceNodesHidden()
+  public boolean isResourcesNodeHidden()
   {
-    return resourceNodesHidden;
+    return resourcesNodeHidden;
   }
 
-  public void setResourceNodesHidden(boolean resourceNodesHidden)
+  public void setResourcesNodeHidden(boolean resourceNodesHidden)
   {
-    this.resourceNodesHidden = resourceNodesHidden;
+    resourcesNodeHidden = resourceNodesHidden;
   }
 
   public Object[] getChildren(Object parentElement)
@@ -137,38 +132,38 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
   public Object[] getChildren(IRepositoryProject repositoryProject)
   {
     List<Object> children = new ArrayList<Object>();
-    Node sessionNode = getNode(repositoryProject, Type.SESSIONS, sessionNodes);
-    Node packageNode = getNode(repositoryProject, Type.PACKAGES, packageNodes);
-    Node resourceNode = getNode(repositoryProject, Type.RESOURCES, resourceNodes);
+    RepositoryInfo info = getRepositoryInfo(repositoryProject);
 
-    if (!isSessionNodesHidden())
+    // First try virtual parent nodes
+    if (!isSessionsNodeHidden())
     {
-      children.add(sessionNode);
+      children.add(info.getSessions());
     }
 
-    if (!isPackageNodesHidden())
+    if (!isPackagesNodeHidden())
     {
-      children.add(packageNode);
+      children.add(info.getPackages());
     }
 
-    if (!isResourceNodesHidden())
+    if (!isResourcesNodeHidden())
     {
-      children.add(resourceNode);
+      children.add(info.getResources());
     }
 
-    if (isSessionNodesHidden())
+    // Then try flattened sub nodes
+    if (isSessionsNodeHidden())
     {
-      addChildren(children, sessionNode);
+      addChildren(children, info.getSessions());
     }
 
-    if (isPackageNodesHidden())
+    if (isPackagesNodeHidden())
     {
-      addChildren(children, packageNode);
+      addChildren(children, info.getPackages());
     }
 
-    if (isResourceNodesHidden())
+    if (isResourcesNodeHidden())
     {
-      addChildren(children, resourceNode);
+      addChildren(children, info.getResources());
     }
 
     return children.toArray(new Object[children.size()]);
@@ -205,33 +200,54 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     }
   }
 
-  private Node getNode(IRepositoryProject repositoryProject, Node.Type type, Map<IRepositoryProject, Node> nodes)
+  private RepositoryInfo getRepositoryInfo(IRepositoryProject repositoryProject)
   {
-    Node node = nodes.get(repositoryProject);
-    if (node == null)
+    RepositoryInfo info = infos.get(repositoryProject);
+    if (info == null)
     {
-      node = createNode(repositoryProject, type);
-      nodes.put(repositoryProject, node);
+      info = new RepositoryInfo(repositoryProject);
+      infos.put(repositoryProject, info);
     }
 
-    return node;
+    return info;
   }
 
-  private Node createNode(IRepositoryProject repositoryProject, Type type)
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RepositoryInfo
   {
-    switch (type)
+    private SessionsNode sessions;
+
+    private PackagesNode packages;
+
+    private ResourcesNode resources;
+
+    public RepositoryInfo(IRepositoryProject repositoryProject)
     {
-    case SESSIONS:
-      return new SessionsNode(repositoryProject);
+      sessions = new SessionsNode(repositoryProject);
+      packages = new PackagesNode(repositoryProject);
+      resources = new ResourcesNode(repositoryProject);
+    }
 
-    case PACKAGES:
-      return new PackagesNode(repositoryProject);
+    public IRepositoryProject getRepositoryProject()
+    {
+      return resources.getRepositoryProject();
+    }
 
-    case RESOURCES:
-      return new ResourcesNode(repositoryProject);
+    public SessionsNode getSessions()
+    {
+      return sessions;
+    }
 
-    default:
-      return null;
+    public PackagesNode getPackages()
+    {
+      return packages;
+    }
+
+    public ResourcesNode getResources()
+    {
+      return resources;
     }
   }
 }

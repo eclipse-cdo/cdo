@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -37,6 +38,7 @@ import org.eclipse.net4j.util.om.trace.PerfTracer;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
@@ -230,6 +232,16 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     return send(new CommitTransactionCancelRequest(this, xaContext), monitor);
   }
 
+  public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
+  {
+    return send(new GetRemoteSessionsRequest(this, manager, subscribe));
+  }
+
+  public void unsubscribeRemoteSessions()
+  {
+    send(new UnsubscribeRemoteSessionsRequest(this));
+  }
+
   @Override
   protected SignalReactor createSignalReactor(short signalID)
   {
@@ -237,6 +249,9 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     {
     case CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION:
       return new CommitNotificationIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION:
+      return new RemoteSessionNotificationIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

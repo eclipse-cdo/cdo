@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 
 /**
@@ -18,4 +19,11 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
  */
 public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
 {
+  public CDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed);
+
+  public void handleRemoteSessionOpened(int sessionID, String userID);
+
+  public void handleRemoteSessionClosed(int sessionID);
+
+  public void handleRemoteSessionSubscribed(int sessionID, boolean subscribed);
 }

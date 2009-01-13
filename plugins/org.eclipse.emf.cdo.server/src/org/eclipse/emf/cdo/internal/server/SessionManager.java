@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
@@ -118,6 +119,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
 
     fireElementAddedEvent(session);
+    handleRemoteSessionNotification(CDOProtocolConstants.REMOTE_SESSION_OPENED, session);
     return session;
   }
 
@@ -133,6 +135,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     if (removeSession != null)
     {
       fireElementRemovedEvent(session);
+      handleRemoteSessionNotification(CDOProtocolConstants.REMOTE_SESSION_CLOSED, session);
     }
   }
 
@@ -162,6 +165,20 @@ public class SessionManager extends Container<ISession> implements ISessionManag
       if (session != excludedSession)
       {
         session.handleCommitNotification(timeStamp, dirtyIDs, detachedObjects, deltas);
+      }
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleRemoteSessionNotification(byte opcode, Session excludedSession)
+  {
+    for (Session session : getSessions())
+    {
+      if (session != excludedSession && session.isSubscribed())
+      {
+        session.handleRemoteSessionNotification(opcode, excludedSession);
       }
     }
   }

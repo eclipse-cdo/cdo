@@ -124,6 +124,12 @@ public class CDOServerProtocol extends CDOProtocolImpl
     case CDOProtocolConstants.SIGNAL_OBJECT_LOCKED:
       return new ObjectLockedIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_GET_REMOTE_SESSIONS:
+      return new GetRemoteSessionsIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS:
+      return new UnsubscribeRemoteSessionsIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

@@ -19,4 +19,20 @@ import org.eclipse.emf.cdo.util.CDOEvent;
 public interface CDORemoteSessionEvent extends CDOEvent
 {
   public CDORemoteSession getRemoteSession();
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface SubscriptionChanged extends CDORemoteSessionEvent
+  {
+    public boolean isSubscribed();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface CustomData extends CDORemoteSessionEvent
+  {
+    public byte[] getData();
+  }
 }

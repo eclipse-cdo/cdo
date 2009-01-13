@@ -77,6 +77,12 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_OBJECT_LOCKED = 27;
 
+  public static final short SIGNAL_GET_REMOTE_SESSIONS = 28;
+
+  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 29;
+
+  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 30;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Management
 
@@ -108,4 +114,17 @@ public interface CDOProtocolConstants
   // Locking Objects
 
   public static final int RELEASE_ALL_LOCKS = -1;
+
+  // //////////////////////////////////////////////////////////////////////
+  // Remote Sessions
+
+  public static final int NO_MORE_REMOTE_SESSIONS = -1;
+
+  public static final byte REMOTE_SESSION_OPENED = 1;
+
+  public static final byte REMOTE_SESSION_CLOSED = 2;
+
+  public static final byte REMOTE_SESSION_SUBSCRIBED = 3;
+
+  public static final byte REMOTE_SESSION_UNSUBSCRIBED = 4;
 }

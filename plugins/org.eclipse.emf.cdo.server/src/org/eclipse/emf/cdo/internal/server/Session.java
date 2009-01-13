@@ -22,11 +22,13 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.CommitNotificationRequest;
+import org.eclipse.emf.cdo.internal.server.protocol.RemoteSessionNotificationRequest;
 import org.eclipse.emf.cdo.server.IAudit;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -84,6 +86,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
   };
 
+  private boolean subscribed;
+
   /**
    * @since 2.0
    */
@@ -137,6 +141,29 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public String getUserID()
   {
     return protocol.getChannel().getUserID();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public boolean isSubscribed()
+  {
+    return subscribed;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setSubscribed(boolean subscribed)
+  {
+    checkActive();
+    if (this.subscribed != subscribed)
+    {
+      this.subscribed = subscribed;
+      byte opcode = subscribed ? CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED
+          : CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED;
+      sessionManager.handleRemoteSessionNotification(opcode, this);
+    }
   }
 
   /**
@@ -295,6 +322,29 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         {
           OM.LOG.warn("Session channel is inactive: " + this);
         }
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleRemoteSessionNotification(byte opcode, ISession session)
+  {
+    try
+    {
+      IChannel channel = protocol.getChannel();
+      if (LifecycleUtil.isActive(channel))
+      {
+        new RemoteSessionNotificationRequest(channel, opcode, session).sendAsync();
+      }
+      else
+      {
+        OM.LOG.warn("Session channel is inactive: " + this);
       }
     }
     catch (Exception ex)

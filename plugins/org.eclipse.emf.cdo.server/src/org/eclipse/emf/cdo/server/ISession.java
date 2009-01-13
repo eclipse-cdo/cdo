@@ -26,6 +26,11 @@ public interface ISession extends CDOCommonSession, IContainer<IView>
   /**
    * @since 2.0
    */
+  public boolean isSubscribed();
+
+  /**
+   * @since 2.0
+   */
   public IView openView(int viewID);
 
   /**

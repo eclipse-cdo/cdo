@@ -198,6 +198,7 @@ public class CDOEList<T> implements EList<T>
     {
       input[size] = null;
     }
+
     return input;
   }
 

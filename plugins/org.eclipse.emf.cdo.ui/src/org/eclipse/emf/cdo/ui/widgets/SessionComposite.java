@@ -12,12 +12,9 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionProvider;
 
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.PreferenceHistory;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.HistoryText;
 import org.eclipse.net4j.util.ui.widgets.PreferenceButton;
@@ -25,6 +22,10 @@ import org.eclipse.net4j.util.ui.widgets.PreferenceButton;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -33,7 +34,7 @@ import org.eclipse.swt.widgets.Label;
 /**
  * @author Victor Roldan Betancort
  */
-public class SessionComposite extends Composite implements CDOSessionProvider
+public class SessionComposite extends Composite
 {
   private IHistory<String> connectorHistory = new PreferenceHistory(OM.PREF_HISTORY_CONNECTORS);
 
@@ -47,7 +48,11 @@ public class SessionComposite extends Composite implements CDOSessionProvider
 
   private PreferenceButton automaticButton;
 
-  private String sessionDescription;
+  private String connectorDescription;
+
+  private String repositoryName;
+
+  private boolean automaticRegistry;
 
   public SessionComposite(Composite parent, int style)
   {
@@ -58,6 +63,13 @@ public class SessionComposite extends Composite implements CDOSessionProvider
     new Label(this, SWT.NONE).setText("Server Description:");
     connectorText = new HistoryText(this, SWT.BORDER | SWT.SINGLE, connectorHistory);
     connectorText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+    connectorText.getCombo().addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        connectorDescription = connectorText.getText();
+      }
+    });
 
     if (connectorHistory.isEmpty())
     {
@@ -70,6 +82,25 @@ public class SessionComposite extends Composite implements CDOSessionProvider
     new Label(this, SWT.NONE).setText("Repository Name:");
     repositoryText = new HistoryText(this, SWT.BORDER | SWT.SINGLE, repositoryHistory);
     repositoryText.getCombo().setLayoutData(new GridData(150, SWT.DEFAULT));
+    repositoryText.getCombo().addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        repositoryName = repositoryText.getText();
+      }
+    });
+
+    new Label(this, SWT.NONE);
+    automaticButton = new PreferenceButton(this, SWT.CHECK, "Automatic Package Registry",
+        OM.PREF_AUTOMATIC_PACKAGE_REGISTRY);
+    automaticButton.getButton().addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        automaticRegistry = automaticButton.getSelection();
+      }
+    });
 
     connectorText.setFocus();
     connectorText.getCombo().addFocusListener(new FocusListener()
@@ -91,58 +122,59 @@ public class SessionComposite extends Composite implements CDOSessionProvider
       }
     });
 
-    new Label(this, SWT.NONE);
-    automaticButton = new PreferenceButton(this, SWT.CHECK, "Automatic Package Registry",
-        OM.PREF_AUTOMATIC_PACKAGE_REGISTRY);
+    connectorDescription = connectorText.getText();
+    repositoryName = repositoryText.getText();
+    automaticRegistry = automaticButton.getSelection();
   }
 
-  @Override
-  public void dispose()
+  public IHistory<String> getConnectorHistory()
   {
-    assembleSessionDescription();
-    super.dispose();
+    return connectorHistory;
   }
 
-  public CDOSession getSession()
+  public IHistory<String> getRepositoryHistory()
   {
-    String description = getSessionDescription();
-    return (CDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", "cdo", description);
+    return repositoryHistory;
+  }
+
+  public HistoryText getConnectorText()
+  {
+    return connectorText;
+  }
+
+  public Label getExampleLabel()
+  {
+    return exampleLabel;
+  }
+
+  public HistoryText getRepositoryText()
+  {
+    return repositoryText;
+  }
+
+  public PreferenceButton getAutomaticButton()
+  {
+    return automaticButton;
   }
 
   public String getSessionDescription()
   {
-    try
-    {
-      String description = sessionDescription;
-      if (description == null)
-      {
-        description = assembleSessionDescription();
-      }
-
-      return description;
-    }
-    finally
-    {
-      sessionDescription = null;
-    }
-  }
-
-  protected IPluginContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
-  }
-
-  protected String assembleSessionDescription()
-  {
     StringBuilder builder = new StringBuilder();
-    builder.append(connectorText.getText(true));
+    builder.append(connectorDescription);
     builder.append("?repositoryName=");
-    builder.append(repositoryText.getText(true));
-    if (automaticButton.getSelection(true))
+    builder.append(repositoryName);
+    if (automaticRegistry)
     {
       builder.append("&automaticPackageRegistry=true");
     }
 
     return builder.toString();
+  }
+
+  public void rememberSettings()
+  {
+    connectorText.getText(true);
+    repositoryText.getText(true);
+    automaticButton.getSelection(true);
   }
 }

@@ -13,8 +13,9 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
-import org.eclipse.emf.cdo.session.CDOSessionProvider;
+import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -30,7 +31,7 @@ public final class OpenSessionAction extends LongRunningAction
 
   private static final String TOOL_TIP = "Open a new CDO session";
 
-  private CDOSessionProvider sessionProvider;
+  private SessionComposite sessionComposite;
 
   public OpenSessionAction(IWorkbenchPage page)
   {
@@ -43,7 +44,8 @@ public final class OpenSessionAction extends LongRunningAction
     OpenSessionDialog dialog = new OpenSessionDialog(getPage());
     if (dialog.open() == OpenSessionDialog.OK)
     {
-      sessionProvider = dialog.getSessionComposite();
+      sessionComposite = dialog.getSessionComposite();
+      sessionComposite.rememberSettings();
     }
     else
     {
@@ -56,7 +58,8 @@ public final class OpenSessionAction extends LongRunningAction
   {
     try
     {
-      sessionProvider.getSession();
+      String description = sessionComposite.getSessionDescription();
+      getContainer().getElement("org.eclipse.emf.cdo.sessions", "cdo", description);
     }
     catch (final RuntimeException ex)
     {
@@ -70,5 +73,10 @@ public final class OpenSessionAction extends LongRunningAction
         }
       });
     }
+  }
+
+  protected IPluginContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 }

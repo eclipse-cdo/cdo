@@ -207,6 +207,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     {
       info = new RepositoryInfo(repositoryProject);
       infos.put(repositoryProject, info);
+      // TODO Get rid of info mappings that are no longer needed (lifecycle or weakref)
     }
 
     return info;

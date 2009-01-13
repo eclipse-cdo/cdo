@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  */
-package org.eclipse.emf.cdo.ui.internal.ide;
+package org.eclipse.emf.cdo.ui.internal.ide.wizards;
 
 import org.eclipse.emf.cdo.internal.team.RepositoryManager;
 import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
@@ -53,7 +53,10 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
   {
     try
     {
-      String sessionDescription = page1.getSessionComposite().getSessionDescription();
+      SessionComposite sessionComposite = page1.getSessionComposite();
+      String sessionDescription = sessionComposite.getSessionDescription();
+      sessionComposite.rememberSettings();
+
       RepositoryTeamProvider.mapProject(project, sessionDescription);
       RepositoryManager.INSTANCE.addElement(project);
       return true;

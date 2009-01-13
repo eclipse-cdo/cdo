@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  */
-package org.eclipse.emf.cdo.ui.internal.ide;
+package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
 import org.eclipse.emf.cdo.internal.team.RepositoryManager;
 import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;

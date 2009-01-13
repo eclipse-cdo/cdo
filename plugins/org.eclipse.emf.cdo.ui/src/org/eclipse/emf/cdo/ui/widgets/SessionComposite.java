@@ -173,8 +173,8 @@ public class SessionComposite extends Composite
 
   public void rememberSettings()
   {
-    connectorText.getText(true);
-    repositoryText.getText(true);
-    automaticButton.getSelection(true);
+    connectorText.getHistory().add(connectorDescription);
+    repositoryText.getHistory().add(repositoryName);
+    automaticButton.getPreference().setValue(automaticRegistry);
   }
 }

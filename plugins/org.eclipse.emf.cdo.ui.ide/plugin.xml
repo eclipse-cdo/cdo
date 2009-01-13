@@ -15,7 +15,7 @@
    <extension
          point="org.eclipse.team.ui.configurationWizards">
       <wizard
-            class="org.eclipse.emf.cdo.ui.internal.ide.TeamConfigurationWizard"
+            class="org.eclipse.emf.cdo.ui.internal.ide.wizards.TeamConfigurationWizard"
             icon="icons/full/obj16/CDOResource.gif"
             id="org.eclipse.emf.cdo.ui.ide.TeamConfigurationWizard"
             name="CDO">
@@ -69,7 +69,7 @@
                value="org.eclipse.team.core.repository=org.eclipse.emf.cdo.team.TeamProvider">
          </filter>
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.DisconnectAction"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.DisconnectAction"
                id="org.eclipse.emf.cdo.ui.ide.DisconnectAction"
                label="Disconnect"
                menubarPath="team.main/projectGroup">

@@ -70,6 +70,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
 {
@@ -93,7 +94,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * 
    * @return The view set this view is associated with, never <code>null</code>.
    * @see CDOViewSet#getViews()
-   * @since 2.0
    */
   public CDOViewSet getViewSet();
 
@@ -107,7 +107,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
   public ResourceSet getResourceSet();
 
   /**
-   * @since 2.0
    * @deprecated This API is provisional and subject to change or removal.
    */
   @Deprecated
@@ -148,8 +147,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * 
    * Note that this method really just returns the lock instance but does <b>not</b> acquire the lock! The above example
    * acquires the lock with a timeout that expires after five seconds.
-   * 
-   * @since 2.0
    */
   public ReentrantLock getLock();
 
@@ -180,7 +177,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
 
   /**
    * @see ResourceSet#getResource(URI, boolean)
-   * @since 2.0
    */
   public CDOResource getResource(String path, boolean loadInDemand);
 
@@ -194,8 +190,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * <p>
    * The root resource is a special resource with only {@link CDOResourceNode CDOResourceNodes} in its contents list.
    * You can use it as the main entry into the new resource and folder structure.
-   * 
-   * @since 2.0
    */
   public CDOResource getRootResource();
 
@@ -210,7 +204,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * @param exactMatch
    *          <code>true</code> if the complete name of the resource must match, <code>false</code> if only a common
    *          prefix of the name must match.
-   * @since 2.0
    */
   public List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch);
 
@@ -225,7 +218,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * @param exactMatch
    *          <code>true</code> if the complete name of the resource must match, <code>false</code> if only a common
    *          prefix of the name must match.
-   * @since 2.0
    */
   public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
       boolean exactMatch);
@@ -258,8 +250,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    * thrown.
    * <li>If <code>null</code> is passed <code>null</code> is returned.
    * </ul>
-   * 
-   * @since 2.0
    */
   public <T extends EObject> T getObject(T objectFromDifferentView);
 
@@ -274,16 +264,11 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    */
   public int reload(CDOObject... objects);
 
-  /**
-   * @since 2.0
-   */
   public void lockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType, long timeout)
       throws InterruptedException;
 
   /**
    * Unlocks the given locked objects of this view.
-   * 
-   * @since 2.0
    */
   public void unlockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType);
 
@@ -306,7 +291,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
 
   /**
    * @author Simon McDuff
-   * @since 2.0
    */
   public interface Options extends IOptions
   {
@@ -424,37 +408,22 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
      */
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
-    /**
-     * @since 2.0
-     */
     public interface CacheReferenceTypeEvent extends IOptionsEvent, CDOEvent
     {
     }
 
-    /**
-     * @since 2.0
-     */
     public interface ReferencePolicyEvent extends IOptionsEvent, CDOEvent
     {
     }
 
-    /**
-     * @since 2.0
-     */
     public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent, CDOEvent
     {
     }
 
-    /**
-     * @since 2.0
-     */
     public interface InvalidationNotificationEvent extends IOptionsEvent, CDOEvent
     {
     }
 
-    /**
-     * @since 2.0
-     */
     public interface RevisionPrefetchingPolicyEvent extends IOptionsEvent, CDOEvent
     {
     }

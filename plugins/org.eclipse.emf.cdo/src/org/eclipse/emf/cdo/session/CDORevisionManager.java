@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDORevisionManager extends CDORevisionResolver
 {
@@ -34,7 +35,6 @@ public interface CDORevisionManager extends CDORevisionResolver
    *          Load objects at the client from fromIndex (inclusive)
    * @param toIndex
    *          Load objects at the client to toIndex (inclusive)
-   * @since 2.0
    */
   public Object loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex);

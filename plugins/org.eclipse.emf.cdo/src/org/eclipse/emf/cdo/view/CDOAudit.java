@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
  * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOAudit extends CDOView
 {
@@ -31,8 +32,6 @@ public interface CDOAudit extends CDOView
   /**
    * Sets the point in (repository) time this audit view should refer to. {@link CDOObject Objects} provided by this
    * view will be {@link CDORevision#isValid(long) valid} at this time.
-   * 
-   * @since 2.0
    */
   public void setTimeStamp(long timeStamp);
 }

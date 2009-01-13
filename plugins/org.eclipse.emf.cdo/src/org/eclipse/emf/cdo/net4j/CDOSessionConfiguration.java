@@ -17,6 +17,7 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDOSessionConfiguration
 {

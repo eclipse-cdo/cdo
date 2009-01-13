@@ -22,31 +22,20 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface InternalCDOObject extends CDOObject, InternalEObject, InternalCDOLoadable
 {
-  /**
-   * @since 2.0
-   */
   public InternalCDOView cdoView();
 
-  /**
-   * @since 2.0
-   */
   public InternalCDORevision cdoRevision();
 
-  /**
-   * @since 2.0
-   */
   public void cdoInternalCleanup();
 
   public void cdoInternalPostAttach();
 
   public void cdoInternalPostDetach();
 
-  /**
-   * @since 2.0
-   */
   public void cdoInternalPostInvalid();
 
   public void cdoInternalPreCommit();

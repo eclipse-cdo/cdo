@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.session.remote;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface CDORemoteSession extends Comparable<CDORemoteSession>
 {

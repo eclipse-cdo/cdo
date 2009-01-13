@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
 {

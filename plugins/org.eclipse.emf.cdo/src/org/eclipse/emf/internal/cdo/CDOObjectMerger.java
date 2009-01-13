@@ -27,6 +27,9 @@ public class CDOObjectMerger extends CDORevisionMerger
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public void merge(InternalCDOObject object, CDORevisionDelta delta)
   {
     InternalCDORevision revision = (InternalCDORevision)object.cdoRevision().copy();

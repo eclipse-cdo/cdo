@@ -58,6 +58,9 @@ public final class EMFUtil
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public static EPackage createEPackage(String name, String nsPrefix, String nsURI)
   {
     EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
@@ -67,6 +70,9 @@ public final class EMFUtil
     return ePackage;
   }
 
+  /**
+   * @since 2.0
+   */
   public static EClass createEClass(EPackage ePackage, String name, boolean isAbstract, boolean isInterface)
   {
     EClass eClass = EcoreFactory.eINSTANCE.createEClass();
@@ -77,6 +83,9 @@ public final class EMFUtil
     return eClass;
   }
 
+  /**
+   * @since 2.0
+   */
   public static EAttribute createEAttribute(EClass eClass, String name, EClassifier type)
   {
     EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
@@ -86,6 +95,9 @@ public final class EMFUtil
     return eAttribute;
   }
 
+  /**
+   * @since 2.0
+   */
   public static EReference createEReference(EClass eClass, String name, EClassifier type, boolean isRequired,
       boolean isMany)
   {

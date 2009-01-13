@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.container.IContainer;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
 {

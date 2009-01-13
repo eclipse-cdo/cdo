@@ -51,6 +51,7 @@ import java.util.Collection;
  * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOptionsContainer
 {
@@ -150,29 +151,22 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    * Takes CDOID and version of all objects in the cache and sends it to the server. {@link CDOTimeStampContext}
    * contains informations of which objects changed/detached. The collection is ordered by timestamp. In the case where
    * {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing anything.
-   * 
-   * @since 2.0
    */
   public Collection<CDOTimeStampContext> refresh();
 
   /**
    * Returns the {@link Options options} of this session.
-   * 
-   * @since 2.0
    */
   public Options options();
 
   /**
    * Returns an instance of {@link Repository} that describes the model repository this {@link CDOSession session} is
    * connected to.
-   * 
-   * @since 2.0
    */
   public Repository repository();
 
   /**
    * @author Simon McDuff
-   * @since 2.0
    */
   public interface Options extends CDOCommonSession.Options
   {
@@ -227,23 +221,14 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
      */
     public void setRevisionFactory(CDORevisionFactory factory);
 
-    /**
-     * @since 2.0
-     */
     public interface PassiveUpdateEvent extends IOptionsEvent, CDOEvent
     {
     }
 
-    /**
-     * @since 2.0
-     */
     public interface CollectionLoadingPolicyEvent extends IOptionsEvent, CDOEvent
     {
     }
 
-    /**
-     * @since 2.0
-     */
     public interface RevisionFactoryEvent extends IOptionsEvent, CDOEvent
     {
     }
@@ -252,7 +237,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
   /**
    * Describes a model repository a {@link CDOSession session} is connected to.
    * 
-   * @since 2.0
    * @author Eike Stepper
    * @see CDOSession#repository()
    */

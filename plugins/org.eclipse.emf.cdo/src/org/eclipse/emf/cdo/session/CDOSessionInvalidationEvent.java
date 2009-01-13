@@ -31,6 +31,7 @@ import java.util.Set;
  * @see CDOInvalidationNotification
  * @see CDOAdapterPolicy
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOSessionInvalidationEvent extends CDOSessionEvent
 {
@@ -55,8 +56,6 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent
 
   /**
    * Returns a collection of the {@link CDOID CDOIDs} of the removed objects.
-   * 
-   * @since 2.0
    */
   public Collection<CDOID> getDetachedObjects();
 }

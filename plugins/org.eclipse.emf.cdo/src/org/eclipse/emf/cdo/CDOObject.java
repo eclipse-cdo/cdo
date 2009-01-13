@@ -81,6 +81,8 @@ public interface CDOObject extends EObject
   /**
    * Returns the {@link CDOView view} this object is associated with, or <code>null</code> if this object is not
    * associated with a view. This view manages all aspects of this object and cahces it as long as required.
+   * 
+   * @since 2.0
    */
   public CDOView cdoView();
 

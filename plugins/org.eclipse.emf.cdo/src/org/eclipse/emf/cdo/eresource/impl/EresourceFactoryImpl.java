@@ -74,9 +74,9 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     switch (eClass.getClassifierID())
     {
     case EresourcePackage.CDO_RESOURCE_FOLDER:
-      return (EObject)createCDOResourceFolder();
+      return createCDOResourceFolder();
     case EresourcePackage.CDO_RESOURCE:
-      return (EObject)createCDOResource();
+      return createCDOResource();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

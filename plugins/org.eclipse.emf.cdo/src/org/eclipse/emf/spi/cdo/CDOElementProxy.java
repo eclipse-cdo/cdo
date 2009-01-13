@@ -18,14 +18,12 @@ import org.eclipse.emf.cdo.session.CDORevisionManager;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOElementProxy
 {
   public int getIndex();
 
-  /**
-   * @since 2.0
-   */
   public Object resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index);
 
 }

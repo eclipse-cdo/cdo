@@ -214,6 +214,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.ATTACH, null);
   }
 
+  /**
+   * @since 2.0
+   */
   public void detach(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
@@ -248,6 +251,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public void read(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
@@ -258,11 +264,17 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.READ, null);
   }
 
+  /**
+   * @since 2.0
+   */
   public void write(InternalCDOObject object)
   {
     write(object, null);
   }
 
+  /**
+   * @since 2.0
+   */
   public void write(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     if (TRACER.isEnabled())
@@ -273,6 +285,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.WRITE, featureDelta);
   }
 
+  /**
+   * @since 2.0
+   */
   public void reload(InternalCDOObject... objects)
   {
     CDOView view = null;
@@ -349,6 +364,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     process(object, CDOEvent.DETACH_REMOTE, CDORevision.UNSPECIFIED_VERSION);
   }
 
+  /**
+   * @since 2.0
+   */
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
     if (TRACER.isEnabled())

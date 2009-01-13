@@ -49,6 +49,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface CDOSessionProtocol
 {
@@ -185,17 +186,11 @@ public interface CDOSessionProtocol
       return compressor;
     }
 
-    /**
-     * @since 2.0
-     */
     public void writePackageURI(ExtendedDataOutput out, String uri) throws IOException
     {
       compressor.write(out, uri);
     }
 
-    /**
-     * @since 2.0
-     */
     public String readPackageURI(ExtendedDataInput in) throws IOException
     {
       return compressor.read(in);

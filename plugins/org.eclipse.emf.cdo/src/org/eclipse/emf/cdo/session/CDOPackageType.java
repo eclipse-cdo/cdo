@@ -15,6 +15,7 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public enum CDOPackageType
 {

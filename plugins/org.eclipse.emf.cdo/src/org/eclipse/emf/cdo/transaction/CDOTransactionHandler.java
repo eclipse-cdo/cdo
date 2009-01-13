@@ -18,22 +18,19 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface CDOTransactionHandler
 {
   /**
    * Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is allowed
    * to throw an unchecked exception that will propagate up to the operation that is about to add the object.
-   * 
-   * @since 2.0
    */
   public void attachingObject(CDOTransaction transaction, CDOObject object);
 
   /**
    * Called by a <code>CDOTransaction</code> <b>before</b> an object is detached. The implementor of this method is
    * allowed to throw an unchecked exception that will propagate up to the operation that is about to remove the object.
-   * 
-   * @since 2.0
    */
   public void detachingObject(CDOTransaction transaction, CDOObject object);
 
@@ -49,24 +46,18 @@ public interface CDOTransactionHandler
    * Called by a <code>CDOTransaction</code> <b>before</b> it is being committed. The implementor of this method is
    * allowed to throw an unchecked exception that will propagate up to the operation that is about to commit the
    * transaction.
-   * 
-   * @since 2.0
    */
   public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext);
 
   /**
    * Called by a <code>CDOTransaction</code> <b>after</b> it is being committed. The implementor of this method is
    * <b>not</b> allowed to throw an unchecked exception.
-   * 
-   * @since 2.0
    */
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext);
 
   /**
    * Called by a <code>CDOTransaction</code> <b>after</b> it is rolled back. If the implementor of this method throws an
    * exception it will be logged as an error and subsequent handlers will be further called.
-   * 
-   * @since 2.0
    */
   public void rolledBackTransaction(CDOTransaction transaction);
 }

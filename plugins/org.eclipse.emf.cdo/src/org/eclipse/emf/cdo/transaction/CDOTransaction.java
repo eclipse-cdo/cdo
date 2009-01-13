@@ -37,38 +37,26 @@ import java.util.Set;
  * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOTransaction extends CDOView, CDOUserTransaction
 {
-  /**
-   * @since 2.0
-   */
   public long getLastCommitTime();
 
   /**
    * Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>
    * otherwise.
-   * 
-   * @since 2.0
    */
   public boolean isDirty();
 
   /**
    * Returns <code>true</code> if this transaction contains local modifications that are conflicting with remote
    * modifications, <code>false</code> otherwise.
-   * 
-   * @since 2.0
    */
   public boolean hasConflict();
 
-  /**
-   * @since 2.0
-   */
   public Set<CDOObject> getConflicts();
 
-  /**
-   * @since 2.0
-   */
   public void resolveConflicts(CDOConflictResolver... resolver);
 
   /**
@@ -101,14 +89,10 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
    */
   public Map<CDOID, CDOObject> getDetachedObjects();
 
-  /**
-   * @since 2.0
-   */
   public Options options();
 
   /**
    * @author Simon McDuff
-   * @since 2.0
    */
   public interface Options extends CDOView.Options
   {

@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public abstract class AbstractQueryIterator<T> extends AbstractQueryResult<T>
 {

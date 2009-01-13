@@ -109,6 +109,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return state;
   }
 
+  /**
+   * @since 2.0
+   */
   public InternalCDORevision cdoRevision()
   {
     return revision;
@@ -228,6 +231,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return null;
   }
 
+  /**
+   * @since 2.0
+   */
   public void cdoInternalSetRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
@@ -238,6 +244,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     this.revision = (InternalCDORevision)revision;
   }
 
+  /**
+   * @since 2.0
+   */
   public void cdoInternalSetView(CDOView view)
   {
     this.view = (InternalCDOView)view;

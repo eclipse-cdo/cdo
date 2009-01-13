@@ -17,6 +17,7 @@ import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOSessionConfiguration
 {
@@ -32,7 +33,6 @@ public interface CDOSessionConfiguration
 
   /**
    * @see CDOSession#getPackageRegistry()
-   * @since 2.0
    */
   public CDOPackageRegistry getPackageRegistry();
 
@@ -40,7 +40,6 @@ public interface CDOSessionConfiguration
    * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
    * 
    * @see CDOSession#getPackageRegistry()
-   * @since 2.0
    */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);
 
@@ -48,7 +47,6 @@ public interface CDOSessionConfiguration
    * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
    * 
    * @see CDOSession#getPackageRegistry()
-   * @since 2.0
    */
   public void setEagerPackageRegistry();
 
@@ -56,13 +54,11 @@ public interface CDOSessionConfiguration
    * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
    * 
    * @see CDOSession#getPackageRegistry()
-   * @since 2.0
    */
   public void setLazyPackageRegistry();
 
   /**
    * @see CDORevisionManagerImpl#getCache()
-   * @since 2.0
    */
   public CDORevisionCache getRevisionCache();
 
@@ -70,7 +66,6 @@ public interface CDOSessionConfiguration
    * The revision cache must be set <b>before</b> the session is opened and can not be changed thereafter.
    * 
    * @see CDORevisionManagerImpl#setCache(CDORevisionCache)
-   * @since 2.0
    */
   public void setRevisionCache(CDORevisionCache revisionCache);
 

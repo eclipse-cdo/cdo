@@ -59,12 +59,18 @@ public final class CDOUtil
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOSessionConfiguration createSessionConfiguration()
   {
     // TODO Remove before release
     return CDONet4jUtil.createSessionConfiguration();
   }
 
+  /**
+   * @since 2.0
+   */
   public static void prepareContainer(IManagedContainer container)
   {
     // TODO Remove before release
@@ -169,6 +175,9 @@ public final class CDOUtil
     return null;
   }
 
+  /**
+   * @since 2.0
+   */
   public static void load(EObject eObject, CDOView view)
   {
     InternalCDOObject cdoObject = FSMUtil.adapt(eObject, view);

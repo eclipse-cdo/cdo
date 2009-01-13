@@ -22,7 +22,7 @@
             productGroup="org.eclipse.net4j.clientProtocols"
             type="cdo"/>
       <factory
-            class="org.eclipse.emf.internal.cdo.session.CDOSessionFactory"
+            class="org.eclipse.emf.internal.cdo.net4j.CDONet4jSessionFactory"
             productGroup="org.eclipse.emf.cdo.sessions"
             type="cdo"/>
    </extension>

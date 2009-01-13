@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.ide;
 
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -47,6 +48,12 @@ public class RepositoryLabelProvider extends LabelProvider
     {
       Node node = (Node)element;
       return node.getText();
+    }
+
+    if (element instanceof CDOResourceNode)
+    {
+      CDOResourceNode resourceNode = (CDOResourceNode)element;
+      return resourceNode.getName();
     }
 
     if (element instanceof Notifier)

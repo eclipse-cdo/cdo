@@ -167,7 +167,10 @@ public abstract class Node
       List<CDOResourceNode> children = new ArrayList<CDOResourceNode>();
       for (CDOResourceNode resourceNode : resources)
       {
-        children.add(resourceNode);
+        if (!resourceNode.isRoot())
+        {
+          children.add(resourceNode);
+        }
       }
 
       return children.toArray(new CDOResourceNode[children.size()]);

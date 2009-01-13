@@ -32,17 +32,35 @@ public class Notifier implements INotifier.Introspection
 
   public void addListener(IListener listener)
   {
+    boolean wasNotEmpty;
+    boolean isNotEmpty;
     synchronized (listeners)
     {
+      wasNotEmpty = !listeners.isEmpty();
       listeners.add(listener);
+      isNotEmpty = !listeners.isEmpty();
+    }
+
+    if (wasNotEmpty ^ isNotEmpty)
+    {
+      emptyChanged(!isNotEmpty);
     }
   }
 
   public void removeListener(IListener listener)
   {
+    boolean wasEmpty;
+    boolean isEmpty;
     synchronized (listeners)
     {
+      wasEmpty = listeners.isEmpty();
       listeners.remove(listener);
+      isEmpty = listeners.isEmpty();
+    }
+
+    if (wasEmpty ^ isEmpty)
+    {
+      emptyChanged(isEmpty);
     }
   }
 
@@ -79,6 +97,13 @@ public class Notifier implements INotifier.Introspection
   protected ExecutorService getNotificationExecutorService()
   {
     return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void emptyChanged(boolean empty)
+  {
   }
 
   /**

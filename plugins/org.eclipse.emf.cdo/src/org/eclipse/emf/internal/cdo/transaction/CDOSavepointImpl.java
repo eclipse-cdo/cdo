@@ -39,7 +39,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOSavepointImpl extends CDOAbstractSavepoint
+public class CDOSavepointImpl extends AbstractSavepoint
 {
   private Map<CDOID, CDOResource> newResources = new HashMap<CDOID, CDOResource>();
 

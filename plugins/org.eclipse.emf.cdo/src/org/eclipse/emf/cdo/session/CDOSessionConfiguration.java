@@ -14,26 +14,12 @@ import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 
-import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.ISignalProtocol;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSessionConfiguration
 {
-  /**
-   * @see CDOSession#open(ISignalProtocol)
-   */
-  public IConnector getConnector();
-
-  /**
-   * @see CDOSession#open(ISignalProtocol)
-   */
-  public void setConnector(IConnector connector);
-
   /**
    * @see CDOSession#getName()
    */
@@ -43,18 +29,6 @@ public interface CDOSessionConfiguration
    * @see CDOSession#getName()
    */
   public void setRepositoryName(String repositoryName);
-
-  /**
-   * @see CDOSession#getFailOverStrategy()
-   */
-  public IFailOverStrategy getFailOverStrategy();
-
-  /**
-   * The fail-over strategy must be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
-   * @see CDOSession#getFailOverStrategy()
-   */
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
 
   /**
    * @see CDOSession#getPackageRegistry()
@@ -101,13 +75,13 @@ public interface CDOSessionConfiguration
   public void setRevisionCache(CDORevisionCache revisionCache);
 
   /**
+   * Returns <code>true</code> if the session for this configuration is currently open, <code>false</code> otherwise.
+   */
+  public boolean isSessionOpen();
+
+  /**
    * Opens the session for this configuration. Once the session is openend this method always returns the same session
    * instance. Therefore it is impossible to change this configuration while the session is open.
    */
   public CDOSession openSession();
-
-  /**
-   * Returns <code>true</code> if the session for this configuration is currently open, <code>false</code> otherwise.
-   */
-  public boolean isSessionOpen();
 }

@@ -13,9 +13,10 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.mango.Value;
@@ -29,7 +30,6 @@ import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.EMFUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -237,7 +237,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       {
         // Create resource in session 1
-        CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+        CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
         configuration.setConnector(getConnector());
         configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
         configuration.setEagerPackageRegistry();
@@ -270,7 +270,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     {
       // Create resource in session 1
-      CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+      CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
       configuration.setLazyPackageRegistry();

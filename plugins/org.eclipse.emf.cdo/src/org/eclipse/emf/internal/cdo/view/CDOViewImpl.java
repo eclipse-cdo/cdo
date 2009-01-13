@@ -58,20 +58,12 @@ import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.CDOStore;
 import org.eclipse.emf.internal.cdo.CDOURIHandler;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.ChangeSubscriptionRequest;
-import org.eclipse.emf.internal.cdo.protocol.LockObjectsRequest;
-import org.eclipse.emf.internal.cdo.protocol.ObjectLockedRequest;
-import org.eclipse.emf.internal.cdo.protocol.UnlockObjectsRequest;
-import org.eclipse.emf.internal.cdo.protocol.ViewsChangedRequest;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.HashBag;
@@ -82,7 +74,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
-import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -155,7 +146,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    */
   public CDOViewImpl()
   {
-    options = initOptions();
+    options = createOptions();
   }
 
   /**
@@ -164,14 +155,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public OptionsImpl options()
   {
     return options;
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected OptionsImpl initOptions()
-  {
-    return new OptionsImpl();
   }
 
   public int getViewID()
@@ -286,39 +269,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       throws InterruptedException
   {
     checkActive();
-    InterruptedException interruptedException = null;
-    RuntimeException runtimeException = null;
-
-    try
-    {
-      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
-      new LockObjectsRequest(protocol, this, objects, timeout, lockType).send();
-    }
-    catch (RemoteException ex)
-    {
-      if (ex.getCause() instanceof RuntimeException)
-      {
-        runtimeException = (RuntimeException)ex.getCause();
-      }
-      else if (ex.getCause() instanceof InterruptedException)
-      {
-        interruptedException = (InterruptedException)ex.getCause();
-      }
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-
-    if (interruptedException != null)
-    {
-      throw interruptedException;
-    }
-
-    if (runtimeException != null)
-    {
-      throw runtimeException;
-    }
+    session.getSessionProtocol().lockObjects(this, objects, timeout, lockType);
   }
 
   /**
@@ -327,16 +278,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public void unlockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType)
   {
     checkActive();
-
-    try
-    {
-      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
-      new UnlockObjectsRequest(protocol, this, objects, lockType).send();
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    session.getSessionProtocol().unlockObjects(this, objects, lockType);
   }
 
   /**
@@ -354,16 +296,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType)
   {
     checkActive();
-
-    try
-    {
-      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
-      return new ObjectLockedRequest(protocol, this, object, lockType).send();
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    return session.getSessionProtocol().isObjectLocked(this, object, lockType);
   }
 
   /**
@@ -1451,6 +1384,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
+  protected OptionsImpl createOptions()
+  {
+    return new OptionsImpl();
+  }
+
+  /**
+   * @since 2.0
+   */
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -1465,8 +1406,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   protected void doActivate() throws Exception
   {
-    CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
-    new ViewsChangedRequest(protocol, getViewID(), getProtocolViewType(), getTimeStamp()).send();
+    session.getSessionProtocol().openView(getViewID(), getProtocolViewType(), getTimeStamp());
   }
 
   /**
@@ -1475,9 +1415,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   protected void doDeactivate() throws Exception
   {
-    CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
-    new ViewsChangedRequest(protocol, getViewID()).send();
-
+    session.getSessionProtocol().closeView(getViewID());
     session.viewDetached(this);
     session = null;
     objects = null;
@@ -1722,15 +1660,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     protected void request(List<CDOID> cdoIDs, boolean clear, boolean subscribeMode)
     {
-      try
-      {
-        CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
-        new ChangeSubscriptionRequest(protocol, getViewID(), cdoIDs, subscribeMode, clear).send();
-      }
-      catch (Exception ex)
-      {
-        throw new TransactionException(ex);
-      }
+      session.getSessionProtocol().changeSubscription(getViewID(), cdoIDs, subscribeMode, clear);
     }
 
     protected int getNumberOfValidAdapter(InternalCDOObject object)

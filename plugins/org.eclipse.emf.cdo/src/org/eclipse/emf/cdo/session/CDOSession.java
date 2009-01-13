@@ -54,22 +54,6 @@ import java.util.Collection;
 public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOptionsContainer
 {
   /**
-   * Returns an instance of {@link Repository} that describes the model repository this {@link CDOSession session} is
-   * connected to.
-   * 
-   * @since 2.0
-   */
-  public Repository repository();
-
-  /**
-   * Returns the Net4j {@link CDOSessionProtocol protocol} instance that represents the underlying
-   * <em>signalling connection</em> to the repository of this session.
-   * 
-   * @since 2.0
-   */
-  public CDOSessionProtocol getProtocol();
-
-  /**
    * Returns the EMF {@link EPackage.Registry package registry} that is used by all {@link EObject objects} of all
    * {@link CDOView views} of this session.
    * <p>
@@ -172,6 +156,14 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
   public Options options();
 
   /**
+   * Returns an instance of {@link Repository} that describes the model repository this {@link CDOSession session} is
+   * connected to.
+   * 
+   * @since 2.0
+   */
+  public Repository repository();
+
+  /**
    * @author Simon McDuff
    * @since 2.0
    */
@@ -207,7 +199,7 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
      * </ol>
      * Example:
      * <p>
-     * <code>CDOUtil.createCollectionLoadingPolicy(initialElements, subsequentElements);</code>
+     * <code>CDONet4jUtil.createCollectionLoadingPolicy(initialElements, subsequentElements);</code>
      * <p>
      * The user can also provide its own implementation of the CDOCollectionLoadingPolicy interface.
      */

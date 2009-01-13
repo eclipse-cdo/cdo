@@ -43,34 +43,21 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.LoadLibrariesRequest;
-import org.eclipse.emf.internal.cdo.protocol.OpenSessionRequest;
-import org.eclipse.emf.internal.cdo.protocol.OpenSessionResult;
-import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeRequest;
-import org.eclipse.emf.internal.cdo.protocol.RepositoryTimeResult;
-import org.eclipse.emf.internal.cdo.protocol.SetPassiveUpdateRequest;
-import org.eclipse.emf.internal.cdo.protocol.SyncRevisionRequest;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.view.CDOAuditImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
-import org.eclipse.net4j.util.event.EventUtil;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.StringCompressor;
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.IOptions;
@@ -86,6 +73,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,23 +91,11 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession, Repository
+public abstract class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession, Repository
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
   private int sessionID;
-
-  private CDOClientProtocol protocol;
-
-  @ExcludeFromDump
-  private IListener protocolListener = new LifecycleEventAdapter()
-  {
-    @Override
-    protected void onDeactivated(ILifecycle lifecycle)
-    {
-      close();
-    }
-  };
 
   private String repositoryName;
 
@@ -163,13 +140,11 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  protected IOptions options = new OptionsImpl();
+  protected IOptions options;
 
   public CDOSessionImpl()
   {
-    protocol = new CDOClientProtocol();
-    protocol.setInfraStructure(this);
-
+    options = createOptions();
     packageManager = createPackageManager();
     revisionManager = createRevisionManager();
   }
@@ -182,9 +157,17 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   /**
    * @since 2.0
    */
-  public Options options()
+  public OptionsImpl options()
   {
-    return (Options)options;
+    return (OptionsImpl)options;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected OptionsImpl createOptions()
+  {
+    return new OptionsImpl();
   }
 
   /**
@@ -193,15 +176,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   public Repository repository()
   {
     return this;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public String getUserID()
-  {
-    IChannel channel = protocol.getChannel();
-    return channel == null ? null : channel.getUserID();
   }
 
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
@@ -215,11 +189,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   public CDOIDObject createCDOIDObject(String in)
   {
     return cdoidObjectFactory.createCDOIDObject(in);
-  }
-
-  public CDOClientProtocol getProtocol()
-  {
-    return protocol;
   }
 
   /**
@@ -276,14 +245,7 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
 
   private RepositoryTimeResult sendRepositoryTimeRequest()
   {
-    try
-    {
-      return new RepositoryTimeRequest(protocol).send();
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    return getSessionProtocol().getRepositoryTime();
   }
 
   /**
@@ -709,8 +671,7 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   @Override
   public String toString()
   {
-    IChannel channel = protocol.getChannel();
-    return MessageFormat.format("CDOSession[{0}/{1}]", channel, repositoryName);
+    return MessageFormat.format("CDOSession[{0}, {1}]", repositoryName, sessionID);
   }
 
   /**
@@ -774,7 +735,8 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(repositoryName, "repositoryName == null");
+    checkState(getSessionProtocol(), "sessionProtocol");
+    checkState(repositoryName, "repositoryName");
   }
 
   @Override
@@ -787,10 +749,8 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     }
 
     packageRegistry.setSession(this);
-    protocol.open();
 
-    boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
-    OpenSessionResult result = new OpenSessionRequest(protocol, repositoryName, passiveUpdateEnabled).send();
+    OpenSessionResult result = getSessionProtocol().openSession(repositoryName, options().isPassiveUpdateEnabled());
     sessionID = result.getSessionID();
     repositoryUUID = result.getRepositoryUUID();
     repositoryCreationTime = result.getRepositoryCreationTime();
@@ -801,7 +761,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
     packageManager.addPackageProxies(result.getPackageInfos());
     packageManager.activate();
     revisionManager.activate();
-    EventUtil.addListener(protocol, protocolListener);
   }
 
   @Override
@@ -832,10 +791,6 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
 
     packageManager.deactivate();
     packageManager = null;
-
-    EventUtil.removeListener(protocol, protocolListener);
-    protocol.close();
-    protocol = null;
     super.doDeactivate();
   }
 
@@ -860,7 +815,7 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
       missingLibraries.removeAll(existingLibraries);
       if (!missingLibraries.isEmpty())
       {
-        new LoadLibrariesRequest(protocol, missingLibraries, cacheFolder).send();
+        getSessionProtocol().loadLibraries(missingLibraries, cacheFolder);
       }
     }
 
@@ -948,7 +903,7 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
         if (!allRevisions.isEmpty())
         {
           int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
-          return new SyncRevisionRequest(protocol, this, allRevisions, initialChunkSize).send();
+          return getSessionProtocol().syncRevisions(allRevisions, initialChunkSize);
         }
       }
       catch (Exception ex)
@@ -1049,18 +1004,10 @@ public class CDOSessionImpl extends Container<CDOView> implements InternalCDOSes
 
         // Need to refresh if we change state
         Map<CDOID, CDORevision> allRevisions = getAllRevisions();
-
-        try
+        if (!allRevisions.isEmpty())
         {
-          if (!allRevisions.isEmpty())
-          {
-            new SetPassiveUpdateRequest(protocol, CDOSessionImpl.this, allRevisions, collectionLoadingPolicy
-                .getInitialChunkSize(), passiveUpdateEnabled).send();
-          }
-        }
-        catch (Exception ex)
-        {
-          throw WrappedException.wrap(ex);
+          int initialChunkSize = collectionLoadingPolicy.getInitialChunkSize();
+          getSessionProtocol().setPassiveUpdate(allRevisions, initialChunkSize, passiveUpdateEnabled);
         }
 
         fireEvent(new PassiveUpdateEventImpl());

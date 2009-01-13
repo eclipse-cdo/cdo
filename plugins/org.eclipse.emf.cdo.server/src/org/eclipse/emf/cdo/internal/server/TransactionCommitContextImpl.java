@@ -19,15 +19,16 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.core.CDOCorePackage;
 import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageManager;
+import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
@@ -79,7 +80,7 @@ public class TransactionCommitContextImpl implements IStoreAccessor.CommitContex
 
   private ConcurrentMap<CDOIDTemp, CDOID> idMappings = new ConcurrentHashMap<CDOIDTemp, CDOID>();
 
-  private CDOIDMapper idMapper = new CDOIDMapper(idMappings);
+  private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
 
   private String rollbackMessage;
 

@@ -18,16 +18,12 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
-import org.eclipse.emf.internal.cdo.protocol.VerifyRevisionRequest;
 import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -41,8 +37,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -308,15 +306,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     if (view != null)
     {
-      try
-      {
-        CDOClientProtocol protocol = (CDOClientProtocol)view.getSession().getProtocol();
-        revisions = new VerifyRevisionRequest(protocol, revisions).send();
-      }
-      catch (Exception ex)
-      {
-        throw new TransportException(ex);
-      }
+      InternalCDOSession session = (InternalCDOSession)view.getSession();
+      revisions = session.getSessionProtocol().verifyRevision(revisions);
 
       revisions.addAll(revised);
       for (InternalCDORevision revision : revisions)

@@ -101,9 +101,4 @@ public final class SessionUtil
 
     return viewSet;
   }
-
-  public static CDOSessionImpl createSession()
-  {
-    return new CDOSessionImpl();
-  }
 }

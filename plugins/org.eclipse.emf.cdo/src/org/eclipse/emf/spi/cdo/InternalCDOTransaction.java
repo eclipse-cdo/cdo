@@ -16,8 +16,11 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.List;
 import java.util.Set;
@@ -58,4 +61,18 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOView
   public void setConflict(InternalCDOObject object);
 
   public void handleConflicts(Set<CDOObject> conflicts);
+
+  /**
+   * Provides a context for a commit operation.
+   * 
+   * @author Simon McDuff
+   */
+  public interface InternalCDOCommitContext extends CDOCommitContext
+  {
+    public InternalCDOTransaction getTransaction();
+
+    public void preCommit();
+
+    public void postCommit(CommitTransactionResult result);
+  }
 }

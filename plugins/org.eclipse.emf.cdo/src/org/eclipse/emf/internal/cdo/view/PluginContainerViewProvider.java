@@ -50,7 +50,7 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider im
     }
 
     String repoUUID = CDOURIUtil.extractRepositoryUUID(uri);
-    for (Object element : container.getElements(CDOSessionFactory.PRODUCT_GROUP, CDOSessionFactory.TYPE))
+    for (Object element : container.getElements(CDOSessionFactory.PRODUCT_GROUP))
     {
       CDOSession session = (CDOSession)element;
       String uuid = session.repository().getUUID();

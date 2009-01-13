@@ -17,10 +17,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOAudit;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.SetAuditRequest;
-
-import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -64,7 +60,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
     if (this.timeStamp != timeStamp)
     {
       List<InternalCDOObject> invalidObjects = getInvalidObjects(timeStamp);
-      boolean[] existanceFlags = sendSetAuditRequest(timeStamp, invalidObjects);
+      boolean[] existanceFlags = getSession().getSessionProtocol().setAudit(getViewID(), timeStamp, invalidObjects);
       this.timeStamp = timeStamp;
 
       int i = 0;
@@ -82,19 +78,6 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
           CDOStateMachine.INSTANCE.detachRemote(invalidObject);
         }
       }
-    }
-  }
-
-  private boolean[] sendSetAuditRequest(long timeStamp, List<InternalCDOObject> invalidObjects)
-  {
-    try
-    {
-      CDOClientProtocol protocol = (CDOClientProtocol)getSession().getProtocol();
-      return new SetAuditRequest(protocol, getViewID(), timeStamp, invalidObjects).send();
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
     }
   }
 

@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.defs.impl;
 import org.eclipse.emf.cdo.defs.CDOClientProtocolFactoryDef;
 import org.eclipse.emf.cdo.defs.CDODefsPackage;
 
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory;
+import org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocolFactory;
 
 import org.eclipse.net4j.defs.impl.ClientProtocolFactoryDefImpl;
 

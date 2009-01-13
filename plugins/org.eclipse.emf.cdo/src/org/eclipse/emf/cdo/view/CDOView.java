@@ -418,7 +418,7 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
      * subtle. The CDOCollectionLoadingPolicy feature determines how and when to fetch CDOIDs, while the
      * CDORevisionPrefetchingPolicy feature determines how and when to resolve CDOIDs (i.e. fetch the target objects).
      * <p>
-     * <code>view.options().setRevisionPrefetchingPolicy (CDOUtil.createRevisionPrefetchingPolicy(10));</code>
+     * <code>view.options().setRevisionPrefetchingPolicy (CDONet4jUtil.createRevisionPrefetchingPolicy(10));</code>
      * <p>
      * The end-user could provide its own implementation of the CDORevisionPrefetchingPolicy interface.
      */

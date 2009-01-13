@@ -27,7 +27,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionCommitContext.java" type="org.eclipse.emf.internal.cdo.transaction.CDOXATransactionCommitContext">
+    <resource path="src/org/eclipse/emf/internal/cdo/CDOXATransactionCommitContext.java" type="org.eclipse.emf.internal.cdo.transaction.CDOXACommitContextImpl">
         <filter id="643846161">
             <message_arguments>
                 <message_argument value="CommitTransactionResult"/>

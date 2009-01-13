@@ -16,20 +16,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.session.CDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
-
-import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.LoadChunkRequest;
-import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByTimeRequest;
-import org.eclipse.emf.internal.cdo.protocol.LoadRevisionByVersionRequest;
-import org.eclipse.emf.internal.cdo.protocol.LoadRevisionRequest;
-
-import org.eclipse.net4j.util.om.trace.PerfTracer;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -42,8 +32,6 @@ import java.util.List;
  */
 public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements CDORevisionManager
 {
-  private static final PerfTracer LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDORevisionManagerImpl.class);
-
   private InternalCDOSession session;
 
   private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
@@ -62,6 +50,22 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   public InternalCDOSession getSession()
   {
     return session;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOFetchRuleManager getRuleManager()
+  {
+    return ruleManager;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setRuleManager(CDOFetchRuleManager ruleManager)
+  {
+    this.ruleManager = ruleManager;
   }
 
   public CDOIDObjectFactory getCDOIDObjectFactory()
@@ -84,55 +88,38 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   public Object loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
-    try
-    {
-      CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-      return new LoadChunkRequest(protocol, (InternalCDORevision)revision, feature, accessIndex, fetchIndex, fromIndex,
-          toIndex).send();
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransportException(ex);
-    }
+    return session.getSessionProtocol().loadChunk((InternalCDORevision)revision, feature, accessIndex, fetchIndex,
+        fromIndex, toIndex);
   }
 
   @Override
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-    return send(new LoadRevisionRequest(protocol, Collections.singleton(id), referenceChunk)).get(0);
+    return loadRevisions(Collections.singleton(id), referenceChunk).get(0);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-    return send(new LoadRevisionByTimeRequest(protocol, Collections.singleton(id), referenceChunk, timeStamp)).get(0);
+    return loadRevisionsByTime(Collections.singleton(id), referenceChunk, timeStamp).get(0);
   }
 
   @Override
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-    return send(new LoadRevisionByVersionRequest(protocol, id, referenceChunk, version)).get(0);
+    return session.getSessionProtocol().loadRevisionByVersion(id, referenceChunk, version);
   }
 
   @Override
   protected List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-    return send(new LoadRevisionRequest(protocol, ids, referenceChunk));
+    return session.getSessionProtocol().loadRevisions(ids, referenceChunk);
   }
 
   @Override
   protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-    return send(new LoadRevisionByTimeRequest(protocol, ids, referenceChunk, timeStamp));
+    return session.getSessionProtocol().loadRevisionsByTime(ids, referenceChunk, timeStamp);
   }
 
   /**
@@ -142,42 +129,5 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   protected CDOPackageManager getPackageManager()
   {
     return session.getPackageManager();
-  }
-
-  private List<InternalCDORevision> send(LoadRevisionRequest request)
-  {
-    try
-    {
-      LOADING.start(request);
-      return request.send();
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransportException(ex);
-    }
-    finally
-    {
-      LOADING.stop(request);
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOFetchRuleManager getRuleManager()
-  {
-    return ruleManager;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setRuleManager(CDOFetchRuleManager ruleManager)
-  {
-    this.ruleManager = ruleManager;
   }
 }

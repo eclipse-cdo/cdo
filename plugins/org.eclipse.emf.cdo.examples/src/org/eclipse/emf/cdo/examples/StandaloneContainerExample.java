@@ -11,12 +11,12 @@
 package org.eclipse.emf.cdo.examples;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -45,14 +45,14 @@ public class StandaloneContainerExample
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
-    CDOUtil.prepareContainer(container); // Register CDO factories
+    CDONet4jUtil.prepareContainer(container); // Register CDO factories
     container.activate();
 
     // Create connector
     IConnector connector = TCPUtil.getConnector(container, "localhost:2036");
 
     // Create configuration
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName("repo1");
 

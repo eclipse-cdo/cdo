@@ -120,6 +120,7 @@ public class AttributeTest extends AbstractCDOTest
       {
         assertEquals(storeByteArray[i], saveByteArray[i]);
       }
+
       view.close();
       session.close();
     }

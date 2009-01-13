@@ -19,12 +19,14 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -54,6 +56,46 @@ public final class EMFUtil
 
   private EMFUtil()
   {
+  }
+
+  public static EPackage createEPackage(String name, String nsPrefix, String nsURI)
+  {
+    EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+    ePackage.setName(name);
+    ePackage.setNsPrefix(nsPrefix);
+    ePackage.setNsURI(nsURI);
+    return ePackage;
+  }
+
+  public static EClass createEClass(EPackage ePackage, String name, boolean isAbstract, boolean isInterface)
+  {
+    EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+    eClass.setName(name);
+    eClass.setAbstract(isAbstract);
+    eClass.setInterface(isInterface);
+    ePackage.getEClassifiers().add(eClass);
+    return eClass;
+  }
+
+  public static EAttribute createEAttribute(EClass eClass, String name, EClassifier type)
+  {
+    EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+    eAttribute.setName(name);
+    eAttribute.setEType(type);
+    eClass.getEStructuralFeatures().add(eAttribute);
+    return eAttribute;
+  }
+
+  public static EReference createEReference(EClass eClass, String name, EClassifier type, boolean isRequired,
+      boolean isMany)
+  {
+    EReference eReference = EcoreFactory.eINSTANCE.createEReference();
+    eReference.setName(name);
+    eReference.setEType(type);
+    eReference.setLowerBound(isRequired ? 1 : 0);
+    eReference.setUpperBound(isMany ? -1 : 0);
+    eClass.getEStructuralFeatures().add(eReference);
+    return eReference;
   }
 
   public static ResourceSet newResourceSet(Resource.Factory resourceFactory)

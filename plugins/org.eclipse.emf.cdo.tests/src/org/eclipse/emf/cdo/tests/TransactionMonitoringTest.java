@@ -10,12 +10,12 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
@@ -41,10 +41,10 @@ public class TransactionMonitoringTest
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container);
     TCPUtil.prepareContainer(container);
-    CDOUtil.prepareContainer(container);
+    CDONet4jUtil.prepareContainer(container);
     container.activate();
 
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
     configuration.setConnector(TCPUtil.getConnector(container, "localhost"));
     configuration.setRepositoryName("repo1");
 

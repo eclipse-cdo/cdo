@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.Factory;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -28,17 +27,15 @@ import java.util.StringTokenizer;
 /**
  * @author Eike Stepper
  */
-public class CDOSessionFactory extends Factory
+public abstract class CDOSessionFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.sessions";
 
-  public static final String TYPE = "cdo";
-
   private static final String TRUE = Boolean.TRUE.toString();
 
-  public CDOSessionFactory()
+  public CDOSessionFactory(String type)
   {
-    super(PRODUCT_GROUP, TYPE);
+    super(PRODUCT_GROUP, type);
   }
 
   public CDOSession create(String description)
@@ -84,27 +81,9 @@ public class CDOSessionFactory extends Factory
     }
   }
 
-  public static CDOSession get(IManagedContainer container, String description)
-  {
-    return (CDOSession)container.getElement(PRODUCT_GROUP, TYPE, description);
-  }
-
   /**
    * @since 2.0
    */
-  public static InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry,
-      IFailOverStrategy failOverStrategy)
-  {
-    InternalCDOSession session = SessionUtil.createSession();
-    if (automaticPackageRegistry)
-    {
-      CDOPackageRegistryImpl.Eager packageRegistry = new CDOPackageRegistryImpl.Eager();
-      packageRegistry.setSession(session);
-      session.setPackageRegistry(packageRegistry);
-    }
-
-    session.setRepositoryName(repositoryName);
-    session.getProtocol().setFailOverStrategy(failOverStrategy);
-    return session;
-  }
+  protected abstract InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry,
+      IFailOverStrategy failOverStrategy);
 }

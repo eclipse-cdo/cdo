@@ -18,7 +18,7 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory"
+            class="org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocolFactory"
             productGroup="org.eclipse.net4j.clientProtocols"
             type="cdo"/>
       <factory
@@ -30,7 +30,7 @@
    <extension
          point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor
-            class="org.eclipse.emf.internal.cdo.protocol.ChannelInjector">
+            class="org.eclipse.emf.internal.cdo.net4j.protocol.ChannelInjector">
       </elementProcessor>
    </extension>
 

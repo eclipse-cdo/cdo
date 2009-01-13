@@ -125,12 +125,6 @@
                 <message_argument value="TransactionPackageManager"/>
             </message_arguments>
         </filter>
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDOPackageManager"/>
-                <message_argument value="TransactionPackageManager"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/server/ISession.java" type="org.eclipse.emf.cdo.server.ISession">
         <filter id="574619656">

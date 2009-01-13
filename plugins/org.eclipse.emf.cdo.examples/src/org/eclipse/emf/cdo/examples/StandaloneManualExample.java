@@ -11,12 +11,12 @@
 package org.eclipse.emf.cdo.examples;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.FactoriesProtocolProvider;
 import org.eclipse.net4j.Net4jUtil;
@@ -63,7 +63,7 @@ public class StandaloneManualExample
     LifecycleUtil.activate(bufferProvider);
 
     IProtocolProvider protocolProvider = new FactoriesProtocolProvider(
-        new org.eclipse.emf.internal.cdo.protocol.CDOClientProtocolFactory());
+        new org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocolFactory());
 
     // Prepare selector
     org.eclipse.net4j.internal.tcp.TCPSelector selector = new org.eclipse.net4j.internal.tcp.TCPSelector();
@@ -81,7 +81,7 @@ public class StandaloneManualExample
     connector.activate();
 
     // Create configuration
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName("repo1");
 

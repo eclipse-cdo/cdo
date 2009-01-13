@@ -124,7 +124,10 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(topPackage);
-    session.getProtocol().setTimeout(2000L);
+    if (session instanceof org.eclipse.emf.cdo.net4j.CDOSession)
+    {
+      ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);
+    }
 
     CDOTransaction transaction = session.openTransaction();
     CDOObject instance = (CDOObject)transaction.getResource("/test1").getContents().get(0);

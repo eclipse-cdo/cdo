@@ -12,28 +12,20 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOPackageRegistry;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
-import org.eclipse.net4j.util.CheckUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
  * @author Eike Stepper
  */
-public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
+public abstract class CDOSessionConfigurationImpl implements CDOSessionConfiguration
 {
   private InternalCDOSession session;
 
-  private IConnector connector;
-
   private String repositoryName;
-
-  private IFailOverStrategy failOverStrategy;
 
   private CDOPackageRegistry packageRegistry;
 
@@ -45,17 +37,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
   {
   }
 
-  public IConnector getConnector()
-  {
-    return connector;
-  }
-
-  public void setConnector(IConnector connector)
-  {
-    checkNotOpen();
-    this.connector = connector;
-  }
-
   public String getRepositoryName()
   {
     return repositoryName;
@@ -65,17 +46,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
   {
     checkNotOpen();
     this.repositoryName = repositoryName;
-  }
-
-  public IFailOverStrategy getFailOverStrategy()
-  {
-    return failOverStrategy;
-  }
-
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
-  {
-    checkNotOpen();
-    this.failOverStrategy = failOverStrategy;
   }
 
   /**
@@ -139,39 +109,6 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     this.activateOnOpen = activateOnOpen;
   }
 
-  /**
-   * @since 2.0
-   */
-  public InternalCDOSession openSession()
-  {
-    CheckUtil.checkState(connector != null ^ failOverStrategy != null,
-        "Specify exactly one of connector or failOverStrategy");
-
-    if (!isSessionOpen())
-    {
-      session = SessionUtil.createSession();
-      if (connector != null)
-      {
-        session.getProtocol().setFailOverStrategy(new NOOPFailOverStrategy(connector));
-      }
-      else
-      {
-        session.getProtocol().setFailOverStrategy(failOverStrategy);
-      }
-
-      session.setRepositoryName(repositoryName);
-      session.setPackageRegistry(packageRegistry);
-      session.getRevisionManager().setCache(revisionCache);
-
-      if (activateOnOpen)
-      {
-        session.activate();
-      }
-    }
-
-    return session;
-  }
-
   public boolean isSessionOpen()
   {
     if (session == null)
@@ -188,11 +125,34 @@ public class CDOSessionConfigurationImpl implements CDOSessionConfiguration
     return false;
   }
 
-  private void checkNotOpen()
+  /**
+   * @since 2.0
+   */
+  public CDOSession openSession()
+  {
+    if (!isSessionOpen())
+    {
+      session = createSession();
+      session.setRepositoryName(repositoryName);
+      session.setPackageRegistry(packageRegistry);
+      session.getRevisionManager().setCache(revisionCache);
+
+      if (activateOnOpen)
+      {
+        session.activate();
+      }
+    }
+
+    return session;
+  }
+
+  protected void checkNotOpen()
   {
     if (isSessionOpen())
     {
       throw new IllegalStateException("Session is already open");
     }
   }
+
+  protected abstract InternalCDOSession createSession();
 }

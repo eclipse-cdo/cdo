@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.QueryRequest;
 import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
@@ -25,6 +23,7 @@ import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -63,7 +62,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
   }
 
   @SuppressWarnings("unchecked")
-  protected <T> CDOAbstractQueryIteratorImpl<T> createQueryResult(Class<T> classObject)
+  protected <T> AbstractQueryIterator<T> createQueryResult(Class<T> classObject)
   {
     CDOQueryInfoImpl queryInfo = createQueryInfo();
     if (classObject.equals(CDOID.class))
@@ -76,24 +75,14 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 
   public <T> List<T> getResult(Class<T> classObject)
   {
-    CDOAbstractQueryIteratorImpl<T> queryResult = createQueryResult(classObject);
-
-    try
-    {
-      CDOClientProtocol protocol = (CDOClientProtocol)view.getSession().getProtocol();
-      new QueryRequest(protocol, view.getViewID(), queryResult).send();
-    }
-    catch (Exception exception)
-    {
-      throw WrappedException.wrap(exception);
-    }
-
+    AbstractQueryIterator<T> queryResult = createQueryResult(classObject);
+    view.getSession().getSessionProtocol().query(view.getViewID(), queryResult);
     return queryResult.asList();
   }
 
   public <T> BlockingCloseableIterator<T> getResultAsync(Class<T> classObject)
   {
-    final CDOAbstractQueryIteratorImpl<T> queryResult = createQueryResult(classObject);
+    final AbstractQueryIterator<T> queryResult = createQueryResult(classObject);
     final Exception exception[] = new Exception[1];
     Runnable runnable = new Runnable()
     {
@@ -101,8 +90,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       {
         try
         {
-          CDOClientProtocol protocol = (CDOClientProtocol)view.getSession().getProtocol();
-          new QueryRequest(protocol, view.getViewID(), queryResult).send();
+          view.getSession().getSessionProtocol().query(view.getViewID(), queryResult);
         }
         catch (Exception ex)
         {

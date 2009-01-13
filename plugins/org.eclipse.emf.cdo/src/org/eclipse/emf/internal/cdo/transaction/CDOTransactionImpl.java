@@ -45,7 +45,6 @@ import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -64,10 +63,10 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
-import org.eclipse.emf.spi.cdo.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -129,7 +128,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 2.0
    */
   @Override
-  protected OptionsImpl initOptions()
+  protected OptionsImpl createOptions()
   {
     return new OptionsImpl();
   }

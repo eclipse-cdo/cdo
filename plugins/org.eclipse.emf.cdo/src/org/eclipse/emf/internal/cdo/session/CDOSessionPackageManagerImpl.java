@@ -18,14 +18,10 @@ import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageManagerImpl;
 import org.eclipse.emf.cdo.session.CDOSessionPackageManager;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.LoadPackageRequest;
 import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.emf.ecore.EClass;
@@ -158,22 +154,10 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
       }
     }
 
-    try
+    session.getSessionProtocol().loadPackage(cdoPackage, false);
+    if (!cdoPackage.isDynamic())
     {
-      CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-      new LoadPackageRequest(protocol, cdoPackage, false).send();
-      if (!cdoPackage.isDynamic())
-      {
-        OM.LOG.info("Dynamic package created for " + cdoPackage.getPackageURI());
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransportException(ex);
+      OM.LOG.info("Dynamic package created for " + cdoPackage.getPackageURI());
     }
   }
 
@@ -182,19 +166,6 @@ public class CDOSessionPackageManagerImpl extends CDOPackageManagerImpl implemen
    */
   public void loadPackageEcore(CDOPackage cdoPackage)
   {
-    try
-    {
-      CDOClientProtocol protocol = (CDOClientProtocol)session.getProtocol();
-      String ecore = new LoadPackageRequest(protocol, cdoPackage, true).send();
-      ((InternalCDOPackage)cdoPackage).setEcore(ecore);
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new TransportException(ex);
-    }
+    session.getSessionProtocol().loadPackage(cdoPackage, true);
   }
 }

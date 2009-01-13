@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.session.remote;
 
-
 /**
  * @author Eike Stepper
  */

@@ -24,13 +24,13 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -19,24 +19,21 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
-import org.eclipse.emf.internal.cdo.protocol.CDOClientProtocol;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionCancelRequest;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase1Request;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase2Request;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionPhase3Request;
-import org.eclipse.emf.internal.cdo.protocol.CommitTransactionResult;
-
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchonizedSubProgressMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
-import org.eclipse.emf.spi.cdo.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -85,7 +82,7 @@ import java.util.concurrent.TimeoutException;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CDOXATransactionImpl implements CDOXATransaction
+public class CDOXATransactionImpl implements InternalCDOXATransaction
 {
   private List<InternalCDOTransaction> transactions = new ArrayList<InternalCDOTransaction>();
 
@@ -93,13 +90,13 @@ public class CDOXATransactionImpl implements CDOXATransaction
 
   private ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-  private Map<InternalCDOTransaction, CDOXATransactionCommitContext> activeContext = new HashMap<InternalCDOTransaction, CDOXATransactionCommitContext>();
+  private Map<InternalCDOTransaction, CDOXACommitContextImpl> activeContext = new HashMap<InternalCDOTransaction, CDOXACommitContextImpl>();
 
   private Map<InternalCDOTransaction, Set<CDOID>> requestedCDOID = new HashMap<InternalCDOTransaction, Set<CDOID>>();
 
-  private CDOXASavepoint lastSavepoint = new CDOXASavepoint(this, null);
+  private CDOXASavepointImpl lastSavepoint = new CDOXASavepointImpl(this, null);
 
-  private CDOXASavepoint firstSavepoint = lastSavepoint;
+  private CDOXASavepointImpl firstSavepoint = lastSavepoint;
 
   private CDOTransactionStrategy transactionStrategy = new CDOXATransactionStrategyImpl();
 
@@ -182,12 +179,12 @@ public class CDOXATransactionImpl implements CDOXATransaction
     return ids.toArray(new CDOID[ids.size()]);
   }
 
-  public CDOXATransactionCommitContext getCommitContext(CDOTransaction transaction)
+  public CDOXACommitContextImpl getCommitContext(CDOTransaction transaction)
   {
     return activeContext.get(transaction);
   }
 
-  private void send(Collection<CDOXATransactionCommitContext> xaContexts, final IProgressMonitor progressMonitor)
+  private void send(Collection<CDOXACommitContextImpl> xaContexts, final IProgressMonitor progressMonitor)
       throws InterruptedException, ExecutionException
   {
     progressMonitor.beginTask("", xaContexts.size());
@@ -195,7 +192,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     try
     {
       List<Future<Object>> futures = new ArrayList<Future<Object>>();
-      for (CDOXATransactionCommitContext xaContext : xaContexts)
+      for (CDOXACommitContextImpl xaContext : xaContexts)
       {
         xaContext.setProgressMonitor(new SynchonizedSubProgressMonitor(progressMonitor, 1));
         futures.add(executorService.submit(xaContext));
@@ -221,7 +218,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     finally
     {
       progressMonitor.done();
-      for (CDOXATransactionCommitContext xaContext : xaContexts)
+      for (CDOXACommitContextImpl xaContext : xaContexts)
       {
         xaContext.setProgressMonitor(null);
       }
@@ -262,7 +259,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     for (InternalCDOTransaction transaction : transactions)
     {
       InternalCDOCommitContext context = transaction.createCommitContext();
-      CDOXATransactionCommitContext xaContext = new CDOXATransactionCommitContext(this, context);
+      CDOXACommitContextImpl xaContext = new CDOXACommitContextImpl(this, context);
       xaContext.setState(CDOXAPhase1State.INSTANCE);
       activeContext.put(transaction, xaContext);
     }
@@ -281,7 +278,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
       if (phase < 2)
       {
         // Phase 0 and 1 are the only two phases we can cancel.
-        for (CDOXATransactionCommitContext transaction : activeContext.values())
+        for (CDOXACommitContextImpl transaction : activeContext.values())
         {
           transaction.setState(CDOXACancel.INSTANCE);
         }
@@ -307,7 +304,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     }
   }
 
-  public CDOXASavepoint getLastSavepoint()
+  public CDOXASavepointImpl getLastSavepoint()
   {
     return lastSavepoint;
   }
@@ -334,7 +331,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
       throw new IllegalArgumentException("Savepoint isn't valid : " + savepoint);
     }
 
-    CDOXASavepoint savepointSet = (CDOXASavepoint)savepoint;
+    CDOXASavepointImpl savepointSet = (CDOXASavepointImpl)savepoint;
     List<CDOSavepoint> savepoints = savepointSet.getSavepoints();
     if (savepoints == null)
     {
@@ -344,7 +341,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     for (CDOSavepoint indexSavePoint : savepoints)
     {
       InternalCDOTransaction transaction = (InternalCDOTransaction)indexSavePoint.getUserTransaction();
-      CDOSingleTransactionStrategy.INSTANCE.rollback(transaction, indexSavePoint);
+      CDOSingleTransactionStrategyImpl.INSTANCE.rollback(transaction, indexSavePoint);
     }
 
     lastSavepoint = savepointSet;
@@ -358,11 +355,11 @@ public class CDOXATransactionImpl implements CDOXATransaction
     for (CDOSavepoint savepoint : savepoints)
     {
       InternalCDOTransaction transaction = (InternalCDOTransaction)savepoint.getUserTransaction();
-      CDOSingleTransactionStrategy.INSTANCE.setSavepoint(transaction);
+      CDOSingleTransactionStrategyImpl.INSTANCE.setSavepoint(transaction);
     }
 
     getLastSavepoint().setSavepoints(savepoints);
-    lastSavepoint = new CDOXASavepoint(this, getLastSavepoint());
+    lastSavepoint = new CDOXASavepointImpl(this, getLastSavepoint());
     return lastSavepoint;
   }
 
@@ -440,7 +437,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
     public static final CDOXAState DONE = new CDOXAState()
     {
       @Override
-      protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
+      protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
       {
         progressMonitor.done();
       }
@@ -454,8 +451,7 @@ public class CDOXATransactionImpl implements CDOXATransaction
       }
     }
 
-    protected abstract void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor)
-        throws Exception;
+    protected abstract void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception;
   };
 
   /**
@@ -466,18 +462,18 @@ public class CDOXATransactionImpl implements CDOXATransaction
     public static final CDOXAPhase1State INSTANCE = new CDOXAPhase1State();
 
     @Override
-    protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
+    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       xaContext.preCommit();
       CommitTransactionResult result = null;
       if (xaContext.getTransaction().isDirty())
       {
-        // Phase 1
-        CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
-        CommitTransactionPhase1Request request = new CommitTransactionPhase1Request(protocol, xaContext);
-        result = request.send(new EclipseMonitor(progressMonitor));
+        CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
+        OMMonitor monitor = new EclipseMonitor(progressMonitor);
+        result = sessionProtocol.commitTransactionPhase1(xaContext, monitor);
         check_result(result);
       }
+
       xaContext.setResult(result);
       xaContext.setState(CDOXAPhase2State.INSTANCE);
     }
@@ -495,16 +491,16 @@ public class CDOXATransactionImpl implements CDOXATransaction
     }
 
     @Override
-    protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
+    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       if (xaContext.getTransaction().isDirty())
       {
-        // Phase 2
-        CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
-        CommitTransactionPhase2Request request = new CommitTransactionPhase2Request(protocol, xaContext);
-        CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+        CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
+        OMMonitor monitor = new EclipseMonitor(progressMonitor);
+        CommitTransactionResult result = sessionProtocol.commitTransactionPhase2(xaContext, monitor);
         check_result(result);
       }
+
       xaContext.setState(CDOXAPhase3State.INSTANCE);
     }
   };
@@ -521,14 +517,13 @@ public class CDOXATransactionImpl implements CDOXATransaction
     }
 
     @Override
-    protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
+    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
     {
-      // Phase 2
       if (xaContext.getTransaction().isDirty())
       {
-        CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
-        CommitTransactionPhase3Request request = new CommitTransactionPhase3Request(protocol, xaContext);
-        CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+        CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
+        OMMonitor monitor = new EclipseMonitor(progressMonitor);
+        CommitTransactionResult result = sessionProtocol.commitTransactionPhase3(xaContext, monitor);
         check_result(result);
       }
       xaContext.postCommit(xaContext.getResult());
@@ -548,12 +543,11 @@ public class CDOXATransactionImpl implements CDOXATransaction
     }
 
     @Override
-    protected void handle(CDOXATransactionCommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
+    protected void handle(CDOXACommitContextImpl xaContext, IProgressMonitor progressMonitor) throws Exception
     {
-      // Phase 2
-      CDOClientProtocol protocol = (CDOClientProtocol)xaContext.getTransaction().getSession().getProtocol();
-      CommitTransactionCancelRequest request = new CommitTransactionCancelRequest(protocol, xaContext);
-      CommitTransactionResult result = request.send(new EclipseMonitor(progressMonitor));
+      CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
+      OMMonitor monitor = new EclipseMonitor(progressMonitor);
+      CommitTransactionResult result = sessionProtocol.commitTransactionCancel(xaContext, monitor);
       check_result(result);
     }
   };

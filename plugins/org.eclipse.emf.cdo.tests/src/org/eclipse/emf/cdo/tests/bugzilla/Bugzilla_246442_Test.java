@@ -67,7 +67,10 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
     }
 
     CDOSession session = openSession();
-    session.getProtocol().setTimeout(2000L);
+    if (session instanceof org.eclipse.emf.cdo.net4j.CDOSession)
+    {
+      ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);
+    }
 
     CDOTransaction transaction = session.openTransaction();
     transaction.getObject(lookupObject);

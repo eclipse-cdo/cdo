@@ -1791,7 +1791,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     throw new UnsupportedOperationException();
 
-    // CDOUtil.getResources(editingDomain.getResourceSet()).get(0).setURI(uri);
+    // CDONet4jUtil.getResources(editingDomain.getResourceSet()).get(0).setURI(uri);
     // setInputWithNotify(editorInput);
     // setPartName(editorInput.getName());
     // IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

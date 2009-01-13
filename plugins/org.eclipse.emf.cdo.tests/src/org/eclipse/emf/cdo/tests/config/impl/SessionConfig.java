@@ -10,12 +10,12 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
-import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.session.CDOPackageTypeRegistryImpl;
 
@@ -147,7 +147,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   private CDOSessionConfiguration createSessionConfiguration(String repositoryName)
   {
-    CDOSessionConfiguration configuration = CDOUtil.createSessionConfiguration();
+    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
     configuration.setConnector(getConnector());
     configuration.setRepositoryName(repositoryName);
     return configuration;

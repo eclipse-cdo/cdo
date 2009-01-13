@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.spi.cdo.CDOObjectConflictResolver.MergeLocalChangesPerFeature;
+import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature;
 
 /**
  * @author Simon McDuff

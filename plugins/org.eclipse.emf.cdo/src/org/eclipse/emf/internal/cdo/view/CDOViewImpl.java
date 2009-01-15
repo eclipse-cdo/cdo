@@ -1496,19 +1496,21 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     protected synchronized void attachObject(CDOObject object)
     {
-      CDOAdapterPolicy strongReferencePolicy = options().getStrongReferencePolicy();
-      int count = 0;
-      for (Adapter adapter : object.eAdapters())
+      if (((InternalEObject)object).eNotificationRequired())
       {
-        if (strongReferencePolicy.isValid(object, adapter))
+        CDOAdapterPolicy strongReferencePolicy = options().getStrongReferencePolicy();
+        int count = 0;
+        for (Adapter adapter : object.eAdapters())
         {
-          count++;
+          if (strongReferencePolicy.isValid(object, adapter))
+          {
+            count++;
+          }
         }
-      }
-
-      for (int i = 0; i < count; i++)
-      {
-        objects.add(object);
+        for (int i = 0; i < count; i++)
+        {
+          objects.add(object);
+        }
       }
     }
 

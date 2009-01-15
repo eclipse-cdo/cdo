@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.collection.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,6 +35,12 @@ import java.util.List;
 public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOListFeatureDelta
 {
   private List<CDOFeatureDelta> featureDeltas = new ArrayList<CDOFeatureDelta>();
+
+  transient private int[] cacheIndices = null;
+
+  transient private IListTargetAdding[] cacheSources = null;
+
+  transient private List<CDOFeatureDelta> notProcessedFeatureDelta = null;
 
   public CDOListFeatureDeltaImpl(CDOFeature feature)
   {
@@ -88,26 +95,60 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
    * 
    * @return never <code>null</code>.
    */
+
   public Pair<IListTargetAdding[], int[]> reconstructAddedIndices()
   {
-    int[] indices = new int[1 + featureDeltas.size()];
-    IListTargetAdding[] sources = new IListTargetAdding[1 + featureDeltas.size()];
-    for (CDOFeatureDelta featureDelta : featureDeltas)
+    reconstructAddedIndicesWithNoCopy();
+    return new Pair<IListTargetAdding[], int[]>(Arrays.copyOf(cacheSources, cacheSources.length), Arrays.copyOf(
+        cacheIndices, cacheIndices.length));
+  }
+
+  private void reconstructAddedIndicesWithNoCopy()
+  {
+    if (cacheIndices == null || notProcessedFeatureDelta != null)
     {
-      if (featureDelta instanceof IListIndexAffecting)
+      if (cacheIndices == null)
       {
-        IListIndexAffecting affecting = (IListIndexAffecting)featureDelta;
-        affecting.affectIndices(sources, indices);
+        cacheIndices = new int[1 + featureDeltas.size()];
+      }
+      else if (cacheIndices.length <= 1 + featureDeltas.size())
+      {
+        int newCapacity = Math.max(10, cacheIndices.length * 3 / 2 + 1);
+        int[] newElements = new int[newCapacity];
+        System.arraycopy(cacheIndices, 0, newElements, 0, cacheIndices.length);
+        cacheIndices = newElements;
       }
 
-      if (featureDelta instanceof IListTargetAdding)
+      if (cacheSources == null)
       {
-        indices[++indices[0]] = ((IListTargetAdding)featureDelta).getIndex();
-        sources[indices[0]] = (IListTargetAdding)featureDelta;
+        cacheSources = new IListTargetAdding[1 + featureDeltas.size()];
       }
+      else if (cacheSources.length <= 1 + featureDeltas.size())
+      {
+        int newCapacity = Math.max(10, cacheSources.length * 3 / 2 + 1);
+        IListTargetAdding[] newElements = new IListTargetAdding[newCapacity];
+        System.arraycopy(cacheSources, 0, newElements, 0, cacheSources.length);
+        cacheSources = newElements;
+      }
+      List<CDOFeatureDelta> featureDeltasToBeProcess = notProcessedFeatureDelta == null ? featureDeltas
+          : notProcessedFeatureDelta;
+
+      for (CDOFeatureDelta featureDelta : featureDeltasToBeProcess)
+      {
+        if (featureDelta instanceof IListIndexAffecting)
+        {
+          IListIndexAffecting affecting = (IListIndexAffecting)featureDelta;
+          affecting.affectIndices(cacheSources, cacheIndices);
+        }
+
+        if (featureDelta instanceof IListTargetAdding)
+        {
+          cacheIndices[++cacheIndices[0]] = ((IListTargetAdding)featureDelta).getIndex();
+          cacheSources[cacheIndices[0]] = (IListTargetAdding)featureDelta;
+        }
+      }
+      notProcessedFeatureDelta = null;
     }
-
-    return new Pair<IListTargetAdding[], int[]>(sources, indices);
   }
 
   private void cleanupWithNewDelta(CDOFeatureDelta featureDelta)
@@ -116,19 +157,27 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     if (feature.isReference() && featureDelta instanceof CDORemoveFeatureDelta)
     {
       int indexToRemove = ((CDORemoveFeatureDelta)featureDelta).getIndex();
-      Pair<IListTargetAdding[], int[]> sourcesAndIndices = reconstructAddedIndices();
-      IListTargetAdding[] sources = sourcesAndIndices.getElement1();
-      int[] indices = sourcesAndIndices.getElement2();
 
-      for (int i = 1; i <= indices[0]; i++)
+      reconstructAddedIndicesWithNoCopy();
+
+      for (int i = 1; i <= cacheIndices[0]; i++)
       {
-        int index = indices[i];
+        int index = cacheIndices[i];
         if (indexToRemove == index)
         {
-          sources[i].clear();
+          cacheSources[i].clear();
           break;
         }
       }
+    }
+
+    if (cacheIndices != null)
+    {
+      if (notProcessedFeatureDelta == null)
+      {
+        notProcessedFeatureDelta = new ArrayList<CDOFeatureDelta>();
+      }
+      notProcessedFeatureDelta.add(featureDelta);
     }
   }
 

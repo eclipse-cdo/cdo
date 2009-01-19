@@ -25,8 +25,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.net4j.util.collection.Pair;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -99,8 +99,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public Pair<IListTargetAdding[], int[]> reconstructAddedIndices()
   {
     reconstructAddedIndicesWithNoCopy();
-    return new Pair<IListTargetAdding[], int[]>(Arrays.copyOf(cacheSources, cacheSources.length), Arrays.copyOf(
-        cacheIndices, cacheIndices.length));
+    return new Pair<IListTargetAdding[], int[]>(copyOf(cacheSources, cacheSources.length, cacheSources.getClass()),
+        copyOf(cacheIndices, cacheIndices.length));
   }
 
   private void reconstructAddedIndicesWithNoCopy()
@@ -207,5 +207,27 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
+  }
+
+  /**
+   * Copied from JAVA 1.6 Arrays.copyOf
+   */
+  @SuppressWarnings("unchecked")
+  private static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType)
+  {
+    T[] copy = (Object)newType == (Object)Object[].class ? (T[])new Object[newLength] : (T[])Array.newInstance(newType
+        .getComponentType(), newLength);
+    System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+    return copy;
+  }
+
+  /**
+   * Copied from JAVA 1.6 Arrays.copyOf
+   */
+  private static int[] copyOf(int[] original, int newLength)
+  {
+    int[] copy = new int[newLength];
+    System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+    return copy;
   }
 }

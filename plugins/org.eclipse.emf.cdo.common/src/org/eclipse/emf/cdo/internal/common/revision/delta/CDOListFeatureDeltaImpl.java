@@ -27,6 +27,7 @@ import org.eclipse.net4j.util.collection.Pair;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,11 +37,11 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 {
   private List<CDOFeatureDelta> featureDeltas = new ArrayList<CDOFeatureDelta>();
 
-  transient private int[] cacheIndices = null;
+  private transient int[] cacheIndices;
 
-  transient private IListTargetAdding[] cacheSources = null;
+  private transient IListTargetAdding[] cacheSources;
 
-  transient private List<CDOFeatureDelta> notProcessedFeatureDelta = null;
+  private transient List<CDOFeatureDelta> notProcessedFeatureDelta;
 
   public CDOListFeatureDeltaImpl(CDOFeature feature)
   {
@@ -95,7 +96,6 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
    * 
    * @return never <code>null</code>.
    */
-
   public Pair<IListTargetAdding[], int[]> reconstructAddedIndices()
   {
     reconstructAddedIndicesWithNoCopy();
@@ -130,6 +130,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         System.arraycopy(cacheSources, 0, newElements, 0, cacheSources.length);
         cacheSources = newElements;
       }
+
       List<CDOFeatureDelta> featureDeltasToBeProcess = notProcessedFeatureDelta == null ? featureDeltas
           : notProcessedFeatureDelta;
 
@@ -147,6 +148,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
           cacheSources[cacheIndices[0]] = (IListTargetAdding)featureDelta;
         }
       }
+
       notProcessedFeatureDelta = null;
     }
   }
@@ -157,7 +159,6 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     if (feature.isReference() && featureDelta instanceof CDORemoveFeatureDelta)
     {
       int indexToRemove = ((CDORemoveFeatureDelta)featureDelta).getIndex();
-
       reconstructAddedIndicesWithNoCopy();
 
       for (int i = 1; i <= cacheIndices[0]; i++)
@@ -177,6 +178,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
       {
         notProcessedFeatureDelta = new ArrayList<CDOFeatureDelta>();
       }
+
       notProcessedFeatureDelta.add(featureDelta);
     }
   }
@@ -210,7 +212,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   }
 
   /**
-   * Copied from JAVA 1.6 Arrays.copyOf
+   * Copied from JAVA 1.6 {@link Arrays Arrays.copyOf}.
    */
   @SuppressWarnings("unchecked")
   private static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType)
@@ -222,7 +224,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   }
 
   /**
-   * Copied from JAVA 1.6 Arrays.copyOf
+   * Copied from JAVA 1.6 {@link Arrays Arrays.copyOf}.
    */
   private static int[] copyOf(int[] original, int newLength)
   {

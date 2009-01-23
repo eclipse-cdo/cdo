@@ -19,6 +19,7 @@ import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPConnector;
+import org.eclipse.net4j.tcp.ITCPNegotiationContext;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -369,7 +370,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   /**
    * @author Eike Stepper
    */
-  private final class TCPNegotiationContext extends NegotiationContext
+  private final class TCPNegotiationContext extends NegotiationContext implements ITCPNegotiationContext
   {
     private IBuffer buffer;
 
@@ -377,6 +378,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
     public TCPNegotiationContext()
     {
+    }
+
+    public TCPConnector getConnector()
+    {
+      return TCPConnector.this;
     }
 
     public void setUserID(String userID)

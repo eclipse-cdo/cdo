@@ -1507,6 +1507,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
             count++;
           }
         }
+
         for (int i = 0; i < count; i++)
         {
           objects.add(object);

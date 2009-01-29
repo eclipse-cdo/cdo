@@ -10,16 +10,26 @@
  */
 package org.eclipse.emf.cdo.ui.ide;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.ide.Node.PackagesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
+import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
+import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.edit.EMFEditPlugin;
@@ -27,15 +37,24 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory.Descriptor.Registry;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -48,6 +67,8 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
   private ComposedAdapterFactory adapterFactory;
 
   private Map<IRepositoryProject, RepositoryInfo> infos = new HashMap<IRepositoryProject, RepositoryInfo>();
+
+  private Map<IRepositoryProject, RepositoryCDOEventHandler> eventHandlers = new HashMap<IRepositoryProject, RepositoryCDOEventHandler>();
 
   private boolean sessionsNodeHidden;
 
@@ -240,10 +261,29 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     {
       info = new RepositoryInfo(repositoryProject);
       infos.put(repositoryProject, info);
+
+      wireUpViewerRefresher(repositoryProject, info);
+      prepareViewerEventHandlers();
+
       // TODO Get rid of info mappings that are no longer needed (lifecycle or weakref)
     }
 
     return info;
+  }
+
+  private void prepareViewerEventHandlers()
+  {
+    // Mouse double-click
+    getViewer().addDoubleClickListener(new MouseListener());
+
+    // TODO Keyboard actions.
+  }
+
+  private void wireUpViewerRefresher(IRepositoryProject repositoryProject, RepositoryInfo info)
+  {
+    // Handles invalidated objects
+    eventHandlers.put(repositoryProject, new RepositoryCDOEventHandler(info.getResources(),
+        repositoryProject.getView(), (TreeViewer)getViewer()));
   }
 
   public static ComposedAdapterFactory createAdapterFactory()
@@ -252,6 +292,87 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
     return adapterFactory;
+  }
+
+  /**
+   * @author Victor Roldan Betancort
+   */
+  private final class RepositoryCDOEventHandler extends CDOEventHandler
+  {
+    private Node resourcesNode;
+
+    public RepositoryCDOEventHandler(Node resourcesNode, CDOView view, TreeViewer treeViewer)
+    {
+      super(view, treeViewer);
+      this.resourcesNode = resourcesNode;
+    }
+
+    @Override
+    protected void objectInvalidated(InternalCDOObject cdoObject)
+    {
+      if (cdoObject instanceof CDOLegacyWrapper)
+      {
+        CDOStateMachine.INSTANCE.read(cdoObject);
+      }
+
+      if (cdoObject instanceof CDOResource)
+      {
+        if (((CDOResource)cdoObject).isRoot())
+        {
+          refreshViewer(true);
+          return;
+        }
+      }
+
+      refreshElement(cdoObject, true);
+    }
+
+    @Override
+    protected void viewInvalidated(Set<? extends CDOObject> dirtyObjects)
+    {
+      // Necessary when the parent of the dirtyObject is ResourcesNode
+      // (since viewer.getInput() is IWorkspaceRoot)
+      for (CDOObject cdoObject : dirtyObjects)
+      {
+        if (cdoObject instanceof CDOResource)
+        {
+          if (((CDOResource)cdoObject).isRoot())
+          {
+            refreshElement(resourcesNode, true);
+            return;
+          }
+        }
+      }
+
+      super.viewInvalidated(dirtyObjects);
+    }
+
+    @Override
+    protected void viewConflict(final CDOObject conflictingObject, boolean firstConflict)
+    {
+      refreshElement(conflictingObject, true);
+    }
+
+    @Override
+    protected void viewClosed()
+    {
+      // TODO what should we do here? CDOObjects become disconnected, exceptions could arise everywhere
+      // Temporary closing the project.
+
+      try
+      {
+        resourcesNode.getRepositoryProject().getProject().close(new NullProgressMonitor());
+      }
+      catch (CoreException ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
+    @Override
+    protected void viewDirtyStateChanged()
+    {
+    }
   }
 
   /**
@@ -290,6 +411,27 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     public ResourcesNode getResources()
     {
       return resources;
+    }
+  }
+
+  /**
+   * @author Victor Roldan Betancort
+   */
+  private static final class MouseListener implements IDoubleClickListener
+  {
+    public MouseListener()
+    {
+    }
+
+    public void doubleClick(DoubleClickEvent event)
+    {
+      Object selection = UIUtil.getElement(event.getSelection());
+      if (selection instanceof CDOResource)
+      {
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        CDOView view = ((CDOResource)selection).cdoView().getSession().openTransaction();
+        CDOEditor.open(page, view, ((CDOResource)selection).getPath());
+      }
     }
   }
 }

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.ui.ide;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -123,8 +124,16 @@ public abstract class Node
       List<EPackage> children = new ArrayList<EPackage>();
       for (String nsURI : packageRegistry.keySet())
       {
-        EPackage ePackage = packageRegistry.getEPackage(nsURI);
-        children.add(ePackage);
+        try
+        {
+          EPackage ePackage = packageRegistry.getEPackage(nsURI);
+          children.add(ePackage);
+        }
+        catch (org.eclipse.emf.cdo.common.util.CDOException ex)
+        {
+          // Generated packages could not be locally available
+          OM.LOG.error(ex);
+        }
       }
 
       return children.toArray(new EPackage[children.size()]);

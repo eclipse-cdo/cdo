@@ -31,9 +31,12 @@ import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.PlatformUI;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -75,6 +78,8 @@ public class CDOEventHandler
       if (event instanceof CDOViewInvalidationEvent)
       {
         CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
+        // Remove detached object from selection, could incur into unwanted exceptions
+        checkDetachedSelection(e.getDetachedObjects());
         viewInvalidated(e.getDirtyObjects());
       }
       else if (event instanceof CDOTransactionFinishedEvent)
@@ -150,6 +155,31 @@ public class CDOEventHandler
       }
     }
   };
+
+  private void checkDetachedSelection(final Set<?> detachedObjects)
+  {
+    treeViewer.getControl().getDisplay().syncExec(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+          List<?> selectedElements = selection.toList();
+          for (Object object : selectedElements)
+          {
+            if (detachedObjects.contains(object))
+            {
+              treeViewer.setSelection(StructuredSelection.EMPTY);
+            }
+          }
+        }
+        catch (Exception ignore)
+        {
+        }
+      }
+    });
+  }
 
   /**
    * @since 2.0

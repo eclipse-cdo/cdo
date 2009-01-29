@@ -75,6 +75,61 @@
                menubarPath="team.main/projectGroup">
          </action>
       </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.core.resources.IProjectContributions"
+            objectClass="org.eclipse.emf.cdo.ui.ide.Node$ResourcesNode">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
+               icon="icons/full/elcl16/NewCDOResource.gif"
+               id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
+               label="New CDOResource">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.core.resources.IProjectContributions"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
+               icon="icons/full/elcl16/NewCDOResource.gif"
+               id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
+               label="New CDOResource">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.core.resources.IProjectContributions"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResourceNode">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceAction"
+               icon="icons/full/elcl16/delete_edit.gif"
+               id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
+               label="Remove">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.core.resources.IProjectContributions"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
+               icon="icons/full/elcl16/NewCDOResourceFolder.gif"
+               id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
+               label="New Folder">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.core.resources.IProjectContributions"
+            objectClass="org.eclipse.emf.cdo.ui.ide.Node$ResourcesNode">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
+               icon="icons/full/elcl16/NewCDOResourceFolder.gif"
+               id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
+               label="New Folder">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>

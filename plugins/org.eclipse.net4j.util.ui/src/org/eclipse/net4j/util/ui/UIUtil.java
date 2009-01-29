@@ -34,6 +34,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
@@ -191,6 +193,21 @@ public final class UIUtil
       return result;
     }
 
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> List<T> getElements(ISelection selection, Class<T> type)
+  {
+    if (selection instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+      return ssel.toList();
+    }
+  
     return null;
   }
 

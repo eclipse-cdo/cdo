@@ -31,7 +31,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -327,6 +329,11 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
         if (value == null)
         {
           stmt.setNull(col++, attributeMapping.getField().getType().getCode());
+        }
+        else if (value instanceof java.util.Date)
+        {
+          // BUG 217255
+          stmt.setTimestamp(col++, new Timestamp(((Date)value).getTime()));
         }
         else
         {

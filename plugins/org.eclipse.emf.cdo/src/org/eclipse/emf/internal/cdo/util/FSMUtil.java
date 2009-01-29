@@ -75,6 +75,18 @@ public final class FSMUtil
         || object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
   }
 
+  public static boolean isWatchable(Object obj)
+  {
+    // Only CLEAN and DIRTY CDOObjects are watchable
+    if (obj instanceof CDOObject)
+    {
+      CDOObject cdoObject = (CDOObject)obj;
+      return cdoObject.cdoState() == CDOState.CLEAN || cdoObject.cdoState() == CDOState.DIRTY;
+    }
+    
+    return false;
+  }
+
   /**
    * @param view
    *          Only needed if object is a meta instance.

@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.container.IContainer.Modifiable;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import java.util.ArrayList;
+
 /**
  * @author Victor Roldan Betancort
  */
@@ -29,9 +31,12 @@ public class RemoveAllContainerItemAction<E> extends AbstractContainerAction<E>
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     Modifiable<E> container = getContainer();
+    ArrayList<E> elementsToRemove = new ArrayList<E>();
     for (E element : container.getElements())
     {
-      container.removeElement(element);
+      elementsToRemove.add(element);
     }
+    
+    container.removeAllElements(elementsToRemove);
   }
 }

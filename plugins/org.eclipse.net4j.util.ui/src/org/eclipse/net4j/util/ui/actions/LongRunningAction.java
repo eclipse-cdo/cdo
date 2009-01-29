@@ -96,11 +96,6 @@ public abstract class LongRunningAction extends SafeAction
     super(text);
   }
 
-  public void setPage(IWorkbenchPage page)
-  {
-    this.page = page;
-  }
-
   public IWorkbenchPage getPage()
   {
     if (page != null)
@@ -115,6 +110,11 @@ public abstract class LongRunningAction extends SafeAction
     }
 
     return null;
+  }
+
+  public void setPage(IWorkbenchPage page)
+  {
+    this.page = page;
   }
 
   public IWorkbenchWindow getWorkbenchWindow()

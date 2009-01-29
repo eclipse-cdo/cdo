@@ -209,25 +209,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
 
   public void refreshViewer()
   {
-    try
-    {
-      currentViewer.getControl().getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            currentViewer.refresh();
-          }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (RuntimeException ignore)
-    {
-    }
+    UIUtil.refreshViewer(currentViewer);
   }
 
   public void selectionChanged(IWorkbenchPart part, ISelection sel)

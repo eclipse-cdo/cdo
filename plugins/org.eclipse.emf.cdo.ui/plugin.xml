@@ -34,10 +34,10 @@
       </view>
       <view
             category="org.eclipse.emf.cdo"
-            class="org.eclipse.emf.cdo.internal.ui.views.CDOSubscriptionsView"
+            class="org.eclipse.emf.cdo.internal.ui.views.CDOWatchListView"
             icon="icons/full/view16/watch_list.gif"
-            id="org.eclipse.emf.cdo.CDOSubscriptionsView"
-            name="CDO Subscriptions">
+            id="org.eclipse.emf.cdo.CDOWatchListView"
+            name="CDO Watch List">
       </view>
    </extension>
    

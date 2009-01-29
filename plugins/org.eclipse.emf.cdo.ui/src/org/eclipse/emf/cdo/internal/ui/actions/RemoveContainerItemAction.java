@@ -63,10 +63,7 @@ public class RemoveContainerItemAction<E> extends AbstractContainerAction<E>
       targets = null;
 
       IContainer.Modifiable<E> container = getContainer();
-      for (E target : useTargets)
-      {
-        container.removeElement(target);
-      }
+      container.removeAllElements(useTargets);
     }
   }
 }

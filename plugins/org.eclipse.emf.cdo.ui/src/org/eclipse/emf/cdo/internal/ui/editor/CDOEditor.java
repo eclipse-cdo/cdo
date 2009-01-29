@@ -1652,7 +1652,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                 saveOptions.put(CDOResource.OPTION_SAVE_PROGRESS_MONITOR, new SubProgressMonitor(monitor, 1));
                 resource.save(saveOptions);
               }
-              catch (final TransactionException exception)
+              catch (TransactionException exception)
               {
                 OM.LOG.error(exception);
                 final Shell shell = getSite().getShell();
@@ -2274,14 +2274,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
             getSite().getPage().closeEditor(CDOEditor.this, false);
             CDOEditor.this.dispose();
           }
-          catch (Exception ignore)
+          catch (RuntimeException ignore)
           {
+            // Do nothing
           }
         }
       });
     }
-    catch (Exception ignore)
+    catch (RuntimeException ignore)
     {
+      // Do nothing
     }
   }
 
@@ -2307,14 +2309,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               selectionViewer.refresh(element, true);
             }
           }
-          catch (Exception ignore)
+          catch (RuntimeException ignore)
           {
+            // Do nothing
           }
         }
       });
     }
-    catch (Exception ignore)
+    catch (RuntimeException ignore)
     {
+      // Do nothing
     }
   }
 

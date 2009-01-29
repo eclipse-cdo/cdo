@@ -17,6 +17,7 @@ import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -263,6 +264,34 @@ public final class UIUtil
       {
         gd.horizontalIndent = horizontalIndent;
       }
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static void refreshViewer(final Viewer viewer)
+  {
+    try
+    {
+      viewer.getControl().getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.refresh();
+          }
+          catch (RuntimeException ignore)
+          {
+            // Do nothing
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+      // Do nothing
     }
   }
 }

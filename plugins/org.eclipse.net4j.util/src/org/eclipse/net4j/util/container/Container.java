@@ -36,6 +36,20 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
     return elements == null || elements.length == 0;
   }
 
+  @Override
+  public void fireEvent(IEvent event)
+  {
+    if (event instanceof IContainerEvent<?>)
+    {
+      if (((IContainerEvent<?>)event).isEmpty())
+      {
+        return;
+      }
+    }
+
+    super.fireEvent(event);
+  }
+
   public void fireContainerEvent(E element, Kind kind)
   {
     fireEvent(newContainerEvent(element, kind));
@@ -94,19 +108,5 @@ public abstract class Container<E> extends Lifecycle implements IContainer<E>
   protected ContainerEvent<E> newContainerEvent()
   {
     return new ContainerEvent<E>(this);
-  }
-
-  @Override
-  public void fireEvent(IEvent event)
-  {
-    if (event instanceof IContainerEvent<?>)
-    {
-      if (((IContainerEvent<?>)event).isEmpty())
-      {
-        return;
-      }
-    }
-
-    super.fireEvent(event);
   }
 }

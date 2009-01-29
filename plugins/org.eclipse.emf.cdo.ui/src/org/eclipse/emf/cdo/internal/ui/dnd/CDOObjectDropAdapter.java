@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.internal.ui.dnd;
 
 import org.eclipse.emf.cdo.CDOObject;
 
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 
@@ -22,13 +24,14 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 
+import java.util.ArrayList;
+
 /**
  * @author Victor Roldan Betancort
  */
 public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
 {
-  private static final Transfer[] TRANSFERS = new Transfer[] { // CDOObjectTransfer.INSTANCE,
-  org.eclipse.emf.edit.ui.dnd.LocalTransfer.getInstance() };
+  private static final Transfer[] TRANSFERS = new Transfer[] { org.eclipse.emf.edit.ui.dnd.LocalTransfer.getInstance() };
 
   protected CDOObjectDropAdapter(StructuredViewer viewer)
   {
@@ -43,14 +46,16 @@ public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
     if (target instanceof IContainer.Modifiable<?>)
     {
       IContainer.Modifiable<CDOObject> objectContainer = (IContainer.Modifiable<CDOObject>)target;
+      ArrayList<CDOObject> elementsToAdd = new ArrayList<CDOObject>();
       for (Object obj : data.toArray())
       {
-        if (obj instanceof CDOObject)
+        if (FSMUtil.isWatchable(obj))
         {
-          objectContainer.addElement((CDOObject)obj);
+          elementsToAdd.add((CDOObject)obj);
         }
       }
-
+      
+      objectContainer.addAllElements(elementsToAdd);
       return true;
     }
 

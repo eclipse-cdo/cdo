@@ -7,10 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.event.INotifier;
+
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -27,8 +30,12 @@ public interface IContainer<E> extends INotifier
    */
   public interface Modifiable<E> extends IContainer<E>
   {
-    public void addElement(E element);
+    public boolean addElement(E element);
 
-    public void removeElement(E element);
+    public boolean addAllElements(Collection<E> elements);
+
+    public boolean removeElement(E element);
+
+    public boolean removeAllElements(Collection<E> elements);
   }
 }

@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.debug.RemoteTraceManager;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -114,24 +115,7 @@ public class RemoteTraceView extends ViewPart
 
   public void refreshViewer()
   {
-    if (isViewerAlive())
-    {
-      getSite().getShell().getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          if (isViewerAlive())
-          {
-            viewer.refresh();
-          }
-        }
-      });
-    }
-  }
-
-  private boolean isViewerAlive()
-  {
-    return viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed();
+    UIUtil.refreshViewer(viewer);
   }
 
   private void hookContextMenu()

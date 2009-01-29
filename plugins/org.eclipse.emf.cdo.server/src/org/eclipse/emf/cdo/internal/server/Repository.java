@@ -84,7 +84,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private List<WriteAccessHandler> writeAccessHandlers = new ArrayList<WriteAccessHandler>();
 
-  private IRepositoryElement[] elements;
+  @ExcludeFromDump
+  private transient IRepositoryElement[] elements;
 
   @ExcludeFromDump
   private transient long lastMetaID;

@@ -1028,21 +1028,28 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         public void commandStackChanged(final EventObject event)
         {
-          getContainer().getDisplay().asyncExec(new Runnable()
+          try
           {
-            public void run()
+            getContainer().getDisplay().asyncExec(new Runnable()
             {
-              Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-              if (mostRecentCommand != null)
+              public void run()
               {
-                setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+                Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+                if (mostRecentCommand != null)
+                {
+                  setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+                }
+                if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+                {
+                  propertySheetPage.refresh();
+                }
               }
-              if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
-              {
-                propertySheetPage.refresh();
-              }
-            }
-          });
+            });
+          }
+          catch (RuntimeException ex)
+          {
+            OM.LOG.error(ex);
+          }
         }
       });
 

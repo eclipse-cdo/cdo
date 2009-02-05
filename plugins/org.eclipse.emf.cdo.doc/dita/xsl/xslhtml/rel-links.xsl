@@ -388,7 +388,7 @@ Children are displayed in a numbered list, with the target title as the cmd and 
       <!-- It's to a DITA file - process the file name (adding the html extension)
       and process the rest of the href -->
       <xsl:when test="contains(@href,$DITAEXT)">
-        <xsl:value-of select="'?node='"/><xsl:value-of select="substring-before(@href,$DITAEXT)"/><xsl:value-of select="$OUTEXT"/><xsl:call-template name="parsehref"><xsl:with-param name="href" select="substring-after(@href,$DITAEXT)"/></xsl:call-template>
+        <xsl:value-of select="'?node='"/><xsl:value-of select="substring-before(@href,$DITAEXT)"/><!--<xsl:value-of select="$OUTEXT"/>--><xsl:call-template name="parsehref"><xsl:with-param name="href" select="substring-after(@href,$DITAEXT)"/></xsl:call-template>
       </xsl:when>
       <xsl:when test="@href=''"/>
       <xsl:otherwise>

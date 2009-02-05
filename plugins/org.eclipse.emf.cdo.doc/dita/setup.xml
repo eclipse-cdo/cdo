@@ -6,7 +6,7 @@
 	<property name="dita.ot" value="${basedir}/.ditaot" />
 
 	<target name="all">
-		<copy todir="${dita.ot}" overwrite="false" verbose="true" includeemptydirs="false">
+		<copy todir="${dita.ot}" overwrite="true" verbose="true" includeemptydirs="false">
 			<fileset dir="${dita.home}">
 				<include name="css/**/*" />
 				<include name="dtd/**/*" />
@@ -19,7 +19,7 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${dita.ot}/xsl" overwrite="true" verbose="true">
+		<copy todir="${dita.ot}/xsl" overwrite="true" verbose="true" includeemptydirs="false">
 			<fileset dir="xsl" includes="**/*" />
 		</copy>
 	</target>

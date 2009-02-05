@@ -13,11 +13,17 @@
 			<param name="output.dir" value="${basedir}/../../cdo/documentation/2.0" />
 			<param name="args.logdir" value="${basedir}/log" />
 		</antcall>
-		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TSTAMP} -->\1" flags="s" byline="false">
-			<fileset dir="${basedir}/../../cdo/documentation/2.0" includes="**/*.html" />
+		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TIME_STAMP} -->\1" flags="s" byline="false">
+			<fileset dir="${basedir}/../../cdo/documentation/2.0" includes="**/*.html" id="html_files" />
 		</replaceregexp>
-
+		<replaceregexp match="href=&quot;\?node=\.\./" replace="href=&quot;\?node=" flags="g">
+			<fileset refid="html_files" />
+		</replaceregexp>
 		<!--
+		<filterset>
+			<filter token="href=&quot;?node=../" value="href=&quot;?node=" />
+		</filterset>
+
 		<antcall target="dita2eclipsecontent">
 			<param name="args.input" value="${basedir}/src/CDO.ditamap" />
 			<param name="output.dir" value="${basedir}/eclipse" />
@@ -27,7 +33,9 @@
 	</target>
 
 	<target name="init">
-		<tstamp />
+		<tstamp>
+			<format property="TIME_STAMP" pattern="MMMM dd, yyyy, hh:mm aa" locale="en" />
+		</tstamp>
 	</target>
 
 </project>

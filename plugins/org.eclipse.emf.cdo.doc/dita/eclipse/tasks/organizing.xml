@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\temp\tasks?><?path2project ..\?><task xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="organize" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic task/task " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\organizing.xml" xtrc="task:1">
+<title class="- topic/title " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\organizing.xml" xtrc="title:1">Organizing the workbench and tools</title>
+<taskbody class="- topic/body task/taskbody " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\organizing.xml" xtrc="taskbody:1">
+<prereq class="- topic/section task/prereq " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\organizing.xml" xtrc="prereq:1"><p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\organizing.xml" xtrc="p:1">Keep your garage neat by organizing the things you keep in the
+garage. </p></prereq>
+</taskbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\CDO.ditamap" xtrc="topicref:3" mapkeyref="CDO"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:1" xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\CDO.ditamap" href="../tasks/garagetaskoverview.xml" role="parent"><linktext class="- topic/linktext ">Garage Tasks</linktext></link></linkpool></related-links>
+</task>

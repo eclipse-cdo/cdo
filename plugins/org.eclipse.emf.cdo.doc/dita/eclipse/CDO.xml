@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
-<toc label="CDO Model Repository" topic="concepts/ServerConfig.html?srcext=xml">
-<topic label="Server Configuration" href="concepts/ServerConfig.html?srcext=xml"/>
-<topic label="Server Configuration" href="concepts/ServerConfig.html?srcext=xml"/>
+<toc label="CDO Model Repository" topic="tasks/garagetaskoverview.html?srcext=xml">
+<topic label="Garage Tasks" href="tasks/garagetaskoverview.html?srcext=xml">
+<topic label="Changing the oil in your car" href="tasks/changingtheoil.html?srcext=xml"/>
+<topic label="Organizing the workbench and tools" href="tasks/organizing.html?srcext=xml"/>
+<topic label="Shovelling snow" href="tasks/shovellingsnow.html?srcext=xml"/>
+<topic label="Spray painting" href="tasks/spraypainting.html?srcext=xml"/>
+<topic label="Taking out the garbage" href="tasks/takinggarbage.html?srcext=xml"/>
+<topic label="Washing the car" href="tasks/washingthecar.html?srcext=xml"/>
+</topic>
+<topic label="Garage Concepts" href="concepts/garageconceptsoverview.html?srcext=xml">
+<topic label="Lawnmower" href="concepts/lawnmower.html?srcext=xml"/>
+<topic label="Oil" href="concepts/oil.html?srcext=xml"/>
+<topic label="Paint" href="concepts/paint.html?srcext=xml"/>
+<topic label="Shelving" href="concepts/shelving.html?srcext=xml"/>
+<topic label="Snow shovel" href="concepts/snowshovel.html?srcext=xml"/>
+<topic label="Tool box" href="concepts/toolbox.html?srcext=xml"/>
+<topic label="Tools" href="concepts/tools.html?srcext=xml"/>
+<topic label="Water hose" href="concepts/waterhose.html?srcext=xml"/>
+<topic label="Wheel barrow" href="concepts/wheelbarrow.html?srcext=xml"/>
+<topic label="Workbench" href="concepts/workbench.html?srcext=xml"/>
+<topic label="Windshield washer fluid" href="concepts/wwfluid.html?srcext=xml"/>
+</topic>
 </toc>

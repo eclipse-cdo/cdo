@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\temp\tasks?><?path2project ..\?><task xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="washcar" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic task/task " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="task:1">
+<title class="- topic/title " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="title:1">Washing the car</title>
+<taskbody class="- topic/body task/taskbody " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="taskbody:1">
+<context class="- topic/section task/context " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="context:1"><p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="p:1">Keep your car looking great by washing it regularly.</p></context>
+<steps class="- topic/ol task/steps " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="steps:1">
+<step class="- topic/li task/step " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="step:1"><cmd class="- topic/ph task/cmd " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="cmd:1">Move the car onto the driveway.</cmd>
+</step>
+<step class="- topic/li task/step " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="step:2"><cmd class="- topic/ph task/cmd " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="cmd:2">Attach the water hose to a spout and pull the free end over to
+the car.</cmd></step>
+<step class="- topic/li task/step " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="step:3"><cmd class="- topic/ph task/cmd " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="cmd:3">Fill a bucket with soapy water.</cmd></step>
+<step class="- topic/li task/step " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="step:4"><cmd class="- topic/ph task/cmd " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="cmd:4">Use a sponge to apply the soapy water to the car and
+scrub off the dirt.</cmd></step>
+<step class="- topic/li task/step " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="step:5"><cmd class="- topic/ph task/cmd " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="cmd:5">Rinse the car by spraying clean water
+from the hose.</cmd></step>
+<step class="- topic/li task/step " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="step:6"><cmd class="- topic/ph task/cmd " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="cmd:6">Dry the car using a dampened chamois.</cmd>
+</step>
+</steps>
+<result class="- topic/section task/result " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="result:1"><p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="p:2"><image href="../image/carwash.jpg" alt="washing the car" height="171" width="249" placement="inline" class="- topic/image " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="image:1"/></p></result>
+</taskbody>
+<related-links class="- topic/related-links " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="related-links:1"><linkpool class="- topic/linkpool " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\CDO.ditamap" xtrc="topicref:7" mapkeyref="CDO"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:1" xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\CDO.ditamap" href="../tasks/garagetaskoverview.xml" role="parent"><linktext class="- topic/linktext ">Garage Tasks</linktext></link></linkpool>
+<link href="../concepts/waterhose.xml" format="dita" type="concept" class="- topic/link " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="link:1"><linktext class="- topic/linktext " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\tasks\washingthecar.xml" xtrc="linktext:1">Water hose</linktext></link>
+</related-links>
+</task>

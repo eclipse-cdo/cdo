@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="setup-dita" default="all" basedir=".">
+
+	<property file="setup.properties" />
+	<property file="${user.home}/dita/build.properties" />
+	<property name="dita.ot" value="${basedir}/.ditaot" />
+
+	<target name="all">
+		<copy todir="${dita.ot}" overwrite="false" verbose="true" includeemptydirs="false">
+			<fileset dir="${dita.home}">
+				<include name="css/**/*" />
+				<include name="dtd/**/*" />
+				<include name="lib/**/*" />
+				<include name="css/**/*" />
+				<include name="resource/**/*" />
+				<include name="schema/**/*" />
+				<include name="xsl/**/*" />
+				<include name="*" />
+			</fileset>
+		</copy>
+
+		<copy todir="${dita.ot}/xsl" overwrite="true" verbose="true">
+			<fileset dir="xsl" includes="**/*" />
+		</copy>
+	</target>
+
+</project>

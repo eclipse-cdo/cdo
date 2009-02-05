@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="build-dita" default="all" basedir=".">
+
+	<property name="dita.home" value="/develop/lib/DITA-OT1.4.2.1" />
+	<property file="build.properties" />
+	<property file="${user.home}/dita/build.properties" />
+
+	<import file="${dita.home}/conductor.xml" />
+	<property name="dita.extname" value=".xml" />
+
+	<target name="all" depends="dita2xhtml">
+	</target>
+
+	<!-- revise below here -->
+	<target name="dita2xhtml" depends="use-init">
+		<!--
+		<antcall target="dita2xhtml">
+			<param name="args.input" value="${basedir}/src/CDO.ditamap" />
+			<param name="output.dir" value="${basedir}/output/xhtml" />
+			<param name="args.logdir" value="${basedir}/log" />
+		</antcall>
+		<antcall target="dita2htmlhelp">
+			<param name="args.input" value="${basedir}/src/CDO.ditamap" />
+			<param name="output.dir" value="${basedir}/output/htmlhelp" />
+			<param name="args.logdir" value="${basedir}/log" />
+		</antcall>
+		-->
+		
+		<antcall target="dita2eclipsecontent">
+			<param name="args.input" value="${basedir}/src/CDO.ditamap" />
+			<param name="output.dir" value="${basedir}/output/eclipse" />
+			<param name="args.logdir" value="${basedir}/log" />
+		</antcall>
+	</target>
+
+</project>

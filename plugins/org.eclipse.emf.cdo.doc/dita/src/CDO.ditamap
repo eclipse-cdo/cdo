@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN"
+					 					 "http://docs.oasis-open.org/dita/v1.1/OS/dtd/map.dtd">
+
+<map title="CDO Model Repository" id="CDO">
+	<topicref href="concepts/ServerConfig.xml"/>
+	<topicref href="concepts/ServerConfig.xml"/>
+</map>

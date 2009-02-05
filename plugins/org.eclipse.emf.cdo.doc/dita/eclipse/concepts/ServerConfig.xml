@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\temp\concepts?><?path2project ..\?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="ServerConfig" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="concept:1">
+	<title class="- topic/title " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="title:1">Server Configuration</title>
+	<abstract class="- topic/abstract " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="abstract:1">A server configuration file is needed 
+		to run the CDO server application. The following describes
+		the structure and usage of this file.</abstract>
+	
+	<conbody class="- topic/body  concept/conbody " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="conbody:1">
+		<p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="p:1">The source format is DITA-XML (i.e., XML documents validated against the DITA DTD).</p>
+
+		<p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="p:2">To write and edit content, you could use any validating XML editor (such as XMetaL Author, 
+		XMLSpy, oXygen, to name a few), or any more specialized desktop publishing editor that 
+		supports XML (such as Arbortext Epic Editor, or structured FrameMaker). 
+		Aside from specifics of functionality that vary from one tool to another, 
+		the authoring tool is mostly a matter of taste.</p>
+
+		<p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="p:3">The DITA-OT is effectively a delivery-format-generating tool by itself, 
+			though you could embed it into your own build system (or output tool) 
+			to provide more specialized processing.</p>
+
+		<p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="p:4">At Sybase, we have a production build system that wraps the DITA-OT to 
+			generate Eclipse doc plug-ins (along with PDF and Web/HTML output formats), 
+			and we have an "ad hoc" build system that wraps the DITA-OT for deployment 
+			on writer's desktop machines.</p>
+
+		<p class="- topic/p " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\concepts\ServerConfig.xml" xtrc="p:5">The EclipseCon 2007 tutorial, (3672) Eclipse &amp; DITA: Write Once, Use Everywhere! 
+			(http://www.eclipsecon.org/2007/index.php?page=sub/&amp;id=3672) includes a sample 
+			integration of the DITA-OT with the Eclipse workbench. This sample is the core 
+			of our "ad hoc" build system. (The sample should be available for download from 
+			Eclipsezilla by late February.)</p>
+	</conbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\CDO.ditamap" xtrc="topicref:1" mapkeyref="CDO"/><linkpool class="- topic/linkpool " xtrf="C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\dita\src\CDO.ditamap" xtrc="topicref:2" mapkeyref="CDO"/></related-links>
+</concept>

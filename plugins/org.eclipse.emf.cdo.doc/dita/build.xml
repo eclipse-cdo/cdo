@@ -9,7 +9,7 @@
 
 	<target name="all" depends="init">
 		<antcall target="dita2xhtml">
-			<param name="args.input" value="${basedir}/src/CDO.ditamap" />
+			<param name="args.input" value="${basedir}/src/index.ditamap" />
 			<param name="output.dir" value="${basedir}/../../cdo/documentation/2.0" />
 			<param name="args.logdir" value="${basedir}/log" />
 		</antcall>
@@ -25,7 +25,7 @@
 		</filterset>
 
 		<antcall target="dita2eclipsecontent">
-			<param name="args.input" value="${basedir}/src/CDO.ditamap" />
+			<param name="args.input" value="${basedir}/src/index.ditamap" />
 			<param name="output.dir" value="${basedir}/eclipse" />
 			<param name="args.logdir" value="${basedir}/log" />
 		</antcall>

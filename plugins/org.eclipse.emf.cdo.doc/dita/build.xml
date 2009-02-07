@@ -4,32 +4,46 @@
 	<property file="setup.properties" />
 	<property file="${user.home}/dita/build.properties" />
 	<property name="dita.ot" value="${basedir}/.ditaot" />
+	<property name="target.dir" value="${basedir}/../../cdo/documentation/2.0" />
 
 	<import file="${dita.ot}/conductor.xml" />
 
 	<target name="all" depends="init">
+		<property name="xhtml.dir" value="${basedir}/output/xhtml" />
+		<delete dir="${xhtml.dir}" failonerror="false" />
+
+		<!-- Transform dita sources -->
 		<antcall target="dita2xhtml">
 			<param name="args.input" value="${basedir}/src/index.ditamap" />
-			<param name="output.dir" value="${basedir}/../../cdo/documentation/2.0" />
+			<param name="output.dir" value="${xhtml.dir}" />
 			<param name="args.logdir" value="${basedir}/log" />
 		</antcall>
-		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TIME_STAMP} -->\1" flags="s" byline="false">
-			<fileset dir="${basedir}/../../cdo/documentation/2.0" includes="**/*.html" id="html_files" />
-		</replaceregexp>
-		<replaceregexp match="href=&quot;\?node=\.\./" replace="href=&quot;\?node=" flags="g">
-			<fileset refid="html_files" />
-		</replaceregexp>
-		<!--
-		<filterset>
-			<filter token="href=&quot;?node=../" value="href=&quot;?node=" />
-		</filterset>
 
-		<antcall target="dita2eclipsecontent">
-			<param name="args.input" value="${basedir}/src/index.ditamap" />
-			<param name="output.dir" value="${basedir}/eclipse" />
-			<param name="args.logdir" value="${basedir}/log" />
-		</antcall>
+		<!-- Cut out the body contents -->
+		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TIME_STAMP} -->\1" flags="s" byline="false">
+			<fileset dir="${xhtml.dir}" includes="**/*.html" id="nodes" />
+		</replaceregexp>
+
+		<!-- Convert relative node links to absolute (excluding first slash) 
+		<replaceregexp match="href=&quot;\?node=\.\./" replace="href=&quot;\?node=" flags="g">
+			<fileset refid="nodes" />
+		</replaceregexp>
 		-->
+
+		<!-- Rewrite node links -->
+		<replaceregexp match="href=&quot;\?node=(.+)&quot;" replace="href=&quot;\1.html&quot;" flags="g">
+			<fileset refid="nodes" />
+		</replaceregexp>
+
+		<move todir="${target.dir}" overwrite="true">
+			<fileset dir="${xhtml.dir}" />
+			<mapper type="glob" from="*.html" to="*.xml" />
+		</move>
+
+		<move todir="${target.dir}" overwrite="true">
+			<fileset dir="${xhtml.dir}" />
+		</move>
+
 	</target>
 
 	<target name="init">

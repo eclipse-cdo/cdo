@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "../.dita/dtd/map.dtd">
+<!--
+Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+Eike Stepper - initial API and implementation
+-->
+
+<map title="CDO Model Repository" id="CDO">
+	<topicref href="concepts/garageconceptsoverview.dita" type="concept">
+		<topicref href="concepts/lawnmower.dita" type="concept"/>
+		<topicref href="concepts/oil.dita" type="concept"/>
+		<topicref href="concepts/paint.dita" type="concept"/>
+		<topicref href="concepts/shelving.dita" type="concept"/>
+		<topicref href="concepts/snowshovel.dita" type="concept"/>
+		<topicref href="tasks/garagetaskoverview.dita" type="concept">
+			<topicref href="tasks/changingtheoil.dita" type="task"/>
+			<topicref href="tasks/organizing.dita" type="task"/>
+			<topicref href="tasks/shovellingsnow.dita" type="task"/>
+			<topicref href="tasks/spraypainting.dita" type="task"/>
+			<topicref href="tasks/takinggarbage.dita" type="task"/>
+			<topicref href="tasks/washingthecar.dita" type="task"/>
+		</topicref>
+		<topicref href="concepts/toolbox.dita" type="concept"/>
+		<topicref href="concepts/tools.dita" type="concept"/>
+		<topicref href="concepts/waterhose.dita" type="concept"/>
+		<topicref href="concepts/wheelbarrow.dita" type="concept"/>
+		<topicref href="concepts/workbench.dita" type="concept"/>
+		<topicref href="concepts/wwfluid.dita" type="concept"/>
+	</topicref>
+	<topicref href="tasks/garagetaskoverview.dita" type="concept">
+		<topicref href="tasks/changingtheoil.dita" type="task"/>
+		<topicref href="tasks/organizing.dita" type="task"/>
+		<topicref href="tasks/shovellingsnow.dita" type="task"/>
+		<topicref href="tasks/spraypainting.dita" type="task"/>
+		<topicref href="tasks/takinggarbage.dita" type="task"/>
+		<topicref href="tasks/washingthecar.dita" type="task"/>
+	</topicref>
+</map>

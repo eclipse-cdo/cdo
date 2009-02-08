@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "../../.dita/dtd/concept.dtd">
+<!--
+Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+Eike Stepper - initial API and implementation
+-->
+
+<concept id="feature1" xml:lang="en-us">
+	<title>Feature 1</title>
+	<conbody>
+		<p>The lawnmower is a machine used to cut grass in the yard. Lawnmowers can be
+			electric, gas-powered, or manual.</p>
+	</conbody>
+</concept>

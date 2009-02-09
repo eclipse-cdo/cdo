@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.view;
+package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
 

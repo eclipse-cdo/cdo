@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.util.CDOEvent;
-import org.eclipse.emf.cdo.view.CDOConflictResolver;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.options.IOptionsEvent;

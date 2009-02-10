@@ -32,12 +32,6 @@
 			<param name="clean.temp" value="yes" />
 		</antcall>
 
-		<!--
-	</target>
-
-	<target name="post_process_xhtml">
-	-->
-
 		<!-- Cut out the body contents -->
 		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TIME_STAMP} -->\1" flags="s" byline="false">
 			<fileset dir="${temp.dir}" includes="**/*.html" id="topics" />

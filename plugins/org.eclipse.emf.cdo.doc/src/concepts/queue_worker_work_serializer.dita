@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="queue_worker_work_serializer" xml:lang="en-us">
 	<title>Queue Worker Work Serializer</title>
 	<titlealts>
-		<navtitle>Queue Worker Work Serializer</navtitle>
+		<navtitle>Queue Worker</navtitle>
 		<searchtitle>Queue Worker Work Serializer</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

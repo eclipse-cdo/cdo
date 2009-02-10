@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="non_blocking_long_counter" xml:lang="en-us">
 	<title>Non-Blocking Long Counter</title>
 	<titlealts>
-		<navtitle>Non-Blocking Long Counter</navtitle>
+		<navtitle>Non-Blocking Long</navtitle>
 		<searchtitle>Non-Blocking Long Counter</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

@@ -11,11 +11,11 @@ Contributors:
 Eike Stepper - initial API and implementation
 -->
 
-<concept id="interactive_credentials_provider" xml:lang="en-us">
-	<title>Interactive Credentials Provider</title>
+<concept id="abstract_classes" xml:lang="en-us">
+	<title>Abstract Classes</title>
 	<titlealts>
-		<navtitle>Interactive</navtitle>
-		<searchtitle>Interactive Credentials Provider</searchtitle>
+		<navtitle>Abstract Classes</navtitle>
+		<searchtitle>Abstract Classes</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>
 	<prolog></prolog>

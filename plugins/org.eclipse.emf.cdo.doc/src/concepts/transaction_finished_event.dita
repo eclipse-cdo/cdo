@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="transaction_finished_event" xml:lang="en-us">
 	<title>Transaction Finished Event</title>
 	<titlealts>
-		<navtitle>Transaction Finished Event</navtitle>
+		<navtitle>Finished Event</navtitle>
 		<searchtitle>Transaction Finished Event</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

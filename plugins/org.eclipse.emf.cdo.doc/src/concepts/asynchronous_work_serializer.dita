@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="asynchronous_work_serializer" xml:lang="en-us">
 	<title>Asynchronous Work Serializer</title>
 	<titlealts>
-		<navtitle>Asynchronous Work Serializer</navtitle>
+		<navtitle>Asynchronous</navtitle>
 		<searchtitle>Asynchronous Work Serializer</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="transaction_conflict_event" xml:lang="en-us">
 	<title>Transaction Conflict Event</title>
 	<titlealts>
-		<navtitle>Transaction Conflict Event</navtitle>
+		<navtitle>Conflict Event</navtitle>
 		<searchtitle>Transaction Conflict Event</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="non_blocking_int_counter" xml:lang="en-us">
 	<title>Non-Blocking Int Counter</title>
 	<titlealts>
-		<navtitle>Non-Blocking Int Counter</navtitle>
+		<navtitle>Non-Blocking Int</navtitle>
 		<searchtitle>Non-Blocking Int Counter</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

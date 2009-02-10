@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="transaction_started_event" xml:lang="en-us">
 	<title>Transaction Started Event</title>
 	<titlealts>
-		<navtitle>Transaction Started Event</navtitle>
+		<navtitle>Started Event</navtitle>
 		<searchtitle>Transaction Started Event</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

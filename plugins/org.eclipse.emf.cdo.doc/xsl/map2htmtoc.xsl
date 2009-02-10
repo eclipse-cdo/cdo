@@ -30,8 +30,11 @@
 <!-- Set the prefix for error message numbers -->
 <xsl:variable name="msgprefix">DOTX</xsl:variable>
 
-<!-- *************************** Command line parameters *********************** -->
+<!-- *************************** CUSTOM *************************************** -->
 <xsl:param name="LINK_PREFIX" select="'?topic='"/>
+	
+	
+<!-- *************************** Command line parameters *********************** -->
 <xsl:param name="OUTEXT" select="'.html'"/><!-- "htm" and "html" are valid values -->
 <xsl:param name="WORKDIR" select="'./'"/>
 <xsl:param name="DITAEXT" select="'.xml'"/>
@@ -160,7 +163,7 @@
         
         <!-- If there are any children that should be in the TOC, process them -->
         <xsl:if test="descendant::*[contains(@class, ' map/topicref ')][not(contains(@toc,'no'))]">
-          <xsl:value-of select="$newline"/><ul><xsl:value-of select="$newline"/>
+          <xsl:value-of select="$newline"/><ul id="#{generate-id()}"><xsl:value-of select="$newline"/>
             <xsl:apply-templates select="*[contains(@class, ' map/topicref ')]">
               <xsl:with-param name="pathFromMaplist" select="$pathFromMaplist"/>
             </xsl:apply-templates>

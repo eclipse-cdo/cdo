@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="creation_time_of_a_revision" xml:lang="en-us">
 	<title>Creation Time of a Revision</title>
 	<titlealts>
-		<navtitle>Creation Time of a Revision</navtitle>
+		<navtitle>Creation Time</navtitle>
 		<searchtitle>Creation Time of a Revision</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

@@ -103,15 +103,15 @@
       </children>
       <children longTitle="Revisions" shortTitle="Revisions" id="revisions">
         <children longTitle="Revision Identity" shortTitle="Revision Identity" id="revision_identity">
-          <children longTitle="Version of a Revision" shortTitle="Version of a Revision" id="version_of_a_revision"/>
+          <children longTitle="Version of a Revision" shortTitle="Version" id="version_of_a_revision"/>
         </children>
         <children longTitle="Revision Validity" shortTitle="Revision Validity" id="revision_validity">
-          <children longTitle="Creation Time of a Revision" shortTitle="Creation Time of a Revision" id="creation_time_of_a_revision"/>
-          <children longTitle="Revision Time of a Revision" shortTitle="Revision Time of a Revision" id="revision_time_of_a_revision"/>
+          <children longTitle="Creation Time of a Revision" shortTitle="Creation Time" id="creation_time_of_a_revision"/>
+          <children longTitle="Revision Time of a Revision" shortTitle="Revision Time" id="revision_time_of_a_revision"/>
         </children>
         <children longTitle="Revision Data" shortTitle="Revision Data" id="revision_data">
-          <children longTitle="Attribute Values of a Revision" shortTitle="Attribute Values of a Revision" id="attribute_values_of_a_revision"/>
-          <children longTitle="Reference Values of a Revision" shortTitle="Reference Values of a Revision" id="reference_values_of_a_revision"/>
+          <children longTitle="Attribute Values of a Revision" shortTitle="Attribute Values" id="attribute_values_of_a_revision"/>
+          <children longTitle="Reference Values of a Revision" shortTitle="Reference Values" id="reference_values_of_a_revision"/>
         </children>
         <children longTitle="Revision Deltas" shortTitle="Revision Deltas" id="revision_deltas"/>
       </children>
@@ -195,9 +195,9 @@
             <children longTitle="Auto Attacher" shortTitle="Auto Attacher" id="auto_attacher"/>
           </children>
           <children longTitle="Transaction Events" shortTitle="Transaction Events" id="transaction_events">
-            <children longTitle="Transaction Started Event" shortTitle="Transaction Started Event" id="transaction_started_event"/>
-            <children longTitle="Transaction Finished Event" shortTitle="Transaction Finished Event" id="transaction_finished_event"/>
-            <children longTitle="Transaction Conflict Event" shortTitle="Transaction Conflict Event" id="transaction_conflict_event"/>
+            <children longTitle="Transaction Started Event" shortTitle="Started Event" id="transaction_started_event"/>
+            <children longTitle="Transaction Finished Event" shortTitle="Finished Event" id="transaction_finished_event"/>
+            <children longTitle="Transaction Conflict Event" shortTitle="Conflict Event" id="transaction_conflict_event"/>
           </children>
           <children longTitle="Save Points" shortTitle="Save Points" id="save_points"/>
           <children longTitle="Distributed Transactions" shortTitle="Distributed Transactions" id="distributed_transactions"/>
@@ -279,10 +279,10 @@
               <children longTitle="One Pending Executor" shortTitle="One Pending Executor" id="one_pending_executor"/>
             </children>
             <children longTitle="Work Serializers" shortTitle="Work Serializers" id="work_serializers">
-              <children longTitle="Synchronous Work Serializer" shortTitle="Synchronous Work Serializer" id="synchronous_work_serializer"/>
-              <children longTitle="Asynchronous Work Serializer" shortTitle="Asynchronous Work Serializer" id="asynchronous_work_serializer"/>
-              <children longTitle="Completion Work Serializer" shortTitle="Completion Work Serializer" id="completion_work_serializer"/>
-              <children longTitle="Queue Worker Work Serializer" shortTitle="Queue Worker Work Serializer" id="queue_worker_work_serializer"/>
+              <children longTitle="Synchronous Work Serializer" shortTitle="Synchronous" id="synchronous_work_serializer"/>
+              <children longTitle="Asynchronous Work Serializer" shortTitle="Asynchronous" id="asynchronous_work_serializer"/>
+              <children longTitle="Completion Work Serializer" shortTitle="Completion" id="completion_work_serializer"/>
+              <children longTitle="Queue Worker Work Serializer" shortTitle="Queue Worker" id="queue_worker_work_serializer"/>
             </children>
             <children longTitle="Synchronizers" shortTitle="Synchronizers" id="synchronizers">
               <children longTitle="Result Synchronizer" shortTitle="Result Synchronizer" id="result_synchronizer"/>
@@ -291,8 +291,8 @@
               <children longTitle="Synchronizing Correlator" shortTitle="Synchronizing Correlator" id="synchronizing_correlator"/>
             </children>
             <children longTitle="Counters" shortTitle="Counters" id="counters">
-              <children longTitle="Non-Blocking Int Counter" shortTitle="Non-Blocking Int Counter" id="non_blocking_int_counter"/>
-              <children longTitle="Non-Blocking Long Counter" shortTitle="Non-Blocking Long Counter" id="non_blocking_long_counter"/>
+              <children longTitle="Non-Blocking Int Counter" shortTitle="Non-Blocking Int" id="non_blocking_int_counter"/>
+              <children longTitle="Non-Blocking Long Counter" shortTitle="Non-Blocking Long" id="non_blocking_long_counter"/>
             </children>
             <children longTitle="Schedulers" shortTitle="Schedulers" id="schedulers">
               <children longTitle="Round Robin List" shortTitle="Round Robin List" id="round_robin_list"/>
@@ -326,8 +326,8 @@
             <children longTitle="Credentials" shortTitle="Credentials" id="credentials">
               <children longTitle="Password Credentials" shortTitle="Password Credentials" id="password_credentials"/>
               <children longTitle="Credentials Providers" shortTitle="Credentials Providers" id="credentials_providers">
-                <children longTitle="Password Credentials Provider" shortTitle="Password Credentials Provider" id="password_credentials_provider"/>
-                <children longTitle="Interactive Credentials Provider" shortTitle="Interactive Credentials Provider" id="interactive_credentials_provider"/>
+                <children longTitle="Password Credentials Provider" shortTitle="Password" id="password_credentials_provider"/>
+                <children longTitle="Interactive Credentials Provider" shortTitle="Interactive" id="interactive_credentials_provider"/>
               </children>
             </children>
             <children longTitle="Negotiation" shortTitle="Negotiation" id="negotiation">

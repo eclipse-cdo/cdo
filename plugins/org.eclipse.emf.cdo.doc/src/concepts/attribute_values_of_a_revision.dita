@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="attribute_values_of_a_revision" xml:lang="en-us">
 	<title>Attribute Values of a Revision</title>
 	<titlealts>
-		<navtitle>Attribute Values of a Revision</navtitle>
+		<navtitle>Attribute Values</navtitle>
 		<searchtitle>Attribute Values of a Revision</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

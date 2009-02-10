@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="version_of_a_revision" xml:lang="en-us">
 	<title>Version of a Revision</title>
 	<titlealts>
-		<navtitle>Version of a Revision</navtitle>
+		<navtitle>Version</navtitle>
 		<searchtitle>Version of a Revision</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

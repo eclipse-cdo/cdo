@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="synchronous_work_serializer" xml:lang="en-us">
 	<title>Synchronous Work Serializer</title>
 	<titlealts>
-		<navtitle>Synchronous Work Serializer</navtitle>
+		<navtitle>Synchronous</navtitle>
 		<searchtitle>Synchronous Work Serializer</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

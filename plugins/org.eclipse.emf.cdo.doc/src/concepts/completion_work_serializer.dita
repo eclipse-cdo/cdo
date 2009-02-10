@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="completion_work_serializer" xml:lang="en-us">
 	<title>Completion Work Serializer</title>
 	<titlealts>
-		<navtitle>Completion Work Serializer</navtitle>
+		<navtitle>Completion</navtitle>
 		<searchtitle>Completion Work Serializer</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

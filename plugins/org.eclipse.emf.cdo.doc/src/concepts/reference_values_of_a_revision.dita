@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <concept id="reference_values_of_a_revision" xml:lang="en-us">
 	<title>Reference Values of a Revision</title>
 	<titlealts>
-		<navtitle>Reference Values of a Revision</navtitle>
+		<navtitle>Reference Values</navtitle>
 		<searchtitle>Reference Values of a Revision</searchtitle>
 	</titlealts>
 	<shortdesc>Represents some real concept.</shortdesc>

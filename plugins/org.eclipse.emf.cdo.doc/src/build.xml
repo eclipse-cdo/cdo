@@ -42,8 +42,9 @@
 			<fileset refid="topics" />
 		</replaceregexp>
 
-		<!-- Clean the target.dir -->
+		<!-- Clean the target.dir 
 		<delete dir="${target.dir}" includeemptydirs="true" failonerror="false" />
+		-->
 
 		<!-- Move the topic files from temp.dir to target.dir (thereby renaming the extensions from .html to target.ext -->
 		<move todir="${target.dir}" overwrite="true">

@@ -10,7 +10,7 @@ Contributors:
 Eike Stepper - initial API and implementation
 -->
 
-<map title="CDO" id="cdo">
+<map title="CDO Model Repository Documentation" id="cdo">
 <topicref href="about_this_manual.dita" type = "concept"/>
 <topicref href="conventions_for_this_manual.dita" type = "concept"/>
 <topicref href="overview_of_cdo.dita" type = "concept"/>

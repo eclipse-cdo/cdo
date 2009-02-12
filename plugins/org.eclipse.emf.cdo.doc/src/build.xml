@@ -90,6 +90,7 @@
 		</antcall>
 
 		<!-- Delete the generated plugin manifest -->
+		<delete file="${target.dir}/meta-inf/" failonerror="false" verbose="true" includeemptydirs="true"/>
 		<delete file="${target.dir}/plugin.xml" failonerror="false" verbose="true" />
 		<delete file="${target.dir}/plugin.properties" failonerror="false" verbose="true" />
 

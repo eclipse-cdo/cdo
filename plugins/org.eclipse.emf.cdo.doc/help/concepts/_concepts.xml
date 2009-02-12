@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\concepts?><?path2project ..\?><topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="concepts" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic " xtrf="..\concepts\_concepts.dita" xtrc="topic:1">
+	<title class="- topic/title " xtrf="..\concepts\_concepts.dita" xtrc="title:1">Concepts</title>
+	<titlealts class="- topic/titlealts " xtrf="..\concepts\_concepts.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\concepts\_concepts.dita" xtrc="navtitle:1">Concepts</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\concepts\_concepts.dita" xtrc="searchtitle:1">Concepts</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\concepts\_concepts.dita" xtrc="shortdesc:1">Certainly an overview page.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\concepts\_concepts.dita" xtrc="prolog:1"/>
+	<body class="- topic/body " xtrf="..\concepts\_concepts.dita" xtrc="body:1">
+		<section class="- topic/section " xtrf="..\concepts\_concepts.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\concepts\_concepts.dita" xtrc="title:2">A certain aspect of this topic</title>
+			<p class="- topic/p " xtrf="..\concepts\_concepts.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\concepts\_concepts.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\concepts\_concepts.dita" xtrc="title:3">Another aspect of this topic</title>
+			<p class="- topic/p " xtrf="..\concepts\_concepts.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</body>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:5" mapkeyref="cdo"><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:5"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:6" xtrf="..\toc.ditamap" href="../concepts/applications.xml" role="child"><linktext class="- topic/linktext ">Applications</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:17" xtrf="..\toc.ditamap" href="../concepts/models.xml" role="child"><linktext class="- topic/linktext ">Models</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:49" xtrf="..\toc.ditamap" href="../concepts/model_instances.xml" role="child"><linktext class="- topic/linktext ">Model Instances</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:82" xtrf="..\toc.ditamap" href="../concepts/technical_infrastructure.xml" role="child"><linktext class="- topic/linktext ">Technical Infrastructure</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link></linkpool></linkpool></related-links>
+</topic>

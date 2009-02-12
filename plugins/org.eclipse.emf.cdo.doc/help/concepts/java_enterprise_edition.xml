@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\concepts?><?path2project ..\?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="java_enterprise_edition" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="concept:1">
+	<title class="- topic/title " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="title:1">Java Enterprise Edition (JEE)</title>
+	<titlealts class="- topic/titlealts " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="navtitle:1">JEE</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="searchtitle:1">Java Enterprise Edition (JEE)</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="shortdesc:1">Represents some real concept.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="prolog:1"/>
+	<conbody class="- topic/body  concept/conbody " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="conbody:1">
+		<section class="- topic/section " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="title:2">A certain aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="title:3">Another aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\java_enterprise_edition.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</conbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:10" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:8" xtrf="..\toc.ditamap" href="../concepts/java_runtime_environments.xml" role="parent"><linktext class="- topic/linktext ">Java Runtime Environments</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:10"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:11" xtrf="..\toc.ditamap" href="../concepts/web_container.xml" role="child"><linktext class="- topic/linktext ">Web Container</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:12" xtrf="..\toc.ditamap" href="../concepts/ejb_container.xml" role="child"><linktext class="- topic/linktext ">EJB Container</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link></linkpool></linkpool></related-links>
+</concept>

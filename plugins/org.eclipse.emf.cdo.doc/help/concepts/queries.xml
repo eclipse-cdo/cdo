@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\concepts?><?path2project ..\?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="queries" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="..\concepts\queries.dita" xtrc="concept:1">
+	<title class="- topic/title " xtrf="..\concepts\queries.dita" xtrc="title:1">Queries</title>
+	<titlealts class="- topic/titlealts " xtrf="..\concepts\queries.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\concepts\queries.dita" xtrc="navtitle:1">Queries</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\concepts\queries.dita" xtrc="searchtitle:1">Queries</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\concepts\queries.dita" xtrc="shortdesc:1">Represents some real concept.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\concepts\queries.dita" xtrc="prolog:1"/>
+	<conbody class="- topic/body  concept/conbody " xtrf="..\concepts\queries.dita" xtrc="conbody:1">
+		<section class="- topic/section " xtrf="..\concepts\queries.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\concepts\queries.dita" xtrc="title:2">A certain aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\queries.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\concepts\queries.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\concepts\queries.dita" xtrc="title:3">Another aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\queries.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</conbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:125" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:92" xtrf="..\toc.ditamap" href="../concepts/client_side.xml" role="parent"><linktext class="- topic/linktext ">Client-Side</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:125"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:126" xtrf="..\toc.ditamap" href="../concepts/query_infos.xml" role="child"><linktext class="- topic/linktext ">Query Infos</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:131" xtrf="..\toc.ditamap" href="../concepts/query_execution.xml" role="child"><linktext class="- topic/linktext ">Query Execution</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link></linkpool></linkpool></related-links>
+</concept>

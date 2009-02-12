@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\concepts?><?path2project ..\?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="security" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="..\concepts\security.dita" xtrc="concept:1">
+	<title class="- topic/title " xtrf="..\concepts\security.dita" xtrc="title:1">Security</title>
+	<titlealts class="- topic/titlealts " xtrf="..\concepts\security.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\concepts\security.dita" xtrc="navtitle:1">Security</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\concepts\security.dita" xtrc="searchtitle:1">Security</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\concepts\security.dita" xtrc="shortdesc:1">Represents some real concept.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\concepts\security.dita" xtrc="prolog:1"/>
+	<conbody class="- topic/body  concept/conbody " xtrf="..\concepts\security.dita" xtrc="conbody:1">
+		<section class="- topic/section " xtrf="..\concepts\security.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\concepts\security.dita" xtrc="title:2">A certain aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\security.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\concepts\security.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\concepts\security.dita" xtrc="title:3">Another aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\security.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</conbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:235" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:171" xtrf="..\toc.ditamap" href="../concepts/net4j_utilities.xml" role="parent"><linktext class="- topic/linktext ">Net4j Utilities</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:235"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:236" xtrf="..\toc.ditamap" href="../concepts/credentials.xml" role="child"><linktext class="- topic/linktext ">Credentials</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:241" xtrf="..\toc.ditamap" href="../concepts/negotiation.xml" role="child"><linktext class="- topic/linktext ">Negotiation</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:248" xtrf="..\toc.ditamap" href="../concepts/user_managers.xml" role="child"><linktext class="- topic/linktext ">User Managers</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:250" xtrf="..\toc.ditamap" href="../concepts/randomizers.xml" role="child"><linktext class="- topic/linktext ">Randomizers</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link></linkpool></linkpool></related-links>
+</concept>

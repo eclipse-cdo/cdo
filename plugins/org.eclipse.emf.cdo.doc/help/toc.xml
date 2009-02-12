@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="CDO" topic="about_this_manual.html?srcext=xml">
+<topic label="About" href="about_this_manual.html?srcext=xml"/>
+<topic label="Conventions" href="conventions_for_this_manual.html?srcext=xml"/>
+<topic label="Overview" href="overview_of_cdo.html?srcext=xml"/>
+<topic label="What's New" href="what_s_new.html?srcext=xml"/>
+<topic label="Concepts" href="concepts/_concepts.html?srcext=xml">
+<topic label="Applications" href="concepts/applications.html?srcext=xml">
+<topic label="Runtime Environments" href="concepts/runtime_environments.html?srcext=xml">
+<topic label="Java" href="concepts/java_runtime_environments.html?srcext=xml">
+<topic label="JSE" href="concepts/java_standard_edition.html?srcext=xml"/>
+<topic label="JEE" href="concepts/java_enterprise_edition.html?srcext=xml">
+<topic label="Web Container" href="concepts/web_container.html?srcext=xml"/>
+<topic label="EJB Container" href="concepts/ejb_container.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="OSGi" href="concepts/osgi.html?srcext=xml"/>
+<topic label="Eclipse" href="concepts/eclipse.html?srcext=xml">
+<topic label="RCP" href="concepts/eclipse_rich_client_platform.html?srcext=xml"/>
+<topic label="Headless" href="concepts/headless_eclipse_environment.html?srcext=xml"/>
+</topic>
+</topic>
+</topic>
+<topic label="Models" href="concepts/models.html?srcext=xml">
+<topic label="Packages" href="concepts/packages.html?srcext=xml">
+<topic label="Generated Packages" href="concepts/generated_packages.html?srcext=xml">
+<topic label="Native Packages" href="concepts/native_packages.html?srcext=xml"/>
+<topic label="Legacy Packages" href="concepts/legacy_packages.html?srcext=xml"/>
+</topic>
+<topic label="Dynamic Packages" href="concepts/dynamic_packages.html?srcext=xml"/>
+<topic label="Package Registries" href="concepts/package_registries.html?srcext=xml">
+<topic label="Namespace URIs" href="concepts/package_namespace_uris.html?srcext=xml"/>
+<topic label="Global Package Registry" href="concepts/global_package_registry.html?srcext=xml"/>
+<topic label="Delegating Package Registries" href="concepts/delegating_package_registries.html?srcext=xml"/>
+</topic>
+<topic label="Modularity" href="concepts/package_modularity.html?srcext=xml">
+<topic label="Nested Packages" href="concepts/nested_packages.html?srcext=xml"/>
+<topic label="Referenced Packages" href="concepts/referenced_packages.html?srcext=xml"/>
+</topic>
+<topic label="Model Reflection" href="concepts/model_reflection.html?srcext=xml"/>
+</topic>
+<topic label="Classes" href="concepts/classes.html?srcext=xml">
+<topic label="Abstract Classes" href="concepts/abstract_classes.html?srcext=xml"/>
+<topic label="Interfaces" href="concepts/interfaces.html?srcext=xml"/>
+<topic label="Inheritance" href="concepts/inheritance.html?srcext=xml"/>
+</topic>
+<topic label="Features" href="concepts/features.html?srcext=xml">
+<topic label="Attributes" href="concepts/attributes.html?srcext=xml">
+<topic label="Data Types" href="concepts/data_types.html?srcext=xml"/>
+<topic label="Enumerations" href="concepts/enumerations.html?srcext=xml"/>
+</topic>
+<topic label="References" href="concepts/references.html?srcext=xml">
+<topic label="Containment References" href="concepts/containment_references.html?srcext=xml"/>
+<topic label="Cross References" href="concepts/cross_references.html?srcext=xml"/>
+</topic>
+<topic label="Unsettable Features" href="concepts/unsettable_features.html?srcext=xml"/>
+<topic label="Many-Valued Features" href="concepts/many_valued_features.html?srcext=xml"/>
+<topic label="Feature Maps" href="concepts/feature_maps.html?srcext=xml"/>
+<topic label="Operations" href="concepts/operations.html?srcext=xml">
+<topic label="Parameters" href="concepts/parameters.html?srcext=xml"/>
+<topic label="Exceptions" href="concepts/exceptions.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Annotations" href="concepts/annotations.html?srcext=xml"/>
+</topic>
+<topic label="Instances" href="concepts/model_instances.html?srcext=xml">
+<topic label="Objects" href="concepts/objects.html?srcext=xml">
+<topic label="Object Identity" href="concepts/object_identity.html?srcext=xml">
+<topic label="CDOID Factories" href="concepts/cdoid_factories.html?srcext=xml"/>
+<topic label="CDOID Class Loaders" href="concepts/cdoid_class_loaders.html?srcext=xml"/>
+</topic>
+<topic label="Object State" href="concepts/object_state.html?srcext=xml">
+<topic label="Transient Objects" href="concepts/transient_objects.html?srcext=xml"/>
+<topic label="New Objects" href="concepts/new_objects.html?srcext=xml"/>
+<topic label="Clean Objects" href="concepts/clean_objects.html?srcext=xml"/>
+<topic label="Dirty Objects" href="concepts/dirty_objects.html?srcext=xml"/>
+<topic label="Proxy Objects" href="concepts/proxy_objects.html?srcext=xml"/>
+<topic label="Conflict Objects" href="concepts/conflict_objects.html?srcext=xml"/>
+<topic label="Invalid Objects" href="concepts/invalid_objects.html?srcext=xml"/>
+</topic>
+<topic label="External References" href="concepts/external_references.html?srcext=xml"/>
+<topic label="Change Notification" href="concepts/change_notification.html?srcext=xml">
+<topic label="Adapters" href="concepts/emf_adapters.html?srcext=xml">
+<topic label="CDO Adapter" href="concepts/cdo_adapter.html?srcext=xml"/>
+</topic>
+<topic label="CDO Invalidation Notification" href="concepts/cdo_invalidation_notification.html?srcext=xml"/>
+<topic label="CDO Delta Notification" href="concepts/cdo_delta_notification.html?srcext=xml"/>
+</topic>
+<topic label="Generic Introspection" href="concepts/generic_introspection.html?srcext=xml"/>
+</topic>
+<topic label="CDO Resources" href="concepts/cdo_resources.html?srcext=xml">
+<topic label="CDO Resource Folders" href="concepts/cdo_resource_folders.html?srcext=xml"/>
+<topic label="CDO Root Resource" href="concepts/cdo_root_resource.html?srcext=xml"/>
+</topic>
+<topic label="Revisions" href="concepts/revisions.html?srcext=xml">
+<topic label="Revision Identity" href="concepts/revision_identity.html?srcext=xml">
+<topic label="Version" href="concepts/version_of_a_revision.html?srcext=xml"/>
+</topic>
+<topic label="Revision Validity" href="concepts/revision_validity.html?srcext=xml">
+<topic label="Creation Time" href="concepts/creation_time_of_a_revision.html?srcext=xml"/>
+<topic label="Revision Time" href="concepts/revision_time_of_a_revision.html?srcext=xml"/>
+</topic>
+<topic label="Revision Data" href="concepts/revision_data.html?srcext=xml">
+<topic label="Attribute Values" href="concepts/attribute_values_of_a_revision.html?srcext=xml"/>
+<topic label="Reference Values" href="concepts/reference_values_of_a_revision.html?srcext=xml"/>
+</topic>
+<topic label="Revision Deltas" href="concepts/revision_deltas.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Technical Infrastructure" href="concepts/technical_infrastructure.html?srcext=xml">
+<topic label="Common Infrastructure" href="concepts/common_infrastructure.html?srcext=xml">
+<topic label="Revision Manager" href="concepts/revision_manager.html?srcext=xml">
+<topic label="Revision Caches" href="concepts/revision_caches.html?srcext=xml">
+<topic label="Memory Sensitive Cache" href="concepts/memory_sensitive_cache.html?srcext=xml"/>
+<topic label="LRU Cache" href="concepts/lru_cache.html?srcext=xml"/>
+<topic label="Two Level Cache" href="concepts/two_level_cache.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Package Manager" href="concepts/package_manager.html?srcext=xml">
+<topic label="Packages" href="concepts/cdo_packages.html?srcext=xml"/>
+<topic label="Package Proxies" href="concepts/package_proxies.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Client-Side" href="concepts/client_side.html?srcext=xml">
+<topic label="Sessions" href="concepts/sessions.html?srcext=xml">
+<topic label="Session Configurations" href="concepts/session_configurations.html?srcext=xml"/>
+<topic label="Session Options" href="concepts/session_options.html?srcext=xml">
+<topic label="Passive Updates" href="concepts/passive_updates.html?srcext=xml"/>
+<topic label="Collection Loading" href="concepts/collection_loading.html?srcext=xml"/>
+<topic label="Revision Factory" href="concepts/revision_factory.html?srcext=xml"/>
+</topic>
+<topic label="Session Events" href="concepts/session_events.html?srcext=xml">
+<topic label="Session Invalidation Event" href="concepts/session_invalidation_event.html?srcext=xml"/>
+</topic>
+<topic label="Repository Information" href="concepts/repository_information.html?srcext=xml"/>
+<topic label="Package Manager" href="concepts/session_package_manager.html?srcext=xml"/>
+<topic label="Revision Manager" href="concepts/session_revision_manager.html?srcext=xml">
+<topic label="Revision Loading" href="concepts/session_revision_loading.html?srcext=xml"/>
+</topic>
+<topic label="Commit Info Manager" href="concepts/commit_info_manager.html?srcext=xml">
+<topic label="Commit Infos" href="concepts/commit_infos.html?srcext=xml"/>
+</topic>
+<topic label="Remote Session Manager" href="concepts/remote_session_manager.html?srcext=xml">
+<topic label="Remote Session Infos" href="concepts/remote_session_infos.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Views" href="concepts/views.html?srcext=xml">
+<topic label="View Options" href="concepts/view_options.html?srcext=xml">
+<topic label="Object Invalidation Notifications" href="concepts/object_invalidation_notifications.html?srcext=xml"/>
+<topic label="Change Subscription Policies" href="concepts/change_subscription_policies.html?srcext=xml"/>
+<topic label="Revision Prefetching Policy" href="concepts/revision_prefetching_policy.html?srcext=xml"/>
+<topic label="Strong Reference Policy" href="concepts/strong_reference_policy.html?srcext=xml"/>
+<topic label="Cache Reference Type" href="concepts/cache_reference_type.html?srcext=xml"/>
+</topic>
+<topic label="View Events" href="concepts/view_events.html?srcext=xml">
+<topic label="View Invalidation Event" href="concepts/view_invalidation_event.html?srcext=xml"/>
+<topic label="Resource Set Event" href="concepts/resource_set_event.html?srcext=xml"/>
+</topic>
+<topic label="View Providers" href="concepts/view_providers.html?srcext=xml">
+<topic label="Managed Container View Provider" href="concepts/managed_container_view_provider.html?srcext=xml"/>
+<topic label="Plugin Container Provider" href="concepts/plugin_container_provider.html?srcext=xml"/>
+<topic label="View Provider Registry" href="concepts/view_provider_registry.html?srcext=xml"/>
+</topic>
+<topic label="Audit Views" href="concepts/audit_views.html?srcext=xml">
+<topic label="Audit Time" href="concepts/audit_time.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Queries" href="concepts/queries.html?srcext=xml">
+<topic label="Query Infos" href="concepts/query_infos.html?srcext=xml">
+<topic label="Query Language" href="concepts/query_language.html?srcext=xml"/>
+<topic label="Query String" href="concepts/query_string.html?srcext=xml"/>
+<topic label="Query Parameters" href="concepts/query_parameters.html?srcext=xml"/>
+<topic label="Result Size Limitation" href="concepts/result_size_limitation.html?srcext=xml"/>
+</topic>
+<topic label="Query Execution" href="concepts/query_execution.html?srcext=xml">
+<topic label="Synchronous Results" href="concepts/synchronous_results.html?srcext=xml"/>
+<topic label="Asynchronous Results" href="concepts/asynchronous_results.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Transactions" href="concepts/transactions.html?srcext=xml">
+<topic label="Transaction Options" href="concepts/transaction_options.html?srcext=xml">
+<topic label="Conflict Resolvers" href="concepts/conflict_resolvers.html?srcext=xml"/>
+<topic label="Auto Lock Releasing" href="concepts/auto_lock_releasing.html?srcext=xml"/>
+</topic>
+<topic label="Transaction Handlers" href="concepts/transaction_handlers.html?srcext=xml">
+<topic label="Auto Attacher" href="concepts/auto_attacher.html?srcext=xml"/>
+</topic>
+<topic label="Transaction Events" href="concepts/transaction_events.html?srcext=xml">
+<topic label="Started Event" href="concepts/transaction_started_event.html?srcext=xml"/>
+<topic label="Finished Event" href="concepts/transaction_finished_event.html?srcext=xml"/>
+<topic label="Conflict Event" href="concepts/transaction_conflict_event.html?srcext=xml"/>
+</topic>
+<topic label="Save Points" href="concepts/save_points.html?srcext=xml"/>
+<topic label="Distributed Transactions" href="concepts/distributed_transactions.html?srcext=xml"/>
+</topic>
+<topic label="Resource Sets" href="concepts/resource_sets.html?srcext=xml">
+<topic label="Resource Factories" href="concepts/resource_factories.html?srcext=xml"/>
+<topic label="URI Converters" href="concepts/uri_converters.html?srcext=xml"/>
+<topic label="View Sets" href="concepts/view_sets.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Server-Side" href="concepts/server_side.html?srcext=xml">
+<topic label="Repository" href="concepts/repository.html?srcext=xml">
+<topic label="Package Manager" href="concepts/repository_package_manager.html?srcext=xml"/>
+<topic label="Revision Manager" href="concepts/repository_revision_manager.html?srcext=xml">
+<topic label="Revision Loading" href="concepts/repository_revision_loading.html?srcext=xml"/>
+</topic>
+<topic label="Session Manager" href="concepts/session_manager.html?srcext=xml">
+<topic label="Repository Sessions" href="concepts/repository_sessions.html?srcext=xml"/>
+<topic label="Views" href="concepts/repository_views.html?srcext=xml">
+<topic label="Audits" href="concepts/repository_audits.html?srcext=xml"/>
+<topic label="Transactions" href="concepts/repository_transactions.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Lock Manager" href="concepts/lock_manager.html?srcext=xml"/>
+<topic label="Commit Manager" href="concepts/commit_manager.html?srcext=xml"/>
+<topic label="Notification Manager" href="concepts/notification_manager.html?srcext=xml"/>
+<topic label="Query Manager" href="concepts/query_manager.html?srcext=xml"/>
+<topic label="Query Handlers" href="concepts/query_handlers.html?srcext=xml">
+<topic label="Query Handler Provider" href="concepts/query_handler_provider.html?srcext=xml"/>
+</topic>
+<topic label="Access Handlers" href="concepts/access_handlers.html?srcext=xml">
+<topic label="Read Access Handlers" href="concepts/read_access_handlers.html?srcext=xml"/>
+<topic label="Write Access Handlers" href="concepts/write_access_handlers.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Store" href="concepts/store.html?srcext=xml"/>
+</topic>
+<topic label="Net4j" href="concepts/net4j_signalling_platform.html?srcext=xml">
+<topic label="Utilities" href="concepts/net4j_utilities.html?srcext=xml">
+<topic label="Adapters" href="concepts/adapters.html?srcext=xml"/>
+<topic label="Events" href="concepts/net4j_events.html?srcext=xml">
+<topic label="Notifiers" href="concepts/net4j_notifiers.html?srcext=xml">
+<topic label="Asynchronous Delivery" href="concepts/asynchronous_delivery.html?srcext=xml"/>
+</topic>
+<topic label="Listeners" href="concepts/net4j_listeners.html?srcext=xml"/>
+</topic>
+<topic label="Factories" href="concepts/net4j_factories.html?srcext=xml">
+<topic label="Factory Keys" href="concepts/net4j_factory_keys.html?srcext=xml"/>
+<topic label="Factory Descriptors" href="concepts/net4j_factory_descriptors.html?srcext=xml"/>
+</topic>
+<topic label="Containers" href="concepts/net4j_containers.html?srcext=xml">
+<topic label="Container Deltas" href="concepts/net4j_container_deltas.html?srcext=xml"/>
+<topic label="Modifiable Containers" href="concepts/modifiable_net4j_containers.html?srcext=xml"/>
+<topic label="Managed Containers" href="concepts/managed_net4j_containers.html?srcext=xml">
+<topic label="Element Factory Registry" href="concepts/element_factory_registry.html?srcext=xml"/>
+<topic label="Element Post Processors" href="concepts/element_post_processors.html?srcext=xml"/>
+<topic label="Container Persistence" href="concepts/container_persistence.html?srcext=xml"/>
+<topic label="Plugin Container" href="concepts/plugin_container.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Registries" href="concepts/net4j_registries.html?srcext=xml">
+<topic label="Transactional Registries" href="concepts/transactional_net4j_registries.html?srcext=xml">
+<topic label="Auto Commit" href="concepts/auto_commit_for_net4j_registries.html?srcext=xml"/>
+</topic>
+<topic label="Map Registries" href="concepts/net4j_map_registries.html?srcext=xml"/>
+<topic label="Delegating Registries" href="concepts/net4j_delegating_registries.html?srcext=xml"/>
+</topic>
+<topic label="State Machines" href="concepts/state_machines.html?srcext=xml">
+<topic label="States" href="concepts/state_machine_states.html?srcext=xml"/>
+<topic label="Events" href="concepts/state_machine_events.html?srcext=xml"/>
+<topic label="Transitions" href="concepts/state_machine_transitions.html?srcext=xml"/>
+</topic>
+<topic label="Concurrency Support" href="concepts/concurrency_support.html?srcext=xml">
+<topic label="Executors" href="concepts/executors.html?srcext=xml">
+<topic label="Thread Pools" href="concepts/thread_pools.html?srcext=xml"/>
+<topic label="Workers" href="concepts/workers.html?srcext=xml">
+<topic label="Queue Workers" href="concepts/queue_workers.html?srcext=xml"/>
+</topic>
+<topic label="One Pending Executor" href="concepts/one_pending_executor.html?srcext=xml"/>
+</topic>
+<topic label="Work Serializers" href="concepts/work_serializers.html?srcext=xml">
+<topic label="Synchronous" href="concepts/synchronous_work_serializer.html?srcext=xml"/>
+<topic label="Asynchronous" href="concepts/asynchronous_work_serializer.html?srcext=xml"/>
+<topic label="Completion" href="concepts/completion_work_serializer.html?srcext=xml"/>
+<topic label="Queue Worker" href="concepts/queue_worker_work_serializer.html?srcext=xml"/>
+</topic>
+<topic label="Synchronizers" href="concepts/synchronizers.html?srcext=xml">
+<topic label="Result Synchronizer" href="concepts/result_synchronizer.html?srcext=xml"/>
+</topic>
+<topic label="Correlators" href="concepts/correlators.html?srcext=xml">
+<topic label="Synchronizing Correlator" href="concepts/synchronizing_correlator.html?srcext=xml"/>
+</topic>
+<topic label="Counters" href="concepts/counters.html?srcext=xml">
+<topic label="Non-Blocking Int" href="concepts/non_blocking_int_counter.html?srcext=xml"/>
+<topic label="Non-Blocking Long" href="concepts/non_blocking_long_counter.html?srcext=xml"/>
+</topic>
+<topic label="Schedulers" href="concepts/schedulers.html?srcext=xml">
+<topic label="Round Robin List" href="concepts/round_robin_list.html?srcext=xml"/>
+</topic>
+<topic label="Locks" href="concepts/locks.html?srcext=xml">
+<topic label="Read Write Lock" href="concepts/read_write_lock.html?srcext=xml"/>
+<topic label="Read Write Lock Manager" href="concepts/read_write_lock_manager.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Lifecycle Management" href="concepts/lifecycle_management.html?srcext=xml">
+<topic label="Lifecycle States" href="concepts/lifecycle_states.html?srcext=xml">
+<topic label="Lifecycle Introspection" href="concepts/lifecycle_introspection.html?srcext=xml"/>
+</topic>
+<topic label="Lifecycle Events" href="concepts/lifecycle_events.html?srcext=xml"/>
+<topic label="Lifecycle Exceptions" href="concepts/lifecycle_exceptions.html?srcext=xml"/>
+</topic>
+<topic label="Memory Management" href="concepts/memory_management.html?srcext=xml">
+<topic label="Keyed References" href="concepts/keyed_references.html?srcext=xml"/>
+<topic label="Reference Types" href="concepts/reference_types.html?srcext=xml">
+<topic label="Strong References" href="concepts/strong_references.html?srcext=xml"/>
+<topic label="Soft References" href="concepts/soft_references.html?srcext=xml"/>
+<topic label="Weak References" href="concepts/weak_references.html?srcext=xml"/>
+<topic label="Phantom References" href="concepts/phantom_references.html?srcext=xml"/>
+</topic>
+<topic label="Reference Queues" href="concepts/reference_queues.html?srcext=xml">
+<topic label="Reference Queue Workers" href="concepts/reference_queue_workers.html?srcext=xml"/>
+</topic>
+<topic label="Reference Value Maps" href="concepts/reference_value_maps.html?srcext=xml"/>
+</topic>
+<topic label="Security" href="concepts/security.html?srcext=xml">
+<topic label="Credentials" href="concepts/credentials.html?srcext=xml">
+<topic label="Password Credentials" href="concepts/password_credentials.html?srcext=xml"/>
+<topic label="Credentials Providers" href="concepts/credentials_providers.html?srcext=xml">
+<topic label="Password" href="concepts/password_credentials_provider.html?srcext=xml"/>
+<topic label="Interactive" href="concepts/interactive_credentials_provider.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Negotiation" href="concepts/negotiation.html?srcext=xml">
+<topic label="Negotiation Contexts" href="concepts/negotiation_contexts.html?srcext=xml"/>
+<topic label="Negotiation Exceptions" href="concepts/negotiation_exceptions.html?srcext=xml"/>
+<topic label="Negotiator Factories" href="concepts/negotiator_factories.html?srcext=xml"/>
+<topic label="Challenge Response Negotiation" href="concepts/challenge_response_negotiation.html?srcext=xml">
+<topic label="Challenge Negotiators" href="concepts/challenge_negotiators.html?srcext=xml"/>
+<topic label="Response Negotiators" href="concepts/response_negotiators.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="User Managers" href="concepts/user_managers.html?srcext=xml">
+<topic label="File User Managers" href="concepts/file_user_managers.html?srcext=xml"/>
+</topic>
+<topic label="Randomizers" href="concepts/randomizers.html?srcext=xml">
+<topic label="Randomizer Factories" href="concepts/randomizer_factories.html?srcext=xml"/>
+</topic>
+</topic>
+</topic>
+<topic label="Platform Layer" href="concepts/net4j_platform_layer.html?srcext=xml">
+<topic label="Platform" href="concepts/platform.html?srcext=xml">
+<topic label="OSGi Platform" href="concepts/osgi_platform.html?srcext=xml">
+<topic label="OSGi Activator" href="concepts/osgi_activator.html?srcext=xml"/>
+<topic label="OSGi Application" href="concepts/osgi_application.html?srcext=xml"/>
+</topic>
+<topic label="Standalone Platform" href="concepts/standalone_platform.html?srcext=xml"/>
+</topic>
+<topic label="Bundles" href="concepts/bundles.html?srcext=xml">
+<topic label="Configuration Properties" href="concepts/configuration_properties.html?srcext=xml"/>
+<topic label="Debug Support" href="concepts/debug_support.html?srcext=xml"/>
+<topic label="Translation Support" href="concepts/translation_support.html?srcext=xml"/>
+<topic label="Bundle Context" href="concepts/bundle_context.html?srcext=xml"/>
+</topic>
+<topic label="Preferences" href="concepts/preferences.html?srcext=xml">
+<topic label="Preference Types" href="concepts/preference_types.html?srcext=xml"/>
+<topic label="Preference Events" href="concepts/preference_events.html?srcext=xml"/>
+</topic>
+<topic label="Progress Monitoring" href="concepts/progress_monitoring.html?srcext=xml">
+<topic label="Root Monitors" href="concepts/root_monitors.html?srcext=xml">
+<topic label="Eclipse Monitoring Bridge" href="concepts/eclipse_monitoring_bridge.html?srcext=xml"/>
+<topic label="Timeout Monitors" href="concepts/timeout_monitors.html?srcext=xml"/>
+</topic>
+<topic label="Nested Monitors" href="concepts/nested_monitors.html?srcext=xml"/>
+<topic label="Delegating Monitors" href="concepts/delegating_monitors.html?srcext=xml"/>
+</topic>
+<topic label="Runtime Logging" href="concepts/runtime_logging.html?srcext=xml">
+<topic label="Loggers" href="concepts/loggers.html?srcext=xml"/>
+<topic label="Log Handlers" href="concepts/log_handlers.html?srcext=xml">
+<topic label="Print Log Handler" href="concepts/print_log_handler.html?srcext=xml"/>
+<topic label="OSGi Logging Bridge" href="concepts/osgi_logging_bridge.html?srcext=xml"/>
+<topic label="Eclipse Logging Bridge" href="concepts/eclipse_logging_bridge.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Debug Tracing" href="concepts/debug_tracing.html?srcext=xml">
+<topic label="Tracers" href="concepts/tracers.html?srcext=xml">
+<topic label="Context Tracers" href="concepts/context_tracers.html?srcext=xml"/>
+<topic label="Performance Tracers" href="concepts/performance_tracers.html?srcext=xml"/>
+</topic>
+<topic label="Trace Handler Events" href="concepts/trace_handler_events.html?srcext=xml"/>
+<topic label="Trace Handlers" href="concepts/trace_handlers.html?srcext=xml">
+<topic label="Print Trace Handler" href="concepts/print_trace_handler.html?srcext=xml"/>
+</topic>
+<topic label="Remote Tracing" href="concepts/remote_tracing.html?srcext=xml">
+<topic label="Remote Trace Handler" href="concepts/remote_trace_handler.html?srcext=xml"/>
+<topic label="Remote Trace Server" href="concepts/remote_trace_server.html?srcext=xml"/>
+<topic label="Remote Trace Agent" href="concepts/remote_trace_agent.html?srcext=xml"/>
+</topic>
+</topic>
+</topic>
+<topic label="Transport Layer" href="concepts/net4j_transport_layer.html?srcext=xml">
+<topic label="Buffers" href="concepts/buffers.html?srcext=xml">
+<topic label="Buffer Providers" href="concepts/buffer_providers.html?srcext=xml">
+<topic label="Buffer Factories" href="concepts/buffer_factories.html?srcext=xml"/>
+<topic label="Buffer Pools" href="concepts/buffer_pools.html?srcext=xml"/>
+</topic>
+<topic label="Buffer Handlers" href="concepts/buffer_handlers.html?srcext=xml"/>
+<topic label="Buffer Streams" href="concepts/buffer_streams.html?srcext=xml">
+<topic label="Buffer Output Streams" href="concepts/buffer_output_streams.html?srcext=xml"/>
+<topic label="Buffer Input Streams" href="concepts/buffer_input_streams.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Virtual Channels" href="concepts/virtual_channels.html?srcext=xml">
+<topic label="Receive Handlers" href="concepts/receive_handlers.html?srcext=xml"/>
+<topic label="Channel Multiplexers" href="concepts/channel_multiplexers.html?srcext=xml"/>
+<topic label="Channel Streams" href="concepts/channel_streams.html?srcext=xml">
+<topic label="Channel Output Streams" href="concepts/channel_output_streams.html?srcext=xml"/>
+<topic label="Channel Input Streams" href="concepts/channel_input_streams.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Physical Connections" href="concepts/physical_connections.html?srcext=xml">
+<topic label="Acceptors" href="concepts/acceptors.html?srcext=xml">
+<topic label="Acceptor Configuration" href="concepts/acceptor_configuration.html?srcext=xml">
+<topic label="__SHORT_TITLE__" href="concepts/acceptor_executor_service.html?srcext=xml"/>
+<topic label="Buffer Provider" href="concepts/acceptor_buffer_provider.html?srcext=xml"/>
+<topic label="Protocol Factory Registry" href="concepts/acceptor_protocol_factory_registry.html?srcext=xml"/>
+<topic label="Negotiator" href="concepts/acceptor_negotiator.html?srcext=xml"/>
+</topic>
+<topic label="Acceptor Factories" href="concepts/acceptor_factories.html?srcext=xml"/>
+</topic>
+<topic label="Connectors" href="concepts/connectors.html?srcext=xml">
+<topic label="Connector Configuration" href="concepts/connector_configuration.html?srcext=xml">
+<topic label="Executor Service" href="concepts/connector_executor_service.html?srcext=xml"/>
+<topic label="Buffer Provider" href="concepts/connector_buffer_provider.html?srcext=xml"/>
+<topic label="Protocol Factory Registry" href="concepts/connector_protocol_factory_registry.html?srcext=xml"/>
+<topic label="Negotiator" href="concepts/connector_negotiator.html?srcext=xml"/>
+</topic>
+<topic label="Connector Factories" href="concepts/connector_factories.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Transport Implementations" href="concepts/transport_implementations.html?srcext=xml">
+<topic label="TCP Transport" href="concepts/tcp_transport.html?srcext=xml">
+<topic label="TCP Acceptors" href="concepts/tcp_acceptors.html?srcext=xml">
+<topic label="TCP Acceptor Factories" href="concepts/tcp_acceptor_factories.html?srcext=xml"/>
+</topic>
+<topic label="TCP Connectors" href="concepts/tcp_connectors.html?srcext=xml">
+<topic label="TCP Connector Factories" href="concepts/tcp_connector_factories.html?srcext=xml"/>
+</topic>
+<topic label="TCP Selectors" href="concepts/tcp_selectors.html?srcext=xml">
+<topic label="TCP Selector Factories" href="concepts/tcp_selector_factories.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="HTTP Transport" href="concepts/http_transport.html?srcext=xml">
+<topic label="HTTP Acceptors" href="concepts/http_acceptors.html?srcext=xml">
+<topic label="HTTP Acceptor Factories" href="concepts/http_acceptor_factories.html?srcext=xml"/>
+</topic>
+<topic label="HTTP Connectors" href="concepts/http_connectors.html?srcext=xml">
+<topic label="HTTP Connector Factories" href="concepts/http_connector_factories.html?srcext=xml"/>
+</topic>
+<topic label="HTTP Channels" href="concepts/http_channels.html?srcext=xml"/>
+<topic label="HTTP Servlet" href="concepts/http_servlet.html?srcext=xml"/>
+</topic>
+<topic label="JVM Transport" href="concepts/jvm_transport.html?srcext=xml">
+<topic label="JVM Acceptors" href="concepts/jvm_acceptors.html?srcext=xml">
+<topic label="JVM Acceptor Factories" href="concepts/jvm_acceptor_factories.html?srcext=xml"/>
+</topic>
+<topic label="JVM Connectors" href="concepts/jvm_connectors.html?srcext=xml">
+<topic label="JVMConnector Factories" href="concepts/jvmconnector_factories.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Custom Transports" href="concepts/custom_transports.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Application Layer" href="concepts/net4j_application_layer.html?srcext=xml">
+<topic label="Signals" href="concepts/signals.html?srcext=xml">
+<topic label="Requests" href="concepts/requests.html?srcext=xml">
+<topic label="Requests with Confirmation" href="concepts/requests_with_confirmation.html?srcext=xml"/>
+<topic label="Requests with Monitoring" href="concepts/requests_with_monitoring.html?srcext=xml"/>
+</topic>
+<topic label="Indications" href="concepts/indications.html?srcext=xml">
+<topic label="Indications with Response" href="concepts/indications_with_response.html?srcext=xml"/>
+<topic label="Indications with Monitoring" href="concepts/indications_with_monitoring.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Signal Streams" href="concepts/signal_streams.html?srcext=xml">
+<topic label="Signal Input Stream" href="concepts/signal_input_stream.html?srcext=xml"/>
+<topic label="Signal Output Stream" href="concepts/signal_output_stream.html?srcext=xml"/>
+</topic>
+<topic label="Signal Protocols" href="concepts/signal_protocols.html?srcext=xml">
+<topic label="Fail-Over Strategies" href="concepts/fail_over_strategies.html?srcext=xml"/>
+<topic label="Protocol Factories" href="concepts/protocol_factories.html?srcext=xml"/>
+</topic>
+</topic>
+</topic>
+</topic>
+</topic>
+<topic label="Architect's Guide" href="architects/_architects.html?srcext=xml">
+<topic label="Choosing a Runtime Environment" href="architects/choosing_a_runtime_environment.html?srcext=xml"/>
+</topic>
+<topic label="Programmer's Guide" href="programmers/_programmers.html?srcext=xml">
+<topic label="Developing a Rich Client Application" href="programmers/developing_a_rich_client_application.html?srcext=xml"/>
+</topic>
+<topic label="Extender's Guide" href="extenders/_extenders.html?srcext=xml">
+<topic label="Developing Custom Stores" href="extenders/developing_custom_stores.html?srcext=xml"/>
+</topic>
+<topic label="Operator's Guide" href="operators/_operators.html?srcext=xml">
+<topic label="Configuring a Repository" href="operators/configuring_a_repository.html?srcext=xml">
+<topic label="Choosing a Back-End Adapter" href="operators/choosing_a_back_end_adapter.html?srcext=xml"/>
+</topic>
+<topic label="Configuring Remote Access" href="operators/configuring_remote_access.html?srcext=xml">
+<topic label="Setting Up Security" href="operators/setting_up_security.html?srcext=xml"/>
+</topic>
+<topic label="Starting a Server" href="operators/starting_a_server.html?srcext=xml"/>
+<topic label="Stopping a Server" href="operators/stopping_a_server.html?srcext=xml"/>
+</topic>
+<topic label="User's Guide" href="users/_users.html?srcext=xml">
+<topic label="Using the Sessions View" href="users/using_the_sessions_view.html?srcext=xml">
+<topic label="Working with Sessions" href="users/working_with_sessions.html?srcext=xml">
+<topic label="Connecting to Repositories" href="users/connecting_to_repositories.html?srcext=xml"/>
+<topic label="Managing Packages" href="users/managing_packages.html?srcext=xml">
+<topic label="Registering New Packages" href="users/registering_new_packages.html?srcext=xml">
+<topic label="Using Generated Packages" href="users/using_generated_packages.html?srcext=xml">
+<topic label="Native Packages" href="users/using_native_packages.html?srcext=xml"/>
+<topic label="Legacy Packages" href="users/using_legacy_packages.html?srcext=xml"/>
+</topic>
+<topic label="Using Dynamic Packages" href="users/using_dynamic_packages.html?srcext=xml">
+<topic label="Loading Packages from the Workspace" href="users/loading_packages_from_the_workspace.html?srcext=xml"/>
+<topic label="Loading Packages from the File System" href="users/loading_packages_from_the_file_system.html?srcext=xml"/>
+<topic label="Loading Packages from other Sources" href="users/loading_packages_from_other_sources.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Browsing Registered Packages" href="users/browsing_registered_packages.html?srcext=xml"/>
+<topic label="Deregistering Packages" href="users/deregistering_packages.html?srcext=xml"/>
+</topic>
+<topic label="Controlling Passive Updates" href="users/controlling_passive_updates.html?srcext=xml">
+<topic label="Disabling Passive Updates" href="users/disabling_passive_updates.html?srcext=xml"/>
+<topic label="Synchronizing a Session Manually" href="users/synchronizing_a_session_manually.html?srcext=xml"/>
+<topic label="Enabling Passive Updates" href="users/enabling_passive_updates.html?srcext=xml"/>
+</topic>
+<topic label="Closing Sessions" href="users/closing_sessions.html?srcext=xml"/>
+</topic>
+<topic label="Working with Views" href="users/working_with_views.html?srcext=xml">
+<topic label="Opening Read-Only Views" href="users/opening_read_only_views.html?srcext=xml"/>
+<topic label="Changing View Options" href="users/changing_view_options.html?srcext=xml"/>
+<topic label="Opening Audit Views" href="users/opening_audit_views.html?srcext=xml"/>
+<topic label="Changing the Audit Time" href="users/changing_the_audit_time.html?srcext=xml"/>
+<topic label="Closing Views" href="users/closing_views.html?srcext=xml"/>
+<topic label="Opening an Editor for a View" href="users/opening_an_editor_for_a_view.html?srcext=xml"/>
+</topic>
+<topic label="Working with Transactions" href="users/working_with_transactions.html?srcext=xml">
+<topic label="Opening Transactions" href="users/opening_transactions.html?srcext=xml"/>
+<topic label="Committing Transactions" href="users/committing_transactions.html?srcext=xml"/>
+<topic label="Rolling Back Transactions" href="users/rolling_back_transactions.html?srcext=xml"/>
+<topic label="Closing Transactions" href="users/closing_transactions.html?srcext=xml"/>
+<topic label="Opening an Editor for a Transaction" href="users/opening_an_editor_for_a_transaction.html?srcext=xml"/>
+</topic>
+<topic label="Working with Resources" href="users/working_with_resources.html?srcext=xml">
+<topic label="Creating New Resources" href="users/creating_new_resources.html?srcext=xml"/>
+<topic label="Loading Existing Resources" href="users/loading_existing_resources.html?srcext=xml"/>
+<topic label="Importing Resources" href="users/importing_resources.html?srcext=xml">
+<topic label="Importing Multiple Resources" href="users/importing_multiple_resources.html?srcext=xml"/>
+</topic>
+<topic label="Exporting Resources" href="users/exporting_resources.html?srcext=xml">
+<topic label="Exporting Multiple Resources" href="users/exporting_multiple_resources.html?srcext=xml"/>
+</topic>
+<topic label="Opening an Editor for a Resource" href="users/opening_an_editor_for_a_resource.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Using the Generic Editor" href="users/using_the_generic_editor.html?srcext=xml">
+<topic label="Loading Resources" href="users/loading_resources.html?srcext=xml"/>
+</topic>
+<topic label="Using the Watch List" href="users/using_the_watch_list.html?srcext=xml"/>
+<topic label="Using the Commit History" href="users/using_the_commit_history.html?srcext=xml"/>
+<topic label="Using the EFS Integration" href="users/using_the_efs_integration.html?srcext=xml"/>
+<topic label="Using the Team Provider" href="users/using_the_team_provider.html?srcext=xml"/>
+</topic>
+<topic label="Reference" href="references/_references.html?srcext=xml">
+<topic label="Server Configuration Reference" href="references/server_configuration_reference.html?srcext=xml">
+<topic label="MEMStore Reference" href="references/memstore_reference.html?srcext=xml"/>
+<topic label="DBStore Reference" href="references/dbstore_reference.html?srcext=xml"/>
+<topic label="HibernateStore Reference" href="references/hibernatestore_reference.html?srcext=xml"/>
+<topic label="ObjectivityStore Reference" href="references/objectivitystore_reference.html?srcext=xml"/>
+</topic>
+<topic label="Extension Point Reference" href="references/extension_point_reference.html?srcext=xml">
+<topic label="See org.eclipse.platform.doc.isv for build automation" href="references/see_org_eclipse_platform_doc_isv_for_build_automation.html?srcext=xml"/>
+</topic>
+<topic label="API Reference" href="references/api_reference.html?srcext=xml">
+<topic label="See XXX for build automation" href="references/see_xxx_for_build_automation.html?srcext=xml"/>
+</topic>
+<topic label="Other Reference Information" href="references/other_reference_information.html?srcext=xml">
+<topic label="CDO State Machine" href="references/cdo_state_machine.html?srcext=xml"/>
+</topic>
+</topic>
+<topic label="Glossary" href="glossary.html?srcext=xml"/>
+<topic label="Index" href="register.html?srcext=xml"/>
+<topic label="Legal" href="legal_information.html?srcext=xml"/>
+</toc>

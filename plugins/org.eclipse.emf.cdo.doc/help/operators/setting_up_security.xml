@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\operators?><?path2project ..\?><task xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="setting_up_security" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic task/task " xtrf="..\operators\setting_up_security.dita" xtrc="task:1">
+	<title class="- topic/title " xtrf="..\operators\setting_up_security.dita" xtrc="title:1">Setting Up Security</title>
+	<titlealts class="- topic/titlealts " xtrf="..\operators\setting_up_security.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\operators\setting_up_security.dita" xtrc="navtitle:1">Setting Up Security</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\operators\setting_up_security.dita" xtrc="searchtitle:1">Setting Up Security</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\operators\setting_up_security.dita" xtrc="shortdesc:1">Explains how to do something.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\operators\setting_up_security.dita" xtrc="prolog:1"/>
+	<taskbody class="- topic/body task/taskbody " xtrf="..\operators\setting_up_security.dita" xtrc="taskbody:1">
+		<context class="- topic/section task/context " xtrf="..\operators\setting_up_security.dita" xtrc="context:1">
+			<p class="- topic/p " xtrf="..\operators\setting_up_security.dita" xtrc="p:1">Once every 6000 kilometers or three months, change the oil in your car. This will help keep the engine in good condition. </p>
+			<p class="- topic/p " xtrf="..\operators\setting_up_security.dita" xtrc="p:2">To change the oil:</p>
+		</context>
+		<steps class="- topic/ol task/steps " xtrf="..\operators\setting_up_security.dita" xtrc="steps:1">
+			<step class="- topic/li task/step " xtrf="..\operators\setting_up_security.dita" xtrc="step:1">
+				<cmd class="- topic/ph task/cmd " xtrf="..\operators\setting_up_security.dita" xtrc="cmd:1">Remove the old oil filter.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\operators\setting_up_security.dita" xtrc="step:2">
+				<cmd class="- topic/ph task/cmd " xtrf="..\operators\setting_up_security.dita" xtrc="cmd:2">Drain the old oil.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\operators\setting_up_security.dita" xtrc="step:3">
+				<cmd class="- topic/ph task/cmd " xtrf="..\operators\setting_up_security.dita" xtrc="cmd:3">Install a new oil filter and gasket.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\operators\setting_up_security.dita" xtrc="step:4">
+				<cmd class="- topic/ph task/cmd " xtrf="..\operators\setting_up_security.dita" xtrc="cmd:4">Add new oil to the engine.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\operators\setting_up_security.dita" xtrc="step:5">
+				<cmd class="- topic/ph task/cmd " xtrf="..\operators\setting_up_security.dita" xtrc="cmd:5">Check the air filter and replace or clean it.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\operators\setting_up_security.dita" xtrc="step:6">
+				<cmd class="- topic/ph task/cmd " xtrf="..\operators\setting_up_security.dita" xtrc="cmd:6">Top up the windshield washer fluid.</cmd>
+			</step>
+		</steps>
+	</taskbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:364" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="task" xtrc="topicref:363" xtrf="..\toc.ditamap" href="../operators/configuring_remote_access.xml" role="parent"><linktext class="- topic/linktext ">Configuring Remote Access</linktext><desc class="- topic/desc ">Explains how to do something.</desc></link></linkpool></related-links>
+</task>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\concepts?><?path2project ..\?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="state_machine_events" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="..\concepts\state_machine_events.dita" xtrc="concept:1">
+	<title class="- topic/title " xtrf="..\concepts\state_machine_events.dita" xtrc="title:1">State Machine Events</title>
+	<titlealts class="- topic/titlealts " xtrf="..\concepts\state_machine_events.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\concepts\state_machine_events.dita" xtrc="navtitle:1">Events</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\concepts\state_machine_events.dita" xtrc="searchtitle:1">State Machine Events</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\concepts\state_machine_events.dita" xtrc="shortdesc:1">Represents some real concept.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\concepts\state_machine_events.dita" xtrc="prolog:1"/>
+	<conbody class="- topic/body  concept/conbody " xtrf="..\concepts\state_machine_events.dita" xtrc="conbody:1">
+		<section class="- topic/section " xtrf="..\concepts\state_machine_events.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\concepts\state_machine_events.dita" xtrc="title:2">A certain aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\state_machine_events.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\concepts\state_machine_events.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\concepts\state_machine_events.dita" xtrc="title:3">Another aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\state_machine_events.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</conbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:195" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:193" xtrf="..\toc.ditamap" href="../concepts/state_machines.xml" role="parent"><linktext class="- topic/linktext ">State Machines</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link></linkpool></related-links>
+</concept>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\references?><?path2project ..\?><reference xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="objectivitystore_reference" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic       reference/reference " xtrf="..\references\objectivitystore_reference.dita" xtrc="reference:1">
+	<title class="- topic/title " xtrf="..\references\objectivitystore_reference.dita" xtrc="title:1">ObjectivityStore Reference</title>
+	<titlealts class="- topic/titlealts " xtrf="..\references\objectivitystore_reference.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\references\objectivitystore_reference.dita" xtrc="navtitle:1">ObjectivityStore Reference</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\references\objectivitystore_reference.dita" xtrc="searchtitle:1">ObjectivityStore Reference</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\references\objectivitystore_reference.dita" xtrc="shortdesc:1">Reference information for something.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\references\objectivitystore_reference.dita" xtrc="prolog:1"/>
+	<refbody class="- topic/body        reference/refbody " xtrf="..\references\objectivitystore_reference.dita" xtrc="refbody:1">
+		<properties class="- topic/simpletable reference/properties " xtrf="..\references\objectivitystore_reference.dita" xtrc="properties:1">
+			<prophead class="- topic/sthead      reference/prophead " xtrf="..\references\objectivitystore_reference.dita" xtrc="prophead:1">
+				<proptypehd class="- topic/stentry     reference/proptypehd " xtrf="..\references\objectivitystore_reference.dita" xtrc="proptypehd:1">Type</proptypehd>
+				<propvaluehd class="- topic/stentry     reference/propvaluehd " xtrf="..\references\objectivitystore_reference.dita" xtrc="propvaluehd:1">Value</propvaluehd>
+				<propdeschd class="- topic/stentry     reference/propdeschd " xtrf="..\references\objectivitystore_reference.dita" xtrc="propdeschd:1">Description</propdeschd>
+			</prophead>
+			<property class="- topic/strow       reference/property " xtrf="..\references\objectivitystore_reference.dita" xtrc="property:1">
+				<proptype class="- topic/stentry     reference/proptype " xtrf="..\references\objectivitystore_reference.dita" xtrc="proptype:1">Type1</proptype>
+				<propvalue class="- topic/stentry     reference/propvalue " xtrf="..\references\objectivitystore_reference.dita" xtrc="propvalue:1">Value1</propvalue>
+				<propdesc class="- topic/stentry     reference/propdesc " xtrf="..\references\objectivitystore_reference.dita" xtrc="propdesc:1">Description1</propdesc>
+			</property>
+			<property class="- topic/strow       reference/property " xtrf="..\references\objectivitystore_reference.dita" xtrc="property:2">
+				<proptype class="- topic/stentry     reference/proptype " xtrf="..\references\objectivitystore_reference.dita" xtrc="proptype:2">Type2</proptype>
+				<propvalue class="- topic/stentry     reference/propvalue " xtrf="..\references\objectivitystore_reference.dita" xtrc="propvalue:2">Value2</propvalue>
+				<propdesc class="- topic/stentry     reference/propdesc " xtrf="..\references\objectivitystore_reference.dita" xtrc="propdesc:2">Description2</propdesc>
+			</property>
+			<property class="- topic/strow       reference/property " xtrf="..\references\objectivitystore_reference.dita" xtrc="property:3">
+				<proptype class="- topic/stentry     reference/proptype " xtrf="..\references\objectivitystore_reference.dita" xtrc="proptype:3">Type3</proptype>
+				<propvalue class="- topic/stentry     reference/propvalue " xtrf="..\references\objectivitystore_reference.dita" xtrc="propvalue:3">Value3</propvalue>
+				<propdesc class="- topic/stentry     reference/propdesc " xtrf="..\references\objectivitystore_reference.dita" xtrc="propdesc:3">Description3</propdesc>
+			</property>
+		</properties>
+	</refbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:419" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="reference" xtrc="topicref:415" xtrf="..\toc.ditamap" href="../references/server_configuration_reference.xml" role="parent"><linktext class="- topic/linktext ">Server Configuration Reference</linktext><desc class="- topic/desc ">Reference information for something.</desc></link></linkpool></related-links>
+</reference>

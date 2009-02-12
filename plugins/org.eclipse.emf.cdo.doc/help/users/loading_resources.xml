@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\users?><?path2project ..\?><task xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="loading_resources" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic task/task " xtrf="..\users\loading_resources.dita" xtrc="task:1">
+	<title class="- topic/title " xtrf="..\users\loading_resources.dita" xtrc="title:1">Loading Resources</title>
+	<titlealts class="- topic/titlealts " xtrf="..\users\loading_resources.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\users\loading_resources.dita" xtrc="navtitle:1">Loading Resources</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\users\loading_resources.dita" xtrc="searchtitle:1">Loading Resources</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\users\loading_resources.dita" xtrc="shortdesc:1">Explains how to do something.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\users\loading_resources.dita" xtrc="prolog:1"/>
+	<taskbody class="- topic/body task/taskbody " xtrf="..\users\loading_resources.dita" xtrc="taskbody:1">
+		<context class="- topic/section task/context " xtrf="..\users\loading_resources.dita" xtrc="context:1">
+			<p class="- topic/p " xtrf="..\users\loading_resources.dita" xtrc="p:1">Once every 6000 kilometers or three months, change the oil in your car. This will help keep the engine in good condition. </p>
+			<p class="- topic/p " xtrf="..\users\loading_resources.dita" xtrc="p:2">To change the oil:</p>
+		</context>
+		<steps class="- topic/ol task/steps " xtrf="..\users\loading_resources.dita" xtrc="steps:1">
+			<step class="- topic/li task/step " xtrf="..\users\loading_resources.dita" xtrc="step:1">
+				<cmd class="- topic/ph task/cmd " xtrf="..\users\loading_resources.dita" xtrc="cmd:1">Remove the old oil filter.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\users\loading_resources.dita" xtrc="step:2">
+				<cmd class="- topic/ph task/cmd " xtrf="..\users\loading_resources.dita" xtrc="cmd:2">Drain the old oil.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\users\loading_resources.dita" xtrc="step:3">
+				<cmd class="- topic/ph task/cmd " xtrf="..\users\loading_resources.dita" xtrc="cmd:3">Install a new oil filter and gasket.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\users\loading_resources.dita" xtrc="step:4">
+				<cmd class="- topic/ph task/cmd " xtrf="..\users\loading_resources.dita" xtrc="cmd:4">Add new oil to the engine.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\users\loading_resources.dita" xtrc="step:5">
+				<cmd class="- topic/ph task/cmd " xtrf="..\users\loading_resources.dita" xtrc="cmd:5">Check the air filter and replace or clean it.</cmd>
+			</step>
+			<step class="- topic/li task/step " xtrf="..\users\loading_resources.dita" xtrc="step:6">
+				<cmd class="- topic/ph task/cmd " xtrf="..\users\loading_resources.dita" xtrc="cmd:6">Top up the windshield washer fluid.</cmd>
+			</step>
+		</steps>
+	</taskbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:409" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="task" xtrc="topicref:408" xtrf="..\toc.ditamap" href="../users/using_the_generic_editor.xml" role="parent"><linktext class="- topic/linktext ">Using the Generic Editor</linktext><desc class="- topic/desc ">Explains how to do something.</desc></link></linkpool></related-links>
+</task>

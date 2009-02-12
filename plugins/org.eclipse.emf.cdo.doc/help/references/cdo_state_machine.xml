@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\references?><?path2project ..\?><reference xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="cdo_state_machine" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic       reference/reference " xtrf="..\references\cdo_state_machine.dita" xtrc="reference:1">
+	<title class="- topic/title " xtrf="..\references\cdo_state_machine.dita" xtrc="title:1">CDO State Machine</title>
+	<titlealts class="- topic/titlealts " xtrf="..\references\cdo_state_machine.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\references\cdo_state_machine.dita" xtrc="navtitle:1">CDO State Machine</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\references\cdo_state_machine.dita" xtrc="searchtitle:1">CDO State Machine</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\references\cdo_state_machine.dita" xtrc="shortdesc:1">Reference information for something.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\references\cdo_state_machine.dita" xtrc="prolog:1"/>
+	<refbody class="- topic/body        reference/refbody " xtrf="..\references\cdo_state_machine.dita" xtrc="refbody:1">
+		<properties class="- topic/simpletable reference/properties " xtrf="..\references\cdo_state_machine.dita" xtrc="properties:1">
+			<prophead class="- topic/sthead      reference/prophead " xtrf="..\references\cdo_state_machine.dita" xtrc="prophead:1">
+				<proptypehd class="- topic/stentry     reference/proptypehd " xtrf="..\references\cdo_state_machine.dita" xtrc="proptypehd:1">Type</proptypehd>
+				<propvaluehd class="- topic/stentry     reference/propvaluehd " xtrf="..\references\cdo_state_machine.dita" xtrc="propvaluehd:1">Value</propvaluehd>
+				<propdeschd class="- topic/stentry     reference/propdeschd " xtrf="..\references\cdo_state_machine.dita" xtrc="propdeschd:1">Description</propdeschd>
+			</prophead>
+			<property class="- topic/strow       reference/property " xtrf="..\references\cdo_state_machine.dita" xtrc="property:1">
+				<proptype class="- topic/stentry     reference/proptype " xtrf="..\references\cdo_state_machine.dita" xtrc="proptype:1">Type1</proptype>
+				<propvalue class="- topic/stentry     reference/propvalue " xtrf="..\references\cdo_state_machine.dita" xtrc="propvalue:1">Value1</propvalue>
+				<propdesc class="- topic/stentry     reference/propdesc " xtrf="..\references\cdo_state_machine.dita" xtrc="propdesc:1">Description1</propdesc>
+			</property>
+			<property class="- topic/strow       reference/property " xtrf="..\references\cdo_state_machine.dita" xtrc="property:2">
+				<proptype class="- topic/stentry     reference/proptype " xtrf="..\references\cdo_state_machine.dita" xtrc="proptype:2">Type2</proptype>
+				<propvalue class="- topic/stentry     reference/propvalue " xtrf="..\references\cdo_state_machine.dita" xtrc="propvalue:2">Value2</propvalue>
+				<propdesc class="- topic/stentry     reference/propdesc " xtrf="..\references\cdo_state_machine.dita" xtrc="propdesc:2">Description2</propdesc>
+			</property>
+			<property class="- topic/strow       reference/property " xtrf="..\references\cdo_state_machine.dita" xtrc="property:3">
+				<proptype class="- topic/stentry     reference/proptype " xtrf="..\references\cdo_state_machine.dita" xtrc="proptype:3">Type3</proptype>
+				<propvalue class="- topic/stentry     reference/propvalue " xtrf="..\references\cdo_state_machine.dita" xtrc="propvalue:3">Value3</propvalue>
+				<propdesc class="- topic/stentry     reference/propdesc " xtrf="..\references\cdo_state_machine.dita" xtrc="propdesc:3">Description3</propdesc>
+			</property>
+		</properties>
+	</refbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:425" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="reference" xtrc="topicref:424" xtrf="..\toc.ditamap" href="../references/other_reference_information.xml" role="parent"><linktext class="- topic/linktext ">Other Reference Information</linktext><desc class="- topic/desc ">Reference information for something.</desc></link></linkpool></related-links>
+</reference>

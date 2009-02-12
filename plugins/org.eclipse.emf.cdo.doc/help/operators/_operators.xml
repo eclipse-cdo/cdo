@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\operators?><?path2project ..\?><topic xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="operator_s_guide" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic " xtrf="..\operators\_operators.dita" xtrc="topic:1">
+	<title class="- topic/title " xtrf="..\operators\_operators.dita" xtrc="title:1">Operator's Guide</title>
+	<titlealts class="- topic/titlealts " xtrf="..\operators\_operators.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\operators\_operators.dita" xtrc="navtitle:1">Operator's Guide</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\operators\_operators.dita" xtrc="searchtitle:1">Operator's Guide</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\operators\_operators.dita" xtrc="shortdesc:1">Certainly an overview page.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\operators\_operators.dita" xtrc="prolog:1"/>
+	<body class="- topic/body " xtrf="..\operators\_operators.dita" xtrc="body:1">
+		<section class="- topic/section " xtrf="..\operators\_operators.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\operators\_operators.dita" xtrc="title:2">A certain aspect of this topic</title>
+			<p class="- topic/p " xtrf="..\operators\_operators.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\operators\_operators.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\operators\_operators.dita" xtrc="title:3">Another aspect of this topic</title>
+			<p class="- topic/p " xtrf="..\operators\_operators.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</body>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:360" mapkeyref="cdo"><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:360"><link class="- topic/link " mapclass="- map/topicref " type="task" xtrc="topicref:361" xtrf="..\toc.ditamap" href="../operators/configuring_a_repository.xml" role="child"><linktext class="- topic/linktext ">Configuring a Repository</linktext><desc class="- topic/desc ">Explains how to do something.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="task" xtrc="topicref:363" xtrf="..\toc.ditamap" href="../operators/configuring_remote_access.xml" role="child"><linktext class="- topic/linktext ">Configuring Remote Access</linktext><desc class="- topic/desc ">Explains how to do something.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="task" xtrc="topicref:365" xtrf="..\toc.ditamap" href="../operators/starting_a_server.xml" role="child"><linktext class="- topic/linktext ">Starting a Server</linktext><desc class="- topic/desc ">Explains how to do something.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="task" xtrc="topicref:366" xtrf="..\toc.ditamap" href="../operators/stopping_a_server.xml" role="child"><linktext class="- topic/linktext ">Stopping a Server</linktext><desc class="- topic/desc ">Explains how to do something.</desc></link></linkpool></linkpool></related-links>
+</topic>

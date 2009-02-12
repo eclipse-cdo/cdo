@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\concepts?><?path2project ..\?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="executors" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="..\concepts\executors.dita" xtrc="concept:1">
+	<title class="- topic/title " xtrf="..\concepts\executors.dita" xtrc="title:1">Executors</title>
+	<titlealts class="- topic/titlealts " xtrf="..\concepts\executors.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\concepts\executors.dita" xtrc="navtitle:1">Executors</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\concepts\executors.dita" xtrc="searchtitle:1">Executors</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\concepts\executors.dita" xtrc="shortdesc:1">Represents some real concept.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\concepts\executors.dita" xtrc="prolog:1"/>
+	<conbody class="- topic/body  concept/conbody " xtrf="..\concepts\executors.dita" xtrc="conbody:1">
+		<section class="- topic/section " xtrf="..\concepts\executors.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\concepts\executors.dita" xtrc="title:2">A certain aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\executors.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\concepts\executors.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\concepts\executors.dita" xtrc="title:3">Another aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\executors.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</conbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:198" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:197" xtrf="..\toc.ditamap" href="../concepts/concurrency_support.xml" role="parent"><linktext class="- topic/linktext ">Concurrency Support</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:198"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:199" xtrf="..\toc.ditamap" href="../concepts/thread_pools.xml" role="child"><linktext class="- topic/linktext ">Thread Pools</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:200" xtrf="..\toc.ditamap" href="../concepts/workers.xml" role="child"><linktext class="- topic/linktext ">Workers</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:202" xtrf="..\toc.ditamap" href="../concepts/one_pending_executor.xml" role="child"><linktext class="- topic/linktext ">One Pending Executor</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link></linkpool></linkpool></related-links>
+</concept>

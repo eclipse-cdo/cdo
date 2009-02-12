@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate\concepts?><?path2project ..\?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="attributes" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="..\concepts\attributes.dita" xtrc="concept:1">
+	<title class="- topic/title " xtrf="..\concepts\attributes.dita" xtrc="title:1">Attributes</title>
+	<titlealts class="- topic/titlealts " xtrf="..\concepts\attributes.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\concepts\attributes.dita" xtrc="navtitle:1">Attributes</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\concepts\attributes.dita" xtrc="searchtitle:1">Attributes</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\concepts\attributes.dita" xtrc="shortdesc:1">Represents some real concept.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\concepts\attributes.dita" xtrc="prolog:1"/>
+	<conbody class="- topic/body  concept/conbody " xtrf="..\concepts\attributes.dita" xtrc="conbody:1">
+		<section class="- topic/section " xtrf="..\concepts\attributes.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\concepts\attributes.dita" xtrc="title:2">A certain aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\attributes.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\concepts\attributes.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\concepts\attributes.dita" xtrc="title:3">Another aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\concepts\attributes.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</conbody>
+<related-links class="- topic/related-links "><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:36" mapkeyref="cdo"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:35" xtrf="..\toc.ditamap" href="../concepts/features.xml" role="parent"><linktext class="- topic/linktext ">Features</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><linkpool class="- topic/linkpool " xtrf="..\toc.ditamap" xtrc="topicref:36"><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:37" xtrf="..\toc.ditamap" href="../concepts/data_types.xml" role="child"><linktext class="- topic/linktext ">Data Types</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link><link class="- topic/link " mapclass="- map/topicref " type="concept" xtrc="topicref:38" xtrf="..\toc.ditamap" href="../concepts/enumerations.xml" role="child"><linktext class="- topic/linktext ">Enumerations</linktext><desc class="- topic/desc ">Represents some real concept.</desc></link></linkpool></linkpool></related-links>
+</concept>

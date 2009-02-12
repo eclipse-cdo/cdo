@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><?workdir /C:\develop\ws\cdo\org.eclipse.emf.cdo.doc\.temp\.intermediate?><?path2project?><concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/" id="about_this_manual" xml:lang="en-us" ditaarch:DITAArchVersion="1.1" domains="(topic ui-d) (topic hi-d) (topic pr-d) (topic sw-d)                          (topic ut-d) (topic indexing-d)" class="- topic/topic concept/concept " xtrf="..\about_this_manual.dita" xtrc="concept:1">
+	<title class="- topic/title " xtrf="..\about_this_manual.dita" xtrc="title:1">About this Manual</title>
+	<titlealts class="- topic/titlealts " xtrf="..\about_this_manual.dita" xtrc="titlealts:1">
+		<navtitle class="- topic/navtitle " xtrf="..\about_this_manual.dita" xtrc="navtitle:1">About</navtitle>
+		<searchtitle class="- topic/searchtitle " xtrf="..\about_this_manual.dita" xtrc="searchtitle:1">About this Manual</searchtitle>
+	</titlealts>
+	<shortdesc class="- topic/shortdesc " xtrf="..\about_this_manual.dita" xtrc="shortdesc:1">Represents some real concept.</shortdesc>
+	<prolog class="- topic/prolog " xtrf="..\about_this_manual.dita" xtrc="prolog:1"/>
+	<conbody class="- topic/body  concept/conbody " xtrf="..\about_this_manual.dita" xtrc="conbody:1">
+		<section class="- topic/section " xtrf="..\about_this_manual.dita" xtrc="section:1">
+			<title class="- topic/title " xtrf="..\about_this_manual.dita" xtrc="title:2">A certain aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\about_this_manual.dita" xtrc="p:1">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+		<section class="- topic/section " xtrf="..\about_this_manual.dita" xtrc="section:2">
+			<title class="- topic/title " xtrf="..\about_this_manual.dita" xtrc="title:3">Another aspect of this concept</title>
+			<p class="- topic/p " xtrf="..\about_this_manual.dita" xtrc="p:2">A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
+				house.</p>
+		</section>
+	</conbody>
+</concept>

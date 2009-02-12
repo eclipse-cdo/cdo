@@ -13,12 +13,6 @@
 
 <plugin>
 
-		<!--
-	<extension point="org.eclipse.help.toc">
-		<toc file="dita/output/eclipse/CDO.xml" primary="true"/>
-	</extension>
-		-->
-
    <extension point="org.eclipse.help.toc">
       <toc file="help/toc.xml" primary="true"/>
       <index path="index"/>

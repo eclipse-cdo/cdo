@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="build-dita" default="all" basedir=".">
+<project name="build-dita" default="build_all" basedir=".">
 
 	<property file="setup.properties" />
 	<property file="build.properties" />
@@ -14,17 +14,24 @@
 
 	<import file="${dita.root}/conductor.xml" />
 
-	<target name="all" depends="ref20" />
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
+	<target name="build_all" depends="build_homepage, build_help" />
 
-	<target name="ref20" depends="init">
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
+	<target name="build_homepage" depends="init">
 		<property name="target.dir" location="${docs.area.root}/manual_20" />
-		<property name="temp.dir" value="${project.root}/.temp/reference/xhtml" />
+		<property name="temp.dir" value="${project.root}/.temp/manual_20/xhtml" />
 		<delete dir="${temp.dir}" includeemptydirs="true" failonerror="false" />
 
 		<!-- Transform dita sources to temp.dir (see http://dita-ot.sourceforge.net/doc/DITA-antscript.html for details) -->
 		<antcall target="dita2xhtml">
+			<param name="transtype" value="xhtml" />
 			<param name="dita.extname" value="${dita.ext}" />
-			<param name="args.input" value="${project.root}/src/index.ditamap" />
+			<param name="args.input" value="${project.root}/src/toc.ditamap" />
 			<param name="output.dir" value="${temp.dir}" />
 			<param name="args.indexshow" value="yes" />
 			<param name="args.logdir" value="${project.root}/.log" />
@@ -32,6 +39,9 @@
 			<param name="clean.temp" value="yes" />
 		</antcall>
 
+		<!-- DITA always writes index.html, we need toc.html -->
+		<move file="${temp.dir}/index.html" tofile="${temp.dir}/toc.html" failonerror="true" verbose="true" />
+		
 		<!-- Cut out the body contents -->
 		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TIME_STAMP} -->\1" flags="s" byline="false">
 			<fileset dir="${temp.dir}" includes="**/*.html" id="topics" />
@@ -58,6 +68,32 @@
 		</move>
 	</target>
 
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
+	<target name="build_help" depends="init">
+		<property name="target.dir" location="../help" />
+		<delete dir="${target.dir}" includeemptydirs="true" failonerror="false" />
+
+		<!-- Transform dita sources to temp.dir (see http://dita-ot.sourceforge.net/doc/DITA-antscript.html for details) -->
+		<antcall target="dita2eclipsecontent">
+			<param name="transtype" value="eclipsehelp" />
+			<param name="dita.extname" value="${dita.ext}" />
+			<param name="args.input" value="toc.ditamap" />
+			<param name="output.dir" value="${target.dir}" />
+			<param name="args.indexshow" value="yes" />
+			<param name="args.logdir" value="${project.root}/.log" />
+			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
+			<param name="clean.temp" value="yes" />
+		</antcall>
+
+		<property name="token" location="${project.root}/src" />
+		<replace token="${token}" value=".." dir="${target.dir}" includes="**/*xml" />
+	</target>
+
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
+	<!-- ********************************************************************************************************* -->
 	<target name="init">
 		<tstamp>
 			<format property="TIME_STAMP" pattern="MMMM dd, yyyy, hh:mm aa" locale="en" />

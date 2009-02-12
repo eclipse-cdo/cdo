@@ -575,24 +575,24 @@ Eike Stepper - initial API and implementation
 <topicref href="users/using_the_efs_integration.dita" type = "task"/>
 <topicref href="users/using_the_team_provider.dita" type = "task"/>
 </topicref>
-<topicref href="reference/_reference.dita">
-<topicref href="reference/server_configuration_reference.dita" type = "reference">
-<topicref href="reference/memstore_reference.dita" type = "reference"/>
-<topicref href="reference/dbstore_reference.dita" type = "reference"/>
-<topicref href="reference/hibernatestore_reference.dita" type = "reference"/>
-<topicref href="reference/objectivitystore_reference.dita" type = "reference"/>
+<topicref href="references/_references.dita">
+<topicref href="references/server_configuration_reference.dita" type = "reference">
+<topicref href="references/memstore_reference.dita" type = "reference"/>
+<topicref href="references/dbstore_reference.dita" type = "reference"/>
+<topicref href="references/hibernatestore_reference.dita" type = "reference"/>
+<topicref href="references/objectivitystore_reference.dita" type = "reference"/>
 </topicref>
-<topicref href="reference/extension_point_reference.dita" type = "reference">
-<topicref href="reference/see_org_eclipse_platform_doc_isv_for_build_automation.dita" type = "reference"/>
+<topicref href="references/extension_point_reference.dita" type = "reference">
+<topicref href="references/see_org_eclipse_platform_doc_isv_for_build_automation.dita" type = "reference"/>
 </topicref>
-<topicref href="reference/api_reference.dita" type = "reference">
-<topicref href="reference/see_xxx_for_build_automation.dita" type = "reference"/>
+<topicref href="references/api_reference.dita" type = "reference">
+<topicref href="references/see_xxx_for_build_automation.dita" type = "reference"/>
 </topicref>
-<topicref href="reference/other_reference_information.dita" type = "reference">
-<topicref href="reference/cdo_state_machine.dita" type = "reference"/>
+<topicref href="references/other_reference_information.dita" type = "reference">
+<topicref href="references/cdo_state_machine.dita" type = "reference"/>
 </topicref>
 </topicref>
 <topicref href="glossary.dita" type = "concept"/>
-<topicref href="index.dita" type = "concept"/>
+<topicref href="register.dita" type = "concept"/>
 <topicref href="legal_information.dita" type = "concept"/>
 </map>

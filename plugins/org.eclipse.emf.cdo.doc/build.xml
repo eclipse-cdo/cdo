@@ -7,7 +7,7 @@
 	<property name="plugin" value="org.eclipse.emf.cdo" />
 	<property name="docPlugin" value="org.eclipse.emf.cdo.doc" />
 
-	<property name="filesToInclude" value="META-INF/,about.*,*.gif,*.png,plugin.*,doc.zip,index/**" />
+	<property name="filesToInclude" value="META-INF/,about.*,*.gif,*.png,plugin.*,index/**, help/**, references/**" />
 
 	<!-- Compiler settings. -->
 	<property name="javacFailOnError" value="false" />
@@ -73,20 +73,35 @@
 	</target>
 
 	<target name="build.jars" depends="init" description="Build all the jars for the plug-in: ${docPlugin}.">
-		<!-- Execute a shell script that will create an ant javadoc script and then run it for us -->
+		<!-- Execute a shell script that will create an ant javadoc script and then run it for us 
 		<exec executable="sh">
 			<arg value="build/antJavadoc.sh" />
 			<arg value="${eclipse.home}/../eclipse" />
 		</exec>
+		-->
+
+		<macrodef name="echo-timestamp">
+			<sequential>
+				<antcall target="-timestamp" inheritAll="false" />
+			</sequential>
+		</macrodef>
+		<echo-timestamp />
+		
+		<property name="eclipseDir" location="../.." />
+		<chmod perm="754" file="build/antJavadoc.sh" />
+		<exec executable="bash" dir="build">
+			<arg line="./antJavadoc.sh ${eclipseDir}" />
+		</exec>
+		<echo-timestamp />
 
 		<antcall target="build.index" />
 
-		<!-- Zip up all of the documentation artifacts - references(including javadoc), images, tutorials, etc. -->
+		<!-- Zip up all of the documentation artifacts - references(including javadoc), images, tutorials, etc. 
 		<zip destfile="doc.zip" compress="true">
-			<!-- Add new folders for documentation zip here. -->
 			<zipfileset dir="references" prefix="references" excludes="**/impl,**/impl/**" />
 			<zipfileset dir="help" prefix="help" />
 		</zip>
+		-->
 	</target>
 
 	<target name="build.index" depends="init" description="Builds search index for the plug-in" if="eclipse.running">

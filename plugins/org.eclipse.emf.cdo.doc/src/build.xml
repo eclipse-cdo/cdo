@@ -36,12 +36,12 @@
 			<param name="args.indexshow" value="yes" />
 			<param name="args.logdir" value="${project.root}/.log" />
 			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
-			<param name="clean.temp" value="yes" />
+			<param name="clean.temp" value="no" />
 		</antcall>
 
 		<!-- DITA always writes index.html, we need toc.html -->
 		<move file="${temp.dir}/index.html" tofile="${temp.dir}/toc.html" failonerror="true" verbose="true" />
-		
+
 		<!-- Cut out the body contents -->
 		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TIME_STAMP} -->\1" flags="s" byline="false">
 			<fileset dir="${temp.dir}" includes="**/*.html" id="topics" />
@@ -73,10 +73,12 @@
 	<!-- ********************************************************************************************************* -->
 	<target name="build_help" depends="init">
 		<property name="target.dir" location="../help" />
+		<!--
 		<delete dir="${target.dir}" includeemptydirs="true" failonerror="false" />
+		-->
 
 		<!-- Transform dita sources to temp.dir (see http://dita-ot.sourceforge.net/doc/DITA-antscript.html for details) -->
-		<antcall target="dita2eclipsecontent">
+		<antcall target="dita2eclipsehelp">
 			<param name="transtype" value="eclipsehelp" />
 			<param name="dita.extname" value="${dita.ext}" />
 			<param name="args.input" value="toc.ditamap" />
@@ -84,11 +86,21 @@
 			<param name="args.indexshow" value="yes" />
 			<param name="args.logdir" value="${project.root}/.log" />
 			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
-			<param name="clean.temp" value="yes" />
+			<param name="clean.temp" value="no" />
 		</antcall>
 
-		<property name="token" location="${project.root}/src" />
-		<replace token="${token}" value=".." dir="${target.dir}" includes="**/*xml" />
+		<!-- Delete the generated plugin manifest -->
+		<delete file="${target.dir}/plugin.xml" failonerror="false" verbose="true" />
+		<delete file="${target.dir}/plugin.properties" failonerror="false" verbose="true" />
+
+		<!-- In the topics replace the generated "../" paths with "help/"	-->
+		<replaceregexp match="href=&quot;\?topic=\.\./([^&quot;]*)&quot;" replace="href=&quot;../\1.html&quot;" flags="g">
+			<fileset dir="${target.dir}" includes="**/*html" />
+		</replaceregexp>
+
+		<!-- In the TOC prefix with "help/" -->
+		<replace token="topic=&quot;" value="topic=&quot;help/" file="${target.dir}/toc.xml" />
+		<replace token="href=&quot;" value="href=&quot;help/" file="${target.dir}/toc.xml" />
 	</target>
 
 	<!-- ********************************************************************************************************* -->

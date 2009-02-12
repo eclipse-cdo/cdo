@@ -85,7 +85,6 @@
 		<zip destfile="doc.zip" compress="true">
 			<!-- Add new folders for documentation zip here. -->
 			<zipfileset dir="references" prefix="references" excludes="**/impl,**/impl/**" />
-			<zipfileset dir="images" prefix="images" />
 			<zipfileset dir="help" prefix="help" />
 		</zip>
 	</target>

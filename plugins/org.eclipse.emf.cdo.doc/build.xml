@@ -90,6 +90,7 @@
 		<replace token="&lt;link toc=&quot;toc_javadocs.xml&quot;/>"
 		         value="${generatedTocSnippet}"
 		         file="help/tox.xml" />
+		<delete file="help/toc_javadocs.snippet" />
 
 		<antcall target="build.index" />
 	</target>

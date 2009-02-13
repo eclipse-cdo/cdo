@@ -92,14 +92,14 @@ for pluginDir in $pluginDirs; do
 	pluginDir=`echo $pluginDir | sed -e 's/\/runtime$//g'`
 	srcDir=$pluginDir/src
 	if [ -d "$srcDir" ]; then
-		packagesets=$packagesets"<packageset dir=\"$srcDir\"><exclude name=\"$srcDir/**/doc-files/**\"/></packageset>"
+		packagesets=$packagesets"<packageset dir=\"$srcDir\"><exclude name=\"$srcDir/**/doc-files/**\"/><exclude name=\"$srcDir/**/internal/**\"/></packageset>"
 		copydocfiles=$copydocfiles"<copyDocFiles pluginDir=\"$pluginDir\"/>"
 		pluginID=`echo "$pluginDir" | sed -e 's|.*plugins/org|org|'`
 		pluginIDs=$pluginIDs"<plugin id=\"$pluginID\"/>"
 	fi
 	srcDir=$pluginDir/tasks
 	if [ -d "$srcDir" ]; then
-		packagesets=$packagesets"<packageset dir=\"$srcDir\"><exclude name=\"$srcDir/**/doc-files/**\"/></packageset>"
+		packagesets=$packagesets"<packageset dir=\"$srcDir\"><exclude name=\"$srcDir/**/doc-files/**\"/><exclude name=\"$srcDir/**/internal/**\"/></packageset>"
 		copydocfiles=$copydocfiles"<copyDocFiles pluginDir=\"$pluginDir\"/>"
 	fi
 done

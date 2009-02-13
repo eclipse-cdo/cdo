@@ -63,15 +63,15 @@ function groupPackage
 	fi
 }
 
-groupPackage org.eclipse.emf.cdo
-groupPackage org.eclipse.emf.cdo.defs
-groupPackage org.eclipse.emf.cdo.edit
-groupPackage org.eclipse.emf.cdo.migrator
-groupPackage org.eclipse.emf.cdo.common
-groupPackage org.eclipse.emf.cdo.server
-groupPackage org.eclipse.emf.cdo.server.db
-groupPackage org.eclipse.emf.cdo.ui
-groupPackage org.eclipse.emf.cdo.ui.defs
+#groupPackage org.eclipse.emf.cdo
+#groupPackage org.eclipse.emf.cdo.defs
+#groupPackage org.eclipse.emf.cdo.edit
+#groupPackage org.eclipse.emf.cdo.migrator
+#groupPackage org.eclipse.emf.cdo.common
+#groupPackage org.eclipse.emf.cdo.server
+#groupPackage org.eclipse.emf.cdo.server.db
+#groupPackage org.eclipse.emf.cdo.ui
+#groupPackage org.eclipse.emf.cdo.ui.defs
 
 # The directory of the plugins in the order they were built
 excludes="resources.jar";

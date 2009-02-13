@@ -10,26 +10,26 @@ pluginName="org.eclipse.emf.cdo";
 
 ##########################################################################
 
-debug=0; if [[ $debug -gt 0 ]]; then echo "[antJd] debug: "$debug; fi
+debug=0; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] debug: "$debug; fi
 
 if [ "x"$ANT_HOME = "x" ]; then export ANT_HOME=/opt/apache-ant-1.6; fi
 if [ "x"$JAVA_HOME = "x" ]; then export JAVA_HOME=/opt/ibm-java2-1.4; fi
 export PATH=${PATH}:${ANT_HOME}/bin
 
 # current directory - all but the name of this script, no trailing slash
-currentPath=$PWD"/"$0; currentPath=${currentPath%/*}; if [[ $debug -gt 0 ]]; then echo "[antJd] currentPath: "$currentPath; fi
+currentPath=$PWD"/"$0; currentPath=${currentPath%/*}; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] currentPath: "$currentPath; fi
 
 # path to $buildID/eclipse/plugins, no trailing slash
-pluginPath=${currentPath%/$pluginName*}; if [[ $debug -gt 0 ]]; then echo "[antJd] pluginName: "$pluginName; echo "[antJd] pluginPath: "$pluginPath; fi
+pluginPath=${currentPath%/$pluginName*}; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] pluginName: "$pluginName; echo "[antJavadoc.sh] pluginPath: "$pluginPath; fi
 
 # ant script to create and then execute
-antScript=$currentPath"/javadoc.xml"; if [[ $debug -gt 0 ]]; then echo "[antJd] antScript: "$antScript; fi
+antScript=$currentPath"/javadoc.xml"; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] antScript: "$antScript; fi
 # The eclipse directory
-eclipseDir=`cd $1; echo $PWD`; if [[ $debug -gt 0 ]]; then echo "[antJd] eclipseDir: "$eclipseDir; fi
+eclipseDir=`cd $1; echo $PWD`; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] eclipseDir: "$eclipseDir; fi
 
 # The destination directory
 destDir=$currentPath/../references/javadoc; mkdir -p $destDir; destDir=`cd $destDir; echo $PWD`; # resolve relative path
-if [[ $debug -gt 0 ]]; then echo "[antJd] destDir: "$destDir; fi
+if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] destDir: "$destDir; fi
 
 function groupPackage
 {
@@ -39,23 +39,23 @@ function groupPackage
 		srcDir=$eclipseDir/plugins/$plugin/src
 		if [ -d "$srcDir" ]; then
 			if [ `find $srcDir -name "*.java" | grep -c .` -eq 0 ]; then # must unpack zips first
-				if [[ $debug -gt 0 ]]; then echo "[antJd] Unpacking *src.zip"; fi
+				if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] Unpacking *src.zip"; fi
 				for f in `find $srcDir -name "*src.zip"`; do 
-					if [[ $debug -gt 1 ]]; then echo "[antJd] Unpack $f"; fi
+					if [[ $debug -gt 1 ]]; then echo "[antJavadoc.sh] Unpack $f"; fi
 					unzip -q -d $srcDir $f; 
 				done
 			fi
-			if [[ $debug -gt 1 ]]; then echo "[antJd] *.java in srcDir: "; echo "-----------------"; find $srcDir -type f -name '*.java'; echo "-----------------"; fi
+			if [[ $debug -gt 1 ]]; then echo "[antJavadoc.sh] *.java in srcDir: "; echo "-----------------"; find $srcDir -type f -name '*.java'; echo "-----------------"; fi
 			packages=`find $srcDir -type f -name '*.java' -exec grep -e '^package .*;' {} \; | sed -e 's/^package *\(.*\);/\1/' | sed -e 's/[ ]*//g' | dos2unix | sort | uniq | xargs | sed -e 's/ /:/g'`;
 			# packages=`find $srcDir -type f -name '*.java' -exec grep -e '^package .*;' {} \; | sed -e 's/^package *\(.*\);.*/\1/' | sort | uniq | xargs | sed -e 's/ /:/g'` # old way
-			if [[ $debug -gt 1 ]]; then echo "[antJd] packages1: "$packages; fi
+			if [[ $debug -gt 1 ]]; then echo "[antJavadoc.sh] packages1: "$packages; fi
 			packages=`echo $packages | sed -e 's/\//\\\\\\//g' | sed -e 's/\./\\\\\./g'`; # slash escape
-			if [[ $debug -gt 1 ]]; then echo "[antJd] packages2: "$packages; fi
+			if [[ $debug -gt 1 ]]; then echo "[antJavadoc.sh] packages2: "$packages; fi
 			sed -e "s/\@${plugin}\@/${packages}/g" ${antScript}.template > ${antScript}.template.tmp;
 			#sed -e "s/\@${plugin}\@/${packages}/g" $currentPath/javadoc.xml.template > javadoc.xml.template.tmp; # old way
 			mv ${antScript}.template.tmp ${antScript}.template
 		else 
-			echo "[antJd] ERROR! "$srcDir" does not exist!";
+			echo "[antJavadoc.sh] ERROR! "$srcDir" does not exist!";
 			exit 1;
 		fi
 	else

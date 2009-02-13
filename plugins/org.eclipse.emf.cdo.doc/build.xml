@@ -81,6 +81,9 @@
 		-->
 
 		<property name="eclipseDir" location="../.." />
+		<property name="curDir" location="." />
+		<echo message="Building JavaDocs in: ${curDir}" />
+
 		<chmod perm="754" file="build/antJavadoc.sh" />
 		<exec executable="bash" dir="build">
 			<arg line="./antJavadoc.sh ${eclipseDir}" />

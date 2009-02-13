@@ -22,7 +22,7 @@
 			classpath="${classpath}"
 			overview="${overview}"
 
-			windowtitle="CDO Model Repository Javadoc"
+			windowtitle="CDO Model Repository Javadocs"
 			footer="Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.&lt;br&gt; All Rights Reserved."
 
 			access="protected" 
@@ -51,6 +51,7 @@
 				<tag name="extends"    description="ignore" enabled="false"/>
 				<tag name="implements" description="ignore" enabled="false"/>
 				<tag name="ordered"    description="ignore" enabled="false"/>
+				<tag name="ADDED"      description="ignore" enabled="false"/>
 
 @packagesets@
 				

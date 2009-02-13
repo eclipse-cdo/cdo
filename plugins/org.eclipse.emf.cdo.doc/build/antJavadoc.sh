@@ -128,10 +128,7 @@ ant	-f ${antScript} \
 #rm -f $antScript $antScript.template*;
 
 # Generate toc_javadocs.xml (replacement for doclet). 
-trXML=$currentPath"/../help/toc_javadocs.xml";
-echo '<?xml version="1.0" encoding="UTF-8"?>' > $trXML;
-echo '<?NLS TYPE="org.eclipse.help.toc"?>' >> $trXML;
-echo '<toc label="Javadocs">' >> $trXML;
+trXML=$currentPath"/../help/toc_javadocs.snippet";
 echo '  <topic label="Javadocs" href="help/javadocs/overview-summary.html">' >> $trXML;
 for packSum in `find $destDir -name "package-summary.html" | sort`; do
 	path=${packSum%/package-summary.html}; path=${path#$destDir/}; 
@@ -139,5 +136,4 @@ for packSum in `find $destDir -name "package-summary.html" | sort`; do
 	echo '    <topic label="'$label'" href="help/javadocs/'$path'/package-summary.html" />' >> $trXML;
 done
 echo '  </topic>' >> $trXML;
-echo '</toc>' >> $trXML;
 	

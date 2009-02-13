@@ -77,13 +77,6 @@
 	</target>
 
 	<target name="build.jars" depends="init" description="Build all the jars for the plug-in: ${docPlugin}.">
-		<!-- Execute a shell script that will create an ant javadoc script and then run it for us 
-		<exec executable="sh">
-			<arg value="build/antJavadoc.sh" />
-			<arg value="${eclipse.home}/../eclipse" />
-		</exec>
-		-->
-
 		<property name="eclipseDir" location="../.." />
 		<property name="curDir" location="." />
 		<echo message="Building JavaDocs in: ${curDir}" />
@@ -93,14 +86,12 @@
 			<arg line="./antJavadoc.sh ${eclipseDir}" />
 		</exec>
 
-		<antcall target="build.index" />
+		<loadfile property="generatedTocSnippet" srcFile="help/toc_javadocs.snippet" />
+		<replace token="&lt;link toc=&quot;toc_javadocs.xml&quot;/>"
+		         value="${generatedTocSnippet}"
+		         file="help/tox.xml" />
 
-		<!-- Zip up all of the documentation artifacts - references(including javadoc), images, tutorials, etc. 
-		<zip destfile="doc.zip" compress="true">
-			<zipfileset dir="references" prefix="references" excludes="**/impl,**/impl/**" />
-			<zipfileset dir="help" prefix="help" />
-		</zip>
-		-->
+		<antcall target="build.index" />
 	</target>
 
 	<target name="build.index" depends="init" description="Builds search index for the plug-in" if="eclipse.running">

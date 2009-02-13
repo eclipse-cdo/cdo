@@ -28,7 +28,7 @@ antScript=$currentPath"/javadoc.xml"; if [[ $debug -gt 0 ]]; then echo "[antJava
 eclipseDir=`cd $1; echo $PWD`; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] eclipseDir: "$eclipseDir; fi
 
 # The destination directory
-destDir=$currentPath/../help/references/javadocs; mkdir -p $destDir; destDir=`cd $destDir; echo $PWD`; # resolve relative path
+destDir=$currentPath/../help/javadocs; mkdir -p $destDir; destDir=`cd $destDir; echo $PWD`; # resolve relative path
 if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] destDir: "$destDir; fi
 
 function groupPackage
@@ -132,11 +132,11 @@ trXML=$currentPath"/../help/toc_javadocs.xml";
 echo '<?xml version="1.0" encoding="UTF-8"?>' > $trXML;
 echo '<?NLS TYPE="org.eclipse.help.toc"?>' >> $trXML;
 echo '<toc label="Javadocs">' >> $trXML;
-echo '  <topic label="Javadocs" href="help/references/javadocs/overview-summary.html">' >> $trXML;
+echo '  <topic label="Javadocs" href="help/javadocs/overview-summary.html">' >> $trXML;
 for packSum in `find $destDir -name "package-summary.html" | sort`; do
 	path=${packSum%/package-summary.html}; path=${path#$destDir/}; 
 	label=${path//\//.}; 
-	echo '    <topic label="'$label'" href="help/references/javadocs/'$path'/package-summary.html" />' >> $trXML;
+	echo '    <topic label="'$label'" href="help/javadocs/'$path'/package-summary.html" />' >> $trXML;
 done
 echo '  </topic>' >> $trXML;
 echo '</toc>' >> $trXML;

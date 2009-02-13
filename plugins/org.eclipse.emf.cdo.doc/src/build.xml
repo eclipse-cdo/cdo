@@ -33,7 +33,6 @@
 			<param name="dita.extname" value="${dita.ext}" />
 			<param name="args.input" value="${project.root}/src/toc.ditamap" />
 			<param name="output.dir" value="${temp.dir}" />
-			<param name="args.indexshow" value="yes" />
 			<param name="args.logdir" value="${project.root}/.log" />
 			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
 			<param name="clean.temp" value="no" />
@@ -86,7 +85,6 @@
 			<param name="dita.extname" value="${dita.ext}" />
 			<param name="args.input" value="toc.ditamap" />
 			<param name="output.dir" value="${target.dir}" />
-			<param name="args.indexshow" value="yes" />
 			<param name="args.logdir" value="${project.root}/.log" />
 			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
 			<param name="clean.temp" value="no" />
@@ -108,12 +106,13 @@
 		<replace token="topic=&quot;" value="topic=&quot;help/" file="${target.dir}/toc.xml" />
 		<replace token="href=&quot;" value="href=&quot;help/" file="${target.dir}/toc.xml" />
 
-		<!-- Hook in the generated Javadocs -->
+		<!-- Hook in the generated Javadocs 
 		<delete file="${target.dir}/references/api_reference.html" failonerror="false" verbose="true" />
 		<replaceregexp match="&lt;topic label=&quot;[^&quot;]*&quot; href=&quot;help/references/api_reference.html&quot;/>"
 		               replace="&lt;link toc=&quot;toc_javadocs.xml&quot;/>"
 		               flags="g"
 		               file="${target.dir}/toc.xml" />
+		-->
 	</target>
 
 	<!-- ********************************************************************************************************* -->

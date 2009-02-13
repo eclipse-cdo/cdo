@@ -12,35 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <reference id="api_reference" xml:lang="en-us">
-	<title>JavaDocs</title>
+	<title>CDO Javadocs</title>
 	<titlealts>
-		<navtitle>JavaDocs</navtitle>
-		<searchtitle>CDO JavaDocs</searchtitle>
+		<navtitle>Javadocs</navtitle>
+		<searchtitle>CDO Javadocs</searchtitle>
 	</titlealts>
-	<shortdesc>Reference information for something.</shortdesc>
-	<prolog></prolog>
-	<refbody>
-		<properties>
-			<prophead>
-				<proptypehd>Type</proptypehd>
-				<propvaluehd>Value</propvaluehd>
-				<propdeschd>Description</propdeschd>
-			</prophead>
-			<property>
-				<proptype>Type1</proptype>
-				<propvalue>Value1</propvalue>
-				<propdesc>Description1</propdesc>
-			</property>
-			<property>
-				<proptype>Type2</proptype>
-				<propvalue>Value2</propvalue>
-				<propdesc>Description2</propdesc>
-			</property>
-			<property>
-				<proptype>Type3</proptype>
-				<propvalue>Value3</propvalue>
-				<propdesc>Description3</propdesc>
-			</property>
-		</properties>
-	</refbody>
+	<shortdesc>File created to avoid PDE warnings. The actual content is created during the build.</shortdesc>
 </reference>

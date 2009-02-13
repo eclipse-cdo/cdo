@@ -28,7 +28,7 @@ antScript=$currentPath"/javadoc.xml"; if [[ $debug -gt 0 ]]; then echo "[antJava
 eclipseDir=`cd $1; echo $PWD`; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] eclipseDir: "$eclipseDir; fi
 
 # The destination directory
-destDir=$currentPath/../references/javadoc; mkdir -p $destDir; destDir=`cd $destDir; echo $PWD`; # resolve relative path
+destDir=$currentPath/../references/javadocs; mkdir -p $destDir; destDir=`cd $destDir; echo $PWD`; # resolve relative path
 if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] destDir: "$destDir; fi
 
 function groupPackage
@@ -59,7 +59,7 @@ function groupPackage
 			exit 1;
 		fi
 	else
-		echo "Error: $antScript.template contains no @plugin@ tokens!"; 
+		echo "Warning: $antScript.template contains no @plugin@ tokens!"; 
 	fi
 }
 
@@ -127,16 +127,16 @@ ant	-f ${antScript} \
 # Don't clean up templates because this script is called more than once (though it shouldn't have to be!)
 #rm -f $antScript $antScript.template*;
 
-# Generate topics_Reference.xml (replacement for doclet). 
-trXML=$currentPath"/../topics_Reference.xml";
+# Generate toc_javadocs.xml (replacement for doclet). 
+trXML=$currentPath"/../help/toc_javadocs.xml";
 echo '<?xml version="1.0" encoding="UTF-8"?>' > $trXML;
 echo '<?NLS TYPE="org.eclipse.help.toc"?>' >> $trXML;
-echo '<toc label="Reference">' >> $trXML;
-echo '  <topic label="API Reference" href="references/javadoc/overview-summary.html">' >> $trXML;
+echo '<toc label="Javadocs">' >> $trXML;
+echo '  <topic label="Javadocs" href="help/references/javadocs/overview-summary.html">' >> $trXML;
 for packSum in `find $destDir -name "package-summary.html" | sort`; do
-	path=${packSum%/package-summary.html}; path=${path#$destDir/}; # org/eclipse/xsd/ecore/importer/taskdefs
-	label=${path//\//.}; # org.eclipse.xsd.ecore.importer.taskdefs
-	echo '    <topic label="'$label'" href="references/javadoc/'$path'/package-summary.html" />' >> $trXML;
+	path=${packSum%/package-summary.html}; path=${path#$destDir/}; 
+	label=${path//\//.}; 
+	echo '    <topic label="'$label'" href="help/references/javadocs/'$path'/package-summary.html" />' >> $trXML;
 done
 echo '  </topic>' >> $trXML;
 echo '</toc>' >> $trXML;

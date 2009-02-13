@@ -43,7 +43,10 @@
 		<move file="${temp.dir}/index.html" tofile="${temp.dir}/toc.html" failonerror="true" verbose="true" />
 
 		<!-- Cut out the body contents -->
-		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*" replace="&lt;!-- Generated: ${TIME_STAMP} -->\1" flags="s" byline="false">
+		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*"
+		               replace="&lt;!-- Generated: ${TIME_STAMP} -->\1"
+		               flags="s"
+		               byline="false">
 			<fileset dir="${temp.dir}" includes="**/*.html" id="topics" />
 		</replaceregexp>
 
@@ -90,18 +93,27 @@
 		</antcall>
 
 		<!-- Delete the generated plugin manifest -->
-		<delete file="${target.dir}/meta-inf/" failonerror="false" verbose="true" includeemptydirs="true"/>
+		<delete file="${target.dir}/meta-inf/" failonerror="false" verbose="true" includeemptydirs="true" />
 		<delete file="${target.dir}/plugin.xml" failonerror="false" verbose="true" />
 		<delete file="${target.dir}/plugin.properties" failonerror="false" verbose="true" />
 
 		<!-- In the topics replace the generated "../" paths with "help/"	-->
-		<replaceregexp match="href=&quot;\?topic=\.\./([^&quot;]*)&quot;" replace="href=&quot;../\1.html&quot;" flags="g">
+		<replaceregexp match="href=&quot;\?topic=\.\./([^&quot;]*)&quot;"
+		               replace="href=&quot;../\1.html&quot;"
+		               flags="g">
 			<fileset dir="${target.dir}" includes="**/*html" />
 		</replaceregexp>
 
 		<!-- In the TOC prefix with "help/" -->
 		<replace token="topic=&quot;" value="topic=&quot;help/" file="${target.dir}/toc.xml" />
 		<replace token="href=&quot;" value="href=&quot;help/" file="${target.dir}/toc.xml" />
+
+		<!-- Hook in the generated Javadocs -->
+		<delete file="${target.dir}/references/api_reference.html" failonerror="false" verbose="true" />
+		<replaceregexp match="&lt;topic label=&quot;[^&quot;]*&quot; href=&quot;help/references/api_reference.html&quot;>"
+		               replace="&lt;link toc=&quot;help/toc_javadocs.xml&quot;>"
+		               flags="g"
+		               file="${target.dir}/toc.xml" />
 	</target>
 
 	<!-- ********************************************************************************************************* -->

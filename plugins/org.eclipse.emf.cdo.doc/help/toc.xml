@@ -565,17 +565,17 @@
 <topic label="Using the EFS Integration" href="help/users/using_the_efs_integration.html"/>
 <topic label="Using the Team Provider" href="help/users/using_the_team_provider.html"/>
 </topic>
-<topic label="Reference" href="help/references/_references.html">
-<topic label="Server Configuration Reference" href="help/references/server_configuration_reference.html">
-<topic label="MEMStore Reference" href="help/references/memstore_reference.html"/>
-<topic label="DBStore Reference" href="help/references/dbstore_reference.html"/>
-<topic label="HibernateStore Reference" href="help/references/hibernatestore_reference.html"/>
-<topic label="ObjectivityStore Reference" href="help/references/objectivitystore_reference.html"/>
-</topic>
-<topic label="Extension Point Reference" href="help/references/extension_point_reference.html">
+<topic label="References" href="help/references/_references.html">
+<link toc="help/toc_javadocs.xml">
+<topic label="Extension Points" href="help/references/extension_point_reference.html">
 <topic label="See org.eclipse.platform.doc.isv for build automation" href="help/references/see_org_eclipse_platform_doc_isv_for_build_automation.html"/>
+<topic label="Server Configuration" href="help/references/server_configuration_reference.html">
+<topic label="MEMStore" href="help/references/memstore_reference.html"/>
+<topic label="DBStore" href="help/references/dbstore_reference.html"/>
+<topic label="HibernateStore" href="help/references/hibernatestore_reference.html"/>
+<topic label="ObjectivityStore" href="help/references/objectivitystore_reference.html"/>
 </topic>
-<topic label="API Reference" href="help/references/api_reference.html">
+</topic>
 <topic label="See XXX for build automation" href="help/references/see_xxx_for_build_automation.html"/>
 </topic>
 <topic label="Other Reference Information" href="help/references/other_reference_information.html">

@@ -12,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <topic id="javadoc_stub1" xml:lang="en-us">
-	<title>Javadoc Stub 1</title>
+	<title>CDO Model Repository Javadocs</title>
 	<titlealts>
-		<navtitle>Javadoc Stub 1</navtitle>
-		<searchtitle>Javadoc Stub 1</searchtitle>
+		<navtitle>Javadocs</navtitle>
+		<searchtitle>CDO Model Repository Javadocs</searchtitle>
 	</titlealts>
-	<shortdesc>File created to avoid PDE warnings. The actual content is created during the build.e.</shortdesc>
+	<shortdesc>File created to avoid PDE warnings. The actual content is created during the build.</shortdesc>
 </topic>

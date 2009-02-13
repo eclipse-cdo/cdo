@@ -87,7 +87,7 @@
 		</exec>
 
 		<loadfile property="generatedTocSnippet" srcFile="help/toc_javadocs.snippet" />
-		<replace token="&lt;link toc=&quot;toc_javadocs.xml&quot;/>"
+		<replace token="&lt;topic label=&quot;Javadocs&quot; href=&quot;help/javadocs/overview-summary.html&quot;/>"
 		         value="${generatedTocSnippet}"
 		         file="help/toc.xml" />
 		<delete file="help/toc_javadocs.snippet" />

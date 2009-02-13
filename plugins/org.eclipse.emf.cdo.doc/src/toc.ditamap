@@ -576,7 +576,7 @@ Eike Stepper - initial API and implementation
 		<topicref href="users/using_the_team_provider.dita" type="task"/>
 	</topicref>
 	<topicref href="references/_references.dita">
-		<navref mapref="toc_javadocs.ditamap"/>
+		<topicref href="javadocs/overview-summary.dita"/>
 		<topicref href="references/extension_point_reference.dita" type="reference">
 			<topicref href="references/see_org_eclipse_platform_doc_isv_for_build_automation.dita" type="reference"/>
 		</topicref>

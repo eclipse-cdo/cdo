@@ -28,7 +28,7 @@ antScript=$currentPath"/javadoc.xml"; if [[ $debug -gt 0 ]]; then echo "[antJava
 eclipseDir=`cd $1; echo $PWD`; if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] eclipseDir: "$eclipseDir; fi
 
 # The destination directory
-destDir=$currentPath/../references/javadocs; mkdir -p $destDir; destDir=`cd $destDir; echo $PWD`; # resolve relative path
+destDir=$currentPath/../help/references/javadocs; mkdir -p $destDir; destDir=`cd $destDir; echo $PWD`; # resolve relative path
 if [[ $debug -gt 0 ]]; then echo "[antJavadoc.sh] destDir: "$destDir; fi
 
 function groupPackage

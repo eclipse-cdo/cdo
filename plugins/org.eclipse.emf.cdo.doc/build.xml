@@ -7,7 +7,7 @@
 	<property name="plugin" value="org.eclipse.emf.cdo" />
 	<property name="docPlugin" value="org.eclipse.emf.cdo.doc" />
 
-	<property name="filesToInclude" value="META-INF/,about.*,*.gif,*.png,plugin.*,index/**, help/**, references/**" />
+	<property name="filesToInclude" value="META-INF/,about.*,*.gif,*.png,plugin.*,index/**, help/**" />
 
 	<!-- Compiler settings. -->
 	<property name="javacFailOnError" value="false" />
@@ -68,7 +68,11 @@
 		<antcall target="gather.bin.parts">
 			<param name="destination.temp.folder" value="${temp.folder}/" />
 		</antcall>
-		<zip destfile="${plugin.destination}/${docPlugin}_${pluginVersion}.${forceContextQualifier}.jar" basedir="${temp.folder}/${docPlugin}_${pluginVersion}.${forceContextQualifier}" filesonly="false" whenempty="skip" update="false" />
+		<zip destfile="${plugin.destination}/${docPlugin}_${pluginVersion}.${forceContextQualifier}.jar"
+		     basedir="${temp.folder}/${docPlugin}_${pluginVersion}.${forceContextQualifier}"
+		     filesonly="false"
+		     whenempty="skip"
+		     update="false" />
 		<delete dir="${temp.folder}" />
 	</target>
 
@@ -108,10 +112,13 @@
 
 	<target name="gather.bin.parts" depends="init" if="destination.temp.folder">
 		<mkdir dir="${destination.temp.folder}/${docPlugin}_${pluginVersion}.${forceContextQualifier}" />
-		<copy todir="${destination.temp.folder}/${docPlugin}_${pluginVersion}.${forceContextQualifier}" failonerror="true" overwrite="false">
+		<copy todir="${destination.temp.folder}/${docPlugin}_${pluginVersion}.${forceContextQualifier}"
+		      failonerror="true"
+		      overwrite="false">
 			<fileset dir="${basedir}" includes="${filesToInclude}" />
 		</copy>
-		<eclipse.versionReplacer path="${destination.temp.folder}/${docPlugin}_${pluginVersion}.${forceContextQualifier}" version="${pluginVersion}.${forceContextQualifier}" />
+		<eclipse.versionReplacer path="${destination.temp.folder}/${docPlugin}_${pluginVersion}.${forceContextQualifier}"
+		                         version="${pluginVersion}.${forceContextQualifier}" />
 	</target>
 
 	<target name="build.zips" depends="init">
@@ -123,13 +130,17 @@
 	<target name="gather.logs" depends="init" if="destination.temp.folder">
 	</target>
 
-	<target name="clean" depends="init" description="Clean the plug-in: ${docPlugin} of all the zips, jars and logs created.">
+	<target name="clean"
+	        depends="init"
+	        description="Clean the plug-in: ${docPlugin} of all the zips, jars and logs created.">
 		<delete file="${plugin.destination}/${docPlugin}_${pluginVersion}.${forceContextQualifier}.jar" />
 		<delete file="${plugin.destination}/${docPlugin}_${pluginVersion}.${forceContextQualifier}.zip" />
 		<delete dir="${temp.folder}" />
 	</target>
 
-	<target name="zip.plugin" depends="init" description="Create a zip containing all the elements for the plug-in: ${docPlugin}.">
+	<target name="zip.plugin"
+	        depends="init"
+	        description="Create a zip containing all the elements for the plug-in: ${docPlugin}.">
 		<delete dir="${temp.folder}" />
 		<mkdir dir="${temp.folder}" />
 		<antcall target="build.jars" />
@@ -143,7 +154,11 @@
 		<delete>
 			<fileset dir="${temp.folder}" includes="**/*.bin.log" />
 		</delete>
-		<zip destfile="${plugin.destination}/${docPlugin}_${pluginVersion}.${forceContextQualifier}.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false" />
+		<zip destfile="${plugin.destination}/${docPlugin}_${pluginVersion}.${forceContextQualifier}.zip"
+		     basedir="${temp.folder}"
+		     filesonly="true"
+		     whenempty="skip"
+		     update="false" />
 		<delete dir="${temp.folder}" />
 	</target>
 

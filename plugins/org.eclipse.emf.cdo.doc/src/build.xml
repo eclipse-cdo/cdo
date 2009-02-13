@@ -111,7 +111,7 @@
 		<!-- Hook in the generated Javadocs -->
 		<delete file="${target.dir}/references/api_reference.html" failonerror="false" verbose="true" />
 		<replaceregexp match="&lt;topic label=&quot;[^&quot;]*&quot; href=&quot;help/references/api_reference.html&quot;>"
-		               replace="&lt;link toc=&quot;help/toc_javadocs.xml&quot;>"
+		               replace="&lt;link toc=&quot;help/toc_javadocs.xml&quot;/>"
 		               flags="g"
 		               file="${target.dir}/toc.xml" />
 	</target>

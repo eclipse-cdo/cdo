@@ -43,7 +43,7 @@
 
 		<!-- Cut out the body contents -->
 		<replaceregexp match=".*&lt;body[^>]*>(.*)&lt;/body>.*"
-		               replace="&lt;!-- Generated: ${TIME_STAMP} -->\1"
+		               replace="&lt;!-- Generated -->\1"
 		               flags="s"
 		               byline="false">
 			<fileset dir="${temp.dir}" includes="**/*.html" id="topics" />
@@ -119,9 +119,6 @@
 	<!-- ********************************************************************************************************* -->
 	<!-- ********************************************************************************************************* -->
 	<target name="init">
-		<tstamp>
-			<format property="TIME_STAMP" pattern="MMMM dd, yyyy, hh:mm aa" locale="en" />
-		</tstamp>
 	</target>
 
 </project>

@@ -40,27 +40,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.server"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.examples"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.examples.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
 
    <includes
@@ -69,11 +49,31 @@
          optional="true"/>
 
    <includes
-         id="org.eclipse.emf.cdo.server.hibernate.source"
+         id="org.eclipse.emf.cdo.examples"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.defs"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.hibernate.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.examples.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
 
    <plugin

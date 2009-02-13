@@ -12,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <reference id="memstore_reference" xml:lang="en-us">
-	<title>MEMStore Reference</title>
+	<title>MEMStore Configuration</title>
 	<titlealts>
-		<navtitle>MEMStore Reference</navtitle>
-		<searchtitle>MEMStore Reference</searchtitle>
+		<navtitle>MEMStore</navtitle>
+		<searchtitle>MEMStore Configuration</searchtitle>
 	</titlealts>
 	<shortdesc>Reference information for something.</shortdesc>
 	<prolog></prolog>

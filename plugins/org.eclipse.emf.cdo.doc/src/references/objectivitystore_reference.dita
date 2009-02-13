@@ -12,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <reference id="objectivitystore_reference" xml:lang="en-us">
-	<title>ObjectivityStore Reference</title>
+	<title>ObjectivityStore Configuration</title>
 	<titlealts>
-		<navtitle>ObjectivityStore Reference</navtitle>
-		<searchtitle>ObjectivityStore Reference</searchtitle>
+		<navtitle>ObjectivityStore</navtitle>
+		<searchtitle>ObjectivityStore Configuration</searchtitle>
 	</titlealts>
 	<shortdesc>Reference information for something.</shortdesc>
 	<prolog></prolog>

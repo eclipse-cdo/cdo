@@ -12,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <reference id="api_reference" xml:lang="en-us">
-	<title>API Reference</title>
+	<title>JavaDocs</title>
 	<titlealts>
-		<navtitle>API Reference</navtitle>
-		<searchtitle>API Reference</searchtitle>
+		<navtitle>JavaDocs</navtitle>
+		<searchtitle>CDO JavaDocs</searchtitle>
 	</titlealts>
 	<shortdesc>Reference information for something.</shortdesc>
 	<prolog></prolog>

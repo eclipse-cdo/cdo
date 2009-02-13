@@ -12,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <reference id="server_configuration_reference" xml:lang="en-us">
-	<title>Server Configuration Reference</title>
+	<title>CDO Server Configuration</title>
 	<titlealts>
-		<navtitle>Server Configuration Reference</navtitle>
-		<searchtitle>Server Configuration Reference</searchtitle>
+		<navtitle>Server Configuration</navtitle>
+		<searchtitle>CDO Server Configuration</searchtitle>
 	</titlealts>
 	<shortdesc>Reference information for something.</shortdesc>
 	<prolog></prolog>

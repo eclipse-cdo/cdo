@@ -14,7 +14,7 @@ Eike Stepper - initial API and implementation
 <reference id="dbstore_reference" xml:lang="en-us">
 	<title>DBStore Reference</title>
 	<titlealts>
-		<navtitle>DBStore Reference</navtitle>
+		<navtitle>DBStore</navtitle>
 		<searchtitle>DBStore Reference</searchtitle>
 	</titlealts>
 	<shortdesc>Reference information for something.</shortdesc>

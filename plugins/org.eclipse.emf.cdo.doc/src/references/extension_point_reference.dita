@@ -12,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <reference id="extension_point_reference" xml:lang="en-us">
-	<title>Extension Point Reference</title>
+	<title>CDO Extension Points</title>
 	<titlealts>
-		<navtitle>Extension Point Reference</navtitle>
-		<searchtitle>Extension Point Reference</searchtitle>
+		<navtitle>Extension Points</navtitle>
+		<searchtitle>CDO Extension Points</searchtitle>
 	</titlealts>
 	<shortdesc>Reference information for something.</shortdesc>
 	<prolog></prolog>

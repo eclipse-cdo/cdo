@@ -12,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <reference id="hibernatestore_reference" xml:lang="en-us">
-	<title>HibernateStore Reference</title>
+	<title>HibernateStore Configuration</title>
 	<titlealts>
-		<navtitle>HibernateStore Reference</navtitle>
-		<searchtitle>HibernateStore Reference</searchtitle>
+		<navtitle>HibernateStore</navtitle>
+		<searchtitle>HibernateStore Configuration</searchtitle>
 	</titlealts>
 	<shortdesc>Reference information for something.</shortdesc>
 	<prolog></prolog>

@@ -92,8 +92,8 @@
 			<param name="clean.temp" value="no" />
 		</antcall>
 
-		<!-- Delete the generated plugin manifest -->
-		<delete file="${target.dir}/meta-inf/" failonerror="false" verbose="true" includeemptydirs="true" />
+		<!-- Delete the generated plugin files -->
+		<delete dir="${target.dir}/meta-inf/" failonerror="false" verbose="true" includeemptydirs="true" />
 		<delete file="${target.dir}/plugin.xml" failonerror="false" verbose="true" />
 		<delete file="${target.dir}/plugin.properties" failonerror="false" verbose="true" />
 
@@ -110,8 +110,8 @@
 
 		<!-- Hook in the generated Javadocs -->
 		<delete file="${target.dir}/references/api_reference.html" failonerror="false" verbose="true" />
-		<replaceregexp match="&lt;topic label=&quot;[^&quot;]*&quot; href=&quot;help/references/api_reference.html&quot;>"
-		               replace="&lt;link toc=&quot;help/toc_javadocs.xml&quot;/>"
+		<replaceregexp match="&lt;topic label=&quot;[^&quot;]*&quot; href=&quot;help/references/api_reference.html&quot;/>"
+		               replace="&lt;link toc=&quot;toc_javadocs.xml&quot;/>"
 		               flags="g"
 		               file="${target.dir}/toc.xml" />
 	</target>

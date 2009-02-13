@@ -566,7 +566,7 @@
 <topic label="Using the Team Provider" href="help/users/using_the_team_provider.html"/>
 </topic>
 <topic label="References" href="help/references/_references.html">
-<link toc="help/toc_javadocs.xml"/>
+<link toc="toc_javadocs.xml"/>
 <topic label="Extension Points" href="help/references/extension_point_reference.html">
 <topic label="See org.eclipse.platform.doc.isv for build automation" href="help/references/see_org_eclipse_platform_doc_isv_for_build_automation.html"/>
 <topic label="Server Configuration" href="help/references/server_configuration_reference.html">
@@ -575,8 +575,6 @@
 <topic label="HibernateStore" href="help/references/hibernatestore_reference.html"/>
 <topic label="ObjectivityStore" href="help/references/objectivitystore_reference.html"/>
 </topic>
-</topic>
-<topic label="See XXX for build automation" href="help/references/see_xxx_for_build_automation.html"/>
 </topic>
 <topic label="Other Reference Information" href="help/references/other_reference_information.html">
 <topic label="CDO State Machine" href="help/references/cdo_state_machine.html"/>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
-<toc label="CDO Model Repository Documentation" topic="help/about_this_manual.html">
-<topic label="About" href="help/about_this_manual.html"/>
-<topic label="Conventions" href="help/conventions_for_this_manual.html"/>
-<topic label="Overview" href="help/overview_of_cdo.html"/>
-<topic label="What's New" href="help/what_s_new.html"/>
+<toc label="CDO Model Repository Documentation" topic="help/collateral/about_this_manual.html">
+<topic label="About" href="help/collateral/about_this_manual.html"/>
+<topic label="Conventions" href="help/collateral/conventions_for_this_manual.html"/>
+<topic label="Overview" href="help/collateral/overview_of_cdo.html"/>
+<topic label="What's New" href="help/collateral/what_s_new.html"/>
 <topic label="Concepts" href="help/concepts/_concepts.html">
 <topic label="Applications" href="help/concepts/applications.html">
 <topic label="Runtime Environments" href="help/concepts/runtime_environments.html">
@@ -566,7 +566,7 @@
 <topic label="Using the Team Provider" href="help/users/using_the_team_provider.html"/>
 </topic>
 <topic label="References" href="help/references/_references.html">
-<link toc="toc_javadocs.xml"/>
+<topic label="Javadocs" href="help/javadocs/overview-summary.html"/>
 <topic label="Extension Points" href="help/references/extension_point_reference.html">
 <topic label="See org.eclipse.platform.doc.isv for build automation" href="help/references/see_org_eclipse_platform_doc_isv_for_build_automation.html"/>
 </topic>
@@ -580,7 +580,7 @@
 <topic label="CDO State Machine" href="help/references/cdo_state_machine.html"/>
 </topic>
 </topic>
-<topic label="Glossary" href="help/glossary.html"/>
-<topic label="Index" href="help/register.html"/>
-<topic label="Legal" href="help/legal_information.html"/>
+<topic label="Glossary" href="help/collateral/glossary.html"/>
+<topic label="Index" href="help/collateral/register.html"/>
+<topic label="Legal" href="help/collateral/legal_information.html"/>
 </toc>

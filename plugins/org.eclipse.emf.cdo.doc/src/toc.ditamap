@@ -11,10 +11,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <map title="CDO Model Repository Documentation" id="cdo">
-	<topicref href="about_this_manual.dita" type="concept"/>
-	<topicref href="conventions_for_this_manual.dita" type="concept"/>
-	<topicref href="overview_of_cdo.dita" type="concept"/>
-	<topicref href="what_s_new.dita" type="concept"/>
+	<topicref href="collateral/about_this_manual.dita" type="concept"/>
+	<topicref href="collateral/conventions_for_this_manual.dita" type="concept"/>
+	<topicref href="collateral/overview_of_cdo.dita" type="concept"/>
+	<topicref href="collateral/what_s_new.dita" type="concept"/>
 	<topicref href="concepts/_concepts.dita">
 		<topicref href="concepts/applications.dita" type="concept">
 			<topicref href="concepts/runtime_environments.dita" type="concept">
@@ -590,7 +590,7 @@ Eike Stepper - initial API and implementation
 			<topicref href="references/cdo_state_machine.dita" type="reference"/>
 		</topicref>
 	</topicref>
-	<topicref href="glossary.dita" type="concept"/>
-	<topicref href="register.dita" type="concept"/>
-	<topicref href="legal_information.dita" type="concept"/>
+	<topicref href="collateral/glossary.dita" type="concept"/>
+	<topicref href="collateral/register.dita" type="concept"/>
+	<topicref href="collateral/legal_information.dita" type="concept"/>
 </map>

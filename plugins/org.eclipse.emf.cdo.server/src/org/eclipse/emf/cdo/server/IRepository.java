@@ -123,7 +123,7 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
      *          unchecked exception must be thrown.
      * @param additionalRevisions
      *          The additional revisions that are to be sent to the client because internal optimizers believe that they
-     *          will be need soon. If the client must not see any of these revisions they should be removed from the
+     *          will be needed soon. If the client must not see any of these revisions they should be removed from the
      *          list.
      * @throws RuntimeException
      *           to indicate that none of the revisions must be sent to the client. This exception will be visible at

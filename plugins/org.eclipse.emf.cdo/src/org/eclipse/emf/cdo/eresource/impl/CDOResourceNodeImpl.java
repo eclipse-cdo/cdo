@@ -116,8 +116,12 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     {
       if (checkDuplicates)
       {
-        String newPath = (newFolder == null ? "" : newFolder.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + getName();
-        checkDuplicates(newPath);
+        String name = getName();
+        if (name != null)
+        {
+          String newPath = (newFolder == null ? "" : newFolder.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + name;
+          checkDuplicates(newPath);
+        }
       }
 
       setFolderGen(newFolder);
@@ -167,8 +171,11 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
       if (checkDuplicates)
       {
         CDOResourceFolder parent = getFolder();
-        String newPath = (parent == null ? "" : parent.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + getName();
-        checkDuplicates(newPath);
+        if (parent != null)
+        {
+          String newPath = (parent == null ? "" : parent.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + getName();
+          checkDuplicates(newPath);
+        }
       }
 
       setNameGen(newName);

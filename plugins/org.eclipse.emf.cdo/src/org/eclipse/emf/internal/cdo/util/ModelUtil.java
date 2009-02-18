@@ -276,7 +276,17 @@ public final class ModelUtil
     Object defaultValue = eFeature.getDefaultValue();
     if (type == CDOType.CUSTOM)
     {
-      defaultValue = EcoreUtil.convertToString((EDataType)eFeature.getEType(), defaultValue);
+      try
+      {
+        defaultValue = EcoreUtil.convertToString((EDataType)eFeature.getEType(), defaultValue);
+      }
+      catch (RuntimeException ex)
+      {
+        if (defaultValue != null)
+        {
+          throw ex;
+        }
+      }
     }
 
     return CDOModelUtil.createAttribute(containingClass, featureID, name, type, defaultValue, many);

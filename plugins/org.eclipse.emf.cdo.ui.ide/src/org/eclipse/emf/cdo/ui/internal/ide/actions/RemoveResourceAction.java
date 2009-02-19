@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
@@ -46,6 +47,9 @@ public class RemoveResourceAction implements IObjectActionDelegate
 
   private Shell shell;
 
+  private static Image removeImage = OM.Activator.imageDescriptorFromPlugin(OM.BUNDLE_ID,
+      "icons/full/elcl16/delete_edit.gif").createImage();
+
   public RemoveResourceAction()
   {
   }
@@ -62,62 +66,64 @@ public class RemoveResourceAction implements IObjectActionDelegate
 
   public void run(IAction action)
   {
-    Job job = new Job("Deleting CDOResource(s)")
+    if (MessageDialog.openConfirm(shell, "Delete Resource", "Are you sure you want to delete the selected "
+        + nodes.size() + " item(s)?"))
     {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
+      Job job = new Job("Deleting CDOResource(s)")
       {
-        Map<Integer, CDOTransaction> repositoryToTransaction = new HashMap<Integer, CDOTransaction>();
-        for (CDOResourceNode node : nodes)
+        @Override
+        protected IStatus run(IProgressMonitor monitor)
         {
-          int sessionID = node.cdoView().getSession().getSessionID();
-          CDOTransaction transaction = repositoryToTransaction.get(sessionID);
-          if (transaction == null)
+          Map<Integer, CDOTransaction> repositoryToTransaction = new HashMap<Integer, CDOTransaction>();
+          for (CDOResourceNode node : nodes)
           {
-            transaction = node.cdoView().getSession().openTransaction();
-            repositoryToTransaction.put(sessionID, transaction);
+            int sessionID = node.cdoView().getSession().getSessionID();
+            CDOTransaction transaction = repositoryToTransaction.get(sessionID);
+            if (transaction == null)
+            {
+              transaction = node.cdoView().getSession().openTransaction();
+              repositoryToTransaction.put(sessionID, transaction);
+            }
+
+            CDOObject writableNode = transaction.getObject(node.cdoID());
+            EObject container = writableNode.eContainer();
+            if (container == null)
+            {
+              container = (CDOResource)writableNode.eResource();
+            }
+
+            if (container instanceof CDOResource)
+            {
+              ((CDOResource)container).getContents().remove(writableNode);
+            }
+            else if (container instanceof CDOResourceFolder)
+            {
+              ((CDOResourceFolder)container).getNodes().remove(writableNode);
+            }
           }
 
-          CDOObject writableNode = transaction.getObject(node.cdoID());
-          EObject container = writableNode.eContainer();
-          if (container == null)
+          for (CDOTransaction transaction : repositoryToTransaction.values())
           {
-            container = (CDOResource)writableNode.eResource();
+            try
+            {
+              transaction.commit();
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(this.getClass().getName().toString() + ": Cannot perform commit", ex);
+            }
+            finally
+            {
+              transaction.close();
+            }
           }
 
-          if (container instanceof CDOResource)
-          {
-            ((CDOResource)container).getContents().remove(writableNode);
-          }
-          else if (container instanceof CDOResourceFolder)
-          {
-            ((CDOResourceFolder)container).getNodes().remove(writableNode);
-          }
+          UIUtil.setStatusBarMessage(nodes.size() + " element(s) removed", removeImage);
+          return Status.OK_STATUS;
         }
-
-        for (CDOTransaction transaction : repositoryToTransaction.values())
-        {
-          try
-          {
-            transaction.commit();
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(this.getClass().getName().toString() + ": Cannot perform commit", ex);
-          }
-          finally
-          {
-            transaction.close();
-          }
-        }
-
-        return Status.OK_STATUS;
-      }
-    };
-
-    if (MessageDialog.openConfirm(shell, "Delete Resource", "Are you sure you want to delete the selected item(s)?"))
-    {
+      };
       job.schedule();
     }
   }
+
 }

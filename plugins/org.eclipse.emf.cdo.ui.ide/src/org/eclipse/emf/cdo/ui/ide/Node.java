@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.ide;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
@@ -18,13 +19,15 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EPackage;
 
+import org.eclipse.core.runtime.PlatformObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public abstract class Node
+public abstract class Node extends PlatformObject
 {
   private static final Object[] EMPTY = {};
 
@@ -166,6 +169,18 @@ public abstract class Node
     public String getImageKey()
     {
       return "icons/full/obj16/Resources.gif";
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Object getAdapter(Class adapter)
+    {
+      if (adapter.equals(CDOObject.class))
+      {
+        return getRepositoryProject().getView().getRootResource();
+      }
+
+      return super.getAdapter(adapter);
     }
 
     @Override

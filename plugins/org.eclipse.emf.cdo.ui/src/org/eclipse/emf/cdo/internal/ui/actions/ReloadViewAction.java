@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
+import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,7 +35,7 @@ public final class ReloadViewAction extends ViewAction
   {
     if (getView().reload() != 0)
     {
-      CDOEditor.refresh(getPage(), getView());
+      CDOEditorInput.refreshEditors(getPage(), getView());
     }
   }
 }

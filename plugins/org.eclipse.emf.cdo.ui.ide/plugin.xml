@@ -27,21 +27,29 @@
       <navigatorContent
             activeByDefault="true"
             contentProvider="org.eclipse.emf.cdo.ui.ide.RepositoryContentProvider"
+            icon="icons/full/obj16/repository_content.gif"
             id="org.eclipse.emf.cdo.ui.ide.RepositoryContent"
             labelProvider="org.eclipse.emf.cdo.ui.ide.RepositoryLabelProvider"
             name="CDO Repository Content"
             priority="normal"
             providesSaveables="false">
          <triggerPoints>
-            <adapt type="org.eclipse.core.resources.IProject">
-              <test property="org.eclipse.core.resources.projectPersistentProperty" args="org.eclipse.team.core.repository,org.eclipse.emf.cdo.team.TeamProvider" />
-            </adapt>
+            <or>
+               <adapt
+                     type="org.eclipse.core.resources.IProject">
+                  <test
+                        args="org.eclipse.team.core.repository,org.eclipse.emf.cdo.team.TeamProvider"
+                        property="org.eclipse.core.resources.projectPersistentProperty">
+                  </test>
+               </adapt>
+               <instanceof
+                     value="org.eclipse.emf.cdo.ui.ide.Node">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.emf.ecore.EObject">
+               </instanceof>
+            </or>
          </triggerPoints>
-         <possibleChildren>
-            <instanceof
-                  value="org.eclipse.emf.cdo.ui.ide.Node">
-            </instanceof>
-         </possibleChildren>
       </navigatorContent>
    </extension>
    
@@ -62,7 +70,7 @@
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="true"
-            id="org.eclipse.core.resources.IProjectContributions"
+            id="org.eclipse.emf.cdo.ui.ide.IProjectContributions"
             objectClass="org.eclipse.core.resources.IProject">
          <filter
                name="projectPersistentProperty"
@@ -76,8 +84,8 @@
          </action>
       </objectContribution>
       <objectContribution
-            adaptable="false"
-            id="org.eclipse.core.resources.IProjectContributions"
+            adaptable="true"
+            id="org.eclipse.emf.cdo.ui.ide.ResourcesNodeContributions"
             objectClass="org.eclipse.emf.cdo.ui.ide.Node$ResourcesNode">
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
@@ -85,21 +93,16 @@
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
                label="New CDOResource">
          </action>
-      </objectContribution>
-      <objectContribution
-            adaptable="false"
-            id="org.eclipse.core.resources.IProjectContributions"
-            objectClass="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
-               icon="icons/full/elcl16/NewCDOResource.gif"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
+               icon="icons/full/elcl16/NewCDOResourceFolder.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="New CDOResource">
+               label="New Folder">
          </action>
       </objectContribution>
       <objectContribution
-            adaptable="false"
-            id="org.eclipse.core.resources.IProjectContributions"
+            adaptable="true"
+            id="org.eclipse.emf.cdo.ui.ide.CDOResourceNodeContributions"
             objectClass="org.eclipse.emf.cdo.eresource.CDOResourceNode">
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceAction"
@@ -109,20 +112,15 @@
          </action>
       </objectContribution>
       <objectContribution
-            adaptable="false"
-            id="org.eclipse.core.resources.IProjectContributions"
+            adaptable="true"
+            id="org.eclipse.emf.cdo.ui.ide.CDOResourceFolderContributions"
             objectClass="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
-               icon="icons/full/elcl16/NewCDOResourceFolder.gif"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
+               icon="icons/full/elcl16/NewCDOResource.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="New Folder">
+               label="New CDOResource">
          </action>
-      </objectContribution>
-      <objectContribution
-            adaptable="false"
-            id="org.eclipse.core.resources.IProjectContributions"
-            objectClass="org.eclipse.emf.cdo.ui.ide.Node$ResourcesNode">
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
                icon="icons/full/elcl16/NewCDOResourceFolder.gif"
@@ -130,6 +128,15 @@
                label="New Folder">
          </action>
       </objectContribution>
-   </extension>
+			<objectContribution
+            id="org.eclipse.emf.cdo.ui.ide.CDOResource"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResource">
+         <action
+               class="org.eclipse.emf.cdo.tests.model1.diagram.part.Model1InitDiagramFileAction"
+               enablesFor="1"
+               id="org.eclipse.emf.cdo.tests.model1.diagram.InitDiagramAction"
+               label="Init Diagram">
+         </action>
+      </objectContribution>   </extension>
 
 </plugin>

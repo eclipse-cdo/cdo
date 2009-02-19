@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.ui.ide;
 
@@ -15,10 +16,12 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
+import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.ide.Node.PackagesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
+import org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceAction;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -47,7 +50,11 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 import java.util.ArrayList;
@@ -276,7 +283,9 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     // Mouse double-click
     getViewer().addDoubleClickListener(new MouseListener());
 
-    // TODO Keyboard actions.
+    // Keyboard actions
+    getViewer().getControl().addKeyListener(new CDONavigatorKeyListener());
+
   }
 
   private void wireUpViewerRefresher(IRepositoryProject repositoryProject, RepositoryInfo info)
@@ -361,7 +370,11 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 
       try
       {
-        resourcesNode.getRepositoryProject().getProject().close(new NullProgressMonitor());
+        // View gets on shutdown, but we shouldn't close the project
+        if (PlatformUI.isWorkbenchRunning())
+        {
+          resourcesNode.getRepositoryProject().getProject().close(new NullProgressMonitor());
+        }
       }
       catch (CoreException ex)
       {
@@ -430,7 +443,37 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
       {
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         CDOView view = ((CDOResource)selection).cdoView().getSession().openTransaction();
-        CDOEditor.open(page, view, ((CDOResource)selection).getPath());
+
+        try
+        {
+          CDOEditorInput editorInput = new CDOEditorInput(view, ((CDOResource)selection).getPath(), true);
+          page.openEditor(editorInput, CDOEditor.EDITOR_ID);
+        }
+        catch (PartInitException ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
+  }
+
+  /**
+   * @author Victor Roldan Betancort
+   */
+  private final class CDONavigatorKeyListener extends KeyAdapter
+  {
+    public CDONavigatorKeyListener()
+    {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+      if (e.keyCode == SWT.DEL)
+      {
+        RemoveResourceAction action = new RemoveResourceAction();
+        action.selectionChanged(null, getViewer().getSelection());
+        action.run(null);
       }
     }
   }

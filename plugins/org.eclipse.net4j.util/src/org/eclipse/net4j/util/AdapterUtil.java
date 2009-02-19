@@ -51,6 +51,8 @@ public final class AdapterUtil
   }
 
   /**
+   * Nested class to factor out dependencies on org.eclipse.core.runtime
+   * 
    * @author Eike Stepper
    */
   private static final class AdaptableHelper
@@ -67,6 +69,8 @@ public final class AdapterUtil
   }
 
   /**
+   * Nested class to factor out dependencies on org.eclipse.core.runtime
+   * 
    * @author Eike Stepper
    */
   private static final class AdapterManagerHelper

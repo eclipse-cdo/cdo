@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.ui.defs.impl;
 
 import org.eclipse.emf.cdo.defs.CDOViewDef;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.defs.CDOEditorDef;
 import org.eclipse.emf.cdo.ui.defs.CDOUIDefsPackage;
 import org.eclipse.emf.cdo.view.CDOView;

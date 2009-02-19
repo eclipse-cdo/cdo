@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
+import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -38,6 +38,6 @@ public final class OpenResourceEditorAction extends ResourceNodeAction
   {
     CDOView view = getResourceNode().cdoView();
     String resourcePath = getResourceNode().getPath();
-    CDOEditor.open(getPage(), view, resourcePath);
+    CDOEditorInput.openEditor(getPage(), view, resourcePath);
   }
 }

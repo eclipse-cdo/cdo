@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.net4j.util.ui;
 
@@ -22,12 +23,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -207,7 +210,7 @@ public final class UIUtil
       IStructuredSelection ssel = (IStructuredSelection)selection;
       return ssel.toList();
     }
-  
+
     return null;
   }
 
@@ -310,5 +313,37 @@ public final class UIUtil
     {
       // Do nothing
     }
+  }
+
+  /**
+   * Shows a message in the StatusBar. Image can be omitted by passing a null parameter
+   * 
+   * @since 2.0
+   */
+  public static void setStatusBarMessage(final String message, final Image image)
+  {
+    getDisplay().syncExec(new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          IViewSite site = (IViewSite)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+              .getActivePart().getSite();
+          if (image == null)
+          {
+            site.getActionBars().getStatusLineManager().setMessage(message);
+          }
+          else
+          {
+            site.getActionBars().getStatusLineManager().setMessage(image, message);
+          }
+        }
+        catch (RuntimeException ignore)
+        {
+          // Do nothing
+        }
+      }
+    });
   }
 }

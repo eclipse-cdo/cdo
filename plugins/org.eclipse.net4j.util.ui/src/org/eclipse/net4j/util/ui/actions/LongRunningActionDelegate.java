@@ -92,5 +92,4 @@ public abstract class LongRunningActionDelegate extends SafeActionDelegate
       throw new OperationCanceledException();
     }
   }
-
 }

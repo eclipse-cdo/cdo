@@ -11,96 +11,22 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
-import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
-
-import org.eclipse.net4j.util.ui.UIUtil;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.EresourceFactory;
 
 /**
- * @author Victor Roldan Betancort
+ * @author Eike Stepper
  */
-public class NewResourceAction implements IObjectActionDelegate
+public class NewResourceAction extends NewResourceNodeAction
 {
-  private Object node;
-
-  private Shell shell;
-
-  private String resourceName;
-
   public NewResourceAction()
   {
+    super("Creating CDO resource");
   }
 
-  public void setActivePart(IAction action, IWorkbenchPart targetPart)
+  @Override
+  protected CDOResourceNode createNewResourceNode()
   {
-    shell = targetPart.getSite().getShell();
-  }
-
-  public void selectionChanged(IAction action, ISelection selection)
-  {
-    node = UIUtil.getElement(selection);
-  }
-
-  public void run(IAction action)
-  {
-    Job job = new Job("Creating CDO resource")
-    {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
-      {
-        try
-        {
-          String path = "";
-          CDOTransaction transaction = null;
-          if (node instanceof ResourcesNode)
-          {
-            transaction = ((ResourcesNode)node).getRepositoryProject().getView().getSession().openTransaction();
-          }
-          else if (node instanceof CDOResourceFolder)
-          {
-            transaction = ((CDOResourceFolder)node).cdoView().getSession().openTransaction();
-            path = ((CDOResourceFolder)node).getPath();
-          }
-          else
-          {
-            // TODO Vik: No exception?
-            OM.LOG.error("Unrecognized selection type in " + NewResourceAction.class.getName().toString());
-          }
-
-          transaction.getOrCreateResource(path + "/" + resourceName);
-          transaction.commit();
-          transaction.close();
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-          return new Status(IStatus.ERROR, NewResourceAction.class.toString(), "Could not create CDO resource", ex);
-        }
-
-        return Status.OK_STATUS;
-      }
-    };
-
-    InputDialog dialog = new InputDialog(shell, "Create a new CDO resource", "Enter the resource name", "Resource",
-        null);
-    if (dialog.open() == Dialog.OK)
-    {
-      resourceName = dialog.getValue();
-      job.schedule();
-    }
+    return EresourceFactory.eINSTANCE.createCDOResource();
   }
 }

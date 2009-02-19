@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.BulkAddDialog;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 import org.eclipse.emf.cdo.session.CDOSessionPackageManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -30,7 +31,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.transaction.TransactionException;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -130,7 +130,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -2192,7 +2191,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       try
       {
-        eventHandler.dispose();
+        if (eventHandler != null)
+        {
+          eventHandler.dispose();
+        }
       }
       catch (Exception ex)
       {
@@ -2201,7 +2203,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       try
       {
-        adapterFactory.dispose();
+        if (adapterFactory != null)
+        {
+          adapterFactory.dispose();
+        }
       }
       catch (Exception ex)
       {
@@ -2224,6 +2229,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     if (contentOutlinePage != null)
     {
       contentOutlinePage.dispose();
+    }
+
+    if (((CDOEditorInput)getEditorInput()).isViewOwned())
+    {
+      view.close();
     }
 
     super.dispose();
@@ -2326,90 +2336,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     catch (RuntimeException ignore)
     {
       // Do nothing
-    }
-  }
-
-  /**
-   * @ADDED
-   */
-  public static void open(final IWorkbenchPage page, final CDOView view, final String resourcePath)
-  {
-    Display display = page.getWorkbenchWindow().getShell().getDisplay();
-    display.asyncExec(new Runnable()
-    {
-      public void run()
-      {
-        try
-        {
-          IEditorReference[] references = find(page, view, resourcePath);
-          if (references.length != 0)
-          {
-            IEditorPart editor = references[0].getEditor(true);
-            page.activate(editor);
-          }
-          else
-          {
-            IEditorInput input = new CDOEditorInput(view, resourcePath);
-            page.openEditor(input, EDITOR_ID);
-          }
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-    });
-  }
-
-  /**
-   * @ADDED
-   */
-  public static IEditorReference[] find(IWorkbenchPage page, CDOView view, String resourcePath)
-  {
-    List<IEditorReference> result = new ArrayList<IEditorReference>();
-    IEditorReference[] editorReferences = page.getEditorReferences();
-    for (IEditorReference editorReference : editorReferences)
-    {
-      try
-      {
-        if (ObjectUtil.equals(editorReference.getId(), EDITOR_ID))
-        {
-          IEditorInput editorInput = editorReference.getEditorInput();
-          if (editorInput instanceof CDOEditorInput)
-          {
-            CDOEditorInput cdoInput = (CDOEditorInput)editorInput;
-            if (cdoInput.getView() == view)
-            {
-              if (resourcePath == null || ObjectUtil.equals(cdoInput.getResourcePath(), resourcePath))
-              {
-                result.add(editorReference);
-              }
-            }
-          }
-        }
-      }
-      catch (PartInitException ex)
-      {
-        OM.LOG.error(ex);
-      }
-    }
-
-    return result.toArray(new IEditorReference[result.size()]);
-  }
-
-  /**
-   * @ADDED
-   */
-  public static void refresh(IWorkbenchPage page, CDOView view)
-  {
-    IEditorReference[] references = find(page, view, null);
-    for (IEditorReference reference : references)
-    {
-      CDOEditor editor = (CDOEditor)reference.getEditor(false);
-      if (editor != null)
-      {
-        editor.refreshViewer(null);
-      }
     }
   }
 

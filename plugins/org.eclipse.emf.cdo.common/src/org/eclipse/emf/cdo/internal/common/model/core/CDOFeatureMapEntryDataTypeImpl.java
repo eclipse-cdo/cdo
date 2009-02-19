@@ -30,14 +30,14 @@ public class CDOFeatureMapEntryDataTypeImpl implements CDOFeatureMapEntryDataTyp
     this.object = object;
   }
 
-  public Object getObject()
-  {
-    return object;
-  }
-
   public String getURI()
   {
     return uri;
+  }
+
+  public Object getObject()
+  {
+    return object;
   }
 
   public void adjustReferences(CDOReferenceAdjuster revisionAdjuster)

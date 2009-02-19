@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewAdapter;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -818,6 +819,20 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
             break;
           }
         }
+      }
+    }
+
+    // TODO Clarify me: 265114: Attaching adapters to resources does not load them?
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=265114
+    if (OM.BUNDLE.getDebugSupport().getDebugOption("load.resource.before.notification", false))
+    {
+      try
+      {
+        load(null);
+      }
+      catch (IOException ex)
+      {
+        OM.LOG.error(ex);
       }
     }
 

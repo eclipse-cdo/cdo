@@ -44,5 +44,4 @@ public class CDOFeatureMapEntryDataTypeImpl implements CDOFeatureMapEntryDataTyp
   {
     object = revisionAdjuster.adjustReference(object);
   }
-
 }

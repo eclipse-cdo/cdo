@@ -14,15 +14,10 @@ package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewAdapter;
-import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
-import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 /**
  * @author Eike Stepper
@@ -31,57 +26,14 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
 {
   private static final String RESOURCE_SET_CLASS_NAME = ResourceSetImpl.class.getName();
 
-  /**
-   * @since 2.0
-   */
-  private InternalCDOViewSet viewSet;
-
-  /**
-   * @since 2.0
-   */
-  public CDOResourceFactoryImpl(CDOViewSet viewSet)
-  {
-    setViewSet(viewSet);
-  }
-
-  public CDOResourceFactoryImpl()
-  {
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOViewSet getViewSet()
-  {
-    return viewSet;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setViewSet(CDOViewSet viewSet)
-  {
-    this.viewSet = (InternalCDOViewSet)viewSet;
-  }
+  public static final CDOResourceFactory eINSTANCE = new CDOResourceFactoryImpl();
 
   public Resource createResource(URI uri)
   {
-    CDOView view = CDOViewProviderRegistry.INSTANCE.provideView(uri, viewSet);
-
-    // Build a new URI with the view and the path
     String path = CDOURIUtil.extractResourcePath(uri);
-    URI newURI = CDOURIUtil.createResourceURI(view, path);
-
-    // Important: Set URI *after* registration with the view!
-    CDOResourceImpl resource = new CDOResourceImpl(newURI);
+    CDOResourceImpl resource = new CDOResourceImpl(uri);
     resource.setRoot(CDOURIUtil.SEGMENT_SEPARATOR.equals(path));
     resource.setExisting(isGetResource());
-    if (view != null)
-    {
-      CDOViewAdapter adapter = new CDOViewAdapter(view);
-      resource.eAdapters().add(adapter);
-    }
-
     return resource;
   }
 

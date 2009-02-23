@@ -173,6 +173,10 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  public void cdoInternalPreLoad()
+  {
+  }
+
   public void cdoInternalPostLoad()
   {
     // TODO Consider not remembering the revisin after copying it to the instance (spare 1/2 of the space)

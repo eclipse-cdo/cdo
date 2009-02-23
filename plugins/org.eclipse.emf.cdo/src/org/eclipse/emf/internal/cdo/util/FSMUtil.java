@@ -83,7 +83,7 @@ public final class FSMUtil
       CDOObject cdoObject = (CDOObject)obj;
       return cdoObject.cdoState() == CDOState.CLEAN || cdoObject.cdoState() == CDOState.DIRTY;
     }
-    
+
     return false;
   }
 

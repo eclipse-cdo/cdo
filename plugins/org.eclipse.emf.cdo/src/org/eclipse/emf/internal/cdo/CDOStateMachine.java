@@ -738,6 +738,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object delta)
     {
+      object.cdoInternalPreLoad();
+
       CDOID id = object.cdoID();
       InternalCDOView view = object.cdoView();
       InternalCDORevision revision = view.getRevision(id, true);

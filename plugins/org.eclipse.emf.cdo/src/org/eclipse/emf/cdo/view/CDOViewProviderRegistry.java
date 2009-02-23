@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * A global registry of {@link CDOViewProvider view provider} implementations.
@@ -29,7 +30,7 @@ public interface CDOViewProviderRegistry extends IContainer<CDOViewProvider>
    * Returns a {@link CDOView view} that serves the given URI in the given {@link CDOViewSet view set}, or
    * <code>null</code> if no {@link CDOViewProvider view provider} in this registry can provide such a view
    */
-  public CDOView provideView(URI uri, CDOViewSet viewSet);
+  public CDOView provideView(URI uri, ResourceSet viewSet);
 
   /**
    * Returns an array of <code>CDOViewProvider</code> instances, determined and ordered by certain criteria based on the

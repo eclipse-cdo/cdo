@@ -265,6 +265,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     throw new UnsupportedOperationException();
   }
 
+  public void cdoInternalPreLoad()
+  {
+  }
+
   public void cdoInternalPostLoad()
   {
     // Reset EMAP objects
@@ -708,6 +712,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         {
           entryData = null;
           size = delegateEList.size();
+        }
+
+        public void cdoInternalPreLoad()
+        {
         }
       }
 

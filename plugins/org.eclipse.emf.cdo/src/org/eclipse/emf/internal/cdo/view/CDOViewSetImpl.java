@@ -13,18 +13,13 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl;
-import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
-import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.notify.impl.NotifierImpl;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -49,7 +44,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private Map<String, InternalCDOView> mapOfViews = new HashMap<String, InternalCDOView>();
 
-  private CDOResourceFactoryImpl resourceFactory = new CDOResourceFactoryImpl(this);
+  private CDOResourceFactory resourceFactory = CDOResourceFactory.eINSTANCE;
 
   private CDOViewSetPackageRegistryImpl packageRegistry;
 
@@ -69,7 +64,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     return packageRegistry;
   }
 
-  public CDOResourceFactoryImpl getResourceFactory()
+  public CDOResourceFactory getResourceFactory()
   {
     return resourceFactory;
   }
@@ -137,11 +132,6 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
       views.add(view);
       mapOfViews.put(repositoryUUID, view);
-
-      if (views.size() == 1)
-      {
-        initializeResources(view);
-      }
     }
 
     if (eNotificationRequired())
@@ -215,75 +205,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     return type instanceof ResourceSet;
   }
 
-  @SuppressWarnings("unchecked")
   public void notifyChanged(Notification notification)
   {
-    try
-    {
-      // We do not notify view for remove notifications.
-      switch (notification.getEventType())
-      {
-      case Notification.ADD:
-      {
-        Object newResource = notification.getNewValue();
-        if (newResource instanceof CDOResourceImpl)
-        {
-          notifyAdd((CDOResourceImpl)newResource);
-        }
-
-        break;
-      }
-
-      case Notification.ADD_MANY:
-      {
-        List<Resource> newResources = (List<Resource>)notification.getNewValue();
-        for (Resource newResource : newResources)
-        {
-          if (newResource instanceof CDOResourceImpl)
-          {
-            notifyAdd((CDOResourceImpl)newResource);
-          }
-        }
-
-        break;
-      }
-      }
-    }
-    catch (RuntimeException ex)
-    {
-      OM.LOG.error(ex);
-      throw ex;
-    }
-  }
-
-  /**
-   * Only generates event to CDOView if it is a new CDOResource.
-   */
-  private void notifyAdd(CDOResourceImpl resource)
-  {
-    String respositoryUUID = CDOURIUtil.extractRepositoryUUID(resource.getURI());
-    InternalCDOView view = resolveView(respositoryUUID);
-    if (view != null)
-    {
-      view.attachResource(resource);
-    }
-  }
-
-  private void initializeResources(CDOView cdoView)
-  {
-    // Intialize the resourceset correctly when it get connected to the first time to a view.
-    for (Resource resource : resourceSet.getResources())
-    {
-      if (resource instanceof CDOResourceImpl)
-      {
-        CDOResourceImpl cdoResource = (CDOResourceImpl)resource;
-        if (cdoResource.cdoView() == null)
-        {
-          URI newURI = CDOURIUtil.createResourceURI(cdoView, cdoResource.getPath());
-          cdoResource.setURI(newURI);
-          notifyAdd(cdoResource);
-        }
-      }
-    }
   }
 }

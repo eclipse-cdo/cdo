@@ -158,7 +158,7 @@ public class InitialTest extends AbstractCDOTest
   }
 
   /**
-   * TODO Revisit me
+   * TODO Revisit me. Should we throw an exception ??
    */
   public void _testAttachView() throws Exception
   {
@@ -184,7 +184,6 @@ public class InitialTest extends AbstractCDOTest
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
 
     assertEquals(resource, resourceSet.getResource(CDOURIUtil.createResourceURI(session, "test1"), false));
-
   }
 
   /**

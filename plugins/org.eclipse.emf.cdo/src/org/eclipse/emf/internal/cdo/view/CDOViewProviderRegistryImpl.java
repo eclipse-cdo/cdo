@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
@@ -26,6 +27,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -61,13 +63,14 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     }
   }
 
-  public CDOView provideView(URI uri, CDOViewSet viewSet)
+  public CDOView provideView(URI uri, ResourceSet resourceSet)
   {
     if (uri == null)
     {
       return null;
     }
 
+    CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
     if (viewSet != null)
     {
       try
@@ -87,7 +90,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
     for (CDOViewProvider viewProvider : getViewProviders(uri))
     {
-      CDOView view = viewProvider.getView(uri, viewSet);
+      CDOView view = viewProvider.getView(uri, resourceSet);
       if (view != null)
       {
         return view;
@@ -260,9 +263,9 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
       }
     }
 
-    public CDOView getView(URI uri, CDOViewSet viewSet)
+    public CDOView getView(URI uri, ResourceSet resourceSet)
     {
-      return getViewProvider().getView(uri, viewSet);
+      return getViewProvider().getView(uri, resourceSet);
     }
 
     private CDOViewProvider getViewProvider()

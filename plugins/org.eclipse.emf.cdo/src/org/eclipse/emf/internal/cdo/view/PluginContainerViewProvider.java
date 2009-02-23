@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
-import org.eclipse.emf.cdo.view.CDOViewSet;
 import org.eclipse.emf.cdo.view.ManagedContainerViewProvider;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
@@ -24,6 +23,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * Provides <code>CDOView</code> from <code>CDOSession</code> registered in IPluginContainer
@@ -41,7 +41,7 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider im
     super(IPluginContainer.INSTANCE, REGEX, PRIORITY);
   }
 
-  public CDOView getView(URI uri, CDOViewSet viewSet)
+  public CDOView getView(URI uri, ResourceSet resourceSet)
   {
     IManagedContainer container = getContainer();
     if (container == null)
@@ -56,7 +56,7 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider im
       String uuid = session.repository().getUUID();
       if (repoUUID.equals(uuid))
       {
-        CDOView view = openView(session, uri);
+        CDOView view = openView(session, resourceSet);
         if (view != null)
         {
           return view;
@@ -73,8 +73,8 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider im
     return IPluginContainer.INSTANCE;
   }
 
-  protected CDOView openView(CDOSession session, URI uri)
+  protected CDOView openView(CDOSession session, ResourceSet resourceSet)
   {
-    return session.openTransaction();
+    return session.openTransaction(resourceSet);
   }
 }

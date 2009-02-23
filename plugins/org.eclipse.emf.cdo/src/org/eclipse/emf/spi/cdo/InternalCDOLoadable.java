@@ -17,5 +17,7 @@ package org.eclipse.emf.spi.cdo;
  */
 public interface InternalCDOLoadable
 {
+  public void cdoInternalPreLoad();
+
   public void cdoInternalPostLoad();
 }

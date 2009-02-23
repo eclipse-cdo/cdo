@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * Capable of opening a <code>CDOView</code> on a target repository, defined by a URI. A regular expression and the
@@ -48,5 +49,5 @@ public interface CDOViewProvider
    * 
    * @return a wired-up and opened <code>CDOView</code>
    */
-  public CDOView getView(URI uri, CDOViewSet viewSet);
+  public CDOView getView(URI uri, ResourceSet resourceSet);
 }

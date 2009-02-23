@@ -23,5 +23,5 @@ Import-Package: org.eclipse.emf.teneo,
  org.eclipse.emf.teneo.annotations.pamodel.impl,
  org.eclipse.emf.teneo.annotations.pamodel.util,
  org.eclipse.emf.teneo.annotations.pamodel.validation,
- org.hsqldb;version="[1.8.0,2.0.0)",
- org.hsqldb.jdbc;version="[1.8.0,2.0.0)"
+ org.hsqldb;version="[1.8.0,2.0.0)";resolution:=optional,
+ org.hsqldb.jdbc;version="[1.8.0,2.0.0)";resolution:=optional

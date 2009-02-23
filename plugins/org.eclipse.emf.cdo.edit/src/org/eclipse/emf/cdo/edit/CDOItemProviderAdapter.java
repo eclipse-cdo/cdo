@@ -846,7 +846,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     {
       if (object instanceof CDOObject)
       {
-        return ((CDOObject)object).cdoView().options().getChangeSubscriptionPolicies();
+        CDOView cdoView = ((CDOObject)object).cdoView();
+        if (cdoView != null)
+        {
+          return cdoView.options().getChangeSubscriptionPolicies();
+        }
       }
 
       return null;

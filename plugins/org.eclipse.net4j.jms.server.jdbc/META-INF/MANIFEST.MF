@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.jms.server.jdbc
-Bundle-Version: 1.0.5.qualifier
+Bundle-Version: 1.0.8.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -13,6 +13,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.jms.server;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.net4j.db;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Import-Package: javax.jms;version="1.1.0"
-Export-Package: org.eclipse.net4j.jms.server.internal.jdbc;version="1.0.5",
- org.eclipse.net4j.jms.server.internal.jdbc.bundle;version="1.0.5";x-internal:=true,
- org.eclipse.net4j.jms.server.jdbc;version="1.0.5"
+Export-Package: org.eclipse.net4j.jms.server.internal.jdbc;version="1.0.8",
+ org.eclipse.net4j.jms.server.internal.jdbc.bundle;version="1.0.8";x-internal:=true,
+ org.eclipse.net4j.jms.server.jdbc;version="1.0.8"

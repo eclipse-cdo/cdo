@@ -43,5 +43,5 @@ Export-Package: base;version="1.0.1",
 Import-Package: org.apache.commons.collections;version="[3.2.0,4.0.0)",
  org.apache.commons.logging;version="[1.1.0,2.0.0)",
  org.dom4j;version="[1.6.0,2.0.0)",
- org.hsqldb;version="[1.8.0,2.0.0)",
- org.hsqldb.jdbc;version="[1.8.0,2.0.0)"
+ org.hsqldb;resolution:=optional,
+ org.hsqldb.jdbc;resolution:=optional

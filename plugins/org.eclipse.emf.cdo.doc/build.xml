@@ -2,7 +2,7 @@
 <project name="org.eclipse.emf.cdo.doc" default="build.jars" basedir=".">
 
 	<!-- Plug-in version.  This is a HACK.  Do not forget to update. -->
-	<property name="pluginVersion" value="1.0.7"/>
+	<property name="pluginVersion" value="1.0.8"/>
 
 	<property name="plugin" value="org.eclipse.emf.cdo"/>
 	<property name="docPlugin" value="org.eclipse.emf.cdo.doc"/>

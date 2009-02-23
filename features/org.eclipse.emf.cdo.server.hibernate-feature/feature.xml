@@ -16,7 +16,7 @@
 <feature
       id="org.eclipse.emf.cdo.server.hibernate"
       label="%featureName"
-      version="1.0.5.qualifier"
+      version="1.0.8.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg">
 

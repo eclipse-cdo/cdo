@@ -17,7 +17,7 @@
       id="org.eclipse.net4j.ui"
       label="%featureName"
       image="eclipse_update_120.jpg"
-      version="1.0.5.qualifier"
+      version="1.0.8.qualifier"
       provider-name="%providerName">
 
    <description>

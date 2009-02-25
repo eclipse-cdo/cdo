@@ -168,6 +168,13 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public void appendValue(StringBuilder builder, Object value)
   {
-    type.appendValue(builder, value);
+    if (value == null)
+    {
+      builder.append("NULL");
+    }
+    else
+    {
+      type.appendValue(builder, value);
+    }
   }
 }

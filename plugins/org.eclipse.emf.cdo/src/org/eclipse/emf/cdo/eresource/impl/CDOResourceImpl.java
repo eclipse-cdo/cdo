@@ -563,6 +563,9 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     // }
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public void cdoInternalPreLoad()
   {

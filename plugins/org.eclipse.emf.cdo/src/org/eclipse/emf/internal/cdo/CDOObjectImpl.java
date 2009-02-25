@@ -265,6 +265,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @since 2.0
+   */
   public void cdoInternalPreLoad()
   {
   }

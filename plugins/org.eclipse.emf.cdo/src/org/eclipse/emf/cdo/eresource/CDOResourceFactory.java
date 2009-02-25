@@ -20,5 +20,8 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public interface CDOResourceFactory extends Resource.Factory
 {
+  /**
+   * @since 2.0
+   */
   public static final CDOResourceFactory eINSTANCE = CDOResourceFactoryImpl.eINSTANCE;
 }

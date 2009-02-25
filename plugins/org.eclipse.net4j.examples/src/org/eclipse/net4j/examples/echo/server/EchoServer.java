@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.examples.bundle.OM;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
@@ -49,7 +50,7 @@ public class EchoServer
       OM.LOG.info("Accepting connections: " + acceptor);
 
       System.out.println("Press any key to shutdown");
-      while (System.in.read() == -1)
+      while (IOUtil.IN().read() == -1)
       {
         Thread.sleep(200);
       }

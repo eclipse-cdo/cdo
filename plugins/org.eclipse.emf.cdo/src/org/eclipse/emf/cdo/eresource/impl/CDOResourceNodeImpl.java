@@ -243,6 +243,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   private void adjustContainedResources(String oldPath)
   {
+    // TODO Still needed?
     // ResourceSet resourceSet = cdoView().getViewSet().getResourceSet();
     // EList<Resource> resources = resourceSet.getResources();
     // for (Resource resource : resources.toArray(new Resource[resources.size()]))

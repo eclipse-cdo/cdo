@@ -199,6 +199,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     {
       return CDOResourceNode.ROOT_PATH + getName();
     }
+
     return folder.getPath() + CDOResourceNode.ROOT_PATH + getName();
   }
 

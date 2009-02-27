@@ -1191,7 +1191,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     public Object get(InternalEObject eObject, EStructuralFeature feature, int index)
     {
       int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      if (feature.isMany())
+      if (index != NO_INDEX)
       {
         return getValueAsList(eObject, dynamicFeatureID).get(index);
       }
@@ -1202,7 +1202,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     public Object set(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
     {
       int dynamicFeatureID = eDynamicFeatureID(eObject, feature);
-      if (feature.isMany())
+      if (index != NO_INDEX)
       {
         return getValueAsList(eObject, dynamicFeatureID).set(index, value);
       }

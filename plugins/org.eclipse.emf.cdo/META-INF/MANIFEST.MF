@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo; singleton:=true
-Bundle-Version: 1.0.8.qualifier
+Bundle-Version: 1.0.9.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -12,15 +12,15 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.common;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo;version="1.0.8",
- org.eclipse.emf.cdo.analyzer;version="1.0.8",
- org.eclipse.emf.cdo.eresource;version="1.0.8",
- org.eclipse.emf.cdo.eresource.impl;version="1.0.8",
- org.eclipse.emf.cdo.eresource.util;version="1.0.8",
- org.eclipse.emf.cdo.util;version="1.0.8",
- org.eclipse.emf.internal.cdo;version="1.0.8",
- org.eclipse.emf.internal.cdo.analyzer;version="1.0.8";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.internal.cdo.bundle;version="1.0.8";x-friends:="org.eclipse.emf.cdo.ui",
- org.eclipse.emf.internal.cdo.protocol;version="1.0.8";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.internal.cdo.util;version="1.0.8";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui"
+Export-Package: org.eclipse.emf.cdo;version="1.0.9",
+ org.eclipse.emf.cdo.analyzer;version="1.0.9",
+ org.eclipse.emf.cdo.eresource;version="1.0.9",
+ org.eclipse.emf.cdo.eresource.impl;version="1.0.9",
+ org.eclipse.emf.cdo.eresource.util;version="1.0.9",
+ org.eclipse.emf.cdo.util;version="1.0.9",
+ org.eclipse.emf.internal.cdo;version="1.0.9",
+ org.eclipse.emf.internal.cdo.analyzer;version="1.0.9";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.internal.cdo.bundle;version="1.0.9";x-friends:="org.eclipse.emf.cdo.ui",
+ org.eclipse.emf.internal.cdo.protocol;version="1.0.9";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.internal.cdo.util;version="1.0.9";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui"
 Bundle-ActivationPolicy: lazy

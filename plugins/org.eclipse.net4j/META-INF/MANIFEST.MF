@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j;singleton:=true
-Bundle-Version: 1.0.8.qualifier
+Bundle-Version: 1.0.9.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -11,7 +11,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";resolution:=optional,
  org.eclipse.net4j.util;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
-Export-Package: org.eclipse.internal.net4j;version="1.0.8";
+Export-Package: org.eclipse.internal.net4j;version="1.0.9";
   x-friends:="org.eclipse.net4j.http.server,
    org.eclipse.net4j.jvm,
    org.eclipse.net4j.tcp,
@@ -19,7 +19,7 @@ Export-Package: org.eclipse.internal.net4j;version="1.0.8";
    org.eclipse.net4j.http.common,
    org.eclipse.net4j.http.tests,
    org.eclipse.net4j.tests",
- org.eclipse.internal.net4j.acceptor;version="1.0.8";
+ org.eclipse.internal.net4j.acceptor;version="1.0.9";
   x-friends:="org.eclipse.net4j.http.server,
    org.eclipse.net4j.jvm,
    org.eclipse.net4j.tcp,
@@ -27,7 +27,7 @@ Export-Package: org.eclipse.internal.net4j;version="1.0.8";
    org.eclipse.net4j.http.common,
    org.eclipse.net4j.http.tests,
    org.eclipse.net4j.tests",
- org.eclipse.internal.net4j.buffer;version="1.0.8";
+ org.eclipse.internal.net4j.buffer;version="1.0.9";
   x-friends:="org.eclipse.net4j.http.server,
    org.eclipse.net4j.jvm,
    org.eclipse.net4j.tcp,
@@ -35,8 +35,8 @@ Export-Package: org.eclipse.internal.net4j;version="1.0.8";
    org.eclipse.net4j.http.common,
    org.eclipse.net4j.http.tests,
    org.eclipse.net4j.tests",
- org.eclipse.internal.net4j.bundle;version="1.0.8";x-internal:=true,
- org.eclipse.internal.net4j.channel;version="1.0.8";
+ org.eclipse.internal.net4j.bundle;version="1.0.9";x-internal:=true,
+ org.eclipse.internal.net4j.channel;version="1.0.9";
   x-friends:="org.eclipse.net4j.http,
    org.eclipse.net4j.http.common,
    org.eclipse.net4j.http.server,
@@ -44,7 +44,7 @@ Export-Package: org.eclipse.internal.net4j;version="1.0.8";
    org.eclipse.net4j.http.tests,
    org.eclipse.net4j.tests,
    org.eclipse.net4j.jvm",
- org.eclipse.internal.net4j.connector;version="1.0.8";
+ org.eclipse.internal.net4j.connector;version="1.0.9";
   x-friends:="org.eclipse.net4j.http,
    org.eclipse.net4j.http.common,
    org.eclipse.net4j.http.server,
@@ -52,13 +52,13 @@ Export-Package: org.eclipse.internal.net4j;version="1.0.8";
    org.eclipse.net4j.tcp,
    org.eclipse.net4j.http.tests,
    org.eclipse.net4j.tests",
- org.eclipse.net4j;version="1.0.8",
- org.eclipse.net4j.acceptor;version="1.0.8",
- org.eclipse.net4j.buffer;version="1.0.8",
- org.eclipse.net4j.channel;version="1.0.8",
- org.eclipse.net4j.connector;version="1.0.8",
- org.eclipse.net4j.protocol;version="1.0.8",
- org.eclipse.net4j.signal;version="1.0.8",
- org.eclipse.net4j.signal.failover;version="1.0.8",
- org.eclipse.net4j.signal.wrapping;version="1.0.8",
- org.eclipse.spi.net4j;version="1.0.8"
+ org.eclipse.net4j;version="1.0.9",
+ org.eclipse.net4j.acceptor;version="1.0.9",
+ org.eclipse.net4j.buffer;version="1.0.9",
+ org.eclipse.net4j.channel;version="1.0.9",
+ org.eclipse.net4j.connector;version="1.0.9",
+ org.eclipse.net4j.protocol;version="1.0.9",
+ org.eclipse.net4j.signal;version="1.0.9",
+ org.eclipse.net4j.signal.failover;version="1.0.9",
+ org.eclipse.net4j.signal.wrapping;version="1.0.9",
+ org.eclipse.spi.net4j;version="1.0.9"

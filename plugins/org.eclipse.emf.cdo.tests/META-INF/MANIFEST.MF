@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests;singleton:=true
-Bundle-Version: 1.0.8.qualifier
+Bundle-Version: 1.0.9.qualifier
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.tests.Activator
 Bundle-Vendor: %providerName
@@ -33,9 +33,9 @@ Export-Package: base;version="1.0.1",
  interface_;version="1.0.1",
  interface_.impl;version="1.0.1",
  interface_.util;version="1.0.1",
- org.eclipse.emf.cdo.tests;version="1.0.8",
- org.eclipse.emf.cdo.tests.bugzilla;version="1.0.8",
- org.eclipse.emf.cdo.tests.store.logic;version="1.0.8",
+ org.eclipse.emf.cdo.tests;version="1.0.9",
+ org.eclipse.emf.cdo.tests.bugzilla;version="1.0.9",
+ org.eclipse.emf.cdo.tests.store.logic;version="1.0.9",
  org.eclipse.net4j.tests;version="1.0.1";x-friends:="org.eclipse.emf.cdo.tests.hibernate,org.eclipse.emf.cdo.tests.hibernate.client",
  reference;version="1.0.1",
  reference.impl;version="1.0.1",

@@ -29,6 +29,11 @@ public interface OMPlatform
 
   public boolean isOSGiRunning();
 
+  /**
+   * @since 2.0
+   */
+  public boolean isExtensionRegistryAvailable();
+
   public boolean isDebugging();
 
   public void setDebugging(boolean debugging);

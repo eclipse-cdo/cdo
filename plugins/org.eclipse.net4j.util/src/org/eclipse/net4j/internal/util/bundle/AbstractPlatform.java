@@ -96,6 +96,18 @@ public abstract class AbstractPlatform implements OMPlatform
     traceHandlers.remove(traceHandler);
   }
 
+  public boolean isExtensionRegistryAvailable()
+  {
+    try
+    {
+      return internalExtensionRegistryAvailable();
+    }
+    catch (Throwable ex)
+    {
+      return false;
+    }
+  }
+
   public boolean isDebugging()
   {
     return debugging;
@@ -281,5 +293,10 @@ public abstract class AbstractPlatform implements OMPlatform
     }
 
     return __TRACER__;
+  }
+
+  private static boolean internalExtensionRegistryAvailable() throws Throwable
+  {
+    return org.eclipse.core.runtime.Platform.getExtensionRegistry() != null;
   }
 }

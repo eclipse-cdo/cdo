@@ -20,9 +20,9 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 2.0
  */
-public class StringCompressor
+public class StringCompressor implements StringIO
 {
-  private int increment;
+  private boolean client;
 
   private int lastID;
 
@@ -38,12 +38,12 @@ public class StringCompressor
    */
   public StringCompressor(boolean client)
   {
-    increment = client ? 1 : -1;
+    this.client = client;
   }
 
   public boolean isClient()
   {
-    return increment == 1;
+    return client;
   }
 
   public void write(ExtendedDataOutput out, String string) throws IOException
@@ -61,7 +61,7 @@ public class StringCompressor
       Integer id = stringToID.get(string);
       if (id == null)
       {
-        lastID += increment;
+        lastID += client ? 1 : -1;
         stringToID.put(string, lastID);
         idToString.put(lastID, string);
         idToWrite = lastID;
@@ -95,6 +95,7 @@ public class StringCompressor
       string = idToString.get(id);
     }
 
+    // TODO Check if we need a single synchronized block
     if (string == null)
     {
       string = in.readString();

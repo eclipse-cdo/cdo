@@ -23,4 +23,107 @@ public interface ExtendedDataOutput extends DataOutput
   public void writeObject(Object object) throws IOException;
 
   public void writeString(String str) throws IOException;
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Delegating implements ExtendedDataOutput
+  {
+    private ExtendedDataOutput delegate;
+
+    public Delegating(ExtendedDataOutput delegate)
+    {
+      this.delegate = delegate;
+    }
+
+    public ExtendedDataOutput getDelegate()
+    {
+      return delegate;
+    }
+
+    public void write(byte[] b, int off, int len) throws IOException
+    {
+      delegate.write(b, off, len);
+    }
+
+    public void write(byte[] b) throws IOException
+    {
+      delegate.write(b);
+    }
+
+    public void write(int b) throws IOException
+    {
+      delegate.write(b);
+    }
+
+    public void writeBoolean(boolean v) throws IOException
+    {
+      delegate.writeBoolean(v);
+    }
+
+    public void writeByte(int v) throws IOException
+    {
+      delegate.writeByte(v);
+    }
+
+    public void writeByteArray(byte[] b) throws IOException
+    {
+      delegate.writeByteArray(b);
+    }
+
+    public void writeBytes(String s) throws IOException
+    {
+      delegate.writeBytes(s);
+    }
+
+    public void writeChar(int v) throws IOException
+    {
+      delegate.writeChar(v);
+    }
+
+    public void writeChars(String s) throws IOException
+    {
+      delegate.writeChars(s);
+    }
+
+    public void writeDouble(double v) throws IOException
+    {
+      delegate.writeDouble(v);
+    }
+
+    public void writeFloat(float v) throws IOException
+    {
+      delegate.writeFloat(v);
+    }
+
+    public void writeInt(int v) throws IOException
+    {
+      delegate.writeInt(v);
+    }
+
+    public void writeLong(long v) throws IOException
+    {
+      delegate.writeLong(v);
+    }
+
+    public void writeObject(Object object) throws IOException
+    {
+      delegate.writeObject(object);
+    }
+
+    public void writeShort(int v) throws IOException
+    {
+      delegate.writeShort(v);
+    }
+
+    public void writeString(String str) throws IOException
+    {
+      delegate.writeString(str);
+    }
+
+    public void writeUTF(String str) throws IOException
+    {
+      delegate.writeUTF(str);
+    }
+  }
 }

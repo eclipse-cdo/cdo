@@ -29,4 +29,122 @@ public interface ExtendedDataInput extends DataInput
   public Object readObject(ClassResolver classResolver) throws IOException;
 
   public String readString() throws IOException;
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Delegating implements ExtendedDataInput
+  {
+    private ExtendedDataInput delegate;
+
+    public Delegating(ExtendedDataInput delegate)
+    {
+      this.delegate = delegate;
+    }
+
+    public ExtendedDataInput getDelegate()
+    {
+      return delegate;
+    }
+
+    public boolean readBoolean() throws IOException
+    {
+      return delegate.readBoolean();
+    }
+
+    public byte readByte() throws IOException
+    {
+      return delegate.readByte();
+    }
+
+    public byte[] readByteArray() throws IOException
+    {
+      return delegate.readByteArray();
+    }
+
+    public char readChar() throws IOException
+    {
+      return delegate.readChar();
+    }
+
+    public double readDouble() throws IOException
+    {
+      return delegate.readDouble();
+    }
+
+    public float readFloat() throws IOException
+    {
+      return delegate.readFloat();
+    }
+
+    public void readFully(byte[] b, int off, int len) throws IOException
+    {
+      delegate.readFully(b, off, len);
+    }
+
+    public void readFully(byte[] b) throws IOException
+    {
+      delegate.readFully(b);
+    }
+
+    public int readInt() throws IOException
+    {
+      return delegate.readInt();
+    }
+
+    public String readLine() throws IOException
+    {
+      return delegate.readLine();
+    }
+
+    public long readLong() throws IOException
+    {
+      return delegate.readLong();
+    }
+
+    public Object readObject() throws IOException
+    {
+      return delegate.readObject();
+    }
+
+    public Object readObject(ClassLoader classLoader) throws IOException
+    {
+      return delegate.readObject(classLoader);
+    }
+
+    public Object readObject(ClassResolver classResolver) throws IOException
+    {
+      return delegate.readObject(classResolver);
+    }
+
+    public short readShort() throws IOException
+    {
+      return delegate.readShort();
+    }
+
+    public String readString() throws IOException
+    {
+      return delegate.readString();
+    }
+
+    public int readUnsignedByte() throws IOException
+    {
+      return delegate.readUnsignedByte();
+    }
+
+    public int readUnsignedShort() throws IOException
+    {
+      return delegate.readUnsignedShort();
+    }
+
+    public String readUTF() throws IOException
+    {
+      return delegate.readUTF();
+    }
+
+    public int skipBytes(int n) throws IOException
+    {
+      return delegate.skipBytes(n);
+    }
+  }
 }

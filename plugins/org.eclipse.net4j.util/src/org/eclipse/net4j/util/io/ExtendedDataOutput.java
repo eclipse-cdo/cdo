@@ -130,7 +130,9 @@ public interface ExtendedDataOutput extends DataOutput
 
   /**
    * @author Eike Stepper
+   * @since 2.0
    */
+  @Deprecated
   public static class Stream extends OutputStream
   {
     private ExtendedDataOutput delegate;

@@ -13,7 +13,9 @@ package org.eclipse.net4j.util.io;
 import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 
 import java.io.DataInput;
+import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Eike Stepper
@@ -145,6 +147,37 @@ public interface ExtendedDataInput extends DataInput
     public int skipBytes(int n) throws IOException
     {
       return delegate.skipBytes(n);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Stream extends InputStream
+  {
+    private ExtendedDataInput delegate;
+
+    public Stream(ExtendedDataInput delegate)
+    {
+      this.delegate = delegate;
+    }
+
+    public ExtendedDataInput getDelegate()
+    {
+      return delegate;
+    }
+
+    @Override
+    public int read() throws IOException
+    {
+      try
+      {
+        return delegate.readUnsignedByte();
+      }
+      catch (EOFException ex)
+      {
+        return -1;
+      }
     }
   }
 }

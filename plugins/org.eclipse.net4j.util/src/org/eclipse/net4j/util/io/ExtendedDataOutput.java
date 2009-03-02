@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.io;
 
 import java.io.DataOutput;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author Eike Stepper
@@ -124,6 +125,30 @@ public interface ExtendedDataOutput extends DataOutput
     public void writeUTF(String str) throws IOException
     {
       delegate.writeUTF(str);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Stream extends OutputStream
+  {
+    private ExtendedDataOutput delegate;
+
+    public Stream(ExtendedDataOutput delegate)
+    {
+      this.delegate = delegate;
+    }
+
+    public ExtendedDataOutput getDelegate()
+    {
+      return delegate;
+    }
+
+    @Override
+    public void write(int b) throws IOException
+    {
+      delegate.write(b);
     }
   }
 }

@@ -34,7 +34,7 @@ import java.io.IOException;
 
 public final class MessageUtil
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, MessageUtil.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, MessageUtil.class);
 
   private MessageUtil()
   {
@@ -137,9 +137,9 @@ public final class MessageUtil
   public static void write(ExtendedDataOutputStream out, MessageImpl message) throws IOException
   {
     byte type = getType(message);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0}", getTypeName(type));
+      TRACER.format("Writing {0}", getTypeName(type));
     }
 
     out.writeByte(type);
@@ -149,9 +149,9 @@ public final class MessageUtil
   public static MessageImpl read(ExtendedDataInputStream in) throws IOException
   {
     byte type = in.readByte();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Reading {0}", getTypeName(type));
+      TRACER.format("Reading {0}", getTypeName(type));
     }
 
     MessageImpl message = create(type);

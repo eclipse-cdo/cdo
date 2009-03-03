@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.io;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,5 +108,11 @@ public class StringCompressor implements StringIO
     }
 
     return string;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("Compressor[client={0}]", client);
   }
 }

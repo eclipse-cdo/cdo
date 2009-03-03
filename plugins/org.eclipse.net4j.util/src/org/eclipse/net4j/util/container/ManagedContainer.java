@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -51,9 +52,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry<ElementKey, Object>();
 
-  private long maxElementID;
+  @ExcludeFromDump
+  private transient long maxElementID;
 
-  private IListener elementListener = new LifecycleEventAdapter()
+  @ExcludeFromDump
+  private transient IListener elementListener = new LifecycleEventAdapter()
   {
     @Override
     protected void onDeactivated(ILifecycle lifecycle)

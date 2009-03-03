@@ -60,4 +60,10 @@ public class NOOPFailOverStrategy extends Notifier implements IFailOverStrategy
   {
     throw new UnsupportedOperationException();
   }
+
+  @Override
+  public String toString()
+  {
+    return "NOOP";
+  }
 }

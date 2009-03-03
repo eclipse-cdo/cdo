@@ -16,6 +16,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.util.security.INegotiator;
 
+import java.text.MessageFormat;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -87,5 +88,13 @@ public class TransportConfig implements ITransportConfig
   public void setNegotiator(INegotiator negotiator)
   {
     this.negotiator = negotiator;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format(
+        "TransportConfig[receiveExecutor={0}, bufferProvider={1}, protocolProvider={2}, negotiator={3}]",
+        receiveExecutor, bufferProvider, protocolProvider, negotiator);
   }
 }

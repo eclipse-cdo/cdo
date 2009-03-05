@@ -94,7 +94,6 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
-        OM.LOG.error(ex);
         return ex;
       }
     }

@@ -396,8 +396,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
     {
       monitor.begin(2);
       fillSystemTables(cdoPackages, monitor.fork());
-
-      createModelTables(cdoPackages, monitor);
+      createModelTables(cdoPackages, monitor.fork());
     }
     finally
     {

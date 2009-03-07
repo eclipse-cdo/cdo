@@ -70,7 +70,6 @@ public abstract class ProgressDistributor
       builder.append(this);
       builder.append(")");
       TRACER.trace(builder.toString());
-      // IOUtil.OUT().println(builder.toString());
     }
 
     monitor.begin(total);

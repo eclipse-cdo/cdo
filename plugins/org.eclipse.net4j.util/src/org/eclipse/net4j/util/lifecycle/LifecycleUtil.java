@@ -56,6 +56,22 @@ public final class LifecycleUtil
     return object != null;
   }
 
+  public static void checkActive(Object object) throws IllegalStateException
+  {
+    if (!isActive(object))
+    {
+      throw new IllegalStateException("Not active: " + object);
+    }
+  }
+
+  public static void checkInactive(Object object) throws IllegalStateException
+  {
+    if (isActive(object))
+    {
+      throw new IllegalStateException("Not inactive: " + object);
+    }
+  }
+
   public static void activate(Object object) throws LifecycleException
   {
     activate(object, false);

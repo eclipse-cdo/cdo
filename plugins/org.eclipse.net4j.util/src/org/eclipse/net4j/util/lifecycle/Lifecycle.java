@@ -163,18 +163,12 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   protected final void checkActive()
   {
-    if (lifecycleState != ILifecycleState.ACTIVE)
-    {
-      throw new IllegalStateException("Not active: " + this);
-    }
+    LifecycleUtil.checkActive(this);
   }
 
   protected final void checkInactive()
   {
-    if (lifecycleState != ILifecycleState.INACTIVE)
-    {
-      throw new IllegalStateException("Not inactive: " + this);
-    }
+    LifecycleUtil.checkInactive(this);
   }
 
   protected final void checkNull(Object handle, String msg) throws NullPointerException

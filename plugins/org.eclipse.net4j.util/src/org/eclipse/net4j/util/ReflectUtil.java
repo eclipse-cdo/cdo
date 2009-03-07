@@ -492,7 +492,7 @@ public final class ReflectUtil
 
   public static String toString(Object object)
   {
-    return toString(object, " "); //$NON-NLS-1$
+    return toString(object, "  "); //$NON-NLS-1$
   }
 
   public static String toString(Object object, String prefix)

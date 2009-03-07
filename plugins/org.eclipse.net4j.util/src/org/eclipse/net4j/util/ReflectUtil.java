@@ -516,8 +516,7 @@ public final class ReflectUtil
     toString(segment.getSuperclass(), object, prefix, builder);
 
     String segmentPrefix = segment == object.getClass() ? "" : getSimpleName(segment) + NAMESPACE_SEPARATOR; //$NON-NLS-1$ 
-    Field[] fields = segment.getDeclaredFields();
-    for (Field field : fields)
+    for (Field field : segment.getDeclaredFields())
     {
       if (field.isSynthetic())
       {

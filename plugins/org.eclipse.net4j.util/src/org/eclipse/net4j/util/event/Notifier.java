@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.event;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.CheckUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class Notifier implements INotifier.Introspection
 
   public void addListener(IListener listener)
   {
+    CheckUtil.checkArg(listener, "listener");
     boolean wasNotEmpty;
     boolean isNotEmpty;
     synchronized (listeners)

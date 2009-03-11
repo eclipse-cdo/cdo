@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.tests.cache;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 /**
  * @author Eike Stepper
  */
@@ -56,28 +58,10 @@ public class Revision
     return "R" + id + "v" + version;
   }
 
-  // @SuppressWarnings("unchecked")
-  // private static Set finalized = new HashSet();
-  //
-  // @SuppressWarnings("unchecked")
-  // private static List refs = new ArrayList();
-  //
-  // @SuppressWarnings("unchecked")
-  // private static ReferenceQueue queue = new ReferenceQueue();
-  //
   @Override
   protected void finalize() throws Throwable
   {
-    System.err.println("FINALIZE " + this);
+    IOUtil.ERR().println("FINALIZE " + this);
     revisionManager.finalizeRevision(this);
-    // long token = id;
-    // token <<= 32;
-    // token |= version;
-    // if (!finalized.add(token))
-    // {
-    // System.err.println("************************************************************************");
-    // }
-    //  
-    // refs.add(new PhantomReference<Revision>(this, queue));
   }
 }

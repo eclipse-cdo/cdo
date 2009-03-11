@@ -205,7 +205,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
 
   protected void handleConditionRED()
   {
-    System.err.println("CONDITION RED");
+    OM.LOG.warn("CONDITION RED");
   }
 
   /**

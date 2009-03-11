@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
 
+import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -384,7 +385,18 @@ public final class DBUtil
           for (int i = 0; i < fields.length; i++)
           {
             values[i] = resultSet.getObject(i + 1);
-            if (values[i] instanceof Clob)
+            if (values[i] instanceof Blob)
+            {
+              Blob blob = (Blob)values[i];
+              long length = blob.length();
+              if (length > Integer.MAX_VALUE)
+              {
+                throw new IllegalStateException("byte[] too long: " + length);
+              }
+
+              values[i] = blob.getBytes(1, (int)length);
+            }
+            else if (values[i] instanceof Clob)
             {
               Clob clob = (Clob)values[i];
               long length = clob.length();

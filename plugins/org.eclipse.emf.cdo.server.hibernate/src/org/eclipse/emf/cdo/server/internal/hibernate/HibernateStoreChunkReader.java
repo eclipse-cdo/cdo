@@ -10,10 +10,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.internal.server.StoreChunkReader;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreChunkReader;
+import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class HibernateStoreChunkReader extends StoreChunkReader implements IHibernateStoreChunkReader
 {
-  public HibernateStoreChunkReader(HibernateStoreAccessor accessor, CDORevision revision, CDOFeature feature)
+  public HibernateStoreChunkReader(HibernateStoreAccessor accessor, CDORevision revision, EStructuralFeature feature)
   {
     super(accessor, revision, feature);
   }

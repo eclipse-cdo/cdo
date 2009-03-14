@@ -27,11 +27,11 @@
    <extension
          point="org.eclipse.emf.cdo.server.db.mappingStrategies">
       <mappingStrategy
-            class="org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy"
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.HorizontalMappingStrategy"
             type="horizontal">
       </mappingStrategy>
       <mappingStrategy
-            class="org.eclipse.emf.cdo.server.internal.db.VerticalMappingStrategy"
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.VerticalMappingStrategy"
             type="vertical">
       </mappingStrategy>
    </extension>

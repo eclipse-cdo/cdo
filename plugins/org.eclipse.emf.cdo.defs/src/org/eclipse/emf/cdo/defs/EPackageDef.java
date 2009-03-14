@@ -54,4 +54,4 @@ public interface EPackageDef extends Def
    */
   void setNsURI(String value);
 
-} // CDOPackageDef
+} // EPackageDef

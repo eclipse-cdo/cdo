@@ -50,7 +50,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     for (int i = 0; i < size; i++)
     {
       String key = in.readString();
-      Object object = in.readCDORevisionOrPrimitiveOrClass();
+      Object object = in.readCDORevisionOrPrimitiveOrClassifier();
       parameters.put(key, object);
     }
   }
@@ -65,7 +65,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     for (Entry<String, Object> entry : parameters.entrySet())
     {
       out.writeString(entry.getKey());
-      out.writeCDORevisionOrPrimitiveOrClass(entry.getValue());
+      out.writeCDORevisionOrPrimitiveOrClassifier(entry.getValue());
     }
   }
 

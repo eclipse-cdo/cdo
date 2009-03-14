@@ -14,8 +14,10 @@ package org.eclipse.emf.internal.cdo.analyzer;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOFetchRule;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,9 +58,9 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
     return lastTraverseCDOObject.cdoID();
   }
 
-  public synchronized CDOClusterOfFetchRule getFeatureRule(CDOClass cdoClass, CDOFeature cdoFeature)
+  public synchronized CDOClusterOfFetchRule getFeatureRule(EClass eClass, EStructuralFeature feature)
   {
-    CDOClusterOfFetchRule search = new CDOClusterOfFetchRule(cdoClass, cdoFeature);
+    CDOClusterOfFetchRule search = new CDOClusterOfFetchRule(eClass, feature);
     CDOClusterOfFetchRule featureRule = featureRules.get(search);
     if (featureRule == null)
     {
@@ -79,7 +81,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
       addRootFeature = false;
     }
 
-    CDOClusterOfFetchRule search = new CDOClusterOfFetchRule(lastTraverseCDOObject.cdoClass(), lastTraverseFeature);
+    CDOClusterOfFetchRule search = new CDOClusterOfFetchRule(lastTraverseCDOObject.eClass(), lastTraverseFeature);
     CDOClusterOfFetchRule fetchOfRule = featureRules.get(search);
     if (fetchOfRule == null)
     {
@@ -90,7 +92,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
     List<CDOFetchRule> list = new ArrayList<CDOFetchRule>();
     for (CDOFetchRule fetchRule : fetchRules)
     {
-      if (addRootFeature == true || lastTraverseCDOObject.cdoClass() != fetchRule.getCDOClass())
+      if (addRootFeature == true || lastTraverseCDOObject.eClass() != fetchRule.getEClass())
       {
         list.add(fetchRule);
       }
@@ -100,27 +102,25 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
   }
 
   @Override
-  protected void doPreTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index)
+  protected void doPreTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
   {
-    // Don`t handle containment relationship
-    if (!feature.isReference())
+    // Don`t handle containment relationship TODO Simon: Do yu really mean containment here? The check is different...
+    if (feature instanceof EReference)
     {
-      return;
-    }
-
-    if (lastElapseTimeBetweenOperations > maxTimeBetweenOperation || currentClusterOfFetchRule == null)
-    {
-      // The user interacted with the UI. Restart a new ClusterOfFetchRule
-      currentClusterOfFetchRule = getFeatureRule(cdoObject.cdoClass(), feature);
+      if (lastElapseTimeBetweenOperations > maxTimeBetweenOperation || currentClusterOfFetchRule == null)
+      {
+        // The user interacted with the UI. Restart a new ClusterOfFetchRule
+        currentClusterOfFetchRule = getFeatureRule(cdoObject.eClass(), feature);
+      }
     }
   }
 
   @Override
-  protected void doPostTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index, Object object)
+  protected void doPostTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index, Object object)
   {
     if (didFetch())
     {
-      currentClusterOfFetchRule.getFeatureInfo().activate(cdoObject.cdoClass(), feature);
+      currentClusterOfFetchRule.getFeatureInfo().activate(cdoObject.eClass(), feature);
     }
   }
 }

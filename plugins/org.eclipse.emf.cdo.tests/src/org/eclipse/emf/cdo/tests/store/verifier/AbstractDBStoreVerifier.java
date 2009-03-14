@@ -12,15 +12,18 @@ package org.eclipse.emf.cdo.tests.store.verifier;
 
 import static junit.framework.Assert.assertTrue;
 
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.db.IClassMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,17 +71,16 @@ public abstract class AbstractDBStoreVerifier
   protected List<IClassMapping> getClassMappings()
   {
     ArrayList<IClassMapping> result = new ArrayList<IClassMapping>();
-    for (CDOPackage pkg : repository.getPackageManager().getPackages())
+    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)repository.getPackageRegistry();
+    for (InternalCDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
     {
       // CDO core package is not mapped in horizontal mapping
-      if (pkg.equals(repository.getPackageManager().getCDOCorePackage()))
+      if (!packageInfo.isCorePackage())
       {
-        continue;
-      }
-
-      for (CDOClass cls : pkg.getClasses())
-      {
-        result.add(getStore().getMappingStrategy().getClassMapping(cls));
+        for (EClass cls : EMFUtil.getPersistentClasses(packageInfo.getEPackage()))
+        {
+          result.add(getStore().getMappingStrategy().getClassMapping(cls));
+        }
       }
     }
 

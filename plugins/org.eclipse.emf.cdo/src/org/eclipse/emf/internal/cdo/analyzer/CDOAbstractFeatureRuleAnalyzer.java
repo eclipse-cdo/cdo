@@ -12,7 +12,6 @@
 package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
@@ -21,6 +20,8 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 /**
  * @author Simon McDuff
  */
@@ -28,7 +29,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOAbstractFeatureRuleAnalyzer.class);
 
-  protected CDOFeature lastTraverseFeature;
+  protected EStructuralFeature lastTraverseFeature;
 
   protected int lastTraverseIndex;
 
@@ -60,11 +61,11 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     return loadCollectionPolicy;
   }
 
-  public void preTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index)
+  public void preTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("preTraverseFeature : {0}.{1}", cdoObject.cdoClass(), feature.getName());
+      TRACER.format("preTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName());
     }
 
     loadCollectionPolicy = cdoObject.cdoView().getSession().options().getCollectionLoadingPolicy();
@@ -79,11 +80,11 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     doPreTraverseFeature(cdoObject, feature, index);
   }
 
-  public void postTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index, Object value)
+  public void postTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index, Object value)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("postTraverseFeature : {0}.{1}", cdoObject.cdoClass(), feature.getName());
+      TRACER.format("postTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName());
     }
 
     try
@@ -97,11 +98,11 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     }
   }
 
-  protected void doPreTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index)
+  protected void doPreTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
   {
   }
 
-  protected void doPostTraverseFeature(CDOObject cdoObject, CDOFeature feature, int index, Object value)
+  protected void doPostTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index, Object value)
   {
   }
 

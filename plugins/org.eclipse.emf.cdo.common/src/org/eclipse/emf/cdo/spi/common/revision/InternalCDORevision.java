@@ -13,12 +13,13 @@ package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjustable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -53,50 +54,50 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   public void setContainingFeatureID(int containingFeatureID);
 
-  public void add(CDOFeature feature, int index, Object value);
+  public void add(EStructuralFeature feature, int index, Object value);
 
-  public void clear(CDOFeature feature);
+  public void clear(EStructuralFeature feature);
 
-  public Object move(CDOFeature feature, int targetIndex, int sourceIndex);
+  public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex);
 
-  public Object remove(CDOFeature feature, int index);
+  public Object remove(EStructuralFeature feature, int index);
 
-  public Object set(CDOFeature feature, int index, Object value);
+  public Object set(EStructuralFeature feature, int index, Object value);
 
-  public void unset(CDOFeature feature);
+  public void unset(EStructuralFeature feature);
 
   /**
    * Should never return {@link InternalCDORevision#NIL}
    */
-  public Object getValue(CDOFeature feature);
+  public Object getValue(EStructuralFeature feature);
 
-  public Object setValue(CDOFeature feature, Object value);
+  public Object setValue(EStructuralFeature feature, Object value);
 
   /**
    * Use this method to retrieved {@link InternalCDORevision#NIL} object in some cases.
    * 
    * @since 2.0
    */
-  public Object basicGet(CDOFeature feature, int index);
+  public Object basicGet(EStructuralFeature feature, int index);
 
   /**
    * Use this method to retrieved {@link InternalCDORevision#NIL} object in some cases.
    */
-  public Object basicSet(CDOFeature feature, int index, Object value);
+  public Object basicSet(EStructuralFeature feature, int index, Object value);
 
-  public void setList(CDOFeature feature, InternalCDOList list);
+  public void setList(EStructuralFeature feature, InternalCDOList list);
 
-  public CDOList getList(CDOFeature feature);
+  public CDOList getList(EStructuralFeature feature);
 
   /**
    * @param size
    *          the size of a new list to be created if this revision has no list so far, or -1 to skip list creation and
    *          return <code>null</code> in this case.
    */
-  public CDOList getList(CDOFeature feature, int size);
+  public CDOList getList(EStructuralFeature feature, int size);
 
   @Deprecated
-  public void setListSize(CDOFeature feature, int size);
+  public void setListSize(EStructuralFeature feature, int size);
 
   public void write(CDODataOutput out, int referenceChunk) throws IOException;
 }

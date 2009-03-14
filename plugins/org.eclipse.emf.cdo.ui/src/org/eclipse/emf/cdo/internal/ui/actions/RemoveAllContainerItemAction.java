@@ -36,7 +36,7 @@ public class RemoveAllContainerItemAction<E> extends AbstractContainerAction<E>
     {
       elementsToRemove.add(element);
     }
-    
+
     container.removeAllElements(elementsToRemove);
   }
 }

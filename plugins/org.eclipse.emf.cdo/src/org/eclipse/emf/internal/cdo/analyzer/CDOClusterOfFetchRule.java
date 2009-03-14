@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
@@ -21,20 +21,20 @@ public class CDOClusterOfFetchRule
 {
   private CDOAnalyzerFeatureInfo featureInfo = new CDOAnalyzerFeatureInfo();
 
-  private CDOFeature rootFeature;
+  private EStructuralFeature rootFeature;
 
-  private CDOClass rootClass;
+  private EClass rootClass;
 
   private long lastUpdate;
 
-  public CDOClusterOfFetchRule(CDOClass rootClass, CDOFeature rootFeature)
+  public CDOClusterOfFetchRule(EClass rootClass, EStructuralFeature rootFeature)
   {
     this.rootFeature = rootFeature;
     this.rootClass = rootClass;
     lastUpdate = System.currentTimeMillis();
   }
 
-  public CDOFeature getRootFeature()
+  public EStructuralFeature getRootFeature()
   {
     return rootFeature;
   }

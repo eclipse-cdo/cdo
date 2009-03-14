@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IView;
@@ -28,7 +27,7 @@ import org.eclipse.net4j.util.event.IListener;
  * @author Simon McDuff
  * @since 2.0
  */
-public class LockManager extends RWLockManager<CDOID, IView> implements IRepositoryElement
+public class LockManager extends RWLockManager<CDOID, IView>
 {
   private IRepository repository;
 

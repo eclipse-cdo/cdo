@@ -158,6 +158,11 @@ public class SessionComposite extends Composite
     return automaticButton;
   }
 
+  public boolean isAutomaticRegistry()
+  {
+    return automaticRegistry;
+  }
+
   public String getSessionDescription()
   {
     StringBuilder builder = new StringBuilder();

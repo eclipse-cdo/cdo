@@ -12,17 +12,13 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import java.util.Collection;
 import java.util.Set;
@@ -31,24 +27,14 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, CDOPackageURICompressor,
-    ILifecycle.Introspection
+public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
+    InternalCDOPackageRegistry.PackageProcessor, InternalCDOPackageRegistry.PackageLoader, ILifecycle.Introspection
 {
   public CDOSessionProtocol getSessionProtocol();
 
   public void setRepositoryName(String repositoryName);
 
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);
-
-  public void registerEPackage(EPackage ePackage, CDOIDMetaRange metaIDRange);
-
-  public CDOIDMetaRange registerEPackage(EPackage ePackage);
-
-  public InternalEObject lookupMetaInstance(CDOID id);
-
-  public CDOID lookupMetaInstanceID(InternalEObject metaInstance);
-
-  public void remapMetaInstance(CDOID oldID, CDOID newID);
 
   public void viewDetached(InternalCDOView view);
 

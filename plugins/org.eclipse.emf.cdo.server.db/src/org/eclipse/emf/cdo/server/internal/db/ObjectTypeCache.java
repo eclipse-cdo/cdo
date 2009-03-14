@@ -7,16 +7,16 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -27,6 +27,8 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,7 +63,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     this.mappingStrategy = mappingStrategy;
   }
 
-  public final CDOClassRef getObjectType(IDBStoreAccessor accessor, CDOID id)
+  public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     Statement statement = accessor.getJDBCDelegate().getStatement();
     initialize(statement);
@@ -85,11 +87,13 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
       resultSet = statement.executeQuery(sql);
       if (!resultSet.next())
       {
-        throw new DBException("ClassID for CDOID " + id + " not found");
+        DBUtil.trace("ClassID for CDOID " + id + " not found");
+        return null;
       }
 
-      int classID = resultSet.getInt(1);
-      return mappingStrategy.getClassRef(accessor, classID);
+      long classID = resultSet.getLong(1);
+      EClass eClass = (EClass)mappingStrategy.getStore().getMetaInstance(classID);
+      return new CDOClassifierRef(eClass);
     }
     catch (SQLException ex)
     {
@@ -101,7 +105,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
   }
 
-  public final void putObjectType(IDBStoreAccessor accessor, CDOID id, CDOClass type)
+  public final void putObjectType(IDBStoreAccessor accessor, CDOID id, EClass type)
   {
     Statement statement = accessor.getJDBCDelegate().getStatement();
     initialize(statement);
@@ -112,7 +116,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     builder.append(" VALUES (");
     builder.append(CDOIDUtil.getLong(id));
     builder.append(", ");
-    builder.append(ClassServerInfo.getDBID(type));
+    builder.append(accessor.getStore().getMetaID(type));
     builder.append(")");
     String sql = builder.toString();
     DBUtil.trace(sql);
@@ -169,7 +173,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
         IDBSchema schema = mappingStrategy.getStore().getDBSchema();
         table = schema.addTable(CDODBSchema.CDO_OBJECTS);
         idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
-        typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.INTEGER);
+        typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT);
         table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
 
         IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();

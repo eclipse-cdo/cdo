@@ -28,36 +28,36 @@ import java.util.Date;
  */
 public class CDODefsUtil
 {
-  public static CDOSessionDef createSessionDef(String repositoryName, CDOPackageRegistryDef cdoPackageRegistryDef,
+  public static CDOSessionDef createSessionDef(String repositoryName, CDOPackageRegistryDef ePackageRegistryDef,
       TCPConnectorDef tcpConnectorDef)
   {
     CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
     cdoSessionDef.setConnectorDef(tcpConnectorDef);
     cdoSessionDef.setRepositoryName(repositoryName);
-    cdoSessionDef.setCdoPackageRegistryDef(cdoPackageRegistryDef);
+    cdoSessionDef.setCdoPackageRegistryDef(ePackageRegistryDef);
     return cdoSessionDef;
   }
 
-  public static CDOSessionDef createSessionDef(String repositoryName, CDOPackageRegistryDef cdoPackageRegistryDef,
+  public static CDOSessionDef createSessionDef(String repositoryName, CDOPackageRegistryDef ePackageRegistryDef,
       FailOverStrategyDef failOverStrategyDef)
   {
     CDOSessionDef cdoSessionDef = CDODefsFactory.eINSTANCE.createCDOSessionDef();
     cdoSessionDef.setFailOverStrategyDef(failOverStrategyDef);
     cdoSessionDef.setRepositoryName(repositoryName);
-    cdoSessionDef.setCdoPackageRegistryDef(cdoPackageRegistryDef);
+    cdoSessionDef.setCdoPackageRegistryDef(ePackageRegistryDef);
     return cdoSessionDef;
   }
 
   public static CDOPackageRegistryDef createEagerPackageRegistryDef()
   {
-    CDOPackageRegistryDef cdoPackageRegistryDef = CDODefsFactory.eINSTANCE.createCDOEagerPackageRegistryDef();
-    return cdoPackageRegistryDef;
+    CDOPackageRegistryDef ePackageRegistryDef = CDODefsFactory.eINSTANCE.createCDOEagerPackageRegistryDef();
+    return ePackageRegistryDef;
   }
 
   public static CDOPackageRegistryDef createLazyPackageRegistryDef()
   {
-    CDOPackageRegistryDef cdoPackageRegistryDef = CDODefsFactory.eINSTANCE.createCDOLazyPackageRegistryDef();
-    return cdoPackageRegistryDef;
+    CDOPackageRegistryDef ePackageRegistryDef = CDODefsFactory.eINSTANCE.createCDOLazyPackageRegistryDef();
+    return ePackageRegistryDef;
   }
 
   public static CDOAuditDef createCDOAuditDef(CDOSessionDef cdoSessionDef)

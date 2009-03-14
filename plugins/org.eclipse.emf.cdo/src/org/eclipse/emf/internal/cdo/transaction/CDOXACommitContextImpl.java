@@ -12,7 +12,7 @@ package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -112,9 +112,9 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getNewObjects();
   }
 
-  public List<CDOPackage> getNewPackages()
+  public List<CDOPackageUnit> getNewPackageUnits()
   {
-    return delegateCommitContext.getNewPackages();
+    return delegateCommitContext.getNewPackageUnits();
   }
 
   public Map<CDOID, CDOResource> getNewResources()

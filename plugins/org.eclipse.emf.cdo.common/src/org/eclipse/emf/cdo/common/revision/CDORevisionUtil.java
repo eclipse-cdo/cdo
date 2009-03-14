@@ -13,10 +13,9 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.core.CDOFeatureMapEntryDataType;
-import org.eclipse.emf.cdo.internal.common.model.core.CDOFeatureMapEntryDataTypeImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,9 +34,9 @@ public final class CDORevisionUtil
   /**
    * @since 2.0
    */
-  public static CDORevision create(CDOClass cdoClass, CDOID id)
+  public static CDORevision create(EClass eClass, CDOID id)
   {
-    return new CDORevisionImpl(cdoClass, id);
+    return new CDORevisionImpl(eClass, id);
   }
 
   /**
@@ -46,14 +45,6 @@ public final class CDORevisionUtil
   public static CDORevision read(CDODataInput in) throws IOException
   {
     return new CDORevisionImpl(in);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOFeatureMapEntryDataType createFeatureMapEntry(String uri, Object value)
-  {
-    return new CDOFeatureMapEntryDataTypeImpl(uri, value);
   }
 
   public static Object remapID(Object value, Map<CDOIDTemp, CDOID> idMappings)

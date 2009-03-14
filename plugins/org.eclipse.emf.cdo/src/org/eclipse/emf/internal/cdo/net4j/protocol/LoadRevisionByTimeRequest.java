@@ -27,8 +27,7 @@ import java.util.Collection;
  */
 public class LoadRevisionByTimeRequest extends LoadRevisionRequest
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      LoadRevisionByTimeRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByTimeRequest.class);
 
   private long timeStamp;
 
@@ -42,9 +41,9 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   protected void requesting(CDODataOutput out) throws IOException
   {
     super.requesting(out);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing timeStamp: {0}", timeStamp);
+      TRACER.format("Writing timeStamp: {0}", timeStamp);
     }
 
     out.writeLong(timeStamp);

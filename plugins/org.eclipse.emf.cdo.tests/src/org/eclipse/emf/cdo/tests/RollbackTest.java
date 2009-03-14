@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -21,6 +20,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
@@ -50,11 +51,9 @@ public class RollbackTest extends AbstractCDOTest
 
   protected void flow1(CDOTransaction transaction1, CDOTransaction transaction2)
   {
-    CDOFeature category_Products1 = transaction1.getSession().getPackageManager().convert(
-        getModel1Package().getCategory_Products());
+    EStructuralFeature category_Products1 = getModel1Package().getCategory_Products();
 
-    CDOFeature category_Products2 = transaction2.getSession().getPackageManager().convert(
-        getModel1Package().getCategory_Products());
+    EStructuralFeature category_Products2 = getModel1Package().getCategory_Products();
 
     // Client1
     CDOResource resource1 = transaction1.createResource("/test1");

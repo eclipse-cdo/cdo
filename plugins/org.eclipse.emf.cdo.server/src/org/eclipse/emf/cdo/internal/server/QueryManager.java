@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
@@ -37,7 +36,7 @@ import java.util.concurrent.Future;
  * @author Simon McDuff
  * @since 2.0
  */
-public class QueryManager extends Lifecycle implements IRepositoryElement
+public class QueryManager extends Lifecycle
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, QueryManager.class);
 
@@ -249,6 +248,7 @@ public class QueryManager extends Lifecycle implements IRepositoryElement
     {
       Session session = (Session)queryResult.getView().getSession();
       StoreThreadLocal.setSession(session);
+
       try
       {
         started = true;

@@ -11,12 +11,12 @@
  */
 package org.eclipse.emf.internal.cdo.revision;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
 
 import java.text.MessageFormat;
@@ -43,7 +43,7 @@ public final class CDOElementProxyImpl implements CDOElementProxy
     this.index = index;
   }
 
-  public Object resolve(CDORevisionManager revisionManager, CDORevision revision, CDOFeature feature, int index)
+  public Object resolve(CDORevisionManager revisionManager, CDORevision revision, EStructuralFeature feature, int index)
   {
     return ((CDORevisionManagerImpl)revisionManager).resolveElementProxy(revision, feature, index, getIndex());
   }

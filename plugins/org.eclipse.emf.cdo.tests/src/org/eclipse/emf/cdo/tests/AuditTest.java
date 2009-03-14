@@ -68,21 +68,21 @@ public class AuditTest extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
     long commitTime1 = transaction.getLastCommitTime();
-    assertTrue(session.repository().getCreationTime() < commitTime1);
+    assertEquals(true, session.repository().getCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
 
     company.setName("Sympedia");
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
-    assertTrue(commitTime1 < commitTime2);
-    assertTrue(session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, commitTime1 < commitTime2);
+    assertEquals(true, session.repository().getCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
 
     company.setName("Eclipse");
     transaction.commit();
     long commitTime3 = transaction.getLastCommitTime();
-    assertTrue(commitTime2 < commitTime3);
-    assertTrue(session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, commitTime2 < commitTime3);
+    assertEquals(true, session.repository().getCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
 
     closeSession1();
@@ -111,21 +111,21 @@ public class AuditTest extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
     long commitTime1 = transaction.getLastCommitTime();
-    assertTrue(session.repository().getCreationTime() < commitTime1);
+    assertEquals(true, session.repository().getCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
 
     company.setName("Sympedia");
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
-    assertTrue(commitTime1 < commitTime2);
-    assertTrue(session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, commitTime1 < commitTime2);
+    assertEquals(true, session.repository().getCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
 
     company.setName("Eclipse");
     transaction.commit();
     long commitTime3 = transaction.getLastCommitTime();
-    assertTrue(commitTime2 < commitTime3);
-    assertTrue(session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, commitTime2 < commitTime3);
+    assertEquals(true, session.repository().getCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
 
     closeSession1();
@@ -166,21 +166,21 @@ public class AuditTest extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
     long commitTime1 = transaction.getLastCommitTime();
-    assertTrue(session.repository().getCreationTime() < commitTime1);
+    assertEquals(true, session.repository().getCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
 
     company.setName("Sympedia");
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
-    assertTrue(commitTime1 < commitTime2);
-    assertTrue(session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, commitTime1 < commitTime2);
+    assertEquals(true, session.repository().getCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
 
     company.setName("Eclipse");
     transaction.commit();
     long commitTime3 = transaction.getLastCommitTime();
-    assertTrue(commitTime2 < commitTime3);
-    assertTrue(session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, commitTime2 < commitTime3);
+    assertEquals(true, session.repository().getCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
 
     closeSession1();
@@ -472,7 +472,7 @@ public class AuditTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       long repositoryTime = session.repository().getCurrentTime();
-      assertTrue(Math.abs(System.currentTimeMillis() - repositoryTime) < 500);
+      assertEquals(true, Math.abs(System.currentTimeMillis() - repositoryTime) < 500);
     }
 
     @Override

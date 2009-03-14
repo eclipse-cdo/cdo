@@ -11,8 +11,9 @@
  */
 package org.eclipse.emf.cdo.common.revision.delta;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
@@ -22,7 +23,7 @@ public interface CDOFeatureDelta
 {
   public Type getType();
 
-  public CDOFeature getFeature();
+  public EStructuralFeature getFeature();
 
   public void apply(CDORevision revision);
 

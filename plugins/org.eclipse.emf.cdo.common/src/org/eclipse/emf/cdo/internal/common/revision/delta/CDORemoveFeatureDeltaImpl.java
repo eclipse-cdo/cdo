@@ -13,13 +13,14 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -31,22 +32,22 @@ public class CDORemoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CD
 {
   private int index;
 
-  public CDORemoveFeatureDeltaImpl(CDOFeature feature, int index)
+  public CDORemoveFeatureDeltaImpl(EStructuralFeature feature, int index)
   {
     super(feature);
     this.index = index;
   }
 
-  public CDORemoveFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
+  public CDORemoveFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
-    super(in, cdoClass);
+    super(in, eClass);
     index = in.readInt();
   }
 
   @Override
-  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  public void write(CDODataOutput out, EClass eClass) throws IOException
   {
-    super.write(out, cdoClass);
+    super.write(out, eClass);
     out.writeInt(index);
   }
 

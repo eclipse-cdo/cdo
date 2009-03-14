@@ -48,6 +48,13 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
     IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
+  /**
    * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
@@ -197,7 +204,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -280,13 +287,9 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   public void dispose()
   {
     if (cdoResourceFolderItemProvider != null)
-    {
       cdoResourceFolderItemProvider.dispose();
-    }
     if (cdoResourceItemProvider != null)
-    {
       cdoResourceItemProvider.dispose();
-    }
   }
 
 }

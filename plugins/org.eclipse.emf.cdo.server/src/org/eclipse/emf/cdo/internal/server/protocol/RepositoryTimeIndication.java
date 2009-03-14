@@ -24,8 +24,7 @@ import java.io.IOException;
  */
 public class RepositoryTimeIndication extends CDOServerIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      RepositoryTimeIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RepositoryTimeIndication.class);
 
   private long indicated;
 
@@ -49,15 +48,15 @@ public class RepositoryTimeIndication extends CDOServerIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     long responded = System.currentTimeMillis();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing indicated: {0,date} {0,time}", indicated);
+      TRACER.format("Writing indicated: {0,date} {0,time}", indicated);
     }
 
     out.writeLong(indicated);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing responded: {0,date} {0,time}", responded);
+      TRACER.format("Writing responded: {0,date} {0,time}", responded);
     }
 
     out.writeLong(responded);

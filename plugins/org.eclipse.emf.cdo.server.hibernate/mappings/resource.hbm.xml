@@ -4,7 +4,7 @@
 	<class entity-name="CDOResourceNode" abstract="false" lazy="false"
 		discriminator-value="cdoresourcenode" table="`cdo_resources_structure`">
 		<meta attribute="eclassName">CDOResourceNode</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
+		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
 		<tuplizer entity-mode="pojo"
 			class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer" />
 		<tuplizer entity-mode="dynamic-map"
@@ -32,7 +32,7 @@
 		<subclass entity-name="CDOResourceFolder" abstract="false"
 			lazy="false" discriminator-value="cdoresourcefolder">
 			<meta attribute="eclassName">CDOResourceFolder</meta>
-			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
+			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
 			<list name="nodes" lazy="true" cascade="merge, persist, save-update, refresh, lock, evict, replicate">
 				<key column="folderid" />
 				<list-index />
@@ -42,7 +42,7 @@
 		<subclass entity-name="CDOResource" abstract="false" lazy="false"
 			discriminator-value="cdoresource">
 			<meta attribute="eclassName">CDOResource</meta>
-			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/resource/2.0.0</meta>
+			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
 			<list name="contents" lazy="true" cascade="all,delete-orphan">
 				<key />
 				<list-index />

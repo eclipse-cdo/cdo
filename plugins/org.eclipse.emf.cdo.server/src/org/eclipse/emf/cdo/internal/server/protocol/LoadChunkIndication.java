@@ -14,14 +14,17 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -30,13 +33,13 @@ import java.io.IOException;
  */
 public class LoadChunkIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkIndication.class);
 
   private CDOID id;
 
   private int version;
 
-  private CDOFeature feature;
+  private EStructuralFeature feature;
 
   private int fromIndex;
 
@@ -51,48 +54,49 @@ public class LoadChunkIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     id = in.readCDOID();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read revision ID: {0}", id);
+      TRACER.format("Read revision ID: {0}", id);
     }
 
     version = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read revision version: {0}", version);
+      TRACER.format("Read revision version: {0}", version);
     }
 
-    CDOClass cdoClass = in.readCDOClassRefAndResolve();
+    EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
     int featureID = in.readInt();
-    feature = cdoClass.getAllFeatures()[featureID];
-    if (PROTOCOL_TRACER.isEnabled())
+    feature = eClass.getEStructuralFeature(featureID);
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read feature: {0}", feature);
+      TRACER.format("Read feature: {0}", feature);
     }
 
     fromIndex = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read fromIndex: {0}", fromIndex);
+      TRACER.format("Read fromIndex: {0}", fromIndex);
     }
 
     toIndex = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read toIndex: {0}", toIndex);
+      TRACER.format("Read toIndex: {0}", toIndex);
     }
   }
 
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    InternalCDORevision revision = getRevisionManager().getRevisionByVersion(id, 0, version);
-    getRevisionManager().ensureChunk(revision, feature, fromIndex, toIndex + 1);
+    InternalCDORevision revision = getRepository().getRevisionManager().getRevisionByVersion(id, 0, version);
+    getRepository().getRevisionManager().ensureChunk(revision, feature, fromIndex, toIndex + 1);
 
+    CDOType type = CDOModelUtil.getType(feature.getEType());
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      feature.getType().writeValue(out, list.get(i));
+      type.writeValue(out, list.get(i));
     }
   }
 }

@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -23,6 +21,10 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 
 import org.eclipse.net4j.util.collection.Pair;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -43,18 +45,18 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
   private transient List<CDOFeatureDelta> notProcessedFeatureDelta;
 
-  public CDOListFeatureDeltaImpl(CDOFeature feature)
+  public CDOListFeatureDeltaImpl(EStructuralFeature feature)
   {
     super(feature);
   }
 
-  public CDOListFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
+  public CDOListFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
-    super(in, cdoClass);
+    super(in, eClass);
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
-      featureDeltas.add(in.readCDOFeatureDelta(cdoClass));
+      featureDeltas.add(in.readCDOFeatureDelta(eClass));
     }
   }
 
@@ -71,13 +73,13 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   }
 
   @Override
-  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  public void write(CDODataOutput out, EClass eClass) throws IOException
   {
-    super.write(out, cdoClass);
+    super.write(out, eClass);
     out.writeInt(featureDeltas.size());
     for (CDOFeatureDelta featureDelta : featureDeltas)
     {
-      out.writeCDOFeatureDelta(featureDelta, cdoClass);
+      out.writeCDOFeatureDelta(featureDelta, eClass);
     }
   }
 
@@ -155,8 +157,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 
   private void cleanupWithNewDelta(CDOFeatureDelta featureDelta)
   {
-    CDOFeature feature = getFeature();
-    if (feature.isReference() && featureDelta instanceof CDORemoveFeatureDelta)
+    EStructuralFeature feature = getFeature();
+    if (feature instanceof EReference && featureDelta instanceof CDORemoveFeatureDelta)
     {
       int indexToRemove = ((CDORemoveFeatureDelta)featureDelta).getIndex();
       reconstructAddedIndicesWithNoCopy();

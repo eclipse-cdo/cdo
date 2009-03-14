@@ -14,17 +14,17 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.Collection;
 import java.util.Map;
@@ -59,34 +59,26 @@ public interface IStoreAccessor extends IQueryHandler
   /**
    * @since 2.0
    */
-  public IStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature);
+  public IStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature);
 
   /**
    * @since 2.0
    */
-  public Collection<CDOPackageInfo> readPackageInfos();
+  public Collection<InternalCDOPackageUnit> readPackageUnits();
 
   /**
    * Demand loads a given package proxy that has been created on startup of the repository.
    * <p>
-   * It's left to the implementor's choice whether to load the {@link CDOPackage#getEcore() ecore xml} at this time
-   * already. In case it is <b>not</b> loaded at this time {@link #readPackageEcore(CDOPackage) readPackageEcore()} is
+   * It's left to the implementor's choice whether to load the {@link EPackage#getEcore() ecore xml} at this time
+   * already. In case it is <b>not</b> loaded at this time {@link #readPackageEcore(EPackage) readPackageEcore()} is
    * called later on demand.
    * <p>
    * This method must only load the given package, <b>not</b> possible contained packages.
    * 
-   * @see InternalCDOPackage
+   * @see InternalEPackage
    * @since 2.0
    */
-  public void readPackage(CDOPackage cdoPackage);
-
-  /**
-   * Loads the {@link CDOPackage#getEcore() ecore xml} of the given package.
-   * 
-   * @see InternalCDOPackage#setEcore(String)
-   * @since 2.0
-   */
-  public void readPackageEcore(CDOPackage cdoPackage);
+  public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit);
 
   /**
    * Returns an iterator that iterates over all objects in the store and makes their CDOIDs available for processing.
@@ -102,7 +94,7 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public CDOClassRef readObjectType(CDOID id);
+  public CDOClassifierRef readObjectType(CDOID id);
 
   /**
    * Reads a current revision (i.e. one with revised == 0) from the back-end. Returns <code>null</code> if the id is
@@ -110,7 +102,7 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public CDORevision readRevision(CDOID id, int referenceChunk);
+  public InternalCDORevision readRevision(CDOID id, int referenceChunk);
 
   /**
    * Reads a revision with the given version from the back-end. This method will only be called by the framework if
@@ -118,7 +110,7 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
+  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
 
   /**
    * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
@@ -127,7 +119,7 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
+  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
 
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
@@ -140,7 +132,7 @@ public interface IStoreAccessor extends IQueryHandler
   /**
    * @since 2.0
    */
-  public CDORevision verifyRevision(CDORevision revision);
+  public InternalCDORevision verifyRevision(InternalCDORevision revision);
 
   /**
    * TODO Clarify the meaning of {@link #refreshRevisions()}
@@ -206,6 +198,11 @@ public interface IStoreAccessor extends IQueryHandler
   public ITransaction getTransaction();
 
   /**
+   * @since 2.0
+   */
+  public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
+
+  /**
    * Called before committing. An instance of this accessor represents an instance of a back-end transaction. Could be
    * called multiple times before commit it called. {@link IStoreAccessor#commit(OMMonitor)} or
    * {@link IStoreAccessor#rollback()} will be called after any numbers of
@@ -264,31 +261,31 @@ public interface IStoreAccessor extends IQueryHandler
      * <code>CommitContext</code>. In addition to the packages registered with the session this package manager also
      * contains the new packages that are part of this commit operation.
      */
-    public CDOPackageManager getPackageManager();
+    public InternalCDOPackageRegistry getPackageRegistry();
 
     /**
-     * Returns an array of the new packages that are part of the commit operation represented by this
+     * Returns an array of the new package units that are part of the commit operation represented by this
      * <code>CommitContext</code>.
      */
-    public CDOPackage[] getNewPackages();
+    public InternalCDOPackageUnit[] getNewPackageUnits();
 
     /**
      * Returns an array of the new objects that are part of the commit operation represented by this
      * <code>CommitContext</code>.
      */
-    public CDORevision[] getNewObjects();
+    public InternalCDORevision[] getNewObjects();
 
     /**
      * Returns an array of the dirty objects that are part of the commit operation represented by this
      * <code>CommitContext</code>.
      */
-    public CDORevision[] getDirtyObjects();
+    public InternalCDORevision[] getDirtyObjects();
 
     /**
      * Returns an array of the dirty object deltas that are part of the commit operation represented by this
      * <code>CommitContext</code>.
      */
-    public CDORevisionDelta[] getDirtyObjectDeltas();
+    public InternalCDORevisionDelta[] getDirtyObjectDeltas();
 
     /**
      * Returns an array of the removed object that are part of the commit operation represented by this

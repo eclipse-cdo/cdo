@@ -12,22 +12,20 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * CDORevisionImpl.eIsSet() works incorrectly
@@ -38,6 +36,10 @@ import org.eclipse.emf.ecore.EcorePackage;
  */
 public class Bugzilla_258933_Test extends AbstractCDOTest
 {
+  private static final String TOP_PACKAGE_URI = "http:///www.elver.org/toppackage";
+
+  private static final String SUB_PACKAGE_URI = "http:///www.elver.org/subPackage1";
+
   private static final Object NIL = new Object();
 
   public void testBugzilla_258933() throws Exception
@@ -91,12 +93,9 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(topPackage);
-      CDOPackage packageObject = ModelUtil.getCDOPackage(topPackage, (CDOSessionPackageManagerImpl)session
-          .getPackageManager());
-      assertNotNull(packageObject.getEcore());
 
       CDOTransaction transaction = session.openTransaction();
-      CDOObject instance = (CDOObject)subpackage1.getEFactoryInstance().create(class1Class);
+      EObject instance = EcoreUtil.create(class1Class);
       if (NIL != initializeValue)
       {
         instance.eSet(feature, initializeValue);
@@ -116,18 +115,16 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     }
 
     clearCache(getRepository().getRevisionManager());
-    EPackage topPackage = createDynamicEPackage();
-
-    EPackage subpackage1 = topPackage.getESubpackages().get(0);
-    EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
-    EStructuralFeature feature = class1Class.getEStructuralFeature(featureName);
 
     CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(topPackage);
     if (session instanceof org.eclipse.emf.cdo.net4j.CDOSession)
     {
       ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);
     }
+
+    EPackage subpackage1 = session.getPackageRegistry().getEPackage(SUB_PACKAGE_URI);
+    EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
+    EStructuralFeature feature = class1Class.getEStructuralFeature(featureName);
 
     CDOTransaction transaction = session.openTransaction();
     CDOObject instance = (CDOObject)transaction.getResource("/test1").getContents().get(0);
@@ -182,12 +179,12 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     EPackage topPackage = efactory.createEPackage();
     topPackage.setName("toppackage");
     topPackage.setNsPrefix("toppackage");
-    topPackage.setNsURI("http:///www.elver.org/toppackage");
+    topPackage.setNsURI(TOP_PACKAGE_URI);
 
     EPackage subPackage1 = efactory.createEPackage();
     subPackage1.setName("subPackage1");
     subPackage1.setNsPrefix("subPackage1");
-    subPackage1.setNsURI("http:///www.elver.org/subPackage1");
+    subPackage1.setNsURI(SUB_PACKAGE_URI);
 
     {
       EClass schoolBookEClass = efactory.createEClass();

@@ -13,7 +13,6 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -25,6 +24,8 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImp
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
 
 /**
@@ -65,9 +66,9 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
   @Override
   public void visit(CDOSetFeatureDelta delta)
   {
-    CDOFeature feature = delta.getFeature();
+    EStructuralFeature feature = delta.getFeature();
     Object value = delta.getValue();
-    if (value != null && feature.isReference() && !(value instanceof CDOElementProxy))
+    if (value != null && feature instanceof EReference && !(value instanceof CDOElementProxy))
     {
       revision.setValue(feature, referenceAdjuster.adjustReference(value));
     }
@@ -76,10 +77,10 @@ public class RevisionAdjuster extends CDOFeatureDeltaVisitorImpl
   @Override
   public void visit(CDOListFeatureDelta deltas)
   {
-    CDOFeature feature = deltas.getFeature();
+    EStructuralFeature feature = deltas.getFeature();
     InternalCDOList list = (InternalCDOList)revision.getValue(feature);
 
-    if (feature.isReference())
+    if (feature instanceof EReference)
     {
       int[] indices = ((CDOListFeatureDeltaImpl)deltas).reconstructAddedIndices().getElement2();
       for (int i = 1; i <= indices[0]; i++)

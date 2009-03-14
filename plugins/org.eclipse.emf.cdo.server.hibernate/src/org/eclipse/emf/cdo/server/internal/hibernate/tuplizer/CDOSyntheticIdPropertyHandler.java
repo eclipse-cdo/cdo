@@ -37,7 +37,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
@@ -109,7 +109,7 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
     if (cdoID == null)
     {
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
-          revision.getCDOClass().getName());
+          revision.getEClass().getName());
       revision.setID(newCDOID);
       if (hcc != null)
       {
@@ -119,7 +119,7 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
     else if (cdoID instanceof CDOIDTemp)
     {
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
-          revision.getCDOClass().getName());
+          revision.getEClass().getName());
       revision.setID(newCDOID);
       if (hcc != null)
       {

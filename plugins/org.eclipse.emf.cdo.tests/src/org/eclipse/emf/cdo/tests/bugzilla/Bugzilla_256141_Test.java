@@ -26,7 +26,7 @@ public class Bugzilla_256141_Test extends AbstractCDOTest
 {
   public void testBugzilla_256141() throws InterruptedException
   {
-    CDOSession session = openLazySession();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
     CDOResource resource1 = transaction.createResource("test1");

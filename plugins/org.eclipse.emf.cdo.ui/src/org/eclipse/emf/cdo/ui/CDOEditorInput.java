@@ -226,7 +226,7 @@ public class CDOEditorInput extends PlatformObject implements IEditorInput
         OM.LOG.error(ex);
       }
     }
-  
+
     return result.toArray(new IEditorReference[result.size()]);
   }
 

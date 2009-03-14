@@ -25,8 +25,7 @@ import java.io.IOException;
  */
 public class GetRemoteSessionsIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      GetRemoteSessionsIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, GetRemoteSessionsIndication.class);
 
   private boolean subscribe;
 
@@ -39,9 +38,9 @@ public class GetRemoteSessionsIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     subscribe = in.readBoolean();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read subscribe: {0}", subscribe);
+      TRACER.format("Read subscribe: {0}", subscribe);
     }
   }
 
@@ -49,7 +48,7 @@ public class GetRemoteSessionsIndication extends CDOReadIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     Session localSession = getSession();
-    Session[] sessions = getSessionManager().getSessions();
+    Session[] sessions = getSession().getSessionManager().getSessions();
     for (Session session : sessions)
     {
       if (session != localSession)

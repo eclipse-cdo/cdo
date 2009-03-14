@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.internal.cdo.analyzer;
 
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
@@ -25,26 +25,26 @@ public class CDOFetchFeatureInfo
 
   private boolean active;
 
-  private CDOClass cdoClass;
+  private EClass eClass;
 
-  private CDOFeature cdoFeature;
+  private EStructuralFeature feature;
 
-  public CDOFetchFeatureInfo(CDOClass cdoClass, CDOFeature cdoFeature)
+  public CDOFetchFeatureInfo(EClass eClass, EStructuralFeature feature)
   {
-    this.cdoClass = cdoClass;
-    this.cdoFeature = cdoFeature;
+    this.eClass = eClass;
+    this.feature = feature;
     active = false;
     latencyTime = -1;
   }
 
-  public CDOClass getCDOClass()
+  public EClass getEClass()
   {
-    return cdoClass;
+    return eClass;
   }
 
-  public CDOFeature getCDOFeature()
+  public EStructuralFeature getEStructuralFeature()
   {
-    return cdoFeature;
+    return feature;
   }
 
   public boolean isActive()
@@ -104,7 +104,7 @@ public class CDOFetchFeatureInfo
   @Override
   public int hashCode()
   {
-    return cdoClass.hashCode() ^ cdoFeature.hashCode();
+    return eClass.hashCode() ^ feature.hashCode();
   }
 
   @Override
@@ -118,7 +118,7 @@ public class CDOFetchFeatureInfo
     if (obj instanceof CDOFetchFeatureInfo)
     {
       CDOFetchFeatureInfo featureInfo = (CDOFetchFeatureInfo)obj;
-      return featureInfo.cdoClass == cdoClass && featureInfo.cdoFeature == cdoFeature;
+      return featureInfo.eClass == eClass && featureInfo.feature == feature;
     }
 
     return false;

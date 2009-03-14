@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class SetAuditIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SetAuditIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SetAuditIndication.class);
 
   private List<CDORevision> revisions;
 
@@ -43,21 +43,21 @@ public class SetAuditIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read viewID: {0}", viewID);
+      TRACER.format("Read viewID: {0}", viewID);
     }
 
     long timeStamp = in.readLong();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp);
+      TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp);
     }
 
     int size = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Reading {0} IDs", size);
+      TRACER.format("Reading {0} IDs", size);
     }
 
     List<CDOID> invalidObjects = new ArrayList<CDOID>(size);
@@ -65,9 +65,9 @@ public class SetAuditIndication extends CDOReadIndication
     {
       CDOID id = in.readCDOID();
       invalidObjects.add(id);
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Read ID: {0}", id);
+        TRACER.format("Read ID: {0}", id);
       }
     }
 
@@ -82,18 +82,18 @@ public class SetAuditIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} existanceFlags", revisions.size());
+      TRACER.format("Writing {0} existanceFlags", revisions.size());
     }
 
     out.writeInt(revisions.size());
     for (CDORevision revision : revisions)
     {
       boolean existanceFlag = revision != null;
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing existanceFlag: {0}", existanceFlag);
+        TRACER.format("Writing existanceFlag: {0}", existanceFlag);
       }
 
       out.writeBoolean(existanceFlag);

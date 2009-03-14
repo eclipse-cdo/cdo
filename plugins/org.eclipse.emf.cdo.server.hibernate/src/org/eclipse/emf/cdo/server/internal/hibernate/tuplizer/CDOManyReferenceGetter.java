@@ -48,14 +48,15 @@ public class CDOManyReferenceGetter extends CDOPropertyGetter
   public Object get(Object target) throws HibernateException
   {
     // Check if there is already a persistentcollection
-    PersistentCollection collection = PersistableListHolder.getInstance().getListMapping(target, getCDOFeature());
+    PersistentCollection collection = PersistableListHolder.getInstance().getListMapping(target,
+        getEStructuralFeature());
     if (collection != null)
     {
       return collection;
     }
 
     InternalCDORevision revision = (InternalCDORevision)target;
-    CDOList list = revision.getList(getCDOFeature(), 10);
+    CDOList list = revision.getList(getEStructuralFeature(), 10);
 
     // Wrap the moveablearraylist
     HibernateMoveableListWrapper wrapper = new HibernateMoveableListWrapper();

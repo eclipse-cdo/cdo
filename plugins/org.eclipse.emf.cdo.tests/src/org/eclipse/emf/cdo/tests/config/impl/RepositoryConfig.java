@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
@@ -16,13 +17,15 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.store.verifier.AuditDBStoreIntegrityVerifier;
+import org.eclipse.emf.cdo.tests.store.verifier.NonAuditDBStoreIntegrityVerifier;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -210,7 +213,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     @Override
     protected IStore createStore()
     {
-      return StoreUtil.createMEMStore();
+      return MEMStoreUtil.createMEMStore();
     }
   }
 
@@ -337,6 +340,45 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
       }
 
+      public static class StmtNonAudit extends Hsqldb
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final StmtNonAudit INSTANCE = new StmtNonAudit("HsqldbHorizontalNonAudit");
+
+        public StmtNonAudit(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected void initRepositoryProperties(Map<String, String> props)
+        {
+          super.initRepositoryProperties(props);
+          props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createStatementJDBCDelegateProvider();
+        }
+
+        @Override
+        public void tearDown() throws Exception
+        {
+          try
+          {
+            // verify DB integrity
+            new NonAuditDBStoreIntegrityVerifier(getRepository(REPOSITORY_NAME)).verify();
+          }
+          finally
+          {
+            super.tearDown();
+          }
+        }
+      }
+
       public static class PrepStmt extends Hsqldb
       {
         private static final long serialVersionUID = 1L;
@@ -349,9 +391,62 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
 
         @Override
+        public void tearDown() throws Exception
+        {
+          try
+          {
+            // verify DB integrity
+            new AuditDBStoreIntegrityVerifier(getRepository(REPOSITORY_NAME)).verify();
+          }
+          finally
+          {
+            super.tearDown();
+          }
+        }
+
+        @Override
         protected IJDBCDelegateProvider createDelegateProvider()
         {
           return CDODBUtil.createPreparedStatementJDBCDelegateProvider();
+        }
+      }
+
+      public static class PrepStmtNonAudit extends Hsqldb
+      {
+        private static final long serialVersionUID = 1L;
+
+        public static final PrepStmtNonAudit INSTANCE = new PrepStmtNonAudit("HsqldbHorizontalPrepStmtNonAudit");
+
+        public PrepStmtNonAudit(String name)
+        {
+          super(name);
+        }
+
+        @Override
+        protected void initRepositoryProperties(Map<String, String> props)
+        {
+          super.initRepositoryProperties(props);
+          props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
+        }
+
+        @Override
+        protected IJDBCDelegateProvider createDelegateProvider()
+        {
+          return CDODBUtil.createPreparedStatementJDBCDelegateProvider();
+        }
+
+        @Override
+        public void tearDown() throws Exception
+        {
+          try
+          {
+            // verify DB integrity
+            new NonAuditDBStoreIntegrityVerifier(getRepository(REPOSITORY_NAME)).verify();
+          }
+          finally
+          {
+            super.tearDown();
+          }
         }
       }
     }

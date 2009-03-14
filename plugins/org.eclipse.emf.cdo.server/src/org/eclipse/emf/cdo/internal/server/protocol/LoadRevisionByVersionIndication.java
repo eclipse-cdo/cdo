@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public class LoadRevisionByVersionIndication extends LoadRevisionIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
       LoadRevisionByVersionIndication.class);
 
   private int version;
@@ -40,15 +40,15 @@ public class LoadRevisionByVersionIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     version = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read version: {0}", version);
+      TRACER.format("Read version: {0}", version);
     }
   }
 
   @Override
   protected InternalCDORevision getRevision(CDOID id)
   {
-    return getRevisionManager().getRevisionByVersion(id, referenceChunk, version);
+    return getRepository().getRevisionManager().getRevisionByVersion(id, referenceChunk, version);
   }
 }

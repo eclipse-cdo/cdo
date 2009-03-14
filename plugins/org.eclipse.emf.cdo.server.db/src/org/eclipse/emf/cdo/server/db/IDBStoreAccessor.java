@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 
 /**
@@ -20,11 +19,6 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 public interface IDBStoreAccessor extends IStoreAccessor
 {
   public IDBStore getStore();
-
-  /**
-   * @since 2.0
-   */
-  public CDOClassRef readClassRef(int classID);
 
   /**
    * @since 2.0

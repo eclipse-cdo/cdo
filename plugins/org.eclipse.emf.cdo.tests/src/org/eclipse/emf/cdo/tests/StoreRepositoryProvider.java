@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class StoreRepositoryProvider
 
   protected IStore createStore()
   {
-    return StoreUtil.createMEMStore();
+    return MEMStoreUtil.createMEMStore();
   }
 
   protected IRepository createRepository(String name, Map<String, String> testProperties)

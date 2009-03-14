@@ -10,10 +10,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
+import org.eclipse.emf.ecore.EClass;
 
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tuple.Instantiator;
@@ -27,11 +28,11 @@ public class CDORevisionInstantiator implements Instantiator
 {
   private static final long serialVersionUID = 1L;
 
-  private CDOClass cdoClass;
+  private EClass eClass;
 
   public CDORevisionInstantiator(CDORevisionTuplizer tuplizer, PersistentClass mappingInfo)
   {
-    cdoClass = tuplizer.getCDOClass();
+    eClass = tuplizer.getEClass();
   }
 
   public Object instantiate()
@@ -42,8 +43,7 @@ public class CDORevisionInstantiator implements Instantiator
 
   public Object instantiate(Serializable id)
   {
-    return CDORevisionUtil
-        .create(cdoClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, cdoClass.getName()));
+    return CDORevisionUtil.create(eClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, eClass.getName()));
   }
 
   public boolean isInstance(Object object)

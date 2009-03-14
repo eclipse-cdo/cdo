@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.session;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
@@ -42,20 +43,6 @@ public interface CDOSessionConfiguration
    * @see CDOSession#getPackageRegistry()
    */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);
-
-  /**
-   * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
-   * @see CDOSession#getPackageRegistry()
-   */
-  public void setEagerPackageRegistry();
-
-  /**
-   * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
-   * @see CDOSession#getPackageRegistry()
-   */
-  public void setLazyPackageRegistry();
 
   /**
    * @see CDORevisionManagerImpl#getCache()

@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractCDOIDInteger extends AbstractCDOID implements Comparable<AbstractCDOIDInteger>
+public abstract class AbstractCDOIDInteger extends AbstractCDOID
 {
   private static final long serialVersionUID = 1L;
 

@@ -19,9 +19,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -40,15 +39,15 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
-import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 
-import java.io.IOException;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,8 +59,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class Session extends Container<IView> implements ISession, CDOIDProvider, CDOPackageURICompressor,
-    CDOCommonSession.Options
+public class Session extends Container<IView> implements ISession, CDOIDProvider, CDOCommonSession.Options
 {
   private SessionManager sessionManager;
 
@@ -72,9 +70,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   private boolean passiveUpdateEnabled = true;
 
   private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
-
-  @ExcludeFromDump
-  private transient StringCompressor packageURICompressor = new StringCompressor(false);
 
   @ExcludeFromDump
   private IListener protocolListener = new LifecycleEventAdapter()
@@ -268,14 +263,13 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects,
-      List<CDORevisionDelta> deltas)
+  public void handleCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
+      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
     if (!isPassiveUpdateEnabled())
     {
       dirtyIDs = Collections.emptyList();
     }
-
     // Look if someone needs to know something about modified objects
     List<CDORevisionDelta> newDeltas = new ArrayList<CDORevisionDelta>();
     for (CDORevisionDelta delta : deltas)
@@ -311,12 +305,13 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
     try
     {
-      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty())
+      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty() || packageUnits.length > 0)
       {
         IChannel channel = protocol.getChannel();
         if (LifecycleUtil.isActive(channel))
         {
-          new CommitNotificationRequest(channel, timeStamp, dirtyIDs, detachedObjects, newDeltas).sendAsync();
+          new CommitNotificationRequest(channel, timeStamp, packageUnits, dirtyIDs, detachedObjects, newDeltas)
+              .sendAsync();
         }
         else
         {
@@ -367,12 +362,12 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       List<CDORevision> additionalRevisions)
   {
     RevisionManager revisionManager = (RevisionManager)getSessionManager().getRepository().getRevisionManager();
-    CDOClass cdoClass = revision.getCDOClass();
-    CDOFeature[] features = cdoClass.getAllFeatures();
+    EClass eClass = revision.getEClass();
+    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
     for (int i = 0; i < features.length; i++)
     {
-      CDOFeature feature = features[i];
-      if (feature.isReference() && !feature.isMany() && feature.isContainment())
+      EStructuralFeature feature = features[i];
+      if (feature instanceof EReference && !feature.isMany() && ((EReference)feature).isContainment())
       {
         Object value = revision.getValue(feature);
         if (value instanceof CDOID)
@@ -389,22 +384,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         }
       }
     }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void writePackageURI(ExtendedDataOutput out, String uri) throws IOException
-  {
-    packageURICompressor.write(out, uri);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public String readPackageURI(ExtendedDataInput in) throws IOException
-  {
-    return packageURICompressor.read(in);
   }
 
   @Override
@@ -444,7 +423,6 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     views = null;
     sessionManager.sessionClosed(this);
     sessionManager = null;
-    packageURICompressor = null;
     super.doDeactivate();
   }
 }

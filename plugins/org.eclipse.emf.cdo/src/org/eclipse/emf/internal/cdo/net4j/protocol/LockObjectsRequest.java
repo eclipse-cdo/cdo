@@ -29,7 +29,7 @@ import java.util.Collection;
  */
 public class LockObjectsRequest extends CDOClientRequest<Object>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LockObjectsRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LockObjectsRequest.class);
 
   private CDOView view;
 
@@ -56,18 +56,18 @@ public class LockObjectsRequest extends CDOClientRequest<Object>
     out.writeCDOLockType(lockType);
     out.writeLong(timeout);
 
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Locking of type {0} requested for view {1} with timeout {2}",
+      TRACER.format("Locking of type {0} requested for view {1} with timeout {2}",
           lockType == RWLockManager.LockType.READ ? "read" : "write", view.getViewID(), timeout);
     }
 
     out.writeInt(objects.size());
     for (CDOObject object : objects)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Locking requested for objects {0}", object.cdoID());
+        TRACER.format("Locking requested for objects {0}", object.cdoID());
       }
 
       out.writeCDOID(object.cdoID());

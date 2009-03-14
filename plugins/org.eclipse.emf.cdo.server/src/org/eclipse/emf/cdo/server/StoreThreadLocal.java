@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
 /**
  * @author Eike Stepper
  * @since 2.0
@@ -19,6 +21,8 @@ public final class StoreThreadLocal
   private static final ThreadLocal<ISession> SESSION = new InheritableThreadLocal<ISession>();
 
   private static final ThreadLocal<IStoreAccessor> ACCESSOR = new InheritableThreadLocal<IStoreAccessor>();
+
+  private static final ThreadLocal<IStoreAccessor.CommitContext> COMMIT_CONTEXT = new InheritableThreadLocal<IStoreAccessor.CommitContext>();
 
   private StoreThreadLocal()
   {
@@ -68,15 +72,30 @@ public final class StoreThreadLocal
     return accessor;
   }
 
+  public static void setCommitContext(IStoreAccessor.CommitContext commitContext)
+  {
+    COMMIT_CONTEXT.set(commitContext);
+  }
+
+  public static IStoreAccessor.CommitContext getCommitContext()
+  {
+    return COMMIT_CONTEXT.get();
+  }
+
   public static void release()
   {
     IStoreAccessor accessor = ACCESSOR.get();
     if (accessor != null)
     {
-      accessor.release();
+      if (LifecycleUtil.isActive(accessor))
+      {
+        accessor.release();
+      }
+
       ACCESSOR.set(null);
     }
 
     SESSION.set(null);
+    COMMIT_CONTEXT.set(null);
   }
 }

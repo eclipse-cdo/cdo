@@ -14,11 +14,10 @@ import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
-import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionMerger;
+import org.eclipse.emf.cdo.spi.common.revision.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
@@ -36,6 +35,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -346,7 +346,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
 
     protected boolean hasFeatureConflicts(CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
     {
-      Set<CDOFeature> features = new HashSet<CDOFeature>();
+      Set<EStructuralFeature> features = new HashSet<EStructuralFeature>();
       for (CDOFeatureDelta localFeatureDelta : localDelta.getFeatureDeltas())
       {
         features.add(localFeatureDelta.getFeature());
@@ -356,7 +356,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
       {
         for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
         {
-          CDOFeature feature = remoteFeatureDelta.getFeature();
+          EStructuralFeature feature = remoteFeatureDelta.getFeature();
           if (features.contains(feature))
           {
             return true;

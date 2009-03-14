@@ -47,126 +47,53 @@ public class CDODBSchema extends DBSchema
   REPOSITORY.addField("next_metaid", DBType.BIGINT);
 
   /**
+   * DBTable cdo_package_units
+   */
+  public static final IDBTable PACKAGE_UNITS = INSTANCE.addTable("cdo_package_units");
+
+  public static final IDBField PACKAGE_UNITS_ID = //
+  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255);
+
+  public static final IDBField PACKAGE_UNITS_ORIGINAL_TYPE = //
+  PACKAGE_UNITS.addField("original_type", DBType.INTEGER);
+
+  public static final IDBField PACKAGE_UNITS_TIME_STAMP = //
+  PACKAGE_UNITS.addField("time_stamp", DBType.BIGINT);
+
+  public static final IDBField PACKAGE_UNITS_PACKAGE_DATA = //
+  PACKAGE_UNITS.addField("package_data", DBType.BLOB);
+
+  public static final IDBIndex INDEX_PACKAGE_UNITS_PK = //
+  PACKAGE_UNITS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_UNITS_ID);
+
+  /**
    * DBTable cdo_packages
    */
-  public static final IDBTable PACKAGES = INSTANCE.addTable("cdo_packages");
+  public static final IDBTable PACKAGE_INFOS = INSTANCE.addTable("cdo_package_infos");
 
-  public static final IDBField PACKAGES_ID = //
-  PACKAGES.addField("id", DBType.INTEGER);
+  public static final IDBField PACKAGE_INFOS_URI = //
+  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255);
 
-  public static final IDBField PACKAGES_URI = //
-  PACKAGES.addField("uri", DBType.VARCHAR, 255);
+  public static final IDBField PACKAGE_INFOS_PARENT = //
+  PACKAGE_INFOS.addField("parent", DBType.VARCHAR, 255);
 
-  public static final IDBField PACKAGES_NAME = //
-  PACKAGES.addField("name", DBType.VARCHAR, 255);
+  public static final IDBField PACKAGE_INFOS_UNIT = //
+  PACKAGE_INFOS.addField("unit", DBType.VARCHAR, 255);
 
-  public static final IDBField PACKAGES_ECORE = //
-  PACKAGES.addField("ecore", DBType.CLOB);
+  public static final IDBField PACKAGE_INFOS_META_LB = //
+  PACKAGE_INFOS.addField("meta_lb", DBType.BIGINT);
 
-  public static final IDBField PACKAGES_DYNAMIC = //
-  PACKAGES.addField("dynamic", DBType.BOOLEAN);
+  public static final IDBField PACKAGE_INFOS_META_UB = //
+  PACKAGE_INFOS.addField("meta_ub", DBType.BIGINT);
 
-  public static final IDBField PACKAGES_RANGE_LB = //
-  PACKAGES.addField("range_lb", DBType.BIGINT);
+  public static final IDBIndex INDEX_PACKAGE_INFOS_PK = //
+  PACKAGE_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_INFOS_URI);
 
-  public static final IDBField PACKAGES_RANGE_UB = //
-  PACKAGES.addField("range_ub", DBType.BIGINT);
+  public static final IDBIndex INDEX_PACKAGE_INFOS_PARENT = //
+  PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_PARENT);
 
-  public static final IDBField PACKAGES_PARENT = //
-  PACKAGES.addField("parent", DBType.VARCHAR, 255);
-
-  public static final IDBIndex INDEX_PACKAGES_PK = //
-  PACKAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGES_ID);
-
-  public static final IDBIndex INDEX_PACKAGES_URI = //
-  PACKAGES.addIndex(IDBIndex.Type.UNIQUE, PACKAGES_URI);
-
-  public static final IDBIndex INDEX_PACKAGES_PARENT = //
-  PACKAGES.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGES_PARENT);
-
-  /**
-   * DBTable cdo_classes
-   */
-  public static final IDBTable CLASSES = INSTANCE.addTable("cdo_classes");
-
-  public static final IDBField CLASSES_ID = //
-  CLASSES.addField("id", DBType.INTEGER);
-
-  public static final IDBField CLASSES_PACKAGE = //
-  CLASSES.addField("package", DBType.INTEGER);
-
-  public static final IDBField CLASSES_CLASSIFIER = //
-  CLASSES.addField("classifier", DBType.INTEGER);
-
-  public static final IDBField CLASSES_NAME = //
-  CLASSES.addField("name", DBType.VARCHAR, 255);
-
-  public static final IDBField CLASSES_ABSTRACT = //
-  CLASSES.addField("abstract", DBType.BOOLEAN);
-
-  public static final IDBIndex INDEX_CLASSES_PK = //
-  CLASSES.addIndex(IDBIndex.Type.PRIMARY_KEY, CLASSES_ID);
-
-  public static final IDBIndex INDEX_CLASSES_PACKAGE = //
-  CLASSES.addIndex(IDBIndex.Type.NON_UNIQUE, CLASSES_PACKAGE);
-
-  /**
-   * DBTable cdo_supertypes
-   */
-  public static final IDBTable SUPERTYPES = INSTANCE.addTable("cdo_supertypes");
-
-  public static final IDBField SUPERTYPES_TYPE = //
-  SUPERTYPES.addField("type_id", DBType.INTEGER);
-
-  public static final IDBField SUPERTYPES_SUPERTYPE_PACKAGE = //
-  SUPERTYPES.addField("supertype_package", DBType.VARCHAR, 255);
-
-  public static final IDBField SUPERTYPES_SUPERTYPE_CLASSIFIER = //
-  SUPERTYPES.addField("supertype_classifier", DBType.INTEGER);
-
-  public static final IDBIndex INDEX_SUPERTYPES_PK = //
-  SUPERTYPES.addIndex(IDBIndex.Type.PRIMARY_KEY, SUPERTYPES_TYPE);
-
-  /**
-   * DBTable cdo_features
-   */
-  public static final IDBTable FEATURES = INSTANCE.addTable("cdo_features");
-
-  public static final IDBField FEATURES_ID = //
-  FEATURES.addField("id", DBType.INTEGER);
-
-  public static final IDBField FEATURES_CLASS = //
-  FEATURES.addField("class", DBType.INTEGER);
-
-  public static final IDBField FEATURES_FEATURE = //
-  FEATURES.addField("feature", DBType.INTEGER);
-
-  public static final IDBField FEATURES_NAME = //
-  FEATURES.addField("name", DBType.VARCHAR, 255);
-
-  public static final IDBField FEATURES_TYPE = //
-  FEATURES.addField("type", DBType.INTEGER);
-
-  public static final IDBField FEATURES_REFERENCE_PACKAGE = //
-  FEATURES.addField("reference_package", DBType.VARCHAR, 255);
-
-  public static final IDBField FEATURES_REFERENCE_CLASSIFIER = //
-  FEATURES.addField("reference_classifier", DBType.INTEGER);
-
-  public static final IDBField FEATURES_MANY = //
-  FEATURES.addField("many", DBType.BOOLEAN);
-
-  public static final IDBField FEATURES_CONTAINMENT = //
-  FEATURES.addField("containment", DBType.BOOLEAN);
-
-  public static final IDBField FEATURES_INDEX = //
-  FEATURES.addField("idx", DBType.INTEGER);
-
-  public static final IDBIndex INDEX_FEATURES_PK = //
-  FEATURES.addIndex(IDBIndex.Type.PRIMARY_KEY, FEATURES_ID);
-
-  public static final IDBIndex INDEX_FEATURES_CLASS = //
-  FEATURES.addIndex(IDBIndex.Type.NON_UNIQUE, FEATURES_CLASS);
+  public static final IDBIndex INDEX_PACKAGE_INFOS_UNIT = //
+  PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_UNIT);
 
   /**
    * Name of object table

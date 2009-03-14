@@ -44,16 +44,15 @@ Export-Package: base;version="2.0.0",
  org.eclipse.emf.cdo.tests.config;version="2.0.0",
  org.eclipse.emf.cdo.tests.config.impl;version="2.0.0",
  org.eclipse.emf.cdo.tests.defs;version="2.0.0",
- org.eclipse.emf.cdo.tests.store.logic;version="2.0.0",
  org.eclipse.net4j.tests;version="2.0.0",
  reference;version="2.0.0",
  reference.impl;version="2.0.0",
  reference.util;version="2.0.0"
-Import-Package: org.apache.commons.collections;version="[3.2.0,4.0.0)",
+Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.1.0,6.0.0)",
+ org.apache.commons.collections;version="[3.2.0,4.0.0)",
  org.apache.commons.logging;version="[1.1.0,2.0.0)",
  org.apache.derby.jdbc,
  org.dom4j;version="[1.6.0,2.0.0)",
  org.hsqldb;version="[1.8.0,2.0.0)",
- org.hsqldb.jdbc;version="[1.8.0,2.0.0)",
- com.mysql.jdbc.jdbc2.optional;version="5.1.6"
+ org.hsqldb.jdbc;version="[1.8.0,2.0.0)"
 Eclipse-BuddyPolicy: dependent

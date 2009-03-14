@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.emf.internal.cdo.session.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -51,10 +50,10 @@ public class CDONet4jSessionFactory extends CDOSessionFactory
     // The session will be activated by the container
     configuration.setActivateOnOpen(false);
     configuration.setRepositoryName(repositoryName);
-    if (automaticPackageRegistry)
-    {
-      configuration.setPackageRegistry(new CDOPackageRegistryImpl.Eager());
-    }
+    // if (automaticPackageRegistry)
+    // {
+    // configuration.setPackageRegistry(new CDOPackageRegistryImpl.Eager());
+    // }
 
     return (InternalCDOSession)configuration.openSession();
   }

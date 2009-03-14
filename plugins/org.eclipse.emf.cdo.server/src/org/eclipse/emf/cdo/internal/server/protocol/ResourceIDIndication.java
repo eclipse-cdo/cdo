@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 public class ResourceIDIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResourceIDIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResourceIDIndication.class);
 
   private CDOID id;
 
@@ -39,15 +39,15 @@ public class ResourceIDIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read viewID: {0}", viewID);
+      TRACER.format("Read viewID: {0}", viewID);
     }
 
     String path = in.readString();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read path: {0}", path);
+      TRACER.format("Read path: {0}", path);
     }
 
     IView view = getSession().getView(viewID);
@@ -57,9 +57,9 @@ public class ResourceIDIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing ID: {0}", id);
+      TRACER.format("Writing ID: {0}", id);
     }
 
     out.writeCDOID(id);

@@ -54,4 +54,4 @@ public interface EDynamicPackageDef extends EPackageDef
    */
   void setResourceURI(String value);
 
-} // DynamicCDOPackageDef
+} // DynamicEPackageDef

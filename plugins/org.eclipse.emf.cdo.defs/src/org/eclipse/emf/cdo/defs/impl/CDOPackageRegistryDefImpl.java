@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -202,7 +201,9 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
    */
   protected Object createInstance()
   {
-    return addPackages(new EPackageRegistryImpl());
+    // TODO: implement CDOPackageRegistryDefImpl.createInstance()
+    throw new UnsupportedOperationException();
+    // return addPackages(new CDOPackageRegistryImpl());
   }
 
   /**

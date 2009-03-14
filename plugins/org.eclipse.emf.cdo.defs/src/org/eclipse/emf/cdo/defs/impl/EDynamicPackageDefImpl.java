@@ -201,4 +201,4 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
     CheckUtil.checkState(eIsSet(CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI), "resource uri not set!");
   }
 
-} // DynamicCDOPackageDefImpl
+} // DynamicEPackageDefImpl

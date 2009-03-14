@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
-import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
@@ -41,7 +40,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Uses the ecore string in the cdoPackages of the store to generate a mapping.
+ * Uses the ecore string in the ePackages of the store to generate a mapping.
  * 
  * @author Martin Taal
  * @author Eike Stepper
@@ -101,14 +100,14 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     rs.getPackageRegistry().put(XMLTypePackage.eNS_URI, XMLTypePackage.eINSTANCE);
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new EcoreResourceFactoryImpl());
 
-    for (CDOPackage cdoPackage : getHibernateStore().getPackageHandler().getCDOPackages())
+    for (EPackage ePackage : getHibernateStore().getPackageHandler().getEPackages())
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Using cdoPackage : " + cdoPackage.getName() + " - " + cdoPackage.getPackageURI());
+        TRACER.trace("Using ePackage : " + ePackage.getName() + " - " + ePackage.getNsURI());
       }
 
-      final String ecoreStr = cdoPackage.getEcore();
+      final String ecoreStr = ePackage.getEcore();
       if (ecoreStr == null)
       {
         // happens at initialization time
@@ -119,7 +118,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
       final ByteArrayInputStream bis = new ByteArrayInputStream(ecoreStr.getBytes());
 
       // fool the resourceset by passing a fake uri
-      final URI epackageURI = URI.createURI(cdoPackage.getPackageURI());
+      final URI epackageURI = URI.createURI(ePackage.getNsURI());
       final Resource resource = rs.createResource(epackageURI);
       try
       {

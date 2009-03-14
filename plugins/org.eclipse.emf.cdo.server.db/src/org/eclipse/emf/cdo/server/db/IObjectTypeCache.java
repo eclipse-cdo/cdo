@@ -11,8 +11,9 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+
+import org.eclipse.emf.ecore.EClass;
 
 /**
  * @author Eike Stepper
@@ -22,12 +23,12 @@ public interface IObjectTypeCache
   /**
    * @since 2.0
    */
-  public CDOClassRef getObjectType(IDBStoreAccessor accessor, CDOID id);
+  public CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id);
 
   /**
    * @since 2.0
    */
-  public void putObjectType(IDBStoreAccessor accessor, CDOID id, CDOClass type);
+  public void putObjectType(IDBStoreAccessor accessor, CDOID id, EClass type);
 
   /**
    * @since 2.0

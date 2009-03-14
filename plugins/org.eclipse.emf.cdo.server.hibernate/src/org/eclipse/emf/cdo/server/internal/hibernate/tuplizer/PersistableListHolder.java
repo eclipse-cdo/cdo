@@ -11,11 +11,12 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.collection.PersistentCollection;
 
@@ -40,20 +41,20 @@ public class PersistableListHolder
   {
   }
 
-  public void putListMapping(Object target, CDOFeature cdoFeature, PersistentCollection collection)
+  public void putListMapping(Object target, EStructuralFeature feature, PersistentCollection collection)
   {
-    Key key = new Key(target, cdoFeature);
+    Key key = new Key(target, feature);
     getListMapping().put(key, collection);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Stored hb list in threadlocal: " + ((CDORevision)target).getCDOClass().getName() + "."
-          + cdoFeature.getName());
+      TRACER.trace("Stored hb list in threadlocal: " + ((CDORevision)target).getEClass().getName() + "."
+          + feature.getName());
     }
   }
 
-  public PersistentCollection getListMapping(Object target, CDOFeature cdoFeature)
+  public PersistentCollection getListMapping(Object target, EStructuralFeature feature)
   {
-    Key key = new Key(target, cdoFeature);
+    Key key = new Key(target, feature);
     return getListMapping().get(key);
   }
 
@@ -86,12 +87,12 @@ public class PersistableListHolder
   {
     private Object owner;
 
-    private CDOFeature cdoFeature;
+    private EStructuralFeature feature;
 
-    public Key(Object owner, CDOFeature cdoFeature)
+    public Key(Object owner, EStructuralFeature feature)
     {
       this.owner = owner;
-      this.cdoFeature = cdoFeature;
+      this.feature = feature;
     }
 
     @Override
@@ -103,15 +104,15 @@ public class PersistableListHolder
       }
 
       Key otherKey = (Key)obj;
-      // the owner is uniquely present in mem, the same applies for the cdoFeature
+      // the owner is uniquely present in mem, the same applies for the feature
       // therefore == is allowed
-      return owner == otherKey.owner && cdoFeature == otherKey.cdoFeature;
+      return owner == otherKey.owner && feature == otherKey.feature;
     }
 
     @Override
     public int hashCode()
     {
-      return owner.hashCode() + cdoFeature.hashCode();
+      return owner.hashCode() + feature.hashCode();
     }
   }
 }

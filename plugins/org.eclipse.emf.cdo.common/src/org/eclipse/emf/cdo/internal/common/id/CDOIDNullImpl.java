@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.id;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -89,5 +90,12 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
   public String toString()
   {
     return "NULL";
+  }
+
+  @Override
+  protected int doCompareTo(CDOID o) throws ClassCastException
+  {
+    ((CDOIDNullImpl)o).getIntValue(); // Possibly throw ClassCastException
+    return 0; // NULL == NULL
   }
 }

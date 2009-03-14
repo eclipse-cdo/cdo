@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
+import org.eclipse.emf.ecore.EPackage;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandlerProvider
+public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
 {
   public String getName();
 
@@ -45,7 +47,14 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
 
   public boolean isVerifyingRevisions();
 
-  public IPackageManager getPackageManager();
+  /**
+   * Returns the EMF {@link EPackage.Registry package registry} that is used by this repository.
+   * <p>
+   * This registry is managed by the {@link CDOPackageUnitManager package manager} of this repository.
+   * 
+   * @see #getPackageUnitManager()
+   */
+  public CDOPackageRegistry getPackageRegistry();
 
   public ISessionManager getSessionManager();
 
@@ -60,10 +69,6 @@ public interface IRepository extends IContainer<IRepositoryElement>, IQueryHandl
    * @since 2.0
    */
   public IQueryHandlerProvider getQueryHandlerProvider();
-
-  public long getLastMetaID();
-
-  public CDOIDMetaRange getMetaIDRange(int count);
 
   /**
    * Returns the repository creation time.

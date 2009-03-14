@@ -27,8 +27,7 @@ import java.io.IOException;
  */
 public class ChangeSubscriptionIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      ChangeSubscriptionIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeSubscriptionIndication.class);
 
   public ChangeSubscriptionIndication(CDOServerProtocol protocol)
   {
@@ -52,9 +51,9 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
     View view = (View)getSession().getView(viewID);
     if (clear)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.trace("Clear subscription");
+        TRACER.trace("Clear subscription");
       }
 
       view.clearChangeSubscription();

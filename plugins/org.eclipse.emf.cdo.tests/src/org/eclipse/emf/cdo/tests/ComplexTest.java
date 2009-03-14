@@ -43,14 +43,12 @@ import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.SingleContainedElement;
 import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
-import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink;
 import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.INamedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
 import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement;
-import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -84,8 +82,8 @@ public class ComplexTest extends AbstractCDOTest
     factory = getModel4Factory();
 
     session = openSession();
-    session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);
-    session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
+    session.getPackageRegistry().putEPackage(getModel4Package());
 
     transaction = session.openTransaction();
 
@@ -119,8 +117,8 @@ public class ComplexTest extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     session = openSession();
-    session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);
-    session.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
+    session.getPackageRegistry().putEPackage(getModel4Package());
 
     transaction = session.openTransaction();
 

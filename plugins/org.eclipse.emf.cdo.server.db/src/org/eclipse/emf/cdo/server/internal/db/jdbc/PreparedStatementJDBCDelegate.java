@@ -7,15 +7,15 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402    
  */
 package org.eclipse.emf.cdo.server.internal.db.jdbc;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.db.IAttributeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IAttributeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.ServerInfo;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -90,90 +90,14 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
 
   private CachingEnablement cachingEnablement;
 
+  /**
+   * This statement is used for unprepared batched statements like in
+   * {@link #doUpdateAttributes(String, long, int, long, List, boolean)}
+   */
+  private Statement miscStatement = null;
+
   public PreparedStatementJDBCDelegate()
   {
-  }
-
-  public CachingEnablement getCachingEnablement()
-  {
-    return cachingEnablement;
-  }
-
-  public void setCachingEnablement(CachingEnablement cachingEnablement)
-  {
-    checkInactive();
-    this.cachingEnablement = cachingEnablement;
-  }
-
-  public void flush(OMMonitor monitor)
-  {
-    try
-    {
-      monitor.begin(dirtyStatements.size());
-      for (Entry<CacheKey, PreparedStatement> entry : dirtyStatements.entrySet())
-      {
-        try
-        {
-          int[] results;
-          Async async = monitor.forkAsync();
-
-          try
-          {
-            results = entry.getValue().executeBatch();
-          }
-          finally
-          {
-            async.stop();
-          }
-
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Executing batch for {0} [{1}]", entry.getKey().toString(), entry.getValue());
-          }
-
-          for (int result : results)
-          {
-            checkState(entry.getKey().getElement1() != StmtType.DELETE_REFERENCES && result == 1,
-                "Batch execution did not return '1' for " + entry.getKey().toString());
-          }
-        }
-        catch (SQLException ex)
-        {
-          throw new DBException("Batch execution failed for " + entry.getKey().toString() + " [" + entry.getValue()
-              + "]", ex);
-        }
-      }
-    }
-    finally
-    {
-      if (!cacheStatements)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Closing prepared statements.");
-        }
-
-        for (PreparedStatement ps : dirtyStatements.values())
-        {
-          DBUtil.close(ps);
-        }
-      }
-      else
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Re-caching prepared statements.");
-        }
-
-        for (Entry<CacheKey, PreparedStatement> entry : dirtyStatements.entrySet())
-        {
-          cacheStatement(entry.getKey(), entry.getValue());
-        }
-      }
-
-      dirtyStatements.clear();
-      monitor.done();
-    }
   }
 
   @Override
@@ -238,27 +162,121 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     super.doBeforeDeactivate();
   }
 
-  /**
-   * Implementation of the hook which is called after selects.
-   */
-  @Override
-  protected void releaseStatement(Statement stmt)
+  public CachingEnablement getCachingEnablement()
   {
-    // leave open cached statements
-    if (!cacheStatements || !(stmt instanceof PreparedStatement))
-    {
-      super.releaseStatement(stmt);
-    }
+    return cachingEnablement;
+  }
 
-    // /* This code would guarantee that releaseStatement is only called
-    // for cached statements. However this looks through the whole hashmap
-    // and is thus too expensive to do in non-debugging mode. */
-    //
-    // else {
-    // if(!selectStatementsCache.containsValue(stmt)) {
-    // super.releaseStatement(stmt);
-    // }
-    // }
+  public void setCachingEnablement(CachingEnablement cachingEnablement)
+  {
+    checkInactive();
+    this.cachingEnablement = cachingEnablement;
+  }
+
+  public void flush(OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(dirtyStatements.size() + 1);
+
+      if (miscStatement != null)
+      {
+        Async async = monitor.forkAsync();
+        try
+        {
+          int[] results = miscStatement.executeBatch();
+          for (int result : results)
+          {
+            checkState(result == 1, "Batch of misc statements did not return '1'");
+          }
+        }
+        catch (SQLException ex)
+        {
+          throw new DBException("Batch execution failed for misc statement.", ex);
+        }
+        finally
+        {
+          try
+          {
+            miscStatement.close();
+          }
+          catch (SQLException ex)
+          {
+            // eat up ...
+          }
+          miscStatement = null;
+          async.stop();
+        }
+      }
+
+      for (Entry<CacheKey, PreparedStatement> entry : dirtyStatements.entrySet())
+      {
+        try
+        {
+          int[] results;
+          Async async = monitor.forkAsync();
+
+          try
+          {
+            results = entry.getValue().executeBatch();
+          }
+          finally
+          {
+            async.stop();
+          }
+
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Executing batch for {0} [{1}]", entry.getKey().toString(), entry.getValue());
+          }
+
+          for (int result : results)
+          {
+            if (entry.getKey().getElement1() != StmtType.DELETE_REFERENCES
+                && entry.getKey().getElement1() != StmtType.UPDATE_REFERENCE_VERSION)
+            {
+              checkState(result == 1, "Batch execution did not return '1' for " + entry.getKey().toString());
+            }
+          }
+        }
+        catch (SQLException ex)
+        {
+          throw new DBException("Batch execution failed for " + entry.getKey().toString() + " [" + entry.getValue()
+              + "]", ex);
+        }
+      }
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Closing prepared statements.");
+        }
+
+        for (PreparedStatement ps : dirtyStatements.values())
+        {
+          DBUtil.close(ps);
+        }
+      }
+      else
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Re-caching prepared statements.");
+        }
+
+        for (Entry<CacheKey, PreparedStatement> entry : dirtyStatements.entrySet())
+        {
+          cacheStatement(entry.getKey(), entry.getValue());
+        }
+      }
+
+      dirtyStatements.clear();
+
+      monitor.done();
+    }
   }
 
   @Override
@@ -314,7 +332,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
       stmt.setInt(col++, revision.getVersion());
       if (withFullRevisionInfo)
       {
-        stmt.setInt(col++, ServerInfo.getDBID(revision.getCDOClass()));
+        stmt.setLong(col++, getStoreAccessor().getStore().getMetaID(revision.getEClass()));
         stmt.setLong(col++, revision.getCreated());
         stmt.setLong(col++, revision.getRevised());
         stmt.setLong(col++, CDOIDUtil.getLong(revision.getResourceID()));
@@ -355,256 +373,119 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
-  protected void doUpdateAttributes(String tableName, CDORevision rev, List<IAttributeMapping> attributeMappings,
-      boolean withFullRevisionInfo)
+  protected void doUpdateAttributes(String tableName, long cdoid, int newVersion, long created,
+      List<Pair<IAttributeMapping, Object>> attributeChanges, boolean hasFullRevisionInfo)
   {
-    boolean firstBatch = false;
+    StringBuilder builder = new StringBuilder();
+    builder.append("UPDATE ");
+    builder.append(tableName);
+    builder.append(" SET ");
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(" = ");
+    builder.append(newVersion);
+    builder.append(", ");
+    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(" = ");
+    builder.append(created);
 
-    InternalCDORevision revision = (InternalCDORevision)rev;
-    if (attributeMappings == null)
+    for (Pair<IAttributeMapping, Object> attributeChange : attributeChanges)
     {
-      attributeMappings = Collections.emptyList();
+      IAttributeMapping attributeMapping = attributeChange.getElement1();
+      builder.append(", ");
+      builder.append(attributeMapping.getField());
+      builder.append(" = ");
+      attributeMapping.appendValue(builder, attributeChange.getElement2());
     }
 
-    PreparedStatement stmt = getDirtyStatement(StmtType.UPDATE_ATTRIBUTES, tableName);
-    if (stmt == null && cacheStatements)
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" = ");
+    builder.append(cdoid);
+
+    String sql = builder.toString();
+
+    if (TRACER.isEnabled())
     {
-      firstBatch = true;
-      stmt = getAndRemoveCachedStatement(StmtType.UPDATE_ATTRIBUTES, tableName);
+      TRACER.trace("Batching misc statement:" + sql);
     }
 
     try
     {
-      firstBatch = true;
-      if (stmt == null)
+      if (miscStatement == null)
       {
-        StringBuilder sql = new StringBuilder();
-
-        sql.append("UPDATE ");
-        sql.append(tableName);
-        sql.append(" SET ");
-        sql.append(CDODBSchema.ATTRIBUTES_VERSION);
-        sql.append(" = ? ");
-        if (withFullRevisionInfo)
-        {
-          sql.append(", ");
-          sql.append(CDODBSchema.ATTRIBUTES_RESOURCE);
-          sql.append(" = ?,");
-          sql.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-          sql.append(" = ?,");
-          sql.append(CDODBSchema.ATTRIBUTES_FEATURE);
-          sql.append(" = ?");
-        }
-
-        for (IAttributeMapping attributeMapping : attributeMappings)
-        {
-          sql.append(", ");
-          sql.append(attributeMapping.getField());
-          sql.append(" = ?");
-        }
-
-        sql.append(" WHERE ");
-        sql.append(CDODBSchema.ATTRIBUTES_ID);
-        sql.append(" = ? ");
-
-        stmt = getConnection().prepareStatement(sql.toString());
+        miscStatement = getConnection().createStatement();
       }
-
-      int col = 1;
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(stmt.toString());
-      }
-
-      stmt.setInt(col++, revision.getVersion());
-      if (withFullRevisionInfo)
-      {
-        stmt.setLong(col++, CDOIDUtil.getLong(revision.getResourceID()));
-        stmt.setLong(col++, CDOIDUtil.getLong((CDOID)revision.getContainerID()));
-        stmt.setInt(col++, revision.getContainingFeatureID());
-      }
-
-      for (IAttributeMapping attributeMapping : attributeMappings)
-      {
-        Object value = attributeMapping.getRevisionValue(revision);
-        if (value == null)
-        {
-          stmt.setNull(col++, attributeMapping.getField().getType().getCode());
-        }
-        else
-        {
-          stmt.setObject(col++, value);
-        }
-      }
-
-      stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
-      if (firstBatch)
-      {
-        addDirtyStatement(StmtType.UPDATE_ATTRIBUTES, tableName, stmt);
-      }
-
-      stmt.addBatch();
+      miscStatement.addBatch(sql);
     }
-    catch (SQLException e)
+    catch (SQLException ex)
     {
-      throw new DBException(e);
+      throw new DBException(ex);
     }
   }
 
   @Override
-  protected void doDeleteAttributes(String tableName, long cdoid)
+  protected void doUpdateAttributes(String tableName, long cdoid, int newVersion, long created, long newContainerId,
+      int newContainingFeatureId, long newResourceId, List<Pair<IAttributeMapping, Object>> attributeChanges,
+      boolean hasFullRevisionInfo)
   {
-    PreparedStatement stmt = null;
-    if (cacheStatements)
+    StringBuilder builder = new StringBuilder();
+    builder.append("UPDATE ");
+    builder.append(tableName);
+    builder.append(" SET ");
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(" = ");
+    builder.append(newVersion);
+    builder.append(", ");
+    builder.append(CDODBSchema.ATTRIBUTES_CREATED);
+    builder.append(" = ");
+    builder.append(created);
+    builder.append(", ");
+    builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
+    builder.append(" = ");
+    builder.append(newContainerId);
+
+    builder.append(", ");
+    builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
+    builder.append(" = ");
+    builder.append(newContainingFeatureId);
+
+    builder.append(", ");
+    builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
+    builder.append(" = ");
+    builder.append(newResourceId);
+
+    for (Pair<IAttributeMapping, Object> attributeChange : attributeChanges)
     {
-      stmt = getCachedStatement(StmtType.DELETE_ATTRIBUTES, tableName);
+      IAttributeMapping attributeMapping = attributeChange.getElement1();
+      builder.append(", ");
+      builder.append(attributeMapping.getField());
+      builder.append(" = ");
+      attributeMapping.appendValue(builder, attributeChange.getElement2());
+    }
+
+    builder.append(" WHERE ");
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(" = ");
+    builder.append(cdoid);
+
+    String sql = builder.toString();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(sql);
     }
 
     try
     {
-      if (stmt == null)
+      if (miscStatement == null)
       {
-        StringBuilder sql = new StringBuilder("DELETE FROM ");
-        sql.append(tableName);
-        sql.append(" WHERE ");
-        sql.append(CDODBSchema.ATTRIBUTES_ID);
-        sql.append(" = ? ");
-
-        stmt = getConnection().prepareStatement(sql.toString());
-        if (cacheStatements)
-        {
-          cacheStatement(StmtType.DELETE_ATTRIBUTES, tableName, stmt);
-        }
+        miscStatement = getConnection().createStatement();
       }
-
-      stmt.setLong(1, cdoid);
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(stmt.toString());
-      }
-
-      stmt.execute();
+      miscStatement.addBatch(sql);
     }
-    catch (SQLException e)
+    catch (SQLException ex)
     {
-      throw new DBException(e);
-    }
-    finally
-    {
-      if (!cacheStatements)
-      {
-        DBUtil.close(stmt);
-      }
-    }
-  }
-
-  @Override
-  protected void doInsertReference(String tableName, int dbID, long source, int version, int index, long target)
-  {
-    boolean firstBatch = false;
-
-    PreparedStatement stmt = getDirtyStatement(StmtType.INSERT_REFERENCES, tableName);
-    if (stmt == null && cacheStatements)
-    {
-      firstBatch = true;
-      stmt = getAndRemoveCachedStatement(StmtType.INSERT_REFERENCES, tableName);
-    }
-
-    try
-    {
-      if (stmt == null)
-      {
-        firstBatch = true;
-        StringBuilder sql = new StringBuilder("INSERT INTO ");
-        sql.append(tableName);
-        sql.append(dbID != 0 ? SQL_INSERT_REFERENCE_WITH_DBID : SQL_INSERT_REFERENCE);
-        stmt = getConnection().prepareStatement(sql.toString());
-      }
-
-      int idx = 1;
-      if (dbID != 0)
-      {
-        stmt.setInt(idx++, dbID);
-      }
-
-      stmt.setLong(idx++, source);
-      stmt.setInt(idx++, version);
-      stmt.setInt(idx++, index);
-      stmt.setLong(idx++, target);
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(stmt.toString());
-      }
-
-      if (firstBatch)
-      {
-        addDirtyStatement(StmtType.INSERT_REFERENCES, tableName, stmt);
-      }
-
-      stmt.addBatch();
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
-  }
-
-  @Override
-  protected void doDeleteReferences(String tableName, int dbId, long cdoid)
-  {
-    PreparedStatement stmt = null;
-    if (cacheStatements)
-    {
-      stmt = getCachedStatement(StmtType.DELETE_REFERENCES, tableName);
-    }
-
-    try
-    {
-      if (stmt == null)
-      {
-        StringBuilder sql = new StringBuilder("DELETE FROM ");
-        sql.append(tableName);
-        sql.append(" WHERE ");
-        sql.append(CDODBSchema.REFERENCES_SOURCE);
-        sql.append(" = ? ");
-
-        if (dbId != 0)
-        {
-          sql.append("AND");
-          sql.append(CDODBSchema.REFERENCES_FEATURE);
-          sql.append(" = ? ");
-        }
-
-        stmt = getConnection().prepareStatement(sql.toString());
-        if (cacheStatements)
-        {
-          cacheStatement(StmtType.DELETE_REFERENCES, tableName, stmt);
-        }
-      }
-
-      stmt.setLong(1, cdoid);
-      if (dbId != 0)
-      {
-        stmt.setInt(2, dbId);
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(stmt.toString());
-      }
-
-      stmt.execute();
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
-    finally
-    {
-      if (!cacheStatements)
-      {
-        DBUtil.close(stmt);
-      }
+      throw new DBException(ex);
     }
   }
 
@@ -701,6 +582,355 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     }
   }
 
+  /*
+   * This has been the preparedStatement version of updateAttributes. Does not make sense now, as amount of attributes
+   * is variable. Preparing for any number of attributes is not very intelligent ...
+   * @Override protected void doUpdateAllAttributes(String tableName, long cdoid, int version, long created,
+   * List<Pair<IAttributeMapping, Object>> attributeChanges, boolean withFullRevisionInfo) { boolean firstBatch = false;
+   * PreparedStatement stmt = getDirtyStatement(StmtType.UPDATE_ATTRIBUTES, tableName); if (stmt == null &&
+   * cacheStatements) { firstBatch = true; stmt = getAndRemoveCachedStatement(StmtType.UPDATE_ATTRIBUTES, tableName); }
+   * try { firstBatch = true; if (stmt == null) { StringBuilder sql = new StringBuilder(); sql.append("UPDATE ");
+   * sql.append(tableName); sql.append(" SET "); sql.append(CDODBSchema.ATTRIBUTES_VERSION); sql.append(" = ? "); if
+   * (withFullRevisionInfo) { sql.append(", "); sql.append(CDODBSchema.ATTRIBUTES_RESOURCE); sql.append(" = ?,");
+   * sql.append(CDODBSchema.ATTRIBUTES_CONTAINER); sql.append(" = ?,"); sql.append(CDODBSchema.ATTRIBUTES_FEATURE);
+   * sql.append(" = ?"); } for (IAttributeMapping attributeMapping : attributeMappings) { sql.append(", ");
+   * sql.append(attributeMapping.getField()); sql.append(" = ?"); } sql.append(" WHERE ");
+   * sql.append(CDODBSchema.ATTRIBUTES_ID); sql.append(" = ? "); stmt =
+   * getConnection().prepareStatement(sql.toString()); } int col = 1; if (TRACER.isEnabled()) {
+   * TRACER.trace(stmt.toString()); } stmt.setInt(col++, revision.getVersion()); if (withFullRevisionInfo) {
+   * stmt.setLong(col++, CDOIDUtil.getLong(revision.getResourceID())); stmt.setLong(col++,
+   * CDOIDUtil.getLong((CDOID)revision.getContainerID())); stmt.setInt(col++, revision.getContainingFeatureID()); } for
+   * (IAttributeMapping attributeMapping : attributeMappings) { Object value =
+   * attributeMapping.getRevisionValue(revision); if (value == null) { stmt.setNull(col++,
+   * attributeMapping.getField().getType().getCode()); } else { stmt.setObject(col++, value); } } stmt.setLong(col++,
+   * CDOIDUtil.getLong(revision.getID())); if (firstBatch) { addDirtyStatement(StmtType.UPDATE_ATTRIBUTES, tableName,
+   * stmt); } stmt.addBatch(); } catch (SQLException e) { throw new DBException(e); } }
+   */
+
+  @Override
+  protected void doDeleteAttributes(String tableName, long cdoid)
+  {
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.DELETE_ATTRIBUTES, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("DELETE FROM ");
+        sql.append(tableName);
+        sql.append(" WHERE ");
+        sql.append(CDODBSchema.ATTRIBUTES_ID);
+        sql.append(" = ? ");
+
+        stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.DELETE_ATTRIBUTES, tableName, stmt);
+        }
+      }
+
+      stmt.setLong(1, cdoid);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  @Override
+  protected void doInsertReference(String tableName, long dbID, long source, int version, int index, long target)
+  {
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.INSERT_REFERENCES, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("INSERT INTO ");
+        sql.append(tableName);
+        sql.append(dbID != 0 ? SQL_INSERT_REFERENCE_WITH_DBID : SQL_INSERT_REFERENCE);
+        stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.INSERT_REFERENCES, tableName, stmt);
+        }
+      }
+
+      int idx = 1;
+      if (dbID != 0)
+      {
+        stmt.setLong(idx++, dbID);
+      }
+
+      stmt.setLong(idx++, source);
+      stmt.setInt(idx++, version);
+      stmt.setInt(idx++, index);
+      stmt.setLong(idx++, target);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  @Override
+  protected void doInsertReferenceRow(String tableName, long metaID, long cdoid, int newVersion, long target, int index)
+  {
+    move1up(tableName, metaID, cdoid, newVersion, index);
+    doInsertReference(tableName, metaID, cdoid, newVersion, index, target);
+  }
+
+  @Override
+  protected void doMoveReferenceRow(String tableName, long metaID, long cdoid, int newVersion, int oldPosition,
+      int newPosition)
+  {
+    if (oldPosition == newPosition)
+    {
+      return;
+    }
+
+    // move element away temporarily
+    updateOneIndex(tableName, metaID, cdoid, newVersion, oldPosition, -1);
+
+    // move elements in between
+    if (oldPosition < newPosition)
+    {
+      move1down(tableName, metaID, cdoid, newVersion, oldPosition, newPosition);
+    }
+    else
+    {
+      // oldPosition > newPosition -- equal case is handled above
+      move1up(tableName, metaID, cdoid, newVersion, newPosition, oldPosition);
+    }
+
+    // move temporary element to new position
+    updateOneIndex(tableName, metaID, cdoid, newVersion, -1, newPosition);
+
+  }
+
+  @Override
+  protected void doRemoveReferenceRow(String tableName, long metaID, long cdoid, int index, int newVersion)
+  {
+    deleteReferenceRow(tableName, metaID, cdoid, index);
+    move1down(tableName, metaID, cdoid, newVersion, index);
+  }
+
+  @Override
+  protected void doUpdateReference(String tableName, long metaID, long sourceId, int newVersion, int index,
+      long targetId)
+  {
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.UPDATE_REFERENCE, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder builder = new StringBuilder("UPDATE ");
+        builder.append(tableName);
+        builder.append(" SET ");
+        builder.append(CDODBSchema.REFERENCES_TARGET);
+        builder.append(" = ?, ");
+        builder.append(CDODBSchema.REFERENCES_VERSION);
+        builder.append(" = ? WHERE ");
+        if (metaID != 0)
+        {
+          builder.append(CDODBSchema.REFERENCES_FEATURE);
+          builder.append("= ? AND ");
+        }
+
+        builder.append(CDODBSchema.REFERENCES_SOURCE);
+        builder.append("= ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" = ?");
+
+        stmt = getConnection().prepareStatement(builder.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.UPDATE_REFERENCE, tableName, stmt);
+        }
+      }
+
+      int idx = 1;
+      stmt.setLong(idx++, targetId);
+      stmt.setInt(idx++, newVersion);
+
+      if (metaID != 0)
+      {
+        stmt.setLong(idx++, metaID);
+      }
+
+      stmt.setLong(idx++, sourceId);
+      stmt.setLong(idx++, index);
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  @Override
+  protected void doUpdateReferenceVersion(String tableName, long cdoid, int newVersion)
+  {
+    boolean firstBatch = false;
+
+    PreparedStatement stmt = getDirtyStatement(StmtType.UPDATE_REFERENCE_VERSION, tableName);
+    if (stmt == null && cacheStatements)
+    {
+      firstBatch = true;
+      stmt = getAndRemoveCachedStatement(StmtType.UPDATE_REFERENCE_VERSION, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        firstBatch = true;
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE ");
+        sql.append(tableName);
+        sql.append(" SET ");
+        sql.append(CDODBSchema.REFERENCES_VERSION);
+        sql.append(" = ? ");
+        sql.append(" WHERE ");
+        sql.append(CDODBSchema.REFERENCES_SOURCE);
+        sql.append(" = ?");
+
+        stmt = getConnection().prepareStatement(sql.toString());
+      }
+
+      stmt.setInt(1, newVersion);
+      stmt.setLong(2, cdoid);
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      if (firstBatch)
+      {
+        addDirtyStatement(StmtType.UPDATE_REFERENCE_VERSION, tableName, stmt);
+      }
+
+      stmt.addBatch();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+  }
+
+  @Override
+  protected void doDeleteReferences(String tableName, long metaID, long cdoid)
+  {
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.DELETE_REFERENCES, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("DELETE FROM ");
+        sql.append(tableName);
+        sql.append(" WHERE ");
+        sql.append(CDODBSchema.REFERENCES_SOURCE);
+        sql.append(" = ? ");
+
+        if (metaID != 0)
+        {
+          sql.append("AND");
+          sql.append(CDODBSchema.REFERENCES_FEATURE);
+          sql.append(" = ? ");
+        }
+
+        stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.DELETE_REFERENCES, tableName, stmt);
+        }
+      }
+
+      stmt.setLong(1, cdoid);
+      if (metaID != 0)
+      {
+        stmt.setLong(2, metaID);
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
   @Override
   protected ResultSet doSelectRevisionAttributes(String tableName, long revisionId,
       List<IAttributeMapping> attributeMappings, boolean hasFullRevisionInfo, String where) throws SQLException
@@ -767,8 +997,8 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
   }
 
   @Override
-  protected ResultSet doSelectRevisionReferences(String tableName, long sourceId, int version, int dbFeatureID,
-      String where) throws SQLException
+  protected ResultSet doSelectRevisionReferences(String tableName, long sourceId, int version, long metaID, String where)
+      throws SQLException
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");
@@ -776,7 +1006,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     builder.append(" FROM ");
     builder.append(tableName);
     builder.append(" WHERE ");
-    if (dbFeatureID != 0)
+    if (metaID != 0)
     {
       builder.append(CDODBSchema.REFERENCES_FEATURE);
       builder.append("= ? AND ");
@@ -817,15 +1047,489 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
     }
 
     int idx = 1;
-    if (dbFeatureID != 0)
+    if (metaID != 0)
     {
-      pstmt.setInt(idx++, dbFeatureID);
+      pstmt.setLong(idx++, metaID);
     }
 
     pstmt.setLong(idx++, sourceId);
     pstmt.setInt(idx++, version);
     return pstmt.executeQuery();
   }
+
+  /**
+   * Implementation of the hook which is called after selects.
+   */
+  @Override
+  protected void releaseStatement(Statement stmt)
+  {
+    // leave open cached statements
+    if (!cacheStatements || !(stmt instanceof PreparedStatement))
+    {
+      super.releaseStatement(stmt);
+    }
+
+    // /* This code would guarantee that releaseStatement is only called
+    // for cached statements. However this looks through the whole hashmap
+    // and is thus too expensive to do in non-debugging mode. */
+    //
+    // else {
+    // if(!selectStatementsCache.containsValue(stmt)) {
+    // super.releaseStatement(stmt);
+    // }
+    // }
+  }
+
+  // ----------------------------------------------------------
+  // List management helpers
+  // ----------------------------------------------------------
+
+  private void updateOneIndex(String tableName, long metaID, long cdoid, int newVersion, int oldIndex, int newIndex)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("updateOneIndex ({0},{1},{2},{3},{4})", tableName, cdoid, newVersion, oldIndex, newIndex);
+    }
+
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.MOVE_ONE_INDEX, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder builder = new StringBuilder("UPDATE ");
+        builder.append(tableName);
+        builder.append(" SET ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" = ?, ");
+        builder.append(CDODBSchema.REFERENCES_VERSION);
+        builder.append(" = ? WHERE ");
+        if (metaID != 0)
+        {
+          builder.append(CDODBSchema.REFERENCES_FEATURE);
+          builder.append("= ? AND ");
+        }
+
+        builder.append(CDODBSchema.REFERENCES_SOURCE);
+        builder.append("= ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" = ?");
+
+        stmt = getConnection().prepareStatement(builder.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.MOVE_ONE_INDEX, tableName, stmt);
+        }
+      }
+
+      int idx = 1;
+      stmt.setInt(idx++, newIndex);
+      stmt.setInt(idx++, newVersion);
+
+      if (metaID != 0)
+      {
+        stmt.setLong(idx++, metaID);
+      }
+
+      stmt.setLong(idx++, cdoid);
+      stmt.setLong(idx++, oldIndex);
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  /**
+   * Move references downwards to close a gap at position <code>index</code>. Only indexes starting with
+   * <code>index + 1</code> and ending with <code>upperIndex</code> are moved down.
+   */
+  private void move1down(String tableName, long metaID, long cdoid, int newVersion, int index, int upperIndex)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("move1down({0},{1},{2},{3},{4})", tableName, cdoid, newVersion, index, upperIndex);
+    }
+
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.MOVE_RANGE_1_DOWN, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UPDATE ");
+        builder.append(tableName);
+        builder.append(" SET ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" = ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append("-1 ,");
+        builder.append(CDODBSchema.REFERENCES_VERSION);
+        builder.append(" = ? WHERE ");
+        if (metaID != 0)
+        {
+          builder.append(CDODBSchema.REFERENCES_FEATURE);
+          builder.append("= ? AND ");
+        }
+
+        builder.append(CDODBSchema.REFERENCES_SOURCE);
+        builder.append("= ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" > ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" <= ?");
+
+        stmt = getConnection().prepareStatement(builder.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.MOVE_RANGE_1_DOWN, tableName, stmt);
+        }
+      }
+
+      int idx = 1;
+      stmt.setInt(idx++, newVersion);
+
+      if (metaID != 0)
+      {
+        stmt.setLong(idx++, metaID);
+      }
+
+      stmt.setLong(idx++, cdoid);
+      stmt.setInt(idx++, index);
+      stmt.setInt(idx++, upperIndex);
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  /**
+   * Move references downwards to close a gap at position <code>index</code>. All indexes starting with
+   * <code>index + 1</code> are moved down.
+   */
+  private void move1down(String tableName, long metaID, long cdoid, int newVersion, int index)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("move1down({0},{1},{2},{3})", tableName, cdoid, newVersion, index);
+    }
+
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.MOVE_1_DOWN, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UPDATE ");
+        builder.append(tableName);
+        builder.append(" SET ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" = ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append("-1 ,");
+        builder.append(CDODBSchema.REFERENCES_VERSION);
+        builder.append(" = ? WHERE ");
+        if (metaID != 0)
+        {
+          builder.append(CDODBSchema.REFERENCES_FEATURE);
+          builder.append("= ? AND ");
+        }
+
+        builder.append(CDODBSchema.REFERENCES_SOURCE);
+        builder.append("= ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" > ?");
+
+        stmt = getConnection().prepareStatement(builder.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.MOVE_1_DOWN, tableName, stmt);
+        }
+      }
+
+      int idx = 1;
+      stmt.setInt(idx++, newVersion);
+
+      if (metaID != 0)
+      {
+        stmt.setLong(idx++, metaID);
+      }
+
+      stmt.setLong(idx++, cdoid);
+      stmt.setInt(idx++, index);
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+
+    }
+  }
+
+  /**
+   * Move references upwards to make room at position <code>index</code>. Only indexes starting with <code>index</code>
+   * and ending with <code>upperIndex - 1</code> are moved up.
+   */
+  private void move1up(String tableName, long metaID, long cdoid, int newVersion, int index, int upperIndex)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("move1up({0},{1},{2},{3},{4})", tableName, cdoid, newVersion, index, upperIndex);
+    }
+
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.MOVE_RANGE_1_UP, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UPDATE ");
+        builder.append(tableName);
+        builder.append(" SET ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" = ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append("+1 ,");
+        builder.append(CDODBSchema.REFERENCES_VERSION);
+        builder.append(" = ? WHERE ");
+        if (metaID != 0)
+        {
+          builder.append(CDODBSchema.REFERENCES_FEATURE);
+          builder.append("= ? AND ");
+        }
+
+        builder.append(CDODBSchema.REFERENCES_SOURCE);
+        builder.append("= ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" => ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" < ?");
+
+        stmt = getConnection().prepareStatement(builder.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.MOVE_RANGE_1_UP, tableName, stmt);
+        }
+      }
+
+      int idx = 1;
+      stmt.setInt(idx++, newVersion);
+
+      if (metaID != 0)
+      {
+        stmt.setLong(idx++, metaID);
+      }
+
+      stmt.setLong(idx++, cdoid);
+      stmt.setInt(idx++, index);
+      stmt.setInt(idx++, upperIndex);
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+
+    }
+  }
+
+  /**
+   * Move references upwards to make room at position <code>index</code>. Only indexes starting with <code>index</code>.
+   */
+  private void move1up(String tableName, long metaID, long cdoid, int newVersion, int index)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("move1up({0},{1},{2},{3})", tableName, cdoid, newVersion, index);
+    }
+
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.MOVE_1_UP, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UPDATE ");
+        builder.append(tableName);
+        builder.append(" SET ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" = ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append("+1 ,");
+        builder.append(CDODBSchema.REFERENCES_VERSION);
+        builder.append(" = ? WHERE ");
+        if (metaID != 0)
+        {
+          builder.append(CDODBSchema.REFERENCES_FEATURE);
+          builder.append("= ? AND ");
+        }
+
+        builder.append(CDODBSchema.REFERENCES_SOURCE);
+        builder.append("= ? AND ");
+        builder.append(CDODBSchema.REFERENCES_IDX);
+        builder.append(" >= ?");
+
+        stmt = getConnection().prepareStatement(builder.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.MOVE_1_UP, tableName, stmt);
+        }
+      }
+
+      int idx = 1;
+      stmt.setInt(idx++, newVersion);
+
+      if (metaID != 0)
+      {
+        stmt.setLong(idx++, metaID);
+      }
+
+      stmt.setLong(idx++, cdoid);
+      stmt.setInt(idx++, index);
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+
+    }
+  }
+
+  private void deleteReferenceRow(String tableName, long metaID, long cdoid, int index)
+  {
+    PreparedStatement stmt = null;
+    if (cacheStatements)
+    {
+      stmt = getCachedStatement(StmtType.DELETE_ONE_REFERENCE, tableName);
+    }
+
+    try
+    {
+      if (stmt == null)
+      {
+        StringBuilder sql = new StringBuilder("DELETE FROM ");
+        sql.append(tableName);
+        sql.append(" WHERE ");
+        sql.append(CDODBSchema.REFERENCES_SOURCE);
+        sql.append(" = ? AND ");
+        sql.append(CDODBSchema.REFERENCES_IDX);
+        sql.append(" = ? ");
+
+        if (metaID != 0)
+        {
+          sql.append("AND");
+          sql.append(CDODBSchema.REFERENCES_FEATURE);
+          sql.append(" = ? ");
+        }
+
+        stmt = getConnection().prepareStatement(sql.toString());
+        if (cacheStatements)
+        {
+          cacheStatement(StmtType.DELETE_ONE_REFERENCE, tableName, stmt);
+        }
+      }
+
+      stmt.setLong(1, cdoid);
+      stmt.setInt(2, index);
+      if (metaID != 0)
+      {
+        stmt.setLong(3, metaID);
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(stmt.toString());
+      }
+
+      stmt.execute();
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      if (!cacheStatements)
+      {
+        DBUtil.close(stmt);
+      }
+    }
+  }
+
+  // ----------------------------------------------------------
+  // Statement caching
+  // ----------------------------------------------------------
 
   /**
    * Add a dirty statement to the dirty statements container.
@@ -923,7 +1627,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
    */
   private static enum StmtType
   {
-    INSERT_ATTRIBUTES, UPDATE_ATTRIBUTES, DELETE_ATTRIBUTES, INSERT_REFERENCES, DELETE_REFERENCES, REVISE_VERSION, REVISE_UNREVISED, GENERAL
+    INSERT_ATTRIBUTES, DELETE_ATTRIBUTES, INSERT_REFERENCES, DELETE_REFERENCES, DELETE_ONE_REFERENCE, REVISE_VERSION, REVISE_UNREVISED, GENERAL, UPDATE_REFERENCE_VERSION, MOVE_1_UP, MOVE_RANGE_1_UP, MOVE_1_DOWN, MOVE_RANGE_1_DOWN, MOVE_ONE_INDEX, UPDATE_REFERENCE
   }
 
   /**

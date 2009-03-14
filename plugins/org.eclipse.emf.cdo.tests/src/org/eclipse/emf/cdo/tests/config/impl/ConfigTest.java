@@ -278,22 +278,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   /**
    *@category Session
    */
-  public CDOSession openEagerSession()
-  {
-    return getSessionConfig().openEagerSession();
-  }
-
-  /**
-   *@category Session
-   */
-  public CDOSession openLazySession()
-  {
-    return getSessionConfig().openLazySession();
-  }
-
-  /**
-   *@category Session
-   */
   public CDOSession openSession(EPackage ePackage)
   {
     return getSessionConfig().openSession(ePackage);

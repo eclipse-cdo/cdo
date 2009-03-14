@@ -12,9 +12,10 @@
 package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 import org.eclipse.emf.internal.cdo.analyzer.NOOPFeatureAnalyzer;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * TODO Simon: JavaDoc
@@ -34,12 +35,12 @@ public interface CDOFeatureAnalyzer
    * 
    * @since 2.0
    */
-  public void preTraverseFeature(CDOObject revision, CDOFeature feature, int index);
+  public void preTraverseFeature(CDOObject revision, EStructuralFeature feature, int index);
 
   /**
    * TODO Simon: JavaDoc
    * 
    * @since 2.0
    */
-  public void postTraverseFeature(CDOObject revision, CDOFeature feature, int index, Object value);
+  public void postTraverseFeature(CDOObject revision, EStructuralFeature feature, int index, Object value);
 }

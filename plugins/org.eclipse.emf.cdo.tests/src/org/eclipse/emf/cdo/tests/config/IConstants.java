@@ -35,7 +35,11 @@ public interface IConstants
 
   public static final RepositoryConfig DB_HSQL_HORIZONTAL = RepositoryConfig.DB.Hsqldb.Stmt.INSTANCE;
 
+  public static final RepositoryConfig DB_HSQL_HORIZONTAL_NONAUDIT = RepositoryConfig.DB.Hsqldb.StmtNonAudit.INSTANCE;
+
   public static final RepositoryConfig DB_HSQL_HORIZONTAL_PREPSTMT = RepositoryConfig.DB.Hsqldb.PrepStmt.INSTANCE;
+
+  public static final RepositoryConfig DB_HSQL_HORIZONTAL_PREPSTMT_NONAUDIT = RepositoryConfig.DB.Hsqldb.PrepStmtNonAudit.INSTANCE;
 
   public static final RepositoryConfig DB_DERBY_HORIZONTAL = RepositoryConfig.DB.Derby.Stmt.INSTANCE;
 

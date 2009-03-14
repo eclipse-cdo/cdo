@@ -46,13 +46,13 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
     }
 
     // Only set it in the listholder
-    PersistableListHolder.getInstance().putListMapping(target, getCDOFeature(), (PersistentCollection)value);
+    PersistableListHolder.getInstance().putListMapping(target, getEStructuralFeature(), (PersistentCollection)value);
 
     // check if deep inside the persistentlist there is not already a delegate which is a hibernatemoveable list
     // which contains the list which should really be set in the cdorevision
     // persistentlist, hibernatemoveablelistwrapper, real list, if so then the real list should be set
     final InternalCDORevision revision = (InternalCDORevision)target;
-    final Object currentValue = revision.getValue(getCDOFeature());
+    final Object currentValue = revision.getValue(getEStructuralFeature());
     final PersistentList pl = (PersistentList)value;
     if (currentValue == null)
     {

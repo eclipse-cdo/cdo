@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IRepositoryElement;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -31,7 +30,7 @@ import java.util.concurrent.Future;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CommitManager extends Lifecycle implements IRepositoryElement
+public class CommitManager extends Lifecycle
 {
   private IRepository repository;
 

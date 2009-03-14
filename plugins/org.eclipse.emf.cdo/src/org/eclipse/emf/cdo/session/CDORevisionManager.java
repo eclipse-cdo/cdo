@@ -11,9 +11,10 @@
  */
 package org.eclipse.emf.cdo.session;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
@@ -36,6 +37,6 @@ public interface CDORevisionManager extends CDORevisionResolver
    * @param toIndex
    *          Load objects at the client to toIndex (inclusive)
    */
-  public Object loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
+  public Object loadChunkByRange(CDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex);
 }

@@ -38,10 +38,6 @@ public interface ISessionConfig extends IConfig
 
   public CDOSession openModel3Session();
 
-  public CDOSession openEagerSession();
-
-  public CDOSession openLazySession();
-
   public CDOSession openSession(EPackage ePackage);
 
   public CDOSession openSession(String repositoryName);

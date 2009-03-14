@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class SetAuditRequest extends CDOClientRequest<boolean[]>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SetAuditRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SetAuditRequest.class);
 
   private int viewID;
 
@@ -47,31 +47,31 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing viewID: {0}", viewID);
+      TRACER.format("Writing viewID: {0}", viewID);
     }
 
     out.writeInt(viewID);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp);
+      TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp);
     }
 
     out.writeLong(timeStamp);
 
     int size = invalidObjects.size();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} IDs", size);
+      TRACER.format("Writing {0} IDs", size);
     }
 
     out.writeInt(size);
     for (InternalCDOObject object : invalidObjects)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing ID: {0}", object.cdoID());
+        TRACER.format("Writing ID: {0}", object.cdoID());
       }
 
       out.writeCDOID(object.cdoID());
@@ -82,9 +82,9 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
   protected boolean[] confirming(CDODataInput in) throws IOException
   {
     int size = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Reading {0} existanceFlags", size);
+      TRACER.format("Reading {0} existanceFlags", size);
     }
 
     boolean[] existanceFlags = new boolean[size];
@@ -92,9 +92,9 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
     {
       boolean existanceFlag = in.readBoolean();
       existanceFlags[i] = existanceFlag;
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Read existanceFlag: {0}", existanceFlag);
+        TRACER.format("Read existanceFlag: {0}", existanceFlag);
       }
     }
 

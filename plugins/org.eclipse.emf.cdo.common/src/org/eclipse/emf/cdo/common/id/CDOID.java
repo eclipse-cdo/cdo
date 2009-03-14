@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOID extends Serializable
+public interface CDOID extends Serializable, Comparable<CDOID>
 {
   public static final CDOID NULL = org.eclipse.emf.cdo.internal.common.id.CDOIDNullImpl.INSTANCE;
 

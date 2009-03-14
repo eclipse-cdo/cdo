@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -21,6 +19,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
@@ -62,7 +63,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li;
   }
 
-  public void add(CDOFeature feature, int index, Object value)
+  public void add(EStructuralFeature feature, int index, Object value)
   {
     li.getRevision().add(feature, index, value);
   }
@@ -72,7 +73,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().adjustReferences(idMappings);
   }
 
-  public void clear(CDOFeature feature)
+  public void clear(EStructuralFeature feature)
   {
     li.getRevision().clear(feature);
   }
@@ -82,19 +83,19 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().compare(origin);
   }
 
-  public boolean contains(CDOFeature feature, Object value)
+  public boolean contains(EStructuralFeature feature, Object value)
   {
     return li.getRevision().contains(feature, value);
   }
 
-  public Object get(CDOFeature feature, int index)
+  public Object get(EStructuralFeature feature, int index)
   {
     return li.getRevision().get(feature, index);
   }
 
-  public CDOClass getCDOClass()
+  public EClass getEClass()
   {
-    return li.getRevision().getCDOClass();
+    return li.getRevision().getEClass();
   }
 
   public Object getContainerID()
@@ -122,17 +123,17 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().getID();
   }
 
-  public CDOList getList(CDOFeature feature, int size)
+  public CDOList getList(EStructuralFeature feature, int size)
   {
     return li.getRevision().getList(feature, size);
   }
 
-  public CDOList getList(CDOFeature feature)
+  public CDOList getList(EStructuralFeature feature)
   {
     return li.getRevision().getList(feature);
   }
 
-  public void setList(CDOFeature feature, InternalCDOList list)
+  public void setList(EStructuralFeature feature, InternalCDOList list)
   {
     li.getRevision().setList(feature, list);
   }
@@ -152,7 +153,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().revision();
   }
 
-  public Object getValue(CDOFeature feature)
+  public Object getValue(EStructuralFeature feature)
   {
     return li.getRevision().getValue(feature);
   }
@@ -162,12 +163,12 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().getVersion();
   }
 
-  public int hashCode(CDOFeature feature)
+  public int hashCode(EStructuralFeature feature)
   {
     return li.getRevision().hashCode(feature);
   }
 
-  public int indexOf(CDOFeature feature, Object value)
+  public int indexOf(EStructuralFeature feature, Object value)
   {
     return li.getRevision().indexOf(feature, value);
   }
@@ -177,7 +178,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().isCurrent();
   }
 
-  public boolean isEmpty(CDOFeature feature)
+  public boolean isEmpty(EStructuralFeature feature)
   {
     return li.getRevision().isEmpty(feature);
   }
@@ -207,7 +208,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().isValid(timeStamp);
   }
 
-  public int lastIndexOf(CDOFeature feature, Object value)
+  public int lastIndexOf(EStructuralFeature feature, Object value)
   {
     return li.getRevision().lastIndexOf(feature, value);
   }
@@ -217,17 +218,17 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().merge(delta);
   }
 
-  public Object move(CDOFeature feature, int targetIndex, int sourceIndex)
+  public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
     return li.getRevision().move(feature, targetIndex, sourceIndex);
   }
 
-  public Object remove(CDOFeature feature, int index)
+  public Object remove(EStructuralFeature feature, int index)
   {
     return li.getRevision().remove(feature, index);
   }
 
-  public Object set(CDOFeature feature, int index, Object value)
+  public Object set(EStructuralFeature feature, int index, Object value)
   {
     return li.getRevision().set(feature, index, value);
   }
@@ -253,7 +254,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   }
 
   @SuppressWarnings("deprecation")
-  public void setListSize(CDOFeature feature, int size)
+  public void setListSize(EStructuralFeature feature, int size)
   {
     li.getRevision().setListSize(feature, size);
   }
@@ -278,7 +279,7 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().setUntransactional();
   }
 
-  public Object setValue(CDOFeature feature, Object value)
+  public Object setValue(EStructuralFeature feature, Object value)
   {
     return li.getRevision().setValue(feature, value);
   }
@@ -288,32 +289,32 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().setVersion(version);
   }
 
-  public int size(CDOFeature feature)
+  public int size(EStructuralFeature feature)
   {
     return li.getRevision().size(feature);
   }
 
-  public <T> T[] toArray(CDOFeature feature, T[] array)
+  public <T> T[] toArray(EStructuralFeature feature, T[] array)
   {
     return li.getRevision().toArray(feature, array);
   }
 
-  public Object[] toArray(CDOFeature feature)
+  public Object[] toArray(EStructuralFeature feature)
   {
     return li.getRevision().toArray(feature);
   }
 
-  public void unset(CDOFeature feature)
+  public void unset(EStructuralFeature feature)
   {
     li.getRevision().unset(feature);
   }
 
-  public Object basicGet(CDOFeature feature, int index)
+  public Object basicGet(EStructuralFeature feature, int index)
   {
     return li.getRevision().basicGet(feature, index);
   }
 
-  public Object basicSet(CDOFeature feature, int index, Object value)
+  public Object basicSet(EStructuralFeature feature, int index, Object value)
   {
     return li.getRevision().basicSet(feature, index, value);
   }

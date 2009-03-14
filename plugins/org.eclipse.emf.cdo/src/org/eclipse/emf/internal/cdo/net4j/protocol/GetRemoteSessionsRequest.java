@@ -30,8 +30,7 @@ import java.util.List;
  */
 public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSession>>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      GetRemoteSessionsRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, GetRemoteSessionsRequest.class);
 
   private InternalCDORemoteSessionManager manager;
 
@@ -47,9 +46,9 @@ public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSes
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing subscribe: {0}", subscribe);
+      TRACER.format("Writing subscribe: {0}", subscribe);
     }
 
     out.writeBoolean(subscribe);

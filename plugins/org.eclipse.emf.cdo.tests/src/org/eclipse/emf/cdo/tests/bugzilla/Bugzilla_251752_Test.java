@@ -35,6 +35,12 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
     CDOResource res = transaction1.createResource("/test1");
     res.getContents().add(getModel1Factory().createCompany());
+    transaction1.commit();
+    CDOTransaction transaction2 = session.openTransaction();
+    CDOResource res2 = transaction2.getResource("/test1");
+    res.getContents().add(getModel1Factory().createCompany());
+    res2.getContents().add(getModel1Factory().createCompany());
+    transaction2.commit();
     try
     {
       transaction1.commit();
@@ -52,9 +58,15 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
     xaTransaction.add(CDOUtil.getViewSet(transaction1.getResourceSet()));
-
     CDOResource res = transaction1.createResource("/test1");
     res.getContents().add(getModel1Factory().createCompany());
+    transaction1.commit();
+    CDOTransaction transaction2 = session.openTransaction();
+    CDOResource res2 = transaction2.getResource("/test1");
+    res.getContents().add(getModel1Factory().createCompany());
+    res2.getContents().add(getModel1Factory().createCompany());
+    transaction2.commit();
+
     try
     {
       transaction1.commit();

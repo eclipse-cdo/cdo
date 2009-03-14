@@ -33,6 +33,13 @@ import org.eclipse.emf.ecore.EReference;
 public interface EresourcePackage extends EPackage
 {
   /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+
+  /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -44,7 +51,7 @@ public interface EresourcePackage extends EPackage
    * 
    * @generated
    */
-  String eNS_URI = "http://www.eclipse.org/emf/CDO/resource/2.0.0";
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/Eresource/2.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->

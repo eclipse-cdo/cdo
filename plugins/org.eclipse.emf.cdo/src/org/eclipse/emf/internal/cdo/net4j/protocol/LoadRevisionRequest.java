@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevision>>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionRequest.class);
 
   private Collection<CDOID> ids;
 
@@ -55,29 +55,29 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing referenceChunk: {0}", referenceChunk);
+      TRACER.format("Writing referenceChunk: {0}", referenceChunk);
     }
 
     out.writeInt(referenceChunk);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} IDs", ids.size());
+      TRACER.format("Writing {0} IDs", ids.size());
     }
 
     out.writeInt(ids.size());
     for (CDOID id : ids)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing ID: {0}", id);
+        TRACER.format("Writing ID: {0}", id);
       }
 
       out.writeCDOID(id);
     }
 
-    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getRevisionManager();
+    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getSession().getRevisionManager();
     CDOFetchRuleManager ruleManager = revisionManager.getRuleManager();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
@@ -106,9 +106,9 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   {
     int idSize = ids.size();
     ArrayList<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>(idSize);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Reading {0} revisions", idSize);
+      TRACER.format("Reading {0} revisions", idSize);
     }
 
     for (int i = 0; i < idSize; i++)
@@ -120,12 +120,12 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     int additionalSize = in.readInt();
     if (additionalSize != 0)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Reading {0} additional revisions", additionalSize);
+        TRACER.format("Reading {0} additional revisions", additionalSize);
       }
 
-      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getRevisionManager();
+      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getSession().getRevisionManager();
       for (int i = 0; i < additionalSize; i++)
       {
         InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();

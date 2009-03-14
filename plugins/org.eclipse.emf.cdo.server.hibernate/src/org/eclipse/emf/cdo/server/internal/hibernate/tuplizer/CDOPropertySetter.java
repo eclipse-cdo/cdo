@@ -47,6 +47,6 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     InternalCDORevision revision = (InternalCDORevision)target;
-    revision.setValue(getCDOFeature(), value);
+    revision.setValue(getEStructuralFeature(), value);
   }
 }

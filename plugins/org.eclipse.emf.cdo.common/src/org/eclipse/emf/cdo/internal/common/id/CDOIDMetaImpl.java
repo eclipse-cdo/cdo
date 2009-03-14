@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.id;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 
@@ -34,5 +35,11 @@ public class CDOIDMetaImpl extends AbstractCDOIDLong implements CDOIDMeta
   public String toString()
   {
     return "MID" + getLongValue();
+  }
+
+  @Override
+  protected int doCompareTo(CDOID o) throws ClassCastException
+  {
+    return new Long(getLongValue()).compareTo(((CDOIDMetaImpl)o).getLongValue());
   }
 }

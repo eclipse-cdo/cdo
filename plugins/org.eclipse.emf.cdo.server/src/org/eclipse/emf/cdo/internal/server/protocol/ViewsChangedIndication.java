@@ -35,8 +35,7 @@ public class ViewsChangedIndication extends CDOServerIndication
   {
     int viewID = in.readInt();
     byte kind = in.readByte();
-    CDOServerProtocol protocol = getProtocol();
-    Session session = protocol.getSession();
+    Session session = getSession();
 
     switch (kind)
     {

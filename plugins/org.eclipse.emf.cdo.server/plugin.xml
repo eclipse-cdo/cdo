@@ -43,7 +43,7 @@
    	<extension 
    		point="org.eclipse.emf.cdo.server.storeFactories">
       	<storeFactory
-        	class="org.eclipse.emf.cdo.internal.server.MEMStoreFactory"
+        	class="org.eclipse.emf.cdo.internal.server.mem.MEMStoreFactory"
             storeType="mem"/>
    	</extension>
 

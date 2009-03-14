@@ -13,20 +13,16 @@ package org.eclipse.emf.internal.cdo.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
-import org.eclipse.emf.cdo.session.CDORevisionManager;
-import org.eclipse.emf.cdo.session.CDOSessionPackageManager;
 
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.StringIO;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -50,27 +46,7 @@ public abstract class CDOClientIndication extends Indication
 
   protected InternalCDOSession getSession()
   {
-    return (InternalCDOSession)getProtocol().getInfraStructure();
-  }
-
-  protected CDORevisionManager getRevisionManager()
-  {
-    return getSession().getRevisionManager();
-  }
-
-  protected CDOSessionPackageManager getPackageManager()
-  {
-    return getSession().getPackageManager();
-  }
-
-  protected CDOPackageURICompressor getPackageURICompressor()
-  {
-    return getSession();
-  }
-
-  protected CDOIDObjectFactory getIDFactory()
-  {
-    return getSession();
+    return (InternalCDOSession)getProtocol().getSession();
   }
 
   @Override
@@ -79,34 +55,15 @@ public abstract class CDOClientIndication extends Indication
     indicating(new CDODataInputImpl(in)
     {
       @Override
-      protected CDORevision readCDORevisionData() throws IOException
-      {
-        CDORevisionFactory factory = getSession().options().getRevisionFactory();
-        return factory.createRevision(this);
-      }
-
-      @Override
-      protected CDORevisionResolver getRevisionResolver()
-      {
-        return CDOClientIndication.this.getRevisionManager();
-      }
-
-      @Override
-      protected CDOPackageManager getPackageManager()
-      {
-        return CDOClientIndication.this.getPackageManager();
-      }
-
-      @Override
-      protected CDOPackageURICompressor getPackageURICompressor()
-      {
-        return CDOClientIndication.this.getPackageURICompressor();
-      }
-
-      @Override
       protected CDOIDObjectFactory getIDFactory()
       {
-        return CDOClientIndication.this.getIDFactory();
+        return getSession();
+      }
+
+      @Override
+      protected StringIO getPackageURICompressor()
+      {
+        return getProtocol().getPackageURICompressor();
       }
 
       @Override
@@ -114,6 +71,19 @@ public abstract class CDOClientIndication extends Indication
       {
         return CDOListWithElementProxiesImpl.FACTORY;
       }
+
+      @Override
+      protected CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getPackageRegistry();
+      }
+
+      @Override
+      protected CDORevisionResolver getRevisionResolver()
+      {
+        return getSession().getRevisionManager();
+      }
+
     });
   }
 

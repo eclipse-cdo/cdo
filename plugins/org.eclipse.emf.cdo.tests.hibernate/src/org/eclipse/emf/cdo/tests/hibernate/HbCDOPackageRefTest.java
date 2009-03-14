@@ -38,7 +38,7 @@ public class HbCDOPackageRefTest extends AbstractCDOTest
   {
     try
     {
-      CDOSession session = openLazySession();
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
       session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
 

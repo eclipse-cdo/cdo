@@ -54,7 +54,7 @@ public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
           elementsToAdd.add((CDOObject)obj);
         }
       }
-      
+
       objectContainer.addAllElements(elementsToAdd);
       return true;
     }

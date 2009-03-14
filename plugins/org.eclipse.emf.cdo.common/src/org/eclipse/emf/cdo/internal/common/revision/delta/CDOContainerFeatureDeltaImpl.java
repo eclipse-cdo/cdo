@@ -16,17 +16,14 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassProxy;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 
 import java.io.IOException;
 
@@ -49,7 +46,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     this.newContainerFeatureID = newContainerFeatureID;
   }
 
-  public CDOContainerFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
+  public CDOContainerFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(CONTAINER_FEATURE);
     newContainerFeatureID = in.readInt();
@@ -92,7 +89,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   }
 
   @Override
-  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  public void write(CDODataOutput out, EClass eClass) throws IOException
   {
     out.writeInt(getType().ordinal());
     out.writeInt(newContainerFeatureID);
@@ -108,92 +105,9 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   /**
    * @author Simon McDuff
    */
-  public static final class ContainerFeature implements CDOFeature
+  public static final class ContainerFeature extends EStructuralFeatureImpl
   {
-    public CDOClass getContainingClass()
-    {
-      return null;
-    }
-
-    public void setContainingClass(CDOClass cdoClass)
-    {
-    }
-
-    public CDOPackage getContainingPackage()
-    {
-      return null;
-    }
-
-    public int getFeatureID()
-    {
-      return 0;
-    }
-
-    public int getFeatureIndex()
-    {
-      return 0;
-    }
-
-    public CDOClass getReferenceType()
-    {
-      return null;
-    }
-
-    public CDOClassProxy getReferenceTypeProxy()
-    {
-      return null;
-    }
-
-    public CDOType getType()
-    {
-      return null;
-    }
-
-    public boolean isContainment()
-    {
-      return false;
-    }
-
-    public boolean isMany()
-    {
-      return false;
-    }
-
-    public boolean isReference()
-    {
-      return false;
-    }
-
-    public Object getClientInfo()
-    {
-      return null;
-    }
-
-    public String getName()
-    {
-      return null;
-    }
-
-    public String getQualifiedName()
-    {
-      return null;
-    }
-
-    public CDOPackageManager getPackageManager()
-    {
-      return null;
-    }
-
-    public Object getServerInfo()
-    {
-      return null;
-    }
-
-    public void setClientInfo(Object clientInfo)
-    {
-    }
-
-    public void setServerInfo(Object serverInfo)
+    public ContainerFeature()
     {
     }
 
@@ -201,11 +115,6 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     public String toString()
     {
       return "CONTAINER_FEATURE";
-    }
-
-    public Object getDefaultValue()
-    {
-      return null;
     }
   }
 }

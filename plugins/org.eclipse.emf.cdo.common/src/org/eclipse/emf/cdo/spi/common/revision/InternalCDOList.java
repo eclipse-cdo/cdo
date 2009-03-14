@@ -11,9 +11,11 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
-import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 
 /**
  * @author Simon McDuff
@@ -24,10 +26,10 @@ public interface InternalCDOList extends CDOList
   /**
    * Adjusts references according to the passed adjuster and resynchronizes indexes.
    */
-  public void adjustReferences(CDOReferenceAdjuster adjuster, CDOType type);
+  public void adjustReferences(CDOReferenceAdjuster adjuster, EClass classifier);
 
   /**
    * Clones the list.
    */
-  public InternalCDOList clone(CDOType type);
+  public InternalCDOList clone(EClassifier classifier);
 }

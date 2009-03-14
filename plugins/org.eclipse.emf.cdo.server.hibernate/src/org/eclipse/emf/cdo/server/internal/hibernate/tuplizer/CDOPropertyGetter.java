@@ -38,7 +38,7 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
   public Object get(Object target) throws HibernateException
   {
     InternalCDORevision revision = (InternalCDORevision)target;
-    return revision.getValue(getCDOFeature());
+    return revision.getValue(getEStructuralFeature());
   }
 
   @SuppressWarnings("unchecked")

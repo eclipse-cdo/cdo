@@ -15,12 +15,11 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -69,7 +68,7 @@ public class Transaction extends View implements ITransaction
    * 
    * @since 2.0
    */
-  public InternalCommitContext createCommitContext(final long timeStamp)
+  public InternalCommitContext testCreateCommitContext(final long timeStamp)
   {
     checkOpen();
     return new TransactionCommitContextImpl(this)
@@ -98,8 +97,6 @@ public class Transaction extends View implements ITransaction
   {
     public Transaction getTransaction();
 
-    public TransactionPackageManager getPackageManager();
-
     public void preCommit();
 
     public void write(OMMonitor monitor);
@@ -114,11 +111,11 @@ public class Transaction extends View implements ITransaction
 
     public List<CDOIDMetaRange> getMetaIDRanges();
 
-    public void setNewPackages(CDOPackage[] newPackages);
+    public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits);
 
-    public void setNewObjects(CDORevision[] newObjects);
+    public void setNewObjects(InternalCDORevision[] newObjects);
 
-    public void setDirtyObjectDeltas(CDORevisionDelta[] dirtyObjectDeltas);
+    public void setDirtyObjectDeltas(InternalCDORevisionDelta[] dirtyObjectDeltas);
 
     public void setDetachedObjects(CDOID[] detachedObjects);
 
@@ -126,5 +123,4 @@ public class Transaction extends View implements ITransaction
 
     public boolean isAutoReleaseLocksEnabled();
   }
-
 }

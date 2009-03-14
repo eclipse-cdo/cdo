@@ -12,22 +12,18 @@
 package org.eclipse.emf.internal.cdo.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.util.ServerException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
-import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
 import java.io.IOException;
@@ -38,7 +34,7 @@ import java.text.MessageFormat;
  */
 public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
 
   private String repositoryName;
 
@@ -54,54 +50,19 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
   }
 
   @Override
-  protected InternalCDOSession getSession()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  protected CDORevisionManagerImpl getRevisionManager()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  protected CDOSessionPackageManagerImpl getPackageManager()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  protected CDOPackageURICompressor getPackageURICompressor()
-  {
-    if (result == null)
-    {
-      throw new IllegalStateException("result == null");
-    }
-
-    return result;
-  }
-
-  @Override
-  protected CDOIDObjectFactory getIDFactory()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
     super.requesting(out);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing repositoryName: {0}", repositoryName);
+      TRACER.format("Writing repositoryName: {0}", repositoryName);
     }
 
     out.writeString(repositoryName);
 
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+      TRACER.format("Writing passiveUpdateEnabled: {0}", passiveUpdateEnabled);
     }
 
     out.writeBoolean(passiveUpdateEnabled);
@@ -123,57 +84,42 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       throw new ServerException(msg);
     }
 
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read sessionID: {0}", sessionID);
+      TRACER.format("Read sessionID: {0}", sessionID);
     }
 
     String repositoryUUID = in.readString();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read repositoryUUID: {0}", repositoryUUID);
+      TRACER.format("Read repositoryUUID: {0}", repositoryUUID);
     }
 
     long repositoryCreationTime = in.readLong();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read repositoryCreationTime: {0,date} {0,time}", repositoryCreationTime);
+      TRACER.format("Read repositoryCreationTime: {0,date} {0,time}", repositoryCreationTime);
     }
 
     boolean repositorySupportingAudits = in.readBoolean();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read repositorySupportingAudits: {0}", repositorySupportingAudits);
+      TRACER.format("Read repositorySupportingAudits: {0}", repositorySupportingAudits);
     }
 
     CDOIDLibraryDescriptor libraryDescriptor = CDOIDUtil.readLibraryDescriptor(in);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor);
+      TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor);
     }
 
     result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, repositorySupportingAudits,
         libraryDescriptor);
 
-    for (;;)
+    CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
+    for (int i = 0; i < packageUnits.length; i++)
     {
-      boolean readInfo = in.readBoolean();
-      if (!readInfo)
-      {
-        break;
-      }
-
-      String packageURI = in.readCDOPackageURI();
-      boolean dynamic = in.readBoolean();
-      CDOIDMetaRange metaIDRange = in.readCDOIDMetaRange();
-      String parentURI = in.readCDOPackageURI();
-      if (PROTOCOL_TRACER.isEnabled())
-      {
-        PROTOCOL_TRACER.format("Read package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", packageURI,
-            dynamic, metaIDRange, parentURI);
-      }
-
-      result.addPackageInfo(packageURI, dynamic, metaIDRange, parentURI);
+      result.getPackageUnits().add((InternalCDOPackageUnit)packageUnits[i]);
     }
 
     super.confirming(in);

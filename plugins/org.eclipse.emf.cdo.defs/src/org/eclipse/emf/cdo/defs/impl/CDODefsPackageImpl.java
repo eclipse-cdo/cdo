@@ -93,7 +93,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
    * 
    * @generated
    */
-  private EClass cdoPackageRegistryDefEClass = null;
+  private EClass ePackageRegistryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -378,7 +378,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
    */
   public EClass getCDOPackageRegistryDef()
   {
-    return cdoPackageRegistryDefEClass;
+    return ePackageRegistryDefEClass;
   }
 
   /**
@@ -388,7 +388,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
    */
   public EReference getCDOPackageRegistryDef_Packages()
   {
-    return (EReference)cdoPackageRegistryDefEClass.getEStructuralFeatures().get(0);
+    return (EReference)ePackageRegistryDefEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -572,8 +572,8 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
     retryFailOverStrategyDefEClass = createEClass(RETRY_FAIL_OVER_STRATEGY_DEF);
     createEAttribute(retryFailOverStrategyDefEClass, RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES);
 
-    cdoPackageRegistryDefEClass = createEClass(CDO_PACKAGE_REGISTRY_DEF);
-    createEReference(cdoPackageRegistryDefEClass, CDO_PACKAGE_REGISTRY_DEF__PACKAGES);
+    ePackageRegistryDefEClass = createEClass(CDO_PACKAGE_REGISTRY_DEF);
+    createEReference(ePackageRegistryDefEClass, CDO_PACKAGE_REGISTRY_DEF__PACKAGES);
 
     cdoEagerPackageRegistryDefEClass = createEClass(CDO_EAGER_PACKAGE_REGISTRY_DEF);
 
@@ -639,7 +639,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
     cdoSessionDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
     failOverStrategyDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
     retryFailOverStrategyDefEClass.getESuperTypes().add(this.getFailOverStrategyDef());
-    cdoPackageRegistryDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
+    ePackageRegistryDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
     cdoEagerPackageRegistryDefEClass.getESuperTypes().add(this.getCDOPackageRegistryDef());
     cdoLazyPackageRegistryDefEClass.getESuperTypes().add(this.getCDOPackageRegistryDef());
     ePackageDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
@@ -672,7 +672,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
         CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,
         !IS_DERIVED, !IS_ORDERED);
     initEReference(getCDOSessionDef_CdoPackageRegistryDef(), this.getCDOPackageRegistryDef(), null,
-        "cdoPackageRegistryDef", null, 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        "ePackageRegistryDef", null, 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOSessionDef_LegacySupportEnabled(), ecorePackage.getEBoolean(), "legacySupportEnabled",
         "false", 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
@@ -693,7 +693,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
         RetryFailOverStrategyDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
-    initEClass(cdoPackageRegistryDefEClass, CDOPackageRegistryDef.class, "CDOPackageRegistryDef", !IS_ABSTRACT,
+    initEClass(ePackageRegistryDefEClass, CDOPackageRegistryDef.class, "CDOPackageRegistryDef", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCDOPackageRegistryDef_Packages(), this.getEPackageDef(), null, "packages", null, 0, -1,
         CDOPackageRegistryDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,

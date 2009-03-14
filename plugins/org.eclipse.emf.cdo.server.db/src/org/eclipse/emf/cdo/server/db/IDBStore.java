@@ -10,11 +10,16 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+
+import org.eclipse.emf.ecore.EModelElement;
 
 /**
  * @author Eike Stepper
@@ -29,4 +34,12 @@ public interface IDBStore extends IStore
   public IDBAdapter getDBAdapter();
 
   public IDBConnectionProvider getDBConnectionProvider();
+
+  public long getMetaID(EModelElement modelElement);
+
+  public EModelElement getMetaInstance(long id);
+
+  public IDBStoreAccessor getReader(ISession session);
+
+  public IDBStoreAccessor getWriter(ITransaction transaction);
 }

@@ -13,10 +13,11 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -27,26 +28,26 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
 {
   public static final int NO_INDEX = -1;
 
-  private CDOFeature feature;
+  private EStructuralFeature feature;
 
-  protected CDOFeatureDeltaImpl(CDOFeature feature)
+  protected CDOFeatureDeltaImpl(EStructuralFeature feature)
   {
     this.feature = feature;
   }
 
-  public CDOFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
+  public CDOFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     int featureID = in.readInt();
-    feature = cdoClass.getAllFeatures()[featureID];
+    feature = eClass.getEStructuralFeature(featureID);
   }
 
-  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  public void write(CDODataOutput out, EClass eClass) throws IOException
   {
     out.writeInt(getType().ordinal());
-    out.writeInt(cdoClass.getFeatureID(feature));
+    out.writeInt(eClass.getFeatureID(feature));
   }
 
-  public CDOFeature getFeature()
+  public EStructuralFeature getFeature()
   {
     return feature;
   }

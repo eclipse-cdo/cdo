@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -21,8 +22,17 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface IStore extends IRepositoryElement
+public interface IStore
 {
+  public IRepository getRepository();
+
+  /**
+   * Internal.
+   * 
+   * @since 2.0
+   */
+  public void setRepository(IRepository repository);
+
   /**
    * @since 2.0
    */
@@ -69,11 +79,7 @@ public interface IStore extends IRepositoryElement
    */
   public void setRevisionParallelism(RevisionParallelism revisionParallelism);
 
-  public boolean wasCrashed();
-
-  public void repairAfterCrash();
-
-  public long getLastMetaID();
+  public CDOIDMetaRange getNextMetaIDRange(int count);
 
   /**
    * Returns the store creation time.
@@ -81,6 +87,13 @@ public interface IStore extends IRepositoryElement
    * @since 2.0
    */
   public long getCreationTime();
+
+  /**
+   * Returns <code>true</code>if this store was activated for the first time, <code>false</code> otherwise.
+   * 
+   * @since 2.0
+   */
+  public boolean isFirstTime();
 
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.

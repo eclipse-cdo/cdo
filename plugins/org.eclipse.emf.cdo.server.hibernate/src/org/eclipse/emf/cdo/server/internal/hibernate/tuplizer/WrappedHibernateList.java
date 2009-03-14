@@ -12,12 +12,16 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -86,8 +90,9 @@ public class WrappedHibernateList implements InternalCDOList
     }
   }
 
-  public void adjustReferences(CDOReferenceAdjuster adjuster, CDOType type)
+  public void adjustReferences(CDOReferenceAdjuster adjuster, EClass classifier)
   {
+    CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
     for (int i = 0; i < size; i++)
     {
@@ -100,14 +105,16 @@ public class WrappedHibernateList implements InternalCDOList
     }
   }
 
-  public InternalCDOList clone(CDOType type)
+  public InternalCDOList clone(EClassifier classifier)
   {
+    CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
     InternalCDOList list = (InternalCDOList)CDOListFactory.DEFAULT.createList(size, 0, 0);
     for (int i = 0; i < size; i++)
     {
       list.add(type.copyValue(get(i)));
     }
+
     return list;
   }
 

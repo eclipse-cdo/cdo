@@ -13,7 +13,8 @@
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
@@ -39,9 +40,8 @@ import java.util.Collection;
  * A session has the following responsibilities:
  * <ul>
  * <li> {@link CDOSession#repository() Repository information}
- * <li> {@link CDOSession#getProtocol() Connection management}
- * <li> {@link CDOSession#getPackageRegistry() Package management}
- * <li> {@link CDOSession#getPackageManager() Package information}
+ * <li> {@link CDOSession#getPackageRegistry() Package registry}
+ * <li> {@link CDOSession#getPackageUnitManager() Package unit management}
  * <li> {@link CDOSession#getRevisionManager() Data management}
  * <li> {@link CDOSession#getViews() View management}
  * </ul>
@@ -59,21 +59,14 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    * Returns the EMF {@link EPackage.Registry package registry} that is used by all {@link EObject objects} of all
    * {@link CDOView views} of this session.
    * <p>
-   * This registry is managed by the {@link CDOSessionPackageManager package manager} of this session. All
-   * {@link EPackage packages} that are already persisted in the repository of this session are automatically registered
-   * with this registry. New packages can be locally registered with this registry and are committed to the repository
-   * through a {@link CDOTransaction transaction} if needed.
+   * This registry is managed by the {@link CDOPackageUnit package unit manager} of this session. All {@link EPackage
+   * packages} that are already persisted in the repository of this session are automatically registered with this
+   * registry. New packages can be locally registered with this registry and are committed to the repository through a
+   * {@link CDOTransaction transaction}, if needed.
    * 
-   * @see #getPackageManager()
+   * @see #getPackageUnitManager()
    */
   public CDOPackageRegistry getPackageRegistry();
-
-  /**
-   * Returns the CDO {@link CDOSessionPackageManager package manager} that represents the CDO {@link CDOPackage
-   * packages} currently stored in the repository of this session. The package manager can be used to query information
-   * about the packages in the repository as well as convert between the EMF and CDO instances of these packages.
-   */
-  public CDOSessionPackageManager getPackageManager();
 
   /**
    * Returns the CDO {@link CDORevisionManager revision manager} that manages the {@link CDORevision revisions} of the
@@ -170,6 +163,11 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    */
   public interface Options extends CDOCommonSession.Options
   {
+
+    public boolean isGeneratedPackageEmulationEnabled();
+
+    public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled);
+
     /**
      * Specifies whether objects will be invalidated due by other users changes.
      * <p>
@@ -221,14 +219,30 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
      */
     public void setRevisionFactory(CDORevisionFactory factory);
 
+    /**
+     * @author Eike Stepper
+     */
+    public interface GeneratedPackageEmulationEvent extends IOptionsEvent, CDOEvent
+    {
+    }
+
+    /**
+     * @author Eike Stepper
+     */
     public interface PassiveUpdateEvent extends IOptionsEvent, CDOEvent
     {
     }
 
+    /**
+     * @author Eike Stepper
+     */
     public interface CollectionLoadingPolicyEvent extends IOptionsEvent, CDOEvent
     {
     }
 
+    /**
+     * @author Eike Stepper
+     */
     public interface RevisionFactoryEvent extends IOptionsEvent, CDOEvent
     {
     }

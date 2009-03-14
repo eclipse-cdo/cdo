@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class QueryRequest extends CDOClientRequest<List<Object>>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryRequest.class);
 
   private int viewID;
 
@@ -73,9 +73,9 @@ public class QueryRequest extends CDOClientRequest<List<Object>>
         numberOfObjectsReceived++;
       }
 
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Query executed [{0} elements received]", numberOfObjectsReceived);
+        TRACER.format("Query executed [{0} elements received]", numberOfObjectsReceived);
       }
     }
     catch (RuntimeException ex)

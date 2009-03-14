@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
@@ -25,6 +23,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,14 +40,13 @@ import java.util.Set;
  */
 public class LoadRevisionIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      LoadRevisionIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionIndication.class);
 
   protected CDOID[] ids;
 
   protected int referenceChunk;
 
-  protected Map<CDOClass, CDOFetchRule> fetchRules = new HashMap<CDOClass, CDOFetchRule>();
+  protected Map<EClass, CDOFetchRule> fetchRules = new HashMap<EClass, CDOFetchRule>();
 
   protected CDOID contextID = CDOID.NULL;
 
@@ -66,24 +66,24 @@ public class LoadRevisionIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     referenceChunk = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read referenceChunk: {0}", referenceChunk);
+      TRACER.format("Read referenceChunk: {0}", referenceChunk);
     }
 
     int size = in.readInt();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Reading {0} IDs", size);
+      TRACER.format("Reading {0} IDs", size);
     }
 
     ids = new CDOID[size];
     for (int i = 0; i < size; i++)
     {
       CDOID id = in.readCDOID();
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Read ID: {0}", id);
+        TRACER.format("Read ID: {0}", id);
       }
 
       ids[i] = id;
@@ -99,15 +99,15 @@ public class LoadRevisionIndication extends CDOReadIndication
       }
 
       contextID = in.readCDOID();
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Reading fetch rules for context {0}", contextID);
+        TRACER.format("Reading fetch rules for context {0}", contextID);
       }
 
       for (int i = 0; i < fetchSize; i++)
       {
-        CDOFetchRule fetchRule = new CDOFetchRule(in, getPackageManager());
-        fetchRules.put(fetchRule.getCDOClass(), fetchRule);
+        CDOFetchRule fetchRule = new CDOFetchRule(in, getRepository().getPackageRegistry());
+        fetchRules.put(fetchRule.getEClass(), fetchRule);
       }
     }
   }
@@ -117,9 +117,9 @@ public class LoadRevisionIndication extends CDOReadIndication
   {
     List<CDORevision> additionalRevisions = new ArrayList<CDORevision>();
     Set<CDOID> revisionIDs = new HashSet<CDOID>();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} revisions", ids.length);
+      TRACER.format("Writing {0} revisions", ids.length);
     }
 
     for (CDOID id : ids)
@@ -131,9 +131,9 @@ public class LoadRevisionIndication extends CDOReadIndication
     Set<CDOFetchRule> visitedFetchRules = new HashSet<CDOFetchRule>();
     if (!CDOIDUtil.isNull(contextID) && fetchRules.size() > 0)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Collecting more revisions based on rules");
+        TRACER.format("Collecting more revisions based on rules");
       }
 
       InternalCDORevision revisionContext = getRevision(contextID);
@@ -159,9 +159,9 @@ public class LoadRevisionIndication extends CDOReadIndication
     }
 
     int additionalSize = additionalRevisions.size();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} additional revisions", additionalSize);
+      TRACER.format("Writing {0} additional revisions", additionalSize);
     }
 
     out.writeInt(additionalSize);
@@ -173,7 +173,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected InternalCDORevision getRevision(CDOID id)
   {
-    RevisionManager revisionManager = getRevisionManager();
+    RevisionManager revisionManager = getRepository().getRevisionManager();
     return revisionManager.getRevision(id, referenceChunk);
   }
 
@@ -181,7 +181,7 @@ public class LoadRevisionIndication extends CDOReadIndication
       List<CDORevision> additionalRevisions, Set<CDOFetchRule> visitedFetchRules)
   {
     getSession().collectContainedRevisions(revision, referenceChunk, revisions, additionalRevisions);
-    CDOFetchRule fetchRule = fetchRules.get(revision.getCDOClass());
+    CDOFetchRule fetchRule = fetchRules.get(revision.getEClass());
     if (fetchRule == null || visitedFetchRules.contains(fetchRule))
     {
       return;
@@ -189,8 +189,9 @@ public class LoadRevisionIndication extends CDOReadIndication
 
     visitedFetchRules.add(fetchRule);
 
-    RevisionManager revisionManager = (RevisionManager)getSessionManager().getRepository().getRevisionManager();
-    for (CDOFeature feature : fetchRule.getFeatures())
+    RevisionManager revisionManager = (RevisionManager)getSession().getSessionManager().getRepository()
+        .getRevisionManager();
+    for (EStructuralFeature feature : fetchRule.getFeatures())
     {
       if (feature.isMany())
       {

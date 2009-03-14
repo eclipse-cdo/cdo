@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.id;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 
 /**
@@ -38,5 +39,11 @@ public class CDOIDLongImpl extends AbstractCDOIDLong implements CDOIDObject
   public String toString()
   {
     return "OID" + getLongValue();
+  }
+
+  @Override
+  protected int doCompareTo(CDOID o) throws ClassCastException
+  {
+    return new Long(getLongValue()).compareTo(((CDOIDLongImpl)o).getLongValue());
   }
 }

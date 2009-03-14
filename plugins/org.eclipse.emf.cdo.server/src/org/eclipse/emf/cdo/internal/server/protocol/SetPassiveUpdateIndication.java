@@ -25,8 +25,7 @@ import java.io.IOException;
  */
 public class SetPassiveUpdateIndication extends SyncRevisionsIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      SetPassiveUpdateIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SetPassiveUpdateIndication.class);
 
   public SetPassiveUpdateIndication(CDOServerProtocol protocol)
   {
@@ -38,9 +37,9 @@ public class SetPassiveUpdateIndication extends SyncRevisionsIndication
   {
     super.indicating(in);
     boolean passiveUpdateEnabled = in.readBoolean();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
+      TRACER.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
     }
 
     getSession().setPassiveUpdateEnabled(passiveUpdateEnabled);

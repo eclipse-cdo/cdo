@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 public class ResourceIDRequest extends CDOClientRequest<CDOID>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResourceIDRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ResourceIDRequest.class);
 
   private int viewID;
 
@@ -42,15 +42,15 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing viewID: {0}", viewID);
+      TRACER.format("Writing viewID: {0}", viewID);
     }
 
     out.writeInt(viewID);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing path: {0}", path);
+      TRACER.format("Writing path: {0}", path);
     }
 
     out.writeString(path);
@@ -60,9 +60,9 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
   protected CDOID confirming(CDODataInput in) throws IOException
   {
     CDOID id = in.readCDOID();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read ID: {0}", id);
+      TRACER.format("Read ID: {0}", id);
     }
 
     return id;

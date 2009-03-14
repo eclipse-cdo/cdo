@@ -195,4 +195,4 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
         && URI.create(getNsURI()) != null, "nsURI not set or not valid!");
   }
 
-} // CDOPackageDefImpl
+} // EPackageDefImpl

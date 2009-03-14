@@ -12,8 +12,9 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import java.util.HashMap;
 
@@ -27,16 +28,16 @@ public class HibernateCommitContext
 {
   private CommitContext commitContext;
 
-  private HashMap<CDOID, CDORevision> dirtyObjects = null;
+  private HashMap<CDOID, InternalCDORevision> dirtyObjects = null;
 
-  private HashMap<CDOID, CDORevision> newObjects = null;
+  private HashMap<CDOID, InternalCDORevision> newObjects = null;
 
-  public CommitContext getCommitContext()
+  public IStoreAccessor.CommitContext getCommitContext()
   {
     return commitContext;
   }
 
-  public void setCommitContext(CommitContext commitContext)
+  public void setCommitContext(IStoreAccessor.CommitContext commitContext)
   {
     this.commitContext = commitContext;
   }
@@ -51,26 +52,26 @@ public class HibernateCommitContext
       return;
     }
 
-    dirtyObjects = new HashMap<CDOID, CDORevision>();
-    for (CDORevision cdoRevision : commitContext.getDirtyObjects())
+    dirtyObjects = new HashMap<CDOID, InternalCDORevision>();
+    for (InternalCDORevision cdoRevision : commitContext.getDirtyObjects())
     {
       dirtyObjects.put(cdoRevision.getID(), cdoRevision);
     }
 
-    newObjects = new HashMap<CDOID, CDORevision>();
-    for (CDORevision cdoRevision : commitContext.getNewObjects())
+    newObjects = new HashMap<CDOID, InternalCDORevision>();
+    for (InternalCDORevision cdoRevision : commitContext.getNewObjects())
     {
       newObjects.put(cdoRevision.getID(), cdoRevision);
     }
   }
 
-  public CDORevision getDirtyObject(CDOID id)
+  public InternalCDORevision getDirtyObject(CDOID id)
   {
     initialize();
     return dirtyObjects.get(id);
   }
 
-  public CDORevision getNewObject(CDOID id)
+  public InternalCDORevision getNewObject(CDOID id)
   {
     initialize();
     return newObjects.get(id);
@@ -79,7 +80,7 @@ public class HibernateCommitContext
   public void setNewID(CDOID oldId, CDOID newId)
   {
     initialize();
-    CDORevision cdoRevision;
+    InternalCDORevision cdoRevision;
     if ((cdoRevision = dirtyObjects.get(oldId)) != null)
     {
       dirtyObjects.remove(oldId);

@@ -11,26 +11,23 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
-import org.eclipse.emf.cdo.session.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
-import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.EMFUtil;
+
+import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -40,6 +37,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
@@ -78,7 +76,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(getModel1Package());
-      session.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
+      session.getPackageRegistry().putEPackage(getModel2Package());
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
@@ -125,16 +123,10 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitNestedPackages() throws Exception
   {
     CDOSession session = openSession();
-    assertEquals(0, session.getPackageRegistry().size());
+    assertEquals(2, session.getPackageRegistry().size());
 
-    try
-    {
-      session.getPackageRegistry().putEPackage(SubpackagePackage.eINSTANCE);
-      fail("IllegalArgumentException expected");
-    }
-    catch (IllegalArgumentException success)
-    {
-    }
+    session.getPackageRegistry().putEPackage(getModel3SubpackagePackage());
+    assertEquals(4, session.getPackageRegistry().size());
 
     session.close();
   }
@@ -142,10 +134,10 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testCommitTopLevelPackages() throws Exception
   {
     CDOSession session = openSession();
-    assertEquals(0, session.getPackageRegistry().size());
-
-    session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
     assertEquals(2, session.getPackageRegistry().size());
+
+    session.getPackageRegistry().putEPackage(getModel3Package());
+    assertEquals(4, session.getPackageRegistry().size());
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res");
@@ -154,13 +146,8 @@ public class PackageRegistryTest extends AbstractCDOTest
     res.getContents().add(class1);
     transaction.commit();
 
-    CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
-    assertEquals(11, model3Package.getMetaIDRange().size());
-    assertNotNull(model3Package.getEcore());
-
-    CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());
-    assertNull(subPackage.getMetaIDRange());
-    assertNull(subPackage.getEcore());
+    EPackage model3Package = session.getPackageRegistry().getEPackage(getModel3Package().getNsURI());
+    assertNotNull(model3Package);
     session.close();
   }
 
@@ -168,7 +155,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     {
       CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
+      session.getPackageRegistry().putEPackage(getModel3Package());
 
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
@@ -180,13 +167,11 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
 
     CDOSession session = openSession();
-    CDOPackage model3Package = session.getPackageManager().lookupPackage(Model3Package.eINSTANCE.getNsURI());
-    assertEquals(11, model3Package.getMetaIDRange().size());
-    assertNotNull(model3Package.getEcore());
+    EPackage model3Package = session.getPackageRegistry().getEPackage(getModel3Package().getNsURI());
+    assertNotNull(model3Package);
 
-    CDOPackage subPackage = session.getPackageManager().lookupPackage(SubpackagePackage.eINSTANCE.getNsURI());
-    assertNull(subPackage.getMetaIDRange());
-    assertNull(subPackage.getEcore());
+    EPackage subPackage = session.getPackageRegistry().getEPackage(getModel3SubpackagePackage().getNsURI());
+    assertNotNull(subPackage);
     session.close();
   }
 
@@ -232,38 +217,29 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testEagerPackageRegistry() throws Exception
   {
-    CDOPackageTypeRegistry.INSTANCE.register(getModel1Package());
-    try
     {
-      {
-        // Create resource in session 1
-        CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
-        configuration.setConnector(getConnector());
-        configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
-        configuration.setEagerPackageRegistry();
+      // Create resource in session 1
+      CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+      configuration.setConnector(getConnector());
+      configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
 
-        CDOSession session = configuration.openSession();
-        CDOTransaction transaction = session.openTransaction();
-        CDOResource res = transaction.createResource("/res");
-
-        Company company = getModel1Factory().createCompany();
-        company.setName("Eike");
-        res.getContents().add(company);
-        transaction.commit();
-      }
-
-      // Load resource in session 2
-      CDOSession session = openSession();
+      CDOSession session = configuration.openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+      CDOResource res = transaction.createResource("/res");
 
-      Company company = (Company)res.getContents().get(0);
-      assertEquals("Eike", company.getName());
+      Company company = getModel1Factory().createCompany();
+      company.setName("Eike");
+      res.getContents().add(company);
+      transaction.commit();
     }
-    finally
-    {
-      CDOPackageTypeRegistry.INSTANCE.clear();
-    }
+
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
+
+    Company company = (Company)res.getContents().get(0);
+    assertEquals("Eike", company.getName());
   }
 
   public void testLazyPackageRegistry() throws Exception
@@ -273,7 +249,6 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
-      configuration.setLazyPackageRegistry();
 
       CDOSession session = configuration.openSession();
       CDOTransaction transaction = session.openTransaction();
@@ -298,7 +273,7 @@ public class PackageRegistryTest extends AbstractCDOTest
    * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
    * https://bugs.eclipse.org/bugs/show_bug.cgi?id=249383
    */
-  public void testGlobalDynamicPackageEager() throws Exception
+  public void _testGlobalDynamicPackageEager() throws Exception
   {
     EPackage p = EcoreFactory.eINSTANCE.createEPackage();
     p.setName("dynamic");
@@ -310,9 +285,8 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     p.getEClassifiers().add(c);
     EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
-    CDOPackageTypeRegistry.INSTANCE.registerNative(p.getNsURI());
 
-    CDOSession session = openEagerSession();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res");
 
@@ -339,10 +313,10 @@ public class PackageRegistryTest extends AbstractCDOTest
     c.setName("DClass");
 
     p.getEClassifiers().add(c);
-    EMFUtil.prepareDynamicEPackage(p);
+    CDOFactoryImpl.prepareDynamicEPackage(p);
     EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
 
-    CDOSession session = openLazySession();
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res");
 
@@ -356,7 +330,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public void testDynamicPackageFactory() throws Exception
   {
-    // -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.EPackageRegistryImpl
+    // -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.CDOPackageRegistryImpl
 
     {
       EPackage model1 = loadModel("model1.ecore");
@@ -406,7 +380,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 
-      CDOObject company = transaction.newInstance(companyClass);
+      CDOObject company = (CDOObject)EcoreUtil.create(companyClass);
       company.eSet(nameAttribute, "Eike");
       res.getContents().add(company);
       transaction.commit();

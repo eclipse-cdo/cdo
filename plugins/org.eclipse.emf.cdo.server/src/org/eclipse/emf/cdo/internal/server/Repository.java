@@ -10,23 +10,28 @@
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/233273    
  *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Stefan Winkler - changed order of determining audit and revision delta support.
  */
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IRepositoryElement;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -35,10 +40,15 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +58,7 @@ import java.util.UUID;
  * @author Eike Stepper
  * @since 2.0
  */
-public class Repository extends Container<IRepositoryElement> implements IRepository
+public class Repository extends Container<Object> implements IRepository, InternalCDOPackageRegistry.PackageLoader
 {
   private String name;
 
@@ -64,7 +74,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
 
   private boolean verifyingRevisions;
 
-  private PackageManager packageManager;
+  private InternalCDOPackageRegistry packageRegistry;
 
   private SessionManager sessionManager;
 
@@ -83,12 +93,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   private List<ReadAccessHandler> readAccessHandlers = new ArrayList<ReadAccessHandler>();
 
   private List<WriteAccessHandler> writeAccessHandlers = new ArrayList<WriteAccessHandler>();
-
-  @ExcludeFromDump
-  private transient IRepositoryElement[] elements;
-
-  @ExcludeFromDump
-  private transient long lastMetaID;
 
   @ExcludeFromDump
   private transient long lastCommitTimeStamp;
@@ -169,17 +173,38 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return verifyingRevisions;
   }
 
-  public PackageManager getPackageManager()
+  public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
-    return packageManager;
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    return accessor.loadPackageUnit((InternalCDOPackageUnit)packageUnit);
   }
 
-  /**
-   * @since 2.0
-   */
-  public void setPackageManager(PackageManager packageManager)
+  public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext)
   {
-    this.packageManager = packageManager;
+    if (considerCommitContext)
+    {
+      IStoreAccessor.CommitContext commitContext = StoreThreadLocal.getCommitContext();
+      if (commitContext != null)
+      {
+        InternalCDOPackageRegistry contextualPackageRegistry = commitContext.getPackageRegistry();
+        if (contextualPackageRegistry != null)
+        {
+          return contextualPackageRegistry;
+        }
+      }
+    }
+
+    return packageRegistry;
+  }
+
+  public InternalCDOPackageRegistry getPackageRegistry()
+  {
+    return getPackageRegistry(true);
+  }
+
+  public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
+  {
+    this.packageRegistry = packageRegistry;
   }
 
   public SessionManager getSessionManager()
@@ -350,8 +375,10 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     return handler;
   }
 
-  public IRepositoryElement[] getElements()
+  public Object[] getElements()
   {
+    final Object[] elements = { packageRegistry, sessionManager, revisionManager, queryManager, notificationManager,
+        commitManager, lockManager, store };
     return elements;
   }
 
@@ -359,23 +386,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   public boolean isEmpty()
   {
     return false;
-  }
-
-  public synchronized CDOIDMetaRange getMetaIDRange(int count)
-  {
-    CDOID lowerBound = CDOIDUtil.createMeta(lastMetaID + 1);
-    lastMetaID += count;
-    return CDOIDUtil.createMetaRange(lowerBound, count);
-  }
-
-  public long getLastMetaID()
-  {
-    return lastMetaID;
-  }
-
-  public void setLastMetaID(long lastMetaID)
-  {
-    this.lastMetaID = lastMetaID;
   }
 
   /**
@@ -528,7 +538,7 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
   {
     super.doBeforeActivate();
     checkState(!StringUtil.isEmpty(name), "name is empty");
-    checkState(packageManager, "packageManager");
+    checkState(packageRegistry, "packageRegistry");
     checkState(sessionManager, "sessionManager");
     checkState(revisionManager, "revisionManager");
     checkState(queryManager, "queryManager");
@@ -536,7 +546,8 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     checkState(commitManager, "commitManager");
     checkState(lockManager, "lockingManager");
 
-    packageManager.setRepository(this);
+    packageRegistry.setReplacingDescriptors(true);
+    packageRegistry.setPackageLoader(this);
     sessionManager.setRepository(this);
     revisionManager.setRepository(this);
     queryManager.setRepository(this);
@@ -545,7 +556,6 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     lockManager.setRepository(this);
 
     checkState(store, "store");
-    supportingRevisionDeltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
 
     {
       String value = getProperties().get(Props.SUPPORTING_AUDITS);
@@ -561,29 +571,20 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       }
     }
 
+    supportingRevisionDeltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
+
     {
       String value = getProperties().get(Props.VERIFYING_REVISIONS);
       verifyingRevisions = value == null ? false : Boolean.valueOf(value);
     }
-
-    elements = new IRepositoryElement[] { packageManager, sessionManager, revisionManager, queryManager,
-        notificationManager, commitManager, lockManager, store };
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    LifecycleUtil.activate(packageRegistry);
     LifecycleUtil.activate(store);
-    LifecycleUtil.activate(packageManager);
-    if (store.wasCrashed())
-    {
-      OM.LOG.info("Crash of repository " + name + " detected");
-      store.repairAfterCrash();
-    }
-
-    setLastMetaID(store.getLastMetaID());
-
     LifecycleUtil.activate(sessionManager);
     LifecycleUtil.activate(revisionManager);
     LifecycleUtil.activate(queryManager);
@@ -592,6 +593,14 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.activate(queryHandlerProvider);
     LifecycleUtil.activate(lockManager);
 
+    if (store.isFirstTime())
+    {
+      initSystemPackages();
+    }
+    else
+    {
+      readPackageUnits();
+    }
   }
 
   @Override
@@ -604,10 +613,64 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     LifecycleUtil.deactivate(queryManager);
     LifecycleUtil.deactivate(revisionManager);
     LifecycleUtil.deactivate(sessionManager);
-
-    LifecycleUtil.deactivate(packageManager);
     LifecycleUtil.deactivate(store);
+    LifecycleUtil.deactivate(packageRegistry);
     super.doDeactivate();
+  }
+
+  protected void initSystemPackages()
+  {
+    IStoreAccessor writer = store.getWriter(null);
+    StoreThreadLocal.setAccessor(writer);
+
+    try
+    {
+      InternalCDOPackageUnit ecoreUnit = initSystemPackage(EcorePackage.eINSTANCE);
+      InternalCDOPackageUnit eresourceUnit = initSystemPackage(EresourcePackage.eINSTANCE);
+      InternalCDOPackageUnit[] systemUnits = { ecoreUnit, eresourceUnit };
+
+      writer.writePackageUnits(systemUnits, new Monitor());
+      writer.commit(new Monitor());
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
+      StoreThreadLocal.release();
+    }
+  }
+
+  protected InternalCDOPackageUnit initSystemPackage(EPackage ePackage)
+  {
+    EMFUtil.registerPackage(ePackage, packageRegistry);
+    InternalCDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
+    CDOIDMetaRange metaIDRange = store.getNextMetaIDRange(packageInfo.getMetaIDRange().size());
+    packageInfo.setMetaIDRange(metaIDRange);
+    packageRegistry.getMetaInstanceMapper().mapMetaInstances(ePackage, metaIDRange);
+
+    InternalCDOPackageUnit packageUnit = packageInfo.getPackageUnit();
+    packageUnit.setTimeStamp(store.getCreationTime());
+    packageUnit.setState(CDOPackageUnit.State.LOADED);
+    return packageUnit;
+  }
+
+  protected void readPackageUnits()
+  {
+    IStoreAccessor reader = store.getReader(null);
+    StoreThreadLocal.setAccessor(reader);
+
+    try
+    {
+      Collection<InternalCDOPackageUnit> packageUnits = reader.readPackageUnits();
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        packageRegistry.putPackageUnit(packageUnit);
+      }
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(reader); // Don't let the null-context accessor go to the pool!
+      StoreThreadLocal.release();
+    }
   }
 
   /**
@@ -623,9 +686,9 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
     @Override
     protected void doBeforeActivate() throws Exception
     {
-      if (getPackageManager() == null)
+      if (getPackageRegistry() == null)
       {
-        setPackageManager(createPackageManager());
+        setPackageRegistry(createPackageRegistry());
       }
 
       if (getSessionManager() == null)
@@ -661,9 +724,9 @@ public class Repository extends Container<IRepositoryElement> implements IReposi
       super.doBeforeActivate();
     }
 
-    protected PackageManager createPackageManager()
+    protected InternalCDOPackageRegistry createPackageRegistry()
     {
-      return new PackageManager();
+      return new CDOPackageRegistryImpl();
     }
 
     protected SessionManager createSessionManager()

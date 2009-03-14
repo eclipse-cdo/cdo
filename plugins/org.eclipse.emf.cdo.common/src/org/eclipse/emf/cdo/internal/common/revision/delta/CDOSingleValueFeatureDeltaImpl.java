@@ -14,11 +14,12 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOFeature;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -31,32 +32,33 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
 
   private Object newValue;
 
-  public CDOSingleValueFeatureDeltaImpl(CDOFeature feature, int index, Object value)
+  public CDOSingleValueFeatureDeltaImpl(EStructuralFeature feature, int index, Object value)
   {
     super(feature);
     this.index = index;
     newValue = value;
   }
 
-  public CDOSingleValueFeatureDeltaImpl(CDODataInput in, CDOClass cdoClass) throws IOException
+  public CDOSingleValueFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
-    super(in, cdoClass);
+    super(in, eClass);
     index = in.readInt();
-    newValue = ((InternalCDOFeature)getFeature()).readValue(in);
+    newValue = in.readCDOFeatureValue(getFeature());
   }
 
   @Override
-  public void write(CDODataOutput out, CDOClass cdoClass) throws IOException
+  public void write(CDODataOutput out, EClass eClass) throws IOException
   {
-    super.write(out, cdoClass);
+    super.write(out, eClass);
     out.writeInt(index);
     Object valueToWrite = newValue;
-    if (valueToWrite != null && getFeature().isReference())
+    EStructuralFeature feature = getFeature();
+    if (valueToWrite != null && feature instanceof EReference)
     {
       valueToWrite = out.getIDProvider().provideCDOID(newValue);
     }
 
-    ((InternalCDOFeature)getFeature()).writeValue(out, valueToWrite);
+    out.writeCDOFeatureValue(valueToWrite, feature);
   }
 
   public int getIndex()

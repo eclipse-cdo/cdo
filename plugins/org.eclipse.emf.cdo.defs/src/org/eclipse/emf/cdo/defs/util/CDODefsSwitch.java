@@ -178,10 +178,10 @@ public class CDODefsSwitch<T>
     }
     case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF:
     {
-      CDOPackageRegistryDef cdoPackageRegistryDef = (CDOPackageRegistryDef)theEObject;
-      T result = caseCDOPackageRegistryDef(cdoPackageRegistryDef);
+      CDOPackageRegistryDef ePackageRegistryDef = (CDOPackageRegistryDef)theEObject;
+      T result = caseCDOPackageRegistryDef(ePackageRegistryDef);
       if (result == null)
-        result = caseDef(cdoPackageRegistryDef);
+        result = caseDef(ePackageRegistryDef);
       if (result == null)
         result = defaultCase(theEObject);
       return result;

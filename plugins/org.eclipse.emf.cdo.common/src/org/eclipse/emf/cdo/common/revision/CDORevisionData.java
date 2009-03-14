@@ -11,7 +11,8 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
@@ -33,21 +34,21 @@ public interface CDORevisionData
 
   public int getContainingFeatureID();
 
-  public Object get(CDOFeature feature, int index);
+  public Object get(EStructuralFeature feature, int index);
 
-  public int size(CDOFeature feature);
+  public int size(EStructuralFeature feature);
 
-  public boolean isEmpty(CDOFeature feature);
+  public boolean isEmpty(EStructuralFeature feature);
 
-  public boolean contains(CDOFeature feature, Object value);
+  public boolean contains(EStructuralFeature feature, Object value);
 
-  public int indexOf(CDOFeature feature, Object value);
+  public int indexOf(EStructuralFeature feature, Object value);
 
-  public int lastIndexOf(CDOFeature feature, Object value);
+  public int lastIndexOf(EStructuralFeature feature, Object value);
 
-  public <T> T[] toArray(CDOFeature feature, T[] array);
+  public <T> T[] toArray(EStructuralFeature feature, T[] array);
 
-  public Object[] toArray(CDOFeature feature);
+  public Object[] toArray(EStructuralFeature feature);
 
-  public int hashCode(CDOFeature feature);
+  public int hashCode(EStructuralFeature feature);
 }

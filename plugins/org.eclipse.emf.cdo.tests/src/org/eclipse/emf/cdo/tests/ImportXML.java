@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.StoreUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
@@ -88,7 +88,7 @@ public class ImportXML
   private static IStore createStore()
   {
     // You might want to create an IDBStore here instead if memory is an issue!
-    return StoreUtil.createMEMStore();
+    return MEMStoreUtil.createMEMStore();
   }
 
   private static EObject getInputModel()

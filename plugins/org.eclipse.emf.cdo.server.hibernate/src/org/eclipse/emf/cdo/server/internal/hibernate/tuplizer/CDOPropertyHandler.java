@@ -11,10 +11,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Martin Taal
@@ -25,22 +26,22 @@ public abstract class CDOPropertyHandler
 
   private CDORevisionTuplizer tuplizer;
 
-  private CDOFeature cdoFeature;
+  private EStructuralFeature feature;
 
   private boolean virtualProperty = false;
 
   public CDOPropertyHandler(CDORevisionTuplizer tuplizer, String propertyName)
   {
     this.tuplizer = tuplizer;
-    cdoFeature = tuplizer.getCDOClass().lookupFeature(propertyName);
+    feature = tuplizer.getEClass().getEStructuralFeature(propertyName);
     if (getTracer().isEnabled())
     {
       getTracer().trace(
-          "Created " + this.getClass().getName() + " for cdoClass/feature: " + tuplizer.getCDOClass().getName() + "."
+          "Created " + this.getClass().getName() + " for eClass/feature: " + tuplizer.getEClass().getName() + "."
               + propertyName);
     }
 
-    if (cdoFeature == null)
+    if (feature == null)
     {
       if (isVirtualPropertyAllowed())
       {
@@ -67,9 +68,9 @@ public abstract class CDOPropertyHandler
     return tuplizer;
   }
 
-  public CDOFeature getCDOFeature()
+  public EStructuralFeature getEStructuralFeature()
   {
-    return cdoFeature;
+    return feature;
   }
 
   protected boolean isVirtualPropertyAllowed()

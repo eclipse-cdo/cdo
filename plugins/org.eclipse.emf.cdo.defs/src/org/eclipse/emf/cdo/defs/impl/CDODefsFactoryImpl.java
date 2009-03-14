@@ -209,8 +209,8 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
    */
   public CDOPackageRegistryDef createCDOPackageRegistryDef()
   {
-    CDOPackageRegistryDefImpl cdoPackageRegistryDef = new CDOPackageRegistryDefImpl();
-    return cdoPackageRegistryDef;
+    CDOPackageRegistryDefImpl ePackageRegistryDef = new CDOPackageRegistryDefImpl();
+    return ePackageRegistryDef;
   }
 
   /**

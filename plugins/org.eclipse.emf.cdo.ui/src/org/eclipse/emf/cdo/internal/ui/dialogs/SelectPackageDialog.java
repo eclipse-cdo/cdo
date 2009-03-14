@@ -7,17 +7,19 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-import org.eclipse.emf.cdo.session.CDOPackageType;
-import org.eclipse.emf.cdo.session.CDOPackageTypeRegistry;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.BaseDialog;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -73,7 +75,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     viewer.getTable().setLayoutData(UIUtil.createGridData());
     viewer.setContentProvider(new PackageContentProvider());
     viewer.setLabelProvider(new PackageLabelProvider());
-    viewer.setInput(CDOPackageTypeRegistry.INSTANCE);
+    viewer.setInput(EPackage.Registry.INSTANCE);
 
     String[] uris = OM.PREF_HISTORY_SELECT_PACKAGES.getValue();
     if (uris != null)
@@ -116,7 +118,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 
     public Object[] getElements(Object inputElement)
     {
-      Set<String> uris = new HashSet<String>(CDOPackageTypeRegistry.INSTANCE.keySet());
+      Set<String> uris = new HashSet<String>(EPackage.Registry.INSTANCE.keySet());
       uris.removeAll(excludedURIs);
 
       List<String> elements = new ArrayList<String>(uris);
@@ -147,14 +149,20 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     {
       if (element instanceof String)
       {
-        CDOPackageType packageType = CDOPackageTypeRegistry.INSTANCE.get(element);
-        switch (packageType)
+        Type type = CDOPackageTypeRegistry.INSTANCE.lookup((String)element);
+        switch (type)
         {
         case LEGACY:
           return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_LEGACY);
 
         case NATIVE:
           return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_NATIVE);
+
+        case DYNAMIC:
+          return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_DYNAMIC);
+
+        case UNKNOWN:
+          return SharedIcons.getImage(SharedIcons.OBJ_EPACKAGE_UNKNOWN);
         }
       }
 

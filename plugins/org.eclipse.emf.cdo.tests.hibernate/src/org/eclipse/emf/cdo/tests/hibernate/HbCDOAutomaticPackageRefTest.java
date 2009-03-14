@@ -38,7 +38,7 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
   {
     try
     {
-      CDOSession session = openLazySession();
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
       session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
 
@@ -58,7 +58,7 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
   {
     try
     {
-      CDOSession session = openLazySession();
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
       session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
 
@@ -79,7 +79,7 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
   {
     try
     {
-      CDOSession session = openLazySession();
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
       session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
 
@@ -99,7 +99,7 @@ public class HbCDOAutomaticPackageRefTest extends AbstractCDOTest
   {
     try
     {
-      CDOSession session = openLazySession();
+      CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(InterfacePackage.eINSTANCE);
       session.getPackageRegistry().putEPackage(ReferencePackage.eINSTANCE);
 

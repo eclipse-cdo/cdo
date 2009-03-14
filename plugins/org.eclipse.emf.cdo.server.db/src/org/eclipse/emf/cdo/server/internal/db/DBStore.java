@@ -7,20 +7,23 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.common.model.CDOType;
-import org.eclipse.emf.cdo.internal.server.LongIDStore;
-import org.eclipse.emf.cdo.internal.server.StoreAccessorPool;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDMeta;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
-import org.eclipse.emf.cdo.server.db.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.server.LongIDStore;
+import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -30,15 +33,22 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -49,6 +59,8 @@ public class DBStore extends LongIDStore implements IDBStore
   public static final String TYPE = "db";
 
   private long creationTime;
+
+  private boolean firstTime;
 
   private IMappingStrategy mappingStrategy;
 
@@ -82,20 +94,50 @@ public class DBStore extends LongIDStore implements IDBStore
   @ExcludeFromDump
   private transient StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
 
-  @ExcludeFromDump
-  private transient int nextPackageID;
+  private static Map<EClassifier, DBType> typeMap = new HashMap<EClassifier, DBType>();
 
-  @ExcludeFromDump
-  private transient int nextClassID;
+  static
+  {
+    typeMap.put(EcorePackage.eINSTANCE.getEDate(), DBType.TIMESTAMP);
+    typeMap.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
 
-  @ExcludeFromDump
-  private transient int nextFeatureID;
+    typeMap.put(EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN);
+    typeMap.put(EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT);
+    typeMap.put(EcorePackage.eINSTANCE.getEChar(), DBType.CHAR);
+    typeMap.put(EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE);
+    typeMap.put(EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT);
+    typeMap.put(EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER);
+    typeMap.put(EcorePackage.eINSTANCE.getELong(), DBType.BIGINT);
+    typeMap.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
+
+    typeMap.put(EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN);
+    typeMap.put(EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT);
+    typeMap.put(EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR);
+    typeMap.put(EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE);
+    typeMap.put(EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT);
+    typeMap.put(EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER);
+    typeMap.put(EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT);
+    typeMap.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
+  }
 
   public DBStore()
   {
-    super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.AUDITING, RevisionTemporality.NONE),
-        set(RevisionParallelism.NONE));
+    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(RevisionTemporality.AUDITING,
+        RevisionTemporality.NONE), set(RevisionParallelism.NONE));
     setRevisionTemporality(RevisionTemporality.AUDITING);
+  }
+
+  @Override
+  public Set<ChangeFormat> getSupportedChangeFormats()
+  {
+    if (getRevisionTemporality() == RevisionTemporality.AUDITING)
+    {
+      return set(ChangeFormat.REVISION);
+    }
+    else
+    {
+      return set(ChangeFormat.REVISION, ChangeFormat.DELTA);
+    }
   }
 
   public IMappingStrategy getMappingStrategy()
@@ -126,7 +168,7 @@ public class DBStore extends LongIDStore implements IDBStore
 
   public void setDbConnectionProvider(IDBConnectionProvider dbConnectionProvider)
   {
-    // FIXME: need to update provider in JDBCWrapper, too?
+    // TODO Need to update provider in JDBCWrapper, too?
     this.dbConnectionProvider = dbConnectionProvider;
   }
 
@@ -150,15 +192,21 @@ public class DBStore extends LongIDStore implements IDBStore
     return accessorWriteDistributor;
   }
 
-  public synchronized IDBSchema getDBSchema()
+  public IDBSchema getDBSchema()
   {
-    // TODO Better synchronization or eager init
-    if (dbSchema == null)
-    {
-      dbSchema = createSchema();
-    }
-
     return dbSchema;
+  }
+
+  @Override
+  public DBStoreAccessor getReader(ISession session)
+  {
+    return (DBStoreAccessor)super.getReader(session);
+  }
+
+  @Override
+  public DBStoreAccessor getWriter(ITransaction transaction)
+  {
+    return (DBStoreAccessor)super.getWriter(transaction);
   }
 
   @Override
@@ -185,22 +233,27 @@ public class DBStore extends LongIDStore implements IDBStore
     return new DBStoreAccessor(this, transaction);
   }
 
-  public synchronized int getNextPackageID()
+  public long getMetaID(EModelElement modelElement)
   {
-    // TODO Better synchronization
-    return nextPackageID++;
+    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getRepository().getPackageRegistry();
+    try
+    {
+      CDOID cdoid = packageRegistry.getMetaInstanceMapper().lookupMetaInstanceID((InternalEObject)modelElement);
+      return ((CDOIDMeta)cdoid).getLongValue();
+    }
+    catch (RuntimeException ex)
+    {
+      packageRegistry.getMetaInstanceMapper().lookupMetaInstanceID((InternalEObject)modelElement);
+      throw ex;
+    }
   }
 
-  public synchronized int getNextClassID()
+  public EModelElement getMetaInstance(long id)
   {
-    // TODO Better synchronization
-    return nextClassID++;
-  }
-
-  public synchronized int getNextFeatureID()
-  {
-    // TODO Better synchronization
-    return nextFeatureID++;
+    CDOIDMeta cdoid = CDOIDUtil.createMeta(id);
+    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getRepository().getPackageRegistry();
+    InternalEObject metaInstance = packageRegistry.getMetaInstanceMapper().lookupMetaInstance(cdoid);
+    return (EModelElement)metaInstance;
   }
 
   public Connection getConnection()
@@ -210,33 +263,18 @@ public class DBStore extends LongIDStore implements IDBStore
     {
       throw new DBException("No connection from connection provider: " + dbConnectionProvider);
     }
+
     return connection;
-  }
-
-  public void repairAfterCrash()
-  {
-    try
-    {
-      DBStoreAccessor accessor = (DBStoreAccessor)getWriter(null);
-      StoreThreadLocal.setAccessor(accessor);
-
-      Connection connection = accessor.getJDBCDelegate().getConnection();
-      long maxObjectID = mappingStrategy.repairAfterCrash(dbAdapter, connection);
-      long maxMetaID = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGES_RANGE_UB);
-
-      OM.LOG.info(MessageFormat.format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", maxObjectID, maxMetaID));
-      setLastObjectID(maxObjectID);
-      setLastMetaID(maxMetaID);
-    }
-    finally
-    {
-      StoreThreadLocal.release();
-    }
   }
 
   public long getCreationTime()
   {
     return creationTime;
+  }
+
+  public boolean isFirstTime()
+  {
+    return firstTime;
   }
 
   @Override
@@ -252,75 +290,83 @@ public class DBStore extends LongIDStore implements IDBStore
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    long startupTime = getStartupTime();
-    Connection connection = null;
+    Connection connection = getConnection();
 
     try
     {
-      connection = getConnection();
-      Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, dbConnectionProvider);
+      Set<IDBTable> createdTables = CDODBSchema.INSTANCE.create(dbAdapter, connection);
       if (createdTables.contains(CDODBSchema.REPOSITORY))
       {
-        // First start
-        creationTime = startupTime;
-        DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTime, 1, startupTime, 0, CRASHED,
-            CRASHED);
-
-        mappingStrategy.mapResourceTables(dbAdapter, connection);
+        firstStart(connection);
       }
       else
       {
-        // Restart
-        creationTime = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_CREATED);
-        long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
-        setLastMetaID(DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_METAID));
-        if (lastObjectID == CRASHED || getLastMetaID() == CRASHED)
-        {
-          OM.LOG.warn("Detected restart after crash");
-        }
-
-        setLastObjectID(lastObjectID);
-
-        StringBuilder builder = new StringBuilder();
-        builder.append("UPDATE ");
-        builder.append(CDODBSchema.REPOSITORY);
-        builder.append(" SET ");
-        builder.append(CDODBSchema.REPOSITORY_STARTS);
-        builder.append("=");
-        builder.append(CDODBSchema.REPOSITORY_STARTS);
-        builder.append("+1, ");
-        builder.append(CDODBSchema.REPOSITORY_STARTED);
-        builder.append("=");
-        builder.append(startupTime);
-        builder.append(", ");
-        builder.append(CDODBSchema.REPOSITORY_STOPPED);
-        builder.append("=0, ");
-        builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
-        builder.append("=");
-        builder.append(CRASHED);
-        builder.append(", ");
-        builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
-        builder.append("=");
-        builder.append(CRASHED);
-
-        String sql = builder.toString();
-        int count = DBUtil.update(connection, sql);
-        if (count == 0)
-        {
-          throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
-        }
-
-        getMappingStrategy().mapResourceTables(null, null);
+        reStart(connection);
       }
 
-      nextPackageID = DBUtil.selectMaximumInt(connection, CDODBSchema.PACKAGES_ID) + 1;
-      nextClassID = DBUtil.selectMaximumInt(connection, CDODBSchema.CLASSES_ID) + 1;
-      nextFeatureID = DBUtil.selectMaximumInt(connection, CDODBSchema.FEATURES_ID) + 1;
       LifecycleUtil.activate(mappingStrategy);
+      dbSchema = createSchema();
     }
     finally
     {
       DBUtil.close(connection);
+    }
+  }
+
+  protected void firstStart(Connection connection)
+  {
+    creationTime = getStartupTime();
+    firstTime = true;
+
+    DBUtil.insertRow(connection, dbAdapter, CDODBSchema.REPOSITORY, creationTime, 1, creationTime, 0, CRASHED, CRASHED);
+    OM.LOG.info(MessageFormat.format("First start: {0,date} {0,time}", creationTime));
+  }
+
+  protected void reStart(Connection connection)
+  {
+    creationTime = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_CREATED);
+    long lastMetaId = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_METAID);
+    long lastObjectID = DBUtil.selectMaximumLong(connection, CDODBSchema.REPOSITORY_NEXT_CDOID);
+
+    if (lastObjectID == CRASHED || getLastMetaID() == CRASHED)
+    {
+      OM.LOG.info("Detected crash");
+      lastObjectID = mappingStrategy.repairAfterCrash(dbAdapter, connection);
+      lastMetaId = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB);
+      OM.LOG.info(MessageFormat
+          .format("Repaired after crash: maxObjectID={0}, maxMetaID={1}", lastObjectID, lastMetaId));
+    }
+
+    setLastMetaID(lastMetaId);
+    setLastObjectID(lastObjectID);
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("UPDATE ");
+    builder.append(CDODBSchema.REPOSITORY);
+    builder.append(" SET ");
+    builder.append(CDODBSchema.REPOSITORY_STARTS);
+    builder.append("=");
+    builder.append(CDODBSchema.REPOSITORY_STARTS);
+    builder.append("+1, ");
+    builder.append(CDODBSchema.REPOSITORY_STARTED);
+    builder.append("=");
+    builder.append(getStartupTime());
+    builder.append(", ");
+    builder.append(CDODBSchema.REPOSITORY_STOPPED);
+    builder.append("=0, ");
+    builder.append(CDODBSchema.REPOSITORY_NEXT_CDOID);
+    builder.append("=");
+    builder.append(CRASHED);
+    builder.append(", ");
+    builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
+    builder.append("=");
+    builder.append(CRASHED);
+
+    String sql = builder.toString();
+    int count = DBUtil.update(connection, sql);
+    if (count == 0)
+    {
+      throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
     }
   }
 
@@ -349,7 +395,7 @@ public class DBStore extends LongIDStore implements IDBStore
       builder.append(", ");
       builder.append(CDODBSchema.REPOSITORY_NEXT_METAID);
       builder.append("=");
-      builder.append(getRepository().getLastMetaID());
+      builder.append(getLastMetaID());
 
       String sql = builder.toString();
       int count = DBUtil.update(connection, sql);
@@ -384,53 +430,19 @@ public class DBStore extends LongIDStore implements IDBStore
     return System.currentTimeMillis();
   }
 
-  public static DBType getDBType(CDOType type)
+  public static DBType getDBType(EClassifier type)
   {
-    if (type == CDOType.BOOLEAN || type == CDOType.BOOLEAN_OBJECT)
-    {
-      return DBType.BOOLEAN;
-    }
-    else if (type == CDOType.BYTE || type == CDOType.BYTE_OBJECT)
-    {
-      return DBType.SMALLINT;
-    }
-    else if (type == CDOType.CHAR || type == CDOType.CHARACTER_OBJECT)
-    {
-      return DBType.CHAR;
-    }
-    else if (type == CDOType.DATE)
-    {
-      return DBType.TIMESTAMP;
-    }
-    else if (type == CDOType.DOUBLE || type == CDOType.DOUBLE_OBJECT)
-    {
-      return DBType.DOUBLE;
-    }
-    else if (type == CDOType.FLOAT || type == CDOType.FLOAT_OBJECT)
-    {
-      return DBType.FLOAT;
-    }
-    else if (type == CDOType.INT || type == CDOType.INTEGER_OBJECT)
-    {
-      return DBType.INTEGER;
-    }
-    else if (type == CDOType.LONG || type == CDOType.LONG_OBJECT)
+    if (type instanceof EClass)
     {
       return DBType.BIGINT;
-    }
-    else if (type == CDOType.OBJECT)
-    {
-      return DBType.BIGINT;
-    }
-    else if (type == CDOType.SHORT || type == CDOType.SHORT_OBJECT)
-    {
-      return DBType.SMALLINT;
-    }
-    else if (type == CDOType.STRING || type == CDOType.CUSTOM)
-    {
-      return DBType.VARCHAR;
     }
 
-    throw new ImplementationError("Unrecognized CDOType: " + type);
+    DBType dbType = typeMap.get(type);
+    if (dbType != null)
+    {
+      return dbType;
+    }
+
+    return DBType.VARCHAR;
   }
 }

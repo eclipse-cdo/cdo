@@ -13,8 +13,6 @@
 package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
@@ -25,6 +23,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,7 +69,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return cache.getRevisionByVersion(id, version) != null;
   }
 
-  public CDOClass getObjectType(CDOID id)
+  public EClass getObjectType(CDOID id)
   {
     return cache.getObjectType(id);
   }
@@ -268,8 +268,6 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   protected abstract List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk,
       long timeStamp);
 
-  protected abstract CDOPackageManager getPackageManager();
-
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -284,7 +282,6 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    cache.setPackageManager(getPackageManager());
     LifecycleUtil.activate(cache);
   }
 

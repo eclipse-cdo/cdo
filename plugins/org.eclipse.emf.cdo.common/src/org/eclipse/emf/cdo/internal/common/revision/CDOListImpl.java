@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision;
 
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -19,6 +20,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableArrayList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 
 /**
  * @author Simon McDuff
@@ -44,8 +48,9 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     }
   }
 
-  public InternalCDOList clone(CDOType type)
+  public InternalCDOList clone(EClassifier classifier)
   {
+    CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
     InternalCDOList list = new CDOListImpl(size, 0);
     for (int j = 0; j < size; j++)
@@ -62,8 +67,9 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     return super.get(index);
   }
 
-  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster, CDOType type)
+  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster, EClass classifier)
   {
+    CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
     for (int i = 0; i < size; i++)
     {

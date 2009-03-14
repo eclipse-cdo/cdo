@@ -14,7 +14,6 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -32,6 +31,7 @@ import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
@@ -460,9 +460,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       changeState(object, CDOState.PREPARED);
 
       // Create new revision
-      CDOClass cdoClass = object.cdoClass();
+      EClass eClass = object.eClass();
       CDORevisionFactory factory = transaction.getSession().options().getRevisionFactory();
-      InternalCDORevision revision = (InternalCDORevision)factory.createRevision(cdoClass, id);
+      InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass, id);
       revision.setVersion(-1);
 
       object.cdoInternalSetRevision(revision);
@@ -693,7 +693,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    * @since 2.0
    */
-  protected class ConflictTransition extends InvalidateTransition
+  private class ConflictTransition extends InvalidateTransition
   {
     @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Integer version)

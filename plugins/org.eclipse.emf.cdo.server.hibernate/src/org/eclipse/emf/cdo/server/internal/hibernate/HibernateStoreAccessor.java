@@ -15,14 +15,9 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.server.StoreAccessor;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -32,13 +27,19 @@ import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
@@ -203,7 +204,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     this.errorOccured = errorOccured;
   }
 
-  public HibernateStoreChunkReader createChunkReader(CDORevision revision, CDOFeature feature)
+  public HibernateStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     return new HibernateStoreChunkReader(this, revision, feature);
   }
@@ -214,43 +215,38 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     throw new UnsupportedOperationException();
   }
 
+  public Collection<InternalCDOPackageUnit> readPackageUnits()
+  {
+    return getStore().getPackageHandler().getPackageUnits();
+  }
+
+  public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
+  {
+    return getStore().getPackageHandler().loadPackageUnit(packageUnit);
+  }
+
   public CloseableIterator<CDOID> readObjectIDs()
   {
     throw new UnsupportedOperationException();
   }
 
-  public CDOClassRef readObjectType(CDOID id)
+  public CDOClassifierRef readObjectType(CDOID id)
   {
     CDORevision cdoRevision = readRevision(id, -1);
-    return cdoRevision.getCDOClass().createClassRef();
+    return new CDOClassifierRef(cdoRevision.getEClass());
   }
 
-  public void readPackage(CDOPackage cdoPackage)
-  {
-    getStore().getPackageHandler().readPackage(cdoPackage);
-  }
-
-  public void readPackageEcore(CDOPackage cdoPackage)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public Collection<CDOPackageInfo> readPackageInfos()
-  {
-    return getStore().getPackageHandler().getCDOPackageInfos();
-  }
-
-  public CDORevision readRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision readRevision(CDOID id, int referenceChunk)
   {
     return HibernateUtil.getInstance().getCDORevision(id);
   }
 
-  public CDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
     throw new UnsupportedOperationException();
   }
 
-  public CDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
     // TODO Could be necessary to implement
     throw new UnsupportedOperationException();
@@ -276,7 +272,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     boolean exactMatch = context.exactMatch();
 
     final Session session = getHibernateSession();
-    final Criteria criteria = session.createCriteria(CDOResourceNodeClass.NAME);
+    final Criteria criteria = session.createCriteria(EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
     if (folderID == null)
     {
       criteria.add(Expression.isNull("containerID"));
@@ -290,7 +286,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     for (Object o : result)
     {
       final CDORevision revision = (CDORevision)o;
-      String revisionName = (String)revision.data().get(getResourceNameFeature(), 0);
+      String revisionName = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
       boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
           : revisionName.startsWith(name);
 
@@ -313,20 +309,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
       // TODO Can this happen? When?
       final long longID = CDOIDUtil.getLong(id);
-      return CDOIDHibernateFactoryImpl.getInstance().createCDOID(longID, CDOResourceNodeClass.NAME);
+      return CDOIDHibernateFactoryImpl.getInstance().createCDOID(longID,
+          EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
     }
 
     return null;
-  }
-
-  private CDOFeature getResourceNameFeature()
-  {
-    return getResourceNodeClass().getCDONameFeature();
-  }
-
-  private CDOResourceNodeClass getResourceNodeClass()
-  {
-    return getStore().getRepository().getPackageManager().getCDOResourcePackage().getCDOResourceNodeClass();
   }
 
   /**
@@ -348,13 +335,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  public void write(CommitContext context, OMMonitor monitor)
+  public void write(IStoreAccessor.CommitContext context, OMMonitor monitor)
   {
     List<InternalCDORevision> adjustRevisions = new ArrayList<InternalCDORevision>();
     HibernateThreadContext.setCommitContext(context);
-    if (context.getNewPackages().length > 0)
+    if (context.getNewPackageUnits().length > 0)
     {
-      writePackages(context.getNewPackages(), monitor);
+      writePackageUnits(context.getNewPackageUnits(), monitor);
     }
     try
     {
@@ -380,7 +367,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.delete(revision);
       }
 
-      final List<CDORevision> cdoRevisions = Arrays.asList(context.getNewObjects());
+      // TODO Martin: Why create an additional list?
+      final List<InternalCDORevision> cdoRevisions = Arrays.asList(context.getNewObjects());
 
       // keep track for which cdoRevisions the container id needs to be repaired afterwards
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
@@ -400,7 +388,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Persisted new Object " + cdoRevision.getCDOClass().getName() + " id: " + cdoRevision.getID());
+          TRACER.trace("Persisted new Object " + cdoRevision.getEClass().getName() + " id: " + cdoRevision.getID());
         }
       }
 
@@ -409,7 +397,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.merge(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Updated Object " + cdoRevision.getCDOClass().getName() + " id: " + cdoRevision.getID());
+          TRACER.trace("Updated Object " + cdoRevision.getEClass().getName() + " id: " + cdoRevision.getID());
         }
       }
 
@@ -469,12 +457,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     HibernateThreadContext.setCommitContext(null);
   }
 
-  @Override
-  protected void writePackages(CDOPackage[] cdoPackages, OMMonitor monitor)
+  public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    if (cdoPackages != null && cdoPackages.length != 0)
+    if (packageUnits != null && packageUnits.length != 0)
     {
-      getStore().getPackageHandler().writePackages(cdoPackages);
+      getStore().getPackageHandler().writePackageUnits(packageUnits);
     }
 
     // Set a new hibernatesession in the thread
@@ -482,13 +469,19 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void writeRevisions(CDORevision[] revisions, OMMonitor monitor)
+  protected void writeRevisions(InternalCDORevision[] revisions, OMMonitor monitor)
   {
     // Don't do anything it is done at commit
   }
 
   @Override
-  protected void writeRevisionDeltas(CDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor)
+  protected void addIDMappings(CommitContext context, OMMonitor monitor)
+  {
+    // Do nothing
+  }
+
+  @Override
+  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

@@ -13,11 +13,13 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
+public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager, ILifecycle.Introspection
 {
   public CDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed);
 

@@ -29,7 +29,7 @@ import java.util.Collection;
  */
 public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadLibrariesRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadLibrariesRequest.class);
 
   private Collection<String> libraryNames;
 
@@ -46,17 +46,17 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
     int size = libraryNames.size();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} library names", size);
+      TRACER.format("Writing {0} library names", size);
     }
 
     out.writeInt(size);
     for (String libraryName : libraryNames)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing library name: {0}", libraryName);
+        TRACER.format("Writing library name: {0}", libraryName);
       }
 
       out.writeString(libraryName);
@@ -71,9 +71,9 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
     for (String libraryName : libraryNames)
     {
       int size = in.readInt();
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Reading library {0}: {1} bytes", libraryName, size);
+        TRACER.format("Reading library {0}: {1} bytes", libraryName, size);
       }
 
       File file = new File(cacheFolder, libraryName);

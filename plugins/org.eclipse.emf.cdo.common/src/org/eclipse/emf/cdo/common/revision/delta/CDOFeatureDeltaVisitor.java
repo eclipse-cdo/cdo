@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.common.revision.delta;
 
 /**
  * @author Simon McDuff
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOFeatureDeltaVisitor
 {

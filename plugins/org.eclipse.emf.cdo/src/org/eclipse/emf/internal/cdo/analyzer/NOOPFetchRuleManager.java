@@ -42,4 +42,10 @@ public class NOOPFetchRuleManager implements CDOFetchRuleManager
   {
     return CDOCollectionLoadingPolicy.DEFAULT;
   }
+
+  @Override
+  public String toString()
+  {
+    return "NOOP";
+  }
 }

@@ -21,4 +21,4 @@ package org.eclipse.emf.cdo.defs;
  */
 public interface EGlobalPackageDef extends EPackageDef
 {
-} // NativeCDOPackageDef
+} // NativeEPackageDef

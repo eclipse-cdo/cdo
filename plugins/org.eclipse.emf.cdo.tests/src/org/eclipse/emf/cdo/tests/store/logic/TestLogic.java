@@ -14,12 +14,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourceClass;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
@@ -27,7 +23,7 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.Transaction;
 import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
-import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
+import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageRegistry;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
@@ -35,16 +31,16 @@ import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
-import org.eclipse.emf.cdo.util.EMFUtil;
+import org.eclipse.emf.cdo.util.ModelUtil;
 
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
 import java.util.ArrayList;
@@ -190,7 +186,7 @@ public abstract class TestLogic extends AbstractOMTest
 
     private InternalCommitContext transactionCommitContext;
 
-    private List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
+    private List<EPackage> newPackages = new ArrayList<EPackage>();
 
     private List<CDORevision> newObjects = new ArrayList<CDORevision>();
 
@@ -236,10 +232,10 @@ public abstract class TestLogic extends AbstractOMTest
       protocol.deactivate();
     }
 
-    public CDOPackage addNewPackage(EPackage ePackage)
+    public EPackage addNewPackage(EPackage ePackage)
     {
       String uri = ePackage.getNsURI();
-      String parentURI = ModelUtil.getParentURI(ePackage);
+      String parentURI = EMFUtil.getParentURI(ePackage);
       String name = ePackage.getName();
       boolean dynamic = EMFUtil.isDynamicEPackage(ePackage);
       String ecore = null;
@@ -255,9 +251,9 @@ public abstract class TestLogic extends AbstractOMTest
         idRange = SessionUtil.registerEPackage(ePackage, 1, null, null);
       }
 
-      TransactionPackageManager packageManager = transactionCommitContext.getPackageManager();
-      CDOPackage newPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, idRange, parentURI);
-      ModelUtil.initializeCDOPackage(ePackage, newPackage);
+      TransactionPackageRegistry packageManager = transactionCommitContext.getPackageRegistry();
+      EPackage newPackage = CDOModelUtil.createPackage(packageManager, uri, name, ecore, dynamic, idRange, parentURI);
+      ModelUtil.initializeEPackage(ePackage, newPackage);
       packageManager.addPackage(newPackage);
       newPackages.add(newPackage);
       return newPackage;
@@ -265,7 +261,7 @@ public abstract class TestLogic extends AbstractOMTest
 
     public TestRevision addNewResource(int id)
     {
-      CDOResourcePackage resourcePackage = repository.getPackageManager().getCDOResourcePackage();
+      CDOResourcePackage resourcePackage = repository.getPackageRegistry().getCDOResourcePackage();
       CDOResourceClass resourceClass = resourcePackage.getCDOResourceClass();
       return addRevision(id, resourceClass);
     }
@@ -275,15 +271,15 @@ public abstract class TestLogic extends AbstractOMTest
 
       String uri = eClass.getEPackage().getNsURI();
 
-      CDOPackage cdoPackage = transactionCommitContext.getPackageManager().lookupPackage(uri);
-      CDOClass cdoClass = cdoPackage.lookupClass(eClass.getClassifierID());
-      return addRevision(id, cdoClass);
+      EPackage ePackage = transactionCommitContext.getPackageRegistry().lookupPackage(uri);
+      EClass eClass = ePackage.lookupClass(eClass.getClassifierID());
+      return addRevision(id, eClass);
     }
 
-    private TestRevision addRevision(int id, CDOClass cdoClass)
+    private TestRevision addRevision(int id, EClass eClass)
     {
       CDOIDTemp tempID = CDOIDUtil.createTempObject(id);
-      TestRevision newObject = new TestRevision(cdoClass, tempID);
+      TestRevision newObject = new TestRevision(eClass, tempID);
       newObjects.add(newObject);
       return newObject;
     }
@@ -303,9 +299,9 @@ public abstract class TestLogic extends AbstractOMTest
       return (Transaction)session.openTransaction(viewID);
     }
 
-    private CDOPackage[] getNewPackages()
+    private EPackage[] getNewPackages()
     {
-      return newPackages.toArray(new CDOPackage[newPackages.size()]);
+      return newPackages.toArray(new EPackage[newPackages.size()]);
     }
 
     private CDORevision[] getNewObjects()
@@ -329,9 +325,9 @@ public abstract class TestLogic extends AbstractOMTest
    */
   protected class TestRevision extends CDORevisionImpl
   {
-    public TestRevision(CDOClass cdoClass, CDOID id)
+    public TestRevision(EClass eClass, CDOID id)
     {
-      super(cdoClass, id);
+      super(eClass, id);
     }
 
     public void set(String featureName, Object value)
@@ -341,8 +337,8 @@ public abstract class TestLogic extends AbstractOMTest
 
     public void set(String featureName, int index, Object value)
     {
-      CDOFeature cdoFeature = getCDOClass().lookupFeature(featureName);
-      set(cdoFeature, index, value);
+      EStructuralFeature feature = getEClass().lookupFeature(featureName);
+      set(feature, index, value);
     }
   }
 }

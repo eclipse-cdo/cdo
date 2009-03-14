@@ -13,33 +13,27 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
-import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,7 +46,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDOSessionProtocol
+public interface CDOSessionProtocol extends PackageLoader
 {
   public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled);
 
@@ -62,9 +56,7 @@ public interface CDOSessionProtocol
 
   public RepositoryTimeResult getRepositoryTime();
 
-  public void loadPackage(CDOPackage cdoPackage, boolean onlyEcore);
-
-  public Object loadChunk(InternalCDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex);
 
   public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk);
@@ -113,7 +105,7 @@ public interface CDOSessionProtocol
   /**
    * @author Eike Stepper
    */
-  public final class OpenSessionResult implements CDOPackageURICompressor
+  public final class OpenSessionResult
   {
     private int sessionID;
 
@@ -127,9 +119,10 @@ public interface CDOSessionProtocol
 
     private CDOIDLibraryDescriptor libraryDescriptor;
 
-    private List<CDOPackageInfo> packageInfos = new ArrayList<CDOPackageInfo>();
+    private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
-    private StringCompressor compressor = new StringCompressor(true);
+    // private Map<InternalCDOPackageUnit, CDOPackageUnit.Type> repositoryActualTypes = new
+    // HashMap<InternalCDOPackageUnit, CDOPackageUnit.Type>();
 
     public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime,
         boolean repositorySupportingAudits, CDOIDLibraryDescriptor libraryDescriptor)
@@ -176,30 +169,15 @@ public interface CDOSessionProtocol
       return libraryDescriptor;
     }
 
-    public List<CDOPackageInfo> getPackageInfos()
+    public List<InternalCDOPackageUnit> getPackageUnits()
     {
-      return packageInfos;
+      return packageUnits;
     }
 
-    public void addPackageInfo(String packageURI, boolean dynamic, CDOIDMetaRange metaIDRange, String parentURI)
-    {
-      packageInfos.add(new CDOPackageInfo(packageURI, dynamic, metaIDRange, parentURI));
-    }
-
-    public StringCompressor getCompressor()
-    {
-      return compressor;
-    }
-
-    public void writePackageURI(ExtendedDataOutput out, String uri) throws IOException
-    {
-      compressor.write(out, uri);
-    }
-
-    public String readPackageURI(ExtendedDataInput in) throws IOException
-    {
-      return compressor.read(in);
-    }
+    // public Map<InternalCDOPackageUnit, CDOPackageUnit.Type> getRepositoryActualTypes()
+    // {
+    // return repositoryActualTypes;
+    // }
   }
 
   /**

@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -27,6 +25,9 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionList;
 import org.eclipse.emf.cdo.internal.common.revision.cache.lru.RevisionHolder;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -333,7 +334,7 @@ public class RevisionHolderTest extends AbstractCDOTest
       return (revised == UNSPECIFIED_DATE || revised >= timeStamp) && timeStamp >= created;
     }
 
-    public CDOClass getCDOClass()
+    public EClass getEClass()
     {
       throw new UnsupportedOperationException();
     }
@@ -378,7 +379,7 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public void add(CDOFeature feature, int index, Object value)
+    public void add(EStructuralFeature feature, int index, Object value)
     {
       throw new UnsupportedOperationException();
     }
@@ -388,17 +389,17 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public void clear(CDOFeature feature)
+    public void clear(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public boolean contains(CDOFeature feature, Object value)
+    public boolean contains(EStructuralFeature feature, Object value)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object get(CDOFeature feature, int index)
+    public Object get(EStructuralFeature feature, int index)
     {
       throw new UnsupportedOperationException();
     }
@@ -413,12 +414,12 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public CDOList getList(CDOFeature feature, int size)
+    public CDOList getList(EStructuralFeature feature, int size)
     {
       throw new UnsupportedOperationException();
     }
 
-    public CDOList getList(CDOFeature feature)
+    public CDOList getList(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
@@ -433,47 +434,47 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public Object getValue(CDOFeature feature)
+    public Object getValue(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public int hashCode(CDOFeature feature)
+    public int hashCode(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public int indexOf(CDOFeature feature, Object value)
+    public int indexOf(EStructuralFeature feature, Object value)
     {
       throw new UnsupportedOperationException();
     }
 
-    public boolean isEmpty(CDOFeature feature)
+    public boolean isEmpty(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public boolean isSet(CDOFeature feature)
+    public boolean isSet(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public int lastIndexOf(CDOFeature feature, Object value)
+    public int lastIndexOf(EStructuralFeature feature, Object value)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object move(CDOFeature feature, int targetIndex, int sourceIndex)
+    public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object remove(CDOFeature feature, int index)
+    public Object remove(EStructuralFeature feature, int index)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object set(CDOFeature feature, int index, Object value)
+    public Object set(EStructuralFeature feature, int index, Object value)
     {
       throw new UnsupportedOperationException();
     }
@@ -488,7 +489,7 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public void setListSize(CDOFeature feature, int size)
+    public void setListSize(EStructuralFeature feature, int size)
     {
       throw new UnsupportedOperationException();
     }
@@ -508,42 +509,42 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public Object setValue(CDOFeature feature, Object value)
+    public Object setValue(EStructuralFeature feature, Object value)
     {
       throw new UnsupportedOperationException();
     }
 
-    public int size(CDOFeature feature)
+    public int size(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public <T> T[] toArray(CDOFeature feature, T[] array)
+    public <T> T[] toArray(EStructuralFeature feature, T[] array)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object[] toArray(CDOFeature feature)
+    public Object[] toArray(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public void unset(CDOFeature feature)
+    public void unset(EStructuralFeature feature)
     {
       throw new UnsupportedOperationException();
     }
 
-    public void setList(CDOFeature feature, InternalCDOList list)
+    public void setList(EStructuralFeature feature, InternalCDOList list)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object basicGet(CDOFeature feature, int index)
+    public Object basicGet(EStructuralFeature feature, int index)
     {
       throw new UnsupportedOperationException();
     }
 
-    public Object basicSet(CDOFeature feature, int index, Object value)
+    public Object basicSet(EStructuralFeature feature, int index, Object value)
     {
       throw new UnsupportedOperationException();
     }

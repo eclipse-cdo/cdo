@@ -27,8 +27,7 @@ import java.util.Collections;
  */
 public class LoadRevisionByVersionRequest extends LoadRevisionRequest
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      LoadRevisionByVersionRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByVersionRequest.class);
 
   private int version;
 
@@ -42,9 +41,9 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
   protected void requesting(CDODataOutput out) throws IOException
   {
     super.requesting(out);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing version: {0}", version);
+      TRACER.format("Writing version: {0}", version);
     }
 
     out.writeInt(version);

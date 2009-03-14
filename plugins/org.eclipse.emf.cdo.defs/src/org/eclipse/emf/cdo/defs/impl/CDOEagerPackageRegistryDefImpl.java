@@ -13,9 +13,6 @@ package org.eclipse.emf.cdo.defs.impl;
 
 import org.eclipse.emf.cdo.defs.CDODefsPackage;
 import org.eclipse.emf.cdo.defs.CDOEagerPackageRegistryDef;
-import org.eclipse.emf.cdo.util.CDOUtil;
-
-import org.eclipse.emf.internal.cdo.session.CDOPackageRegistryImpl.Eager;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -57,7 +54,9 @@ public class CDOEagerPackageRegistryDefImpl extends CDOPackageRegistryDefImpl im
    */
   protected Object createInstance()
   {
-    return addPackages(CDOUtil.createEagerPackageRegistry());
+    // TODO: implement CDOEagerPackageRegistryDefImpl.createInstance()
+    throw new UnsupportedOperationException();
+    // return addPackages(CDOUtil.createEagerPackageRegistry());
   }
 
 } // EagerPackageRegistryDefImpl

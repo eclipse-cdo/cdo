@@ -14,8 +14,6 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -24,9 +22,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
@@ -137,11 +133,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   protected Object[] cdoBasicSettings()
   {
     return cdoSettings;
-  }
-
-  public CDOClass cdoClass()
-  {
-    return getCDOClass(this);
   }
 
   /**
@@ -368,21 +359,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   @SuppressWarnings("unchecked")
-  private void populateRevisionFeature(InternalCDOView view, InternalCDORevision revision, EStructuralFeature eFeature,
+  private void populateRevisionFeature(InternalCDOView view, InternalCDORevision revision, EStructuralFeature feature,
       Object[] eSettings, int i)
   {
-    CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)view.getSession().getPackageManager();
-    CDOFeature cdoFeature = packageManager.getCDOFeature(eFeature);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Populating feature {0}", cdoFeature);
+      TRACER.format("Populating feature {0}", feature);
     }
 
     Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
 
     CDOStore cdoStore = cdoStore();
 
-    if (cdoFeature.isMany())
+    if (feature.isMany())
     {
       if (setting != null)
       {
@@ -390,15 +379,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         EList<Object> list = (EList<Object>)setting;
         for (Object value : list)
         {
-          value = cdoStore.convertToCDO(cdoView(), eFeature, cdoFeature, value);
-          revision.add(cdoFeature, index++, value);
+          value = cdoStore.convertToCDO(cdoView(), feature, value);
+          revision.add(feature, index++, value);
         }
       }
     }
     else
     {
-      setting = cdoStore.convertToCDO(cdoView(), eFeature, cdoFeature, setting);
-      revision.set(cdoFeature, 0, setting);
+      setting = cdoStore.convertToCDO(cdoView(), feature, setting);
+      revision.set(feature, 0, setting);
     }
   }
 
@@ -1039,13 +1028,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return eClass().getName() + "@" + id;
-  }
-
-  static CDOClass getCDOClass(InternalCDOObject cdoObject)
-  {
-    InternalCDOView view = cdoObject.cdoView();
-    CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)view.getSession().getPackageManager();
-    return ModelUtil.getCDOClass(cdoObject.eClass(), packageManager);
   }
 
   private CDOStore cdoStore()

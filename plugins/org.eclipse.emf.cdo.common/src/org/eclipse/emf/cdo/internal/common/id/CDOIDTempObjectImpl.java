@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.id;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDInteger;
 
@@ -34,5 +35,11 @@ public class CDOIDTempObjectImpl extends AbstractCDOIDInteger implements CDOIDTe
   public String toString()
   {
     return "oid" + getIntValue();
+  }
+
+  @Override
+  protected int doCompareTo(CDOID o) throws ClassCastException
+  {
+    return new Integer(getIntValue()).compareTo(((CDOIDTempObjectImpl)o).getIntValue());
   }
 }

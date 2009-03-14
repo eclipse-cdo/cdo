@@ -15,10 +15,10 @@ import static junit.framework.Assert.assertTrue;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.db.IClassMapping;
-import org.eclipse.emf.cdo.server.db.IReferenceMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IReferenceMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.HorizontalMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.HorizontalMappingStrategy;
 
 import org.eclipse.net4j.util.collection.Pair;
 

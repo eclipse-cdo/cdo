@@ -12,8 +12,9 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+
+import org.eclipse.emf.ecore.EClass;
 
 /**
  * @author Eike Stepper
@@ -30,7 +31,7 @@ public interface CDORevision
 
   public static final int UNCHUNKED = -1;
 
-  public CDOClass getCDOClass();
+  public EClass getEClass();
 
   public CDOID getID();
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry.CDOObjectMarker;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -24,7 +25,7 @@ import org.eclipse.emf.ecore.InternalEObject;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOObject extends CDOObject, InternalEObject, InternalCDOLoadable
+public interface InternalCDOObject extends CDOObject, InternalEObject, InternalCDOLoadable, CDOObjectMarker
 {
   public InternalCDOView cdoView();
 

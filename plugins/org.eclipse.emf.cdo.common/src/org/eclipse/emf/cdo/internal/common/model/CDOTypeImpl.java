@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
-import org.eclipse.emf.cdo.internal.common.model.core.CDOFeatureMapEntryDataTypeImpl;
 
 import java.io.IOException;
 import java.util.Date;
@@ -27,6 +26,7 @@ import java.util.Map;
  */
 public abstract class CDOTypeImpl implements CDOType
 {
+  // TODO Use an array
   public static Map<Integer, CDOTypeImpl> ids = new HashMap<Integer, CDOTypeImpl>();
 
   private static final byte BOOLEAN_DEFAULT_PRIMITIVE = 0;
@@ -358,36 +358,26 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", 36, false)
+  public static final CDOType ENUM = new ObjectType("ENUM", 998)
   {
+    @SuppressWarnings("cast")
     @Override
     public Object copyValue(Object value)
     {
-      return value;
-    }
-
-    public void writeValue(CDODataOutput out, Object value) throws IOException
-    {
-      CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
-      out.writeString(featureMapEntry.getURI());
-      out.writeCDOID(out.getIDProvider().provideCDOID(featureMapEntry.getObject()));
-    }
-
-    public Object readValue(CDODataInput in) throws IOException
-    {
-      String uri = in.readString();
-      Object id = in.readCDOID();
-      return new CDOFeatureMapEntryDataTypeImpl(uri, id);
+      return (Integer)value;
     }
 
     @Override
-    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    public void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
-      featureMapEntry.adjustReferences(adjuster);
-      return value;
+      out.writeInt((Integer)value);
     }
 
+    @Override
+    public Object doReadValue(CDODataInput in) throws IOException
+    {
+      return in.readInt();
+    }
   };
 
   public static final CDOType CUSTOM = new CDOTypeImpl("CUSTOM", 999, true)
@@ -408,6 +398,44 @@ public abstract class CDOTypeImpl implements CDOType
     {
       return in.readString();
     }
+  };
+
+  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", 36, false)
+  {
+    @Override
+    public Object copyValue(Object value)
+    {
+      return value;
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      // TODO: implement CDOTypeImpl.enclosing_method(enclosing_method_arguments)
+      throw new UnsupportedOperationException();
+      // CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
+      // out.writeString(featureMapEntry.getURI());
+      // out.writeCDOID(out.getIDProvider().provideCDOID(featureMapEntry.getObject()));
+    }
+
+    public Object readValue(CDODataInput in) throws IOException
+    {
+      // TODO: implement CDOTypeImpl.enclosing_method(enclosing_method_arguments)
+      throw new UnsupportedOperationException();
+      // String uri = in.readString();
+      // Object id = in.readCDOID();
+      // return new CDOFeatureMapEntryDataTypeImpl(uri, id);
+    }
+
+    @Override
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    {
+      // TODO: implement CDOTypeImpl.enclosing_method(enclosing_method_arguments)
+      throw new UnsupportedOperationException();
+      // CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
+      // featureMapEntry.adjustReferences(adjuster);
+      // return value;
+    }
+
   };
 
   private String name;
@@ -465,6 +493,7 @@ public abstract class CDOTypeImpl implements CDOType
 
   public void write(CDODataOutput out) throws IOException
   {
+    // TODO Use byte IDs
     out.writeInt(typeID);
   }
 

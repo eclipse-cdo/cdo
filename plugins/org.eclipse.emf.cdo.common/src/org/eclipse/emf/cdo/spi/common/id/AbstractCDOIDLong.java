@@ -21,7 +21,7 @@ import java.io.IOException;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractCDOIDLong extends AbstractCDOID implements Comparable<AbstractCDOIDLong>
+public abstract class AbstractCDOIDLong extends AbstractCDOID
 {
   public static final long NULL_VALUE = 0L;
 
@@ -69,21 +69,6 @@ public abstract class AbstractCDOIDLong extends AbstractCDOID implements Compara
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeLong(value);
-  }
-
-  public int compareTo(AbstractCDOIDLong that)
-  {
-    if (value < that.value)
-    {
-      return -1;
-    }
-
-    if (value > that.value)
-    {
-      return 1;
-    }
-
-    return 0;
   }
 
   @Override

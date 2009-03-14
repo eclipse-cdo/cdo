@@ -30,7 +30,7 @@ public class CommitTransactionCancelIndication extends CommitTransactionIndicati
   @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    indicationTransaction(in);
+    indicatingTransaction(in);
   }
 
   @Override
@@ -58,7 +58,7 @@ public class CommitTransactionCancelIndication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicationTransaction(CDODataInput in) throws Exception
+  protected void indicatingTransaction(CDODataInput in) throws Exception
   {
     int viewID = in.readInt();
     commitContext = getRepository().getCommitManager().get(getTransaction(viewID));

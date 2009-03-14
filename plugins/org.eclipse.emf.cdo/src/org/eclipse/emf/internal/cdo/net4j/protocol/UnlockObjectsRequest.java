@@ -29,7 +29,7 @@ import java.util.Collection;
  */
 public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, UnlockObjectsRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, UnlockObjectsRequest.class);
 
   private CDOView view;
 
@@ -53,27 +53,27 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
     out.writeCDOLockType(lockType);
     if (objects == null)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Unlocking all objects for view {0}", view.getViewID());
+        TRACER.format("Unlocking all objects for view {0}", view.getViewID());
       }
 
       out.writeInt(CDOProtocolConstants.RELEASE_ALL_LOCKS);
     }
     else
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Unlocking of type {0} requested for view {1}",
-            lockType == RWLockManager.LockType.READ ? "read" : "write", view.getViewID());
+        TRACER.format("Unlocking of type {0} requested for view {1}", lockType == RWLockManager.LockType.READ ? "read"
+            : "write", view.getViewID());
       }
 
       out.writeInt(objects.size());
       for (CDOObject object : objects)
       {
-        if (PROTOCOL_TRACER.isEnabled())
+        if (TRACER.isEnabled())
         {
-          PROTOCOL_TRACER.format("Unlocking requested for objects {0}", object.cdoID());
+          TRACER.format("Unlocking requested for objects {0}", object.cdoID());
         }
 
         out.writeCDOID(object.cdoID());

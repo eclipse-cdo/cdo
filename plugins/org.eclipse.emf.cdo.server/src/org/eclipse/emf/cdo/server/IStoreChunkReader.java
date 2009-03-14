@@ -11,8 +11,9 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface IStoreChunkReader
 
   public CDORevision getRevision();
 
-  public CDOFeature getFeature();
+  public EStructuralFeature getFeature();
 
   public void addSimpleChunk(int index);
 

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.util.EMFUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.io.IOUtil;

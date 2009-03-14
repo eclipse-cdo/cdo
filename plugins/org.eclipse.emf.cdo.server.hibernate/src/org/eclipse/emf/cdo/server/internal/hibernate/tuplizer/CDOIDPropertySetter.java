@@ -54,7 +54,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
     if (cdoID == null)
     {
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
-          revision.getCDOClass().getName());
+          revision.getEClass().getName());
       revision.setID(newCDOID);
       if (hcc != null)
       {
@@ -64,7 +64,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
     else if (cdoID instanceof CDOIDTemp)
     {
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
-          revision.getCDOClass().getName());
+          revision.getEClass().getName());
       revision.setID(newCDOID);
       if (hcc != null)
       {

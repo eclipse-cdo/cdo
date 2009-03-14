@@ -13,8 +13,6 @@
 package org.eclipse.emf.cdo.internal.common.revision.cache.two;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -26,6 +24,8 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EClass;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,33 +36,12 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, TwoLevelRevisionCache.class);
 
-  private CDOPackageManager packageManager;
-
   private CDORevisionCache level1;
 
   private CDORevisionCache level2;
 
   public TwoLevelRevisionCache()
   {
-  }
-
-  public CDOPackageManager getPackageManager()
-  {
-    return packageManager;
-  }
-
-  public void setPackageManager(CDOPackageManager packageManager)
-  {
-    this.packageManager = packageManager;
-    if (level1 != null)
-    {
-      level1.setPackageManager(packageManager);
-    }
-
-    if (level2 != null)
-    {
-      level2.setPackageManager(packageManager);
-    }
   }
 
   public CDORevisionCache getLevel1()
@@ -73,7 +52,6 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel1(CDORevisionCache level1)
   {
     this.level1 = level1;
-    setPackageManager(packageManager);
   }
 
   public CDORevisionCache getLevel2()
@@ -84,12 +62,17 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   public void setLevel2(CDORevisionCache level2)
   {
     this.level2 = level2;
-    setPackageManager(packageManager);
   }
 
-  public CDOClass getObjectType(CDOID id)
+  public EClass getObjectType(CDOID id)
   {
-    return null;
+    EClass objectType = level1.getObjectType(id);
+    if (objectType == null)
+    {
+      objectType = level2.getObjectType(id);
+    }
+
+    return objectType;
   }
 
   public InternalCDORevision getRevision(CDOID id)

@@ -13,6 +13,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.db;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.server;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
 Export-Package: org.eclipse.emf.cdo.server.db;version="2.0.0",
+ org.eclipse.emf.cdo.server.db.mapping;version="2.0.0",
  org.eclipse.emf.cdo.server.internal.db;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.cdo.server.internal.db.bundle;version="2.0.0";x-internal:=true,
- org.eclipse.emf.cdo.server.internal.db.jdbc;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests"
+ org.eclipse.emf.cdo.server.internal.db.jdbc;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.server.internal.db.mapping;version="2.0.0";x-friends:="org.eclipse.emf.cdo.tests"

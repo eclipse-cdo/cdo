@@ -13,7 +13,8 @@ package org.eclipse.emf.internal.cdo.net4j.protocol;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -22,6 +23,8 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import java.io.IOException;
 
 /**
@@ -29,11 +32,11 @@ import java.io.IOException;
  */
 public class LoadChunkRequest extends CDOClientRequest<Object>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkRequest.class);
 
   private InternalCDORevision revision;
 
-  private CDOFeature feature;
+  private EStructuralFeature feature;
 
   private int accessIndex;
 
@@ -43,7 +46,7 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
 
   private int fetchIndex;
 
-  public LoadChunkRequest(CDOClientProtocol protocol, InternalCDORevision revision, CDOFeature feature,
+  public LoadChunkRequest(CDOClientProtocol protocol, InternalCDORevision revision, EStructuralFeature feature,
       int accessIndex, int fetchIndex, int fromIndex, int toIndex)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_CHUNK);
@@ -59,9 +62,9 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
   protected void requesting(CDODataOutput out) throws IOException
   {
     CDOID id = revision.getID();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing revision ID: {0}", id);
+      TRACER.format("Writing revision ID: {0}", id);
     }
 
     out.writeCDOID(id);
@@ -71,28 +74,28 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
       --version;
     }
 
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing revision version: {0}", version);
+      TRACER.format("Writing revision version: {0}", version);
     }
 
     out.writeInt(version);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing feature: {0}", feature);
+      TRACER.format("Writing feature: {0}", feature);
     }
 
-    out.writeCDOClassRef(feature.getContainingClass());
-    out.writeInt(feature.getFeatureIndex());
-    if (PROTOCOL_TRACER.isEnabled())
+    out.writeCDOClassifierRef(feature.getEContainingClass());
+    out.writeInt(feature.getFeatureID());
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing fromIndex: {0}", fromIndex);
+      TRACER.format("Writing fromIndex: {0}", fromIndex);
     }
     int diffIndex = accessIndex - fetchIndex;
     out.writeInt(fromIndex - diffIndex);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing toIndex: {0}", toIndex);
+      TRACER.format("Writing toIndex: {0}", toIndex);
     }
 
     out.writeInt(toIndex - diffIndex);
@@ -101,11 +104,12 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
   @Override
   protected Object confirming(CDODataInput in) throws IOException
   {
+    CDOType type = CDOModelUtil.getType(feature.getEType());
     Object accessID = null;
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
-      Object value = feature.getType().readValue(in);
+      Object value = type.readValue(in);
       list.set(i, value);
       if (i == accessIndex)
       {

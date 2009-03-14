@@ -19,33 +19,33 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
-import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
-import org.eclipse.emf.cdo.session.CDOSession.Repository;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.view.CDOAuditImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
@@ -56,17 +56,15 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -93,25 +91,17 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession, Repository
+public abstract class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
   private int sessionID;
 
-  private String repositoryName;
+  private CDOSession.Options options;
 
-  private String repositoryUUID;
+  private CDOSession.Repository repository;
 
-  private long repositoryCreationTime;
-
-  private RepositoryTimeResult repositoryTimeResult;
-
-  private boolean repositorySupportingAudits;
-
-  private CDOPackageRegistry packageRegistry;
-
-  private CDOSessionPackageManagerImpl packageManager;
+  private InternalCDOPackageRegistry packageRegistry;
 
   private CDORevisionManagerImpl revisionManager;
 
@@ -119,37 +109,21 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
-  private QueueRunner invalidationRunner;
-
-  private Object invalidationRunnerLock = new Object();
+  @ExcludeFromDump
+  private CDOIDObjectFactory cdoidObjectFactory;
 
   @ExcludeFromDump
-  private transient Map<CDOID, InternalEObject> idToMetaInstanceMap = new HashMap<CDOID, InternalEObject>();
+  private transient QueueRunner invalidationRunner;
 
   @ExcludeFromDump
-  private transient Map<InternalEObject, CDOID> metaInstanceToIDMap = new HashMap<InternalEObject, CDOID>();
+  private transient Object invalidationRunnerLock = new Object();
 
   @ExcludeFromDump
   private transient int lastViewID;
 
-  @ExcludeFromDump
-  private transient int lastTempMetaID;
-
-  @ExcludeFromDump
-  private transient StringCompressor packageURICompressor;
-
-  @ExcludeFromDump
-  private CDOIDObjectFactory cdoidObjectFactory;
-
-  /**
-   * @since 2.0
-   */
-  protected IOptions options;
-
   public CDOSessionImpl()
   {
     options = createOptions();
-    packageManager = createPackageManager();
     revisionManager = createRevisionManager();
     remoteSessionManager = createRemoteSessionManager();
   }
@@ -162,15 +136,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @since 2.0
    */
-  public OptionsImpl options()
+  public CDOSession.Options options()
   {
-    return (OptionsImpl)options;
+    return options;
   }
 
   /**
    * @since 2.0
    */
-  protected OptionsImpl createOptions()
+  protected CDOSession.Options createOptions()
   {
     return new OptionsImpl();
   }
@@ -178,9 +152,18 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @since 2.0
    */
-  public Repository repository()
+  public CDOSession.Repository repository()
   {
-    return this;
+    return repository;
+  }
+
+  /**
+   * @param result
+   * @since 2.0
+   */
+  protected CDOSession.Repository createRepository(OpenSessionResult result)
+  {
+    return new RepositoryImpl(repository.getName(), result);
   }
 
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
@@ -196,71 +179,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return cdoidObjectFactory.createCDOIDObject(in);
   }
 
-  /**
-   * @since 2.0
-   */
-  public String getName()
-  {
-    return repositoryName;
-  }
-
-  public void setRepositoryName(String repositoryName)
-  {
-    this.repositoryName = repositoryName;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public String getUUID()
-  {
-    return repositoryUUID;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public long getCreationTime()
-  {
-    checkActive();
-    return repositoryCreationTime;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public long getCurrentTime()
-  {
-    return getCurrentTime(false);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public long getCurrentTime(boolean forceRefresh)
-  {
-    checkActive();
-    if (repositoryTimeResult == null || forceRefresh)
-    {
-      repositoryTimeResult = sendRepositoryTimeRequest();
-    }
-
-    return repositoryTimeResult.getAproximateRepositoryTime();
-  }
-
-  private RepositoryTimeResult sendRepositoryTimeRequest()
-  {
-    return getSessionProtocol().getRepositoryTime();
-  }
-
-  /**
-   * @since 2.0
-   */
-  public boolean isSupportingAudits()
-  {
-    return repositorySupportingAudits;
-  }
-
   public void close()
   {
     deactivate();
@@ -274,22 +192,41 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return !isActive();
   }
 
+  public void setRepositoryName(String repositoryName)
+  {
+    repository = new TemporaryRepositoryName(repositoryName);
+  }
+
   /**
    * @since 2.0
    */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry)
   {
-    this.packageRegistry = packageRegistry;
+    this.packageRegistry = (InternalCDOPackageRegistry)packageRegistry;
   }
 
-  public CDOPackageRegistry getPackageRegistry()
+  public InternalCDOPackageRegistry getPackageRegistry()
   {
     return packageRegistry;
   }
 
-  public CDOSessionPackageManagerImpl getPackageManager()
+  public Object processPackage(Object value)
   {
-    return packageManager;
+    CDOFactoryImpl.prepareDynamicEPackage(value);
+    return value;
+  }
+
+  public EPackage[] loadPackages(CDOPackageUnit packageUnit)
+  {
+    if (packageUnit.getOriginalType().isGenerated())
+    {
+      if (!options().isGeneratedPackageEmulationEnabled())
+      {
+        throw new CDOException("Generated packages locally not available: " + packageUnit);
+      }
+    }
+
+    return getSessionProtocol().loadPackages(packageUnit);
   }
 
   public CDORevisionManagerImpl getRevisionManager()
@@ -397,8 +334,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       try
       {
         LifecycleUtil.deactivate(view);
-        // new ViewsChangedRequest(protocol, view.getViewID(), CDOProtocolConstants.VIEW_CLOSED,
-        // CDOCommonView.UNSPECIFIED_DATE).send();
       }
       catch (Exception ex)
       {
@@ -445,81 +380,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     checkActive();
     return views.isEmpty();
-  }
-
-  public synchronized CDOIDMetaRange getTempMetaIDRange(int count)
-  {
-    CDOIDTemp lowerBound = CDOIDUtil.createTempMeta(lastTempMetaID + 1);
-    lastTempMetaID += count;
-    return CDOIDUtil.createMetaRange(lowerBound, count);
-  }
-
-  public InternalEObject lookupMetaInstance(CDOID id)
-  {
-    InternalEObject metaInstance = idToMetaInstanceMap.get(id);
-    if (metaInstance == null)
-    {
-      CDOPackage[] cdoPackages = packageManager.getPackages();
-      for (CDOPackage cdoPackage : cdoPackages)
-      {
-        CDOIDMetaRange metaIDRange = cdoPackage.getMetaIDRange();
-        if (metaIDRange != null && metaIDRange.contains(id))
-        {
-          EPackage ePackage = ModelUtil.getEPackage(cdoPackage, packageRegistry);
-          registerEPackage(ePackage);
-          metaInstance = idToMetaInstanceMap.get(id);
-          break;
-        }
-      }
-    }
-
-    return metaInstance;
-  }
-
-  public CDOID lookupMetaInstanceID(InternalEObject metaInstance)
-  {
-    return metaInstanceToIDMap.get(metaInstance);
-  }
-
-  public void registerEPackage(EPackage ePackage, CDOIDMetaRange metaIDRange)
-  {
-    if (metaIDRange.isTemporary())
-    {
-      throw new IllegalArgumentException("metaIDRange.isTemporary()");
-    }
-
-    CDOIDMetaRange range = CDOIDUtil.createMetaRange(metaIDRange.getLowerBound(), 0);
-    range = SessionUtil
-        .registerMetaInstance((InternalEObject)ePackage, range, idToMetaInstanceMap, metaInstanceToIDMap);
-    if (range.size() != metaIDRange.size())
-    {
-      throw new IllegalStateException("range.size() != metaIDRange.size()");
-    }
-  }
-
-  public CDOIDMetaRange registerEPackage(EPackage ePackage)
-  {
-    CDOIDMetaRange range = SessionUtil.registerEPackage(ePackage, lastTempMetaID + 1, idToMetaInstanceMap,
-        metaInstanceToIDMap);
-    lastTempMetaID = ((CDOIDTempMeta)range.getUpperBound()).getIntValue();
-    return range;
-  }
-
-  public void remapMetaInstance(CDOID oldID, CDOID newID)
-  {
-    InternalEObject metaInstance = idToMetaInstanceMap.remove(oldID);
-    if (metaInstance == null)
-    {
-      throw new IllegalArgumentException("Unknown meta instance id: " + oldID);
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Remapping meta instance: {0} --> {1} <-> {2}", oldID, newID, metaInstance);
-    }
-
-    idToMetaInstanceMap.put(newID, metaInstance);
-    metaInstanceToIDMap.put(metaInstance, newID);
   }
 
   /**
@@ -662,39 +522,18 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs, detachedObjects));
   }
 
-  /**
-   * @since 2.0
-   */
-  public void writePackageURI(ExtendedDataOutput out, String uri) throws IOException
-  {
-    packageURICompressor.write(out, uri);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public String readPackageURI(ExtendedDataInput in) throws IOException
-  {
-    return packageURICompressor.read(in);
-  }
-
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOSession[{0}, {1}]", repositoryName, sessionID);
+    return MessageFormat.format("CDOSession[{0}, {1}]", repository().getName(), sessionID);
   }
 
   /**
    * @since 2.0
    */
-  protected CDOPackageRegistry createPackageRegistry()
+  protected InternalCDOPackageRegistry createPackageRegistry()
   {
     return new CDOPackageRegistryImpl();
-  }
-
-  protected CDOSessionPackageManagerImpl createPackageManager()
-  {
-    return new CDOSessionPackageManagerImpl(this);
   }
 
   protected CDORevisionManagerImpl createRevisionManager()
@@ -751,31 +590,49 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     super.doBeforeActivate();
     checkState(getSessionProtocol(), "sessionProtocol");
-    checkState(repositoryName, "repositoryName");
+    checkState(repository().getName(), "repository().getName()");
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    revisionManager.activate();
+    remoteSessionManager.activate();
     if (packageRegistry == null)
     {
       packageRegistry = createPackageRegistry();
     }
 
-    packageRegistry.setSession(this);
+    packageRegistry.setPackageProcessor(this);
+    packageRegistry.setPackageLoader(this);
+    packageRegistry.activate();
+    // EMFUtil.registerPackage(EcorePackage.eINSTANCE, packageRegistry);
+    // EMFUtil.registerPackage(EresourcePackage.eINSTANCE, packageRegistry);
 
-    OpenSessionResult result = getSessionProtocol().openSession(repositoryName, options().isPassiveUpdateEnabled());
+    String name = repository().getName();
+    boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
+    OpenSessionResult result = getSessionProtocol().openSession(name, passiveUpdateEnabled);
+
     sessionID = result.getSessionID();
-    repositoryUUID = result.getRepositoryUUID();
-    repositoryCreationTime = result.getRepositoryCreationTime();
-    repositoryTimeResult = result.getRepositoryTimeResult();
-    repositorySupportingAudits = result.isRepositorySupportingAudits();
+    repository = createRepository(result);
     handleLibraryDescriptor(result.getLibraryDescriptor());
-    packageURICompressor = result.getCompressor();
-    packageManager.addPackageProxies(result.getPackageInfos());
-    packageManager.activate();
-    revisionManager.activate();
+
+    for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
+    {
+      if (EcorePackage.eINSTANCE.getNsURI().equals(packageUnit.getID()))
+      {
+        EMFUtil.addAdapter(EcorePackage.eINSTANCE, packageUnit.getTopLevelPackageInfo());
+        packageUnit.setState(CDOPackageUnit.State.LOADED);
+      }
+      else if (EresourcePackage.eINSTANCE.getNsURI().equals(packageUnit.getID()))
+      {
+        EMFUtil.addAdapter(EresourcePackage.eINSTANCE, packageUnit.getTopLevelPackageInfo());
+        packageUnit.setState(CDOPackageUnit.State.LOADED);
+      }
+
+      packageRegistry.putPackageUnit(packageUnit);
+    }
   }
 
   @Override
@@ -804,8 +661,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     revisionManager.deactivate();
     revisionManager = null;
 
-    packageManager.deactivate();
-    packageManager = null;
+    packageRegistry.deactivate();
+    packageRegistry = null;
     super.doDeactivate();
   }
 
@@ -856,7 +713,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     String stateLocation = OM.BUNDLE.getStateLocation();
     File repos = new File(stateLocation, "repos");
-    return new File(repos, repositoryUUID);
+    return new File(repos, repository().getUUID());
   }
 
   private Set<String> createSet(String[] fileNames)
@@ -932,6 +789,294 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   /**
    * @author Eike Stepper
+   * @since 2.0
+   */
+  protected class OptionsImpl extends Notifier implements Options
+  {
+    private boolean generatedPackageEmulationEnabled = false;
+
+    private boolean passiveUpdateEnabled = true;
+
+    private CDOCollectionLoadingPolicy collectionLoadingPolicy;
+
+    private CDORevisionFactory revisionFactory;
+
+    public OptionsImpl()
+    {
+      // TODO Remove preferences from core
+      int value = OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue();
+      collectionLoadingPolicy = CDOUtil.createCollectionLoadingPolicy(value, value);
+    }
+
+    public IOptionsContainer getContainer()
+    {
+      return CDOSessionImpl.this;
+    }
+
+    public boolean isGeneratedPackageEmulationEnabled()
+    {
+      return generatedPackageEmulationEnabled;
+    }
+
+    public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled)
+    {
+      this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
+      if (this.generatedPackageEmulationEnabled != generatedPackageEmulationEnabled)
+      {
+        this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
+        // TODO Check inconsistent state if switching off?
+
+        fireEvent(new GeneratedPackageEmulationEventImpl());
+      }
+    }
+
+    public boolean isPassiveUpdateEnabled()
+    {
+      return passiveUpdateEnabled;
+    }
+
+    public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+    {
+      if (this.passiveUpdateEnabled != passiveUpdateEnabled)
+      {
+        this.passiveUpdateEnabled = passiveUpdateEnabled;
+
+        // Need to refresh if we change state
+        Map<CDOID, CDORevision> allRevisions = getAllRevisions();
+        if (!allRevisions.isEmpty())
+        {
+          int initialChunkSize = collectionLoadingPolicy.getInitialChunkSize();
+          getSessionProtocol().setPassiveUpdate(allRevisions, initialChunkSize, passiveUpdateEnabled);
+        }
+
+        fireEvent(new PassiveUpdateEventImpl());
+      }
+    }
+
+    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+    {
+      return collectionLoadingPolicy;
+    }
+
+    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
+    {
+      if (policy == null)
+      {
+        policy = CDOCollectionLoadingPolicy.DEFAULT;
+      }
+
+      if (collectionLoadingPolicy != policy)
+      {
+        collectionLoadingPolicy = policy;
+        fireEvent(new CollectionLoadingPolicyEventImpl());
+      }
+    }
+
+    public synchronized CDORevisionFactory getRevisionFactory()
+    {
+      if (revisionFactory == null)
+      {
+        revisionFactory = new CDORevisionFactory()
+        {
+          public CDORevision createRevision(EClass eClass, CDOID id)
+          {
+            return CDORevisionUtil.create(eClass, id);
+          }
+
+          public CDORevision createRevision(CDODataInput in) throws IOException
+          {
+            return CDORevisionUtil.read(in);
+          }
+
+          @Override
+          public String toString()
+          {
+            return "DefaultRevisionFactory";
+          }
+        };
+      }
+
+      return revisionFactory;
+    }
+
+    public synchronized void setRevisionFactory(CDORevisionFactory revisionFactory)
+    {
+      if (this.revisionFactory != revisionFactory)
+      {
+        this.revisionFactory = revisionFactory;
+        fireEvent(new RevisionFactoryEventImpl());
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class GeneratedPackageEmulationEventImpl extends OptionsEvent implements
+        GeneratedPackageEmulationEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public GeneratedPackageEmulationEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class PassiveUpdateEventImpl extends OptionsEvent implements PassiveUpdateEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public PassiveUpdateEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class CollectionLoadingPolicyEventImpl extends OptionsEvent implements CollectionLoadingPolicyEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public CollectionLoadingPolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class RevisionFactoryEventImpl extends OptionsEvent implements RevisionFactoryEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public RevisionFactoryEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected class RepositoryImpl implements CDOSession.Repository
+  {
+    private String name;
+
+    private String uuid;
+
+    private long creationTime;
+
+    private RepositoryTimeResult timeResult;
+
+    private boolean supportingAudits;
+
+    public RepositoryImpl(String name, OpenSessionResult result)
+    {
+      this.name = name;
+      uuid = result.getRepositoryUUID();
+      creationTime = result.getRepositoryCreationTime();
+      timeResult = result.getRepositoryTimeResult();
+      supportingAudits = result.isRepositorySupportingAudits();
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    /**
+     * Must be callable before session activation has finished!
+     */
+    public String getUUID()
+    {
+      return uuid;
+    }
+
+    public long getCreationTime()
+    {
+      checkActive();
+      return creationTime;
+    }
+
+    public long getCurrentTime()
+    {
+      return getCurrentTime(false);
+    }
+
+    public long getCurrentTime(boolean forceRefresh)
+    {
+      checkActive();
+      if (timeResult == null || forceRefresh)
+      {
+        timeResult = refreshTime();
+      }
+
+      return timeResult.getAproximateRepositoryTime();
+    }
+
+    public boolean isSupportingAudits()
+    {
+      return supportingAudits;
+    }
+
+    private RepositoryTimeResult refreshTime()
+    {
+      return getSessionProtocol().getRepositoryTime();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class TemporaryRepositoryName implements CDOSession.Repository
+  {
+    private String name;
+
+    public TemporaryRepositoryName(String name)
+    {
+      this.name = name;
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    public long getCreationTime()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public long getCurrentTime()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public long getCurrentTime(boolean forceRefresh)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public String getUUID()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isSupportingAudits()
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
    */
   private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent
   {
@@ -984,148 +1129,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     public String toString()
     {
       return "CDOSessionInvalidationEvent: " + dirtyOIDs;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 2.0
-   */
-  protected class OptionsImpl extends Notifier implements Options
-  {
-    private boolean passiveUpdateEnabled = true;
-
-    private CDOCollectionLoadingPolicy collectionLoadingPolicy;
-
-    private CDORevisionFactory revisionFactory;
-
-    public OptionsImpl()
-    {
-      // TODO Remove preferences from core
-      int value = OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue();
-      collectionLoadingPolicy = CDOUtil.createCollectionLoadingPolicy(value, value);
-    }
-
-    public IOptionsContainer getContainer()
-    {
-      return CDOSessionImpl.this;
-    }
-
-    public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
-    {
-      if (this.passiveUpdateEnabled != passiveUpdateEnabled)
-      {
-        this.passiveUpdateEnabled = passiveUpdateEnabled;
-
-        // Need to refresh if we change state
-        Map<CDOID, CDORevision> allRevisions = getAllRevisions();
-        if (!allRevisions.isEmpty())
-        {
-          int initialChunkSize = collectionLoadingPolicy.getInitialChunkSize();
-          getSessionProtocol().setPassiveUpdate(allRevisions, initialChunkSize, passiveUpdateEnabled);
-        }
-
-        fireEvent(new PassiveUpdateEventImpl());
-      }
-    }
-
-    public boolean isPassiveUpdateEnabled()
-    {
-      return passiveUpdateEnabled;
-    }
-
-    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
-    {
-      return collectionLoadingPolicy;
-    }
-
-    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
-    {
-      if (policy == null)
-      {
-        policy = CDOCollectionLoadingPolicy.DEFAULT;
-      }
-
-      if (collectionLoadingPolicy != policy)
-      {
-        collectionLoadingPolicy = policy;
-        fireEvent(new CollectionLoadingPolicyEventImpl());
-      }
-    }
-
-    public synchronized CDORevisionFactory getRevisionFactory()
-    {
-      if (revisionFactory == null)
-      {
-        revisionFactory = new CDORevisionFactory()
-        {
-          public CDORevision createRevision(CDOClass cdoClass, CDOID id)
-          {
-            return CDORevisionUtil.create(cdoClass, id);
-          }
-
-          public CDORevision createRevision(CDODataInput in) throws IOException
-          {
-            return CDORevisionUtil.read(in);
-          }
-
-          @Override
-          public String toString()
-          {
-            return "DefaultRevisionFactory";
-          }
-        };
-      }
-
-      return revisionFactory;
-    }
-
-    public synchronized void setRevisionFactory(CDORevisionFactory revisionFactory)
-    {
-      if (this.revisionFactory != revisionFactory)
-      {
-        this.revisionFactory = revisionFactory;
-        fireEvent(new RevisionFactoryEventImpl());
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class PassiveUpdateEventImpl extends OptionsEvent implements PassiveUpdateEvent
-    {
-      private static final long serialVersionUID = 1L;
-
-      public PassiveUpdateEventImpl()
-      {
-        super(OptionsImpl.this);
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class CollectionLoadingPolicyEventImpl extends OptionsEvent implements CollectionLoadingPolicyEvent
-    {
-      private static final long serialVersionUID = 1L;
-
-      public CollectionLoadingPolicyEventImpl()
-      {
-        super(OptionsImpl.this);
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class RevisionFactoryEventImpl extends OptionsEvent implements RevisionFactoryEvent
-    {
-      private static final long serialVersionUID = 1L;
-
-      public RevisionFactoryEventImpl()
-      {
-        super(OptionsImpl.this);
-      }
     }
   }
 }

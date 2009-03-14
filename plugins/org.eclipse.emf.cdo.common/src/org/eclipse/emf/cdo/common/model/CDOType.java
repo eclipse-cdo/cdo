@@ -62,12 +62,14 @@ public interface CDOType
 
   public static final CDOType BYTE_ARRAY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BYTE_ARRAY;
 
+  public static final CDOType ENUM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.ENUM;
+
+  public static final CDOType CUSTOM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.CUSTOM;
+
   /**
    * @since 2.0
    */
   public static final CDOType FEATURE_MAP_ENTRY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.FEATURE_MAP_ENTRY;
-
-  public static final CDOType CUSTOM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.CUSTOM;
 
   public String getName();
 

@@ -36,30 +36,23 @@ import java.util.List;
  */
 public class Bugzilla_260764_Test extends AbstractCDOTest
 {
-
   public void testBugzilla_260764() throws Exception
   {
     msg("Opening session");
     final CDOSession session = openModel1Session();
-
     session.options().setPassiveUpdateEnabled(false);
 
     // ************************************************************* //
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
-
     final CDOResource resourceA = transaction.createResource("/test1");
 
     final OrderAddress orderAddress = getModel1Factory().createOrderAddress();
-
     resourceA.getContents().add(orderAddress);
-
     transaction.commit();
 
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-
     final TestAdapter adapter = new TestAdapter();
-
     orderAddress.eAdapters().add(adapter);
 
     // ************************************************************* //
@@ -69,12 +62,10 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
     session2.options().setPassiveUpdateEnabled(false);
 
     final CDOTransaction transaction2 = session2.openTransaction();
-
     final OrderAddress orderAddress2 = (OrderAddress)transaction2.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(),
         true);
 
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
-
     orderAddress2.getOrderDetails().add(orderDetail);
 
     assertEquals(0, adapter.getNotifications().size());

@@ -15,20 +15,18 @@ import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
-import org.eclipse.emf.cdo.session.CDORevisionManager;
-import org.eclipse.emf.cdo.session.CDOSessionPackageManager;
 
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.StringIO;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -52,32 +50,7 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
 
   protected InternalCDOSession getSession()
   {
-    return (InternalCDOSession)getProtocol().getInfraStructure();
-  }
-
-  protected CDORevisionManager getRevisionManager()
-  {
-    return getSession().getRevisionManager();
-  }
-
-  protected CDOSessionPackageManager getPackageManager()
-  {
-    return getSession().getPackageManager();
-  }
-
-  protected CDOPackageURICompressor getPackageURICompressor()
-  {
-    return getSession();
-  }
-
-  protected CDOIDProvider getIDProvider()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  protected CDOIDObjectFactory getIDFactory()
-  {
-    return getSession();
+    return (InternalCDOSession)getProtocol().getSession();
   }
 
   @Override
@@ -85,15 +58,15 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   {
     requesting(new CDODataOutputImpl(out)
     {
-      @Override
-      protected CDOPackageURICompressor getPackageURICompressor()
-      {
-        return CDOClientRequest.this.getPackageURICompressor();
-      }
-
       public CDOIDProvider getIDProvider()
       {
-        return CDOClientRequest.this.getIDProvider();
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      protected StringIO getPackageURICompressor()
+      {
+        return getProtocol().getPackageURICompressor();
       }
     });
   }
@@ -104,33 +77,33 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
     return confirming(new CDODataInputImpl(in)
     {
       @Override
-      protected CDORevisionResolver getRevisionResolver()
-      {
-        return CDOClientRequest.this.getRevisionManager();
-      }
-
-      @Override
-      protected CDOPackageManager getPackageManager()
-      {
-        return CDOClientRequest.this.getPackageManager();
-      }
-
-      @Override
-      protected CDOPackageURICompressor getPackageURICompressor()
-      {
-        return CDOClientRequest.this.getPackageURICompressor();
-      }
-
-      @Override
       protected CDOIDObjectFactory getIDFactory()
       {
-        return CDOClientRequest.this.getIDFactory();
+        return getSession();
       }
 
       @Override
       protected CDOListFactory getListFactory()
       {
         return CDOListWithElementProxiesImpl.FACTORY;
+      }
+
+      @Override
+      protected CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getPackageRegistry();
+      }
+
+      @Override
+      protected StringIO getPackageURICompressor()
+      {
+        return getProtocol().getPackageURICompressor();
+      }
+
+      @Override
+      protected CDORevisionResolver getRevisionResolver()
+      {
+        return getSession().getRevisionManager();
       }
     });
   }

@@ -31,9 +31,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     {
       CDOSession session = openModel1Session();
-
       CDOTransaction transaction = session.openTransaction();
-
       CDOResource resource = transaction.createResource("/test1");
 
       Customer customer = getModel1Factory().createCustomer();
@@ -76,9 +74,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     {
       CDOSession session = openModel1Session();
-
       CDOTransaction transaction = session.openTransaction();
-
       CDOResource resource = transaction.createResource("/test1");
 
       Customer customer = getModel1Factory().createCustomer();
@@ -122,11 +118,8 @@ public class ChunkingTest extends AbstractCDOTest
   public void testChunkWithTemporaryObject() throws Exception
   {
     {
-
       CDOSession session = openModel1Session();
-
       CDOTransaction transaction = session.openTransaction();
-
       CDOResource resource = transaction.createResource("/test1");
 
       Customer customer = getModel1Factory().createCustomer();
@@ -135,15 +128,14 @@ public class ChunkingTest extends AbstractCDOTest
 
       transaction.commit();
     }
+
     clearCache(getRepository().getRevisionManager());
 
     // ************************************************************* //
 
     CDOSession session = openModel1Session();
-
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
-
     CDOResource resource = transaction.getResource("/test1");
 
     Customer customer = getModel1Factory().createCustomer();
@@ -217,6 +209,7 @@ public class ChunkingTest extends AbstractCDOTest
 
       transaction.commit();
     }
+
     clearCache(getRepository().getRevisionManager());
     // ************************************************************* //
 

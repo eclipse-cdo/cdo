@@ -15,10 +15,7 @@ package org.eclipse.emf.cdo.internal.common.revision.cache.mem;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.model.resource.CDONameFeature;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourceNodeClass;
+import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -34,6 +31,9 @@ import org.eclipse.net4j.util.ref.KeyedStrongReference;
 import org.eclipse.net4j.util.ref.KeyedWeakReference;
 import org.eclipse.net4j.util.ref.ReferenceQueueWorker;
 import org.eclipse.net4j.util.ref.ReferenceType;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.lang.ref.Reference;
 import java.util.ArrayList;
@@ -52,13 +52,9 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, MEMRevisionCache.class);
 
-  private CDOPackageManager packageManager;
-
   private Map<CDOID, CacheList> cacheLists = new HashMap<CDOID, CacheList>();
 
   private ReferenceType referenceType;
-
-  private transient CDONameFeature cdoNameFeature;
 
   public MEMRevisionCache(ReferenceType referenceType)
   {
@@ -68,21 +64,6 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
   public MEMRevisionCache()
   {
     this(ReferenceType.SOFT);
-  }
-
-  public CDOPackageManager getPackageManager()
-  {
-    return packageManager;
-  }
-
-  public void setPackageManager(CDOPackageManager packageManager)
-  {
-    this.packageManager = packageManager;
-    if (packageManager != null)
-    {
-      CDOResourceNodeClass resourceNodeClass = packageManager.getCDOResourcePackage().getCDOResourceNodeClass();
-      cdoNameFeature = resourceNodeClass.getCDONameFeature();
-    }
   }
 
   public ReferenceType getReferenceType()
@@ -95,7 +76,7 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     this.referenceType = referenceType;
   }
 
-  public CDOClass getObjectType(CDOID id)
+  public EClass getObjectType(CDOID id)
   {
     return null;
   }
@@ -348,7 +329,9 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
         CDOID revisionFolderID = (CDOID)revision.getContainerID();
         if (CDOIDUtil.equals(revisionFolderID, folderID))
         {
-          String revisionName = (String)revision.getValue(cdoNameFeature);
+          EStructuralFeature feature = revision.getEClass().getEStructuralFeature(
+              CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+          String revisionName = (String)revision.getValue(feature);
           if (ObjectUtil.equals(revisionName, name))
           {
             return revision.getID();

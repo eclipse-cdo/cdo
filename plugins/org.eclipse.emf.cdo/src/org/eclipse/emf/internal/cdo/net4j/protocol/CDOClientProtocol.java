@@ -12,14 +12,14 @@ package org.eclipse.emf.internal.cdo.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -32,9 +32,13 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
+import org.eclipse.net4j.util.io.StringCompressor;
+import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -56,14 +60,15 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING,
       CDORevisionManagerImpl.class);
 
+  private StringCompressor packageURICompressor = new StringCompressor(true);
+
   public CDOClientProtocol()
   {
   }
 
-  @Override
-  public CDOSession getSession()
+  public StringIO getPackageURICompressor()
   {
-    return (CDOSession)super.getSession();
+    return packageURICompressor;
   }
 
   public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled)
@@ -87,12 +92,12 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     return send(new RepositoryTimeRequest(this));
   }
 
-  public void loadPackage(CDOPackage cdoPackage, boolean onlyEcore)
+  public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
-    send(new LoadPackageRequest(this, cdoPackage, onlyEcore));
+    return send(new LoadPackagesRequest(this, (InternalCDOPackageUnit)packageUnit));
   }
 
-  public Object loadChunk(InternalCDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));

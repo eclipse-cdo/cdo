@@ -12,8 +12,9 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.model.CDOClass;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +30,7 @@ public interface CDORevisionResolver
   /**
    * @return The type of an object if a revision for that object is in the revision cache, <code>null</code> otherwise.
    */
-  public CDOClass getObjectType(CDOID id);
+  public EClass getObjectType(CDOID id);
 
   public boolean containsRevision(CDOID id);
 

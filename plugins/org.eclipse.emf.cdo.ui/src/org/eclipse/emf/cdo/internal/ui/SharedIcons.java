@@ -56,6 +56,10 @@ public class SharedIcons
 
   public static final String OBJ_EPACKAGE_NATIVE = OBJ + "EPackageNative";
 
+  public static final String OBJ_EPACKAGE_DYNAMIC = OBJ + "EPackageDynamic";
+
+  public static final String OBJ_EPACKAGE_UNKNOWN = OBJ + "EPackageUnknown";
+
   public static final String OBJ_ECLASS = OBJ + "EClass";
 
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions";

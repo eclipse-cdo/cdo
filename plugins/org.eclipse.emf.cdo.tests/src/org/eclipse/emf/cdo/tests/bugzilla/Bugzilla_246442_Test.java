@@ -13,15 +13,10 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-
-import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -29,9 +24,10 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
- * ArrayIndexOutOfBoundsException when importing resoruces.
+ * ArrayIndexOutOfBoundsException when importing resources.
  * <p>
  * 
  * @see https://bugs.eclipse.org/246442
@@ -50,14 +46,11 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
       EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
 
       CDOSession session = openSession();
-
       session.getPackageRegistry().putEPackage(topPackage);
-      CDOPackage packageObject = ModelUtil.getCDOPackage(topPackage, (CDOSessionPackageManagerImpl)session
-          .getPackageManager());
-      assertNotNull(packageObject.getEcore());
 
       CDOTransaction transaction = session.openTransaction();
-      CDOObject instance = (CDOObject)subpackage1.getEFactoryInstance().create(class1Class);
+      CDOObject instance = (CDOObject)EcoreUtil.create(class1Class);
+
       CDOResource resource = transaction.createResource("/test1");
       resource.getContents().add(instance);
       transaction.commit();
@@ -76,27 +69,28 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
     transaction.getObject(lookupObject);
   }
 
-  public void testBugzilla_246442_lookupEClass() throws Exception
-  {
-    EPackage topPackage = createDynamicEPackage();
-
-    EPackage subpackage1 = topPackage.getESubpackages().get(0);
-    EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
-    EClass class2Class = (EClass)subpackage1.getEClassifier("class2");
-    EClass class3Class = (EClass)subpackage1.getEClassifier("class3");
-
-    CDOSession session = openSession();
-
-    session.getPackageRegistry().putEPackage(topPackage);
-
-    CDOClass cdoClass1 = ModelUtil.getCDOClass(class1Class, (CDOSessionPackageManagerImpl)session.getPackageManager());
-    CDOClass cdoClass2 = ModelUtil.getCDOClass(class2Class, (CDOSessionPackageManagerImpl)session.getPackageManager());
-    CDOClass cdoClass3 = ModelUtil.getCDOClass(class3Class, (CDOSessionPackageManagerImpl)session.getPackageManager());
-
-    assertEquals(class1Class.getName(), cdoClass1.getName());
-    assertEquals(class2Class.getName(), cdoClass2.getName());
-    assertEquals(class3Class.getName(), cdoClass3.getName());
-  }
+  // public void testBugzilla_246442_lookupEClass() throws Exception
+  // {
+  // EPackage topPackage = createDynamicEPackage();
+  // EPackage subpackage1 = topPackage.getESubpackages().get(0);
+  // EClass class1Class = (EClass)subpackage1.getEClassifier("class1");
+  // EClass class2Class = (EClass)subpackage1.getEClassifier("class2");
+  // EClass class3Class = (EClass)subpackage1.getEClassifier("class3");
+  //
+  // CDOSession session = openSession();
+  // session.getPackageRegistry().putEPackage(topPackage);
+  //
+  // EClass eClass1 = ModelUtil.getEClass(class1Class,
+  // (_CDOSessionPackageManagerImpl)session.getPackageUnitManager());
+  // EClass eClass2 = ModelUtil.getEClass(class2Class,
+  // (_CDOSessionPackageManagerImpl)session.getPackageUnitManager());
+  // EClass eClass3 = ModelUtil.getEClass(class3Class,
+  // (_CDOSessionPackageManagerImpl)session.getPackageUnitManager());
+  //
+  // assertEquals(class1Class.getName(), eClass1.getName());
+  // assertEquals(class2Class.getName(), eClass2.getName());
+  // assertEquals(class3Class.getName(), eClass3.getName());
+  // }
 
   private EPackage createDynamicEPackage()
   {

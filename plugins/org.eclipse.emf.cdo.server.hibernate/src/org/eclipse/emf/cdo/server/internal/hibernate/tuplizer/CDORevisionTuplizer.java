@@ -11,15 +11,18 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.resource.CDOResourcePackage;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.EntityMode;
 import org.hibernate.HibernateException;
@@ -39,7 +42,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDORevisionTuplizer.class);
 
-  private CDOClass cdoClass;
+  private EClass eClass;
 
   public CDORevisionTuplizer(EntityMetamodel entityMetamodel, PersistentClass mappingInfo)
   {
@@ -49,19 +52,19 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       TRACER.trace("Created CDORevisionTuplizer for entity " + mappingInfo.getEntityName());
     }
 
-    initCDOClass(mappingInfo);
+    initEClass(mappingInfo);
   }
 
-  private void initCDOClass(PersistentClass mappingInfo)
+  private void initEClass(PersistentClass mappingInfo)
   {
-    if (cdoClass != null)
+    if (eClass != null)
     {
       return;
     }
 
     HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
 
-    // find the CDOClass/Package
+    // find the EClass/Package
     // TODO: error handling if meta attribute not present
     // TODO: error handling if entityname not set
     String entityName = mappingInfo.getEntityName();
@@ -72,30 +75,30 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       TRACER.trace("EntityName/packageURI " + entityName + " " + ePackageURI);
     }
 
-    for (CDOPackage cdoPackage : hbStore.getPackageHandler().getCDOPackages())
+    for (EPackage ePackage : hbStore.getPackageHandler().getEPackages())
     {
-      if (cdoPackage.getPackageURI().compareTo(ePackageURI) != 0)
+      if (ePackage.getNsURI().compareTo(ePackageURI) != 0)
       {
         continue;
       }
 
-      for (CDOClass localCdoClass : cdoPackage.getClasses())
+      for (EClass localCdoClass : EMFUtil.getPersistentClasses(ePackage))
       {
         if (localCdoClass.getName().compareTo(entityName) == 0)
         {
-          cdoClass = localCdoClass;
+          eClass = localCdoClass;
           break;
         }
       }
     }
 
-    if (cdoClass == null && ePackageURI.compareTo(CDOResourcePackage.PACKAGE_URI) == 0)
+    if (eClass == null && ePackageURI.compareTo(EresourcePackage.eINSTANCE.getNsURI()) == 0)
     {
-      for (CDOClass localCdoClass : hbStore.getRepository().getPackageManager().getCDOResourcePackage().getClasses())
+      for (EClass localCdoClass : EMFUtil.getPersistentClasses(EresourcePackage.eINSTANCE))
       {
         if (localCdoClass.getName().compareTo(entityName) == 0)
         {
-          cdoClass = localCdoClass;
+          eClass = localCdoClass;
           if (TRACER.isEnabled())
           {
             TRACER.trace("Class is CDOResource class");
@@ -106,10 +109,10 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       }
     }
 
-    if (cdoClass == null)
+    if (eClass == null)
     {
       throw new IllegalArgumentException("The mapped class " + mappingInfo.getEntityName()
-          + " does not have a cdoClass equivalent");
+          + " does not have a eClass equivalent");
     }
   }
 
@@ -176,18 +179,18 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     return EntityMode.MAP;
   }
 
-  public CDOClass getCDOClass()
+  public EClass getEClass()
   {
-    return cdoClass;
+    return eClass;
   }
 
   @Override
   protected Getter buildPropertyGetter(Property mappedProperty, PersistentClass mappedEntity)
   {
-    initCDOClass(mappedEntity);
+    initEClass(mappedEntity);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Building property getter for " + cdoClass.getName() + "." + mappedProperty.getName());
+      TRACER.trace("Building property getter for " + eClass.getName() + "." + mappedProperty.getName());
     }
 
     if (mappedProperty.isBackRef())
@@ -215,12 +218,12 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       return new CDOContainingFeatureIDGetter(this, mappedProperty.getName());
     }
 
-    CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
-    if (cdoFeature.isReference() && cdoFeature.isMany())
+    EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
+    if (feature instanceof EReference && feature.isMany())
     {
       return new CDOManyReferenceGetter(this, mappedProperty.getName());
     }
-    else if (cdoFeature.isReference())
+    else if (feature instanceof EReference)
     {
       return new CDOReferenceGetter(this, mappedProperty.getName());
     }
@@ -231,44 +234,50 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
   @Override
   protected Setter buildPropertySetter(Property mappedProperty, PersistentClass mappedEntity)
   {
-    initCDOClass(mappedEntity);
+    initEClass(mappedEntity);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Building property setter for " + cdoClass.getName() + "." + mappedProperty.getName());
+      TRACER.trace("Building property setter for " + eClass.getName() + "." + mappedProperty.getName());
     }
 
     if (mappedProperty.isBackRef())
     {
       return mappedProperty.getSetter(mappedEntity.getMappedClass());
     }
-    else if (mappedProperty == mappedEntity.getIdentifierProperty())
+
+    if (mappedProperty == mappedEntity.getIdentifierProperty())
     {
       return new CDOIDPropertySetter(this, mappedProperty.getName());
     }
-    else if (mappedProperty == mappedEntity.getVersion())
+
+    if (mappedProperty == mappedEntity.getVersion())
     {
       return new CDOVersionPropertySetter(this, mappedProperty.getName());
     }
+
     // TODO: externalize this
-    else if (mappedProperty.getName().compareTo("resourceID") == 0)
+    if (mappedProperty.getName().compareTo("resourceID") == 0)
     {
       return new CDOResourceIDSetter(this, mappedProperty.getName());
     }
-    else if (mappedProperty.getName().compareTo("containerID") == 0)
+
+    if (mappedProperty.getName().compareTo("containerID") == 0)
     {
       return new CDOContainerIDSetter(this, mappedProperty.getName());
     }
-    else if (mappedProperty.getName().compareTo("containingFeatureID") == 0)
+
+    if (mappedProperty.getName().compareTo("containingFeatureID") == 0)
     {
       return new CDOContainingFeatureIDSetter(this, mappedProperty.getName());
     }
 
-    CDOFeature cdoFeature = getCDOClass().lookupFeature(mappedProperty.getName());
-    if (cdoFeature.isReference() && cdoFeature.isMany())
+    EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
+    if (feature instanceof EReference && feature.isMany())
     {
       return new CDOManyReferenceSetter(this, mappedProperty.getName());
     }
-    else if (cdoFeature.isReference())
+
+    if (feature instanceof EReference)
     {
       return new CDOReferenceSetter(this, mappedProperty.getName());
     }

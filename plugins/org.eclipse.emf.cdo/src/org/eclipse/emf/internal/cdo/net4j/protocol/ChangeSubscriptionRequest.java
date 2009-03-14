@@ -29,8 +29,7 @@ import java.util.List;
  */
 public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      ChangeSubscriptionRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeSubscriptionRequest.class);
 
   private int viewID;
 
@@ -57,9 +56,9 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.trace("View " + viewID + " subscribing to " + cdoIDs.size());
+      TRACER.trace("View " + viewID + " subscribing to " + cdoIDs.size());
     }
 
     out.writeInt(viewID);

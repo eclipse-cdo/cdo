@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.internal.cdo.bundle;
 
-import org.eclipse.emf.internal.cdo.session.CDOPackageTypeRegistryImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewProviderRegistryImpl;
 
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -125,7 +124,7 @@ public final class Activator extends EMFPlugin
     protected void doStop() throws Exception
     {
       CDOViewProviderRegistryImpl.INSTANCE.deactivate();
-      CDOPackageTypeRegistryImpl.INSTANCE.deactivate();
+      // CDOPackageTypeRegistryImpl.INSTANCE.deactivate();
     }
   }
 }

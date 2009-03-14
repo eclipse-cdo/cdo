@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -157,14 +158,14 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(long timeStamp, List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects,
-      List<CDORevisionDelta> deltas, Session excludedSession)
+  public void handleCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
+      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas, Session excludedSession)
   {
     for (Session session : getSessions())
     {
       if (session != excludedSession)
       {
-        session.handleCommitNotification(timeStamp, dirtyIDs, detachedObjects, deltas);
+        session.handleCommitNotification(timeStamp, packageUnits, dirtyIDs, detachedObjects, deltas);
       }
     }
   }

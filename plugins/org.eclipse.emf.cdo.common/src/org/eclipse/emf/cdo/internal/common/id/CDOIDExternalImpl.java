@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.id;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 
@@ -96,4 +97,9 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     return getClass().hashCode() ^ uri.hashCode();
   }
 
+  @Override
+  protected int doCompareTo(CDOID o) throws ClassCastException
+  {
+    return getURI().compareTo(((CDOIDExternalImpl)o).getURI());
+  }
 }

@@ -179,25 +179,24 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void setTarget(Notifier newTarget)
   {
+    if (!isAdapterForType(newTarget))
+    {
+      throw new IllegalArgumentException("Unsupported target: " + newTarget);
+    }
+
     if (resourceSet != null)
     {
-      throw new IllegalStateException("Cannot associate more than 1 resourceset to this viewset");
+      throw new IllegalStateException("Cannot associate more than 1 resource set with this view set");
     }
-    if (isAdapterForType(newTarget))
-    {
-      resourceSet = (ResourceSet)newTarget;
-      EPackage.Registry oldPackageRegistry = resourceSet.getPackageRegistry();
-      packageRegistry = new CDOViewSetPackageRegistryImpl(this, oldPackageRegistry);
-      resourceSet.setPackageRegistry(packageRegistry);
 
-      Registry registry = resourceSet.getResourceFactoryRegistry();
-      Map<String, Object> map = registry.getProtocolToFactoryMap();
-      map.put(CDOProtocolConstants.PROTOCOL_NAME, getResourceFactory());
-    }
-    else
-    {
-      throw new IllegalArgumentException("Doesn't support " + newTarget);
-    }
+    resourceSet = (ResourceSet)newTarget;
+    EPackage.Registry oldPackageRegistry = resourceSet.getPackageRegistry();
+    packageRegistry = new CDOViewSetPackageRegistryImpl(this, oldPackageRegistry);
+    resourceSet.setPackageRegistry(packageRegistry);
+
+    Registry registry = resourceSet.getResourceFactoryRegistry();
+    Map<String, Object> map = registry.getProtocolToFactoryMap();
+    map.put(CDOProtocolConstants.PROTOCOL_NAME, getResourceFactory());
   }
 
   public boolean isAdapterForType(Object type)

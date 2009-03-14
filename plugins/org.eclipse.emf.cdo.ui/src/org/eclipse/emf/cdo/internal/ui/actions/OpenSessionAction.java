@@ -7,9 +7,11 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
@@ -17,6 +19,8 @@ import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -59,7 +63,13 @@ public final class OpenSessionAction extends LongRunningAction
     try
     {
       String description = sessionComposite.getSessionDescription();
-      getContainer().getElement("org.eclipse.emf.cdo.sessions", "cdo", description);
+      final InternalCDOSession session = (InternalCDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions",
+          "cdo", description);
+
+      if (sessionComposite.isAutomaticRegistry())
+      {
+        CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
+      }
     }
     catch (final RuntimeException ex)
     {

@@ -19,38 +19,38 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
-import org.eclipse.emf.cdo.common.model.CDOPackageURICompressor;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.Session;
-import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.Transaction;
 import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
-import org.eclipse.emf.cdo.internal.server.TransactionCommitContextImpl.TransactionPackageManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributable;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,8 +62,7 @@ import java.util.Map.Entry;
  */
 public class CommitTransactionIndication extends IndicationWithMonitoring
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      CommitTransactionIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionIndication.class);
 
   @SuppressWarnings("unchecked")
   private static final ProgressDistributable<InternalCommitContext>[] ops = ProgressDistributor.array( //
@@ -109,48 +108,18 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected Session getSession()
   {
-    return getProtocol().getSession();
-  }
-
-  protected CDOPackageURICompressor getPackageURICompressor()
-  {
-    return getSession();
-  }
-
-  protected CDOIDProvider getIDProvider()
-  {
-    return getSession();
-  }
-
-  protected CDOIDObjectFactory getIDFactory()
-  {
-    return getStore().getCDOIDObjectFactory();
-  }
-
-  protected SessionManager getSessionManager()
-  {
-    return getSession().getSessionManager();
+    return (Session)getProtocol().getSession();
   }
 
   protected Repository getRepository()
   {
-    Repository repository = (Repository)getSessionManager().getRepository();
-    if (!repository.isActive())
+    Repository repository = (Repository)getSession().getSessionManager().getRepository();
+    if (!LifecycleUtil.isActive(repository))
     {
       throw new IllegalStateException("Repository has been deactivated");
     }
 
     return repository;
-  }
-
-  protected RevisionManager getRevisionManager()
-  {
-    return getRepository().getRevisionManager();
-  }
-
-  protected TransactionPackageManager getPackageManager()
-  {
-    return commitContext.getPackageManager();
   }
 
   protected IStore getStore()
@@ -172,25 +141,25 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       @Override
       protected CDORevisionResolver getRevisionResolver()
       {
-        return CommitTransactionIndication.this.getRevisionManager();
+        return CommitTransactionIndication.this.getRepository().getRevisionManager();
       }
 
       @Override
-      protected CDOPackageManager getPackageManager()
+      protected CDOPackageRegistry getPackageRegistry()
       {
-        return CommitTransactionIndication.this.getPackageManager();
+        return commitContext.getPackageRegistry();
       }
 
       @Override
-      protected CDOPackageURICompressor getPackageURICompressor()
+      protected StringIO getPackageURICompressor()
       {
-        return CommitTransactionIndication.this.getPackageURICompressor();
+        return getProtocol().getPackageURICompressor();
       }
 
       @Override
       protected CDOIDObjectFactory getIDFactory()
       {
-        return CommitTransactionIndication.this.getIDFactory();
+        return CommitTransactionIndication.this.getStore().getCDOIDObjectFactory();
       }
 
       @Override
@@ -207,14 +176,14 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     responding(new CDODataOutputImpl(out)
     {
       @Override
-      protected CDOPackageURICompressor getPackageURICompressor()
+      protected StringIO getPackageURICompressor()
       {
-        return CommitTransactionIndication.this.getPackageURICompressor();
+        return getProtocol().getPackageURICompressor();
       }
 
       public CDOIDProvider getIDProvider()
       {
-        return CommitTransactionIndication.this.getIDProvider();
+        return CommitTransactionIndication.this.getSession();
       }
     }, monitor);
   }
@@ -262,7 +231,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
   }
 
-  protected void indicationTransaction(CDODataInput in) throws Exception
+  protected void indicatingTransaction(CDODataInput in) throws Exception
   {
     int viewID = in.readInt();
     commitContext = getTransaction(viewID).createCommitContext();
@@ -270,59 +239,65 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
 
   protected void indicatingCommit(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    // Create transaction context
-    indicationTransaction(in);
+    // Create commit context
+    indicatingTransaction(in);
     commitContext.preCommit();
 
     boolean autoReleaseLocksEnabled = in.readBoolean();
     commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
 
-    TransactionPackageManager packageManager = commitContext.getPackageManager();
-    CDOPackage[] newPackages = new CDOPackage[in.readInt()];
-    CDORevision[] newObjects = new CDORevision[in.readInt()];
-    CDORevisionDelta[] dirtyObjectDeltas = new CDORevisionDelta[in.readInt()];
+    InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
+    InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
+    InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
     CDOID[] detachedObjects = new CDOID[in.readInt()];
-
-    // New packages
-    if (PROTOCOL_TRACER.isEnabled())
-    {
-      PROTOCOL_TRACER.format("Reading {0} new packages", newPackages.length);
-    }
-
-    monitor.begin(newPackages.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
+    monitor.begin(newPackageUnits.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
 
     try
     {
-      for (int i = 0; i < newPackages.length; i++)
+      // New package units
+      if (TRACER.isEnabled())
       {
-        InternalCDOPackage newPackage = (InternalCDOPackage)in.readCDOPackage();
-        newPackage.setEcore(in.readString());
-        newPackages[i] = newPackage;
-        packageManager.addPackage(newPackage);
+        TRACER.format("Reading {0} new package units", newPackageUnits.length);
+      }
+
+      InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
+      for (int i = 0; i < newPackageUnits.length; i++)
+      {
+        newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(packageRegistry);
+        packageRegistry.putPackageUnit(newPackageUnits[i]); // Must happen before readCDORevision!!!
         monitor.worked();
       }
 
-      // New objects
-      if (PROTOCOL_TRACER.isEnabled())
+      // When all packages are deserialized and registered, resolve them
+      for (InternalCDOPackageUnit packageUnit : newPackageUnits)
       {
-        PROTOCOL_TRACER.format("Reading {0} new objects", newObjects.length);
+        for (EPackage ePackage : packageUnit.getEPackages(true))
+        {
+          EcoreUtil.resolveAll(ePackage);
+        }
+      }
+
+      // New objects
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Reading {0} new objects", newObjects.length);
       }
 
       for (int i = 0; i < newObjects.length; i++)
       {
-        newObjects[i] = in.readCDORevision();
+        newObjects[i] = (InternalCDORevision)in.readCDORevision();
         monitor.worked();
       }
 
       // Dirty objects
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length);
+        TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length);
       }
 
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
-        dirtyObjectDeltas[i] = in.readCDORevisionDelta();
+        dirtyObjectDeltas[i] = (InternalCDORevisionDelta)in.readCDORevisionDelta();
         monitor.worked();
       }
 
@@ -332,7 +307,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
         monitor.worked();
       }
 
-      commitContext.setNewPackages(newPackages);
+      commitContext.setNewPackageUnits(newPackageUnits);
       commitContext.setNewObjects(newObjects);
       commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
       commitContext.setDetachedObjects(detachedObjects);

@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevision>>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, VerifyRevisionRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, VerifyRevisionRequest.class);
 
   private Collection<InternalCDORevision> revisions;
 
@@ -50,9 +50,9 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} IDs and versions", revisions.size());
+      TRACER.format("Writing {0} IDs and versions", revisions.size());
     }
 
     out.writeInt(revisions.size());
@@ -60,9 +60,9 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
     {
       CDOID id = revision.getID();
       int version = revision.getVersion();
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing ID and version: {0}v{1}", id, version);
+        TRACER.format("Writing ID and version: {0}v{1}", id, version);
       }
 
       out.writeCDOID(id);
@@ -74,17 +74,17 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
   protected List<InternalCDORevision> confirming(CDODataInput in) throws IOException
   {
     ArrayList<InternalCDORevision> result = new ArrayList<InternalCDORevision>();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Reading {0} timeStamps", revisions.size());
+      TRACER.format("Reading {0} timeStamps", revisions.size());
     }
 
     for (InternalCDORevision revision : revisions)
     {
       long revised = in.readLong();
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Reading timeStamp: {0}", revised);
+        TRACER.format("Reading timeStamp: {0}", revised);
       }
 
       if (revised != CDORevision.UNSPECIFIED_DATE)

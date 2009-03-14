@@ -14,10 +14,10 @@ package org.eclipse.emf.cdo.common.io;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOClassRef;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -26,6 +26,10 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -37,21 +41,21 @@ public interface CDODataInput extends ExtendedDataInput
 {
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
+  public CDOPackageUnit readCDOPackageUnit(CDOPackageRegistry packageRegistry) throws IOException;
+
+  public CDOPackageUnit[] readCDOPackageUnits(CDOPackageRegistry packageRegistry) throws IOException;
+
+  public CDOPackageUnit.Type readCDOPackageUnitType() throws IOException;
+
+  public CDOPackageInfo readCDOPackageInfo() throws IOException;
+
+  public CDOClassifierRef readCDOClassifierRef() throws IOException;
+
+  public EClassifier readCDOClassifierRefAndResolve() throws IOException;
+
   public String readCDOPackageURI() throws IOException;
 
   public CDOType readCDOType() throws IOException;
-
-  public CDOClassRef readCDOClassRef() throws IOException;
-
-  public CDOClass readCDOClassRefAndResolve() throws IOException;
-
-  public void readCDOPackage(CDOPackage cdoPackage) throws IOException;
-
-  public CDOPackage readCDOPackage() throws IOException;
-
-  public CDOClass readCDOClass(CDOPackage containingPackage) throws IOException;
-
-  public CDOFeature readCDOFeature(CDOClass containingClass) throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,11 +69,13 @@ public interface CDODataInput extends ExtendedDataInput
 
   public CDORevision readCDORevision() throws IOException;
 
-  public CDOList readCDOList(CDORevision revision, CDOFeature feature) throws IOException;
+  public CDOList readCDOList(CDORevision revision, EStructuralFeature feature) throws IOException;
+
+  public Object readCDOFeatureValue(EStructuralFeature feature) throws IOException;
 
   public CDORevisionDelta readCDORevisionDelta() throws IOException;
 
-  public CDOFeatureDelta readCDOFeatureDelta(CDOClass cdoClass) throws IOException;
+  public CDOFeatureDelta readCDOFeatureDelta(EClass eClass) throws IOException;
 
   /**
    * Read either a CDORevision or a primitive value.
@@ -77,9 +83,9 @@ public interface CDODataInput extends ExtendedDataInput
   public Object readCDORevisionOrPrimitive() throws IOException;
 
   /**
-   * Read either a CDORevision, a primitive value or a CDOClass.
+   * Read either a CDORevision, a primitive value or a EClass.
    */
-  public Object readCDORevisionOrPrimitiveOrClass() throws IOException;
+  public Object readCDORevisionOrPrimitiveOrClassifier() throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 

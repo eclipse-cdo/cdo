@@ -33,8 +33,7 @@ import java.util.List;
  */
 public class SyncRevisionsIndication extends CDOReadIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      SyncRevisionsIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionsIndication.class);
 
   private List<Pair<InternalCDORevision, Long>> dirtyObjects = new ArrayList<Pair<InternalCDORevision, Long>>();
 
@@ -56,9 +55,9 @@ public class SyncRevisionsIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     IStoreAccessor reader = StoreThreadLocal.getAccessor();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Refreshing store accessor: " + reader);
+      TRACER.format("Refreshing store accessor: " + reader);
     }
 
     reader.refreshRevisions();
@@ -72,7 +71,7 @@ public class SyncRevisionsIndication extends CDOReadIndication
       {
         try
         {
-          InternalCDORevision revision = getRevisionManager().getRevision(id, referenceChunk);
+          InternalCDORevision revision = getRepository().getRevisionManager().getRevision(id, referenceChunk);
           if (revision == null)
           {
             detachedObjects.add(new Pair<CDOID, Long>(id, getTimestamp(id, version)));
@@ -92,7 +91,7 @@ public class SyncRevisionsIndication extends CDOReadIndication
 
   private long getTimestamp(CDOID id, int version)
   {
-    CDORevision revision = getRevisionManager().getRevisionByVersion(id, 0, version, false);
+    CDORevision revision = getRepository().getRevisionManager().getRevisionByVersion(id, 0, version, false);
     if (revision != null)
     {
       return revision.getRevised() + 1;
@@ -104,9 +103,9 @@ public class SyncRevisionsIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Sync found " + dirtyObjects.size() + " dirty objects");
+      TRACER.format("Sync found " + dirtyObjects.size() + " dirty objects");
     }
 
     out.writeInt(dirtyObjects.size());

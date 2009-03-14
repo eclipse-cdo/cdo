@@ -25,8 +25,7 @@ import java.io.IOException;
  */
 public class LoadRevisionByTimeIndication extends LoadRevisionIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      LoadRevisionByTimeIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByTimeIndication.class);
 
   private long timeStamp;
 
@@ -40,15 +39,15 @@ public class LoadRevisionByTimeIndication extends LoadRevisionIndication
   {
     super.indicating(in);
     timeStamp = in.readLong();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read timeStamp: {0}", timeStamp);
+      TRACER.format("Read timeStamp: {0}", timeStamp);
     }
   }
 
   @Override
   protected InternalCDORevision getRevision(CDOID cdoID)
   {
-    return getRevisionManager().getRevisionByTime(cdoID, referenceChunk, timeStamp);
+    return getRepository().getRevisionManager().getRevisionByTime(cdoID, referenceChunk, timeStamp);
   }
 }

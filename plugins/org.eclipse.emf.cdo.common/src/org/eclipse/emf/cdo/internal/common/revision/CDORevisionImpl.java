@@ -15,12 +15,15 @@ package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -31,9 +34,9 @@ public class CDORevisionImpl extends AbstractCDORevision
 {
   private Object[] values;
 
-  public CDORevisionImpl(CDOClass cdoClass, CDOID id)
+  public CDORevisionImpl(EClass eClass, CDOID id)
   {
-    super(cdoClass, id);
+    super(eClass, id);
   }
 
   public CDORevisionImpl(CDODataInput in) throws IOException
@@ -44,22 +47,23 @@ public class CDORevisionImpl extends AbstractCDORevision
   public CDORevisionImpl(CDORevisionImpl source)
   {
     super(source);
-    CDOFeature[] features = getCDOClass().getAllFeatures();
-    initValues(features.length);
+    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
+    initValues(features);
     for (int i = 0; i < features.length; i++)
     {
-      CDOFeature feature = features[i];
-      CDOType type = feature.getType();
+      EStructuralFeature feature = features[i];
+      EClassifier classifier = feature.getEType();
       if (feature.isMany())
       {
         InternalCDOList sourceList = (InternalCDOList)source.values[i];
         if (sourceList != null)
         {
-          setValue(i, sourceList.clone(type));
+          setValue(i, sourceList.clone(classifier));
         }
       }
       else
       {
+        CDOType type = CDOModelUtil.getType(classifier);
         setValue(i, type.copyValue(source.values[i]));
       }
     }
@@ -71,20 +75,20 @@ public class CDORevisionImpl extends AbstractCDORevision
   }
 
   @Override
-  protected void initValues(int size)
+  protected void initValues(EStructuralFeature[] allPersistentFeatures)
   {
-    values = new Object[size];
+    values = new Object[allPersistentFeatures.length];
   }
 
   @Override
-  protected Object getValue(int i)
+  protected Object getValue(int featureIndex)
   {
-    return values[i];
+    return values[featureIndex];
   }
 
   @Override
-  protected void setValue(int i, Object value)
+  protected void setValue(int featureIndex, Object value)
   {
-    values[i] = value;
+    values[featureIndex] = value;
   }
 }

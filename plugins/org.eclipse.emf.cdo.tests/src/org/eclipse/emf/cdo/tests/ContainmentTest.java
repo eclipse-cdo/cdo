@@ -441,8 +441,6 @@ public class ContainmentTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction(resourceSet);
-    EPackage packageObject = createDynamicEPackage();
-    session.getPackageRegistry().putEPackage(packageObject);
     Resource resource1 = transaction.getResource("testA");
     Resource resource2 = transaction.getResource("testB");
 

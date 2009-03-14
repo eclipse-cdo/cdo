@@ -13,6 +13,8 @@ package org.eclipse.emf.internal.cdo.bundle;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.net4j.protocol.CommitTransactionRequest;
+
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -84,4 +86,10 @@ public abstract class OM
 
   public static final OMPreference<Integer> PREF_REVISION_LOADING_CHUNK_SIZE = //
   PREFS.init("PREF_REVISION_LOADING_CHUNK_SIZE", CDOView.Options.NO_REVISION_PREFETCHING); //$NON-NLS-1$
+
+  public static final OMPreference<Integer> PREF_COMMIT_MONITOR_PROGRESS_SECONDS = //
+  PREFS.init("PREF_COMMIT_MONITOR_PROGRESS_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_PROGRESS_SECONDS); //$NON-NLS-1$
+
+  public static final OMPreference<Integer> PREF_COMMIT_MONITOR_TIMEOUT_SECONDS = //
+  PREFS.init("PREF_COMMIT_MONITOR_TIMEOUT_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS); //$NON-NLS-1$
 }

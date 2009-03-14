@@ -40,7 +40,7 @@ import java.util.TreeMap;
  */
 public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeStampContext>>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionsRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionsRequest.class);
 
   private Map<CDOID, CDORevision> revisions;
 
@@ -62,9 +62,9 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.trace("Synchronization " + revisions.size() + " objects");
+      TRACER.trace("Synchronization " + revisions.size() + " objects");
     }
 
     out.writeInt(referenceChunk);
@@ -79,7 +79,7 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
   @Override
   protected Collection<CDOTimeStampContext> confirming(CDODataInput in) throws IOException
   {
-    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getRevisionManager();
+    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getSession().getRevisionManager();
     TreeMap<Long, CDOTimeStampContext> mapofContext = new TreeMap<Long, CDOTimeStampContext>();
 
     int size = in.readInt();
@@ -99,9 +99,9 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
       revisionManager.addCachedRevision((InternalCDORevision)revision);
     }
 
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.trace("Synchronization received  " + size + " dirty objects");
+      TRACER.trace("Synchronization received  " + size + " dirty objects");
     }
 
     size = in.readInt();

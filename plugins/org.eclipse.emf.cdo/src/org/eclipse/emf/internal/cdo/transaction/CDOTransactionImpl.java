@@ -18,7 +18,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -30,7 +33,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackage;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
@@ -45,11 +48,9 @@ import org.eclipse.emf.cdo.view.CDOViewResourcesEvent;
 import org.eclipse.emf.internal.cdo.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.session.CDOSessionPackageManagerImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
-import org.eclipse.emf.internal.cdo.util.ModelUtil;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -927,6 +928,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       TRACER.format("Registering new object {0}", object);
     }
 
+    registerNewPackage(object.eClass().getEPackage());
+
     for (CDOTransactionHandler handler : getHandlers())
     {
       handler.attachingObject(this, object);
@@ -939,6 +942,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     else
     {
       registerNew(lastSavepoint.getNewObjects(), object);
+    }
+  }
+
+  private void registerNewPackage(EPackage ePackage)
+  {
+    CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
+    if (!packageRegistry.containsKey(ePackage.getNsURI()))
+    {
+      packageRegistry.putEPackage(ePackage);
     }
   }
 
@@ -1020,10 +1032,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private List<CDOPackage> analyzeNewPackages()
+  private List<CDOPackageUnit> analyzeNewPackages()
   {
-    CDOSessionPackageManagerImpl packageManager = (CDOSessionPackageManagerImpl)getSession().getPackageManager();
+    CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     Set<EPackage> usedPackages = new HashSet<EPackage>();
     Set<EPackage> usedNewPackages = new HashSet<EPackage>();
     for (CDOObject object : getNewObjects().values())
@@ -1031,13 +1042,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       EPackage ePackage = object.eClass().getEPackage();
       if (usedPackages.add(ePackage))
       {
-        EPackage topLevelPackage = ModelUtil.getTopLevelPackage(ePackage);
+        EPackage topLevelPackage = EMFUtil.getTopLevelPackage(ePackage);
         if (ePackage == topLevelPackage || usedPackages.add(topLevelPackage))
         {
-          CDOPackage cdoPackage = ModelUtil.getCDOPackage(topLevelPackage, packageManager);
-          if (!cdoPackage.isPersistent() && !cdoPackage.isSystem())
+          if (!CDOModelUtil.isSystemPackage(topLevelPackage))
           {
-            usedNewPackages.add(topLevelPackage);
+            CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(topLevelPackage);
+            if (packageUnit.getState() == CDOPackageUnit.State.NEW)
+            {
+              usedNewPackages.add(topLevelPackage);
+            }
           }
         }
       }
@@ -1045,32 +1059,42 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (usedNewPackages.size() > 0)
     {
-      return analyzeNewPackages(usedNewPackages, packageManager);
+      Set<CDOPackageUnit> result = new HashSet<CDOPackageUnit>();
+      for (EPackage usedNewPackage : analyzeNewPackages(usedNewPackages, packageRegistry))
+      {
+        CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(usedNewPackage);
+        result.add(packageUnit);
+      }
+
+      return new ArrayList<CDOPackageUnit>(result);
     }
 
-    return Collections.EMPTY_LIST;
+    return Collections.emptyList();
   }
 
-  private static List<CDOPackage> analyzeNewPackages(Collection<EPackage> usedTopLevelPackages,
-      CDOSessionPackageManagerImpl packageManager)
+  private static List<EPackage> analyzeNewPackages(Collection<EPackage> usedTopLevelPackages,
+      CDOPackageRegistry packageRegistry)
   {
-    // Determine which of the corresdonding CDOPackages are new
-    List<CDOPackage> newPackages = new ArrayList<CDOPackage>();
+    // Determine which of the corresdonding EPackages are new
+    List<EPackage> newPackages = new ArrayList<EPackage>();
 
     IPackageClosure closure = new CompletePackageClosure();
     usedTopLevelPackages = closure.calculate(usedTopLevelPackages);
 
     for (EPackage usedPackage : usedTopLevelPackages)
     {
-      CDOPackage cdoPackage = ModelUtil.getCDOPackage(usedPackage, packageManager);
-      if (cdoPackage == null)
+      if (!CDOModelUtil.isSystemPackage(usedPackage))
       {
-        throw new IllegalStateException("Missing CDO package: " + usedPackage.getNsURI());
-      }
+        CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(usedPackage);
+        if (packageUnit == null)
+        {
+          throw new CDOException("No package unit for " + usedPackage);
+        }
 
-      if (!(cdoPackage.isPersistent() || cdoPackage.isSystem()))
-      {
-        newPackages.add(cdoPackage);
+        if (packageUnit.getState() == CDOPackageUnit.State.NEW)
+        {
+          newPackages.add(usedPackage);
+        }
       }
     }
 
@@ -1158,7 +1182,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private Map<CDOID, CDOObject> detachedObjects;
 
-    private List<CDOPackage> newPackages;
+    private List<CDOPackageUnit> newPackageUnits;
 
     public CDOCommitContextImpl()
     {
@@ -1168,7 +1192,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       dirtyObjects = transaction.getDirtyObjects();
       detachedObjects = transaction.getDetachedObjects();
       revisionDeltas = transaction.getRevisionDeltas();
-      newPackages = transaction.analyzeNewPackages();
+      newPackageUnits = transaction.analyzeNewPackages();
     }
 
     public CDOTransactionImpl getTransaction()
@@ -1186,9 +1210,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return newObjects;
     }
 
-    public List<CDOPackage> getNewPackages()
+    public List<CDOPackageUnit> getNewPackageUnits()
     {
-      return newPackages;
+      return newPackageUnits;
     }
 
     public Map<CDOID, CDOResource> getNewResources()
@@ -1254,9 +1278,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
 
           InternalCDOSession session = getSession();
-          for (CDOPackage newPackage : newPackages)
+          for (CDOPackageUnit newPackageUnit : newPackageUnits)
           {
-            ((InternalCDOPackage)newPackage).setPersistent(true);
+            ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
           }
 
           long timeStamp = result.getTimeStamp();

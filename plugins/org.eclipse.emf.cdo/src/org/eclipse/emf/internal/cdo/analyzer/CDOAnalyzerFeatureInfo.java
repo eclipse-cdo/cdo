@@ -13,12 +13,13 @@
 package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.common.CDOFetchRule;
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,20 +34,20 @@ public class CDOAnalyzerFeatureInfo
 
   private Map<CDOFetchFeatureInfo, CDOFetchFeatureInfo> featureStats = new HashMap<CDOFetchFeatureInfo, CDOFetchFeatureInfo>();
 
-  private Map<CDOClass, CDOFetchRule> fetchRules = new HashMap<CDOClass, CDOFetchRule>();
+  private Map<EClass, CDOFetchRule> fetchRules = new HashMap<EClass, CDOFetchRule>();
 
   public CDOAnalyzerFeatureInfo()
   {
   }
 
-  public Collection<CDOFetchRule> getRules(CDOClass cdoClass, CDOFeature cdoFeature)
+  public Collection<CDOFetchRule> getRules(EClass eClass, EStructuralFeature feature)
   {
     return fetchRules.values();
   }
 
-  public synchronized CDOFetchFeatureInfo getFeatureStat(CDOClass cdoClass, CDOFeature cdoFeature)
+  public synchronized CDOFetchFeatureInfo getFeatureStat(EClass eClass, EStructuralFeature feature)
   {
-    CDOFetchFeatureInfo search = new CDOFetchFeatureInfo(cdoClass, cdoFeature);
+    CDOFetchFeatureInfo search = new CDOFetchFeatureInfo(eClass, feature);
     CDOFetchFeatureInfo featureRule = featureStats.get(search);
     if (featureRule == null)
     {
@@ -57,63 +58,63 @@ public class CDOAnalyzerFeatureInfo
     return featureRule;
   }
 
-  public boolean isActive(CDOClass cdoClass, CDOFeature cdoFeature)
+  public boolean isActive(EClass eClass, EStructuralFeature feature)
   {
-    CDOFetchFeatureInfo search = new CDOFetchFeatureInfo(cdoClass, cdoFeature);
+    CDOFetchFeatureInfo search = new CDOFetchFeatureInfo(eClass, feature);
     CDOFetchFeatureInfo featureRule = featureStats.get(search);
     return featureRule != null && featureRule.isActive();
   }
 
-  public void activate(CDOClass cdoClass, CDOFeature cdoFeature)
+  public void activate(EClass eClass, EStructuralFeature feature)
   {
-    CDOFetchFeatureInfo info = getFeatureStat(cdoClass, cdoFeature);
+    CDOFetchFeatureInfo info = getFeatureStat(eClass, feature);
     if (!info.isActive())
     {
       info.setActive(true);
-      addRule(cdoClass, cdoFeature);
+      addRule(eClass, feature);
     }
   }
 
-  public void deactivate(CDOClass cdoClass, CDOFeature cdoFeature)
+  public void deactivate(EClass eClass, EStructuralFeature feature)
   {
-    CDOFetchFeatureInfo info = getFeatureStat(cdoClass, cdoFeature);
+    CDOFetchFeatureInfo info = getFeatureStat(eClass, feature);
     if (info.isActive())
     {
       info.setActive(false);
-      removeRule(cdoClass, cdoFeature);
+      removeRule(eClass, feature);
     }
   }
 
-  private void addRule(CDOClass cdoClass, CDOFeature cdoFeature)
+  private void addRule(EClass eClass, EStructuralFeature feature)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Adding rule : {0}.{1}", cdoClass.getName(), cdoFeature.getName());
+      TRACER.format("Adding rule : {0}.{1}", eClass.getName(), feature.getName());
     }
 
-    CDOFetchRule fetchRule = fetchRules.get(cdoClass);
+    CDOFetchRule fetchRule = fetchRules.get(eClass);
     if (fetchRule == null)
     {
-      fetchRule = new CDOFetchRule(cdoClass);
-      fetchRules.put(cdoClass, fetchRule);
+      fetchRule = new CDOFetchRule(eClass);
+      fetchRules.put(eClass, fetchRule);
     }
 
-    fetchRule.addFeature(cdoFeature);
+    fetchRule.addFeature(feature);
   }
 
-  private void removeRule(CDOClass cdoClass, CDOFeature cdoFeature)
+  private void removeRule(EClass eClass, EStructuralFeature feature)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Removing rule : {0}.{1}", cdoClass.getName(), cdoFeature.getName());
+      TRACER.format("Removing rule : {0}.{1}", eClass.getName(), feature.getName());
     }
 
-    CDOFetchRule fetchRule = fetchRules.get(cdoClass);
+    CDOFetchRule fetchRule = fetchRules.get(eClass);
     if (fetchRule == null)
     {
       return;
     }
 
-    fetchRule.removeFeature(cdoFeature);
+    fetchRule.removeFeature(feature);
   }
 }

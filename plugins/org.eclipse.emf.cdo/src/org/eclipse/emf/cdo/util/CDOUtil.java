@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
-import org.eclipse.emf.cdo.session.CDOPackageRegistry;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
@@ -28,7 +27,6 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
-import org.eclipse.emf.internal.cdo.session.CDOPackageRegistryImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
@@ -101,22 +99,6 @@ public final class CDOUtil
     }
 
     return new CDOCollectionLoadingPolicyImpl(initialChunkSize, resolveChunkSize);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOPackageRegistry createEagerPackageRegistry()
-  {
-    return new CDOPackageRegistryImpl.Eager();
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOPackageRegistry createLazyPackageRegistry()
-  {
-    return new CDOPackageRegistryImpl.Lazy();
   }
 
   /**

@@ -13,14 +13,13 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackageManager;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.session.CDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Collection;
@@ -76,7 +75,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   /**
    * @since 2.0
    */
-  public Object resolveElementProxy(CDORevision revision, CDOFeature feature, int accessIndex, int serverIndex)
+  public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
   {
     return session.options().getCollectionLoadingPolicy().resolveProxy(this, revision, feature, accessIndex,
         serverIndex);
@@ -85,7 +84,7 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   /**
    * @since 2.0
    */
-  public Object loadChunkByRange(CDORevision revision, CDOFeature feature, int accessIndex, int fetchIndex,
+  public Object loadChunkByRange(CDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
     return session.getSessionProtocol().loadChunk((InternalCDORevision)revision, feature, accessIndex, fetchIndex,
@@ -120,14 +119,5 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
   protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
     return session.getSessionProtocol().loadRevisionsByTime(ids, referenceChunk, timeStamp);
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  protected CDOPackageManager getPackageManager()
-  {
-    return session.getPackageManager();
   }
 }

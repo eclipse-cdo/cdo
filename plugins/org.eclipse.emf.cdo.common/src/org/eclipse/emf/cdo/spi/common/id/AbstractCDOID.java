@@ -95,6 +95,20 @@ public abstract class AbstractCDOID implements CDOID
     }
   }
 
+  public final int compareTo(CDOID o)
+  {
+    try
+    {
+      return doCompareTo(o);
+    }
+    catch (ClassCastException ex)
+    {
+      return getType().compareTo(o.getType());
+    }
+  }
+
+  protected abstract int doCompareTo(CDOID o) throws ClassCastException;
+
   /**
    * <b>Note:</b> {@link CDOID#toURIFragment()} and {@link AbstractCDOID#read(String)} need to match.
    */

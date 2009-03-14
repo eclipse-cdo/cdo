@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 public class QueryCancelRequest extends CDOClientRequest<Boolean>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryCancelRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryCancelRequest.class);
 
   private int queryID;
 
@@ -39,9 +39,9 @@ public class QueryCancelRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.trace("Cancel query " + queryID);
+      TRACER.trace("Cancel query " + queryID);
     }
 
     out.writeInt(queryID);

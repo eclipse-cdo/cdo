@@ -12,8 +12,9 @@
 package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
@@ -24,11 +25,11 @@ public class NOOPFeatureAnalyzer implements CDOFeatureAnalyzer
   {
   }
 
-  public void preTraverseFeature(CDOObject cdoClass, CDOFeature feature, int index)
+  public void preTraverseFeature(CDOObject eClass, EStructuralFeature feature, int index)
   {
   }
 
-  public void postTraverseFeature(CDOObject cdoClass, CDOFeature feature, int index, Object value)
+  public void postTraverseFeature(CDOObject eClass, EStructuralFeature feature, int index, Object value)
   {
   }
 }

@@ -13,7 +13,8 @@
 package org.eclipse.emf.cdo.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
@@ -24,7 +25,7 @@ public interface CDOContainerFeatureDelta extends CDOFeatureDelta
   /**
    * @since 2.0
    */
-  public static final CDOFeature CONTAINER_FEATURE = new org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl.ContainerFeature();
+  public static final EStructuralFeature CONTAINER_FEATURE = new org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl.ContainerFeature();
 
   /**
    * @since 2.0

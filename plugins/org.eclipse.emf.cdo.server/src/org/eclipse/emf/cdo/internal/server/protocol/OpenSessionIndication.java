@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.Session;
@@ -31,7 +31,7 @@ import java.io.IOException;
  */
 public class OpenSessionIndication extends RepositoryTimeIndication
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
 
   private String repositoryName;
 
@@ -63,15 +63,15 @@ public class OpenSessionIndication extends RepositoryTimeIndication
   {
     super.indicating(in);
     repositoryName = in.readString();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read repositoryName: {0}", repositoryName);
+      TRACER.format("Read repositoryName: {0}", repositoryName);
     }
 
     passiveUpdateEnabled = in.readBoolean();
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+      TRACER.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled);
     }
   }
 
@@ -94,37 +94,39 @@ public class OpenSessionIndication extends RepositoryTimeIndication
 
       // Adjust the infra structure (was IRepositoryProvider)
       protocol.setInfraStructure(session);
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing sessionID: {0}", session.getSessionID());
+        TRACER.format("Writing sessionID: {0}", session.getSessionID());
       }
 
       out.writeInt(session.getSessionID());
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing repositoryUUID: {0}", repository.getUUID());
+        TRACER.format("Writing repositoryUUID: {0}", repository.getUUID());
       }
 
       out.writeString(repository.getUUID());
       out.writeLong(repository.getCreationTime());
       out.writeBoolean(repository.isSupportingAudits());
       repository.getStore().getCDOIDLibraryDescriptor().write(out);
-      writePackageInfos(out);
+
+      CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();
+      out.writeCDOPackageUnits(packageUnits);
     }
     catch (RepositoryNotFoundException ex)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Repository {0} not found", repositoryName);
+        TRACER.format("Repository {0} not found", repositoryName);
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);
     }
     catch (SessionCreationException ex)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Failed to open session for repository {0}", repositoryName);
+        TRACER.format("Failed to open session for repository {0}", repositoryName);
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_NO_SESSION);
@@ -132,29 +134,5 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     }
 
     super.responding(out);
-  }
-
-  private void writePackageInfos(CDODataOutput out) throws IOException
-  {
-    CDOPackage[] packages = getPackageManager().getPackages();
-    for (CDOPackage p : packages)
-    {
-      if (!p.isSystem())
-      {
-        if (PROTOCOL_TRACER.isEnabled())
-        {
-          PROTOCOL_TRACER.format("Writing package info: uri={0}, dynamic={1}, metaIDRange={2}, parentURI={3}", p
-              .getPackageURI(), p.isDynamic(), p.getMetaIDRange(), p.getParentURI());
-        }
-
-        out.writeBoolean(true);
-        out.writeCDOPackageURI(p.getPackageURI());
-        out.writeBoolean(p.isDynamic());
-        out.writeCDOIDMetaRange(p.getMetaIDRange());
-        out.writeCDOPackageURI(p.getParentURI());
-      }
-    }
-
-    out.writeBoolean(false);
   }
 }

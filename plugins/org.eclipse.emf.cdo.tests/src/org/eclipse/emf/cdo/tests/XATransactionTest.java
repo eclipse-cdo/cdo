@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
-import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
@@ -137,11 +136,9 @@ public class XATransactionTest extends AbstractCDOTest
     }
     catch (Exception ex)
     {
-
     }
 
     xaTransaction.commit();
-
   }
 
   public void testCommitFromTransactionDisabled() throws Exception
@@ -150,10 +147,14 @@ public class XATransactionTest extends AbstractCDOTest
 
     {
       CDOSession sessionA = openSession();
+      sessionA.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
+      sessionA.getPackageRegistry().putEPackage(getModel4Package());
+
       CDOSession sessionB = openSession(REPOSITORY2_NAME);
+      sessionB.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
+      sessionB.getPackageRegistry().putEPackage(getModel4Package());
+
       ResourceSet resourceSet = new ResourceSetImpl();
-      sessionA.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
-      sessionB.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
@@ -169,9 +170,7 @@ public class XATransactionTest extends AbstractCDOTest
       resB.getContents().add(objectFromResB);
 
       CDOXATransaction transSet = CDOUtil.createXATransaction();
-
       transSet.setAllowRequestFromTransactionEnabled(false);
-
       transSet.add(CDOUtil.getViewSet(resourceSet));
 
       try
@@ -193,10 +192,14 @@ public class XATransactionTest extends AbstractCDOTest
 
     {
       CDOSession sessionA = openSession();
+      sessionA.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
+      sessionA.getPackageRegistry().putEPackage(getModel4Package());
+
       CDOSession sessionB = openSession(REPOSITORY2_NAME);
+      sessionB.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
+      sessionB.getPackageRegistry().putEPackage(getModel4Package());
+
       ResourceSet resourceSet = new ResourceSetImpl();
-      sessionA.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
-      sessionB.getPackageRegistry().putEPackage(model4Package.eINSTANCE);
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
@@ -312,6 +315,7 @@ public class XATransactionTest extends AbstractCDOTest
     resC.getContents().add(purchaseOrder3);
     supplier.getPurchaseOrders().add(purchaseOrder3);
     purchaseOrder.setDate(new Date());
+
     try
     {
 
@@ -321,6 +325,7 @@ public class XATransactionTest extends AbstractCDOTest
     catch (Exception ignore)
     {
     }
+
     Assert.assertEquals(false, CDOUtil.getCDOObject(supplier).cdoWriteLock().isLocked());
     Assert.assertEquals(false, CDOUtil.getCDOObject(purchaseOrder).cdoWriteLock().isLocked());
 
@@ -329,5 +334,4 @@ public class XATransactionTest extends AbstractCDOTest
     assertEquals(null, purchaseOrder.getDate());
     assertEquals(1, supplier.getPurchaseOrders().size());
   }
-
 }

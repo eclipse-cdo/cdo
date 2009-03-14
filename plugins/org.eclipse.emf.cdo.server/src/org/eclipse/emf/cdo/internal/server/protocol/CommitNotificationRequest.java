@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.internal.server.protocol;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -30,10 +31,11 @@ import java.util.List;
  */
 public class CommitNotificationRequest extends CDOServerRequest
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      CommitNotificationRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitNotificationRequest.class);
 
   private long timeStamp;
+
+  private final CDOPackageUnit[] packageUnits;
 
   private List<CDOIDAndVersion> dirtyIDs;
 
@@ -41,11 +43,12 @@ public class CommitNotificationRequest extends CDOServerRequest
 
   private List<CDOID> detachedObjects;
 
-  public CommitNotificationRequest(IChannel channel, long timeStamp, List<CDOIDAndVersion> dirtyIDs,
-      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
+  public CommitNotificationRequest(IChannel channel, long timeStamp, CDOPackageUnit[] packageUnits,
+      List<CDOIDAndVersion> dirtyIDs, List<CDOID> detachedObjects, List<CDORevisionDelta> deltas)
   {
     super(channel, CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION);
     this.timeStamp = timeStamp;
+    this.packageUnits = packageUnits;
     this.dirtyIDs = dirtyIDs;
     this.deltas = deltas;
     this.detachedObjects = detachedObjects;
@@ -54,23 +57,25 @@ public class CommitNotificationRequest extends CDOServerRequest
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp);
+      TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp);
     }
 
     out.writeLong(timeStamp);
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Writing {0} dirty IDs", dirtyIDs.size());
+      TRACER.format("Writing {0} dirty IDs", dirtyIDs.size());
     }
+
+    out.writeCDOPackageUnits(packageUnits);
 
     out.writeInt(dirtyIDs == null ? 0 : dirtyIDs.size());
     for (CDOIDAndVersion dirtyID : dirtyIDs)
     {
-      if (PROTOCOL_TRACER.isEnabled())
+      if (TRACER.isEnabled())
       {
-        PROTOCOL_TRACER.format("Writing dirty ID: {0}", dirtyID);
+        TRACER.format("Writing dirty ID: {0}", dirtyID);
       }
 
       out.writeCDOIDAndVersion(dirtyID);

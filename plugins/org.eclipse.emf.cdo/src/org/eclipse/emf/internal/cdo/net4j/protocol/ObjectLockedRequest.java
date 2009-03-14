@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 public class ObjectLockedRequest extends CDOClientRequest<Boolean>
 {
-  private static final ContextTracer PROTOCOL_TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ObjectLockedRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ObjectLockedRequest.class);
 
   private CDOView view;
 
@@ -47,9 +47,9 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (PROTOCOL_TRACER.isEnabled())
+    if (TRACER.isEnabled())
     {
-      PROTOCOL_TRACER.format("Requesting if object {0} has  of lock for object {1}", object.cdoID(),
+      TRACER.format("Requesting if object {0} has  of lock for object {1}", object.cdoID(),
           lockType == RWLockManager.LockType.READ ? "read" : "write");
     }
 

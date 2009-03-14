@@ -11,13 +11,21 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.Session;
-
 /**
  * @author Simon McDuff
  * @since 2.0
  */
-public interface INotificationManager extends IRepositoryElement
+public interface INotificationManager
 {
-  public void notifyCommit(Session session, IStoreAccessor.CommitContext commitContext);
+  public IRepository getRepository();
+
+  /**
+   * Internal.
+   */
+  public void setRepository(IRepository repository);
+
+  /**
+   * Internal.
+   */
+  public void notifyCommit(ISession session, IStoreAccessor.CommitContext commitContext);
 }

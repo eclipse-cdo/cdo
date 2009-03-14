@@ -10,9 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.model.CDOClass;
-import org.eclipse.emf.cdo.common.model.CDOFeature;
-import org.eclipse.emf.cdo.common.model.CDOPackage;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -29,7 +26,10 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
@@ -62,11 +62,11 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
-      CDOPackage model1Package = getRepository().getPackageManager().lookupPackage(getModel1Package().getNsURI());
+      EPackage model1Package = getRepository().getPackageRegistry().getEPackage(getModel1Package().getNsURI());
 
-      CDOClass customerClass = model1Package.lookupClass(getModel1Package().getCustomer().getClassifierID());
+      EClass customerClass = (EClass)model1Package.getEClassifier("Customer");
 
-      CDOFeature nameFeature = customerClass.lookupFeature("name");
+      EStructuralFeature nameFeature = customerClass.getEStructuralFeature("name");
 
       public void handleTransactionBeforeCommitting(ITransaction transaction,
           IStoreAccessor.CommitContext commitContext, OMMonitor monitor) throws RuntimeException
@@ -74,7 +74,7 @@ public class RepositoryTest extends AbstractCDOTest
         CDORevision[] newObjects = commitContext.getNewObjects();
         for (CDORevision revision : newObjects)
         {
-          if (revision.getCDOClass() == customerClass)
+          if (revision.getEClass() == customerClass)
           {
             String name = (String)revision.data().get(nameFeature, 0);
             if ("Admin".equals(name))
@@ -125,16 +125,16 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new CDOServerUtil.RepositoryReadAccessValidator()
     {
-      CDOPackage model1Package = getRepository().getPackageManager().lookupPackage(getModel1Package().getNsURI());
+      EPackage model1Package = getRepository().getPackageRegistry().getEPackage(getModel1Package().getNsURI());
 
-      CDOClass customerClass = model1Package.lookupClass(getModel1Package().getCustomer().getClassifierID());
+      EClass customerClass = (EClass)model1Package.getEClassifier("Customer");
 
-      CDOFeature nameFeature = customerClass.lookupFeature("name");
+      EStructuralFeature nameFeature = customerClass.getEStructuralFeature("name");
 
       @Override
       protected String validate(ISession session, CDORevision revision)
       {
-        if (revision.getCDOClass() == customerClass)
+        if (revision.getEClass() == customerClass)
         {
           String name = (String)revision.data().get(nameFeature, 0);
           if ("Admin".equals(name))

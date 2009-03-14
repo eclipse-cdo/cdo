@@ -12,7 +12,8 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.model.CDOClass;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ import java.io.IOException;
  */
 public interface CDORevisionFactory
 {
-  public CDORevision createRevision(CDOClass cdoClass, CDOID id);
+  public CDORevision createRevision(EClass eClass, CDOID id);
 
   public CDORevision createRevision(CDODataInput in) throws IOException;
 }

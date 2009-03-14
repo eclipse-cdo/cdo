@@ -23,6 +23,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class LongIDStore extends Store
 {
@@ -34,9 +35,6 @@ public abstract class LongIDStore extends Store
   @ExcludeFromDump
   private transient Object lastObjectIDLock = new Object();
 
-  /**
-   * @since 2.0
-   */
   public LongIDStore(String type, Set<ChangeFormat> supportedChangeFormats,
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {

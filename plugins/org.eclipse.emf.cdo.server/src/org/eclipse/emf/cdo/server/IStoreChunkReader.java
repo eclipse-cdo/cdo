@@ -29,6 +29,9 @@ public interface IStoreChunkReader
 
   public CDORevision getRevision();
 
+  /**
+   * @since 2.0
+   */
   public EStructuralFeature getFeature();
 
   public void addSimpleChunk(int index);

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public final class ModelUtil
 {

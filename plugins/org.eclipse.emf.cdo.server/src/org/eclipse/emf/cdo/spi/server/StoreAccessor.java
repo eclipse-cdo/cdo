@@ -31,6 +31,7 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 {
@@ -56,9 +57,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     this(store, session, true);
   }
 
-  /**
-   * @since 2.0
-   */
   protected StoreAccessor(Store store, ITransaction transaction)
   {
     this(store, transaction, false);
@@ -84,9 +82,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return (ISession)context;
   }
 
-  /**
-   * @since 2.0
-   */
   public ITransaction getTransaction()
   {
     if (context instanceof ITransaction)
@@ -97,9 +92,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return null;
   }
 
-  /**
-   * @since 2.0
-   */
   public CDOID readResourceID(CDOID folderID, String name, long timeStamp)
   {
     IStoreAccessor.QueryResourcesContext.ExactMatch context = //
@@ -109,17 +101,11 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return context.getResourceID();
   }
 
-  /**
-   * @since 2.0
-   */
   public InternalCDORevision verifyRevision(InternalCDORevision revision)
   {
     return revision;
   }
 
-  /**
-   * @since 2.0
-   */
   public void write(CommitContext context, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
@@ -174,9 +160,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public void rollback()
   {
     if (TRACER.isEnabled())
@@ -190,9 +173,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     }
   }
 
-  /**
-   * @since 2.0
-   */
   protected abstract void rollback(IStoreAccessor.CommitContext commitContext);
 
   public final void release()
@@ -205,45 +185,22 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * Add ID mappings for all new objects of a transaction to the commit context. The implementor must, for each new
    * object of the commit context, determine a permanent CDOID and make it known to the context by calling
    * {@link CommitContext#addIDMapping(CDOIDTemp, CDOID)}.
-   * 
-   * @since 2.0
    */
   protected abstract void addIDMappings(CommitContext context, OMMonitor monitor);
 
-  /**
-   * @since 2.0
-   */
   protected abstract void writeRevisions(InternalCDORevision[] revisions, OMMonitor monitor);
 
-  /**
-   * @since 2.0
-   */
   protected abstract void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor);
 
-  /**
-   * @since 2.0
-   */
   protected abstract void detachObjects(CDOID[] detachedObjects, long revised, OMMonitor monitor);
 
-  /**
-   * @since 2.0
-   */
   @Override
   protected abstract void doActivate() throws Exception;
 
-  /**
-   * @since 2.0
-   */
   @Override
   protected abstract void doDeactivate() throws Exception;
 
-  /**
-   * @since 2.0
-   */
   protected abstract void doPassivate() throws Exception;
 
-  /**
-   * @since 2.0
-   */
   protected abstract void doUnpassivate() throws Exception;
 }

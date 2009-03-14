@@ -21,6 +21,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface InternalCDOPackageInfo extends CDOPackageInfo, Adapter.Internal
 {

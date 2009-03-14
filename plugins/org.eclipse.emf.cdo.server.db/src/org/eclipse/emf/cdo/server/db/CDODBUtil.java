@@ -61,6 +61,9 @@ public final class CDODBUtil
     return store;
   }
 
+  /**
+   * @since 2.0
+   */
   public static IMappingStrategy createHorizontalMappingStrategy()
   {
     return new HorizontalMappingStrategy();
@@ -87,6 +90,7 @@ public final class CDODBUtil
    * calling the constructor of the mapping strategy class.
    * 
    * @see #createHorizontalMappingStrategy()
+   * @since 2.0
    */
   public static IMappingStrategy createMappingStrategy(String type)
   {

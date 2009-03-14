@@ -35,6 +35,7 @@ public class EresourceSwitch<T>
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 2.0
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
@@ -106,7 +107,9 @@ public class EresourceSwitch<T>
       CDOResourceNode cdoResourceNode = (CDOResourceNode)theEObject;
       T result = caseCDOResourceNode(cdoResourceNode);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE_FOLDER:
@@ -114,9 +117,13 @@ public class EresourceSwitch<T>
       CDOResourceFolder cdoResourceFolder = (CDOResourceFolder)theEObject;
       T result = caseCDOResourceFolder(cdoResourceFolder);
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoResourceFolder);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE:
@@ -124,9 +131,13 @@ public class EresourceSwitch<T>
       CDOResource cdoResource = (CDOResource)theEObject;
       T result = caseCDOResource(cdoResource);
       if (result == null)
+      {
         result = caseCDOResourceNode(cdoResource);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

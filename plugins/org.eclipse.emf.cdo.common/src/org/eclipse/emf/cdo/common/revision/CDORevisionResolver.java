@@ -29,6 +29,7 @@ public interface CDORevisionResolver
 
   /**
    * @return The type of an object if a revision for that object is in the revision cache, <code>null</code> otherwise.
+   * @since 2.0
    */
   public EClass getObjectType(CDOID id);
 

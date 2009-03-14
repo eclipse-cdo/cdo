@@ -27,19 +27,37 @@ import org.eclipse.emf.ecore.EModelElement;
  */
 public interface IDBStore extends IStore
 {
+  /**
+   * @since 2.0
+   */
   public IMappingStrategy getMappingStrategy();
 
   public IDBSchema getDBSchema();
 
   public IDBAdapter getDBAdapter();
 
+  /**
+   * @since 2.0
+   */
   public IDBConnectionProvider getDBConnectionProvider();
 
+  /**
+   * @since 2.0
+   */
   public long getMetaID(EModelElement modelElement);
 
+  /**
+   * @since 2.0
+   */
   public EModelElement getMetaInstance(long id);
 
+  /**
+   * @since 2.0
+   */
   public IDBStoreAccessor getReader(ISession session);
 
+  /**
+   * @since 2.0
+   */
   public IDBStoreAccessor getWriter(ITransaction transaction);
 }

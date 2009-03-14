@@ -27,6 +27,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface IClassMapping
 {
@@ -38,14 +39,8 @@ public interface IClassMapping
 
   public Set<IDBTable> getAffectedTables();
 
-  /**
-   * @since 2.0
-   */
   public boolean hasFullRevisionInfo();
 
-  /**
-   * @since 2.0
-   */
   public IFeatureMapping getFeatureMapping(EStructuralFeature feature);
 
   public List<IAttributeMapping> getAttributeMappings();
@@ -56,31 +51,20 @@ public interface IClassMapping
 
   public IReferenceMapping getReferenceMapping(EStructuralFeature feature);
 
-  /**
-   * @since 2.0
-   */
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, OMMonitor monitor);
 
-  /**
-   * @since 2.0
-   */
   public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
       OMMonitor monitor);
 
-  /**
-   * @since 2.0
-   */
   public void detachObject(IDBStoreAccessor accessor, CDOID id, long revised, OMMonitor monitor);
 
   /**
-   * @since 2.0
    * @return <code>true</code> if the revision has been loaded sucessfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int referenceChunk);
 
   /**
-   * @since 2.0
    * @return <code>true</code> if the revision has been loaded sucessfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
@@ -88,7 +72,6 @@ public interface IClassMapping
       int referenceChunk);
 
   /**
-   * @since 2.0
    * @return <code>true</code> if the revision has been loaded sucessfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */

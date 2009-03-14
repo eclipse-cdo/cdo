@@ -20,6 +20,9 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface ISessionManager extends IContainer<ISession>
 {
+  /**
+   * @since 2.0
+   */
   public IRepository getRepository();
 
   /**

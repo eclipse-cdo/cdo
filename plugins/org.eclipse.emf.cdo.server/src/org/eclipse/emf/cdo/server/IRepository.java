@@ -53,6 +53,7 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
    * This registry is managed by the {@link CDOPackageUnitManager package manager} of this repository.
    * 
    * @see #getPackageUnitManager()
+   * @since 2.0
    */
   public CDOPackageRegistry getPackageRegistry();
 

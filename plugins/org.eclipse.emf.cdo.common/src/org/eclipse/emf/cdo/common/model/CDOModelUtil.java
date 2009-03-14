@@ -34,21 +34,39 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @since 2.0
  * @author Eike Stepper
+ * @since 2.0
  */
 public final class CDOModelUtil
 {
+  /**
+   * @since 2.0
+   */
   public static final String CORE_PACKAGE_URI = "http://www.eclipse.org/emf/2002/Ecore";
 
+  /**
+   * @since 2.0
+   */
   public static final String RESOURCE_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Eresource/2.0.0";
 
+  /**
+   * @since 2.0
+   */
   public static final String RESOURCE_NODE_CLASS_NAME = "CDOResourceNode";
 
+  /**
+   * @since 2.0
+   */
   public static final String RESOURCE_FOLDER_CLASS_NAME = "CDOResourceFolder";
 
+  /**
+   * @since 2.0
+   */
   public static final String RESOURCE_CLASS_NAME = "CDOResource";
 
+  /**
+   * @since 2.0
+   */
   public static final String ROOT_CLASS_NAME = "EObject";
 
   private static CDOType[] coreTypes;
@@ -99,31 +117,49 @@ public final class CDOModelUtil
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isCorePackage(EPackage ePackage)
   {
     return CORE_PACKAGE_URI.equals(ePackage.getNsURI());
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isResourcePackage(EPackage ePackage)
   {
     return RESOURCE_PACKAGE_URI.equals(ePackage.getNsURI());
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isSystemPackage(EPackage ePackage)
   {
     return isCorePackage(ePackage) || isResourcePackage(ePackage);
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isResource(EClass eClass)
   {
     return isResourcePackage(eClass.getEPackage()) && RESOURCE_CLASS_NAME.equals(eClass.getName());
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isResourceFolder(EClass eClass)
   {
     return isResourcePackage(eClass.getEPackage()) && RESOURCE_FOLDER_CLASS_NAME.equals(eClass.getName());
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isResourceNode(EClass eClass)
   {
     return isResourcePackage(eClass.getEPackage())
@@ -131,6 +167,9 @@ public final class CDOModelUtil
             .equals(eClass.getName()));
   }
 
+  /**
+   * @since 2.0
+   */
   public static boolean isRoot(EClass eClass)
   {
     return isCorePackage(eClass.getEPackage()) && ROOT_CLASS_NAME.equals(eClass.getName());
@@ -147,6 +186,9 @@ public final class CDOModelUtil
     return type;
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOType getType(EClassifier classifier)
   {
     if (classifier instanceof EClass)
@@ -165,6 +207,8 @@ public final class CDOModelUtil
 
   /**
    * Core types includes also complex data like EAnnotation, and EEnum
+   * 
+   * @since 2.0
    */
   public static CDOType getCoreType(EClassifier eDataType)
   {
@@ -172,6 +216,9 @@ public final class CDOModelUtil
     return coreTypes[index];
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOType getPrimitiveType(Class<? extends Object> primitiveType)
   {
     if (primitiveType == String.class)
@@ -222,6 +269,9 @@ public final class CDOModelUtil
     throw new IllegalArgumentException("Not a primitive type nor String nor Date: " + primitiveType);
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOPackageInfo getPackageInfo(Object value, CDOPackageRegistry packageRegistry)
   {
     if (value instanceof EPackage)
@@ -241,6 +291,9 @@ public final class CDOModelUtil
     return null;
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOClassInfo getClassInfo(EClass eClass)
   {
     synchronized (eClass)
@@ -257,22 +310,34 @@ public final class CDOModelUtil
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public static EStructuralFeature[] getAllPersistentFeatures(EClass eClass)
   {
     CDOClassInfo classInfo = getClassInfo(eClass);
     return classInfo.getAllPersistentFeatures();
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOPackageUnit createPackageUnit()
   {
     return new CDOPackageUnitImpl();
   }
 
+  /**
+   * @since 2.0
+   */
   public static CDOPackageInfo createPackageInfo()
   {
     return new CDOPackageInfoImpl();
   }
 
+  /**
+   * @since 2.0
+   */
   public static void writePackage(ExtendedDataOutput out, EPackage ePackage, boolean zipped,
       EPackage.Registry packageRegistry) throws IOException
   {
@@ -282,6 +347,9 @@ public final class CDOModelUtil
     out.writeByteArray(bytes);
   }
 
+  /**
+   * @since 2.0
+   */
   public static EPackage readPackage(ExtendedDataInput in, EPackage.Registry packageRegistry) throws IOException
   {
     String uri = in.readString();

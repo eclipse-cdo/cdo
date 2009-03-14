@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaVisitor
 
 /**
  * @author Simon McDuff
+ * @since 2.0
  */
 public class CDORevisionMerger extends CDOFeatureDeltaVisitorImpl
 {

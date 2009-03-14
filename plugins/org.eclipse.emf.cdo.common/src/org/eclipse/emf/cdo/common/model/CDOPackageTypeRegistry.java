@@ -26,6 +26,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public final class CDOPackageTypeRegistry
 {

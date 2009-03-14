@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class CDOPackageRegistryPopulator extends Worker
 {

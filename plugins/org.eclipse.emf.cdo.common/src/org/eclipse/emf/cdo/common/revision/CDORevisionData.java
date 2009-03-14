@@ -34,21 +34,45 @@ public interface CDORevisionData
 
   public int getContainingFeatureID();
 
+  /**
+   * @since 2.0
+   */
   public Object get(EStructuralFeature feature, int index);
 
+  /**
+   * @since 2.0
+   */
   public int size(EStructuralFeature feature);
 
+  /**
+   * @since 2.0
+   */
   public boolean isEmpty(EStructuralFeature feature);
 
+  /**
+   * @since 2.0
+   */
   public boolean contains(EStructuralFeature feature, Object value);
 
+  /**
+   * @since 2.0
+   */
   public int indexOf(EStructuralFeature feature, Object value);
 
+  /**
+   * @since 2.0
+   */
   public int lastIndexOf(EStructuralFeature feature, Object value);
 
   public <T> T[] toArray(EStructuralFeature feature, T[] array);
 
+  /**
+   * @since 2.0
+   */
   public Object[] toArray(EStructuralFeature feature);
 
+  /**
+   * @since 2.0
+   */
   public int hashCode(EStructuralFeature feature);
 }

@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class StoreChunkReader implements IStoreChunkReader
 {
@@ -32,9 +33,6 @@ public abstract class StoreChunkReader implements IStoreChunkReader
 
   private List<Chunk> chunks = new ArrayList<Chunk>(0);
 
-  /**
-   * @since 2.0
-   */
   public StoreChunkReader(IStoreAccessor accessor, CDORevision revision, EStructuralFeature feature)
   {
     this.accessor = accessor;
@@ -42,9 +40,6 @@ public abstract class StoreChunkReader implements IStoreChunkReader
     this.feature = feature;
   }
 
-  /**
-   * @since 2.0
-   */
   public IStoreAccessor getAccessor()
   {
     return accessor;

@@ -23,6 +23,7 @@ import java.text.MessageFormat;
  * TODO Optimize transfer of EClassRef instances
  * 
  * @author Eike Stepper
+ * @since 2.0
  */
 public final class CDOClassifierRef
 {

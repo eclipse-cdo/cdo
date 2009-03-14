@@ -19,28 +19,17 @@ import java.sql.ResultSet;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface IAttributeMapping extends IFeatureMapping
 {
   public IDBField getField();
 
-  /**
-   * @since 2.0
-   */
   public void appendValue(StringBuilder builder, InternalCDORevision revision);
 
-  /**
-   * @since 2.0
-   */
   public void appendValue(StringBuilder builder, Object value);
 
-  /**
-   * @since 2.0
-   */
   public void extractValue(ResultSet resultSet, int column, InternalCDORevision revision);
 
-  /**
-   * @since 2.0
-   */
   public Object getRevisionValue(InternalCDORevision revision);
 }

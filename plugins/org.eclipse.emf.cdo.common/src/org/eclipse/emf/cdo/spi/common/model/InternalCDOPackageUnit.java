@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public interface InternalCDOPackageUnit extends CDOPackageUnit
 {

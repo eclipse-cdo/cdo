@@ -24,6 +24,9 @@ import java.util.Set;
  */
 public interface IStore
 {
+  /**
+   * @since 2.0
+   */
   public IRepository getRepository();
 
   /**
@@ -79,6 +82,9 @@ public interface IStore
    */
   public void setRevisionParallelism(RevisionParallelism revisionParallelism);
 
+  /**
+   * @since 2.0
+   */
   public CDOIDMetaRange getNextMetaIDRange(int count);
 
   /**

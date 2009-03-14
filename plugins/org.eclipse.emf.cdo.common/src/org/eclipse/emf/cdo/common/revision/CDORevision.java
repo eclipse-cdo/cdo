@@ -31,6 +31,9 @@ public interface CDORevision
 
   public static final int UNCHUNKED = -1;
 
+  /**
+   * @since 2.0
+   */
   public EClass getEClass();
 
   public CDOID getID();

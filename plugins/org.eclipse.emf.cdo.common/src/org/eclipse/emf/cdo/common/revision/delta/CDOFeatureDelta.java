@@ -23,6 +23,9 @@ public interface CDOFeatureDelta
 {
   public Type getType();
 
+  /**
+   * @since 2.0
+   */
   public EStructuralFeature getFeature();
 
   public void apply(CDORevision revision);

@@ -36,6 +36,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public abstract class Store extends Lifecycle implements IStore
 {
@@ -81,9 +82,6 @@ public abstract class Store extends Lifecycle implements IStore
     }
   };
 
-  /**
-   * @since 2.0
-   */
   public Store(String type, Set<ChangeFormat> supportedChangeFormats,
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
@@ -102,9 +100,6 @@ public abstract class Store extends Lifecycle implements IStore
     this.supportedRevisionParallelisms = supportedRevisionParallelisms;
   }
 
-  /**
-   * @since 2.0
-   */
   public String getType()
   {
     return type;
@@ -120,41 +115,26 @@ public abstract class Store extends Lifecycle implements IStore
     this.repository = repository;
   }
 
-  /**
-   * @since 2.0
-   */
   public Set<ChangeFormat> getSupportedChangeFormats()
   {
     return supportedChangeFormats;
   }
 
-  /**
-   * @since 2.0
-   */
   public Set<RevisionTemporality> getSupportedRevisionTemporalities()
   {
     return supportedRevisionTemporalities;
   }
 
-  /**
-   * @since 2.0
-   */
   public Set<RevisionParallelism> getSupportedRevisionParallelisms()
   {
     return supportedRevisionParallelisms;
   }
 
-  /**
-   * @since 2.0
-   */
   public RevisionTemporality getRevisionTemporality()
   {
     return revisionTemporality;
   }
 
-  /**
-   * @since 2.0
-   */
   public void setRevisionTemporality(RevisionTemporality revisionTemporality)
   {
     checkInactive();
@@ -163,17 +143,11 @@ public abstract class Store extends Lifecycle implements IStore
     this.revisionTemporality = revisionTemporality;
   }
 
-  /**
-   * @since 2.0
-   */
   public RevisionParallelism getRevisionParallelism()
   {
     return revisionParallelism;
   }
 
-  /**
-   * @since 2.0
-   */
   public void setRevisionParallelism(RevisionParallelism revisionParallelism)
   {
     checkInactive();
@@ -208,9 +182,6 @@ public abstract class Store extends Lifecycle implements IStore
     }
   }
 
-  /**
-   * @since 2.0
-   */
   public IStoreAccessor getReader(ISession session)
   {
     IStoreAccessor reader = null;
@@ -246,9 +217,6 @@ public abstract class Store extends Lifecycle implements IStore
     return reader;
   }
 
-  /**
-   * @since 2.0
-   */
   public IStoreAccessor getWriter(ITransaction transaction)
   {
     IStoreAccessor writer = null;
@@ -267,9 +235,6 @@ public abstract class Store extends Lifecycle implements IStore
     return writer;
   }
 
-  /**
-   * @since 2.0
-   */
   public ProgressDistributor getIndicatingCommitDistributor()
   {
     return indicatingCommitDistributor;
@@ -314,7 +279,6 @@ public abstract class Store extends Lifecycle implements IStore
    * @param forReleasing
    *          Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
    *          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.
-   * @since 2.0
    */
   protected abstract StoreAccessorPool getReaderPool(ISession session, boolean forReleasing);
 
@@ -335,29 +299,21 @@ public abstract class Store extends Lifecycle implements IStore
    * @param forReleasing
    *          Enables lazy pool creation. The implementor is not supposed to create a new pool if <code>false</code> is
    *          passed. If <code>true</code> is passed it's up to the implementor whether to create a new pool or not.
-   * @since 2.0
    */
   protected abstract StoreAccessorPool getWriterPool(IView view, boolean forReleasing);
 
   /**
    * Creates and returns a <b>new</b> {@link IStoreAccessor} instance. The caller of this method is responsible for
    * {@link Lifecycle#activate() activating} the new instance.
-   * 
-   * @since 2.0
    */
   protected abstract IStoreAccessor createReader(ISession session);
 
   /**
    * Creates and returns a <b>new</b> {@link IStoreAccessor} instance. The caller of this method is responsible for
    * {@link Lifecycle#activate() activating} the new instance.
-   * 
-   * @since 2.0
    */
   protected abstract IStoreAccessor createWriter(ITransaction transaction);
 
-  /**
-   * @since 2.0
-   */
   public static IStoreAccessor.QueryResourcesContext.ExactMatch createExactMatchContext(final CDOID folderID,
       final String name, final long timeStamp)
   {
@@ -403,9 +359,6 @@ public abstract class Store extends Lifecycle implements IStore
     };
   }
 
-  /**
-   * @since 2.0
-   */
   protected static <T> Set<T> set(T... elements)
   {
     return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));

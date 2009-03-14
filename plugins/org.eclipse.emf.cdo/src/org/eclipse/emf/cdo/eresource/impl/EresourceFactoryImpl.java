@@ -34,6 +34,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 2.0
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
@@ -81,9 +82,9 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     switch (eClass.getClassifierID())
     {
     case EresourcePackage.CDO_RESOURCE_FOLDER:
-      return (EObject)createCDOResourceFolder();
+      return createCDOResourceFolder();
     case EresourcePackage.CDO_RESOURCE:
-      return (EObject)createCDOResource();
+      return createCDOResource();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

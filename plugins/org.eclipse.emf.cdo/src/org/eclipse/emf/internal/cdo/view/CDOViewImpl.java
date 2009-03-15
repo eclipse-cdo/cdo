@@ -1072,23 +1072,24 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       for (CDOIDAndVersion dirtyOID : dirtyOIDs)
       {
-        InternalCDOObject dirtyObject;
+        InternalCDOObject dirtyObject = null;
+        // 258831 - Causes deadlock when introduce thread safe mechanisms in State machine.
         synchronized (objects)
         {
           dirtyObject = objects.get(dirtyOID.getID());
-          if (dirtyObject != null)
+        }
+        if (dirtyObject != null)
+        {
+          CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
+          dirtyObjects.add(dirtyObject);
+          if (dirtyObject.cdoConflict())
           {
-            CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
-            dirtyObjects.add(dirtyObject);
-            if (dirtyObject.cdoConflict())
+            if (conflicts == null)
             {
-              if (conflicts == null)
-              {
-                conflicts = new HashSet<CDOObject>();
-              }
-
-              conflicts.add(dirtyObject);
+              conflicts = new HashSet<CDOObject>();
             }
+
+            conflicts.add(dirtyObject);
           }
         }
       }

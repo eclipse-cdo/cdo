@@ -28,6 +28,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -104,6 +105,6 @@ public class CommitNotificationIndication extends CDOClientIndication
       detachedObjects.add(in.readCDOID());
     }
 
-    session.handleCommitNotification(timeStamp, dirtyOIDs, detachedObjects, deltas, null);
+    session.handleCommitNotification(timeStamp, Arrays.asList(packageUnits), dirtyOIDs, detachedObjects, deltas, null);
   }
 }

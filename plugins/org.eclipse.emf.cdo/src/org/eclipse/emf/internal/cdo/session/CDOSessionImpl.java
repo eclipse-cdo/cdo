@@ -385,24 +385,27 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @since 2.0
    */
-  public void handleSyncResponse(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
+  public void handleSyncResponse(long timestamp, Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
   {
-    handleCommitNotification(timestamp, dirtyOIDs, detachedObjects, null, null, true, false);
+    handleCommitNotification(timestamp, newPackageUnits, dirtyOIDs, detachedObjects, null, null, true, false);
   }
 
   /**
    * @since 2.0
    */
-  public void handleCommitNotification(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      final Collection<CDOID> detachedObjects, final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView)
+  public void handleCommitNotification(final long timeStamp, final Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDs, final Collection<CDOID> detachedObjects,
+      final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView)
   {
-    handleCommitNotification(timeStamp, dirtyOIDs, detachedObjects, deltas, excludedView, options()
+    handleCommitNotification(timeStamp, newPackageUnits, dirtyOIDs, detachedObjects, deltas, excludedView, options()
         .isPassiveUpdateEnabled(), true);
   }
 
-  private void handleCommitNotification(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      final Collection<CDOID> detachedObjects, final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView,
-      final boolean passiveUpdate, boolean async)
+  private void handleCommitNotification(final long timeStamp, final Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDs, final Collection<CDOID> detachedObjects,
+      final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView, final boolean passiveUpdate,
+      boolean async)
   {
     if (passiveUpdate)
     {
@@ -459,7 +462,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    fireInvalidationEvent(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+    fireInvalidationEvent(timeStamp, newPackageUnits, dirtyOIDs, detachedObjects, excludedView);
   }
 
   private void updateRevisionForRemoteChanges(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
@@ -514,12 +517,13 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   }
 
   /**
+   * @param packageUnits
    * @since 2.0
    */
-  public void fireInvalidationEvent(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects,
-      InternalCDOView excludedView)
+  public void fireInvalidationEvent(long timeStamp, Collection<CDOPackageUnit> packageUnits,
+      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects, InternalCDOView excludedView)
   {
-    fireEvent(new InvalidationEvent(excludedView, timeStamp, dirtyOIDs, detachedObjects));
+    fireEvent(new InvalidationEvent(excludedView, timeStamp, packageUnits, dirtyOIDs, detachedObjects));
   }
 
   @Override
@@ -1090,12 +1094,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     private Collection<CDOID> detachedObjects;
 
-    public InvalidationEvent(InternalCDOView view, long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-        Collection<CDOID> detachedObjects)
+    private Collection<CDOPackageUnit> newPackageUnits;
+
+    public InvalidationEvent(InternalCDOView view, long timeStamp, Collection<CDOPackageUnit> packageUnits,
+        Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects)
     {
       super(CDOSessionImpl.this);
       this.view = view;
       this.timeStamp = timeStamp;
+      newPackageUnits = packageUnits;
       this.dirtyOIDs = dirtyOIDs;
       this.detachedObjects = detachedObjects;
     }
@@ -1123,6 +1130,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     public Collection<CDOID> getDetachedObjects()
     {
       return detachedObjects;
+    }
+
+    public Collection<CDOPackageUnit> getNewPackageUnits()
+    {
+      return newPackageUnits;
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -38,8 +39,10 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
 
   public void viewDetached(InternalCDOView view);
 
-  public void handleCommitNotification(long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
-      Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas, InternalCDOView excludedView);
+  public void handleCommitNotification(long timeStamp, Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas,
+      InternalCDOView excludedView);
 
-  public void handleSyncResponse(long timestamp, Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects);
+  public void handleSyncResponse(long timestamp, Collection<CDOPackageUnit> newPackageUnits,
+      Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects);
 }

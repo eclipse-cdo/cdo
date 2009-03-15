@@ -1305,7 +1305,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(result.getReferenceAdjuster());
             }
 
-            session.handleCommitNotification(timeStamp, dirtyIDs, detachedIDs, deltasCopy, getTransaction());
+            session.handleCommitNotification(timeStamp, newPackageUnits, dirtyIDs, detachedIDs, deltasCopy,
+                getTransaction());
           }
 
           lastCommitTime = timeStamp;

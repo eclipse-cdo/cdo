@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -113,7 +114,8 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
       Collection<CDOID> detachedObjects = getMap(mapofContext, revised).getDetachedObjects();
       detachedObjects.add(id);
     }
-
+    
+    Collection<CDOPackageUnit> emptyNewPackageUnits = Collections.emptyList();
     for (CDOTimeStampContext timestampContext : mapofContext.values())
     {
       Set<CDOIDAndVersion> dirtyObjects = timestampContext.getDirtyObjects();
@@ -125,7 +127,7 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
       ((CDOTimeStampContextImpl)timestampContext).setDirtyObjects(dirtyObjects);
       ((CDOTimeStampContextImpl)timestampContext).setDetachedObjects(detachedObjects);
 
-      getSession().handleSyncResponse(timestampContext.getTimeStamp(), dirtyObjects, detachedObjects);
+      getSession().handleSyncResponse(timestampContext.getTimeStamp(), emptyNewPackageUnits, dirtyObjects, detachedObjects);
     }
 
     return Collections.unmodifiableCollection(mapofContext.values());

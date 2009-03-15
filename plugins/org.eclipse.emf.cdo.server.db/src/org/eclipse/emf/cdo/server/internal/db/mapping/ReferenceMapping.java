@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -137,7 +138,7 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
   public final void writeReference(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     int idx = 0;
-    for (Object element : (revision).getList(getFeature()))
+    for (Object element : revision.getList(getFeature()))
     {
       writeReferenceEntry(accessor, revision.getID(), revision.getVersion(), idx++, (CDOID)element);
     }
@@ -189,4 +190,9 @@ public class ReferenceMapping extends FeatureMapping implements IReferenceMappin
     chunkReader.getAccessor().getJDBCDelegate().selectRevisionReferenceChunks(chunkReader, chunks, this, where);
   }
 
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("ReferenceMapping[feature={0}, table={1}]", getFeature(), getTable());
+  }
 }

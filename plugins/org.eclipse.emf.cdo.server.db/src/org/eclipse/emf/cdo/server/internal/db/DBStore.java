@@ -39,6 +39,7 @@ import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -435,6 +436,11 @@ public class DBStore extends LongIDStore implements IDBStore
     if (type instanceof EClass)
     {
       return DBType.BIGINT;
+    }
+
+    if (type instanceof EEnum)
+    {
+      return DBType.INTEGER;
     }
 
     DBType dbType = typeMap.get(type);

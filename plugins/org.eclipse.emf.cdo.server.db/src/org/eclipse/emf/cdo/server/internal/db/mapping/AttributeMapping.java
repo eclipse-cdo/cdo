@@ -20,10 +20,12 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -60,7 +62,7 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
   public Object getRevisionValue(InternalCDORevision revision)
   {
     EStructuralFeature feature = getFeature();
-    return ((InternalCDORevision)revision).getValue(feature);
+    return revision.getValue(feature);
   }
 
   public void extractValue(ResultSet resultSet, int column, InternalCDORevision revision)
@@ -73,12 +75,18 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
         value = null;
       }
 
-      ((InternalCDORevision)revision).setValue(getFeature(), value);
+      revision.setValue(getFeature(), value);
     }
     catch (SQLException ex)
     {
       throw new DBException(ex);
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("AttributeMapping[feature={0}, field={1}]", getFeature(), getField());
   }
 
   protected abstract Object getResultSetValue(ResultSet resultSet, int column) throws SQLException;
@@ -90,6 +98,25 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
   protected Object convertToDBType(Object value)
   {
     return value;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class AMEnum extends AttributeMapping
+  {
+    public AMEnum(ClassMapping classMapping, EStructuralFeature feature)
+    {
+      super(classMapping, feature);
+    }
+
+    @Override
+    protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    {
+      EEnum type = (EEnum)getFeature().getEType();
+      int value = resultSet.getInt(column);
+      return type.getEEnumLiteral(value);
+    }
   }
 
   /**

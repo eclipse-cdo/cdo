@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -100,5 +102,11 @@ public class HorizontalClassMapping extends ClassMapping
     {
       monitor.done();
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("HorizontalClassMapping[class={0}, table={1}]", getEClass(), getTable());
   }
 }

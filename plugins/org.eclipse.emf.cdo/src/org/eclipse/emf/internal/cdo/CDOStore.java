@@ -351,10 +351,10 @@ public final class CDOStore implements EStore
         return EStoreEObjectImpl.NIL;
       }
 
-      if (feature.isMany() && EStore.NO_INDEX != index)
+      if (feature.isMany() && index != EStore.NO_INDEX)
       {
         value = resolveProxy(revision, feature, index, value);
-        if (feature.isMany() && value instanceof CDOID)
+        if (value instanceof CDOID)
         {
           CDOID id = (CDOID)value;
           CDOList list = revision.getList(feature);
@@ -373,7 +373,7 @@ public final class CDOStore implements EStore
       {
         value = view.convertIDToObject(value);
       }
-      else if (feature.getEType() instanceof EDataType)
+      else
       {
         EDataType eType = (EDataType)feature.getEType();
         CDOType type = CDOModelUtil.getCoreType(eType);

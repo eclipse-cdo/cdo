@@ -67,6 +67,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
@@ -76,6 +77,7 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
@@ -2097,8 +2099,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   private IContributionItem populateSubMenu(String nsURI, Object value, final CDOPackageRegistry packageRegistry)
   {
-    ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE);
-    final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
     if (value instanceof EPackage)
     {
       EPackage ePackage = (EPackage)value;
@@ -2109,32 +2109,35 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         return null;
       }
 
+      ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE);
+      MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
       populateSubMenu(ePackage, submenuManager);
+      return submenuManager;
     }
-    else
-    {
-      submenuManager.add(new Action("Calculating...")
-      {
-      });
 
-      submenuManager.addMenuListener(new IMenuListener()
+    ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE_UNKNOWN);
+    final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
+    submenuManager.setRemoveAllWhenShown(true);
+    submenuManager.add(new Action("Calculating...")
+    {
+    });
+
+    submenuManager.addMenuListener(new IMenuListener()
+    {
+      public void menuAboutToShow(IMenuManager manager)
       {
-        public void menuAboutToShow(IMenuManager manager)
-        {
-          String nsURI = submenuManager.getMenuText();
-          EPackage ePackage = packageRegistry.getEPackage(nsURI);
-          submenuManager.removeAll();
-          populateSubMenu(ePackage, submenuManager);
-        }
-      });
-    }
+        String nsURI = submenuManager.getMenuText();
+        EPackage ePackage = packageRegistry.getEPackage(nsURI);
+        populateSubMenu(ePackage, submenuManager);
+      }
+    });
 
     return submenuManager;
   }
 
   private void populateSubMenu(EPackage ePackage, final MenuManager submenuManager)
   {
-    List<EClass> eClasses = new ArrayList<EClass>();
+    List<EObject> objects = new ArrayList<EObject>();
     for (EClassifier eClassifier : ePackage.getEClassifiers())
     {
       if (eClassifier instanceof EClass)
@@ -2142,27 +2145,62 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         EClass eClass = (EClass)eClassifier;
         if (!eClass.isAbstract() && !eClass.isInterface())
         {
-          eClasses.add(eClass);
+          objects.add(EcoreUtil.create(eClass));
         }
       }
     }
 
-    if (!eClasses.isEmpty())
+    if (!objects.isEmpty())
     {
-      Collections.sort(eClasses, new Comparator<EClass>()
+      Collections.sort(objects, new Comparator<EObject>()
       {
-        public int compare(EClass o1, EClass o2)
+        public int compare(EObject o1, EObject o2)
         {
-          return o1.getName().compareTo(o2.getName());
+          return getLabelText(o1).compareTo(getLabelText(o2));
         }
+
       });
 
-      for (EClass eClass : eClasses)
+      for (EObject object : objects)
       {
-        CreateRootAction action = new CreateRootAction(eClass);
+        CreateRootAction action = new CreateRootAction(object);
         submenuManager.add(action);
       }
     }
+  }
+
+  private String getLabelText(Object object)
+  {
+    try
+    {
+      IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
+      if (labelProvider != null)
+      {
+        return labelProvider.getText(object);
+      }
+    }
+    catch (Exception ignore)
+    {
+    }
+
+    return null;
+  }
+
+  private Object getLabelImage(Object object)
+  {
+    try
+    {
+      IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
+      if (labelProvider != null)
+      {
+        return labelProvider.getImage(object);
+      }
+    }
+    catch (Exception ignore)
+    {
+    }
+
+    return null;
   }
 
   /**
@@ -2394,12 +2432,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   private final class CreateRootAction extends LongRunningAction
   {
-    private EClass eClass;
+    private EObject object;
 
-    private CreateRootAction(EClass eClass)
+    private CreateRootAction(EObject object)
     {
-      super(getEditorSite().getPage(), eClass.getName(), SharedIcons.getDescriptor(SharedIcons.OBJ_ECLASS));
-      this.eClass = eClass;
+      super(getEditorSite().getPage(), getLabelText(object), ExtendedImageRegistry.getInstance().getImageDescriptor(
+          getLabelImage(object)));
+      // super(getEditorSite().getPage(), getLabel(object), SharedIcons.getDescriptor(SharedIcons.OBJ_ECLASS));
+      this.object = object;
     }
 
     @Override
@@ -2429,8 +2469,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       if (resource != null)
       {
-        InternalCDOObject object = (InternalCDOObject)EcoreUtil.create(eClass);
-        resource.getContents().add(object.cdoInternalInstance());
+        if (object instanceof InternalCDOObject)
+        {
+          object = ((InternalCDOObject)object).cdoInternalInstance();
+        }
+
+        resource.getContents().add(object);
       }
     }
   }

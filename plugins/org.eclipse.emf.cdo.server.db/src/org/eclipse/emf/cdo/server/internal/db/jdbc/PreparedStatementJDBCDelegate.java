@@ -27,6 +27,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
+import org.eclipse.emf.ecore.EEnumLiteral;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -284,8 +286,8 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
       boolean withFullRevisionInfo)
   {
     boolean firstBatch = false;
-
     InternalCDORevision revision = (InternalCDORevision)rev;
+
     if (attributeMappings == null)
     {
       attributeMappings = Collections.emptyList();
@@ -352,6 +354,10 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
         {
           // BUG 217255
           stmt.setTimestamp(col++, new Timestamp(((Date)value).getTime()));
+        }
+        else if (value instanceof EEnumLiteral)
+        {
+          stmt.setInt(col++, ((EEnumLiteral)value).getValue());
         }
         else
         {

@@ -358,25 +358,28 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
+  /**
+   * TODO Transfer integers!
+   */
   public static final CDOType ENUM = new ObjectType("ENUM", 998)
   {
     @SuppressWarnings("cast")
     @Override
     public Object copyValue(Object value)
     {
-      return (Integer)value;
+      return (String)value;
     }
 
     @Override
     public void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeInt((Integer)value);
+      out.writeString((String)value);
     }
 
     @Override
     public Object doReadValue(CDODataInput in) throws IOException
     {
-      return in.readInt();
+      return in.readString();
     }
   };
 

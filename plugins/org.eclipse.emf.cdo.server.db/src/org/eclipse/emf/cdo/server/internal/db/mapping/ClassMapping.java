@@ -326,6 +326,10 @@ public abstract class ClassMapping implements IClassMapping
     {
       return new AttributeMapping.AMShort(this, feature);
     }
+    else if (type == CDOType.ENUM)
+    {
+      return new AttributeMapping.AMEnum(this, feature);
+    }
     else if (type == CDOType.STRING || type == CDOType.CUSTOM)
     {
       return new AttributeMapping.AMString(this, feature);

@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -97,8 +98,6 @@ public final class CDOModelUtil
     registerCoreType(types, EcorePackage.eINSTANCE.getEShortObject(), CDOType.SHORT_OBJECT);
     registerCoreType(types, EcorePackage.eINSTANCE.getEShort(), CDOType.SHORT);
     registerCoreType(types, EcorePackage.eINSTANCE.getEString(), CDOType.STRING);
-    registerCoreType(types, EcorePackage.eINSTANCE.getEEnum(), CDOType.ENUM);
-
     coreTypes = types.toArray(new CDOType[types.size()]);
   }
 
@@ -194,6 +193,11 @@ public final class CDOModelUtil
     if (classifier instanceof EClass)
     {
       return CDOType.OBJECT;
+    }
+
+    if (classifier instanceof EEnum)
+    {
+      return CDOType.ENUM;
     }
 
     if (isCorePackage(classifier.getEPackage()))

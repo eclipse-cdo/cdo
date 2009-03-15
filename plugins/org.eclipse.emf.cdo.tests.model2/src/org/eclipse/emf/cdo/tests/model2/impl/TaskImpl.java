@@ -112,7 +112,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public boolean isDone()
   {
-    return ((Boolean)eGet(Model2Package.Literals.TASK__DONE, true)).booleanValue();
+    return (Boolean)eGet(Model2Package.Literals.TASK__DONE, true);
   }
 
   /**
@@ -122,7 +122,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public void setDone(boolean newDone)
   {
-    eSet(Model2Package.Literals.TASK__DONE, new Boolean(newDone));
+    eSet(Model2Package.Literals.TASK__DONE, newDone);
   }
 
 } // TaskImpl

@@ -1551,7 +1551,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
-      handleNewObjects(commitContext.getNewObjects().values());
+      handleNewObjects(commitContext.getNewResources().values());
       handleNewObjects(commitContext.getNewObjects().values());
       handleDetachedObjects(commitContext.getDetachedObjects().keySet());
     }

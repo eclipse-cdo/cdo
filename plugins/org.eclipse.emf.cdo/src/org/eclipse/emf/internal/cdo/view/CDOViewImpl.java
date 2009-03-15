@@ -125,6 +125,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   private ReentrantLock lock = new ReentrantLock(true);
 
+  private ReentrantLock stateLock = new ReentrantLock(true);
+
   private CDOResourceImpl rootResource;
 
   private ChangeSubscriptionManager changeSubscriptionManager = createChangeSubscriptionManager();
@@ -257,6 +259,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   public ReentrantLock getLock()
   {
     return lock;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public ReentrantLock getStateLock()
+  {
+    return stateLock;
   }
 
   /**

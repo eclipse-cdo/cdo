@@ -52,6 +52,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * CDORevision needs to follow these rules:<br>
@@ -566,8 +567,18 @@ public final class CDOStore implements EStore
 
   private static InternalCDORevision getRevisionForReading(InternalCDOObject cdoObject)
   {
-    CDOStateMachine.INSTANCE.read(cdoObject);
-    return getRevision(cdoObject);
+    ReentrantLock viewLock = cdoObject.cdoView().getStateLock();
+    viewLock.lock();
+
+    try
+    {
+      CDOStateMachine.INSTANCE.read(cdoObject);
+      return getRevision(cdoObject);
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
   }
 
   private static InternalCDORevision getRevisionForWriting(InternalCDOObject cdoObject, CDOFeatureDelta delta)

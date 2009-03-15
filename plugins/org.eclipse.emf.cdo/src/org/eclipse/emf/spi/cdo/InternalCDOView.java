@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -98,4 +99,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle.Intr
   public void unsubscribe(EObject eObject, Adapter adapter);
 
   public boolean hasSubscription(CDOID id);
+
+  public ReentrantLock getStateLock();
 }

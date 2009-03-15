@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -177,13 +178,23 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
-    attach1(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
-    attach2(object);
+    ReentrantLock viewLock = transaction.getStateLock();
+    viewLock.lock();
 
-    for (InternalCDOObject content : contents)
+    try
     {
-      attach2(content);
+      List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
+      attach1(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
+      attach2(object);
+
+      for (InternalCDOObject content : contents)
+      {
+        attach2(content);
+      }
+    }
+    finally
+    {
+      viewLock.unlock();
     }
   }
 
@@ -219,35 +230,45 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void detach(InternalCDOObject object)
   {
-    if (TRACER.isEnabled())
+    ReentrantLock viewLock = object.cdoView().getStateLock();
+    viewLock.lock();
+
+    try
     {
-      trace(object, CDOEvent.DETACH);
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.DETACH);
+      }
+
+      List<InternalCDOObject> objectsToDetach = new ArrayList<InternalCDOObject>();
+      InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
+
+      // Accumulate objects that needs to be detached
+      // If we have an error, we will keep the graph exactly like it was before.
+      process(object, CDOEvent.DETACH, objectsToDetach);
+
+      // postDetach requires the object to be TRANSIENT
+      for (InternalCDOObject content : objectsToDetach)
+      {
+        CDOState oldState = content.cdoInternalSetState(CDOState.TRANSIENT);
+        content.cdoInternalPostDetach();
+        content.cdoInternalSetState(oldState);
+      }
+
+      // detachObject needs to know the state before we change the object to TRANSIENT
+      for (InternalCDOObject content : objectsToDetach)
+      {
+        transaction.detachObject(content);
+        content.cdoInternalSetState(CDOState.TRANSIENT);
+
+        content.cdoInternalSetView(null);
+        content.cdoInternalSetID(null);
+        content.cdoInternalSetRevision(null);
+      }
     }
-
-    List<InternalCDOObject> objectsToDetach = new ArrayList<InternalCDOObject>();
-    InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
-
-    // Accumulate objects that needs to be detached
-    // If we have an error, we will keep the graph exactly like it was before.
-    process(object, CDOEvent.DETACH, objectsToDetach);
-
-    // postDetach requires the object to be TRANSIENT
-    for (InternalCDOObject content : objectsToDetach)
+    finally
     {
-      CDOState oldState = content.cdoInternalSetState(CDOState.TRANSIENT);
-      content.cdoInternalPostDetach();
-      content.cdoInternalSetState(oldState);
-    }
-
-    // detachObject needs to know the state before we change the object to TRANSIENT
-    for (InternalCDOObject content : objectsToDetach)
-    {
-      transaction.detachObject(content);
-      content.cdoInternalSetState(CDOState.TRANSIENT);
-
-      content.cdoInternalSetView(null);
-      content.cdoInternalSetID(null);
-      content.cdoInternalSetRevision(null);
+      viewLock.unlock();
     }
   }
 
@@ -256,12 +277,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void read(InternalCDOObject object)
   {
-    if (TRACER.isEnabled())
-    {
-      trace(object, CDOEvent.READ);
-    }
+    ReentrantLock viewLock = object.cdoView().getStateLock();
+    viewLock.lock();
 
-    process(object, CDOEvent.READ, null);
+    try
+    {
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.READ);
+      }
+
+      process(object, CDOEvent.READ, null);
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
   }
 
   /**
@@ -277,12 +308,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void write(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
-    if (TRACER.isEnabled())
-    {
-      trace(object, CDOEvent.WRITE);
-    }
+    ReentrantLock viewLock = object.cdoView().getStateLock();
+    viewLock.lock();
 
-    process(object, CDOEvent.WRITE, featureDelta);
+    try
+    {
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.WRITE);
+      }
+
+      process(object, CDOEvent.WRITE, featureDelta);
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
   }
 
   /**
@@ -321,19 +362,29 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     if (view != null)
     {
-      InternalCDOSession session = (InternalCDOSession)view.getSession();
-      revisions = session.getSessionProtocol().verifyRevision(revisions);
+      ReentrantLock viewLock = ((InternalCDOView)view).getStateLock();
+      viewLock.lock();
 
-      revisions.addAll(revised);
-      for (InternalCDORevision revision : revisions)
+      try
       {
-        InternalCDOObject object = ids.get(revision.getID());
-        if (TRACER.isEnabled())
-        {
-          trace(object, CDOEvent.RELOAD);
-        }
+        InternalCDOSession session = (InternalCDOSession)view.getSession();
+        revisions = session.getSessionProtocol().verifyRevision(revisions);
 
-        process(object, CDOEvent.RELOAD, null);
+        revisions.addAll(revised);
+        for (InternalCDORevision revision : revisions)
+        {
+          InternalCDOObject object = ids.get(revision.getID());
+          if (TRACER.isEnabled())
+          {
+            trace(object, CDOEvent.RELOAD);
+          }
+
+          process(object, CDOEvent.RELOAD, null);
+        }
+      }
+      finally
+      {
+        viewLock.unlock();
       }
     }
   }
@@ -343,12 +394,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void invalidate(InternalCDOObject object, int version)
   {
-    if (TRACER.isEnabled())
-    {
-      trace(object, CDOEvent.INVALIDATE);
-    }
+    ReentrantLock viewLock = object.cdoView().getStateLock();
+    viewLock.lock();
 
-    process(object, CDOEvent.INVALIDATE, version);
+    try
+    {
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.INVALIDATE);
+      }
+
+      process(object, CDOEvent.INVALIDATE, version);
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
   }
 
   /**
@@ -356,12 +417,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void detachRemote(InternalCDOObject object)
   {
-    if (TRACER.isEnabled())
-    {
-      trace(object, CDOEvent.DETACH_REMOTE);
-    }
+    ReentrantLock viewLock = object.cdoView().getStateLock();
+    viewLock.lock();
 
-    process(object, CDOEvent.DETACH_REMOTE, CDORevision.UNSPECIFIED_VERSION);
+    try
+    {
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.DETACH_REMOTE);
+      }
+
+      process(object, CDOEvent.DETACH_REMOTE, CDORevision.UNSPECIFIED_VERSION);
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
   }
 
   /**
@@ -369,12 +440,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
-    if (TRACER.isEnabled())
-    {
-      trace(object, CDOEvent.COMMIT);
-    }
+    ReentrantLock viewLock = object.cdoView().getStateLock();
+    viewLock.lock();
 
-    process(object, CDOEvent.COMMIT, result);
+    try
+    {
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.COMMIT);
+      }
+
+      process(object, CDOEvent.COMMIT, result);
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
   }
 
   /**
@@ -382,12 +463,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void rollback(InternalCDOObject object)
   {
-    if (TRACER.isEnabled())
-    {
-      trace(object, CDOEvent.ROLLBACK);
-    }
+    ReentrantLock viewLock = object.cdoView().getStateLock();
+    viewLock.lock();
 
-    process(object, CDOEvent.ROLLBACK, null);
+    try
+    {
+      if (TRACER.isEnabled())
+      {
+        trace(object, CDOEvent.ROLLBACK);
+      }
+
+      process(object, CDOEvent.ROLLBACK, null);
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
   }
 
   @Override

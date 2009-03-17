@@ -147,49 +147,6 @@ public interface IStoreAccessor extends IQueryHandler
   public void queryResources(QueryResourcesContext context);
 
   /**
-   * @author Eike Stepper
-   * @since 2.0
-   * @noimplement This interface is not intended to be implemented by clients.
-   */
-  public interface QueryResourcesContext
-  {
-    /**
-     * The timeStamp of the view ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is an
-     * {@link CDOCommonView.Type#AUDIT audit} view.
-     */
-    public long getTimeStamp();
-
-    public CDOID getFolderID();
-
-    public String getName();
-
-    public boolean exactMatch();
-
-    /**
-     * Returns the maximum number of results expected by the client or {@link CDOQueryInfo#UNLIMITED_RESULTS} for no
-     * limitation.
-     */
-    public int getMaxResults();
-
-    /**
-     * Adds the CDOID of one resource to the results of the underlying query.
-     * 
-     * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
-     *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
-     */
-    public boolean addResource(CDOID resourceID);
-
-    /**
-     * @author Eike Stepper
-     * @since 2.0
-     */
-    public interface ExactMatch extends QueryResourcesContext
-    {
-      public CDOID getResourceID();
-    }
-  }
-
-  /**
    * Returns the transaction this accessor is associated with if {@link #isReader()} returns <code>false</code>,
    * <code>null</code> otherwise.
    * 
@@ -304,5 +261,48 @@ public interface IStoreAccessor extends IQueryHandler
     public void addIDMapping(CDOIDTemp oldID, CDOID newID);
 
     public void applyIDMappings(OMMonitor monitor);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 2.0
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface QueryResourcesContext
+  {
+    /**
+     * The timeStamp of the view ({@link CDOCommonView#UNSPECIFIED_DATE} if the view is an
+     * {@link CDOCommonView.Type#AUDIT audit} view.
+     */
+    public long getTimeStamp();
+  
+    public CDOID getFolderID();
+  
+    public String getName();
+  
+    public boolean exactMatch();
+  
+    /**
+     * Returns the maximum number of results expected by the client or {@link CDOQueryInfo#UNLIMITED_RESULTS} for no
+     * limitation.
+     */
+    public int getMaxResults();
+  
+    /**
+     * Adds the CDOID of one resource to the results of the underlying query.
+     * 
+     * @return <code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
+     *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
+     */
+    public boolean addResource(CDOID resourceID);
+  
+    /**
+     * @author Eike Stepper
+     * @since 2.0
+     */
+    public interface ExactMatch extends QueryResourcesContext
+    {
+      public CDOID getResourceID();
+    }
   }
 }

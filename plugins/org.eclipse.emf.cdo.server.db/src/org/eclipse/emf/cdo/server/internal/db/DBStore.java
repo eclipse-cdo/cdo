@@ -157,7 +157,7 @@ public class DBStore extends LongIDStore implements IDBStore
     return dbAdapter;
   }
 
-  public void setDbAdapter(IDBAdapter dbAdapter)
+  public void setDBAdapter(IDBAdapter dbAdapter)
   {
     this.dbAdapter = dbAdapter;
   }

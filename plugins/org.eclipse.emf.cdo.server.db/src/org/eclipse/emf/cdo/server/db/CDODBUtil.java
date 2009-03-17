@@ -54,7 +54,7 @@ public final class CDODBUtil
   {
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
-    store.setDbAdapter(dbAdapter);
+    store.setDBAdapter(dbAdapter);
     store.setDbConnectionProvider(dbConnectionProvider);
     store.setJDBCDelegateProvider(delegateProvider);
     mappingStrategy.setStore(store);

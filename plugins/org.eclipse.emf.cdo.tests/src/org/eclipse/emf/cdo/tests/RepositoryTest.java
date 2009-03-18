@@ -62,17 +62,15 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
-      EPackage model1Package = getRepository().getPackageRegistry().getEPackage(getModel1Package().getNsURI());
-
-      EClass customerClass = (EClass)model1Package.getEClassifier("Customer");
-
-      EStructuralFeature nameFeature = customerClass.getEStructuralFeature("name");
-
       public void handleTransactionBeforeCommitting(ITransaction transaction,
           IStoreAccessor.CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
-        CDORevision[] newObjects = commitContext.getNewObjects();
-        for (CDORevision revision : newObjects)
+        // Use the package registry of the commit context to catch new packages!
+        EPackage model1Package = commitContext.getPackageRegistry().getEPackage(getModel1Package().getNsURI());
+        EClass customerClass = (EClass)model1Package.getEClassifier("Customer");
+        EStructuralFeature nameFeature = customerClass.getEStructuralFeature("name");
+
+        for (CDORevision revision : commitContext.getNewObjects())
         {
           if (revision.getEClass() == customerClass)
           {

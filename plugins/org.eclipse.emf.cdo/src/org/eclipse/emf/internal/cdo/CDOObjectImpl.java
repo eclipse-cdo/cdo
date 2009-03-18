@@ -81,7 +81,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private InternalCDORevision revision;
 
   /**
-   * CDO used this list instead of eSettings for transient objects. EMF used eSettings as cache. CDO deactivates the
+   * CDO uses this list instead of eSettings for transient objects. EMF uses eSettings as cache. CDO deactivates the
    * cache but EMF still used eSettings to store list wrappers. CDO needs another place to store the real list with the
    * actual data (transient mode) and accessible through EStore. This allows CDO to always use the same instance of the
    * list wrapper.

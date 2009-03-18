@@ -34,6 +34,7 @@ public interface ExtendedDataInput extends DataInput
 
   /**
    * @author Eike Stepper
+   * @since 2.0
    */
   public static class Delegating implements ExtendedDataInput
   {

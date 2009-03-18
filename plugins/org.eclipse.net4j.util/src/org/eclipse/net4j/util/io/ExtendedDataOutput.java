@@ -27,6 +27,7 @@ public interface ExtendedDataOutput extends DataOutput
 
   /**
    * @author Eike Stepper
+   * @since 2.0
    */
   public static class Delegating implements ExtendedDataOutput
   {

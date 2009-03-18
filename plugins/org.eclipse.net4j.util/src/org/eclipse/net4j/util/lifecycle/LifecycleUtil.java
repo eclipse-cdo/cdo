@@ -56,6 +56,9 @@ public final class LifecycleUtil
     return object != null;
   }
 
+  /**
+   * @since 2.0
+   */
   public static void checkActive(Object object) throws IllegalStateException
   {
     if (!isActive(object))
@@ -64,6 +67,9 @@ public final class LifecycleUtil
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public static void checkInactive(Object object) throws IllegalStateException
   {
     if (isActive(object))

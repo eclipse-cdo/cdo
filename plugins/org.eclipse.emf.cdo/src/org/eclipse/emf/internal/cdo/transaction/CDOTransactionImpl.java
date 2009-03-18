@@ -82,6 +82,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -842,21 +843,33 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalArgumentException("Savepoint isn't valid : " + savepoint);
       }
 
-      // Rollback objects
-      Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
+      // Use the state lock since rollback mechanism is playing with EObject and CDORevisions. We do not want to
+      // receives notifications during that process! neither the user should callload any objects.
+      ReentrantLock viewLock = getStateLock();
+      viewLock.lock();
 
-      lastSavepoint = (CDOSavepointImpl)savepoint;
-      // Make savepoint active. Erase savepoint that could have be after
-      lastSavepoint.setNextSavepoint(null);
-      lastSavepoint.clear();
-
-      // Load from first savepoint up to current savepoint
-      loadSavepoint(lastSavepoint, idsOfNewObjectWithDeltas);
-
-      if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
+      try
       {
-        // Unlock all objects
-        unlockObjects(null, null);
+        // Rollback objects
+        Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
+
+        lastSavepoint = (CDOSavepointImpl)savepoint;
+        // Make savepoint active. Erase savepoint that could have be after
+        lastSavepoint.setNextSavepoint(null);
+        lastSavepoint.clear();
+
+        // Load from first savepoint up to current savepoint
+        loadSavepoint(lastSavepoint, idsOfNewObjectWithDeltas);
+
+        if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
+        {
+          // Unlock all objects
+          unlockObjects(null, null);
+        }
+      }
+      finally
+      {
+        viewLock.unlock();
       }
 
       Map<CDOIDTemp, CDOID> idMappings = Collections.emptyMap();

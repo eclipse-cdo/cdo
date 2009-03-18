@@ -335,28 +335,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     Map<CDOID, InternalCDOObject> ids = new HashMap<CDOID, InternalCDOObject>();
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     List<InternalCDORevision> revised = new ArrayList<InternalCDORevision>();
+    // Detect the view
     for (InternalCDOObject object : objects)
     {
-      CDOState state = object.cdoState();
-      if (state != CDOState.TRANSIENT && state != CDOState.PREPARED && state != CDOState.NEW
-          && state != CDOState.CONFLICT && state != CDOState.INVALID_CONFLICT && state != CDOState.INVALID)
+      if (view == null)
       {
-        if (view == null)
-        {
-          view = object.cdoView();
-        }
-
-        InternalCDORevision revision = object.cdoRevision();
-        if (revision.isCurrent())
-        {
-          revisions.add(revision);
-        }
-        else
-        {
-          revised.add(revision);
-        }
-
-        ids.put(object.cdoID(), object);
+        view = object.cdoView();
+        break;
       }
     }
 
@@ -364,9 +349,31 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       ReentrantLock viewLock = ((InternalCDOView)view).getStateLock();
       viewLock.lock();
-
       try
       {
+        for (InternalCDOObject object : objects)
+        {
+          CDOState state = object.cdoState();
+          if (state != CDOState.TRANSIENT && state != CDOState.PREPARED && state != CDOState.NEW
+              && state != CDOState.CONFLICT && state != CDOState.INVALID_CONFLICT && state != CDOState.INVALID)
+          {
+            InternalCDORevision revision = object.cdoRevision();
+            // Revision is null for proxy state
+            if (revision != null)
+            {
+              if (revision.isCurrent())
+              {
+                revisions.add(revision);
+              }
+              else
+              {
+                revised.add(revision);
+              }
+            }
+            ids.put(object.cdoID(), object);
+          }
+        }
+
         InternalCDOSession session = (InternalCDOSession)view.getSession();
         revisions = session.getSessionProtocol().verifyRevision(revisions);
 
@@ -396,7 +403,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     ReentrantLock viewLock = object.cdoView().getStateLock();
     viewLock.lock();
-
     try
     {
       if (TRACER.isEnabled())

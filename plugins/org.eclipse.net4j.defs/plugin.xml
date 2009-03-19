@@ -15,7 +15,7 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://www.eclipse.org/NET4J/util/defs/1.0.0"
+            uri="http://www.eclipse.org/NET4J/defs/1.0.0"
             class="org.eclipse.net4j.defs.Net4jDefsPackage"
             genModel="model/org.eclipse.net4j.defs.genmodel"/>
    </extension>

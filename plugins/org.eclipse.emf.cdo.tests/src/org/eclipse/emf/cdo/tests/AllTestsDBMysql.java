@@ -27,6 +27,6 @@ public class AllTestsDBMysql extends AllTestsAllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, DB_MYSQL_HORIZONTAL, TCP, NATIVE);
+    // addScenario(parent, COMBINED, DB_MYSQL_HORIZONTAL, TCP, NATIVE);
   }
 }

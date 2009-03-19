@@ -45,9 +45,9 @@ public interface IConstants
 
   public static final RepositoryConfig DB_DERBY_HORIZONTAL_PREPSTMT = RepositoryConfig.DB.Derby.PrepStmt.INSTANCE;
 
-  public static final RepositoryConfig DB_MYSQL_HORIZONTAL = RepositoryConfig.DB.Mysql.Stmt.INSTANCE;
-
-  public static final RepositoryConfig DB_MYSQL_HORIZONTAL_PREPSTMT = RepositoryConfig.DB.Mysql.PrepStmt.INSTANCE;
+  // public static final RepositoryConfig DB_MYSQL_HORIZONTAL = RepositoryConfig.DB.Mysql.Stmt.INSTANCE;
+  //
+  // public static final RepositoryConfig DB_MYSQL_HORIZONTAL_PREPSTMT = RepositoryConfig.DB.Mysql.PrepStmt.INSTANCE;
 
   public static final SessionConfig JVM = SessionConfig.JVM.INSTANCE;
 

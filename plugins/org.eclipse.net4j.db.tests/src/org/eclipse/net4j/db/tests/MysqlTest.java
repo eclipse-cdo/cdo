@@ -10,26 +10,23 @@
  */
 package org.eclipse.net4j.db.tests;
 
-import org.eclipse.net4j.db.IDBAdapter;
-
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
  * @author Eike Stepper
  */
-public class MysqlTest extends AbstractDBTest<MysqlDataSource>
+public class MysqlTest // extends AbstractDBTest<MysqlDataSource>
 {
-  @Override
-  protected IDBAdapter createDBAdapter()
-  {
-    return new org.eclipse.net4j.db.mysql.MYSQLAdapter();
-  }
-
-  @Override
-  protected void configureDataSource(MysqlDataSource dataSource)
-  {
-    dataSource.setDatabaseName("dbtest");
-    dataSource.setUser("root");
-    dataSource.setPassword("root");
-  }
+  // @Override
+  // protected IDBAdapter createDBAdapter()
+  // {
+  // return new org.eclipse.net4j.db.mysql.MYSQLAdapter();
+  // }
+  //
+  // @Override
+  // protected void configureDataSource(MysqlDataSource dataSource)
+  // {
+  // dataSource.setDatabaseName("dbtest");
+  // dataSource.setUser("root");
+  // dataSource.setPassword("root");
+  // }
 }

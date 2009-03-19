@@ -12,7 +12,9 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBufferPool;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPClientConnector;
 import org.eclipse.net4j.internal.tcp.TCPSelector;
@@ -29,6 +31,8 @@ import org.eclipse.net4j.util.security.Randomizer;
 import org.eclipse.net4j.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.security.UserManager;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
+
+import org.eclipse.spi.net4j.InternalChannel;
 
 import java.nio.channels.ServerSocketChannel;
 import java.util.concurrent.ExecutorService;
@@ -258,6 +262,15 @@ public class TCPConnectorTest extends AbstractOMTest
 
     boolean connected = connector.waitForConnection(TIMEOUT);
     assertEquals(true, connected);
+
+    InternalChannel clientChannel = connector.openChannel();
+    assertEquals(USER_ID, clientChannel.getUserID());
+
+    IConnector serverConnector = acceptor.getElements()[0];
+    IChannel serverChannel = serverConnector.getElements()[0];
+    assertEquals(USER_ID, serverChannel.getUserID());
+
+    System.out.println(serverChannel);
   }
 
   public void testNegotiationSuccess10() throws Exception

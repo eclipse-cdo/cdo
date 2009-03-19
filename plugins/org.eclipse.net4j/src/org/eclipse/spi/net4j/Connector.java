@@ -12,6 +12,7 @@ package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
@@ -327,6 +328,37 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   protected void setNegotiationException(NegotiationException negotiationException)
   {
     this.negotiationException = negotiationException;
+  }
+
+  @Override
+  protected void initChannel(InternalChannel channel, IProtocol<?> protocol)
+  {
+    super.initChannel(channel, protocol);
+    channel.setUserID(getUserID());
+  }
+
+  @Override
+  protected void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException
+  {
+  }
+
+  public Location getLocation()
+  {
+    return null;
+  }
+
+  public String getURL()
+  {
+    return null;
+  }
+
+  public void multiplexChannel(InternalChannel channel)
+  {
+  }
+
+  @Override
+  protected void registerChannelWithPeer(short channelId, long timeout, IProtocol<?> protocol) throws ChannelException
+  {
   }
 
   @Override

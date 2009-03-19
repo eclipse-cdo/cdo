@@ -207,7 +207,6 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     channel.setMultiplexer(this);
     channel.setReceiveExecutor(getConfig().getReceiveExecutor());
-    // channel.setUserID(getUserID());
     if (protocol != null)
     {
       protocol.setChannel(channel);

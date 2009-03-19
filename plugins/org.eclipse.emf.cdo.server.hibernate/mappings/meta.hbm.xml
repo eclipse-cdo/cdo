@@ -14,7 +14,7 @@
 		<property name="timeStamp" access="field" />
 
 		<array name="packageInfos" cascade="all, delete-orphan" access="field" inverse="true">
-			<key />
+			<key column="cdo_package_unit_id"/>
 			<list-index />
 			<one-to-many class="CDOPackageInfoImpl"/>
 		</array>
@@ -27,7 +27,7 @@
 			<generator class="increment" />
 		</id>
 		
-		<many-to-one name="packageUnit" entity-name="CDOPackageUnit" not-null="false"  access="field"/>
+		<many-to-one name="packageUnit" entity-name="CDOPackageUnit" not-null="true" column="cdo_package_unit_id" access="field"/>
 		
 		<property name="packageURI" not-null="true" length="255" access="field" />
 		<property name="parentURI" length="255" access="field" />

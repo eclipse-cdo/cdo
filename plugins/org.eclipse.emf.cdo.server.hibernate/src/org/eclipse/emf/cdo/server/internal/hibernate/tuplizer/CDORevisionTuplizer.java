@@ -217,6 +217,10 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return new CDOContainingFeatureIDGetter(this, mappedProperty.getName());
     }
+    else if (mappedProperty.getName().compareTo("containingFeatureName") == 0)
+    {
+      return new CDOContainingFeatureIDGetter(this, mappedProperty.getName());
+    }
 
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
     if (feature instanceof EReference && feature.isMany())
@@ -267,6 +271,11 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     }
 
     if (mappedProperty.getName().compareTo("containingFeatureID") == 0)
+    {
+      return new CDOContainingFeatureIDSetter(this, mappedProperty.getName());
+    }
+
+    if (mappedProperty.getName().compareTo("containingFeatureName") == 0)
     {
       return new CDOContainingFeatureIDSetter(this, mappedProperty.getName());
     }

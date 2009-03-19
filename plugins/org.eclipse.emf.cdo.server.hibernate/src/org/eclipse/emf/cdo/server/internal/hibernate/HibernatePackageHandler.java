@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -79,21 +78,6 @@ public class HibernatePackageHandler extends Lifecycle
   public List<EPackage> getEPackages()
   {
     List<EPackage> ePackages = new ArrayList<EPackage>();
-    if (HibernateThreadContext.isHibernateCommitContextSet())
-    {
-      IStoreAccessor.CommitContext cc = HibernateThreadContext.getHibernateCommitContext().getCommitContext();
-      if (cc != null)
-      {
-        for (InternalCDOPackageUnit packageUnit : cc.getNewPackageUnits())
-        {
-          for (EPackage ePackage : packageUnit.getEPackages(true))
-          {
-            ePackages.add(ePackage);
-          }
-        }
-      }
-    }
-
     for (EPackage ePackage : getPackageRegistry().getEPackages())
     {
       ePackages.add(ePackage);
@@ -124,7 +108,7 @@ public class HibernatePackageHandler extends Lifecycle
       // first store and update the new packageunits and the epackages
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
-        session.saveOrUpdate("CDOPackageUnit", packageUnit);
+        session.save("CDOPackageUnit", packageUnit);
 
         if (packageUnit.getPackageInfos().length > 0)
         {
@@ -134,7 +118,7 @@ public class HibernatePackageHandler extends Lifecycle
           final EPackage.Registry registry = hibernateStore.getRepository().getPackageRegistry();
           final EPackage rootEPackage = registry.getEPackage(rootNSUri);
           hbEPackage.setEPackageBlob(EMFUtil.getEPackageBytes(rootEPackage, true, registry));
-          session.saveOrUpdate(packageUnit);
+          session.saveOrUpdate(hbEPackage);
         }
 
         updated = true;
@@ -142,6 +126,11 @@ public class HibernatePackageHandler extends Lifecycle
 
       tx.commit();
       err = false;
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace(System.err);
+      throw new Error(e);
     }
     finally
     {

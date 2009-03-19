@@ -25,6 +25,15 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -43,6 +52,8 @@ public class HibernateUtil
   private static final String EXT_POINT = "mappingProviderFactories";
 
   private static HibernateUtil instance = new HibernateUtil();
+
+  private static String SEPARATOR = "_;_";
 
   /**
    * @return the instance
@@ -266,4 +277,60 @@ public class HibernateUtil
     final Session session = getHibernateSession();
     return (InternalCDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
   }
+
+  public int convertStringToFeatureID(EObject contained, String value)
+  {
+    final String[] values = value.split(SEPARATOR);
+    final String nsuri = values[0];
+    final EPackage eContainerPackage = EPackage.Registry.INSTANCE.getEPackage(nsuri);
+    final String eContainerEClassName = values[1];
+    final EClass eContainingClass = (EClass)eContainerPackage.getEClassifier(eContainerEClassName);
+
+    final EPackage eFeaturePackage = EPackage.Registry.INSTANCE.getEPackage(values[2]);
+
+    final String eClassifierName = values[3];
+    final EClassifier eClassifier = eFeaturePackage.getEClassifier(eClassifierName);
+    final EClass eFeatureClass = (EClass)eClassifier;
+    final String eFeatureName = values[4];
+    final EStructuralFeature eFeature = eFeatureClass.getEStructuralFeature(eFeatureName);
+    return getContainerFeatureId(eContainingClass, contained, eFeature);
+  }
+
+  private int getContainerFeatureId(EClass containingEClass, EObject contained, EStructuralFeature eFeature)
+  {
+    if (eFeature instanceof EAttribute)
+    {
+      return InternalEObject.EOPPOSITE_FEATURE_BASE - containingEClass.getFeatureID(eFeature);
+
+    }
+    final EReference eReference = (EReference)eFeature;
+    if (eReference.getEOpposite() != null)
+    {
+      final EReference containerEReference = eReference.getEOpposite();
+      return contained.eClass().getFeatureID(containerEReference);
+    }
+    else
+    {
+      return InternalEObject.EOPPOSITE_FEATURE_BASE - containingEClass.getFeatureID(eReference);
+    }
+  }
+
+  public static String convertEContainerRelationToString(EClass eClass, EStructuralFeature eFeature)
+  {
+    StringBuilder result = new StringBuilder();
+    {
+      final String uri = eClass.getEPackage().getNsURI();
+      final String eClassifierName = eClass.getName();
+      result.append(uri + SEPARATOR + eClassifierName);
+    }
+
+    {
+      final String uri = eFeature.getEContainingClass().getEPackage().getNsURI();
+      final String eClassName = eFeature.getEContainingClass().getName();
+      final String eFeatureName = eFeature.getName();
+      result.append(SEPARATOR + uri + SEPARATOR + eClassName + SEPARATOR + eFeatureName);
+    }
+    return result.toString();
+  }
+
 }

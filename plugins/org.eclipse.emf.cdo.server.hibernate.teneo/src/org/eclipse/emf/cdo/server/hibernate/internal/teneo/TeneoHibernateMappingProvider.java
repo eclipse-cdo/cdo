@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 import org.eclipse.emf.teneo.hibernate.cdo.CDOHelper;
@@ -85,10 +87,14 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
     // translate the list of EPackages to an array
     final List<EPackage> epacks = getHibernateStore().getPackageHandler().getEPackages();
+    // remove the ecore and resource package
+    epacks.remove(EcorePackage.eINSTANCE);
+    epacks.remove(EresourcePackage.eINSTANCE);
+
     final EPackage[] ePackageArray = epacks.toArray(new EPackage[epacks.size()]);
     properties.put("teneo.mapping.also_map_as_class", "false");
     String hbm = CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
-    System.err.println(hbm);
+    // System.err.println(hbm);
     // to solve an issue with older versions of teneo
     hbm = hbm.replaceAll("_cont", "cont");
     return hbm;

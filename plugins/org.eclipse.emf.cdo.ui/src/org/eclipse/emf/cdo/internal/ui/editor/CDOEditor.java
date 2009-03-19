@@ -2121,14 +2121,21 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     submenuManager.add(new Action("Calculating...")
     {
     });
-
     submenuManager.addMenuListener(new IMenuListener()
     {
       public void menuAboutToShow(IMenuManager manager)
       {
         String nsURI = submenuManager.getMenuText();
         EPackage ePackage = packageRegistry.getEPackage(nsURI);
-        populateSubMenu(ePackage, submenuManager);
+
+        if (ePackage != null)
+        {
+          populateSubMenu(ePackage, submenuManager);
+        }
+        else
+        {
+          OM.LOG.warn("Can't find " + nsURI + " in CDOPackageRegistry");
+        }
       }
     });
 
@@ -2176,14 +2183,18 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
       if (labelProvider != null)
       {
-        return labelProvider.getText(object);
+        String text = labelProvider.getText(object);
+        if (text != null)
+        {
+          return text;
+        }
       }
     }
     catch (Exception ignore)
     {
     }
 
-    return null;
+    return "";
   }
 
   private Object getLabelImage(Object object)

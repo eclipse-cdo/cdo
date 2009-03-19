@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -70,6 +69,8 @@ public class HibernateStore extends Store implements IHibernateStore
   private IHibernateMappingProvider mappingProvider;
 
   private boolean doDropSchema = false;
+
+  private SystemInformation systemInformation;
 
   public HibernateStore(IHibernateMappingProvider mappingProvider)
   {
@@ -157,7 +158,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public long getCreationTime()
   {
-    return CDORevision.UNSPECIFIED_DATE;
+    return getSystemInformation().getCreationTime();
   }
 
   public HibernatePackageHandler getPackageHandler()
@@ -310,5 +311,19 @@ public class HibernateStore extends Store implements IHibernateStore
       addLibrary(CDOIDHibernateLibraryHandler.LIBRARY_NAME,
           org.eclipse.emf.cdo.server.hibernate.internal.id.bundle.OM.BUNDLE);
     }
+  }
+
+  public boolean isFirstTime()
+  {
+    return getSystemInformation().isFirstTime();
+  }
+
+  private SystemInformation getSystemInformation()
+  {
+    if (systemInformation == null)
+    {
+      systemInformation = getPackageHandler().getSystemInformation();
+    }
+    return systemInformation;
   }
 }

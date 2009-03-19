@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -32,6 +33,10 @@ public class CDOInterceptor extends EmptyInterceptor
   @Override
   public String getEntityName(Object object)
   {
+    if (!(object instanceof CDORevision))
+    {
+      return object.getClass().getName();
+    }
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(object);
     return revision.getEClass().getName();
   }

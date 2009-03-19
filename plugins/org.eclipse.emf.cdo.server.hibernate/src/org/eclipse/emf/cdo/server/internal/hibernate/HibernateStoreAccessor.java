@@ -445,8 +445,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   protected void detachObjects(CDOID[] detachedObjects, long revised, OMMonitor monitor)
   {
-    // TODO: implement HibernateStoreAccessor.detachObjects(detachedObjects)
-    throw new UnsupportedOperationException();
+    // handled by the write method
   }
 
   @Override

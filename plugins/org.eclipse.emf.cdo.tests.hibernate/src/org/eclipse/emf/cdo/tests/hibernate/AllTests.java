@@ -27,9 +27,9 @@ public class AllTests
     TestSuite suite = new TestSuite("Tests for CDO using Hibernate");
     suite.addTestSuite(HbViewTest.class);
     suite.addTestSuite(HbCDOAutomaticPackageRefTest.class);
+    suite.addTestSuite(HbContainmentTest.class);
     suite.addTestSuite(HbCDOPackageRefTest.class);
     suite.addTestSuite(HbPackageRegistryTest.class);
-    suite.addTestSuite(HbContainmentTest.class);
     suite.addTestSuite(HbResourceTest.class);
     suite.addTestSuite(HbComplexTest.class);
     suite.addTestSuite(HbTransactionDeadLockTest.class);

@@ -501,7 +501,7 @@ public class RWLockManager<K, V> extends Lifecycle
           readLock = null;
         }
       }
-      return readLock;
+      return this.context == context ? readLock : this;
     }
   }
 

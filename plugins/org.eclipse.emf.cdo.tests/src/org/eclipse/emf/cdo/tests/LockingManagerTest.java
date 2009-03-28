@@ -461,6 +461,30 @@ public class LockingManagerTest extends AbstractCDOTest
     assertEquals(false, repo.getLockManager().hasLock(RWLockManager.LockType.READ, view, cdoCompany.cdoID()));
   }
 
+  public void testBugzilla_270345() throws Exception
+  {
+    Company company1 = getModel1Factory().createCompany();
+    Company company2 = getModel1Factory().createCompany();
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction1 = session.openTransaction();
+    CDOTransaction transaction2 = session.openTransaction();
+    CDOResource res = transaction1.getOrCreateResource("/res1");
+    res.getContents().add(company1);
+    res.getContents().add(company2);
+    transaction1.commit();
+    CDOObject cdoCompany1 = CDOUtil.getCDOObject(company1);
+    CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+
+    cdoCompany1.cdoWriteLock().lock();
+    assertEquals(true, cdoCompany1.cdoWriteLock().isLocked());
+    Company companyFrom2 = (Company)transaction2.getObject(cdoCompany2.cdoID());
+    companyFrom2.setCity("sss");
+    transaction2.commit();
+    assertEquals(true, cdoCompany1.cdoWriteLock().isLocked());
+
+  }
+
   public void testAutoReleaseLockFalse_commit() throws Exception
   {
     Company company = getModel1Factory().createCompany();

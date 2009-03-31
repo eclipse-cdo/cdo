@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.db.mapping.IAttributeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.util.collection.Pair;
@@ -81,7 +82,7 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
       for (IAttributeMapping attributeMapping : attributeMappings)
       {
         builder.append(", ");
-        attributeMapping.appendValue(builder, revision);
+        attributeMapping.appendValue(builder, (InternalCDORevision)revision);
       }
     }
 

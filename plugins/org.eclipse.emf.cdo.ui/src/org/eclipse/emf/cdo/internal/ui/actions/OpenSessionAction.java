@@ -74,7 +74,7 @@ public final class OpenSessionAction extends LongRunningAction
     catch (final RuntimeException ex)
     {
       OM.LOG.error(ex);
-      getShell().getDisplay().syncExec(new Runnable()
+      getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {

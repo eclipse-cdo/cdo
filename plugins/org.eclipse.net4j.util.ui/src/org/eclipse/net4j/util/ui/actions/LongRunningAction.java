@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -127,9 +128,29 @@ public abstract class LongRunningAction extends SafeAction
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
   }
 
+  /**
+   * @since 2.0
+   */
+  public Display getDisplay()
+  {
+    IWorkbenchWindow workbenchWindow = getWorkbenchWindow();
+    if (workbenchWindow != null)
+    {
+      return workbenchWindow.getShell().getDisplay();
+    }
+
+    return PlatformUI.getWorkbench().getDisplay();
+  }
+
   public Shell getShell()
   {
-    return getWorkbenchWindow().getShell();
+    IWorkbenchWindow workbenchWindow = getWorkbenchWindow();
+    if (workbenchWindow != null)
+    {
+      return workbenchWindow.getShell();
+    }
+
+    return new Shell();
   }
 
   protected final int getTotalWork()

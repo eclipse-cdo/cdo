@@ -85,11 +85,11 @@ public abstract class RegisterPackagesAction extends SessionAction
     if (errors != 0)
     {
       final String label = String.valueOf(errors) + (errors == 1 ? " package has" : " packages have");
-      final Shell shell = getShell();
-      shell.getDisplay().asyncExec(new Runnable()
+      getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
+          Shell shell = getShell();
           if (!shell.isDisposed())
           {
             MessageDialog.openError(shell, getText(), label

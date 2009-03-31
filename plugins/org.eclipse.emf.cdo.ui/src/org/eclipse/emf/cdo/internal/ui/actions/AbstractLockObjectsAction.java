@@ -83,7 +83,7 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
         {
           if (!getLock(object).tryLock())
           {
-            getShell().getDisplay().syncExec(new Runnable()
+            getDisplay().asyncExec(new Runnable()
             {
               public void run()
               {

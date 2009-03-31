@@ -221,7 +221,12 @@ public final class CDOModelUtil
   public static CDOType getCoreType(EClassifier eDataType)
   {
     int index = eDataType.getClassifierID();
-    return coreTypes[index];
+    if (0 <= index && index < coreTypes.length)
+    {
+      return coreTypes[index];
+    }
+
+    return null;
   }
 
   /**

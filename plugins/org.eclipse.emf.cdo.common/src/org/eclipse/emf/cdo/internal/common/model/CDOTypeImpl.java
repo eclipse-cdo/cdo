@@ -16,6 +16,10 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -367,19 +371,39 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     public Object copyValue(Object value)
     {
-      return (String)value;
+      return (Integer)value;
     }
 
     @Override
     public void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeString((String)value);
+      out.writeInt((Integer)value);
     }
 
     @Override
     public Object doReadValue(CDODataInput in) throws IOException
     {
-      return in.readString();
+      return in.readInt();
+    }
+
+    @Override
+    public Object convertToCDO(EClassifier type, Object value)
+    {
+      for (EEnumLiteral literal : ((EEnum)type).getELiterals())
+      {
+        if (literal.getInstance() == value)
+        {
+          return literal.getValue();
+        }
+      }
+      
+      throw new IllegalStateException("Cannot find the enum literal " + value);
+    }
+
+    @Override
+    public Object convertToEMF(EClassifier type, Object value)
+    {
+      return ((EEnum)type).getEEnumLiteral((Integer)value).getInstance();
     }
   };
 
@@ -506,6 +530,22 @@ public abstract class CDOTypeImpl implements CDOType
   }
 
   protected Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+  {
+    return value;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Object convertToEMF(EClassifier feature, Object value)
+  {
+    return value;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Object convertToCDO(EClassifier feature, Object value)
   {
     return value;
   }

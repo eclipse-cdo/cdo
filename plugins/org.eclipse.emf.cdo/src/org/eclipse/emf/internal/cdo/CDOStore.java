@@ -38,14 +38,13 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -369,28 +368,31 @@ public final class CDOStore implements EStore
           }
         }
       }
-
       if (feature instanceof EReference)
       {
+        // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
+        // InternalCDOView I kept it here.
         value = view.convertIDToObject(value);
+      }
+      else if (FeatureMapUtil.isFeatureMap(feature))
+      {
+        // TODO Handle feature maps!
+        // EStructuralFeatureMapEntryDataTypeImpl entry = (EStructuralFeatureMapEntryDataTypeImpl)value;
+        // EStructuralFeature feature = (EStructuralFeature)view.getResourceSet().getEObject(
+        // URI.createURI(entry.getURI()), true);
+        // Object object = view.convertIDToObject(entry.getObject());
+        // value = FeatureMapUtil.createEntry(feature, object);
+        throw new UnsupportedOperationException(
+            "Feature maps currently not supported. See https://bugs.eclipse.org/249436");
       }
       else
       {
-        EDataType eType = (EDataType)feature.getEType();
-        CDOType type = CDOModelUtil.getCoreType(eType);
-        if (type == null)
+        CDOType type = CDOModelUtil.getType(feature.getEType());
+        if (type != null)
         {
-          value = EcoreUtil.createFromString(eType, (String)value);
+          value = type.convertToEMF(feature.getEType(), value);
         }
       }
-      // TODO Handle feature maps! else if (feature.getType() == CDOType.FEATURE_MAP_ENTRY)
-      // {
-      // EStructuralFeatureMapEntryDataTypeImpl entry = (EStructuralFeatureMapEntryDataTypeImpl)value;
-      // EStructuralFeature feature = (EStructuralFeature)view.getResourceSet().getEObject(
-      // URI.createURI(entry.getURI()), true);
-      // Object object = view.convertIDToObject(entry.getObject());
-      // value = FeatureMapUtil.createEntry(feature, object);
-      // }
     }
 
     return value;
@@ -409,21 +411,25 @@ public final class CDOStore implements EStore
       }
       else if (feature instanceof EReference)
       {
+        // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
+        // InternalCDOView I kept it here.
         value = view.convertObjectToID(value, true);
       }
-      // TODO Handle feature maps! else if (feature.getType() == CDOType.FEATURE_MAP_ENTRY)
-      // {
-      // FeatureMap.Entry entry = (FeatureMap.Entry)value;
-      // String uri = EcoreUtil.getURI(entry.getEStructuralFeature()).toString();
-      // value = CDORevisionUtil.createFeatureMapEntry(uri, entry.getValue());
-      // }
-      else if (feature.getEType() instanceof EDataType)
+      else if (FeatureMapUtil.isFeatureMap(feature))
       {
-        EDataType eType = (EDataType)feature.getEType();
-        CDOType type = CDOModelUtil.getCoreType(eType);
-        if (type == null)
+        // TODO Handle feature maps!
+        // FeatureMap.Entry entry = (FeatureMap.Entry)value;
+        // String uri = EcoreUtil.getURI(entry.getEStructuralFeature()).toString();
+        // value = CDORevisionUtil.createFeatureMapEntry(uri, entry.getValue());
+        throw new UnsupportedOperationException(
+            "Feature maps currently not supported. See https://bugs.eclipse.org/249436");
+      }
+      else
+      {
+        CDOType type = CDOModelUtil.getType(feature.getEType());
+        if (type != null)
         {
-          value = EcoreUtil.convertToString(eType, value);
+          value = type.convertToCDO(feature.getEType(), value);
         }
       }
     }

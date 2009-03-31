@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 
+import org.eclipse.emf.ecore.EClassifier;
+
 import java.io.IOException;
 
 /**
@@ -98,4 +100,14 @@ public interface CDOType
    * @since 2.0
    */
   public void writeValue(CDODataOutput out, Object value) throws IOException;
+
+  /**
+   * @since 2.0
+   */
+  public Object convertToEMF(EClassifier feature, Object value);
+
+  /**
+   * @since 2.0
+   */
+  public Object convertToCDO(EClassifier feature, Object value);
 }

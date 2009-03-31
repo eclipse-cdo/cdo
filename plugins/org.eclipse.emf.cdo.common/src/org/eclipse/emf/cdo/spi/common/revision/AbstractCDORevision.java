@@ -520,6 +520,11 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     if (value == null)
     {
       value = feature.getDefaultValue();
+      if (value != null)
+      {
+        CDOType type = CDOModelUtil.getType(feature.getEType());
+        value = type.convertToCDO(feature.getEType(), value);
+      }
     }
     else if (value == InternalCDORevision.NIL)
     {

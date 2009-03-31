@@ -203,7 +203,11 @@ public final class CDOModelUtil
     if (isCorePackage(classifier.getEPackage()))
     {
       EDataType eDataType = (EDataType)classifier;
-      return getCoreType(eDataType);
+      CDOType type = getCoreType(eDataType);
+      if (type != null)
+      {
+        return type;
+      }
     }
 
     return CDOType.CUSTOM;

@@ -135,7 +135,7 @@ public class CDOEventHandler
         // Fire a LabelProviderChangedEvent in case user changed decoration pattern
         try
         {
-          treeViewer.getControl().getDisplay().syncExec(new Runnable()
+          treeViewer.getControl().getDisplay().asyncExec(new Runnable()
           {
             public void run()
             {
@@ -158,7 +158,7 @@ public class CDOEventHandler
 
   private void checkDetachedSelection(final Set<?> detachedObjects)
   {
-    treeViewer.getControl().getDisplay().syncExec(new Runnable()
+    treeViewer.getControl().getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {
@@ -241,7 +241,7 @@ public class CDOEventHandler
   {
     try
     {
-      treeViewer.getControl().getDisplay().syncExec(new Runnable()
+      treeViewer.getControl().getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {

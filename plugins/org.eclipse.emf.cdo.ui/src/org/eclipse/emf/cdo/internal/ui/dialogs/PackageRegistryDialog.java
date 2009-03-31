@@ -190,7 +190,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
 
   protected void refreshViewer()
   {
-    page.getWorkbenchWindow().getShell().getDisplay().syncExec(new Runnable()
+    page.getWorkbenchWindow().getShell().getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {

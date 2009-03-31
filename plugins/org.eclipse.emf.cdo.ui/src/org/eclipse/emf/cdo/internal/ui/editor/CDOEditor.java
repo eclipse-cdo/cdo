@@ -737,25 +737,28 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       public void commandStackChanged(final EventObject event)
       {
-        getContainer().getDisplay().asyncExec(new Runnable()
+        if (getContainer() != null && !getContainer().isDisposed())
         {
-          public void run()
+          getContainer().getDisplay().asyncExec(new Runnable()
           {
-            firePropertyChange(IEditorPart.PROP_DIRTY);
+            public void run()
+            {
+              firePropertyChange(IEditorPart.PROP_DIRTY);
 
-            // Try to select the affected objects.
-            //
-            Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-            if (mostRecentCommand != null)
-            {
-              setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+              // Try to select the affected objects.
+              //
+              Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+              if (mostRecentCommand != null)
+              {
+                setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+              }
+              if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+              {
+                propertySheetPage.refresh();
+              }
             }
-            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
-            {
-              propertySheetPage.refresh();
-            }
-          }
-        });
+          });
+        }
       }
     });
 
@@ -1037,21 +1040,24 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           try
           {
-            getContainer().getDisplay().asyncExec(new Runnable()
+            if (getContainer() != null && !getContainer().isDisposed())
             {
-              public void run()
+              getContainer().getDisplay().asyncExec(new Runnable()
               {
-                Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-                if (mostRecentCommand != null)
+                public void run()
                 {
-                  setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+                  Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+                  if (mostRecentCommand != null)
+                  {
+                    setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+                  }
+                  if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+                  {
+                    propertySheetPage.refresh();
+                  }
                 }
-                if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
-                {
-                  propertySheetPage.refresh();
-                }
-              }
-            });
+              });
+            }
           }
           catch (RuntimeException ex)
           {
@@ -1337,14 +1343,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * If there is just one page in the multi-page editor part, this hides the single tab at the bottom. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   protected void hideTabs()
   {
     if (getPageCount() <= 1)
     {
       setPageText(0, "");
-      if (getContainer() instanceof CTabFolder)
+      if (getContainer() != null && !getContainer().isDisposed() && getContainer() instanceof CTabFolder)
       {
         ((CTabFolder)getContainer()).setTabHeight(1);
         Point point = getContainer().getSize();
@@ -1357,14 +1363,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * If there is more than one page in the multi-page editor part, this shows the tabs at the bottom. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   protected void showTabs()
   {
     if (getPageCount() > 1)
     {
       setPageText(0, getString("_UI_SelectionPage_label"));
-      if (getContainer() instanceof CTabFolder)
+      if (getContainer() != null && !getContainer().isDisposed() && getContainer() instanceof CTabFolder)
       {
         ((CTabFolder)getContainer()).setTabHeight(SWT.DEFAULT);
         Point point = getContainer().getSize();
@@ -1640,7 +1646,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public void doSave(IProgressMonitor progressMonitor)
   {
-    Display.getCurrent().syncExec(null);
+    Display.getCurrent().asyncExec(null);
     // Save only resources that have actually changed.
     //
     final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
@@ -2354,7 +2360,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     try
     {
-      getSite().getShell().getDisplay().syncExec(new Runnable()
+      getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {

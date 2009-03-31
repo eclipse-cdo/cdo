@@ -81,7 +81,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
 
     try
     {
-      viewer.getControl().getDisplay().syncExec(new Runnable()
+      viewer.getControl().getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {

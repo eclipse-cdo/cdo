@@ -232,21 +232,23 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public CDOClassifierRef readObjectType(CDOID id)
   {
-    CDORevision cdoRevision = readRevision(id, -1);
+    CDORevision cdoRevision = readRevision(id, -1, null);
     return new CDOClassifierRef(cdoRevision.getEClass());
   }
 
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache)
   {
     return HibernateUtil.getInstance().getCDORevision(id);
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      long timeStamp)
   {
     throw new UnsupportedOperationException();
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      int version)
   {
     // TODO Could be necessary to implement
     throw new UnsupportedOperationException();

@@ -94,7 +94,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return new CDOClassifierRef(storeRevision.getEClass());
   }
 
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache)
   {
     InternalCDORevision storeRevision = getStore().getRevision(id);
     // IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
@@ -121,12 +121,14 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return storeRevision;
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      long timeStamp)
   {
     return getStore().getRevisionByTime(id, timeStamp);
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      int version)
   {
     return getStore().getRevisionByVersion(id, version);
   }

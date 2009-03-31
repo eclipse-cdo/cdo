@@ -102,7 +102,7 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk);
+  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache);
 
   /**
    * Reads a revision with the given version from the back-end. This method will only be called by the framework if
@@ -110,7 +110,8 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version);
+  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      int version);
 
   /**
    * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
@@ -119,7 +120,8 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
+  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      long timeStamp);
 
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
@@ -275,19 +277,19 @@ public interface IStoreAccessor extends IQueryHandler
      * {@link CDOCommonView.Type#AUDIT audit} view.
      */
     public long getTimeStamp();
-  
+
     public CDOID getFolderID();
-  
+
     public String getName();
-  
+
     public boolean exactMatch();
-  
+
     /**
      * Returns the maximum number of results expected by the client or {@link CDOQueryInfo#UNLIMITED_RESULTS} for no
      * limitation.
      */
     public int getMaxResults();
-  
+
     /**
      * Adds the CDOID of one resource to the results of the underlying query.
      * 
@@ -295,7 +297,7 @@ public interface IStoreAccessor extends IQueryHandler
      *         (i.e. maxResults has been reached or an asynchronous query has been canceled).
      */
     public boolean addResource(CDOID resourceID);
-  
+
     /**
      * @author Eike Stepper
      * @since 2.0
@@ -304,5 +306,13 @@ public interface IStoreAccessor extends IQueryHandler
     {
       public CDOID getResourceID();
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface AdditionalRevisionCache
+  {
+    public void cacheRevision(InternalCDORevision revision);
   }
 }

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.IStoreAccessor.AdditionalRevisionCache;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -40,6 +41,8 @@ import java.util.List;
 public class RevisionManager extends CDORevisionResolverImpl implements IRevisionManager
 {
   private IRepository repository;
+
+  private AdditionalRevisionCache additionalRevisionCache;
 
   /**
    * @since 2.0
@@ -80,7 +83,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     if (repository.isVerifyingRevisions())
     {
       accessor = StoreThreadLocal.getAccessor();
-      revision = (InternalCDORevision)accessor.verifyRevision(revision);
+      revision = accessor.verifyRevision(revision);
     }
 
     ensureChunks(revision, referenceChunk, accessor);
@@ -208,7 +211,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   protected InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    return (InternalCDORevision)accessor.readRevision(id, referenceChunk);
+    return accessor.readRevision(id, referenceChunk, additionalRevisionCache);
   }
 
   /**
@@ -220,7 +223,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     if (getRepository().isSupportingAudits())
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      return (InternalCDORevision)accessor.readRevisionByTime(id, referenceChunk, timeStamp);
+      return accessor.readRevisionByTime(id, referenceChunk, additionalRevisionCache, timeStamp);
     }
 
     // TODO Simon*: Is this check necessary here?
@@ -245,7 +248,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     if (getRepository().isSupportingAudits())
     {
-      return (InternalCDORevision)accessor.readRevisionByVersion(id, referenceChunk, version);
+      return accessor.readRevisionByVersion(id, referenceChunk, additionalRevisionCache, version);
     }
 
     InternalCDORevision revision = loadRevision(id, referenceChunk);
@@ -264,7 +267,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     for (CDOID id : ids)
     {
-      InternalCDORevision revision = (InternalCDORevision)accessor.readRevision(id, referenceChunk);
+      InternalCDORevision revision = accessor.readRevision(id, referenceChunk, additionalRevisionCache);
       revisions.add(revision);
     }
 
@@ -291,5 +294,18 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     String capacity = repository.getProperties().get(prop);
     return capacity == null ? 0 : Integer.valueOf(capacity);
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    additionalRevisionCache = new IStoreAccessor.AdditionalRevisionCache()
+    {
+      public void cacheRevision(InternalCDORevision revision)
+      {
+        addCachedRevision(revision);
+      }
+    };
   }
 }

@@ -221,7 +221,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return getStore().getMappingStrategy().readObjectType(this, id);
   }
 
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache)
   {
     if (TRACER.isEnabled())
     {
@@ -247,7 +247,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      long timeStamp)
   {
     if (TRACER.isEnabled())
     {
@@ -268,7 +269,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
+      int version)
   {
     if (TRACER.isEnabled())
     {

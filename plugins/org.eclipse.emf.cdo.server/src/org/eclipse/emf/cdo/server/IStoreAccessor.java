@@ -310,6 +310,7 @@ public interface IStoreAccessor extends IQueryHandler
 
   /**
    * @author Eike Stepper
+   * @since 2.0
    */
   public interface AdditionalRevisionCache
   {

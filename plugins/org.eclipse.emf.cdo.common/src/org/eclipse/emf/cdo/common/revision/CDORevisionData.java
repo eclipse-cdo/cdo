@@ -64,6 +64,9 @@ public interface CDORevisionData
    */
   public int lastIndexOf(EStructuralFeature feature, Object value);
 
+  /**
+   * @since 2.0
+   */
   public <T> T[] toArray(EStructuralFeature feature, T[] array);
 
   /**

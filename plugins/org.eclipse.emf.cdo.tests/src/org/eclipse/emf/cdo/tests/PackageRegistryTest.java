@@ -273,20 +273,24 @@ public class PackageRegistryTest extends AbstractCDOTest
    * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
    * https://bugs.eclipse.org/bugs/show_bug.cgi?id=249383
    */
-  public void _testGlobalDynamicPackageEager() throws Exception
+  public void testGlobalDynamicPackageEager() throws Exception
   {
+    String nsURI = "http://dynamic";
     EPackage p = EcoreFactory.eINSTANCE.createEPackage();
     p.setName("dynamic");
     p.setNsPrefix("dynamic");
-    p.setNsURI("http://dynamic");
+    p.setNsURI(nsURI);
 
     EClass c = EcoreFactory.eINSTANCE.createEClass();
     c.setName("DClass");
 
     p.getEClassifiers().add(c);
-    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
+    EPackage.Registry.INSTANCE.put(nsURI, p);
 
     CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(p);
+    p = session.getPackageRegistry().getEPackage(nsURI);
+
     CDOTransaction transaction = session.openTransaction();
     CDOResource res = transaction.createResource("/res");
 
@@ -302,7 +306,7 @@ public class PackageRegistryTest extends AbstractCDOTest
    * Bug 249383: Dynamic models in the global EPackage.Registry are not committed
    * https://bugs.eclipse.org/bugs/show_bug.cgi?id=249383
    */
-  public void testGlobalDynamicPackageLazy() throws Exception
+  public void testGlobalDynamicPackage() throws Exception
   {
     EPackage p = EcoreFactory.eINSTANCE.createEPackage();
     p.setName("dynamic");

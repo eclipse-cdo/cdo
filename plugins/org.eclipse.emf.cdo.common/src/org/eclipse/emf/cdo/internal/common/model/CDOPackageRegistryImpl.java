@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.ILifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -206,6 +207,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   public synchronized InternalCDOPackageInfo getPackageInfo(EPackage ePackage)
   {
     LifecycleUtil.checkActive(this);
+
     // Looks in the registry
     Object object = get(ePackage.getNsURI());
     if (object instanceof InternalCDOPackageInfo)
@@ -270,12 +272,17 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   public InternalCDOPackageUnit getPackageUnit(EPackage ePackage)
   {
     CDOPackageInfo packageInfo = getPackageInfo(ePackage);
-    if (packageInfo != null)
+    if (packageInfo == null)
     {
-      return (InternalCDOPackageUnit)packageInfo.getPackageUnit();
+      putEPackage(ePackage);
+      packageInfo = getPackageInfo(ePackage);
+      if (packageInfo == null)
+      {
+        throw new ImplementationError("No package unit available for: " + ePackage);
+      }
     }
 
-    return null;
+    return (InternalCDOPackageUnit)packageInfo.getPackageUnit();
   }
 
   public synchronized InternalCDOPackageUnit[] getPackageUnits()

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
@@ -215,34 +217,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     assertNotNull(class1);
   }
 
-  public void testEagerPackageRegistry() throws Exception
-  {
-    {
-      // Create resource in session 1
-      CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
-      configuration.setConnector(getConnector());
-      configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
-
-      CDOSession session = configuration.openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
-
-      Company company = getModel1Factory().createCompany();
-      company.setName("Eike");
-      res.getContents().add(company);
-      transaction.commit();
-    }
-
-    // Load resource in session 2
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
-
-    Company company = (Company)res.getContents().get(0);
-    assertEquals("Eike", company.getName());
-  }
-
-  public void testLazyPackageRegistry() throws Exception
+  public void testPackageRegistry() throws Exception
   {
     {
       // Create resource in session 1
@@ -276,30 +251,38 @@ public class PackageRegistryTest extends AbstractCDOTest
   public void testGlobalDynamicPackageEager() throws Exception
   {
     String nsURI = "http://dynamic";
-    EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-    p.setName("dynamic");
-    p.setNsPrefix("dynamic");
-    p.setNsURI(nsURI);
 
-    EClass c = EcoreFactory.eINSTANCE.createEClass();
-    c.setName("DClass");
+    try
+    {
+      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+      p.setName("dynamic");
+      p.setNsPrefix("dynamic");
+      p.setNsURI(nsURI);
 
-    p.getEClassifiers().add(c);
-    EPackage.Registry.INSTANCE.put(nsURI, p);
+      EClass c = EcoreFactory.eINSTANCE.createEClass();
+      c.setName("DClass");
 
-    CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(p);
-    p = session.getPackageRegistry().getEPackage(nsURI);
+      p.getEClassifiers().add(c);
+      EPackage.Registry.INSTANCE.put(nsURI, p);
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res");
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(p);
+      p = session.getPackageRegistry().getEPackage(nsURI);
 
-    EFactory factory = p.getEFactoryInstance();
-    EObject object = factory.create(c);
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
 
-    res.getContents().add(object);
-    transaction.commit();
-    session.close();
+      EFactory factory = p.getEFactoryInstance();
+      EObject object = factory.create(c);
+
+      res.getContents().add(object);
+      transaction.commit();
+      session.close();
+    }
+    finally
+    {
+      EPackage.Registry.INSTANCE.remove(nsURI);
+    }
   }
 
   /**
@@ -308,28 +291,77 @@ public class PackageRegistryTest extends AbstractCDOTest
    */
   public void testGlobalDynamicPackage() throws Exception
   {
-    EPackage p = EcoreFactory.eINSTANCE.createEPackage();
-    p.setName("dynamic");
-    p.setNsPrefix("dynamic");
-    p.setNsURI("http://dynamic");
+    String nsURI = "http://dynamic";
 
-    EClass c = EcoreFactory.eINSTANCE.createEClass();
-    c.setName("DClass");
+    try
+    {
+      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+      p.setName("dynamic");
+      p.setNsPrefix("dynamic");
+      p.setNsURI(nsURI);
 
-    p.getEClassifiers().add(c);
-    CDOFactoryImpl.prepareDynamicEPackage(p);
-    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
+      EClass c = EcoreFactory.eINSTANCE.createEClass();
+      c.setName("DClass");
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res");
+      p.getEClassifiers().add(c);
+      CDOFactoryImpl.prepareDynamicEPackage(p);
+      EPackage.Registry.INSTANCE.put(nsURI, p);
 
-    EFactory factory = p.getEFactoryInstance();
-    EObject object = factory.create(c);
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
 
-    res.getContents().add(object);
-    transaction.commit();
-    session.close();
+      EFactory factory = p.getEFactoryInstance();
+      EObject object = factory.create(c);
+
+      res.getContents().add(object);
+      transaction.commit();
+      session.close();
+    }
+    catch (Exception ex)
+    {
+      EPackage.Registry.INSTANCE.remove(nsURI);
+    }
+  }
+
+  public void testGlobalDynamicPackageUnprepared() throws Exception
+  {
+    String nsURI = "http://dynamic";
+
+    try
+    {
+      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+      p.setName("dynamic");
+      p.setNsPrefix("dynamic");
+      p.setNsURI(nsURI);
+
+      EClass c = EcoreFactory.eINSTANCE.createEClass();
+      c.setName("DClass");
+
+      p.getEClassifiers().add(c);
+      EPackage.Registry.INSTANCE.put(nsURI, p);
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      EFactory factory = p.getEFactoryInstance();
+      EObject object = factory.create(c);
+
+      res.getContents().add(object);
+      transaction.commit();
+      session.close();
+
+      fail("Expected: UnsupportedOperationException: Legacy models not supported");
+    }
+    catch (UnsupportedOperationException success)
+    {
+      // SUCCESS
+    }
+    finally
+    {
+      EPackage.Registry.INSTANCE.remove(nsURI);
+    }
   }
 
   public void testDynamicPackageFactory() throws Exception
@@ -402,6 +434,89 @@ public class PackageRegistryTest extends AbstractCDOTest
     String name = (String)company.eGet(nameAttribute);
     assertEquals("Eike", name);
     session.close();
+  }
+
+  public void testPopulator() throws Exception
+  {
+    String nsURI = "http://dynamic";
+    EPackage.Registry registry = new EPackageRegistryImpl();
+
+    {
+      EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+      p.setName("dynamic");
+      p.setNsPrefix("dynamic");
+      p.setNsURI(nsURI);
+
+      EClass c = EcoreFactory.eINSTANCE.createEClass();
+      c.setName("DClass");
+
+      p.getEClassifiers().add(c);
+      registry.put(nsURI, p);
+
+      CDOSession session = openSession();
+      CDOPackageRegistryPopulator.populate(registry, session.getPackageRegistry());
+
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      Company company = getModel1Factory().createCompany();
+      company.setName("Eike");
+      res.getContents().add(company);
+      transaction.commit();
+    }
+
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
+
+    Company company = (Company)res.getContents().get(0);
+    assertEquals("Eike", company.getName());
+  }
+
+  public void testPopulatorGlobal() throws Exception
+  {
+    String nsURI = "http://dynamic";
+    EPackage.Registry registry = EPackage.Registry.INSTANCE;
+
+    try
+    {
+      {
+        EPackage p = EcoreFactory.eINSTANCE.createEPackage();
+        p.setName("dynamic");
+        p.setNsPrefix("dynamic");
+        p.setNsURI(nsURI);
+
+        EClass c = EcoreFactory.eINSTANCE.createEClass();
+        c.setName("DClass");
+
+        p.getEClassifiers().add(c);
+        registry.put(nsURI, p);
+
+        CDOSession session = openSession();
+        CDOPackageRegistryPopulator.populate(registry, session.getPackageRegistry());
+
+        CDOTransaction transaction = session.openTransaction();
+        CDOResource res = transaction.createResource("/res");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Eike");
+        res.getContents().add(company);
+        transaction.commit();
+      }
+
+      // Load resource in session 2
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.getResource("/res");
+
+      Company company = (Company)res.getContents().get(0);
+      assertEquals("Eike", company.getName());
+    }
+    finally
+    {
+      EPackage.Registry.INSTANCE.remove(nsURI);
+    }
   }
 
   private static EPackage loadModel(String fileName) throws IOException

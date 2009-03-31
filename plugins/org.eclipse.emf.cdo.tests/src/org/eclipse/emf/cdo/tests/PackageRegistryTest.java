@@ -519,6 +519,28 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
+  public void testLaziness() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      Company company = getModel1Factory().createCompany();
+      company.setName("Eike");
+      res.getContents().add(company);
+      transaction.commit();
+    }
+
+    // Load resource in session 2
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
+
+    Company company = (Company)res.getContents().get(0);
+    assertEquals("Eike", company.getName());
+  }
+
   private static EPackage loadModel(String fileName) throws IOException
   {
     URI uri = URI.createURI("file://" + fileName);

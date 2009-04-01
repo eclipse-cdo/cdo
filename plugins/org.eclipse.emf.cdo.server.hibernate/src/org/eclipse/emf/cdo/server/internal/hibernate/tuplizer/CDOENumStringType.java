@@ -11,13 +11,14 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOENumStringType.java,v 1.1 2009-03-19 17:20:14 mtaal Exp $
+ * $Id: CDOENumStringType.java,v 1.2 2009-04-01 21:38:30 mtaal Exp $
  */
 
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.hibernate.HibernateException;
@@ -36,7 +37,7 @@ import java.util.Properties;
  * Implements the EMF UserType for an Enum
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.1 $ $Date: 2009-03-19 17:20:14 $
+ * @version $Revision: 1.2 $ $Date: 2009-04-01 21:38:30 $
  */
 
 public class CDOENumStringType implements UserType, ParameterizedType
@@ -95,6 +96,15 @@ public class CDOENumStringType implements UserType, ParameterizedType
     {
       return false;
     }
+    if (x instanceof Integer && y instanceof Integer)
+    {
+      return ((Integer)x).intValue() == ((Integer)y).intValue();
+    }
+    if (x instanceof String && y instanceof String)
+    {
+      return ((String)x).equals(y);
+    }
+
     return ((Enumerator)x).getValue() == ((Enumerator)y).getValue();
   }
 
@@ -138,7 +148,7 @@ public class CDOENumStringType implements UserType, ParameterizedType
           + enumInstance.getName());
     }
     localCache.put(name, enumValue);
-    return enumValue;
+    return enumValue.getValue();
   }
 
   /*
@@ -153,7 +163,20 @@ public class CDOENumStringType implements UserType, ParameterizedType
     }
     else
     {
-      st.setString(index, ((Enumerator)value).getName());
+      if (value instanceof Integer)
+      {
+        final EEnumLiteral literal = enumInstance.getEEnumLiteral((Integer)value);
+        st.setString(index, literal.getName());
+      }
+      else if (value instanceof String)
+      {
+        final EEnumLiteral literal = enumInstance.getEEnumLiteral((String)value);
+        st.setString(index, literal.getName());
+      }
+      else
+      {
+        st.setString(index, ((Enumerator)value).getName());
+      }
     }
   }
 

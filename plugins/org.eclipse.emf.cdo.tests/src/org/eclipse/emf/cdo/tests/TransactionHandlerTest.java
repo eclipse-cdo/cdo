@@ -15,8 +15,10 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.transaction.CDOAsyncTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -312,6 +314,72 @@ public class TransactionHandlerTest extends AbstractCDOTest
     assertEquals(1, handler.getNumberOfRollback());
 
     transaction.close();
+    session.close();
+  }
+
+  public void testAsyncTransactionHandler() throws Exception
+  {
+    final CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
+    CDOAsyncTransactionHandler asyncHandler = new CDOAsyncTransactionHandler(handler);
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    Order order = getModel1Factory().createOrder();
+    final Company company = getModel1Factory().createCompany();
+
+    final CDOResource resource = transaction.getOrCreateResource("/test1");
+    resource.getContents().add(company);
+
+    transaction.addHandler(new CDOAsyncTransactionHandler(new CDOTransactionHandler()
+    {
+
+      public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+      {
+        // Create READ access to see if we have deadlock
+        company.getCity();
+      }
+
+      public void detachingObject(CDOTransaction transaction, CDOObject object)
+      {
+        // Create READ access to see if we have deadlock
+        company.getCity();
+      }
+
+      public void attachingObject(CDOTransaction transaction, CDOObject object)
+      {
+        // Create READ access to see if we have deadlock
+        company.getCity();
+      }
+
+      public void rolledBackTransaction(CDOTransaction transaction)
+      {
+      }
+
+      public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+      {
+      }
+
+      public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+      {
+      }
+    }));
+    transaction.addHandler(asyncHandler);
+    resource.getContents().add(order); // 1 modif + 1 attach
+    resource.getContents().remove(order); // 1 modif + 1 detach
+
+    boolean timedOut = new PollingTimeOuter(200, 100)
+    {
+      @Override
+      protected boolean successful()
+      {
+        return handler.listOfAddingObject.size() == 1 && handler.listOfDetachingObject.size() == 1
+            && handler.listOfModifyinObject.size() == 2;
+      }
+    }.timedOut();
+    assertEquals(false, timedOut);
+    // Wait a little bit to let the async finish. It is only there to not have Transaction not active exception and
+    // mislead the test.
+    Thread.sleep(300);
     session.close();
   }
 

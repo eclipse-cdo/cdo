@@ -17,8 +17,11 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
 import java.util.Date;
@@ -55,7 +58,7 @@ public abstract class CDOTypeImpl implements CDOType
 
   public static final Short SHORT_DEFAULT = new Short(SHORT_DEFAULT_PRIMITIVE);
 
-  public static final CDOType BOOLEAN = new CDOTypeImpl("BOOLEAN", 22, false, BOOLEAN_DEFAULT)
+  public static final CDOType BOOLEAN = new CDOTypeImpl("BOOLEAN", EcorePackage.EBOOLEAN, false, BOOLEAN_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -70,7 +73,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType BYTE = new CDOTypeImpl("BYTE", 24, false, BYTE_DEFAULT)
+  public static final CDOType BYTE = new CDOTypeImpl("BYTE", EcorePackage.EBYTE, false, BYTE_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -83,7 +86,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType CHAR = new CDOTypeImpl("CHAR", 27, false, CHARACTER_DEFAULT)
+  public static final CDOType CHAR = new CDOTypeImpl("CHAR", EcorePackage.ECHAR, false, CHARACTER_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -96,7 +99,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType DOUBLE = new CDOTypeImpl("DOUBLE", 31, false, DOUBLE_DEFAULT)
+  public static final CDOType DOUBLE = new CDOTypeImpl("DOUBLE", EcorePackage.EDOUBLE, false, DOUBLE_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -109,7 +112,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType FLOAT = new CDOTypeImpl("FLOAT", 37, false, FLOAT_DEFAULT)
+  public static final CDOType FLOAT = new CDOTypeImpl("FLOAT", EcorePackage.EFLOAT, false, FLOAT_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -122,7 +125,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType INT = new CDOTypeImpl("INT", 39, false, INTEGER_DEFAULT)
+  public static final CDOType INT = new CDOTypeImpl("INT", EcorePackage.EINT, false, INTEGER_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -135,7 +138,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType LONG = new CDOTypeImpl("LONG", 43, false, LONG_DEFAULT)
+  public static final CDOType LONG = new CDOTypeImpl("LONG", EcorePackage.ELONG, false, LONG_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -148,7 +151,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType SHORT = new CDOTypeImpl("SHORT", 48, false, SHORT_DEFAULT)
+  public static final CDOType SHORT = new CDOTypeImpl("SHORT", EcorePackage.ESHORT, false, SHORT_DEFAULT)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -161,7 +164,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType OBJECT = new CDOTypeImpl("OBJECT", 10, true, CDOID.NULL)
+  public static final CDOType OBJECT = new CDOTypeImpl("OBJECT", EcorePackage.EOBJECT, true, CDOID.NULL)
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
@@ -180,7 +183,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType BOOLEAN_OBJECT = new ObjectType("BOOLEAN_OBJECT", 23)
+  public static final CDOType BOOLEAN_OBJECT = new ObjectType("BOOLEAN_OBJECT", EcorePackage.EBOOLEAN_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -195,7 +198,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType BYTE_OBJECT = new ObjectType("BYTE_OBJECT", 26)
+  public static final CDOType BYTE_OBJECT = new ObjectType("BYTE_OBJECT", EcorePackage.EBYTE_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -210,7 +213,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType CHARACTER_OBJECT = new ObjectType("CHARACTER_OBJECT", 28)
+  public static final CDOType CHARACTER_OBJECT = new ObjectType("CHARACTER_OBJECT", EcorePackage.ECHARACTER_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -225,7 +228,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType DATE = new ObjectType("DATE", 29)
+  public static final CDOType DATE = new ObjectType("DATE", EcorePackage.EDATE)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -240,7 +243,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType DOUBLE_OBJECT = new ObjectType("DOUBLE_OBJECT", 32)
+  public static final CDOType DOUBLE_OBJECT = new ObjectType("DOUBLE_OBJECT", EcorePackage.EDOUBLE_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -255,7 +258,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType FLOAT_OBJECT = new ObjectType("FLOAT_OBJECT", 38)
+  public static final CDOType FLOAT_OBJECT = new ObjectType("FLOAT_OBJECT", EcorePackage.EFLOAT_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -270,7 +273,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType INTEGER_OBJECT = new ObjectType("INTEGER_OBJECT", 40)
+  public static final CDOType INTEGER_OBJECT = new ObjectType("INTEGER_OBJECT", EcorePackage.EINTEGER_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -285,7 +288,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType LONG_OBJECT = new ObjectType("LONG_OBJECT", 44)
+  public static final CDOType LONG_OBJECT = new ObjectType("LONG_OBJECT", EcorePackage.ELONG_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -300,7 +303,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType SHORT_OBJECT = new ObjectType("SHORT_OBJECT", 49)
+  public static final CDOType SHORT_OBJECT = new ObjectType("SHORT_OBJECT", EcorePackage.ESHORT_OBJECT)
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -315,7 +318,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType STRING = new CDOTypeImpl("STRING", 50, true)
+  public static final CDOType STRING = new CDOTypeImpl("STRING", EcorePackage.ESTRING, true)
   {
     @SuppressWarnings("cast")
     @Override
@@ -335,7 +338,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType BYTE_ARRAY = new CDOTypeImpl("BYTE_ARRAY", 25, true)
+  public static final CDOType BYTE_ARRAY = new CDOTypeImpl("BYTE_ARRAY", EcorePackage.EBYTE_ARRAY, true)
   {
     @Override
     public Object copyValue(Object value)
@@ -396,7 +399,7 @@ public abstract class CDOTypeImpl implements CDOType
           return literal.getValue();
         }
       }
-      
+
       throw new IllegalStateException("Cannot find the enum literal " + value);
     }
 
@@ -425,9 +428,23 @@ public abstract class CDOTypeImpl implements CDOType
     {
       return in.readString();
     }
+
+    @Override
+    public Object convertToEMF(EClassifier eType, Object value)
+    {
+      return EcoreUtil.createFromString((EDataType)eType, (String)value);
+    }
+
+    @Override
+    public Object convertToCDO(EClassifier eType, Object value)
+    {
+      return EcoreUtil.convertToString((EDataType)eType, value);
+
+    }
   };
 
-  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", 36, false)
+  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", EcorePackage.EFEATURE_MAP_ENTRY,
+      false)
   {
     @Override
     public Object copyValue(Object value)

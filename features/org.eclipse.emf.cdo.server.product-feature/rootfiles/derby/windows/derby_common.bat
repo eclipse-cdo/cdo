@@ -17,10 +17,10 @@
 @REM specific language governing permissions and limitations
 @REM under the License.
 
-if exist "%~dp0..\lib\derby.jar" goto libsCopied
-cd %~dp0..\..\plugins\org.eclipse.net4j.db.derby_*
-cd lib
-copy derby.jar ..\..\..\derby\lib
+@REM if exist "%~dp0..\lib\derby.jar" goto libsCopied
+@REM cd %~dp0..\..\plugins\org.eclipse.net4j.db.derby_*
+@REM cd lib
+@REM copy derby.jar ..\..\..\derby\lib
 
 :libsCopied
 cd %~dp0..\work

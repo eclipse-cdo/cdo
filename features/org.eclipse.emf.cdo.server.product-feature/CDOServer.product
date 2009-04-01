@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?pde version="3.4"?>
+<?pde version="3.5"?>
 
 <product name="CDO Server" id="org.eclipse.emf.cdo.server.product" application="org.eclipse.emf.cdo.server.app" useFeatures="true">
 
-   <configIni>
+
+   <configIni use="">
       <linux>/org.eclipse.emf.cdo.server.product/config.ini</linux>
       <macosx>/org.eclipse.emf.cdo.server.product/config.ini</macosx>
       <solaris>/org.eclipse.emf.cdo.server.product/config.ini</solaris>
@@ -20,10 +21,14 @@
 -Xmx512M
 -Ddebug=true</vmArgs>
       <vmArgsLin>-Dnet4j.config=configuration</vmArgsLin>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts-Dnet4j.config=configuration</vmArgsMac>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+-Dnet4j.config=configuration</vmArgsMac>
       <vmArgsSol>-Dnet4j.config=configuration</vmArgsSol>
-      <vmArgsWin>-Dnet4j.config=../../../configuration</vmArgsWin>
+      <vmArgsWin>-Dnet4j.config=configuration</vmArgsWin>
    </launcherArgs>
+
+   <windowImages/>
+
 
    <launcher name="cdo-server.exe">
       <solaris/>
@@ -32,8 +37,10 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
 
    <plugins>
       <plugin id="org.eclipse.core.contenttype"/>
@@ -60,10 +67,8 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.emf.cdo.server.product" version="0.8.0.qualifier"/>
-      <feature id="org.eclipse.net4j" version="0.8.0.qualifier"/>
-      <feature id="org.eclipse.net4j.db" version="0.8.0.qualifier"/>
-      <feature id="org.eclipse.emf.cdo.server" version="0.8.0.qualifier"/>
+      <feature id="org.eclipse.emf.cdo.server.product" version="2.0.0.qualifier"/>
    </features>
+
 
 </product>

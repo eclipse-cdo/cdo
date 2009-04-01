@@ -9,13 +9,12 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-
 <feature
       id="org.eclipse.emf.cdo.server"
       label="%featureName"
-      image="eclipse_update_120.jpg"
       version="2.0.0.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg">
 
    <description>
       %description
@@ -51,6 +50,13 @@
 
    <plugin
          id="org.eclipse.emf.cdo.server.db"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo"
          download-size="0"
          install-size="0"
          version="0.0.0"

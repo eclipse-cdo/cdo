@@ -57,7 +57,7 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
             // Could fail if the attach is not thread safe
             transaction.reload(customerToLoad);
           }
-          
+
           transaction.close();
           session.close();
         }
@@ -69,7 +69,7 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
     };
 
     new Thread(changeObjects).start();
-    for (int i = 0; i < 500 && exception[0] == null; i++)
+    for (int i = 0; i < 100 && exception[0] == null; i++)
     {
       customer.setName("Ottawa" + i);
       transaction.commit();

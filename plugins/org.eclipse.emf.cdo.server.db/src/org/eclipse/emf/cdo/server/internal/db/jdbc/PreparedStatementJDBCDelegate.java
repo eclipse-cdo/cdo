@@ -234,11 +234,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
 
           for (int result : results)
           {
-            if (entry.getKey().getElement1() != StmtType.DELETE_REFERENCES
-                && entry.getKey().getElement1() != StmtType.UPDATE_REFERENCE_VERSION)
-            {
-              checkState(result == 1, "Batch execution did not return '1' for " + entry.getKey().toString());
-            }
+            checkState(result != Statement.EXECUTE_FAILED, "Batch execution returned EXECUTE_FAILED!");
           }
         }
         catch (SQLException ex)

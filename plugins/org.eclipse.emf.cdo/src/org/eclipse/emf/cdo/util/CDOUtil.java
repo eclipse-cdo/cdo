@@ -227,6 +227,26 @@ public final class CDOUtil
   /**
    * @since 2.0
    */
+  public static CDORevision getRevisionByVersion(CDOObject object, int version)
+  {
+    CDORevision revision = object.cdoRevision();
+    if (revision.getVersion() != version)
+    {
+      CDOSession session = object.cdoView().getSession();
+      if (session.repository().isSupportingAudits())
+      {
+        throw new IllegalStateException("Auditing not supported by repository");
+      }
+
+      return session.getRevisionManager().getRevisionByVersion(object.cdoID(), 0, version);
+    }
+
+    return revision;
+  }
+
+  /**
+   * @since 2.0
+   */
   public static EList<Resource> getResources(ResourceSet resourceSet)
   {
     EList<Resource> result = new BasicEList<Resource>();

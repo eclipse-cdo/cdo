@@ -59,6 +59,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
   {
     // General
     testClasses.add(InitialTest.class);
+    testClasses.add(CDOIDTest.class);
     testClasses.add(ComplexTest.class);
     testClasses.add(AttributeTest.class);
     testClasses.add(EnumTest.class);

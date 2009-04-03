@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IAttributeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -72,7 +73,7 @@ public class StatementJDBCDelegate extends AbstractJDBCDelegate
       builder.append(", ");
       builder.append(CDOIDUtil.getLong(data.getResourceID()));
       builder.append(", ");
-      builder.append(CDOIDUtil.getLong((CDOID)data.getContainerID()));
+      builder.append(CDODBUtil.getLong((CDOID)data.getContainerID()));
       builder.append(", ");
       builder.append(data.getContainingFeatureID());
     }

@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.db.jdbc;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IAttributeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -334,7 +335,7 @@ public class PreparedStatementJDBCDelegate extends AbstractJDBCDelegate
         stmt.setLong(col++, revision.getCreated());
         stmt.setLong(col++, revision.getRevised());
         stmt.setLong(col++, CDOIDUtil.getLong(revision.getResourceID()));
-        stmt.setLong(col++, CDOIDUtil.getLong((CDOID)revision.getContainerID()));
+        stmt.setLong(col++, CDODBUtil.getLong((CDOID)revision.getContainerID()));
         stmt.setInt(col++, revision.getContainingFeatureID());
       }
 

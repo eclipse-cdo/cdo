@@ -80,8 +80,12 @@ public final class CDOIDUtil
     case TEMP_OBJECT:
       throw new IllegalArgumentException("id instanceof CDOIDTemp");
 
+    case EXTERNAL_OBJECT:
+    case EXTERNAL_TEMP_OBJECT:
+      throw new IllegalArgumentException("Can't get long id from external ID types.");
+
     default:
-      throw new ImplementationError();
+      throw new ImplementationError("Invalid CDOID type: " + id.getClass().getName());
     }
   }
 

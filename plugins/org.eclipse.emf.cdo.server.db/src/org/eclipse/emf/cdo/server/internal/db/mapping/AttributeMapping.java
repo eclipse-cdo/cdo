@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IAttributeMapping;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -178,7 +179,7 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
     @Override
     protected Object convertToDBType(Object value)
     {
-      return CDOIDUtil.getLong((CDOID)value);
+      return CDODBUtil.getLong((CDOID)value);
     }
   }
 

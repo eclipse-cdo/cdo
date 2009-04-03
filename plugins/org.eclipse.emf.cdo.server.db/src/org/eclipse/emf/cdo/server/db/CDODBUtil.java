@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -146,6 +148,27 @@ public final class CDODBUtil
     }
 
     return null;
+  }
+
+  /**
+   * Get the long value of a CDOID (by delegating to {@link CDOIDUtil#getLong(org.eclipse.emf.cdo.common.id.CDOID)}) In
+   * addition, provide a check for external IDs which are not supported by the DBStore
+   * 
+   * @param id
+   *          the ID to convert to long
+   * @return the long value of the ID
+   * @throws IllegalArgumentException
+   *           if the ID is not convertibla
+   * @since 2.0
+   */
+  public static long getLong(CDOID id)
+  {
+    if (id != null && id.getType() == CDOID.Type.EXTERNAL_OBJECT)
+    {
+      throw new IllegalArgumentException("DBStore does not support external references.");
+    }
+
+    return CDOIDUtil.getLong(id);
   }
 
   // public static CDODBStoreManager getStoreManager(IDBAdapter dbAdapter,

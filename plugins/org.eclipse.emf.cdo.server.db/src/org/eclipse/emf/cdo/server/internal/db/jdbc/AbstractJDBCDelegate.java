@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IJDBCDelegate;
@@ -235,13 +236,13 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
   public final void insertReference(CDOID id, int version, int index, CDOID targetId, IReferenceMapping referenceMapping)
   {
     doInsertReference(referenceMapping.getTable().getName(), getDBID(referenceMapping), CDOIDUtil.getLong(id), version,
-        index, CDOIDUtil.getLong(targetId));
+        index, CDODBUtil.getLong(targetId));
   }
 
   public void insertReferenceRow(CDOID id, int newVersion, int index, CDOID value, IReferenceMapping referenceMapping)
   {
     doInsertReferenceRow(referenceMapping.getTable().getName(), getDBID(referenceMapping), CDOIDUtil.getLong(id),
-        newVersion, CDOIDUtil.getLong(value), index);
+        newVersion, CDODBUtil.getLong(value), index);
   }
 
   public void moveReferenceRow(CDOID id, int newVersion, int oldPosition, int newPosition,
@@ -265,7 +266,7 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
   public void updateReference(CDOID id, int version, int index, CDOID targetId, IReferenceMapping referenceMapping)
   {
     doUpdateReference(referenceMapping.getTable().getName(), getDBID(referenceMapping), CDOIDUtil.getLong(id), version,
-        index, CDOIDUtil.getLong(targetId));
+        index, CDODBUtil.getLong(targetId));
   }
 
   public final void updateReferenceVersion(CDOID id, int newVersion, IReferenceMapping referenceMapping)
@@ -328,7 +329,7 @@ public abstract class AbstractJDBCDelegate extends Lifecycle implements IJDBCDel
   public void selectRevisionReferences(InternalCDORevision revision, IReferenceMapping referenceMapping,
       int referenceChunk)
   {
-    MoveableList<Object> list = (revision).getList(referenceMapping.getFeature());
+    MoveableList<Object> list = revision.getList(referenceMapping.getFeature());
 
     CDOID source = revision.getID();
     long sourceId = CDOIDUtil.getLong(source);

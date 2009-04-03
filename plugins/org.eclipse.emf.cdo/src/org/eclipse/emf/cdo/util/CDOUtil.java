@@ -229,7 +229,12 @@ public final class CDOUtil
    */
   public static CDORevision getRevisionByVersion(CDOObject object, int version)
   {
-    CDORevision revision = object.cdoRevision();
+    if (FSMUtil.isTransient(object))
+    {
+      return null;
+    }
+
+    CDORevision revision = CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
     if (revision.getVersion() != version)
     {
       CDOSession session = object.cdoView().getSession();

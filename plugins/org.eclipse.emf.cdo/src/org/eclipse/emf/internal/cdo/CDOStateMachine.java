@@ -275,7 +275,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @since 2.0
    */
-  public void read(InternalCDOObject object)
+  public InternalCDORevision read(InternalCDOObject object)
   {
     ReentrantLock viewLock = object.cdoView().getStateLock();
     viewLock.lock();
@@ -288,6 +288,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       process(object, CDOEvent.READ, null);
+
+      return object.cdoRevision();
     }
     finally
     {

@@ -694,7 +694,7 @@ public abstract class ClassMapping implements IClassMapping
 
     public void visit(CDORemoveFeatureDelta delta)
     {
-      getReferenceMapping(delta.getFeature()).removeReferenceEntry(accessor, id, newVersion, delta.getIndex());
+      getReferenceMapping(delta.getFeature()).removeReferenceEntry(accessor, id, delta.getIndex(), newVersion);
     }
 
     public void visit(CDOContainerFeatureDelta delta)

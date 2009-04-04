@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
@@ -20,6 +22,7 @@ import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.mango.Value;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model3.Class1;
@@ -434,6 +437,125 @@ public class PackageRegistryTest extends AbstractCDOTest
     String name = (String)company.eGet(nameAttribute);
     assertEquals("Eike", name);
     session.close();
+  }
+
+  public void testDuplicatePackageRegistration() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOSession session2 = openSession();
+
+    try
+    {
+      {
+        CDOTransaction transaction = session1.openTransaction();
+        CDOResource res = transaction.createResource("/res1");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Company1");
+        res.getContents().add(company);
+        transaction.commit();
+        sleep(1000); // Give session2 a chance to react
+      }
+
+      CDOPackageRegistry packageRegistry = session2.getPackageRegistry();
+      Model1Package model1Package = getModel1Package();
+      packageRegistry.putEPackage(model1Package);
+
+      CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(model1Package);
+      assertEquals(false, packageUnit.getTopLevelPackageInfo().getMetaIDRange().isTemporary());
+      assertEquals(CDOPackageUnit.State.LOADED, packageUnit.getState());
+
+      {
+        CDOTransaction transaction = session2.openTransaction();
+        CDOResource res = transaction.createResource("/res2");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Company2");
+        res.getContents().add(company);
+        transaction.commit();
+      }
+    }
+    finally
+    {
+      session1.close();
+      session2.close();
+    }
+  }
+
+  public void testReuseCommittedPackage() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOSession session2 = openSession();
+
+    try
+    {
+      {
+        CDOTransaction transaction = session1.openTransaction();
+        CDOResource res = transaction.createResource("/res1");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Company1");
+        res.getContents().add(company);
+        transaction.commit();
+      }
+
+      {
+        CDOTransaction transaction = session2.openTransaction();
+        CDOResource res = transaction.createResource("/res2");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Company2");
+        res.getContents().add(company);
+        transaction.commit();
+      }
+    }
+    finally
+    {
+      session1.close();
+      session2.close();
+    }
+  }
+
+  public void testConcurrentPackageRegistration() throws Exception
+  {
+    CDOSession session1 = openModel1Session();
+    CDOSession session2 = openModel1Session();
+
+    try
+    {
+      {
+        CDOTransaction transaction = session1.openTransaction();
+        CDOResource res = transaction.createResource("/res1");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Company1");
+        res.getContents().add(company);
+        transaction.commit();
+        sleep(1000); // Give session2 a chance to react
+      }
+
+      CDOPackageRegistry packageRegistry = session2.getPackageRegistry();
+      Model1Package model1Package = getModel1Package();
+
+      CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(model1Package);
+      assertEquals(false, packageUnit.getTopLevelPackageInfo().getMetaIDRange().isTemporary());
+      assertEquals(CDOPackageUnit.State.LOADED, packageUnit.getState());
+
+      {
+        CDOTransaction transaction = session2.openTransaction();
+        CDOResource res = transaction.createResource("/res2");
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("Company2");
+        res.getContents().add(company);
+        transaction.commit();
+      }
+    }
+    finally
+    {
+      session1.close();
+      session2.close();
+    }
   }
 
   public void testPopulator() throws Exception

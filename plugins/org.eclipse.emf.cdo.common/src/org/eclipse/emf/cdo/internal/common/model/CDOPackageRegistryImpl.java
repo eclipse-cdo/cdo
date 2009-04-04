@@ -150,6 +150,27 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
         oldPackageInfo.getPackageUnit().setState(CDOPackageUnit.State.LOADED);
       }
     }
+    else if (oldValue instanceof EPackage && value instanceof InternalCDOPackageInfo)
+    {
+      EPackage oldPackage = (EPackage)oldValue;
+      InternalCDOPackageInfo oldPackageInfo = getPackageInfo(oldPackage);
+      InternalCDOPackageInfo newPackageInfo = (InternalCDOPackageInfo)value;
+      if (oldPackageInfo.getMetaIDRange().isTemporary() && !newPackageInfo.getMetaIDRange().isTemporary())
+      {
+        oldPackageInfo.setMetaIDRange(newPackageInfo.getMetaIDRange());
+      }
+
+      InternalCDOPackageUnit oldPackageUnit = oldPackageInfo.getPackageUnit();
+      InternalCDOPackageUnit newPackageUnit = newPackageInfo.getPackageUnit();
+      if (oldPackageUnit.getState() == CDOPackageUnit.State.NEW
+          && newPackageUnit.getState() != CDOPackageUnit.State.NEW)
+      {
+        oldPackageUnit.setState(CDOPackageUnit.State.LOADED);
+      }
+
+      // Keep old value!
+      return null;
+    }
 
     return super.put(nsURI, value);
   }

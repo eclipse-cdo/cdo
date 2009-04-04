@@ -2,6 +2,7 @@
 
 org.eclipse.emf.cdo.common/debug = true
 org.eclipse.emf.cdo.common/debug.protocol = true
+org.eclipse.emf.cdo.common/debug.metaid = false
 org.eclipse.emf.cdo.common/debug.id = true
 org.eclipse.emf.cdo.common/debug.model = true
 org.eclipse.emf.cdo.common/debug.revision= true

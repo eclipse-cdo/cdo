@@ -61,6 +61,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOPackageRegistryImpl.class);
 
+  private static final ContextTracer METAID_TRACER = new ContextTracer(OM.DEBUG_METAID, MetaInstanceMapperImpl.class);
+
   private static final boolean eagerInternalCaches = false;
 
   private MetaInstanceMapperImpl metaInstanceMapper = new MetaInstanceMapperImpl();
@@ -588,9 +590,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
         throw new IllegalArgumentException("Unknown meta instance ID: " + oldID);
       }
 
-      if (TRACER.isEnabled())
+      if (METAID_TRACER.isEnabled())
       {
-        TRACER.format("Remapping meta instance: {0} --> {1} <-> {2}", oldID, newID, metaInstance);
+        METAID_TRACER.format("Remapping meta instance: {0} --> {1} <-> {2}", oldID, newID, metaInstance);
       }
 
       map(newID, metaInstance);
@@ -628,10 +630,6 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
         stream.println("    " + entry.getKey() + " --> " + entry.getValue());
       }
 
-      // ReflectUtil.dump(idToMetaInstanceMap, "    ", stream);
-      // stream.println();
-      // ReflectUtil.dump(metaInstanceToIDMap, "    ", stream);
-
       return baos.toString();
     }
 
@@ -646,9 +644,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     {
       range = range.increase();
       CDOID id = range.getUpperBound();
-      if (TRACER.isEnabled())
+      if (METAID_TRACER.isEnabled())
       {
-        TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
+        METAID_TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
       }
 
       idToMetaInstanceMap.put(id, metaInstance);

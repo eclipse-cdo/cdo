@@ -31,6 +31,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG_PROTOCOL = DEBUG.tracer("protocol"); //$NON-NLS-1$
 
+  public static final OMTracer DEBUG_METAID = DEBUG.tracer("metaid"); //$NON-NLS-1$
+
   public static final OMTracer DEBUG_ID = DEBUG.tracer("id"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_MODEL = DEBUG.tracer("model"); //$NON-NLS-1$

@@ -26,6 +26,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 /**
  * @author Eike Stepper
  */
@@ -127,6 +130,45 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
+  public void testBigDecimalAndBigInteger() throws Exception
+  {
+    BigDecimal bigDecimal = new BigDecimal(10);
+    BigInteger bigInteger = BigInteger.valueOf(10);
+    {
+      EPackage packageBytes = createDynamicEPackageBigIntegerAndBigDecimal();
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(packageBytes);
+      CDOTransaction transaction = session.openTransaction();
+
+      EClass eClass = (EClass)packageBytes.getEClassifier("Gen");
+      EObject gen = packageBytes.getEFactoryInstance().create(eClass);
+      gen.eSet(gen.eClass().getEStructuralFeature("bigDecimal"), bigDecimal);
+      gen.eSet(gen.eClass().getEStructuralFeature("bigInteger"), bigInteger);
+
+      CDOResource resource = transaction.createResource("/my/resource");
+      resource.getContents().add(gen);
+
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openSession();
+      CDOView view = session.openView();
+      CDOResource resource = view.getResource("/my/resource");
+      EObject gen = resource.getContents().get(0);
+      BigDecimal bigDecimalStore = (BigDecimal)gen.eGet(gen.eClass().getEStructuralFeature("bigDecimal"));
+      BigInteger bigIntegerStore = (BigInteger)gen.eGet(gen.eClass().getEStructuralFeature("bigInteger"));
+      assertEquals(bigDecimal, bigDecimalStore);
+      assertEquals(bigInteger, bigIntegerStore);
+
+      view.close();
+      session.close();
+    }
+  }
+
   private EPackage createDynamicEPackageWithByte()
   {
     final EcoreFactory efactory = EcoreFactory.eINSTANCE;
@@ -140,6 +182,35 @@ public class AttributeTest extends AbstractCDOTest
     level.setName("bytes");
     level.setEType(epackage.getEByteArray());
     schoolBookEClass.getEStructuralFeatures().add(level);
+
+    // Create a new EPackage and add the new EClasses
+    EPackage schoolPackage = efactory.createEPackage();
+    schoolPackage.setName("EPackageTest");
+    schoolPackage.setNsPrefix("EPackageTest");
+    schoolPackage.setNsURI("http:///www.cdo.org/testcase");
+    schoolPackage.getEClassifiers().add(schoolBookEClass);
+    return schoolPackage;
+
+  }
+
+  private EPackage createDynamicEPackageBigIntegerAndBigDecimal()
+  {
+    final EcoreFactory efactory = EcoreFactory.eINSTANCE;
+    final EcorePackage epackage = EcorePackage.eINSTANCE;
+
+    EClass schoolBookEClass = efactory.createEClass();
+    schoolBookEClass.setName("Gen");
+
+    // create a new attribute for this EClass
+    EAttribute attrBigDecimal = efactory.createEAttribute();
+    attrBigDecimal.setName("bigDecimal");
+    attrBigDecimal.setEType(epackage.getEBigDecimal());
+    schoolBookEClass.getEStructuralFeatures().add(attrBigDecimal);
+
+    EAttribute attrBigInteger = efactory.createEAttribute();
+    attrBigInteger.setName("bigInteger");
+    attrBigInteger.setEType(epackage.getEBigInteger());
+    schoolBookEClass.getEStructuralFeatures().add(attrBigInteger);
 
     // Create a new EPackage and add the new EClasses
     EPackage schoolPackage = efactory.createEPackage();

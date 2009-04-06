@@ -114,7 +114,7 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
       Collection<CDOID> detachedObjects = getMap(mapofContext, revised).getDetachedObjects();
       detachedObjects.add(id);
     }
-    
+
     Collection<CDOPackageUnit> emptyNewPackageUnits = Collections.emptyList();
     for (CDOTimeStampContext timestampContext : mapofContext.values())
     {
@@ -127,7 +127,8 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
       ((CDOTimeStampContextImpl)timestampContext).setDirtyObjects(dirtyObjects);
       ((CDOTimeStampContextImpl)timestampContext).setDetachedObjects(detachedObjects);
 
-      getSession().handleSyncResponse(timestampContext.getTimeStamp(), emptyNewPackageUnits, dirtyObjects, detachedObjects);
+      getSession().handleSyncResponse(timestampContext.getTimeStamp(), emptyNewPackageUnits, dirtyObjects,
+          detachedObjects);
     }
 
     return Collections.unmodifiableCollection(mapofContext.values());

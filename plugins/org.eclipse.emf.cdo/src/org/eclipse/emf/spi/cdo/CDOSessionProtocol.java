@@ -86,7 +86,7 @@ public interface CDOSessionProtocol extends PackageLoader
 
   public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType);
 
-  public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType);
+  public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers);
 
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor);
 

@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.view.CDOView;
+
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 
 import java.util.concurrent.locks.Lock;
@@ -34,12 +36,19 @@ public interface CDOLock extends Lock
   public static final int NO_WAIT = RWLockManager.NO_WAIT;
 
   /**
-   * Returns <code>true</code> if this lock is currently lock, <code>false</code> otherwise.
+   * TODO Simon: JavaDoc
+   */
+  public RWLockManager.LockType getType();
+
+  /**
+   * Returns <code>true</code> if this lock is currently held by the requesting {@link CDOView view}, <code>false</code>
+   * otherwise.
    */
   public boolean isLocked();
 
   /**
-   * TODO Simon: JavaDoc
+   * Returns <code>true</code> if this lock is currently held by another {@link CDOView view} (i.e. any view different
+   * from the requesting one), <code>false</code> otherwise.
    */
-  public RWLockManager.LockType getType();
+  public boolean isLockedByOthers();
 }

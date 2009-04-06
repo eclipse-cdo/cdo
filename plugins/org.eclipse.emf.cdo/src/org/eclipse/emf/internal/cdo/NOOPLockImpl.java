@@ -35,6 +35,14 @@ public class NOOPLockImpl implements CDOLock
     return false;
   }
 
+  /**
+   * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
+   */
+  public boolean isLockedByOthers()
+  {
+    return false;
+  }
+
   public void lock()
   {
     throw new UnsupportedOperationException();

@@ -36,12 +36,16 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
 
   private RWLockManager.LockType lockType;
 
-  public ObjectLockedRequest(CDOClientProtocol protocol, CDOView view, CDOObject object, RWLockManager.LockType lockType)
+  private boolean byOthers;
+
+  public ObjectLockedRequest(CDOClientProtocol protocol, CDOView view, CDOObject object,
+      RWLockManager.LockType lockType, boolean byOthers)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OBJECT_LOCKED);
     this.view = view;
     this.object = object;
     this.lockType = lockType;
+    this.byOthers = byOthers;
   }
 
   @Override
@@ -56,6 +60,7 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
     out.writeInt(view.getViewID());
     out.writeCDOLockType(lockType);
     out.writeCDOID(object.cdoID());
+    out.writeBoolean(byOthers);
   }
 
   @Override

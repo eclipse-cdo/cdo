@@ -58,6 +58,11 @@ public class RWLockManager<K, V> extends Lifecycle
     {
       return entry.isWriteLock(context);
     }
+
+    public boolean isLockedByOthers(LockEntry<K, V> entry, V context)
+    {
+      return entry.isWriteLockByOthers(context);
+    }
   };
 
   private LockStrategy<K, V> readLockStrategy = new LockStrategy<K, V>()
@@ -80,6 +85,11 @@ public class RWLockManager<K, V> extends Lifecycle
     public boolean isLocked(LockEntry<K, V> entry, V context)
     {
       return entry.isReadLock(context);
+    }
+
+    public boolean isLockedByOthers(LockEntry<K, V> entry, V context)
+    {
+      return entry.isReadLockByOthers(context);
     }
   };
 
@@ -151,6 +161,13 @@ public class RWLockManager<K, V> extends Lifecycle
   public boolean hasLock(RWLockManager.LockType type, V context, K objectToLock)
   {
     return hasLock(getLockingStrategy(type), context, objectToLock);
+  }
+
+  public boolean hasLockByOthers(RWLockManager.LockType type, V context, K objectToLock)
+  {
+    LockStrategy<K, V> lockingStrategy = getLockingStrategy(type);
+    LockEntry<K, V> entry = getLockEntry(objectToLock);
+    return null != entry && lockingStrategy.isLockedByOthers(entry, context);
   }
 
   private LockStrategy<K, V> getLockingStrategy(RWLockManager.LockType type)
@@ -305,6 +322,8 @@ public class RWLockManager<K, V> extends Lifecycle
     public LockEntry<K, V> lock(LockEntry<K, V> entry, V context);
 
     public LockEntry<K, V> unlock(LockEntry<K, V> entry, V context);
+
+    public boolean isLockedByOthers(LockEntry<K, V> entry, V context);
   }
 
   /**
@@ -317,6 +336,10 @@ public class RWLockManager<K, V> extends Lifecycle
     public boolean isReadLock(V context);
 
     public boolean isWriteLock(V context);
+
+    public boolean isReadLockByOthers(V context);
+
+    public boolean isWriteLockByOthers(V context);
 
     public boolean canObtainReadLock(V context);
 
@@ -395,11 +418,27 @@ public class RWLockManager<K, V> extends Lifecycle
       return false;
     }
 
+    public boolean isReadLockByOthers(V context)
+    {
+      if (contexts.isEmpty())
+      {
+        return false;
+      }
+
+      return contexts.size() > (isReadLock(context) ? 1 : 0);
+    }
+
+    public boolean isWriteLockByOthers(V context)
+    {
+      return false;
+    }
+
     public LockEntry<K, V> clearLock(V context)
     {
       while (contexts.remove(context))
       {
       }
+
       return contexts.isEmpty() ? null : this;
     }
   }
@@ -501,7 +540,18 @@ public class RWLockManager<K, V> extends Lifecycle
           readLock = null;
         }
       }
+
       return this.context == context ? readLock : this;
+    }
+
+    public boolean isReadLockByOthers(V context)
+    {
+      return readLock != null ? readLock.isReadLockByOthers(context) : false;
+    }
+
+    public boolean isWriteLockByOthers(V context)
+    {
+      return context != this.context;
     }
   }
 
@@ -563,6 +613,16 @@ public class RWLockManager<K, V> extends Lifecycle
     }
 
     public LockEntry<K, V> clearLock(V context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isReadLockByOthers(V context)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isWriteLockByOthers(V context)
     {
       throw new UnsupportedOperationException();
     }

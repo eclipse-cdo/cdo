@@ -88,7 +88,7 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle.Intr
 
   public Object convertIDToObject(Object potentialID);
 
-  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType);
+  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType, boolean byOthers);
 
   public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter);
 

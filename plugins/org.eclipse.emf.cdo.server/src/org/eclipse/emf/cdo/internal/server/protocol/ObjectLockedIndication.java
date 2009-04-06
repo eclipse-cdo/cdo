@@ -41,7 +41,15 @@ public class ObjectLockedIndication extends CDOReadIndication
 
     RWLockManager.LockType lockType = in.readCDOLockType();
     CDOID id = in.readCDOID();
-    isLocked = getRepository().getLockManager().hasLock(lockType, view, id);
+    boolean byOthers = in.readBoolean();
+    if (byOthers)
+    {
+      isLocked = getRepository().getLockManager().hasLockByOthers(lockType, view, id);
+    }
+    else
+    {
+      isLocked = getRepository().getLockManager().hasLock(lockType, view, id);
+    }
   }
 
   @Override

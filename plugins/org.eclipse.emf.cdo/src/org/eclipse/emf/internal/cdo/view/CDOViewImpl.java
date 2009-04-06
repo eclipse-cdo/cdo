@@ -298,13 +298,12 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   }
 
   /**
-   * @throws InterruptedException
    * @since 2.0
    */
-  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType)
+  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType, boolean byOthers)
   {
     checkActive();
-    return session.getSessionProtocol().isObjectLocked(this, object, lockType);
+    return session.getSessionProtocol().isObjectLocked(this, object, lockType, byOthers);
   }
 
   /**

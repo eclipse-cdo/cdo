@@ -82,6 +82,8 @@ public class LockingManagerTest extends AbstractCDOTest
     assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 2, 1));
     assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 2, 2));
     assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 2, 3));
+    assertEquals(true, lockingManager.hasLockByOthers(RWLockManager.LockType.READ, 2, 1));
+    assertEquals(true, lockingManager.hasLockByOthers(RWLockManager.LockType.READ, 1, 1));
 
     keys.clear();
     keys.add(4);
@@ -165,6 +167,48 @@ public class LockingManagerTest extends AbstractCDOTest
     assertEquals(true, System.currentTimeMillis() - start > 2000);
   }
 
+  public void testReadLockByOthers() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource("/res1");
+    res.getContents().add(company);
+    transaction.commit();
+
+    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
+    cdoCompany.cdoReadLock().lock();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+
+    CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+    assertEquals(false, cdoCompany2.cdoWriteLock().isLockedByOthers());
+    assertEquals(true, cdoCompany2.cdoReadLock().isLockedByOthers());
+  }
+
+  public void testWriteLockByOthers() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource("/res1");
+    res.getContents().add(company);
+    transaction.commit();
+
+    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
+    cdoCompany.cdoWriteLock().lock();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+
+    CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+    assertEquals(true, cdoCompany2.cdoWriteLock().isLockedByOthers());
+    assertEquals(false, cdoCompany2.cdoReadLock().isLockedByOthers());
+  }
+
   public void testWriteLock() throws Exception
   {
     Company company = getModel1Factory().createCompany();
@@ -191,7 +235,42 @@ public class LockingManagerTest extends AbstractCDOTest
     catch (TimeoutRuntimeException ex)
     {
     }
+
     company2.setCity("Ottawa");
+
+    try
+    {
+      transaction2.commit();
+      fail("Should have an exception");
+    }
+    catch (TransactionException exception)
+    {
+    }
+  }
+
+  public void testWriteLockViaObject() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource("/res1");
+    res.getContents().add(company);
+    transaction.commit();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+
+    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
+    CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+
+    cdoCompany.cdoWriteLock().lock();
+
+    boolean acquired = cdoCompany2.cdoWriteLock().tryLock(1000L, TimeUnit.MILLISECONDS);
+    assertEquals(false, acquired);
+
+    company2.setCity("Ottawa");
+
     try
     {
       transaction2.commit();

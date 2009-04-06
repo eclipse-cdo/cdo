@@ -207,9 +207,9 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     send(new UnlockObjectsRequest(this, view, objects, lockType));
   }
 
-  public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType)
+  public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
   {
-    return send(new ObjectLockedRequest(this, view, object, lockType));
+    return send(new ObjectLockedRequest(this, view, object, lockType, byOthers));
   }
 
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor)

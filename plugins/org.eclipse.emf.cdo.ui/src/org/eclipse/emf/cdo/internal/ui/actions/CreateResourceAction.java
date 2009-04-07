@@ -14,8 +14,12 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -53,7 +57,24 @@ public final class CreateResourceAction extends ViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    getTransaction().getOrCreateResource(resourcePath);
-    CDOEditorUtil.openEditor(getPage(), getView(), resourcePath);
+    final boolean[] getOrCreate = { true };
+
+    if (getTransaction().hasResource(resourcePath))
+    {
+      UIUtil.getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          getOrCreate[0] = MessageDialog.openQuestion(new Shell(), "Resource already exists",
+              "There already exists a resource with path \"" + resourcePath + "\". Do you want to edit the resource?");
+        }
+      });
+    }
+
+    if (getOrCreate[0])
+    {
+      getTransaction().getOrCreateResource(resourcePath);
+      CDOEditorUtil.openEditor(getPage(), getView(), resourcePath);
+    }
   }
 }

@@ -280,7 +280,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   {
     try
     {
-      cdoView().getResourceID(newPath);
+      cdoView().getResourceNodeID(newPath);
     }
     catch (Exception ex)
     {

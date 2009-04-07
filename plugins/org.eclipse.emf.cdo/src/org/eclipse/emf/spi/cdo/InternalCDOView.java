@@ -70,7 +70,7 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle.Intr
 
   public void remapObject(CDOID oldID);
 
-  public CDOID getResourceID(String path);
+  public CDOID getResourceNodeID(String path);
 
   public void registerProxyResource(CDOResourceImpl resource);
 

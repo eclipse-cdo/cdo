@@ -178,12 +178,19 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
   /**
    * @see ResourceSet#getResource(URI, boolean)
    */
-  public CDOResource getResource(String path, boolean loadInDemand);
+  public CDOResource getResource(String path, boolean loadOnDemand);
 
   /**
+   * Same as {@link #getResource(String, boolean) getResource(String, true)}.
+   * 
    * @see ResourceSet#getResource(URI, boolean)
    */
   public CDOResource getResource(String path);
+
+  /**
+   * Returns the resource node with the given path, or <code>null</code> if no such resource node exists.
+   */
+  public CDOResourceNode getResourceNode(String path);
 
   /**
    * Returns the root resource of the repository.

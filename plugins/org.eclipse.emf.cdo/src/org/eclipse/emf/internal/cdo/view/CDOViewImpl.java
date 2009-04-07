@@ -360,7 +360,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     try
     {
-      getResourceID(path);
+      getResourceNodeID(path);
       return true;
     }
     catch (Exception ex)
@@ -379,10 +379,30 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   }
 
   /**
+   * @since 2.0
+   */
+  public CDOResourceNode getResourceNode(String path)
+  {
+    CDOID id = getResourceNodeID(path);
+    if (id == null)
+    {
+      return null;
+    }
+
+    InternalCDOObject object = getObject(id);
+    if (object instanceof CDOResourceNode)
+    {
+      return (CDOResourceNode)object;
+    }
+
+    return null;
+  }
+
+  /**
    * @return never <code>null</code>
    * @since 2.0
    */
-  public CDOID getResourceID(String path)
+  public CDOID getResourceNodeID(String path)
   {
     if (StringUtil.isEmpty(path))
     {
@@ -392,14 +412,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     CDOID folderID = null;
     if (CDOURIUtil.SEGMENT_SEPARATOR.equals(path))
     {
-      folderID = getResourceID(null, null);
+      folderID = getResourceNodeIDChecked(null, null);
     }
     else
     {
       List<String> names = CDOURIUtil.analyzePath(path);
       for (String name : names)
       {
-        folderID = getResourceID(folderID, name);
+        folderID = getResourceNodeIDChecked(folderID, name);
       }
     }
 
@@ -407,9 +427,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   }
 
   /**
-   * @retrn never <code>null</code>
+   * @return never <code>null</code>
    */
-  private CDOID getResourceID(CDOID folderID, String name)
+  private CDOID getResourceNodeIDChecked(CDOID folderID, String name)
   {
     folderID = getResourceNodeID(folderID, name);
     if (folderID == null)
@@ -450,7 +470,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       return getRootOrTopLevelResourceNodeID(name);
     }
-    else if (name == null)
+
+    if (name == null)
     {
       throw new IllegalArgumentException("name");
     }
@@ -987,7 +1008,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     try
     {
-      CDOID id = getResourceID(path);
+      CDOID id = getResourceNodeID(path);
       resource.cdoInternalSetID(id);
       registerObject(resource);
     }

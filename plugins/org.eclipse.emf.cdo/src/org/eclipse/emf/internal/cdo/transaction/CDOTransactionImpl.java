@@ -319,7 +319,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     try
     {
-      CDOID id = getResourceID(path);
+      CDOID id = getResourceNodeID(path);
       if (!CDOIDUtil.isNull(id))
       {
         return (CDOResource)getObject(id);

@@ -83,6 +83,7 @@ public class PostgreSQLAdapter extends DBAdapter
     {
     case VARCHAR:
     case CLOB:
+    case BLOB:
       return "text";
     }
     return super.getTypeName(field);

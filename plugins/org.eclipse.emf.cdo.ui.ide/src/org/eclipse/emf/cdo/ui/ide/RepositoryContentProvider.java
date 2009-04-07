@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.ide.Node.PackagesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
@@ -446,7 +447,8 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
 
         try
         {
-          CDOEditorInput editorInput = new CDOEditorInput(view, ((CDOResource)selection).getPath(), true);
+          CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(view, ((CDOResource)selection).getPath(),
+              true);
           page.openEditor(editorInput, CDOEditor.EDITOR_ID);
         }
         catch (PartInitException ex)

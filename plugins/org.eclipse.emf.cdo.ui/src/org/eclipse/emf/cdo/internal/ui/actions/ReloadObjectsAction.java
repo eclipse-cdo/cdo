@@ -7,10 +7,11 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -79,7 +80,7 @@ public class ReloadObjectsAction extends EditingDomainAction
       if (page != null)
       {
         CDOView view = array[0].cdoView();
-        CDOEditorInput.refreshEditors(page, view);
+        CDOEditorUtil.refreshEditors(page, view);
       }
     }
   }

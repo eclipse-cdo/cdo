@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -49,6 +49,6 @@ public final class LoadResourceAction extends ViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    CDOEditorInput.openEditor(getPage(), getView(), resourcePath);
+    CDOEditorUtil.openEditor(getPage(), getView(), resourcePath);
   }
 }

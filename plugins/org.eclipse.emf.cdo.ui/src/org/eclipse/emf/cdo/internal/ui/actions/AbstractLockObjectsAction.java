@@ -8,11 +8,12 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOLock;
-import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -98,7 +99,7 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
       if (page != null)
       {
         CDOView view = array[0].cdoView();
-        CDOEditorInput.refreshEditors(page, view);
+        CDOEditorUtil.refreshEditors(page, view);
       }
     }
   }

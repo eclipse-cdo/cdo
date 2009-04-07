@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.ui.defs.impl;
 
 import org.eclipse.emf.cdo.defs.CDOViewDef;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
-import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.defs.CDOEditorDef;
 import org.eclipse.emf.cdo.ui.defs.CDOUIDefsPackage;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -353,7 +353,8 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
    */
   private IEditorPart openCDOEditor(String resourcePath)
   {
-    IEditorInput input = new CDOEditorInput((CDOView)getCdoView().getInstance(), resourcePath);
+  // TODO Andre: Why not use CDOEditorUtil.openEditor()?
+    IEditorInput input = CDOEditorUtil.createCDOEditorInput((CDOView)getCdoView().getInstance(), resourcePath, false);
     IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
     CheckUtil.checkState(workbenchWindow != null && workbenchWindow.getActivePage() != null,
         "no active window or no active page present!");

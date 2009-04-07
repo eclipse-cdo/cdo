@@ -7,10 +7,11 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -33,6 +34,6 @@ public final class OpenViewEditorAction extends ViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    CDOEditorInput.openEditor(getPage(), getView(), null);
+    CDOEditorUtil.openEditor(getPage(), getView(), null);
   }
 }

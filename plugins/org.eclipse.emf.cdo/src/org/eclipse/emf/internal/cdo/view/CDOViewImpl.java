@@ -196,7 +196,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     this.viewSet = viewSet;
     if (viewSet != null)
     {
-      viewSet.getResourceSet().getURIConverter().getURIHandlers().add(getURIHandler());
+      viewSet.getResourceSet().getURIConverter().getURIHandlers().add(0, getURIHandler());
     }
   }
 

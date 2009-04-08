@@ -20,6 +20,7 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
@@ -244,6 +245,14 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
       basicSetName(newName, false);
       adjustContainedResources(oldPath);
     }
+  }
+
+  /**
+   * @ADDED
+   */
+  public URI getURI()
+  {
+    return CDOURIUtil.createResourceURI(cdoView(), getPath());
   }
 
   /**

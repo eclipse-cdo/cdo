@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -436,7 +437,7 @@ public class ResourceTest extends AbstractCDOTest
     changePath(3, 0);
   }
 
-  public void testChangeURI() throws Exception
+  public void testChangeResourceURI() throws Exception
   {
     {
       CDOSession session = openModel1Session();
@@ -451,6 +452,32 @@ public class ResourceTest extends AbstractCDOTest
       transaction.commit();
       session.close();
     }
+
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    assertFalse(transaction.hasResource("/my/resource"));
+    assertTrue(transaction.hasResource("/renamed"));
+  }
+
+  public void testChangeResourceFolderURI() throws Exception
+  {
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/my/resource");
+      transaction.commit();
+
+      URI uri = URI.createURI("cdo://repo1/renamed");
+      assertEquals(CDOURIUtil.createResourceURI(session, "/renamed"), uri);
+      resource.setURI(uri);
+
+      transaction.commit();
+      session.close();
+    }
+
     clearCache(getRepository().getRevisionManager());
 
     CDOSession session = openModel1Session();
@@ -610,6 +637,572 @@ public class ResourceTest extends AbstractCDOTest
     queryResources(view, "c", 8);
     queryResources(view, "be", 3);
     queryResources(view, "ca", 3);
+    session.close();
+  }
+
+  public void testDeleteResource() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource = createResource(transaction, "/resource1");
+    CDOID resourceID = resource.cdoID();
+
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOID objectID = object.cdoID();
+
+    transaction.commit();
+    resource.delete(null);
+    transaction.commit();
+    transaction.close();
+
+    CDOView view = session.openView();
+    assertEquals(false, view.hasResource("/resource1"));
+
+    try
+    {
+      view.getResourceNode("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    session.close();
+  }
+
+  public void testDeleteResourceFresh() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource = createResource(transaction, "/resource1");
+    CDOID resourceID = resource.cdoID();
+
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOID objectID = object.cdoID();
+
+    transaction.commit();
+    resource.delete(null);
+    transaction.commit();
+    transaction.close();
+    clearCache(getRepository().getRevisionManager());
+
+    CDOView view = session.openView();
+    assertEquals(false, view.hasResource("/resource1"));
+
+    try
+    {
+      view.getResourceNode("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    session.close();
+  }
+
+  public void testDeleteResourceDifferentSession() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOSession session2 = openSession();
+    CDOView view = session2.openView();
+
+    CDOResource resource = createResource(transaction, "/resource1");
+    CDOID resourceID = resource.cdoID();
+
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOID objectID = object.cdoID();
+
+    transaction.commit();
+    assertEquals(true, view.hasResource("/resource1"));
+    assertEquals(resource.getURI(), view.getResource("/resource1").getURI());
+
+    resource.delete(null);
+    transaction.commit();
+    transaction.close();
+
+    assertEquals(false, view.hasResource("/resource1"));
+
+    try
+    {
+      view.getResourceNode("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    session.close();
+  }
+
+  public void testDeleteResourceDifferentSessionFresh() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOSession session2 = openSession();
+    CDOView view = session2.openView();
+
+    CDOResource resource = createResource(transaction, "/resource1");
+    CDOID resourceID = resource.cdoID();
+
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+    CDOID objectID = object.cdoID();
+
+    transaction.commit();
+    assertEquals(true, view.hasResource("/resource1"));
+    assertEquals(resource.getURI(), view.getResource("/resource1").getURI());
+
+    resource.delete(null);
+    transaction.commit();
+    transaction.close();
+    clearCache(getRepository().getRevisionManager());
+
+    assertEquals(false, view.hasResource("/resource1"));
+
+    try
+    {
+      view.getResourceNode("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    session.close();
+  }
+
+  public void testDeleteResourceFolder() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = createResource(transaction, "/folder/resource1");
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+    transaction.commit();
+
+    CDOResourceFolder folder = resource.getFolder();
+    CDOID folderID = folder.cdoID();
+    CDOID resourceID = resource.cdoID();
+    CDOID objectID = object.cdoID();
+
+    folder.delete(null);
+    transaction.commit();
+    transaction.close();
+
+    CDOView view = session.openView();
+    assertEquals(false, view.hasResource("/folder/resource1"));
+
+    try
+    {
+      view.getResourceNode("/folder");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResourceNode("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(folderID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    session.close();
+  }
+
+  public void testDeleteResourceFolderFresh() throws Exception
+  {
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = createResource(transaction, "/folder/resource1");
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+    transaction.commit();
+
+    CDOResourceFolder folder = resource.getFolder();
+    CDOID folderID = folder.cdoID();
+    CDOID resourceID = resource.cdoID();
+    CDOID objectID = object.cdoID();
+
+    folder.delete(null);
+    transaction.commit();
+    transaction.close();
+    clearCache(getRepository().getRevisionManager());
+
+    CDOView view = session.openView();
+    assertEquals(false, view.hasResource("/folder/resource1"));
+
+    try
+    {
+      view.getResourceNode("/folder");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResourceNode("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(folderID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    session.close();
+  }
+
+  public void testDeleteResourceFolderDifferentSession() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOSession session2 = openSession();
+    CDOView view = session2.openView();
+
+    CDOResource resource = createResource(transaction, "/folder/resource1");
+    CDOResourceFolder folder = resource.getFolder();
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+
+    transaction.commit();
+    assertEquals(true, view.hasResource("/folder/resource1"));
+    assertEquals(resource.getURI(), view.getResource("/folder/resource1").getURI());
+
+    CDOID folderID = folder.cdoID();
+    CDOID resourceID = resource.cdoID();
+    CDOID objectID = object.cdoID();
+
+    folder.delete(null);
+    transaction.commit();
+    transaction.close();
+
+    assertEquals(false, view.hasResource("/folder/resource1"));
+
+    try
+    {
+      view.getResourceNode("/folder");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResourceNode("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(folderID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    session.close();
+  }
+
+  public void testDeleteResourceFolderDifferentSessionFresh() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOSession session2 = openSession();
+    CDOView view = session2.openView();
+
+    CDOResource resource = createResource(transaction, "/folder/resource1");
+    CDOResourceFolder folder = resource.getFolder();
+    CDOObject object = (CDOObject)resource.getContents().get(0);
+
+    transaction.commit();
+    assertEquals(true, view.hasResource("/folder/resource1"));
+    assertEquals(resource.getURI(), view.getResource("/folder/resource1").getURI());
+
+    CDOID folderID = folder.cdoID();
+    CDOID resourceID = resource.cdoID();
+    CDOID objectID = object.cdoID();
+
+    folder.delete(null);
+    transaction.commit();
+    transaction.close();
+    clearCache(getRepository().getRevisionManager());
+
+    assertEquals(false, view.hasResource("/folder/resource1"));
+
+    try
+    {
+      view.getResourceNode("/folder");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResourceNode("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getResource("/folder/resource1");
+      fail("Exception expected");
+    }
+    catch (Exception success)
+    {
+    }
+
+    try
+    {
+      view.getObject(folderID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(resourceID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
+    try
+    {
+      view.getObject(objectID);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException success)
+    {
+    }
+
     session.close();
   }
 

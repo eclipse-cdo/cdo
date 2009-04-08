@@ -14,8 +14,14 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
+import org.eclipse.emf.internal.cdo.util.FSMUtil;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource Folder</b></em>'.
@@ -56,22 +62,6 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
     return false;
   }
 
-  // @Override
-  // public Resource.Internal eDirectResource()
-  // {
-  // if (FSMUtil.isTransient(this))
-  // {
-  // return super.eDirectResource();
-  // }
-  //
-  // if (eStore().getContainer(this) == null)
-  // {
-  // return cdoView().getRootResource();
-  // }
-  //
-  // return null;
-  // }
-
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -94,4 +84,22 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
     return (EList<CDOResourceNode>)eGet(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, true);
   }
 
+  /**
+   * @ADDED
+   */
+  public void delete(Map<?, ?> options) throws IOException
+  {
+    if (!FSMUtil.isTransient(this))
+    {
+      if (getFolder() == null)
+      {
+        InternalCDOView view = cdoView();
+        view.getRootResource().getContents().remove(this);
+      }
+      else
+      {
+        basicSetFolder(null, false);
+      }
+    }
+  }
 } // CDOResourceFolderImpl

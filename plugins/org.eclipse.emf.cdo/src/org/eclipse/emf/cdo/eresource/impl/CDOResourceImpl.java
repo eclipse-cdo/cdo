@@ -230,6 +230,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    * 
    * @generated NOT
    */
+  @Override
   public URI getURI()
   {
     if (cdoID() == null && initialURI != null)
@@ -237,7 +238,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       return initialURI;
     }
 
-    return CDOURIUtil.createResourceURI(cdoView(), getPath());
+    return super.getURI();
   }
 
   /**
@@ -741,7 +742,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   /**
    * @ADDED
    */
-  public void delete(Map<?, ?> defaultDeleteOptions) throws IOException
+  public void delete(Map<?, ?> options) throws IOException
   {
     if (FSMUtil.isTransient(this))
     {

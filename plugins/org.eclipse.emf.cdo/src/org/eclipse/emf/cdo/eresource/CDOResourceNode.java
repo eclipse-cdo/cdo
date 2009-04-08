@@ -12,6 +12,13 @@ package org.eclipse.emf.cdo.eresource;
 
 import org.eclipse.emf.cdo.CDOObject;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+
+import java.io.IOException;
+import java.util.Map;
+
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource Node</b></em>'. <!-- end-user-doc
  * -->
@@ -136,5 +143,27 @@ public interface CDOResourceNode extends CDOObject
    * @generated
    */
   void setPath(String value);
+
+  /**
+   * @ADDED
+   */
+  public URI getURI();
+
+  /**
+   * {@link URIConverter#delete(URI, Map) deletes} the resource using the specified options, {@link #unload() unloads}
+   * it, and then removes it from the {@link #getResourceSet() containing} resource set.
+   * <p>
+   * Options are handled generically as feature-to-setting entries; the resource will ignore options it doesn't
+   * recognize. The options could even include things like an Eclipse progress monitor...
+   * </p>
+   * <p>
+   * An implementation typically uses the {@link ResourceSet#getURIConverter URI converter} of the
+   * {@link #getResourceSet containing} resource set to {@link URIConverter#delete(URI, Map)} the resource's
+   * {@link #getURI() URI}.
+   * </p>
+   * 
+   * @ADDED
+   */
+  public void delete(Map<?, ?> options) throws IOException;
 
 } // CDOResourceNode

@@ -165,7 +165,7 @@ public final class CDODBUtil
   {
     if (id != null && id.getType() == CDOID.Type.EXTERNAL_OBJECT)
     {
-      throw new IllegalArgumentException("DBStore does not support external references.");
+      throw new IllegalArgumentException("DBStore does not support external references: " + id);
     }
 
     return CDOIDUtil.getLong(id);

@@ -947,9 +947,18 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       InternalCDOObject object = (InternalCDOObject)potentialObject;
       boolean newOrTransient = FSMUtil.isTransient(object) || FSMUtil.isNew(object);
-      if (object.cdoView() == this && (!onlyPersistedID || !newOrTransient))
+      if (!(onlyPersistedID && newOrTransient))
       {
-        return object.cdoID();
+        CDOView view = object.cdoView();
+        if (view == this)
+        {
+          return object.cdoID();
+        }
+
+        if (view != null && view.getSession() == getSession())
+        {
+          return object.cdoID();
+        }
       }
     }
 

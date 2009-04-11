@@ -360,15 +360,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
     resource1.getContents().add(supplier);
     resource2.getContents().add(purchaseOrder);
 
-    try
-    {
-      msg("Committing");
-      transaction1.commit();
-      fail("TransactionException expected");
-    }
-    catch (TransactionException success)
-    {
-    }
+    msg("Committing");
+    transaction1.commit();
   }
 
   private EPackage createDynamicEPackage()

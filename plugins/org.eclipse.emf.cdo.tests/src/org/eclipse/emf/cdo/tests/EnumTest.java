@@ -59,6 +59,47 @@ public class EnumTest extends AbstractCDOTest
     }
   }
 
+  public void testTransientFresh() throws Exception
+  {
+    {
+      Product1 product = getModel1Factory().createProduct1();
+      product.setName("Normal Product");
+      product.setVat(VAT.VAT7);
+
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/my/resource");
+      resource.getContents().add(product);
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/my/resource");
+      Product1 product = (Product1)resource.getContents().get(0);
+      assertEquals(VAT.VAT7, product.getVat());
+
+      product.setVat(VAT.VAT15);
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/my/resource");
+      Product1 product = (Product1)resource.getContents().get(0);
+      assertEquals(VAT.VAT15, product.getVat());
+      session.close();
+    }
+  }
+
   public void testAttached() throws Exception
   {
     {
@@ -89,6 +130,52 @@ public class EnumTest extends AbstractCDOTest
       transaction.commit();
       session.close();
     }
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/my/resource");
+      Category category = (Category)resource.getContents().get(0);
+      Product1 product = category.getProducts().get(0);
+      assertEquals(VAT.VAT15, product.getVat());
+      session.close();
+    }
+  }
+
+  public void testAttachedFresh() throws Exception
+  {
+    {
+      Category category = getModel1Factory().createCategory();
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/my/resource");
+      resource.getContents().add(category);
+
+      Product1 product = getModel1Factory().createProduct1();
+      product.setName("Normal Product");
+      product.setVat(VAT.VAT7);
+      category.getProducts().add(product);
+
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/my/resource");
+      Category category = (Category)resource.getContents().get(0);
+      Product1 product = category.getProducts().get(0);
+      assertEquals(VAT.VAT7, product.getVat());
+
+      product.setVat(VAT.VAT15);
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
 
     {
       CDOSession session = openModel1Session();

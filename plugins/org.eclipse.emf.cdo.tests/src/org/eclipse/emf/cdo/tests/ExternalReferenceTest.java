@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -49,6 +50,13 @@ import java.io.ByteArrayOutputStream;
 public class ExternalReferenceTest extends AbstractCDOTest
 {
   final static public String REPOSITORY2_NAME = "repo2";
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipTest(getRepositoryConfig() instanceof RepositoryConfig.DB);
+  }
 
   public void testExternalWithDynamicEObject() throws Exception
   {

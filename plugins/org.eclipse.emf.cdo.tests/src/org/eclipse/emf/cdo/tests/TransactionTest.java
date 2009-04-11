@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -66,6 +67,7 @@ public class TransactionTest extends AbstractCDOTest
 
   public void testCreateManyTransactions() throws Exception
   {
+    skipTest(getRepositoryConfig() instanceof RepositoryConfig.DB);
     msg("Opening session");
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
@@ -93,6 +95,7 @@ public class TransactionTest extends AbstractCDOTest
 
   public void testCreateManySessionsAndTransactionsMultiThread() throws Exception
   {
+    skipTest(getRepositoryConfig() instanceof RepositoryConfig.DB);
     final long TIMEOUT = 2 * 120L;
     final int THREADS = 5;
 

@@ -21,7 +21,6 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.ResultSet;
@@ -114,9 +113,10 @@ public abstract class AttributeMapping extends FeatureMapping implements IAttrib
     @Override
     protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
     {
-      EEnum type = (EEnum)getFeature().getEType();
-      int value = resultSet.getInt(column);
-      return type.getEEnumLiteral(value);
+      return resultSet.getInt(column);
+      // EEnum type = (EEnum)getFeature().getEType();
+      // int value = resultSet.getInt(column);
+      // return type.getEEnumLiteral(value);
     }
   }
 

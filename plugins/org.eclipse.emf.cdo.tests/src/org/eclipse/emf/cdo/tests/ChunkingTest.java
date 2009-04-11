@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -28,13 +27,6 @@ import java.util.Iterator;
  */
 public class ChunkingTest extends AbstractCDOTest
 {
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    skipTest(getRepositoryConfig() instanceof RepositoryConfig.DB);
-  }
-
   public void testReadNative() throws Exception
   {
     {

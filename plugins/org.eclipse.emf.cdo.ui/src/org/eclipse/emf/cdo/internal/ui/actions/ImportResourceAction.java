@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.dialogs.ImportResourceDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -98,5 +99,13 @@ public class ImportResourceAction extends ViewAction
     {
       targetContents.add(root);
     }
+
+    getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        CDOEditorUtil.openEditor(getPage(), getView(), targetPath);
+      }
+    });
   }
 }

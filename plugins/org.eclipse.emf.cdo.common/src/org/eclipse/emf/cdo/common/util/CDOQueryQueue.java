@@ -268,11 +268,6 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       seqNumber = nextSeq.getAndIncrement();
     }
 
-    public Object getObject()
-    {
-      return internalObject;
-    }
-
     @SuppressWarnings("unchecked")
     public E getObjectWithException()
     {

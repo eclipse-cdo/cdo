@@ -170,6 +170,7 @@ public class SecurityTest extends AbstractOMTest
     {
     }
 
+    @SuppressWarnings("unused")
     public PeerNegotiationContext getPeer()
     {
       return peer;
@@ -180,6 +181,7 @@ public class SecurityTest extends AbstractOMTest
       this.peer = peer;
     }
 
+    @SuppressWarnings("unused")
     public String getUserID()
     {
       return userID;

@@ -407,11 +407,6 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
       resources = new ResourcesNode(repositoryProject);
     }
 
-    public IRepositoryProject getRepositoryProject()
-    {
-      return resources.getRepositoryProject();
-    }
-
     public SessionsNode getSessions()
     {
       return sessions;

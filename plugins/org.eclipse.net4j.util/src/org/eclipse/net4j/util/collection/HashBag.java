@@ -154,11 +154,6 @@ public final class HashBag<T> implements Set<T>
     {
     }
 
-    public int getValue()
-    {
-      return value;
-    }
-
     public int incValue()
     {
       return ++value;

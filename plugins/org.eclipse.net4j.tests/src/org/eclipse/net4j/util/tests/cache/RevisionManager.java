@@ -85,11 +85,6 @@ public class RevisionManager extends Cache<Revision>
       this.id = id;
     }
 
-    public int getID()
-    {
-      return id;
-    }
-
     public Revision getRevision(int version)
     {
       for (Iterator<Reference<Revision>> it = revisions.iterator(); it.hasNext();)
@@ -141,16 +136,6 @@ public class RevisionManager extends Cache<Revision>
       // ref = new WeakReference<Revision>(revision, queue);
       id = revision.getID();
       version = revision.getVersion();
-    }
-
-    public int getID()
-    {
-      return id;
-    }
-
-    public int getVersion()
-    {
-      return version;
     }
 
     @Override

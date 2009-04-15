@@ -454,11 +454,6 @@ public class RevisionHolderTest extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public boolean isSet(EStructuralFeature feature)
-    {
-      throw new UnsupportedOperationException();
-    }
-
     public int lastIndexOf(EStructuralFeature feature, Object value)
     {
       throw new UnsupportedOperationException();

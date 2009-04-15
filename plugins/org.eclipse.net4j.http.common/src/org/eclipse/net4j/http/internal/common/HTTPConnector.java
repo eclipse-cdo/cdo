@@ -88,6 +88,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     lastTraffic = System.currentTimeMillis();
   }
 
+  @Override
   public void multiplexChannel(InternalChannel channel)
   {
     IBuffer buffer;
@@ -346,11 +347,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       return OPERATION_OPEN;
     }
 
-    public String getProtocolID()
-    {
-      return protocolID;
-    }
-
     @Override
     public void execute()
     {
@@ -503,11 +499,6 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     public byte getOperation()
     {
       return OPERATION_BUFFER;
-    }
-
-    public IBuffer getBuffer()
-    {
-      return buffer;
     }
 
     @Override

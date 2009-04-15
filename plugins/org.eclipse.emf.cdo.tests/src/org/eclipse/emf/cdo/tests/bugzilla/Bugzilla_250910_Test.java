@@ -91,11 +91,6 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
       return notifier;
     }
 
-    public List<Notification> getNotifications()
-    {
-      return notifications;
-    }
-
     public boolean isAdapterForType(Object type)
     {
       return false;

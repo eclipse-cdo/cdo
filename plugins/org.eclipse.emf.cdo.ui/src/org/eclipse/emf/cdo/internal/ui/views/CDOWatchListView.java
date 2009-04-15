@@ -576,23 +576,15 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
     private final CDOObject referrer;
 
-    private final CDOView view;
-
     private long referenceCount;
 
     /**
      * TODO Vik: Why private?
      */
-    private CDOViewReferenceCounter(CDOView view, CDOObject cdoObject)
+    private CDOViewReferenceCounter(CDOObject cdoObject)
     {
-      this.view = view;
       referrer = cdoObject;
       referenceCount = 0;
-    }
-
-    public synchronized long getCount()
-    {
-      return referenceCount;
     }
 
     public synchronized long increase()
@@ -606,12 +598,8 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       {
         viewReferences.remove(this);
       }
-      return referenceCount;
-    }
 
-    public CDOView getView()
-    {
-      return view;
+      return referenceCount;
     }
 
     public CDOObject getReferrer()
@@ -635,7 +623,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         }
       }
 
-      CDOViewReferenceCounter counter = new CDOViewReferenceCounter(cdoObject.cdoView(), cdoObject);
+      CDOViewReferenceCounter counter = new CDOViewReferenceCounter(cdoObject);
       viewReferences.add(counter);
       return counter;
     }
@@ -704,17 +692,6 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       return getData(object).getNotification();
     }
 
-    public void addLastCommitTime(Object object, long timeStamp)
-    {
-      getData(object).setCommitTimeStamp(timeStamp);
-      fireEvent(dataRegistryEvent);
-    }
-
-    public Long getLastCommitTime(Object object)
-    {
-      return getData(object).getCommitTimeStamp();
-    }
-
     public void notifyEvent(IEvent event)
     {
       if (event instanceof ContainerEvent<?>)
@@ -737,8 +714,6 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     {
       private Notification notification;
 
-      private long commitTimeStamp;
-
       public WatchedObjectData()
       {
       }
@@ -756,16 +731,6 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       public Notification getNotification()
       {
         return notification;
-      }
-
-      public void setCommitTimeStamp(long commitTimeStamp)
-      {
-        this.commitTimeStamp = commitTimeStamp;
-      }
-
-      public long getCommitTimeStamp()
-      {
-        return commitTimeStamp;
       }
     }
   }

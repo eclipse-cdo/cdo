@@ -407,15 +407,6 @@ public class TransactionHandlerTest extends AbstractCDOTest
     {
     }
 
-    public void clear()
-    {
-      listOfAddingObject.clear();
-      listOfDetachingObject.clear();
-      listOfModifyinObject.clear();
-      numberOfCommit = 0;
-      numberOfRollback = 0;
-    }
-
     public List<CDOObject> getListOfAddingObject()
     {
       return listOfAddingObject;

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
@@ -174,7 +174,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
         table = schema.addTable(CDODBSchema.CDO_OBJECTS);
         idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
         typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT);
-        table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
+        table.addIndex(IDBIndex.Type.UNIQUE, idField);
 
         IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
         dbAdapter.createTable(table, statement);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
@@ -100,7 +99,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     for (int i = 0; i < features.length; i++)
     {
       EStructuralFeature feature = features[i];
-      if (feature instanceof EReference && feature.isMany())
+      if (feature.isMany())
       {
         MoveableList<Object> list = revision.getList(feature);
         int chunkEnd = Math.min(referenceChunk, list.size());

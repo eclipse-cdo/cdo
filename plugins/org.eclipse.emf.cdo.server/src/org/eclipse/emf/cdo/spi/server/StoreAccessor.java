@@ -132,6 +132,11 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       addIDMappings(context, monitor.fork());
       context.applyIDMappings(monitor.fork());
 
+      if (detachedObjects.length != 0)
+      {
+        detachObjects(detachedObjects, timeStamp - 1, monitor.fork(detachedObjects.length));
+      }
+
       if (newObjects.length != 0)
       {
         writeRevisions(newObjects, monitor.fork(newObjects.length));
@@ -147,11 +152,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
         {
           writeRevisions(context.getDirtyObjects(), monitor.fork(dirtyCount));
         }
-      }
-
-      if (detachedObjects.length != 0)
-      {
-        detachObjects(detachedObjects, timeStamp - 1, monitor.fork(detachedObjects.length));
       }
     }
     finally

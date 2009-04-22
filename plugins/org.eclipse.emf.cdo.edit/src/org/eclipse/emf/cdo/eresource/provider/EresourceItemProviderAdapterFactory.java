@@ -115,6 +115,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
    * end-user-doc -->
    * 
    * @generated
+   * @since 2.0
    */
   @Override
   public Adapter createCDOResourceFolderAdapter()

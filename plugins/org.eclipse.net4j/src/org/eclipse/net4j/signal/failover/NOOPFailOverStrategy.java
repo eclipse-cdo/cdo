@@ -61,6 +61,9 @@ public class NOOPFailOverStrategy extends Notifier implements IFailOverStrategy
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * @since 2.0
+   */
   @Override
   public String toString()
   {

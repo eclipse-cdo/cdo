@@ -288,14 +288,18 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     for (Object o : result)
     {
       final CDORevision revision = (CDORevision)o;
-      String revisionName = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
-      boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
-          : revisionName.startsWith(name);
-
-      if (match && !context.addResource(revision.getID()))
+      final EStructuralFeature feature = revision.getEClass().getEStructuralFeature("name");
+      if (feature != null)
       {
-        // No more results allowed
-        break;
+        String revisionName = (String)revision.data().get(feature, 0);
+        boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
+            : revisionName.startsWith(name);
+
+        if (match && !context.addResource(revision.getID()))
+        {
+          // No more results allowed
+          break;
+        }
       }
     }
   }
@@ -387,7 +391,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           }
         }
 
-        session.saveOrUpdate(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
+        session.merge(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Persisted new Object " + cdoRevision.getEClass().getName() + " id: " + cdoRevision.getID());

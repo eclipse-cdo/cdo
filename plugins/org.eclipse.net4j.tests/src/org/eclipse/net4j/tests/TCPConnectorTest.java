@@ -414,4 +414,45 @@ public class TCPConnectorTest extends AbstractOMTest
       assertEquals(true, ex.getCause() instanceof NegotiationException);
     }
   }
+
+  public void testNoNegotiator() throws Exception
+  {
+    threadPool = Executors.newCachedThreadPool();
+    LifecycleUtil.activate(threadPool);
+
+    bufferPool = Net4jUtil.createBufferPool();
+    LifecycleUtil.activate(bufferPool);
+
+    selector = new TCPSelector();
+    selector.activate();
+
+    acceptor = new TCPAcceptor();
+    acceptor.setStartSynchronously(true);
+    acceptor.setSynchronousStartTimeout(TIMEOUT);
+    acceptor.getConfig().setBufferProvider(bufferPool);
+    acceptor.getConfig().setReceiveExecutor(threadPool);
+    acceptor.setSelector(selector);
+    acceptor.setAddress("0.0.0.0");
+    acceptor.setPort(2036);
+    acceptor.activate();
+
+    connector = new TCPClientConnector();
+    connector.getConfig().setBufferProvider(bufferPool);
+    connector.getConfig().setReceiveExecutor(threadPool);
+    connector.setSelector(selector);
+    connector.setHost("localhost");
+    connector.setPort(2036);
+    connector.setUserID("SHOULD_FAIL_LATER");
+
+    try
+    {
+      connector.connect();
+      fail("ConnectorException expected");
+    }
+    catch (ConnectorException ex)
+    {
+      OM.LOG.info("Expected ConnectorException:", ex);
+      assertEquals(true, ex.getCause() instanceof IllegalStateException);
+    }
+  }
 }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.spi.net4j;
 
+import org.eclipse.net4j.ITransportConfigAware;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
@@ -18,7 +19,7 @@ import org.eclipse.net4j.channel.IChannelMultiplexer;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalChannelMultiplexer extends IChannelMultiplexer, IBufferProvider
+public interface InternalChannelMultiplexer extends IChannelMultiplexer, IBufferProvider, ITransportConfigAware
 {
   /**
    * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be

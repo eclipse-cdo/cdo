@@ -10,7 +10,6 @@
  */
 package org.eclipse.spi.net4j;
 
-import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
@@ -27,7 +26,6 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiator;
 import org.eclipse.net4j.util.security.NegotiationException;
 
-import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import java.text.MessageFormat;
@@ -43,8 +41,6 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, Connector.class);
 
   private String userID;
-
-  private ITransportConfig config;
 
   private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
@@ -62,24 +58,6 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
   public Connector()
   {
-  }
-
-  @Override
-  public synchronized ITransportConfig getConfig()
-  {
-    if (config == null)
-    {
-      config = new TransportConfig();
-    }
-
-    return config;
-  }
-
-  @Override
-  public synchronized void setConfig(ITransportConfig config)
-  {
-    checkInactive();
-    this.config = config;
   }
 
   public INegotiator getNegotiator()
@@ -378,9 +356,11 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (getConfig().getBufferProvider() == null)
+    checkState(getConfig().getBufferProvider(), "getConfig().getBufferProvider()");
+
+    if (userID != null && getConfig().getNegotiator() == null)
     {
-      throw new IllegalStateException("getConfig().getBufferProvider() == null");
+      throw new IllegalStateException("A UserID on this connector requires a negotiator to be configured");
     }
   }
 

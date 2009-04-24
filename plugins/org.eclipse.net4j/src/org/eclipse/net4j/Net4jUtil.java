@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.security.RandomizerFactory;
 
 import org.eclipse.internal.net4j.ExecutorServiceFactory;
+import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.buffer.BufferFactory;
 import org.eclipse.internal.net4j.buffer.BufferPool;
 import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
@@ -141,5 +142,18 @@ public final class Net4jUtil
     }
 
     return -1;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static ITransportConfig copyTransportConfig(ITransportConfig source)
+  {
+    TransportConfig result = new TransportConfig();
+    result.setBufferProvider(source.getBufferProvider());
+    result.setProtocolProvider(source.getProtocolProvider());
+    result.setReceiveExecutor(source.getReceiveExecutor());
+    result.setNegotiator(source.getNegotiator());
+    return result;
   }
 }

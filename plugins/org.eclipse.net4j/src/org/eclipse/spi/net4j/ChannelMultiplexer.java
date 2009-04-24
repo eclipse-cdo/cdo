@@ -11,6 +11,7 @@
 package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.ITransportConfig;
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.IChannel;
@@ -76,7 +77,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   public synchronized void setConfig(ITransportConfig config)
   {
     checkInactive();
-    this.config = config;
+    this.config = Net4jUtil.copyTransportConfig(config);
   }
 
   public long getOpenChannelTimeout()

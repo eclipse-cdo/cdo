@@ -16,7 +16,13 @@ package org.eclipse.net4j;
  */
 public interface ITransportConfigAware
 {
+  /**
+   * Returns the current transport configuration if there is one, a new empty one otherwise.
+   */
   public ITransportConfig getConfig();
 
+  /**
+   * Sets a new transport configuration by <b>copying</b> the given one.
+   */
   public void setConfig(ITransportConfig config);
 }

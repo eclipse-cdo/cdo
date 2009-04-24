@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.acceptor;
 
+import org.eclipse.net4j.ILocationAware.Location;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.IContainer;

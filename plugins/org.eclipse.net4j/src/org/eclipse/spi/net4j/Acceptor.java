@@ -11,6 +11,7 @@
 package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.ITransportConfig;
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.Container;
@@ -63,7 +64,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   public synchronized void setConfig(ITransportConfig config)
   {
-    this.config = config;
+    this.config = Net4jUtil.copyTransportConfig(config);
   }
 
   public INegotiator getNegotiator()

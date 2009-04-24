@@ -68,7 +68,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     if (config == null)
     {
-      config = new TransportConfig();
+      config = new TransportConfig(this);
     }
 
     return config;
@@ -77,7 +77,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   public synchronized void setConfig(ITransportConfig config)
   {
     checkInactive();
-    this.config = Net4jUtil.copyTransportConfig(config);
+    this.config = Net4jUtil.copyTransportConfig(this, config);
   }
 
   public long getOpenChannelTimeout()

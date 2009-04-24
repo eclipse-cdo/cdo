@@ -16,6 +16,7 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.security.RandomizerFactory;
 
 import org.eclipse.internal.net4j.ExecutorServiceFactory;
@@ -147,13 +148,9 @@ public final class Net4jUtil
   /**
    * @since 2.0
    */
-  public static ITransportConfig copyTransportConfig(ITransportConfig source)
+  public static ITransportConfig copyTransportConfig(ILifecycle lifecycle, ITransportConfig source)
   {
-    TransportConfig result = new TransportConfig();
-    result.setBufferProvider(source.getBufferProvider());
-    result.setProtocolProvider(source.getProtocolProvider());
-    result.setReceiveExecutor(source.getReceiveExecutor());
-    result.setNegotiator(source.getNegotiator());
-    return result;
+    return new TransportConfig(lifecycle, source.getReceiveExecutor(), source.getBufferProvider(), source
+        .getProtocolProvider(), source.getNegotiator());
   }
 }

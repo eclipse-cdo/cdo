@@ -14,6 +14,8 @@ import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.protocol.IProtocolProvider;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.INegotiator;
 
 import java.text.MessageFormat;
@@ -24,6 +26,8 @@ import java.util.concurrent.ExecutorService;
  */
 public class TransportConfig implements ITransportConfig
 {
+  private transient ILifecycle lifecycle;
+
   private IBufferProvider bufferProvider;
 
   /**
@@ -41,13 +45,29 @@ public class TransportConfig implements ITransportConfig
   {
   }
 
-  public TransportConfig(ExecutorService receiveExecutor, IBufferProvider bufferProvider,
+  public TransportConfig(ILifecycle lifecycle)
+  {
+    this.lifecycle = lifecycle;
+  }
+
+  public TransportConfig(ILifecycle lifecycle, ExecutorService receiveExecutor, IBufferProvider bufferProvider,
       IProtocolProvider protocolProvider, INegotiator negotiator)
   {
+    this(lifecycle);
     this.receiveExecutor = receiveExecutor;
     this.bufferProvider = bufferProvider;
     this.protocolProvider = protocolProvider;
     this.negotiator = negotiator;
+  }
+
+  public ILifecycle getLifecycle()
+  {
+    return lifecycle;
+  }
+
+  public void setLifecycle(ILifecycle lifecycle)
+  {
+    this.lifecycle = lifecycle;
   }
 
   public ExecutorService getReceiveExecutor()
@@ -57,6 +77,7 @@ public class TransportConfig implements ITransportConfig
 
   public void setReceiveExecutor(ExecutorService receiveExecutor)
   {
+    LifecycleUtil.checkInactive(lifecycle);
     this.receiveExecutor = receiveExecutor;
   }
 
@@ -67,6 +88,7 @@ public class TransportConfig implements ITransportConfig
 
   public void setBufferProvider(IBufferProvider bufferProvider)
   {
+    LifecycleUtil.checkInactive(lifecycle);
     this.bufferProvider = bufferProvider;
   }
 
@@ -77,6 +99,7 @@ public class TransportConfig implements ITransportConfig
 
   public void setProtocolProvider(IProtocolProvider protocolProvider)
   {
+    LifecycleUtil.checkInactive(lifecycle);
     this.protocolProvider = protocolProvider;
   }
 
@@ -87,6 +110,7 @@ public class TransportConfig implements ITransportConfig
 
   public void setNegotiator(INegotiator negotiator)
   {
+    LifecycleUtil.checkInactive(lifecycle);
     this.negotiator = negotiator;
   }
 

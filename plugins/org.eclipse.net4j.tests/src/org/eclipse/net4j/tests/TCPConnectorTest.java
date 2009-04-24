@@ -455,4 +455,51 @@ public class TCPConnectorTest extends AbstractOMTest
       assertEquals(true, ex.getCause() instanceof IllegalStateException);
     }
   }
+
+  public void testNegotiatorTooLate() throws Exception
+  {
+    threadPool = Executors.newCachedThreadPool();
+    LifecycleUtil.activate(threadPool);
+
+    bufferPool = Net4jUtil.createBufferPool();
+    LifecycleUtil.activate(bufferPool);
+
+    selector = new TCPSelector();
+    selector.activate();
+
+    acceptor = new TCPAcceptor();
+    acceptor.setStartSynchronously(true);
+    acceptor.setSynchronousStartTimeout(TIMEOUT);
+    acceptor.getConfig().setBufferProvider(bufferPool);
+    acceptor.getConfig().setReceiveExecutor(threadPool);
+    acceptor.setSelector(selector);
+    acceptor.setAddress("0.0.0.0");
+    acceptor.setPort(2036);
+    acceptor.activate();
+
+    connector = new TCPClientConnector();
+    connector.getConfig().setBufferProvider(bufferPool);
+    connector.getConfig().setReceiveExecutor(threadPool);
+    connector.setSelector(selector);
+    connector.setHost("localhost");
+    connector.setPort(2036);
+    connector.connect();
+
+    credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
+    LifecycleUtil.activate(credentialsProvider);
+
+    responseNegotiator = new ResponseNegotiator();
+    responseNegotiator.setCredentialsProvider(credentialsProvider);
+    responseNegotiator.activate();
+
+    try
+    {
+      connector.getConfig().setNegotiator(responseNegotiator);
+      fail("IllegalStateException expected");
+    }
+    catch (IllegalStateException ex)
+    {
+      OM.LOG.info("Expected IllegalStateException:", ex);
+    }
+  }
 }

@@ -12,6 +12,7 @@ package org.eclipse.net4j;
 
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.protocol.IProtocolProvider;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 
 import java.util.concurrent.ExecutorService;
@@ -22,6 +23,14 @@ import java.util.concurrent.ExecutorService;
  */
 public interface ITransportConfig extends INegotiatorAware
 {
+  public ILifecycle getLifecycle();
+
+  /**
+   * Sets the lifecycle delegate to be used for inactivity checks in the setter implementations of this transport
+   * configuration.
+   */
+  public void setLifecycle(ILifecycle lifecycle);
+
   public IBufferProvider getBufferProvider();
 
   public void setBufferProvider(IBufferProvider bufferProvider);

@@ -56,7 +56,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   {
     if (config == null)
     {
-      config = new TransportConfig();
+      config = new TransportConfig(this);
     }
 
     return config;
@@ -64,7 +64,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   public synchronized void setConfig(ITransportConfig config)
   {
-    this.config = Net4jUtil.copyTransportConfig(config);
+    this.config = Net4jUtil.copyTransportConfig(this, config);
   }
 
   public INegotiator getNegotiator()

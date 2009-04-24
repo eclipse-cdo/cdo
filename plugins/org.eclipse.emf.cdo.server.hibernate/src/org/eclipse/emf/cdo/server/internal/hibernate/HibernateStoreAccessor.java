@@ -387,7 +387,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           }
         }
 
-        session.save(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
+        session.saveOrUpdate(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Persisted new Object " + cdoRevision.getEClass().getName() + " id: " + cdoRevision.getID());

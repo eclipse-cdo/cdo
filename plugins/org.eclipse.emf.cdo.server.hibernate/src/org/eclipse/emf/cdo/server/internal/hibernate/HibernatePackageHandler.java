@@ -105,10 +105,10 @@ public class HibernatePackageHandler extends Lifecycle
 
     try
     {
-      // first store and update the new packageunits and the epackages
+      // first store and update the packageunits and the epackages
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
-        session.save("CDOPackageUnit", packageUnit);
+        session.saveOrUpdate("CDOPackageUnit", new HibernateCDOPackageUnit(packageUnit));
 
         if (packageUnit.getPackageInfos().length > 0)
         {
@@ -300,7 +300,7 @@ public class HibernatePackageHandler extends Lifecycle
 
     try
     {
-      in = OM.BUNDLE.getInputStream("mappings/meta.hbm.xml");
+      in = OM.BUNDLE.getInputStream("/mappings/meta.hbm.xml");
       configuration = new Configuration();
       configuration.addInputStream(in);
       configuration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(hibernateStore));

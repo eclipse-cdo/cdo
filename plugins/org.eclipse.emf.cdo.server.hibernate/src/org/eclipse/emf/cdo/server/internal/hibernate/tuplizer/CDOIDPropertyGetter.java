@@ -11,10 +11,18 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
+import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
+
+import java.io.Serializable;
 
 /**
  * @author Martin Taal
@@ -34,6 +42,12 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
     InternalCDORevision revision = (InternalCDORevision)target;
     if (!(revision.getID() instanceof CDOIDHibernate))
     {
+      if (!isVirtualProperty())
+      {
+        final Object value = super.get(target);
+        setCDOID(revision, value);
+        return value;
+      }
       return null;
     }
 
@@ -45,12 +59,46 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
     else
     {
       Object id = super.get(target);
+      setCDOID(revision, id);
+
       // TODO: does this make sense?
       // if (cdoID.getId() == null)
       // {
       // cdoID.setId((Serializable)id);
       // }
       return id;
+    }
+  }
+
+  private void setCDOID(CDORevision target, Object value)
+  {
+    InternalCDORevision revision = (InternalCDORevision)target;
+    HibernateCommitContext hcc = null;
+    if (HibernateThreadContext.isHibernateCommitContextSet())
+    {
+      hcc = HibernateThreadContext.getHibernateCommitContext();
+    }
+    CDOID cdoID = revision.getID();
+    if (cdoID == null)
+    {
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
+          revision.getEClass().getName());
+      revision.setID(newCDOID);
+      if (hcc != null)
+      {
+        hcc.setNewID(cdoID, newCDOID);
+      }
+    }
+    else if (cdoID instanceof CDOIDTemp)
+    {
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
+          revision.getEClass().getName());
+      revision.setID(newCDOID);
+      if (hcc != null)
+      {
+        hcc.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
+        hcc.setNewID(cdoID, newCDOID);
+      }
     }
   }
 

@@ -75,11 +75,15 @@ public class CDOIDPropertySetter extends CDOPropertySetter
     else
     {
       CDOIDHibernate hbCDOID = (CDOIDHibernate)revision.getID();
-      if (!hbCDOID.getId().equals(value))
+      if (hbCDOID.getId() == null)
+      {
+        // TODO: how can this happen?
+        hbCDOID.setId((Serializable)value);
+      }
+      else if (!hbCDOID.getId().equals(value))
       {
         throw new IllegalStateException("Current id and new id are different " + value + "/" + hbCDOID.getId());
       }
-
     }
     if (!isVirtualProperty())
     {

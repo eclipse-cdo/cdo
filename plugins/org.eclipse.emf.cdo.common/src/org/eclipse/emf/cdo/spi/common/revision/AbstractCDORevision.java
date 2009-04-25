@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
@@ -660,7 +659,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
         CDOID newID = idMappings.get(oldID);
         if (newID == null)
         {
-          throw new ImplementationError("Missing ID mapping for " + oldID);
+          throw new IllegalStateException("Missing ID mapping for " + oldID);
         }
 
         if (TRACER.isEnabled())

@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -200,9 +199,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @since 2.0
    */
-  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
+  public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
   {
-    this.packageRegistry = (InternalCDOPackageRegistry)packageRegistry;
+    this.packageRegistry = packageRegistry;
   }
 
   public InternalCDOPackageRegistry getPackageRegistry()

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -117,7 +118,7 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
     {
       session = createSession();
       session.setRepositoryName(repositoryName);
-      session.setPackageRegistry(packageRegistry);
+      session.setPackageRegistry((InternalCDOPackageRegistry)packageRegistry);
       session.getRevisionManager().setCache(revisionCache);
 
       if (activateOnOpen)

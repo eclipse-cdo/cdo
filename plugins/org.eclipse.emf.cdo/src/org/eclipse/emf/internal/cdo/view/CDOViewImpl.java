@@ -790,7 +790,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       TRACER.trace("Creating meta object for " + id);
     }
 
-    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)session.getPackageRegistry();
+    InternalCDOPackageRegistry packageRegistry = session.getPackageRegistry();
     InternalEObject metaInstance = packageRegistry.getMetaInstanceMapper().lookupMetaInstance(id);
     return new CDOMetaWrapper(this, metaInstance, id);
   }

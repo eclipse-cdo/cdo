@@ -13,7 +13,6 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -33,9 +32,11 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
 {
   public CDOSessionProtocol getSessionProtocol();
 
-  public void setRepositoryName(String repositoryName);
+  public InternalCDOPackageRegistry getPackageRegistry();
 
-  public void setPackageRegistry(CDOPackageRegistry packageRegistry);
+  public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
+
+  public void setRepositoryName(String repositoryName);
 
   public void viewDetached(InternalCDOView view);
 

@@ -48,7 +48,7 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
   @Override
   public String toString()
   {
-    return "oid" + toURIFragment();
+    return "oid:" + toURIFragment();
   }
 
   @Override
@@ -81,6 +81,7 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     {
       return true;
     }
+
     // Could CDOIDExternalTempImpl and CDOIDExternalImpl have the same uri. We don't want to mixed them.
     if (obj != null && obj.getClass() == getClass())
     {

@@ -178,8 +178,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    ReentrantLock viewLock = transaction.getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(transaction);
 
     try
     {
@@ -194,7 +193,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -230,8 +229,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void detach(InternalCDOObject object)
   {
-    ReentrantLock viewLock = object.cdoView().getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(object.cdoView());
 
     try
     {
@@ -268,7 +266,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -277,8 +275,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public InternalCDORevision read(InternalCDOObject object)
   {
-    ReentrantLock viewLock = object.cdoView().getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(object.cdoView());
 
     try
     {
@@ -293,7 +290,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -310,8 +307,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void write(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
-    ReentrantLock viewLock = object.cdoView().getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(object.cdoView());
 
     try
     {
@@ -324,7 +320,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -333,7 +329,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void reload(InternalCDOObject... objects)
   {
-    CDOView view = null;
+    InternalCDOView view = null;
     Map<CDOID, InternalCDOObject> ids = new HashMap<CDOID, InternalCDOObject>();
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     List<InternalCDORevision> revised = new ArrayList<InternalCDORevision>();
@@ -349,8 +345,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     if (view != null)
     {
-      ReentrantLock viewLock = ((InternalCDOView)view).getStateLock();
-      viewLock.lock();
+      ReentrantLock lock = lockView(view);
+
       try
       {
         for (InternalCDOObject object : objects)
@@ -376,7 +372,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           }
         }
 
-        InternalCDOSession session = (InternalCDOSession)view.getSession();
+        InternalCDOSession session = view.getSession();
         revisions = session.getSessionProtocol().verifyRevision(revisions);
 
         revisions.addAll(revised);
@@ -393,7 +389,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
       finally
       {
-        viewLock.unlock();
+        unlockView(lock);
       }
     }
   }
@@ -403,8 +399,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void invalidate(InternalCDOObject object, int version)
   {
-    ReentrantLock viewLock = object.cdoView().getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(object.cdoView());
+
     try
     {
       if (TRACER.isEnabled())
@@ -416,7 +412,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -425,8 +421,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void detachRemote(InternalCDOObject object)
   {
-    ReentrantLock viewLock = object.cdoView().getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(object.cdoView());
 
     try
     {
@@ -439,7 +434,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -448,8 +443,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void commit(InternalCDOObject object, CommitTransactionResult result)
   {
-    ReentrantLock viewLock = object.cdoView().getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(object.cdoView());
 
     try
     {
@@ -462,7 +456,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -471,8 +465,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void rollback(InternalCDOObject object)
   {
-    ReentrantLock viewLock = object.cdoView().getStateLock();
-    viewLock.lock();
+    ReentrantLock lock = lockView(object.cdoView());
 
     try
     {
@@ -485,7 +478,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
     finally
     {
-      viewLock.unlock();
+      unlockView(lock);
     }
   }
 
@@ -499,6 +492,26 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   protected void setState(InternalCDOObject object, CDOState state)
   {
     object.cdoInternalSetState(state);
+  }
+
+  private ReentrantLock lockView(InternalCDOView view)
+  {
+    if (view == null)
+    {
+      return null;
+    }
+
+    ReentrantLock stateLock = view.getStateLock();
+    stateLock.lock();
+    return stateLock;
+  }
+
+  private void unlockView(ReentrantLock stateLock)
+  {
+    if (stateLock != null)
+    {
+      stateLock.unlock();
+    }
   }
 
   /**

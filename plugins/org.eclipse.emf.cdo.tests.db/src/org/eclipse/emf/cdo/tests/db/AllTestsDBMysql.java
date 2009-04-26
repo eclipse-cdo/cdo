@@ -9,7 +9,9 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.db;
+
+import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -21,7 +23,7 @@ public class AllTestsDBMysql extends AllTestsAllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBMysql().getTestSuite("CDO Tests (DB MySql Horizontal)");
+    return new AllTestsDBMysql().getTestSuite("CDO Tests (DBStoreRepositoryConfig MySql Horizontal)");
   }
 
   @Override

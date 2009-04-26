@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_266982_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -25,13 +26,13 @@ public class AllTestsDBHsqldb extends AllTestsAllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBHsqldb().getTestSuite("CDO Tests (DB Hsql Horizontal)");
+    return new AllTestsDBHsqldb().getTestSuite("CDO Tests (DBStoreRepositoryConfig Hsql Horizontal)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, DB_HSQL, TCP, NATIVE);
+    addScenario(parent, COMBINED, DBStoreRepositoryConfig.Hsqldb.INSTANCE, TCP, NATIVE);
   }
 
   @Override

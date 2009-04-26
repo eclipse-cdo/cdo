@@ -32,9 +32,6 @@ import org.eclipse.emf.cdo.tests.model5.Model5Package;
  */
 public abstract class ModelConfig extends Config implements IModelConfig
 {
-  // TODO LEGACY
-  public static final ModelConfig[] CONFIGS = { Native.INSTANCE /* , Legacy.INSTANCE */};
-
   private static final long serialVersionUID = 1L;
 
   public ModelConfig(String name)

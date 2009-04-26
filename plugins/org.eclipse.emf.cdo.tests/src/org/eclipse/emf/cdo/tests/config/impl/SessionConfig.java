@@ -37,8 +37,6 @@ import java.util.Set;
  */
 public abstract class SessionConfig extends Config implements ISessionConfig
 {
-  public static final SessionConfig[] CONFIGS = { TCP.INSTANCE, JVM.INSTANCE };
-
   private static final long serialVersionUID = 1L;
 
   private transient Set<CDOSession> sessions;

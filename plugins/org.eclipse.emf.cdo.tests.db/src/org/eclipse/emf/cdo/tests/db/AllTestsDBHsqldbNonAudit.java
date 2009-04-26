@@ -8,8 +8,10 @@
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -27,13 +29,13 @@ public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
 
   public static Test suite()
   {
-    return new AllTestsDBHsqldbNonAudit().getTestSuite("CDO Tests (DB Hsql Horizontal Non-audit)");
+    return new AllTestsDBHsqldbNonAudit().getTestSuite("CDO Tests (DBStoreRepositoryConfig Hsql Horizontal Non-audit)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, DB_HSQL_NONAUDIT, TCP, NATIVE);
+    addScenario(parent, COMBINED, DBStoreRepositoryConfig.HsqldbNonAudit.INSTANCE, TCP, NATIVE);
   }
 
   @Override

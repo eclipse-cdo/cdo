@@ -24,8 +24,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  */
 public abstract class ContainerConfig extends Config implements IContainerConfig
 {
-  public static final ContainerConfig[] CONFIGS = { Combined.INSTANCE, Separated.INSTANCE };
-
   private static final long serialVersionUID = 1L;
 
   protected transient IManagedContainer clientContainer;

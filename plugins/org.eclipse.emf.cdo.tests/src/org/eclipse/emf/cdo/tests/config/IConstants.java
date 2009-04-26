@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.config;
 
-import org.eclipse.emf.cdo.tests.config.impl.Config;
 import org.eclipse.emf.cdo.tests.config.impl.ContainerConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -21,25 +20,11 @@ import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
  */
 public interface IConstants
 {
-  public static final Config[][] CONFIGS = { //
-  ContainerConfig.CONFIGS, //
-      RepositoryConfig.CONFIGS, //
-      SessionConfig.CONFIGS, //
-      ModelConfig.CONFIGS };
-
   public static final ContainerConfig COMBINED = ContainerConfig.Combined.INSTANCE;
 
   public static final ContainerConfig SEPARATED = ContainerConfig.Separated.INSTANCE;
 
   public static final RepositoryConfig MEM = RepositoryConfig.MEM.INSTANCE;
-
-  public static final RepositoryConfig DB_HSQL = RepositoryConfig.DB.Hsqldb.INSTANCE;
-
-  public static final RepositoryConfig DB_HSQL_NONAUDIT = RepositoryConfig.DB.HsqldbNonAudit.INSTANCE;
-
-  public static final RepositoryConfig DB_DERBY = RepositoryConfig.DB.Derby.INSTANCE;
-
-  public static final RepositoryConfig DB_MYSQL = RepositoryConfig.DB.Mysql.INSTANCE;
 
   public static final SessionConfig JVM = SessionConfig.JVM.INSTANCE;
 

@@ -43,20 +43,20 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SyncRevisionsRequest.class);
 
-  private Map<CDOID, CDORevision> revisions;
+  private Map<CDOID, CDOIDAndVersion> idAndVersions;
 
   private int referenceChunk;
 
-  public SyncRevisionsRequest(CDOClientProtocol protocol, Map<CDOID, CDORevision> revisions, int referenceChunk)
+  public SyncRevisionsRequest(CDOClientProtocol protocol, Map<CDOID, CDOIDAndVersion> idAndVersions, int referenceChunk)
   {
-    this(protocol, CDOProtocolConstants.SIGNAL_SYNC_REVISIONS, revisions, referenceChunk);
+    this(protocol, CDOProtocolConstants.SIGNAL_SYNC_REVISIONS, idAndVersions, referenceChunk);
   }
 
-  public SyncRevisionsRequest(CDOClientProtocol protocol, short signalID, Map<CDOID, CDORevision> revisions,
+  public SyncRevisionsRequest(CDOClientProtocol protocol, short signalID, Map<CDOID, CDOIDAndVersion> idAndVersions,
       int referenceChunk)
   {
     super(protocol, signalID);
-    this.revisions = revisions;
+    this.idAndVersions = idAndVersions;
     this.referenceChunk = referenceChunk;
   }
 
@@ -65,15 +65,15 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Synchronization " + revisions.size() + " objects");
+      TRACER.trace("Synchronization " + idAndVersions.size() + " objects");
     }
 
     out.writeInt(referenceChunk);
-    out.writeInt(revisions.size());
-    for (CDORevision revision : revisions.values())
+    out.writeInt(idAndVersions.size());
+    for (CDOIDAndVersion idAndVersion : idAndVersions.values())
     {
-      out.writeCDOID(revision.getID());
-      out.writeInt(revision.getVersion());
+      out.writeCDOID(idAndVersion.getID());
+      out.writeInt(idAndVersion.getVersion());
     }
   }
 
@@ -89,14 +89,14 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
       CDORevision revision = in.readCDORevision();
       long revised = in.readLong();
 
-      CDORevision oldRevision = revisions.get(revision.getID());
-      if (oldRevision == null)
+      CDOIDAndVersion idAndVersion = idAndVersions.get(revision.getID());
+      if (idAndVersion == null)
       {
         throw new IllegalStateException("Didn't expect to receive object with id '" + revision.getID() + "'");
       }
 
       Set<CDOIDAndVersion> dirtyObjects = getMap(mapofContext, revised).getDirtyObjects();
-      dirtyObjects.add(CDOIDUtil.createIDAndVersion(oldRevision.getID(), oldRevision.getVersion()));
+      dirtyObjects.add(CDOIDUtil.createIDAndVersion(idAndVersion.getID(), idAndVersion.getVersion()));
       revisionManager.addCachedRevision((InternalCDORevision)revision);
     }
 

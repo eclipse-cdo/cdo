@@ -76,9 +76,14 @@ public class SyncRevisionsIndication extends CDOReadIndication
           {
             detachedObjects.add(new Pair<CDOID, Long>(id, getTimestamp(id, version)));
           }
-          else if (revision.getVersion() != version)
+          else if (revision.getVersion() > version)
           {
             dirtyObjects.add(new Pair<InternalCDORevision, Long>(revision, getTimestamp(id, version)));
+          }
+          else if (revision.getVersion() < version)
+          {
+            throw new IllegalStateException("The object " + revision.getID() + " have a higher version ("
+                + revision.getVersion() + ") in the repository than the version (" + version + ") submitted.");
           }
         }
         catch (IllegalArgumentException revisionIsNullException)

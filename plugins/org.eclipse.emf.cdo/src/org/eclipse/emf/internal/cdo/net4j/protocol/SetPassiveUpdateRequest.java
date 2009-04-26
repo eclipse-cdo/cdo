@@ -12,9 +12,9 @@
 package org.eclipse.emf.internal.cdo.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
@@ -33,10 +33,10 @@ public class SetPassiveUpdateRequest extends SyncRevisionsRequest
 
   private boolean passiveUpdateEnabled;
 
-  public SetPassiveUpdateRequest(CDOClientProtocol protocol, Map<CDOID, CDORevision> revisions, int referenceChunk,
-      boolean passiveUpdateEnabled)
+  public SetPassiveUpdateRequest(CDOClientProtocol protocol, Map<CDOID, CDOIDAndVersion> idAndVersions,
+      int referenceChunk, boolean passiveUpdateEnabled)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE, revisions, referenceChunk);
+    super(protocol, CDOProtocolConstants.SIGNAL_PASSIVE_UPDATE, idAndVersions, referenceChunk);
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 

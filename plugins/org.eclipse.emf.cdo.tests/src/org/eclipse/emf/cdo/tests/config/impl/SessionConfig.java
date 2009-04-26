@@ -112,7 +112,12 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     CDOSessionConfiguration configuration = createSessionConfiguration(repositoryName);
     CDOSession session = configuration.openSession();
     session.addListener(sessionListener);
-    sessions.add(session);
+
+    synchronized (sessions)
+    {
+      sessions.add(session);
+    }
+
     return session;
   }
 
@@ -126,7 +131,10 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       @Override
       protected void onDeactivated(ILifecycle session)
       {
-        sessions.remove(session);
+        synchronized (sessions)
+        {
+          sessions.remove(session);
+        }
       }
     };
   }
@@ -138,16 +146,25 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     {
       if (sessions != null)
       {
-        for (CDOSession session : sessions)
+        CDOSession[] array;
+        synchronized (sessions)
+        {
+          array = sessions.toArray(new CDOSession[sessions.size()]);
+        }
+
+        for (CDOSession session : array)
         {
           session.removeListener(sessionListener);
           LifecycleUtil.deactivate(session);
         }
 
-        sessions.clear();
-        sessions = null;
+        synchronized (sessions)
+        {
+          sessions.clear();
+        }
       }
 
+      sessions = null;
       sessionListener = null;
       stopTransport();
       super.tearDown();

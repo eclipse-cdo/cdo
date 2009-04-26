@@ -12,11 +12,11 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
@@ -52,7 +52,8 @@ public interface CDOSessionProtocol extends PackageLoader
 
   public void loadLibraries(Set<String> missingLibraries, File cacheFolder);
 
-  public void setPassiveUpdate(Map<CDOID, CDORevision> allRevisions, int initialChunkSize, boolean passiveUpdateEnabled);
+  public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,
+      boolean passiveUpdateEnabled);
 
   public RepositoryTimeResult getRepositoryTime();
 
@@ -67,7 +68,7 @@ public interface CDOSessionProtocol extends PackageLoader
 
   public List<InternalCDORevision> verifyRevision(List<InternalCDORevision> revisions);
 
-  public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDORevision> allRevisions, int initialChunkSize);
+  public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize);
 
   public void openView(int viewId, byte protocolViewType, long timeStamp);
 

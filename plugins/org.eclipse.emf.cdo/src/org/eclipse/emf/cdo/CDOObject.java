@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 /**
- * A specialalized subinterface of {@link EObject} that is exposed by all CDO objects and allows access to special CDO
+ * A specialized subinterface of {@link EObject} that is exposed by all CDO objects and allows access to special CDO
  * properties and features of those objects.
  * <p>
  * Note that, by contract, every instance of CDOObject can also be cast to {@link InternalCDOObject}.

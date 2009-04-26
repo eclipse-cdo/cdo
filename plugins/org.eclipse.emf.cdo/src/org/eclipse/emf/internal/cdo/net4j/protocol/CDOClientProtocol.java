@@ -12,9 +12,9 @@ package org.eclipse.emf.internal.cdo.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -82,9 +82,10 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     send(new LoadLibrariesRequest(this, missingLibraries, cacheFolder));
   }
 
-  public void setPassiveUpdate(Map<CDOID, CDORevision> allRevisions, int initialChunkSize, boolean passiveUpdateEnabled)
+  public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,
+      boolean passiveUpdateEnabled)
   {
-    send(new SetPassiveUpdateRequest(this, allRevisions, initialChunkSize, passiveUpdateEnabled));
+    send(new SetPassiveUpdateRequest(this, idAndVersions, initialChunkSize, passiveUpdateEnabled));
   }
 
   public RepositoryTimeResult getRepositoryTime()
@@ -123,9 +124,9 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     return send(new VerifyRevisionRequest(this, revisions));
   }
 
-  public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDORevision> allRevisions, int initialChunkSize)
+  public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize)
   {
-    return send(new SyncRevisionsRequest(this, allRevisions, initialChunkSize));
+    return send(new SyncRevisionsRequest(this, idAndVersions, initialChunkSize));
   }
 
   public void openView(int viewId, byte protocolViewType, long timeStamp)

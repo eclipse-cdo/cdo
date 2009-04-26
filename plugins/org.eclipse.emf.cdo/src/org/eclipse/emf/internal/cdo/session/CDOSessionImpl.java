@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -476,13 +477,16 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         CDOID id = dirtyOID.getID();
         int version = dirtyOID.getVersion();
         InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version, false);
-        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+        if (revision != null)
         {
-          revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
-        }
-        else if (revision != null)
-        {
-          revision.setRevised(timeStamp - 1);
+          if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+          {
+            revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
+          }
+          else
+          {
+            revision.setRevised(timeStamp - 1);
+          }
         }
       }
     }
@@ -733,17 +737,30 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return set;
   }
 
-  private Map<CDOID, CDORevision> getAllRevisions()
+  private Map<CDOID, CDOIDAndVersion> getAllCDOIDAndVersion()
   {
-    Map<CDOID, CDORevision> uniqueObjects = new HashMap<CDOID, CDORevision>();
+    Map<CDOID, CDOIDAndVersion> uniqueObjects = new HashMap<CDOID, CDOIDAndVersion>();
     for (InternalCDOView view : getViews())
     {
+      Map<CDOID, CDORevisionDelta> deltaMap = view instanceof InternalCDOTransaction ? ((InternalCDOTransaction)view)
+          .getRevisionDeltas() : null;
       for (InternalCDOObject internalCDOObject : view.getObjectsArray())
       {
-        if (internalCDOObject.cdoRevision() != null && !internalCDOObject.cdoID().isTemporary()
-            && !uniqueObjects.containsKey(internalCDOObject.cdoID()))
+        InternalCDORevision cdoRevision = internalCDOObject.cdoRevision();
+        CDOID cdoId = internalCDOObject.cdoID();
+        if (cdoRevision != null && !cdoId.isTemporary() && !uniqueObjects.containsKey(cdoId))
         {
-          uniqueObjects.put(internalCDOObject.cdoID(), internalCDOObject.cdoRevision());
+          int version = cdoRevision.getVersion();
+          if (deltaMap != null)
+          {
+            CDORevisionDelta delta = deltaMap.get(cdoId);
+            if (delta != null)
+            {
+              version = delta.getOriginVersion();
+            }
+          }
+          
+          uniqueObjects.put(cdoId, CDOIDUtil.createIDAndVersion(cdoId, version));
         }
       }
     }
@@ -753,7 +770,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       if (!uniqueObjects.containsKey(revision.getID()))
       {
-        uniqueObjects.put(revision.getID(), revision);
+        uniqueObjects.put(revision.getID(), CDOIDUtil.createIDAndVersion(revision.getID(), revision.getVersion()));
       }
     }
 
@@ -771,7 +788,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     checkActive();
     if (!options().isPassiveUpdateEnabled())
     {
-      Map<CDOID, CDORevision> allRevisions = getAllRevisions();
+      Map<CDOID, CDOIDAndVersion> allRevisions = getAllCDOIDAndVersion();
 
       try
       {
@@ -845,7 +862,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         this.passiveUpdateEnabled = passiveUpdateEnabled;
 
         // Need to refresh if we change state
-        Map<CDOID, CDORevision> allRevisions = getAllRevisions();
+        Map<CDOID, CDOIDAndVersion> allRevisions = getAllCDOIDAndVersion();
         if (!allRevisions.isEmpty())
         {
           int initialChunkSize = collectionLoadingPolicy.getInitialChunkSize();

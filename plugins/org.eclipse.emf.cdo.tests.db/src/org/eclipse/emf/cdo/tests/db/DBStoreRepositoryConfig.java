@@ -18,6 +18,8 @@ import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
 import org.apache.derby.jdbc.EmbeddedDataSource;
 
 import javax.sql.DataSource;

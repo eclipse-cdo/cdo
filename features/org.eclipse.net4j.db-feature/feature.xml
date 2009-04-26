@@ -9,7 +9,6 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-
 <feature
       id="org.eclipse.net4j.db"
       label="%featureName"
@@ -51,27 +50,6 @@
 
    <plugin
          id="org.eclipse.net4j.db.derby"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.net4j.db.hsqldb"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.net4j.db.mysql"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.net4j.db.postgresql"
          download-size="0"
          install-size="0"
          version="0.0.0"

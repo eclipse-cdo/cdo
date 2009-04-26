@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_265114_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_266857_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_266982_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_267050_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_267352_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_270429_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273233_Test;
@@ -138,7 +139,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_266857_Test.class);
     testClasses.add(Bugzilla_266982_Test.class);
     testClasses.add(Bugzilla_267050_Test.class);
-    // testClasses.add(Bugzilla_267352_Test.class);
+    testClasses.add(Bugzilla_267352_Test.class);
     testClasses.add(Bugzilla_270429_Test.class);
     testClasses.add(Bugzilla_272861_Test.class);
     testClasses.add(Bugzilla_273233_Test.class);

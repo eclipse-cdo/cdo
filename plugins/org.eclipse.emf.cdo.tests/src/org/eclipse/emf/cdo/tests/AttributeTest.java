@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -23,6 +25,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 
@@ -134,19 +137,27 @@ public class AttributeTest extends AbstractCDOTest
   {
     BigDecimal bigDecimal = new BigDecimal(10);
     BigInteger bigInteger = BigInteger.valueOf(10);
+
     {
-      EPackage packageBytes = createDynamicEPackageBigIntegerAndBigDecimal();
+      EPackage ePackage = createDynamicEPackageBigIntegerAndBigDecimal();
       CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(packageBytes);
+      session.getPackageRegistry().putEPackage(ePackage);
       CDOTransaction transaction = session.openTransaction();
 
-      EClass eClass = (EClass)packageBytes.getEClassifier("Gen");
-      EObject gen = packageBytes.getEFactoryInstance().create(eClass);
-      gen.eSet(gen.eClass().getEStructuralFeature("bigDecimal"), bigDecimal);
-      gen.eSet(gen.eClass().getEStructuralFeature("bigInteger"), bigInteger);
+      EClass eClass = (EClass)ePackage.getEClassifier("Gen");
+      EStructuralFeature bigDecimalFeature = eClass.getEStructuralFeature("bigDecimal");
+      EStructuralFeature bigIntegerFeature = eClass.getEStructuralFeature("bigInteger");
+
+      EObject gen = ePackage.getEFactoryInstance().create(eClass);
+      gen.eSet(bigDecimalFeature, bigDecimal);
+      gen.eSet(bigIntegerFeature, bigInteger);
 
       CDOResource resource = transaction.createResource("/my/resource");
       resource.getContents().add(gen);
+
+      CDORevisionData data = ((CDOObject)gen).cdoRevision().data();
+      assertEquals(BigDecimal.class, data.get(bigDecimalFeature, -1).getClass());
+      assertEquals(BigInteger.class, data.get(bigIntegerFeature, -1).getClass());
 
       transaction.commit();
       session.close();

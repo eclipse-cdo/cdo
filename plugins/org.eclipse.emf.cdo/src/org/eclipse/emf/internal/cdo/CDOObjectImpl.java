@@ -368,7 +368,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
-
     CDOStore cdoStore = cdoStore();
 
     if (feature.isMany())
@@ -446,6 +445,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     CDOStore cdoStore = cdoStore();
     EStore eStore = eStore();
+
     if (eFeature.isMany())
     {
       int size = cdoStore.size(this, eFeature);

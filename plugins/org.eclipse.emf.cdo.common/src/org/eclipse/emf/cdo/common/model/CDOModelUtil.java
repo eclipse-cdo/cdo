@@ -75,8 +75,8 @@ public final class CDOModelUtil
   static
   {
     List<CDOType> types = new ArrayList<CDOType>();
-    registerCoreType(types, EcorePackage.eINSTANCE.getEBigDecimal(), CDOType.CUSTOM);
-    registerCoreType(types, EcorePackage.eINSTANCE.getEBigInteger(), CDOType.CUSTOM);
+    registerCoreType(types, EcorePackage.eINSTANCE.getEBigDecimal(), CDOType.BIG_DECIMAL);
+    registerCoreType(types, EcorePackage.eINSTANCE.getEBigInteger(), CDOType.BIG_INTEGER);
     registerCoreType(types, EcorePackage.eINSTANCE.getEBooleanObject(), CDOType.BOOLEAN_OBJECT);
     registerCoreType(types, EcorePackage.eINSTANCE.getEBoolean(), CDOType.BOOLEAN);
     registerCoreType(types, EcorePackage.eINSTANCE.getEByteArray(), CDOType.BYTE_ARRAY);

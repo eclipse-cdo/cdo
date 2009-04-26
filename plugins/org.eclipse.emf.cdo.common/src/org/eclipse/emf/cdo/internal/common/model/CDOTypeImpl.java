@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -161,6 +163,62 @@ public abstract class CDOTypeImpl implements CDOType
     public Object readValue(CDODataInput in) throws IOException
     {
       return new Short(in.readShort());
+    }
+  };
+
+  public static final CDOType BIG_DECIMAL = new CDOTypeImpl("BIG_DECIMAL", EcorePackage.EBIG_DECIMAL, true)
+  {
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      if (value == null)
+      {
+        out.writeByteArray(null);
+      }
+      else
+      {
+        BigDecimal bigDecimal = (BigDecimal)value;
+        out.writeByteArray(bigDecimal.unscaledValue().toByteArray());
+        out.writeInt(bigDecimal.scale());
+      }
+    }
+
+    public Object readValue(CDODataInput in) throws IOException
+    {
+      byte[] array = in.readByteArray();
+      if (array == null)
+      {
+        return null;
+      }
+
+      BigInteger unscaled = new BigInteger(array);
+      int scale = in.readInt();
+      return new BigDecimal(unscaled, scale);
+    }
+  };
+
+  public static final CDOType BIG_INTEGER = new CDOTypeImpl("BIG_INTEGER", EcorePackage.EBIG_INTEGER, true)
+  {
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      if (value == null)
+      {
+        out.writeByteArray(null);
+      }
+      else
+      {
+        out.writeByteArray(((BigInteger)value).toByteArray());
+      }
+    }
+
+    public Object readValue(CDODataInput in) throws IOException
+    {
+      byte[] array = in.readByteArray();
+      if (array == null)
+      {
+        return null;
+      }
+
+      return new BigInteger(array);
     }
   };
 

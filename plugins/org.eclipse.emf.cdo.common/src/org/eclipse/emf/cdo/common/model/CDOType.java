@@ -21,6 +21,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.0
  */
 public interface CDOType
 {
@@ -63,6 +64,16 @@ public interface CDOType
   public static final CDOType STRING = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.STRING;
 
   public static final CDOType BYTE_ARRAY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BYTE_ARRAY;
+
+  /**
+   * @since 2.0
+   */
+  public static final CDOType BIG_DECIMAL = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BIG_DECIMAL;
+
+  /**
+   * @since 2.0
+   */
+  public static final CDOType BIG_INTEGER = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BIG_INTEGER;
 
   /**
    * @since 2.0

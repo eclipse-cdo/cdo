@@ -1,5 +1,5 @@
 RUNNING THE GASTRO EXAMPLES
-==============================
+===========================
 
 1) Install the example 
    - Checkout the "org.gastro.*" plugins via http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.emf/org.eclipse.emf.cdo/develop/setup/psf/pserver/cdo-gastro-example.psf?root=Modeling_Project&view=log
@@ -33,3 +33,5 @@ RUNNING THE GASTRO EXAMPLES
    - In the table application open the second shelf pane and send the order.
    - Watch how the relevant order details "arrive" in the bar and kitchen applications...
    
+8) Browse the menu card via Web
+   - Start a web browser and point it to "http://localhost:9090/gastro"

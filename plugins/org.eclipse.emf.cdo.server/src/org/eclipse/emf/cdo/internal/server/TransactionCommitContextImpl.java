@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -38,6 +39,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -460,10 +462,24 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     CDORevision originObject = revisionResolver.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
     if (originObject != null)
     {
+      if (loadOnDemand)
+      {
+        // make sure all chunks are loaded
+        for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(originObject.getEClass()))
+        {
+          if (feature.isMany())
+          {
+            InternalCDORevision internalOriginObject = (InternalCDORevision)originObject;
+            // TODO ensureChunk should get promoted to API because the cast is not really nice here.
+            ((RevisionManager)revisionResolver).ensureChunk(internalOriginObject, feature, 0, internalOriginObject
+                .getList(feature).size());
+          }
+        }
+      }
+
       InternalCDORevision dirtyObject = (InternalCDORevision)originObject.copy();
       dirtyObjectDelta.apply(dirtyObject);
       dirtyObject.setCreated(timeStamp);
-      // dirtyObject.setVersion(originObject.getVersion() + 1);
       return dirtyObject;
     }
 

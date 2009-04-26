@@ -7,6 +7,9 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings
+ *      https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *
  */
 package org.eclipse.emf.cdo.server.db;
 
@@ -14,20 +17,28 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.SmartPreparedStatementCache;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.jdbc.PreparedStatementJDBCDelegateProvider;
-import org.eclipse.emf.cdo.server.internal.db.jdbc.StatementJDBCDelegateProvider;
-import org.eclipse.emf.cdo.server.internal.db.mapping.HorizontalMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * @author Eike Stepper
@@ -37,12 +48,12 @@ public final class CDODBUtil
   /**
    * @since 2.0
    */
-  public static final String EXT_POINT_MAPPING_STRATEGIES = "mappingStrategies";
+  public static final int DEFAULT_STATEMENT_CACHE_CAPACITY = 200;
 
   /**
    * @since 2.0
    */
-  public static final String EXT_POINT_JDBC_DELEGATE_PROVIDERS = "jdbcDelegateProviders";
+  public static final String EXT_POINT_MAPPING_STRATEGIES = "mappingStrategies";
 
   private CDODBUtil()
   {
@@ -52,13 +63,12 @@ public final class CDODBUtil
    * @since 2.0
    */
   public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
-      IDBConnectionProvider dbConnectionProvider, IJDBCDelegateProvider delegateProvider)
+      IDBConnectionProvider dbConnectionProvider)
   {
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
     store.setDbConnectionProvider(dbConnectionProvider);
-    store.setJDBCDelegateProvider(delegateProvider);
     mappingStrategy.setStore(store);
     return store;
   }
@@ -68,23 +78,15 @@ public final class CDODBUtil
    */
   public static IMappingStrategy createHorizontalMappingStrategy()
   {
-    return new HorizontalMappingStrategy();
+    return new HorizontalAuditMappingStrategy();
   }
 
   /**
    * @since 2.0
    */
-  public static IJDBCDelegateProvider createStatementJDBCDelegateProvider()
+  public static IMappingStrategy createHorizontalNonAuditMappingStrategy()
   {
-    return new StatementJDBCDelegateProvider();
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static IJDBCDelegateProvider createPreparedStatementJDBCDelegateProvider()
-  {
-    return new PreparedStatementJDBCDelegateProvider();
+    return new HorizontalNonAuditMappingStrategy();
   }
 
   /**
@@ -121,36 +123,6 @@ public final class CDODBUtil
   }
 
   /**
-   * @since 2.0
-   */
-  public static IJDBCDelegateProvider createDelegateProvider(String type)
-  {
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID,
-        EXT_POINT_JDBC_DELEGATE_PROVIDERS);
-    for (final IConfigurationElement element : elements)
-    {
-      if ("jdbcDelegateProvider".equals(element.getName()))
-      {
-        String typeAttr = element.getAttribute("type");
-        if (ObjectUtil.equals(typeAttr, type))
-        {
-          try
-          {
-            return (IJDBCDelegateProvider)element.createExecutableExtension("class");
-          }
-          catch (CoreException ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /**
    * Get the long value of a CDOID (by delegating to {@link CDOIDUtil#getLong(org.eclipse.emf.cdo.common.id.CDOID)}) In
    * addition, provide a check for external IDs which are not supported by the DBStore
    * 
@@ -171,21 +143,152 @@ public final class CDODBUtil
     return CDOIDUtil.getLong(id);
   }
 
-  // public static CDODBStoreManager getStoreManager(IDBAdapter dbAdapter,
-  // DataSource dataSource)
-  // {
-  // CDODBStoreManager storeManager = new CDODBStoreManager(dbAdapter,
-  // dataSource);
-  // storeManager.initDatabase();
-  // return storeManager;
-  // }
-  //
-  // public static CDODBStoreManager getStoreManager()
-  // {
-  // Properties properties = OM.BUNDLE.getConfigProperties();
-  // String adapterName = properties.getProperty("store.adapterName", "derby-embedded");
-  // IDBAdapter dbAdapter = DBUtil.getDBAdapter(adapterName);
-  // DataSource dataSource = DBUtil.createDataSource(properties, "datasource");
-  // return getStoreManager(dbAdapter, dataSource);
-  // }
+  /**
+   * Execute update on the given prepared statement and handle common cases of return values.
+   * 
+   * @param stmt
+   *          the prepared statement
+   * @param exactlyOne
+   *          if <code>true</code>, the update count is checked to be <code>1</code>. Else the update result is only
+   *          checked so that the update was successful (i.e. result code != Statement.EXECUTE_FAILED).
+   * @return the update count / execution result as returned by {@link PreparedStatement#executeUpdate()}. Can be used
+   *         by the caller to perform more advanced checks.
+   * @throws SQLException
+   *           if {@link PreparedStatement#executeUpdate()} throws it.
+   * @throws IllegalStateException
+   *           if the check indicated by <code>excatlyOne</code> indicates an error.
+   * @since 2.0
+   */
+  public static int sqlUpdate(PreparedStatement stmt, boolean exactlyOne) throws SQLException
+  {
+    DBUtil.trace(stmt.toString());
+    int result = stmt.executeUpdate();
+
+    // basic check of update result
+    if (exactlyOne && result != 1)
+    {
+      throw new IllegalStateException(stmt.toString() + " returned Update count " + result + " (expected: 1)");
+    }
+
+    if (result == Statement.EXECUTE_FAILED)
+    {
+      throw new IllegalStateException(stmt.toString() + " returned EXECUTE_FAILED.");
+    }
+
+    return result;
+  }
+
+  /**
+   * For debugging purposes ONLY!
+   * 
+   * @deprecated Should only be used when debugging.
+   * @since 2.0
+   */
+  @Deprecated
+  public static void sqlDump(Connection conn, String sql)
+  {
+    ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDODBUtil.class);
+    ResultSet rs = null;
+    try
+    {
+      TRACER.format("Dumping output of {0}", sql);
+      rs = conn.createStatement().executeQuery(sql);
+      int numCol = rs.getMetaData().getColumnCount();
+
+      StringBuilder row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append(String.format("%10s | ", rs.getMetaData().getColumnLabel(c)));
+      }
+
+      TRACER.trace(row.toString());
+
+      row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append("-----------+--");
+      }
+
+      TRACER.trace(row.toString());
+
+      while (rs.next())
+      {
+        row = new StringBuilder();
+        for (int c = 1; c <= numCol; c++)
+        {
+          row.append(String.format("%10s | ", rs.getString(c)));
+        }
+
+        TRACER.trace(row.toString());
+      }
+
+      row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append("-----------+-");
+      }
+
+      TRACER.trace(row.toString());
+    }
+    catch (SQLException ex)
+    {
+      // NOP
+    }
+    finally
+    {
+      if (rs != null)
+      {
+        try
+        {
+          rs.close();
+        }
+        catch (SQLException ex)
+        {
+          // NOP
+        }
+      }
+    }
+  }
+
+  /**
+   * For debugging purposes ONLY!
+   * 
+   * @deprecated Should only be used when debugging.
+   * @since 2.0
+   */
+  @Deprecated
+  public static void sqlDump(IDBConnectionProvider connectionProvider, String sql)
+  {
+    Connection connection = connectionProvider.getConnection();
+
+    try
+    {
+      sqlDump(connection, sql);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
+  }
+
+  /**
+   * Creates a prepared statement cache with the {@link CDODBUtil#DEFAULT_STATEMENT_CACHE_CAPACITY default capacity}.
+   * 
+   * @since 2.0
+   * @see CDODBUtil#createStatementCache(int)
+   */
+  public static IPreparedStatementCache createStatementCache()
+  {
+    return createStatementCache(DEFAULT_STATEMENT_CACHE_CAPACITY);
+  }
+
+  /**
+   * Creates a prepared statement cache with the given capacity.
+   * 
+   * @since 2.0
+   */
+  public static IPreparedStatementCache createStatementCache(int capacity)
+  {
+    return new SmartPreparedStatementCache(capacity);
+  }
 }

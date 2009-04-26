@@ -51,7 +51,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 
   public void close()
   {
-    DBUtil.close(currentResultSet);
+    closeCurrentResultSet();
     nextID = null;
     closed = true;
   }
@@ -99,7 +99,8 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
           return true;
         }
 
-        DBUtil.close(currentResultSet);
+        closeCurrentResultSet();
+
         currentResultSet = null;
         return false;
       }
@@ -108,6 +109,11 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
         throw new DBException(ex);
       }
     }
+  }
+
+  protected void closeCurrentResultSet()
+  {
+    DBUtil.close(currentResultSet);
   }
 
   public CDOID next()

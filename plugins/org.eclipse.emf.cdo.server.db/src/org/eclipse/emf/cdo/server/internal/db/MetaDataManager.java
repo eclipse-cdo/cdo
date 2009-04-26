@@ -1,0 +1,375 @@
+/**
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444  
+ */
+package org.eclipse.emf.cdo.server.internal.db;
+
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDMeta;
+import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBRowHandler;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+/**
+ * @author Eike Stepper
+ */
+public class MetaDataManager extends Lifecycle implements IMetaDataManager
+{
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MetaDataManager.class);
+
+  private static Map<EClassifier, DBType> typeMap = new HashMap<EClassifier, DBType>();
+
+  private static final boolean ZIP_PACKAGE_BYTES = true;
+
+  private IDBStore store;
+
+  static
+  {
+    typeMap.put(EcorePackage.eINSTANCE.getEDate(), DBType.TIMESTAMP);
+    typeMap.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
+    typeMap.put(EcorePackage.eINSTANCE.getEByteArray(), DBType.BLOB);
+
+    typeMap.put(EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN);
+    typeMap.put(EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT);
+    typeMap.put(EcorePackage.eINSTANCE.getEChar(), DBType.CHAR);
+    typeMap.put(EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE);
+    typeMap.put(EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT);
+    typeMap.put(EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER);
+    typeMap.put(EcorePackage.eINSTANCE.getELong(), DBType.BIGINT);
+    typeMap.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
+
+    typeMap.put(EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN);
+    typeMap.put(EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT);
+    typeMap.put(EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR);
+    typeMap.put(EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE);
+    typeMap.put(EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT);
+    typeMap.put(EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER);
+    typeMap.put(EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT);
+    typeMap.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
+  }
+
+  public MetaDataManager(IDBStore store)
+  {
+    this.store = store;
+  }
+
+  public long getMetaID(EModelElement modelElement)
+  {
+    CDOID cdoid = getPackageRegistry().getMetaInstanceMapper().lookupMetaInstanceID((InternalEObject)modelElement);
+    return CDOIDUtil.getLong(cdoid);
+  }
+
+  public EModelElement getMetaInstance(long id)
+  {
+    CDOIDMeta cdoid = CDOIDUtil.createMeta(id);
+    InternalEObject metaInstance = getPackageRegistry().getMetaInstanceMapper().lookupMetaInstance(cdoid);
+    return (EModelElement)metaInstance;
+  }
+
+  public final EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit)
+  {
+    String where = CDODBSchema.PACKAGE_UNITS_ID.getName() + "='" + packageUnit.getID() + "'";
+    Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA);
+    byte[] bytes = (byte[])values[0];
+    EPackage ePackage = createEPackage(packageUnit, bytes);
+    return EMFUtil.getAllPackages(ePackage);
+  }
+
+  public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
+  {
+    final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
+    IDBRowHandler unitRowHandler = new IDBRowHandler()
+    {
+      public boolean handle(int row, final Object... values)
+      {
+        InternalCDOPackageUnit packageUnit = createPackageUnit();
+        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[(Integer)values[1]]);
+        packageUnit.setTimeStamp((Long)values[2]);
+        packageUnits.put((String)values[0], packageUnit);
+        return true;
+      }
+    };
+
+    DBUtil.select(connection, unitRowHandler, CDODBSchema.PACKAGE_UNITS_ID, CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE,
+        CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
+
+    final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<String, List<InternalCDOPackageInfo>>();
+    IDBRowHandler infoRowHandler = new IDBRowHandler()
+    {
+      public boolean handle(int row, final Object... values)
+      {
+        long metaLB = (Long)values[3];
+        long metaUB = (Long)values[4];
+        CDOIDMetaRange metaIDRange = metaLB == 0 ? null : CDOIDUtil.createMetaRange(CDOIDUtil.createMeta(metaLB),
+            (int)(metaUB - metaLB) + 1);
+
+        InternalCDOPackageInfo packageInfo = createPackageInfo();
+        packageInfo.setPackageURI((String)values[1]);
+        packageInfo.setParentURI((String)values[2]);
+        packageInfo.setMetaIDRange(metaIDRange);
+
+        String unit = (String)values[0];
+        List<InternalCDOPackageInfo> list = packageInfos.get(unit);
+        if (list == null)
+        {
+          list = new ArrayList<InternalCDOPackageInfo>();
+          packageInfos.put(unit, list);
+        }
+
+        list.add(packageInfo);
+        return true;
+      }
+    };
+
+    DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI,
+        CDODBSchema.PACKAGE_INFOS_PARENT, CDODBSchema.PACKAGE_INFOS_META_LB, CDODBSchema.PACKAGE_INFOS_META_UB);
+
+    for (Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
+    {
+      String id = entry.getKey();
+      InternalCDOPackageUnit packageUnit = entry.getValue();
+
+      List<InternalCDOPackageInfo> list = packageInfos.get(id);
+      InternalCDOPackageInfo[] array = list.toArray(new InternalCDOPackageInfo[list.size()]);
+      packageUnit.setPackageInfos(array);
+    }
+
+    return packageUnits.values();
+  }
+
+  public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(2);
+      fillSystemTables(connection, packageUnits, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  public DBType getDBType(EClassifier type)
+  {
+    if (type instanceof EClass)
+    {
+      return DBType.BIGINT;
+    }
+
+    if (type instanceof EEnum)
+    {
+      return DBType.INTEGER;
+    }
+
+    DBType dbType = typeMap.get(type);
+    if (dbType != null)
+    {
+      return dbType;
+    }
+
+    return DBType.VARCHAR;
+  }
+
+  protected IDBStore getStore()
+  {
+    return store;
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    checkState(store != null, "Store is not set");
+  }
+
+  protected InternalCDOPackageInfo createPackageInfo()
+  {
+    return (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
+  }
+
+  protected InternalCDOPackageUnit createPackageUnit()
+  {
+    return (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+  }
+
+  private InternalCDOPackageRegistry getPackageRegistry()
+  {
+    return (InternalCDOPackageRegistry)store.getRepository().getPackageRegistry();
+  }
+
+  private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
+  {
+    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, getPackageRegistry());
+  }
+
+  private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
+  {
+    EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
+    CDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
+    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
+  }
+
+  private void fillSystemTables(Connection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
+  {
+    try
+    {
+      InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
+      monitor.begin(1 + packageInfos.length);
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing package unit: {0}", packageUnit);
+      }
+
+      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)";
+      DBUtil.trace(sql);
+      PreparedStatement pstmt = null;
+      Async async = monitor.forkAsync();
+
+      try
+      {
+        pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, packageUnit.getID());
+        pstmt.setInt(2, packageUnit.getOriginalType().ordinal());
+        pstmt.setLong(3, packageUnit.getTimeStamp());
+        pstmt.setBytes(4, getEPackageBytes(packageUnit));
+
+        if (pstmt.execute())
+        {
+          throw new DBException("No result set expected");
+        }
+
+        if (pstmt.getUpdateCount() == 0)
+        {
+          throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS);
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(pstmt);
+        async.stop();
+      }
+
+      for (InternalCDOPackageInfo packageInfo : packageInfos)
+      {
+        fillSystemTables(connection, packageInfo, monitor); // Don't fork monitor
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void fillSystemTables(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(packageUnits.length);
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        fillSystemTables(connection, packageUnit, monitor.fork());
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void fillSystemTables(Connection connection, InternalCDOPackageInfo packageInfo, OMMonitor monitor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing package info: {0}", packageInfo);
+    }
+
+    String packageURI = packageInfo.getPackageURI();
+    String parentURI = packageInfo.getParentURI();
+    String unitID = packageInfo.getPackageUnit().getID();
+    CDOIDMetaRange metaIDRange = packageInfo.getMetaIDRange();
+    long metaLB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getLongValue();
+    long metaUB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getLongValue();
+
+    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?, ?, ?)";
+    DBUtil.trace(sql);
+    PreparedStatement pstmt = null;
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      pstmt = connection.prepareStatement(sql);
+      pstmt.setString(1, packageURI);
+      pstmt.setString(2, parentURI);
+      pstmt.setString(3, unitID);
+      pstmt.setLong(4, metaLB);
+      pstmt.setLong(5, metaUB);
+
+      if (pstmt.execute())
+      {
+        throw new DBException("No result set expected");
+      }
+
+      if (pstmt.getUpdateCount() == 0)
+      {
+        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(pstmt);
+      async.stop();
+    }
+  }
+}

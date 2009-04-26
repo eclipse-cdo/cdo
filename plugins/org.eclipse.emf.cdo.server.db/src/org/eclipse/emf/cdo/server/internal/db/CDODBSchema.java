@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others. 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,8 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -120,17 +122,17 @@ public class CDODBSchema extends DBSchema
   public static final String ATTRIBUTES_FEATURE = "cdo_feature";
 
   /**
-   * Field names of reference tables
+   * Field names of list tables
    */
-  public static final String REFERENCES_FEATURE = "cdo_feature";
+  public static final String LIST_FEATURE = "cdo_feature";
 
-  public static final String REFERENCES_SOURCE = "cdo_source";
+  public static final String LIST_REVISION_ID = "cdo_source";
 
-  public static final String REFERENCES_VERSION = "cdo_version";
+  public static final String LIST_REVISION_VERSION = "cdo_version";
 
-  public static final String REFERENCES_IDX = "cdo_idx";
+  public static final String LIST_IDX = "cdo_idx";
 
-  public static final String REFERENCES_TARGET = "cdo_target";
+  public static final String LIST_VALUE = "cdo_value";
 
   private CDODBSchema()
   {

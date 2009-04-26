@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IDBStoreChunkReader extends IStoreChunkReader
 {

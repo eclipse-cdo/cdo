@@ -179,10 +179,28 @@ public class Scenario implements IScenario
 
   public synchronized void setUp() throws Exception
   {
-    getContainerConfig().setUp();
-    getRepositoryConfig().setUp();
-    getSessionConfig().setUp();
-    getModelConfig().setUp();
+    try
+    {
+      getContainerConfig().setUp();
+    }
+    finally
+    {
+      try
+      {
+        getRepositoryConfig().setUp();
+      }
+      finally
+      {
+        try
+        {
+          getSessionConfig().setUp();
+        }
+        finally
+        {
+          getModelConfig().setUp();
+        }
+      }
+    }
   }
 
   public synchronized void tearDown() throws Exception

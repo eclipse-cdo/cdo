@@ -7,6 +7,8 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings 
+ *      https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444  
  */
 package org.eclipse.emf.cdo.server.db;
 
@@ -19,11 +21,8 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 
-import org.eclipse.emf.ecore.EModelElement;
-
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IDBStore extends IStore
 {
@@ -44,20 +43,17 @@ public interface IDBStore extends IStore
   /**
    * @since 2.0
    */
-  public long getMetaID(EModelElement modelElement);
-
-  /**
-   * @since 2.0
-   */
-  public EModelElement getMetaInstance(long id);
-
-  /**
-   * @since 2.0
-   */
   public IDBStoreAccessor getReader(ISession session);
 
   /**
    * @since 2.0
    */
   public IDBStoreAccessor getWriter(ITransaction transaction);
+
+  /**
+   * Get the meta data manager associated with this DBStore.
+   * 
+   * @since 2.0
+   */
+  public IMetaDataManager getMetaDataManager();
 }

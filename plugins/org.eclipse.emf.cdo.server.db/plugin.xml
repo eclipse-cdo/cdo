@@ -14,7 +14,6 @@
 <plugin>
 
    <extension-point id="mappingStrategies" name="CDO Mapping Strategies" schema="schema/mappingStrategies.exsd"/>
-   <extension-point id="jdbcDelegateProviders" name="CDO JDBC Delegate Providers" schema="schema/delegateProviders.exsd"/>
 
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">
@@ -27,25 +26,12 @@
    <extension
          point="org.eclipse.emf.cdo.server.db.mappingStrategies">
       <mappingStrategy
-            class="org.eclipse.emf.cdo.server.internal.db.mapping.HorizontalMappingStrategy"
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy"
             type="horizontal">
       </mappingStrategy>
       <mappingStrategy
-            class="org.eclipse.emf.cdo.server.internal.db.mapping.VerticalMappingStrategy"
-            type="vertical">
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy"
+            type="horizontalNonAudit">
       </mappingStrategy>
    </extension>
-   
-   <extension
-         point="org.eclipse.emf.cdo.server.db.jdbcDelegateProviders">
-      <jdbcDelegateProvider
-            class="org.eclipse.emf.cdo.server.internal.db.jdbc.StatementJDBCDelegateProvider"
-            type="statement">
-      </jdbcDelegateProvider>
-      <jdbcDelegateProvider
-            class="org.eclipse.emf.cdo.server.internal.db.jdbc.PreparedStatementJDBCDelegateProvider"
-            type="preparedStatement">
-      </jdbcDelegateProvider>
-   </extension>
-
 </plugin>

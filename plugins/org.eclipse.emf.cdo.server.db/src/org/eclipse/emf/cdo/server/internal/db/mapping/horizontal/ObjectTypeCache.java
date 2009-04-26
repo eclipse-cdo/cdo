@@ -8,15 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
+ *    Stefan Winkler - redesign (prepared statements)
  */
-package org.eclipse.emf.cdo.server.internal.db;
+package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.IObjectTypeCache;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -30,12 +34,15 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.emf.ecore.EClass;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
 public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 {
@@ -48,6 +55,14 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
   private IDBField typeField;
 
   private transient Object initializeLock = new Object();
+
+  private String sqlDelete;
+
+  private String sqlInsert;
+
+  private String sqlSelect;
+
+  private IMetaDataManager metaDataManager;
 
   public ObjectTypeCache()
   {
@@ -65,26 +80,18 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    Statement statement = accessor.getJDBCDelegate().getStatement();
-    initialize(statement);
+    Connection connection = accessor.getConnection();
+    initialize(connection);
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
-    builder.append(typeField);
-    builder.append(" FROM ");
-    builder.append(table);
-    builder.append(" WHERE ");
-    builder.append(idField);
-    builder.append("=");
-    builder.append(CDOIDUtil.getLong(id));
-    String sql = builder.toString();
-    DBUtil.trace(sql);
-
-    ResultSet resultSet = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      resultSet = statement.executeQuery(sql);
+      stmt = accessor.getStatementCache().getPreparedStatement(sqlSelect, ReuseProbability.MAX);
+      stmt.setLong(1, CDOIDUtil.getLong(id));
+      DBUtil.trace(stmt.toString());
+      ResultSet resultSet = stmt.executeQuery();
+
       if (!resultSet.next())
       {
         DBUtil.trace("ClassID for CDOID " + id + " not found");
@@ -92,7 +99,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
       }
 
       long classID = resultSet.getLong(1);
-      EClass eClass = (EClass)mappingStrategy.getStore().getMetaInstance(classID);
+      EClass eClass = (EClass)metaDataManager.getMetaInstance(classID);
       return new CDOClassifierRef(eClass);
     }
     catch (SQLException ex)
@@ -101,59 +108,26 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
     finally
     {
-      DBUtil.close(resultSet);
+      accessor.getStatementCache().releasePreparedStatement(stmt);
     }
   }
 
   public final void putObjectType(IDBStoreAccessor accessor, CDOID id, EClass type)
   {
-    Statement statement = accessor.getJDBCDelegate().getStatement();
-    initialize(statement);
+    Connection connection = accessor.getConnection();
+    initialize(connection);
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
-    builder.append(table);
-    builder.append(" VALUES (");
-    builder.append(CDOIDUtil.getLong(id));
-    builder.append(", ");
-    builder.append(accessor.getStore().getMetaID(type));
-    builder.append(")");
-    String sql = builder.toString();
-    DBUtil.trace(sql);
+    PreparedStatement stmt = null;
 
     try
     {
-      statement.execute(sql);
-      if (statement.getUpdateCount() != 1)
-      {
-        throw new DBException("Object type not inserted: " + id + " -> " + type);
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
+      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsert, ReuseProbability.MAX);
+      stmt.setLong(1, CDOIDUtil.getLong(id));
+      stmt.setLong(2, metaDataManager.getMetaID(type));
+      DBUtil.trace(stmt.toString());
+      int result = stmt.executeUpdate();
 
-  public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
-  {
-    Statement statement = accessor.getJDBCDelegate().getStatement();
-    initialize(statement);
-
-    StringBuilder builder = new StringBuilder();
-    builder.append("DELETE FROM ");
-    builder.append(table);
-    builder.append(" WHERE ");
-    builder.append(idField);
-    builder.append(" = ");
-    builder.append(CDOIDUtil.getLong(id));
-    String sql = builder.toString();
-    DBUtil.trace(sql);
-
-    try
-    {
-      statement.execute(sql);
-      if (statement.getUpdateCount() != 1)
+      if (result != 1)
       {
         throw new DBException("Object type could not be deleted: " + id);
       }
@@ -162,10 +136,45 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     {
       throw new DBException(ex);
     }
+    finally
+    {
+      accessor.getStatementCache().releasePreparedStatement(stmt);
+    }
   }
 
-  private void initialize(Statement statement)
+  public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
+    Connection connection = accessor.getConnection();
+    initialize(connection);
+
+    PreparedStatement stmt = null;
+
+    try
+    {
+      stmt = accessor.getStatementCache().getPreparedStatement(sqlDelete, ReuseProbability.MAX);
+      stmt.setLong(1, CDOIDUtil.getLong(id));
+      DBUtil.trace(stmt.toString());
+      int result = stmt.executeUpdate();
+
+      if (result != 1)
+      {
+        throw new DBException("Object type could not be deleted: " + id);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      accessor.getStatementCache().releasePreparedStatement(stmt);
+    }
+  }
+
+  private void initialize(Connection connection)
+  {
+    // TODO - is there a better way to initialize this
+    // e.g. doActivate() - only problem there is to get hold of a statement ....
     synchronized (initializeLock)
     {
       if (table == null)
@@ -177,9 +186,35 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
         table.addIndex(IDBIndex.Type.UNIQUE, idField);
 
         IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
-        dbAdapter.createTable(table, statement);
+
+        Statement statement = null;
+        try
+        {
+          statement = connection.createStatement();
+          dbAdapter.createTable(table, statement);
+        }
+        catch (SQLException ex)
+        {
+          throw new DBException(ex);
+        }
+        finally
+        {
+          DBUtil.close(statement);
+        }
       }
+
+      sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?";
+
+      sqlInsert = "INSERT INTO " + table.getName() + " VALUES (?,?)";
+
+      sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?";
     }
+  }
+
+  public long getMaxId(Connection connection)
+  {
+    initialize(connection);
+    return DBUtil.selectMaximumLong(connection, idField);
   }
 
   @Override
@@ -190,6 +225,12 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
   }
 
   @Override
+  protected void doActivate() throws Exception
+  {
+    metaDataManager = getMappingStrategy().getStore().getMetaDataManager();
+  }
+
+  @Override
   protected void doDeactivate() throws Exception
   {
     table = null;
@@ -197,4 +238,5 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     typeField = null;
     super.doDeactivate();
   }
+
 }

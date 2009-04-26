@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
@@ -45,7 +45,10 @@ public abstract class AbstractDBStoreVerifier
   public AbstractDBStoreVerifier(IRepository repository)
   {
     this.repository = repository;
-    assertTrue(repository.getStore() instanceof IDBStore);
+    if (repository != null)
+    {
+      assertTrue(repository.getStore() instanceof IDBStore);
+    }
   }
 
   protected IRepository getRepository()
@@ -65,7 +68,15 @@ public abstract class AbstractDBStoreVerifier
       accessor = (IDBStoreAccessor)repository.getStore().getReader(null);
     }
 
-    return accessor.getJDBCDelegate().getStatement();
+    try
+    {
+      return accessor.getConnection().createStatement();
+    }
+    catch (SQLException ex)
+    {
+      ex.printStackTrace();
+      return null;
+    }
   }
 
   protected List<IClassMapping> getClassMappings()

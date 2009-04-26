@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
@@ -16,9 +16,10 @@ import static junit.framework.Assert.assertTrue;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
-import org.eclipse.emf.cdo.server.db.mapping.IReferenceMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.mapping.HorizontalMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditClassMapping;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
 
 import org.eclipse.net4j.util.collection.Pair;
 
@@ -38,7 +39,7 @@ public class NonAuditDBStoreIntegrityVerifier extends AbstractDBStoreVerifier
     // this is a verifier for non-auditing mode
     assertTrue(getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE);
     // ... and for horizontal class mapping
-    assertTrue(getStore().getMappingStrategy() instanceof HorizontalMappingStrategy);
+    assertTrue(getStore().getMappingStrategy() instanceof HorizontalNonAuditMappingStrategy);
   }
 
   @Override
@@ -46,7 +47,7 @@ public class NonAuditDBStoreIntegrityVerifier extends AbstractDBStoreVerifier
   {
     for (IClassMapping mapping : getClassMappings())
     {
-      if (mapping != null && mapping.getTable() != null)
+      if (mapping != null && mapping.getDBTables().size() > 0)
       {
         verifyClassMapping(mapping);
       }
@@ -65,7 +66,7 @@ public class NonAuditDBStoreIntegrityVerifier extends AbstractDBStoreVerifier
    */
   private void verifyNoUnrevisedRevisions(IClassMapping mapping) throws Exception
   {
-    String tableName = mapping.getTable().getName();
+    String tableName = mapping.getDBTables().iterator().next().getName();
     String sql = "SELECT count(1) FROM " + tableName + " WHERE " + CDODBSchema.ATTRIBUTES_REVISED + " <> 0";
     ResultSet resultSet = getStatement().executeQuery(sql);
     try
@@ -84,7 +85,7 @@ public class NonAuditDBStoreIntegrityVerifier extends AbstractDBStoreVerifier
    */
   private void verifyUniqueId(IClassMapping mapping) throws Exception
   {
-    String tableName = mapping.getTable().getName();
+    String tableName = mapping.getDBTables().iterator().next().getName();
     String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + ", count(1) FROM " + tableName + " GROUP BY "
         + CDODBSchema.ATTRIBUTES_ID;
 
@@ -105,13 +106,13 @@ public class NonAuditDBStoreIntegrityVerifier extends AbstractDBStoreVerifier
 
   private void verifyReferences(IClassMapping mapping) throws Exception
   {
-    List<IReferenceMapping> referenceMappings = mapping.getReferenceMappings();
+    List<IListMapping> referenceMappings = ((HorizontalNonAuditClassMapping)mapping).getListMappings();
     if (referenceMappings == null)
     {
       return;
     }
 
-    String tableName = mapping.getTable().getName();
+    String tableName = mapping.getDBTables().iterator().next().getName();
     String sql = "SELECT " + CDODBSchema.ATTRIBUTES_ID + ", " + CDODBSchema.ATTRIBUTES_VERSION + " FROM " + tableName;
 
     ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<Pair<Long, Integer>>();
@@ -129,43 +130,20 @@ public class NonAuditDBStoreIntegrityVerifier extends AbstractDBStoreVerifier
       resultSet.close();
     }
 
-    for (IReferenceMapping refMapping : referenceMappings)
+    for (IListMapping refMapping : referenceMappings)
     {
       for (Pair<Long, Integer> idVersion : idVersions)
       {
-        verifyOnlyLatestReferences(refMapping, idVersion.getElement1(), idVersion.getElement2());
         verifyCorrectIndices(refMapping, idVersion.getElement1());
       }
     }
   }
 
-  /**
-   * Verify that no reference with sourceId == ID exist which have another version
-   */
-  private void verifyOnlyLatestReferences(IReferenceMapping refMapping, long id, int version) throws Exception
+  private void verifyCorrectIndices(IListMapping refMapping, long id) throws Exception
   {
-    String tableName = refMapping.getTable().getName();
-    String sql = "SELECT count(1) FROM " + tableName + " WHERE " + CDODBSchema.REFERENCES_SOURCE + "=" + id + " AND "
-        + CDODBSchema.REFERENCES_VERSION + "<>" + version;
-
-    ResultSet resultSet = getStatement().executeQuery(sql);
-    try
-    {
-      assertTrue(resultSet.next());
-      assertEquals("Table " + tableName + " contains old references for id " + id + "(version should be " + version
-          + ")", 0, resultSet.getInt(1));
-    }
-    finally
-    {
-      resultSet.close();
-    }
-  }
-
-  private void verifyCorrectIndices(IReferenceMapping refMapping, long id) throws Exception
-  {
-    String tableName = refMapping.getTable().getName();
-    String sql = "SELECT " + CDODBSchema.REFERENCES_IDX + " FROM " + tableName + " WHERE "
-        + CDODBSchema.REFERENCES_SOURCE + "=" + id + " ORDER BY " + CDODBSchema.REFERENCES_IDX;
+    String tableName = refMapping.getDBTables().iterator().next().getName();
+    String sql = "SELECT " + CDODBSchema.LIST_IDX + " FROM " + tableName + " WHERE " + CDODBSchema.LIST_REVISION_ID
+        + "=" + id + " ORDER BY " + CDODBSchema.LIST_IDX;
 
     ResultSet resultSet = getStatement().executeQuery(sql);
     int indexShouldBe = 0;

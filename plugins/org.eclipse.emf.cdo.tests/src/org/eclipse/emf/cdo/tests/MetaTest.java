@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
-import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
@@ -29,19 +28,39 @@ public class MetaTest extends AbstractCDOTest
       CDOResource res = transaction.createResource("/res");
 
       MetaRef metaRef = getModel3Factory().createMetaRef();
-      metaRef.setEPackageRef(Model3Package.eINSTANCE);
+      metaRef.setEPackageRef(getModel3Package());
       res.getContents().add(metaRef);
       transaction.commit();
       session.close();
     }
 
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
 
-      MetaRef metaRef = (MetaRef)res.getContents().get(0);
-      assertEquals(Model3Package.eINSTANCE, metaRef.getEPackageRef());
+    MetaRef metaRef = (MetaRef)res.getContents().get(0);
+    assertEquals(getModel3Package(), metaRef.getEPackageRef());
+  }
+
+  public void testMetaReferenceAttachFirst() throws Exception
+  {
+    {
+      CDOSession session = openModel3Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource res = transaction.createResource("/res");
+
+      MetaRef metaRef = getModel3Factory().createMetaRef();
+      res.getContents().add(metaRef);
+      metaRef.setEPackageRef(getModel3Package());
+      transaction.commit();
+      session.close();
     }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.getResource("/res");
+
+    MetaRef metaRef = (MetaRef)res.getContents().get(0);
+    assertEquals(getModel3Package(), metaRef.getEPackageRef());
   }
 }

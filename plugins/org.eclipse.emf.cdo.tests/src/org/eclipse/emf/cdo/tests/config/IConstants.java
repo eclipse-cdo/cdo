@@ -33,21 +33,13 @@ public interface IConstants
 
   public static final RepositoryConfig MEM = RepositoryConfig.MEM.INSTANCE;
 
-  public static final RepositoryConfig DB_HSQL_HORIZONTAL = RepositoryConfig.DB.Hsqldb.Stmt.INSTANCE;
+  public static final RepositoryConfig DB_HSQL = RepositoryConfig.DB.Hsqldb.INSTANCE;
 
-  public static final RepositoryConfig DB_HSQL_HORIZONTAL_NONAUDIT = RepositoryConfig.DB.Hsqldb.StmtNonAudit.INSTANCE;
+  public static final RepositoryConfig DB_HSQL_NONAUDIT = RepositoryConfig.DB.HsqldbNonAudit.INSTANCE;
 
-  public static final RepositoryConfig DB_HSQL_HORIZONTAL_PREPSTMT = RepositoryConfig.DB.Hsqldb.PrepStmt.INSTANCE;
+  public static final RepositoryConfig DB_DERBY = RepositoryConfig.DB.Derby.INSTANCE;
 
-  public static final RepositoryConfig DB_HSQL_HORIZONTAL_PREPSTMT_NONAUDIT = RepositoryConfig.DB.Hsqldb.PrepStmtNonAudit.INSTANCE;
-
-  public static final RepositoryConfig DB_DERBY_HORIZONTAL = RepositoryConfig.DB.Derby.Stmt.INSTANCE;
-
-  public static final RepositoryConfig DB_DERBY_HORIZONTAL_PREPSTMT = RepositoryConfig.DB.Derby.PrepStmt.INSTANCE;
-
-  // public static final RepositoryConfig DB_MYSQL_HORIZONTAL = RepositoryConfig.DB.Mysql.Stmt.INSTANCE;
-  //
-  // public static final RepositoryConfig DB_MYSQL_HORIZONTAL_PREPSTMT = RepositoryConfig.DB.Mysql.PrepStmt.INSTANCE;
+  public static final RepositoryConfig DB_MYSQL = RepositoryConfig.DB.Mysql.INSTANCE;
 
   public static final SessionConfig JVM = SessionConfig.JVM.INSTANCE;
 

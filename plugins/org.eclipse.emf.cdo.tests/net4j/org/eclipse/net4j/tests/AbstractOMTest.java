@@ -42,7 +42,9 @@ public abstract class AbstractOMTest extends TestCase
     if (!SUPPRESS_OUTPUT)
     {
       IOUtil.OUT().println("*******************************************************");
+      sleep(1L);
       IOUtil.ERR().println(this);
+      sleep(1L);
       IOUtil.OUT().println("*******************************************************");
     }
 

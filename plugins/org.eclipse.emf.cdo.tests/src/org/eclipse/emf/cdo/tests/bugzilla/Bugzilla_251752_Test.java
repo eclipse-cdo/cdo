@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  */
 public class Bugzilla_251752_Test extends AbstractCDOTest
 {
-
   public void testBug_251752() throws Exception
   {
     CDOSession session = openSession();
@@ -36,11 +35,13 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     CDOResource res = transaction1.createResource("/test1");
     res.getContents().add(getModel1Factory().createCompany());
     transaction1.commit();
+
     CDOTransaction transaction2 = session.openTransaction();
     CDOResource res2 = transaction2.getResource("/test1");
     res.getContents().add(getModel1Factory().createCompany());
     res2.getContents().add(getModel1Factory().createCompany());
     transaction2.commit();
+
     try
     {
       transaction1.commit();
@@ -49,6 +50,7 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     catch (Exception ex)
     {
     }
+
     assertTrue(res.cdoRevision().isTransactional());
   }
 
@@ -61,6 +63,7 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     CDOResource res = transaction1.createResource("/test1");
     res.getContents().add(getModel1Factory().createCompany());
     transaction1.commit();
+
     CDOTransaction transaction2 = session.openTransaction();
     CDOResource res2 = transaction2.getResource("/test1");
     res.getContents().add(getModel1Factory().createCompany());
@@ -75,6 +78,7 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     catch (Exception ex)
     {
     }
+
     assertTrue(res.cdoRevision().isTransactional());
   }
 }

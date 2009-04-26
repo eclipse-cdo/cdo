@@ -8,31 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.IStore.RevisionTemporality;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IJDBCDelegate;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -40,8 +37,6 @@ import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBRowHandler;
-import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -55,16 +50,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.sql.PreparedStatement;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Eike Stepper
@@ -73,9 +64,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
-  private static final boolean ZIP_PACKAGE_BYTES = true;
+  private Connection connection = null;
 
-  private IJDBCDelegate jdbcDelegate;
+  private IPreparedStatementCache statementCache = null;
+
+  private Timer connectionKeepAliveTimer = null;
 
   @ExcludeFromDump
   @SuppressWarnings("unchecked")
@@ -91,31 +84,19 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       {
         public void runLoop(int index, CommitContext commitContext, OMMonitor monitor) throws Exception
         {
-          jdbcDelegate.flush(monitor.fork());
+          // TODO - reenable when reimplementing stmt caching
+          // flush(monitor.fork());
         }
       });
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
     super(store, session);
-    initJDBCDelegate();
   }
 
   public DBStoreAccessor(DBStore store, ITransaction transaction) throws DBException
   {
     super(store, transaction);
-    initJDBCDelegate();
-  }
-
-  private void initJDBCDelegate()
-  {
-    jdbcDelegate = getStore().getJDBCDelegateProvider().getJDBCDelegate();
-    jdbcDelegate.setStoreAccessor(this);
-  }
-
-  public IJDBCDelegate getJDBCDelegate()
-  {
-    return jdbcDelegate;
   }
 
   @Override
@@ -124,81 +105,14 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return (DBStore)super.getStore();
   }
 
+  public IPreparedStatementCache getStatementCache()
+  {
+    return statementCache;
+  }
+
   public DBStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     return new DBStoreChunkReader(this, revision, feature);
-  }
-
-  public final Collection<InternalCDOPackageUnit> readPackageUnits()
-  {
-    final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
-    IDBRowHandler unitRowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        InternalCDOPackageUnit packageUnit = createPackageUnit();
-        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[(Integer)values[1]]);
-        packageUnit.setTimeStamp((Long)values[2]);
-        packageUnits.put((String)values[0], packageUnit);
-        return true;
-      }
-    };
-
-    DBUtil.select(jdbcDelegate.getConnection(), unitRowHandler, CDODBSchema.PACKAGE_UNITS_ID,
-        CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE, CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
-
-    final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<String, List<InternalCDOPackageInfo>>();
-    IDBRowHandler infoRowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        long metaLB = (Long)values[3];
-        long metaUB = (Long)values[4];
-        CDOIDMetaRange metaIDRange = metaLB == 0 ? null : CDOIDUtil.createMetaRange(CDOIDUtil.createMeta(metaLB),
-            (int)(metaUB - metaLB) + 1);
-
-        InternalCDOPackageInfo packageInfo = createPackageInfo();
-        packageInfo.setPackageURI((String)values[1]);
-        packageInfo.setParentURI((String)values[2]);
-        packageInfo.setMetaIDRange(metaIDRange);
-
-        String unit = (String)values[0];
-        List<InternalCDOPackageInfo> list = packageInfos.get(unit);
-        if (list == null)
-        {
-          list = new ArrayList<InternalCDOPackageInfo>();
-          packageInfos.put(unit, list);
-        }
-
-        list.add(packageInfo);
-        return true;
-      }
-    };
-
-    DBUtil.select(jdbcDelegate.getConnection(), infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT,
-        CDODBSchema.PACKAGE_INFOS_URI, CDODBSchema.PACKAGE_INFOS_PARENT, CDODBSchema.PACKAGE_INFOS_META_LB,
-        CDODBSchema.PACKAGE_INFOS_META_UB);
-
-    for (Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
-    {
-      String id = entry.getKey();
-      InternalCDOPackageUnit packageUnit = entry.getValue();
-
-      List<InternalCDOPackageInfo> list = packageInfos.get(id);
-      InternalCDOPackageInfo[] array = list.toArray(new InternalCDOPackageInfo[list.size()]);
-      packageUnit.setPackageInfos(array);
-    }
-
-    return packageUnits.values();
-  }
-
-  public final EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
-  {
-    String where = CDODBSchema.PACKAGE_UNITS_ID.getName() + "='" + packageUnit.getID() + "'";
-    Object[] values = DBUtil.select(jdbcDelegate.getConnection(), where, CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA);
-    byte[] bytes = (byte[])values[0];
-    EPackage ePackage = createEPackage(packageUnit, bytes);
-    return EMFUtil.getAllPackages(ePackage);
   }
 
   public CloseableIterator<CDOID> readObjectIDs()
@@ -221,7 +135,25 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return getStore().getMappingStrategy().readObjectType(this, id);
   }
 
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache)
+  protected EClass getObjectType(CDOID id)
+  {
+    EClass result = getStore().getRepository().getRevisionManager().getObjectType(id);
+    if (result == null)
+    {
+      CDOClassifierRef type = readObjectType(id);
+      if (type == null)
+      {
+        return null;
+      }
+
+      IRepository repository = getStore().getRepository();
+      CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
+      result = (EClass)type.resolve(packageRegistry);
+    }
+    return result;
+  }
+
+  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
   {
     if (TRACER.isEnabled())
     {
@@ -238,7 +170,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-    if (mapping.readRevision(this, revision, referenceChunk))
+    if (mapping.readRevision(this, revision, listChunk))
     {
       return revision;
     }
@@ -247,9 +179,15 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)
   {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+
+    if (!mappingStrategy.hasAuditSupport())
+    {
+      throw new UnsupportedOperationException("Mapping strategy does not support audits.");
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Selecting revision: {0}, timestamp={1,date} {1,time}", id, timeStamp);
@@ -258,9 +196,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     EClass eClass = getObjectType(id);
     InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(eClass, id);
 
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-    if (mapping.readRevisionByTime(this, revision, timeStamp, referenceChunk))
+    IClassMappingAuditSupport mapping = (IClassMappingAuditSupport)mappingStrategy.getClassMapping(eClass);
+    if (mapping.readRevisionByTime(this, revision, timeStamp, listChunk))
     {
       return revision;
     }
@@ -269,29 +206,54 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Selecting revision: {0}, version={1}", id, version);
-    }
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
 
     EClass eClass = getObjectType(id);
     InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(eClass, id);
-
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-    if (mapping.readRevisionByVersion(this, revision, version, referenceChunk))
+
+    boolean success = false;
+
+    if (mappingStrategy.hasAuditSupport())
     {
-      return revision;
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Selecting revision: {0}, version={1}", id, version);
+      }
+
+      // if audit support is present, just use the audit method
+      success = ((IClassMappingAuditSupport)mapping).readRevisionByVersion(this, revision, version, listChunk);
+    }
+    else
+    {
+      // if audit support is not present, we still have to provide a method
+      // to readRevisionByVersion because TransactionCommitContext.computeDirtyObject
+      // needs to lookup the base revision for a change. Hence we emulate this
+      // behavior by getting the current revision and asserting that the version
+      // has not changed. This is valid because if the version has changed,
+      // we are in trouble because of a conflict anyways.
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Selecting current base revision: {0}", id);
+      }
+
+      success = mapping.readRevision(this, revision, listChunk);
+
+      if (success && revision.getVersion() != version)
+      {
+        throw new IllegalStateException("Can only retrieve current version " + revision.getVersion() + " for " + id
+            + " - version requested was " + version + ".");
+      }
     }
 
-    // Reading failed - revision does not exist.
-    return null;
+    return success ? revision : null;
   }
 
   /**
+   * TODO: implement as query when query implementation is done?
+   * 
    * @since 2.0
    */
   public void queryResources(QueryResourcesContext context)
@@ -309,20 +271,6 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     throw new UnsupportedOperationException();
   }
 
-  protected EClass getObjectType(CDOID id)
-  {
-    // TODO Replace calls to getObjectType by optimized calls to RevisionManager.getObjectType (cache!)
-    CDOClassifierRef type = readObjectType(id);
-    if (type == null)
-    {
-      return null;
-    }
-
-    IRepository repository = getStore().getRepository();
-    CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
-    return (EClass)type.resolve(packageRegistry);
-  }
-
   public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
   {
     throw new UnsupportedOperationException();
@@ -330,6 +278,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public void refreshRevisions()
   {
+    // TODO is this empty on purpose or should it be implemented (how?)
   }
 
   @Override
@@ -339,177 +288,14 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     distributor.run(ops, context, monitor);
   }
 
-  public final void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
-  {
-    try
-    {
-      monitor.begin(2);
-      fillSystemTables(packageUnits, monitor.fork());
-      createModelTables(packageUnits, monitor.fork());
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  private void fillSystemTables(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
-  {
-    try
-    {
-      monitor.begin(packageUnits.length);
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        fillSystemTables(packageUnit, monitor.fork());
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  private void fillSystemTables(InternalCDOPackageUnit packageUnit, OMMonitor monitor)
-  {
-    try
-    {
-      InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
-      monitor.begin(1 + packageInfos.length);
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing package unit: {0}", packageUnit);
-      }
-
-      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)";
-      DBUtil.trace(sql);
-      PreparedStatement pstmt = null;
-      Async async = monitor.forkAsync();
-
-      try
-      {
-        pstmt = jdbcDelegate.getPreparedStatement(sql);
-        pstmt.setString(1, packageUnit.getID());
-        pstmt.setInt(2, packageUnit.getOriginalType().ordinal());
-        pstmt.setLong(3, packageUnit.getTimeStamp());
-        pstmt.setBytes(4, getEPackageBytes(packageUnit));
-
-        if (pstmt.execute())
-        {
-          throw new DBException("No result set expected");
-        }
-
-        if (pstmt.getUpdateCount() == 0)
-        {
-          throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS);
-        }
-      }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
-      finally
-      {
-        DBUtil.close(pstmt);
-        async.stop();
-      }
-
-      for (InternalCDOPackageInfo packageInfo : packageInfos)
-      {
-        fillSystemTables(packageInfo, monitor); // Don't fork monitor
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
-  {
-    EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
-    CDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
-    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
-  }
-
-  private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
-  {
-    CDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
-    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, packageRegistry);
-  }
-
-  private void fillSystemTables(InternalCDOPackageInfo packageInfo, OMMonitor monitor)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing package info: {0}", packageInfo);
-    }
-
-    String packageURI = packageInfo.getPackageURI();
-    String parentURI = packageInfo.getParentURI();
-    String unitID = packageInfo.getPackageUnit().getID();
-    CDOIDMetaRange metaIDRange = packageInfo.getMetaIDRange();
-    long metaLB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getLongValue();
-    long metaUB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getLongValue();
-
-    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?, ?, ?)";
-    DBUtil.trace(sql);
-    PreparedStatement pstmt = null;
-    Async async = monitor.forkAsync();
-
-    try
-    {
-      pstmt = jdbcDelegate.getPreparedStatement(sql);
-      pstmt.setString(1, packageURI);
-      pstmt.setString(2, parentURI);
-      pstmt.setString(3, unitID);
-      pstmt.setLong(4, metaLB);
-      pstmt.setLong(5, metaUB);
-
-      if (pstmt.execute())
-      {
-        throw new DBException("No result set expected");
-      }
-
-      if (pstmt.getUpdateCount() == 0)
-      {
-        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS);
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(pstmt);
-      async.stop();
-    }
-  }
-
-  private void createModelTables(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
-  {
-    monitor.begin();
-    Async async = monitor.forkAsync();
-
-    try
-    {
-      Set<IDBTable> affectedTables = mapPackageUnits(packageUnits);
-      getStore().getDBAdapter().createTables(affectedTables, jdbcDelegate.getConnection());
-    }
-    finally
-    {
-      async.stop();
-      monitor.done();
-    }
-  }
-
   @Override
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, long created, OMMonitor monitor)
   {
-    if (!(getStore().getRevisionTemporality() == RevisionTemporality.NONE))
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+
+    if (!mappingStrategy.hasDeltaSupport())
     {
-      throw new UnsupportedOperationException("Revision Deltas are only supported in non-auditing mode!");
+      throw new UnsupportedOperationException("Mapping strategy does not support revision deltas.");
     }
 
     monitor.begin(revisionDeltas.length);
@@ -529,7 +315,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   protected void writeRevisionDelta(InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     EClass eClass = getObjectType(delta.getID());
-    IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(eClass);
+    IClassMappingDeltaSupport mapping = (IClassMappingDeltaSupport)getStore().getMappingStrategy().getClassMapping(
+        eClass);
     mapping.writeRevisionDelta(this, delta, created, monitor);
   }
 
@@ -594,107 +381,80 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mapping.detachObject(this, id, revised, monitor);
   }
 
-  /**
-   * TODO Move this somehow to DBAdapter
-   */
-  protected Boolean getBoolean(Object value)
+  public Connection getConnection()
   {
-    if (value == null)
-    {
-      return null;
-    }
-
-    if (value instanceof Boolean)
-    {
-      return (Boolean)value;
-    }
-
-    if (value instanceof Number)
-    {
-      return ((Number)value).intValue() != 0;
-    }
-
-    throw new IllegalArgumentException("Not a boolean value: " + value);
-  }
-
-  protected Set<IDBTable> mapPackageUnits(InternalCDOPackageUnit[] packageUnits)
-  {
-    Set<IDBTable> affectedTables = new HashSet<IDBTable>();
-    if (packageUnits != null && packageUnits.length != 0)
-    {
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        mapPackageInfos(packageUnit.getPackageInfos(), affectedTables);
-      }
-    }
-
-    return affectedTables;
-  }
-
-  protected void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Set<IDBTable> affectedTables)
-  {
-    for (InternalCDOPackageInfo packageInfo : packageInfos)
-    {
-      EPackage ePackage = packageInfo.getEPackage();
-      if (!CDOModelUtil.isCorePackage(ePackage))
-      {
-        EClass[] persistentClasses = EMFUtil.getPersistentClasses(ePackage);
-        Set<IDBTable> tables = mapClasses(persistentClasses);
-        affectedTables.addAll(tables);
-      }
-    }
-  }
-
-  protected Set<IDBTable> mapClasses(EClass... eClasses)
-  {
-    Set<IDBTable> affectedTables = new HashSet<IDBTable>();
-    if (eClasses != null && eClasses.length != 0)
-    {
-      IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-      for (EClass eClass : eClasses)
-      {
-        IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-        if (mapping != null)
-        {
-          affectedTables.addAll(mapping.getAffectedTables());
-        }
-      }
-    }
-
-    return affectedTables;
-  }
-
-  protected InternalCDOPackageUnit createPackageUnit()
-  {
-    return (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
-  }
-
-  protected InternalCDOPackageInfo createPackageInfo()
-  {
-    return (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
+    return connection;
   }
 
   public final void commit(OMMonitor monitor)
   {
-    jdbcDelegate.commit(monitor);
+    monitor.begin();
+    Async async = monitor.forkAsync();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("--- DB COMMIT ---");
+    }
+
+    try
+    {
+      getConnection().commit();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      async.stop();
+      monitor.done();
+    }
   }
 
   @Override
-  protected final void rollback(CommitContext context)
+  protected final void rollback(IStoreAccessor.CommitContext commitContext)
   {
-    jdbcDelegate.rollback();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("--- DB ROLLBACK ---");
+    }
+
+    try
+    {
+      getConnection().rollback();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
   }
 
   @Override
   protected void doActivate() throws Exception
   {
-    LifecycleUtil.activate(jdbcDelegate);
+    connection = getStore().getConnection();
+
+    connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + toString());
+    connectionKeepAliveTimer.schedule(new ConnectionKeepAliveTask(), ConnectionKeepAliveTask.EXECUTION_PERIOD,
+        ConnectionKeepAliveTask.EXECUTION_PERIOD);
+
+    // TODO - make this configurable?
+    statementCache = CDODBUtil.createStatementCache();
+    statementCache.setConnection(connection);
+
+    LifecycleUtil.activate(statementCache);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(jdbcDelegate);
+    LifecycleUtil.deactivate(statementCache);
+
+    connectionKeepAliveTimer.cancel();
+    connectionKeepAliveTimer = null;
+
+    DBUtil.close(connection);
+    connection = null;
   }
 
   @Override
@@ -706,6 +466,58 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   @Override
   protected void doUnpassivate() throws Exception
   {
-    // Do nothing
+    // do nothing
+  }
+
+  public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
+  {
+    return getStore().getMetaDataManager().loadPackageUnit(getConnection(), packageUnit);
+  }
+
+  public Collection<InternalCDOPackageUnit> readPackageUnits()
+  {
+    return getStore().getMetaDataManager().readPackageUnits(getConnection());
+  }
+
+  public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    monitor.begin(2);
+    try
+    {
+      getStore().getMetaDataManager().writePackageUnits(getConnection(), packageUnits, monitor.fork());
+      getStore().getMappingStrategy().createMapping(getConnection(), packageUnits, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private class ConnectionKeepAliveTask extends TimerTask
+  {
+    public static final long EXECUTION_PERIOD = 1000 * 60 * 60 * 4; // 4 hours
+
+    @Override
+    public void run()
+    {
+      Statement stmt = null;
+      try
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("DB connection keep-alive task activated.");
+        }
+        stmt = connection.createStatement();
+        stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.REPOSITORY);
+      }
+      catch (SQLException e)
+      {
+        OM.LOG.error("DB connection keep-alive failed.", e);
+      }
+      finally
+      {
+        DBUtil.close(stmt);
+      }
+    }
   }
 }

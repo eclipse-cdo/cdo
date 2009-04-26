@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,13 +14,18 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
+import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -235,4 +240,127 @@ public class ChunkingTest extends AbstractCDOTest
       assertEquals(i - 20, saleOrders.getId());
     }
   }
+
+  private static final String RESOURCE_PATH = "/test";
+
+  public void testPartiallyLoadedAdd()
+  {
+    createInitialList();
+
+    CDOSession session = openSession(getModel5Package());
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
+    CDOTransaction tx = session.openTransaction();
+    CDOResource resource = tx.getResource(RESOURCE_PATH);
+
+    GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
+    list.getElements().add(9);
+
+    tx.commit();
+    tx.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    testListResult(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+  }
+
+  public void testPartiallyLoadedAddAtIndex()
+  {
+    createInitialList();
+
+    CDOSession session = openSession(getModel5Package());
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
+    CDOTransaction tx = session.openTransaction();
+    CDOResource resource = tx.getResource(RESOURCE_PATH);
+
+    GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
+    list.getElements().add(5, 9);
+
+    tx.commit();
+    tx.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    testListResult(0, 1, 2, 3, 4, 9, 5, 6, 7, 8);
+  }
+
+  public void testPartiallyLoadedSet()
+  {
+    createInitialList();
+
+    CDOSession session = openSession(getModel5Package());
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
+    CDOTransaction tx = session.openTransaction();
+    CDOResource resource = tx.getResource(RESOURCE_PATH);
+
+    GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
+    list.getElements().set(5, 9);
+
+    tx.commit();
+    tx.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    testListResult(0, 1, 2, 3, 4, 9, 6, 7, 8);
+  }
+
+  public void testPartiallyLoadedRemoveIndex()
+  {
+    createInitialList();
+
+    CDOSession session = openSession(getModel5Package());
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
+    CDOTransaction tx = session.openTransaction();
+    CDOResource resource = tx.getResource(RESOURCE_PATH);
+
+    GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
+    list.getElements().remove(5);
+
+    tx.commit();
+    tx.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    testListResult(0, 1, 2, 3, 4, 6, 7, 8);
+  }
+
+  private void createInitialList()
+  {
+    CDOSession session = openSession(getModel5Package());
+    CDOTransaction tx = session.openTransaction();
+    CDOResource resource = tx.createResource(RESOURCE_PATH);
+
+    GenListOfInt list = Model5Factory.eINSTANCE.createGenListOfInt();
+
+    list.getElements().addAll(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+
+    resource.getContents().add(list);
+
+    tx.commit();
+    tx.close();
+    session.close();
+
+    clearCache(getRepository().getRevisionManager());
+  }
+
+  private void testListResult(Integer... expected)
+  {
+    List<Integer> expectedList = Arrays.asList(expected);
+
+    CDOSession session = openSession(getModel5Package());
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource(RESOURCE_PATH);
+
+    EList<Integer> actualList = ((GenListOfInt)resource.getContents().get(0)).getElements();
+
+    assertEquals("List sizes differ", expectedList.size(), actualList.size());
+
+    for (int index = 0; index < expectedList.size(); index++)
+    {
+      assertEquals("Entry at index " + index + " differs", expectedList.get(index), actualList.get(index));
+    }
+
+    view.close();
+    session.close();
+  }
+
 }

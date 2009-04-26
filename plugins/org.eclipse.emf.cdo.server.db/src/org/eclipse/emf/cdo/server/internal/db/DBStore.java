@@ -4,29 +4,25 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IJDBCDelegateProvider;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.db.DBException;
-import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
@@ -37,19 +33,11 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EModelElement;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.InternalEObject;
-
 import javax.sql.DataSource;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -70,8 +58,6 @@ public class DBStore extends LongIDStore implements IDBStore
   private IDBAdapter dbAdapter;
 
   private IDBConnectionProvider dbConnectionProvider;
-
-  private IJDBCDelegateProvider jdbcDelegateProvider;
 
   @ExcludeFromDump
   private transient ProgressDistributor accessorWriteDistributor = new ProgressDistributor.Geometric()
@@ -95,50 +81,13 @@ public class DBStore extends LongIDStore implements IDBStore
   @ExcludeFromDump
   private transient StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
 
-  private static Map<EClassifier, DBType> typeMap = new HashMap<EClassifier, DBType>();
-
-  static
-  {
-    typeMap.put(EcorePackage.eINSTANCE.getEDate(), DBType.TIMESTAMP);
-    typeMap.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
-
-    typeMap.put(EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN);
-    typeMap.put(EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT);
-    typeMap.put(EcorePackage.eINSTANCE.getEChar(), DBType.CHAR);
-    typeMap.put(EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE);
-    typeMap.put(EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT);
-    typeMap.put(EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER);
-    typeMap.put(EcorePackage.eINSTANCE.getELong(), DBType.BIGINT);
-    typeMap.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
-
-    typeMap.put(EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN);
-    typeMap.put(EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT);
-    typeMap.put(EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR);
-    typeMap.put(EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE);
-    typeMap.put(EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT);
-    typeMap.put(EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER);
-    typeMap.put(EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT);
-    typeMap.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
-  }
+  private transient IMetaDataManager metaDataManager;
 
   public DBStore()
   {
-    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(RevisionTemporality.AUDITING,
-        RevisionTemporality.NONE), set(RevisionParallelism.NONE));
-    setRevisionTemporality(RevisionTemporality.AUDITING);
-  }
-
-  @Override
-  public Set<ChangeFormat> getSupportedChangeFormats()
-  {
-    if (getRevisionTemporality() == RevisionTemporality.AUDITING)
-    {
-      return set(ChangeFormat.REVISION);
-    }
-    else
-    {
-      return set(ChangeFormat.REVISION, ChangeFormat.DELTA);
-    }
+    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), //
+        set(RevisionTemporality.AUDITING, RevisionTemporality.NONE), //
+        set(RevisionParallelism.NONE));
   }
 
   public IMappingStrategy getMappingStrategy()
@@ -150,6 +99,8 @@ public class DBStore extends LongIDStore implements IDBStore
   {
     this.mappingStrategy = mappingStrategy;
     mappingStrategy.setStore(this);
+
+    setRevisionTemporality(mappingStrategy.hasAuditSupport() ? RevisionTemporality.AUDITING : RevisionTemporality.NONE);
   }
 
   public IDBAdapter getDBAdapter()
@@ -169,23 +120,12 @@ public class DBStore extends LongIDStore implements IDBStore
 
   public void setDbConnectionProvider(IDBConnectionProvider dbConnectionProvider)
   {
-    // TODO Need to update provider in JDBCWrapper, too?
     this.dbConnectionProvider = dbConnectionProvider;
   }
 
   public void setDataSource(DataSource dataSource)
   {
     dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
-  }
-
-  public IJDBCDelegateProvider getJDBCDelegateProvider()
-  {
-    return jdbcDelegateProvider;
-  }
-
-  public void setJDBCDelegateProvider(IJDBCDelegateProvider provider)
-  {
-    jdbcDelegateProvider = provider;
   }
 
   public ProgressDistributor getAccessorWriteDistributor()
@@ -234,33 +174,19 @@ public class DBStore extends LongIDStore implements IDBStore
     return new DBStoreAccessor(this, transaction);
   }
 
-  public long getMetaID(EModelElement modelElement)
+  protected Connection getConnection()
   {
-    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getRepository().getPackageRegistry();
+    Connection connection = dbConnectionProvider.getConnection();
 
     try
     {
-      CDOID cdoid = packageRegistry.getMetaInstanceMapper().lookupMetaInstanceID((InternalEObject)modelElement);
-      return ((CDOIDMeta)cdoid).getLongValue();
+      connection.setAutoCommit(false);
     }
-    catch (RuntimeException ex)
+    catch (SQLException ex)
     {
-      packageRegistry.getMetaInstanceMapper().lookupMetaInstanceID((InternalEObject)modelElement);
-      throw ex;
+      throw new DBException(ex);
     }
-  }
 
-  public EModelElement getMetaInstance(long id)
-  {
-    CDOIDMeta cdoid = CDOIDUtil.createMeta(id);
-    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getRepository().getPackageRegistry();
-    InternalEObject metaInstance = packageRegistry.getMetaInstanceMapper().lookupMetaInstance(cdoid);
-    return (EModelElement)metaInstance;
-  }
-
-  public Connection getConnection()
-  {
-    Connection connection = dbConnectionProvider.getConnection();
     if (connection == null)
     {
       throw new DBException("No connection from connection provider: " + dbConnectionProvider);
@@ -286,13 +212,22 @@ public class DBStore extends LongIDStore implements IDBStore
     checkNull(mappingStrategy, "mappingStrategy is null");
     checkNull(dbAdapter, "dbAdapter is null");
     checkNull(dbConnectionProvider, "dbConnectionProvider is null");
+
+    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(),
+        "AuditSupport of MappingStrategy and Store does not match. Please check configuration.");
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    dbSchema = createSchema();
+    metaDataManager = new MetaDataManager(this);
+    LifecycleUtil.activate(metaDataManager);
+
     Connection connection = getConnection();
+    LifecycleUtil.activate(mappingStrategy);
 
     try
     {
@@ -306,8 +241,7 @@ public class DBStore extends LongIDStore implements IDBStore
         reStart(connection);
       }
 
-      LifecycleUtil.activate(mappingStrategy);
-      dbSchema = createSchema();
+      connection.commit();
     }
     finally
     {
@@ -370,12 +304,16 @@ public class DBStore extends LongIDStore implements IDBStore
     {
       throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
     }
+
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
     Connection connection = null;
+
+    LifecycleUtil.deactivate(metaDataManager);
+    metaDataManager = null;
 
     try
     {
@@ -405,6 +343,8 @@ public class DBStore extends LongIDStore implements IDBStore
       {
         throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
       }
+
+      connection.commit();
     }
     finally
     {
@@ -432,24 +372,21 @@ public class DBStore extends LongIDStore implements IDBStore
     return System.currentTimeMillis();
   }
 
-  public static DBType getDBType(EClassifier type)
+  public IMetaDataManager getMetaDataManager()
   {
-    if (type instanceof EClass)
-    {
-      return DBType.BIGINT;
-    }
+    return metaDataManager;
+  }
 
-    if (type instanceof EEnum)
+  @Override
+  public Set<ChangeFormat> getSupportedChangeFormats()
+  {
+    if (mappingStrategy.hasDeltaSupport())
     {
-      return DBType.INTEGER;
+      return set(ChangeFormat.DELTA);
     }
-
-    DBType dbType = typeMap.get(type);
-    if (dbType != null)
+    else
     {
-      return dbType;
+      return set(ChangeFormat.REVISION);
     }
-
-    return DBType.VARCHAR;
   }
 }

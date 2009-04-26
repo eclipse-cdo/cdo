@@ -138,16 +138,19 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
     try
     {
-      for (CDOSession session : sessions)
+      if (sessions != null)
       {
-        session.removeListener(sessionListener);
-        LifecycleUtil.deactivate(session);
+        for (CDOSession session : sessions)
+        {
+          session.removeListener(sessionListener);
+          LifecycleUtil.deactivate(session);
+        }
+
+        sessions.clear();
+        sessions = null;
       }
 
       sessionListener = null;
-      sessions.clear();
-      sessions = null;
-
       stopTransport();
       super.tearDown();
     }

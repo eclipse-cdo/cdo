@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Department"
+            class="org.gastro.rcp.internal.department.DepartmentPerspective"
+            id="org.gastro.rcp.department.perspective">
+      </perspective>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Employees"
+            class="org.gastro.rcp.internal.department.EmployeesView"
+            id="org.gastro.rcp.employees.view">
+      </view>
+      <view
+            name="Orders"
+            class="org.gastro.rcp.internal.department.OrdersView"
+            id="org.gastro.rcp.orders.view">
+      </view>
+   </extension>
+
+</plugin>

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.gastro.inventory.edit;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-ClassPath: .
+Bundle-Activator: org.gastro.inventory.provider.InventoryEditPlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.gastro.inventory.provider
+Require-Bundle: org.eclipse.core.runtime,
+ org.gastro.inventory;visibility:=reexport,
+ org.eclipse.emf.cdo.edit;visibility:=reexport
+Bundle-ActivationPolicy: lazy

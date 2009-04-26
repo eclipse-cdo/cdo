@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Gastro Department
+Bundle-SymbolicName: org.gastro.rcp.department; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.gastro.rcp.internal.department.Activator
+Require-Bundle: org.gastro.rcp;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: www.gastro.org

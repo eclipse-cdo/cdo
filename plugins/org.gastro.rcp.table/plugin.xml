@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Table Perspective"
+            class="org.gastro.rcp.internal.table.TablePerspective"
+            id="org.gastro.rcp.table.perspective">
+      </perspective>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Table View"
+            class="org.gastro.rcp.internal.table.TableView"
+            id="org.gastro.rcp.table.view">
+      </view>
+   </extension>
+
+</plugin>

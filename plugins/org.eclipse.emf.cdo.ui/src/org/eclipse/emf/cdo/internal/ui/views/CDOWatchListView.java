@@ -89,6 +89,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Victor Roldan Betancort
@@ -99,10 +100,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
   private static final int[] columnWidths = { 110, 280, 170, 230 };
 
-  /**
-   * TODO Vik: Why static?
-   */
-  private static WatchedObjectsDataRegistry dataRegistry = new WatchedObjectsDataRegistry();
+  private WatchedObjectsDataRegistry dataRegistry = new WatchedObjectsDataRegistry();
 
   private TableViewer viewer;
 
@@ -123,7 +121,12 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   public CDOWatchListView()
   {
     adapterFactory = new ComposedAdapterFactory(EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
-    container.addListener(dataRegistry);
+    container.addListener(getDataRegistry());
+  }
+
+  public WatchedObjectsDataRegistry getDataRegistry()
+  {
+    return dataRegistry;
   }
 
   @Override
@@ -143,7 +146,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     };
 
     container.addListener(refreshListener);
-    dataRegistry.addListener(refreshListener);
+    getDataRegistry().addListener(refreshListener);
 
     // Configure ViewPart
     createActions();
@@ -363,7 +366,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       {
         checkDetached(msg);
         // TODO how to retrieve remote commit timestamp?
-        dataRegistry.addNotification(msg);
+        getDataRegistry().addNotification(msg);
       }
     }
 
@@ -374,7 +377,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       {
         Object obj = msg.getNotifier();
         container.removeElement((CDOObject)obj);
-        dataRegistry.removeData(obj);
+        getDataRegistry().removeData(obj);
       }
     }
 
@@ -396,6 +399,8 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     private ViewDeactivationListener viewDeactivationListener = new ViewDeactivationListener();
 
     private TransactionHandler transactionHandler = new TransactionHandler();
+
+    private CDOViewReferenceCounterManager counterManager = new CDOViewReferenceCounterManager();
 
     public CDOObjectContainer()
     {
@@ -509,7 +514,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
     private void increaseViewReference(CDOObject referrer)
     {
-      CDOViewReferenceCounter counter = CDOViewReferenceCounter.getCounter(referrer);
+      CDOViewReferenceCounterManager.CDOViewReferenceCounter counter = counterManager.getCounter(referrer);
       if (counter.increase() == 1)
       {
         CDOView view = referrer.cdoView();
@@ -523,7 +528,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
     private void decreaseViewReference(CDOObject referrer)
     {
-      CDOViewReferenceCounter counter = CDOViewReferenceCounter.getCounter(referrer);
+      CDOViewReferenceCounterManager.CDOViewReferenceCounter counter = counterManager.getCounter(referrer);
 
       // CDOObject might be detached, and so CDOView will be null
       if (counter.decrease() == 0 && referrer.cdoView() != null)
@@ -548,7 +553,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         {
           if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE)
           {
-            ArrayList<CDOObject> aboutToRemove = new ArrayList<CDOObject>();
+            List<CDOObject> aboutToRemove = new ArrayList<CDOObject>();
             for (CDOObject object : getElements())
             {
               if (object.cdoView().equals(event.getSource()))
@@ -567,58 +572,57 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private static final class CDOViewReferenceCounter
+  private final class CDOViewReferenceCounterManager
   {
-    /**
-     * TODO Vik: Why static?
-     */
-    private static ArrayList<CDOViewReferenceCounter> viewReferences = new ArrayList<CDOViewReferenceCounter>();
+    private List<CDOViewReferenceCounter> viewReferences = new ArrayList<CDOViewReferenceCounter>();
 
-    private final CDOObject referrer;
-
-    private long referenceCount;
-
-    /**
-     * TODO Vik: Why private?
-     */
-    private CDOViewReferenceCounter(CDOObject cdoObject)
+    public CDOViewReferenceCounterManager()
     {
-      referrer = cdoObject;
-      referenceCount = 0;
     }
 
-    public synchronized long increase()
+    private class CDOViewReferenceCounter
     {
-      return ++referenceCount;
-    }
+      private final CDOView view;
 
-    public synchronized long decrease()
-    {
-      if (--referenceCount == 0)
+      private AtomicLong referenceCount = new AtomicLong();
+
+      public CDOViewReferenceCounter(CDOObject cdoObject)
       {
-        viewReferences.remove(this);
+        view = cdoObject.cdoView();
+        referenceCount.set(0);
       }
 
-      return referenceCount;
+      public long increase()
+      {
+        return referenceCount.incrementAndGet();
+      }
+
+      public synchronized long decrease()
+      {
+        Long value = referenceCount.decrementAndGet();
+        if (value == 0)
+        {
+          viewReferences.remove(this);
+        }
+
+        return value;
+      }
+
+      public CDOView getReferencedView()
+      {
+        return view;
+      }
     }
 
-    public CDOObject getReferrer()
-    {
-      return referrer;
-    }
-
-    /**
-     * TODO Vik: Why static?
-     */
-    public static CDOViewReferenceCounter getCounter(CDOObject cdoObject)
+    public CDOViewReferenceCounter getCounter(CDOObject cdoObject)
     {
       synchronized (viewReferences)
       {
-        for (CDOViewReferenceCounter registeredCounter : viewReferences)
+        for (CDOViewReferenceCounter counter : viewReferences)
         {
-          if (registeredCounter.getReferrer().equals(cdoObject))
+          if (counter.getReferencedView().equals(cdoObject.cdoView()))
           {
-            return registeredCounter;
+            return counter;
           }
         }
       }
@@ -632,8 +636,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private static final class WatchedObjectsDataRegistry extends org.eclipse.net4j.util.event.Notifier implements
-      IListener
+  private final class WatchedObjectsDataRegistry extends org.eclipse.net4j.util.event.Notifier implements IListener
   {
     private Map<Object, WatchedObjectData> registry = new HashMap<Object, WatchedObjectData>();
 
@@ -657,6 +660,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         data = new WatchedObjectData();
         registry.put(object, data);
       }
+
       return data;
     }
 
@@ -710,7 +714,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     /**
      * @author Victor Roldan Betancort
      */
-    private static final class WatchedObjectData
+    private final class WatchedObjectData
     {
       private Notification notification;
 
@@ -738,19 +742,19 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private static final class CDOSubscriptionViewLabelProvider extends LabelProvider implements ILabelProvider,
+  private final class CDOSubscriptionViewLabelProvider extends LabelProvider implements ILabelProvider,
       ITableLabelProvider, IColorProvider
   {
-    private static final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
+    private final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 
-    private static final String[] eventTypes = { "CREATE", "SET", "UNSET", "ADD", "REMOVE", "ADD MANY", "REMOVE MANY",
-        "MOVE", "REMOVING ADAPTER", "RESOLVE" };
+    private final String[] eventTypes = { "CREATE", "SET", "UNSET", "ADD", "REMOVE", "ADD MANY", "REMOVE MANY", "MOVE",
+        "REMOVING ADAPTER", "RESOLVE" };
 
-    private static AdapterFactory adapterFactory;
+    private AdapterFactory adapterFactory;
 
     public CDOSubscriptionViewLabelProvider(AdapterFactory adapterFactory)
     {
-      CDOSubscriptionViewLabelProvider.adapterFactory = adapterFactory;
+      this.adapterFactory = adapterFactory;
     }
 
     public Image getColumnImage(Object object, int columnIndex)
@@ -812,7 +816,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         return "?";
 
       case 3:
-        Notification notification = dataRegistry.getNotification(element);
+        Notification notification = getDataRegistry().getNotification(element);
         return createEventLabel(notification);
       }
 
@@ -823,7 +827,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     {
       if (element instanceof CDOObject)
       {
-        if (dataRegistry.getNotification(element) != null)
+        if (getDataRegistry().getNotification(element) != null)
         {
           return YELLOW;
         }
@@ -862,7 +866,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private static final class CDOObjectContainerContentProvider implements IStructuredContentProvider
+  private final class CDOObjectContainerContentProvider implements IStructuredContentProvider
   {
     public CDOObjectContainerContentProvider()
     {
@@ -925,7 +929,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         {
           if (object instanceof CDOObject)
           {
-            dataRegistry.removeNotification(object);
+            getDataRegistry().removeNotification(object);
           }
         }
       }
@@ -950,7 +954,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         aboutToReset.add(cdoObject);
       }
 
-      dataRegistry.removeAllNotification(aboutToReset);
+      getDataRegistry().removeAllNotification(aboutToReset);
     }
   }
 }

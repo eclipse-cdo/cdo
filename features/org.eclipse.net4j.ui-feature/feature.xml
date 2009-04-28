@@ -12,9 +12,9 @@
 <feature
       id="org.eclipse.net4j.ui"
       label="%featureName"
-      image="eclipse_update_120.jpg"
       version="2.0.0.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg">
 
    <description>
       %description
@@ -47,5 +47,11 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="org.eclipse.net4j.ui.capabilities"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>

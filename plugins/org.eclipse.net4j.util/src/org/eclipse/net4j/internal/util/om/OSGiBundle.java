@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -44,7 +44,14 @@ public class OSGiBundle extends AbstractBundle
     try
     {
       URL entry = getBundleContext().getBundle().getEntry("."); //$NON-NLS-1$
-      return FileLocator.resolve(entry);
+      URL baseURL = FileLocator.resolve(entry);
+      String str = baseURL.toExternalForm();
+      if (str.endsWith("/./")) //$NON-NLS-1$
+      {
+        baseURL = new URL(str.substring(0, str.length() - 2));
+      }
+
+      return baseURL;
     }
     catch (IOException ex)
     {

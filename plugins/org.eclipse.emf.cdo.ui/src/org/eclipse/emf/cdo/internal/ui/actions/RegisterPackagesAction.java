@@ -7,12 +7,14 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -76,7 +78,7 @@ public abstract class RegisterPackagesAction extends SessionAction
         }
         else
         {
-          OM.LOG.error("Failed to register package " + uri, ex);
+          OM.LOG.error(Messages.getString("RegisterPackagesAction.0") + uri, ex); //$NON-NLS-1$
         }
       }
     }
@@ -84,7 +86,8 @@ public abstract class RegisterPackagesAction extends SessionAction
     postRegistration(ePackages);
     if (errors != 0)
     {
-      final String label = String.valueOf(errors) + (errors == 1 ? " package has" : " packages have");
+      final String label = String.valueOf(errors)
+          + (errors == 1 ? Messages.getString("RegisterPackagesAction.1") : Messages.getString("RegisterPackagesAction.2")); //$NON-NLS-1$ //$NON-NLS-2$
       getDisplay().asyncExec(new Runnable()
       {
         public void run()
@@ -92,8 +95,7 @@ public abstract class RegisterPackagesAction extends SessionAction
           Shell shell = getShell();
           if (!shell.isDisposed())
           {
-            MessageDialog.openError(shell, getText(), label
-                + " not been registered due to errors.\nSee the log for details.");
+            MessageDialog.openError(shell, getText(), label + Messages.getString("RegisterPackagesAction.3")); //$NON-NLS-1$
           }
         }
       });

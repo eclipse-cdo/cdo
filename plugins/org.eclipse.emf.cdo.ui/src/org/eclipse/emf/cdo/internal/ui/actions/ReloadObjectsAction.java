@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
@@ -31,9 +32,9 @@ import java.util.List;
  */
 public class ReloadObjectsAction extends EditingDomainAction
 {
-  public static final String ID = "reload-objects";
+  public static final String ID = "reload-objects"; //$NON-NLS-1$
 
-  private static final String TITLE = "Reload";
+  private static final String TITLE = Messages.getString("ReloadObjectsAction.1"); //$NON-NLS-1$
 
   private List<InternalCDOObject> objects = new ArrayList<InternalCDOObject>();
 

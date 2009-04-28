@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -23,9 +24,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class CloseViewAction extends ViewAction
 {
-  private static final String TITLE = "Close";
+  private static final String TITLE = Messages.getString("CloseViewAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Close the CDO view";
+  private static final String TOOL_TIP = Messages.getString("CloseViewAction.1"); //$NON-NLS-1$
 
   public CloseViewAction(IWorkbenchPage page, CDOView view)
   {
@@ -38,7 +39,7 @@ public final class CloseViewAction extends ViewAction
     if (getView().isDirty())
     {
       MessageDialog dialog = new MessageDialog(getShell(), TITLE, null,
-          "You have uncommitted changes. Do you want to discard them?", MessageDialog.QUESTION, new String[] {
+          Messages.getString("CloseViewAction.2"), MessageDialog.QUESTION, new String[] { //$NON-NLS-1$
               IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
       if (dialog.open() != MessageDialog.OK)
       {

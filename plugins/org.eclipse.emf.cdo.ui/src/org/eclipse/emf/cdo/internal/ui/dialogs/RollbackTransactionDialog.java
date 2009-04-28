@@ -7,10 +7,12 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -79,29 +81,35 @@ public class RollbackTransactionDialog extends TitleAreaDialog
   protected String formatMessage()
   {
     StringBuilder builder = new StringBuilder();
-    builder.append("This transaction contains:\n");
+    builder.append(Messages.getString("RollbackTransactionDialog.0")); //$NON-NLS-1$
+    builder.append("\n"); //$NON-NLS-1$
 
-    append(builder, transaction.getNewResources().size(), "new resource");
-    append(builder, transaction.getNewObjects().size(), "new object");
-    append(builder, transaction.getDirtyObjects().size(), "dirty object");
-    append(builder, transaction.getDetachedObjects().size(), "detached object");
+    append(builder, transaction.getNewResources().size(), Messages.getString("RollbackTransactionDialog.2"), Messages.getString("RollbackTransactionDialog.3")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getNewObjects().size(), Messages.getString("RollbackTransactionDialog.4"), Messages.getString("RollbackTransactionDialog.5")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getDirtyObjects().size(), Messages.getString("RollbackTransactionDialog.6"), Messages.getString("RollbackTransactionDialog.7")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getDetachedObjects().size(), Messages.getString("RollbackTransactionDialog.8"), Messages.getString("RollbackTransactionDialog.9")); //$NON-NLS-1$ //$NON-NLS-2$
 
-    builder.append("\n\nAre you sure to rollback this transaction?");
+    builder.append("\n\n"); //$NON-NLS-1$
+    builder.append(Messages.getString("RollbackTransactionDialog.11")); //$NON-NLS-1$
     return builder.toString();
   }
 
-  private void append(StringBuilder builder, int count, String label)
+  private void append(StringBuilder builder, int count, String labelSingular, String labelPlural)
   {
     if (count > 0)
     {
-      builder.append("\n- ");
+      builder.append("\n- "); //$NON-NLS-1$
       builder.append(count);
-      builder.append(" ");
-      builder.append(label);
+      builder.append(" "); //$NON-NLS-1$
       if (count > 1)
       {
-        builder.append("s");
+        builder.append(labelPlural);
       }
+      else
+      {
+        builder.append(labelSingular);
+      }
+
     }
   }
 }

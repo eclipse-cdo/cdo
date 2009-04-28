@@ -20,7 +20,7 @@ public abstract class CDOObjectFilter extends ViewerFilter
 {
   private StructuredViewer viewer;
 
-  private String pattern = "";
+  private String pattern = ""; //$NON-NLS-1$
 
   public CDOObjectFilter(StructuredViewer viewer)
   {

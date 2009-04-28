@@ -7,11 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -32,14 +34,15 @@ import java.util.List;
  */
 public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
 {
-  private static final String TITLE = "Register Filesystem Packages";
+  private static final String TITLE = Messages.getString("RegisterFilesystemPackagesAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Register dynamic packages from the filesystem";
+  private static final String TOOL_TIP = Messages.getString("RegisterFilesystemPackagesAction.1"); //$NON-NLS-1$
 
-  private static final String[] FILTER_NAMES = { "Ecore models (*.ecore)", "XMI files (*.xmi)", "XML files (*.xml)",
-      "All files (*.*)" };
+  private static final String[] FILTER_NAMES = {
+      Messages.getString("RegisterFilesystemPackagesAction.2"), Messages.getString("RegisterFilesystemPackagesAction.3"), Messages.getString("RegisterFilesystemPackagesAction.4"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      Messages.getString("RegisterFilesystemPackagesAction.5") }; //$NON-NLS-1$
 
-  private static final String[] FILTER_EXTENSIONS = { "ecore", "xmi", "xml", null };
+  private static final String[] FILTER_EXTENSIONS = { "ecore", "xmi", "xml", null }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
   public RegisterFilesystemPackagesAction(IWorkbenchPage page, CDOSession session)
   {
@@ -51,7 +54,7 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
   {
     Shell shell = page.getWorkbenchWindow().getShell();
     FileDialog dialog = new FileDialog(shell, SWT.OPEN | SWT.MULTI);
-    dialog.setFileName("*.ecore");
+    dialog.setFileName("*.ecore"); //$NON-NLS-1$
     dialog.setFilterNames(FILTER_NAMES);
     dialog.setFilterExtensions(FILTER_EXTENSIONS);
     if (dialog.open() != null)

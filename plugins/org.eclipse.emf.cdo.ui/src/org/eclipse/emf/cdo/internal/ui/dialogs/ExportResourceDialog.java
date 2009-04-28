@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
+import org.eclipse.emf.cdo.ui.messages.Messages;
+
 import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
 
 import org.eclipse.swt.SWT;
@@ -29,7 +31,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class ExportResourceDialog extends ResourceDialog
 {
-  private String targetPath = "/";
+  private String targetPath = "/"; //$NON-NLS-1$
 
   private Text targetText;
 
@@ -63,7 +65,7 @@ public class ExportResourceDialog extends ResourceDialog
     }
 
     Label label = new Label(composite, SWT.NONE);
-    label.setText("Source path:");
+    label.setText(Messages.getString("ExportResourceDialog.1")); //$NON-NLS-1$
     {
       FormData data = new FormData();
       data.top = new FormAttachment(separatorLabel1, CONTROL_OFFSET);

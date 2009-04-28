@@ -7,11 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -21,9 +23,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenTransactionAction extends AbstractOpenViewAction
 {
-  private static final String TITLE = "Open Transaction";
+  private static final String TITLE = Messages.getString("OpenTransactionAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Open a read-write CDO view";
+  private static final String TOOL_TIP = Messages.getString("OpenTransactionAction.1"); //$NON-NLS-1$
 
   public OpenTransactionAction(IWorkbenchPage page, CDOSession session)
   {

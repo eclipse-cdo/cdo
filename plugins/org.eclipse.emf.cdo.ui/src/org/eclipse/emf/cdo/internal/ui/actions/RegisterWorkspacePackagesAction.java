@@ -7,12 +7,14 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenResourcesDialog;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -31,9 +33,9 @@ import java.util.List;
  */
 public class RegisterWorkspacePackagesAction extends RegisterPackagesAction
 {
-  private static final String TITLE = "Register Workspace Packages";
+  private static final String TITLE = Messages.getString("RegisterWorkspacePackagesAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Register dynamic packages from the workspace";
+  private static final String TOOL_TIP = Messages.getString("RegisterWorkspacePackagesAction.1"); //$NON-NLS-1$
 
   public RegisterWorkspacePackagesAction(IWorkbenchPage page, CDOSession session)
   {

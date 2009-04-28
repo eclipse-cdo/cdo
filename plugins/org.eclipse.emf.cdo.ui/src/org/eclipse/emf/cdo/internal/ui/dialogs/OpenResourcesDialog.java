@@ -7,8 +7,11 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
+
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -20,7 +23,7 @@ public class OpenResourcesDialog extends FilteredResourcesSelectionDialog
   public OpenResourcesDialog(Shell parentShell)
   {
     super(parentShell, true, ResourcesPlugin.getWorkspace().getRoot(), IResource.FILE);
-    setTitle("Open Resources");
-    setInitialPattern("*.ecore");
+    setTitle(Messages.getString("OpenResourcesDialog.0")); //$NON-NLS-1$
+    setInitialPattern("*.ecore"); //$NON-NLS-1$
   }
 }

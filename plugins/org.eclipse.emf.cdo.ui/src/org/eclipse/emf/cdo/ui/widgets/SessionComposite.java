@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.PreferenceHistory;
@@ -61,7 +62,7 @@ public class SessionComposite extends Composite
     setLayoutData(UIUtil.createGridData());
     setLayout(new GridLayout(2, false));
 
-    new Label(this, SWT.NONE).setText("Server Description:");
+    new Label(this, SWT.NONE).setText(Messages.getString("SessionComposite.0")); //$NON-NLS-1$
     connectorText = new HistoryText(this, SWT.BORDER | SWT.SINGLE, connectorHistory);
     connectorText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
     connectorText.getCombo().addModifyListener(new ModifyListener()
@@ -76,11 +77,11 @@ public class SessionComposite extends Composite
     {
       new Label(this, SWT.NONE);
       exampleLabel = new Label(this, SWT.NONE);
-      exampleLabel.setText("for example 'tcp://dev.eclipse.org:2036'");
+      exampleLabel.setText(Messages.getString("SessionComposite.1")); //$NON-NLS-1$
       exampleLabel.setForeground(getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
     }
 
-    new Label(this, SWT.NONE).setText("Repository Name:");
+    new Label(this, SWT.NONE).setText(Messages.getString("SessionComposite.2")); //$NON-NLS-1$
     repositoryText = new HistoryText(this, SWT.BORDER | SWT.SINGLE, repositoryHistory);
     repositoryText.getCombo().setLayoutData(new GridData(150, SWT.DEFAULT));
     repositoryText.getCombo().addModifyListener(new ModifyListener()
@@ -92,7 +93,7 @@ public class SessionComposite extends Composite
     });
 
     new Label(this, SWT.NONE);
-    automaticButton = new PreferenceButton(this, SWT.CHECK, "Automatic Package Registry",
+    automaticButton = new PreferenceButton(this, SWT.CHECK, Messages.getString("SessionComposite.3"), //$NON-NLS-1$
         OM.PREF_AUTOMATIC_PACKAGE_REGISTRY);
     automaticButton.getButton().addSelectionListener(new SelectionAdapter()
     {
@@ -167,11 +168,11 @@ public class SessionComposite extends Composite
   {
     StringBuilder builder = new StringBuilder();
     builder.append(connectorDescription);
-    builder.append("?repositoryName=");
+    builder.append("?repositoryName="); //$NON-NLS-1$
     builder.append(repositoryName);
     if (automaticRegistry)
     {
-      builder.append("&automaticPackageRegistry=true");
+      builder.append("&automaticPackageRegistry=true"); //$NON-NLS-1$
     }
 
     return builder.toString();

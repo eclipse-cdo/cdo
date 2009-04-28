@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenSessionDialog;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -33,7 +34,7 @@ public final class OpenSessionAction extends LongRunningAction
 {
   private static final String TITLE = OpenSessionDialog.TITLE;
 
-  private static final String TOOL_TIP = "Open a new CDO session";
+  private static final String TOOL_TIP = Messages.getString("OpenSessionAction.0"); //$NON-NLS-1$
 
   private SessionComposite sessionComposite;
 
@@ -63,8 +64,8 @@ public final class OpenSessionAction extends LongRunningAction
     try
     {
       String description = sessionComposite.getSessionDescription();
-      final InternalCDOSession session = (InternalCDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions",
-          "cdo", description);
+      final InternalCDOSession session = (InternalCDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", //$NON-NLS-1$
+          "cdo", description); //$NON-NLS-1$
 
       if (sessionComposite.isAutomaticRegistry())
       {
@@ -78,7 +79,7 @@ public final class OpenSessionAction extends LongRunningAction
       {
         public void run()
         {
-          MessageDialog.openError(getShell(), getText(), "Unable to open a session on the specified repository.\n"
+          MessageDialog.openError(getShell(), getText(), Messages.getString("OpenSessionAction.3") //$NON-NLS-1$
               + ex.getMessage());
         }
       });

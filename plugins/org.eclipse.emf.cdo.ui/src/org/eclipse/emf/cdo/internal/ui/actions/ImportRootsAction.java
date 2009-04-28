@@ -7,12 +7,14 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.dialogs.ResourceDialog;
@@ -33,9 +35,9 @@ import java.util.List;
  */
 public class ImportRootsAction extends EditingDomainAction
 {
-  public static final String ID = "import-roots";
+  public static final String ID = "import-roots"; //$NON-NLS-1$
 
-  private static final String TITLE = "Import Roots";
+  private static final String TITLE = Messages.getString("ImportRootsAction.1"); //$NON-NLS-1$
 
   private CDOResource targetResource;
 

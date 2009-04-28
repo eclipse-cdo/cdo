@@ -7,11 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -22,9 +24,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class RollbackTransactionAction extends ViewAction
 {
-  private static final String TITLE = "Rollback";
+  private static final String TITLE = Messages.getString("RollbackTransactionAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Rollback this transaction";
+  private static final String TOOL_TIP = Messages.getString("RollbackTransactionAction.1"); //$NON-NLS-1$
 
   public RollbackTransactionAction(IWorkbenchPage page, CDOView view)
   {

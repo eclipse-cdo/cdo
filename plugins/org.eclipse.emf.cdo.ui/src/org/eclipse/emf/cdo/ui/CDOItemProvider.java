@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOAudit;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -157,7 +158,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public static String getSessionLabel(CDOSession session)
   {
-    return "Session " + session.repository().getName() + " [" + session.getSessionID() + "]";
+    return Messages.getString("CDOItemProvider.0") + session.repository().getName() + " [" + session.getSessionID() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**
@@ -168,16 +169,16 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (view instanceof CDOTransaction)
     {
       CDOTransaction transaction = (CDOTransaction)view;
-      return MessageFormat.format("{0}Transaction [{1}]", transaction.isDirty() ? "*" : "", transaction.getViewID());
+      return MessageFormat.format(Messages.getString("CDOItemProvider.3"), transaction.isDirty() ? "*" : "", transaction.getViewID()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     if (view instanceof CDOAudit)
     {
       CDOAudit audit = (CDOAudit)view;
-      return MessageFormat.format("Audit [{0,date} {0,time}]", audit.getTimeStamp());
+      return MessageFormat.format(Messages.getString("CDOItemProvider.6"), audit.getTimeStamp()); //$NON-NLS-1$
     }
 
-    return MessageFormat.format("View [{0}]", view.getViewID());
+    return MessageFormat.format(Messages.getString("CDOItemProvider.7"), view.getViewID()); //$NON-NLS-1$
   }
 
   @Override
@@ -209,7 +210,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new Separator());
     manager.add(new ManagePackagesAction(page, session));
 
-    MenuManager generatedManager = new MenuManager("Register Generated Package");
+    MenuManager generatedManager = new MenuManager(Messages.getString("CDOItemProvider.8")); //$NON-NLS-1$
     if (fillGenerated(generatedManager, session))
     {
       manager.add(generatedManager);

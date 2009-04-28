@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.SelectPackageDialog;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -30,9 +31,9 @@ import java.util.Set;
  */
 public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
 {
-  private static final String TITLE = "Register Generated Packages";
+  private static final String TITLE = Messages.getString("RegisterGeneratedPackagesAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Register native and legacy packages";
+  private static final String TOOL_TIP = Messages.getString("RegisterGeneratedPackagesAction.1"); //$NON-NLS-1$
 
   private EPackage.Registry registry = EPackage.Registry.INSTANCE;
 
@@ -45,8 +46,8 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
   protected List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session)
   {
     Shell shell = page.getWorkbenchWindow().getShell();
-    SelectPackageDialog dialog = new SelectPackageDialog(shell, "Generated Packages",
-        "Select one or more packages for registration with the CDO package registry", session.getPackageRegistry()
+    SelectPackageDialog dialog = new SelectPackageDialog(shell, Messages.getString("RegisterGeneratedPackagesAction.2"), //$NON-NLS-1$
+        Messages.getString("RegisterGeneratedPackagesAction.3"), session.getPackageRegistry() //$NON-NLS-1$
             .keySet());
 
     if (dialog.open() == SelectPackageDialog.OK)
@@ -81,10 +82,9 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
     {
       if (uri == null || uri.length() == 0)
       {
-        return "";
+        return ""; //$NON-NLS-1$
       }
-
-      return registry.containsKey(uri) ? null : "Package " + uri + " not found.";
+      return registry.containsKey(uri) ? null : String.format(Messages.getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
     }
   }
 }

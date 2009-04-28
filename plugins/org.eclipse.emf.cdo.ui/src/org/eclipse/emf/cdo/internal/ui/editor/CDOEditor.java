@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -182,12 +183,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
 
   /**
    * @ADDED
    */
-  public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor";
+  public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor"; //$NON-NLS-1$
 
   /**
    * @ADDED
@@ -636,7 +637,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (updateProblemIndication)
     {
-      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui.editor", 0, null,
+      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui.editor", 0, null, //$NON-NLS-1$
           new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
@@ -698,8 +699,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected boolean handleDirtyConflict()
   {
-    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"),
-        getString("_WARN_FileConflict"));
+    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"), //$NON-NLS-1$
+        getString("_WARN_FileConflict")); //$NON-NLS-1$
   }
 
   /**
@@ -969,8 +970,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void createContextMenuFor(StructuredViewer viewer)
   {
-    MenuManager contextMenu = new MenuManager("#PopUp");
-    contextMenu.add(new Separator("additions"));
+    MenuManager contextMenu = new MenuManager("#PopUp"); //$NON-NLS-1$
+    contextMenu.add(new Separator("additions")); //$NON-NLS-1$
     contextMenu.setRemoveAllWhenShown(true);
     contextMenu.addMenuListener(this);
     Menu menu = contextMenu.createContextMenu(viewer.getControl());
@@ -1102,16 +1103,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui.editor", 0,
-          getString("_UI_CreateModelError_message", resource.getURI()),
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui.editor", 0, //$NON-NLS-1$
+          getString("_UI_CreateModelError_message", resource.getURI()), //$NON-NLS-1$
           new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
     else if (exception != null)
     {
-      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui.editor", 0, getString(
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
+      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui.editor", 0, getString( //$NON-NLS-1$
+          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception }); //$NON-NLS-1$
     }
     else
     {
@@ -1150,7 +1151,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       createContextMenuFor(selectionViewer);
       int pageIndex = addPage(tree);
-      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+      setPageText(pageIndex, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
@@ -1218,7 +1219,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       createContextMenuFor(selectionViewer);
       int pageIndex = addPage(tree);
-      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
+      setPageText(pageIndex, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
 
       setActivePage(0);
 
@@ -1294,7 +1295,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         try
         {
-          getSite().getPage().showView("org.eclipse.ui.views.PropertySheet");
+          getSite().getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
         }
         catch (PartInitException ex)
         {
@@ -1349,7 +1350,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (getPageCount() <= 1)
     {
-      setPageText(0, "");
+      setPageText(0, ""); //$NON-NLS-1$
       if (getContainer() != null && !getContainer().isDisposed() && getContainer() instanceof CTabFolder)
       {
         ((CTabFolder)getContainer()).setTabHeight(1);
@@ -1369,7 +1370,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (getPageCount() > 1)
     {
-      setPageText(0, getString("_UI_SelectionPage_label"));
+      setPageText(0, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
       if (getContainer() != null && !getContainer().isDisposed() && getContainer() instanceof CTabFolder)
       {
         ((CTabFolder)getContainer()).setTabHeight(SWT.DEFAULT);
@@ -1658,7 +1659,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         boolean first = true;
         EList<Resource> resources = CDOUtil.getResources(editingDomain.getResourceSet());
-        monitor.beginTask("", resources.size());
+        monitor.beginTask("", resources.size()); //$NON-NLS-1$
         try
         {
           for (Resource resource : resources)
@@ -1681,8 +1682,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                   public void run()
                   {
                     CDOTransaction transaction = (CDOTransaction)view;
-                    String title = "Transaction Error";
-                    String message = "An error occured while committing the transaction.\nSee Error Log for details.";
+                    String title = Messages.getString("CDOEditor.17"); //$NON-NLS-1$
+                    String message = Messages.getString("CDOEditor.18"); //$NON-NLS-1$
                     RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
                         message, transaction);
                     if (dialog.open() == RollbackTransactionDialog.OK)
@@ -1954,25 +1955,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
         case 0:
         {
-          statusLineManager.setMessage(getString("_UI_NoObjectSelected"));
+          statusLineManager.setMessage(getString("_UI_NoObjectSelected")); //$NON-NLS-1$
           break;
         }
         case 1:
         {
           String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
-          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text));
+          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text)); //$NON-NLS-1$
           break;
         }
         default:
         {
-          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size())));
+          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size()))); //$NON-NLS-1$
           break;
         }
         }
       }
       else
       {
-        statusLineManager.setMessage("");
+        statusLineManager.setMessage(""); //$NON-NLS-1$
       }
     }
   }
@@ -2014,10 +2015,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   public void menuAboutToShow(IMenuManager menuManager)
   {
     menuAboutToShowGen(menuManager);
-    MenuManager submenuManager = new MenuManager("New Root");
+    MenuManager submenuManager = new MenuManager(Messages.getString("CDOEditor.23")); //$NON-NLS-1$
     if (populateNewRoot(submenuManager))
     {
-      menuManager.insertBefore("edit", submenuManager);
+      menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
     }
 
     if (OM.TEST_BULK_ADD.isEnabled())
@@ -2041,7 +2042,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           if (!features.isEmpty())
           {
             final IWorkbenchPage page = getSite().getPage();
-            menuManager.insertBefore("edit", new LongRunningAction(page, "Bulk Add" + SafeAction.INTERACTIVE)
+            menuManager.insertBefore("edit", new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$ //$NON-NLS-2$
             {
               private EReference feature;
 
@@ -2124,7 +2125,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE_UNKNOWN);
     final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
     submenuManager.setRemoveAllWhenShown(true);
-    submenuManager.add(new Action("Calculating...")
+    submenuManager.add(new Action(Messages.getString("CDOEditor.27")) //$NON-NLS-1$
     {
     });
     submenuManager.addMenuListener(new IMenuListener()
@@ -2140,7 +2141,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         else
         {
-          OM.LOG.warn("Can't find " + nsURI + " in CDOPackageRegistry");
+          OM.LOG.warn(String.format(Messages.getString("CDOEditor.28"), nsURI)); //$NON-NLS-1$
         }
       }
     });
@@ -2200,7 +2201,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
     }
 
-    return "";
+    return ""; //$NON-NLS-1$
   }
 
   private Object getLabelImage(Object object)

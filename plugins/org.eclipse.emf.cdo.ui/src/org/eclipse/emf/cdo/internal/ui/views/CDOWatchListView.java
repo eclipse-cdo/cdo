@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.ui.dnd.CDOObjectDropAdapter;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -96,7 +97,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class CDOWatchListView extends ViewPart implements ISelectionProvider
 {
-  private static final String[] columnNames = { "Object", "Resource", "Time", "Changes" };
+  private static final String[] columnNames = { Messages.getString("CDOWatchListView.0"), Messages.getString("CDOWatchListView.1"), Messages.getString("CDOWatchListView.2"), Messages.getString("CDOWatchListView.3") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
   private static final int[] columnWidths = { 110, 280, 170, 230 };
 
@@ -160,29 +161,29 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   {
     ISharedImages platformImages = PlatformUI.getWorkbench().getSharedImages();
     removeAction = new RemoveContainerItemAction<CDOObject>(container, viewer);
-    removeAction.setText("Remove");
+    removeAction.setText(Messages.getString("CDOWatchListView.4")); //$NON-NLS-1$
     removeAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     removeAction.setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
-    removeAction.setToolTipText("Remove selected subscriptions");
+    removeAction.setToolTipText(Messages.getString("CDOWatchListView.5")); //$NON-NLS-1$
 
     removeAllAction = new RemoveAllContainerItemAction<CDOObject>(container);
-    removeAllAction.setText("Remove All");
+    removeAllAction.setText(Messages.getString("CDOWatchListView.6")); //$NON-NLS-1$
     removeAllAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-    removeAllAction.setToolTipText("Remove all subscriptions");
+    removeAllAction.setToolTipText(Messages.getString("CDOWatchListView.7")); //$NON-NLS-1$
 
     resetNotificationAction = new ResetNotificationAction();
-    resetNotificationAction.setText("Reset Changes");
+    resetNotificationAction.setText(Messages.getString("CDOWatchListView.8")); //$NON-NLS-1$
     resetNotificationAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
     resetNotificationAction.setDisabledImageDescriptor(platformImages
         .getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
-    resetNotificationAction.setToolTipText("Reset all change notifications from the selected subscriptions");
+    resetNotificationAction.setToolTipText(Messages.getString("CDOWatchListView.9")); //$NON-NLS-1$
 
     resetAllNotificationAction = new ResetAllNotificationAction();
-    resetAllNotificationAction.setText("Reset All Changes");
+    resetAllNotificationAction.setText(Messages.getString("CDOWatchListView.10")); //$NON-NLS-1$
     resetAllNotificationAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
     resetAllNotificationAction.setDisabledImageDescriptor(platformImages
         .getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
-    resetAllNotificationAction.setToolTipText("Reset all change notifications of the subscriptions in the view");
+    resetAllNotificationAction.setToolTipText(Messages.getString("CDOWatchListView.11")); //$NON-NLS-1$
   }
 
   private void createToolbarButtons()
@@ -198,7 +199,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
   private void createContextMenu()
   {
-    MenuManager menuMgr = new MenuManager("#PopupMenu");
+    MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
@@ -747,8 +748,8 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   {
     private final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 
-    private final String[] eventTypes = { "CREATE", "SET", "UNSET", "ADD", "REMOVE", "ADD MANY", "REMOVE MANY", "MOVE",
-        "REMOVING ADAPTER", "RESOLVE" };
+    private final String[] eventTypes = { Messages.getString("CDOWatchListView.12"), Messages.getString("CDOWatchListView.25"), Messages.getString("CDOWatchListView.26"), Messages.getString("CDOWatchListView.27"), Messages.getString("CDOWatchListView.28"), Messages.getString("CDOWatchListView.29"), Messages.getString("CDOWatchListView.30"), Messages.getString("CDOWatchListView.31"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+        Messages.getString("CDOWatchListView.32"), Messages.getString("CDOWatchListView.33") }; //$NON-NLS-1$ //$NON-NLS-2$
 
     private AdapterFactory adapterFactory;
 
@@ -813,7 +814,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
           }
         }
 
-        return "?";
+        return "?"; //$NON-NLS-1$
 
       case 3:
         Notification notification = getDataRegistry().getNotification(element);
@@ -855,9 +856,9 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         builder.append(eventTypes[event]);
       }
 
-      builder.append(": ");
+      builder.append(": "); //$NON-NLS-1$
       builder.append(((EStructuralFeature)notification.getFeature()).getName());
-      builder.append(" = ");
+      builder.append(" = "); //$NON-NLS-1$
       builder.append(notification.getNewValue().toString());
       return builder.toString();
     }

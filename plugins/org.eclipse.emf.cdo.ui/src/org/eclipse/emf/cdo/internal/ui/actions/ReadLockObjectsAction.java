@@ -8,10 +8,12 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
@@ -20,11 +22,11 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
  */
 public class ReadLockObjectsAction extends AbstractLockObjectsAction
 {
-  public static final String ID = "readlock-objects";
+  public static final String ID = "readlock-objects"; //$NON-NLS-1$
 
   public ReadLockObjectsAction()
   {
-    super("ReadLock");
+    super(Messages.getString("ReadLockObjectsAction.1")); //$NON-NLS-1$
     setId(ID);
   }
 

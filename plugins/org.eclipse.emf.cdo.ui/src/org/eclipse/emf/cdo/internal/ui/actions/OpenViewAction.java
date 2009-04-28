@@ -7,11 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
@@ -23,9 +25,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenViewAction extends AbstractOpenViewAction
 {
-  private static final String TITLE = "Open View";
+  private static final String TITLE = Messages.getString("OpenViewAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Open a read-only CDO view";
+  private static final String TOOL_TIP = Messages.getString("OpenViewAction.1"); //$NON-NLS-1$
 
   public OpenViewAction(IWorkbenchPage page, CDOSession session)
   {

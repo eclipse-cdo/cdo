@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -25,9 +26,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
  */
 public class ChangePassiveUpdateAction extends EditingDomainAction
 {
-  public static final String ID = "change-passiveupdate";
+  public static final String ID = "change-passiveupdate"; //$NON-NLS-1$
 
-  private static final String TITLE = "Passive Updates";
+  private static final String TITLE = Messages.getString("ChangePassiveUpdateAction.1"); //$NON-NLS-1$
 
   private CDOSession session;
 

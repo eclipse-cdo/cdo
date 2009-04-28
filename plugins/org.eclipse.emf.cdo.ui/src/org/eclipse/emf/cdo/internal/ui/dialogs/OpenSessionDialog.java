@@ -7,10 +7,12 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -25,7 +27,7 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class OpenSessionDialog extends TitleAreaDialog
 {
-  public static final String TITLE = "Open Session";
+  public static final String TITLE = Messages.getString("OpenSessionDialog.0"); //$NON-NLS-1$
 
   private IWorkbenchPage page;
 

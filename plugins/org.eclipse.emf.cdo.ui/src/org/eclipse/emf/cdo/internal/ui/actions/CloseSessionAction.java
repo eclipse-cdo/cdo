@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -24,9 +25,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class CloseSessionAction extends SessionAction
 {
-  private static final String TITLE = "Close";
+  private static final String TITLE = Messages.getString("CloseSessionAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Close the CDO session";
+  private static final String TOOL_TIP = Messages.getString("CloseSessionAction.1"); //$NON-NLS-1$
 
   public CloseSessionAction(IWorkbenchPage page, CDOSession session)
   {
@@ -39,7 +40,7 @@ public final class CloseSessionAction extends SessionAction
     if (CDOUtil.isSessionDirty(getSession()))
     {
       MessageDialog dialog = new MessageDialog(getShell(), TITLE, null,
-          "You have uncommitted changes. Do you want to discard them?", MessageDialog.QUESTION, new String[] {
+          Messages.getString("CloseSessionAction.2"), MessageDialog.QUESTION, new String[] { //$NON-NLS-1$
               IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
       if (dialog.open() != MessageDialog.OK)
       {

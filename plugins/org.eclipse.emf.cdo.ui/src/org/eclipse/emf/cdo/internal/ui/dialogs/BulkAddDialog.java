@@ -7,8 +7,11 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
+
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.ui.StaticContentProvider;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -42,7 +45,7 @@ import java.util.List;
  */
 public class BulkAddDialog extends TitleAreaDialog
 {
-  public static final String TITLE = "Bulk Add";
+  public static final String TITLE = Messages.getString("BulkAddDialog.0"); //$NON-NLS-1$
 
   private IWorkbenchPage page;
 
@@ -94,10 +97,10 @@ public class BulkAddDialog extends TitleAreaDialog
     composite.setLayoutData(UIUtil.createGridData());
     composite.setLayout(new GridLayout(2, false));
 
-    setTitle("Select a child type and number of child instances");
+    setTitle(Messages.getString("BulkAddDialog.1")); //$NON-NLS-1$
 
     Label label = new Label(composite, SWT.NONE);
-    label.setText("Type:");
+    label.setText(Messages.getString("BulkAddDialog.2")); //$NON-NLS-1$
     label.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 
     final TableViewer featureViewer = new TableViewer(composite, SWT.BORDER | SWT.SINGLE);
@@ -123,7 +126,7 @@ public class BulkAddDialog extends TitleAreaDialog
       }
     });
 
-    new Label(composite, SWT.NONE).setText("Instances:");
+    new Label(composite, SWT.NONE).setText(Messages.getString("BulkAddDialog.3")); //$NON-NLS-1$
     final Text instancesText = new Text(composite, SWT.BORDER);
     instancesText.setLayoutData(UIUtil.createGridData(true, false));
     instancesText.setText(String.valueOf(instances));
@@ -166,13 +169,13 @@ public class BulkAddDialog extends TitleAreaDialog
     getButton(IDialogConstants.OK_ID).setEnabled(false);
     if (feature == null)
     {
-      setErrorMessage("Select a feature");
+      setErrorMessage(Messages.getString("BulkAddDialog.4")); //$NON-NLS-1$
       return;
     }
 
     if (instances == 0)
     {
-      setErrorMessage("Enter a valid number of instances (>0)");
+      setErrorMessage(Messages.getString("BulkAddDialog.5")); //$NON-NLS-1$
       return;
     }
 

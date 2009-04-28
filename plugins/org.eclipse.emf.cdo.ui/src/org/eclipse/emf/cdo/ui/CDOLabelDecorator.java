@@ -40,15 +40,15 @@ import java.text.MessageFormat;
  */
 public class CDOLabelDecorator implements ILabelDecorator
 {
-  public static final String[] DECORATION_PROPOSALS = { "${element}", "${id}", "${state}", "${created}", "${revised}" };
+  public static final String[] DECORATION_PROPOSALS = { "${element}", "${id}", "${state}", "${created}", "${revised}" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
-  public static final String DEFAULT_DECORATION = DECORATION_PROPOSALS[0] + " [" + DECORATION_PROPOSALS[1] + "]";
+  public static final String DEFAULT_DECORATION = DECORATION_PROPOSALS[0] + " [" + DECORATION_PROPOSALS[1] + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 
   public static final String NO_DECORATION = DECORATION_PROPOSALS[0];
 
-  private static final String[] DECORATION_ARGS = { "{0}", "{1}", "{2}", "{3,date} {3,time}", "{4,date} {4,time}" };
+  private static final String[] DECORATION_ARGS = { "{0}", "{1}", "{2}", "{3,date} {3,time}", "{4,date} {4,time}" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
-  public static final String DECORATOR_ID = "org.eclipse.emf.cdo.ui.cdolabeldecorator";
+  public static final String DECORATOR_ID = "org.eclipse.emf.cdo.ui.cdolabeldecorator"; //$NON-NLS-1$
 
   private String pattern;
 

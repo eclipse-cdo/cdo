@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -24,9 +25,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenResourceEditorAction extends ResourceNodeAction
 {
-  private static final String TITLE = "Open Editor";
+  private static final String TITLE = Messages.getString("OpenResourceEditorAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Open a CDO editor for this resource";
+  private static final String TOOL_TIP = Messages.getString("OpenResourceEditorAction.1"); //$NON-NLS-1$
 
   public OpenResourceEditorAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
       CDOResourceNode resourceNode)

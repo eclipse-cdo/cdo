@@ -7,11 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.dialogs.PackageRegistryDialog;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -21,9 +23,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class ManagePackagesAction extends SessionAction
 {
-  private static final String TITLE = "Package Registry";
+  private static final String TITLE = Messages.getString("ManagePackagesAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Browse and register model packages";
+  private static final String TOOL_TIP = Messages.getString("ManagePackagesAction.1"); //$NON-NLS-1$
 
   public ManagePackagesAction(IWorkbenchPage page, CDOSession session)
   {

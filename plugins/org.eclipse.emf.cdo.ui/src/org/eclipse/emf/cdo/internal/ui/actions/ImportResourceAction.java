@@ -7,12 +7,14 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.dialogs.ImportResourceDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -37,9 +39,9 @@ import java.util.Map;
  */
 public class ImportResourceAction extends ViewAction
 {
-  public static final String ID = "import-resource";
+  public static final String ID = "import-resource"; //$NON-NLS-1$
 
-  private static final String TITLE = "Import Resource";
+  private static final String TITLE = Messages.getString("ImportResourceAction.1"); //$NON-NLS-1$
 
   private URI sourceURI;
 
@@ -47,7 +49,7 @@ public class ImportResourceAction extends ViewAction
 
   public ImportResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE + INTERACTIVE, "Import a CDO resource", null, view);
+    super(page, TITLE + INTERACTIVE, Messages.getString("ImportResourceAction.2"), null, view); //$NON-NLS-1$
     setId(ID);
   }
 
@@ -65,7 +67,7 @@ public class ImportResourceAction extends ViewAction
       }
       else
       {
-        MessageDialog.openError(getShell(), TITLE, "A single URI must be entered!");
+        MessageDialog.openError(getShell(), TITLE, Messages.getString("ImportResourceAction.3")); //$NON-NLS-1$
         cancel();
       }
     }
@@ -83,7 +85,7 @@ public class ImportResourceAction extends ViewAction
     // Source ResourceSet
     ResourceSet sourceSet = new ResourceSetImpl();
     Map<String, Object> map = sourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-    map.put("*", new XMIResourceFactoryImpl());
+    map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
     sourceSet.setPackageRegistry(transaction.getSession().getPackageRegistry());
 
     // Source Resource

@@ -7,12 +7,14 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.internal.ui.dialogs.OpenAuditDialog;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
@@ -24,9 +26,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenAuditAction extends AbstractOpenViewAction
 {
-  private static final String TITLE = "Open Audit";
+  private static final String TITLE = Messages.getString("OpenAuditAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Open a historical CDO view";
+  private static final String TOOL_TIP = Messages.getString("OpenAuditAction.1"); //$NON-NLS-1$
 
   private long timeStamp;
 

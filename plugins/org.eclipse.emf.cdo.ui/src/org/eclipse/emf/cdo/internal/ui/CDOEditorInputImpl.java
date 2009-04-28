@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOAudit;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -106,7 +107,7 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
   {
     if (view.isClosed())
     {
-      return "View closed";
+      return Messages.getString("CDOEditorInputImpl.0"); //$NON-NLS-1$
     }
 
     CDOSession session = view.getSession();
@@ -119,20 +120,20 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
       builder.append(resourcePath);
     }
 
-    builder.append(" [");
+    builder.append(" ["); //$NON-NLS-1$
     builder.append(session.getSessionID());
-    builder.append(":");
+    builder.append(":"); //$NON-NLS-1$
     builder.append(view.getViewID());
-    builder.append("]");
+    builder.append("]"); //$NON-NLS-1$
 
     if (view.getViewType() != CDOView.Type.TRANSACTION)
     {
-      builder.append(" readonly");
+      builder.append(" readonly"); //$NON-NLS-1$
     }
 
     if (view instanceof CDOAudit)
     {
-      builder.append(MessageFormat.format(" {0,date} {0,time}", ((CDOAudit)view).getTimeStamp()));
+      builder.append(MessageFormat.format(" {0,date} {0,time}", ((CDOAudit)view).getTimeStamp())); //$NON-NLS-1$
     }
 
     return builder.toString();

@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -22,9 +23,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class OpenViewEditorAction extends ViewAction
 {
-  private static final String TITLE = "Open Editor";
+  private static final String TITLE = Messages.getString("OpenViewEditorAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Open a CDO editor for this view";
+  private static final String TOOL_TIP = Messages.getString("OpenViewEditorAction.1"); //$NON-NLS-1$
 
   public OpenViewEditorAction(IWorkbenchPage page, CDOView view)
   {

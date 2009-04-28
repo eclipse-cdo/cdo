@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -88,7 +89,7 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
             {
               public void run()
               {
-                MessageDialog.openError(getShell(), "Error", "Cannot obtain locks");
+                MessageDialog.openError(getShell(), Messages.getString("AbstractLockObjectsAction.0"), Messages.getString("AbstractLockObjectsAction.1")); //$NON-NLS-1$ //$NON-NLS-2$
               }
             });
           }

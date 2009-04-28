@@ -7,10 +7,12 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.preferences;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -57,36 +59,36 @@ public class CDOPreferencePage extends OMPreferencePage
 
     Group sessionGroup = new Group(composite, SWT.NONE);
     sessionGroup.setLayout(new GridLayout(2, false));
-    sessionGroup.setText("Session Defaults");
+    sessionGroup.setText(Messages.getString("CDOPreferencePage.0")); //$NON-NLS-1$
     sessionGroup.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(sessionGroup, SWT.NONE).setText("Repository name:");
+    new Label(sessionGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.1")); //$NON-NLS-1$
     repositoryName = new Text(sessionGroup, SWT.BORDER);
     repositoryName.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(sessionGroup, SWT.NONE).setText("User name:");
+    new Label(sessionGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.2")); //$NON-NLS-1$
     userName = new Text(sessionGroup, SWT.BORDER);
     userName.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(sessionGroup, SWT.NONE).setText("Connector description:");
+    new Label(sessionGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.3")); //$NON-NLS-1$
     connectorDescription = new Text(sessionGroup, SWT.BORDER);
     connectorDescription.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(sessionGroup, SWT.NONE).setText("Reference chunk size:");
+    new Label(sessionGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.4")); //$NON-NLS-1$
     referenceChunkSize = new TextAndDisable(sessionGroup, SWT.BORDER, String.valueOf(CDORevision.UNCHUNKED));
     referenceChunkSize.setLayoutData(UIUtil.createGridData(true, false));
 
     Group viewGroup = new Group(composite, SWT.NONE);
     viewGroup.setLayout(new GridLayout(2, false));
-    viewGroup.setText("View Defaults");
+    viewGroup.setText(Messages.getString("CDOPreferencePage.5")); //$NON-NLS-1$
     viewGroup.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(viewGroup, SWT.NONE).setText("Preload chunk size:");
+    new Label(viewGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.6")); //$NON-NLS-1$
     preloadChunkSize = new TextAndDisable(viewGroup, SWT.BORDER, String
         .valueOf(CDOView.Options.NO_REVISION_PREFETCHING));
     preloadChunkSize.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(viewGroup, SWT.NONE).setText("EMF invalidation notifications:");
+    new Label(viewGroup, SWT.NONE).setText(Messages.getString("CDOPreferencePage.7")); //$NON-NLS-1$
     invalidationNotifications = new Button(viewGroup, SWT.CHECK);
 
     initValues();

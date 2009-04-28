@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
- *    
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -23,9 +23,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class ReloadViewAction extends ViewAction
 {
-  private static final String TITLE = "Reload";
+  private static final String TITLE = Messages.getString("ReloadViewAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Reload this view";
+  private static final String TOOL_TIP = Messages.getString("ReloadViewAction.1"); //$NON-NLS-1$
 
   public ReloadViewAction(IWorkbenchPage page, CDOView view)
   {

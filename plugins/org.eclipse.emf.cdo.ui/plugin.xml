@@ -23,21 +23,21 @@
          point="org.eclipse.ui.views">
       <category
             id="org.eclipse.emf.cdo"
-            name="CDO">
+            name="%category.name.0">
       </category>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView"
             icon="icons/full/view16/cdo_sessions.gif"
             id="org.eclipse.emf.cdo.CDOSessionsView"
-            name="CDO Sessions">
+            name="%view.name.0">
       </view>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOWatchListView"
             icon="icons/full/view16/watch_list.gif"
             id="org.eclipse.emf.cdo.CDOWatchListView"
-            name="CDO Watch List">
+            name="%view.name.1">
       </view>
    </extension>
    
@@ -57,7 +57,7 @@
   <extension point = "org.eclipse.ui.editors">
     <editor
         id = "org.eclipse.emf.cdo.ui.CDOEditor"
-        name = "CDO Editor"
+        name = "%editor.name.0"
         icon = "icons/full/obj16/cdo_editor.gif"
         extensions = "*"
         class = "org.eclipse.emf.cdo.internal.ui.editor.CDOEditor" 
@@ -70,13 +70,13 @@
      <page
            class="org.eclipse.emf.cdo.internal.ui.preferences.CDOPreferencePage"
            id="org.eclipse.emf.cdo.ui.CDOPreferencePage"
-           name="CDO">
+           name="%page.name.0">
      </page>
      <page
            category="org.eclipse.emf.cdo.ui.CDOPreferencePage"
            class="org.eclipse.emf.cdo.internal.ui.preferences.CDOUIPreferencePage"
            id="org.eclipse.emf.cdo.ui.CDOUIPreferencePage"
-           name="User Interface">
+           name="%page.name.1">
      </page>
   </extension>
   

@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.editor;
 
@@ -62,17 +63,17 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
 
   /**
    * @ADDED
    */
-  public static final String LOAD_RESOURCE_ID = "load-resource";
+  public static final String LOAD_RESOURCE_ID = "load-resource"; //$NON-NLS-1$
 
   /**
    * @ADDED
    */
-  public static final String REFRESH_VIEWER_ID = "refresh-viewer";
+  public static final String REFRESH_VIEWER_ID = "refresh-viewer"; //$NON-NLS-1$
 
   /**
    * @ADDED
@@ -119,14 +120,14 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * @generated
    */
   protected IAction showPropertiesViewAction = new Action(PluginDelegator.INSTANCE
-      .getString("_UI_ShowPropertiesView_menu_item"))
+      .getString("_UI_ShowPropertiesView_menu_item")) //$NON-NLS-1$
   {
     @Override
     public void run()
     {
       try
       {
-        getPage().showView("org.eclipse.ui.views.PropertySheet");
+        getPage().showView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
       }
       catch (PartInitException exception)
       {
@@ -141,7 +142,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * 
    * @generated
    */
-  protected IAction refreshViewerAction = new Action(PluginDelegator.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
+  protected IAction refreshViewerAction = new Action(PluginDelegator.INSTANCE.getString("_UI_RefreshViewer_menu_item")) //$NON-NLS-1$
   {
     @Override
     public boolean isEnabled()
@@ -227,8 +228,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   @Override
   public void contributeToToolBar(IToolBarManager toolBarManager)
   {
-    toolBarManager.add(new Separator("cdo-settings"));
-    toolBarManager.add(new Separator("cdo-additions"));
+    toolBarManager.add(new Separator("cdo-settings")); //$NON-NLS-1$
+    toolBarManager.add(new Separator("cdo-additions")); //$NON-NLS-1$
   }
 
   /**
@@ -242,23 +243,23 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   {
     super.contributeToMenu(menuManager);
 
-    IMenuManager submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CDOEditor_menu"),
-        "org.eclipse.emf.cdo.internal.ui.editorMenuID");
-    menuManager.insertAfter("additions", submenuManager);
-    submenuManager.add(new Separator("settings"));
-    submenuManager.add(new Separator("actions"));
-    submenuManager.add(new Separator("additions"));
-    submenuManager.add(new Separator("additions-end"));
+    IMenuManager submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CDOEditor_menu"), //$NON-NLS-1$
+        "org.eclipse.emf.cdo.internal.ui.editorMenuID"); //$NON-NLS-1$
+    menuManager.insertAfter("additions", submenuManager); //$NON-NLS-1$
+    submenuManager.add(new Separator("settings")); //$NON-NLS-1$
+    submenuManager.add(new Separator("actions")); //$NON-NLS-1$
+    submenuManager.add(new Separator("additions")); //$NON-NLS-1$
+    submenuManager.add(new Separator("additions-end")); //$NON-NLS-1$
 
     // Prepare for CreateChild item addition or removal.
     //
-    createChildMenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateChild_menu_item"));
-    submenuManager.insertBefore("additions", createChildMenuManager);
+    createChildMenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateChild_menu_item")); //$NON-NLS-1$
+    submenuManager.insertBefore("additions", createChildMenuManager); //$NON-NLS-1$
 
     // Prepare for CreateSibling item addition or removal.
     //
-    createSiblingMenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateSibling_menu_item"));
-    submenuManager.insertBefore("additions", createSiblingMenuManager);
+    createSiblingMenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateSibling_menu_item")); //$NON-NLS-1$
+    submenuManager.insertBefore("additions", createSiblingMenuManager); //$NON-NLS-1$
 
     // Force an update because Eclipse hides empty menus now.
     //
@@ -555,13 +556,13 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     super.menuAboutToShow(menuManager);
     MenuManager submenuManager = null;
 
-    submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateChild_menu_item"));
+    submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateChild_menu_item")); //$NON-NLS-1$
     populateManager(submenuManager, createChildActions, null);
-    menuManager.insertBefore("edit", submenuManager);
+    menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
 
-    submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateSibling_menu_item"));
+    submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CreateSibling_menu_item")); //$NON-NLS-1$
     populateManager(submenuManager, createSiblingActions, null);
-    menuManager.insertBefore("edit", submenuManager);
+    menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
   }
 
   /**
@@ -571,11 +572,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    */
   protected void addGlobalActionsGen(IMenuManager menuManager)
   {
-    menuManager.insertAfter("additions-end", new Separator("ui-actions"));
-    menuManager.insertAfter("ui-actions", showPropertiesViewAction);
+    menuManager.insertAfter("additions-end", new Separator("ui-actions")); //$NON-NLS-1$ //$NON-NLS-2$
+    menuManager.insertAfter("ui-actions", showPropertiesViewAction); //$NON-NLS-1$
 
     refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
-    menuManager.insertAfter("ui-actions", refreshViewerAction);
+    menuManager.insertAfter("ui-actions", refreshViewerAction); //$NON-NLS-1$
 
     super.addGlobalActions(menuManager);
   }
@@ -586,26 +587,26 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   @Override
   protected void addGlobalActions(IMenuManager menuManager)
   {
-    menuManager.insertAfter("additions-end", new Separator("ui-actions"));
-    menuManager.insertAfter("ui-actions", showPropertiesViewAction);
+    menuManager.insertAfter("additions-end", new Separator("ui-actions")); //$NON-NLS-1$ //$NON-NLS-2$
+    menuManager.insertAfter("ui-actions", showPropertiesViewAction); //$NON-NLS-1$
 
     refreshViewerAction.setEnabled(refreshViewerAction.isEnabled());
     refreshViewerAction.setId(REFRESH_VIEWER_ID);
-    menuManager.insertAfter("ui-actions", refreshViewerAction);
+    menuManager.insertAfter("ui-actions", refreshViewerAction); //$NON-NLS-1$
     menuManager.insertBefore(refreshViewerAction.getId(), reloadObjectsAction);
 
-    MenuManager lockingSubMenu = new MenuManager("Locking");
-    lockingSubMenu.add(new Separator("ui-actions"));
+    MenuManager lockingSubMenu = new MenuManager("Locking"); //$NON-NLS-1$
+    lockingSubMenu.add(new Separator("ui-actions")); //$NON-NLS-1$
 
-    lockingSubMenu.insertAfter("ui-actions", writeLockObjectsAction);
+    lockingSubMenu.insertAfter("ui-actions", writeLockObjectsAction); //$NON-NLS-1$
     writeLockObjectsAction.update();
 
-    lockingSubMenu.insertAfter("ui-actions", readLockObjectsAction);
+    lockingSubMenu.insertAfter("ui-actions", readLockObjectsAction); //$NON-NLS-1$
     readLockObjectsAction.update();
 
-    menuManager.insertAfter("ui-actions", lockingSubMenu);
+    menuManager.insertAfter("ui-actions", lockingSubMenu); //$NON-NLS-1$
 
-    menuManager.insertAfter("ui-actions", changePassiveUpdateAction);
+    menuManager.insertAfter("ui-actions", changePassiveUpdateAction); //$NON-NLS-1$
     changePassiveUpdateAction.update();
     changePassiveUpdateAction.setEnabled(true);
 
@@ -622,10 +623,10 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     {
       if (importRootsAction != null)
       {
-        menuManager.insertBefore("additions-end", importRootsAction);
+        menuManager.insertBefore("additions-end", importRootsAction); //$NON-NLS-1$
       }
 
-      menuManager.insertBefore("additions-end", new Separator());
+      menuManager.insertBefore("additions-end", new Separator()); //$NON-NLS-1$
     }
   }
 

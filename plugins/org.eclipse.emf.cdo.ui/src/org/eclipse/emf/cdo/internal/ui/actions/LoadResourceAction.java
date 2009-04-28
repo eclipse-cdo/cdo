@@ -7,10 +7,12 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -22,20 +24,20 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class LoadResourceAction extends ViewAction
 {
-  private static final String TITLE = "Load Resource";
+  private static final String TITLE = Messages.getString("LoadResourceAction.0"); //$NON-NLS-1$
 
   private String resourcePath;
 
   public LoadResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE + INTERACTIVE, "Load a CDO resource", null, view);
+    super(page, TITLE + INTERACTIVE, Messages.getString("LoadResourceAction.1"), null, view); //$NON-NLS-1$
   }
 
   @Override
   protected void preRun() throws Exception
   {
-    String uri = ViewAction.lastResourceNumber == 0 ? "" : "/res" + ViewAction.lastResourceNumber;
-    InputDialog dialog = new InputDialog(getShell(), TITLE, "Enter resource path:", uri, null);
+    String uri = ViewAction.lastResourceNumber == 0 ? "" : "/res" + ViewAction.lastResourceNumber; //$NON-NLS-1$ //$NON-NLS-2$
+    InputDialog dialog = new InputDialog(getShell(), TITLE, Messages.getString("LoadResourceAction.4"), uri, null); //$NON-NLS-1$
     if (dialog.open() == InputDialog.OK)
     {
       resourcePath = dialog.getValue();

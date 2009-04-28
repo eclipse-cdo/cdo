@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.ui.dialogs.ExportResourceDialog;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
@@ -32,13 +33,13 @@ import java.util.List;
  */
 public class ExportResourceAction extends ViewAction
 {
-  public static final String ID = "export-resource";
+  public static final String ID = "export-resource"; //$NON-NLS-1$
 
-  private static final String TITLE = "Export Resource";
+  private static final String TITLE = Messages.getString("ExportResourceAction.1"); //$NON-NLS-1$
 
   public ExportResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE + INTERACTIVE, "Export a CDO resource", null, view);
+    super(page, TITLE + INTERACTIVE, Messages.getString("ExportResourceAction.2"), null, view); //$NON-NLS-1$
     setId(ID);
   }
 
@@ -60,7 +61,7 @@ public class ExportResourceAction extends ViewAction
       }
       else
       {
-        MessageDialog.openError(getShell(), TITLE, "A single URI must be entered!");
+        MessageDialog.openError(getShell(), TITLE, Messages.getString("ExportResourceAction.3")); //$NON-NLS-1$
         cancel();
       }
     }

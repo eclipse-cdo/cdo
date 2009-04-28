@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.filters;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -22,6 +23,16 @@ import org.eclipse.jface.viewers.Viewer;
  */
 public class CDOStateFilter extends CDOObjectFilter
 {
+  private static final String STATE_CONFLICT = Messages.getString("CDOStateFilter.0"); //$NON-NLS-1$
+
+  private static final String STATE_TRANSIENT = Messages.getString("CDOStateFilter.1"); //$NON-NLS-1$
+
+  private static final String STATE_NEW = Messages.getString("CDOStateFilter.2"); //$NON-NLS-1$
+
+  private static final String STATE_CLEAN = Messages.getString("CDOStateFilter.3"); //$NON-NLS-1$
+
+  private static final String STATE_DIRTY = Messages.getString("CDOStateFilter.4"); //$NON-NLS-1$
+
   private CDOState stateFilter;
 
   public CDOStateFilter(StructuredViewer viewer)
@@ -32,23 +43,23 @@ public class CDOStateFilter extends CDOObjectFilter
   @Override
   protected void parsePattern(String pattern)
   {
-    if (pattern.compareToIgnoreCase("dirty") == 0)
+    if (pattern.compareToIgnoreCase(STATE_DIRTY) == 0)
     {
       stateFilter = CDOState.DIRTY;
     }
-    else if (pattern.compareToIgnoreCase("clean") == 0)
+    else if (pattern.compareToIgnoreCase(STATE_CLEAN) == 0)
     {
       stateFilter = CDOState.CLEAN;
     }
-    else if (pattern.compareToIgnoreCase("new") == 0)
+    else if (pattern.compareToIgnoreCase(STATE_NEW) == 0)
     {
       stateFilter = CDOState.NEW;
     }
-    else if (pattern.compareToIgnoreCase("transient") == 0)
+    else if (pattern.compareToIgnoreCase(STATE_TRANSIENT) == 0)
     {
       stateFilter = CDOState.TRANSIENT;
     }
-    else if (pattern.compareToIgnoreCase("conflict") == 0)
+    else if (pattern.compareToIgnoreCase(STATE_CONFLICT) == 0)
     {
       stateFilter = CDOState.CONFLICT;
     }
@@ -71,12 +82,13 @@ public class CDOStateFilter extends CDOObjectFilter
   @Override
   public String getDescription()
   {
-    return "Specify a state to filter: dirty | clean | transient | new | conflict";
+    return String.format(Messages.getString("CDOStateFilter.5"), STATE_DIRTY, STATE_CLEAN, //$NON-NLS-1$
+        STATE_TRANSIENT, STATE_NEW, STATE_CONFLICT);
   }
 
   @Override
   public String getTitle()
   {
-    return "CDOState filter";
+    return Messages.getString("CDOStateFilter.6"); //$NON-NLS-1$
   }
 }

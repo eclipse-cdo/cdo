@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -27,9 +28,9 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public final class CreateResourceAction extends ViewAction
 {
-  private static final String TITLE = "Create Resource";
+  private static final String TITLE = Messages.getString("CreateResourceAction.0"); //$NON-NLS-1$
 
-  private static final String TOOL_TIP = "Create a CDO resource";
+  private static final String TOOL_TIP = Messages.getString("CreateResourceAction.1"); //$NON-NLS-1$
 
   private String resourcePath;
 
@@ -41,7 +42,7 @@ public final class CreateResourceAction extends ViewAction
   @Override
   protected void preRun() throws Exception
   {
-    InputDialog dialog = new InputDialog(getShell(), TITLE, "Enter resource path:", "/res"
+    InputDialog dialog = new InputDialog(getShell(), TITLE, Messages.getString("CreateResourceAction.2"), "/res" //$NON-NLS-1$ //$NON-NLS-2$
         + (ViewAction.lastResourceNumber + 1), null);
     if (dialog.open() == InputDialog.OK)
     {
@@ -65,8 +66,8 @@ public final class CreateResourceAction extends ViewAction
       {
         public void run()
         {
-          getOrCreate[0] = MessageDialog.openQuestion(new Shell(), "Resource already exists",
-              "There already exists a resource with path \"" + resourcePath + "\". Do you want to edit the resource?");
+          getOrCreate[0] = MessageDialog.openQuestion(new Shell(), Messages.getString("CreateResourceAction.4"), String.format( //$NON-NLS-1$
+              Messages.getString("CreateResourceAction.5"), resourcePath)); //$NON-NLS-1$
         }
       });
     }

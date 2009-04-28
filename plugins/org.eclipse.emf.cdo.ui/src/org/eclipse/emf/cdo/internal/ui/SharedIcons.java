@@ -26,45 +26,45 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String ETOOL = "etool16/";
+  private static final String ETOOL = "etool16/"; //$NON-NLS-1$
 
-  private static final String OBJ = "obj16/";
+  private static final String OBJ = "obj16/"; //$NON-NLS-1$
 
-  private static final String VIEW = "view16/";
+  private static final String VIEW = "view16/"; //$NON-NLS-1$
 
-  private static final String WIZBAN = "wizban/";
+  private static final String WIZBAN = "wizban/"; //$NON-NLS-1$
 
-  public static final String ETOOL_OPEN_SESSION = ETOOL + "open_session";
+  public static final String ETOOL_OPEN_SESSION = ETOOL + "open_session"; //$NON-NLS-1$
 
-  public static final String ETOOL_OPEN_EDITOR = ETOOL + "open_editor";
+  public static final String ETOOL_OPEN_EDITOR = ETOOL + "open_editor"; //$NON-NLS-1$
 
-  public static final String OBJ_SESSION = OBJ + "cdo_session";
+  public static final String OBJ_SESSION = OBJ + "cdo_session"; //$NON-NLS-1$
 
-  public static final String OBJ_EDITOR = OBJ + "cdo_editor";
+  public static final String OBJ_EDITOR = OBJ + "cdo_editor"; //$NON-NLS-1$
 
-  public static final String OBJ_EDITOR_READWRITE = OBJ + "cdo_editor_readwrite";
+  public static final String OBJ_EDITOR_READWRITE = OBJ + "cdo_editor_readwrite"; //$NON-NLS-1$
 
-  public static final String OBJ_EDITOR_READONLY = OBJ + "cdo_editor_readonly";
+  public static final String OBJ_EDITOR_READONLY = OBJ + "cdo_editor_readonly"; //$NON-NLS-1$
 
-  public static final String OBJ_EDITOR_HISTORICAL = OBJ + "cdo_editor_historical";
+  public static final String OBJ_EDITOR_HISTORICAL = OBJ + "cdo_editor_historical"; //$NON-NLS-1$
 
-  public static final String OBJ_EPACKAGE = OBJ + "EPackage";
+  public static final String OBJ_EPACKAGE = OBJ + "EPackage"; //$NON-NLS-1$
 
-  public static final String OBJ_EPACKAGE_CONVERTED = OBJ + "EPackageConverted";
+  public static final String OBJ_EPACKAGE_CONVERTED = OBJ + "EPackageConverted"; //$NON-NLS-1$
 
-  public static final String OBJ_EPACKAGE_LEGACY = OBJ + "EPackageLegacy";
+  public static final String OBJ_EPACKAGE_LEGACY = OBJ + "EPackageLegacy"; //$NON-NLS-1$
 
-  public static final String OBJ_EPACKAGE_NATIVE = OBJ + "EPackageNative";
+  public static final String OBJ_EPACKAGE_NATIVE = OBJ + "EPackageNative"; //$NON-NLS-1$
 
-  public static final String OBJ_EPACKAGE_DYNAMIC = OBJ + "EPackageDynamic";
+  public static final String OBJ_EPACKAGE_DYNAMIC = OBJ + "EPackageDynamic"; //$NON-NLS-1$
 
-  public static final String OBJ_EPACKAGE_UNKNOWN = OBJ + "EPackageUnknown";
+  public static final String OBJ_EPACKAGE_UNKNOWN = OBJ + "EPackageUnknown"; //$NON-NLS-1$
 
-  public static final String OBJ_ECLASS = OBJ + "EClass";
+  public static final String OBJ_ECLASS = OBJ + "EClass"; //$NON-NLS-1$
 
-  public static final String VIEW_SESSIONS = VIEW + "cdo_sessions";
+  public static final String VIEW_SESSIONS = VIEW + "cdo_sessions"; //$NON-NLS-1$
 
-  public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager";
+  public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager"; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {
@@ -121,7 +121,7 @@ public class SharedIcons
 
     if (display == null)
     {
-      throw new IllegalStateException("display == null");
+      throw new IllegalStateException("display == null"); //$NON-NLS-1$
     }
 
     return display;
@@ -129,6 +129,6 @@ public class SharedIcons
 
   private static String mangleKey(String key)
   {
-    return "icons/full/" + key + ".gif";
+    return "icons/full/" + key + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

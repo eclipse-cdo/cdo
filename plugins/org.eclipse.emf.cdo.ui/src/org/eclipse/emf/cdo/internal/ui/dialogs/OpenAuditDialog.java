@@ -7,10 +7,12 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -32,7 +34,7 @@ import java.util.GregorianCalendar;
  */
 public class OpenAuditDialog extends TitleAreaDialog
 {
-  public static final String TITLE = "Open Audit";
+  public static final String TITLE = Messages.getString("OpenAuditDialog.0"); //$NON-NLS-1$
 
   private IWorkbenchPage page;
 
@@ -76,7 +78,7 @@ public class OpenAuditDialog extends TitleAreaDialog
     setTitle(TITLE);
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
 
-    new Label(composite, SWT.NONE).setText("Target Time:");
+    new Label(composite, SWT.NONE).setText(Messages.getString("OpenAuditDialog.1")); //$NON-NLS-1$
     dateControl = new DateTime(composite, SWT.DATE);
     timeControl = new DateTime(composite, SWT.TIME);
 

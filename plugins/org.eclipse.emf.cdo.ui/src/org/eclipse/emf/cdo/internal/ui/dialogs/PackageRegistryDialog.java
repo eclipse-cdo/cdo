@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -65,7 +66,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
 
   private static final int REGISTER_FILESYSTEM_PACKAGES_ID = IDialogConstants.CLIENT_ID + 3;
 
-  private static final String TITLE = "CDO Package Registry";
+  private static final String TITLE = Messages.getString("PackageRegistryDialog.0"); //$NON-NLS-1$
 
   private static final Color GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_GRAY);
 
@@ -102,10 +103,10 @@ public class PackageRegistryDialog extends TitleAreaDialog
 
     table.setHeaderVisible(true);
     table.setLayoutData(UIUtil.createGridData());
-    addColumn(table, "Package", 450, SWT.LEFT);
-    addColumn(table, "State", 80, SWT.CENTER);
-    addColumn(table, "Type", 80, SWT.CENTER);
-    addColumn(table, "Original", 80, SWT.CENTER);
+    addColumn(table, Messages.getString("PackageRegistryDialog.1"), 450, SWT.LEFT); //$NON-NLS-1$
+    addColumn(table, Messages.getString("PackageRegistryDialog.2"), 80, SWT.CENTER); //$NON-NLS-1$
+    addColumn(table, Messages.getString("PackageRegistryDialog.3"), 80, SWT.CENTER); //$NON-NLS-1$
+    addColumn(table, Messages.getString("PackageRegistryDialog.4"), 80, SWT.CENTER); //$NON-NLS-1$
 
     viewer.setContentProvider(new EPackageContentProvider());
     viewer.setLabelProvider(new EPackageLabelProvider());
@@ -117,11 +118,11 @@ public class PackageRegistryDialog extends TitleAreaDialog
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
-    Button button = createButton(parent, REGISTER_GENERATED_PACKAGES_ID, "Generated...", false);
+    Button button = createButton(parent, REGISTER_GENERATED_PACKAGES_ID, Messages.getString("PackageRegistryDialog.5"), false); //$NON-NLS-1$
     button.setEnabled(isGlobalPackageAvaliable());
 
-    createButton(parent, REGISTER_WORKSPACE_PACKAGES_ID, "Workspace...", false);
-    createButton(parent, REGISTER_FILESYSTEM_PACKAGES_ID, "Filesystem...", false);
+    createButton(parent, REGISTER_WORKSPACE_PACKAGES_ID, Messages.getString("PackageRegistryDialog.6"), false); //$NON-NLS-1$
+    createButton(parent, REGISTER_FILESYSTEM_PACKAGES_ID, Messages.getString("PackageRegistryDialog.7"), false); //$NON-NLS-1$
     createButton(parent, IDialogConstants.CLOSE_ID, IDialogConstants.CLOSE_LABEL, false);
   }
 
@@ -232,7 +233,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
         case 2:
           if (packageInfo.getPackageUnit().getType() == Type.UNKNOWN)
           {
-            return "?";
+            return Messages.getString("PackageRegistryDialog.8"); //$NON-NLS-1$
           }
 
           return packageInfo.getPackageUnit().getType().toString();
@@ -248,7 +249,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
         return entry.getKey();
 
       default:
-        return "";
+        return ""; //$NON-NLS-1$
       }
     }
 

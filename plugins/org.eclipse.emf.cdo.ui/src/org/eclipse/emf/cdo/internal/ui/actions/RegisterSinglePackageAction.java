@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.internal.ui.SharedIcons;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -35,7 +36,7 @@ public class RegisterSinglePackageAction extends RegisterPackagesAction
 
   public RegisterSinglePackageAction(IWorkbenchPage page, CDOSession session, String packageURI)
   {
-    super(page, packageURI, "Register the package " + packageURI, getDescriptor(packageURI), session);
+    super(page, packageURI, Messages.getString("RegisterSinglePackageAction.0") + packageURI, getDescriptor(packageURI), session); //$NON-NLS-1$
     this.packageURI = packageURI;
   }
 

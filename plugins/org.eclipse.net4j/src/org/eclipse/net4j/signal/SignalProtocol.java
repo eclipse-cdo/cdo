@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -256,12 +256,26 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   @Override
   public String toString()
   {
-    return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$ 
+    return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    for (Signal signal : getSignals())
+    {
+      if (signal instanceof RequestWithConfirmation<?>)
+      {
+        RequestWithConfirmation<?> request = (RequestWithConfirmation<?>)signal;
+        request.setRemoteException(new IllegalStateException("Request canceled due to protocol deactivation"), false);
+      }
+    }
+
+    synchronized (signals)
+    {
+      signals.clear();
+    }
+
     failOverStrategy = null;
     IChannel channel = getChannel();
     if (channel != null)
@@ -322,6 +336,14 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   protected SignalReactor createSignalReactor(short signalID)
   {
     return null;
+  }
+
+  private Signal[] getSignals()
+  {
+    synchronized (signals)
+    {
+      return signals.values().toArray(new Signal[signals.size()]);
+    }
   }
 
   synchronized int getNextCorrelationID()

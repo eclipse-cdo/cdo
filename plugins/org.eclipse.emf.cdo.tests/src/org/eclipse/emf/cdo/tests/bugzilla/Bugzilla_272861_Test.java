@@ -37,24 +37,4 @@ public class Bugzilla_272861_Test extends AbstractCDOTest
     trans.close();
     session.close();
   }
-
-  // TODO SIMON Is it a bug or not??
-  public void te2st_Bugzilla_272861_Case2() throws IOException
-  {
-    CDOSession session = openModel1Session();
-
-    CDOTransaction trans1 = session.openTransaction();
-    CDOTransaction trans2 = session.openTransaction();
-
-    trans1.createResource("/test1");
-    trans2.createResource("/test2");
-
-    trans1.commit();
-    trans2.commit();
-
-    trans1.close();
-    trans2.close();
-
-    session.close();
-  }
 }

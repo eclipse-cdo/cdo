@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.internal.common.revision.cache.mem;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.lang.ref.Reference;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -171,7 +173,7 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
           cacheLists.remove(id);
           if (TRACER.isEnabled())
           {
-            TRACER.format("Removed cache list of {0}", id);
+            TRACER.format("Removed cache list of {0}", id); //$NON-NLS-1$
           }
         }
       }
@@ -253,7 +255,7 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
       }
     }
 
-    throw new IllegalStateException("Invalid referenceType: " + referenceType);
+    throw new IllegalStateException(MessageFormat.format(Messages.getString("MEMRevisionCache.1"), referenceType)); //$NON-NLS-1$
   }
 
   /**
@@ -354,7 +356,7 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
           it.remove();
           if (TRACER.isEnabled())
           {
-            TRACER.format("Removed version {0} from cache list of {1}", version, key.getID());
+            TRACER.format("Removed version {0} from cache list of {1}", version, key.getID()); //$NON-NLS-1$
           }
 
           break;

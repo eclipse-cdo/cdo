@@ -81,6 +81,6 @@ public final class CDOIDAndVersionImpl implements CDOIDAndVersion
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}v{1}", id, version);
+    return MessageFormat.format("{0}v{1}", id, version); //$NON-NLS-1$
   }
 }

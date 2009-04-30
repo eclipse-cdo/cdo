@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -66,6 +67,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -91,7 +93,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     int size = readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} package units", size);
+      TRACER.format("Reading {0} package units", size); //$NON-NLS-1$
     }
 
     CDOPackageUnit[] packageUnits = new CDOPackageUnit[size];
@@ -153,7 +155,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
         type = ex.getMessage();
       }
 
-      TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type);
+      TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
     }
 
     Type type = Type.values()[ordinal];
@@ -226,7 +228,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       referenceChunk = readInt();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk);
+        TRACER.format("Read feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk); //$NON-NLS-1$
       }
     }
     else
@@ -234,7 +236,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       referenceChunk = size;
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read feature {0}: size={1}", feature.getName(), size);
+        TRACER.format("Read feature {0}: size={1}", feature.getName(), size); //$NON-NLS-1$
       }
     }
 
@@ -246,7 +248,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       list.set(j, value);
       if (TRACER.isEnabled())
       {
-        TRACER.trace("    " + value);
+        TRACER.trace("    " + value); //$NON-NLS-1$
       }
     }
 
@@ -303,7 +305,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       return new CDOUnsetFeatureDeltaImpl(this, eClass);
 
     default:
-      throw new IOException("Invalid type " + typeOrdinal);
+      throw new IOException(MessageFormat.format(Messages.getString("CDODataInputImpl.5"), typeOrdinal)); //$NON-NLS-1$
     }
   }
 

@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
@@ -32,6 +33,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -71,21 +73,22 @@ public final class CDOIDUtil
         return ((CDOIDLongImpl)id).getLongValue();
       }
 
-      throw new IllegalArgumentException("Unknown CDOIDObject implementation: " + id.getClass().getName());
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
 
     case META:
       return ((CDOIDMeta)id).getLongValue();
 
     case TEMP_META:
     case TEMP_OBJECT:
-      throw new IllegalArgumentException("id instanceof CDOIDTemp");
+      throw new IllegalArgumentException(Messages.getString("CDOIDUtil.1")); //$NON-NLS-1$
 
     case EXTERNAL_OBJECT:
     case EXTERNAL_TEMP_OBJECT:
-      throw new IllegalArgumentException("Can't get long id from external ID types.");
+      throw new IllegalArgumentException(Messages.getString("CDOIDUtil.2")); //$NON-NLS-1$
 
     default:
-      throw new ImplementationError("Invalid CDOID type: " + id.getClass().getName());
+      throw new ImplementationError(MessageFormat.format(Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
     }
   }
 
@@ -142,7 +145,7 @@ public final class CDOIDUtil
       try
       {
         String type = Type.values()[ordinal].toString();
-        TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type);
+        TRACER.format("Reading CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
       }
       catch (RuntimeException ex)
       {
@@ -180,7 +183,7 @@ public final class CDOIDUtil
     }
 
     default:
-      throw new IllegalArgumentException("Invalid ID type : " + uriFragment);
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOIDUtil.5"), uriFragment)); //$NON-NLS-1$
     }
   }
 
@@ -204,7 +207,7 @@ public final class CDOIDUtil
     int ordinal = type.ordinal();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type);
+      TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
     }
 
     builder.append(ordinal);
@@ -221,7 +224,7 @@ public final class CDOIDUtil
       throw new ImplementationError();
     }
 
-    builder.append("/" + id.toURIFragment());
+    builder.append("/" + id.toURIFragment()); //$NON-NLS-1$
   }
 
   public static CDOIDMeta createMeta(long value)

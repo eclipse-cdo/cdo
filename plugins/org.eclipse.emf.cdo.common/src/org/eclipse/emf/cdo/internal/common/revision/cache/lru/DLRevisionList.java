@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import java.text.MessageFormat;
@@ -54,7 +55,7 @@ public class DLRevisionList extends DLRevisionHolder
   {
     if (getPrev() != null || getDLNext() != null || getDLList() != null)
     {
-      throw new IllegalStateException("Cannot assign to a different list while linked to a list");
+      throw new IllegalStateException(Messages.getString("DLRevisionList.0")); //$NON-NLS-1$
     }
 
     super.setDLList(list);
@@ -69,7 +70,7 @@ public class DLRevisionList extends DLRevisionHolder
   {
     if (index < 0 || index >= size)
     {
-      throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+      throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     DLRevisionHolder holder = this;
@@ -100,7 +101,7 @@ public class DLRevisionList extends DLRevisionHolder
   {
     if (holder.getDLList() != null)
     {
-      throw new IllegalArgumentException("Holder " + holder + " is still linked in different list");
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("DLRevisionList.3"), holder)); //$NON-NLS-1$ 
     }
   }
 
@@ -108,7 +109,7 @@ public class DLRevisionList extends DLRevisionHolder
   {
     if (holder.getDLList() != this)
     {
-      throw new IllegalArgumentException("Holder " + holder + " does not belong to this list");
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("DLRevisionList.5"), holder)); //$NON-NLS-1$
     }
   }
 
@@ -156,7 +157,7 @@ public class DLRevisionList extends DLRevisionHolder
   @Override
   public String toString()
   {
-    return MessageFormat.format("DLRevisionList[size={0}]", size);
+    return MessageFormat.format("DLRevisionList[size={0}]", size); //$NON-NLS-1$
   }
 
   @Override

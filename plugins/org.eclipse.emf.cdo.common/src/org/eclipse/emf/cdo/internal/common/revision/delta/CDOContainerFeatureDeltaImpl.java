@@ -114,7 +114,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     @Override
     public String toString()
     {
-      return "CONTAINER_FEATURE";
+      return "CONTAINER_FEATURE"; //$NON-NLS-1$
     }
   }
 }

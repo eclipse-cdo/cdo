@@ -38,7 +38,7 @@ public class CDOIDLongImpl extends AbstractCDOIDLong implements CDOIDObject
   @Override
   public String toString()
   {
-    return "OID" + getLongValue();
+    return "OID" + getLongValue(); //$NON-NLS-1$
   }
 
   @Override

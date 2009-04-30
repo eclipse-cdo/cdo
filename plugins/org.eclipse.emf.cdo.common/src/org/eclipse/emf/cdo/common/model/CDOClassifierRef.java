@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.messages.Messages;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
@@ -73,7 +74,7 @@ public final class CDOClassifierRef
     EPackage ePackage = packageRegistry.getEPackage(packageURI);
     if (ePackage == null)
     {
-      throw new IllegalStateException("Package not found: " + packageURI);
+      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOClassifierRef.0"), packageURI)); //$NON-NLS-1$
     }
 
     return EMFUtil.getClassifier(ePackage, classifierID);
@@ -82,6 +83,6 @@ public final class CDOClassifierRef
   @Override
   public String toString()
   {
-    return MessageFormat.format("EClassRef({0}, {1})", packageURI, classifierID);
+    return MessageFormat.format("EClassRef({0}, {1})", packageURI, classifierID); //$NON-NLS-1$
   }
 }

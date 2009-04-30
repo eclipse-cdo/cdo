@@ -124,6 +124,6 @@ public class RevisionHolder
   @Override
   public String toString()
   {
-    return MessageFormat.format("RevisionHolder[{0}]", revision);
+    return MessageFormat.format("RevisionHolder[{0}]", revision); //$NON-NLS-1$
   }
 }

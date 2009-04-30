@@ -31,7 +31,7 @@ public final class CDOIDMetaRangeImpl implements CDOIDMetaRange
   {
     if (size < 0)
     {
-      throw new IllegalArgumentException("size < 0");
+      throw new IllegalArgumentException("size < 0"); //$NON-NLS-1$
     }
 
     this.lowerBound = lowerBound;
@@ -52,7 +52,7 @@ public final class CDOIDMetaRangeImpl implements CDOIDMetaRange
   {
     if (index < 0 || index >= size)
     {
-      throw new IllegalArgumentException("ids < 0 || ids >= size");
+      throw new IllegalArgumentException("ids < 0 || ids >= size"); //$NON-NLS-1$
     }
 
     if (isTemporary())
@@ -79,7 +79,7 @@ public final class CDOIDMetaRangeImpl implements CDOIDMetaRange
     {
       if (id.getType() != Type.TEMP_META)
       {
-        throw new IllegalArgumentException("id.getType() != Type.TEMP_META");
+        throw new IllegalArgumentException("id.getType() != Type.TEMP_META"); //$NON-NLS-1$
       }
 
       int index = ((CDOIDTempMetaImpl)id).getIntValue() - ((CDOIDTempMetaImpl)lowerBound).getIntValue();
@@ -88,7 +88,7 @@ public final class CDOIDMetaRangeImpl implements CDOIDMetaRange
 
     if (id.getType() != Type.META)
     {
-      throw new IllegalArgumentException("id.getType() != Type.META");
+      throw new IllegalArgumentException("id.getType() != Type.META"); //$NON-NLS-1$
     }
 
     long index = ((CDOIDMetaImpl)id).getLongValue() - ((CDOIDMetaImpl)lowerBound).getLongValue();
@@ -113,6 +113,6 @@ public final class CDOIDMetaRangeImpl implements CDOIDMetaRange
   @Override
   public String toString()
   {
-    return MessageFormat.format("[{0}:{1}]", lowerBound, getUpperBound());
+    return MessageFormat.format("[{0}:{1}]", lowerBound, getUpperBound()); //$NON-NLS-1$
   }
 }

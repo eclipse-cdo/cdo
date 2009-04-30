@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
+import org.eclipse.emf.cdo.common.messages.Messages;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -21,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -70,7 +72,8 @@ public class CDOIDLibraryProviderImpl implements CDOIDLibraryProvider
     OMBundle bundle = bundles.get(libraryName);
     if (bundle == null)
     {
-      throw new IllegalStateException("Unknown library: " + libraryName);
+      throw new IllegalStateException(MessageFormat.format(
+          Messages.getString("CDOIDLibraryProviderImpl.0"), libraryName)); //$NON-NLS-1$
     }
 
     URL url = bundle.getBaseURL();
@@ -80,12 +83,13 @@ public class CDOIDLibraryProviderImpl implements CDOIDLibraryProvider
       file = new File(file, libraryName);
     }
 
-    if (file.exists() && file.isFile() && file.getName().endsWith(".jar"))
+    if (file.exists() && file.isFile() && file.getName().endsWith(".jar")) //$NON-NLS-1$
     {
       return file;
     }
 
-    throw new IllegalStateException("Not a JAR: " + file.getAbsolutePath());
+    throw new IllegalStateException(MessageFormat.format(
+        Messages.getString("CDOIDLibraryProviderImpl.2"), file.getAbsolutePath())); //$NON-NLS-1$
   }
 
   /**

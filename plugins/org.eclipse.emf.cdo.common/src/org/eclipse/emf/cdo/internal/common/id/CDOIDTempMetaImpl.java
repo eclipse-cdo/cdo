@@ -35,7 +35,7 @@ public class CDOIDTempMetaImpl extends AbstractCDOIDInteger implements CDOIDTemp
   @Override
   public String toString()
   {
-    return "mid" + getIntValue();
+    return "mid" + getIntValue(); //$NON-NLS-1$
   }
 
   @Override

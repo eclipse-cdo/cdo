@@ -174,7 +174,7 @@ public final class EMFUtil
   public static ResourceSet newResourceSet(Resource.Factory resourceFactory)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
     return resourceSet;
   }
 
@@ -425,8 +425,8 @@ public final class EMFUtil
     resourceSet.setPackageRegistry(packageRegistry);
 
     Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
-    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory);
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
 
     return resourceSet.createResource(URI.createURI(uri));
   }

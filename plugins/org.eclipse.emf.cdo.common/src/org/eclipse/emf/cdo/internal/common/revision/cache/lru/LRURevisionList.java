@@ -49,7 +49,7 @@ public class LRURevisionList extends DLRevisionList
   @Override
   public String toString()
   {
-    return MessageFormat.format("LRURevisionList[size={0}, capacity={1}]", size(), capacity);
+    return MessageFormat.format("LRURevisionList[size={0}, capacity={1}]", size(), capacity); //$NON-NLS-1$
   }
 
   protected void eviction()

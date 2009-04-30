@@ -34,7 +34,7 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID
   {
     if (value == 0)
     {
-      throw new IllegalArgumentException("value == 0");
+      throw new IllegalArgumentException("value == 0"); //$NON-NLS-1$
     }
 
     this.value = value;

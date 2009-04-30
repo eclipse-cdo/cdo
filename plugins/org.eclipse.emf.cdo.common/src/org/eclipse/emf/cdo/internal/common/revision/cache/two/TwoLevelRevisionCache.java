@@ -175,7 +175,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     level2.addRevision(revision);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Recached revision {0}", revision);
+      TRACER.format("Recached revision {0}", revision); //$NON-NLS-1$
     }
   }
 
@@ -187,8 +187,8 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(level1, "level1");
-    checkState(level2, "level2");
+    checkState(level1, "level1"); //$NON-NLS-1$
+    checkState(level2, "level2"); //$NON-NLS-1$
   }
 
   @Override

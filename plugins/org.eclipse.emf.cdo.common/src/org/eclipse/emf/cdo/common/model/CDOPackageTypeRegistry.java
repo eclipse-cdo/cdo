@@ -32,11 +32,11 @@ public final class CDOPackageTypeRegistry
 {
   public static final CDOPackageTypeRegistry INSTANCE = new CDOPackageTypeRegistry();
 
-  private static final String ECORE_ID = "org.eclipse.emf.ecore";
+  private static final String ECORE_ID = "org.eclipse.emf.ecore"; //$NON-NLS-1$
 
   private static final String PPID = EcorePlugin.GENERATED_PACKAGE_PPID;
 
-  private static final String MARKER_FILE = "META-INF/CDO.MF";
+  private static final String MARKER_FILE = "META-INF/CDO.MF"; //$NON-NLS-1$
 
   private Map<String, CDOPackageUnit.Type> types = new HashMap<String, CDOPackageUnit.Type>();
 
@@ -150,7 +150,7 @@ public final class CDOPackageTypeRegistry
     org.eclipse.core.runtime.IExtensionRegistry registry = org.eclipse.core.runtime.Platform.getExtensionRegistry();
     for (org.eclipse.core.runtime.IConfigurationElement element : registry.getConfigurationElementsFor(ECORE_ID, PPID))
     {
-      String uri = element.getAttribute("uri");
+      String uri = element.getAttribute("uri"); //$NON-NLS-1$
       if (ObjectUtil.equals(uri, packageURI))
       {
         return element.getContributor().getName();

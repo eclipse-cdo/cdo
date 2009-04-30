@@ -48,7 +48,7 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
   @Override
   public String toString()
   {
-    return "oid:" + toURIFragment();
+    return "oid:" + toURIFragment(); //$NON-NLS-1$
   }
 
   @Override

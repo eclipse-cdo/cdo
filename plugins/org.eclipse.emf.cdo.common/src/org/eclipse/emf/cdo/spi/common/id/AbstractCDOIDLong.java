@@ -37,7 +37,7 @@ public abstract class AbstractCDOIDLong extends AbstractCDOID
   {
     if (value == NULL_VALUE)
     {
-      throw new IllegalArgumentException("value == NULL_VALUE");
+      throw new IllegalArgumentException("value == NULL_VALUE"); //$NON-NLS-1$
     }
 
     this.value = value;

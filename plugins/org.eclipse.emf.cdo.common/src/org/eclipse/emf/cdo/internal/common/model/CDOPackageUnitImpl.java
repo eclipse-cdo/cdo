@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.common.model;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -72,7 +73,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
     catch (RuntimeException ex)
     {
-      return "UNINITIALIZED";
+      return Messages.getString("CDOPackageUnitImpl.0"); //$NON-NLS-1$
     }
   }
 
@@ -142,7 +143,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   {
     if (packageInfos == null || packageInfos.length == 0)
     {
-      throw new IllegalStateException("Package unit not initialized");
+      throw new IllegalStateException(Messages.getString("CDOPackageUnitImpl.1")); //$NON-NLS-1$
     }
 
     return packageInfos[0];
@@ -254,7 +255,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0}", this);
+      TRACER.format("Writing {0}", this); //$NON-NLS-1$
     }
 
     out.writeBoolean(withPackages);
@@ -298,7 +299,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read {0}", this);
+      TRACER.format("Read {0}", this); //$NON-NLS-1$
     }
   }
 
@@ -310,7 +311,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   @Override
   public String toString()
   {
-    String fmt = "CDOPackageUnit[id={0}, state={1}, type={2}, originalType={3}, timeStamp={4,date} {4,time}]";
+    String fmt = "CDOPackageUnit[id={0}, state={1}, type={2}, originalType={3}, timeStamp={4,date} {4,time}]"; //$NON-NLS-1$
     return MessageFormat.format(fmt, getID(), getState(), getType(), getOriginalType(), getTimeStamp());
   }
 

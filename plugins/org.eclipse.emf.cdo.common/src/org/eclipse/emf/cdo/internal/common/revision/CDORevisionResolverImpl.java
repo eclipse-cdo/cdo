@@ -88,7 +88,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Loading revision {0}", id);
+          TRACER.format("Loading revision {0}", id); //$NON-NLS-1$
         }
 
         revision = loadRevision(id, referenceChunk);
@@ -122,7 +122,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Loading revision {0} by time {1,date} {1,time}", id, timeStamp);
+          TRACER.format("Loading revision {0} by time {1,date} {1,time}", id, timeStamp); //$NON-NLS-1$
         }
 
         revision = loadRevisionByTime(id, referenceChunk, timeStamp);
@@ -156,7 +156,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Loading revision {0} by version {1}", id, version);
+          TRACER.format("Loading revision {0} by version {1}", id, version); //$NON-NLS-1$
         }
 
         revision = loadRevisionByVersion(id, referenceChunk, version);
@@ -239,7 +239,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
       return cache.addRevision(revision);
     }
 
-    throw new IllegalArgumentException("revision == null");
+    throw new IllegalArgumentException("revision == null"); //$NON-NLS-1$
   }
 
   public void removeCachedRevision(CDOID id, int version)

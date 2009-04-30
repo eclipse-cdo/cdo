@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -133,7 +134,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     LifecycleUtil.checkActive(this);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Registering {0} --> {1}", nsURI, value);
+      TRACER.format("Registering {0} --> {1}", nsURI, value); //$NON-NLS-1$
     }
 
     if (packageProcessor != null)
@@ -301,7 +302,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
       packageInfo = getPackageInfo(ePackage);
       if (packageInfo == null)
       {
-        throw new ImplementationError("No package unit available for: " + ePackage);
+        throw new ImplementationError(MessageFormat.format(Messages.getString("CDOPackageRegistryImpl.0"), ePackage)); //$NON-NLS-1$
       }
     }
 
@@ -357,7 +358,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[packageLoader={1}]", getClass().getSimpleName(), getPackageLoader());
+    return MessageFormat.format("{0}[packageLoader={1}]", getClass().getSimpleName(), getPackageLoader()); //$NON-NLS-1$
   }
 
   public synchronized boolean isActive()
@@ -374,7 +375,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   {
     if (!active)
     {
-      CheckUtil.checkState(packageLoader, "packageLoader");
+      CheckUtil.checkState(packageLoader, "packageLoader"); //$NON-NLS-1$
       active = true;
     }
   }
@@ -491,7 +492,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
         }
       }
 
-      throw new IllegalStateException("No meta instance mapped for " + id + "\n" + dump());
+      throw new IllegalStateException(
+          MessageFormat.format(Messages.getString("CDOPackageRegistryImpl.1"), id) + "\n" + dump()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public synchronized CDOID lookupMetaInstanceID(InternalEObject metaInstance)
@@ -531,8 +533,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
         }
       }
 
-      throw new IllegalStateException("No meta ID mapped for " + metaInstance + "\nContaining package: " + ePackage
-          + "\n" + dump());
+      throw new IllegalStateException(MessageFormat.format(
+          Messages.getString("CDOPackageRegistryImpl.6"), metaInstance, ePackage) + "\n" + dump()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private EPackage getContainingPackage(InternalEObject metaInstance)
@@ -564,7 +566,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
       range = map((InternalEObject)ePackage, range);
       if (range.size() != metaIDRange.size())
       {
-        throw new IllegalStateException("range.size() != metaIDRange.size()");
+        throw new IllegalStateException("range.size() != metaIDRange.size()"); //$NON-NLS-1$
       }
     }
 
@@ -587,12 +589,12 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
       InternalEObject metaInstance = idToMetaInstanceMap.remove(oldID);
       if (metaInstance == null)
       {
-        throw new IllegalArgumentException("Unknown meta instance ID: " + oldID);
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOPackageRegistryImpl.10"), oldID)); //$NON-NLS-1$
       }
 
       if (METAID_TRACER.isEnabled())
       {
-        METAID_TRACER.format("Remapping meta instance: {0} --> {1} <-> {2}", oldID, newID, metaInstance);
+        METAID_TRACER.format("Remapping meta instance: {0} --> {1} <-> {2}", oldID, newID, metaInstance); //$NON-NLS-1$
       }
 
       map(newID, metaInstance);
@@ -627,7 +629,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
       for (Map.Entry<CDOID, InternalEObject> entry : list)
       {
-        stream.println("    " + entry.getKey() + " --> " + entry.getValue());
+        stream.println("    " + entry.getKey() + " --> " + entry.getValue()); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       return baos.toString();
@@ -646,7 +648,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
       CDOID id = range.getUpperBound();
       if (METAID_TRACER.isEnabled())
       {
-        METAID_TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance);
+        METAID_TRACER.format("Registering meta instance: {0} <-> {1}", id, metaInstance); //$NON-NLS-1$
       }
 
       idToMetaInstanceMap.put(id, metaInstance);

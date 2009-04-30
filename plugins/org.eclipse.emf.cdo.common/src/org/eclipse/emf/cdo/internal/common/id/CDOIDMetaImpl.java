@@ -34,7 +34,7 @@ public class CDOIDMetaImpl extends AbstractCDOIDLong implements CDOIDMeta
   @Override
   public String toString()
   {
-    return "MID" + getLongValue();
+    return "MID" + getLongValue(); //$NON-NLS-1$
   }
 
   @Override

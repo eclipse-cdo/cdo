@@ -34,7 +34,7 @@ public class CDOIDTempObjectImpl extends AbstractCDOIDInteger implements CDOIDTe
   @Override
   public String toString()
   {
-    return "oid" + getIntValue();
+    return "oid" + getIntValue(); //$NON-NLS-1$
   }
 
   @Override

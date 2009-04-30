@@ -42,13 +42,13 @@ public class CDOIDLibraryDescriptorImpl implements CDOIDLibraryDescriptor
     factoryName = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read factory name: {0}", factoryName);
+      TRACER.format("Read factory name: {0}", factoryName); //$NON-NLS-1$
     }
 
     int size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} library names", size);
+      TRACER.format("Reading {0} library names", size); //$NON-NLS-1$
     }
 
     libraryNames = new String[size];
@@ -57,7 +57,7 @@ public class CDOIDLibraryDescriptorImpl implements CDOIDLibraryDescriptor
       libraryNames[i] = in.readString();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read library name: {0}", libraryNames[i]);
+        TRACER.format("Read library name: {0}", libraryNames[i]); //$NON-NLS-1$
       }
     }
   }
@@ -76,13 +76,13 @@ public class CDOIDLibraryDescriptorImpl implements CDOIDLibraryDescriptor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing factory name: {0}", factoryName);
+      TRACER.format("Writing factory name: {0}", factoryName); //$NON-NLS-1$
     }
 
     out.writeString(factoryName);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} library names", libraryNames.length);
+      TRACER.format("Writing {0} library names", libraryNames.length); //$NON-NLS-1$
     }
 
     out.writeInt(libraryNames.length);
@@ -90,7 +90,7 @@ public class CDOIDLibraryDescriptorImpl implements CDOIDLibraryDescriptor
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing library name: {0}", libraryName);
+        TRACER.format("Writing library name: {0}", libraryName); //$NON-NLS-1$
       }
 
       out.writeString(libraryName);
@@ -102,23 +102,23 @@ public class CDOIDLibraryDescriptorImpl implements CDOIDLibraryDescriptor
   {
     StringBuilder builder = new StringBuilder();
     builder.append(getClass().getSimpleName());
-    builder.append("[");
+    builder.append("["); //$NON-NLS-1$
     builder.append(factoryName);
     if (libraryNames.length != 0)
     {
-      builder.append(" -> ");
+      builder.append(" -> "); //$NON-NLS-1$
       for (int i = 0; i < libraryNames.length; i++)
       {
         if (i != 0)
         {
-          builder.append(", ");
+          builder.append(", "); //$NON-NLS-1$
         }
 
         builder.append(libraryNames[i]);
       }
     }
 
-    builder.append("]");
+    builder.append("]"); //$NON-NLS-1$
     return builder.toString();
   }
 }

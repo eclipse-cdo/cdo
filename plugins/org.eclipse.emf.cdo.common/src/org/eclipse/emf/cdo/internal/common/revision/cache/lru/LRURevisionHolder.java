@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -40,7 +43,8 @@ public class LRURevisionHolder extends DLRevisionHolder
     }
     else
     {
-      throw new IllegalArgumentException("Not a " + LRURevisionList.class.getName() + ": " + list);
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("LRURevisionHolder.0"), LRURevisionList.class.getName(), list)); //$NON-NLS-1$ 
     }
   }
 

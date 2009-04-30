@@ -91,7 +91,7 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0}", this);
+      TRACER.format("Writing {0}", this); //$NON-NLS-1$
     }
 
     out.writeCDOPackageURI(packageURI);
@@ -106,7 +106,7 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
     metaIDRange = in.readCDOIDMetaRange();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read {0}", this);
+      TRACER.format("Read {0}", this); //$NON-NLS-1$
     }
   }
 
@@ -160,7 +160,7 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOPackageInfo[packageURI={0}, parentURI={1}, metaIDRange={2}]", packageURI,
+    return MessageFormat.format("CDOPackageInfo[packageURI={0}, parentURI={1}, metaIDRange={2}]", packageURI, //$NON-NLS-1$
         parentURI, metaIDRange);
   }
 }

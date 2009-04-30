@@ -162,7 +162,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Adding revision: {0}, created={1,date} {1,time}, revised={2,date} {2,time}, current={3}",
+      TRACER.format("Adding revision: {0}, created={1,date} {1,time}, revised={2,date} {2,time}, current={3}", //$NON-NLS-1$
           revision, revision.getCreated(), revision.getRevised(), revision.isCurrent());
     }
 
@@ -419,7 +419,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     @Override
     public String toString()
     {
-      return MessageFormat.format("LRU[size={0}, capacity={1}]", size(), capacity());
+      return MessageFormat.format("LRU[size={0}, capacity={1}]", size(), capacity()); //$NON-NLS-1$
     }
 
     @Override
@@ -427,7 +427,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Evicting revision {0}v{1}", holder.getID(), holder.getVersion());
+        TRACER.format("Evicting revision {0}v{1}", holder.getID(), holder.getVersion()); //$NON-NLS-1$
       }
 
       // Remember some values before the holder may be changed

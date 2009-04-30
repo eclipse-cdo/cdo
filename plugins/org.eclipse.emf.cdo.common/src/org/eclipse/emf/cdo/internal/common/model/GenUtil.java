@@ -65,7 +65,7 @@ public final class GenUtil
     String capName = StringUtil.cap(featureName);
     // if (isMapEntryFeature())
     // return "getTyped" + capName;
-    String result = isBooleanType ? "is" + capName : "get" + ("Class".equals(capName) ? "Class_" : capName);
+    String result = isBooleanType ? "is" + capName : "get" + ("Class".equals(capName) ? "Class_" : capName); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     // if (isListType() && !isFeatureMapType() && !isMapType() &&
     // getGenModel().isArrayAccessors())
@@ -142,7 +142,7 @@ public final class GenUtil
     {
       result.append(prefix);
     }
-    return leadingSeparators != null ? "_" + result.toString() : result.toString();
+    return leadingSeparators != null ? "_" + result.toString() : result.toString(); //$NON-NLS-1$
   }
 
   /**

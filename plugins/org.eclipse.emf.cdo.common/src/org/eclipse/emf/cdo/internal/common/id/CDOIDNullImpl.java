@@ -53,7 +53,7 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
 
   public String toURIFragment()
   {
-    return "NULL";
+    return "NULL"; //$NON-NLS-1$
   }
 
   @Override
@@ -89,7 +89,7 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
   @Override
   public String toString()
   {
-    return "NULL";
+    return "NULL"; //$NON-NLS-1$
   }
 
   @Override

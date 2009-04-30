@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -46,6 +47,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -70,7 +72,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     writeInt(size);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} package units", size);
+      TRACER.format("Writing {0} package units", size); //$NON-NLS-1$
     }
 
     for (CDOPackageUnit packageUnit : packageUnits)
@@ -120,7 +122,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     int ordinal = type.ordinal();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type);
+      TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
     }
 
     writeByte(ordinal);
@@ -185,7 +187,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       // This happens only on server-side
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk);
+        TRACER.format("Writing feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk); //$NON-NLS-1$
       }
 
       writeInt(-size);
@@ -196,7 +198,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing feature {0}: size={1}", feature.getName(), size);
+        TRACER.format("Writing feature {0}: size={1}", feature.getName(), size); //$NON-NLS-1$
       }
 
       writeInt(size);
@@ -212,7 +214,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace("    " + value);
+        TRACER.trace("    " + value); //$NON-NLS-1$
       }
 
       writeCDOFeatureValue(value, feature);
@@ -278,7 +280,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       CDOID id = (CDOID)value;
       if (id.isTemporary())
       {
-        throw new IllegalArgumentException("Temporary ID not supported: " + value);
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDODataOutputImpl.5"), value)); //$NON-NLS-1$
       }
 
       type = CDOType.OBJECT;
@@ -288,7 +290,8 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       type = CDOModelUtil.getPrimitiveType(value.getClass());
       if (type == null)
       {
-        throw new IllegalArgumentException("No type for object of class " + value.getClass());
+        throw new IllegalArgumentException(MessageFormat.format(
+            Messages.getString("CDODataOutputImpl.6"), value.getClass())); //$NON-NLS-1$
       }
     }
 

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.common.messages.Messages;
+
 import org.eclipse.emf.ecore.EPackage;
 
 /**
@@ -65,7 +67,7 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>
     {
       if (this == UNKNOWN)
       {
-        throw new IllegalStateException("Package unit type is unknown");
+        throw new IllegalStateException(Messages.getString("CDOPackageUnit.0")); //$NON-NLS-1$
       }
     }
   }

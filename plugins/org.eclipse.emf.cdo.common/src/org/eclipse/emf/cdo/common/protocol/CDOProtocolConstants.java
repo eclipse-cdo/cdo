@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.common.protocol;
 
+
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
@@ -20,7 +21,7 @@ package org.eclipse.emf.cdo.common.protocol;
  */
 public interface CDOProtocolConstants
 {
-  public static final String PROTOCOL_NAME = "cdo";
+  public static final String PROTOCOL_NAME = "cdo"; //$NON-NLS-1$
 
   // //////////////////////////////////////////////////////////////////////
   // Signal IDs
@@ -104,11 +105,11 @@ public interface CDOProtocolConstants
   // //////////////////////////////////////////////////////////////////////
   // Query Support
 
-  public static final String QUERY_LANGUAGE_RESOURCES = "resources";
+  public static final String QUERY_LANGUAGE_RESOURCES = "resources"; //$NON-NLS-1$
 
-  public static final String QUERY_LANGUAGE_RESOURCES_FOLDER_ID = "folder";
+  public static final String QUERY_LANGUAGE_RESOURCES_FOLDER_ID = "folder"; //$NON-NLS-1$
 
-  public static final String QUERY_LANGUAGE_RESOURCES_EXACT_MATCH = "exactMatch";
+  public static final String QUERY_LANGUAGE_RESOURCES_EXACT_MATCH = "exactMatch"; //$NON-NLS-1$
 
   // //////////////////////////////////////////////////////////////////////
   // Locking Objects

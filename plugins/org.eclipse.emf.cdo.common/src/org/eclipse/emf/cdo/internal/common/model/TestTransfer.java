@@ -40,34 +40,34 @@ public class TestTransfer
     // Create packageA
     //
     EAttribute attributeA = EcoreFactory.eINSTANCE.createEAttribute();
-    attributeA.setName("attributeA");
+    attributeA.setName("attributeA"); //$NON-NLS-1$
     attributeA.setEType(EcorePackage.eINSTANCE.getEString());
 
     EClass classA = EcoreFactory.eINSTANCE.createEClass();
-    classA.setName("classA");
+    classA.setName("classA"); //$NON-NLS-1$
     classA.getEStructuralFeatures().add(attributeA);
 
     EPackage packageA = EcoreFactory.eINSTANCE.createEPackage();
-    packageA.setName("packageA");
-    packageA.setNsPrefix("packageA");
-    packageA.setNsURI("http://packageA");
+    packageA.setName("packageA"); //$NON-NLS-1$
+    packageA.setNsPrefix("packageA"); //$NON-NLS-1$
+    packageA.setNsURI("http://packageA"); //$NON-NLS-1$
     packageA.getEClassifiers().add(classA);
 
     // Create packageB
     //
     EAttribute attributeB = EcoreFactory.eINSTANCE.createEAttribute();
-    attributeB.setName("attributeB");
+    attributeB.setName("attributeB"); //$NON-NLS-1$
     attributeB.setEType(EcorePackage.eINSTANCE.getEString());
 
     EClass classB = EcoreFactory.eINSTANCE.createEClass();
-    classB.setName("classA");
+    classB.setName("classA"); //$NON-NLS-1$
     classB.getEStructuralFeatures().add(attributeB);
     classB.getESuperTypes().add(classA);
 
     EPackage packageB = EcoreFactory.eINSTANCE.createEPackage();
-    packageB.setName("packageB");
-    packageB.setNsPrefix("packageB");
-    packageB.setNsURI("http://packageB");
+    packageB.setName("packageB"); //$NON-NLS-1$
+    packageB.setNsPrefix("packageB"); //$NON-NLS-1$
+    packageB.setNsURI("http://packageB"); //$NON-NLS-1$
     packageB.getEClassifiers().add(classB);
 
     // Simulate generated global packages
@@ -99,8 +99,8 @@ public class TestTransfer
     Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
 
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory);
-    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory);
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
 
     return resourceSet.createResource(URI.createURI(uri));
   }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageUnitImpl;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,32 +45,32 @@ public final class CDOModelUtil
   /**
    * @since 2.0
    */
-  public static final String CORE_PACKAGE_URI = "http://www.eclipse.org/emf/2002/Ecore";
+  public static final String CORE_PACKAGE_URI = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 
   /**
    * @since 2.0
    */
-  public static final String RESOURCE_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Eresource/2.0.0";
+  public static final String RESOURCE_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Eresource/2.0.0"; //$NON-NLS-1$
 
   /**
    * @since 2.0
    */
-  public static final String RESOURCE_NODE_CLASS_NAME = "CDOResourceNode";
+  public static final String RESOURCE_NODE_CLASS_NAME = "CDOResourceNode"; //$NON-NLS-1$
 
   /**
    * @since 2.0
    */
-  public static final String RESOURCE_FOLDER_CLASS_NAME = "CDOResourceFolder";
+  public static final String RESOURCE_FOLDER_CLASS_NAME = "CDOResourceFolder"; //$NON-NLS-1$
 
   /**
    * @since 2.0
    */
-  public static final String RESOURCE_CLASS_NAME = "CDOResource";
+  public static final String RESOURCE_CLASS_NAME = "CDOResource"; //$NON-NLS-1$
 
   /**
    * @since 2.0
    */
-  public static final String ROOT_CLASS_NAME = "EObject";
+  public static final String ROOT_CLASS_NAME = "EObject"; //$NON-NLS-1$
 
   private static CDOType[] coreTypes;
 
@@ -179,7 +181,7 @@ public final class CDOModelUtil
     CDOTypeImpl type = CDOTypeImpl.ids.get(typeID);
     if (type == null)
     {
-      throw new IllegalStateException("No type for id " + typeID);
+      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOModelUtil.6"), typeID)); //$NON-NLS-1$
     }
 
     return type;
@@ -279,7 +281,7 @@ public final class CDOModelUtil
       return CDOType.CHAR;
     }
 
-    throw new IllegalArgumentException("Not a primitive type nor String nor Date: " + primitiveType);
+    throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOModelUtil.7"), primitiveType)); //$NON-NLS-1$
   }
 
   /**

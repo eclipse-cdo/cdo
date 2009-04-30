@@ -51,6 +51,6 @@ public final class CDOElementProxyImpl implements CDOElementProxy
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOElementProxy[{0}]", index);
+    return MessageFormat.format("CDOElementProxy[{0}]", index); //$NON-NLS-1$
   }
 }

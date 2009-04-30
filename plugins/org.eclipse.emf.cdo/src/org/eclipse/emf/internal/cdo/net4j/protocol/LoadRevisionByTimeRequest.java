@@ -43,7 +43,7 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
     super.requesting(out);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing timeStamp: {0}", timeStamp);
+      TRACER.format("Writing timeStamp: {0}", timeStamp); //$NON-NLS-1$
     }
 
     out.writeLong(timeStamp);
@@ -52,7 +52,7 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, timeStamp={3})", getClass().getSimpleName(),
+    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, timeStamp={3})", getClass().getSimpleName(), //$NON-NLS-1$
         getIds(), getReferenceChunk(), timeStamp);
   }
 }

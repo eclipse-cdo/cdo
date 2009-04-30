@@ -12,8 +12,11 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.messages.Messages;
 
 import org.eclipse.emf.ecore.EObject;
+
+import java.text.MessageFormat;
 
 /**
  * @author Simon McDuff
@@ -27,7 +30,7 @@ public class DanglingReferenceException extends CDOException
 
   public DanglingReferenceException(EObject object)
   {
-    super("The object '" + object + "(" + object.getClass().getName() + ")' is not contained in a resource.");
+    super(MessageFormat.format(Messages.getString("DanglingReferenceException.0"), object, object.getClass().getName())); //$NON-NLS-1$
     target = object;
   }
 

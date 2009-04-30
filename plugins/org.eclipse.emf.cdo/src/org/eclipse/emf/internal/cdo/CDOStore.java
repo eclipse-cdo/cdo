@@ -101,7 +101,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("setContainer({0}, {1}, {2}, {3})", cdoObject, newResource, newEContainer, newContainerFeatureID);
+      TRACER.format("setContainer({0}, {1}, {2}, {3})", cdoObject, newResource, newEContainer, newContainerFeatureID); //$NON-NLS-1$
     }
 
     Object newContainerID = newEContainer == null ? CDOID.NULL : cdoObject.cdoView().convertObjectToID(newEContainer,
@@ -120,7 +120,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("getContainer({0})", cdoObject);
+      TRACER.format("getContainer({0})", cdoObject); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -132,7 +132,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("getContainingFeatureID({0})", cdoObject);
+      TRACER.format("getContainingFeatureID({0})", cdoObject); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -147,7 +147,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("getResource({0})", cdoObject);
+      TRACER.format("getResource({0})", cdoObject); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -157,7 +157,7 @@ public final class CDOStore implements EStore
   @Deprecated
   public EStructuralFeature getContainingFeature(InternalEObject eObject)
   {
-    throw new UnsupportedOperationException("Use getContainingFeatureID() instead");
+    throw new UnsupportedOperationException("Use getContainingFeatureID() instead"); //$NON-NLS-1$
   }
 
   public Object get(InternalEObject eObject, EStructuralFeature feature, int index)
@@ -165,7 +165,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("get({0}, {1}, {2})", cdoObject, feature, index);
+      TRACER.format("get({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
     }
 
     view.getFeatureAnalyzer().preTraverseFeature(cdoObject, feature, index);
@@ -190,7 +190,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("size({0}, {1})", cdoObject, feature);
+      TRACER.format("size({0}, {1})", cdoObject, feature); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -202,7 +202,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("isEmpty({0}, {1})", cdoObject, feature);
+      TRACER.format("isEmpty({0}, {1})", cdoObject, feature); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -214,7 +214,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value);
+      TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
     if (feature instanceof EReference)
@@ -231,7 +231,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("indexOf({0}, {1}, {2})", cdoObject, feature, value);
+      TRACER.format("indexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
     if (feature instanceof EReference)
@@ -248,7 +248,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("lastIndexOf({0}, {1}, {2})", cdoObject, feature, value);
+      TRACER.format("lastIndexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
     if (feature instanceof EReference)
@@ -265,7 +265,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("hashCode({0}, {1})", cdoObject, feature);
+      TRACER.format("hashCode({0}, {1})", cdoObject, feature); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -277,7 +277,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("toArray({0}, {1})", cdoObject, feature);
+      TRACER.format("toArray({0}, {1})", cdoObject, feature); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
@@ -319,7 +319,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, feature, index, value);
+      TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
     }
 
     value = convertToCDO(getView(), feature, value);
@@ -383,7 +383,7 @@ public final class CDOStore implements EStore
         // Object object = view.convertIDToObject(entry.getObject());
         // value = FeatureMapUtil.createEntry(feature, object);
         throw new UnsupportedOperationException(
-            "Feature maps currently not supported. See https://bugs.eclipse.org/249436");
+            "Feature maps currently not supported. See https://bugs.eclipse.org/249436"); //$NON-NLS-1$
       }
       else
       {
@@ -422,7 +422,7 @@ public final class CDOStore implements EStore
         // String uri = EcoreUtil.getURI(entry.getEStructuralFeature()).toString();
         // value = CDORevisionUtil.createFeatureMapEntry(uri, entry.getValue());
         throw new UnsupportedOperationException(
-            "Feature maps currently not supported. See https://bugs.eclipse.org/249436");
+            "Feature maps currently not supported. See https://bugs.eclipse.org/249436"); //$NON-NLS-1$
       }
       else
       {
@@ -442,7 +442,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("unset({0}, {1})", cdoObject, feature);
+      TRACER.format("unset({0}, {1})", cdoObject, feature); //$NON-NLS-1$
     }
 
     CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
@@ -457,7 +457,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("add({0}, {1}, {2}, {3})", cdoObject, feature, index, value);
+      TRACER.format("add({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
     }
 
     value = convertToCDO(cdoObject.cdoView(), feature, value);
@@ -472,7 +472,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("remove({0}, {1}, {2})", cdoObject, feature, index);
+      TRACER.format("remove({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
     }
 
     CDOFeatureDelta delta = new CDORemoveFeatureDeltaImpl(feature, index);
@@ -489,7 +489,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("clear({0}, {1})", cdoObject, feature);
+      TRACER.format("clear({0}, {1})", cdoObject, feature); //$NON-NLS-1$
     }
 
     CDOFeatureDelta delta = new CDOClearFeatureDeltaImpl(feature);
@@ -503,7 +503,7 @@ public final class CDOStore implements EStore
     InternalCDOObject cdoObject = getCDOObject(eObject);
     if (TRACER.isEnabled())
     {
-      TRACER.format("move({0}, {1}, {2}, {3})", cdoObject, feature, target, source);
+      TRACER.format("move({0}, {1}, {2}, {3})", cdoObject, feature, target, source); //$NON-NLS-1$
     }
 
     CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(feature, target, source);
@@ -516,13 +516,13 @@ public final class CDOStore implements EStore
 
   public EObject create(EClass eClass)
   {
-    throw new UnsupportedOperationException("Use the generated factory to create objects");
+    throw new UnsupportedOperationException("Use the generated factory to create objects"); //$NON-NLS-1$
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOStore[{0}]", view);
+    return MessageFormat.format("CDOStore[{0}]", view); //$NON-NLS-1$
   }
 
   private InternalCDOObject getCDOObject(Object object)
@@ -598,7 +598,7 @@ public final class CDOStore implements EStore
     InternalCDORevision revision = cdoObject.cdoRevision();
     if (revision == null)
     {
-      throw new IllegalStateException("revision == null");
+      throw new IllegalStateException("revision == null"); //$NON-NLS-1$
     }
 
     return revision;

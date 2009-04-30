@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAState;
@@ -32,6 +33,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,7 +160,7 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
       }
       else
       {
-        throw new ImplementationError("Object should be an EObject " + idOrObject);
+        throw new ImplementationError(MessageFormat.format(Messages.getString("CDOXACommitContextImpl.0"), idOrObject)); //$NON-NLS-1$
       }
     }
 

@@ -52,7 +52,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} IDs and versions", revisions.size());
+      TRACER.format("Writing {0} IDs and versions", revisions.size()); //$NON-NLS-1$
     }
 
     out.writeInt(revisions.size());
@@ -62,7 +62,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
       int version = revision.getVersion();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing ID and version: {0}v{1}", id, version);
+        TRACER.format("Writing ID and version: {0}v{1}", id, version); //$NON-NLS-1$
       }
 
       out.writeCDOID(id);
@@ -76,7 +76,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
     ArrayList<InternalCDORevision> result = new ArrayList<InternalCDORevision>();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} timeStamps", revisions.size());
+      TRACER.format("Reading {0} timeStamps", revisions.size()); //$NON-NLS-1$
     }
 
     for (InternalCDORevision revision : revisions)
@@ -84,7 +84,7 @@ public class VerifyRevisionRequest extends CDOClientRequest<List<InternalCDORevi
       long revised = in.readLong();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading timeStamp: {0}", revised);
+        TRACER.format("Reading timeStamp: {0}", revised); //$NON-NLS-1$
       }
 
       if (revised != CDORevision.UNSPECIFIED_DATE)

@@ -38,7 +38,7 @@ public class UnsubscribeRemoteSessionsRequest extends CDOClientRequest<Boolean>
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Unsubscribing");
+      TRACER.trace("Unsubscribing"); //$NON-NLS-1$
     }
   }
 

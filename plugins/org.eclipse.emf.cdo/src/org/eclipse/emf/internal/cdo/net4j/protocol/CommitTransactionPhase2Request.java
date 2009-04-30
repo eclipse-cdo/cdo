@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -29,6 +30,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -80,7 +82,7 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
     out.writeInt(size);
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Number of ids requested: {0}", size);
+      PROTOCOL.format("Number of ids requested: {0}", size); //$NON-NLS-1$
     }
 
     for (Entry<CDOIDExternalTempImpl, InternalCDOTransaction> entry : requestedIDs.entrySet())
@@ -92,20 +94,23 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
       InternalCDOXACommitContext commitContext = context.getTransactionManager().getCommitContext(entry.getValue());
       if (commitContext == null)
       {
-        throw new IllegalStateException("Missing informations. " + entry.getValue() + " isn't involved in the commit.");
+        throw new IllegalStateException(MessageFormat.format(
+            Messages.getString("CommitTransactionPhase2Request.1"), entry //$NON-NLS-1$
+                .getValue()));
       }
 
       CDOID newID = commitContext.getResult().getIDMappings().get(oldCDOID);
       if (newID == null)
       {
-        throw new IllegalStateException("Missing informations. " + oldCDOID.toURIFragment()
-            + " isn't mapped in the commit.");
+        throw new IllegalStateException(MessageFormat.format(
+            Messages.getString("CommitTransactionPhase2Request.2"), oldCDOID //$NON-NLS-1$
+                .toURIFragment()));
       }
 
       CDOID newIDExternal = CDOURIUtil.convertExternalCDOID(oldURIExternal, newID);
       if (PROTOCOL.isEnabled())
       {
-        PROTOCOL.format("ID mapping: {0} --> {1}", tempID.toURIFragment(), newIDExternal.toURIFragment());
+        PROTOCOL.format("ID mapping: {0} --> {1}", tempID.toURIFragment(), newIDExternal.toURIFragment()); //$NON-NLS-1$
       }
       out.writeCDOID(tempID);
       out.writeCDOID(newIDExternal);

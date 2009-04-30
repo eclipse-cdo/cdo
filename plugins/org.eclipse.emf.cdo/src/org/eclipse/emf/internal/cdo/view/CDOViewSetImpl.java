@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -91,7 +93,8 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       {
         if (repositoryUUID != null)
         {
-          throw new IllegalArgumentException("Cannot find associated CDOView for repository " + repositoryUUID);
+          throw new IllegalArgumentException(MessageFormat.format(
+              Messages.getString("CDOViewSetImpl.0"), repositoryUUID)); //$NON-NLS-1$
         }
 
         if (mapOfViews.size() == 1)
@@ -104,7 +107,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
           return null;
         }
 
-        throw new IllegalStateException("Don't know which CDOView to take since no authority has been specified");
+        throw new IllegalStateException(Messages.getString("CDOViewSetImpl.1")); //$NON-NLS-1$
       }
     }
 
@@ -127,7 +130,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       CDOView lookupView = mapOfViews.get(repositoryUUID);
       if (lookupView != null)
       {
-        throw new RuntimeException("Only one view per repository can be open for the same resource set");
+        throw new RuntimeException(Messages.getString("CDOViewSetImpl.2")); //$NON-NLS-1$
       }
 
       views.add(view);
@@ -181,12 +184,12 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
   {
     if (!isAdapterForType(newTarget))
     {
-      throw new IllegalArgumentException("Unsupported target: " + newTarget);
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewSetImpl.3"), newTarget)); //$NON-NLS-1$
     }
 
     if (resourceSet != null)
     {
-      throw new IllegalStateException("Cannot associate more than 1 resource set with this view set");
+      throw new IllegalStateException(Messages.getString("CDOViewSetImpl.4")); //$NON-NLS-1$
     }
 
     resourceSet = (ResourceSet)newTarget;

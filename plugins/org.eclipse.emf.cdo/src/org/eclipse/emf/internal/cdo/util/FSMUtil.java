@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
@@ -96,7 +97,7 @@ public final class FSMUtil
   {
     if (view.isClosed())
     {
-      throw new IllegalStateException("View closed");
+      throw new IllegalStateException(Messages.getString("FSMUtil.0")); //$NON-NLS-1$
     }
 
     if (object instanceof InternalCDOObject)
@@ -106,7 +107,7 @@ public final class FSMUtil
 
     if (object == null)
     {
-      throw new IllegalArgumentException("object == null");
+      throw new IllegalArgumentException(Messages.getString("FSMUtil.1")); //$NON-NLS-1$
     }
 
     if (isMeta(object))
@@ -126,7 +127,7 @@ public final class FSMUtil
   {
     if (view == null)
     {
-      throw new IllegalArgumentException("view == null");
+      throw new IllegalArgumentException(Messages.getString("FSMUtil.2")); //$NON-NLS-1$
     }
 
     if (object.eIsProxy())
@@ -153,7 +154,7 @@ public final class FSMUtil
   public static InternalCDOObject adaptLegacy(InternalEObject object)
   {
     // TODO LEGACY
-    throw new UnsupportedOperationException("Legacy models not supported");
+    throw new UnsupportedOperationException(Messages.getString("FSMUtil.3")); //$NON-NLS-1$
     // EList<InternalEObject.EReadListener> readListeners = object.eReadListeners();
     // CDOLegacyWrapper wrapper = getLegacyWrapper(readListeners);
     // if (wrapper == null)

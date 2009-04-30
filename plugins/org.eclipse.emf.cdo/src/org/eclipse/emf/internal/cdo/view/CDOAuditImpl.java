@@ -95,6 +95,6 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOAudit({0})", getViewID());
+    return MessageFormat.format("CDOAudit({0})", getViewID()); //$NON-NLS-1$
   }
 }

@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.query;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
@@ -32,6 +33,7 @@ import java.util.Map.Entry;
  */
 public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 {
+  private static final String OBJECT_NOT_PERSISTED_MESSAGE = Messages.getString("CDOQueryImpl.0"); //$NON-NLS-1$
   private InternalCDOView view;
 
   public CDOQueryImpl(InternalCDOView view, String queryLanguage, String queryString)
@@ -138,12 +140,12 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       InternalCDOObject internalCDOObject = FSMUtil.adapt(object, view);
       if (internalCDOObject.cdoID() == null)
       {
-        throw new UnsupportedOperationException("Object not persisted");
+        throw new UnsupportedOperationException(OBJECT_NOT_PERSISTED_MESSAGE);
       }
 
       if (internalCDOObject.cdoID().isTemporary())
       {
-        throw new UnsupportedOperationException("Object not persisted");
+        throw new UnsupportedOperationException(OBJECT_NOT_PERSISTED_MESSAGE);
       }
 
       return internalCDOObject.cdoID();

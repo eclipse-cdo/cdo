@@ -39,7 +39,7 @@ import java.util.Set;
  */
 public class CDOURIHandler implements URIHandler
 {
-  private static final String CDO_URI_SCHEME = "cdo";
+  private static final String CDO_URI_SCHEME = "cdo"; //$NON-NLS-1$
 
   private InternalCDOView view;
 

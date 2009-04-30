@@ -46,7 +46,7 @@ public class LoadPackagesRequest extends CDOClientRequest<EPackage[]>
     String packageUnitID = packageUnit.getID();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing packageUnitID: {0}", packageUnitID);
+      TRACER.format("Writing packageUnitID: {0}", packageUnitID); //$NON-NLS-1$
     }
 
     out.writeCDOPackageURI(packageUnitID);

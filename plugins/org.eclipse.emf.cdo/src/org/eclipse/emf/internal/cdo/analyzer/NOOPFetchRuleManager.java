@@ -46,6 +46,6 @@ public class NOOPFetchRuleManager implements CDOFetchRuleManager
   @Override
   public String toString()
   {
-    return "NOOP";
+    return "NOOP"; //$NON-NLS-1$
   }
 }

@@ -57,13 +57,13 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing referenceChunk: {0}", referenceChunk);
+      TRACER.format("Writing referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
     }
 
     out.writeInt(referenceChunk);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} IDs", ids.size());
+      TRACER.format("Writing {0} IDs", ids.size()); //$NON-NLS-1$
     }
 
     out.writeInt(ids.size());
@@ -71,7 +71,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing ID: {0}", id);
+        TRACER.format("Writing ID: {0}", id); //$NON-NLS-1$
       }
 
       out.writeCDOID(id);
@@ -108,7 +108,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     ArrayList<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>(idSize);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} revisions", idSize);
+      TRACER.format("Reading {0} revisions", idSize); //$NON-NLS-1$
     }
 
     for (int i = 0; i < idSize; i++)
@@ -122,7 +122,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading {0} additional revisions", additionalSize);
+        TRACER.format("Reading {0} additional revisions", additionalSize); //$NON-NLS-1$
       }
 
       CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getSession().getRevisionManager();
@@ -152,6 +152,6 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}(ids={1}, referenceChunk={2})", getClass().getSimpleName(), ids, referenceChunk);
+    return MessageFormat.format("{0}(ids={1}, referenceChunk={2})", getClass().getSimpleName(), ids, referenceChunk); //$NON-NLS-1$
   }
 }

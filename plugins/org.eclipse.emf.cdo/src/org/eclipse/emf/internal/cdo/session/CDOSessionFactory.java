@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -19,6 +20,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -28,7 +30,7 @@ import java.util.StringTokenizer;
  */
 public abstract class CDOSessionFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.sessions";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.sessions"; //$NON-NLS-1$
 
   private static final String TRUE = Boolean.TRUE.toString();
 
@@ -45,11 +47,11 @@ public abstract class CDOSessionFactory extends Factory
       String query = uri.getQuery();
       if (StringUtil.isEmpty(query))
       {
-        throw new IllegalArgumentException("Query is empty: " + description);
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOSessionFactory.1"), description)); //$NON-NLS-1$
       }
 
       Map<String, String> result = new HashMap<String, String>();
-      StringTokenizer tokenizer = new StringTokenizer(query, "&");
+      StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
       while (tokenizer.hasMoreTokens())
       {
         String parameter = tokenizer.nextToken();
@@ -59,7 +61,7 @@ public abstract class CDOSessionFactory extends Factory
           if (pos == -1)
           {
             String key = parameter.trim();
-            result.put(key, "");
+            result.put(key, ""); //$NON-NLS-1$
           }
           else
           {
@@ -70,8 +72,8 @@ public abstract class CDOSessionFactory extends Factory
         }
       }
 
-      String repositoryName = result.get("repositoryName");
-      boolean automaticPackageRegistry = TRUE.equals(result.get("automaticPackageRegistry"));
+      String repositoryName = result.get("repositoryName"); //$NON-NLS-1$
+      boolean automaticPackageRegistry = TRUE.equals(result.get("automaticPackageRegistry")); //$NON-NLS-1$
       return createSession(repositoryName, automaticPackageRegistry);
     }
     catch (URISyntaxException ex)

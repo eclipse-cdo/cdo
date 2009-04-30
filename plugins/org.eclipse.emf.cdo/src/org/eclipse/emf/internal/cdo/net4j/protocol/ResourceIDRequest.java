@@ -44,13 +44,13 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing viewID: {0}", viewID);
+      TRACER.format("Writing viewID: {0}", viewID); //$NON-NLS-1$
     }
 
     out.writeInt(viewID);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing path: {0}", path);
+      TRACER.format("Writing path: {0}", path); //$NON-NLS-1$
     }
 
     out.writeString(path);
@@ -62,7 +62,7 @@ public class ResourceIDRequest extends CDOClientRequest<CDOID>
     CDOID id = in.readCDOID();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read ID: {0}", id);
+      TRACER.format("Read ID: {0}", id); //$NON-NLS-1$
     }
 
     return id;

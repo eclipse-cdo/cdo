@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -326,7 +327,7 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
       if (hasFeatureConflicts(localDelta, remoteDeltas))
       {
         // TODO localDelta may be corrupt already and the transaction will not be able to restore it!!!
-        throw new CDOException("Object has feature-level conflicts");
+        throw new CDOException(Messages.getString("AbstractObjectConflictResolver.0")); //$NON-NLS-1$
       }
 
       rollbackObject(conflict);

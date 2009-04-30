@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 
@@ -29,6 +30,7 @@ import org.eclipse.emf.internal.cdo.transaction.CDOTimeStampContextImpl;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -65,7 +67,7 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Synchronization " + idAndVersions.size() + " objects");
+      TRACER.trace("Synchronization " + idAndVersions.size() + " objects"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     out.writeInt(referenceChunk);
@@ -92,7 +94,8 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
       CDOIDAndVersion idAndVersion = idAndVersions.get(revision.getID());
       if (idAndVersion == null)
       {
-        throw new IllegalStateException("Didn't expect to receive object with id '" + revision.getID() + "'");
+        throw new IllegalStateException(MessageFormat.format(
+            Messages.getString("SyncRevisionsRequest.2"), revision.getID())); //$NON-NLS-1$
       }
 
       Set<CDOIDAndVersion> dirtyObjects = getMap(mapofContext, revised).getDirtyObjects();
@@ -102,7 +105,7 @@ public class SyncRevisionsRequest extends CDOClientRequest<Collection<CDOTimeSta
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Synchronization received  " + size + " dirty objects");
+      TRACER.trace("Synchronization received  " + size + " dirty objects"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     size = in.readInt();

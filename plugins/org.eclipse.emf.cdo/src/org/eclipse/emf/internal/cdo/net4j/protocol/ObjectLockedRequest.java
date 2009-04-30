@@ -53,8 +53,8 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Requesting if object {0} has  of lock for object {1}", object.cdoID(),
-          lockType == RWLockManager.LockType.READ ? "read" : "write");
+      TRACER.format("Requesting if object {0} has  of lock for object {1}", object.cdoID(), //$NON-NLS-1$
+          lockType == RWLockManager.LockType.READ ? "read" : "write"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     out.writeInt(view.getViewID());

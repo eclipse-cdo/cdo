@@ -61,7 +61,7 @@ public final class Activator extends EMFPlugin
       OSGiActivator.traceStart(context);
       if (OM.BUNDLE == null)
       {
-        throw new IllegalStateException("bundle == null");
+        throw new IllegalStateException("bundle == null"); //$NON-NLS-1$
       }
 
       try
@@ -89,7 +89,7 @@ public final class Activator extends EMFPlugin
       OSGiActivator.traceStop(context);
       if (OM.BUNDLE == null)
       {
-        throw new IllegalStateException("bundle == null");
+        throw new IllegalStateException("bundle == null"); //$NON-NLS-1$
       }
 
       try

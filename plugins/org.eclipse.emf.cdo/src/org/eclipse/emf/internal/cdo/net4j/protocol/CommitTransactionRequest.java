@@ -192,7 +192,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} new package units", newPackageUnits.size());
+      TRACER.format("Writing {0} new package units", newPackageUnits.size()); //$NON-NLS-1$
     }
 
     for (CDOPackageUnit newPackageUnit : newPackageUnits)
@@ -202,7 +202,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} new objects", newResources.size() + newObjects.size());
+      TRACER.format("Writing {0} new objects", newResources.size() + newObjects.size()); //$NON-NLS-1$
     }
 
     writeRevisions(out, newResources);
@@ -210,7 +210,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} dirty objects", revisionDeltas.size());
+      TRACER.format("Writing {0} dirty objects", revisionDeltas.size()); //$NON-NLS-1$
     }
 
     for (CDORevisionDelta revisionDelta : revisionDeltas)

@@ -49,13 +49,13 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing viewID: {0}", viewID);
+      TRACER.format("Writing viewID: {0}", viewID); //$NON-NLS-1$
     }
 
     out.writeInt(viewID);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp);
+      TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp); //$NON-NLS-1$
     }
 
     out.writeLong(timeStamp);
@@ -63,7 +63,7 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
     int size = invalidObjects.size();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} IDs", size);
+      TRACER.format("Writing {0} IDs", size); //$NON-NLS-1$
     }
 
     out.writeInt(size);
@@ -71,7 +71,7 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing ID: {0}", object.cdoID());
+        TRACER.format("Writing ID: {0}", object.cdoID()); //$NON-NLS-1$
       }
 
       out.writeCDOID(object.cdoID());
@@ -84,7 +84,7 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
     int size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} existanceFlags", size);
+      TRACER.format("Reading {0} existanceFlags", size); //$NON-NLS-1$
     }
 
     boolean[] existanceFlags = new boolean[size];
@@ -94,7 +94,7 @@ public class SetAuditRequest extends CDOClientRequest<boolean[]>
       existanceFlags[i] = existanceFlag;
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read existanceFlag: {0}", existanceFlag);
+        TRACER.format("Read existanceFlag: {0}", existanceFlag); //$NON-NLS-1$
       }
     }
 

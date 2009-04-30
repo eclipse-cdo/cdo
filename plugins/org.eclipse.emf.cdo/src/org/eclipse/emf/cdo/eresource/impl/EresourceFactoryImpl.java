@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.messages.Messages;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -22,6 +23,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import java.text.MessageFormat;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
@@ -36,7 +39,9 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * @generated
    * @since 2.0
    */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
+
+  private static final String dataTypeError = Messages.getString("EresourceFactoryImpl.1"); //$NON-NLS-1$
 
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,7 +53,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     try
     {
       EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Eresource/2.0.0");
+          .getEFactory("http://www.eclipse.org/emf/CDO/Eresource/2.0.0"); //$NON-NLS-1$
       if (theEresourceFactory != null)
       {
         return theEresourceFactory;
@@ -86,7 +91,8 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     case EresourcePackage.CDO_RESOURCE:
       return createCDOResource();
     default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("EresourceFactoryImpl.3"), eClass.getName())); //$NON-NLS-1$
     }
   }
 
@@ -103,7 +109,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     case EresourcePackage.URI:
       return createURIFromString(eDataType, initialValue);
     default:
-      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+      throw new IllegalArgumentException(MessageFormat.format(dataTypeError, eDataType.getName()));
     }
   }
 
@@ -120,7 +126,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     case EresourcePackage.URI:
       return convertURIToString(eDataType, instanceValue);
     default:
-      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+      throw new IllegalArgumentException(MessageFormat.format(dataTypeError, eDataType.getName()));
     }
   }
 

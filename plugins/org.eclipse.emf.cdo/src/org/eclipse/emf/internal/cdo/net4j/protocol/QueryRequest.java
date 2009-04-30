@@ -75,7 +75,7 @@ public class QueryRequest extends CDOClientRequest<List<Object>>
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Query executed [{0} elements received]", numberOfObjectsReceived);
+        TRACER.format("Query executed [{0} elements received]", numberOfObjectsReceived); //$NON-NLS-1$
       }
     }
     catch (RuntimeException ex)

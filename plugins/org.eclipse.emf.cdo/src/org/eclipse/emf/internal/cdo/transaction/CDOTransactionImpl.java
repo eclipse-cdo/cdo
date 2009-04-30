@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
@@ -388,7 +389,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
       else
       {
-        throw new CDOException("Not a ResourceFolder: " + node);
+        throw new CDOException(MessageFormat.format(Messages.getString("CDOTransactionImpl.0"), node)); //$NON-NLS-1$
       }
     }
 
@@ -495,7 +496,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     CDOID id = super.getRootOrTopLevelResourceNodeID(name);
     if (getLastSavepoint().getAllDetachedObjects().containsKey(id) || getDirtyObjects().containsKey(id))
     {
-      throw new CDOException("Root resource node " + name + " doesn't exist");
+      throw new CDOException(MessageFormat.format(Messages.getString("CDOTransactionImpl.1"), name)); //$NON-NLS-1$
     }
 
     return id;
@@ -559,7 +560,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     checkActive();
     if (hasConflict())
     {
-      throw new TransactionException("This transaction has conflicts");
+      throw new TransactionException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
     }
 
     if (progressMonitor == null)
@@ -823,24 +824,24 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     if (savepoint == null)
     {
-      throw new IllegalArgumentException("Save point is null");
+      throw new IllegalArgumentException(Messages.getString("CDOTransactionImpl.3")); //$NON-NLS-1$
     }
 
     if (savepoint.getUserTransaction() != this)
     {
-      throw new IllegalArgumentException("Save point to rollback doesn't belong to this transaction: " + savepoint);
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.4"), savepoint)); //$NON-NLS-1$
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("handleRollback()");
+      TRACER.trace("handleRollback()"); //$NON-NLS-1$
     }
 
     try
     {
       if (!savepoint.isValid())
       {
-        throw new IllegalArgumentException("Savepoint isn't valid : " + savepoint);
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.6"), savepoint)); //$NON-NLS-1$
       }
 
       // Use the state lock since rollback mechanism is playing with EObject and CDORevisions. We do not want to
@@ -931,14 +932,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOTransaction({0})", getViewID());
+    return MessageFormat.format("CDOTransaction({0})", getViewID()); //$NON-NLS-1$
   }
 
   public void registerNew(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Registering new object {0}", object);
+      TRACER.format("Registering new object {0}", object); //$NON-NLS-1$
     }
 
     registerNewPackage(object.eClass().getEPackage());
@@ -1015,7 +1016,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Registering dirty object {0}", object);
+      TRACER.format("Registering dirty object {0}", object); //$NON-NLS-1$
     }
 
     if (featureDelta != null)
@@ -1035,7 +1036,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     Object old = map.put(object.cdoID(), object);
     if (old != null)
     {
-      throw new ImplementationError("Duplicate ID: " + object);
+      throw new ImplementationError(MessageFormat.format(Messages.getString("CDOTransactionImpl.10"), object)); //$NON-NLS-1$
     }
 
     if (!dirty)
@@ -1101,7 +1102,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(usedPackage);
         if (packageUnit == null)
         {
-          throw new CDOException("No package unit for " + usedPackage);
+          throw new CDOException(MessageFormat.format(Messages.getString("CDOTransactionImpl.11"), usedPackage)); //$NON-NLS-1$
         }
 
         if (packageUnit.getState() == CDOPackageUnit.State.NEW)
@@ -1249,7 +1250,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("commit()");
+          TRACER.trace("commit()"); //$NON-NLS-1$
         }
 
         for (CDOTransactionHandler handler : getHandlers())
@@ -1393,7 +1394,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     @Override
     public String toString()
     {
-      return MessageFormat.format("CDOTransactionStartedEvent[source={0}]", getSource());
+      return MessageFormat.format("CDOTransactionStartedEvent[source={0}]", getSource()); //$NON-NLS-1$
     }
   }
 
@@ -1427,7 +1428,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     @Override
     public String toString()
     {
-      return MessageFormat.format("CDOTransactionFinishedEvent[source={0}, type={1}, idMappings={2}]", getSource(),
+      return MessageFormat.format("CDOTransactionFinishedEvent[source={0}, type={1}, idMappings={2}]", getSource(), //$NON-NLS-1$
           getType(), idMappings == null ? 0 : idMappings.size());
     }
   }
@@ -1462,7 +1463,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     @Override
     public String toString()
     {
-      return MessageFormat.format("CDOTransactionConflictEvent[source={0}, conflictingObject={1}, firstConflict={2}]",
+      return MessageFormat.format("CDOTransactionConflictEvent[source={0}, conflictingObject={1}, firstConflict={2}]", //$NON-NLS-1$
           getSource(), getConflictingObject(), isFirstConflict());
     }
   }
@@ -1497,7 +1498,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     @Override
     public String toString()
     {
-      return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind);
+      return MessageFormat.format("CDOViewResourcesEvent[source={0}, {1}={2}]", getSource(), resourcePath, kind); //$NON-NLS-1$
     }
   }
 
@@ -1601,7 +1602,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       if (resolver.getTransaction() != null)
       {
-        throw new IllegalArgumentException("New conflict resolver is already associated with a transaction");
+        throw new IllegalArgumentException(Messages.getString("CDOTransactionImpl.17")); //$NON-NLS-1$
       }
 
       resolver.setTransaction(CDOTransactionImpl.this);

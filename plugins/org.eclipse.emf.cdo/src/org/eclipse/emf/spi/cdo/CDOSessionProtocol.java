@@ -256,7 +256,7 @@ public interface CDOSessionProtocol extends PackageLoader
     {
       return MessageFormat
           .format(
-              "RepositoryTime[requested={0,date} {0,time}, indicated={1,date} {1,time}, responded={2,date} {2,time}, confirmed={3,date} {3,time}]",
+              "RepositoryTime[requested={0,date} {0,time}, indicated={1,date} {1,time}, responded={2,date} {2,time}, confirmed={3,date} {3,time}]", //$NON-NLS-1$
               requested, indicated, responded, confirmed);
     }
   }

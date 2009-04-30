@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -70,7 +71,7 @@ public interface CDOAdapterPolicy
     @Override
     public String toString()
     {
-      return "NONE";
+      return Messages.getString("CDOAdapterPolicy.1"); //$NON-NLS-1$
     }
   };
 
@@ -91,7 +92,7 @@ public interface CDOAdapterPolicy
     @Override
     public String toString()
     {
-      return "CDO";
+      return Messages.getString("CDOAdapterPolicy.0"); //$NON-NLS-1$
     }
   };
 
@@ -111,7 +112,7 @@ public interface CDOAdapterPolicy
     @Override
     public String toString()
     {
-      return "ALL";
+      return Messages.getString("CDOAdapterPolicy.2"); //$NON-NLS-1$
     }
   };
 

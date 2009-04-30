@@ -105,11 +105,11 @@ public class CDOURIUtil
   {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(CDOProtocolConstants.PROTOCOL_NAME);
-    stringBuilder.append(":");
+    stringBuilder.append(":"); //$NON-NLS-1$
 
     if (repositoryUUID != null)
     {
-      stringBuilder.append("//");
+      stringBuilder.append("//"); //$NON-NLS-1$
       stringBuilder.append(repositoryUUID);
     }
 

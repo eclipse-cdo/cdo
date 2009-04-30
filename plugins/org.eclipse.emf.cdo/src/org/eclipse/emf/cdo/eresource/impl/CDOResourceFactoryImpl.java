@@ -62,7 +62,7 @@ public class CDOResourceFactoryImpl implements Resource.Factory, CDOResourceFact
         }
       }
 
-      if (inResourceSet && "getResource".equals(element.getMethodName()))
+      if (inResourceSet && "getResource".equals(element.getMethodName())) //$NON-NLS-1$
       {
         return true;
       }

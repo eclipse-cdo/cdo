@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -193,7 +194,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting ID: {0}", id);
+      TRACER.format("Setting ID: {0}", id); //$NON-NLS-1$
     }
 
     this.id = id;
@@ -205,7 +206,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Setting state {0} for {1}", state, this);
+        TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
       }
 
       try
@@ -229,7 +230,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting revision: {0}", revision);
+      TRACER.format("Setting revision: {0}", revision); //$NON-NLS-1$
     }
 
     this.revision = (InternalCDORevision)revision;
@@ -303,7 +304,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Populating revision for {0}", this);
+      TRACER.format("Populating revision for {0}", this); //$NON-NLS-1$
     }
 
     InternalCDOView view = cdoView();
@@ -364,7 +365,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Populating feature {0}", feature);
+      TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
     }
 
     Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
@@ -398,7 +399,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Depopulating revision for {0}", this);
+      TRACER.format("Depopulating revision for {0}", this); //$NON-NLS-1$
     }
 
     InternalCDOView view = cdoView();
@@ -437,7 +438,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Depopulating feature {0}", eFeature);
+      TRACER.format("Depopulating feature {0}", eFeature); //$NON-NLS-1$
     }
 
     EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
@@ -591,7 +592,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     // Answer from Christian Damus
     // Java ensures that string constants are interned, so this is actually
     // more efficient than .equals() and it's correct
-    if (eType.getInstanceClassName() == "java.util.Map$Entry")
+    if (eType.getInstanceClassName() == "java.util.Map$Entry") //$NON-NLS-1$
     {
       class EStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
       {
@@ -736,7 +737,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
-      throw new IllegalArgumentException("Resource needs to be an instanceof CDOResourceImpl");
+      throw new IllegalArgumentException(Messages.getString("CDOObjectImpl.8")); //$NON-NLS-1$
     }
   }
 
@@ -997,7 +998,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID);
+      TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID); //$NON-NLS-1$
     }
 
     if (FSMUtil.isTransient(this))
@@ -1024,10 +1025,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     if (id == null)
     {
-      return eClass().getName() + "?";
+      return eClass().getName() + "?"; //$NON-NLS-1$
     }
 
-    return eClass().getName() + "@" + id;
+    return eClass().getName() + "@" + id; //$NON-NLS-1$
   }
 
   private CDOStore cdoStore()
@@ -1465,18 +1466,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     protected String delegateToString()
     {
       StringBuffer stringBuffer = new StringBuffer();
-      stringBuffer.append("[");
+      stringBuffer.append("["); //$NON-NLS-1$
       for (int i = 0, size = size(); i < size;)
       {
         Object value = delegateGet(i);
         stringBuffer.append(String.valueOf(value));
         if (++i < size)
         {
-          stringBuffer.append(", ");
+          stringBuffer.append(", "); //$NON-NLS-1$
         }
       }
 
-      stringBuffer.append("]");
+      stringBuffer.append("]"); //$NON-NLS-1$
       return stringBuffer.toString();
     }
   }

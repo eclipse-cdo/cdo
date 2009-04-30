@@ -58,8 +58,8 @@ public class LockObjectsRequest extends CDOClientRequest<Object>
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Locking of type {0} requested for view {1} with timeout {2}",
-          lockType == RWLockManager.LockType.READ ? "read" : "write", view.getViewID(), timeout);
+      TRACER.format("Locking of type {0} requested for view {1} with timeout {2}", //$NON-NLS-1$
+          lockType == RWLockManager.LockType.READ ? "read" : "write", view.getViewID(), timeout); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     out.writeInt(objects.size());
@@ -67,7 +67,7 @@ public class LockObjectsRequest extends CDOClientRequest<Object>
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Locking requested for objects {0}", object.cdoID());
+        TRACER.format("Locking requested for objects {0}", object.cdoID()); //$NON-NLS-1$
       }
 
       out.writeCDOID(object.cdoID());

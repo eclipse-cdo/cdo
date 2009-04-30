@@ -65,7 +65,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("preTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName());
+      TRACER.format("preTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName()); //$NON-NLS-1$
     }
 
     loadCollectionPolicy = cdoObject.cdoView().getSession().options().getCollectionLoadingPolicy();
@@ -84,7 +84,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("postTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName());
+      TRACER.format("postTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName()); //$NON-NLS-1$
     }
 
     try

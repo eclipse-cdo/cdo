@@ -120,9 +120,9 @@ public class CDOMetaWrapper extends CDOObjectWrapper
   {
     if (cdoID() == null)
     {
-      return instance.eClass().getName() + "?";
+      return instance.eClass().getName() + "?"; //$NON-NLS-1$
     }
 
-    return instance.eClass().getName() + "@" + cdoID();
+    return instance.eClass().getName() + "@" + cdoID(); //$NON-NLS-1$
   }
 }

@@ -48,7 +48,7 @@ public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSes
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing subscribe: {0}", subscribe);
+      TRACER.format("Writing subscribe: {0}", subscribe); //$NON-NLS-1$
     }
 
     out.writeBoolean(subscribe);

@@ -51,7 +51,7 @@ public class CommitNotificationIndication extends CDOClientIndication
     long timeStamp = in.readLong();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp);
+      TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp); //$NON-NLS-1$
     }
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
@@ -64,7 +64,7 @@ public class CommitNotificationIndication extends CDOClientIndication
     int size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} dirty IDs", size);
+      TRACER.format("Reading {0} dirty IDs", size); //$NON-NLS-1$
     }
 
     InternalCDOSession session = getSession();
@@ -74,7 +74,7 @@ public class CommitNotificationIndication extends CDOClientIndication
       CDOIDAndVersion dirtyOID = in.readCDOIDAndVersion();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read dirty ID: {0}", dirtyOID);
+        TRACER.format("Read dirty ID: {0}", dirtyOID); //$NON-NLS-1$
       }
 
       dirtyOIDs.add(dirtyOID);
@@ -83,7 +83,7 @@ public class CommitNotificationIndication extends CDOClientIndication
     size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} Deltas", size);
+      TRACER.format("Reading {0} Deltas", size); //$NON-NLS-1$
     }
 
     List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
@@ -96,7 +96,7 @@ public class CommitNotificationIndication extends CDOClientIndication
     size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} Detach Objects", size);
+      TRACER.format("Reading {0} Detach Objects", size); //$NON-NLS-1$
     }
 
     List<CDOID> detachedObjects = new ArrayList<CDOID>();

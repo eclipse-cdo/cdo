@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.util.ServerException;
 
@@ -55,14 +56,14 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
     super.requesting(out);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing repositoryName: {0}", repositoryName);
+      TRACER.format("Writing repositoryName: {0}", repositoryName); //$NON-NLS-1$
     }
 
     out.writeString(repositoryName);
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+      TRACER.format("Writing passiveUpdateEnabled: {0}", passiveUpdateEnabled); //$NON-NLS-1$
     }
 
     out.writeBoolean(passiveUpdateEnabled);
@@ -74,43 +75,43 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
     int sessionID = in.readInt();
     if (sessionID == CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND)
     {
-      String msg = MessageFormat.format("Repository {0} not found", repositoryName);
+      String msg = MessageFormat.format(Messages.getString("OpenSessionRequest.0"), repositoryName); //$NON-NLS-1$
       throw new ServerException(msg);
     }
 
     if (sessionID == CDOProtocolConstants.ERROR_NO_SESSION)
     {
-      String msg = MessageFormat.format("Failed to open session for repository {0}", repositoryName);
+      String msg = MessageFormat.format(Messages.getString("OpenSessionRequest.3"), repositoryName); //$NON-NLS-1$
       throw new ServerException(msg);
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read sessionID: {0}", sessionID);
+      TRACER.format("Read sessionID: {0}", sessionID); //$NON-NLS-1$
     }
 
     String repositoryUUID = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read repositoryUUID: {0}", repositoryUUID);
+      TRACER.format("Read repositoryUUID: {0}", repositoryUUID); //$NON-NLS-1$
     }
 
     long repositoryCreationTime = in.readLong();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read repositoryCreationTime: {0,date} {0,time}", repositoryCreationTime);
+      TRACER.format("Read repositoryCreationTime: {0,date} {0,time}", repositoryCreationTime); //$NON-NLS-1$
     }
 
     boolean repositorySupportingAudits = in.readBoolean();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read repositorySupportingAudits: {0}", repositorySupportingAudits);
+      TRACER.format("Read repositorySupportingAudits: {0}", repositorySupportingAudits); //$NON-NLS-1$
     }
 
     CDOIDLibraryDescriptor libraryDescriptor = CDOIDUtil.readLibraryDescriptor(in);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor);
+      TRACER.format("Read libraryDescriptor: {0}", libraryDescriptor); //$NON-NLS-1$
     }
 
     result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, repositorySupportingAudits,

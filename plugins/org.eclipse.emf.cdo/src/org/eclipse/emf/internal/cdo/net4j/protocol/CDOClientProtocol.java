@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -270,7 +271,7 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     super.doBeforeActivate();
     if (!(getInfraStructure() instanceof CDOSession))
     {
-      throw new IllegalStateException("No session");
+      throw new IllegalStateException(Messages.getString("CDOClientProtocol.0")); //$NON-NLS-1$
     }
   }
 

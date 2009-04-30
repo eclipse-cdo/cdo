@@ -48,7 +48,7 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
     int size = libraryNames.size();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} library names", size);
+      TRACER.format("Writing {0} library names", size); //$NON-NLS-1$
     }
 
     out.writeInt(size);
@@ -56,7 +56,7 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing library name: {0}", libraryName);
+        TRACER.format("Writing library name: {0}", libraryName); //$NON-NLS-1$
       }
 
       out.writeString(libraryName);
@@ -73,7 +73,7 @@ public class LoadLibrariesRequest extends RequestWithConfirmation<Integer>
       int size = in.readInt();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading library {0}: {1} bytes", libraryName, size);
+        TRACER.format("Reading library {0}: {1} bytes", libraryName, size); //$NON-NLS-1$
       }
 
       File file = new File(cacheFolder, libraryName);

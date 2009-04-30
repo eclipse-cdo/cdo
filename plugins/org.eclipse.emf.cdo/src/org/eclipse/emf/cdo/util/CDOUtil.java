@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
@@ -240,7 +241,7 @@ public final class CDOUtil
       CDOSession session = object.cdoView().getSession();
       if (session.repository().isSupportingAudits())
       {
-        throw new IllegalStateException("Auditing not supported by repository");
+        throw new IllegalStateException(Messages.getString("CDOUtil.0")); //$NON-NLS-1$
       }
 
       return session.getRevisionManager().getRevisionByVersion(object.cdoID(), 0, version);

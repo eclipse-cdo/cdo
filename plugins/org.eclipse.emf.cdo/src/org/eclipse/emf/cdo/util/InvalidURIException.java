@@ -11,8 +11,11 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.messages.Messages;
 
 import org.eclipse.emf.common.util.URI;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -26,7 +29,7 @@ public class InvalidURIException extends CDOException
 
   public InvalidURIException(URI uri, Throwable cause)
   {
-    super("Invalid URI: " + uri, cause);
+    super(MessageFormat.format(Messages.getString("InvalidURIException.0"), uri, cause)); //$NON-NLS-1$
     this.uri = uri;
   }
 

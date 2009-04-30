@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.internal.cdo.util;
 
+import org.eclipse.emf.cdo.messages.Messages;
+
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.EcorePackage;
 
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,13 +79,13 @@ public class CompletePackageClosure extends PackageClosure
           {
             if (TRACER.isEnabled())
             {
-              TRACER.trace("Found package " + p.getNsURI());
+              TRACER.trace("Found package " + p.getNsURI()); //$NON-NLS-1$
             }
           }
         }
         else
         {
-          OM.LOG.warn("Package == null for " + eClass.getName());
+          OM.LOG.warn(MessageFormat.format(Messages.getString("CompletePackageClosure.0"), eClass.getName())); //$NON-NLS-1$
         }
       }
     }
@@ -126,7 +129,7 @@ public class CompletePackageClosure extends PackageClosure
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Found class " + eClass.getName());
+          TRACER.trace("Found class " + eClass.getName()); //$NON-NLS-1$
         }
 
         handleEStructuralFeatures(eClass.getEStructuralFeatures(), visited);

@@ -46,7 +46,7 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
     repositoryTimeResult.setRequested(System.currentTimeMillis());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Requested: {0,date} {0,time}", repositoryTimeResult.getRequested());
+      TRACER.format("Requested: {0,date} {0,time}", repositoryTimeResult.getRequested()); //$NON-NLS-1$
     }
   }
 
@@ -56,19 +56,19 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
     repositoryTimeResult.setConfirmed(System.currentTimeMillis());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Confirmed: {0,date} {0,time}", repositoryTimeResult.getConfirmed());
+      TRACER.format("Confirmed: {0,date} {0,time}", repositoryTimeResult.getConfirmed()); //$NON-NLS-1$
     }
 
     repositoryTimeResult.setIndicated(in.readLong());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read indicated: {0,date} {0,time}", repositoryTimeResult.getIndicated());
+      TRACER.format("Read indicated: {0,date} {0,time}", repositoryTimeResult.getIndicated()); //$NON-NLS-1$
     }
 
     repositoryTimeResult.setResponded(in.readLong());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read responded: {0,date} {0,time}", repositoryTimeResult.getResponded());
+      TRACER.format("Read responded: {0,date} {0,time}", repositoryTimeResult.getResponded()); //$NON-NLS-1$
     }
 
     return null;

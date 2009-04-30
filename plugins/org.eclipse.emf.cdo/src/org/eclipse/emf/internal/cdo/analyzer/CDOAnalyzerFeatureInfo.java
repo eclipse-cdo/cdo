@@ -89,7 +89,7 @@ public class CDOAnalyzerFeatureInfo
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Adding rule : {0}.{1}", eClass.getName(), feature.getName());
+      TRACER.format("Adding rule : {0}.{1}", eClass.getName(), feature.getName()); //$NON-NLS-1$
     }
 
     CDOFetchRule fetchRule = fetchRules.get(eClass);
@@ -106,7 +106,7 @@ public class CDOAnalyzerFeatureInfo
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Removing rule : {0}.{1}", eClass.getName(), feature.getName());
+      TRACER.format("Removing rule : {0}.{1}", eClass.getName(), feature.getName()); //$NON-NLS-1$
     }
 
     CDOFetchRule fetchRule = fetchRules.get(eClass);

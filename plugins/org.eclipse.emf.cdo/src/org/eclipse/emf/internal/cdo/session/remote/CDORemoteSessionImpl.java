@@ -98,6 +98,6 @@ public class CDORemoteSessionImpl implements CDORemoteSession
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0} ({1}", userID, sessionID);
+    return MessageFormat.format("{0} ({1}", userID, sessionID); //$NON-NLS-1$
   }
 }

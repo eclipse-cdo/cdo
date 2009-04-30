@@ -55,7 +55,7 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Unlocking all objects for view {0}", view.getViewID());
+        TRACER.format("Unlocking all objects for view {0}", view.getViewID()); //$NON-NLS-1$
       }
 
       out.writeInt(CDOProtocolConstants.RELEASE_ALL_LOCKS);
@@ -64,8 +64,8 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Unlocking of type {0} requested for view {1}", lockType == RWLockManager.LockType.READ ? "read"
-            : "write", view.getViewID());
+        TRACER.format("Unlocking of type {0} requested for view {1}", lockType == RWLockManager.LockType.READ ? "read" //$NON-NLS-1$ //$NON-NLS-2$
+            : "write", view.getViewID()); //$NON-NLS-1$
       }
 
       out.writeInt(objects.size());
@@ -73,7 +73,7 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Unlocking requested for objects {0}", object.cdoID());
+          TRACER.format("Unlocking requested for objects {0}", object.cdoID()); //$NON-NLS-1$
         }
 
         out.writeCDOID(object.cdoID());

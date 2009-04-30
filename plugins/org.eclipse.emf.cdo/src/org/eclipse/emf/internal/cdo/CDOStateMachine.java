@@ -205,7 +205,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("PREPARE: {0} --> {1}", object, transactionAndMapOfContents.getElement1());
+      TRACER.format("PREPARE: {0} --> {1}", object, transactionAndMapOfContents.getElement1()); //$NON-NLS-1$
     }
 
     process(object, CDOEvent.PREPARE, transactionAndMapOfContents);
@@ -218,7 +218,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("ATTACH: {0}", object);
+      TRACER.format("ATTACH: {0}", object); //$NON-NLS-1$
     }
 
     process(object, CDOEvent.ATTACH, null);
@@ -522,7 +522,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     CDOState state = object.cdoState();
     if (lastTracedObject != object || lastTracedState != state || lastTracedEvent != event)
     {
-      TRACER.format("{0}: {1}", event, object.getClass().getName());
+      TRACER.format("{0}: {1}", event, object.getClass().getName()); //$NON-NLS-1$
       lastTracedObject = object;
       lastTracedState = state;
       lastTracedEvent = event;

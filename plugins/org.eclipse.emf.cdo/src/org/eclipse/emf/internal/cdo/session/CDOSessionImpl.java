@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
@@ -222,7 +223,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       if (!options().isGeneratedPackageEmulationEnabled())
       {
-        throw new CDOException("Generated packages locally not available: " + packageUnit);
+        throw new CDOException(MessageFormat.format(Messages.getString("CDOSessionImpl.0"), packageUnit)); //$NON-NLS-1$
       }
     }
 
@@ -532,7 +533,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOSession[{0}, {1}]", repository().getName(), sessionID);
+    return MessageFormat.format("CDOSession[{0}, {1}]", repository().getName(), sessionID); //$NON-NLS-1$
   }
 
   /**
@@ -596,8 +597,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(getSessionProtocol(), "sessionProtocol");
-    checkState(repository().getName(), "repository().getName()");
+    checkState(getSessionProtocol(), "sessionProtocol"); //$NON-NLS-1$
+    checkState(repository().getName(), "repository().getName()"); //$NON-NLS-1$
   }
 
   @Override
@@ -678,7 +679,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     String factoryName = libraryDescriptor.getFactoryName();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Using CDOID factory: {0}", factoryName);
+      TRACER.format("Using CDOID factory: {0}", factoryName); //$NON-NLS-1$
     }
 
     File cacheFolder = getCacheFolder();
@@ -705,10 +706,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       File lib = new File(cacheFolder, neededLibrary);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Using CDOID library: {0}", lib.getAbsolutePath());
+        TRACER.format("Using CDOID library: {0}", lib.getAbsolutePath()); //$NON-NLS-1$
       }
 
-      urls[i++] = new URL("file:///" + lib.getAbsolutePath());
+      urls[i++] = new URL("file:///" + lib.getAbsolutePath()); //$NON-NLS-1$
     }
 
     classLoader = new URLClassLoader(urls, classLoader);
@@ -719,7 +720,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private File getCacheFolder()
   {
     String stateLocation = OM.BUNDLE.getStateLocation();
-    File repos = new File(stateLocation, "repos");
+    File repos = new File(stateLocation, "repos"); //$NON-NLS-1$
     return new File(repos, repository().getUUID());
   }
 
@@ -728,7 +729,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     Set<String> set = new HashSet<String>();
     for (String fileName : fileNames)
     {
-      if (fileName.endsWith(".jar"))
+      if (fileName.endsWith(".jar")) //$NON-NLS-1$
       {
         set.add(fileName);
       }
@@ -759,7 +760,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
               version = delta.getOriginVersion();
             }
           }
-          
+
           uniqueObjects.put(cdoId, CDOIDUtil.createIDAndVersion(cdoId, version));
         }
       }
@@ -911,7 +912,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           @Override
           public String toString()
           {
-            return "DefaultRevisionFactory";
+            return "DefaultRevisionFactory"; //$NON-NLS-1$
           }
         };
       }
@@ -1156,7 +1157,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     @Override
     public String toString()
     {
-      return "CDOSessionInvalidationEvent: " + dirtyOIDs;
+      return "CDOSessionInvalidationEvent: " + dirtyOIDs; //$NON-NLS-1$
     }
   }
 }

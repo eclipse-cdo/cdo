@@ -59,7 +59,7 @@ public abstract class PackageClosure implements IPackageClosure
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Package closure for " + ePackage.getNsURI());
+      TRACER.trace("Package closure for " + ePackage.getNsURI()); //$NON-NLS-1$
     }
     collectContents(ePackage, visited);
     for (EPackage subPackage : ePackage.getESubpackages())

@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -134,7 +135,7 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
   {
     if (isSessionOpen())
     {
-      throw new IllegalStateException("Session is already open");
+      throw new IllegalStateException(Messages.getString("CDOSessionConfigurationImpl.0")); //$NON-NLS-1$
     }
   }
 

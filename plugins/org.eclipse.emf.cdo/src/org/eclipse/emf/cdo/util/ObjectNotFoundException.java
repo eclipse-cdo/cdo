@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.messages.Messages;
+
+import java.text.MessageFormat;
 
 /**
  * Exception occurs when an id doesn't exist on the server.
@@ -26,6 +29,6 @@ public class ObjectNotFoundException extends CDOException
 
   public ObjectNotFoundException(CDOID id)
   {
-    super("Object " + id + " not found (temporary = " + id.isTemporary() + ").");
+    super(MessageFormat.format(Messages.getString("ObjectNotFoundException.0"), id, id.isTemporary())); //$NON-NLS-1$
   }
 }

@@ -68,7 +68,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     if (isActivateOnOpen())
     {
       CheckUtil.checkState(connector != null ^ failOverStrategy != null,
-          "Specify exactly one of connector or failOverStrategy");
+          "Specify exactly one of connector or failOverStrategy"); //$NON-NLS-1$
     }
 
     CDONet4jSessionImpl session = new CDONet4jSessionImpl();

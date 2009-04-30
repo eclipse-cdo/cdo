@@ -94,12 +94,12 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   {
     if (id == null)
     {
-      throw new IllegalArgumentException("id == null");
+      throw new IllegalArgumentException("id == null"); //$NON-NLS-1$
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting ID: {0} for {1}", id, instance);
+      TRACER.format("Setting ID: {0} for {1}", id, instance); //$NON-NLS-1$
     }
 
     this.id = id;
@@ -109,7 +109,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting view: {0} for {1}", view, instance);
+      TRACER.format("Setting view: {0} for {1}", view, instance); //$NON-NLS-1$
     }
 
     this.view = (InternalCDOView)view;
@@ -139,7 +139,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     // TODO Implement method CDOWrapperImpl.cdoInternalDynamicFeature()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 
   /**

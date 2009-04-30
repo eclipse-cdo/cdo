@@ -45,7 +45,7 @@ public class SetPassiveUpdateRequest extends SyncRevisionsRequest
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
+      TRACER.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     super.requesting(out);

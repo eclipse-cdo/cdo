@@ -43,7 +43,7 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
     super.requesting(out);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing version: {0}", version);
+      TRACER.format("Writing version: {0}", version); //$NON-NLS-1$
     }
 
     out.writeInt(version);
@@ -52,7 +52,7 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, version={3})", getClass().getSimpleName(), getIds(),
+    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, version={3})", getClass().getSimpleName(), getIds(), //$NON-NLS-1$
         getReferenceChunk(), version);
   }
 }

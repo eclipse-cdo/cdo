@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
@@ -34,6 +35,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,7 +53,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 {
   public static final CDOViewProviderRegistryImpl INSTANCE = new CDOViewProviderRegistryImpl();
 
-  private static final String EXT_POINT = "viewProviders";
+  private static final String EXT_POINT = "viewProviders"; //$NON-NLS-1$
 
   private List<CDOViewProvider> viewProviders = new ArrayList<CDOViewProvider>();
 
@@ -249,17 +251,19 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
     public CDOViewProviderDescriptor(IConfigurationElement element)
     {
-      super(element.getAttribute("regex"), Integer.parseInt(element.getAttribute("priority")));
+      super(element.getAttribute("regex"), Integer.parseInt(element.getAttribute("priority"))); //$NON-NLS-1$ //$NON-NLS-2$
       this.element = element;
 
-      if (StringUtil.isEmpty(element.getAttribute("class")))
+      if (StringUtil.isEmpty(element.getAttribute("class"))) //$NON-NLS-1$
       {
-        throw new IllegalArgumentException("class not defined for extension " + element);
+        throw new IllegalArgumentException(MessageFormat.format(
+            Messages.getString("CDOViewProviderRegistryImpl.4"), element)); //$NON-NLS-1$
       }
 
-      if (StringUtil.isEmpty(element.getAttribute("regex")))
+      if (StringUtil.isEmpty(element.getAttribute("regex"))) //$NON-NLS-1$
       {
-        throw new IllegalArgumentException("regex not defined for extension " + element);
+        throw new IllegalArgumentException(MessageFormat.format(
+            Messages.getString("CDOViewProviderRegistryImpl.6"), element)); //$NON-NLS-1$
       }
     }
 
@@ -272,7 +276,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     {
       try
       {
-        return (CDOViewProvider)element.createExecutableExtension("class");
+        return (CDOViewProvider)element.createExecutableExtension("class"); //$NON-NLS-1$
       }
       catch (CoreException ex)
       {

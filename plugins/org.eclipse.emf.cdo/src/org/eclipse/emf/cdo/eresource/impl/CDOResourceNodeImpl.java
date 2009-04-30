@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -48,7 +50,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -127,7 +129,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
         String name = getName();
         if (name != null)
         {
-          String newPath = (newFolder == null ? "" : newFolder.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + name;
+          String newPath = (newFolder == null ? "" : newFolder.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + name; //$NON-NLS-1$
           checkDuplicates(newPath);
         }
       }
@@ -181,7 +183,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
         CDOResourceFolder parent = getFolder();
         if (parent != null)
         {
-          String newPath = (parent == null ? "" : parent.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + getName();
+          String newPath = (parent == null ? "" : parent.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + getName(); //$NON-NLS-1$
           checkDuplicates(newPath);
         }
       }
@@ -221,7 +223,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     InternalCDOTransaction transaction = cdoView().toTransaction();
     if (newPath == null)
     {
-      throw new CDOException("Null path is not allowed");
+      throw new CDOException(Messages.getString("CDOResourceNodeImpl.3")); //$NON-NLS-1$
     }
 
     String oldPath = getPath();
@@ -231,7 +233,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
       List<String> names = CDOURIUtil.analyzePath(newPath);
       if (names.isEmpty())
       {
-        throw new CDOException("Root path is not allowed");
+        throw new CDOException(Messages.getString("CDOResourceNodeImpl.4")); //$NON-NLS-1$
       }
 
       String newName = names.remove(names.size() - 1);
@@ -293,7 +295,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     }
     catch (Exception ex)
     {
-      throw new CDOException("Duplicate path: " + newPath);
+      throw new CDOException(MessageFormat.format(Messages.getString("CDOResourceNodeImpl.5"), newPath)); //$NON-NLS-1$
     }
   }
 } // CDOResourceNodeImpl

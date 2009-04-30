@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
@@ -351,7 +352,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return (InternalCDOTransaction)this;
     }
 
-    throw new ReadOnlyException("CDO view is read-only: " + this);
+    throw new ReadOnlyException(MessageFormat.format(Messages.getString("CDOViewImpl.0"), this)); //$NON-NLS-1$
   }
 
   public boolean hasResource(String path)
@@ -406,7 +407,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (StringUtil.isEmpty(path))
     {
-      throw new IllegalArgumentException("path");
+      throw new IllegalArgumentException(Messages.getString("CDOViewImpl.1")); //$NON-NLS-1$
     }
 
     CDOID folderID = null;
@@ -434,7 +435,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     folderID = getResourceNodeID(folderID, name);
     if (folderID == null)
     {
-      throw new CDOException("Can not find " + name);
+      throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.2"), name)); //$NON-NLS-1$
     }
 
     return folderID;
@@ -473,14 +474,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (name == null)
     {
-      throw new IllegalArgumentException("name");
+      throw new IllegalArgumentException(Messages.getString("CDOViewImpl.3")); //$NON-NLS-1$
     }
 
     InternalCDORevision folderRevision = getLocalRevision(folderID);
     EClass resourceFolderClass = EresourcePackage.eINSTANCE.getCDOResourceFolder();
     if (folderRevision.getEClass() != resourceFolderClass)
     {
-      throw new CDOException("Expected folder for id = " + folderID);
+      throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.4"), folderID)); //$NON-NLS-1$
     }
 
     EReference nodesFeature = EresourcePackage.eINSTANCE.getCDOResourceFolder_Nodes();
@@ -499,7 +500,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       }
     }
 
-    throw new CDOException("Node " + name + " not found");
+    throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.5"), name)); //$NON-NLS-1$
   }
 
   /**
@@ -514,18 +515,18 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       if (name == null)
       {
-        throw new CDOException("No root ResourceNode");
+        throw new CDOException(Messages.getString("CDOViewImpl.6")); //$NON-NLS-1$
       }
       else
       {
-        throw new CDOException("No top level ResourceNode with the name " + name);
+        throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.7"), name)); //$NON-NLS-1$
       }
     }
 
     if (ids.size() > 1)
     {
       // TODO is this still needed since the is resourceQuery.setMaxResults(1) ??
-      throw new ImplementationError("Duplicate top-level ResourceNodes");
+      throw new ImplementationError(Messages.getString("CDOViewImpl.8")); //$NON-NLS-1$
     }
 
     return ids.get(0);
@@ -550,7 +551,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (revision == null)
     {
-      throw new CDOException("Cannot find revision with ID " + id);
+      throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.9"), id)); //$NON-NLS-1$
     }
 
     return revision;
@@ -651,7 +652,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (CDOIDUtil.isNull(resourceID))
     {
-      throw new IllegalArgumentException("resourceID: " + resourceID);
+      throw new IllegalArgumentException("resourceID: " + resourceID); //$NON-NLS-1$
     }
 
     return (CDOResourceImpl)getObject(resourceID);
@@ -741,7 +742,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         if (view.getSession() != session)
         {
-          throw new IllegalArgumentException("Object is contaiuned in a different session: " + objectFromDifferentView);
+          throw new IllegalArgumentException(MessageFormat.format(
+              Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$
         }
 
         CDOID id = object.cdoID();
@@ -787,7 +789,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Creating meta object for " + id);
+      TRACER.trace("Creating meta object for " + id); //$NON-NLS-1$
     }
 
     InternalCDOPackageRegistry packageRegistry = session.getPackageRegistry();
@@ -802,7 +804,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Creating object for " + id);
+      TRACER.trace("Creating object for " + id); //$NON-NLS-1$
     }
 
     InternalCDORevision revision = getRevision(id, true);
@@ -855,7 +857,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return path + CDOURIUtil.SEGMENT_SEPARATOR + name;
     }
 
-    throw new ImplementationError("Not a ResourceFolder: " + object);
+    throw new ImplementationError(MessageFormat.format(Messages.getString("CDOViewImpl.14"), object)); //$NON-NLS-1$
   }
 
   /**
@@ -881,7 +883,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       CDOID id = (CDOID)shouldBeCDOID;
       if (TRACER.isEnabled() && id != idOrObject)
       {
-        TRACER.format("Converted object to CDOID: {0} --> {1}", idOrObject, id);
+        TRACER.format("Converted object to CDOID: {0} --> {1}", idOrObject, id); //$NON-NLS-1$
       }
 
       return id;
@@ -907,7 +909,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       throw new DanglingReferenceException(eObject);
     }
 
-    throw new IllegalStateException("Unable to provideCDOID: " + idOrObject.getClass().getName());
+    throw new IllegalStateException(MessageFormat.format(
+        Messages.getString("CDOViewImpl.16"), idOrObject.getClass().getName())); //$NON-NLS-1$
   }
 
   public Object convertObjectToID(Object potentialObject)
@@ -983,7 +986,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       InternalCDOObject result = getObject(id, true);
       if (result == null)
       {
-        throw new ImplementationError("ID not registered: " + id);
+        throw new ImplementationError(MessageFormat.format(Messages.getString("CDOViewImpl.17"), id)); //$NON-NLS-1$
       }
 
       return result.cdoInternalInstance();
@@ -999,7 +1002,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (!resource.isExisting())
     {
-      throw new ReadOnlyException("CDO view is read-only: " + this);
+      throw new ReadOnlyException(MessageFormat.format(Messages.getString("CDOViewImpl.18"), this)); //$NON-NLS-1$
     }
 
     // ResourceSet.getResource(uri, true) was called!!
@@ -1031,7 +1034,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Registering {0}", object);
+      TRACER.format("Registering {0}", object); //$NON-NLS-1$
     }
 
     InternalCDOObject old;
@@ -1042,7 +1045,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (old != null)
     {
-      throw new IllegalStateException("Duplicate ID: " + object);
+      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.20"), object)); //$NON-NLS-1$
     }
   }
 
@@ -1050,7 +1053,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Deregistering {0}", object);
+      TRACER.format("Deregistering {0}", object); //$NON-NLS-1$
     }
 
     removeObject(object.cdoID());
@@ -1068,7 +1071,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Remapping {0} --> {1}", oldID, newID);
+      TRACER.format("Remapping {0} --> {1}", oldID, newID); //$NON-NLS-1$
     }
   }
 
@@ -1388,7 +1391,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOView({0})", viewID);
+    return MessageFormat.format("CDOView({0})", viewID); //$NON-NLS-1$
   }
 
   public boolean isAdapterForType(Object type)
@@ -1416,8 +1419,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(session, "session");
-    checkState(viewID > 0, "viewID");
+    checkState(session, "session"); //$NON-NLS-1$
+    checkState(viewID > 0, "viewID"); //$NON-NLS-1$
   }
 
   /**
@@ -1463,7 +1466,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return CDOProtocolConstants.VIEW_AUDIT;
 
     default:
-      throw new IllegalStateException("Invalid view type: " + viewType);
+      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.26"), viewType)); //$NON-NLS-1$
     }
   }
 
@@ -1715,7 +1718,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
           InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, CDOViewImpl.this);
           if (internalCDOObject.cdoView() != CDOViewImpl.this)
           {
-            throw new CDOException("Object " + internalCDOObject + " doesn`t belong to this view.");
+            throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.27"), internalCDOObject)); //$NON-NLS-1$
           }
 
           subscribe(internalCDOObject.cdoID(), internalCDOObject, adjust);
@@ -1878,7 +1881,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     @Override
     public String toString()
     {
-      return "CDOViewInvalidationEvent: " + dirtyObjects;
+      return "CDOViewInvalidationEvent: " + dirtyObjects; //$NON-NLS-1$
     }
   }
 
@@ -2031,7 +2034,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         return ReferenceType.WEAK;
       }
 
-      throw new IllegalStateException("referenceType");
+      throw new IllegalStateException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$
     }
 
     public boolean setCacheReferenceType(ReferenceType referenceType)
@@ -2072,7 +2075,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         break;
 
       default:
-        throw new IllegalArgumentException("referenceType");
+        throw new IllegalArgumentException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$
       }
 
       if (objects == null)

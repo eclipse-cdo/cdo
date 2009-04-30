@@ -46,7 +46,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     InternalCDOCommitContext commitContext = transaction.createCommitContext();
     if (TRACER.isEnabled())
     {
-      TRACER.format("CDOCommitContext.preCommit");
+      TRACER.format("CDOCommitContext.preCommit"); //$NON-NLS-1$
     }
 
     commitContext.preCommit();
@@ -66,7 +66,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("CDOCommitContext.postCommit");
+      TRACER.format("CDOCommitContext.postCommit"); //$NON-NLS-1$
     }
 
     commitContext.postCommit(result);

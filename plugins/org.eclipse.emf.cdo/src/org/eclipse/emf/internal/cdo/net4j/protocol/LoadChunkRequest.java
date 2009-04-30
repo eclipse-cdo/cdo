@@ -64,7 +64,7 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
     CDOID id = revision.getID();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing revision ID: {0}", id);
+      TRACER.format("Writing revision ID: {0}", id); //$NON-NLS-1$
     }
 
     out.writeCDOID(id);
@@ -76,26 +76,26 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing revision version: {0}", version);
+      TRACER.format("Writing revision version: {0}", version); //$NON-NLS-1$
     }
 
     out.writeInt(version);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing feature: {0}", feature);
+      TRACER.format("Writing feature: {0}", feature); //$NON-NLS-1$
     }
 
     out.writeCDOClassifierRef(feature.getEContainingClass());
     out.writeInt(feature.getFeatureID());
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing fromIndex: {0}", fromIndex);
+      TRACER.format("Writing fromIndex: {0}", fromIndex); //$NON-NLS-1$
     }
     int diffIndex = accessIndex - fetchIndex;
     out.writeInt(fromIndex - diffIndex);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing toIndex: {0}", toIndex);
+      TRACER.format("Writing toIndex: {0}", toIndex); //$NON-NLS-1$
     }
 
     out.writeInt(toIndex - diffIndex);

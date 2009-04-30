@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
@@ -39,6 +40,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -131,7 +133,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     CDOXATransaction transSet = CDOUtil.getXATransaction(viewSet);
     if (transSet != null)
     {
-      throw new IllegalArgumentException("XATransaction is already attached to this viewSet");
+      throw new IllegalArgumentException(Messages.getString("CDOXATransactionImpl.0")); //$NON-NLS-1$
     }
 
     viewSet.eAdapters().add(internalAdapter);
@@ -147,7 +149,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     CDOXATransaction transSet = CDOUtil.getXATransaction(viewSet);
     if (transSet != this)
     {
-      throw new IllegalArgumentException("ViewSet isn't attached to this XATransaction");
+      throw new IllegalArgumentException(Messages.getString("CDOXATransactionImpl.1")); //$NON-NLS-1$
     }
 
     for (InternalCDOTransaction transaction : getTransactions(viewSet))
@@ -187,7 +189,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
   private void send(Collection<CDOXACommitContextImpl> xaContexts, final IProgressMonitor progressMonitor)
       throws InterruptedException, ExecutionException
   {
-    progressMonitor.beginTask("", xaContexts.size());
+    progressMonitor.beginTask("", xaContexts.size()); //$NON-NLS-1$
 
     try
     {
@@ -252,8 +254,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   public void commit(IProgressMonitor progressMonitor) throws TransactionException
   {
-    CheckUtil.checkArg(progressMonitor, "progressMonitor");
-    progressMonitor.beginTask("Committing XA transaction", 3);
+    CheckUtil.checkArg(progressMonitor, "progressMonitor"); //$NON-NLS-1$
+    progressMonitor.beginTask(Messages.getString("CDOXATransactionImpl.4"), 3); //$NON-NLS-1$
     int phase = 0;
 
     for (InternalCDOTransaction transaction : transactions)
@@ -318,17 +320,17 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
   {
     if (savepoint == null)
     {
-      throw new IllegalArgumentException("Save point is null");
+      throw new IllegalArgumentException(Messages.getString("CDOXATransactionImpl.5")); //$NON-NLS-1$
     }
 
     if (savepoint.getUserTransaction() != this)
     {
-      throw new IllegalArgumentException("Save point to rollback doesn't belong to this transaction: " + savepoint);
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOXATransactionImpl.6"), savepoint)); //$NON-NLS-1$
     }
 
     if (!savepoint.isValid())
     {
-      throw new IllegalArgumentException("Savepoint isn't valid : " + savepoint);
+      throw new IllegalArgumentException(Messages.getString("CDOXATransactionImpl.7") + savepoint); //$NON-NLS-1$
     }
 
     CDOXASavepointImpl savepointSet = (CDOXASavepointImpl)savepoint;
@@ -406,7 +408,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     {
       if (!allRequestEnabled)
       {
-        throw new IllegalStateException("Commit from CDOTransaction is not allowed.");
+        throw new IllegalStateException(Messages.getString("CDOXATransactionImpl.8")); //$NON-NLS-1$
       }
     }
 

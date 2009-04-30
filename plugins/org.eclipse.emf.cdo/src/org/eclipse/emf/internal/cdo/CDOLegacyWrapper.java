@@ -73,10 +73,10 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyWrapper.class);
 
-  private static final Method eSetDirectResourceMethod = ReflectUtil.getMethod(EObjectImpl.class, "eSetDirectResource",
+  private static final Method eSetDirectResourceMethod = ReflectUtil.getMethod(EObjectImpl.class, "eSetDirectResource", //$NON-NLS-1$
       Resource.Internal.class);
 
-  private static final Method eBasicSetContainerMethod = ReflectUtil.getMethod(EObjectImpl.class, "eBasicSetContainer",
+  private static final Method eBasicSetContainerMethod = ReflectUtil.getMethod(EObjectImpl.class, "eBasicSetContainer", //$NON-NLS-1$
       InternalEObject.class, int.class);
 
   private CDOState state;
@@ -115,7 +115,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Setting state {0} for {1}", state, this);
+        TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
       }
 
       CDOState tmp = this.state;
@@ -132,7 +132,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting revision: {0}", revision);
+      TRACER.format("Setting revision: {0}", revision); //$NON-NLS-1$
     }
 
     this.revision = (InternalCDORevision)revision;
@@ -244,14 +244,14 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   @Override
   public String toString()
   {
-    return "CDOLegacyWrapper[" + id + "]";
+    return "CDOLegacyWrapper[" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   private void instanceToRevision()
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Transfering instance to revision: {0} --> {1}", instance, revision);
+      TRACER.format("Transfering instance to revision: {0} --> {1}", instance, revision); //$NON-NLS-1$
     }
 
     // Handle containment
@@ -329,7 +329,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance);
+      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
     }
 
     boolean deliver = instance.eDeliver();
@@ -485,10 +485,10 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
         // UNIQUE_EFLAG = 1 << 9;
         // *******************************************
 
-        String flagName = GenUtil.getFeatureUpperName(featureName) + "_EFLAG";
+        String flagName = GenUtil.getFeatureUpperName(featureName) + "_EFLAG"; //$NON-NLS-1$
         int flagsMask = getEFlagMask(instanceClass, flagName);
 
-        field = ReflectUtil.getField(instanceClass, "eFlags");
+        field = ReflectUtil.getField(instanceClass, "eFlags"); //$NON-NLS-1$
         int flags = (Integer)ReflectUtil.getValue(field, instance);
         boolean on = (Boolean)value;
         if (on)
@@ -507,7 +507,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
 
     if (field == null)
     {
-      throw new ImplementationError("Field not found: " + fieldName);
+      throw new ImplementationError("Field not found: " + fieldName); //$NON-NLS-1$
     }
 
     ReflectUtil.setValue(field, instance, value);
@@ -655,10 +655,10 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     {
       if (!instance.eIsProxy())
       {
-        URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id);
+        URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id); //$NON-NLS-1$
         if (TRACER.isEnabled())
         {
-          TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
+          TRACER.format("Setting proxyURI {0} for {1}", uri, instance); //$NON-NLS-1$
         }
 
         instance.eSetProxyURI(uri);
@@ -670,7 +670,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Unsetting proxyURI for {0}", instance);
+          TRACER.format("Unsetting proxyURI for {0}", instance); //$NON-NLS-1$
         }
 
         instance.eSetProxyURI(null);
@@ -726,11 +726,11 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
    */
   private static final class LegacyProxyInvocationHandler implements InvocationHandler, LegacyProxy
   {
-    private static final Method getIDMethod = ReflectUtil.getMethod(LegacyProxy.class, "getID");
+    private static final Method getIDMethod = ReflectUtil.getMethod(LegacyProxy.class, "getID"); //$NON-NLS-1$
 
-    private static final Method eIsProxyMethod = ReflectUtil.getMethod(EObject.class, "eIsProxy");
+    private static final Method eIsProxyMethod = ReflectUtil.getMethod(EObject.class, "eIsProxy"); //$NON-NLS-1$
 
-    private static final Method eProxyURIMethod = ReflectUtil.getMethod(InternalEObject.class, "eProxyURI");
+    private static final Method eProxyURIMethod = ReflectUtil.getMethod(InternalEObject.class, "eProxyURI"); //$NON-NLS-1$
 
     private CDOLegacyWrapper wrapper;
 

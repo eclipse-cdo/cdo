@@ -160,6 +160,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -2042,42 +2043,43 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           if (!features.isEmpty())
           {
             final IWorkbenchPage page = getSite().getPage();
-            menuManager.insertBefore("edit", new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$ //$NON-NLS-2$
-            {
-              private EReference feature;
-
-              private int instances;
-
-              @Override
-              protected void preRun() throws Exception
-              {
-                BulkAddDialog dialog = new BulkAddDialog(page, features);
-                if (dialog.open() == BulkAddDialog.OK)
+            menuManager.insertBefore(
+                "edit", new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$ //$NON-NLS-2$
                 {
-                  feature = dialog.getFeature();
-                  instances = dialog.getInstances();
-                }
-                else
-                {
-                  cancel();
-                }
-              }
+                  private EReference feature;
 
-              @SuppressWarnings("unchecked")
-              @Override
-              protected void doRun(IProgressMonitor progressMonitor) throws Exception
-              {
-                List<EObject> children = new ArrayList<EObject>();
-                for (int i = 0; i < instances; i++)
-                {
-                  EObject child = EcoreUtil.create(feature.getEReferenceType());
-                  children.add(child);
-                }
+                  private int instances;
 
-                List<EObject> list = (EList<EObject>)object.eGet(feature);
-                list.addAll(children);
-              }
-            });
+                  @Override
+                  protected void preRun() throws Exception
+                  {
+                    BulkAddDialog dialog = new BulkAddDialog(page, features);
+                    if (dialog.open() == BulkAddDialog.OK)
+                    {
+                      feature = dialog.getFeature();
+                      instances = dialog.getInstances();
+                    }
+                    else
+                    {
+                      cancel();
+                    }
+                  }
+
+                  @SuppressWarnings("unchecked")
+                  @Override
+                  protected void doRun(IProgressMonitor progressMonitor) throws Exception
+                  {
+                    List<EObject> children = new ArrayList<EObject>();
+                    for (int i = 0; i < instances; i++)
+                    {
+                      EObject child = EcoreUtil.create(feature.getEReferenceType());
+                      children.add(child);
+                    }
+
+                    List<EObject> list = (EList<EObject>)object.eGet(feature);
+                    list.addAll(children);
+                  }
+                });
           }
         }
       }
@@ -2126,8 +2128,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
     submenuManager.setRemoveAllWhenShown(true);
     submenuManager.add(new Action(Messages.getString("CDOEditor.27")) //$NON-NLS-1$
-    {
-    });
+        {
+        });
     submenuManager.addMenuListener(new IMenuListener()
     {
       public void menuAboutToShow(IMenuManager manager)
@@ -2141,7 +2143,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         else
         {
-          OM.LOG.warn(String.format(Messages.getString("CDOEditor.28"), nsURI)); //$NON-NLS-1$
+          OM.LOG.warn(MessageFormat.format(Messages.getString("CDOEditor.28"), nsURI)); //$NON-NLS-1$
         }
       }
     });

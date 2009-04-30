@@ -23,6 +23,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -66,8 +68,9 @@ public final class CreateResourceAction extends ViewAction
       {
         public void run()
         {
-          getOrCreate[0] = MessageDialog.openQuestion(new Shell(), Messages.getString("CreateResourceAction.4"), String.format( //$NON-NLS-1$
-              Messages.getString("CreateResourceAction.5"), resourcePath)); //$NON-NLS-1$
+          getOrCreate[0] = MessageDialog.openQuestion(new Shell(),
+              Messages.getString("CreateResourceAction.4"), MessageFormat.format( //$NON-NLS-1$
+                  Messages.getString("CreateResourceAction.5"), resourcePath)); //$NON-NLS-1$
         }
       });
     }

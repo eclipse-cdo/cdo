@@ -27,6 +27,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -78,7 +79,7 @@ public abstract class RegisterPackagesAction extends SessionAction
         }
         else
         {
-          OM.LOG.error(Messages.getString("RegisterPackagesAction.0") + uri, ex); //$NON-NLS-1$
+          OM.LOG.error(MessageFormat.format(Messages.getString("RegisterPackagesAction.0"), uri), ex); //$NON-NLS-1$
         }
       }
     }
@@ -86,8 +87,7 @@ public abstract class RegisterPackagesAction extends SessionAction
     postRegistration(ePackages);
     if (errors != 0)
     {
-      final String label = String.valueOf(errors)
-          + (errors == 1 ? Messages.getString("RegisterPackagesAction.1") : Messages.getString("RegisterPackagesAction.2")); //$NON-NLS-1$ //$NON-NLS-2$
+      final String label = errors == 1 ? MessageFormat.format(Messages.getString("RegisterPackagesAction.1"), errors) : MessageFormat.format(Messages.getString("RegisterPackagesAction.2"), errors); //$NON-NLS-1$ //$NON-NLS-2$
       getDisplay().asyncExec(new Runnable()
       {
         public void run()
@@ -95,7 +95,7 @@ public abstract class RegisterPackagesAction extends SessionAction
           Shell shell = getShell();
           if (!shell.isDisposed())
           {
-            MessageDialog.openError(shell, getText(), label + Messages.getString("RegisterPackagesAction.3")); //$NON-NLS-1$
+            MessageDialog.openError(shell, getText(), label);
           }
         }
       });

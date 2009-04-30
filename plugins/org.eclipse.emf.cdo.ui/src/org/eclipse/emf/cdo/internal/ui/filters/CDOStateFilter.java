@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 
+import java.text.MessageFormat;
+
 /**
  * @author Victor Roldan Betancort
  */
@@ -82,7 +84,7 @@ public class CDOStateFilter extends CDOObjectFilter
   @Override
   public String getDescription()
   {
-    return String.format(Messages.getString("CDOStateFilter.5"), STATE_DIRTY, STATE_CLEAN, //$NON-NLS-1$
+    return MessageFormat.format(Messages.getString("CDOStateFilter.5"), STATE_DIRTY, STATE_CLEAN, //$NON-NLS-1$
         STATE_TRANSIENT, STATE_NEW, STATE_CONFLICT);
   }
 

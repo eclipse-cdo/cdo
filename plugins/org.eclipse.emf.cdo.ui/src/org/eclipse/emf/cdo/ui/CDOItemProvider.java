@@ -158,7 +158,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public static String getSessionLabel(CDOSession session)
   {
-    return Messages.getString("CDOItemProvider.0") + session.repository().getName() + " [" + session.getSessionID() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return MessageFormat.format(
+        Messages.getString("CDOItemProvider.0"), session.repository().getName(), session.getSessionID()); //$NON-NLS-1$ 
   }
 
   /**
@@ -169,7 +170,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (view instanceof CDOTransaction)
     {
       CDOTransaction transaction = (CDOTransaction)view;
-      return MessageFormat.format(Messages.getString("CDOItemProvider.3"), transaction.isDirty() ? "*" : "", transaction.getViewID()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      return MessageFormat.format(
+          Messages.getString("CDOItemProvider.3"), transaction.isDirty() ? "*" : "", transaction.getViewID()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     if (view instanceof CDOAudit)

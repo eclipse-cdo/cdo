@@ -22,6 +22,7 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +47,8 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
   protected List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session)
   {
     Shell shell = page.getWorkbenchWindow().getShell();
-    SelectPackageDialog dialog = new SelectPackageDialog(shell, Messages.getString("RegisterGeneratedPackagesAction.2"), //$NON-NLS-1$
+    SelectPackageDialog dialog = new SelectPackageDialog(shell,
+        Messages.getString("RegisterGeneratedPackagesAction.2"), //$NON-NLS-1$
         Messages.getString("RegisterGeneratedPackagesAction.3"), session.getPackageRegistry() //$NON-NLS-1$
             .keySet());
 
@@ -84,7 +86,8 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
       {
         return ""; //$NON-NLS-1$
       }
-      return registry.containsKey(uri) ? null : String.format(Messages.getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
+      return registry.containsKey(uri) ? null : MessageFormat.format(Messages
+          .getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
     }
   }
 }

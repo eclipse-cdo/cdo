@@ -39,13 +39,6 @@ import java.util.Map;
 public interface CDOResourceNode extends CDOObject
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
-
-  /**
    * @ADDED
    * @since 2.0
    */
@@ -64,14 +57,14 @@ public interface CDOResourceNode extends CDOObject
   public boolean isRoot();
 
   /**
-   * Returns the value of the '<em><b>Folder</b></em>' container reference. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes <em>Nodes</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Folder</b></em>' container reference.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes <em>Nodes</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Folder</em>' container reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Folder</em>' container reference.
    * @see #setFolder(CDOResourceFolder)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceNode_Folder()
@@ -82,23 +75,21 @@ public interface CDOResourceNode extends CDOObject
   CDOResourceFolder getFolder();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}' container
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Folder</em>' container reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}' container reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Folder</em>' container reference.
    * @see #getFolder()
    * @generated
    */
   void setFolder(CDOResourceFolder value);
 
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceNode_Name()
@@ -119,12 +110,12 @@ public interface CDOResourceNode extends CDOObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Path</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Path</em>' attribute.
    * @see #setPath(String)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceNode_Path()

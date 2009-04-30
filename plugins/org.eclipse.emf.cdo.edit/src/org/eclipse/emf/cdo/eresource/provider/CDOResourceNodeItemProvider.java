@@ -42,13 +42,6 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -84,8 +77,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   protected void addNamePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResourceNode_name_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_name_feature", "_UI_CDOResourceNode_type"),
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResourceNode_name_feature"), getString( //$NON-NLS-1$
+            "_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_name_feature", "_UI_CDOResourceNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -98,8 +91,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   protected void addPathPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResourceNode_path_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_path_feature", "_UI_CDOResourceNode_type"),
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_CDOResourceNode_path_feature"), getString( //$NON-NLS-1$
+            "_UI_PropertyDescriptor_description", "_UI_CDOResourceNode_path_feature", "_UI_CDOResourceNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         EresourcePackage.Literals.CDO_RESOURCE_NODE__PATH, false, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -113,8 +106,8 @@ public class CDOResourceNodeItemProvider extends ItemProviderAdapter implements 
   public String getText(Object object)
   {
     String label = ((CDOResourceNode)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_CDOResourceNode_type")
-        : getString("_UI_CDOResourceNode_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_CDOResourceNode_type") //$NON-NLS-1$
+        : getString("_UI_CDOResourceNode_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.edit.messages.Messages;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -195,7 +196,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * PropertiesView category for CDO
      */
-    public static final String CDO_CATEGORY = "CDO";
+    public static final String CDO_CATEGORY = Messages.getString("CDOItemProviderAdapter.0"); //$NON-NLS-1$
 
     public CDOPropertyDescriptor()
     {
@@ -294,11 +295,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class IDDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "ID";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.1"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "ID";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.2"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The CDOID uniquely identifies this object in the repository";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.3"); //$NON-NLS-1$
 
     public IDDescriptor()
     {
@@ -338,11 +339,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class VersionDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "Version";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.4"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "Version";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.5"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The version of this object";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.6"); //$NON-NLS-1$
 
     public VersionDescriptor()
     {
@@ -405,11 +406,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class StateDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "State";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.7"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "State";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.8"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The local state of this object";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.9"); //$NON-NLS-1$
 
     public StateDescriptor()
     {
@@ -454,11 +455,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class ViewDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "View";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.10"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "View";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.11"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The view of this object";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.12"); //$NON-NLS-1$
 
     public ViewDescriptor()
     {
@@ -503,11 +504,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class ContainerDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "Container";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.13"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "Container";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.14"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The container of this object";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.15"); //$NON-NLS-1$
 
     private static AdapterFactory adapterFactory;
 
@@ -581,11 +582,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class DirectResourceDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "DirectResource";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.16"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "Direct Resource";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.17"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The direct resource of this object";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.18"); //$NON-NLS-1$
 
     public DirectResourceDescriptor()
     {
@@ -648,11 +649,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class ReadLockedDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "ReadLocked";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.19"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "Read Locked";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.20"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "Shows if this object is read-locked";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.21"); //$NON-NLS-1$
 
     public ReadLockedDescriptor()
     {
@@ -715,11 +716,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class WriteLockedDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "WriteLocked";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.22"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "Write Locked";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.23"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "Shows if this object is write-locked";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.24"); //$NON-NLS-1$
 
     public WriteLockedDescriptor()
     {
@@ -782,11 +783,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    */
   public static class AdaptersDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "Adapters";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.25"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "Adapters";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.26"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The list of adapters attached to this object";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.27"); //$NON-NLS-1$
 
     public AdaptersDescriptor()
     {
@@ -832,11 +833,11 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   public static class ChangeSubscriptionPoliciesDescriptor extends CDOPropertyDescriptor implements
       IItemPropertyDescriptor
   {
-    private static final String FEATURE_ID = "ChangeSubscriptionPolicies";
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.28"); //$NON-NLS-1$
 
-    private static final String DISPLAY_NAME = "Change Subscription Policies";
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.29"); //$NON-NLS-1$
 
-    private static final String DESCRIPTION = "The change subscription policies associated with the underlying view of this object";
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.30"); //$NON-NLS-1$
 
     public ChangeSubscriptionPoliciesDescriptor()
     {
@@ -891,7 +892,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
             for (CDOAdapterPolicy policy : policies)
             {
               builder.append(policy.toString());
-              builder.append(", ");
+              builder.append(", "); //$NON-NLS-1$
             }
 
             return builder.toString();

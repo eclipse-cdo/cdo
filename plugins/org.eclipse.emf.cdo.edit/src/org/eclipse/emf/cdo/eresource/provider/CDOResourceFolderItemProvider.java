@@ -39,13 +39,6 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -112,7 +105,7 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/CDOResourceFolder"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/CDOResourceFolder")); //$NON-NLS-1$
   }
 
   /**
@@ -124,7 +117,7 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
   public String getText(Object object)
   {
     String label = ((CDOResourceFolder)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_CDOResourceFolder_type") + "?" : "/" + label;
+    return label == null || label.length() == 0 ? getString("_UI_CDOResourceFolder_type") + "?" : "/" + label; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**

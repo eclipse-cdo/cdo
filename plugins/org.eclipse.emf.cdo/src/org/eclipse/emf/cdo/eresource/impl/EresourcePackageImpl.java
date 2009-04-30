@@ -37,14 +37,6 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
-   * @since 2.0
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
    */
   private EClass cdoResourceNodeEClass = null;
 
@@ -446,50 +438,75 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     cdoResourceEClass.getESuperTypes().add(getCDOResourceNode());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(cdoResourceNodeEClass, CDOResourceNode.class, "CDOResourceNode", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOResourceNode_Folder(), getCDOResourceFolder(), getCDOResourceFolder_Nodes(), "folder", null, //$NON-NLS-1$
-        0, 1, CDOResourceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResourceNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, CDOResourceNode.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResourceNode_Path(), ecorePackage.getEString(), "path", null, 0, 1, CDOResourceNode.class, //$NON-NLS-1$
-        IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEClass(cdoResourceNodeEClass, CDOResourceNode.class,
+        "CDOResourceNode", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(
+        getCDOResourceNode_Folder(),
+        getCDOResourceFolder(),
+        getCDOResourceFolder_Nodes(),
+        "folder", null, 0, 1, CDOResourceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResourceNode_Name(),
+        ecorePackage.getEString(),
+        "name", null, 0, 1, CDOResourceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResourceNode_Path(),
+        ecorePackage.getEString(),
+        "path", null, 0, 1, CDOResourceNode.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-    initEClass(cdoResourceFolderEClass, CDOResourceFolder.class, "CDOResourceFolder", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOResourceFolder_Nodes(), getCDOResourceNode(), getCDOResourceNode_Folder(), "nodes", null, 0, //$NON-NLS-1$
-        -1, CDOResourceFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(cdoResourceFolderEClass, CDOResourceFolder.class,
+        "CDOResourceFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(
+        getCDOResourceFolder_Nodes(),
+        getCDOResourceNode(),
+        getCDOResourceNode_Folder(),
+        "nodes", null, 0, -1, CDOResourceFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-    initEClass(cdoResourceEClass, CDOResource.class, "CDOResource", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getCDOResource_ResourceSet(), getResourceSet(), "resourceSet", null, 0, 1, CDOResource.class, //$NON-NLS-1$
-        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_URI(), getURI(), "uRI", null, 0, 1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, //$NON-NLS-1$
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getCDOResource_Contents(), theEcorePackage.getEObject(), null, "contents", null, 0, -1, //$NON-NLS-1$
-        CDOResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_Modified(), ecorePackage.getEBoolean(), "modified", null, 0, 1, CDOResource.class, //$NON-NLS-1$
-        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_Loaded(), ecorePackage.getEBoolean(), "loaded", "true", 0, 1, CDOResource.class, //$NON-NLS-1$ //$NON-NLS-2$
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_TrackingModification(), ecorePackage.getEBoolean(), "trackingModification", null, 0, //$NON-NLS-1$
-        1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_Errors(), getDiagnostic(), "errors", null, 0, -1, CDOResource.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_Warnings(), getDiagnostic(), "warnings", null, 0, -1, CDOResource.class, //$NON-NLS-1$
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResource_TimeStamp(), theEcorePackage.getELong(), "timeStamp", null, 0, 1, CDOResource.class, //$NON-NLS-1$
-        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(cdoResourceEClass, CDOResource.class,
+        "CDOResource", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResource_ResourceSet(),
+        getResourceSet(),
+        "resourceSet", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResource_URI(),
+        getURI(),
+        "uRI", null, 0, 1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getCDOResource_Contents(),
+        theEcorePackage.getEObject(),
+        null,
+        "contents", null, 0, -1, CDOResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResource_Modified(),
+        ecorePackage.getEBoolean(),
+        "modified", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResource_Loaded(),
+        ecorePackage.getEBoolean(),
+        "loaded", "true", 0, 1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+    initEAttribute(
+        getCDOResource_TrackingModification(),
+        ecorePackage.getEBoolean(),
+        "trackingModification", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResource_Errors(),
+        getDiagnostic(),
+        "errors", null, 0, -1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResource_Warnings(),
+        getDiagnostic(),
+        "warnings", null, 0, -1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEAttribute(
+        getCDOResource_TimeStamp(),
+        theEcorePackage.getELong(),
+        "timeStamp", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     // Initialize data types
-    initEDataType(resourceSetEDataType, ResourceSet.class, "ResourceSet", !IS_SERIALIZABLE, //$NON-NLS-1$
-        !IS_GENERATED_INSTANCE_CLASS);
-    initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE, //$NON-NLS-1$
-        !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(resourceSetEDataType, ResourceSet.class,
+        "ResourceSet", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class,
+        "URI", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEDataType(diagnosticEDataType, Diagnostic.class, "Diagnostic", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
     // Create resource

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<repository:Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:repository="http://www.eclipse.org/NET4J/tooling/dita/repository/1.0" id="types">
-  <baseType id="Topic" icon="topic.gif">
-    <children id="Concept" icon="concept.gif"/>
-    <children id="Task" icon="task.gif"/>
-    <children id="Reference" icon="reference.gif"/>
-  </baseType>
-</repository:Repository>

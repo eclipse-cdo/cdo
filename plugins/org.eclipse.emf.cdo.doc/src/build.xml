@@ -9,7 +9,7 @@
 	<property name="dita.root" location="${project.root}/${dita.path}" />
 	<property name="docs.area.root" location="${project.root}/${docs.area.path}" />
 
-	<property name="dita.ext" value=".xml" />
+	<property name="dita.ext" value=".dita" />
 	<property name="target.ext" value=".topic" />
 
 	<import file="${dita.root}/conductor.xml" />
@@ -35,7 +35,7 @@
 			<param name="output.dir" value="${temp.dir}" />
 			<param name="args.logdir" value="${project.root}/.log" />
 			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
-			<param name="clean.temp" value="no" />
+			<param name="clean.temp" value="true" />
 		</antcall>
 
 		<!-- DITA always writes index.html, we need toc.html -->
@@ -54,7 +54,7 @@
 			<fileset refid="topics" />
 		</replaceregexp>
 
-		<!-- Clean the target.dir 
+		<!-- Clean the target.dir
 		<delete dir="${target.dir}" includeemptydirs="true" failonerror="false" />
 		-->
 

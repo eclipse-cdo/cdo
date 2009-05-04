@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/task.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- This document was created with Syntext Serna Free. -->
+<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/task.dtd" []>
 <!--
 Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
 All rights reserved. This program and the accompanying materials
@@ -12,37 +13,61 @@ Eike Stepper - initial API and implementation
 -->
 
 <task id="developing_custom_stores" xml:lang="en-us">
-	<title>Developing Custom Stores</title>
-	<titlealts>
-		<navtitle>Developing Custom Stores</navtitle>
-		<searchtitle>Developing Custom Stores</searchtitle>
-	</titlealts>
-	<shortdesc>Explains how to do something.</shortdesc>
-	<prolog></prolog>
-	<taskbody>
-		<context>
-			<p>Once every 6000 kilometers or three months, change the oil in your car. This will help keep the engine in good condition. </p>
-			<p>To change the oil:</p>
-		</context>
-		<steps>
-			<step>
-				<cmd>Remove the old oil filter.</cmd>
-			</step>
-			<step>
-				<cmd>Drain the old oil.</cmd>
-			</step>
-			<step>
-				<cmd>Install a new oil filter and gasket.</cmd>
-			</step>
-			<step>
-				<cmd>Add new oil to the engine.</cmd>
-			</step>
-			<step>
-				<cmd>Check the air filter and replace or clean it.</cmd>
-			</step>
-			<step>
-				<cmd>Top up the windshield washer fluid.</cmd>
-			</step>
-		</steps>
-	</taskbody>
+  <title>Developing Custom Stores</title>
+  <titlealts>
+    <navtitle>Developing Custom Stores</navtitle>
+    <searchtitle>Developing Custom Stores</searchtitle>
+  </titlealts>
+  <shortdesc>Explains how to integrate arbitrary data storage back-ends with the CDO model repository framework.</shortdesc>
+  <taskbody>
+    <context>
+      <p>The CDO model repository framework does not make many assumptions on the type of data storage back-end used to store  models and object graphs. A CDO repository communicates with a concrete back-end through an implementation of the IStore interface. By providing a custom store a repository can either <i>talk</i> to new back-end types or talk <i>differently</i> to already supportedback-end types.</p>
+      <p>To develop a custom store:</p>
+    </context>
+    <steps>
+      <step>
+        <cmd>Choose an appropriate base class.</cmd>
+        <choices>
+          <choice>Extend LongIDStore if your objects are to be identified by long integer values. In this case your new objects will automatically be assigned an ID instance of the class CDOIDLongImpl with increasing values (starting with 1).</choice>
+          <choice>Extend the Store class if you want to control the way your objects are to be identified. You can provide your own implementation of the CDOIDObject interface and you need to provide an object factory, a library descriptor and a library provider. See LongIDStore for an example. Keep in mind that the actual values of CDOIDs must not change at any time after the object entered state NEW!</choice>
+        </choices>
+      </step>
+      <step>
+        <cmd>Support certain repository capabilities.</cmd>
+        <choices>
+          <choice>Define the change formats supported in the processing of commit operations. ChangeFormat.REVISION indicates that your store is able process object changes as snapshots taken after the modification (called a revision). ChangeFormat.DELTA indicates that your store is able process object changes as a set of deltas that represent the modification itself. If both are supported the repository may decide which format to use.</choice>
+          <choice>Define the revision temporality supported by the store. RevisionTemporality.NONE indicates that the store can deal with the repository auditing configuration switched off, i.e. old revisions are not preserved and can not be restored. RevisionTemporality.AUDITING indicates that the store can deal with repositories configured for auditing, i.e. old revisions (or deltas to restore them) are preserved and can be restored at any later time. It&apos;s possible to support only one or both modes.</choice>
+          <choice>Define the revision parallelism supported by the store. Currently the framework only supports RevisionParallelism.NONE. In the future the framework may also support RevisionParallelism.BRANCHING.</choice>
+        </choices>
+      </step>
+      <step>
+        <cmd>Manage some store system properties.</cmd>
+        <choices>
+          <choice>Provide the creation time of the repository. Eventually the repository will ask for the creation time. Hence your store must save the time of the <b>first</b> succesful activation somewhere and later provide it through getCreationTime().</choice>
+          <choice>Answer if the current process is the first one for a given repository instance in a back-end. True indicates that the creation time has been saved and false indicates that it has been loaded.</choice>
+          <choice>You also need to load and save the latest CDOID values for objects and meta objects to be able to create new IDs for new objects later.</choice>
+        </choices>
+      </step>
+      <step>
+        <cmd>Provide read/write access the back-end.</cmd>
+        <choices>
+          <choice>Read/write access to the back-end is provided through your implementation of the IStoreAccessor interface. If your store extends the LongIDStore your store accessors must also extend LongIDStoreAccessor, StoreAccessor otherwise.</choice>
+          <choice>Instances of your store accessor are created in the createReader() and createWriter() methods of your store implementation. Readers <b>can be</b> bound to ISessions. Writers <b>can be</b> bound to ITransactions.</choice>
+          <choice>Store accessor instances can take part in store accessor pooling. Return an instance of StoreAccessorPool from the getReaderPool() method and/or the getWriterPool() method of your store implementation. Returning null indicates that no pooling takes place.</choice>
+          <choice>Store accessors usually open and maintain some sort of physical <i>connection</i> to the particular back-end instance. For this purpose the lifecycle methods doActivate(), doDeactivate(), doPassivate() and doUnpassivate() can be used.</choice>
+        </choices>
+        <substeps>
+          <substep>
+            <cmd>Manage persistence of model elements</cmd>
+          </substep>
+          <substep>
+            <cmd>Manage persistence of objects</cmd>
+          </substep>
+          <substep>
+            <cmd>Support partial collection loading</cmd>
+          </substep>
+        </substeps>
+      </step>
+    </steps>
+  </taskbody>
 </task>

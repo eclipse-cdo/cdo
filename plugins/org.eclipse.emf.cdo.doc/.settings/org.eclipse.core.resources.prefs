@@ -1,7 +1,8 @@
-#Sat Feb 14 08:15:59 CET 2009
+#Mon May 04 08:45:41 CEST 2009
 eclipse.preferences.version=1
 encoding//src/collateral/about_this_manual.dita=UTF-8
 encoding//src/collateral/register.dita=UTF-8
+encoding//src/concepts/abstract_classes.dita=UTF-8
 encoding//src/concepts/asynchronous_work_serializer.dita=UTF-8
 encoding//src/concepts/attribute_values_of_a_revision.dita=UTF-8
 encoding//src/concepts/completion_work_serializer.dita=UTF-8
@@ -28,5 +29,4 @@ encoding//src/references/memstore_reference.dita=UTF-8
 encoding//src/references/objectivitystore_reference.dita=UTF-8
 encoding//src/references/other_reference_information.dita=UTF-8
 encoding//src/references/server_configuration_reference.dita=UTF-8
-encoding//src/test/index.ditamap=UTF-8
 encoding//src/toc.ditamap=UTF-8

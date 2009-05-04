@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Taal - specific hibernate functionality
@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -225,30 +224,17 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return getStore().getPackageHandler().loadPackageUnit(packageUnit);
   }
 
-  public CloseableIterator<CDOID> readObjectIDs()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public CDOClassifierRef readObjectType(CDOID id)
-  {
-    CDORevision cdoRevision = readRevision(id, -1, null);
-    return new CDOClassifierRef(cdoRevision.getEClass());
-  }
-
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache)
+  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
   {
     return HibernateUtil.getInstance().getCDORevision(id);
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)
   {
     throw new UnsupportedOperationException();
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version)
   {
     // TODO Could be necessary to implement
     throw new UnsupportedOperationException();

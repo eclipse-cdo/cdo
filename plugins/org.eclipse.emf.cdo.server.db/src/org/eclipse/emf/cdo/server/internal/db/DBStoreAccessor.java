@@ -115,6 +115,14 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return new DBStoreChunkReader(this, revision, feature);
   }
 
+  /**
+   * Returns an iterator that iterates over all objects in the store and makes their CDOIDs available for processing.
+   * This method is supposed to be called very infrequently, for example during the recovery from a crash.
+   * 
+   * @since 2.0
+   * @deprecated Not used by the framework anymore.
+   */
+  @Deprecated
   public CloseableIterator<CDOID> readObjectIDs()
   {
     if (TRACER.isEnabled())
@@ -150,6 +158,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
       result = (EClass)type.resolve(packageRegistry);
     }
+
     return result;
   }
 

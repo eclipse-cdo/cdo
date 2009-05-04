@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,13 +14,11 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
-import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -81,28 +79,12 @@ public interface IStoreAccessor extends IQueryHandler
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit);
 
   /**
-   * Returns an iterator that iterates over all objects in the store and makes their CDOIDs available for processing.
-   * This method is supposed to be called very infrequently, for example during the recovery from a crash.
-   * 
-   * @since 2.0
-   */
-  public CloseableIterator<CDOID> readObjectIDs();
-
-  /**
-   * Reads the type of an object from the associated store and returns a class reference of it. This method is supposed
-   * to be called very infrequently if the {@link IStore#hasEfficientTypeLookup()} returns <code>false</code>.
-   * 
-   * @since 2.0
-   */
-  public CDOClassifierRef readObjectType(CDOID id);
-
-  /**
    * Reads a current revision (i.e. one with revised == 0) from the back-end. Returns <code>null</code> if the id is
    * invalid.
    * 
    * @since 2.0
    */
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache);
+  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache);
 
   /**
    * Reads a revision with the given version from the back-end. This method will only be called by the framework if
@@ -110,8 +92,7 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      int version);
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version);
 
   /**
    * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
@@ -120,8 +101,7 @@ public interface IStoreAccessor extends IQueryHandler
    * 
    * @since 2.0
    */
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      long timeStamp);
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp);
 
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this

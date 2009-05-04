@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/topic.dtd">
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- This document was created with Syntext Serna Free. -->
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/topic.dtd" []>
 <!--
 Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
 All rights reserved. This program and the accompanying materials
@@ -12,23 +13,11 @@ Eike Stepper - initial API and implementation
 -->
 
 <topic id="extender_s_guide" xml:lang="en-us">
-	<title>Extender's Guide</title>
-	<titlealts>
-		<navtitle>Extender's Guide</navtitle>
-		<searchtitle>Extender's Guide</searchtitle>
-	</titlealts>
-	<shortdesc>Certainly an overview page.</shortdesc>
-	<prolog></prolog>
-	<body>
-		<section>
-			<title>A certain aspect of this topic</title>
-			<p>A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
-				house.</p>
-		</section>
-		<section>
-			<title>Another aspect of this topic</title>
-			<p>A tool box contains many compartments for organizing tools and hardware. Keep the tool box handy for all sorts of jobs around the
-				house.</p>
-		</section>
-	</body>
+  <title>Extender&apos;s Guide</title>
+  <titlealts>
+    <navtitle>CDO Extender&apos;s Guide</navtitle>
+    <searchtitle>CDO Extender&apos;s Guide</searchtitle>
+  </titlealts>
+  <shortdesc>Explains how to extend the CDO Model Repositoy framework.</shortdesc>
+  <body/>
 </topic>

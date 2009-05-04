@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.internal.server.mem;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -24,7 +23,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -80,21 +78,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  /**
-   * @since 2.0
-   */
-  public CloseableIterator<CDOID> readObjectIDs()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public CDOClassifierRef readObjectType(CDOID id)
-  {
-    InternalCDORevision storeRevision = getStore().getRevision(id);
-    return new CDOClassifierRef(storeRevision.getEClass());
-  }
-
-  public InternalCDORevision readRevision(CDOID id, int referenceChunk, AdditionalRevisionCache cache)
+  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
   {
     InternalCDORevision storeRevision = getStore().getRevision(id);
     // IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
@@ -121,14 +105,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return storeRevision;
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)
   {
     return getStore().getRevisionByTime(id, timeStamp);
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int referenceChunk, AdditionalRevisionCache cache,
-      int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version)
   {
     return getStore().getRevisionByVersion(id, version);
   }

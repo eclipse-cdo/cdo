@@ -87,7 +87,7 @@ Eike Stepper - initial API and implementation
         </choices>
       </step>
       <step>
-        <cmd>Support for browsing the resource / folder structure</cmd>
+        <cmd>Support browsing the resource / folder structure</cmd>
         <choices>
           <choice>This non-optional feature is implemented in the queryResources() method of the store accessor. A QueryResourcesContext is passed by the framework which can be used to get the query values and to push the query results into.</choice>
           <choice>In a CDO repository resources can exist at the root level or in resource folders, which themselves can exist at the root level or in other resource folders. All resources and resource folders are directly or indirectly contained by a single root resource. Resources and folders are normal objects that are committed to the repository in the scope of transactions.</choice>
@@ -104,4 +104,8 @@ Eike Stepper - initial API and implementation
       </step>
     </steps>
   </taskbody>
+  <related-links>
+    <link href="../concepts/queries.dita"/>
+    <link href="../concepts/object_identity.dita"/>
+  </related-links>
 </task>

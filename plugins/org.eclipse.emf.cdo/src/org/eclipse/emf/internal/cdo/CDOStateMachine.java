@@ -184,11 +184,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
       prepare(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
-      attach2(object);
+      attachObject(object);
 
       for (InternalCDOObject content : contents)
       {
-        attach2(content);
+        attachObject(content);
       }
     }
     finally
@@ -214,7 +214,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * Phase 2: PREPARED --> NEW
    */
-  private void attach2(InternalCDOObject object)
+  private void attachObject(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {

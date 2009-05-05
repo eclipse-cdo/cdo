@@ -10,7 +10,6 @@
  *    Simon McDuff - maintenance
  *    Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -34,7 +33,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class Bugzilla_250757_Test extends AbstractCDOTest
 {
-
   public void testAddAndRemoveFromPersistedList() throws Exception
   {
     CDOSession session = openModel1Session();

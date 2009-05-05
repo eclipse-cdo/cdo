@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -101,6 +101,7 @@ public class ResourceTest extends AbstractCDOTest
       rootResourceURI = EcoreUtil.getURI(transaction.getRootResource());
       resourceURI = EcoreUtil.getURI((EObject)res1);
     }
+
     CDOSession session = openModel1Session();
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
@@ -223,7 +224,6 @@ public class ResourceTest extends AbstractCDOTest
     }
     catch (Exception ignore)
     {
-
     }
 
     transaction.close();
@@ -1297,6 +1297,7 @@ public class ResourceTest extends AbstractCDOTest
         parentFolder.getNodes().remove(node);
       }
     }
+
     for (int i = depthtoRemove; i < depth; i++)
     {
       CDOResourceNode transientNode = nodesList.get(i);
@@ -1366,6 +1367,7 @@ public class ResourceTest extends AbstractCDOTest
       assertClean(order, transaction);
       session.close();
     }
+
     clearCache(getRepository().getRevisionManager());
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
@@ -1378,6 +1380,7 @@ public class ResourceTest extends AbstractCDOTest
     catch (Exception ex)
     {
     }
+
     Resource resource = transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(session, newPath), true);
     assertNotNull(resource);
   }
@@ -1431,7 +1434,6 @@ public class ResourceTest extends AbstractCDOTest
 
   static class TestAdapter extends AdapterImpl
   {
-
     @Override
     public void notifyChanged(Notification msg)
     {
@@ -1445,7 +1447,6 @@ public class ResourceTest extends AbstractCDOTest
     @Override
     public void setTarget(Notifier newTarget)
     {
-
     }
 
     @Override
@@ -1453,7 +1454,5 @@ public class ResourceTest extends AbstractCDOTest
     {
       return super.isAdapterForType(type);
     }
-
   };
-
 }

@@ -269,6 +269,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
           break;
         }
       }
+
       if (valid)
       {
         if (!queryContext.addResult(revision))

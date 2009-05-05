@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    André Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -30,7 +30,6 @@ import java.util.concurrent.Executors;
  */
 public class JVMConnectorDefImplTest extends AbstractOMTest
 {
-
   private static final String NAME = "test1";
 
   public void testIncompleteInitializationThrowsIllegalArgumentException()

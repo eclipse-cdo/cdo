@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -248,6 +248,7 @@ public final class ZIPUtil
           {
             return ORDER_KEEP;
           }
+
           if (path2.length() == 0)
           {
             return ORDER_SWAP;

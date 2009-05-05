@@ -9,7 +9,6 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
@@ -71,21 +70,25 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
       assertTrue(session.repository().getCreationTime() < commitTime2);
       assertEquals("Sympedia", company.getName());
     }
-    CDOSession session = openModel1Session();
 
+    CDOSession session = openModel1Session();
     CDOAudit audit = session.openAudit(commitTime1);
+
     {
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
       CDOObject cdoAuditCompany = CDOUtil.getCDOObject(auditCompany);
       CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoAuditCompany, CDORevision.UNSPECIFIED_VERSION);
     }
+
     audit.setTimeStamp(commitTime2);
+
     {
       CDOResource auditResource = audit.getResource("/res1");
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Sympedia", auditCompany.getName());
     }
+
     session.close();
   }
 }

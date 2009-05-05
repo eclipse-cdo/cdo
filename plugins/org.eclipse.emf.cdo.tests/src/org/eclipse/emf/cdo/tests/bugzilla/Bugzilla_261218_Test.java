@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  */
@@ -43,16 +43,18 @@ public class Bugzilla_261218_Test extends AbstractCDOTest
       Category file = getModel1Factory().createCategory();
       folder.getCategories().add(file);
     }
-    transaction.commit();
 
+    transaction.commit();
     long start = System.currentTimeMillis();
     for (int i = 9999; i >= 0; --i)
     {
       // EcoreUtil.remove(folder.getCategories().get(i));
       folder.getCategories().remove(i);
     }
+
     // =>90 seconds
     transaction.commit();
+
     // TODO: SIMON BETTER ASSERTION
     assertTrue(System.currentTimeMillis() - start < 10000);
   }

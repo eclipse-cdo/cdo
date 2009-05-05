@@ -9,7 +9,6 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -37,7 +36,6 @@ import java.util.List;
  */
 public class Bugzilla_254489_Test extends AbstractCDOTest
 {
-
   public void testBugzilla_254489() throws Exception
   {
     msg("Opening session");
@@ -78,6 +76,7 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
         return companyA2Adapter.getNotifications().size() == 1;
       }
     }.timedOut();
+
     assertFalse(timedOut);
 
     Category category2 = (Category)companyA2Adapter.getNotifications().get(0).getNewValue();

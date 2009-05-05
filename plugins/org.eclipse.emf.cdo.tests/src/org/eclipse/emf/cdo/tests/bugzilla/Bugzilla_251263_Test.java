@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  */
 public class Bugzilla_251263_Test extends AbstractCDOTest
 {
-
   public void testEOpposite_AdjustMany() throws Exception
   {
     CDOSession session = openModel1Session();
@@ -59,6 +58,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     catch (Exception ignore)
     {
     }
+
     CDOResource resB = transaction1.createResource("testB");
     resB.getContents().add(purchaseOrder2);
     transaction1.commit();
@@ -95,6 +95,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     catch (Exception ignore)
     {
     }
+
     CDOResource resB = transaction1.createResource("testB");
     resB.getContents().add(supplier2);
     transaction1.commit();
@@ -128,6 +129,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     catch (Exception ignore)
     {
     }
+
     CDOResource resB = transaction1.createResource("testB");
     resB.getContents().add(supplier2);
     transaction1.commit();
@@ -165,6 +167,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     catch (Exception ignore)
     {
     }
+
     CDOResource resB = transaction1.createResource("testB");
     resB.getContents().add(purchaseOrder2);
     transaction1.commit();

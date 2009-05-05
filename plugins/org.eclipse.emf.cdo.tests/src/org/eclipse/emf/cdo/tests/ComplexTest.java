@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -1074,6 +1074,7 @@ public class ComplexTest extends AbstractCDOTest
     {
       elementToRemove.add(o);
     }
+
     RefMultiContained container_work = (RefMultiContained)containers.get(0);
     for (EObject o : elementToRemove)
     {
@@ -1085,7 +1086,6 @@ public class ComplexTest extends AbstractCDOTest
 
   public void testMultipleTransactions2()
   {
-
     CDOTransaction transaction1 = session.openTransaction();
     String resource1path = "/resources/3/" + uniqueCounter;
     CDOResource resource1 = transaction1.createResource(resource1path);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Paul Richardson - initial API and implementation
  *    Simon McDuff - maintenance
@@ -102,7 +102,6 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
 
   public void testBugzilla_248915_DuplicateID() throws Exception
   {
-
     CDOSession session1 = openModel1Session();
     CDOTransaction transaction1 = session1.openTransaction();
 

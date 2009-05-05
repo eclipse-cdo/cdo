@@ -9,7 +9,6 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;

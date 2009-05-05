@@ -37,7 +37,6 @@ public class Bugzilla_258850_Test extends AbstractCDOTest
 
       TestListener listener = new TestListener()
       {
-
         @Override
         public void notifyEvent(IEvent event)
         {
@@ -65,7 +64,6 @@ public class Bugzilla_258850_Test extends AbstractCDOTest
 
   public abstract class TestListener implements IListener
   {
-
     private boolean success = false;
 
     public void setSuccess(boolean success)
@@ -79,6 +77,5 @@ public class Bugzilla_258850_Test extends AbstractCDOTest
     }
 
     public abstract void notifyEvent(IEvent event);
-
   }
 }

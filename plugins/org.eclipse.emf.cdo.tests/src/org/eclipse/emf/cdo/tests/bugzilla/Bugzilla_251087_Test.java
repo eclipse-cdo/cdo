@@ -10,7 +10,6 @@
  *    Simon McDuff - maintenance
  *    Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.id.CDOID;

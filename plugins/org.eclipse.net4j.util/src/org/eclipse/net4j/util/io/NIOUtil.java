@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -111,6 +111,7 @@ public final class NIOUtil
         throw new IllegalArgumentException("Invalid destination object '" + dst.getAbsolutePath() + "'!");
       }
     }
+
     File dstParent = dst.getParentFile();
     if (!dstParent.exists())
     {
@@ -119,6 +120,7 @@ public final class NIOUtil
         throw new IOException("Failed to create directory " + dstParent.getAbsolutePath());
       }
     }
+
     long fileSize = src.length();
     if (fileSize > 20971520l)
     { // for larger files (20Mb) use streams
@@ -139,6 +141,7 @@ public final class NIOUtil
             out.write(buf, 0, doneCnt);
           }
         }
+
         out.flush();
       }
       finally

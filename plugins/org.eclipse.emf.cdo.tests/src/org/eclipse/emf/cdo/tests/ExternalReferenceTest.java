@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -129,6 +129,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resA.getContents().add(objectFromResA);
       transactionA1.commit();
     }
+
     clearCache(getRepository().getRevisionManager());
     {
       CDOSession sessionA = openSession();
@@ -208,7 +209,9 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resD.save(outputStream, null);
       dataOfresD = outputStream.toByteArray();
     }
+
     clearCache(getRepository().getRevisionManager());
+
     {
       ResourceSet resourceSet = new ResourceSetImpl();
       CDOSession session = openSession();

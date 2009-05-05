@@ -4,13 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  *    Simon McDuff - maintenance
  *    Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -32,8 +31,8 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
   public void testBugzilla_248124_hasResourceWithCommit() throws Exception
   {
     CDOSession session = openModel1Session();
-
     CDOTransaction transaction1 = session.openTransaction();
+
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
     res.getContents().add(getModel1Factory().createCompany());
@@ -49,8 +48,8 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
   public void testBugzilla_248124_getResourceWithCommit() throws Exception
   {
     CDOSession session = openModel1Session();
-
     CDOTransaction transaction1 = session.openTransaction();
+
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
     res.getContents().add(getModel1Factory().createCompany());
@@ -71,6 +70,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     }
 
     CDOView transaction2 = session.openTransaction();
+
     try
     {
       transaction2.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, resourcePath), true);
@@ -78,15 +78,14 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     }
     catch (RuntimeException exception)
     {
-
     }
   }
 
   public void testBugzilla_248124_hasResourceWithoutCommit() throws Exception
   {
     CDOSession session = openModel1Session();
-
     CDOTransaction transaction1 = session.openTransaction();
+
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
     res.getContents().add(getModel1Factory().createCompany());
@@ -100,8 +99,8 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
   public void testBugzilla_248124_getResourceWithoutCommit() throws Exception
   {
     CDOSession session = openModel1Session();
-
     CDOTransaction transaction1 = session.openTransaction();
+
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(resourcePath);
     res.getContents().add(getModel1Factory().createCompany());
@@ -112,13 +111,11 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-
       transaction1.getResourceSet().getResource(CDOURIUtil.createResourceURI(transaction1, resourcePath), true);
       fail("Should fail to create resource");
     }
     catch (RuntimeException exception)
     {
-
     }
   }
 }

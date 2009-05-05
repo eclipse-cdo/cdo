@@ -439,13 +439,6 @@ public class FormatChecker
             complain(name, i);
           }
         }
-        // else if (last.equals("stmt"))
-        // {
-        // if (!type.equals("{"))
-        // {
-        // complain(name, i);
-        // }
-        // }
         else if (last.equals("empty"))
         {
           if (type.equals("empty"))

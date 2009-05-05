@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -332,7 +332,6 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     transaction.addHandler(new CDOAsyncTransactionHandler(new CDOTransactionHandler()
     {
-
       public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
       {
         // Create READ access to see if we have deadlock
@@ -363,6 +362,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
       {
       }
     }));
+
     transaction.addHandler(asyncHandler);
     resource.getContents().add(order); // 1 modif + 1 attach
     resource.getContents().remove(order); // 1 modif + 1 detach
@@ -376,6 +376,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
             && handler.listOfModifyinObject.size() == 2;
       }
     }.timedOut();
+
     assertEquals(false, timedOut);
     // Wait a little bit to let the async finish. It is only there to not have Transaction not active exception and
     // mislead the test.

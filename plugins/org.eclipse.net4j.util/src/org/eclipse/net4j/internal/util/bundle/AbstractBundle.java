@@ -250,7 +250,6 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     String result = stringMap.get(key);
     if (result == null)
     {
-
       ResourceBundle bundle = translate ? resourceBundle : untranslatedResourceBundle;
       if (bundle == null)
       {

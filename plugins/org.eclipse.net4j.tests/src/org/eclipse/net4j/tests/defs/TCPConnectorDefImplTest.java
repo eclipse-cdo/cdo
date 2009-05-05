@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    André Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -26,7 +26,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  */
 public class TCPConnectorDefImplTest extends AbstractProtocolTest
 {
-
   private static final long DELAY = 500l;
 
   private static final int PORT = 2036;
@@ -53,7 +52,6 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
 
   public void testConnectorDefOpensConnection()
   {
-
     TCPConnectorDef tcpConnectorDef = Net4jDefsFactory.eINSTANCE.createTCPConnectorDef();
 
     tcpConnectorDef.setHost(HOST);
@@ -98,7 +96,6 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
 
   public void testCredentialsProvider()
   {
-
     Util.addNegotiator(USERID, PASSWORD, tcpAcceptor);
 
     TCPConnectorDef tcpConnectorDef = Net4jDefsFactory.eINSTANCE.createTCPConnectorDef();

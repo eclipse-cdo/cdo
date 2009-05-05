@@ -9,7 +9,6 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -27,7 +26,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  */
 public class Bugzilla_252909_Test extends AbstractCDOTest
 {
-
   public void testBugzilla_252909() throws Exception
   {
     CDOSession session = openModel1Session();
@@ -43,5 +41,4 @@ public class Bugzilla_252909_Test extends AbstractCDOTest
       clearCache(getRepository().getRevisionManager());
     }
   }
-
 }

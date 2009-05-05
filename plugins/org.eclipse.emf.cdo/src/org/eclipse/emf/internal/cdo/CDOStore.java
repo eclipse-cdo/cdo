@@ -368,6 +368,7 @@ public final class CDOStore implements EStore
           }
         }
       }
+
       if (feature instanceof EReference)
       {
         // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to

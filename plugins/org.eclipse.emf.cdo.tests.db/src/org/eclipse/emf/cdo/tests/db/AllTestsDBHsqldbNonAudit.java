@@ -26,7 +26,6 @@ import junit.framework.TestSuite;
  */
 public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
 {
-
   public static Test suite()
   {
     return new AllTestsDBHsqldbNonAudit().getTestSuite("CDO Tests (DBStoreRepositoryConfig Hsql Horizontal Non-audit)");
@@ -51,5 +50,4 @@ public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
     // this takes ages - so for now, we disable it
     testClasses.remove(Bugzilla_261218_Test.class);
   }
-
 }

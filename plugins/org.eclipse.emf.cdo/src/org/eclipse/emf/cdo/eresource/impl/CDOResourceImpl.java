@@ -170,6 +170,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     {
       return this;
     }
+
     return super.eDirectResource();
   }
 

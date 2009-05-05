@@ -163,7 +163,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    */
   public interface Options extends CDOCommonSession.Options
   {
-
     public boolean isGeneratedPackageEmulationEnabled();
 
     public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled);

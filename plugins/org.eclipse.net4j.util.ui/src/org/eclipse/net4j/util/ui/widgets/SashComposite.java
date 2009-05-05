@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -76,6 +76,7 @@ public abstract class SashComposite extends Composite implements INotifier.Intro
         return createControl1(parent);
       }
     } : createControl1(this);
+
     control1.setLayoutData(control1Data);
 
     sashData = new FormData();
@@ -91,6 +92,7 @@ public abstract class SashComposite extends Composite implements INotifier.Intro
         return createControl2(parent);
       }
     } : createControl2(this);
+
     control2.setLayoutData(control2Data);
 
     init();

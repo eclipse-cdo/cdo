@@ -63,6 +63,7 @@ public class NullPreparedStatementCache extends AbstractPreparedStatementCache i
       {
         OM.LOG.warn("- " + ps.toString());
       }
+
       assert false;
     }
   }

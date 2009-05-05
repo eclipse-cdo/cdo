@@ -688,7 +688,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     Set<String> neededLibraries = createSet(libraryDescriptor.getLibraryNames());
     if (!neededLibraries.isEmpty())
     {
-
       IOUtil.mkdirs(cacheFolder);
       Set<String> existingLibraries = createSet(cacheFolder.list());
       Set<String> missingLibraries = new HashSet<String>(neededLibraries);

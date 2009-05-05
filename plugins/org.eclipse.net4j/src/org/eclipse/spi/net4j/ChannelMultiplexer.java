@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -145,7 +145,6 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
     try
     {
-
       try
       {
         long timeout = getOpenChannelTimeout() - System.currentTimeMillis() + start;

@@ -80,6 +80,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
           DBStoreAccessor.super.write(commitContext, monitor.fork());
         }
       }, //
+
       new ProgressDistributable.Default<CommitContext>()
       {
         public void runLoop(int index, CommitContext commitContext, OMMonitor monitor) throws Exception
@@ -516,6 +517,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         {
           TRACER.trace("DB connection keep-alive task activated.");
         }
+
         stmt = connection.createStatement();
         stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.REPOSITORY);
       }

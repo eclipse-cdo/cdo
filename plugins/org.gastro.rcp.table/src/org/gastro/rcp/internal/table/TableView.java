@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -248,6 +248,7 @@ public class TableView extends ViewPart
             tree.setLayoutData(gridData);
           }
         }
+
         {
           Composite composite = new Composite(shelfItem.getBody(), SWT.NONE);
           composite.setLayout(new GridLayout(1, false));
@@ -261,6 +262,7 @@ public class TableView extends ViewPart
             menuTitle.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
             menuTitle.setText("Titel");
           }
+
           {
             Label label = new Label(composite, SWT.SEPARATOR);
             {
@@ -269,6 +271,7 @@ public class TableView extends ViewPart
               label.setLayoutData(gridData);
             }
           }
+
           {
             menuDescription = new Label(composite, SWT.WRAP);
             menuDescription.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_BLUE));
@@ -277,6 +280,7 @@ public class TableView extends ViewPart
             menuDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
             menuDescription.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
           }
+
           {
             Composite composite_1 = new Composite(composite, SWT.NONE);
             composite_1.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
@@ -293,6 +297,7 @@ public class TableView extends ViewPart
               menuImage.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_BLUE));
               menuImage.setFont(SWTResourceManager.getFont("Comic Sans MS", 16, SWT.BOLD));
             }
+
             {
               menuPrice = new Label(composite_1, SWT.NONE);
               menuPrice.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false, 1, 1));
@@ -304,6 +309,7 @@ public class TableView extends ViewPart
             }
           }
         }
+
         {
           Composite composite = new Composite(shelfItem.getBody(), SWT.NONE);
           composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -322,12 +328,15 @@ public class TableView extends ViewPart
                 prevMenu();
               }
             });
+
             buttonPrev.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/up.png"));
           }
+
           {
             Label label = new Label(composite, SWT.NONE);
             label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
           }
+
           {
             quantity = new Label(composite, SWT.NONE);
             quantity.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_BLUE));
@@ -337,6 +346,7 @@ public class TableView extends ViewPart
             quantity.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
             quantity.setText("0");
           }
+
           {
             Composite composite_1 = new Composite(composite, SWT.NONE);
             composite_1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -354,8 +364,10 @@ public class TableView extends ViewPart
                   deleteOrder();
                 }
               });
+
               buttonDelete.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/delete.gif"));
             }
+
             {
               buttonAdd = new Button(composite_1, SWT.NONE);
               buttonAdd.setToolTipText("Mehr bestellen");
@@ -369,10 +381,12 @@ public class TableView extends ViewPart
               });
             }
           }
+
           {
             Label label = new Label(composite, SWT.NONE);
             label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
           }
+
           {
             Button buttonNext = new Button(composite, SWT.NONE);
             buttonNext.setToolTipText("N\u00E4chster Eintrag");
@@ -383,12 +397,15 @@ public class TableView extends ViewPart
                 nextMenu();
               }
             });
+
             buttonNext.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/down.png"));
           }
         }
+
         shelfItem.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/menucard.png"));
         shelfItem.setText(" Speisen und Getr\u00E4nke");
       }
+
       {
         PShelfItem shelfItem = new PShelfItem(shelf, SWT.NONE);
         GridLayout gridLayout = new GridLayout(2, false);
@@ -409,6 +426,7 @@ public class TableView extends ViewPart
             gridData.widthHint = 300;
             table.setLayoutData(gridData);
           }
+
           {
             TableViewerColumn tableViewerColumn = new TableViewerColumn(orderViewer, SWT.NONE);
             TableColumn tblclmnQuantity = tableViewerColumn.getColumn();
@@ -417,12 +435,14 @@ public class TableView extends ViewPart
             tblclmnQuantity.setWidth(70);
             tblclmnQuantity.setText("Quantity");
           }
+
           {
             TableViewerColumn tableViewerColumn = new TableViewerColumn(orderViewer, SWT.NONE);
             TableColumn tblclmnOffering = tableViewerColumn.getColumn();
             tblclmnOffering.setWidth(410);
             tblclmnOffering.setText("Offering");
           }
+
           {
             TableViewerColumn tableViewerColumn = new TableViewerColumn(orderViewer, SWT.NONE);
             TableColumn tblclmnPrice = tableViewerColumn.getColumn();
@@ -431,6 +451,7 @@ public class TableView extends ViewPart
             tblclmnPrice.setWidth(100);
             tblclmnPrice.setText("Price");
           }
+
           {
             TableViewerColumn tableViewerColumn = new TableViewerColumn(orderViewer, SWT.NONE);
             TableColumn tblclmnSum = tableViewerColumn.getColumn();
@@ -469,6 +490,7 @@ public class TableView extends ViewPart
             }
           });
         }
+
         {
           Composite composite = new Composite(shelfItem.getBody(), SWT.NONE);
           composite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -487,15 +509,18 @@ public class TableView extends ViewPart
                 cancelOrder();
               }
             });
+
             buttonCancel.setToolTipText("Bestellung abbrechen");
             buttonCancel.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/cancel.png"));
           }
+
           {
             Label labelTotalPrice = new Label(composite, SWT.NONE);
             labelTotalPrice.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
             labelTotalPrice.setAlignment(SWT.CENTER);
             labelTotalPrice.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
           }
+
           {
             Button buttonSend = new Button(composite, SWT.NONE);
             buttonSend.addSelectionListener(new SelectionAdapter()
@@ -505,18 +530,22 @@ public class TableView extends ViewPart
                 sendOrder();
               }
             });
+
             buttonSend.setToolTipText("Bestellung absenden");
             buttonSend.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/send.png"));
           }
         }
+
         shelfItem.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/order.png"));
         shelfItem.setText(" Bestellung");
       }
+
       {
         PShelfItem shelfItem = new PShelfItem(shelf, SWT.NONE);
         shelfItem.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/payment.png"));
         shelfItem.setText(" Bezahlung");
       }
+
       {
         PShelfItem shelfItem = new PShelfItem(shelf, SWT.NONE);
         shelfItem.setImage(ResourceManager.getPluginImage("org.gastro.rcp.table", "icons/service.png"));

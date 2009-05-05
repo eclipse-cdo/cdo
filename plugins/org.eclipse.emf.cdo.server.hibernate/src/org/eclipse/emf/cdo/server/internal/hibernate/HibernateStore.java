@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Taal - moved cdopackage handler to other class, changed configuration
@@ -187,6 +187,7 @@ public class HibernateStore extends Store implements IHibernateStore
       hibernateSessionFactory.close();
       hibernateSessionFactory = null;
     }
+
     // and now do the drop action
     if (doDropSchema)
     {
@@ -196,11 +197,11 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     packageHandler.deactivate();
-
     if (doDropSchema)
     {
       packageHandler.doDropSchema();
     }
+
     super.doDeactivate();
   }
 
@@ -237,6 +238,7 @@ public class HibernateStore extends Store implements IHibernateStore
         {
           TRACER.trace("Closing SessionFactory");
         }
+
         hibernateSessionFactory.close();
       }
 
@@ -324,6 +326,7 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       systemInformation = getPackageHandler().getSystemInformation();
     }
+
     return systemInformation;
   }
 }

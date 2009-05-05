@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -86,6 +86,7 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
       {
         return ""; //$NON-NLS-1$
       }
+
       return registry.containsKey(uri) ? null : MessageFormat.format(Messages
           .getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
     }

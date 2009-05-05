@@ -1110,6 +1110,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         {
           dirtyObject = objects.get(dirtyOID.getID());
         }
+
         if (dirtyObject != null)
         {
           CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
@@ -1804,7 +1805,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     class SubscribeEntry
     {
-
       private CDOID id;
 
       private int count = 0;

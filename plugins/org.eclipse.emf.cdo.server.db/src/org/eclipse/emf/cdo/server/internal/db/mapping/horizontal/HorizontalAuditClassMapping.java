@@ -130,6 +130,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     {
       builder.append(", ?");
     }
+
     builder.append(")");
     sqlInsertAttributes = builder.toString();
 

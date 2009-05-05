@@ -195,6 +195,7 @@ public abstract class AbstractListTableMapping implements IListMapping
     {
       builder.append("?, ");
     }
+
     builder.append(" ?, ?)");
     sqlInsertEntry = builder.toString();
   }
@@ -221,7 +222,6 @@ public abstract class AbstractListTableMapping implements IListMapping
 
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-
     MoveableList<Object> list = revision.getList(getFeature());
     int listSize = -1;
 
@@ -276,6 +276,7 @@ public abstract class AbstractListTableMapping implements IListMapping
         {
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value);
         }
+
         list.add(value);
       }
 
@@ -285,6 +286,7 @@ public abstract class AbstractListTableMapping implements IListMapping
         {
           TRACER.format("Adding UNINITIALIZED for index {0} ", list.size());
         }
+
         list.add(InternalCDORevision.UNINITIALIZED);
       }
     }
@@ -338,6 +340,7 @@ public abstract class AbstractListTableMapping implements IListMapping
         {
           TRACER.trace("No last index found -> list is empty. ");
         }
+
         return -1;
       }
       else
@@ -347,6 +350,7 @@ public abstract class AbstractListTableMapping implements IListMapping
         {
           TRACER.trace("Read list last index = " + result);
         }
+
         return result;
       }
     }
@@ -379,14 +383,12 @@ public abstract class AbstractListTableMapping implements IListMapping
       {
         builder.append(where);
       }
+
       builder.append(sqlOrderByIndex);
 
       String sql = builder.toString();
-
       pstmt = chunkReader.getAccessor().getStatementCache().getPreparedStatement(sql, ReuseProbability.LOW);
-
       setKeyFields(pstmt, chunkReader.getRevision());
-
       if (TRACER.isEnabled())
       {
         TRACER.trace(pstmt.toString());
@@ -419,8 +421,8 @@ public abstract class AbstractListTableMapping implements IListMapping
         {
           TRACER.format("Read value for chunk index {0} from result set: {1}", indexInChunk, value);
         }
-        chunk.add(indexInChunk++, value);
 
+        chunk.add(indexInChunk++, value);
         if (indexInChunk == chunkSize)
         {
           if (TRACER.isEnabled())

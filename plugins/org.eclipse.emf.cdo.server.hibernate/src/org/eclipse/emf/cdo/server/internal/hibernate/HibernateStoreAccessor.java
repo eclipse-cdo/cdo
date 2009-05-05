@@ -335,6 +335,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       writePackageUnits(context.getNewPackageUnits(), monitor);
     }
+
     try
     {
       // start with fresh hibernate session

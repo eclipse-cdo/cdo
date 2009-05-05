@@ -189,14 +189,17 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
         {
           first = s.next;
         }
+
         if (s.next != null)
         {
           s.next.previous = s.previous;
         }
+
         if (s == last)
         {
           last = s.previous;
         }
+
         if (s.previous != null)
         {
           s.previous.next = s.next;

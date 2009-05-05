@@ -463,7 +463,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   {
     CDOFeatureDeltaVisitor visitor = new CDOFeatureDeltaVisitor()
     {
-
       public void visit(CDOMoveFeatureDelta delta)
       {
         moveListItem(accessor, id, delta.getOldPosition(), delta.getNewPosition());

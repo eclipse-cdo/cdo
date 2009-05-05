@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -129,6 +129,7 @@ public class RemoteTraceView extends ViewPart
         RemoteTraceView.this.fillContextMenu(manager);
       }
     });
+
     Menu menu = menuMgr.createContextMenu(viewer.getControl());
     viewer.getControl().setMenu(menu);
     getSite().registerContextMenu(menuMgr, viewer);
@@ -169,6 +170,7 @@ public class RemoteTraceView extends ViewPart
         refreshViewer();
       }
     };
+
     clearAction.setText("Clear");
     clearAction.setToolTipText("Clear");
     clearAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(

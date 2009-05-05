@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -27,7 +27,6 @@ import org.eclipse.emf.spi.cdo.CDOElementProxy;
  */
 public class CDOListWithElementProxiesImpl extends CDOListImpl
 {
-
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {
     public CDOList createList(int initialCapacity, int size, int initialChunk)

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -147,6 +147,7 @@ public class OrdersView extends ViewPart
         trclmnTitel.setWidth(400);
         trclmnTitel.setText("Angebot");
       }
+
       {
         TreeViewerColumn treeViewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
         TreeColumn trclmnQuantity = treeViewerColumn.getColumn();
@@ -155,6 +156,7 @@ public class OrdersView extends ViewPart
         trclmnQuantity.setWidth(50);
         trclmnQuantity.setText("Menge");
       }
+
       {
         TreeViewerColumn treeViewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
         TreeColumn trclmnPreis = treeViewerColumn.getColumn();
@@ -163,6 +165,7 @@ public class OrdersView extends ViewPart
         trclmnPreis.setWidth(100);
         trclmnPreis.setText("Preis");
       }
+
       {
         TreeViewerColumn treeViewerColumn = new TreeViewerColumn(treeViewer, SWT.NONE);
         TreeColumn trclmnSumme = treeViewerColumn.getColumn();

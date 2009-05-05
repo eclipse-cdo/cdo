@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444  
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
@@ -15,19 +15,18 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 /**
- * Interface which complements {@link IClassMapping} with methods to facilitate 
+ * Interface which complements {@link IClassMapping} with methods to facilitate
  * audit support.
- * 
+ *
  * @see {@link IMappingStrategy#hasAuditSupport()
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
- * 
+ *
  * @since 2.0
  */
 public interface IClassMappingAuditSupport
 {
-
   /**
    * Read a specific version of a revision. If this method returns <code>true</code> it is guaranteed that
    * <code>revision.getVersion() == version</code>

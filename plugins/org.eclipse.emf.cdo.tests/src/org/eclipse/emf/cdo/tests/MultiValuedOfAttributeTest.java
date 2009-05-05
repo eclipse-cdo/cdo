@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -176,6 +176,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       {
         elements.add(list.get(i));
       }
+
       resource.getContents().add(eGenObject);
       transaction.commit();
     }
@@ -193,6 +194,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       {
         assertEquals(elements.get(i), list.get(i));
       }
+
       elements.add(list.get(list.size() - 1));
       transaction.commit();
     }
@@ -212,6 +214,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       {
         assertEquals(elements.get(i), list.get(i));
       }
+
       transaction.commit();
     }
   }

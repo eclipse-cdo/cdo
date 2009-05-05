@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
@@ -973,6 +973,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           {
             oldContainerResource.attached(this);
           }
+
           // If we didn't detach it from an old resource already, detach it from the old container's resource.
           //
           else if (oldResource == null)

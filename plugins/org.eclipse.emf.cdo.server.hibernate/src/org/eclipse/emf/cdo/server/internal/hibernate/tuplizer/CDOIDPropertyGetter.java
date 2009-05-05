@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
  *    Eike Stepper - maintenance
@@ -48,6 +48,7 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
         setCDOID(revision, value);
         return value;
       }
+
       return null;
     }
 
@@ -78,6 +79,7 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
     {
       hcc = HibernateThreadContext.getHibernateCommitContext();
     }
+
     CDOID cdoID = revision.getID();
     if (cdoID == null)
     {

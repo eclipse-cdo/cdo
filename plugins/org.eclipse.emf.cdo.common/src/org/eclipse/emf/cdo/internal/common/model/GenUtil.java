@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -40,6 +40,7 @@ public final class GenUtil
       {
         return false;
       }
+
       Class<?> instanceClass = (Class<?>)result;
       return instanceClass.isPrimitive();
     }
@@ -142,6 +143,7 @@ public final class GenUtil
     {
       result.append(prefix);
     }
+
     return leadingSeparators != null ? "_" + result.toString() : result.toString(); //$NON-NLS-1$
   }
 
@@ -165,6 +167,7 @@ public final class GenUtil
             result.add(currentWord.toString());
             currentWord = new StringBuilder();
           }
+
           lastIsLower = false;
         }
         else
@@ -181,6 +184,7 @@ public final class GenUtil
               currentWord.append(lastChar);
             }
           }
+
           lastIsLower = true;
         }
 
@@ -192,6 +196,7 @@ public final class GenUtil
 
       result.add(currentWord.toString());
     }
+
     return result;
   }
 
@@ -202,6 +207,7 @@ public final class GenUtil
     {
       // the for loop's condition finds the separator
     }
+
     return i != 0 ? name.substring(0, i) : null;
   }
 }

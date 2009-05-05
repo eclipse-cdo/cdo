@@ -1053,6 +1053,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                   {
                     setSelectionToViewer(mostRecentCommand.getAffectedObjects());
                   }
+
                   if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
                   {
                     propertySheetPage.refresh();
@@ -2106,6 +2107,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     return populated;
   }
 
+  /**
+   * @ADDED
+   */
   private IContributionItem populateSubMenu(String nsURI, Object value, final CDOPackageRegistry packageRegistry)
   {
     if (value instanceof EPackage)
@@ -2130,6 +2134,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     submenuManager.add(new Action(Messages.getString("CDOEditor.27")) //$NON-NLS-1$
         {
         });
+
     submenuManager.addMenuListener(new IMenuListener()
     {
       public void menuAboutToShow(IMenuManager manager)
@@ -2151,6 +2156,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     return submenuManager;
   }
 
+  /**
+   * @ADDED
+   */
   private void populateSubMenu(EPackage ePackage, final MenuManager submenuManager)
   {
     List<EObject> objects = new ArrayList<EObject>();
@@ -2185,6 +2193,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
   }
 
+  /**
+   * @ADDED
+   */
   private String getLabelText(Object object)
   {
     try
@@ -2206,6 +2217,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     return ""; //$NON-NLS-1$
   }
 
+  /**
+   * @ADDED
+   */
   private Object getLabelImage(Object object)
   {
     try
@@ -2512,6 +2526,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         return true;
       }
+
       return false;
     }
 

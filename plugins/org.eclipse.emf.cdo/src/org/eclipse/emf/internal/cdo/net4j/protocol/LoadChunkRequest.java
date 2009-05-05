@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -91,6 +91,7 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
     {
       TRACER.format("Writing fromIndex: {0}", fromIndex); //$NON-NLS-1$
     }
+
     int diffIndex = accessIndex - fetchIndex;
     out.writeInt(fromIndex - diffIndex);
     if (TRACER.isEnabled())

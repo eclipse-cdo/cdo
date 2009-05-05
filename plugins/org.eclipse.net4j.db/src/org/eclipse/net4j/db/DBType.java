@@ -39,6 +39,7 @@ public enum DBType
       throw new UnsupportedOperationException();
     }
   }, //
+
   TIME(92)
   {
     @Override
@@ -47,6 +48,7 @@ public enum DBType
       throw new UnsupportedOperationException();
     }
   }, //
+
   TIMESTAMP(93)
   {
     @Override
@@ -65,6 +67,7 @@ public enum DBType
       }
     }
   }, //
+
   BINARY(-2)
   {
     @Override
@@ -73,6 +76,7 @@ public enum DBType
       throw new UnsupportedOperationException();
     }
   }, //
+
   VARBINARY(-3)
   {
     @Override
@@ -81,6 +85,7 @@ public enum DBType
       throw new UnsupportedOperationException();
     }
   }, //
+
   LONGVARBINARY(-4, "LONG VARBINARY")
   {
     @Override
@@ -89,6 +94,7 @@ public enum DBType
       throw new UnsupportedOperationException();
     }
   }, //
+
   BLOB(2004)
   {
     @Override
@@ -97,6 +103,7 @@ public enum DBType
       throw new UnsupportedOperationException();
     }
   }, //
+
   CLOB(2005)
   {
     @Override

@@ -189,6 +189,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
             throw new DBException(ex);
           }
         }
+
         return null;
       }
 

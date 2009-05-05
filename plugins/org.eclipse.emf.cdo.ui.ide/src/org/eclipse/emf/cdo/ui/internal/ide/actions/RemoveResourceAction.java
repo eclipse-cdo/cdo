@@ -122,8 +122,8 @@ public class RemoveResourceAction implements IObjectActionDelegate
           return Status.OK_STATUS;
         }
       };
+
       job.schedule();
     }
   }
-
 }

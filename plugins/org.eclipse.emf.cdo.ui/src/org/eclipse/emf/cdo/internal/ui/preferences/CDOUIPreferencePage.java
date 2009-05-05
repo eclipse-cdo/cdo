@@ -61,6 +61,7 @@ public class CDOUIPreferencePage extends OMPreferencePage
         return UIUtil.createGridData(true, false);
       }
     };
+
     decoration.setLayoutData(UIUtil.createGridData(true, false));
 
     Text text = decoration.getText();
@@ -69,6 +70,7 @@ public class CDOUIPreferencePage extends OMPreferencePage
     {
       tags.append(tag + " "); //$NON-NLS-1$
     }
+
     text.setToolTipText(Messages.getString("CDOUIPreferencePage.2") + tags.toString()); //$NON-NLS-1$
     IControlContentAdapter contentAdapter = new TextContentAdapter();
     IContentProposalProvider provider = new SimpleContentProposalProvider(CDOLabelDecorator.DECORATION_PROPOSALS);

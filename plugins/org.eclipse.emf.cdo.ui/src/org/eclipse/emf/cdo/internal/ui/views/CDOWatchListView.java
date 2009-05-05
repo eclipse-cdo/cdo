@@ -97,7 +97,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class CDOWatchListView extends ViewPart implements ISelectionProvider
 {
-  private static final String[] columnNames = { Messages.getString("CDOWatchListView.0"), Messages.getString("CDOWatchListView.1"), Messages.getString("CDOWatchListView.2"), Messages.getString("CDOWatchListView.3") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+  private static final String[] columnNames = {
+      Messages.getString("CDOWatchListView.0"), Messages.getString("CDOWatchListView.1"), Messages.getString("CDOWatchListView.2"), Messages.getString("CDOWatchListView.3") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
   private static final int[] columnWidths = { 110, 280, 170, 230 };
 
@@ -748,7 +749,8 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   {
     private final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 
-    private final String[] eventTypes = { Messages.getString("CDOWatchListView.12"), Messages.getString("CDOWatchListView.25"), Messages.getString("CDOWatchListView.26"), Messages.getString("CDOWatchListView.27"), Messages.getString("CDOWatchListView.28"), Messages.getString("CDOWatchListView.29"), Messages.getString("CDOWatchListView.30"), Messages.getString("CDOWatchListView.31"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+    private final String[] eventTypes = {
+        Messages.getString("CDOWatchListView.12"), Messages.getString("CDOWatchListView.25"), Messages.getString("CDOWatchListView.26"), Messages.getString("CDOWatchListView.27"), Messages.getString("CDOWatchListView.28"), Messages.getString("CDOWatchListView.29"), Messages.getString("CDOWatchListView.30"), Messages.getString("CDOWatchListView.31"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
         Messages.getString("CDOWatchListView.32"), Messages.getString("CDOWatchListView.33") }; //$NON-NLS-1$ //$NON-NLS-2$
 
     private AdapterFactory adapterFactory;
@@ -765,6 +767,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       {
         return null;
       }
+
       switch (columnIndex)
       {
       case 0:

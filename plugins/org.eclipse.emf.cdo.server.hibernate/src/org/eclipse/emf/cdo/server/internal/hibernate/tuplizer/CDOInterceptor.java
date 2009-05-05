@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - initial API and implementation
  *    Eike Stepper - maintenance
@@ -37,6 +37,7 @@ public class CDOInterceptor extends EmptyInterceptor
     {
       return object.getClass().getName();
     }
+
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(object);
     return revision.getEClass().getName();
   }

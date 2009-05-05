@@ -133,6 +133,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       builder.append(", ?");
     }
+
     builder.append(")");
     sqlInsertAttributes = builder.toString();
 
@@ -423,13 +424,14 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       {
         throw new ImplementationError("Should not be called");
       }
+
       ITypeMapping am = getValueMapping(delta.getFeature());
       if (am == null)
       {
         throw new IllegalArgumentException("AttributeMapping for " + delta.getFeature() + " is null!");
       }
-      attributeChanges.add(new Pair<ITypeMapping, Object>(am, delta.getValue()));
 
+      attributeChanges.add(new Pair<ITypeMapping, Object>(am, delta.getValue()));
     }
 
     public void visit(CDOUnsetFeatureDelta delta)

@@ -11,10 +11,13 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOENumIntegerType.java,v 1.1 2009-03-19 17:20:14 mtaal Exp $
+ * $Id: CDOENumIntegerType.java,v 1.2 2009-05-05 11:10:26 estepper Exp $
  */
-
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
+
+import org.eclipse.emf.common.util.Enumerator;
+
+import org.hibernate.HibernateException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,66 +25,66 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.HashMap;
 
-import org.eclipse.emf.common.util.Enumerator;
-import org.hibernate.HibernateException;
-
 /**
  * Implements the EMF UserType for an Enum in a dynamic model, for an integer field.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.1 $ $Date: 2009-03-19 17:20:14 $
+ * @version $Revision: 1.2 $ $Date: 2009-05-05 11:10:26 $
  */
+public class CDOENumIntegerType extends CDOENumStringType
+{
+  /** The sql types used for enums */
+  private static final int[] SQL_TYPES = new int[] { Types.INTEGER };
 
-public class CDOENumIntegerType extends CDOENumStringType {
+  /** Hashmap with string to enum mappings */
+  private final HashMap<Integer, Enumerator> localCache = new HashMap<Integer, Enumerator>();
 
-	/** The sql types used for enums */
-	private static final int[] SQL_TYPES = new int[] { Types.INTEGER };
+  /*
+   * (non-Javadoc)
+   * @see org.hibernate.usertype.UserType#nullSafeGet(java.sql.ResultSet, java.lang.String[], java.lang.Object)
+   */
+  @Override
+  public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws HibernateException, SQLException
+  {
+    final int value = rs.getInt(names[0]);
+    if (rs.wasNull())
+    {
+      return null;
+    }
 
-	/** Hashmap with string to enum mappings */
-	private final HashMap<Integer, Enumerator> localCache = new HashMap<Integer, Enumerator>();
+    Integer objValue = new Integer(value);
+    Enumerator enumValue = localCache.get(objValue);
+    if (enumValue != null)
+    {
+      return enumValue;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hibernate.usertype.UserType#nullSafeGet(java.sql.ResultSet, java.lang.String[],
-	 *      java.lang.Object)
-	 */
-	@Override
-	public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws HibernateException, SQLException {
-		final int value = rs.getInt(names[0]);
-		if (rs.wasNull()) {
-			return null;
-		}
+    enumValue = enumInstance.getEEnumLiteral(objValue.intValue());
+    localCache.put(objValue, enumValue);
+    return enumValue;
+  }
 
-		Integer objValue = new Integer(value);
-		Enumerator enumValue = localCache.get(objValue);
-		if (enumValue != null) {
-			return enumValue;
-		}
+  /*
+   * (non-Javadoc)
+   * @see org.hibernate.usertype.UserType#nullSafeSet(java.sql.PreparedStatement, java.lang.Object, int)
+   */
+  @Override
+  public void nullSafeSet(PreparedStatement st, Object value, int index) throws HibernateException, SQLException
+  {
+    if (value == null)
+    {
+      st.setNull(index, Types.INTEGER);
+    }
+    else
+    {
+      st.setInt(index, ((Enumerator)value).getValue());
+    }
+  }
 
-		enumValue = enumInstance.getEEnumLiteral(objValue.intValue());
-		localCache.put(objValue, enumValue);
-		return enumValue;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.hibernate.usertype.UserType#nullSafeSet(java.sql.PreparedStatement,
-	 *      java.lang.Object, int)
-	 */
-	@Override
-	public void nullSafeSet(PreparedStatement st, Object value, int index) throws HibernateException, SQLException {
-		if (value == null) {
-			st.setNull(index, Types.INTEGER);
-		} else {
-			st.setInt(index, ((Enumerator) value).getValue());
-		}
-	}
-
-	/** An enum is stored in one varchar */
-	@Override
-	public int[] sqlTypes() {
-		return SQL_TYPES;
-	}
+  /** An enum is stored in one varchar */
+  @Override
+  public int[] sqlTypes()
+  {
+    return SQL_TYPES;
+  }
 }

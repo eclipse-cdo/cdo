@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -118,7 +118,8 @@ public class PackageRegistryDialog extends TitleAreaDialog
   @Override
   protected void createButtonsForButtonBar(Composite parent)
   {
-    Button button = createButton(parent, REGISTER_GENERATED_PACKAGES_ID, Messages.getString("PackageRegistryDialog.5"), false); //$NON-NLS-1$
+    Button button = createButton(parent, REGISTER_GENERATED_PACKAGES_ID,
+        Messages.getString("PackageRegistryDialog.5"), false); //$NON-NLS-1$
     button.setEnabled(isGlobalPackageAvaliable());
 
     createButton(parent, REGISTER_WORKSPACE_PACKAGES_ID, Messages.getString("PackageRegistryDialog.6"), false); //$NON-NLS-1$
@@ -147,6 +148,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
           refreshViewer();
         }
       }.run();
+
       break;
 
     case REGISTER_WORKSPACE_PACKAGES_ID:
@@ -158,6 +160,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
           refreshViewer();
         }
       }.run();
+
       break;
 
     case REGISTER_FILESYSTEM_PACKAGES_ID:
@@ -169,6 +172,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
           refreshViewer();
         }
       }.run();
+
       break;
 
     case IDialogConstants.CLOSE_ID:

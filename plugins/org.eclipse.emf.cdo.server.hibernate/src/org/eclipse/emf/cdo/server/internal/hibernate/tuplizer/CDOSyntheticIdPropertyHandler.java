@@ -9,7 +9,6 @@
  *   Martin Taal - initial API and implementation
  *   Eike Stepper - maintenance
  */
-
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -37,7 +36,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor

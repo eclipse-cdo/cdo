@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/246442 
+ *    Simon McDuff - http://bugs.eclipse.org/246442
  */
 package org.eclipse.emf.internal.cdo.util;
 
@@ -54,7 +54,6 @@ public class CompletePackageClosure extends PackageClosure
   @Override
   protected void collectContents(EPackage ePackage, Set<EPackage> visited)
   {
-
     if (ePackage != null && visited.add(ePackage))
     {
       if (excludeEcore && // Optimize EPackage comparison

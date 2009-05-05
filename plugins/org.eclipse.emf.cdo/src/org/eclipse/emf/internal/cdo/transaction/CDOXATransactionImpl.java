@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -528,6 +528,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         CommitTransactionResult result = sessionProtocol.commitTransactionPhase3(xaContext, monitor);
         check_result(result);
       }
+
       xaContext.postCommit(xaContext.getResult());
       xaContext.setState(null);
     }
@@ -587,6 +588,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         {
           CDOXATransactionImpl.this.add((InternalCDOTransaction)notification.getNewValue());
         }
+
         break;
 
       case Notification.REMOVE:
@@ -594,6 +596,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         {
           CDOXATransactionImpl.this.remove((InternalCDOTransaction)notification.getNewValue());
         }
+
         break;
       }
     }

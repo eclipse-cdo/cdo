@@ -11,9 +11,8 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOENumStringType.java,v 1.2 2009-04-01 21:38:30 mtaal Exp $
+ * $Id: CDOENumStringType.java,v 1.3 2009-05-05 11:10:26 estepper Exp $
  */
-
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -37,9 +36,8 @@ import java.util.Properties;
  * Implements the EMF UserType for an Enum
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.2 $ $Date: 2009-04-01 21:38:30 $
+ * @version $Revision: 1.3 $ $Date: 2009-05-05 11:10:26 $
  */
-
 public class CDOENumStringType implements UserType, ParameterizedType
 {
   /** The sql types used for enums */
@@ -96,10 +94,12 @@ public class CDOENumStringType implements UserType, ParameterizedType
     {
       return false;
     }
+
     if (x instanceof Integer && y instanceof Integer)
     {
       return ((Integer)x).intValue() == ((Integer)y).intValue();
     }
+
     if (x instanceof String && y instanceof String)
     {
       return ((String)x).equals(y);
@@ -147,6 +147,7 @@ public class CDOENumStringType implements UserType, ParameterizedType
       throw new IllegalStateException("The enum value " + name + " is not valid for enumerator: "
           + enumInstance.getName());
     }
+
     localCache.put(name, enumValue);
     return enumValue.getValue();
   }

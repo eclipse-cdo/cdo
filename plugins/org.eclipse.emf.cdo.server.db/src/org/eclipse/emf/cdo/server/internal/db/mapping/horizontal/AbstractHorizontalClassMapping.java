@@ -252,6 +252,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         return mapping;
       }
     }
+
     return null;
   }
 

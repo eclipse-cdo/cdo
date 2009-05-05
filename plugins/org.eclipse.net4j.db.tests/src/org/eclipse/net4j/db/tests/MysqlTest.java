@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.db.tests;
 
-
 /**
  * @author Eike Stepper
  */

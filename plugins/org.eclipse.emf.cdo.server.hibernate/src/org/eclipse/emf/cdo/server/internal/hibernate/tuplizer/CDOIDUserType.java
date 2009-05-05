@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - initial api
  *    Eike Stepper - maintenance
@@ -115,6 +115,7 @@ public class CDOIDUserType implements UserType
       statement.setNull(index + 1, Types.VARCHAR);
       statement.setNull(index + 2, Types.VARCHAR);
     }
+
     // try to resolve the temp id
     else if (value instanceof CDOIDTemp)
     {
@@ -123,6 +124,7 @@ public class CDOIDUserType implements UserType
       {
         value = cdoRevision.getID();
       }
+
       // still a temp one, don't do anything for now
       if (value instanceof CDOIDTemp)
       {

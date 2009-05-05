@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - initial API and implementation
  *    Eike Stepper - maintenance
@@ -168,6 +168,7 @@ public class HibernateUtil
     {
       session.saveOrUpdate(cdoRevision);
     }
+
     if (!(cdoRevision.getID() instanceof CDOIDHibernate))
     {
       throw new IllegalStateException("CDORevision " + cdoRevision.getEClass().getName() + " " + cdoRevision.getID()
@@ -301,8 +302,8 @@ public class HibernateUtil
     if (eFeature instanceof EAttribute)
     {
       return InternalEObject.EOPPOSITE_FEATURE_BASE - containingEClass.getFeatureID(eFeature);
-
     }
+
     final EReference eReference = (EReference)eFeature;
     if (eReference.getEOpposite() != null)
     {
@@ -330,7 +331,7 @@ public class HibernateUtil
       final String eFeatureName = eFeature.getName();
       result.append(SEPARATOR + uri + SEPARATOR + eClassName + SEPARATOR + eFeatureName);
     }
+
     return result.toString();
   }
-
 }

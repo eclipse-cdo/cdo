@@ -517,6 +517,12 @@ public class FormatChecker
 
   private static void report()
   {
+    if (complaints.isEmpty())
+    {
+      System.out.println("No violations found.");
+      return;
+    }
+
     List<Entry<String, List<Integer>>> list = new ArrayList<Entry<String, List<Integer>>>(complaints.entrySet());
     Collections.sort(list, new Comparator<Entry<String, List<Integer>>>()
     {
@@ -537,6 +543,18 @@ public class FormatChecker
       }
     }
 
+    try
+    {
+      Thread.sleep(50);
+    }
+    catch (InterruptedException ex)
+    {
+      return;
+    }
+
+    System.out.println();
+    System.out.println();
+    System.out.println();
     for (Entry<String, List<Integer>> entry : list)
     {
       System.out.println("ignore(\"" + entry.getKey() + "\", " + entry.getValue().size() + ");");

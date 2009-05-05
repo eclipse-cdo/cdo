@@ -289,6 +289,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
             .put(object.cdoID(), CDOIDUtil.createIDAndVersion(object.cdoID(), CDORevision.UNSPECIFIED_VERSION));
       }
     }
+
     session.getSessionProtocol().lockObjects(this, uniqueObjects, timeout, lockType);
   }
 
@@ -1157,6 +1158,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         dirtyObject = objects.get(dirtyOID.getID());
       }
+
       if (dirtyObject != null)
       {
         CDOStateMachine.INSTANCE.invalidate(dirtyObject, dirtyOID.getVersion());
@@ -1172,6 +1174,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         }
       }
     }
+
     for (CDOID id : detachedOIDs)
     {
       InternalCDOObject detachedObject = removeObject(id);
@@ -1190,6 +1193,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         }
       }
     }
+
     return conflicts;
   }
 

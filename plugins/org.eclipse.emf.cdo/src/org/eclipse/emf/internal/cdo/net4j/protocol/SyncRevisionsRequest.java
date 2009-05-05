@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -29,7 +29,6 @@ import java.util.Map;
  */
 public class SyncRevisionsRequest extends AbstractSyncRevisionsRequest
 {
-
   public SyncRevisionsRequest(CDOClientProtocol protocol, Map<CDOID, CDOIDAndVersion> idAndVersions, int referenceChunk)
   {
     this(protocol, CDOProtocolConstants.SIGNAL_SYNC_REVISIONS, idAndVersions, referenceChunk);
@@ -51,6 +50,7 @@ public class SyncRevisionsRequest extends AbstractSyncRevisionsRequest
       getSession().handleSyncResponse(timestampContext.getTimeStamp(), emptyNewPackageUnits,
           timestampContext.getDirtyObjects(), timestampContext.getDetachedObjects());
     }
+
     return contexts;
   }
 }

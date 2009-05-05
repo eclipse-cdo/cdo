@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_270429_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273233_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273565_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273758_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
@@ -145,6 +146,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_272861_Test.class);
     testClasses.add(Bugzilla_273233_Test.class);
     testClasses.add(Bugzilla_273565_Test.class);
+    testClasses.add(Bugzilla_273758_Test.class);
 
     // TODO testClasses.add(NonCDOResourceTest.class);
     // TODO testClasses.add(GeneratedEcoreTest.class);

@@ -242,6 +242,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
           addCachedRevisionIfNotNull(revision);
         }
       }
+
       return revision;
     }
     finally

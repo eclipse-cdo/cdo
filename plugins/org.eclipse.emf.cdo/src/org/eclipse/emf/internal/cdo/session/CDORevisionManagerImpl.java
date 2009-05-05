@@ -141,7 +141,6 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements C
     {
       throw WrappedException.wrap(ex);
     }
-
   }
 
   @Override

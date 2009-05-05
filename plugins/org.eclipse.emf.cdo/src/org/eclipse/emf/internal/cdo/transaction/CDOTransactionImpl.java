@@ -289,7 +289,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void getCDOIDAndVersion(Map<CDOID, CDOIDAndVersion> uniqueObjects, Collection<? extends CDOObject> cdoObjects)
   {
     Map<CDOID, CDORevisionDelta> deltaMap = getRevisionDeltas();
-
     for (CDOObject cdoObject : cdoObjects)
     {
       CDORevision cdoRevision = CDOStateMachine.INSTANCE.readNoLoad((InternalCDOObject)cdoObject);
@@ -305,6 +304,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             version = delta.getOriginVersion();
           }
         }
+
         uniqueObjects.put(cdoId, CDOIDUtil.createIDAndVersion(cdoId, version));
       }
     }

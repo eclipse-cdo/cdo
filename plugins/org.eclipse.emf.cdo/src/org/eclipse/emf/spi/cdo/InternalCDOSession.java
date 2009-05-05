@@ -52,5 +52,4 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
    */
   public void handleUpdateRevision(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
       Collection<CDOID> detachedObjects);
-
 }

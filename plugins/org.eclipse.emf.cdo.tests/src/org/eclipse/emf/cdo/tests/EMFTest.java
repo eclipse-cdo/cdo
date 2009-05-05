@@ -10,9 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.model.EMFUtil;
-
 import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.tests.TestEMFUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -37,7 +36,7 @@ public class EMFTest extends AbstractOMTest
 
   public void testProxy() throws Exception
   {
-    EPackage model2 = (EPackage)EMFUtil.loadXMI("model2.ecore");
+    EPackage model2 = (EPackage)TestEMFUtil.loadXMI("model2.ecore");
     EClass companyProxy = (EClass)model2.getEClassifier("CompanyProxy");
     EReference reference = (EReference)companyProxy.getEStructuralFeature("company");
 

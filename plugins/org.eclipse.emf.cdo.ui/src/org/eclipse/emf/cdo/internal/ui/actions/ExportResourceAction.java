@@ -11,21 +11,28 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.ui.dialogs.ExportResourceDialog;
 import org.eclipse.emf.cdo.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.io.IORuntimeException;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -79,8 +86,27 @@ public class ExportResourceAction extends ViewAction
     // Source Resource
     Resource source = view.getResource(targetPath);
     List<EObject> sourceContents = new ArrayList<EObject>(source.getContents());
+    exportObjects(sourceContents);
+  }
 
+  private void exportObjects(List<EObject> sourceContents)
+  {
     // Target Resource
-    EMFUtil.saveXMI(sourceURI.toString(), sourceContents);
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+        Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+    Resource resource = resourceSet.createResource(sourceURI);
+
+    Collection<EObject> copiedRoots = EcoreUtil.copyAll(sourceContents);
+    resource.getContents().addAll(copiedRoots);
+
+    try
+    {
+      resource.save(null);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 }

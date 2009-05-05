@@ -190,6 +190,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
       throw new ConcurrentModificationException("Trying to update object " + revisionDelta.getID()
           + " that was already modified");
     }
+
     InternalCDORevision newRevision = (InternalCDORevision)revision.copy();
     revisionDelta.apply(newRevision);
     newRevision.setCreated(created);

@@ -477,11 +477,13 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
           }
         }
       }
+
       if (!originObject.isCurrent())
       {
         throw new ConcurrentModificationException("Trying to update object " + dirtyObjectDelta.getID()
             + " that was already modified");
       }
+
       InternalCDORevision dirtyObject = (InternalCDORevision)originObject.copy();
       dirtyObjectDelta.apply(dirtyObject);
       dirtyObject.setCreated(timeStamp);

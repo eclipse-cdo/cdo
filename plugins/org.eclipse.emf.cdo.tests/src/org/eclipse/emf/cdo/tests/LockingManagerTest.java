@@ -204,6 +204,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
     transaction.commit();
+
     try
     {
       cdoCompany2.cdoReadLock().lock();
@@ -211,8 +212,8 @@ public class LockingManagerTest extends AbstractCDOTest
     }
     catch (IllegalArgumentException ex)
     {
-
     }
+
     assertEquals(false, cdoCompany2.cdoReadLock().isLocked());
     assertEquals(false, cdoCompany2.cdoReadLock().isLockedByOthers());
   }

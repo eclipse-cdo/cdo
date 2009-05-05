@@ -153,6 +153,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
               Thread.sleep(100);
             }
+
             transaction.getLock().lock();
             transaction.getLock().unlock();
 
@@ -178,7 +179,6 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
     for (int i = 0; i < 50 && exception[0] == null; i++)
     {
-
       orderDetail.setPrice(1);
       CDOUtil.getCDOObject(orderDetail.getOrder()).cdoWriteLock().lock();
       orderDetail.getOrder().getOrderDetails().add(getModel1Factory().createOrderDetail());
@@ -194,6 +194,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
         Thread.sleep(100);
       }
+
       transaction.getLock().lock();
       transaction.getLock().unlock();
     }
@@ -255,7 +256,6 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
       CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock();
       orderDetail.setPrice(1);
       transaction.commit();
-
     }
 
     done[0] = true;

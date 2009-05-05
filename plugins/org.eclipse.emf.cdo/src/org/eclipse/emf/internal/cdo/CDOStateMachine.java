@@ -171,8 +171,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   }
 
   /**
-   * object is already attached in EMF world. It contains all the information needed to know where it will be connected.
-   * We used a mapOfContents only for performance reason.
+   * The object is already attached in EMF world. It contains all the information needed to know where it will be
+   * connected. The mapOfContents is only used for performance reasons.
    * 
    * @since 2.0
    */

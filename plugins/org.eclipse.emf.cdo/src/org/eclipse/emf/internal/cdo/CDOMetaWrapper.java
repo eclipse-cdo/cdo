@@ -55,6 +55,7 @@ public class CDOMetaWrapper extends CDOObjectWrapper
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public EClass eClass()
   {
     throw new UnsupportedOperationException();

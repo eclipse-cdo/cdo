@@ -46,4 +46,11 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
 
   public void handleSyncResponse(long timestamp, Collection<CDOPackageUnit> newPackageUnits,
       Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects);
+
+  /**
+   * In some cases we need to sync without propagating event. Lock is a good example.
+   */
+  public void handleUpdateRevision(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      Collection<CDOID> detachedObjects);
+
 }

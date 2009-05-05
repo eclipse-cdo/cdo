@@ -38,7 +38,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -68,7 +67,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -82,6 +80,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -406,103 +405,119 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private void handleCommitNotification(final long timeStamp, final Collection<CDOPackageUnit> newPackageUnits,
       Set<CDOIDAndVersion> dirtyOIDs, final Collection<CDOID> detachedObjects,
       final Collection<CDORevisionDelta> deltas, InternalCDOView excludedView, final boolean passiveUpdate,
-      boolean async)
+      final boolean async)
   {
-    if (passiveUpdate)
+    try
     {
-      updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, excludedView);
-    }
-
-    final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
-    final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
-    final boolean skipChangeSubscription = (deltas == null || deltas.size() <= 0)
-        && (detachedObjects == null || detachedObjects.size() <= 0);
-
-    for (final InternalCDOView view : getViews())
-    {
-      if (view != excludedView)
+      if (passiveUpdate)
       {
-        Runnable runnable = new Runnable()
+        updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, excludedView);
+      }
+
+      final Set<CDOIDAndVersion> finalDirtyOIDs = Collections.unmodifiableSet(dirtyOIDs);
+      final Collection<CDOID> finalDetachedObjects = Collections.unmodifiableCollection(detachedObjects);
+      final boolean skipChangeSubscription = (deltas == null || deltas.size() <= 0)
+          && (detachedObjects == null || detachedObjects.size() <= 0);
+
+      for (final InternalCDOView view : getViews())
+      {
+        if (view != excludedView)
         {
-          public void run()
+          Runnable runnable = new Runnable()
           {
-            try
+            public void run()
             {
-              Set<CDOObject> conflicts = null;
-              if (passiveUpdate)
+              try
               {
-                conflicts = view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
-              }
+                Set<CDOObject> conflicts = null;
+                if (passiveUpdate)
+                {
+                  conflicts = view.handleInvalidation(timeStamp, finalDirtyOIDs, finalDetachedObjects);
+                }
 
-              if (!skipChangeSubscription)
-              {
-                view.handleChangeSubscription(deltas, detachedObjects);
-              }
+                if (!skipChangeSubscription)
+                {
+                  view.handleChangeSubscription(deltas, detachedObjects);
+                }
 
-              if (conflicts != null)
+                if (conflicts != null)
+                {
+                  ((InternalCDOTransaction)view).handleConflicts(conflicts);
+                }
+              }
+              catch (RuntimeException ex)
               {
-                ((InternalCDOTransaction)view).handleConflicts(conflicts);
+                if (!async)
+                {
+                  throw ex;
+                }
+
+                if (isActive())
+                {
+                  OM.LOG.error(ex);
+                }
+                else
+                {
+                  OM.LOG.info("Commit notification arrived while session is inactive");
+                }
               }
             }
-            catch (RuntimeException ex)
-            {
-              OM.LOG.error(ex);
-            }
+          };
+
+          if (async)
+          {
+            QueueRunner runner = getInvalidationRunner();
+            runner.addWork(runnable);
           }
-        };
+          else
+          {
+            runnable.run();
+          }
+        }
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      if (!async)
+      {
+        throw ex;
+      }
 
-        if (async)
-        {
-          QueueRunner runner = getInvalidationRunner();
-          runner.addWork(runnable);
-        }
-        else
-        {
-          runnable.run();
-        }
+      if (isActive())
+      {
+        OM.LOG.error(ex);
+      }
+      else
+      {
+        OM.LOG.info("Commit notification arrived while session is inactive");
       }
     }
 
     fireInvalidationEvent(timeStamp, newPackageUnits, dirtyOIDs, detachedObjects, excludedView);
   }
 
+  public void handleUpdateRevision(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
+      Collection<CDOID> detachedObjects)
+  {
+    updateRevisionForRemoteChanges(timeStamp, dirtyOIDs, detachedObjects, null);
+  }
+
   private void updateRevisionForRemoteChanges(final long timeStamp, Set<CDOIDAndVersion> dirtyOIDs,
       Collection<CDOID> detachedObjects, InternalCDOView excludedView)
   {
-    // revised is done automatically when postCommit is CDOTransaction.postCommit is happening
-    // Detached are not revised through postCommit
     if (excludedView == null || timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
       for (CDOIDAndVersion dirtyOID : dirtyOIDs)
       {
         CDOID id = dirtyOID.getID();
         int version = dirtyOID.getVersion();
-        InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version, false);
-        if (revision != null)
-        {
-          if (timeStamp == CDORevision.UNSPECIFIED_DATE)
-          {
-            revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
-          }
-          else
-          {
-            revision.setRevised(timeStamp - 1);
-          }
-        }
+        revisionManager.revisedRevisionByVersion(id, version, timeStamp);
       }
     }
 
     for (CDOID id : detachedObjects)
     {
-      InternalCDORevision revision = revisionManager.getRevision(id, 0, false);
-      if (timeStamp == CDORevision.UNSPECIFIED_DATE)
-      {
-        revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
-      }
-      else if (revision != null)
-      {
-        revision.setRevised(timeStamp - 1);
-      }
+      revisionManager.revisedRevision(id, timeStamp);
     }
   }
 
@@ -742,27 +757,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     Map<CDOID, CDOIDAndVersion> uniqueObjects = new HashMap<CDOID, CDOIDAndVersion>();
     for (InternalCDOView view : getViews())
     {
-      Map<CDOID, CDORevisionDelta> deltaMap = view instanceof InternalCDOTransaction ? ((InternalCDOTransaction)view)
-          .getRevisionDeltas() : null;
-      for (InternalCDOObject internalCDOObject : view.getObjectsArray())
-      {
-        InternalCDORevision cdoRevision = internalCDOObject.cdoRevision();
-        CDOID cdoId = internalCDOObject.cdoID();
-        if (cdoRevision != null && !cdoId.isTemporary() && !uniqueObjects.containsKey(cdoId))
-        {
-          int version = cdoRevision.getVersion();
-          if (deltaMap != null)
-          {
-            CDORevisionDelta delta = deltaMap.get(cdoId);
-            if (delta != null)
-            {
-              version = delta.getOriginVersion();
-            }
-          }
-
-          uniqueObjects.put(cdoId, CDOIDUtil.createIDAndVersion(cdoId, version));
-        }
-      }
+      view.getCDOIDAndVersion(uniqueObjects, Arrays.asList(view.getObjectsArray()));
     }
 
     // Need to add Revision from revisionManager since we do not have all objects in view.

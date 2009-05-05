@@ -55,7 +55,7 @@ public class CommitNotificationIndication extends CDOClientIndication
     }
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
-    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getSession().getPackageRegistry();
+    InternalCDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     for (int i = 0; i < packageUnits.length; i++)
     {
       packageRegistry.putPackageUnit((InternalCDOPackageUnit)packageUnits[i]);

@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -476,7 +477,11 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
           }
         }
       }
-
+      if (!originObject.isCurrent())
+      {
+        throw new ConcurrentModificationException("Trying to update object " + dirtyObjectDelta.getID()
+            + " that was already modified");
+      }
       InternalCDORevision dirtyObject = (InternalCDORevision)originObject.copy();
       dirtyObjectDelta.apply(dirtyObject);
       dirtyObject.setCreated(timeStamp);

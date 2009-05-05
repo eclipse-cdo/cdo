@@ -10,10 +10,12 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j.protocol;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -21,13 +23,18 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
+
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author Simon McDuff
  */
-public class LockObjectsRequest extends CDOClientRequest<Object>
+public class LockObjectsRequest extends AbstractSyncRevisionsRequest
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LockObjectsRequest.class);
 
@@ -35,16 +42,14 @@ public class LockObjectsRequest extends CDOClientRequest<Object>
 
   private RWLockManager.LockType lockType;
 
-  private Collection<? extends CDOObject> objects;
-
   private long timeout;
 
-  public LockObjectsRequest(CDOClientProtocol protocol, CDOView view, Collection<? extends CDOObject> objects,
-      long timeout, RWLockManager.LockType lockType)
+  public LockObjectsRequest(CDOClientProtocol protocol, CDOView view, Map<CDOID, CDOIDAndVersion> idAndVersions,
+      int referenceChunk, long timeout, RWLockManager.LockType lockType)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS, idAndVersions, referenceChunk);
     this.view = view;
-    this.objects = objects;
+
     this.timeout = timeout;
     this.lockType = lockType;
   }
@@ -52,6 +57,7 @@ public class LockObjectsRequest extends CDOClientRequest<Object>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
+    super.requesting(out);
     out.writeInt(view.getViewID());
     out.writeCDOLockType(lockType);
     out.writeLong(timeout);
@@ -61,23 +67,20 @@ public class LockObjectsRequest extends CDOClientRequest<Object>
       TRACER.format("Locking of type {0} requested for view {1} with timeout {2}", //$NON-NLS-1$
           lockType == RWLockManager.LockType.READ ? "read" : "write", view.getViewID(), timeout); //$NON-NLS-1$ //$NON-NLS-2$
     }
-
-    out.writeInt(objects.size());
-    for (CDOObject object : objects)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Locking requested for objects {0}", object.cdoID()); //$NON-NLS-1$
-      }
-
-      out.writeCDOID(object.cdoID());
-    }
   }
 
   @Override
-  protected Object confirming(CDODataInput in) throws IOException
+  protected Collection<CDOTimeStampContext> confirming(CDODataInput in) throws IOException
   {
-    in.readBoolean();
-    return null;
+    Collection<CDOTimeStampContext> contexts = super.confirming(in);
+    for (CDOTimeStampContext timestampContext : contexts)
+    {
+      getSession().handleUpdateRevision(timestampContext.getTimeStamp(), timestampContext.getDirtyObjects(),
+          timestampContext.getDetachedObjects());
+      ((InternalCDOView)view).handleInvalidationWithoutNotification(timestampContext.getDirtyObjects(),
+          timestampContext.getDetachedObjects(), new HashSet<InternalCDOObject>(), new HashSet<InternalCDOObject>());
+    }
+
+    return contexts;
   }
 }

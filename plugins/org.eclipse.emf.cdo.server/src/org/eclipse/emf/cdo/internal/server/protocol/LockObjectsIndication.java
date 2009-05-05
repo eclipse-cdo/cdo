@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -27,8 +29,16 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
-public class LockObjectsIndication extends CDOReadIndication
+public class LockObjectsIndication extends AbstractSyncRevisionsIndication
 {
+  private RWLockManager.LockType lockType;
+
+  private List<CDOID> ids = new ArrayList<CDOID>();
+
+  private List<CDOIDAndVersion> idAndVersions = new ArrayList<CDOIDAndVersion>();
+
+  private IView view;
+
   public LockObjectsIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS);
@@ -37,21 +47,15 @@ public class LockObjectsIndication extends CDOReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int viewID = in.readInt();
-    RWLockManager.LockType lockType = in.readCDOLockType();
-    long timeout = in.readLong();
+    super.indicating(in);
 
-    int size = in.readInt();
-    List<CDOID> ids = new ArrayList<CDOID>(size);
-    for (int i = 0; i < size; i++)
-    {
-      CDOID id = in.readCDOID();
-      ids.add(id);
-    }
+    int viewID = in.readInt();
+    lockType = in.readCDOLockType();
+    long timeout = in.readLong();
 
     try
     {
-      IView view = getSession().getView(viewID);
+      view = getSession().getView(viewID);
       getRepository().getLockManager().lock(lockType, view, ids, timeout);
     }
     catch (InterruptedException ex)
@@ -63,6 +67,23 @@ public class LockObjectsIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeBoolean(true);
+    for (CDOIDAndVersion idAndVersion : idAndVersions)
+    {
+      udpateObjectList(idAndVersion.getID(), idAndVersion.getVersion());
+    }
+
+    if (!detachedObjects.isEmpty())
+    {
+      getRepository().getLockManager().unlock(lockType, view, ids);
+      throw new IllegalArgumentException(detachedObjects.size() + " objects are not persistent anymore");
+    }
+    super.responding(out);
+  }
+
+  @Override
+  protected void process(CDOID id, int version)
+  {
+    ids.add(id);
+    idAndVersions.add(CDOIDUtil.createIDAndVersion(id, version));
   }
 }

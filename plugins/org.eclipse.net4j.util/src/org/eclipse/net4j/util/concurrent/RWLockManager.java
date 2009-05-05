@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -97,7 +97,7 @@ public class RWLockManager<K, V> extends Lifecycle
 
   private Object lockChanged = new Object();
 
-  public void lock(RWLockManager.LockType type, V context, Collection<K> objectsToLock, long timeout)
+  public void lock(RWLockManager.LockType type, V context, Collection<? extends K> objectsToLock, long timeout)
       throws InterruptedException
   {
     lock(getLockingStrategy(type), context, objectsToLock, timeout);
@@ -110,15 +110,13 @@ public class RWLockManager<K, V> extends Lifecycle
 
   /**
    * Attempts to release for a given locktype, context and objects.
-   * <p>
-   * .
    * 
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
    */
-  public void unlock(RWLockManager.LockType type, V context, Collection<K> objectToLock)
+  public void unlock(RWLockManager.LockType type, V context, Collection<? extends K> objectsToLock)
   {
-    unlock(getLockingStrategy(type), context, objectToLock);
+    unlock(getLockingStrategy(type), context, objectsToLock);
   }
 
   /**
@@ -193,7 +191,7 @@ public class RWLockManager<K, V> extends Lifecycle
    * @throws IllegalMonitorStateException
    *           Unlocking object not locked.
    */
-  private void unlock(LockStrategy<K, V> lockingStrategy, V context, Collection<K> objectsToLock)
+  private void unlock(LockStrategy<K, V> lockingStrategy, V context, Collection<? extends K> objectsToLock)
   {
     synchronized (lockChanged)
     {
@@ -240,7 +238,7 @@ public class RWLockManager<K, V> extends Lifecycle
     return entry != null && lockingStrategy.isLocked(entry, context);
   }
 
-  private void lock(LockStrategy<K, V> lockStrategy, V context, Collection<K> objectToLocks, long timeout)
+  private void lock(LockStrategy<K, V> lockStrategy, V context, Collection<? extends K> objectsToLocks, long timeout)
       throws InterruptedException
   {
     long startTime = System.currentTimeMillis();
@@ -248,7 +246,7 @@ public class RWLockManager<K, V> extends Lifecycle
     {
       synchronized (lockChanged)
       {
-        K conflict = obtainLock(lockStrategy, context, objectToLocks);
+        K conflict = obtainLock(lockStrategy, context, objectsToLocks);
         if (conflict == null)
         {
           lockChanged.notifyAll();
@@ -273,7 +271,7 @@ public class RWLockManager<K, V> extends Lifecycle
     }
   }
 
-  private K obtainLock(LockStrategy<K, V> lockingStrategy, V context, Collection<K> objectsToLock)
+  private K obtainLock(LockStrategy<K, V> lockingStrategy, V context, Collection<? extends K> objectsToLock)
   {
     List<LockEntry<K, V>> lockEntrys = new ArrayList<LockEntry<K, V>>();
     for (K objectToLock : objectsToLock)

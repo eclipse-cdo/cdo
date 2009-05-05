@@ -271,6 +271,9 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    */
   public int reload(CDOObject... objects);
 
+  /**
+   * Locks the given objects. Once the objects are locked, they will not be changed remotely or go in conflict state.
+   */
   public void lockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType, long timeout)
       throws InterruptedException;
 

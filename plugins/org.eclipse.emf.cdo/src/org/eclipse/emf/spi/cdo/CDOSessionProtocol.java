@@ -82,7 +82,7 @@ public interface CDOSessionProtocol extends PackageLoader
 
   public boolean cancelQuery(int queryId);
 
-  public void lockObjects(CDOView view, Collection<? extends CDOObject> objects, long timeout, LockType lockType)
+  public void lockObjects(CDOView view, Map<CDOID, CDOIDAndVersion> objects, long timeout, LockType lockType)
       throws InterruptedException;
 
   public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -39,6 +40,12 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionResolverImpl.class);
 
   private CDORevisionCache cache;
+
+  @ExcludeFromDump
+  private Object loadAndAddLock = new Object();
+
+  @ExcludeFromDump
+  private Object revisedLock = new Object();
 
   public CDORevisionResolverImpl()
   {
@@ -74,6 +81,56 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
     return cache.getObjectType(id);
   }
 
+  public void revisedRevision(CDOID id, long timeStamp)
+  {
+    acquireAtomicRequestLock(revisedLock);
+
+    try
+    {
+      InternalCDORevision revision = cache.getRevision(id);
+      if (revision != null)
+      {
+        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+        {
+          removeCachedRevision(revision.getID(), revision.getVersion());
+        }
+        else
+        {
+          revision.setRevised(timeStamp - 1);
+        }
+      }
+    }
+    finally
+    {
+      releaseAtomicRequestLock(revisedLock);
+    }
+  }
+
+  public void revisedRevisionByVersion(CDOID id, int version, long timeStamp)
+  {
+    acquireAtomicRequestLock(revisedLock);
+
+    try
+    {
+      InternalCDORevision revision = cache.getRevisionByVersion(id, version);
+      if (revision != null)
+      {
+        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+        {
+          removeCachedRevision(revision.getID(), revision.getVersion());
+        }
+        else
+        {
+          revision.setRevised(timeStamp - 1);
+        }
+      }
+    }
+    finally
+    {
+      releaseAtomicRequestLock(revisedLock);
+    }
+  }
+
   public InternalCDORevision getRevision(CDOID id, int referenceChunk)
   {
     return getRevision(id, referenceChunk, true);
@@ -81,31 +138,40 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 
   public InternalCDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand)
   {
-    InternalCDORevision revision = cache.getRevision(id);
-    if (revision == null)
+    acquireAtomicRequestLock(loadAndAddLock);
+
+    try
     {
-      if (loadOnDemand)
+      InternalCDORevision revision = cache.getRevision(id);
+      if (revision == null)
       {
-        if (TRACER.isEnabled())
+        if (loadOnDemand)
         {
-          TRACER.format("Loading revision {0}", id); //$NON-NLS-1$
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Loading revision {0}", id); //$NON-NLS-1$
+          }
+
+          revision = loadRevision(id, referenceChunk);
+          addCachedRevisionIfNotNull(revision);
         }
-
-        revision = loadRevision(id, referenceChunk);
-        addCachedRevisionIfNotNull(revision);
       }
-    }
-    else
-    {
-      InternalCDORevision oldRevision = revision;
-      revision = verifyRevision(oldRevision, referenceChunk);
-      if (revision != oldRevision)
+      else
       {
-        addCachedRevisionIfNotNull(revision);
+        InternalCDORevision oldRevision = revision;
+        revision = verifyRevision(oldRevision, referenceChunk);
+        if (revision != oldRevision)
+        {
+          addCachedRevisionIfNotNull(revision);
+        }
       }
-    }
 
-    return revision;
+      return revision;
+    }
+    finally
+    {
+      releaseAtomicRequestLock(loadAndAddLock);
+    }
   }
 
   public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
@@ -115,31 +181,40 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 
   public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp, boolean loadOnDemand)
   {
-    InternalCDORevision revision = cache.getRevisionByTime(id, timeStamp);
-    if (revision == null)
+    acquireAtomicRequestLock(loadAndAddLock);
+
+    try
     {
-      if (loadOnDemand)
+      InternalCDORevision revision = cache.getRevisionByTime(id, timeStamp);
+      if (revision == null)
       {
-        if (TRACER.isEnabled())
+        if (loadOnDemand)
         {
-          TRACER.format("Loading revision {0} by time {1,date} {1,time}", id, timeStamp); //$NON-NLS-1$
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Loading revision {0} by time {1,date} {1,time}", id, timeStamp); //$NON-NLS-1$
+          }
+
+          revision = loadRevisionByTime(id, referenceChunk, timeStamp);
+          addCachedRevisionIfNotNull(revision);
         }
-
-        revision = loadRevisionByTime(id, referenceChunk, timeStamp);
-        addCachedRevisionIfNotNull(revision);
       }
-    }
-    else
-    {
-      InternalCDORevision verified = verifyRevision(revision, referenceChunk);
-      if (revision != verified)
+      else
       {
-        addCachedRevisionIfNotNull(verified);
-        revision = verified;
+        InternalCDORevision verified = verifyRevision(revision, referenceChunk);
+        if (revision != verified)
+        {
+          addCachedRevisionIfNotNull(verified);
+          revision = verified;
+        }
       }
-    }
 
-    return revision;
+      return revision;
+    }
+    finally
+    {
+      releaseAtomicRequestLock(loadAndAddLock);
+    }
   }
 
   public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version)
@@ -149,22 +224,30 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 
   public InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version, boolean loadOnDemand)
   {
-    InternalCDORevision revision = cache.getRevisionByVersion(id, version);
-    if (revision == null)
+    acquireAtomicRequestLock(loadAndAddLock);
+
+    try
     {
-      if (loadOnDemand)
+      InternalCDORevision revision = cache.getRevisionByVersion(id, version);
+      if (revision == null)
       {
-        if (TRACER.isEnabled())
+        if (loadOnDemand)
         {
-          TRACER.format("Loading revision {0} by version {1}", id, version); //$NON-NLS-1$
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("Loading revision {0} by version {1}", id, version); //$NON-NLS-1$
+          }
+
+          revision = loadRevisionByVersion(id, referenceChunk, version);
+          addCachedRevisionIfNotNull(revision);
         }
-
-        revision = loadRevisionByVersion(id, referenceChunk, version);
-        addCachedRevisionIfNotNull(revision);
       }
+      return revision;
     }
-
-    return revision;
+    finally
+    {
+      releaseAtomicRequestLock(loadAndAddLock);
+    }
   }
 
   public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk)
@@ -183,8 +266,17 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 
     if (!missingIDs.isEmpty())
     {
-      List<InternalCDORevision> missingRevisions = loadRevisions(missingIDs, referenceChunk);
-      handleMissingRevisions(revisions, missingRevisions);
+      acquireAtomicRequestLock(loadAndAddLock);
+
+      try
+      {
+        List<InternalCDORevision> missingRevisions = loadRevisions(missingIDs, referenceChunk);
+        handleMissingRevisions(revisions, missingRevisions);
+      }
+      finally
+      {
+        releaseAtomicRequestLock(loadAndAddLock);
+      }
     }
 
     return revisions;
@@ -207,8 +299,17 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
 
     if (missingIDs != null && !missingIDs.isEmpty())
     {
-      List<InternalCDORevision> missingRevisions = loadRevisionsByTime(missingIDs, referenceChunk, timeStamp);
-      handleMissingRevisions(revisions, missingRevisions);
+      acquireAtomicRequestLock(loadAndAddLock);
+
+      try
+      {
+        List<InternalCDORevision> missingRevisions = loadRevisionsByTime(missingIDs, referenceChunk, timeStamp);
+        handleMissingRevisions(revisions, missingRevisions);
+      }
+      finally
+      {
+        releaseAtomicRequestLock(loadAndAddLock);
+      }
     }
 
     return revisions;
@@ -290,6 +391,14 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements CDORe
   {
     LifecycleUtil.deactivate(cache);
     super.doDeactivate();
+  }
+
+  protected void acquireAtomicRequestLock(Object lockObject)
+  {
+  }
+
+  protected void releaseAtomicRequestLock(Object lockObject)
+  {
   }
 
   private void handleMissingRevisions(List<CDORevision> revisions, List<InternalCDORevision> missingRevisions)

@@ -159,6 +159,16 @@ public interface IStoreAccessor extends IQueryHandler
    * <p>
    * <b>Note</b>: {@link IStoreAccessor#write(CommitContext, OMMonitor)} and {@link IStoreAccessor#commit(OMMonitor)}
    * could be called from different threads.
+   * <p>
+   * <b>Note</b>: Implementors should detect if dirty write occurred. In this case it should throw an exception.
+   * 
+   * <pre>
+   * if (revision.getVersion() != revisionDelta.getOriginVersion())
+   * {
+   *   throw new ConcurrentModificationException(&quot;Trying to update object &quot; + revisionDelta.getID()
+   *       + &quot; that was already modified&quot;);
+   * }
+   * </pre>
    * 
    * @since 2.0
    */

@@ -297,6 +297,35 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @since 2.0
    */
+  public InternalCDORevision readNoLoad(InternalCDOObject object)
+  {
+    ReentrantLock lock = lockView(object.cdoView());
+
+    try
+    {
+      switch (object.cdoState())
+      {
+      case TRANSIENT:
+      case PREPARED:
+      case NEW:
+      case CONFLICT:
+      case INVALID_CONFLICT:
+      case INVALID:
+      case PROXY:
+        return null;
+      }
+
+      return object.cdoRevision();
+    }
+    finally
+    {
+      unlockView(lock);
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
   public void write(InternalCDOObject object)
   {
     write(object, null);

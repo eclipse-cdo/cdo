@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -184,6 +185,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   protected void writeRevisionDelta(InternalCDORevisionDelta revisionDelta, long created)
   {
     InternalCDORevision revision = getStore().getRevision(revisionDelta.getID());
+    if (revision.getVersion() != revisionDelta.getOriginVersion())
+    {
+      throw new ConcurrentModificationException("Trying to update object " + revisionDelta.getID()
+          + " that was already modified");
+    }
     InternalCDORevision newRevision = (InternalCDORevision)revision.copy();
     revisionDelta.apply(newRevision);
     newRevision.setCreated(created);

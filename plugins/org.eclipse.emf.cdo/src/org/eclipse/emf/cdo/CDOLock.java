@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.concurrent.RWLockManager;
 import java.util.concurrent.locks.Lock;
 
 /**
- * TODO Simon: JavaDoc
+ * Once object got lock, it will not go in conflict mode or cannot be changed.
  * 
  * @author Simon McDuff
  * @since 2.0

@@ -52,22 +52,22 @@ public class FailOverStrategyInjector implements IElementProcessor
     int pos = description.indexOf(SCHEME_SEPARATOR);
     if (pos == -1)
     {
-      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description,
-          Messages.getString("FailOverStrategyInjector.0"))); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description, Messages
+          .getString("FailOverStrategyInjector.0"))); //$NON-NLS-1$
     }
 
     String factoryType = description.substring(0, pos);
     if (StringUtil.isEmpty(factoryType))
     {
-      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description,
-          Messages.getString("FailOverStrategyInjector.1"))); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description, Messages
+          .getString("FailOverStrategyInjector.1"))); //$NON-NLS-1$
     }
 
     String connectorDescription = description.substring(pos + SCHEME_SEPARATOR.length());
     if (StringUtil.isEmpty(connectorDescription))
     {
-      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description,
-          Messages.getString("FailOverStrategyInjector.2"))); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format(INVALID_URI_MESSAGE, description, Messages
+          .getString("FailOverStrategyInjector.2"))); //$NON-NLS-1$
     }
 
     pos = connectorDescription.indexOf('?');

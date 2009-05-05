@@ -167,7 +167,7 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
     }
   }
 
-  public void lockObjects(CDOView view, Collection<? extends CDOObject> objects, long timeout, LockType lockType)
+  public void lockObjects(CDOView view, Map<CDOID, CDOIDAndVersion> objects, long timeout, LockType lockType)
       throws InterruptedException
   {
     InterruptedException interruptedException = null;
@@ -175,7 +175,8 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
 
     try
     {
-      new LockObjectsRequest(this, view, objects, timeout, lockType).send();
+      new LockObjectsRequest(this, view, objects, view.getSession().options().getCollectionLoadingPolicy()
+          .getInitialChunkSize(), timeout, lockType).send();
     }
     catch (RemoteException ex)
     {

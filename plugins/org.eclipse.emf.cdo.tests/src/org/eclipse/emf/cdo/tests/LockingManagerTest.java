@@ -188,6 +188,35 @@ public class LockingManagerTest extends AbstractCDOTest
     assertEquals(true, cdoCompany2.cdoReadLock().isLockedByOthers());
   }
 
+  public void testDetachedObjects() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openModel1Session();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource("/res1");
+    res.getContents().add(company);
+    transaction.commit();
+
+    CDOTransaction transaction2 = session.openTransaction();
+    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    res.getContents().remove(0);
+
+    CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+    transaction.commit();
+    try
+    {
+      cdoCompany2.cdoReadLock().lock();
+      fail("Should have fail");
+    }
+    catch (IllegalArgumentException ex)
+    {
+
+    }
+    assertEquals(false, cdoCompany2.cdoReadLock().isLocked());
+    assertEquals(false, cdoCompany2.cdoReadLock().isLockedByOthers());
+  }
+
   public void testWriteLockByOthers() throws Exception
   {
     Company company = getModel1Factory().createCompany();

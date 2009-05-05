@@ -34,6 +34,7 @@ import java.util.Map.Entry;
 public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 {
   private static final String OBJECT_NOT_PERSISTED_MESSAGE = Messages.getString("CDOQueryImpl.0"); //$NON-NLS-1$
+
   private InternalCDOView view;
 
   public CDOQueryImpl(InternalCDOView view, String queryLanguage, String queryString)

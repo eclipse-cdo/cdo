@@ -148,7 +148,6 @@ public class ResourceTest extends AbstractCDOTest
     transaction.getRootResource().getContents().remove(resource);
     assertEquals(false, transaction.getResourceSet().getResources().contains(resource));
     assertEquals(true, transaction.getResourceSet().getResources().contains(transaction.getRootResource()));
-
   }
 
   public void testCreateNestedResource_FromResourceSet() throws Exception

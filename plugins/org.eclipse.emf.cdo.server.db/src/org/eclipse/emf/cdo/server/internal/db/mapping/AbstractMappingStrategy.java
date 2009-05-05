@@ -451,5 +451,4 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   }
 
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
-
 }

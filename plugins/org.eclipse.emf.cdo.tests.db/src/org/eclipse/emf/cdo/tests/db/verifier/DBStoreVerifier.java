@@ -124,7 +124,6 @@ public abstract class DBStoreVerifier
       TRACER.format("Starting {0} ...", getClass().getSimpleName());
       doVerify();
       TRACER.format("{0} completed without complaints ...", getClass().getSimpleName());
-
     }
     catch (Exception e)
     {

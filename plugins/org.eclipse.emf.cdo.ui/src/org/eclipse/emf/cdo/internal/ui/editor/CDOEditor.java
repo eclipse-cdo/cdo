@@ -2182,7 +2182,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           return getLabelText(o1).compareTo(getLabelText(o2));
         }
-
       });
 
       for (EObject object : objects)

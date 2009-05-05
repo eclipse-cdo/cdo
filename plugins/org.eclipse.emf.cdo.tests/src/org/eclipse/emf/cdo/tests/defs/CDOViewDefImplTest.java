@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    André Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -96,5 +96,4 @@ public class CDOViewDefImplTest extends AbstractCDOTest
     assertTrue(((CDOViewDefImpl)cdoViewDef).getInternalInstance() == null);
     assertTrue(!LifecycleUtil.isActive(cdoView));
   }
-
 }

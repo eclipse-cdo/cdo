@@ -64,7 +64,6 @@ public class Bugzilla_261218_Test extends AbstractCDOTest
   {
     disableConsole();
     super.doSetUp();
-
   }
 
   @Override

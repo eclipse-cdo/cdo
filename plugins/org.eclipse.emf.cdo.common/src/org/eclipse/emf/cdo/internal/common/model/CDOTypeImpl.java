@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -499,7 +499,6 @@ public abstract class CDOTypeImpl implements CDOType
     public Object convertToCDO(EClassifier eType, Object value)
     {
       return EcoreUtil.convertToString((EDataType)eType, value);
-
     }
   };
 
@@ -539,7 +538,6 @@ public abstract class CDOTypeImpl implements CDOType
       // featureMapEntry.adjustReferences(adjuster);
       // return value;
     }
-
   };
 
   private String name;

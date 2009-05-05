@@ -46,7 +46,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
     orderDetail.setProduct(product);
 
     EList<OrderDetail> list = order1.getOrderDetails();
-    // 
+    //
     resource.getContents().remove(0); // remove object by index
     list.remove(orderDetail);
     transaction.commit();
@@ -75,5 +75,4 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
     assertEquals(true, orderDetails.remove(orderDetail));
     transaction.commit();
   }
-
 }

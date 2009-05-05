@@ -425,5 +425,4 @@ public class WrappedHibernateList implements InternalCDOList
       delegate.set(((CDORevision)o).getID());
     }
   }
-
 }

@@ -156,7 +156,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   public void testSeparateSession() throws Exception
   {
     testSeparateSession(CDOAdapterPolicy.ALL);
-
   }
 
   public void testSeparateSession_disable() throws Exception
@@ -263,7 +262,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     }.timedOut();
 
     assertEquals(false, timedOut);
-
   }
 
   public void testTemporaryObject() throws Exception
@@ -432,7 +430,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     }.timedOut();
 
     assertEquals(false, timedOut);
-
   }
 
   public void testNotificationChain() throws Exception
@@ -533,7 +530,6 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
         assertEquals(Notification.ADD, notification.getEventType());
         assertEquals(1, notification.getPosition());
         assertEquals(transaction.getObject(CDOUtil.getCDOObject(category2B).cdoID(), true), notification.getNewValue());
-
       }
       else
       {
@@ -541,9 +537,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
       }
 
       count++;
-
     }
-
   }
 
   /**

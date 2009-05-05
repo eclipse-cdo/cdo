@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
@@ -222,7 +222,6 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     {
       out.writeCDOID(id);
     }
-
   }
 
   protected CommitTransactionResult confirmingCheckError(CDODataInput in) throws IOException
@@ -246,7 +245,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
   protected void confirmingNewPackage(CDODataInput in, CommitTransactionResult result) throws IOException
   {
-    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getSession().getPackageRegistry();
+    InternalCDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     for (CDOPackageUnit newPackageUnit : commitContext.getNewPackageUnits())
     {
       for (CDOPackageInfo packageInfo : newPackageUnit.getPackageInfos())

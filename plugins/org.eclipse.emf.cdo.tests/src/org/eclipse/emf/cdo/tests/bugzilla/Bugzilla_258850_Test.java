@@ -59,7 +59,6 @@ public class Bugzilla_258850_Test extends AbstractCDOTest
       transaction.commit();
       session.close();
     }
-
   }
 
   public abstract class TestListener implements IListener

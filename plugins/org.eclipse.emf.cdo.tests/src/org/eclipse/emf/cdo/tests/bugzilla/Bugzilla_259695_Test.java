@@ -55,5 +55,4 @@ public class Bugzilla_259695_Test extends AbstractCDOTest
     elementA.getElements().clear();
     transaction.commit();
   }
-
 }

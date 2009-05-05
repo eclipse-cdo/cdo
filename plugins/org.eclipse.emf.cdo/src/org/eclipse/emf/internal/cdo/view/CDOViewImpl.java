@@ -645,7 +645,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID, folder == null ? null : folder.cdoID());
     query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_EXACT_MATCH, exactMatch);
     return query;
-
   }
 
   public CDOResourceImpl getResource(CDOID resourceID)
@@ -1839,7 +1838,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         return object;
       }
     }
-
   }
 
   /**

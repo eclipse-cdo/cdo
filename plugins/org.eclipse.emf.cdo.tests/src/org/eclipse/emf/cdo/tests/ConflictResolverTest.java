@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -86,6 +86,5 @@ public class ConflictResolverTest extends AbstractCDOTest
     assertTrue(CDOUtil.getCDOObject(address2).cdoConflict());
     assertTrue(transaction2.hasConflict());
     assertEquals("OTTAWA", address2.getCity());
-
   }
 }

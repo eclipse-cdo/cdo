@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -84,10 +84,14 @@ public class RollbackTransactionDialog extends TitleAreaDialog
     builder.append(Messages.getString("RollbackTransactionDialog.0")); //$NON-NLS-1$
     builder.append("\n"); //$NON-NLS-1$
 
-    append(builder, transaction.getNewResources().size(), Messages.getString("RollbackTransactionDialog.2"), Messages.getString("RollbackTransactionDialog.3")); //$NON-NLS-1$ //$NON-NLS-2$
-    append(builder, transaction.getNewObjects().size(), Messages.getString("RollbackTransactionDialog.4"), Messages.getString("RollbackTransactionDialog.5")); //$NON-NLS-1$ //$NON-NLS-2$
-    append(builder, transaction.getDirtyObjects().size(), Messages.getString("RollbackTransactionDialog.6"), Messages.getString("RollbackTransactionDialog.7")); //$NON-NLS-1$ //$NON-NLS-2$
-    append(builder, transaction.getDetachedObjects().size(), Messages.getString("RollbackTransactionDialog.8"), Messages.getString("RollbackTransactionDialog.9")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getNewResources().size(),
+        Messages.getString("RollbackTransactionDialog.2"), Messages.getString("RollbackTransactionDialog.3")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getNewObjects().size(),
+        Messages.getString("RollbackTransactionDialog.4"), Messages.getString("RollbackTransactionDialog.5")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getDirtyObjects().size(),
+        Messages.getString("RollbackTransactionDialog.6"), Messages.getString("RollbackTransactionDialog.7")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getDetachedObjects().size(),
+        Messages.getString("RollbackTransactionDialog.8"), Messages.getString("RollbackTransactionDialog.9")); //$NON-NLS-1$ //$NON-NLS-2$
 
     builder.append("\n\n"); //$NON-NLS-1$
     builder.append(Messages.getString("RollbackTransactionDialog.11")); //$NON-NLS-1$
@@ -109,7 +113,6 @@ public class RollbackTransactionDialog extends TitleAreaDialog
       {
         builder.append(labelSingular);
       }
-
     }
   }
 }

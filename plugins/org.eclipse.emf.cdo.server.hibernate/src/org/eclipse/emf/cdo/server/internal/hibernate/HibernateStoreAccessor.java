@@ -417,7 +417,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       }
 
       session.flush();
-
     }
     catch (Exception e)
     {

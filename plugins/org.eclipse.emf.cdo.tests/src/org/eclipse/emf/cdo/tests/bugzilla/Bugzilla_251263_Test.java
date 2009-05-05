@@ -172,5 +172,4 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     resB.getContents().add(purchaseOrder2);
     transaction1.commit();
   }
-
 }

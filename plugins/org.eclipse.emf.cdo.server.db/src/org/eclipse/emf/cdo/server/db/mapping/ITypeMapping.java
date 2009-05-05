@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
@@ -116,5 +116,4 @@ public interface ITypeMapping
    *           if reading the value throws an SQLException
    */
   public void readValueToRevision(ResultSet resultSet, int i, InternalCDORevision revision) throws SQLException;
-
 }

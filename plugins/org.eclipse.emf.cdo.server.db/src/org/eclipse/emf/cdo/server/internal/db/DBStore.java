@@ -304,7 +304,6 @@ public class DBStore extends LongIDStore implements IDBStore
     {
       throw new DBException("No row updated in table " + CDODBSchema.REPOSITORY);
     }
-
   }
 
   @Override

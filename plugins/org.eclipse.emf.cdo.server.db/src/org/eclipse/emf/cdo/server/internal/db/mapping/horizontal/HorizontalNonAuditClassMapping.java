@@ -507,7 +507,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       accessor.getStatementCache().releasePreparedStatement(stmt);
     }
-
   }
 
   public void updateAttributes(IDBStoreAccessor accessor, CDOID id, int newVersion, long created,

@@ -238,5 +238,4 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     typeField = null;
     super.doDeactivate();
   }
-
 }

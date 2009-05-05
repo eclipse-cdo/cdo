@@ -125,5 +125,4 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
 
     Util.removeNegotiator(tcpAcceptor);
   }
-
 }

@@ -292,7 +292,6 @@ public class ComplexTest extends AbstractCDOTest
 
     assertContent(resource1, container);
     assertContent(container, element0);
-
   }
 
   public void testPlainMultiNonContainedUnidirectional()
@@ -384,7 +383,6 @@ public class ComplexTest extends AbstractCDOTest
 
     assertContent(resource1, container);
     assertContent(resource1, element0);
-
   }
 
   public void testGenRefSingleContainedUnidirectional()

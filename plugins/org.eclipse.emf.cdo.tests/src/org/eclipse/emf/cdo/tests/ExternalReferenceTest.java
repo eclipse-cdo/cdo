@@ -307,7 +307,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
       assertEquals(supplierB, pO.getSupplier());
       assertEquals(supplierB.getPurchaseOrders().get(0), pO);
-
     }
   }
 

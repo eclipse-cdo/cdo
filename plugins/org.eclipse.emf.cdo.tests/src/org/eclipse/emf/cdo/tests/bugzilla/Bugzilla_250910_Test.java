@@ -67,9 +67,7 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
       transaction2.getLock().unlock();
       assertEquals(String.valueOf(i), company2.getName());
       // Need a way to test if an error occured in the invalidation process.
-
     }
-
   }
 
   /**

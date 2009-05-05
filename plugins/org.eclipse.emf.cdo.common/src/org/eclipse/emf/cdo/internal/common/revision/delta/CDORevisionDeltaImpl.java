@@ -95,7 +95,6 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       addFeatureDelta(new CDOContainerFeatureDeltaImpl(dirtyData.getResourceID(), dirtyData.getContainerID(), dirtyData
           .getContainingFeatureID()));
     }
-
   }
 
   public CDORevisionDeltaImpl(CDODataInput in) throws IOException

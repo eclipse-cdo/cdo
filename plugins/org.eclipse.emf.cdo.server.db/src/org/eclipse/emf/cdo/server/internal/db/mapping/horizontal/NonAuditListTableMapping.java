@@ -175,7 +175,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(CDODBSchema.LIST_IDX);
     builder.append(" < ?");
     sqlMoveUpWithLimit = builder.toString();
-
   }
 
   @Override
@@ -502,7 +501,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         throw new ImplementationError("Should not be called");
       }
-
     };
 
     for (CDOFeatureDelta delta : listDelta.getListChanges())

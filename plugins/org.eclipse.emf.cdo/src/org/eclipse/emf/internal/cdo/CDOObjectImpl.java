@@ -521,7 +521,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           }
         }
       }
-
     }
   }
 
@@ -1145,7 +1144,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     protected Object getValue(InternalEObject eObject, int dynamicFeatureID)
     {
       return ((CDOObjectImpl)eObject).cdoSettings()[dynamicFeatureID];
-
     }
 
     protected EList<Object> getValueAsList(InternalEObject eObject, int dynamicFeatureID)

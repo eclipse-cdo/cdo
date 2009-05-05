@@ -139,7 +139,6 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
           {
             listOfContent.add(object);
           }
-
         }
       }
     }
@@ -149,5 +148,4 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
       return listOfContent;
     }
   }
-
 }

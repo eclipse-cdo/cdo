@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  */
@@ -84,7 +84,6 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
     CDODeltaNotification cdoNotification = (CDODeltaNotification)adapter.getNotifications().get(0);
     assertEquals(false, cdoNotification.hasNext());
     assertEquals(getModel1Package().getOrder_OrderDetails(), cdoNotification.getFeature());
-
   }
 
   /**
@@ -125,5 +124,4 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
       notifier = newTarget;
     }
   }
-
 }

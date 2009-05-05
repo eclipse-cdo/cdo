@@ -362,5 +362,4 @@ public class ChunkingTest extends AbstractCDOTest
     view.close();
     session.close();
   }
-
 }

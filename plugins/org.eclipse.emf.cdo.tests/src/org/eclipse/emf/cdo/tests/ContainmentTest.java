@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -452,7 +452,6 @@ public class ContainmentTest extends AbstractCDOTest
 
     Order order2 = (Order)container.eGet(container.eClass().getEStructuralFeature("proxyElement"));
     assertSame(order, order2);
-
   }
 
   public void testObjectNotSameResourceThanItsContainer_WithoutCDO() throws Exception
@@ -556,6 +555,5 @@ public class ContainmentTest extends AbstractCDOTest
     schoolPackage.setNsURI("http:///www.elver.org/School");
     schoolPackage.getEClassifiers().add(schoolBookEClass);
     return schoolPackage;
-
   }
 }

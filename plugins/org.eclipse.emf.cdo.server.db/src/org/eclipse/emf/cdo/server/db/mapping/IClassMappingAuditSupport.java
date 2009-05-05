@@ -66,5 +66,4 @@ public interface IClassMappingAuditSupport
    */
   public boolean readRevisionByTime(IDBStoreAccessor dbStoreAccessor, InternalCDORevision revision, long timeStamp,
       int listChunk);
-
 }

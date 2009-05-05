@@ -825,7 +825,6 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Checking after commit");
     assertEquals(false, timeOuter.timedOut());
     assertEquals(false, timeOuterNotification.timedOut());
-
   }
 
   public void testDetachAndPassiveUpdate() throws Exception

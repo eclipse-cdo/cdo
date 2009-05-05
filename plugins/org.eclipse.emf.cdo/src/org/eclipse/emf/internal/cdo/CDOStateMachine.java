@@ -172,7 +172,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   /**
    * The object is already attached in EMF world. It contains all the information needed to know where it will be
-   * connected. The mapOfContents is only used for performance reasons.
+   * connected.
    * 
    * @since 2.0
    */
@@ -183,7 +183,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     try
     {
       List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
-      attach1(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
+      prepare(object, new Pair<InternalCDOTransaction, List<InternalCDOObject>>(transaction, contents));
       attach2(object);
 
       for (InternalCDOObject content : contents)
@@ -200,15 +200,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * Phase 1: TRANSIENT --> PREPARED
    */
-  private void attach1(InternalCDOObject object,
-      Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndMapOfContents)
+  private void prepare(InternalCDOObject object,
+      Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndContents)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("PREPARE: {0} --> {1}", object, transactionAndMapOfContents.getElement1()); //$NON-NLS-1$
+      TRACER.format("PREPARE: {0} --> {1}", object, transactionAndContents.getElement1()); //$NON-NLS-1$
     }
 
-    process(object, CDOEvent.PREPARE, transactionAndMapOfContents);
+    process(object, CDOEvent.PREPARE, transactionAndContents);
   }
 
   /**
@@ -561,10 +561,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<InternalCDOTransaction, List<InternalCDOObject>>>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
-        Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndMapOfContents)
+        Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndContents)
     {
-      InternalCDOTransaction transaction = transactionAndMapOfContents.getElement1();
-      List<InternalCDOObject> contents = transactionAndMapOfContents.getElement2();
+      InternalCDOTransaction transaction = transactionAndContents.getElement1();
+      List<InternalCDOObject> contents = transactionAndContents.getElement2();
 
       // Prepare object
       CDOID id = transaction.getNextTemporaryID();
@@ -589,7 +589,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         InternalCDOObject content = it.next();
         contents.add(content);
-        INSTANCE.process(content, CDOEvent.PREPARE, transactionAndMapOfContents);
+        INSTANCE.process(content, CDOEvent.PREPARE, transactionAndContents);
       }
     }
   }

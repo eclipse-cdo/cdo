@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -101,17 +101,17 @@ public class CDOMetaWrapper extends CDOObjectWrapper
     throw new UnsupportedOperationException();
   }
 
-  public void cdoInternalPostDetach()
+  public void cdoInternalPostDetach(boolean remote)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void cdoInternalPostInvalidate()
   {
     throw new UnsupportedOperationException();
   }
 
   public void cdoInternalPreCommit()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public void cdoInternalPostInvalid()
   {
     throw new UnsupportedOperationException();
   }

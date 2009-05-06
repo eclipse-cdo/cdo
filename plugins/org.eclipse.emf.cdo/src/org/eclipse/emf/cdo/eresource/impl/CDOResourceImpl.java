@@ -268,17 +268,21 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated NOT
    * @since 2.0
    */
   @Override
-  public void cdoInternalPostInvalid()
+  public void cdoInternalPostDetach(boolean remote)
   {
-    super.cdoInternalPostInvalid();
-    existing = false;
-    cdoView().getResourceSet().getResources().remove(this);
+    super.cdoInternalPostDetach(remote);
+    if (remote)
+    {
+      existing = false;
+      cdoView().getResourceSet().getResources().remove(this);
+    }
+    else
+    {
+      removeFromResourceSet();
+    }
   }
 
   /**
@@ -758,16 +762,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
         basicSetFolder(null, false);
       }
     }
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  public void cdoInternalPostDetach()
-  {
-    super.cdoInternalPostDetach();
-    removeFromResourceSet();
   }
 
   private void removeFromResourceSet()

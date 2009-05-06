@@ -249,7 +249,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       for (InternalCDOObject content : objectsToDetach)
       {
         CDOState oldState = content.cdoInternalSetState(CDOState.TRANSIENT);
-        content.cdoInternalPostDetach();
+        content.cdoInternalPostDetach(false);
         content.cdoInternalSetState(oldState);
       }
 
@@ -811,7 +811,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       view.deregisterObject(object);
 
       object.cdoInternalSetState(CDOState.INVALID);
-      object.cdoInternalPostInvalid();
+      object.cdoInternalPostDetach(true);
     }
   }
 
@@ -827,6 +827,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         changeState(object, CDOState.PROXY);
         object.cdoInternalSetRevision(null);
+        object.cdoInternalPostInvalidate();
       }
     }
   }

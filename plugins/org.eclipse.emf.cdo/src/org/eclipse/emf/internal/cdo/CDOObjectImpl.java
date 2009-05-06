@@ -117,28 +117,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * @since 2.0
    */
-  protected Object[] cdoSettings()
-  {
-    if (cdoSettings == null)
-    {
-      int size = eClass().getFeatureCount() - eStaticFeatureCount();
-      cdoSettings = size == 0 ? ENO_SETTINGS : new Object[size];
-    }
-
-    return cdoSettings;
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected Object[] cdoBasicSettings()
-  {
-    return cdoSettings;
-  }
-
-  /**
-   * @since 2.0
-   */
   public InternalCDOView cdoView()
   {
     return view;
@@ -188,6 +166,34 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public boolean cdoInvalid()
   {
     return FSMUtil.isInvalid(this);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOLock cdoReadLock()
+  {
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return NOOPLockImpl.INSTANCE;
+    }
+
+    // Should we cache the locks ?
+    return new CDOLockImpl(RWLockManager.LockType.READ);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public CDOLock cdoWriteLock()
+  {
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return NOOPLockImpl.INSTANCE;
+    }
+
+    // Should we cache the locks ?
+    return new CDOLockImpl(RWLockManager.LockType.WRITE);
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -287,15 +293,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * @since 2.0
    */
-  public void cdoInternalPostInvalid()
-  {
-    // Do nothing
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void cdoInternalCleanup()
+  public void cdoInternalPostInvalidate()
   {
     // Do nothing
   }
@@ -332,71 +330,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * @since 2.0
-   */
-  public CDOLock cdoReadLock()
-  {
-    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
-    {
-      return NOOPLockImpl.INSTANCE;
-    }
-
-    // Should we cache the locks ?
-    return new CDOLockImpl(RWLockManager.LockType.READ);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOLock cdoWriteLock()
-  {
-    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
-    {
-      return NOOPLockImpl.INSTANCE;
-    }
-
-    // Should we cache the locks ?
-    return new CDOLockImpl(RWLockManager.LockType.WRITE);
-  }
-
-  @SuppressWarnings("unchecked")
-  private void populateRevisionFeature(InternalCDOView view, InternalCDORevision revision, EStructuralFeature feature,
-      Object[] eSettings, int i)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
-    }
-
-    Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
-    CDOStore cdoStore = cdoStore();
-
-    if (feature.isMany())
-    {
-      if (setting != null)
-      {
-        int index = 0;
-        EList<Object> list = (EList<Object>)setting;
-        for (Object value : list)
-        {
-          value = cdoStore.convertToCDO(cdoView(), feature, value);
-          revision.add(feature, index++, value);
-        }
-      }
-    }
-    else
-    {
-      setting = cdoStore.convertToCDO(cdoView(), feature, setting);
-      revision.set(feature, 0, setting);
-    }
-  }
-
-  /**
    * It is really important for accessing the data to go through {@link #cdoStore()}. {@link #eStore()} will redirect
    * you to the transient data.
+   * 
+   * @since 2.0
    */
-  public void cdoInternalPostDetach()
+  public void cdoInternalPostDetach(boolean remote)
   {
+    if (remote)
+    {
+      // Do nothing
+      return;
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Depopulating revision for {0}", this); //$NON-NLS-1$
@@ -427,104 +373,15 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
-  private void resetSettings()
+  public void cdoInternalPreCommit()
   {
-    cdoSettings = null;
-    cdoSettings();
-  }
-
-  private void depopulateRevisionFeature(InternalCDOView view, InternalCDORevision revision,
-      EStructuralFeature eFeature, Object[] eSettings, int i)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Depopulating feature {0}", eFeature); //$NON-NLS-1$
-    }
-
-    EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
-    EReference oppositeReference = cdoID().isTemporary() ? null : internalFeature.getEOpposite();
-
-    CDOStore cdoStore = cdoStore();
-    EStore eStore = eStore();
-
-    if (eFeature.isMany())
-    {
-      int size = cdoStore.size(this, eFeature);
-      for (int index = 0; index < size; index++)
-      {
-        // Do not trigger events
-        // Do not trigger inverse updates
-        Object object = cdoStore.get(this, eFeature, index);
-        eStore.add(this, eFeature, index, object);
-        if (oppositeReference != null)
-        {
-          adjustOppositeReference((InternalEObject)object, oppositeReference);
-        }
-      }
-    }
-    else
-    {
-      Object object = cdoStore.get(this, eFeature, EStore.NO_INDEX);
-      eStore.set(this, eFeature, EStore.NO_INDEX, object);
-      if (oppositeReference != null)
-      {
-        adjustOppositeReference((InternalEObject)object, oppositeReference);
-      }
-    }
+    // Do nothing
   }
 
   /**
-   * Adjust the reference ONLY if the opposite reference used CDOID. This is true ONLY if the state of <cdo>this</code>
-   * was not {@link CDOState#NEW}.
+   * @since 2.0
    */
-  @SuppressWarnings("unchecked")
-  private void adjustOppositeReference(InternalEObject object, EReference feature)
-  {
-    if (object != null)
-    {
-      InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(object);
-      if (cdoObject != null && !FSMUtil.isTransient(cdoObject))
-      {
-        if (feature.isMany())
-        {
-          int index = cdoObject.eStore().indexOf(cdoObject, feature, cdoID());
-
-          // TODO Simon Log an error in the new view.getErrors() in the case we are not able to find the object.
-          // Cannot throw an exception, the detach process is too far.
-          if (index != -1)
-          {
-            cdoObject.eStore().set(cdoObject, feature, index, this);
-          }
-        }
-        else
-        {
-          cdoObject.eStore().set(cdoObject, feature, 0, this);
-        }
-      }
-      else
-      {
-        if (feature.isResolveProxies())
-        {
-          // We should not trigger events. But we have no choice :-(.
-          if (feature.isMany())
-          {
-            InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
-            int index = list.indexOf(this);
-            if (index != -1)
-            {
-              list.set(index, this);
-            }
-          }
-          else
-          {
-            object.eSet(feature, this);
-          }
-        }
-      }
-    }
-  }
-
-  public void cdoInternalPreCommit()
+  public void cdoInternalCleanup()
   {
     // Do nothing
   }
@@ -577,169 +434,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return eAdapters;
   }
 
-  @Override
-  protected FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
-  {
-    return new CDOStoreFeatureMap(eStructuralFeature);
-  }
-
-  @Override
-  protected EList<?> createList(final EStructuralFeature eStructuralFeature)
-  {
-    final EClassifier eType = eStructuralFeature.getEType();
-
-    // Answer from Christian Damus
-    // Java ensures that string constants are interned, so this is actually
-    // more efficient than .equals() and it's correct
-    if (eType.getInstanceClassName() == "java.util.Map$Entry") //$NON-NLS-1$
-    {
-      class EStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
-      {
-        private static final long serialVersionUID = 1L;
-
-        public EStoreEcoreEMap()
-        {
-          super((EClass)eType, BasicEMap.Entry.class, null);
-          delegateEList = new BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
-          {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
-            {
-              EStoreEcoreEMap.this.doPut(newObject);
-            }
-
-            @Override
-            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
-                BasicEMap.Entry<Object, Object> oldObject)
-            {
-              didRemove(index, oldObject);
-              didAdd(index, newObject);
-            }
-
-            @Override
-            protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
-            {
-              EStoreEcoreEMap.this.doRemove(oldObject);
-            }
-
-            @Override
-            protected void didClear(int size, Object[] oldObjects)
-            {
-              EStoreEcoreEMap.this.doClear();
-            }
-
-            @Override
-            protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
-            {
-              EStoreEcoreEMap.this.doMove(movedObject);
-            }
-          };
-
-          size = delegateEList.size();
-        }
-
-        private void checkListForReading()
-        {
-          if (!FSMUtil.isTransient(CDOObjectImpl.this))
-          {
-            CDOStateMachine.INSTANCE.read(CDOObjectImpl.this);
-          }
-        }
-
-        /**
-         * Ensures that the entry data is created and is populated with contents of the delegate list.
-         */
-        @Override
-        protected synchronized void ensureEntryDataExists()
-        {
-          checkListForReading();
-          super.ensureEntryDataExists();
-        }
-
-        @Override
-        public int size()
-        {
-          checkListForReading();
-          return size;
-        }
-
-        @Override
-        public boolean isEmpty()
-        {
-          checkListForReading();
-          return size == 0;
-        }
-
-        @Override
-        public boolean contains(Object object)
-        {
-          checkListForReading();
-          return super.contains(object);
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> collection)
-        {
-          checkListForReading();
-          return super.containsAll(collection);
-        }
-
-        @Override
-        public boolean containsKey(Object key)
-        {
-          checkListForReading();
-          return super.containsKey(key);
-        }
-
-        @Override
-        public boolean containsValue(Object value)
-        {
-          checkListForReading();
-          return super.containsValue(value);
-        }
-
-        public void cdoInternalPostLoad()
-        {
-          entryData = null;
-          size = delegateEList.size();
-        }
-
-        public void cdoInternalPreLoad()
-        {
-        }
-      }
-
-      return new EStoreEcoreEMap();
-    }
-
-    return super.createList(eStructuralFeature);
-  }
-
-  @Override
-  protected void eInitializeContainer()
-  {
-    throw new ImplementationError();
-  }
-
-  @Override
-  protected void eSetDirectResource(Internal resource)
-  {
-    if (FSMUtil.isTransient(this))
-    {
-      super.eSetDirectResource(resource);
-    }
-    else if (resource instanceof CDOResourceImpl || resource == null)
-    {
-      cdoStore().setContainer(this, (CDOResourceImpl)resource, eInternalContainer(), eContainerFeatureID());
-    }
-    else
-    {
-      throw new IllegalArgumentException(Messages.getString("CDOObjectImpl.8")); //$NON-NLS-1$
-    }
-  }
-
   /**
    * @since 2.0
    */
@@ -752,16 +446,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return (Resource.Internal)cdoStore().getResource(this);
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
-  {
-    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
-        dynamicFeatureID);
   }
 
   /**
@@ -797,15 +481,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     return cdoStore();
-  }
-
-  /**
-   * Don't cache non-transient features in this CDOObject's {@link #eSettings()}.
-   */
-  @Override
-  protected boolean eIsCaching()
-  {
-    return false;
   }
 
   @Override
@@ -993,24 +668,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return notifications;
   }
 
-  @Override
-  protected void eBasicSetContainer(InternalEObject newEContainer, int newContainerFeatureID)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID); //$NON-NLS-1$
-    }
-
-    if (FSMUtil.isTransient(this))
-    {
-      super.eBasicSetContainer(newEContainer, newContainerFeatureID);
-    }
-    else
-    {
-      cdoStore().setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
-    }
-  }
-
   /**
    * Specializing the behaviour of {@link #equals(Object)} is not permitted as per {@link EObject} specification.
    */
@@ -1031,9 +688,360 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return eClass().getName() + "@" + id; //$NON-NLS-1$
   }
 
+  /**
+   * @since 2.0
+   */
+  protected Object[] cdoSettings()
+  {
+    if (cdoSettings == null)
+    {
+      int size = eClass().getFeatureCount() - eStaticFeatureCount();
+      cdoSettings = size == 0 ? ENO_SETTINGS : new Object[size];
+    }
+
+    return cdoSettings;
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected Object[] cdoBasicSettings()
+  {
+    return cdoSettings;
+  }
+
+  @Override
+  protected FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
+  {
+    return new CDOStoreFeatureMap(eStructuralFeature);
+  }
+
+  @Override
+  protected EList<?> createList(final EStructuralFeature eStructuralFeature)
+  {
+    final EClassifier eType = eStructuralFeature.getEType();
+
+    // Answer from Christian Damus
+    // Java ensures that string constants are interned, so this is actually
+    // more efficient than .equals() and it's correct
+    if (eType.getInstanceClassName() == "java.util.Map$Entry") //$NON-NLS-1$
+    {
+      class EStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
+      {
+        private static final long serialVersionUID = 1L;
+
+        public EStoreEcoreEMap()
+        {
+          super((EClass)eType, BasicEMap.Entry.class, null);
+          delegateEList = new BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
+          {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
+            {
+              EStoreEcoreEMap.this.doPut(newObject);
+            }
+
+            @Override
+            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
+                BasicEMap.Entry<Object, Object> oldObject)
+            {
+              didRemove(index, oldObject);
+              didAdd(index, newObject);
+            }
+
+            @Override
+            protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
+            {
+              EStoreEcoreEMap.this.doRemove(oldObject);
+            }
+
+            @Override
+            protected void didClear(int size, Object[] oldObjects)
+            {
+              EStoreEcoreEMap.this.doClear();
+            }
+
+            @Override
+            protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
+            {
+              EStoreEcoreEMap.this.doMove(movedObject);
+            }
+          };
+
+          size = delegateEList.size();
+        }
+
+        private void checkListForReading()
+        {
+          if (!FSMUtil.isTransient(CDOObjectImpl.this))
+          {
+            CDOStateMachine.INSTANCE.read(CDOObjectImpl.this);
+          }
+        }
+
+        /**
+         * Ensures that the entry data is created and is populated with contents of the delegate list.
+         */
+        @Override
+        protected synchronized void ensureEntryDataExists()
+        {
+          checkListForReading();
+          super.ensureEntryDataExists();
+        }
+
+        @Override
+        public int size()
+        {
+          checkListForReading();
+          return size;
+        }
+
+        @Override
+        public boolean isEmpty()
+        {
+          checkListForReading();
+          return size == 0;
+        }
+
+        @Override
+        public boolean contains(Object object)
+        {
+          checkListForReading();
+          return super.contains(object);
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> collection)
+        {
+          checkListForReading();
+          return super.containsAll(collection);
+        }
+
+        @Override
+        public boolean containsKey(Object key)
+        {
+          checkListForReading();
+          return super.containsKey(key);
+        }
+
+        @Override
+        public boolean containsValue(Object value)
+        {
+          checkListForReading();
+          return super.containsValue(value);
+        }
+
+        public void cdoInternalPostLoad()
+        {
+          entryData = null;
+          size = delegateEList.size();
+        }
+
+        public void cdoInternalPreLoad()
+        {
+        }
+      }
+
+      return new EStoreEcoreEMap();
+    }
+
+    return super.createList(eStructuralFeature);
+  }
+
+  @Override
+  protected void eInitializeContainer()
+  {
+    throw new ImplementationError();
+  }
+
+  @Override
+  protected void eSetDirectResource(Internal resource)
+  {
+    if (FSMUtil.isTransient(this))
+    {
+      super.eSetDirectResource(resource);
+    }
+    else if (resource instanceof CDOResourceImpl || resource == null)
+    {
+      cdoStore().setContainer(this, (CDOResourceImpl)resource, eInternalContainer(), eContainerFeatureID());
+    }
+    else
+    {
+      throw new IllegalArgumentException(Messages.getString("CDOObjectImpl.8")); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
+  {
+    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
+        dynamicFeatureID);
+  }
+
+  /**
+   * Don't cache non-transient features in this CDOObject's {@link #eSettings()}.
+   */
+  @Override
+  protected boolean eIsCaching()
+  {
+    return false;
+  }
+
+  @Override
+  protected void eBasicSetContainer(InternalEObject newEContainer, int newContainerFeatureID)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting container: {0}, featureID={1}", newEContainer, newContainerFeatureID); //$NON-NLS-1$
+    }
+
+    if (FSMUtil.isTransient(this))
+    {
+      super.eBasicSetContainer(newEContainer, newContainerFeatureID);
+    }
+    else
+    {
+      cdoStore().setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
+    }
+  }
+
   private CDOStore cdoStore()
   {
     return cdoView().getStore();
+  }
+
+  @SuppressWarnings("unchecked")
+  private void populateRevisionFeature(InternalCDOView view, InternalCDORevision revision, EStructuralFeature feature,
+      Object[] eSettings, int i)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
+    }
+
+    Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
+    CDOStore cdoStore = cdoStore();
+
+    if (feature.isMany())
+    {
+      if (setting != null)
+      {
+        int index = 0;
+        EList<Object> list = (EList<Object>)setting;
+        for (Object value : list)
+        {
+          value = cdoStore.convertToCDO(cdoView(), feature, value);
+          revision.add(feature, index++, value);
+        }
+      }
+    }
+    else
+    {
+      setting = cdoStore.convertToCDO(cdoView(), feature, setting);
+      revision.set(feature, 0, setting);
+    }
+  }
+
+  private void depopulateRevisionFeature(InternalCDOView view, InternalCDORevision revision,
+      EStructuralFeature eFeature, Object[] eSettings, int i)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Depopulating feature {0}", eFeature); //$NON-NLS-1$
+    }
+
+    EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
+    EReference oppositeReference = cdoID().isTemporary() ? null : internalFeature.getEOpposite();
+
+    CDOStore cdoStore = cdoStore();
+    EStore eStore = eStore();
+
+    if (eFeature.isMany())
+    {
+      int size = cdoStore.size(this, eFeature);
+      for (int index = 0; index < size; index++)
+      {
+        // Do not trigger events
+        // Do not trigger inverse updates
+        Object object = cdoStore.get(this, eFeature, index);
+        eStore.add(this, eFeature, index, object);
+        if (oppositeReference != null)
+        {
+          adjustOppositeReference((InternalEObject)object, oppositeReference);
+        }
+      }
+    }
+    else
+    {
+      Object object = cdoStore.get(this, eFeature, EStore.NO_INDEX);
+      eStore.set(this, eFeature, EStore.NO_INDEX, object);
+      if (oppositeReference != null)
+      {
+        adjustOppositeReference((InternalEObject)object, oppositeReference);
+      }
+    }
+  }
+
+  /**
+   * Adjust the reference ONLY if the opposite reference used CDOID. This is true ONLY if the state of <cdo>this</code>
+   * was not {@link CDOState#NEW}.
+   */
+  @SuppressWarnings("unchecked")
+  private void adjustOppositeReference(InternalEObject object, EReference feature)
+  {
+    if (object != null)
+    {
+      InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(object);
+      if (cdoObject != null && !FSMUtil.isTransient(cdoObject))
+      {
+        if (feature.isMany())
+        {
+          int index = cdoObject.eStore().indexOf(cdoObject, feature, cdoID());
+
+          // TODO Simon Log an error in the new view.getErrors() in the case we are not able to find the object.
+          // Cannot throw an exception, the detach process is too far.
+          if (index != -1)
+          {
+            cdoObject.eStore().set(cdoObject, feature, index, this);
+          }
+        }
+        else
+        {
+          cdoObject.eStore().set(cdoObject, feature, 0, this);
+        }
+      }
+      else
+      {
+        if (feature.isResolveProxies())
+        {
+          // We should not trigger events. But we have no choice :-(.
+          if (feature.isMany())
+          {
+            InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
+            int index = list.indexOf(this);
+            if (index != -1)
+            {
+              list.set(index, this);
+            }
+          }
+          else
+          {
+            object.eSet(feature, this);
+          }
+        }
+      }
+    }
+  }
+
+  private void resetSettings()
+  {
+    cdoSettings = null;
+    cdoSettings();
   }
 
   /**

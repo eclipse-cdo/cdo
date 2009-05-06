@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -67,9 +67,7 @@ import java.util.List;
  * IMPORTANT: Compile errors in this class might indicate an old version of EMF. Legacy support is only enabled for EMF
  * with fixed bug #247130. These compile errors do not affect native models!
  */
-public final class CDOLegacyWrapper extends CDOObjectWrapper
-// TODO LEGACY
-// implements InternalEObject.EReadListener, InternalEObject.EWriteListener
+public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyWrapper.class);
 
@@ -79,14 +77,11 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   private static final Method eBasicSetContainerMethod = ReflectUtil.getMethod(EObjectImpl.class, "eBasicSetContainer", //$NON-NLS-1$
       InternalEObject.class, int.class);
 
-  private CDOState state;
+  protected CDOState state;
 
-  private InternalCDORevision revision;
+  protected InternalCDORevision revision;
 
-  @SuppressWarnings("unused")
   private boolean allProxiesResolved;
-
-  private boolean handlingCallback;
 
   public CDOLegacyWrapper(InternalEObject instance)
   {
@@ -148,7 +143,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  public void cdoInternalPostDetach()
+  public void cdoInternalPostDetach(boolean remote)
   {
     // Do nothing
   }
@@ -178,50 +173,12 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     revisionToInstance();
   }
 
-  public void cdoInternalPostInvalid()
+  public void cdoInternalPostInvalidate()
   {
   }
 
   public void cdoInternalCleanup()
   {
-  }
-
-  public synchronized void handleRead(InternalEObject object, int featureID)
-  {
-    if (!handlingCallback)
-    {
-      try
-      {
-        handlingCallback = true;
-        CDOStateMachine.INSTANCE.read(this);
-
-        // TODO Optimize this when the list position index is added to the new callbacks
-        resolveAllProxies();
-      }
-      finally
-      {
-        handlingCallback = false;
-      }
-    }
-  }
-
-  public synchronized void handleWrite(InternalEObject object, int featureID)
-  {
-    if (!handlingCallback)
-    {
-      try
-      {
-        handlingCallback = true;
-        CDOStateMachine.INSTANCE.write(this);
-
-        // TODO Optimize this when the list position index is added to the new callbacks
-        resolveAllProxies();
-      }
-      finally
-      {
-        handlingCallback = false;
-      }
-    }
   }
 
   @Override
@@ -247,7 +204,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     return "CDOLegacyWrapper[" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
-  private void instanceToRevision()
+  protected void instanceToRevision()
   {
     if (TRACER.isEnabled())
     {
@@ -266,7 +223,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  private void instanceToRevisionContainment()
+  protected void instanceToRevisionContainment()
   {
     CDOResource resource = (CDOResource)getInstanceResource(instance);
     revision.setResourceID(resource == null ? CDOID.NULL : resource.cdoID());
@@ -285,7 +242,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  private void instanceToRevisionFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
+  protected void instanceToRevisionFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
     Object instanceValue = getInstanceValue(instance, feature, packageRegistry);
     if (feature.isMany())
@@ -325,7 +282,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * TODO Simon: Fix this whole mess ;-)
    */
-  private void revisionToInstance()
+  protected void revisionToInstance()
   {
     if (TRACER.isEnabled())
     {
@@ -360,7 +317,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  private void revisionToInstanceContainment()
+  protected void revisionToInstanceContainment()
   {
     CDOID resourceID = revision.getResourceID();
     InternalEObject resource = getEObjectFromPotentialID(view, null, resourceID);
@@ -372,7 +329,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   }
 
   @SuppressWarnings("unchecked")
-  private void revisionToInstanceFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
+  protected void revisionToInstanceFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
     Object value = revision.getValue(feature);
     if (feature.isMany())
@@ -414,33 +371,33 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  private Resource.Internal getInstanceResource(InternalEObject instance)
+  protected Resource.Internal getInstanceResource(InternalEObject instance)
   {
     return instance.eDirectResource();
   }
 
-  private InternalEObject getInstanceContainer(InternalEObject instance)
+  protected InternalEObject getInstanceContainer(InternalEObject instance)
   {
     return instance.eInternalContainer();
   }
 
-  private int getInstanceContainerFeatureID(InternalEObject instance)
+  protected int getInstanceContainerFeatureID(InternalEObject instance)
   {
     return instance.eContainerFeatureID();
   }
 
-  private Object getInstanceValue(InternalEObject instance, EStructuralFeature feature,
+  protected Object getInstanceValue(InternalEObject instance, EStructuralFeature feature,
       CDOPackageRegistry packageRegistry)
   {
     return instance.eGet(feature);
   }
 
-  private void setInstanceResource(Resource.Internal resource)
+  protected void setInstanceResource(Resource.Internal resource)
   {
     ReflectUtil.invokeMethod(eSetDirectResourceMethod, instance, resource);
   }
 
-  private void setInstanceContainer(InternalEObject container, int containerFeatureID)
+  protected void setInstanceContainer(InternalEObject container, int containerFeatureID)
   {
     ReflectUtil.invokeMethod(eBasicSetContainerMethod, instance, container, containerFeatureID);
   }
@@ -448,7 +405,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * TODO Ed: Help to fix whole mess (avoid inverse updates)
    */
-  private void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
+  protected void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
   {
     // TODO Consider EStoreEObjectImpl based objects as well!
     // TODO Don't use Java reflection
@@ -519,7 +476,8 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
    *          that will be used later to resolve the proxy. <code>null</code> indicates that proxy creation will be
    *          avoided!
    */
-  private InternalEObject getEObjectFromPotentialID(InternalCDOView view, EStructuralFeature feature, Object potentialID)
+  protected InternalEObject getEObjectFromPotentialID(InternalCDOView view, EStructuralFeature feature,
+      Object potentialID)
   {
     if (potentialID instanceof CDOID)
     {
@@ -558,9 +516,9 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
    * at runtime. Note also that the proxy object might even not be cast to the concrete type of the target object. The
    * proxy can only guaranteed to be of <em>any</em> concrete subtype of the declared type of the given feature.
    * <p>
-   * TODO {@link InternalEObject#eResolveProxy(InternalEObject) 
+   * TODO {@link InternalEObject#eResolveProxy(InternalEObject)
    */
-  private InternalEObject createProxy(InternalCDOView view, EStructuralFeature feature, CDOID id)
+  protected InternalEObject createProxy(InternalCDOView view, EStructuralFeature feature, CDOID id)
   {
     EClassifier eType = feature.getEType();
     Class<?> instanceClass = eType.getInstanceClass();
@@ -572,9 +530,21 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
   }
 
   /**
+   * TODO Ed: Fix whole mess ;-)
+   */
+  protected void clearEList(InternalEList<Object> list)
+  {
+    while (!list.isEmpty())
+    {
+      Object toBeRemoved = list.basicGet(0);
+      list.basicRemove(toBeRemoved, null);
+    }
+  }
+
+  /**
    * TODO Consider using only EMF concepts for resolving proxies!
    */
-  private void resolveAllProxies()
+  protected void resolveAllProxies()
   {
     // if (!allProxiesResolved)
     {
@@ -597,7 +567,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
    * EMF with fixed bug #247130. These compile errors do not affect native models!
    */
   @SuppressWarnings("unchecked")
-  private void resolveProxies(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
+  protected void resolveProxies(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
     Object value = getInstanceValue(instance, feature, packageRegistry);
     if (value != null)
@@ -646,7 +616,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  private void adjustEProxy()
+  protected void adjustEProxy()
   {
     // Setting eProxyURI is necessary to prevent content adapters from
     // loading the whole content tree.
@@ -678,19 +648,7 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  /**
-   * TODO Ed: Fix whole mess ;-)
-   */
-  private void clearEList(InternalEList<Object> list)
-  {
-    while (!list.isEmpty())
-    {
-      Object toBeRemoved = list.basicGet(0);
-      list.basicRemove(toBeRemoved, null);
-    }
-  }
-
-  private static int getEFlagMask(Class<?> instanceClass, String flagName)
+  protected static int getEFlagMask(Class<?> instanceClass, String flagName)
   {
     Field field = ReflectUtil.getField(instanceClass, flagName);
     if (!field.isAccessible())
@@ -773,4 +731,5 @@ public final class CDOLegacyWrapper extends CDOObjectWrapper
       throw new UnsupportedOperationException(method.getName());
     }
   }
+
 }

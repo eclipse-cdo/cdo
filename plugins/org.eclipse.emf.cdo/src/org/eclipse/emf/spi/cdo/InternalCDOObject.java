@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -35,9 +35,9 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
 
   public void cdoInternalPostAttach();
 
-  public void cdoInternalPostDetach();
+  public void cdoInternalPostDetach(boolean remote);
 
-  public void cdoInternalPostInvalid();
+  public void cdoInternalPostInvalidate();
 
   public void cdoInternalPreCommit();
 

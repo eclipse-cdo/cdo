@@ -595,7 +595,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       if (!FSMUtil.isTransient(this))
       {
         CDOID id = cdoID();
-        if (id == null || id != null && !view.isObjectRegistered(id))
+        if (id == null || !view.isObjectRegistered(id))
         {
           try
           {

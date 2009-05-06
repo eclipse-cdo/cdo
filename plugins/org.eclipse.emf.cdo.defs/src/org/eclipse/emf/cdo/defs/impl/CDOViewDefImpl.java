@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    André Dietisheim - initial API and implementation
+ *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.defs.impl;

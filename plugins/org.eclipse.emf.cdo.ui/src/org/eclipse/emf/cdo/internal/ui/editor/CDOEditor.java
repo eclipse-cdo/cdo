@@ -2519,14 +2519,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   private class EditingDomainProviderAdapter implements Adapter, IEditingDomainProvider
   {
-    public boolean isAdapterForType(Object arg0)
+    public boolean isAdapterForType(Object type)
     {
-      if (arg0 == IEditingDomainProvider.class)
-      {
-        return true;
-      }
-
-      return false;
+      return type == IEditingDomainProvider.class;
     }
 
     public EditingDomain getEditingDomain()
@@ -2547,5 +2542,4 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
     }
   }
-
 }

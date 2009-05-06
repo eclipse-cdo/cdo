@@ -124,7 +124,7 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory", 3);
     ignore("org.eclipse.emf.cdo.eresource.util.EresourceSwitch", 7);
     ignore("org.eclipse.emf.cdo.internal.ui.editor.CDOActionBarContributor", 5);
-    ignore("org.eclipse.emf.cdo.internal.ui.editor.CDOEditor", 12);
+    ignore("org.eclipse.emf.cdo.internal.ui.editor.CDOEditor", 11);
     ignore("org.eclipse.emf.cdo.internal.ui.editor.PluginDelegator", 1);
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.impl.model4interfacesFactoryImpl", 2);
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.impl.model4interfacesPackageImpl", 3);

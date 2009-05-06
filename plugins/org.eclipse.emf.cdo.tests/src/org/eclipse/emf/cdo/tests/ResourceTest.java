@@ -712,8 +712,8 @@ public class ResourceTest extends AbstractCDOTest
     resource.delete(null);
     transaction.commit();
     transaction.close();
-    clearCache(getRepository().getRevisionManager());
 
+    clearCache(getRepository().getRevisionManager());
     CDOView view = session.openView();
     assertEquals(false, view.hasResource("/resource1"));
 
@@ -840,8 +840,8 @@ public class ResourceTest extends AbstractCDOTest
     resource.delete(null);
     transaction.commit();
     transaction.close();
-    clearCache(getRepository().getRevisionManager());
 
+    clearCache(getRepository().getRevisionManager());
     assertEquals(false, view.hasResource("/resource1"));
 
     try
@@ -857,9 +857,32 @@ public class ResourceTest extends AbstractCDOTest
     {
       view.getResource("/resource1");
       fail("Exception expected");
+      // TODO Fails on automated build:
+      // junit.framework.AssertionFailedError: Exception expected
+      // at org.eclipse.emf.cdo.tests.ResourceTest.testDeleteResourceDifferentSessionFresh(ResourceTest.java:859)
+      // at org.eclipse.net4j.tests.AbstractOMTest.runBare(AbstractOMTest.java:86)
+      // at org.eclipse.net4j.tests.AbstractOMTest.run(AbstractOMTest.java:108)
+      // at org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite$TestWrapper.runTest(ConfigTestSuite.java:126)
+      // at org.eclipse.test.EclipseTestRunner.run(EclipseTestRunner.java:332)
+      // at org.eclipse.test.EclipseTestRunner.run(EclipseTestRunner.java:202)
+      // at org.eclipse.test.CoreTestApplication.runTests(CoreTestApplication.java:35)
+      // at org.eclipse.test.CoreTestApplication.run(CoreTestApplication.java:31)
+      // at org.eclipse.equinox.internal.app.EclipseAppContainer.callMethodWithException(EclipseAppContainer.java:574)
+      // at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+      // at org.eclipse.equinox.internal.app.MainApplicationLauncher.run(MainApplicationLauncher.java:32)
+      // at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+      // at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+      // at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:368)
+      // at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+      // at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:559)
+      // at org.eclipse.equinox.launcher.Main.basicRun(Main.java:514)
+      // at org.eclipse.equinox.launcher.Main.run(Main.java:1311)
+      // at org.eclipse.equinox.launcher.Main.main(Main.java:1287)
+      // at org.eclipse.core.launcher.Main.main(Main.java:34)
     }
     catch (Exception success)
     {
+      success.printStackTrace();
     }
 
     try
@@ -976,8 +999,8 @@ public class ResourceTest extends AbstractCDOTest
     folder.delete(null);
     transaction.commit();
     transaction.close();
-    clearCache(getRepository().getRevisionManager());
 
+    clearCache(getRepository().getRevisionManager());
     CDOView view = session.openView();
     assertEquals(false, view.hasResource("/folder/resource1"));
 
@@ -1144,8 +1167,8 @@ public class ResourceTest extends AbstractCDOTest
     folder.delete(null);
     transaction.commit();
     transaction.close();
-    clearCache(getRepository().getRevisionManager());
 
+    clearCache(getRepository().getRevisionManager());
     assertEquals(false, view.hasResource("/folder/resource1"));
 
     try
@@ -1169,6 +1192,7 @@ public class ResourceTest extends AbstractCDOTest
     try
     {
       view.getResource("/folder/resource1");
+      // TODO Fails on automated build
       fail("Exception expected");
     }
     catch (Exception success)

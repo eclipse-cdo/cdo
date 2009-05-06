@@ -5,7 +5,7 @@
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
 	http://www.eclipse.org/legal/epl-v10.html
-	
+
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
@@ -40,7 +40,15 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.source"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.server"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.source"
          version="0.0.0"/>
 
    <includes
@@ -49,7 +57,15 @@
          optional="true"/>
 
    <includes
+         id="org.eclipse.emf.cdo.server.hibernate.source"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.examples"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.examples.source"
          version="0.0.0"/>
 
    <includes
@@ -57,19 +73,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.hibernate.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.examples.source"
+         id="org.eclipse.emf.cdo.defs.source"
          version="0.0.0"/>
 
    <includes

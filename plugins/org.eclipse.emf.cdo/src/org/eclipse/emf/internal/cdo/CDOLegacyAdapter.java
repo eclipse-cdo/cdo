@@ -95,8 +95,17 @@ public final class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.
       break;
 
     case Notification.REMOVE_MANY:
-      // TODO: implement CDOLegacyAdapter.notifyChanged(notification)
-      throw new UnsupportedOperationException();
+    {
+      int pos = notification.getPosition();
+      @SuppressWarnings("unchecked")
+      List<Object> list = (List<Object>)notification.getOldValue();
+      for (int i = 0; i < list.size(); i++)
+      {
+        view.getStore().remove(instance, (EStructuralFeature)notification.getFeature(), pos);
+      }
+    }
+
+      break;
     }
   }
 

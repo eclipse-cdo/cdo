@@ -855,7 +855,8 @@ public class ResourceTest extends AbstractCDOTest
 
     try
     {
-      view.getResource("/resource1");
+      CDOResource resource1 = view.getResource("/resource1");
+      assertNull(resource1);
       fail("Exception expected");
       // TODO Fails on automated build:
       // junit.framework.AssertionFailedError: Exception expected

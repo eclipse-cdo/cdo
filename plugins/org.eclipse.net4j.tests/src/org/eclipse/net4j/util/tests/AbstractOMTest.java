@@ -4,12 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util.tests;
 
+import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -18,12 +19,15 @@ import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 
 /**
  * @author Eike Stepper
  */
 public abstract class AbstractOMTest extends TestCase
 {
+  public static boolean SUPPRESS_OUTPUT;
+
   private static boolean consoleEnabled;
 
   protected AbstractOMTest()
@@ -31,53 +35,104 @@ public abstract class AbstractOMTest extends TestCase
   }
 
   @Override
-  public final void setUp() throws Exception
+  public void setUp() throws Exception
   {
-    super.setUp();
-    IOUtil.OUT().println("************************************************");
-    IOUtil.OUT().println(getName());
-    IOUtil.OUT().println("************************************************");
-
-    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-    OMPlatform.INSTANCE.setDebugging(true);
     enableConsole();
+    if (!SUPPRESS_OUTPUT)
+    {
+      IOUtil.OUT().println("*******************************************************");
+      sleep(1L);
+      IOUtil.ERR().println(this);
+      sleep(1L);
+      IOUtil.OUT().println("*******************************************************");
+    }
 
+    super.setUp();
     doSetUp();
-    IOUtil.OUT().println();
-    IOUtil.OUT().println("------------------------ START ------------------------");
+
+    if (!SUPPRESS_OUTPUT)
+    {
+      IOUtil.OUT().println();
+      IOUtil.OUT().println("------------------------ START ------------------------");
+    }
   }
 
   @Override
-  public final void tearDown() throws Exception
+  public void tearDown() throws Exception
   {
-    sleep(200);
-    IOUtil.OUT().println("------------------------ END --------------------------");
-    IOUtil.OUT().println();
+    enableConsole();
+    if (!SUPPRESS_OUTPUT)
+    {
+      IOUtil.OUT().println("------------------------- END -------------------------");
+      IOUtil.OUT().println();
+    }
 
     doTearDown();
     super.tearDown();
-    IOUtil.OUT().println();
-    IOUtil.OUT().println();
+
+    if (!SUPPRESS_OUTPUT)
+    {
+      IOUtil.OUT().println();
+      IOUtil.OUT().println();
+    }
   }
 
   @Override
-  protected void runTest() throws Throwable
+  public void runBare() throws Throwable
   {
     try
     {
-      super.runTest();
+      super.runBare();
+    }
+    catch (SkipTestException ex)
+    {
+      OM.LOG.info("Skipped " + this);
     }
     catch (Throwable t)
     {
-      t.printStackTrace(IOUtil.OUT());
+      if (!SUPPRESS_OUTPUT)
+      {
+        t.printStackTrace(IOUtil.OUT());
+      }
+
       throw t;
+    }
+  }
+
+  @Override
+  public void run(TestResult result)
+  {
+    try
+    {
+      super.run(result);
+    }
+    catch (SkipTestException ex)
+    {
+      OM.LOG.info("Skipped " + this);
+    }
+    catch (RuntimeException ex)
+    {
+      if (!SUPPRESS_OUTPUT)
+      {
+        ex.printStackTrace(IOUtil.OUT());
+      }
+
+      throw ex;
+    }
+    catch (Error err)
+    {
+      if (!SUPPRESS_OUTPUT)
+      {
+        err.printStackTrace(IOUtil.OUT());
+      }
+
+      throw err;
     }
   }
 
   protected void enableConsole()
   {
-    if (!consoleEnabled)
+    if (!SUPPRESS_OUTPUT)
     {
       PrintTraceHandler.CONSOLE.setShortContext(true);
       OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
@@ -89,7 +144,7 @@ public abstract class AbstractOMTest extends TestCase
 
   protected void disableConsole()
   {
-    if (consoleEnabled)
+    if (!SUPPRESS_OUTPUT)
     {
       consoleEnabled = false;
       OMPlatform.INSTANCE.setDebugging(false);
@@ -100,12 +155,10 @@ public abstract class AbstractOMTest extends TestCase
 
   protected void doSetUp() throws Exception
   {
-    // Guaranteed to be empty
   }
 
   protected void doTearDown() throws Exception
   {
-    // Guaranteed to be empty
   }
 
   public static void sleep(long millis)
@@ -143,9 +196,33 @@ public abstract class AbstractOMTest extends TestCase
 
   protected static void msg(Object m)
   {
-    if (consoleEnabled)
+    if (!SUPPRESS_OUTPUT)
     {
-      IOUtil.OUT().println("--> " + m);
+      if (consoleEnabled)
+      {
+        IOUtil.OUT().println("--> " + m);
+      }
     }
+  }
+
+  protected static void skipTest(boolean skip)
+  {
+    if (skip)
+    {
+      throw new SkipTestException();
+    }
+  }
+
+  protected static void skipTest()
+  {
+    skipTest(true);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class SkipTestException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
   }
 }

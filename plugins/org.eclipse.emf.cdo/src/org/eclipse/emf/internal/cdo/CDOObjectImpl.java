@@ -58,8 +58,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
-import org.eclipse.core.runtime.Assert;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -990,7 +988,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
     CDOStore cdoStore = instance.cdoView().getStore();
     EStore eStore = instance.eStore();
-    Assert.isTrue(cdoStore != eStore); // XXX Remove me!
 
     if (eFeature.isMany())
     {

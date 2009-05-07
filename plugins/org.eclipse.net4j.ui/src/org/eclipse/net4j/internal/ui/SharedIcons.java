@@ -25,31 +25,31 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String ETOOL = "etool16/";
+  private static final String ETOOL = "etool16/"; //$NON-NLS-1$
 
-  private static final String OBJ = "obj16/";
+  private static final String OBJ = "obj16/"; //$NON-NLS-1$
 
-  public static final String OBJ_ACCEPTOR = OBJ + "acceptor";
+  public static final String OBJ_ACCEPTOR = OBJ + "acceptor"; //$NON-NLS-1$
 
-  public static final String OBJ_ADAPTER = OBJ + "adapter";
+  public static final String OBJ_ADAPTER = OBJ + "adapter"; //$NON-NLS-1$
 
-  public static final String OBJ_CHANNEL = OBJ + "channel";
+  public static final String OBJ_CHANNEL = OBJ + "channel"; //$NON-NLS-1$
 
-  public static final String OBJ_CONNECTOR = OBJ + "connector";
+  public static final String OBJ_CONNECTOR = OBJ + "connector"; //$NON-NLS-1$
 
-  public static final String OBJ_FACTORY = OBJ + "factory";
+  public static final String OBJ_FACTORY = OBJ + "factory"; //$NON-NLS-1$
 
-  public static final String OBJ_FOLDER = OBJ + "folder";
+  public static final String OBJ_FOLDER = OBJ + "folder"; //$NON-NLS-1$
 
-  public static final String ETOOL_ADD_ACCEPTOR = ETOOL + "add_acceptor";
+  public static final String ETOOL_ADD_ACCEPTOR = ETOOL + "add_acceptor"; //$NON-NLS-1$
 
-  public static final String ETOOL_ADD_CONNECTOR = ETOOL + "add_connector";
+  public static final String ETOOL_ADD_CONNECTOR = ETOOL + "add_connector"; //$NON-NLS-1$
 
-  public static final String ETOOL_ADD = ETOOL + "add";
+  public static final String ETOOL_ADD = ETOOL + "add"; //$NON-NLS-1$
 
-  public static final String ETOOL_DELETE = ETOOL + "delete";
+  public static final String ETOOL_DELETE = ETOOL + "delete"; //$NON-NLS-1$
 
-  public static final String ETOOL_REFRESH = ETOOL + "refresh";
+  public static final String ETOOL_REFRESH = ETOOL + "refresh"; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {
@@ -97,7 +97,7 @@ public class SharedIcons
 
     if (display == null)
     {
-      throw new IllegalStateException("display == null");
+      throw new IllegalStateException("display == null"); //$NON-NLS-1$
     }
 
     return display;
@@ -105,6 +105,6 @@ public class SharedIcons
 
   private static String mangleKey(String key)
   {
-    return "icons/full/" + key + ".gif";
+    return "icons/full/" + key + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

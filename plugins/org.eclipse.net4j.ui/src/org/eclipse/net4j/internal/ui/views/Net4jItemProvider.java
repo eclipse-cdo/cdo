@@ -14,6 +14,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.ui.SharedIcons;
+import org.eclipse.net4j.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
@@ -83,7 +84,7 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     public RemoveAction(Object object)
     {
-      super("Remove", "Remove", ContainerView.getDeleteImageDescriptor());
+      super(Messages.getString("Net4jItemProvider.0"), Messages.getString("Net4jItemProvider.1"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
       this.object = object;
     }
 

@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.NotifyingListImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -322,7 +323,18 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected void revisionToInstanceFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
-    CDOObjectImpl.revisionToInstanceFeature(this, revision, feature);
+    // Attempt 4
+    Object value = revision.getValue(feature);
+    view.getStore().set(instance, feature, Notification.NO_INDEX, value);
+
+    // // Attempt 3
+    // Object value = revision.getValue(feature);
+    // instance.eSet(feature, value);
+
+    // // Attempt 2
+    // CDOObjectImpl.revisionToInstanceFeature(this, revision, feature);
+
+    // // Attempt 1
     // Object value = revision.getValue(feature);
     // if (feature.isMany())
     // {

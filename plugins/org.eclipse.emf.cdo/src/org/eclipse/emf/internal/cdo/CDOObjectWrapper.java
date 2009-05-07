@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreSettingsImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
@@ -363,11 +362,6 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
 
   public EStore eStore()
   {
-    if (FSMUtil.isTransient(this))
-    {
-      return CDOStoreSettingsImpl.INSTANCE;
-    }
-
     return instance.eStore();
   }
 

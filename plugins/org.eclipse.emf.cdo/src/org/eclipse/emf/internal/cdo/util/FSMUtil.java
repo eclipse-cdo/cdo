@@ -21,15 +21,21 @@ import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.CDOLegacyAdapter;
 import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.CDOMetaWrapper;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -73,8 +79,24 @@ public final class FSMUtil
 
   public static boolean isMeta(Object object)
   {
-    return object instanceof EModelElement || object instanceof EGenericType
-        || object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
+    if (object instanceof EModelElement || object instanceof EGenericType)
+    {
+      EClass eClass = ((EObject)object).eClass();
+      if (eClass == null)
+      {
+        return false;
+      }
+
+      EPackage ePackage = eClass.getEPackage();
+      if (ePackage == null)
+      {
+        return false;
+      }
+
+      return ePackage.getNsURI() == EcorePackage.eNS_URI;
+    }
+
+    return object instanceof org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
   }
 
   public static boolean isWatchable(Object obj)
@@ -153,8 +175,21 @@ public final class FSMUtil
    */
   public static InternalCDOObject adaptLegacy(InternalEObject object)
   {
-    // TODO LEGACY
-    throw new UnsupportedOperationException(Messages.getString("FSMUtil.3")); //$NON-NLS-1$
+    if (object.getClass() == DynamicEObjectImpl.class)
+    {
+      throw new IllegalArgumentException("Use CDOFactory to create dynamic object: " + object);
+    }
+
+    EList<Adapter> adapters = object.eAdapters();
+    CDOLegacyAdapter adapter = (CDOLegacyAdapter)EcoreUtil.getAdapter(adapters, CDOLegacyAdapter.class);
+    if (adapter == null)
+    {
+      adapter = new CDOLegacyAdapter();
+      adapters.add(adapter);
+    }
+
+    return adapter;
+
     // EList<InternalEObject.EReadListener> readListeners = object.eReadListeners();
     // CDOLegacyWrapper wrapper = getLegacyWrapper(readListeners);
     // if (wrapper == null)
@@ -168,6 +203,7 @@ public final class FSMUtil
     // return wrapper;
   }
 
+  @Deprecated
   public static CDOLegacyWrapper getLegacyWrapper(EList<?> listeners)
   {
     for (Object listener : listeners)
@@ -185,6 +221,7 @@ public final class FSMUtil
    * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
    * EMF with fixed bug #247130. These compile errors do not affect native models!
    */
+  @Deprecated
   public static Object getLegacyWrapper(InternalEObject object)
   {
     // TODO LEGACY

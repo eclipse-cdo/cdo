@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
+import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
@@ -40,6 +41,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -56,6 +58,24 @@ public final class CDOUtil
 {
   private CDOUtil()
   {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static boolean prepareDynamicEPackage(EPackage startPackage)
+  {
+    if (CDOFactoryImpl.prepareDynamicEPackage(startPackage))
+    {
+      for (EPackage subPackage : startPackage.getESubpackages())
+      {
+        prepareDynamicEPackage(subPackage);
+      }
+
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -196,9 +216,7 @@ public final class CDOUtil
       return (CDOObject)object;
     }
 
-    // TODO LEGACY
-    throw new UnsupportedOperationException();
-    // return (CDOObject)FSMUtil.getLegacyWrapper((InternalEObject)object);
+    return FSMUtil.adaptLegacy((InternalEObject)object);
   }
 
   /**

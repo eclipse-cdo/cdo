@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
 import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -554,6 +555,8 @@ public class ContainmentTest extends AbstractCDOTest
     schoolPackage.setNsPrefix("elv");
     schoolPackage.setNsURI("http:///www.elver.org/School");
     schoolPackage.getEClassifiers().add(schoolBookEClass);
+
+    CDOUtil.prepareDynamicEPackage(schoolPackage);
     return schoolPackage;
   }
 }

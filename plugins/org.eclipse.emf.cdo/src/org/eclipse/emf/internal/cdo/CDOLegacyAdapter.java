@@ -24,9 +24,9 @@ import java.util.List;
  */
 public final class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Internal
 {
-  public CDOLegacyAdapter(InternalEObject instance)
+  public CDOLegacyAdapter()
   {
-    super(instance);
+    super(null);
   }
 
   public void setTarget(Notifier newTarget)
@@ -49,59 +49,58 @@ public final class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.
 
   public boolean isAdapterForType(Object type)
   {
-    return true;
+    return type == CDOLegacyAdapter.class;
   }
 
-  public void notifyChanged(Notification notification)
+  public void notifyChanged(Notification msg)
   {
-    switch (notification.getEventType())
+    CDOStore store = view.getStore();
+    EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
+    switch (msg.getEventType())
     {
     case Notification.SET:
-      view.getStore().set(instance, (EStructuralFeature)notification.getFeature(), notification.getPosition(),
-          notification.getNewValue());
+      store.set(instance, feature, msg.getPosition(), msg.getNewValue());
       break;
 
     case Notification.UNSET:
-      view.getStore().unset(instance, (EStructuralFeature)notification.getFeature());
+      store.unset(instance, feature);
       break;
 
     case Notification.MOVE:
       // TODO Is that correct?
-      view.getStore().move(instance, (EStructuralFeature)notification.getFeature(), notification.getPosition(),
-          (Integer)notification.getOldValue());
+      store.move(instance, feature, msg.getPosition(), (Integer)msg.getOldValue());
       break;
 
     case Notification.ADD:
-      view.getStore().add(instance, (EStructuralFeature)notification.getFeature(), notification.getPosition(),
-          notification.getNewValue());
+      store.add(instance, feature, msg.getPosition(), msg.getNewValue());
       break;
 
     case Notification.ADD_MANY:
     {
-      int pos = notification.getPosition();
+      int pos = msg.getPosition();
       @SuppressWarnings("unchecked")
-      List<Object> list = (List<Object>)notification.getNewValue();
+      List<Object> list = (List<Object>)msg.getNewValue();
       for (Object object : list)
       {
         // TODO Is that correct?
-        view.getStore().add(instance, (EStructuralFeature)notification.getFeature(), pos++, object);
+        store.add(instance, feature, pos++, object);
       }
     }
 
       break;
 
     case Notification.REMOVE:
-      view.getStore().remove(instance, (EStructuralFeature)notification.getFeature(), notification.getPosition());
+      store.remove(instance, feature, msg.getPosition());
       break;
 
     case Notification.REMOVE_MANY:
     {
-      int pos = notification.getPosition();
+      int pos = msg.getPosition();
       @SuppressWarnings("unchecked")
-      List<Object> list = (List<Object>)notification.getOldValue();
+      List<Object> list = (List<Object>)msg.getOldValue();
       for (int i = 0; i < list.size(); i++)
       {
-        view.getStore().remove(instance, (EStructuralFeature)notification.getFeature(), pos);
+        store.remove(instance, feature, pos);
       }
     }
 

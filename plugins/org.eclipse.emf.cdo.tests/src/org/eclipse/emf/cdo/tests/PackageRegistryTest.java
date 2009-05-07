@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -30,8 +30,7 @@ import org.eclipse.emf.cdo.tests.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-
-import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -307,7 +306,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       c.setName("DClass");
 
       p.getEClassifiers().add(c);
-      CDOFactoryImpl.prepareDynamicEPackage(p);
+      CDOUtil.prepareDynamicEPackage(p);
       EPackage.Registry.INSTANCE.put(nsURI, p);
 
       CDOSession session = openSession();
@@ -355,9 +354,9 @@ public class PackageRegistryTest extends AbstractCDOTest
       transaction.commit();
       session.close();
 
-      fail("Expected: UnsupportedOperationException: Legacy models not supported");
+      fail("Expected: IllegalArgumentException: Use CDOFactory to create dynamic object");
     }
-    catch (UnsupportedOperationException success)
+    catch (IllegalArgumentException success)
     {
       // SUCCESS
     }

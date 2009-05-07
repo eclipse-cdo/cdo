@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -52,6 +52,18 @@ public final class EMFUtil
 {
   private EMFUtil()
   {
+  }
+
+  public static EPackage getGeneratedEPackage(EPackage ePackage)
+  {
+    String packageURI = ePackage.getNsURI();
+    if (packageURI.equals(EcorePackage.eINSTANCE.getNsURI()))
+    {
+      return EcorePackage.eINSTANCE;
+    }
+
+    EPackage.Registry registry = EPackage.Registry.INSTANCE;
+    return registry.getEPackage(packageURI);
   }
 
   public static Map.Entry<String, Object>[] getSortedRegistryEntries(EPackage.Registry packageRegistry)

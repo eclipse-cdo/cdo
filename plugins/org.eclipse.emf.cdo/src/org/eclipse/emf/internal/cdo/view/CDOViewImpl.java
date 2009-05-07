@@ -939,40 +939,41 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return potentialObject;
     }
 
-    if (potentialObject instanceof InternalEObject && !(potentialObject instanceof InternalCDOObject))
+    if (potentialObject instanceof InternalEObject)
     {
-      // TODO LEGACY
-      // try
-      // {
-      // InternalEObject eObject = (InternalEObject)potentialObject;
-      // Object legacyListener = FSMUtil.getLegacyWrapper(eObject);
-      // if (legacyListener != null)
-      // {
-      // potentialObject = legacyListener;
-      // }
-      // }
-      // catch (Throwable ex)
-      // {
-      // OM.LOG.warn(ex);
-      // }
-    }
-
-    if (potentialObject instanceof InternalCDOObject)
-    {
-      InternalCDOObject object = (InternalCDOObject)potentialObject;
-      boolean newOrTransient = FSMUtil.isTransient(object) || FSMUtil.isNew(object);
-      if (!(onlyPersistedID && newOrTransient))
+      if (potentialObject instanceof InternalCDOObject)
       {
-        CDOView view = object.cdoView();
-        if (view == this)
+        InternalCDOObject object = (InternalCDOObject)potentialObject;
+        boolean newOrTransient = FSMUtil.isTransient(object) || FSMUtil.isNew(object);
+        if (!(onlyPersistedID && newOrTransient))
         {
-          return object.cdoID();
-        }
+          CDOView view = object.cdoView();
+          if (view == this)
+          {
+            return object.cdoID();
+          }
 
-        if (view != null && view.getSession() == getSession())
-        {
-          return object.cdoID();
+          if (view != null && view.getSession() == getSession())
+          {
+            return object.cdoID();
+          }
         }
+      }
+      else
+      {
+        // try
+        // {
+        // InternalEObject eObject = (InternalEObject)potentialObject;
+        // InternalCDOObject cdoObject = FSMUtil.adaptLegacy(eObject);
+        // if (cdoObject != null)
+        // {
+        // potentialObject = cdoObject;
+        // }
+        // }
+        // catch (Throwable ex)
+        // {
+        // OM.LOG.warn(ex);
+        // }
       }
     }
 

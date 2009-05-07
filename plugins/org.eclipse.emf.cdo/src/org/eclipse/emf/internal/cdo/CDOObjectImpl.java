@@ -322,7 +322,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
       if (!eFeature.isTransient())
       {
-        populateRevisionFeature(view, revision, eFeature, eSettings, i);
+        instanceToRevisionFeature(view, revision, eFeature, eSettings, i);
       }
     }
 
@@ -368,7 +368,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
       if (!eFeature.isTransient())
       {
-        depopulateRevisionFeature(view, revision, eFeature, eSettings, i);
+        revisionToInstanceFeature(view, revision, eFeature, eSettings, i);
       }
     }
   }
@@ -915,39 +915,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return cdoView().getStore();
   }
 
-  @SuppressWarnings("unchecked")
-  private void populateRevisionFeature(InternalCDOView view, InternalCDORevision revision, EStructuralFeature feature,
-      Object[] eSettings, int i)
+  private void instanceToRevisionFeature(InternalCDOView view, InternalCDORevision revision,
+      EStructuralFeature feature, Object[] eSettings, int i)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
-    }
-
     Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
-    CDOStore cdoStore = cdoStore();
-
-    if (feature.isMany())
-    {
-      if (setting != null)
-      {
-        int index = 0;
-        EList<Object> list = (EList<Object>)setting;
-        for (Object value : list)
-        {
-          value = cdoStore.convertToCDO(cdoView(), feature, value);
-          revision.add(feature, index++, value);
-        }
-      }
-    }
-    else
-    {
-      setting = cdoStore.convertToCDO(cdoView(), feature, setting);
-      revision.set(feature, 0, setting);
-    }
+    instanceToRevisionFeature(view, revision, feature, setting);
   }
 
-  private void depopulateRevisionFeature(InternalCDOView view, InternalCDORevision revision,
+  private void revisionToInstanceFeature(InternalCDOView view, InternalCDORevision revision,
       EStructuralFeature eFeature, Object[] eSettings, int i)
   {
     if (TRACER.isEnabled())
@@ -991,7 +966,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    * Adjust the reference ONLY if the opposite reference used CDOID. This is true ONLY if the state of <cdo>this</code>
    * was not {@link CDOState#NEW}.
    */
-  @SuppressWarnings("unchecked")
   private void adjustOppositeReference(InternalEObject object, EReference feature)
   {
     if (object != null)
@@ -1022,6 +996,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           // We should not trigger events. But we have no choice :-(.
           if (feature.isMany())
           {
+            @SuppressWarnings("unchecked")
             InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
             int index = list.indexOf(this);
             if (index != -1)
@@ -1042,6 +1017,40 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   {
     cdoSettings = null;
     cdoSettings();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static void instanceToRevisionFeature(InternalCDOView view, InternalCDORevision revision,
+      EStructuralFeature feature, Object setting)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
+    }
+
+    CDOStore cdoStore = view.getStore();
+
+    if (feature.isMany())
+    {
+      if (setting != null)
+      {
+        int index = 0;
+        @SuppressWarnings("unchecked")
+        EList<Object> list = (EList<Object>)setting;
+        for (Object value : list)
+        {
+          value = cdoStore.convertToCDO(view, feature, value);
+          revision.add(feature, index++, value);
+        }
+      }
+    }
+    else
+    {
+      setting = cdoStore.convertToCDO(view, feature, setting);
+      revision.set(feature, 0, setting);
+    }
   }
 
   /**

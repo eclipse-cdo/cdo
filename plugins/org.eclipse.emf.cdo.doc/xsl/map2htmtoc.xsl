@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- This file is part of the DITA Open Toolkit project hosted on 
-     Sourceforge.net. See the accompanying license.txt file for 
+<!-- This file is part of the DITA Open Toolkit project hosted on
+     Sourceforge.net. See the accompanying license.txt file for
      applicable licenses.-->
 <!-- (c) Copyright IBM Corp. 2004, 2005 All Rights Reserved. -->
 
@@ -13,7 +13,7 @@
   <!ENTITY quot          "&#34;">
   <!ENTITY copyr         "&#169;">
   ]>
-  
+
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:saxon="http://icl.com/saxon"
@@ -43,8 +43,8 @@
 
 <!-- *************************** CUSTOM *************************************** -->
 <xsl:param name="LINK_PREFIX" select="'?topic='"/>
-	
-	
+
+
 <!-- *************************** Command line parameters *********************** -->
 <xsl:param name="OUTEXT" select="'.html'"/><!-- "htm" and "html" are valid values -->
 <xsl:param name="WORKDIR" select="'./'"/>
@@ -144,7 +144,7 @@
 </xsl:template>
 
 <xsl:template name="copyright">
-  
+
 </xsl:template>
 <!-- *********************************************************************************
      If processing only a single map, setup the HTML wrapper and output the contents.
@@ -223,7 +223,7 @@
                   </xsl:when>
                   <xsl:when test="contains(@href,$DITAEXT)">
                     <xsl:if test="not(@scope='external')"><xsl:value-of select="$pathFromMaplist"/></xsl:if>
-                    <xsl:value-of select="$LINK_PREFIX"/><xsl:value-of select="substring-before(@href,$DITAEXT)"/><xsl:value-of select="$OUTEXT"/>
+                    <xsl:value-of select="$LINK_PREFIX"/><xsl:value-of select="substring-before(@href,$DITAEXT)"/><!--<xsl:value-of select="$OUTEXT"/>-->
                     <xsl:if test="contains(@href, '#')">
                       <xsl:value-of select="concat('#', substring-after(@href, '#'))"/>
                     </xsl:if>
@@ -240,12 +240,12 @@
               <xsl:value-of select="$title"/>
             </xsl:element>
           </xsl:when>
-          
+
           <xsl:otherwise>
             <xsl:value-of select="$title"/>
           </xsl:otherwise>
         </xsl:choose>
-        
+
         <!-- If there are any children that should be in the TOC, process them -->
         <xsl:if test="descendant::*[contains(@class, ' map/topicref ')][not(contains(@toc,'no'))]">
           <xsl:value-of select="$newline"/><ul id="#{generate-id()}"><xsl:value-of select="$newline"/>
@@ -263,7 +263,7 @@
       </xsl:apply-templates>
     </xsl:otherwise>
   </xsl:choose>
-  
+
 </xsl:template>
 
 <!-- If toc=no, but a child has toc=yes, that child should bubble up to the top -->
@@ -276,7 +276,7 @@
 
 <xsl:template match="processing-instruction('workdir')" mode="get-work-dir">
   <xsl:value-of select="."/><xsl:text>/</xsl:text>
-</xsl:template>  
+</xsl:template>
 
 <xsl:template name="navtitle">
   <xsl:variable name="WORKDIR">
@@ -293,7 +293,7 @@
 
     <!-- If this references a DITA file (has @href, not "local" or "external"),
          try to open the file and get the title -->
-    <xsl:when test="@href and not(@href='') and 
+    <xsl:when test="@href and not(@href='') and
                     not ((ancestor-or-self::*/@scope)[last()]='external') and
                     not ((ancestor-or-self::*/@scope)[last()]='peer') and
                     not ((ancestor-or-self::*/@type)[last()]='external') and
@@ -413,7 +413,7 @@
     <xsl:otherwise>
       <link rel="stylesheet" type="text/css" href="{$PATH2PROJ}{$CSSPATH}{$CSS}" />
     </xsl:otherwise>
-  </xsl:choose><xsl:value-of select="$newline"/>   
+  </xsl:choose><xsl:value-of select="$newline"/>
   </xsl:if>
 </xsl:template>
 

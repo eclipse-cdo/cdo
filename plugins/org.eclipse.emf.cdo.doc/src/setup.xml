@@ -26,8 +26,16 @@
 				<include name="css/**/*" />
 				<include name="resource/**/*" />
 				<include name="schema/**/*" />
+				<include name="tools/ant/**/*" />
 				<include name="xsl/**/*" />
 				<include name="*" />
+			</fileset>
+		</copy>
+
+		<!-- Copy Ant Libs -->
+		<copy todir="${dita.root}/lib" overwrite="false" verbose="true" includeemptydirs="false" flatten="true">
+			<fileset dir="${dita.external}">
+				<include name="demo/**/*.jar" />
 			</fileset>
 		</copy>
 

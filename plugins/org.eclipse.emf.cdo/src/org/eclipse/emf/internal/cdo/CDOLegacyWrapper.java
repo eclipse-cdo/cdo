@@ -41,7 +41,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EAttributeImpl;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.EDataTypeImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
 import org.eclipse.emf.ecore.impl.ETypedElementImpl;
@@ -54,7 +53,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -67,12 +65,6 @@ import java.util.List;
 public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyWrapper.class);
-
-  private static final Method eSetDirectResourceMethod = ReflectUtil.getMethod(EObjectImpl.class, "eSetDirectResource", //$NON-NLS-1$
-      Resource.Internal.class);
-
-  private static final Method eBasicSetContainerMethod = ReflectUtil.getMethod(EObjectImpl.class, "eBasicSetContainer", //$NON-NLS-1$
-      InternalEObject.class, int.class);
 
   protected CDOState state;
 
@@ -328,47 +320,47 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     setInstanceContainer(container, revision.getContainingFeatureID());
   }
 
-  @SuppressWarnings("unchecked")
   protected void revisionToInstanceFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
-    Object value = revision.getValue(feature);
-    if (feature.isMany())
-    {
-      InternalEList<Object> instanceList = (InternalEList<Object>)getInstanceValue(instance, feature, packageRegistry);
-      if (instanceList != null)
-      {
-        clearEList(instanceList);
-        if (value != null)
-        {
-          List<?> revisionList = (List<?>)value;
-          if (feature instanceof EReference)
-          {
-            for (Object element : revisionList)
-            {
-              element = getEObjectFromPotentialID(view, feature, element);
-              instanceList.basicAdd(element, null);
-            }
-          }
-          else
-          {
-            // TODO Is this only for multi-valued attributes??
-            for (Object element : revisionList)
-            {
-              instanceList.basicAdd(element, null);
-            }
-          }
-        }
-      }
-    }
-    else
-    {
-      if (feature instanceof EReference)
-      {
-        value = getEObjectFromPotentialID(view, feature, value);
-      }
-
-      setInstanceValue(instance, feature, value);
-    }
+    CDOObjectImpl.revisionToInstanceFeature(this, revision, feature);
+    // Object value = revision.getValue(feature);
+    // if (feature.isMany())
+    // {
+    // InternalEList<Object> instanceList = (InternalEList<Object>)getInstanceValue(instance, feature, packageRegistry);
+    // if (instanceList != null)
+    // {
+    // clearEList(instanceList);
+    // if (value != null)
+    // {
+    // List<?> revisionList = (List<?>)value;
+    // if (feature instanceof EReference)
+    // {
+    // for (Object element : revisionList)
+    // {
+    // element = getEObjectFromPotentialID(view, feature, element);
+    // instanceList.basicAdd(element, null);
+    // }
+    // }
+    // else
+    // {
+    // // TODO Is this only for multi-valued attributes??
+    // for (Object element : revisionList)
+    // {
+    // instanceList.basicAdd(element, null);
+    // }
+    // }
+    // }
+    // }
+    // }
+    // else
+    // {
+    // if (feature instanceof EReference)
+    // {
+    // value = getEObjectFromPotentialID(view, feature, value);
+    // }
+    //
+    // setInstanceValue(instance, feature, value);
+    // }
   }
 
   protected Resource.Internal getInstanceResource(InternalEObject instance)
@@ -394,18 +386,25 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected void setInstanceResource(Resource.Internal resource)
   {
-    ReflectUtil.invokeMethod(eSetDirectResourceMethod, instance, resource);
+    Method method = ReflectUtil.getMethod(instance.getClass(), "eSetDirectResource", Resource.Internal.class); //$NON-NLS-1$
+    ReflectUtil.invokeMethod(method, instance, resource);
   }
 
   protected void setInstanceContainer(InternalEObject container, int containerFeatureID)
   {
-    ReflectUtil.invokeMethod(eBasicSetContainerMethod, instance, container, containerFeatureID);
+    Method method = ReflectUtil.getMethod(instance.getClass(), "eBasicSetContainer", InternalEObject.class, int.class); //$NON-NLS-1$
+    ReflectUtil.invokeMethod(method, instance, container, containerFeatureID);
+  }
+
+  protected void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
+  {
+    instance.eSet(feature, value);
   }
 
   /**
    * TODO Ed: Help to fix whole mess (avoid inverse updates)
    */
-  protected void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
+  private void setInstanceValueOLD(InternalEObject instance, EStructuralFeature feature, Object value)
   {
     // TODO Consider EStoreEObjectImpl based objects as well!
     // TODO Don't use Java reflection

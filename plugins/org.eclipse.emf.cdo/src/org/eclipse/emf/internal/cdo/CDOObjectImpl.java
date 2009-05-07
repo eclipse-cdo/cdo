@@ -58,6 +58,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import org.eclipse.core.runtime.Assert;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -322,7 +324,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
       if (!eFeature.isTransient())
       {
-        instanceToRevisionFeature(view, revision, eFeature, eSettings, i);
+        Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
+        instanceToRevisionFeature(view, revision, eFeature, setting);
       }
     }
 
@@ -348,7 +351,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Depopulating revision for {0}", this); //$NON-NLS-1$
     }
 
-    InternalCDOView view = cdoView();
     super.eSetDirectResource((Resource.Internal)cdoStore().getResource(this));
 
     CDOStore store = cdoStore();
@@ -356,7 +358,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     eContainerFeatureID = store.getContainingFeatureID(this);
     if (eContainer != null && eContainmentFeature().isResolveProxies())
     {
-      adjustOppositeReference(eContainer, eContainmentFeature());
+      adjustOppositeReference(this, eContainer, eContainmentFeature());
     }
 
     // Ensure that the internal eSettings array is initialized;
@@ -368,7 +370,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
       if (!eFeature.isTransient())
       {
-        revisionToInstanceFeature(view, revision, eFeature, eSettings, i);
+        revisionToInstanceFeature(this, revision, eFeature);
       }
     }
   }
@@ -915,58 +917,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return cdoView().getStore();
   }
 
-  private void instanceToRevisionFeature(InternalCDOView view, InternalCDORevision revision,
-      EStructuralFeature feature, Object[] eSettings, int i)
+  private void resetSettings()
   {
-    Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
-    instanceToRevisionFeature(view, revision, feature, setting);
-  }
-
-  private void revisionToInstanceFeature(InternalCDOView view, InternalCDORevision revision,
-      EStructuralFeature eFeature, Object[] eSettings, int i)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Depopulating feature {0}", eFeature); //$NON-NLS-1$
-    }
-
-    EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
-    EReference oppositeReference = cdoID().isTemporary() ? null : internalFeature.getEOpposite();
-
-    CDOStore cdoStore = cdoStore();
-    EStore eStore = eStore();
-
-    if (eFeature.isMany())
-    {
-      int size = cdoStore.size(this, eFeature);
-      for (int index = 0; index < size; index++)
-      {
-        // Do not trigger events
-        // Do not trigger inverse updates
-        Object object = cdoStore.get(this, eFeature, index);
-        eStore.add(this, eFeature, index, object);
-        if (oppositeReference != null)
-        {
-          adjustOppositeReference((InternalEObject)object, oppositeReference);
-        }
-      }
-    }
-    else
-    {
-      Object object = cdoStore.get(this, eFeature, EStore.NO_INDEX);
-      eStore.set(this, eFeature, EStore.NO_INDEX, object);
-      if (oppositeReference != null)
-      {
-        adjustOppositeReference((InternalEObject)object, oppositeReference);
-      }
-    }
+    cdoSettings = null;
+    cdoSettings();
   }
 
   /**
    * Adjust the reference ONLY if the opposite reference used CDOID. This is true ONLY if the state of <cdo>this</code>
    * was not {@link CDOState#NEW}.
    */
-  private void adjustOppositeReference(InternalEObject object, EReference feature)
+  private static void adjustOppositeReference(InternalCDOObject instance, InternalEObject object, EReference feature)
   {
     if (object != null)
     {
@@ -975,18 +936,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         if (feature.isMany())
         {
-          int index = cdoObject.eStore().indexOf(cdoObject, feature, cdoID());
+          int index = cdoObject.eStore().indexOf(cdoObject, feature, instance.cdoID());
 
           // TODO Simon Log an error in the new view.getErrors() in the case we are not able to find the object.
           // Cannot throw an exception, the detach process is too far.
           if (index != -1)
           {
-            cdoObject.eStore().set(cdoObject, feature, index, this);
+            cdoObject.eStore().set(cdoObject, feature, index, instance);
           }
         }
         else
         {
-          cdoObject.eStore().set(cdoObject, feature, 0, this);
+          cdoObject.eStore().set(cdoObject, feature, 0, instance);
         }
       }
       else
@@ -998,25 +959,63 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
           {
             @SuppressWarnings("unchecked")
             InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
-            int index = list.indexOf(this);
+            int index = list.indexOf(instance);
             if (index != -1)
             {
-              list.set(index, this);
+              list.set(index, instance);
             }
           }
           else
           {
-            object.eSet(feature, this);
+            object.eSet(feature, instance);
           }
         }
       }
     }
   }
 
-  private void resetSettings()
+  /**
+   * @since 2.0
+   */
+  public static void revisionToInstanceFeature(InternalCDOObject instance, InternalCDORevision revision,
+      EStructuralFeature eFeature)
   {
-    cdoSettings = null;
-    cdoSettings();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Depopulating feature {0}", eFeature); //$NON-NLS-1$
+    }
+
+    EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
+    EReference oppositeReference = instance.cdoID().isTemporary() ? null : internalFeature.getEOpposite();
+
+    CDOStore cdoStore = instance.cdoView().getStore();
+    EStore eStore = instance.eStore();
+    Assert.isTrue(cdoStore != eStore); // XXX Remove me!
+
+    if (eFeature.isMany())
+    {
+      int size = cdoStore.size(instance, eFeature);
+      for (int index = 0; index < size; index++)
+      {
+        // Do not trigger events
+        // Do not trigger inverse updates
+        Object object = cdoStore.get(instance, eFeature, index);
+        eStore.add(instance, eFeature, index, object);
+        if (oppositeReference != null)
+        {
+          adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+        }
+      }
+    }
+    else
+    {
+      Object object = cdoStore.get(instance, eFeature, EStore.NO_INDEX);
+      eStore.set(instance, eFeature, EStore.NO_INDEX, object);
+      if (oppositeReference != null)
+      {
+        adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+      }
+    }
   }
 
   /**
@@ -1041,14 +1040,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         EList<Object> list = (EList<Object>)setting;
         for (Object value : list)
         {
-          value = cdoStore.convertToCDO(view, feature, value);
+          value = cdoStore.convertToCDO(feature, value);
           revision.add(feature, index++, value);
         }
       }
     }
     else
     {
-      setting = cdoStore.convertToCDO(view, feature, setting);
+      setting = cdoStore.convertToCDO(feature, setting);
       revision.set(feature, 0, setting);
     }
   }

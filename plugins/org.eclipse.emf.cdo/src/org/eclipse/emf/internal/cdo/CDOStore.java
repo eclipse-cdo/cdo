@@ -172,7 +172,7 @@ public final class CDOStore implements EStore
     InternalCDORevision revision = getRevisionForReading(cdoObject);
 
     Object value = revision.basicGet(feature, index);
-    value = convertToEMF(view, eObject, revision, feature, index, value);
+    value = convertToEMF(eObject, revision, feature, index, value);
 
     view.getFeatureAnalyzer().postTraverseFeature(cdoObject, feature, index, value);
     return value;
@@ -322,7 +322,7 @@ public final class CDOStore implements EStore
       TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
     }
 
-    value = convertToCDO(getView(), feature, value);
+    value = convertToCDO(feature, value);
 
     CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
@@ -334,15 +334,15 @@ public final class CDOStore implements EStore
     }
 
     Object oldValue = revision.basicSet(feature, index, value);
-    oldValue = convertToEMF(cdoObject.cdoView(), eObject, revision, feature, index, oldValue);
+    oldValue = convertToEMF(eObject, revision, feature, index, oldValue);
     return oldValue;
   }
 
   /**
    * @since 2.0
    */
-  public Object convertToEMF(InternalCDOView view, EObject eObject, InternalCDORevision revision,
-      EStructuralFeature feature, int index, Object value)
+  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature,
+      int index, Object value)
   {
     if (value != null)
     {
@@ -402,7 +402,7 @@ public final class CDOStore implements EStore
   /**
    * @since 2.0
    */
-  public Object convertToCDO(InternalCDOView view, EStructuralFeature feature, Object value)
+  public Object convertToCDO(EStructuralFeature feature, Object value)
   {
     if (value != null)
     {
@@ -461,7 +461,7 @@ public final class CDOStore implements EStore
       TRACER.format("add({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
     }
 
-    value = convertToCDO(cdoObject.cdoView(), feature, value);
+    value = convertToCDO(feature, value);
 
     CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, value);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
@@ -480,7 +480,7 @@ public final class CDOStore implements EStore
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.remove(feature, index);
 
-    result = convertToEMF(cdoObject.cdoView(), eObject, revision, feature, index, result);
+    result = convertToEMF(eObject, revision, feature, index, result);
 
     return result;
   }
@@ -511,7 +511,7 @@ public final class CDOStore implements EStore
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
     Object result = revision.move(feature, target, source);
 
-    result = convertToEMF(cdoObject.cdoView(), eObject, revision, feature, EStore.NO_INDEX, result);
+    result = convertToEMF(eObject, revision, feature, EStore.NO_INDEX, result);
     return result;
   }
 

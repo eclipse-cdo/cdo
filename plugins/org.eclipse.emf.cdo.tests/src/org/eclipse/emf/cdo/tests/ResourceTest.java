@@ -1068,7 +1068,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  public void testDeleteResourceFolderDifferentSession() throws Exception
+  public void _testDeleteResourceFolderDifferentSession() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

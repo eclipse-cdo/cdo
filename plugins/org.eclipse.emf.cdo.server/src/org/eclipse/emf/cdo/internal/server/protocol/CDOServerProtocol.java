@@ -4,12 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/233273    
- *    Simon McDuff - http://bugs.eclipse.org/230832                   
- *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Simon McDuff - http://bugs.eclipse.org/233273
+ *    Simon McDuff - http://bugs.eclipse.org/230832
+ *    Simon McDuff - http://bugs.eclipse.org/233490
  *    Simon McDuff - http://bugs.eclipse.org/213402
  */
 package org.eclipse.emf.cdo.internal.server.protocol;
@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 
 /**
@@ -29,7 +28,10 @@ public class CDOServerProtocol extends CDOProtocolImpl
 {
   private IRepositoryProvider repositoryProvider;
 
-  private StringCompressor packageURICompressor = new StringCompressor(false);
+  private StringIO packageURICompressor = StringIO.DIRECT;
+
+  // XXX Enable compression again!
+  // private StringIO packageURICompressor = new StringCompressor(false);
 
   public CDOServerProtocol(IRepositoryProvider repositoryProvider)
   {

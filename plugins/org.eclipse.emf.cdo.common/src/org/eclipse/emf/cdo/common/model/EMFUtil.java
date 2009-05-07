@@ -82,20 +82,6 @@ public final class EMFUtil
     return array;
   }
 
-  public static EClassifier getClassifier(EPackage ePackage, int classifierID)
-  {
-    EList<EClassifier> classifiers = ePackage.getEClassifiers();
-    for (EClassifier classifier : classifiers)
-    {
-      if (classifier.getClassifierID() == classifierID)
-      {
-        return classifier;
-      }
-    }
-
-    return null;
-  }
-
   public static EPackage getTopLevelPackage(EPackage ePackage)
   {
     EPackage superPackage = ePackage.getESuperPackage();

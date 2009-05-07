@@ -21,16 +21,16 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
- * TODO Optimize transfer of EClassRef instances
- * 
  * @author Eike Stepper
  * @since 2.0
  */
 public final class CDOClassifierRef
 {
+  public static final String URI_SEPARATOR = "#"; //$NON-NLS-1$
+
   private String packageURI;
 
-  private int classifierID;
+  private String classifierName;
 
   public CDOClassifierRef()
   {
@@ -38,25 +38,31 @@ public final class CDOClassifierRef
 
   public CDOClassifierRef(EClassifier classifier)
   {
-    this(classifier.getEPackage().getNsURI(), classifier.getClassifierID());
+    this(classifier.getEPackage().getNsURI(), classifier.getName());
   }
 
-  public CDOClassifierRef(String packageURI, int classifierID)
+  public CDOClassifierRef(String packageURI, String classifierName)
   {
     this.packageURI = packageURI;
-    this.classifierID = classifierID;
+    this.classifierName = classifierName;
   }
 
   public CDOClassifierRef(CDODataInput in) throws IOException
   {
-    packageURI = in.readCDOPackageURI();
-    classifierID = in.readInt();
+    String uri = in.readCDOPackageURI();
+    int hash = uri.lastIndexOf(URI_SEPARATOR);
+    if (hash == -1)
+    {
+      throw new IOException("Invalid classifier URI: " + uri); //$NON-NLS-1$
+    }
+
+    packageURI = uri.substring(0, hash);
+    classifierName = uri.substring(hash + 1);
   }
 
   public void write(CDODataOutput out) throws IOException
   {
-    out.writeCDOPackageURI(packageURI);
-    out.writeInt(classifierID);
+    out.writeCDOPackageURI(packageURI + URI_SEPARATOR + classifierName);
   }
 
   public String getPackageURI()
@@ -64,9 +70,9 @@ public final class CDOClassifierRef
     return packageURI;
   }
 
-  public int getClassifierID()
+  public String getClassifierName()
   {
-    return classifierID;
+    return classifierName;
   }
 
   public EClassifier resolve(EPackage.Registry packageRegistry)
@@ -77,12 +83,12 @@ public final class CDOClassifierRef
       throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOClassifierRef.0"), packageURI)); //$NON-NLS-1$
     }
 
-    return EMFUtil.getClassifier(ePackage, classifierID);
+    return ePackage.getEClassifier(classifierName);
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOClassifierRef({0}, {1})", packageURI, classifierID); //$NON-NLS-1$
+    return MessageFormat.format("CDOClassifierRef({0}, {1})", packageURI, classifierName); //$NON-NLS-1$
   }
 }

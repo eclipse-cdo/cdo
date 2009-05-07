@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,13 +16,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO Detect possible race condition and let the client win.
- * 
  * @author Eike Stepper
  * @since 2.0
  */
 public class StringCompressor implements StringIO
 {
+  private static final boolean DEBUG = false;
+
+  private static final byte DEBUG_STRING = 0;
+
+  private static final byte DEBUG_INT = 1;
+
+  private static final int NULL_ID = 0;
+
+  private static final int STRING_FOLLOWS = Integer.MIN_VALUE;
+
   private boolean client;
 
   private int lastID;
@@ -51,12 +59,10 @@ public class StringCompressor implements StringIO
   {
     if (string == null)
     {
-      out.writeInt(0);
+      writeInt(out, NULL_ID);
       return;
     }
 
-    int idToWrite;
-    String stringToWrite;
     synchronized (stringToID)
     {
       Integer id = stringToID.get(string);
@@ -65,54 +71,101 @@ public class StringCompressor implements StringIO
         lastID += client ? 1 : -1;
         stringToID.put(string, lastID);
         idToString.put(lastID, string);
-        idToWrite = lastID;
-        stringToWrite = string;
+        writeInt(out, STRING_FOLLOWS);
+        writeInt(out, lastID);
+        writeString(out, string);
       }
       else
       {
-        idToWrite = id;
-        stringToWrite = null;
+        writeInt(out, id);
       }
-    }
-
-    out.writeInt(idToWrite);
-    if (stringToWrite != null)
-    {
-      out.writeString(stringToWrite);
     }
   }
 
   public String read(ExtendedDataInput in) throws IOException
   {
-    int id = in.readInt();
-    if (id == 0)
+    int id = readInt(in);
+    if (id == NULL_ID)
     {
       return null;
     }
 
-    String string;
-    synchronized (stringToID)
+    if (id == STRING_FOLLOWS)
     {
-      string = idToString.get(id);
-    }
-
-    // TODO Check if we need a single synchronized block
-    if (string == null)
-    {
-      string = in.readString();
+      id = readInt(in);
+      String string = readString(in);
       synchronized (stringToID)
       {
         stringToID.put(string, id);
         idToString.put(id, string);
       }
-    }
 
-    return string;
+      return string;
+    }
+    else
+    {
+      synchronized (stringToID)
+      {
+        String string = idToString.get(id);
+        if (string == null)
+        {
+          throw new IOException("String ID unknown: " + id);
+        }
+
+        return string;
+      }
+    }
   }
 
   @Override
   public String toString()
   {
-    return MessageFormat.format("Compressor[client={0}]", client);
+    return MessageFormat.format("StringCompressor[client={0}]", client);
+  }
+
+  private void writeInt(ExtendedDataOutput out, int value) throws IOException
+  {
+    if (DEBUG)
+    {
+      out.writeByte(DEBUG_INT);
+    }
+
+    out.writeInt(value);
+  }
+
+  private void writeString(ExtendedDataOutput out, String value) throws IOException
+  {
+    if (DEBUG)
+    {
+      out.writeByte(DEBUG_STRING);
+    }
+
+    out.writeString(value);
+  }
+
+  private int readInt(ExtendedDataInput in) throws IOException
+  {
+    if (DEBUG)
+    {
+      if (DEBUG_INT != in.readByte())
+      {
+        throw new IOException("Not an integer value");
+      }
+    }
+
+    return in.readInt();
+  }
+
+  private String readString(ExtendedDataInput in) throws IOException
+  {
+    if (DEBUG)
+    {
+      if (DEBUG_STRING != in.readByte())
+      {
+        throw new IOException("Not a string value");
+      }
+    }
+
+    return in.readString();
   }
 }

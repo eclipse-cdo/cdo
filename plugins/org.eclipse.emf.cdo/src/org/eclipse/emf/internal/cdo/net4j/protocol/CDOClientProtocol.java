@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -33,7 +33,6 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
-import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
@@ -61,7 +60,10 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING,
       CDORevisionManagerImpl.class);
 
-  private StringCompressor packageURICompressor = new StringCompressor(true);
+  private StringIO packageURICompressor = StringIO.DIRECT;
+
+  // XXX Enable compression again!
+  // private StringIO packageURICompressor = new StringCompressor(true);
 
   public CDOClientProtocol()
   {

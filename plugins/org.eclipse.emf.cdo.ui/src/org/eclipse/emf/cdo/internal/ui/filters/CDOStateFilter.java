@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.filters;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.ui.messages.Messages;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;

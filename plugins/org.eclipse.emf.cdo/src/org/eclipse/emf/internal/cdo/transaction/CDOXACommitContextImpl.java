@@ -17,9 +17,9 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
-import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAState;
 
 import org.eclipse.net4j.util.ImplementationError;

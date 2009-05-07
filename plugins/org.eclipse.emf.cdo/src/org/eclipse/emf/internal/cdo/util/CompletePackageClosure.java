@@ -11,9 +11,9 @@
  */
 package org.eclipse.emf.internal.cdo.util;
 
-import org.eclipse.emf.cdo.messages.Messages;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 

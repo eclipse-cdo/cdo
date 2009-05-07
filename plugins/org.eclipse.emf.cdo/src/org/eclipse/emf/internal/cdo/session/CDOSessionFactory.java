@@ -10,8 +10,9 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
-import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
+
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.Factory;

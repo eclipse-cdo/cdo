@@ -12,8 +12,8 @@
 package org.eclipse.emf.cdo.internal.ui.preferences;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
-import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;

@@ -14,9 +14,9 @@ package org.eclipse.emf.internal.cdo.query;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
-import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
+import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.WrappedException;

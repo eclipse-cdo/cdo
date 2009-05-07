@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.ui.messages;
+package org.eclipse.emf.cdo.internal.common.messages;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  */
 public class Messages
 {
-  private static final String BUNDLE_NAME = "org.eclipse.emf.cdo.ui.messages.messages"; //$NON-NLS-1$
+  private static final String BUNDLE_NAME = "org.eclipse.emf.cdo.internal.common.messages.messages"; //$NON-NLS-1$
 
   private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 

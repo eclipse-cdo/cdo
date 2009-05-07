@@ -10,7 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j;
 
-import org.eclipse.emf.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;

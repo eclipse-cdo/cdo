@@ -13,9 +13,10 @@ package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
-import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;

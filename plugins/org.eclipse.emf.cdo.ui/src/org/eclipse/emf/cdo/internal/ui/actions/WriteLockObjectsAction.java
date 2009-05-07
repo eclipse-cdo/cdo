@@ -13,7 +13,7 @@
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.CDOLock;
-import org.eclipse.emf.cdo.ui.messages.Messages;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 

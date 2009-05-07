@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.SelectPackageDialog;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.emf.ecore.EPackage;
 

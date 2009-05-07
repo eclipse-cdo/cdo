@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
-import org.eclipse.emf.cdo.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import java.text.MessageFormat;

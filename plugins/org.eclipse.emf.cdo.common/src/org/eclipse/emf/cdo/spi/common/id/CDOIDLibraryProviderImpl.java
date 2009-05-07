@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.spi.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
-import org.eclipse.emf.cdo.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;

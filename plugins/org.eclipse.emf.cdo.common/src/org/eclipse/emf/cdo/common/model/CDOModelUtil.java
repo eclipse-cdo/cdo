@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
-import org.eclipse.emf.cdo.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageUnitImpl;

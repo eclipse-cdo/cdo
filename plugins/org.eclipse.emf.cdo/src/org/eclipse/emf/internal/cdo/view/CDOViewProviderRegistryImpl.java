@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
-import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
@@ -21,6 +20,7 @@ import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;

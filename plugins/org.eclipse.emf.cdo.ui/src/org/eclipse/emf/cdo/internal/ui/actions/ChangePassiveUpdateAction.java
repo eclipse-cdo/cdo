@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;

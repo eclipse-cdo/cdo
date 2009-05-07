@@ -12,7 +12,8 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.common.util.CDOException;
-import org.eclipse.emf.cdo.messages.Messages;
+
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.emf.ecore.EObject;
 

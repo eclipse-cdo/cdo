@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.messages.Messages;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 

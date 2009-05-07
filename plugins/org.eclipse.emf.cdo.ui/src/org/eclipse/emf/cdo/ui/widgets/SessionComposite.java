@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
-import org.eclipse.emf.cdo.ui.messages.Messages;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.PreferenceHistory;

@@ -12,13 +12,14 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
+
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;

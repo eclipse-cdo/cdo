@@ -30,9 +30,10 @@
 		<!-- Transform dita sources to temp.dir (see http://dita-ot.sourceforge.net/doc/DITA-antscript.html for details) -->
 		<antcall target="dita2xhtml">
 			<param name="transtype" value="xhtml" />
+			<param name="output.dir" value="${temp.dir}" />
+
 			<param name="dita.extname" value="${dita.ext}" />
 			<param name="args.input" value="${project.root}/src/toc.ditamap" />
-			<param name="output.dir" value="${temp.dir}" />
 			<param name="args.logdir" value="${project.root}/.log" />
 			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
 			<param name="clean.temp" value="true" />
@@ -82,12 +83,13 @@
 		<!-- Transform dita sources to temp.dir (see http://dita-ot.sourceforge.net/doc/DITA-antscript.html for details) -->
 		<antcall target="dita2eclipsehelp">
 			<param name="transtype" value="eclipsehelp" />
-			<param name="dita.extname" value="${dita.ext}" />
-			<param name="args.input" value="toc.ditamap" />
 			<param name="output.dir" value="${target.dir}" />
+
+			<param name="dita.extname" value="${dita.ext}" />
+			<param name="args.input" value="${project.root}/src/toc.ditamap" />
 			<param name="args.logdir" value="${project.root}/.log" />
 			<param name="dita.temp.dir" value="${project.root}/.temp/.intermediate" />
-			<param name="clean.temp" value="no" />
+			<param name="clean.temp" value="true" />
 		</antcall>
 
 		<!-- Delete the generated plugin files -->

@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- This document was created with Syntext Serna Free. -->
-<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/topic.dtd" []>
+<!-- This document was created with Syntext Serna Free. --><!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/topic.dtd" []>
 <!--
 Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
 All rights reserved. This program and the accompanying materials
@@ -13,10 +12,10 @@ Eike Stepper - initial API and implementation
 -->
 
 <topic id="extender_s_guide" xml:lang="en-us">
-  <title>Extender&apos;s Guide</title>
+  <title>CDO Extender&apos;s Guide</title>
   <titlealts>
-    <navtitle>CDO Extender&apos;s Guide</navtitle>
-    <searchtitle>CDO Extender&apos;s Guide</searchtitle>
+    <navtitle>Extender&apos;s Guide</navtitle>
+    <searchtitle>Extender&apos;s Guide</searchtitle>
   </titlealts>
   <shortdesc>Explains how to extend the CDO Model Repositoy framework.</shortdesc>
   <body/>

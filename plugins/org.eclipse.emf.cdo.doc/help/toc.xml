@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?NLS TYPE="org.eclipse.help.toc"?>
+
 <toc label="CDO Model Repository Documentation" topic="help/collateral/about_this_manual.html">
 <topic label="About" href="help/collateral/about_this_manual.html"/>
 <topic label="Conventions" href="help/collateral/conventions_for_this_manual.html"/>
@@ -492,7 +494,7 @@
 <topic label="Developing a Rich Client Application" href="help/programmers/developing_a_rich_client_application.html"/>
 </topic>
 <topic label="Extender's Guide" href="help/extenders/_extenders.html">
-<topic label="Developing Custom Stores" href="help/extenders/developing_custom_stores.html"/>
+<topic label="Developing Custom CDO Stores" href="help/extenders/developing_custom_stores.html"/>
 </topic>
 <topic label="Operator's Guide" href="help/operators/_operators.html">
 <topic label="Configuring a Repository" href="help/operators/configuring_a_repository.html">

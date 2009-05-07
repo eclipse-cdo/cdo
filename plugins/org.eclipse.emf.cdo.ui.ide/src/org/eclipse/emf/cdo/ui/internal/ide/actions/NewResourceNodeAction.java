@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
@@ -35,7 +36,7 @@ public abstract class NewResourceNodeAction extends TransactionalBackgroundActio
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
-    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), "Enter the name", null, null);
+    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), Messages.getString("NewResourceNodeAction_0"), null, null); //$NON-NLS-1$
     if (dialog.open() == Dialog.OK)
     {
       newResourceNode = createNewResourceNode();

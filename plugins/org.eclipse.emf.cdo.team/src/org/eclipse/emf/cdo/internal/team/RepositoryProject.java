@@ -81,7 +81,7 @@ public class RepositoryProject extends PlatformObject implements IRepositoryProj
   protected CDOView openView()
   {
     String description = RepositoryTeamProvider.getSessionDescription(project);
-    CDOSession session = (CDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", "cdo", description);
+    CDOSession session = (CDOSession)getContainer().getElement("org.eclipse.emf.cdo.sessions", "cdo", description); //$NON-NLS-1$ //$NON-NLS-2$
     return session.openView();
   }
 

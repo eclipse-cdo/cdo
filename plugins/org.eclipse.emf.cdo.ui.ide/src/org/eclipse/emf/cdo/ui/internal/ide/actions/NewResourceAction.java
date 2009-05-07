@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 /**
  * @author Eike Stepper
@@ -21,7 +22,7 @@ public class NewResourceAction extends NewResourceNodeAction
 {
   public NewResourceAction()
   {
-    super("Creating CDO resource");
+    super(Messages.getString("NewResourceAction_0")); //$NON-NLS-1$
   }
 
   @Override

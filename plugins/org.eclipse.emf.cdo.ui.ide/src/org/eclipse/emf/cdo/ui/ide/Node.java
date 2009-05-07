@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -81,13 +82,13 @@ public abstract class Node extends PlatformObject
     @Override
     public String getText()
     {
-      return "Sessions";
+      return Messages.getString("Node.0"); //$NON-NLS-1$
     }
 
     @Override
     public String getImageKey()
     {
-      return "icons/full/obj16/Sessions.gif";
+      return "icons/full/obj16/Sessions.gif"; //$NON-NLS-1$
     }
   }
 
@@ -110,13 +111,13 @@ public abstract class Node extends PlatformObject
     @Override
     public String getText()
     {
-      return "Packages";
+      return Messages.getString("Node.2"); //$NON-NLS-1$
     }
 
     @Override
     public String getImageKey()
     {
-      return "icons/full/obj16/Packages.gif";
+      return "icons/full/obj16/Packages.gif"; //$NON-NLS-1$
     }
 
     @Override
@@ -162,13 +163,13 @@ public abstract class Node extends PlatformObject
     @Override
     public String getText()
     {
-      return "Resources";
+      return Messages.getString("Node.4"); //$NON-NLS-1$
     }
 
     @Override
     public String getImageKey()
     {
-      return "icons/full/obj16/Resources.gif";
+      return "icons/full/obj16/Resources.gif"; //$NON-NLS-1$
     }
 
     @SuppressWarnings("unchecked")

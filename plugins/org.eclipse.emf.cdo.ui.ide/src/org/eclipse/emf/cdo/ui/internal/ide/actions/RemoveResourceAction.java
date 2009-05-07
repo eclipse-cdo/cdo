@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -34,6 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class RemoveResourceAction implements IObjectActionDelegate
   private Shell shell;
 
   private static Image removeImage = OM.Activator.imageDescriptorFromPlugin(OM.BUNDLE_ID,
-      "icons/full/elcl16/delete_edit.gif").createImage();
+      "icons/full/elcl16/delete_edit.gif").createImage(); //$NON-NLS-1$
 
   public RemoveResourceAction()
   {
@@ -66,10 +68,10 @@ public class RemoveResourceAction implements IObjectActionDelegate
 
   public void run(IAction action)
   {
-    if (MessageDialog.openConfirm(shell, "Delete Resource", "Are you sure you want to delete the selected "
-        + nodes.size() + " item(s)?"))
+    if (MessageDialog.openConfirm(shell, Messages.getString("RemoveResourceAction_1"), MessageFormat.format( //$NON-NLS-1$
+        Messages.getString("RemoveResourceAction_2"), nodes.size()))) //$NON-NLS-1$
     {
-      Job job = new Job("Deleting CDOResource(s)")
+      Job job = new Job(Messages.getString("RemoveResourceAction_3")) //$NON-NLS-1$
       {
         @Override
         protected IStatus run(IProgressMonitor monitor)
@@ -110,7 +112,8 @@ public class RemoveResourceAction implements IObjectActionDelegate
             }
             catch (Exception ex)
             {
-              OM.LOG.error(this.getClass().getName().toString() + ": Cannot perform commit", ex);
+              OM.LOG
+                  .error(MessageFormat.format(Messages.getString("RemoveResourceAction_4"), this.getClass().getName().toString()), ex); //$NON-NLS-1$
             }
             finally
             {
@@ -118,7 +121,7 @@ public class RemoveResourceAction implements IObjectActionDelegate
             }
           }
 
-          UIUtil.setStatusBarMessage(nodes.size() + " element(s) removed", removeImage);
+          UIUtil.setStatusBarMessage(MessageFormat.format(Messages.getString("RemoveResourceAction_5"), nodes.size()), removeImage); //$NON-NLS-1$
           return Status.OK_STATUS;
         }
       };

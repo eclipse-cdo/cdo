@@ -53,7 +53,7 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Added repository for project {0}", project.getName());
+      TRACER.format("Added repository for project {0}", project.getName()); //$NON-NLS-1$
     }
 
     fireElementAddedEvent(element);
@@ -72,7 +72,7 @@ public class RepositoryManager extends Container<IRepositoryProject> implements 
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Removed repository for project {0}", project.getName());
+        TRACER.format("Removed repository for project {0}", project.getName()); //$NON-NLS-1$
       }
 
       fireElementRemovedEvent(element);

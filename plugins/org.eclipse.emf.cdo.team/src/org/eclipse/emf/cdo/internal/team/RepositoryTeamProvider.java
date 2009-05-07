@@ -26,9 +26,9 @@ import org.eclipse.team.core.TeamException;
  */
 public class RepositoryTeamProvider extends RepositoryProvider
 {
-  public static final String PROVIDER_ID = "org.eclipse.emf.cdo.team.TeamProvider";
+  public static final String PROVIDER_ID = "org.eclipse.emf.cdo.team.TeamProvider"; //$NON-NLS-1$
 
-  private static final QualifiedName SESSION_DESCRIPTION_KEY = new QualifiedName(OM.BUNDLE_ID, "sessionDescription");
+  private static final QualifiedName SESSION_DESCRIPTION_KEY = new QualifiedName(OM.BUNDLE_ID, "sessionDescription"); //$NON-NLS-1$
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, RepositoryTeamProvider.class);
 
@@ -47,7 +47,7 @@ public class RepositoryTeamProvider extends RepositoryProvider
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Configuring project {0}", getProject());
+      TRACER.format("Configuring project {0}", getProject()); //$NON-NLS-1$
     }
   }
 
@@ -55,7 +55,7 @@ public class RepositoryTeamProvider extends RepositoryProvider
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Deconfiguring project {0}", getProject());
+      TRACER.format("Deconfiguring project {0}", getProject()); //$NON-NLS-1$
     }
   }
 

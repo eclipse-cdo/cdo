@@ -18,7 +18,7 @@
             class="org.eclipse.emf.cdo.ui.internal.ide.wizards.TeamConfigurationWizard"
             icon="icons/full/obj16/CDOResource.gif"
             id="org.eclipse.emf.cdo.ui.ide.TeamConfigurationWizard"
-            name="CDO">
+            name="%wizard.name">
       </wizard>
    </extension>
 
@@ -30,7 +30,7 @@
             icon="icons/full/obj16/repository_content.gif"
             id="org.eclipse.emf.cdo.ui.ide.RepositoryContent"
             labelProvider="org.eclipse.emf.cdo.ui.ide.RepositoryLabelProvider"
-            name="CDO Repository Content"
+            name="%navigatorContent.name"
             priority="normal"
             providesSaveables="false">
          <triggerPoints>
@@ -79,7 +79,7 @@
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.DisconnectAction"
                id="org.eclipse.emf.cdo.ui.ide.DisconnectAction"
-               label="Disconnect"
+               label="%action.label"
                menubarPath="team.main/projectGroup">
          </action>
       </objectContribution>
@@ -91,13 +91,13 @@
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
                icon="icons/full/elcl16/NewCDOResource.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="New CDOResource">
+               label="%action.label.0">
          </action>
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
                icon="icons/full/elcl16/NewCDOResourceFolder.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="New Folder">
+               label="%action.label.1">
          </action>
       </objectContribution>
       <objectContribution
@@ -108,7 +108,7 @@
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceAction"
                icon="icons/full/elcl16/delete_edit.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="Remove">
+               label="%action.label.2">
          </action>
       </objectContribution>
       <objectContribution
@@ -119,13 +119,13 @@
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
                icon="icons/full/elcl16/NewCDOResource.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="New CDOResource">
+               label="%action.label.3">
          </action>
          <action
                class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
                icon="icons/full/elcl16/NewCDOResourceFolder.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="New Folder">
+               label="%action.label.4">
          </action>
       </objectContribution> </extension>
 

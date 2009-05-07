@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.ui.internal.ide.wizards;
 import org.eclipse.emf.cdo.internal.team.RepositoryManager;
 import org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.ui.widgets.SessionComposite;
 
 import org.eclipse.core.resources.IProject;
@@ -77,7 +78,7 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
 
     private Page1()
     {
-      super("page1");
+      super("page1"); //$NON-NLS-1$
     }
 
     public SessionComposite getSessionComposite()
@@ -89,6 +90,19 @@ public class TeamConfigurationWizard extends Wizard implements IConfigurationWiz
     {
       sessionComposite = new SessionComposite(parent, SWT.NONE);
       setControl(sessionComposite);
+      setWindowTitle(Messages.getString("TeamConfigurationWizard_1")); //$NON-NLS-1$
+    }
+
+    @Override
+    public String getTitle()
+    {
+      return Messages.getString("TeamConfigurationWizard_2"); //$NON-NLS-1$
+    }
+
+    @Override
+    public String getDescription()
+    {
+      return Messages.getString("TeamConfigurationWizard_3"); //$NON-NLS-1$
     }
   }
 }

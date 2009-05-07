@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -24,6 +25,8 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
+
+import java.text.MessageFormat;
 
 /**
  * @author Victor Roldan Betancort
@@ -76,7 +79,7 @@ public abstract class TransactionalBackgroundAction extends LongRunningActionDel
         CDOView view = transactionalObject.cdoView();
         if (!(view instanceof CDOTransaction))
         {
-          throw new IllegalStateException("Object is not transactional: " + transactionalObject);
+          throw new IllegalStateException(MessageFormat.format(Messages.getString("TransactionalBackgroundAction_0"), transactionalObject)); //$NON-NLS-1$
         }
 
         // Bypass cancel()
@@ -108,7 +111,7 @@ public abstract class TransactionalBackgroundAction extends LongRunningActionDel
   {
     CDOTransaction transaction = (CDOTransaction)transactionalObject.cdoView();
     int commitWorkPercent = getCommitWorkPercent();
-    progressMonitor.beginTask("", 100);
+    progressMonitor.beginTask(Messages.getString("TransactionalBackgroundAction_1"), 100); //$NON-NLS-1$
 
     try
     {

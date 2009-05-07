@@ -181,7 +181,7 @@ public final class FSMUtil
     }
 
     EList<Adapter> adapters = object.eAdapters();
-    CDOLegacyAdapter adapter = (CDOLegacyAdapter)EcoreUtil.getAdapter(adapters, CDOLegacyAdapter.class);
+    CDOLegacyAdapter adapter = getLegacyAdapter(adapters);
     if (adapter == null)
     {
       adapter = new CDOLegacyAdapter();
@@ -201,6 +201,11 @@ public final class FSMUtil
     // }
     //
     // return wrapper;
+  }
+
+  public static CDOLegacyAdapter getLegacyAdapter(EList<Adapter> adapters)
+  {
+    return (CDOLegacyAdapter)EcoreUtil.getAdapter(adapters, CDOLegacyAdapter.class);
   }
 
   @Deprecated

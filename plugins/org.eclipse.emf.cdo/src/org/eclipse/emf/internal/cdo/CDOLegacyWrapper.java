@@ -132,6 +132,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   public void cdoInternalPostAttach()
   {
+    instanceToRevision();
+
     // TODO Avoid if no adapters in list (eBasicAdapters?)
     // TODO LEGACY Clarify how to intercept adapter addition in the legacy instance
     for (Adapter adapter : eAdapters())

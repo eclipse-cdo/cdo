@@ -386,15 +386,14 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     {
       CDOIDTemp oldID = (CDOIDTemp)oldRange.get(i);
       CDOID newID = newRange.get(i);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Mapping meta ID: {0} --> {1}", oldID, newID);
-      }
-
       idMappings.put(oldID, newID);
     }
 
     metaIDRanges.add(newRange);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Mapping meta ID range: {0} --> {1}", oldRange, newRange);
+    }
   }
 
   private void lockObjects() throws InterruptedException

@@ -126,10 +126,10 @@ public class CompletePackageClosure extends PackageClosure
     {
       if (visited.add(eClass))
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Found class " + eClass.getName()); //$NON-NLS-1$
-        }
+        // if (TRACER.isEnabled())
+        // {
+        //          TRACER.trace("Found class " + eClass.getName()); //$NON-NLS-1$
+        // }
 
         handleEStructuralFeatures(eClass.getEStructuralFeatures(), visited);
         handleEOperations(eClass.getEOperations(), visited);

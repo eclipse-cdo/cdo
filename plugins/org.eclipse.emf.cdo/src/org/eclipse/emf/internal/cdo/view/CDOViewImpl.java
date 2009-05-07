@@ -944,40 +944,56 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (potentialObject instanceof InternalCDOObject)
       {
         InternalCDOObject object = (InternalCDOObject)potentialObject;
-        boolean newOrTransient = FSMUtil.isTransient(object) || FSMUtil.isNew(object);
-        if (!(onlyPersistedID && newOrTransient))
+        CDOID id = getID(object, onlyPersistedID);
+        if (id != null)
         {
-          CDOView view = object.cdoView();
-          if (view == this)
-          {
-            return object.cdoID();
-          }
-
-          if (view != null && view.getSession() == getSession())
-          {
-            return object.cdoID();
-          }
+          return id;
         }
       }
       else
       {
-        // try
-        // {
-        // InternalEObject eObject = (InternalEObject)potentialObject;
-        // InternalCDOObject cdoObject = FSMUtil.adaptLegacy(eObject);
-        // if (cdoObject != null)
-        // {
-        // potentialObject = cdoObject;
-        // }
-        // }
-        // catch (Throwable ex)
-        // {
-        // OM.LOG.warn(ex);
-        // }
+        try
+        {
+          InternalCDOObject object = FSMUtil.getLegacyAdapter(((InternalEObject)potentialObject).eAdapters());
+          if (object != null)
+          {
+            CDOID id = getID(object, onlyPersistedID);
+            if (id != null)
+            {
+              return id;
+            }
+
+            potentialObject = object;
+          }
+        }
+        catch (Throwable ex)
+        {
+          OM.LOG.warn(ex);
+        }
       }
     }
 
     return potentialObject;
+  }
+
+  private CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
+  {
+    boolean newOrTransient = FSMUtil.isTransient(object) || FSMUtil.isNew(object);
+    if (!(onlyPersistedID && newOrTransient))
+    {
+      CDOView view = object.cdoView();
+      if (view == this)
+      {
+        return object.cdoID();
+      }
+
+      if (view != null && view.getSession() == getSession())
+      {
+        return object.cdoID();
+      }
+    }
+
+    return null;
   }
 
   public Object convertIDToObject(Object potentialID)

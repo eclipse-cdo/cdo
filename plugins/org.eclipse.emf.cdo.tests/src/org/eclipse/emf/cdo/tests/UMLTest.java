@@ -30,7 +30,7 @@ import org.eclipse.uml2.uml.UMLFactory;
  */
 public class UMLTest extends AbstractCDOTest
 {
-  public void testCommit() throws Exception
+  public void _testCommit() throws Exception
   {
     Class umlClass = UMLFactory.eINSTANCE.createClass();
     umlClass.setName("TestClass");
@@ -62,6 +62,9 @@ public class UMLTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("/test1");
       resource.getContents().add(umlClass);
+
+      assertNew(umlClass, transaction);
+
       transaction.commit();
       session.close();
     }

@@ -22,7 +22,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public final class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Internal
+public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Internal
 {
   public CDOLegacyAdapter()
   {

@@ -435,6 +435,14 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       return new TypeMapping.TMString(this, feature);
     }
+    else if (type == CDOType.BIG_INTEGER)
+    {
+      return new TypeMapping.TMBigInteger(this, feature);
+    }
+    else if (type == CDOType.BIG_DECIMAL)
+    {
+      return new TypeMapping.TMBigDecimal(this, feature);
+    }
     else if (type == CDOType.BYTE_ARRAY)
     {
       return new TypeMapping.TMBytes(this, feature);

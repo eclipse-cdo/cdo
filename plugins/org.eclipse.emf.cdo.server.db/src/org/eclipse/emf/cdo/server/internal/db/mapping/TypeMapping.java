@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - 275303: [DB] DBStore does not handle BIG_INTEGER and BIG_DECIMAL
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -25,6 +26,8 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -405,6 +408,52 @@ public abstract class TypeMapping implements ITypeMapping
     public Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
     {
       return resultSet.getBoolean(column);
+    }
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  public static class TMBigInteger extends TypeMapping
+  {
+    public TMBigInteger(IMappingStrategy strategy, EStructuralFeature feature)
+    {
+      super(strategy, feature);
+    }
+
+    @Override
+    protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    {
+      return new BigInteger(resultSet.getString(column));
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      stmt.setString(index, ((BigInteger)value).toString());
+    }
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  public static class TMBigDecimal extends TypeMapping
+  {
+    public TMBigDecimal(IMappingStrategy strategy, EStructuralFeature feature)
+    {
+      super(strategy, feature);
+    }
+
+    @Override
+    protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    {
+      return new BigDecimal(resultSet.getString(column));
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      stmt.setString(index, ((BigDecimal)value).toPlainString());
     }
   }
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -87,7 +87,7 @@ public class TransportConfigurator
     String listenAddr = acceptorConfig.getAttribute("listenAddr");
     String port = acceptorConfig.getAttribute("port");
     String description = (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port);
-    Acceptor acceptor = (Acceptor)container.getElement(AcceptorFactory.PRODUCT_GROUP, type, description);
+    Acceptor acceptor = (Acceptor)container.getElement(AcceptorFactory.PRODUCT_GROUP, type, description, false);
 
     NodeList negotiatorConfigs = acceptorConfig.getElementsByTagName("negotiator");
     if (negotiatorConfigs.getLength() > 1)
@@ -102,6 +102,7 @@ public class TransportConfigurator
       acceptor.getConfig().setNegotiator(negotiator);
     }
 
+    acceptor.activate();
     return acceptor;
   }
 
@@ -109,8 +110,7 @@ public class TransportConfigurator
   {
     String type = negotiatorConfig.getAttribute("type");
     String description = negotiatorConfig.getAttribute("description");
-    INegotiator negotiator = (INegotiator)container.getElement(NegotiatorFactory.PRODUCT_GROUP, type, description);
-    return negotiator;
+    return (INegotiator)container.getElement(NegotiatorFactory.PRODUCT_GROUP, type, description);
   }
 
   protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException

@@ -458,7 +458,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
                 }
                 else
                 {
-                  OM.LOG.info("Commit notification arrived while session is inactive");
+                  OM.LOG.info(Messages.getString("CDOSessionImpl.1")); //$NON-NLS-1$
                 }
               }
             }
@@ -489,7 +489,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
       else
       {
-        OM.LOG.info("Commit notification arrived while session is inactive");
+        OM.LOG.info(Messages.getString("CDOSessionImpl.2")); //$NON-NLS-1$
       }
     }
 

@@ -177,7 +177,7 @@ public final class FSMUtil
   {
     if (object.getClass() == DynamicEObjectImpl.class)
     {
-      throw new IllegalArgumentException("Use CDOFactory to create dynamic object: " + object);
+      throw new IllegalArgumentException(Messages.getString("FSMUtil.4") + object); //$NON-NLS-1$
     }
 
     EList<Adapter> adapters = object.eAdapters();

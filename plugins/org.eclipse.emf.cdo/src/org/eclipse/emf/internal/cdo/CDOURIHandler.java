@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -90,12 +90,12 @@ public class CDOURIHandler implements URIHandler
 
   public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("URI: " + uri);
   }
 
   public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("URI: " + uri);
   }
 
   public Map<String, ?> contentDescription(URI uri, Map<?, ?> options) throws IOException

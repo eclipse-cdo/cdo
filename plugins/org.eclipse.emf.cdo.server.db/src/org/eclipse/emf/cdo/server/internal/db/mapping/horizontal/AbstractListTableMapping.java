@@ -257,10 +257,10 @@ public abstract class AbstractListTableMapping implements IListMapping
 
       setKeyFields(pstmt, revision);
 
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(pstmt.toString());
-      }
+      // if (TRACER.isEnabled())
+      // {
+      // TRACER.trace(pstmt.toString());
+      // }
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
@@ -327,10 +327,10 @@ public abstract class AbstractListTableMapping implements IListMapping
 
       setKeyFields(pstmt, revision);
 
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(pstmt.toString());
-      }
+      // if (TRACER.isEnabled())
+      // {
+      // TRACER.trace(pstmt.toString());
+      // }
 
       resultSet = pstmt.executeQuery();
 
@@ -389,10 +389,10 @@ public abstract class AbstractListTableMapping implements IListMapping
       String sql = builder.toString();
       pstmt = chunkReader.getAccessor().getStatementCache().getPreparedStatement(sql, ReuseProbability.LOW);
       setKeyFields(pstmt, chunkReader.getRevision());
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(pstmt.toString());
-      }
+      // if (TRACER.isEnabled())
+      // {
+      // TRACER.trace(pstmt.toString());
+      // }
 
       resultSet = pstmt.executeQuery();
 

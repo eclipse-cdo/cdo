@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,9 +21,22 @@ import java.nio.ByteBuffer;
 public abstract class ChallengeResponseNegotiator extends
     Negotiator<IChallengeResponse.State, IChallengeResponse.Event> implements IChallengeResponse
 {
-  public static final String DEFAULT_ALGORITHM_NAME = SecurityUtil.PBE_WITH_MD5_AND_DES;
+  /**
+   * @since 2.0
+   */
+  public static final byte[] DEFAULT_SALT = { (byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c, (byte)0x7e, (byte)0xc8,
+      (byte)0xee, (byte)0x99 };
 
-  private String algorithmName = DEFAULT_ALGORITHM_NAME;
+  /**
+   * @since 2.0
+   */
+  public static final int DEFAULT_COUNT = 20;
+
+  private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
+
+  private byte[] encryptionSaltBytes = DEFAULT_SALT;
+
+  private int encryptionIterationCount = DEFAULT_COUNT;
 
   public ChallengeResponseNegotiator(boolean initiator)
   {
@@ -90,24 +103,62 @@ public abstract class ChallengeResponseNegotiator extends
     });
   }
 
-  public String getAlgorithmName()
+  /**
+   * @since 2.0
+   */
+  public String getEncryptionAlgorithmName()
   {
-    return algorithmName;
+    return encryptionAlgorithmName;
   }
 
-  public void setAlgorithmName(String algorithmName)
+  /**
+   * @since 2.0
+   */
+  public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
   {
-    this.algorithmName = algorithmName;
+    this.encryptionAlgorithmName = encryptionAlgorithmName;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public byte[] getEncryptionSaltBytes()
+  {
+    return encryptionSaltBytes;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
+  {
+    this.encryptionSaltBytes = encryptionSaltBytes;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public int getEncryptionIterationCount()
+  {
+    return encryptionIterationCount;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void setEncryptionIterationCount(int encryptionIterationCount)
+  {
+    this.encryptionIterationCount = encryptionIterationCount;
   }
 
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (algorithmName == null)
-    {
-      throw new IllegalStateException("algorithmName == null");
-    }
+    checkState(encryptionAlgorithmName, "encryptionAlgorithmName");
+    checkState(encryptionSaltBytes, "encryptionSaltBytes");
+    checkState(encryptionSaltBytes.length > 0, "encryptionSaltBytes");
+    checkState(encryptionIterationCount > 0, "encryptionIterationCount");
   }
 
   @Override

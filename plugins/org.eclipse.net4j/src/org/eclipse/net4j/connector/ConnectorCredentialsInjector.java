@@ -4,17 +4,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.connector;
 
-import org.eclipse.net4j.util.security.ChallengeResponseNegotiator;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.security.ResponseNegotiatorInjector;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 /**
  * Injects a configurable response negotiator into selected client connectors.
@@ -41,8 +41,6 @@ import org.eclipse.net4j.util.security.ResponseNegotiatorInjector;
  */
 public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
 {
-  public static final String DEFAULT_ALGORITHM_NAME = ChallengeResponseNegotiator.DEFAULT_ALGORITHM_NAME;
-
   private String connectorDescription;
 
   /**
@@ -64,7 +62,7 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
    */
   public ConnectorCredentialsInjector(String connectorDescription, IPasswordCredentialsProvider credentialsProvider)
   {
-    this(connectorDescription, credentialsProvider, DEFAULT_ALGORITHM_NAME);
+    this(connectorDescription, credentialsProvider, SecurityUtil.PBE_WITH_MD5_AND_DES);
   }
 
   @Override
@@ -98,7 +96,7 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
   {
     ResponseNegotiator negotiator = new ResponseNegotiator();
     negotiator.setCredentialsProvider(credentialsProvider);
-    negotiator.setAlgorithmName(algorithmName);
+    negotiator.setEncryptionAlgorithmName(algorithmName);
     return negotiator;
   }
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -42,7 +42,11 @@ public class UserManager extends Lifecycle implements IUserManager
     }
   }
 
-  public byte[] encrypt(String userID, byte[] data, String algorithmName) throws SecurityException
+  /**
+   * @since 2.0
+   */
+  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
+      throws SecurityException
   {
     char[] password;
     synchronized (this)
@@ -57,7 +61,7 @@ public class UserManager extends Lifecycle implements IUserManager
 
     try
     {
-      return SecurityUtil.encrypt(data, password, algorithmName);
+      return SecurityUtil.encrypt(data, password, algorithmName, salt, count);
     }
     catch (RuntimeException ex)
     {

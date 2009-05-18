@@ -468,8 +468,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       }
     }
   }
+
   /**
-   * TODO: TO BE REMOVED once ????
+   * TODO: TO BE REMOVED once https://bugs.eclipse.org/bugs/show_bug.cgi?id=276712 is available
    */
   @Override
   public void dynamicUnset(int dynamicFeatureID)

@@ -468,6 +468,26 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       }
     }
   }
+  /**
+   * TODO: TO BE REMOVED once ????
+   */
+  @Override
+  public void dynamicUnset(int dynamicFeatureID)
+  {
+    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+    if (eStructuralFeature.isTransient())
+    {
+      eSettings[dynamicFeatureID] = null;
+    }
+    else
+    {
+      eStore().unset(this, eDynamicFeature(dynamicFeatureID));
+      if (eIsCaching())
+      {
+        eSettings[dynamicFeatureID] = null;
+      }
+    }
+  }
 
   /**
    * @since 2.0

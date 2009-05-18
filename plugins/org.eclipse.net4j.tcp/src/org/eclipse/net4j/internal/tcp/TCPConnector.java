@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -113,6 +113,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     this.socketChannel = socketChannel;
   }
 
+  @Override
   public String getURL()
   {
     return "tcp://" + host + ":" + port;
@@ -192,6 +193,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (IOException ex)
     {
+      OM.LOG.error(ex);
       deactivate();
     }
     catch (Exception ex)
@@ -208,6 +210,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
    * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
    * dequeued from the outputQueue of the {@link IChannel}.
    */
+  @Override
   public void multiplexChannel(InternalChannel channel)
   {
     synchronized (writeQueue)

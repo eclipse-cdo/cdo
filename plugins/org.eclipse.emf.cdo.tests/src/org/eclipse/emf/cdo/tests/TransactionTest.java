@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.ArrayList;
@@ -36,6 +37,35 @@ public class TransactionTest extends AbstractCDOTest
   {
     super.doSetUp();
     OMPlatform.INSTANCE.setDebugging(false);
+  }
+
+  public void testCommitAfterClose() throws Exception
+  {
+    CDOSession session = openSession();
+    assertEquals(true, LifecycleUtil.isActive(session));
+    assertEquals(false, session.isClosed());
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource("/test1");
+    resource.getContents().add(getModel1Factory().createCompany());
+    assertEquals(true, LifecycleUtil.isActive(transaction));
+    assertEquals(false, transaction.isClosed());
+
+    session.close();
+    assertEquals(false, LifecycleUtil.isActive(session));
+    assertEquals(true, session.isClosed());
+    assertEquals(false, LifecycleUtil.isActive(transaction));
+    assertEquals(true, transaction.isClosed());
+
+    try
+    {
+      transaction.commit();
+      fail("IllegalStateException expected");
+    }
+    catch (IllegalStateException success)
+    {
+      // SUCCESS
+    }
   }
 
   public void testCreateManySessions() throws Exception

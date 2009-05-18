@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.common.util.EList;
@@ -35,6 +36,24 @@ import org.eclipse.emf.spi.cdo.CDOElementProxy;
  */
 public class ViewTest extends AbstractCDOTest
 {
+  public void testDeactivateWithSession() throws Exception
+  {
+    CDOSession session = openSession();
+    assertEquals(true, LifecycleUtil.isActive(session));
+    assertEquals(false, session.isClosed());
+
+    CDOView view = session.openView();
+    assertEquals(true, LifecycleUtil.isActive(view));
+    assertEquals(false, view.isClosed());
+
+    session.close();
+    assertEquals(false, LifecycleUtil.isActive(session));
+    assertEquals(true, session.isClosed());
+
+    assertEquals(false, LifecycleUtil.isActive(view));
+    assertEquals(true, view.isClosed());
+  }
+
   public void testHasResource() throws Exception
   {
     {

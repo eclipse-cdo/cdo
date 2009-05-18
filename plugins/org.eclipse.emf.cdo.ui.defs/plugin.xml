@@ -19,26 +19,4 @@
             class="org.eclipse.emf.cdo.ui.defs.CDOUIDefsPackage"
             genModel="model/org.eclipse.emf.cdo.ui.defs.genmodel"/>
    </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            default="false"
-            icon="icons/database_go.png"
-            id="org.eclipse.emf.cdo.ui.defs.editorlauncher"
-            launcher="org.eclipse.emf.cdo.ui.cdouidefs.editorlauncher.EditorLauncher"
-            name="name">
-         <contentTypeBinding
-               contentTypeId="org.eclipse.emf.cdo.ui.defs.editor.contenttype">
-         </contentTypeBinding>
-      </editor>
-   </extension>
-   <extension
-         point="org.eclipse.core.runtime.contentTypes">
-		<content-type file-extensions="xmi" id="org.eclipse.emf.cdo.ui.defs.contenttype" name="CDO Editor launcher File" priority="normal">
-			<describer class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber2">
-				<parameter name="element" value="CDOEditorDef">
-	            </parameter>
-			</describer>
-		</content-type>
-	</extension>
 </plugin>

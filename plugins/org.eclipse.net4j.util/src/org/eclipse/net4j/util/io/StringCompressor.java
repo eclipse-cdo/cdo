@@ -12,7 +12,9 @@ package org.eclipse.net4j.util.io;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,17 +29,29 @@ public class StringCompressor implements StringIO
 
   private static final byte DEBUG_INT = 1;
 
+  private static final byte DEBUG_BYTE = 2;
+
   private static final int NULL_ID = 0;
 
-  private static final int STRING_FOLLOWS = Integer.MIN_VALUE;
+  private static final int INFO_FOLLOWS = Integer.MIN_VALUE;
+
+  private static final byte NOTHING_FOLLOWS = 0;
+
+  private static final byte STRING_FOLLOWS = 1;
+
+  private static final byte ACK_FOLLOWS = 2;
 
   private boolean client;
 
   private int lastID;
 
-  private Map<String, Integer> stringToID = new HashMap<String, Integer>();
+  private Map<String, ID> stringToID = new HashMap<String, ID>();
 
   private Map<Integer, String> idToString = new HashMap<Integer, String>();
+
+  private List<Integer> pendingAcknowledgements = new ArrayList<Integer>();
+
+  private Object lock = new Object();
 
   /**
    * Creates a StringCompressor instance.
@@ -63,22 +77,58 @@ public class StringCompressor implements StringIO
       return;
     }
 
-    synchronized (stringToID)
+    ID id;
+    List<Integer> acknowledgements = null;
+    boolean stringFollows = false;
+    synchronized (lock)
     {
-      Integer id = stringToID.get(string);
+      id = stringToID.get(string);
       if (id == null)
       {
         lastID += client ? 1 : -1;
-        stringToID.put(string, lastID);
-        idToString.put(lastID, string);
-        writeInt(out, STRING_FOLLOWS);
-        writeInt(out, lastID);
+        id = new ID(lastID);
+
+        stringToID.put(string, id);
+        idToString.put(id.getValue(), string);
+        stringFollows = true;
+      }
+      else if (!id.isAcknowledged())
+      {
+        stringFollows = true;
+      }
+
+      if (!pendingAcknowledgements.isEmpty())
+      {
+        acknowledgements = pendingAcknowledgements;
+        pendingAcknowledgements = new ArrayList<Integer>();
+      }
+    }
+
+    if (stringFollows || acknowledgements != null)
+    {
+      writeInt(out, INFO_FOLLOWS);
+      writeInt(out, id.getValue());
+
+      if (stringFollows)
+      {
+        writeByte(out, STRING_FOLLOWS);
         writeString(out, string);
       }
-      else
+
+      if (acknowledgements != null)
       {
-        writeInt(out, id);
+        for (int ack : acknowledgements)
+        {
+          writeByte(out, ACK_FOLLOWS);
+          writeInt(out, ack);
+        }
       }
+
+      writeByte(out, NOTHING_FOLLOWS);
+    }
+    else
+    {
+      writeInt(out, id.getValue());
     }
   }
 
@@ -90,37 +140,97 @@ public class StringCompressor implements StringIO
       return null;
     }
 
-    if (id == STRING_FOLLOWS)
+    String string = null;
+    List<Integer> acks = null;
+    if (id == INFO_FOLLOWS)
     {
       id = readInt(in);
-      String string = readString(in);
-      synchronized (stringToID)
-      {
-        stringToID.put(string, id);
-        idToString.put(id, string);
-      }
 
-      return string;
-    }
-    else
-    {
-      synchronized (stringToID)
+      boolean moreInfos = true;
+      while (moreInfos)
       {
-        String string = idToString.get(id);
+        byte info = readByte(in);
+        switch (info)
+        {
+        case NOTHING_FOLLOWS:
+          moreInfos = false;
+          break;
+
+        case STRING_FOLLOWS:
+          string = readString(in);
+          break;
+
+        case ACK_FOLLOWS:
+          if (acks == null)
+          {
+            acks = new ArrayList<Integer>();
+          }
+
+          acks.add(readInt(in));
+          break;
+
+        default:
+          throw new IOException("Invalid info: " + info);
+        }
+      }
+    }
+
+    synchronized (lock)
+    {
+      if (string != null)
+      {
+        acknowledge(acks);
+        stringToID.put(string, new ID(id));
+        idToString.put(id, string);
+        pendingAcknowledgements.add(id);
+      }
+      else
+      {
+        acknowledge(acks);
+        string = idToString.get(id);
         if (string == null)
         {
           throw new IOException("String ID unknown: " + id);
         }
-
-        return string;
       }
     }
+
+    return string;
   }
 
   @Override
   public String toString()
   {
     return MessageFormat.format("StringCompressor[client={0}]", client);
+  }
+
+  private void acknowledge(List<Integer> acks)
+  {
+    if (acks != null)
+    {
+      for (int value : acks)
+      {
+        String string = idToString.get(value);
+        if (string != null)
+        {
+          ID id = stringToID.get(string);
+          if (id != null)
+          {
+            id.setAcknowledged();
+          }
+        }
+      }
+    }
+  }
+
+  private void writeByte(ExtendedDataOutput out, byte value) throws IOException
+  {
+    if (DEBUG)
+    {
+      out.writeByte(DEBUG_BYTE);
+    }
+
+    out.writeByte(value);
   }
 
   private void writeInt(ExtendedDataOutput out, int value) throws IOException
@@ -141,6 +251,19 @@ public class StringCompressor implements StringIO
     }
 
     out.writeString(value);
+  }
+
+  private byte readByte(ExtendedDataInput in) throws IOException
+  {
+    if (DEBUG)
+    {
+      if (DEBUG_BYTE != in.readByte())
+      {
+        throw new IOException("Not a byte value");
+      }
+    }
+
+    return in.readByte();
   }
 
   private int readInt(ExtendedDataInput in) throws IOException
@@ -167,5 +290,35 @@ public class StringCompressor implements StringIO
     }
 
     return in.readString();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ID
+  {
+    private int value;
+
+    private boolean acknowledged;
+
+    public ID(int value)
+    {
+      this.value = value;
+    }
+
+    public int getValue()
+    {
+      return value;
+    }
+
+    public boolean isAcknowledged()
+    {
+      return acknowledged;
+    }
+
+    public void setAcknowledged()
+    {
+      acknowledged = true;
+    }
   }
 }

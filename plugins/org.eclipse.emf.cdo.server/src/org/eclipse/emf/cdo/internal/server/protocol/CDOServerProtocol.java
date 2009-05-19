@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 
 /**
@@ -28,10 +29,10 @@ public class CDOServerProtocol extends CDOProtocolImpl
 {
   private IRepositoryProvider repositoryProvider;
 
-  private StringIO packageURICompressor = StringIO.DIRECT;
-
+  // private StringIO packageURICompressor = StringIO.DIRECT;
   // XXX Enable compression again!
-  // private StringIO packageURICompressor = new StringCompressor(false);
+
+  private StringIO packageURICompressor = new StringCompressor(false);
 
   public CDOServerProtocol(IRepositoryProvider repositoryProvider)
   {

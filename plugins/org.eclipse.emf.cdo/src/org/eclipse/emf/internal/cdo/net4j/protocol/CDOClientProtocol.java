@@ -33,6 +33,7 @@ import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
+import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
@@ -60,10 +61,10 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING,
       CDORevisionManagerImpl.class);
 
-  private StringIO packageURICompressor = StringIO.DIRECT;
-
+  // private StringIO packageURICompressor = StringIO.DIRECT;
   // XXX Enable compression again!
-  // private StringIO packageURICompressor = new StringCompressor(true);
+
+  private StringIO packageURICompressor = new StringCompressor(true);
 
   public CDOClientProtocol()
   {

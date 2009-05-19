@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
@@ -25,7 +24,7 @@ import java.util.HashSet;
  * @author Stefan Winkler
  * @since 2.0
  */
-public class NullPreparedStatementCache extends AbstractPreparedStatementCache implements IPreparedStatementCache
+public class NullPreparedStatementCache extends AbstractPreparedStatementCache
 {
   private HashSet<PreparedStatement> allocatedStatements = new HashSet<PreparedStatement>();
 

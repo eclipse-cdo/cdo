@@ -45,7 +45,7 @@ public class SyncRevisionsIndication extends AbstractSyncRevisionsIndication
     IStoreAccessor reader = StoreThreadLocal.getAccessor();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Refreshing store accessor: " + reader);
+      TRACER.format("Refreshing store accessor: " + reader); //$NON-NLS-1$
     }
 
     reader.refreshRevisions();

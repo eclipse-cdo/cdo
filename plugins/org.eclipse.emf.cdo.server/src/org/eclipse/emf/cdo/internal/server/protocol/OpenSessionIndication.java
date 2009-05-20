@@ -65,13 +65,13 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     repositoryName = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read repositoryName: {0}", repositoryName);
+      TRACER.format("Read repositoryName: {0}", repositoryName); //$NON-NLS-1$
     }
 
     passiveUpdateEnabled = in.readBoolean();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled);
+      TRACER.format("Read passiveUpdateEnabled: {0}", passiveUpdateEnabled); //$NON-NLS-1$
     }
   }
 
@@ -96,13 +96,13 @@ public class OpenSessionIndication extends RepositoryTimeIndication
       protocol.setInfraStructure(session);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing sessionID: {0}", session.getSessionID());
+        TRACER.format("Writing sessionID: {0}", session.getSessionID()); //$NON-NLS-1$
       }
 
       out.writeInt(session.getSessionID());
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing repositoryUUID: {0}", repository.getUUID());
+        TRACER.format("Writing repositoryUUID: {0}", repository.getUUID()); //$NON-NLS-1$
       }
 
       out.writeString(repository.getUUID());
@@ -117,7 +117,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Repository {0} not found", repositoryName);
+        TRACER.format("Repository {0} not found", repositoryName); //$NON-NLS-1$
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);
@@ -126,7 +126,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Failed to open session for repository {0}", repositoryName);
+        TRACER.format("Failed to open session for repository {0}", repositoryName); //$NON-NLS-1$
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_NO_SESSION);

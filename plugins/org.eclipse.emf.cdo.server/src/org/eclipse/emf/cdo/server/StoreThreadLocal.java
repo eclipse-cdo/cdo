@@ -46,7 +46,7 @@ public final class StoreThreadLocal
     ISession session = SESSION.get();
     if (session == null)
     {
-      throw new IllegalStateException("session == null");
+      throw new IllegalStateException("session == null"); //$NON-NLS-1$
     }
 
     return session;

@@ -128,7 +128,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Selecting object IDs");
+      TRACER.trace("Selecting object IDs"); //$NON-NLS-1$
     }
 
     return getStore().getMappingStrategy().readObjectIDs(this);
@@ -138,7 +138,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Selecting object type: {0}", id);
+      TRACER.format("Selecting object type: {0}", id); //$NON-NLS-1$
     }
 
     return getStore().getMappingStrategy().readObjectType(this, id);
@@ -167,7 +167,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Selecting revision: {0}", id);
+      TRACER.format("Selecting revision: {0}", id); //$NON-NLS-1$
     }
 
     EClass eClass = getObjectType(id);
@@ -195,12 +195,12 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     if (!mappingStrategy.hasAuditSupport())
     {
-      throw new UnsupportedOperationException("Mapping strategy does not support audits.");
+      throw new UnsupportedOperationException("Mapping strategy does not support audits."); //$NON-NLS-1$
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Selecting revision: {0}, timestamp={1,date} {1,time}", id, timeStamp);
+      TRACER.format("Selecting revision: {0}, timestamp={1,date} {1,time}", id, timeStamp); //$NON-NLS-1$
     }
 
     EClass eClass = getObjectType(id);
@@ -230,7 +230,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Selecting revision: {0}, version={1}", id, version);
+        TRACER.format("Selecting revision: {0}, version={1}", id, version); //$NON-NLS-1$
       }
 
       // if audit support is present, just use the audit method
@@ -246,15 +246,15 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       // we are in trouble because of a conflict anyways.
       if (TRACER.isEnabled())
       {
-        TRACER.format("Selecting current base revision: {0}", id);
+        TRACER.format("Selecting current base revision: {0}", id); //$NON-NLS-1$
       }
 
       success = mapping.readRevision(this, revision, listChunk);
 
       if (success && revision.getVersion() != version)
       {
-        throw new IllegalStateException("Can only retrieve current version " + revision.getVersion() + " for " + id
-            + " - version requested was " + version + ".");
+        throw new IllegalStateException("Can only retrieve current version " + revision.getVersion() + " for " + id //$NON-NLS-1$ //$NON-NLS-2$
+            + " - version requested was " + version + "."); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
 
@@ -305,7 +305,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     if (!mappingStrategy.hasDeltaSupport())
     {
-      throw new UnsupportedOperationException("Mapping strategy does not support revision deltas.");
+      throw new UnsupportedOperationException("Mapping strategy does not support revision deltas."); //$NON-NLS-1$
     }
 
     monitor.begin(revisionDeltas.length);
@@ -351,7 +351,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing revision: {0}", revision);
+      TRACER.format("Writing revision: {0}", revision); //$NON-NLS-1$
     }
 
     EClass eClass = revision.getEClass();
@@ -383,7 +383,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Detaching object: {0}", id);
+      TRACER.format("Detaching object: {0}", id); //$NON-NLS-1$
     }
 
     EClass eClass = getObjectType(id);
@@ -403,7 +403,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("--- DB COMMIT ---");
+      TRACER.format("--- DB COMMIT ---"); //$NON-NLS-1$
     }
 
     try
@@ -426,7 +426,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("--- DB ROLLBACK ---");
+      TRACER.format("--- DB ROLLBACK ---"); //$NON-NLS-1$
     }
 
     try
@@ -444,7 +444,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   {
     connection = getStore().getConnection();
 
-    connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + toString());
+    connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + toString()); //$NON-NLS-1$
     connectionKeepAliveTimer.schedule(new ConnectionKeepAliveTask(), ConnectionKeepAliveTask.EXECUTION_PERIOD,
         ConnectionKeepAliveTask.EXECUTION_PERIOD);
 
@@ -515,15 +515,15 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("DB connection keep-alive task activated.");
+          TRACER.trace("DB connection keep-alive task activated."); //$NON-NLS-1$
         }
 
         stmt = connection.createStatement();
-        stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.REPOSITORY);
+        stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.REPOSITORY); //$NON-NLS-1$
       }
       catch (SQLException e)
       {
-        OM.LOG.error("DB connection keep-alive failed.", e);
+        OM.LOG.error("DB connection keep-alive failed.", e); //$NON-NLS-1$
       }
       finally
       {

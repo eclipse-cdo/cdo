@@ -41,7 +41,7 @@ import java.util.Map;
  */
 public class MEMStore extends LongIDStore implements IMEMStore
 {
-  public static final String TYPE = "mem";
+  public static final String TYPE = "mem"; //$NON-NLS-1$
 
   private long creationTime;
 
@@ -169,7 +169,7 @@ public class MEMStore extends LongIDStore implements IMEMStore
     InternalCDORevision rev = getRevisionByVersion(list, version);
     if (rev != null)
     {
-      throw new IllegalStateException("Concurrent modification of revision " + rev);
+      throw new IllegalStateException("Concurrent modification of revision " + rev); //$NON-NLS-1$
     }
 
     rev = getRevisionByVersion(list, version - 1);
@@ -189,7 +189,7 @@ public class MEMStore extends LongIDStore implements IMEMStore
       CDOID resourceID = accessor.readResourceID(revisionFolder, revisionName, revision.getCreated());
       if (!CDOIDUtil.isNull(resourceID))
       {
-        throw new IllegalStateException("Duplicate resource: " + revisionName + " (folderID=" + revisionFolder + ")");
+        throw new IllegalStateException("Duplicate resource: " + revisionName + " (folderID=" + revisionFolder + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       }
     }
 

@@ -94,7 +94,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
       if (!resultSet.next())
       {
-        DBUtil.trace("ClassID for CDOID " + id + " not found");
+        DBUtil.trace("ClassID for CDOID " + id + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
         return null;
       }
 
@@ -129,7 +129,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
       if (result != 1)
       {
-        throw new DBException("Object type could not be deleted: " + id);
+        throw new DBException("Object type could not be deleted: " + id); //$NON-NLS-1$
       }
     }
     catch (SQLException ex)
@@ -158,7 +158,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
       if (result != 1)
       {
-        throw new DBException("Object type could not be deleted: " + id);
+        throw new DBException("Object type could not be deleted: " + id); //$NON-NLS-1$
       }
     }
     catch (SQLException ex)
@@ -203,11 +203,11 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
         }
       }
 
-      sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?";
+      sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
-      sqlInsert = "INSERT INTO " + table.getName() + " VALUES (?,?)";
+      sqlInsert = "INSERT INTO " + table.getName() + " VALUES (?,?)"; //$NON-NLS-1$ //$NON-NLS-2$
 
-      sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?";
+      sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
   }
 
@@ -221,7 +221,7 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(mappingStrategy, "mappingStrategy");
+    checkState(mappingStrategy, "mappingStrategy"); //$NON-NLS-1$
   }
 
   @Override

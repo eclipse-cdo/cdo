@@ -56,13 +56,13 @@ public class LoadChunkIndication extends CDOReadIndication
     id = in.readCDOID();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read revision ID: {0}", id);
+      TRACER.format("Read revision ID: {0}", id); //$NON-NLS-1$
     }
 
     version = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read revision version: {0}", version);
+      TRACER.format("Read revision version: {0}", version); //$NON-NLS-1$
     }
 
     EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
@@ -70,19 +70,19 @@ public class LoadChunkIndication extends CDOReadIndication
     feature = eClass.getEStructuralFeature(featureID);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read feature: {0}", feature);
+      TRACER.format("Read feature: {0}", feature); //$NON-NLS-1$
     }
 
     fromIndex = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read fromIndex: {0}", fromIndex);
+      TRACER.format("Read fromIndex: {0}", fromIndex); //$NON-NLS-1$
     }
 
     toIndex = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read toIndex: {0}", toIndex);
+      TRACER.format("Read toIndex: {0}", toIndex); //$NON-NLS-1$
     }
   }
 

@@ -110,7 +110,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     int id = ++lastSessionID;
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Opening session " + id);
+      TRACER.trace("Opening session " + id); //$NON-NLS-1$
     }
 
     Session session = new Session(this, protocol, id);

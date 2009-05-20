@@ -47,30 +47,30 @@ public interface IMappingStrategy
    * Name of the integer property that configures the maximum length for table names. A value of zero indicates the
    * value of the {@link IDBAdapter#getMaxTableNameLength() db adapter} to be used.
    */
-  public static final String PROP_MAX_TABLE_NAME_LENGTH = "maxTableNameLength";
+  public static final String PROP_MAX_TABLE_NAME_LENGTH = "maxTableNameLength"; //$NON-NLS-1$
 
   /**
    * Name of the integer property that configures the maximum length for column names. A value of zero indicates the
    * value of the {@link IDBAdapter#getMaxFieldNameLength() db adapter} to be used.
    */
-  public static final String PROP_MAX_FIELD_NAME_LENGTH = "maxFieldNameLength";
+  public static final String PROP_MAX_FIELD_NAME_LENGTH = "maxFieldNameLength"; //$NON-NLS-1$
 
   /**
    * Name of the String property that specifies a common prefix for table names.
    */
-  public static final String PROP_TABLE_NAME_PREFIX = "tableNamePrefix";
+  public static final String PROP_TABLE_NAME_PREFIX = "tableNamePrefix"; //$NON-NLS-1$
 
   /**
    * Name of the boolean property that configures whether the table names are made of simple class names or of qualified
    * class names.
    */
-  public static final String PROP_QUALIFIED_NAMES = "qualifiedNames";
+  public static final String PROP_QUALIFIED_NAMES = "qualifiedNames"; //$NON-NLS-1$
 
   /**
    * Name of the boolean property that configures whether table names and column names are always suffixed with the
    * internal DBID or only in cases where generated names violate the naming constraints of the underlying backend.
    */
-  public static final String PROP_FORCE_NAMES_WITH_ID = "forceNamesWithID";
+  public static final String PROP_FORCE_NAMES_WITH_ID = "forceNamesWithID"; //$NON-NLS-1$
 
   /**
    * @return the store, this MappingStrategy instance belongs to.

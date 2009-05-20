@@ -42,7 +42,7 @@ public class LoadRevisionByVersionIndication extends LoadRevisionIndication
     version = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read version: {0}", version);
+      TRACER.format("Read version: {0}", version); //$NON-NLS-1$
     }
   }
 

@@ -59,13 +59,13 @@ public class CommitNotificationRequest extends CDOServerRequest
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp);
+      TRACER.format("Writing timeStamp: {0,date} {0,time}", timeStamp); //$NON-NLS-1$
     }
 
     out.writeLong(timeStamp);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} dirty IDs", dirtyIDs.size());
+      TRACER.format("Writing {0} dirty IDs", dirtyIDs.size()); //$NON-NLS-1$
     }
 
     out.writeCDOPackageUnits(packageUnits);
@@ -75,7 +75,7 @@ public class CommitNotificationRequest extends CDOServerRequest
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing dirty ID: {0}", dirtyID);
+        TRACER.format("Writing dirty ID: {0}", dirtyID); //$NON-NLS-1$
       }
 
       out.writeCDOIDAndVersion(dirtyID);

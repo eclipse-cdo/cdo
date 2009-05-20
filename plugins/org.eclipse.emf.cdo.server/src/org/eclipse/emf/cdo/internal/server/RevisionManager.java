@@ -235,7 +235,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     // "Auditing supports isn't activated (see IRepository.Props.PROP_SUPPORTING_AUDITS).");
     // }
 
-    throw new UnsupportedOperationException("No support for auditing mode");
+    throw new UnsupportedOperationException("No support for auditing mode"); //$NON-NLS-1$
   }
 
   /**
@@ -256,7 +256,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
       return revision;
     }
 
-    throw new IllegalStateException("Cannot access object with id " + id + " and version " + version);
+    throw new IllegalStateException("Cannot access object with id " + id + " and version " + version); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Override

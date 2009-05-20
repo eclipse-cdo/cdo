@@ -70,90 +70,90 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
 
-    builder.append("SELECT ");
+    builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
 
     for (ITypeMapping singleMapping : getValueMappings())
     {
-      builder.append(", ");
+      builder.append(", "); //$NON-NLS-1$
       builder.append(singleMapping.getField().getName());
     }
 
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append("= ? AND (");
+    builder.append("= ? AND ("); //$NON-NLS-1$
 
     String sqlSelectAttributesPrefix = builder.toString();
 
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0 )");
+    builder.append(" = 0 )"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append(" <= ? AND ( ");
+    builder.append(" <= ? AND ( "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0 OR ");
+    builder.append(" = 0 OR "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" >= ?))");
+    builder.append(" >= ?))"); //$NON-NLS-1$
 
     sqlSelectAttributesByTime = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
 
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append(" = ?)");
+    builder.append(" = ?)"); //$NON-NLS-1$
 
     sqlSelectAttributesByVersion = builder.toString();
 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
-    builder.append("INSERT INTO ");
+    builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" VALUES (?, ?, ");
-    builder.append("?, ?, ?, ?, ?, ?");
+    builder.append(" VALUES (?, ?, "); //$NON-NLS-1$
+    builder.append("?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
     for (int i = 0; i < getValueMappings().size(); i++)
     {
-      builder.append(", ?");
+      builder.append(", ?"); //$NON-NLS-1$
     }
 
-    builder.append(")");
+    builder.append(")"); //$NON-NLS-1$
     sqlInsertAttributes = builder.toString();
 
     // ----------- Update to set revised ----------------
-    builder = new StringBuilder("UPDATE ");
+    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" SET ");
+    builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = ? WHERE ");
+    builder.append(" = ? WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" = ? AND ");
+    builder.append(" = ? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0");
+    builder.append(" = 0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
-    builder = new StringBuilder("SELECT ");
+    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(" = 0");
+    builder.append(" = 0"); //$NON-NLS-1$
     sqlSelectAllObjectIds = builder.toString();
   }
 
@@ -228,42 +228,42 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     ITypeMapping nameValueMapping = getValueMapping(nameFeature);
     if (nameValueMapping == null)
     {
-      throw new ImplementationError(nameFeature + " not found in ClassMapping " + this);
+      throw new ImplementationError(nameFeature + " not found in ClassMapping " + this); //$NON-NLS-1$
     }
 
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
+    builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append("= ? AND ");
+    builder.append("= ? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField().getName());
     if (name == null)
     {
-      builder.append(" IS NULL");
+      builder.append(" IS NULL"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(exactMatch ? " = ? " : " LIKE ? ");
+      builder.append(exactMatch ? " = ? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    builder.append(" AND ( ");
+    builder.append(" AND ( "); //$NON-NLS-1$
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(" = 0 )");
+      builder.append(" = 0 )"); //$NON-NLS-1$
     }
     else
     {
       builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-      builder.append(" <= ? AND ( ");
+      builder.append(" <= ? AND ( "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(" = 0 OR ");
+      builder.append(" = 0 OR "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(" >= ?))");
+      builder.append(" >= ?))"); //$NON-NLS-1$
     }
 
     PreparedStatement pstmt = null;
@@ -276,7 +276,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
       if (name != null)
       {
-        String queryName = exactMatch ? name : name + "%";
+        String queryName = exactMatch ? name : name + "%"; //$NON-NLS-1$
         nameValueMapping.setValue(pstmt, idx++, queryName);
       }
 
@@ -288,7 +288,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Created Resource Query: {0}", pstmt.toString());
+        TRACER.format("Created Resource Query: {0}", pstmt.toString()); //$NON-NLS-1$
       }
 
       return pstmt;
@@ -304,7 +304,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIds);
+      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIds); //$NON-NLS-1$
     }
 
     return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIds, ReuseProbability.HIGH);

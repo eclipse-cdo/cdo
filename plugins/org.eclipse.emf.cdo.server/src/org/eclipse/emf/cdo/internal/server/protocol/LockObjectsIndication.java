@@ -75,7 +75,7 @@ public class LockObjectsIndication extends AbstractSyncRevisionsIndication
     if (!detachedObjects.isEmpty())
     {
       getRepository().getLockManager().unlock(lockType, view, ids);
-      throw new IllegalArgumentException(detachedObjects.size() + " objects are not persistent anymore");
+      throw new IllegalArgumentException(detachedObjects.size() + " objects are not persistent anymore"); //$NON-NLS-1$
     }
 
     super.responding(out);

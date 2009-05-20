@@ -37,7 +37,7 @@ public class WrappedPreparedStatement
     wrappedStatement = ps;
     if (TRACER.isEnabled())
     {
-      TRACER.format("Wrapping Statement: {0}", wrappedStatement);
+      TRACER.format("Wrapping Statement: {0}", wrappedStatement); //$NON-NLS-1$
     }
   }
 
@@ -50,7 +50,7 @@ public class WrappedPreparedStatement
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("UnWrapping Statement: {0}", wrappedStatement);
+      TRACER.format("UnWrapping Statement: {0}", wrappedStatement); //$NON-NLS-1$
     }
 
     PreparedStatement result = wrappedStatement;
@@ -61,7 +61,7 @@ public class WrappedPreparedStatement
   @Override
   public String toString()
   {
-    return MessageFormat.format("Wrapped[{0}]", wrappedStatement);
+    return MessageFormat.format("Wrapped[{0}]", wrappedStatement); //$NON-NLS-1$
   }
 
   @Override
@@ -71,7 +71,7 @@ public class WrappedPreparedStatement
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Closing statement: {0}", wrappedStatement);
+        TRACER.format("Closing statement: {0}", wrappedStatement); //$NON-NLS-1$
       }
 
       DBUtil.close(wrappedStatement);

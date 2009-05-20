@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public abstract class QueryHandlerFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.queryHandlerFactories";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.queryHandlerFactories"; //$NON-NLS-1$
 
   public QueryHandlerFactory(String language)
   {

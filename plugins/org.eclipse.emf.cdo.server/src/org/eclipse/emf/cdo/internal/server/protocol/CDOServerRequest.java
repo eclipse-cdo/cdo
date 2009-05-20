@@ -71,6 +71,6 @@ public abstract class CDOServerRequest extends Request
       return (CDOServerProtocol)channel.getReceiveHandler();
     }
 
-    throw new IllegalStateException("Channel is inactive: " + channel);
+    throw new IllegalStateException("Channel is inactive: " + channel); //$NON-NLS-1$
   }
 }

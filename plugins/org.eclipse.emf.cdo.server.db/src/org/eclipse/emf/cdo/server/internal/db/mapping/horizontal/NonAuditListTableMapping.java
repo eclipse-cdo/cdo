@@ -87,93 +87,93 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     // ----------- clear list -------------------------
     StringBuilder builder = new StringBuilder();
 
-    builder.append("DELETE FROM ");
+    builder.append("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? ");
+    builder.append(" = ? "); //$NON-NLS-1$
 
     sqlClear = builder.toString();
 
-    builder.append(" AND ");
+    builder.append(" AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? ");
+    builder.append(" = ? "); //$NON-NLS-1$
 
     sqlDeleteItem = builder.toString();
 
     // ----------- update one item --------------------
     builder = new StringBuilder();
-    builder.append("UPDATE ");
+    builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" SET ");
+    builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
-    builder.append(" = ? ");
-    builder.append(" WHERE ");
+    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND ");
+    builder.append(" = ? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? ");
+    builder.append(" = ? "); //$NON-NLS-1$
     sqlUpdateValue = builder.toString();
 
     // ----------- insert one item --------------------
     builder = new StringBuilder();
-    builder.append("INSERT INTO ");
+    builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" VALUES(?, ?, ?) ");
+    builder.append(" VALUES(?, ?, ?) "); //$NON-NLS-1$
     sqlInsertValue = builder.toString();
 
     // ----------- update one item index --------------
     builder = new StringBuilder();
-    builder.append("UPDATE ");
+    builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" SET ");
+    builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? ");
-    builder.append(" WHERE ");
+    builder.append(" = ? "); //$NON-NLS-1$
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(" = ? AND ");
+    builder.append(" = ? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ? ");
+    builder.append(" = ? "); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------- move down --------------
     builder = new StringBuilder();
-    builder.append("UPDATE ");
+    builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" SET ");
+    builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ");
+    builder.append(" = "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append("-1 WHERE ");
+    builder.append("-1 WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append("= ? AND ");
+    builder.append("= ? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" > ? ");
+    builder.append(" > ? "); //$NON-NLS-1$
     sqlMoveDown = builder.toString();
 
-    builder.append(" AND ");
+    builder.append(" AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" <= ?");
+    builder.append(" <= ?"); //$NON-NLS-1$
     sqlMoveDownWithLimit = builder.toString();
 
     // ----------- move up --------------
     builder = new StringBuilder();
-    builder.append("UPDATE ");
+    builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" SET ");
+    builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" = ");
+    builder.append(" = "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append("+1 WHERE ");
+    builder.append("+1 WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append("= ? AND ");
+    builder.append("= ? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" >= ? ");
+    builder.append(" >= ? "); //$NON-NLS-1$
     sqlMoveUp = builder.toString();
 
-    builder.append(" AND ");
+    builder.append(" AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" < ?");
+    builder.append(" < ?"); //$NON-NLS-1$
     sqlMoveUpWithLimit = builder.toString();
   }
 
@@ -484,12 +484,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       public void visit(CDOUnsetFeatureDelta delta)
       {
-        throw new ImplementationError("Should not be called");
+        throw new ImplementationError("Should not be called"); //$NON-NLS-1$
       }
 
       public void visit(CDOListFeatureDelta delta)
       {
-        throw new ImplementationError("Should not be called");
+        throw new ImplementationError("Should not be called"); //$NON-NLS-1$
       }
 
       public void visit(CDOClearFeatureDelta delta)
@@ -499,7 +499,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       public void visit(CDOContainerFeatureDelta delta)
       {
-        throw new ImplementationError("Should not be called");
+        throw new ImplementationError("Should not be called"); //$NON-NLS-1$
       }
     };
 

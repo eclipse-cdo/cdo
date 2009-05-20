@@ -66,15 +66,15 @@ import java.util.Set;
 public abstract class AbstractMappingStrategy extends Lifecycle implements IMappingStrategy
 {
   // --------- database name generation strings --------------
-  protected static final String NAME_SEPARATOR = "_";
+  protected static final String NAME_SEPARATOR = "_"; //$NON-NLS-1$
 
-  protected static final String TYPE_PREFIX_FEATURE = "F";
+  protected static final String TYPE_PREFIX_FEATURE = "F"; //$NON-NLS-1$
 
-  protected static final String TYPE_PREFIX_CLASS = "C";
+  protected static final String TYPE_PREFIX_CLASS = "C"; //$NON-NLS-1$
 
-  protected static final String TYPE_PREFIX_PACKAGE = "P";
+  protected static final String TYPE_PREFIX_PACKAGE = "P"; //$NON-NLS-1$
 
-  protected static final String FEATEURE_TABLE_SUFFIX = "_list";
+  protected static final String FEATEURE_TABLE_SUFFIX = "_list"; //$NON-NLS-1$
 
   private IDBStore store;
 
@@ -232,7 +232,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
     else
     {
-      throw new ImplementationError("Unknown element: " + element);
+      throw new ImplementationError("Unknown element: " + element); //$NON-NLS-1$
     }
 
     String prefix = getTableNamePrefix();
@@ -448,12 +448,12 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       return new TypeMapping.TMBytes(this, feature);
     }
 
-    throw new ImplementationError("Unrecognized CDOType: " + type);
+    throw new ImplementationError("Unrecognized CDOType: " + type); //$NON-NLS-1$
   }
 
   public final IListMapping createListMapping(EClass containingClass, EStructuralFeature feature)
   {
-    checkArg(feature.isMany(), "Only many-valued features allowed.");
+    checkArg(feature.isMany(), "Only many-valued features allowed."); //$NON-NLS-1$
     IListMapping mapping = doCreateListMapping(containingClass, feature);
     return mapping;
   }

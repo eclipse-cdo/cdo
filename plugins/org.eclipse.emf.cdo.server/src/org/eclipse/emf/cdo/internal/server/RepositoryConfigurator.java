@@ -68,12 +68,12 @@ public class RepositoryConfigurator
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Configuring CDO server from " + configFile.getAbsolutePath());
+      TRACER.trace("Configuring CDO server from " + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
     List<IRepository> repositories = new ArrayList<IRepository>();
     Document document = getDocument(configFile);
-    NodeList elements = document.getElementsByTagName("repository");
+    NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$
     for (int i = 0; i < elements.getLength(); i++)
     {
       Element repositoryConfig = (Element)elements.item(i);
@@ -87,13 +87,13 @@ public class RepositoryConfigurator
 
   protected IRepository configureRepository(Element repositoryConfig) throws CoreException
   {
-    String repositoryName = repositoryConfig.getAttribute("name");
+    String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
     if (StringUtil.isEmpty(repositoryName))
     {
-      throw new IllegalArgumentException("Repository name is missing or empty");
+      throw new IllegalArgumentException("Repository name is missing or empty"); //$NON-NLS-1$
     }
 
-    String repositoryType = repositoryConfig.getAttribute("type");
+    String repositoryType = repositoryConfig.getAttribute("type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(repositoryType))
     {
       repositoryType = RepositoryFactory.TYPE;
@@ -101,7 +101,7 @@ public class RepositoryConfigurator
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType);
+      TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType); //$NON-NLS-1$
     }
 
     IRepository repository = createRepository(repositoryType);
@@ -125,18 +125,18 @@ public class RepositoryConfigurator
 
   protected IStore configureStore(Element storeConfig) throws CoreException
   {
-    String type = storeConfig.getAttribute("type");
+    String type = storeConfig.getAttribute("type"); //$NON-NLS-1$
     IStoreFactory storeFactory = getStoreFactory(type);
     return storeFactory.createStore(storeConfig);
   }
 
   protected IStoreFactory getStoreFactory(String type) throws CoreException
   {
-    IStoreFactory factory = (IStoreFactory)createExecutableExtension("storeFactories", "storeFactory", "storeType",
+    IStoreFactory factory = (IStoreFactory)createExecutableExtension("storeFactories", "storeFactory", "storeType", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         type);
     if (factory == null)
     {
-      throw new IllegalStateException("Store factory not found: " + type);
+      throw new IllegalStateException("Store factory not found: " + type); //$NON-NLS-1$
     }
 
     return factory;
@@ -144,11 +144,11 @@ public class RepositoryConfigurator
 
   protected IRepositoryFactory getRepositoryFactory(String type) throws CoreException
   {
-    IRepositoryFactory factory = (IRepositoryFactory)createExecutableExtension("repositoryFactories",
-        "repositoryFactory", "repositoryType", type);
+    IRepositoryFactory factory = (IRepositoryFactory)createExecutableExtension("repositoryFactories", //$NON-NLS-1$
+        "repositoryFactory", "repositoryType", type); //$NON-NLS-1$ //$NON-NLS-2$
     if (factory == null)
     {
-      throw new IllegalStateException("Repository factory not found: " + type);
+      throw new IllegalStateException("Repository factory not found: " + type); //$NON-NLS-1$
     }
 
     return factory;
@@ -163,11 +163,11 @@ public class RepositoryConfigurator
 
   protected Element getStoreConfig(Element repositoryConfig)
   {
-    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store");
+    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
     if (storeConfigs.getLength() != 1)
     {
-      String repositoryName = repositoryConfig.getAttribute("name");
-      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName);
+      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
     }
 
     return (Element)storeConfigs.item(0);
@@ -176,18 +176,18 @@ public class RepositoryConfigurator
   public static Map<String, String> getProperties(Element element, int levels)
   {
     Map<String, String> properties = new HashMap<String, String>();
-    collectProperties(element, "", properties, levels);
+    collectProperties(element, "", properties, levels); //$NON-NLS-1$
     return properties;
   }
 
   private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels)
   {
-    if ("property".equals(element.getNodeName()))
+    if ("property".equals(element.getNodeName())) //$NON-NLS-1$
     {
-      String name = element.getAttribute("name");
-      String value = element.getAttribute("value");
+      String name = element.getAttribute("name"); //$NON-NLS-1$
+      String value = element.getAttribute("value"); //$NON-NLS-1$
       properties.put(prefix + name, value);
-      prefix += name + ".";
+      prefix += name + "."; //$NON-NLS-1$
     }
 
     if (levels > 0)
@@ -216,7 +216,7 @@ public class RepositoryConfigurator
         String storeType = element.getAttribute(attributeName);
         if (ObjectUtil.equals(storeType, type))
         {
-          return element.createExecutableExtension("class");
+          return element.createExecutableExtension("class"); //$NON-NLS-1$
         }
       }
     }

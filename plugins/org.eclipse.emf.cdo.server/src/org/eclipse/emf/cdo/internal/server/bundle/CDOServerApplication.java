@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.bundle;
 
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
+import org.eclipse.emf.cdo.internal.server.messages.Messages;
 import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.TransportConfigurator;
@@ -27,7 +28,7 @@ import java.io.File;
  */
 public class CDOServerApplication extends OSGiApplication
 {
-  public static final String ID = OM.BUNDLE_ID + ".app";
+  public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
 
   private IRepository[] repositories;
 
@@ -42,36 +43,36 @@ public class CDOServerApplication extends OSGiApplication
   protected void doStart() throws Exception
   {
     super.doStart();
-    OM.LOG.info("CDO Server starting");
-    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml");
+    OM.LOG.info(Messages.getString("CDOServerApplication.1")); //$NON-NLS-1$
+    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
     if (configFile != null && configFile.exists())
     {
       RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(IPluginContainer.INSTANCE);
       repositories = repositoryConfigurator.configure(configFile);
       if (repositories == null || repositories.length == 0)
       {
-        OM.LOG.warn("No repositories configured");
+        OM.LOG.warn(Messages.getString("CDOServerApplication.3")); //$NON-NLS-1$
       }
 
       TransportConfigurator net4jConfigurator = new TransportConfigurator(IPluginContainer.INSTANCE);
       acceptors = net4jConfigurator.configure(configFile);
       if (acceptors == null || acceptors.length == 0)
       {
-        OM.LOG.warn("No acceptors configured");
+        OM.LOG.warn(Messages.getString("CDOServerApplication.4")); //$NON-NLS-1$
       }
     }
     else
     {
-      OM.LOG.warn("CDO server configuration not found: " + configFile.getAbsolutePath());
+      OM.LOG.warn(Messages.getString("CDOServerApplication.5") + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
-    OM.LOG.info("CDO Server started");
+    OM.LOG.info(Messages.getString("CDOServerApplication.6")); //$NON-NLS-1$
   }
 
   @Override
   protected void doStop() throws Exception
   {
-    OM.LOG.info("CDO Server stopping");
+    OM.LOG.info(Messages.getString("CDOServerApplication.7")); //$NON-NLS-1$
     if (acceptors != null)
     {
       for (IAcceptor acceptor : acceptors)
@@ -88,7 +89,7 @@ public class CDOServerApplication extends OSGiApplication
       }
     }
 
-    OM.LOG.info("CDO Server stopped");
+    OM.LOG.info(Messages.getString("CDOServerApplication.8")); //$NON-NLS-1$
     super.doStop();
   }
 }

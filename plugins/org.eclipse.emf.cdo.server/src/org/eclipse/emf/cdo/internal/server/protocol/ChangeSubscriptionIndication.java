@@ -53,7 +53,7 @@ public class ChangeSubscriptionIndication extends CDOReadIndication
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Clear subscription");
+        TRACER.trace("Clear subscription"); //$NON-NLS-1$
       }
 
       view.clearChangeSubscription();

@@ -110,7 +110,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing transaction: {0}", getTransaction());
+      TRACER.format("Writing transaction: {0}", getTransaction()); //$NON-NLS-1$
     }
 
     commitContexts.add(context);
@@ -164,7 +164,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Rolling back transaction: {0}", getTransaction());
+      TRACER.format("Rolling back transaction: {0}", getTransaction()); //$NON-NLS-1$
     }
 
     for (CommitContext commitContext : commitContexts)

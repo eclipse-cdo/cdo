@@ -43,7 +43,7 @@ public class LoadPackagesIndication extends CDOReadIndication
     packageUnitID = in.readCDOPackageURI();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read packageUnitID: {0}", packageUnitID);
+      TRACER.format("Read packageUnitID: {0}", packageUnitID); //$NON-NLS-1$
     }
   }
 
@@ -54,7 +54,7 @@ public class LoadPackagesIndication extends CDOReadIndication
     EPackage ePackage = packageRegistry.getEPackage(packageUnitID);
     if (ePackage == null)
     {
-      throw new IllegalStateException("Package unit not found: " + packageUnitID);
+      throw new IllegalStateException("Package unit not found: " + packageUnitID); //$NON-NLS-1$
     }
 
     CDOModelUtil.writePackage(out, ePackage, true, packageRegistry);

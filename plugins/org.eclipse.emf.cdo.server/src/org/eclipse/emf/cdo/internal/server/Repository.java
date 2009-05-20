@@ -362,7 +362,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
         }
         catch (Throwable t)
         {
-          OM.LOG.warn("Problem with ContainerQueryHandlerProvider: " + t.getMessage());
+          OM.LOG.warn("Problem with ContainerQueryHandlerProvider: " + t.getMessage()); //$NON-NLS-1$
         }
       }
     }
@@ -404,13 +404,13 @@ public class Repository extends Container<Object> implements IRepository, Intern
     long creationTimeStamp = getCreationTime();
     if (timeStamp < creationTimeStamp)
     {
-      throw new IllegalArgumentException("timeStamp < repository creation time: " + creationTimeStamp);
+      throw new IllegalArgumentException("timeStamp < repository creation time: " + creationTimeStamp); //$NON-NLS-1$
     }
 
     long currentTimeStamp = System.currentTimeMillis();
     if (timeStamp > currentTimeStamp)
     {
-      throw new IllegalArgumentException("timeStamp > current time: " + currentTimeStamp);
+      throw new IllegalArgumentException("timeStamp > current time: " + currentTimeStamp); //$NON-NLS-1$
     }
   }
 
@@ -441,7 +441,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
     }
     else
     {
-      throw new IllegalArgumentException("Invalid handler: " + handler);
+      throw new IllegalArgumentException("Invalid handler: " + handler); //$NON-NLS-1$
     }
   }
 
@@ -466,7 +466,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
     }
     else
     {
-      throw new IllegalArgumentException("Invalid handler: " + handler);
+      throw new IllegalArgumentException("Invalid handler: " + handler); //$NON-NLS-1$
     }
   }
 
@@ -530,21 +530,21 @@ public class Repository extends Container<Object> implements IRepository, Intern
   @Override
   public String toString()
   {
-    return MessageFormat.format("Repository[{0}]", name);
+    return MessageFormat.format("Repository[{0}]", name); //$NON-NLS-1$
   }
 
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(!StringUtil.isEmpty(name), "name is empty");
-    checkState(packageRegistry, "packageRegistry");
-    checkState(sessionManager, "sessionManager");
-    checkState(revisionManager, "revisionManager");
-    checkState(queryManager, "queryManager");
-    checkState(notificationManager, "notificationManager");
-    checkState(commitManager, "commitManager");
-    checkState(lockManager, "lockingManager");
+    checkState(!StringUtil.isEmpty(name), "name is empty"); //$NON-NLS-1$
+    checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
+    checkState(sessionManager, "sessionManager"); //$NON-NLS-1$
+    checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
+    checkState(queryManager, "queryManager"); //$NON-NLS-1$
+    checkState(notificationManager, "notificationManager"); //$NON-NLS-1$
+    checkState(commitManager, "commitManager"); //$NON-NLS-1$
+    checkState(lockManager, "lockingManager"); //$NON-NLS-1$
 
     packageRegistry.setReplacingDescriptors(true);
     packageRegistry.setPackageLoader(this);
@@ -555,7 +555,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
     commitManager.setRepository(this);
     lockManager.setRepository(this);
 
-    checkState(store, "store");
+    checkState(store, "store"); //$NON-NLS-1$
 
     {
       String value = getProperties().get(Props.SUPPORTING_AUDITS);

@@ -39,7 +39,7 @@ public class SetPassiveUpdateIndication extends SyncRevisionsIndication
     boolean passiveUpdateEnabled = in.readBoolean();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update");
+      TRACER.trace("Turning " + (passiveUpdateEnabled ? "on" : "off") + " passive update"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     getSession().setPassiveUpdateEnabled(passiveUpdateEnabled);

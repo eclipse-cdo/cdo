@@ -137,11 +137,11 @@ public abstract class AbstractListTableMapping implements IListMapping
 
     // ---------------- SELECT to read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
+    builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_VALUE);
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
 
     for (int i = 0; i < fields.length; i++)
     {
@@ -149,26 +149,26 @@ public abstract class AbstractListTableMapping implements IListMapping
       if (i + 1 < fields.length)
       {
         // more to come
-        builder.append("= ? AND ");
+        builder.append("= ? AND "); //$NON-NLS-1$
       }
       else
       {
         // last one
-        builder.append("= ? ");
+        builder.append("= ? "); //$NON-NLS-1$
       }
     }
 
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX;
+    sqlOrderByIndex = " ORDER BY " + CDODBSchema.LIST_IDX; //$NON-NLS-1$
 
     // ----------------- count list size --------------------------
 
-    builder = new StringBuilder("SELECT max(");
+    builder = new StringBuilder("SELECT max("); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(") FROM ");
+    builder.append(") FROM "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
 
     for (int i = 0; i < fields.length; i++)
     {
@@ -176,27 +176,27 @@ public abstract class AbstractListTableMapping implements IListMapping
       if (i + 1 < fields.length)
       {
         // more to come
-        builder.append("= ? AND ");
+        builder.append("= ? AND "); //$NON-NLS-1$
       }
       else
       {
         // last one
-        builder.append("= ? ");
+        builder.append("= ? "); //$NON-NLS-1$
       }
     }
 
     sqlGetListLastIndex = builder.toString();
 
     // ----------------- INSERT - reference entry -----------------
-    builder = new StringBuilder("INSERT INTO ");
+    builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
-    builder.append(" VALUES (");
+    builder.append(" VALUES ("); //$NON-NLS-1$
     for (int i = 0; i < fields.length; i++)
     {
-      builder.append("?, ");
+      builder.append("?, "); //$NON-NLS-1$
     }
 
-    builder.append(" ?, ?)");
+    builder.append(" ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
   }
 
@@ -242,7 +242,7 @@ public abstract class AbstractListTableMapping implements IListMapping
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature.getName(),
+      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature.getName(), //$NON-NLS-1$
           revision.getID(), revision.getVersion());
     }
 
@@ -274,7 +274,7 @@ public abstract class AbstractListTableMapping implements IListMapping
         Object value = typeMapping.readValue(resultSet, 1);
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read value for index {0} from result set: {1}", list.size(), value);
+          TRACER.format("Read value for index {0} from result set: {1}", list.size(), value); //$NON-NLS-1$
         }
 
         list.add(value);
@@ -284,7 +284,7 @@ public abstract class AbstractListTableMapping implements IListMapping
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size());
+          TRACER.format("Adding UNINITIALIZED for index {0} ", list.size()); //$NON-NLS-1$
         }
 
         list.add(InternalCDORevision.UNINITIALIZED);
@@ -302,7 +302,7 @@ public abstract class AbstractListTableMapping implements IListMapping
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature
+      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature //$NON-NLS-1$
           .getName(), revision.getID(), revision.getVersion());
     }
   }
@@ -338,7 +338,7 @@ public abstract class AbstractListTableMapping implements IListMapping
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("No last index found -> list is empty. ");
+          TRACER.trace("No last index found -> list is empty. "); //$NON-NLS-1$
         }
 
         return -1;
@@ -348,7 +348,7 @@ public abstract class AbstractListTableMapping implements IListMapping
         int result = resultSet.getInt(1);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Read list last index = " + result);
+          TRACER.trace("Read list last index = " + result); //$NON-NLS-1$
         }
 
         return result;
@@ -369,7 +369,7 @@ public abstract class AbstractListTableMapping implements IListMapping
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature
+      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", containingClass.getName(), feature //$NON-NLS-1$
           .getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
@@ -412,14 +412,14 @@ public abstract class AbstractListTableMapping implements IListMapping
 
           if (TRACER.isEnabled())
           {
-            TRACER.format("Current chunk no. {0} is [start = {1}, size = {2}]", chunkIndex - 1, chunk.getStartIndex(),
+            TRACER.format("Current chunk no. {0} is [start = {1}, size = {2}]", chunkIndex - 1, chunk.getStartIndex(), //$NON-NLS-1$
                 chunkSize);
           }
         }
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read value for chunk index {0} from result set: {1}", indexInChunk, value);
+          TRACER.format("Read value for chunk index {0} from result set: {1}", indexInChunk, value); //$NON-NLS-1$
         }
 
         chunk.add(indexInChunk++, value);
@@ -427,7 +427,7 @@ public abstract class AbstractListTableMapping implements IListMapping
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Chunk finished.");
+            TRACER.format("Chunk finished."); //$NON-NLS-1$
           }
 
           chunk = null;
@@ -437,7 +437,7 @@ public abstract class AbstractListTableMapping implements IListMapping
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", containingClass.getName(),
+        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}v{3}", containingClass.getName(), //$NON-NLS-1$
             feature.getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
       }
     }
@@ -469,7 +469,7 @@ public abstract class AbstractListTableMapping implements IListMapping
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", containingClass.getName(), feature
+      TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", containingClass.getName(), feature //$NON-NLS-1$
           .getName(), idx, revision.getID(), revision.getVersion(), value);
     }
 

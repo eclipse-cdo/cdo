@@ -74,7 +74,7 @@ public class QueryIndication extends CDOReadIndication
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Query returned " + numberOfResults + " results");
+      TRACER.trace("Query returned " + numberOfResults + " results"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     // Query is done successfully

@@ -157,13 +157,13 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
   {
     if (CDOIDUtil.isNull(newID) || newID.isTemporary())
     {
-      throw new IllegalStateException("newID=" + newID);
+      throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
     }
 
     CDOID previousMapping = idMappings.putIfAbsent(oldID, newID);
     if (previousMapping != null)
     {
-      throw new IllegalStateException("previousMapping != null");
+      throw new IllegalStateException("previousMapping != null"); //$NON-NLS-1$
     }
   }
 
@@ -304,7 +304,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
   {
     OM.LOG.error(ex);
     String storeClass = transaction.getRepository().getStore().getClass().getSimpleName();
-    rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex));
+    rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   protected long createTimeStamp()
@@ -374,7 +374,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     CDOIDMetaRange oldRange = packageInfo.getMetaIDRange();
     if (!oldRange.isTemporary())
     {
-      throw new IllegalStateException("!oldRange.isTemporary()");
+      throw new IllegalStateException("!oldRange.isTemporary()"); //$NON-NLS-1$
     }
 
     int count = oldRange.size();
@@ -392,7 +392,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     metaIDRanges.add(newRange);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Mapping meta ID range: {0} --> {1}", oldRange, newRange);
+      TRACER.format("Mapping meta ID range: {0} --> {1}", oldRange, newRange); //$NON-NLS-1$
     }
   }
 
@@ -441,7 +441,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
         dirtyObjects[i] = computeDirtyObject(dirtyObjectDeltas[i], failOnNull);
         if (dirtyObjects[i] == null && failOnNull)
         {
-          throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]);
+          throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]); //$NON-NLS-1$
         }
 
         monitor.worked();
@@ -479,8 +479,8 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
 
       if (!originObject.isCurrent())
       {
-        throw new ConcurrentModificationException("Trying to update object " + dirtyObjectDelta.getID()
-            + " that was already modified");
+        throw new ConcurrentModificationException("Trying to update object " + dirtyObjectDelta.getID() //$NON-NLS-1$
+            + " that was already modified"); //$NON-NLS-1$
       }
 
       InternalCDORevision dirtyObject = (InternalCDORevision)originObject.copy();
@@ -533,7 +533,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
         }
         catch (RuntimeException ex)
         {
-          OM.LOG.warn("Problem while rolling back  the transaction", ex);
+          OM.LOG.warn("Problem while rolling back  the transaction", ex); //$NON-NLS-1$
         }
       }
     }
@@ -566,7 +566,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     catch (RuntimeException ex)
     {
       // TODO Rethink this case
-      OM.LOG.error("FATAL: Memory infrastructure corrupted after successful commit operation of the store");
+      OM.LOG.error("FATAL: Memory infrastructure corrupted after successful commit operation of the store"); //$NON-NLS-1$
     }
     finally
     {

@@ -48,9 +48,9 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public void addSimpleChunk(int index)
   {
     super.addSimpleChunk(index);
-    builder.append(" AND ");
+    builder.append(" AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append("=");
+    builder.append("="); //$NON-NLS-1$
     builder.append(index);
   }
 
@@ -58,11 +58,11 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
   public void addRangedChunk(int fromIndex, int toIndex)
   {
     super.addRangedChunk(fromIndex, toIndex);
-    builder.append(" AND ");
+    builder.append(" AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" BETWEEN ");
+    builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromIndex);
-    builder.append(" AND ");
+    builder.append(" AND "); //$NON-NLS-1$
     builder.append(toIndex - 1);
   }
 

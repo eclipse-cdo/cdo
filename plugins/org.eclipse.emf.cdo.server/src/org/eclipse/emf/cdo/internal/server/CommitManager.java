@@ -113,7 +113,7 @@ public class CommitManager extends Lifecycle
     if (contextEntry != null)
     {
       contextEntry.getFuture().cancel(true);
-      commitContext.rollback("Remote rollback");
+      commitContext.rollback("Remote rollback"); //$NON-NLS-1$
       commitContext.postCommit(false);
     }
   }

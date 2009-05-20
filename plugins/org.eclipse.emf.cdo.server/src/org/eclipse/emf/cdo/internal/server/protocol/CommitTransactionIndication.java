@@ -117,7 +117,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     Repository repository = (Repository)getSession().getSessionManager().getRepository();
     if (!LifecycleUtil.isActive(repository))
     {
-      throw new IllegalStateException("Repository has been deactivated");
+      throw new IllegalStateException("Repository has been deactivated"); //$NON-NLS-1$
     }
 
     return repository;
@@ -128,7 +128,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     IStore store = getRepository().getStore();
     if (!LifecycleUtil.isActive(store))
     {
-      throw new IllegalStateException("Store has been deactivated");
+      throw new IllegalStateException("Store has been deactivated"); //$NON-NLS-1$
     }
 
     return store;
@@ -258,7 +258,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       // New package units
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading {0} new package units", newPackageUnits.length);
+        TRACER.format("Reading {0} new package units", newPackageUnits.length); //$NON-NLS-1$
       }
 
       InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
@@ -281,7 +281,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       // New objects
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading {0} new objects", newObjects.length);
+        TRACER.format("Reading {0} new objects", newObjects.length); //$NON-NLS-1$
       }
 
       for (int i = 0; i < newObjects.length; i++)
@@ -293,7 +293,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       // Dirty objects
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length);
+        TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length); //$NON-NLS-1$
       }
 
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
@@ -378,6 +378,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       return (Transaction)view;
     }
 
-    throw new IllegalStateException("Illegal transaction: " + view);
+    throw new IllegalStateException("Illegal transaction: " + view); //$NON-NLS-1$
   }
 }

@@ -111,7 +111,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   public final EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit)
   {
-    String where = CDODBSchema.PACKAGE_UNITS_ID.getName() + "='" + packageUnit.getID() + "'";
+    String where = CDODBSchema.PACKAGE_UNITS_ID.getName() + "='" + packageUnit.getID() + "'"; //$NON-NLS-1$ //$NON-NLS-2$
     Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA);
     byte[] bytes = (byte[])values[0];
     EPackage ePackage = createEPackage(packageUnit, bytes);
@@ -222,7 +222,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   @Override
   protected void doBeforeActivate() throws Exception
   {
-    checkState(store != null, "Store is not set");
+    checkState(store != null, "Store is not set"); //$NON-NLS-1$
   }
 
   protected InternalCDOPackageInfo createPackageInfo()
@@ -261,10 +261,10 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing package unit: {0}", packageUnit);
+        TRACER.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
       }
 
-      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)";
+      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
       DBUtil.trace(sql);
       PreparedStatement pstmt = null;
       Async async = monitor.forkAsync();
@@ -279,12 +279,12 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
         if (pstmt.execute())
         {
-          throw new DBException("No result set expected");
+          throw new DBException("No result set expected"); //$NON-NLS-1$
         }
 
         if (pstmt.getUpdateCount() == 0)
         {
-          throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS);
+          throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS); //$NON-NLS-1$
         }
       }
       catch (SQLException ex)
@@ -328,7 +328,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing package info: {0}", packageInfo);
+      TRACER.format("Writing package info: {0}", packageInfo); //$NON-NLS-1$
     }
 
     String packageURI = packageInfo.getPackageURI();
@@ -338,7 +338,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     long metaLB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getLowerBound()).getLongValue();
     long metaUB = metaIDRange == null ? 0L : ((CDOIDMeta)metaIDRange.getUpperBound()).getLongValue();
 
-    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
     DBUtil.trace(sql);
     PreparedStatement pstmt = null;
     Async async = monitor.forkAsync();
@@ -354,12 +354,12 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
       if (pstmt.execute())
       {
-        throw new DBException("No result set expected");
+        throw new DBException("No result set expected"); //$NON-NLS-1$
       }
 
       if (pstmt.getUpdateCount() == 0)
       {
-        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS);
+        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS); //$NON-NLS-1$
       }
     }
     catch (SQLException ex)

@@ -42,7 +42,7 @@ public class VerifyRevisionIndication extends CDOReadIndication
     int size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} IDs and versions", size);
+      TRACER.format("Reading {0} IDs and versions", size); //$NON-NLS-1$
     }
 
     RevisionManager revisionManager = getRepository().getRevisionManager();
@@ -53,7 +53,7 @@ public class VerifyRevisionIndication extends CDOReadIndication
       int version = in.readInt();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read ID and version: {0}v{1}", id, version);
+        TRACER.format("Read ID and version: {0}v{1}", id, version); //$NON-NLS-1$
       }
 
       InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version);

@@ -57,10 +57,10 @@ public class NullPreparedStatementCache extends AbstractPreparedStatementCache
   {
     if (!allocatedStatements.isEmpty())
     {
-      OM.LOG.warn("Possible Leak Detected:");
+      OM.LOG.warn("Possible Leak Detected:"); //$NON-NLS-1$
       for (PreparedStatement ps : allocatedStatements)
       {
-        OM.LOG.warn("- " + ps.toString());
+        OM.LOG.warn("- " + ps.toString()); //$NON-NLS-1$
       }
 
       assert false;

@@ -72,10 +72,10 @@ public abstract class Store extends Lifecycle implements IStore
     @Override
     public String toString()
     {
-      String result = "indicatingCommitDistributor";
+      String result = "indicatingCommitDistributor"; //$NON-NLS-1$
       if (repository != null)
       {
-        result += ": " + repository.getName();
+        result += ": " + repository.getName(); //$NON-NLS-1$
       }
 
       return result;
@@ -85,18 +85,18 @@ public abstract class Store extends Lifecycle implements IStore
   public Store(String type, Set<ChangeFormat> supportedChangeFormats,
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
-    checkArg(!StringUtil.isEmpty(type), "Empty type");
+    checkArg(!StringUtil.isEmpty(type), "Empty type"); //$NON-NLS-1$
     this.type = type;
 
-    checkArg(supportedChangeFormats != null && !supportedChangeFormats.isEmpty(), "Empty supportedChangeFormats");
+    checkArg(supportedChangeFormats != null && !supportedChangeFormats.isEmpty(), "Empty supportedChangeFormats"); //$NON-NLS-1$
     this.supportedChangeFormats = supportedChangeFormats;
 
     checkArg(supportedRevisionTemporalities != null && !supportedRevisionTemporalities.isEmpty(),
-        "Empty supportedRevisionTemporalities");
+        "Empty supportedRevisionTemporalities"); //$NON-NLS-1$
     this.supportedRevisionTemporalities = supportedRevisionTemporalities;
 
     checkArg(supportedRevisionParallelisms != null && !supportedRevisionParallelisms.isEmpty(),
-        "Empty supportedRevisionParallelisms");
+        "Empty supportedRevisionParallelisms"); //$NON-NLS-1$
     this.supportedRevisionParallelisms = supportedRevisionParallelisms;
   }
 
@@ -138,7 +138,7 @@ public abstract class Store extends Lifecycle implements IStore
   public void setRevisionTemporality(RevisionTemporality revisionTemporality)
   {
     checkInactive();
-    checkState(supportedRevisionTemporalities.contains(revisionTemporality), "Revision temporality not supported: "
+    checkState(supportedRevisionTemporalities.contains(revisionTemporality), "Revision temporality not supported: " //$NON-NLS-1$
         + revisionTemporality);
     this.revisionTemporality = revisionTemporality;
   }
@@ -151,7 +151,7 @@ public abstract class Store extends Lifecycle implements IStore
   public void setRevisionParallelism(RevisionParallelism revisionParallelism)
   {
     checkInactive();
-    checkState(supportedRevisionParallelisms.contains(revisionParallelism), "Revision parallelism not supported: "
+    checkState(supportedRevisionParallelisms.contains(revisionParallelism), "Revision parallelism not supported: " //$NON-NLS-1$
         + revisionParallelism);
     this.revisionParallelism = revisionParallelism;
   }

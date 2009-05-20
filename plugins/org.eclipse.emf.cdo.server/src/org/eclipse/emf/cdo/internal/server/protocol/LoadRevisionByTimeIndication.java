@@ -41,7 +41,7 @@ public class LoadRevisionByTimeIndication extends LoadRevisionIndication
     timeStamp = in.readLong();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read timeStamp: {0}", timeStamp);
+      TRACER.format("Read timeStamp: {0}", timeStamp); //$NON-NLS-1$
     }
   }
 

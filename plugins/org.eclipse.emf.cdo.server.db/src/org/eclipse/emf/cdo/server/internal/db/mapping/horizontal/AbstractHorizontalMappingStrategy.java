@@ -113,7 +113,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     // only support timestamp in audit mode
     if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !hasAuditSupport())
     {
-      throw new UnsupportedOperationException("Mapping Strategy does not support audits.");
+      throw new UnsupportedOperationException("Mapping Strategy does not support audits."); //$NON-NLS-1$
     }
 
     EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
@@ -163,7 +163,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Resource Query returned ID {0}", longID);
+          TRACER.format("Resource Query returned ID {0}", longID); //$NON-NLS-1$
         }
 
         CDOID id = CDOIDUtil.createLong(longID);

@@ -84,7 +84,7 @@ public class View implements IView
     long timeStamp = getTimeStamp();
     CDOID resourceID = null;
 
-    StringTokenizer tokenizer = new StringTokenizer(path, "/");
+    StringTokenizer tokenizer = new StringTokenizer(path, "/"); //$NON-NLS-1$
     while (tokenizer.hasMoreTokens())
     {
       String token = tokenizer.nextToken();
@@ -163,7 +163,7 @@ public class View implements IView
   @Override
   public String toString()
   {
-    return MessageFormat.format("View[{0}]", viewID);
+    return MessageFormat.format("View[{0}]", viewID); //$NON-NLS-1$
   }
 
   /**
@@ -200,7 +200,7 @@ public class View implements IView
   {
     if (isClosed())
     {
-      throw new IllegalStateException("View closed");
+      throw new IllegalStateException("View closed"); //$NON-NLS-1$
     }
   }
 }

@@ -42,7 +42,7 @@ public class LoadLibrariesIndication extends CDOServerIndication
     int size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} library names", size);
+      TRACER.format("Reading {0} library names", size); //$NON-NLS-1$
     }
 
     libraryNames = new String[size];
@@ -51,7 +51,7 @@ public class LoadLibrariesIndication extends CDOServerIndication
       libraryNames[i] = in.readString();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read library name: {0}", libraryNames[i]);
+        TRACER.format("Read library name: {0}", libraryNames[i]); //$NON-NLS-1$
       }
     }
   }
@@ -66,7 +66,7 @@ public class LoadLibrariesIndication extends CDOServerIndication
       int size = libraryProvider.getSize(libraryName);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing library {0}: {1} bytes", libraryName, size);
+        TRACER.format("Writing library {0}: {1} bytes", libraryName, size); //$NON-NLS-1$
       }
 
       out.writeInt(size);

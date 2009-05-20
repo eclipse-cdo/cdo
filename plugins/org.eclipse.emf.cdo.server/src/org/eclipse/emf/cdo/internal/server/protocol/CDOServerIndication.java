@@ -59,7 +59,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     Repository repository = (Repository)getSession().getSessionManager().getRepository();
     if (!LifecycleUtil.isActive(repository))
     {
-      throw new IllegalStateException("Repository has been deactivated");
+      throw new IllegalStateException("Repository has been deactivated"); //$NON-NLS-1$
     }
 
     return repository;
@@ -70,7 +70,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     IStore store = getRepository().getStore();
     if (!LifecycleUtil.isActive(store))
     {
-      throw new IllegalStateException("Store has been deactivated");
+      throw new IllegalStateException("Store has been deactivated"); //$NON-NLS-1$
     }
 
     return store;

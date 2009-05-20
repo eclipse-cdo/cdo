@@ -105,12 +105,12 @@ public class QueryManager extends Lifecycle
     QueryContext queryContext = queryContexts.get(queryID);
     if (queryContext == null || queryContext.getFuture().isDone())
     {
-      throw new RuntimeException("Query " + queryID + " is not running anymore");
+      throw new RuntimeException("Query " + queryID + " is not running anymore"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Cancelling query for context: " + queryContext);
+      TRACER.trace("Cancelling query for context: " + queryContext); //$NON-NLS-1$
     }
 
     queryContext.cancel();
@@ -237,7 +237,7 @@ public class QueryManager extends Lifecycle
     {
       if (resultCount == 0)
       {
-        throw new IllegalStateException("Maximum number of results exceeded");
+        throw new IllegalStateException("Maximum number of results exceeded"); //$NON-NLS-1$
       }
 
       queryResult.getQueue().add(object);

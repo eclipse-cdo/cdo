@@ -51,7 +51,7 @@ public abstract class LongIDStoreAccessor extends StoreAccessor
         CDOID newID = longIDStore.getNextCDOID();
         if (CDOIDUtil.isNull(newID) || newID.isTemporary())
         {
-          throw new IllegalStateException("newID=" + newID);
+          throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
         }
 
         context.addIDMapping(oldID, newID);

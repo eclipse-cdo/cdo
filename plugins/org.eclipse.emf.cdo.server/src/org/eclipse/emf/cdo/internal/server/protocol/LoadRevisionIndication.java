@@ -68,13 +68,13 @@ public class LoadRevisionIndication extends CDOReadIndication
     referenceChunk = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read referenceChunk: {0}", referenceChunk);
+      TRACER.format("Read referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
     }
 
     int size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} IDs", size);
+      TRACER.format("Reading {0} IDs", size); //$NON-NLS-1$
     }
 
     ids = new CDOID[size];
@@ -83,7 +83,7 @@ public class LoadRevisionIndication extends CDOReadIndication
       CDOID id = in.readCDOID();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read ID: {0}", id);
+        TRACER.format("Read ID: {0}", id); //$NON-NLS-1$
       }
 
       ids[i] = id;
@@ -101,7 +101,7 @@ public class LoadRevisionIndication extends CDOReadIndication
       contextID = in.readCDOID();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading fetch rules for context {0}", contextID);
+        TRACER.format("Reading fetch rules for context {0}", contextID); //$NON-NLS-1$
       }
 
       for (int i = 0; i < fetchSize; i++)
@@ -119,7 +119,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     Set<CDOID> revisionIDs = new HashSet<CDOID>();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} revisions", ids.length);
+      TRACER.format("Writing {0} revisions", ids.length); //$NON-NLS-1$
     }
 
     for (CDOID id : ids)
@@ -133,7 +133,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Collecting more revisions based on rules");
+        TRACER.format("Collecting more revisions based on rules"); //$NON-NLS-1$
       }
 
       InternalCDORevision revisionContext = getRevision(contextID);
@@ -161,7 +161,7 @@ public class LoadRevisionIndication extends CDOReadIndication
     int additionalSize = additionalRevisions.size();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} additional revisions", additionalSize);
+      TRACER.format("Writing {0} additional revisions", additionalSize); //$NON-NLS-1$
     }
 
     out.writeInt(additionalSize);

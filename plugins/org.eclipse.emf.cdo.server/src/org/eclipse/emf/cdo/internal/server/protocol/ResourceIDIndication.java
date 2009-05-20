@@ -41,13 +41,13 @@ public class ResourceIDIndication extends CDOReadIndication
     int viewID = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read viewID: {0}", viewID);
+      TRACER.format("Read viewID: {0}", viewID); //$NON-NLS-1$
     }
 
     String path = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read path: {0}", path);
+      TRACER.format("Read path: {0}", path); //$NON-NLS-1$
     }
 
     IView view = getSession().getView(viewID);
@@ -59,7 +59,7 @@ public class ResourceIDIndication extends CDOReadIndication
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing ID: {0}", id);
+      TRACER.format("Writing ID: {0}", id); //$NON-NLS-1$
     }
 
     out.writeCDOID(id);

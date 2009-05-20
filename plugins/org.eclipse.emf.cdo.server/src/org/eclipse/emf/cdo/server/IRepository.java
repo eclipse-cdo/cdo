@@ -171,26 +171,26 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
     /**
      * @since 2.0
      */
-    public static final String OVERRIDE_UUID = "overrideUUID";
+    public static final String OVERRIDE_UUID = "overrideUUID"; //$NON-NLS-1$
 
     /**
      * @since 2.0
      */
-    public static final String SUPPORTING_AUDITS = "supportingAudits";
+    public static final String SUPPORTING_AUDITS = "supportingAudits"; //$NON-NLS-1$
 
     /**
      * @since 2.0
      */
-    public static final String VERIFYING_REVISIONS = "verifyingRevisions";
+    public static final String VERIFYING_REVISIONS = "verifyingRevisions"; //$NON-NLS-1$
 
     /**
      * @since 2.0
      */
-    public static final String CURRENT_LRU_CAPACITY = "currentLRUCapacity";
+    public static final String CURRENT_LRU_CAPACITY = "currentLRUCapacity"; //$NON-NLS-1$
 
     /**
      * @since 2.0
      */
-    public static final String REVISED_LRU_CAPACITY = "revisedLRUCapacity";
+    public static final String REVISED_LRU_CAPACITY = "revisedLRUCapacity"; //$NON-NLS-1$
   }
 }

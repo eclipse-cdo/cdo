@@ -50,13 +50,13 @@ public class RepositoryTimeIndication extends CDOServerIndication
     long responded = System.currentTimeMillis();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing indicated: {0,date} {0,time}", indicated);
+      TRACER.format("Writing indicated: {0,date} {0,time}", indicated); //$NON-NLS-1$
     }
 
     out.writeLong(indicated);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing responded: {0,date} {0,time}", responded);
+      TRACER.format("Writing responded: {0,date} {0,time}", responded); //$NON-NLS-1$
     }
 
     out.writeLong(responded);

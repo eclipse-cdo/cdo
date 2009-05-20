@@ -100,13 +100,13 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Notify phase2 to fill ID mapping.");
+      TRACER.format("Notify phase2 to fill ID mapping."); //$NON-NLS-1$
     }
 
     state.set(CommitState.APPLY_ID_MAPPING);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Waiting for phase2 to be completed before continueing.");
+      TRACER.format("Waiting for phase2 to be completed before continueing."); //$NON-NLS-1$
     }
 
     try
@@ -120,7 +120,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Received signal to continue.");
+      TRACER.format("Received signal to continue."); //$NON-NLS-1$
     }
 
     super.applyIDMappings(monitor);
@@ -136,7 +136,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
     {
       if (object == CommitState.ROLLED_BACK)
       {
-        throw new RuntimeException("RolledBack");
+        throw new RuntimeException("RolledBack"); //$NON-NLS-1$
       }
 
       return CommitState.APPLY_ID_MAPPING == object;
@@ -153,7 +153,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
     {
       if (object == CommitState.ROLLED_BACK)
       {
-        throw new RuntimeException("RolledBack");
+        throw new RuntimeException("RolledBack"); //$NON-NLS-1$
       }
 
       return CommitState.APPLY_ID_MAPPING_DONE == object;

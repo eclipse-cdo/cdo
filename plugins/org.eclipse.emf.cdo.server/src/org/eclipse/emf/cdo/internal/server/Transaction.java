@@ -51,7 +51,7 @@ public class Transaction extends View implements ITransaction
   @Override
   public String toString()
   {
-    return MessageFormat.format("Transaction[{0}]", getTransactionID());
+    return MessageFormat.format("Transaction[{0}]", getTransactionID()); //$NON-NLS-1$
   }
 
   /**
@@ -85,7 +85,7 @@ public class Transaction extends View implements ITransaction
   {
     if (isClosed())
     {
-      throw new IllegalStateException("View closed");
+      throw new IllegalStateException("View closed"); //$NON-NLS-1$
     }
   }
 

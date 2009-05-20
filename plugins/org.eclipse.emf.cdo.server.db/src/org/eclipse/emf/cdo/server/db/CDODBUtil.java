@@ -53,7 +53,7 @@ public final class CDODBUtil
   /**
    * @since 2.0
    */
-  public static final String EXT_POINT_MAPPING_STRATEGIES = "mappingStrategies";
+  public static final String EXT_POINT_MAPPING_STRATEGIES = "mappingStrategies"; //$NON-NLS-1$
 
   private CDODBUtil()
   {
@@ -102,14 +102,14 @@ public final class CDODBUtil
     IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT_MAPPING_STRATEGIES);
     for (final IConfigurationElement element : elements)
     {
-      if ("mappingStrategy".equals(element.getName()))
+      if ("mappingStrategy".equals(element.getName())) //$NON-NLS-1$
       {
-        String typeAttr = element.getAttribute("type");
+        String typeAttr = element.getAttribute("type"); //$NON-NLS-1$
         if (ObjectUtil.equals(typeAttr, type))
         {
           try
           {
-            return (IMappingStrategy)element.createExecutableExtension("class");
+            return (IMappingStrategy)element.createExecutableExtension("class"); //$NON-NLS-1$
           }
           catch (CoreException ex)
           {
@@ -137,7 +137,7 @@ public final class CDODBUtil
   {
     if (id != null && id.getType() == CDOID.Type.EXTERNAL_OBJECT)
     {
-      throw new IllegalArgumentException("DBStore does not support external references: " + id);
+      throw new IllegalArgumentException("DBStore does not support external references: " + id); //$NON-NLS-1$
     }
 
     return CDOIDUtil.getLong(id);
@@ -167,12 +167,12 @@ public final class CDODBUtil
     // basic check of update result
     if (exactlyOne && result != 1)
     {
-      throw new IllegalStateException(stmt.toString() + " returned Update count " + result + " (expected: 1)");
+      throw new IllegalStateException(stmt.toString() + " returned Update count " + result + " (expected: 1)"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (result == Statement.EXECUTE_FAILED)
     {
-      throw new IllegalStateException(stmt.toString() + " returned EXECUTE_FAILED.");
+      throw new IllegalStateException(stmt.toString() + " returned EXECUTE_FAILED."); //$NON-NLS-1$
     }
 
     return result;
@@ -191,14 +191,14 @@ public final class CDODBUtil
     ResultSet rs = null;
     try
     {
-      TRACER.format("Dumping output of {0}", sql);
+      TRACER.format("Dumping output of {0}", sql); //$NON-NLS-1$
       rs = conn.createStatement().executeQuery(sql);
       int numCol = rs.getMetaData().getColumnCount();
 
       StringBuilder row = new StringBuilder();
       for (int c = 1; c <= numCol; c++)
       {
-        row.append(String.format("%10s | ", rs.getMetaData().getColumnLabel(c)));
+        row.append(String.format("%10s | ", rs.getMetaData().getColumnLabel(c))); //$NON-NLS-1$
       }
 
       TRACER.trace(row.toString());
@@ -206,7 +206,7 @@ public final class CDODBUtil
       row = new StringBuilder();
       for (int c = 1; c <= numCol; c++)
       {
-        row.append("-----------+--");
+        row.append("-----------+--"); //$NON-NLS-1$
       }
 
       TRACER.trace(row.toString());
@@ -216,7 +216,7 @@ public final class CDODBUtil
         row = new StringBuilder();
         for (int c = 1; c <= numCol; c++)
         {
-          row.append(String.format("%10s | ", rs.getString(c)));
+          row.append(String.format("%10s | ", rs.getString(c))); //$NON-NLS-1$
         }
 
         TRACER.trace(row.toString());
@@ -225,7 +225,7 @@ public final class CDODBUtil
       row = new StringBuilder();
       for (int c = 1; c <= numCol; c++)
       {
-        row.append("-----------+-");
+        row.append("-----------+-"); //$NON-NLS-1$
       }
 
       TRACER.trace(row.toString());

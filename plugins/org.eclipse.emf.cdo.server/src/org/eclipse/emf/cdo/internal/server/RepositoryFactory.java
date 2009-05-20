@@ -20,9 +20,9 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public class RepositoryFactory implements IRepositoryFactory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositories";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositories"; //$NON-NLS-1$
 
-  public static final String TYPE = "default";
+  public static final String TYPE = "default"; //$NON-NLS-1$
 
   public RepositoryFactory()
   {

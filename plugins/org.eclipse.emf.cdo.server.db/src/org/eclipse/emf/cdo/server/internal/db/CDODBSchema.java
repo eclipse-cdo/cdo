@@ -28,42 +28,42 @@ public class CDODBSchema extends DBSchema
   /**
    * DBTable cdo_repository
    */
-  public static final IDBTable REPOSITORY = INSTANCE.addTable("cdo_repository");
+  public static final IDBTable REPOSITORY = INSTANCE.addTable("cdo_repository"); //$NON-NLS-1$
 
   public static final IDBField REPOSITORY_CREATED = //
-  REPOSITORY.addField("created", DBType.BIGINT);
+  REPOSITORY.addField("created", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField REPOSITORY_STARTS = //
-  REPOSITORY.addField("starts", DBType.BIGINT);
+  REPOSITORY.addField("starts", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField REPOSITORY_STARTED = //
-  REPOSITORY.addField("started", DBType.BIGINT);
+  REPOSITORY.addField("started", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField REPOSITORY_STOPPED = //
-  REPOSITORY.addField("stopped", DBType.BIGINT);
+  REPOSITORY.addField("stopped", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField REPOSITORY_NEXT_CDOID = //
-  REPOSITORY.addField("next_cdoid", DBType.BIGINT);
+  REPOSITORY.addField("next_cdoid", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField REPOSITORY_NEXT_METAID = //
-  REPOSITORY.addField("next_metaid", DBType.BIGINT);
+  REPOSITORY.addField("next_metaid", DBType.BIGINT); //$NON-NLS-1$
 
   /**
    * DBTable cdo_package_units
    */
-  public static final IDBTable PACKAGE_UNITS = INSTANCE.addTable("cdo_package_units");
+  public static final IDBTable PACKAGE_UNITS = INSTANCE.addTable("cdo_package_units"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ID = //
-  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255);
+  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ORIGINAL_TYPE = //
-  PACKAGE_UNITS.addField("original_type", DBType.INTEGER);
+  PACKAGE_UNITS.addField("original_type", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_TIME_STAMP = //
-  PACKAGE_UNITS.addField("time_stamp", DBType.BIGINT);
+  PACKAGE_UNITS.addField("time_stamp", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_PACKAGE_DATA = //
-  PACKAGE_UNITS.addField("package_data", DBType.BLOB);
+  PACKAGE_UNITS.addField("package_data", DBType.BLOB); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_PACKAGE_UNITS_PK = //
   PACKAGE_UNITS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_UNITS_ID);
@@ -71,22 +71,22 @@ public class CDODBSchema extends DBSchema
   /**
    * DBTable cdo_packages
    */
-  public static final IDBTable PACKAGE_INFOS = INSTANCE.addTable("cdo_package_infos");
+  public static final IDBTable PACKAGE_INFOS = INSTANCE.addTable("cdo_package_infos"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_URI = //
-  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255);
+  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_PARENT = //
-  PACKAGE_INFOS.addField("parent", DBType.VARCHAR, 255);
+  PACKAGE_INFOS.addField("parent", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_UNIT = //
-  PACKAGE_INFOS.addField("unit", DBType.VARCHAR, 255);
+  PACKAGE_INFOS.addField("unit", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_META_LB = //
-  PACKAGE_INFOS.addField("meta_lb", DBType.BIGINT);
+  PACKAGE_INFOS.addField("meta_lb", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_META_UB = //
-  PACKAGE_INFOS.addField("meta_ub", DBType.BIGINT);
+  PACKAGE_INFOS.addField("meta_ub", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_PACKAGE_INFOS_PK = //
   PACKAGE_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_INFOS_URI);
@@ -100,43 +100,43 @@ public class CDODBSchema extends DBSchema
   /**
    * Name of object table
    */
-  public static final String CDO_OBJECTS = "cdo_objects";
+  public static final String CDO_OBJECTS = "cdo_objects"; //$NON-NLS-1$
 
   /**
    * Field names of attribute tables
    */
-  public static final String ATTRIBUTES_ID = "cdo_id";
+  public static final String ATTRIBUTES_ID = "cdo_id"; //$NON-NLS-1$
 
-  public static final String ATTRIBUTES_VERSION = "cdo_version";
+  public static final String ATTRIBUTES_VERSION = "cdo_version"; //$NON-NLS-1$
 
-  public static final String ATTRIBUTES_CLASS = "cdo_class";
+  public static final String ATTRIBUTES_CLASS = "cdo_class"; //$NON-NLS-1$
 
-  public static final String ATTRIBUTES_CREATED = "cdo_created";
+  public static final String ATTRIBUTES_CREATED = "cdo_created"; //$NON-NLS-1$
 
-  public static final String ATTRIBUTES_REVISED = "cdo_revised";
+  public static final String ATTRIBUTES_REVISED = "cdo_revised"; //$NON-NLS-1$
 
-  public static final String ATTRIBUTES_RESOURCE = "cdo_resource";
+  public static final String ATTRIBUTES_RESOURCE = "cdo_resource"; //$NON-NLS-1$
 
-  public static final String ATTRIBUTES_CONTAINER = "cdo_container";
+  public static final String ATTRIBUTES_CONTAINER = "cdo_container"; //$NON-NLS-1$
 
-  public static final String ATTRIBUTES_FEATURE = "cdo_feature";
+  public static final String ATTRIBUTES_FEATURE = "cdo_feature"; //$NON-NLS-1$
 
   /**
    * Field names of list tables
    */
-  public static final String LIST_FEATURE = "cdo_feature";
+  public static final String LIST_FEATURE = "cdo_feature"; //$NON-NLS-1$
 
-  public static final String LIST_REVISION_ID = "cdo_source";
+  public static final String LIST_REVISION_ID = "cdo_source"; //$NON-NLS-1$
 
-  public static final String LIST_REVISION_VERSION = "cdo_version";
+  public static final String LIST_REVISION_VERSION = "cdo_version"; //$NON-NLS-1$
 
-  public static final String LIST_IDX = "cdo_idx";
+  public static final String LIST_IDX = "cdo_idx"; //$NON-NLS-1$
 
-  public static final String LIST_VALUE = "cdo_value";
+  public static final String LIST_VALUE = "cdo_value"; //$NON-NLS-1$
 
   private CDODBSchema()
   {
-    super("CDO");
+    super("CDO"); //$NON-NLS-1$
   }
 
   static

@@ -13,8 +13,8 @@
 
 <plugin>
 
-   <extension-point id="storeFactories" name="CDO Store Factories" schema="schema/storeFactories.exsd"/>
-   <extension-point id="repositoryFactories" name="CDO Repository Factories" schema="schema/repositoryFactories.exsd"/>
+   <extension-point id="storeFactories" name="%extension-point.name" schema="schema/storeFactories.exsd"/>
+   <extension-point id="repositoryFactories" name="%extension-point.name.0" schema="schema/repositoryFactories.exsd"/>
 
 	<extension
 		point="org.eclipse.net4j.util.factories">
@@ -50,7 +50,7 @@
     <extension
 		id="app"
 		point="org.eclipse.core.runtime.applications"
-		name="CDOServer">
+		name="%extension.name">
 		<application cardinality="1" thread="main">
 			<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
  		</application>
@@ -60,8 +60,8 @@
         id="product"
         point="org.eclipse.core.runtime.products">
       	<product
-        	name="CDO Server"
-            description="An example of a CDO server"
+        	name="%product.name"
+            description="%product.description"
             application="org.eclipse.emf.cdo.server.app">
          	<property name="appName" value="CDO Server"/>
       	</product>

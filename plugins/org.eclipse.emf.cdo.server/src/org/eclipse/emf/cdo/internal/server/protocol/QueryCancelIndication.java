@@ -40,7 +40,7 @@ public class QueryCancelIndication extends CDOReadIndication
     queryID = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Query " + queryID + " will be cancelled");
+      TRACER.trace("Query " + queryID + " will be cancelled"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

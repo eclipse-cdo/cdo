@@ -13,7 +13,7 @@
 
 <plugin>
 
-   <extension-point id="mappingStrategies" name="CDO Mapping Strategies" schema="schema/mappingStrategies.exsd"/>
+   <extension-point id="mappingStrategies" name="%extension-point.name" schema="schema/mappingStrategies.exsd"/>
 
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">

@@ -62,7 +62,7 @@ public class ViewsChangedIndication extends CDOServerIndication
       break;
 
     default:
-      throw new ImplementationError("Invalid kind: " + kind);
+      throw new ImplementationError("Invalid kind: " + kind); //$NON-NLS-1$
     }
   }
 

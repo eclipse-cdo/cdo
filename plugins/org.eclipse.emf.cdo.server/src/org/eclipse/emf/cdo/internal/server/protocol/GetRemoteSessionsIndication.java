@@ -40,7 +40,7 @@ public class GetRemoteSessionsIndication extends CDOReadIndication
     subscribe = in.readBoolean();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read subscribe: {0}", subscribe);
+      TRACER.format("Read subscribe: {0}", subscribe); //$NON-NLS-1$
     }
   }
 

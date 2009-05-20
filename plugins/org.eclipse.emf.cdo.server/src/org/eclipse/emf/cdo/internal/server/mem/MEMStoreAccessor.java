@@ -187,8 +187,8 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     InternalCDORevision revision = getStore().getRevision(revisionDelta.getID());
     if (revision.getVersion() != revisionDelta.getOriginVersion())
     {
-      throw new ConcurrentModificationException("Trying to update object " + revisionDelta.getID()
-          + " that was already modified");
+      throw new ConcurrentModificationException("Trying to update object " + revisionDelta.getID() //$NON-NLS-1$
+          + " that was already modified"); //$NON-NLS-1$
     }
 
     InternalCDORevision newRevision = (InternalCDORevision)revision.copy();
@@ -227,14 +227,14 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
    */
   public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
   {
-    if (!info.getQueryLanguage().equals("TEST"))
+    if (!info.getQueryLanguage().equals("TEST")) //$NON-NLS-1$
     {
-      throw new RuntimeException("Unsupported language " + info.getQueryLanguage());
+      throw new RuntimeException("Unsupported language " + info.getQueryLanguage()); //$NON-NLS-1$
     }
 
     List<Object> filters = new ArrayList<Object>();
-    Object context = info.getParameters().get("context");
-    Long sleep = (Long)info.getParameters().get("sleep");
+    Object context = info.getParameters().get("context"); //$NON-NLS-1$
+    Long sleep = (Long)info.getParameters().get("sleep"); //$NON-NLS-1$
     if (context != null)
     {
       if (context instanceof EClass)

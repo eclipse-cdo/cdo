@@ -60,7 +60,7 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
   {
     if (!checkedOut.isEmpty())
     {
-      OM.LOG.warn("Statement leak detected.");
+      OM.LOG.warn("Statement leak detected."); //$NON-NLS-1$
     }
   }
 
@@ -111,7 +111,7 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
       // put into lookup table
       if (lookup.put(cachedStatement.getSql(), cachedStatement) != null)
       {
-        throw new ImplementationError(cachedStatement.getSql() + " already in cache.");
+        throw new ImplementationError(cachedStatement.getSql() + " already in cache."); //$NON-NLS-1$
       }
 
       // handle capacity overflow

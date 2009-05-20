@@ -81,19 +81,19 @@ public final class CDOServerUtil
   public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException,
       IOException
   {
-    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo.server.xml");
+    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo.server.xml"); //$NON-NLS-1$
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document document = builder.parse(configFile);
-    NodeList elements = document.getElementsByTagName("repository");
+    NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$
     for (int i = 0; i < elements.getLength(); i++)
     {
       Node node = elements.item(i);
       if (node instanceof Element)
       {
         Element element = (Element)node;
-        String name = element.getAttribute("name");
+        String name = element.getAttribute("name"); //$NON-NLS-1$
         if (ObjectUtil.equals(name, repositoryName))
         {
           return element;
@@ -101,7 +101,7 @@ public final class CDOServerUtil
       }
     }
 
-    throw new IllegalStateException("Repository config not found: " + repositoryName);
+    throw new IllegalStateException("Repository config not found: " + repositoryName); //$NON-NLS-1$
   }
 
   /**
@@ -138,7 +138,7 @@ public final class CDOServerUtil
         String violation = validate(session, revision);
         if (violation != null)
         {
-          OM.LOG.info("Revision can not be delivered to " + session + ": " + violation);
+          OM.LOG.info("Revision can not be delivered to " + session + ": " + violation); //$NON-NLS-1$ //$NON-NLS-2$
           it.remove();
         }
       }
@@ -147,12 +147,12 @@ public final class CDOServerUtil
     protected void throwException(ISession session, List<String> violations) throws RuntimeException
     {
       StringBuilder builder = new StringBuilder();
-      builder.append("Revisions can not be delivered to ");
+      builder.append("Revisions can not be delivered to "); //$NON-NLS-1$
       builder.append(session);
-      builder.append(":");
+      builder.append(":"); //$NON-NLS-1$
       for (String violation : violations)
       {
-        builder.append("\n- ");
+        builder.append("\n- "); //$NON-NLS-1$
         builder.append(violation);
       }
 

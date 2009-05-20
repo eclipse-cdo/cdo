@@ -59,7 +59,7 @@ public class Audit extends View implements IAudit
   @Override
   public String toString()
   {
-    return MessageFormat.format("Audit[{0}, {1,date} {1,time}]", getViewID(), timeStamp);
+    return MessageFormat.format("Audit[{0}, {1,date} {1,time}]", getViewID(), timeStamp); //$NON-NLS-1$
   }
 
   private void setTimeStamp(IRepository repository, long timeStamp)
@@ -72,7 +72,7 @@ public class Audit extends View implements IAudit
   {
     if (isClosed())
     {
-      throw new IllegalStateException("View closed");
+      throw new IllegalStateException("View closed"); //$NON-NLS-1$
     }
   }
 }

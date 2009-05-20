@@ -316,7 +316,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
         }
         else
         {
-          OM.LOG.warn("Session channel is inactive: " + this);
+          OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
         }
       }
     }
@@ -340,7 +340,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       }
       else
       {
-        OM.LOG.warn("Session channel is inactive: " + this);
+        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
       }
     }
     catch (Exception ex)
@@ -390,7 +390,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   @Override
   public String toString()
   {
-    return MessageFormat.format("Session[{0}]", sessionID);
+    return MessageFormat.format("Session[{0}]", sessionID); //$NON-NLS-1$
   }
 
   /**

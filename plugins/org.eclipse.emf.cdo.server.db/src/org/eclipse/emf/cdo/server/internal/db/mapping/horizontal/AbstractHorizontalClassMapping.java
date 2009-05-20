@@ -150,7 +150,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Executing Query: {0}", pstmt.toString());
+        TRACER.format("Executing Query: {0}", pstmt.toString()); //$NON-NLS-1$
       }
 
       pstmt.setMaxRows(1); // Optimization: only 1 row
@@ -160,7 +160,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Resultset was empty.");
+          TRACER.format("Resultset was empty."); //$NON-NLS-1$
         }
 
         return false;
@@ -271,7 +271,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       }
     }
 
-    throw new IllegalArgumentException("List mapping for feature " + feature + " does not exist.");
+    throw new IllegalArgumentException("List mapping for feature " + feature + " does not exist."); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   protected final IDBTable getTable()
@@ -300,7 +300,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     CDOID existingID = accessor.readResourceID(folderID, name, CDORevision.UNSPECIFIED_DATE);
     if (existingID != null && !existingID.equals(revision.getID()))
     {
-      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID);
+      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

@@ -32,6 +32,6 @@ public class RepositoryNotFoundException extends CDOException
   @Override
   public String getMessage()
   {
-    return "Repository not found: " + getRepositoryName();
+    return "Repository not found: " + getRepositoryName(); //$NON-NLS-1$
   }
 }

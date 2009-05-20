@@ -96,83 +96,83 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
 
-    builder.append("SELECT ");
+    builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append(", ");
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
 
     for (ITypeMapping singleMapping : getValueMappings())
     {
-      builder.append(", ");
+      builder.append(", "); //$NON-NLS-1$
       builder.append(singleMapping.getField().getName());
     }
 
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append("= ?");
+    builder.append("= ?"); //$NON-NLS-1$
 
     sqlSelectCurrentAttributes = builder.toString();
 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
-    builder.append("INSERT INTO ");
+    builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" VALUES (?, ?, ");
-    builder.append("?, ?, ?, ?, ?, ?");
+    builder.append(" VALUES (?, ?, "); //$NON-NLS-1$
+    builder.append("?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
     for (int i = 0; i < getValueMappings().size(); i++)
     {
-      builder.append(", ?");
+      builder.append(", ?"); //$NON-NLS-1$
     }
 
-    builder.append(")");
+    builder.append(")"); //$NON-NLS-1$
     sqlInsertAttributes = builder.toString();
 
-    builder = new StringBuilder("DELETE FROM ");
+    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" = ? ");
+    builder.append(" = ? "); //$NON-NLS-1$
     sqlDelete = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
-    builder = new StringBuilder("SELECT ");
+    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
     sqlSelectAllObjectIds = builder.toString();
 
     // ----------- Update attributes --------------------
-    builder = new StringBuilder("UPDATE ");
+    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" SET ");
+    builder.append(" SET "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_VERSION);
-    builder.append(" =? ,");
+    builder.append(" =? ,"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-    builder.append(" =? ");
+    builder.append(" =? "); //$NON-NLS-1$
     sqlUpdatePrexix = builder.toString();
 
-    builder = new StringBuilder(", ");
+    builder = new StringBuilder(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_RESOURCE);
-    builder.append(" =? ,");
+    builder.append(" =? ,"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append(" =? ,");
+    builder.append(" =? ,"); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_FEATURE);
-    builder.append(" =? ");
+    builder.append(" =? "); //$NON-NLS-1$
     sqlUpdateContainerPart = builder.toString();
 
-    builder = new StringBuilder(" WHERE ");
+    builder = new StringBuilder(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" = ? ");
+    builder.append(" = ? "); //$NON-NLS-1$
     sqlUpdateAffix = builder.toString();
   }
 
@@ -217,7 +217,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIds);
+      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIds); //$NON-NLS-1$
     }
 
     return accessor.getStatementCache().getPreparedStatement(sqlSelectAllObjectIds, ReuseProbability.HIGH);
@@ -228,7 +228,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   {
     if (timeStamp != CDORevision.UNSPECIFIED_DATE)
     {
-      throw new IllegalArgumentException("Non-audit store does not support explicit timeStamp in resource query");
+      throw new IllegalArgumentException("Non-audit store does not support explicit timeStamp in resource query"); //$NON-NLS-1$
     }
 
     EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
@@ -236,25 +236,25 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     ITypeMapping nameValueMapping = getValueMapping(nameFeature);
     if (nameValueMapping == null)
     {
-      throw new ImplementationError(nameFeature + " not found in ClassMapping " + this);
+      throw new ImplementationError(nameFeature + " not found in ClassMapping " + this); //$NON-NLS-1$
     }
 
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
+    builder.append("SELECT "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_ID);
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable().getName());
-    builder.append(" WHERE ");
+    builder.append(" WHERE "); //$NON-NLS-1$
     builder.append(CDODBSchema.ATTRIBUTES_CONTAINER);
-    builder.append("= ? AND ");
+    builder.append("= ? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField().getName());
     if (name == null)
     {
-      builder.append(" IS NULL");
+      builder.append(" IS NULL"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(exactMatch ? " = ? " : " LIKE ? ");
+      builder.append(exactMatch ? " = ? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     PreparedStatement pstmt = null;
@@ -267,13 +267,13 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
       if (name != null)
       {
-        String queryName = exactMatch ? name : name + "%";
+        String queryName = exactMatch ? name : name + "%"; //$NON-NLS-1$
         nameValueMapping.setValue(pstmt, idx++, queryName);
       }
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Created Resource Query: {0}", pstmt.toString());
+        TRACER.format("Created Resource Query: {0}", pstmt.toString()); //$NON-NLS-1$
       }
 
       return pstmt;
@@ -415,20 +415,20 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     public void visit(CDOMoveFeatureDelta delta)
     {
-      throw new ImplementationError("Should not be called");
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
     public void visit(CDOSetFeatureDelta delta)
     {
       if (delta.getFeature().isMany())
       {
-        throw new ImplementationError("Should not be called");
+        throw new ImplementationError("Should not be called"); //$NON-NLS-1$
       }
 
       ITypeMapping am = getValueMapping(delta.getFeature());
       if (am == null)
       {
-        throw new IllegalArgumentException("AttributeMapping for " + delta.getFeature() + " is null!");
+        throw new IllegalArgumentException("AttributeMapping for " + delta.getFeature() + " is null!"); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       attributeChanges.add(new Pair<ITypeMapping, Object>(am, delta.getValue()));
@@ -450,17 +450,17 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     public void visit(CDOClearFeatureDelta delta)
     {
-      throw new ImplementationError("Should not be called");
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
     public void visit(CDOAddFeatureDelta delta)
     {
-      throw new ImplementationError("Should not be called");
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
     public void visit(CDORemoveFeatureDelta delta)
     {
-      throw new ImplementationError("Should not be called");
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
     public void visit(CDOContainerFeatureDelta delta)
@@ -553,9 +553,9 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     for (Pair<ITypeMapping, Object> change : attributeChanges)
     {
-      builder.append(", ");
+      builder.append(", "); //$NON-NLS-1$
       builder.append(change.getElement1().getField().getName());
-      builder.append(" =? ");
+      builder.append(" =? "); //$NON-NLS-1$
     }
 
     builder.append(sqlUpdateAffix);

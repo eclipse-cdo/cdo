@@ -56,18 +56,18 @@ public class DBStoreFactory implements IStoreFactory
 
   private IMappingStrategy getMappingStrategy(Element storeConfig)
   {
-    NodeList mappingStrategyConfigs = storeConfig.getElementsByTagName("mappingStrategy");
+    NodeList mappingStrategyConfigs = storeConfig.getElementsByTagName("mappingStrategy"); //$NON-NLS-1$
     if (mappingStrategyConfigs.getLength() != 1)
     {
-      throw new IllegalStateException("Exactly one mapping strategy must be configured for DB store");
+      throw new IllegalStateException("Exactly one mapping strategy must be configured for DB store"); //$NON-NLS-1$
     }
 
     Element mappingStrategyConfig = (Element)mappingStrategyConfigs.item(0);
-    String mappingStrategyType = mappingStrategyConfig.getAttribute("type");
+    String mappingStrategyType = mappingStrategyConfig.getAttribute("type"); //$NON-NLS-1$
     IMappingStrategy mappingStrategy = CDODBUtil.createMappingStrategy(mappingStrategyType);
     if (mappingStrategy == null)
     {
-      throw new IllegalArgumentException("Unknown mapping strategy: " + mappingStrategyType);
+      throw new IllegalArgumentException("Unknown mapping strategy: " + mappingStrategyType); //$NON-NLS-1$
     }
 
     Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig, 1);
@@ -77,18 +77,18 @@ public class DBStoreFactory implements IStoreFactory
 
   private IDBAdapter getDBAdapter(Element storeConfig)
   {
-    NodeList dbAdapterConfigs = storeConfig.getElementsByTagName("dbAdapter");
+    NodeList dbAdapterConfigs = storeConfig.getElementsByTagName("dbAdapter"); //$NON-NLS-1$
     if (dbAdapterConfigs.getLength() != 1)
     {
-      throw new IllegalStateException("Exactly one dbAdapter must be configured for DB store");
+      throw new IllegalStateException("Exactly one dbAdapter must be configured for DB store"); //$NON-NLS-1$
     }
 
     Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
-    String dbAdapterName = dbAdapterConfig.getAttribute("name");
+    String dbAdapterName = dbAdapterConfig.getAttribute("name"); //$NON-NLS-1$
     IDBAdapter dbAdapter = DBUtil.getDBAdapter(dbAdapterName);
     if (dbAdapter == null)
     {
-      throw new IllegalArgumentException("Unknown DB adapter: " + dbAdapterName);
+      throw new IllegalArgumentException("Unknown DB adapter: " + dbAdapterName); //$NON-NLS-1$
     }
 
     return dbAdapter;
@@ -96,10 +96,10 @@ public class DBStoreFactory implements IStoreFactory
 
   private DataSource getDataSource(Element storeConfig)
   {
-    NodeList dataSourceConfigs = storeConfig.getElementsByTagName("dataSource");
+    NodeList dataSourceConfigs = storeConfig.getElementsByTagName("dataSource"); //$NON-NLS-1$
     if (dataSourceConfigs.getLength() != 1)
     {
-      throw new IllegalStateException("Exactly one dataSource must be configured for DB store");
+      throw new IllegalStateException("Exactly one dataSource must be configured for DB store"); //$NON-NLS-1$
     }
 
     Properties properties = new Properties();

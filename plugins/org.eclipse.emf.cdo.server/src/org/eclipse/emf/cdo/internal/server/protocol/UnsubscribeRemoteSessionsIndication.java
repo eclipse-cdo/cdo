@@ -46,19 +46,19 @@ public class UnsubscribeRemoteSessionsIndication extends CDOReadIndication
     int viewID = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read viewID: {0}", viewID);
+      TRACER.format("Read viewID: {0}", viewID); //$NON-NLS-1$
     }
 
     long timeStamp = in.readLong();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp);
+      TRACER.format("Read timeStamp: {0,date} {0,time}", timeStamp); //$NON-NLS-1$
     }
 
     int size = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0} IDs", size);
+      TRACER.format("Reading {0} IDs", size); //$NON-NLS-1$
     }
 
     List<CDOID> invalidObjects = new ArrayList<CDOID>(size);
@@ -68,7 +68,7 @@ public class UnsubscribeRemoteSessionsIndication extends CDOReadIndication
       invalidObjects.add(id);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Read ID: {0}", id);
+        TRACER.format("Read ID: {0}", id); //$NON-NLS-1$
       }
     }
 
@@ -85,7 +85,7 @@ public class UnsubscribeRemoteSessionsIndication extends CDOReadIndication
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} existanceFlags", revisions.size());
+      TRACER.format("Writing {0} existanceFlags", revisions.size()); //$NON-NLS-1$
     }
 
     out.writeInt(revisions.size());
@@ -94,7 +94,7 @@ public class UnsubscribeRemoteSessionsIndication extends CDOReadIndication
       boolean existanceFlag = revision != null;
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing existanceFlag: {0}", existanceFlag);
+        TRACER.format("Writing existanceFlag: {0}", existanceFlag); //$NON-NLS-1$
       }
 
       out.writeBoolean(existanceFlag);

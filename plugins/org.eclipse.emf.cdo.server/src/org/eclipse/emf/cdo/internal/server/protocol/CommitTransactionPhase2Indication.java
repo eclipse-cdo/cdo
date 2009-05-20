@@ -47,7 +47,7 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
     int size = in.readInt();
     if (PROTOCOL.isEnabled())
     {
-      PROTOCOL.format("Receiving {0} mapping informations", size);
+      PROTOCOL.format("Receiving {0} mapping informations", size); //$NON-NLS-1$
     }
 
     for (int i = 0; i < size; i++)

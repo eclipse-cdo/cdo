@@ -61,7 +61,7 @@ public abstract class AbstractSyncRevisionsIndication extends CDOReadIndication
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Sync found " + dirtyObjects.size() + " dirty objects");
+      TRACER.format("Sync found " + dirtyObjects.size() + " dirty objects"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     out.writeInt(dirtyObjects.size());
@@ -96,8 +96,8 @@ public abstract class AbstractSyncRevisionsIndication extends CDOReadIndication
       }
       else if (revision.getVersion() < version)
       {
-        throw new IllegalStateException("The object " + revision.getID() + " have a higher version ("
-            + revision.getVersion() + ") in the repository than the version (" + version + ") submitted.");
+        throw new IllegalStateException("The object " + revision.getID() + " have a higher version (" //$NON-NLS-1$ //$NON-NLS-2$
+            + revision.getVersion() + ") in the repository than the version (" + version + ") submitted."); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
     catch (IllegalArgumentException revisionIsNullException)

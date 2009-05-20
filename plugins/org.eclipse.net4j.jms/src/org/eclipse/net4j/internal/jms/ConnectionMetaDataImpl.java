@@ -41,12 +41,12 @@ public class ConnectionMetaDataImpl implements ConnectionMetaData
 
   public String getJMSVersion()
   {
-    return "1.1";
+    return "1.1"; //$NON-NLS-1$
   }
 
   public String getJMSProviderName()
   {
-    return "Net4j JMS";
+    return "Net4j JMS"; //$NON-NLS-1$
   }
 
   public int getProviderMajorVersion()
@@ -61,11 +61,11 @@ public class ConnectionMetaDataImpl implements ConnectionMetaData
 
   public String getProviderVersion()
   {
-    return "0.8.0";
+    return "0.8.0"; //$NON-NLS-1$
   }
 
   public Enumeration<?> getJMSXPropertyNames()
   {
-    return new StringTokenizer("");
+    return new StringTokenizer(""); //$NON-NLS-1$
   }
 }

@@ -14,8 +14,11 @@ import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.jms.internal.server.ServerConnection;
 import org.eclipse.net4j.jms.internal.server.ServerSession;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
+import org.eclipse.net4j.jms.internal.server.messages.Messages;
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -37,7 +40,7 @@ public class JMSAcknowledgeIndication extends Indication
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {
-      OM.LOG.info("Session " + sessionID + " not found. Acknowledgement discarded.");
+      OM.LOG.info(MessageFormat.format(Messages.getString("JMSAcknowledgeIndication_0"), sessionID)); //$NON-NLS-1$
       return;
     }
 

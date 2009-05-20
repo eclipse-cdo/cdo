@@ -26,13 +26,13 @@ public class JMSSchema extends DBSchema
   /**
    * DBTable Destinations
    */
-  public static final IDBTable DESTINATIONS = INSTANCE.addTable("destinations");
+  public static final IDBTable DESTINATIONS = INSTANCE.addTable("destinations"); //$NON-NLS-1$
 
   public static final IDBField DESTINATIONS_NAME = //
-  DESTINATIONS.addField("name", DBType.VARCHAR, 255);
+  DESTINATIONS.addField("name", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBField DESTINATIONS_TYPE = //
-  DESTINATIONS.addField("type", DBType.INTEGER);
+  DESTINATIONS.addField("type", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_DESTINATIONS_PK = //
   DESTINATIONS.addIndex(IDBIndex.Type.PRIMARY_KEY, DESTINATIONS_NAME);
@@ -40,16 +40,16 @@ public class JMSSchema extends DBSchema
   /**
    * DBTable Messages
    */
-  public static final IDBTable MESSAGES = INSTANCE.addTable("messages");
+  public static final IDBTable MESSAGES = INSTANCE.addTable("messages"); //$NON-NLS-1$
 
   public static final IDBField MESSAGES_ID = //
-  MESSAGES.addField("id", DBType.VARCHAR);
+  MESSAGES.addField("id", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField MESSAGES_DESTINATION = //
-  MESSAGES.addField("destination", DBType.VARCHAR);
+  MESSAGES.addField("destination", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField MESSAGES_PRIORITY = //
-  MESSAGES.addField("priority", DBType.INTEGER);
+  MESSAGES.addField("priority", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_MESSAGES_PK = //
   MESSAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, MESSAGES_ID);
@@ -57,13 +57,13 @@ public class JMSSchema extends DBSchema
   /**
    * Queries
    */
-  public static final String QUERY = "SELECT " + DESTINATIONS_TYPE + ", " + MESSAGES_ID + ", " + MESSAGES_PRIORITY
-      + " FROM " + DESTINATIONS + ", " + MESSAGES + " WHERE " + DESTINATIONS_NAME + "=" + MESSAGES_DESTINATION
-      + " AND " + DESTINATIONS_NAME + "=?";
+  public static final String QUERY = "SELECT " + DESTINATIONS_TYPE + ", " + MESSAGES_ID + ", " + MESSAGES_PRIORITY //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      + " FROM " + DESTINATIONS + ", " + MESSAGES + " WHERE " + DESTINATIONS_NAME + "=" + MESSAGES_DESTINATION //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      + " AND " + DESTINATIONS_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$
 
   private JMSSchema()
   {
-    super("JMS");
+    super("JMS"); //$NON-NLS-1$
   }
 
   static

@@ -17,7 +17,7 @@ import org.eclipse.net4j.jms.server.IStoreTransaction;
  */
 public class NOOPStore extends AbstractStore
 {
-  private static final String STORE_TYPE = "NOOP";
+  private static final String STORE_TYPE = "NOOP"; //$NON-NLS-1$
 
   public NOOPStore()
   {

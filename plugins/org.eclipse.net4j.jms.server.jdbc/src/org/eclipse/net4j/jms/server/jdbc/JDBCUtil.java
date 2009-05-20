@@ -39,10 +39,10 @@ public final class JDBCUtil
   public static IStore getStore()
   {
     Properties properties = OM.BUNDLE.getConfigProperties();
-    String adapterName = properties.getProperty("store.adapterName", "derby-embedded");
+    String adapterName = properties.getProperty("store.adapterName", "derby-embedded"); //$NON-NLS-1$ //$NON-NLS-2$
     IDBAdapter dbAdapter = DBUtil.getDBAdapter(adapterName);
-    DataSource dataSource = DBUtil.createDataSource(properties, "datasource");
-    String instanceID = properties.getProperty("store.instanceID", "00000000");
+    DataSource dataSource = DBUtil.createDataSource(properties, "datasource"); //$NON-NLS-1$
+    String instanceID = properties.getProperty("store.instanceID", "00000000"); //$NON-NLS-1$ //$NON-NLS-2$
     return getStore(dbAdapter, dataSource, instanceID);
   }
 }

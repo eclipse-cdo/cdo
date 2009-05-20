@@ -60,6 +60,6 @@ public class JMSCreateDestinationIndication extends IndicationWithResponse
       return IDestination.Type.TOPIC;
     }
 
-    throw new IllegalArgumentException("type: " + type);
+    throw new IllegalArgumentException("type: " + type); //$NON-NLS-1$
   }
 }

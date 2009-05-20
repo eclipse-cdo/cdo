@@ -15,7 +15,7 @@ package org.eclipse.net4j.jms;
  */
 public interface JMSAdminProtocolConstants
 {
-  public static final String PROTOCOL_NAME = "jmsadmin";
+  public static final String PROTOCOL_NAME = "jmsadmin"; //$NON-NLS-1$
 
   public static final short SIGNAL_CREATE_DESTINATION = 1;
 

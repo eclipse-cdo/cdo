@@ -25,7 +25,7 @@ import java.sql.SQLException;
  */
 public class JDBCStore extends AbstractStore
 {
-  private static final String STORE_TYPE = "JDBC";
+  private static final String STORE_TYPE = "JDBC"; //$NON-NLS-1$
 
   private IDBAdapter dbAdapter;
 
@@ -36,12 +36,12 @@ public class JDBCStore extends AbstractStore
     super(STORE_TYPE);
     if (dbAdapter == null)
     {
-      throw new IllegalArgumentException("dbAdapter == null");
+      throw new IllegalArgumentException("dbAdapter == null"); //$NON-NLS-1$
     }
 
     if (dataSource == null)
     {
-      throw new IllegalArgumentException("dataSource == null");
+      throw new IllegalArgumentException("dataSource == null"); //$NON-NLS-1$
     }
 
     this.dbAdapter = dbAdapter;

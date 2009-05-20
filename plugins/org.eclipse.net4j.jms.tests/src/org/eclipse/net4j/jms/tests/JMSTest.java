@@ -49,8 +49,8 @@ public class JMSTest
     try
     {
       Context context = init();
-      ConnectionFactory connectionFactory = (ConnectionFactory)context.lookup("net4j.jms.ConnectionFactory");
-      Destination destination = (Destination)context.lookup("StockTopic");
+      ConnectionFactory connectionFactory = (ConnectionFactory)context.lookup("net4j.jms.ConnectionFactory"); //$NON-NLS-1$
+      Destination destination = (Destination)context.lookup("StockTopic"); //$NON-NLS-1$
 
       Connection connection = connectionFactory.createConnection();
       Session session = connection.createSession(true, 0);
@@ -58,15 +58,15 @@ public class JMSTest
       MessageProducer publisher = session.createProducer(destination);
       MessageConsumer subscriber1 = session.createConsumer(destination);
       MessageConsumer subscriber2 = session.createConsumer(destination);
-      subscriber1.setMessageListener(new MessageLogger("subscriber1"));
-      subscriber2.setMessageListener(new MessageLogger("subscriber2"));
+      subscriber1.setMessageListener(new MessageLogger("subscriber1")); //$NON-NLS-1$
+      subscriber2.setMessageListener(new MessageLogger("subscriber2")); //$NON-NLS-1$
 
       connection.start();
 
-      publisher.send(session.createObjectMessage("Message 1"));
-      publisher.send(session.createObjectMessage("Message 2"));
-      publisher.send(session.createObjectMessage("Message 3"));
-      publisher.send(session.createObjectMessage("Message 4"));
+      publisher.send(session.createObjectMessage("Message 1")); //$NON-NLS-1$
+      publisher.send(session.createObjectMessage("Message 2")); //$NON-NLS-1$
+      publisher.send(session.createObjectMessage("Message 3")); //$NON-NLS-1$
+      publisher.send(session.createObjectMessage("Message 4")); //$NON-NLS-1$
 
       session.commit();
     }
@@ -94,11 +94,11 @@ public class JMSTest
     JMSServerUtil.prepareContainer(container);
 
     TCPUtil.getAcceptor(container, null);
-    IConnector connector = TCPUtil.getConnector(container, "localhost");
+    IConnector connector = TCPUtil.getConnector(container, "localhost"); //$NON-NLS-1$
 
     IJMSAdmin admin = JMSAdminUtil.createAdmin(connector);
-    admin.createQueue("StockQueue");
-    admin.createTopic("StockTopic");
+    admin.createQueue("StockQueue"); //$NON-NLS-1$
+    admin.createTopic("StockTopic"); //$NON-NLS-1$
 
     return new JMSInitialContext(container);
   }
@@ -120,7 +120,7 @@ public class JMSTest
       try
       {
         Object object = ((ObjectMessage)message).getObject();
-        IOUtil.OUT().println("\n------> MESSAGE for " + name + ": " + object + "\n");
+        IOUtil.OUT().println("\n------> MESSAGE for " + name + ": " + object + "\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         message.acknowledge();
       }
       catch (JMSException ex)

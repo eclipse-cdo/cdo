@@ -36,7 +36,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(boolean.class, value));
@@ -54,7 +54,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(byte.class, value));
@@ -76,7 +76,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(short.class, value));
@@ -90,7 +90,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(char.class, value));
@@ -116,7 +116,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(int.class, value));
@@ -146,7 +146,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(long.class, value));
@@ -164,7 +164,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(float.class, value));
@@ -186,7 +186,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(double.class, value));
@@ -200,7 +200,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     return String.valueOf(value);
@@ -216,7 +216,7 @@ public final class TypeUtil
     }
     else if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     throw new MessageFormatException(conversionProblem(byte[].class, value));
@@ -265,7 +265,7 @@ public final class TypeUtil
       out.writeString((String)value);
     }
 
-    throw new IllegalArgumentException("value: " + value);
+    throw new IllegalArgumentException("value: " + value); //$NON-NLS-1$
   }
 
   public static Object read(ExtendedDataInputStream in) throws IOException
@@ -291,11 +291,11 @@ public final class TypeUtil
       return in.readString();
     }
 
-    throw new IOException("Invalid type: " + type);
+    throw new IOException("Invalid type: " + type); //$NON-NLS-1$
   }
 
   private static String conversionProblem(Class<?> type, Object value)
   {
-    return "Cannot convert values of type " + value.getClass().getName() + " to " + type.getName();
+    return "Cannot convert values of type " + value.getClass().getName() + " to " + type.getName(); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

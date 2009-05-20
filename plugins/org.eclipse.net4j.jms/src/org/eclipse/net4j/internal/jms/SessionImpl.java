@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.jms;
 
 import org.eclipse.net4j.internal.jms.bundle.OM;
+import org.eclipse.net4j.internal.jms.messages.Messages;
 import org.eclipse.net4j.internal.jms.protocol.JMSAcknowledgeRequest;
 import org.eclipse.net4j.internal.jms.protocol.JMSClientMessageRequest;
 import org.eclipse.net4j.internal.jms.protocol.JMSCommitRequest;
@@ -43,6 +44,7 @@ import javax.jms.TopicSubscriber;
 import javax.transaction.TransactionRolledbackException;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -260,7 +262,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
         String[] messageIDs = new JMSCommitRequest(connection.getProtocol(), id, messages).send();
         if (messageIDs == null)
         {
-          throw new TransactionRolledbackException("Transaction rolled back by JMS server");
+          throw new TransactionRolledbackException(Messages.getString("SessionImpl_0")); //$NON-NLS-1$
         }
 
         for (int i = 0; i < messageIDs.length; i++)
@@ -294,7 +296,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
       {
         if (!new JMSRollbackRequest(connection.getProtocol(), id).send())
         {
-          throw new JMSException("JMS server failed to rolled back transaction");
+          throw new JMSException(Messages.getString("SessionImpl_1")); //$NON-NLS-1$
         }
 
         messages.clear();
@@ -363,7 +365,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
         String messageID = request.send(connection.getSendTimeout());
         if (messageID == null)
         {
-          throw new JMSException("Message not accepted by JMS server");
+          throw new JMSException(Messages.getString("SessionImpl_2")); //$NON-NLS-1$
         }
 
         message.setJMSMessageID(messageID);
@@ -403,7 +405,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     MessageConsumerImpl consumer = consumers.get(consumerID);
     if (consumer == null)
     {
-      OM.LOG.warn("Consumer " + consumerID + " not found. Discarding message.");
+      OM.LOG.warn(MessageFormat.format(Messages.getString("SessionImpl_3"), consumerID)); //$NON-NLS-1$
       return;
     }
 
@@ -413,7 +415,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
   @Override
   protected String getThreadName()
   {
-    return "jms-session";
+    return "jms-session"; //$NON-NLS-1$
   }
 
   /**
@@ -429,7 +431,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
   {
     if (!transacted)
     {
-      throw new IllegalStateException("Session " + id + " not transacted");
+      throw new IllegalStateException("Session " + id + " not transacted"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
@@ -437,7 +439,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
   {
     if (transacted)
     {
-      throw new IllegalStateException("Session " + id + " transacted");
+      throw new IllegalStateException("Session " + id + " transacted"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

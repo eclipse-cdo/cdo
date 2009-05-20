@@ -14,6 +14,7 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.jms.bundle.OM;
+import org.eclipse.net4j.internal.jms.messages.Messages;
 import org.eclipse.net4j.internal.jms.protocol.JMSClientProtocol;
 import org.eclipse.net4j.internal.jms.protocol.JMSLogonRequest;
 import org.eclipse.net4j.internal.jms.protocol.JMSOpenSessionRequest;
@@ -100,7 +101,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     this.transportContainer = transportContainer == null ? JMSUtil.getTransportContainer() : transportContainer;
     if (transportContainer == null)
     {
-      throw new JMSException("No transport container available");
+      throw new JMSException(Messages.getString("ConnectionImpl_0")); //$NON-NLS-1$
     }
 
     this.connectorType = connectorType;
@@ -117,7 +118,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     {
       if (!new JMSLogonRequest(protocol, userName, password).send())
       {
-        throw new JMSException("Server rejected logon request");
+        throw new JMSException(Messages.getString("ConnectionImpl_1")); //$NON-NLS-1$
       }
     }
     catch (JMSException ex)
@@ -154,7 +155,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     {
       if (!new JMSOpenSessionRequest(protocol, sessionID).send())
       {
-        throw new JMSException("Server rejected open session request");
+        throw new JMSException(Messages.getString("ConnectionImpl_2")); //$NON-NLS-1$
       }
     }
     catch (JMSException ex)
@@ -213,12 +214,12 @@ public class ConnectionImpl extends Container<Session> implements Connection
     ensureOpen();
     if (clientID != null)
     {
-      throw new IllegalStateException("clientID != null");
+      throw new IllegalStateException("clientID != null"); //$NON-NLS-1$
     }
 
     if (modified)
     {
-      throw new IllegalStateException("modified == true");
+      throw new IllegalStateException("modified == true"); //$NON-NLS-1$
     }
 
     this.clientID = clientID;
@@ -400,7 +401,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
   {
     if (protocol == null)
     {
-      throw new IllegalStateException("protocol == null");
+      throw new IllegalStateException("protocol == null"); //$NON-NLS-1$
     }
   }
 }

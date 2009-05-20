@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.internal.jms;
 
+import org.eclipse.net4j.internal.jms.messages.Messages;
 import org.eclipse.net4j.internal.jms.util.DestinationUtil;
 import org.eclipse.net4j.internal.jms.util.TypeUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -22,6 +23,7 @@ import javax.jms.MessageFormatException;
 import javax.jms.Session;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -30,8 +32,8 @@ import java.util.Map.Entry;
 
 public class MessageImpl implements Message, Comparable<MessageImpl>
 {
-  private static final String[] KEYWORDS = { "and", "between", "escape", "in", "is", "like", "false", "null", "or",
-      "not", "true" };
+  private static final String[] KEYWORDS = { "and", "between", "escape", "in", "is", "like", "false", "null", "or", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+      "not", "true" }; //$NON-NLS-1$ //$NON-NLS-2$
 
   private Map<String, Object> properties = new HashMap<String, Object>();
 
@@ -308,7 +310,8 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     }
     else
     {
-      throw new MessageFormatException("Values of type" + value.getClass().getName() + " are not supported");
+      throw new MessageFormatException(MessageFormat.format(
+          Messages.getString("MessageImpl_11"), value.getClass().getName())); //$NON-NLS-1$ 
     }
   }
 
@@ -316,25 +319,25 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
   {
     if (name == null)
     {
-      throw new JMSException("Invalid property name: " + name);
+      throw new JMSException(MessageFormat.format(Messages.getString("MessageImpl_13"), name)); //$NON-NLS-1$
     }
 
     char[] chars = name.toCharArray();
     if (chars.length == 0)
     {
-      throw new JMSException("Invalid property name: " + name);
+      throw new JMSException(MessageFormat.format(Messages.getString("MessageImpl_13"), name)); //$NON-NLS-1$
     }
 
     if (!Character.isJavaIdentifierStart(chars[0]))
     {
-      throw new JMSException("Invalid property name: " + name);
+      throw new JMSException(MessageFormat.format(Messages.getString("MessageImpl_13"), name)); //$NON-NLS-1$
     }
 
     for (int i = 1; i < chars.length; ++i)
     {
       if (!Character.isJavaIdentifierPart(chars[i]))
       {
-        throw new JMSException("Invalid property name: " + name);
+        throw new JMSException(MessageFormat.format(Messages.getString("MessageImpl_13"), name)); //$NON-NLS-1$
       }
     }
 
@@ -342,7 +345,7 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     {
       if (name.equalsIgnoreCase(KEYWORDS[i]))
       {
-        throw new JMSException("Invalid property name: " + name);
+        throw new JMSException(MessageFormat.format(Messages.getString("MessageImpl_13"), name)); //$NON-NLS-1$
       }
     }
 

@@ -30,7 +30,7 @@ public final class JMSUtil
   {
     if (transportContainer == null)
     {
-      throw new IllegalStateException("transportContainer == null");
+      throw new IllegalStateException("transportContainer == null"); //$NON-NLS-1$
     }
 
     return new JMSInitialContext(transportContainer);

@@ -48,13 +48,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Getting destination names");
+      TRACER.trace("Getting destination names"); //$NON-NLS-1$
     }
 
     String[] names = doGetDestinationNames();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Got destination names " + names);
+      TRACER.trace("Got destination names " + names); //$NON-NLS-1$
     }
 
     return names;
@@ -64,13 +64,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Getting destination " + name);
+      TRACER.trace("Getting destination " + name); //$NON-NLS-1$
     }
 
     ServerDestination destination = doGetDestination(name);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Got destination " + destination);
+      TRACER.trace("Got destination " + destination); //$NON-NLS-1$
     }
 
     return destination;
@@ -80,13 +80,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Getting consumer IDs");
+      TRACER.trace("Getting consumer IDs"); //$NON-NLS-1$
     }
 
     long[] ids = doGetConsumerIDs();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Got consumer IDs " + ids);
+      TRACER.trace("Got consumer IDs " + ids); //$NON-NLS-1$
     }
 
     return ids;
@@ -96,13 +96,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Getting consumer " + id);
+      TRACER.trace("Getting consumer " + id); //$NON-NLS-1$
     }
 
     ServerConsumer consumer = doGetConsumer(id);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Got consumer " + consumer);
+      TRACER.trace("Got consumer " + consumer); //$NON-NLS-1$
     }
 
     return consumer;
@@ -112,13 +112,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Adding destination " + destination);
+      TRACER.trace("Adding destination " + destination); //$NON-NLS-1$
     }
 
     doDestinationAdded((ServerDestination)destination);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Added destination " + destination);
+      TRACER.trace("Added destination " + destination); //$NON-NLS-1$
     }
   }
 
@@ -126,13 +126,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Removing destination " + destination);
+      TRACER.trace("Removing destination " + destination); //$NON-NLS-1$
     }
 
     doDestinationRemoved((ServerDestination)destination);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Removed destination " + destination);
+      TRACER.trace("Removed destination " + destination); //$NON-NLS-1$
     }
   }
 
@@ -140,13 +140,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Adding consumer " + consumer);
+      TRACER.trace("Adding consumer " + consumer); //$NON-NLS-1$
     }
 
     doConsumerAdded((ServerConsumer)consumer);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Added consumer " + consumer);
+      TRACER.trace("Added consumer " + consumer); //$NON-NLS-1$
     }
   }
 
@@ -154,13 +154,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Removing consumer " + consumer);
+      TRACER.trace("Removing consumer " + consumer); //$NON-NLS-1$
     }
 
     doConsumerRemoved((ServerConsumer)consumer);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Removed consumer " + consumer);
+      TRACER.trace("Removed consumer " + consumer); //$NON-NLS-1$
     }
   }
 
@@ -168,13 +168,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Logging received message " + message);
+      TRACER.trace("Logging received message " + message); //$NON-NLS-1$
     }
 
     doMessageReceived((MessageImpl)message);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Logged received message " + message);
+      TRACER.trace("Logged received message " + message); //$NON-NLS-1$
     }
   }
 
@@ -182,13 +182,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Logging sent message " + message);
+      TRACER.trace("Logging sent message " + message); //$NON-NLS-1$
     }
 
     doMessageSent((MessageImpl)message, consumerID);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Logged sent message " + message);
+      TRACER.trace("Logged sent message " + message); //$NON-NLS-1$
     }
   }
 
@@ -196,13 +196,13 @@ public abstract class AbstractTransaction implements IStoreTransaction
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Logging acknowledged message " + message);
+      TRACER.trace("Logging acknowledged message " + message); //$NON-NLS-1$
     }
 
     doMessageAcknowledged((MessageImpl)message, consumerID);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Logged acknowledged message " + message);
+      TRACER.trace("Logged acknowledged message " + message); //$NON-NLS-1$
     }
   }
 

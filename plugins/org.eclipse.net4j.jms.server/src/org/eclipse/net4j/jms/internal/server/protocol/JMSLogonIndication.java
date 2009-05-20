@@ -14,6 +14,7 @@ import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.jms.internal.server.Server;
 import org.eclipse.net4j.jms.internal.server.ServerConnection;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
+import org.eclipse.net4j.jms.internal.server.messages.Messages;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -38,7 +39,7 @@ public class JMSLogonIndication extends IndicationWithResponse
     ServerConnection connection = Server.INSTANCE.logon(userName, password);
     if (connection == null)
     {
-      OM.LOG.error("Access to JMS server denied");
+      OM.LOG.error(Messages.getString("JMSLogonIndication_0")); //$NON-NLS-1$
       return;
     }
 

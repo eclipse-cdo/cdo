@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.jms.ConnectionFactoryImpl;
 import org.eclipse.net4j.internal.jms.JMSDestination;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
+import org.eclipse.net4j.jms.internal.server.messages.Messages;
 import org.eclipse.net4j.jms.server.IDestination;
 import org.eclipse.net4j.jms.server.IServer;
 import org.eclipse.net4j.jms.server.IStore;
@@ -75,7 +76,7 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
     ServerDestination existing = destinations.putIfAbsent(name, destination);
     if (existing != null)
     {
-      throw new IllegalStateException("Destination " + type + " " + name + " does already exist");
+      throw new IllegalStateException("Destination " + type + " " + name + " does already exist"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     IStoreTransaction transaction = store.startTransaction();
@@ -107,7 +108,7 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
     ServerDestination destination = destinations.get(name);
     if (destination == null)
     {
-      OM.LOG.error("Invalid destination: " + name);
+      OM.LOG.error(Messages.getString("Server.3") + name); //$NON-NLS-1$
       return null;
     }
 
@@ -158,7 +159,7 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
         return null;
       }
 
-      messageIDs[i] = "ID:NET4J:" + HexUtil.longToHex(messageIDCounter.increment());
+      messageIDs[i] = "ID:NET4J:" + HexUtil.longToHex(messageIDCounter.increment()); //$NON-NLS-1$
       message.setJMSMessageID(messageIDs[i]);
     }
 
@@ -174,7 +175,7 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
   @Override
   protected String getThreadName()
   {
-    return "jms-server";
+    return "jms-server"; //$NON-NLS-1$
   }
 
   @Override
@@ -192,7 +193,7 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
     super.doBeforeActivate();
     if (store == null)
     {
-      throw new IllegalStateException("store == null");
+      throw new IllegalStateException("store == null"); //$NON-NLS-1$
     }
   }
 
@@ -200,9 +201,9 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    String name = System.getProperty("net4j.jms.connection.factory.name", "net4j.jms.ConnectionFactory");
-    String type = System.getProperty("net4j.jms.connector.type", "tcp");
-    String desc = System.getProperty("net4j.jms.connector.description", "localhost");
+    String name = System.getProperty("net4j.jms.connection.factory.name", "net4j.jms.ConnectionFactory"); //$NON-NLS-1$ //$NON-NLS-2$
+    String type = System.getProperty("net4j.jms.connector.type", "tcp"); //$NON-NLS-1$ //$NON-NLS-2$
+    String desc = System.getProperty("net4j.jms.connector.description", "localhost"); //$NON-NLS-1$ //$NON-NLS-2$
 
     jndiContext = new InitialContext();
     jndiContext.rebind(name, new ConnectionFactoryImpl(type, desc));

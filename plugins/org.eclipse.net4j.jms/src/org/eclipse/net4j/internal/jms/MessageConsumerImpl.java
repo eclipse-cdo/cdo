@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.jms;
 
 import org.eclipse.net4j.internal.jms.bundle.OM;
+import org.eclipse.net4j.internal.jms.messages.Messages;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import javax.jms.JMSException;
@@ -93,7 +94,7 @@ public class MessageConsumerImpl extends Lifecycle implements MessageConsumer
   {
     if (messageListener != null)
     {
-      throw new JMSException("Consumer is configured for asynchronous delivery");
+      throw new JMSException(Messages.getString("MessageConsumerImpl.0")); //$NON-NLS-1$
     }
 
     if (timeout == DO_NOT_WAIT)
@@ -138,7 +139,7 @@ public class MessageConsumerImpl extends Lifecycle implements MessageConsumer
       MessageImpl message = messages.poll();
       if (message == null)
       {
-        OM.LOG.warn("No message to dispatch");
+        OM.LOG.warn(Messages.getString("MessageConsumerImpl.1")); //$NON-NLS-1$
         return;
       }
 

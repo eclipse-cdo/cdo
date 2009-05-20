@@ -14,9 +14,12 @@ import org.eclipse.net4j.jms.JMSProtocolConstants;
 import org.eclipse.net4j.jms.internal.server.ServerConnection;
 import org.eclipse.net4j.jms.internal.server.ServerSession;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
+import org.eclipse.net4j.jms.internal.server.messages.Messages;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -37,7 +40,7 @@ public class JMSRollbackIndication extends IndicationWithResponse
     ServerSession session = connection.getSession(sessionID);
     if (session == null)
     {
-      OM.LOG.warn("Session " + sessionID + " not found");
+      OM.LOG.warn(MessageFormat.format(Messages.getString("JMSRollbackIndication_0"), sessionID)); //$NON-NLS-1$
       return;
     }
 

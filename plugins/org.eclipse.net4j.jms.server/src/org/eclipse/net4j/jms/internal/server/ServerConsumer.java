@@ -122,7 +122,7 @@ public class ServerConsumer implements IServerConsumer
       for (MessageImpl message : messages.values())
       {
         transaction.messageAcknowledged(message, id);
-        IOUtil.OUT().println("\nMessage acknowledged: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n");
+        IOUtil.OUT().println("\nMessage acknowledged: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       }
 
       messages.clear();
@@ -140,7 +140,7 @@ public class ServerConsumer implements IServerConsumer
 
       for (MessageImpl message : messages.values())
       {
-        IOUtil.OUT().println("\nRecovering message: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n");
+        IOUtil.OUT().println("\nRecovering message: " + message.getJMSMessageID() + "  (consumer=" + id + ")\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         session.getConnection().getServer().addWork(message);
       }
     }

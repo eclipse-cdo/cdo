@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.internal.jms;
 
+import org.eclipse.net4j.internal.jms.messages.Messages;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import javax.jms.DeliveryMode;
@@ -123,7 +124,7 @@ public class MessageProducerImpl extends Lifecycle implements MessageProducer
   {
     if (message == null)
     {
-      throw new MessageFormatException("Null message");
+      throw new MessageFormatException(Messages.getString("MessageProducerImpl_0")); //$NON-NLS-1$
     }
 
     // message.setJMSMessageID(MessageId.create());

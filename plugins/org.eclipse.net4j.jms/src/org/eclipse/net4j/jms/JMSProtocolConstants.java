@@ -15,7 +15,7 @@ package org.eclipse.net4j.jms;
  */
 public interface JMSProtocolConstants
 {
-  public static final String PROTOCOL_NAME = "jms";
+  public static final String PROTOCOL_NAME = "jms"; //$NON-NLS-1$
 
   // Signals
 

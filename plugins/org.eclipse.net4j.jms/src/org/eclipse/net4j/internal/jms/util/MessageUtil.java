@@ -67,7 +67,7 @@ public final class MessageUtil
       return JMSProtocolConstants.MESSAGE_TYPE_TEXT;
     }
 
-    throw new IllegalArgumentException("message: " + message);
+    throw new IllegalArgumentException("message: " + message); //$NON-NLS-1$
   }
 
   public static String getTypeName(byte type)
@@ -75,22 +75,22 @@ public final class MessageUtil
     switch (type)
     {
     case JMSProtocolConstants.MESSAGE_TYPE_BYTES:
-      return "BYTES_MESSAGE";
+      return "BYTES_MESSAGE"; //$NON-NLS-1$
 
     case JMSProtocolConstants.MESSAGE_TYPE_MAP:
-      return "MAP_MESSAGE";
+      return "MAP_MESSAGE"; //$NON-NLS-1$
 
     case JMSProtocolConstants.MESSAGE_TYPE_OBJECT:
-      return "OBJECT_MESSAGE";
+      return "OBJECT_MESSAGE"; //$NON-NLS-1$
 
     case JMSProtocolConstants.MESSAGE_TYPE_STREAM:
-      return "STREAM_MESSAGE";
+      return "STREAM_MESSAGE"; //$NON-NLS-1$
 
     case JMSProtocolConstants.MESSAGE_TYPE_TEXT:
-      return "TEXT_MESSAGE";
+      return "TEXT_MESSAGE"; //$NON-NLS-1$
     }
 
-    throw new IllegalArgumentException("type: " + type);
+    throw new IllegalArgumentException("type: " + type); //$NON-NLS-1$
   }
 
   public static MessageImpl create(byte type)
@@ -113,7 +113,7 @@ public final class MessageUtil
       return new TextMessageImpl();
     }
 
-    throw new IllegalArgumentException("type: " + type);
+    throw new IllegalArgumentException("type: " + type); //$NON-NLS-1$
   }
 
   public static MessageImpl copy(Message source) throws JMSException
@@ -139,7 +139,7 @@ public final class MessageUtil
     byte type = getType(message);
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0}", getTypeName(type));
+      TRACER.format("Writing {0}", getTypeName(type)); //$NON-NLS-1$
     }
 
     out.writeByte(type);
@@ -151,7 +151,7 @@ public final class MessageUtil
     byte type = in.readByte();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading {0}", getTypeName(type));
+      TRACER.format("Reading {0}", getTypeName(type)); //$NON-NLS-1$
     }
 
     MessageImpl message = create(type);

@@ -13,11 +13,13 @@ package org.eclipse.net4j.jms.internal.server;
 import org.eclipse.net4j.internal.jms.DestinationImpl;
 import org.eclipse.net4j.internal.jms.MessageImpl;
 import org.eclipse.net4j.jms.internal.server.bundle.OM;
+import org.eclipse.net4j.jms.internal.server.messages.Messages;
 import org.eclipse.net4j.jms.server.ISession;
 import org.eclipse.net4j.jms.server.IStore;
 import org.eclipse.net4j.jms.server.IStoreTransaction;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -56,7 +58,7 @@ public class ServerSession extends Lifecycle implements ISession
     ServerDestination destination = server.getDestination(name);
     if (destination == null)
     {
-      OM.LOG.error("Destination not found: " + name);
+      OM.LOG.error(MessageFormat.format(Messages.getString("ServerSession_0"), name)); //$NON-NLS-1$
       return -1;
     }
 

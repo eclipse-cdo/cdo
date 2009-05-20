@@ -47,7 +47,7 @@ public final class DestinationUtil
       return JMSProtocolConstants.DESTINATION_TYPE_NULL;
     }
 
-    throw new IllegalArgumentException("destination: " + destination);
+    throw new IllegalArgumentException("destination: " + destination); //$NON-NLS-1$
   }
 
   public static String getTypeName(byte type)
@@ -55,16 +55,16 @@ public final class DestinationUtil
     switch (type)
     {
     case JMSProtocolConstants.DESTINATION_TYPE_NULL:
-      return "NULL_DESTINATION";
+      return "NULL_DESTINATION"; //$NON-NLS-1$
 
     case JMSProtocolConstants.DESTINATION_TYPE_QUEUE:
-      return "QUEUE_DESTINATION";
+      return "QUEUE_DESTINATION"; //$NON-NLS-1$
 
     case JMSProtocolConstants.DESTINATION_TYPE_TOPIC:
-      return "TOPIC_DESTINATION";
+      return "TOPIC_DESTINATION"; //$NON-NLS-1$
     }
 
-    throw new IllegalArgumentException("type: " + type);
+    throw new IllegalArgumentException("type: " + type); //$NON-NLS-1$
   }
 
   public static String getName(Destination destination) throws JMSException

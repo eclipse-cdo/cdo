@@ -93,7 +93,7 @@ public class DBStatement implements IDBStatement
     {
       if (element instanceof IDBParameter)
       {
-        builder.append("?");
+        builder.append("?"); //$NON-NLS-1$
       }
       else
       {

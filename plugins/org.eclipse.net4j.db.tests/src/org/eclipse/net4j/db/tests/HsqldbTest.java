@@ -27,7 +27,7 @@ public class HsqldbTest extends AbstractDBTest<HSQLDBDataSource>
   @Override
   protected void configureDataSource(HSQLDBDataSource dataSource)
   {
-    dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
-    dataSource.setUser("sa");
+    dataSource.setDatabase("jdbc:hsqldb:mem:dbtest"); //$NON-NLS-1$
+    dataSource.setUser("sa"); //$NON-NLS-1$
   }
 }

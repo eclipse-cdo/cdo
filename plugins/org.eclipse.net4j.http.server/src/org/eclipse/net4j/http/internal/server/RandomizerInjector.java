@@ -42,6 +42,6 @@ public class RandomizerInjector implements IElementProcessor
 
   protected IRandomizer getRandomizer(IManagedContainer container)
   {
-    return (IRandomizer)container.getElement("org.eclipse.net4j.randomizers", "default", TYPE);
+    return (IRandomizer)container.getElement("org.eclipse.net4j.randomizers", "default", TYPE); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

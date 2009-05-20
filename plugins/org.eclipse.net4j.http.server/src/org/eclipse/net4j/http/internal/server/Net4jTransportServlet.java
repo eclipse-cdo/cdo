@@ -15,6 +15,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.http.internal.server.bundle.OM;
+import org.eclipse.net4j.http.internal.server.messages.Messages;
 import org.eclipse.net4j.http.server.INet4jTransportServlet;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -49,7 +50,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Creating " + getClass().getName());
+      TRACER.trace("Creating " + getClass().getName()); //$NON-NLS-1$
     }
   }
 
@@ -79,10 +80,10 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
   {
     if (requestHandler == null)
     {
-      throw new ServletException("No request handler installed");
+      throw new ServletException(Messages.getString("Net4jTransportServlet_0")); //$NON-NLS-1$
     }
 
-    String connectorID = req.getParameter("list");
+    String connectorID = req.getParameter("list"); //$NON-NLS-1$
     if (connectorID != null)
     {
       doList(connectorID, resp);
@@ -111,7 +112,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       break;
 
     default:
-      throw new IOException("Invalid opcaode: " + opcode);
+      throw new IOException("Invalid opcaode: " + opcode); //$NON-NLS-1$
     }
 
     out.flush();
@@ -121,7 +122,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Received List request: {0}", connectorID);
+      TRACER.format("Received List request: {0}", connectorID); //$NON-NLS-1$
     }
 
     IHTTPConnector[] connectors = requestHandler.handleList(connectorID);
@@ -130,27 +131,27 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     {
       // TODO Security: Hide connectorID!
       writer.write(connector.getConnectorID());
-      writer.write(":");
+      writer.write(":"); //$NON-NLS-1$
 
       String userID = connector.getUserID();
       if (userID != null)
       {
-        writer.write(" userID=" + userID);
+        writer.write(" userID=" + userID); //$NON-NLS-1$
       }
 
       if (connector instanceof HTTPServerConnector)
       {
         long idleTime = System.currentTimeMillis() - ((HTTPServerConnector)connector).getLastTraffic();
-        writer.write(" idleTime=" + idleTime);
+        writer.write(" idleTime=" + idleTime); //$NON-NLS-1$
       }
 
-      writer.write("\n");
+      writer.write("\n"); //$NON-NLS-1$
 
       for (IChannel channel : connector.getChannels())
       {
-        writer.write("    ");
+        writer.write("    "); //$NON-NLS-1$
         writer.write(String.valueOf(channel.getID()));
-        writer.write(": ");
+        writer.write(": "); //$NON-NLS-1$
         IBufferHandler receiveHandler = channel.getReceiveHandler();
         if (receiveHandler instanceof IProtocol<?>)
         {
@@ -167,9 +168,9 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
           writer.write(string);
         }
 
-        writer.write(" (");
+        writer.write(" ("); //$NON-NLS-1$
         writer.write(String.valueOf(channel.getID()));
-        writer.write(")\n");
+        writer.write(")\n"); //$NON-NLS-1$
       }
     }
   }
@@ -182,7 +183,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       String userID = in.readString();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Received Connect request: {0}", userID);
+        TRACER.format("Received Connect request: {0}", userID); //$NON-NLS-1$
       }
 
       IHTTPConnector connector = requestHandler.handleConnect(userID);
@@ -204,7 +205,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       String connectorID = in.readString();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Received Disconnect request: {0}", connectorID);
+        TRACER.format("Received Disconnect request: {0}", connectorID); //$NON-NLS-1$
       }
 
       requestHandler.handleDisonnect(connectorID);
@@ -221,7 +222,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     String connectorID = in.readString();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Received Operations request: {0}", connectorID);
+      TRACER.format("Received Operations request: {0}", connectorID); //$NON-NLS-1$
     }
 
     requestHandler.handleOperations(connectorID, in, out);
@@ -252,7 +253,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
       acceptor = (HTTPAcceptor)IPluginContainer.INSTANCE.getElement(ACCEPTORS_GROUP, HTTP_TYPE, null);
       if (acceptor == null)
       {
-        throw new ServletException("Acceptor not found");
+        throw new ServletException(Messages.getString("Net4jTransportServlet_1")); //$NON-NLS-1$
       }
 
       acceptor.setServlet(this);

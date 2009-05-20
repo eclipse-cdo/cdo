@@ -14,6 +14,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.http.internal.server.bundle.OM;
+import org.eclipse.net4j.http.internal.server.messages.Messages;
 import org.eclipse.net4j.http.server.IHTTPAcceptor;
 import org.eclipse.net4j.http.server.INet4jTransportServlet;
 import org.eclipse.net4j.util.StringUtil;
@@ -157,7 +158,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     HTTPConnector connector = httpConnectors.get(connectorID);
     if (connector == null)
     {
-      throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
+      throw new IllegalArgumentException("Invalid connectorID: " + connectorID); //$NON-NLS-1$
     }
 
     connector.deactivate();
@@ -169,7 +170,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     HTTPServerConnector connector = httpConnectors.get(connectorID);
     if (connector == null)
     {
-      throw new IllegalArgumentException("Invalid connectorID: " + connectorID);
+      throw new IllegalArgumentException("Invalid connectorID: " + connectorID); //$NON-NLS-1$
     }
 
     connector.readInputOperations(in);
@@ -179,7 +180,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   @Override
   public String toString()
   {
-    return "HTTPAcceptor";
+    return "HTTPAcceptor"; //$NON-NLS-1$
   }
 
   @Override
@@ -202,9 +203,9 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(randomizer, "randomizer");
-    checkState(connectorIDLength > 0, "Constraint violated: connectorIDLength > 0");
-    checkState(maxIdleTime >= 100, "Constraint violated: maxIdleTime >= 100");
+    checkState(randomizer, "randomizer"); //$NON-NLS-1$
+    checkState(connectorIDLength > 0, "Constraint violated: connectorIDLength > 0"); //$NON-NLS-1$
+    checkState(maxIdleTime >= 100, "Constraint violated: maxIdleTime >= 100"); //$NON-NLS-1$
   }
 
   @Override
@@ -224,7 +225,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 
   protected String createConnectorID(String userID)
   {
-    return randomizer.nextString(connectorIDLength, "0123456789ABCDEF");
+    return randomizer.nextString(connectorIDLength, "0123456789ABCDEF"); //$NON-NLS-1$
   }
 
   protected HTTPServerConnector createServerConnector()
@@ -238,7 +239,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     IConnector[] connectors = getAcceptedConnectors();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Checking {0} HTTP server connectors for idle time: {1,time}", connectors.length, new Date());
+      TRACER.format("Checking {0} HTTP server connectors for idle time: {1,time}", connectors.length, new Date()); //$NON-NLS-1$
     }
 
     for (IConnector connector : connectors)
@@ -249,7 +250,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
       if (idleTime > maxIdleTime)
       {
         serverConnector.deactivate();
-        OM.LOG.info("Deactivated idle HTTP server connector: " + serverConnector);
+        OM.LOG.info(Messages.getString("HTTPAcceptor.8") + serverConnector); //$NON-NLS-1$
       }
     }
 

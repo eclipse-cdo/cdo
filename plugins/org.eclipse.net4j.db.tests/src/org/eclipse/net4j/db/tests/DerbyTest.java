@@ -34,12 +34,12 @@ public class DerbyTest extends AbstractDBTest<EmbeddedDataSource>
   @Override
   protected void configureDataSource(EmbeddedDataSource dataSource)
   {
-    dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
+    dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp")); //$NON-NLS-1$ //$NON-NLS-2$
     deleteDBFolder();
-    msg("Using DB folder: " + dbFolder.getAbsolutePath());
+    msg("Using DB folder: " + dbFolder.getAbsolutePath()); //$NON-NLS-1$
 
     dataSource.setDatabaseName(dbFolder.getAbsolutePath());
-    dataSource.setCreateDatabase("create");
+    dataSource.setCreateDatabase("create"); //$NON-NLS-1$
   }
 
   @Override

@@ -41,7 +41,7 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  public static final String EXT_POINT = "dbAdapters";
+  public static final String EXT_POINT = "dbAdapters"; //$NON-NLS-1$
 
   /**
    * @author Eike Stepper
@@ -65,16 +65,16 @@ public abstract class OM
       IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
       for (final IConfigurationElement element : elements)
       {
-        if ("dbAdapter".equals(element.getName()))
+        if ("dbAdapter".equals(element.getName())) //$NON-NLS-1$
         {
-          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name"))
+          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name")) //$NON-NLS-1$
           {
             @Override
             public IDBAdapter createDBAdapter()
             {
               try
               {
-                return (IDBAdapter)element.createExecutableExtension("class");
+                return (IDBAdapter)element.createExecutableExtension("class"); //$NON-NLS-1$
               }
               catch (CoreException ex)
               {

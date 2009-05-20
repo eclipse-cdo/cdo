@@ -56,7 +56,7 @@ public final class DBUtil
 
   public static DataSource createDataSource(Map<Object, Object> properties, String namespace)
   {
-    return createDataSource(properties, namespace, "class");
+    return createDataSource(properties, namespace, "class"); //$NON-NLS-1$
   }
 
   public static DataSource createDataSource(Map<Object, Object> properties, String namespace, String driverClassKey)
@@ -159,7 +159,7 @@ public final class DBUtil
     {
       List<String> names = new ArrayList<String>();
       DatabaseMetaData metaData = connection.getMetaData();
-      tables = metaData.getTables(dbName, null, null, new String[] { "TABLE" });
+      tables = metaData.getTables(dbName, null, null, new String[] { "TABLE" }); //$NON-NLS-1$
       while (tables.next())
       {
         String name = tables.getString(3);
@@ -187,7 +187,7 @@ public final class DBUtil
       statement = connection.createStatement();
       for (String tableName : DBUtil.getAllTableNames(connection, dbName))
       {
-        String sql = "DROP TABLE " + tableName;
+        String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
         DBUtil.trace(sql);
         statement.execute(sql);
       }
@@ -214,7 +214,7 @@ public final class DBUtil
       return 0;
     }
 
-    throw new DBException("Not an integer number: " + number);
+    throw new DBException("Not an integer number: " + number); //$NON-NLS-1$
   }
 
   public static long selectMaximumLong(Connection connection, IDBField field) throws DBException
@@ -229,15 +229,15 @@ public final class DBUtil
       return 0L;
     }
 
-    throw new DBException("Not a long number: " + number);
+    throw new DBException("Not a long number: " + number); //$NON-NLS-1$
   }
 
   private static Number getMaximumNumber(Connection connection, IDBField field) throws DBException
   {
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT MAX(");
+    builder.append("SELECT MAX("); //$NON-NLS-1$
     builder.append(field);
-    builder.append(") FROM ");
+    builder.append(") FROM "); //$NON-NLS-1$
     builder.append(field.getTable());
 
     String sql = builder.toString();
@@ -304,32 +304,32 @@ public final class DBUtil
     IDBField[] fields = table.getFields();
     if (fields.length != args.length)
     {
-      throw new IllegalArgumentException("Wrong number of args for " + table + ": " + Arrays.asList(args) + " --> "
+      throw new IllegalArgumentException("Wrong number of args for " + table + ": " + Arrays.asList(args) + " --> " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
           + Arrays.asList(table.getFields()));
     }
 
     StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
+    builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(table);
-    builder.append(" VALUES (");
+    builder.append(" VALUES ("); //$NON-NLS-1$
 
     for (int i = 0; i < fields.length; i++)
     {
       if (i > 0)
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
       }
 
       dbAdapter.appendValue(builder, fields[i], args[i]);
     }
 
-    builder.append(")");
+    builder.append(")"); //$NON-NLS-1$
     String sql = builder.toString();
 
     int count = update(connection, sql);
     if (count == 0)
     {
-      throw new DBException("No row inserted into table " + table);
+      throw new DBException("No row inserted into table " + table); //$NON-NLS-1$
     }
   }
 
@@ -341,27 +341,27 @@ public final class DBUtil
     {
       if (fields[i].getTable() != table)
       {
-        throw new IllegalArgumentException("Multiple tables not allowed: " + Arrays.asList(fields));
+        throw new IllegalArgumentException("Multiple tables not allowed: " + Arrays.asList(fields)); //$NON-NLS-1$
       }
     }
 
     StringBuilder builder = new StringBuilder();
-    builder.append("SELECT ");
+    builder.append("SELECT "); //$NON-NLS-1$
     for (int i = 0; i < fields.length; i++)
     {
       if (i > 0)
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
       }
 
       builder.append(fields[i]);
     }
 
-    builder.append(" FROM ");
+    builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
     if (where != null)
     {
-      builder.append(" WHERE ");
+      builder.append(" WHERE "); //$NON-NLS-1$
       builder.append(where);
     }
 
@@ -391,7 +391,7 @@ public final class DBUtil
               long length = blob.length();
               if (length > Integer.MAX_VALUE)
               {
-                throw new IllegalStateException("byte[] too long: " + length);
+                throw new IllegalStateException("byte[] too long: " + length); //$NON-NLS-1$
               }
 
               values[i] = blob.getBytes(1, (int)length);
@@ -402,7 +402,7 @@ public final class DBUtil
               long length = clob.length();
               if (length > Integer.MAX_VALUE)
               {
-                throw new IllegalStateException("String too long: " + length);
+                throw new IllegalStateException("String too long: " + length); //$NON-NLS-1$
               }
 
               values[i] = clob.getSubString(1, (int)length);

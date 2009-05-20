@@ -20,7 +20,7 @@ import org.eclipse.spi.net4j.AcceptorFactory;
  */
 public class JVMAcceptorFactory extends AcceptorFactory
 {
-  public static final String TYPE = "jvm";
+  public static final String TYPE = "jvm"; //$NON-NLS-1$
 
   public JVMAcceptorFactory()
   {

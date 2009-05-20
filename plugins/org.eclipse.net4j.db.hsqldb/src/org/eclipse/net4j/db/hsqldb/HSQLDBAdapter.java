@@ -27,9 +27,9 @@ import java.util.StringTokenizer;
  */
 public class HSQLDBAdapter extends DBAdapter
 {
-  private static final String NAME = "hsqldb";
+  private static final String NAME = "hsqldb"; //$NON-NLS-1$
 
-  public static final String VERSION = "1.8.0.8";
+  public static final String VERSION = "1.8.0.8"; //$NON-NLS-1$
 
   public HSQLDBAdapter()
   {
@@ -67,16 +67,16 @@ public class HSQLDBAdapter extends DBAdapter
       return type.toString();
 
     case LONGVARCHAR:
-      return "LONGVARCHAR";
+      return "LONGVARCHAR"; //$NON-NLS-1$
 
     case LONGVARBINARY:
-      return "LONGVARBINARY";
+      return "LONGVARBINARY"; //$NON-NLS-1$
 
     case BLOB:
-      return "LONGVARBINARY";
+      return "LONGVARBINARY"; //$NON-NLS-1$
 
     case CLOB:
-      return "LONGVARCHAR";
+      return "LONGVARCHAR"; //$NON-NLS-1$
 
     case CHAR:
     case VARCHAR:
@@ -106,7 +106,7 @@ public class HSQLDBAdapter extends DBAdapter
     {
       // HSQLDB just adds one additional single quote for a single quote
       String str = (String)value;
-      StringTokenizer tokenizer = new StringTokenizer(str, "\'", true); // split on single quote
+      StringTokenizer tokenizer = new StringTokenizer(str, "\'", true); // split on single quote //$NON-NLS-1$
       StringBuilder newValueBuilder = new StringBuilder();
 
       while (tokenizer.hasMoreTokens())
@@ -141,7 +141,7 @@ public class HSQLDBAdapter extends DBAdapter
   {
     if (c == '\'') // one single quote -->
     {
-      return "\'\'"; // results two single quotes
+      return "\'\'"; // results two single quotes //$NON-NLS-1$
     }
 
     return c; // no escape character --> return as is

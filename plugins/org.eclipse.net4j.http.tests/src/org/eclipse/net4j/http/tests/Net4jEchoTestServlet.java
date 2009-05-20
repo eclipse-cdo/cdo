@@ -63,7 +63,7 @@ public class Net4jEchoTestServlet extends HttpServlet
       long now = System.currentTimeMillis();
       long gap = now - lastTime;
       lastTime = now;
-      IOUtil.OUT().println("Gap: " + gap);
+      IOUtil.OUT().println("Gap: " + gap); //$NON-NLS-1$
 
       out.writeByte(b);
       out.writeLong(gap);

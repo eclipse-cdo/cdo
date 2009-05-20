@@ -81,7 +81,7 @@ public class DBTable extends DBSchemaElement implements IDBTable
     schema.assertUnlocked();
     if (getField(name) != null)
     {
-      throw new DBException("DBField exists: " + name);
+      throw new DBException("DBField exists: " + name); //$NON-NLS-1$
     }
 
     DBField field = new DBField(this, name, type, precision, scale, notNull, fields.size());
@@ -156,21 +156,21 @@ public class DBTable extends DBSchemaElement implements IDBTable
   public String sqlInsert()
   {
     StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO ");
+    builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getName());
-    builder.append(" VALUES (");
+    builder.append(" VALUES ("); //$NON-NLS-1$
 
     for (int i = 0; i < fields.size(); i++)
     {
       if (i > 0)
       {
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
       }
 
-      builder.append("?");
+      builder.append("?"); //$NON-NLS-1$
     }
 
-    builder.append(")");
+    builder.append(")"); //$NON-NLS-1$
     return builder.toString();
   }
 }

@@ -60,31 +60,31 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
 
   public void testDBTypes() throws Exception
   {
-    IDBSchema schema = DBUtil.createSchema("testDBTypes");
+    IDBSchema schema = DBUtil.createSchema("testDBTypes"); //$NON-NLS-1$
     DBType[] dbTypes = DBType.values();
 
     int count = 0;
     int i = 0;
     for (DBType dbType : dbTypes)
     {
-      IDBTable table = schema.addTable("table_" + i);
-      table.addField("field", dbType);
+      IDBTable table = schema.addTable("table_" + i); //$NON-NLS-1$
+      table.addField("field", dbType); //$NON-NLS-1$
       ++count;
 
       if (dbAdapter.isTypeIndexable(dbType))
       {
-        IDBTable idx_table = schema.addTable("idx_table" + i);
-        IDBField idx_field = idx_table.addField("field", dbType);
+        IDBTable idx_table = schema.addTable("idx_table" + i); //$NON-NLS-1$
+        IDBField idx_field = idx_table.addField("field", dbType); //$NON-NLS-1$
         idx_table.addIndex(IDBIndex.Type.NON_UNIQUE, idx_field);
         ++count;
 
-        IDBTable uni_table = schema.addTable("uni_table" + i);
-        IDBField uni_field = uni_table.addField("field", dbType);
+        IDBTable uni_table = schema.addTable("uni_table" + i); //$NON-NLS-1$
+        IDBField uni_field = uni_table.addField("field", dbType); //$NON-NLS-1$
         uni_table.addIndex(IDBIndex.Type.UNIQUE, uni_field);
         ++count;
 
-        IDBTable pk_table = schema.addTable("pk_table" + i);
-        IDBField pk_field = pk_table.addField("field", dbType);
+        IDBTable pk_table = schema.addTable("pk_table" + i); //$NON-NLS-1$
+        IDBField pk_field = pk_table.addField("field", dbType); //$NON-NLS-1$
         pk_table.addIndex(IDBIndex.Type.PRIMARY_KEY, pk_field);
         ++count;
       }
@@ -98,15 +98,15 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
 
   public void testEscapeStrings() throws Exception
   {
-    IDBSchema schema = DBUtil.createSchema("testEscapeStrings");
-    IDBTable table = schema.addTable("testtable");
-    IDBField field = table.addField("strval", DBType.VARCHAR, 255);
+    IDBSchema schema = DBUtil.createSchema("testEscapeStrings"); //$NON-NLS-1$
+    IDBTable table = schema.addTable("testtable"); //$NON-NLS-1$
+    IDBField field = table.addField("strval", DBType.VARCHAR, 255); //$NON-NLS-1$
     schema.create(dbAdapter, dbConnectionProvider);
 
-    insertString(field, "My name is 'nobody', not body");
-    insertString(field, "a = 'hello'");
-    insertString(field, "'hello' == a");
-    insertString(field, "'hello'");
+    insertString(field, "My name is 'nobody', not body"); //$NON-NLS-1$
+    insertString(field, "a = 'hello'"); //$NON-NLS-1$
+    insertString(field, "'hello' == a"); //$NON-NLS-1$
+    insertString(field, "'hello'"); //$NON-NLS-1$
   }
 
   private void insertString(IDBField field, String val)
@@ -122,7 +122,7 @@ public abstract class AbstractDBTest<DATA_SOURCE extends DataSource> extends Abs
     }
     finally
     {
-      DBUtil.update(connection, "DELETE FROM " + table);
+      DBUtil.update(connection, "DELETE FROM " + table); //$NON-NLS-1$
     }
   }
 }

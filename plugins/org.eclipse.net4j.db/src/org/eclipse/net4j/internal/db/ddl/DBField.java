@@ -142,7 +142,7 @@ public class DBField extends DBSchemaElement implements IDBField
 
   public String getFullName()
   {
-    return table.getName() + "." + name;
+    return table.getName() + "." + name; //$NON-NLS-1$
   }
 
   public String formatPrecision()
@@ -150,27 +150,27 @@ public class DBField extends DBSchemaElement implements IDBField
     int precision = getPrecision();
     if (precision > 0)
     {
-      return "(" + precision + ")";
+      return "(" + precision + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    return "";
+    return ""; //$NON-NLS-1$
   }
 
   public String formatPrecisionAndScale()
   {
     if (scale == DEFAULT)
     {
-      return "(" + getPrecision() + ")";
+      return "(" + getPrecision() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    return "(" + getPrecision() + ", " + scale + ")";
+    return "(" + getPrecision() + ", " + scale + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   public void appendValue(StringBuilder builder, Object value)
   {
     if (value == null)
     {
-      builder.append("NULL");
+      builder.append("NULL"); //$NON-NLS-1$
     }
     else
     {

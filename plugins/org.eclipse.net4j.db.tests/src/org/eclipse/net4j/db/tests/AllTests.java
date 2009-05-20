@@ -20,7 +20,7 @@ public class AllTests
 {
   public static Test suite()
   {
-    TestSuite suite = new TestSuite("Tests for Net4j");
+    TestSuite suite = new TestSuite("Tests for Net4j"); //$NON-NLS-1$
 
     // $JUnit-BEGIN$
     suite.addTestSuite(DerbyTest.class);

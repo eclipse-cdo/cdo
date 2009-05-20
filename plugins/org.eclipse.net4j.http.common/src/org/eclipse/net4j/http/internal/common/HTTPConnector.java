@@ -15,6 +15,7 @@ import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.bundle.OM;
+import org.eclipse.net4j.http.internal.common.messages.Messages;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -105,7 +106,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Multiplexing {0} (count={1})", buffer.formatContent(true), outputOperationCount);
+      TRACER.format("Multiplexing {0} (count={1})", buffer.formatContent(true), outputOperationCount); //$NON-NLS-1$
     }
 
     outputOperations.add(new BufferChannelOperation(httpChannel.getID(), outputOperationCount, buffer));
@@ -168,7 +169,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
         return;
 
       default:
-        throw new IOException("Invalid operation code: " + code);
+        throw new IOException("Invalid operation code: " + code); //$NON-NLS-1$
       }
 
       markLastTraffic();
@@ -353,7 +354,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       HTTPChannel channel = (HTTPChannel)inverseOpenChannel(getChannelID(), protocolID);
       if (channel == null)
       {
-        throw new ConnectorException("Could not open channel");
+        throw new ConnectorException(Messages.getString("HTTPConnector.0")); //$NON-NLS-1$
       }
 
       channel.increaseInputOperationCount();
@@ -456,7 +457,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       int length = in.readShort();
       if (TRACER.isEnabled())
       {
-        TRACER.format("Receiving Buffer operation: operationID={0}, length={1}", getOperationCount(), length);
+        TRACER.format("Receiving Buffer operation: operationID={0}, length={1}", getOperationCount(), length); //$NON-NLS-1$
       }
 
       buffer = getConfig().getBufferProvider().provideBuffer();
@@ -483,7 +484,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       out.writeShort(length);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Transmitting Buffer operation: operationID={0}, length={1}", getOperationCount(), length);
+        TRACER.format("Transmitting Buffer operation: operationID={0}, length={1}", getOperationCount(), length); //$NON-NLS-1$
       }
 
       for (int i = 0; i < length; i++)

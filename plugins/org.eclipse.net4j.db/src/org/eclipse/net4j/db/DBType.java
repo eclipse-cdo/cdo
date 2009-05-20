@@ -30,7 +30,7 @@ public enum DBType
   DECIMAL(3), //
   CHAR(1), //
   VARCHAR(12), //
-  LONGVARCHAR(-1, "LONG VARCHAR"), //
+  LONGVARCHAR(-1, "LONG VARCHAR"), // //$NON-NLS-1$
   DATE(91)
   {
     @Override
@@ -57,13 +57,13 @@ public enum DBType
       if (value instanceof Date)
       {
         Date date = (Date)value;
-        builder.append("'");
+        builder.append("'"); //$NON-NLS-1$
         builder.append(new java.sql.Timestamp(date.getTime()));
-        builder.append("'");
+        builder.append("'"); //$NON-NLS-1$
       }
       else
       {
-        throw new IllegalArgumentException("Not a java.util.Date: " + value);
+        throw new IllegalArgumentException("Not a java.util.Date: " + value); //$NON-NLS-1$
       }
     }
   }, //
@@ -86,7 +86,7 @@ public enum DBType
     }
   }, //
 
-  LONGVARBINARY(-4, "LONG VARBINARY")
+  LONGVARBINARY(-4, "LONG VARBINARY") //$NON-NLS-1$
   {
     @Override
     public void appendValue(StringBuilder builder, Object value)
@@ -148,15 +148,15 @@ public enum DBType
   {
     if (value == null)
     {
-      builder.append("NULL");
+      builder.append("NULL"); //$NON-NLS-1$
     }
     else
     {
       if (value instanceof String || value instanceof Character)
       {
-        builder.append("'");
+        builder.append("'"); //$NON-NLS-1$
         builder.append(value);
-        builder.append("'");
+        builder.append("'"); //$NON-NLS-1$
       }
       else
       {

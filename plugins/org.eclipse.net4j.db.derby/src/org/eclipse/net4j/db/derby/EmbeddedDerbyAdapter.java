@@ -23,7 +23,7 @@ import java.sql.Driver;
  */
 public class EmbeddedDerbyAdapter extends DerbyAdapter
 {
-  public static final String NAME = "derby-embedded";
+  public static final String NAME = "derby-embedded"; //$NON-NLS-1$
 
   public EmbeddedDerbyAdapter()
   {

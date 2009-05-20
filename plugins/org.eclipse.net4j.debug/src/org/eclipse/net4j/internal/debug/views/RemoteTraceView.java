@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.debug.views;
 
 import org.eclipse.net4j.internal.debug.RemoteTraceManager;
+import org.eclipse.net4j.internal.debug.messages.Messages;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.trace.RemoteTraceServer.Event;
@@ -91,8 +92,8 @@ public class RemoteTraceView extends ViewPart
 
   protected void createColmuns(TableViewer viewer)
   {
-    final String[] columnNames = { "ID", "Time Stamp", "Agent ID", "Bundle ID", "Tracer Name", "Context", "Message",
-        "Throwable" };
+    final String[] columnNames = { Messages.getString("RemoteTraceView.0"), Messages.getString("RemoteTraceView.1"), Messages.getString("RemoteTraceView.2"), Messages.getString("RemoteTraceView.3"), Messages.getString("RemoteTraceView.4"), Messages.getString("RemoteTraceView.5"), Messages.getString("RemoteTraceView.6"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+        Messages.getString("RemoteTraceView.7") }; //$NON-NLS-1$
     final int[] columnWidths = { 60, 170, 80, 160, 120, 120, 400, 200 };
     TableColumn[] columns = new TableColumn[columnNames.length];
     for (int i = 0; i < columns.length; i++)
@@ -120,7 +121,7 @@ public class RemoteTraceView extends ViewPart
 
   private void hookContextMenu()
   {
-    MenuManager menuMgr = new MenuManager("#PopupMenu");
+    MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
@@ -171,8 +172,8 @@ public class RemoteTraceView extends ViewPart
       }
     };
 
-    clearAction.setText("Clear");
-    clearAction.setToolTipText("Clear");
+    clearAction.setText(Messages.getString("RemoteTraceView.9")); //$NON-NLS-1$
+    clearAction.setToolTipText(Messages.getString("RemoteTraceView.10")); //$NON-NLS-1$
     clearAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
         ISharedImages.IMG_TOOL_DELETE));
 
@@ -183,7 +184,7 @@ public class RemoteTraceView extends ViewPart
       {
         ISelection selection = viewer.getSelection();
         Object obj = ((IStructuredSelection)selection).getFirstElement();
-        showMessage("Double-click detected on " + obj.toString());
+        showMessage(Messages.getString("RemoteTraceView.11") + obj.toString()); //$NON-NLS-1$
       }
     };
   }
@@ -201,7 +202,7 @@ public class RemoteTraceView extends ViewPart
 
   private void showMessage(String message)
   {
-    MessageDialog.openInformation(viewer.getControl().getShell(), "Remote Traces", message);
+    MessageDialog.openInformation(viewer.getControl().getShell(), Messages.getString("RemoteTraceView.12"), message); //$NON-NLS-1$
   }
 
   /**
@@ -276,7 +277,7 @@ public class RemoteTraceView extends ViewPart
             return id;
           }
 
-          return id + " (" + className + ")";
+          return id + " (" + className + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
         case 7:
           return getFirstLine(text);
@@ -326,7 +327,7 @@ public class RemoteTraceView extends ViewPart
         str = str.substring(0, nl);
       }
 
-      return str.replaceAll("\r", "");
+      return str.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

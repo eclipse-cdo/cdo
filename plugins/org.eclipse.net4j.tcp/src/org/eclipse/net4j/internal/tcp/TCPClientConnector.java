@@ -75,12 +75,12 @@ public class TCPClientConnector extends TCPConnector
     super.doBeforeActivate();
     if (getHost() == null)
     {
-      throw new IllegalStateException("host == null");
+      throw new IllegalStateException("host == null"); //$NON-NLS-1$
     }
 
     if (getPort() == 0)
     {
-      throw new IllegalStateException("port == 0");
+      throw new IllegalStateException("port == 0"); //$NON-NLS-1$
     }
   }
 

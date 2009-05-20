@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.tcp;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
+import org.eclipse.net4j.internal.tcp.messages.Messages;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -71,7 +72,7 @@ public class ControlChannel extends Channel
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Registering channel {0} with protocol {1}", channelID, protocol);
+      TRACER.format("Registering channel {0} with protocol {1}", channelID, protocol); //$NON-NLS-1$
     }
 
     assertValidChannelID(channelID);
@@ -87,7 +88,7 @@ public class ControlChannel extends Channel
     Boolean acknowledged = acknowledgement.get(timeout);
     if (acknowledged == null)
     {
-      throw new TimeoutRuntimeException("Registration timeout after " + timeout + " milliseconds");
+      throw new TimeoutRuntimeException(MessageFormat.format(Messages.getString("ControlChannel_0"), timeout)); //$NON-NLS-1$
     }
 
     return acknowledged;
@@ -97,7 +98,7 @@ public class ControlChannel extends Channel
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Deregistering channel {0}", channelID);
+      TRACER.format("Deregistering channel {0}", channelID); //$NON-NLS-1$
     }
 
     assertValidChannelID(channelID);
@@ -146,7 +147,7 @@ public class ControlChannel extends Channel
           InternalChannel channel = getConnector().inverseOpenChannel(channelID, protocolID);
           if (channel == null)
           {
-            throw new ConnectorException("Could not open channel");
+            throw new ConnectorException(Messages.getString("ControlChannel_4")); //$NON-NLS-1$
           }
         }
         catch (Exception ex)
@@ -227,7 +228,7 @@ public class ControlChannel extends Channel
     if (!getConnector().isNegotiating())
     {
       getConnector().deactivate();
-      throw new IllegalStateException("Connector is not negotiating");
+      throw new IllegalStateException("Connector is not negotiating"); //$NON-NLS-1$
     }
   }
 
@@ -235,7 +236,7 @@ public class ControlChannel extends Channel
   {
     if (!getConnector().isConnected())
     {
-      throw new IllegalStateException("Connector is not connected");
+      throw new IllegalStateException("Connector is not connected"); //$NON-NLS-1$
     }
   }
 

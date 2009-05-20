@@ -40,7 +40,7 @@ public class JVMClientConnector extends JVMConnector
     acceptor = JVMAcceptorManager.INSTANCE.getAcceptor(getName());
     if (acceptor == null)
     {
-      throw new IllegalStateException("acceptor == null");
+      throw new IllegalStateException("acceptor == null"); //$NON-NLS-1$
     }
   }
 

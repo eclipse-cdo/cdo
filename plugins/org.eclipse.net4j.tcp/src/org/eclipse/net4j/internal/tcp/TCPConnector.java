@@ -16,6 +16,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
+import org.eclipse.net4j.internal.tcp.messages.Messages;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPConnector;
@@ -116,7 +117,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   public String getURL()
   {
-    return "tcp://" + host + ":" + port;
+    return "tcp://" + host + ":" + port; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public void handleRegistration(ITCPSelector selector, SocketChannel socketChannel)
@@ -327,12 +328,12 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     super.doBeforeActivate();
     if (socketChannel == null)
     {
-      throw new IllegalStateException("socketChannel == null");
+      throw new IllegalStateException("socketChannel == null"); //$NON-NLS-1$
     }
 
     if (selector == null)
     {
-      throw new IllegalStateException("selector == null");
+      throw new IllegalStateException("selector == null"); //$NON-NLS-1$
     }
   }
 
@@ -366,7 +367,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
     if (selectionKey == null)
     {
-      throw new IllegalStateException("No selection key for connector " + this);
+      throw new IllegalStateException("No selection key for connector " + this); //$NON-NLS-1$
     }
   }
 
@@ -405,7 +406,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       if (buffer.getByteBuffer() != byteBuffer)
       {
-        throw new IllegalArgumentException("The passed buffer is not the last that was produced");
+        throw new IllegalArgumentException("The passed buffer is not the last that was produced"); //$NON-NLS-1$
       }
 
       controlChannel.sendBuffer(buffer);
@@ -424,7 +425,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       }
       else
       {
-        OM.LOG.error("Connector negotiation failed: " + TCPConnector.this);
+        OM.LOG.error(Messages.getString("TCPConnector.6") + TCPConnector.this); //$NON-NLS-1$
         failed = true;
       }
 

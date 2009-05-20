@@ -113,7 +113,7 @@ public class HTTPClientConnector extends HTTPConnector
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkArg(url, "url == null");
+    checkArg(url, "url == null"); //$NON-NLS-1$
   }
 
   @Override

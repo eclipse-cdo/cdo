@@ -15,6 +15,7 @@ import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.jvm.bundle.OM;
+import org.eclipse.net4j.internal.jvm.messages.Messages;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -64,7 +65,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
 
   public String getURL()
   {
-    return "jvm://" + name;
+    return "jvm://" + name; //$NON-NLS-1$
   }
 
   @Override
@@ -92,7 +93,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
     IBuffer buffer = localQueue.poll();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Multiplexing " + buffer.formatContent(true));
+      TRACER.trace("Multiplexing " + buffer.formatContent(true)); //$NON-NLS-1$
     }
 
     buffer.flip();
@@ -115,7 +116,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
       InternalChannel channel = getPeer().inverseOpenChannel(channelID, protocolID);
       if (channel == null)
       {
-        throw new ChannelException("Failed to register channel with peer");
+        throw new ChannelException(Messages.getString("JVMConnector.2")); //$NON-NLS-1$
       }
     }
     catch (ChannelException ex)
@@ -149,7 +150,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(name, "name");
+    checkState(name, "name"); //$NON-NLS-1$
   }
 
   @Override

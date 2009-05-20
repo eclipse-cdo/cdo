@@ -18,9 +18,9 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public class TCPSelectorFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.selectors";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.selectors"; //$NON-NLS-1$
 
-  public static final String TYPE = "tcp";
+  public static final String TYPE = "tcp"; //$NON-NLS-1$
 
   public TCPSelectorFactory()
   {

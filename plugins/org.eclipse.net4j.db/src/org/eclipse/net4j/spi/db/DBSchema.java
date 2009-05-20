@@ -67,7 +67,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
     assertUnlocked();
     if (tables.containsKey(name))
     {
-      throw new DBException("DBTable exists: " + name);
+      throw new DBException("DBTable exists: " + name); //$NON-NLS-1$
     }
 
     DBTable table = new DBTable(this, name);
@@ -120,7 +120,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
       connection = connectionProvider.getConnection();
       if (connection == null)
       {
-        throw new DBException("No connection available from " + connectionProvider);
+        throw new DBException("No connection available from " + connectionProvider); //$NON-NLS-1$
       }
 
       return create(dbAdapter, connection);
@@ -176,7 +176,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
           out.println(tableName);
           for (int i = 0; i < tableName.length(); i++)
           {
-            out.print("=");
+            out.print("="); //$NON-NLS-1$
           }
 
           out.println();
@@ -216,7 +216,7 @@ public class DBSchema extends DBSchemaElement implements IDBSchema
   {
     if (locked)
     {
-      throw new DBException("DBSchema locked: " + name);
+      throw new DBException("DBSchema locked: " + name); //$NON-NLS-1$
     }
   }
 }

@@ -20,7 +20,7 @@ import org.eclipse.spi.net4j.ConnectorFactory;
  */
 public class JVMConnectorFactory extends ConnectorFactory
 {
-  public static final String TYPE = "jvm";
+  public static final String TYPE = "jvm"; //$NON-NLS-1$
 
   public JVMConnectorFactory()
   {

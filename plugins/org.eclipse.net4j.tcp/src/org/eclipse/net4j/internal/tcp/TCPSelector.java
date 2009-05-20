@@ -74,7 +74,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "REGISTER " + channel;
+        return "REGISTER " + channel; //$NON-NLS-1$
       }
     });
   }
@@ -93,7 +93,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "REGISTER " + channel;
+        return "REGISTER " + channel; //$NON-NLS-1$
       }
     });
   }
@@ -110,7 +110,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST CONNECT " + selectionKey.channel() + " = " + on;
+        return "INTEREST CONNECT " + selectionKey.channel() + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
       }
     });
   }
@@ -127,7 +127,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST READ " + selectionKey.channel() + " = " + on;
+        return "INTEREST READ " + selectionKey.channel() + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
       }
     });
   }
@@ -144,7 +144,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST WRITE " + selectionKey.channel() + " = " + on;
+        return "INTEREST WRITE " + selectionKey.channel() + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
       }
     });
   }
@@ -347,7 +347,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Ordering {0} operation {1}", client ? "client" : "server", operation);
+      TRACER.format("Ordering {0} operation {1}", client ? "client" : "server", operation); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     if (client)
@@ -373,7 +373,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Executing {0} operation {1}", client ? "client" : "server", operation);
+        TRACER.format("Executing {0} operation {1}", client ? "client" : "server", operation); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       }
 
       operation.run();

@@ -24,9 +24,9 @@ import java.net.URL;
  */
 public class TCPConnectorFactory extends ConnectorFactory
 {
-  public static final String TYPE = "tcp";
+  public static final String TYPE = "tcp"; //$NON-NLS-1$
 
-  private static final String URL_SCHEME = "http://";
+  private static final String URL_SCHEME = "http://"; //$NON-NLS-1$
 
   public TCPConnectorFactory()
   {
@@ -70,13 +70,13 @@ public class TCPConnectorFactory extends ConnectorFactory
       String userID = connector.getUserID();
       if (!StringUtil.isEmpty(userID))
       {
-        description = userID + "@" + description;
+        description = userID + "@" + description; //$NON-NLS-1$
       }
 
       int port = connector.getPort();
       if (port != ITCPConnector.DEFAULT_PORT)
       {
-        description = description + ":" + port;
+        description = description + ":" + port; //$NON-NLS-1$
       }
 
       return description;

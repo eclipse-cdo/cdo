@@ -40,7 +40,7 @@ public class HTTPServerConnector extends HTTPConnector
 
   public String getURL()
   {
-    return "agent://connector:" + getConnectorID();
+    return "agent://connector:" + getConnectorID(); //$NON-NLS-1$
   }
 
   public int getMaxIdleTime()

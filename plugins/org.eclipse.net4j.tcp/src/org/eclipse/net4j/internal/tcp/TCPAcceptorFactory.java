@@ -20,7 +20,7 @@ import org.eclipse.spi.net4j.AcceptorFactory;
  */
 public class TCPAcceptorFactory extends AcceptorFactory
 {
-  public static final String TYPE = "tcp";
+  public static final String TYPE = "tcp"; //$NON-NLS-1$
 
   private static final String SEPARATOR = ":"; //$NON-NLS-1$
 

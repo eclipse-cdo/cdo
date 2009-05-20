@@ -17,7 +17,7 @@ import org.eclipse.spi.net4j.AcceptorFactory;
  */
 public class HTTPAcceptorFactory extends AcceptorFactory
 {
-  public static final String TYPE = "http";
+  public static final String TYPE = "http"; //$NON-NLS-1$
 
   public HTTPAcceptorFactory()
   {

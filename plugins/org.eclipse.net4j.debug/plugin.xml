@@ -17,10 +17,10 @@
          point="org.eclipse.ui.views">
       <category
             id="org.eclipse.debug.ui"
-            name="Debug">
+            name="%category.name">
       </category>
       <view
-            name="Remote Traces"
+            name="%view.name"
             icon="icons/text.gif"
             category="org.eclipse.debug.ui"
             class="org.eclipse.net4j.internal.debug.views.RemoteTraceView"

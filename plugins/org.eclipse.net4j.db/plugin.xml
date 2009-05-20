@@ -13,6 +13,6 @@
 
 <plugin>
 
-   <extension-point id="dbAdapters" name="Net4j DB Adapters" schema="schema/dbAdapters.exsd"/>
+   <extension-point id="dbAdapters" name="%extension-point.name" schema="schema/dbAdapters.exsd"/>
 
 </plugin>

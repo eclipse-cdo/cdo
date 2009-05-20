@@ -49,7 +49,7 @@ public class HTTPTest extends AbstractTransportTest
   public void _testRequestFlush() throws Exception
   {
     HttpClient client = new HttpClient();
-    PostMethod method = new PostMethod("http://eike@localhost:8080/net4j/echotest");
+    PostMethod method = new PostMethod("http://eike@localhost:8080/net4j/echotest"); //$NON-NLS-1$
     method.setRequestEntity(new RequestEntity()
     {
       public long getContentLength()
@@ -59,7 +59,7 @@ public class HTTPTest extends AbstractTransportTest
 
       public String getContentType()
       {
-        return "application/octet-stream";
+        return "application/octet-stream"; //$NON-NLS-1$
       }
 
       public boolean isRepeatable()
@@ -81,7 +81,7 @@ public class HTTPTest extends AbstractTransportTest
       {
         try
         {
-          msg("Writing " + b);
+          msg("Writing " + b); //$NON-NLS-1$
           out.write(b);
           out.flush();
           Thread.sleep(1000);
@@ -103,7 +103,7 @@ public class HTTPTest extends AbstractTransportTest
       assertEquals(i, b);
 
       long gap = in.readLong();
-      msg("Gap: " + gap);
+      msg("Gap: " + gap); //$NON-NLS-1$
     }
 
     method.releaseConnection();
@@ -126,7 +126,7 @@ public class HTTPTest extends AbstractTransportTest
 
   private HTTPClientConnector getHTTPConnector()
   {
-    return (HTTPClientConnector)container.getElement("org.eclipse.net4j.connectors", "http",
-        "http://eike@localhost:8080/net4j");
+    return (HTTPClientConnector)container.getElement("org.eclipse.net4j.connectors", "http", //$NON-NLS-1$ //$NON-NLS-2$
+        "http://eike@localhost:8080/net4j"); //$NON-NLS-1$
   }
 }

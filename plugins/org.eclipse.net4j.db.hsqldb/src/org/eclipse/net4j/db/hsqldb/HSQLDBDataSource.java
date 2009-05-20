@@ -28,6 +28,6 @@ public class HSQLDBDataSource extends jdbcDataSource
   @Override
   public String toString()
   {
-    return MessageFormat.format("HSQLDBDataSource[database={0}, user={1}]", getDatabase(), getUser());
+    return MessageFormat.format("HSQLDBDataSource[database={0}, user={1}]", getDatabase(), getUser()); //$NON-NLS-1$
   }
 }

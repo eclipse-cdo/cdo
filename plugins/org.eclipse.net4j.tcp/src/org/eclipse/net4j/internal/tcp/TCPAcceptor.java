@@ -137,7 +137,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
       if (addr == null)
       {
         address = socket.getInetAddress().toString();
-        if (address.startsWith("/"))
+        if (address.startsWith("/")) //$NON-NLS-1$
         {
           address = address.substring(1);
         }
@@ -217,7 +217,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     super.doBeforeActivate();
     if (selector == null)
     {
-      throw new IllegalStateException("selector == null");
+      throw new IllegalStateException("selector == null"); //$NON-NLS-1$
     }
 
     if (startSynchronously)
@@ -240,7 +240,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
       {
         startLatch = null;
         IOUtil.closeSilent(serverSocketChannel);
-        throw new IOException("Registration with selector timed out after " + synchronousStartTimeout + " millis");
+        throw new IOException("Registration with selector timed out after " + synchronousStartTimeout + " millis"); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }

@@ -22,9 +22,9 @@ import java.net.URL;
  */
 public class HTTPConnectorFactory extends ConnectorFactory
 {
-  private static final String HTTP_SCHEME_PREFIX = "http://";
+  private static final String HTTP_SCHEME_PREFIX = "http://"; //$NON-NLS-1$
 
-  public static final String TYPE = "http";
+  public static final String TYPE = "http"; //$NON-NLS-1$
 
   public HTTPConnectorFactory()
   {

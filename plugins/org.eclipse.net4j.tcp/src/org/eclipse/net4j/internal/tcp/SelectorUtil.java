@@ -79,7 +79,7 @@ public final class SelectorUtil
         {
           TRACER.trace("Setting interest " //$NON-NLS-1$
               + formatInterestOps(newOps)
-              + (oldOps == 0 ? "" : " (was " + formatInterestOps(oldOps).toLowerCase() + ")")); //$NON-NLS-1$ //$NON-NLS-2$
+              + (oldOps == 0 ? "" : " (was " + formatInterestOps(oldOps).toLowerCase() + ")")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
 
         selectionKey.interestOps(newOps);

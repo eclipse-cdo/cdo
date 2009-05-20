@@ -73,7 +73,7 @@ public class DBIndex extends DBSchemaElement implements IDBIndex
 
   public String getName()
   {
-    return "idx_" + table.getName() + "_" + position;
+    return "idx_" + table.getName() + "_" + position; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public String getFullName()

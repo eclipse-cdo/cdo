@@ -34,10 +34,10 @@ public class Webinar20090129
   {
     ResourceSet rs = new ResourceSetImpl();
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap() //
-        .put("xml", new XMLResourceFactoryImpl());
+        .put("xml", new XMLResourceFactoryImpl()); //$NON-NLS-1$
     rs.getPackageRegistry().put(MODEL.getNsURI(), MODEL);
 
-    URI uri = URI.createFileURI("C:/business/company.xml");
+    URI uri = URI.createFileURI("C:/business/company.xml"); //$NON-NLS-1$
     Resource resource = rs.getResource(uri, true);
     resource.setTrackingModification(true);
 

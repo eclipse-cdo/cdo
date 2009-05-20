@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.migrator;
 
+import org.eclipse.emf.cdo.internal.messages.Messages;
+
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -38,7 +40,7 @@ import java.util.List;
  */
 public class CDOImporter extends ModelImporter
 {
-  public static final String IMPORTER_ID = "org.eclipse.emf.importer.cdo";
+  public static final String IMPORTER_ID = "org.eclipse.emf.importer.cdo"; //$NON-NLS-1$
 
   public CDOImporter()
   {
@@ -58,13 +60,13 @@ public class CDOImporter extends ModelImporter
     List<URI> locationURIs = getModelLocationURIs();
     if (locationURIs.isEmpty())
     {
-      diagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.internal.migrator", 0,
-          "Specify a valid Ecore model and try loading again", null);
+      diagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.internal.migrator", 0, //$NON-NLS-1$
+          Messages.getString("CDOImporter_2"), null); //$NON-NLS-1$
     }
     else
     {
-      monitor.beginTask("", 2);
-      monitor.subTask(MessageFormat.format("Loading {0}", locationURIs));
+      monitor.beginTask("", 2); //$NON-NLS-1$
+      monitor.subTask(MessageFormat.format(Messages.getString("CDOImporter_4"), locationURIs)); //$NON-NLS-1$
 
       ResourceSet ecoreResourceSet = createResourceSet();
       for (URI ecoreModelLocation : locationURIs)
@@ -81,7 +83,7 @@ public class CDOImporter extends ModelImporter
       }
 
       BasicDiagnostic diagnosticChain = new BasicDiagnostic(ConverterPlugin.ID, ConverterUtil.ACTION_MESSAGE_NONE,
-          "Problems were detected while validating and converting the Ecore models", null);
+          Messages.getString("CDOImporter_5"), null); //$NON-NLS-1$
       for (EPackage ePackage : getEPackages())
       {
         Diagnostician.INSTANCE.validate(ePackage, diagnosticChain);
@@ -136,10 +138,10 @@ public class CDOImporter extends ModelImporter
     StringBuffer text = new StringBuffer();
     for (String value : getOriginalGenModel().getForeignModel())
     {
-      if (value.endsWith(".ecore") || value.endsWith(".emof"))
+      if (value.endsWith(".ecore") || value.endsWith(".emof")) //$NON-NLS-1$ //$NON-NLS-2$
       {
         text.append(makeAbsolute(URI.createURI(value), genModelURI).toString());
-        text.append(" ");
+        text.append(" "); //$NON-NLS-1$
       }
     }
 
@@ -152,7 +154,7 @@ public class CDOImporter extends ModelImporter
         if (locations.add(ecoreURI))
         {
           text.append(makeAbsolute(URI.createURI(ecoreURI.toString()), genModelURI).toString());
-          text.append(" ");
+          text.append(" "); //$NON-NLS-1$
         }
       }
     }

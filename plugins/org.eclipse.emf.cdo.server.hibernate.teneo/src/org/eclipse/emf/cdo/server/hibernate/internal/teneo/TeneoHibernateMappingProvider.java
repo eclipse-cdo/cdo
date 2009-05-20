@@ -63,14 +63,14 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     final String mapping = generateMapping();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Generated hibernate mapping:");
+      TRACER.trace("Generated hibernate mapping:"); //$NON-NLS-1$
       TRACER.trace(mapping);
     }
 
     configuration.addXML(mapping);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Added mapping to configuration");
+      TRACER.trace("Added mapping to configuration"); //$NON-NLS-1$
     }
   }
 
@@ -80,7 +80,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Generating Hibernate Mapping");
+      TRACER.trace("Generating Hibernate Mapping"); //$NON-NLS-1$
     }
 
     final Properties properties = HibernateUtil.getInstance().getPropertiesFromStore(getHibernateStore());
@@ -92,11 +92,11 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     epacks.remove(EresourcePackage.eINSTANCE);
 
     final EPackage[] ePackageArray = epacks.toArray(new EPackage[epacks.size()]);
-    properties.put("teneo.mapping.also_map_as_class", "false");
+    properties.put("teneo.mapping.also_map_as_class", "false"); //$NON-NLS-1$ //$NON-NLS-2$
     String hbm = CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
     // System.err.println(hbm);
     // to solve an issue with older versions of teneo
-    hbm = hbm.replaceAll("_cont", "cont");
+    hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
     return hbm;
   }
 

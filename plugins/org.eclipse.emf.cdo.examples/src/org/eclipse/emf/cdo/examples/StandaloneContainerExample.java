@@ -49,12 +49,12 @@ public class StandaloneContainerExample
     container.activate();
 
     // Create connector
-    IConnector connector = TCPUtil.getConnector(container, "localhost:2036");
+    IConnector connector = TCPUtil.getConnector(container, "localhost:2036"); //$NON-NLS-1$
 
     // Create configuration
     CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
     configuration.setConnector(connector);
-    configuration.setRepositoryName("repo1");
+    configuration.setRepositoryName("repo1"); //$NON-NLS-1$
 
     // Open session
     CDOSession session = configuration.openSession();
@@ -64,7 +64,7 @@ public class StandaloneContainerExample
     CDOTransaction transaction = session.openTransaction();
 
     // Get or create resource
-    CDOResource resource = transaction.getOrCreateResource("/path/to/my/resource");
+    CDOResource resource = transaction.getOrCreateResource("/path/to/my/resource"); //$NON-NLS-1$
 
     // Work with the resource and commit the transaction
     EObject object = Model1Factory.eINSTANCE.createCompany();

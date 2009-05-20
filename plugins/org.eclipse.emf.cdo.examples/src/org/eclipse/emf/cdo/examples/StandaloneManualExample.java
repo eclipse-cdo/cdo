@@ -47,7 +47,7 @@ public class StandaloneManualExample
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
 
     // Prepare receiveExecutor
-    final ThreadGroup threadGroup = new ThreadGroup("net4j");
+    final ThreadGroup threadGroup = new ThreadGroup("net4j"); //$NON-NLS-1$
     ExecutorService receiveExecutor = Executors.newCachedThreadPool(new ThreadFactory()
     {
       public Thread newThread(Runnable r)
@@ -76,14 +76,14 @@ public class StandaloneManualExample
     connector.getConfig().setProtocolProvider(protocolProvider);
     connector.getConfig().setNegotiator(null);
     connector.setSelector(selector);
-    connector.setHost("localhost");
+    connector.setHost("localhost"); //$NON-NLS-1$
     connector.setPort(2036);
     connector.activate();
 
     // Create configuration
     CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
     configuration.setConnector(connector);
-    configuration.setRepositoryName("repo1");
+    configuration.setRepositoryName("repo1"); //$NON-NLS-1$
 
     // Open session
     CDOSession session = configuration.openSession();
@@ -93,7 +93,7 @@ public class StandaloneManualExample
     CDOTransaction transaction = session.openTransaction();
 
     // Get or create resource
-    CDOResource resource = transaction.getOrCreateResource("/path/to/my/resource");
+    CDOResource resource = transaction.getOrCreateResource("/path/to/my/resource"); //$NON-NLS-1$
 
     // Work with the resource and commit the transaction
     EObject object = Model1Factory.eINSTANCE.createCompany();

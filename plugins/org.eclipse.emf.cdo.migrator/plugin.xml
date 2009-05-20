@@ -31,7 +31,7 @@
            objectClass="org.eclipse.core.resources.IFile">
         <menu
               id="org.eclipse.emf.cdo.migrator.menu1"
-              label="CDO"
+              label="%menu.label"
               path="additions">
            <separator
                  name="group1">
@@ -41,7 +41,7 @@
               class="org.eclipse.emf.cdo.internal.migrator.actions.MigrateAction"
               enablesFor="1"
               id="org.eclipse.emf.cdo.migrator.MigrateAction"
-              label="Migrate EMF Model"
+              label="%action.label"
               menubarPath="org.eclipse.emf.cdo.migrator.menu1/group1">
         </action>
      </objectContribution>

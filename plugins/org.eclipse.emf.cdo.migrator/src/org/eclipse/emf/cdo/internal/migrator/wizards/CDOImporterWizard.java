@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.migrator.wizards;
 
+import org.eclipse.emf.cdo.internal.messages.Messages;
 import org.eclipse.emf.cdo.internal.migrator.CDOImporter;
 
 import org.eclipse.emf.converter.ModelConverter;
@@ -35,14 +36,14 @@ public class CDOImporterWizard extends ModelImporterWizard
   @Override
   public void addPages()
   {
-    ModelImporterDetailPage detailPage = new ModelImporterDetailPage(getModelImporter(), "EcoreModel");
-    detailPage.setTitle("Ecore &Import");
+    ModelImporterDetailPage detailPage = new ModelImporterDetailPage(getModelImporter(), Messages.getString("CDOImporterWizard_0")); //$NON-NLS-1$
+    detailPage.setTitle(Messages.getString("CDOImporterWizard_1")); //$NON-NLS-1$
     detailPage
-        .setDescription(detailPage.showGenModel() ? "Specify one or more \'.ecore\' or \'.emof\' URIs, try to load them, and choose a file name for the generator model"
-            : "Specify one or more \'.ecore\' or \'.emof\' URIs and try to load them");
+        .setDescription(detailPage.showGenModel() ? Messages.getString("CDOImporterWizard_2") //$NON-NLS-1$
+            : Messages.getString("CDOImporterWizard_3")); //$NON-NLS-1$
     addPage(detailPage);
 
-    ModelImporterPackagePage packagePage = new ModelImporterPackagePage(getModelImporter(), "EcorePackages");
+    ModelImporterPackagePage packagePage = new ModelImporterPackagePage(getModelImporter(), Messages.getString("CDOImporterWizard_4")); //$NON-NLS-1$
     packagePage.setShowReferencedGenModels(true);
     addPage(packagePage);
   }

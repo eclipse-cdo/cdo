@@ -23,7 +23,7 @@ import org.w3c.dom.Element;
  */
 public class TeneoHibernateMappingProviderFactory implements IHibernateMappingProvider.Factory
 {
-  public static final String TYPE = "teneo";
+  public static final String TYPE = "teneo"; //$NON-NLS-1$
 
   public TeneoHibernateMappingProviderFactory()
   {

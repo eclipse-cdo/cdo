@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.migrator.actions;
 
+import org.eclipse.emf.cdo.internal.messages.Messages;
 import org.eclipse.emf.cdo.internal.migrator.CDOMigrator;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -65,7 +66,7 @@ public class MigrateAction implements IObjectActionDelegate
 
   public void run(IAction action)
   {
-    new Job("Migrating EMF model")
+    new Job(Messages.getString("MigrateAction_0")) //$NON-NLS-1$
     {
       @Override
       protected IStatus run(IProgressMonitor monitor)
@@ -75,34 +76,34 @@ public class MigrateAction implements IObjectActionDelegate
           IFile file = getFile();
           if (file == null)
           {
-            showMessage("The selected element is not a *.genmodel file.", true);
+            showMessage(Messages.getString("MigrateAction_1"), true); //$NON-NLS-1$
           }
           else
           {
             GenModel genModel = getGenModel(file);
             if (genModel == null)
             {
-              showMessage("The selected file does not contain a generator model.", true);
+              showMessage(Messages.getString("MigrateAction_2"), true); //$NON-NLS-1$
             }
             else
             {
               String msg = CDOMigrator.adjustGenModel(genModel, file.getProject());
               if (msg == null)
               {
-                showMessage("The selected generator model was already migrated.", false);
+                showMessage(Messages.getString("MigrateAction_3"), false); //$NON-NLS-1$
               }
               else
               {
                 genModel.eResource().save(null);
-                showMessage("The selected generator model has been migrated:\n\n" + msg, false);
+                showMessage(Messages.getString("MigrateAction_4") + msg, false); //$NON-NLS-1$
               }
             }
           }
         }
         catch (Exception ex)
         {
-          return new Status(IStatus.ERROR, "org.eclipse.emf.cdo.internal.migrator",
-              "Problem while migrating EMF model", ex);
+          return new Status(IStatus.ERROR, "org.eclipse.emf.cdo.internal.migrator", //$NON-NLS-1$
+              Messages.getString("MigrateAction_6"), ex); //$NON-NLS-1$
         }
 
         return Status.OK_STATUS;
@@ -118,7 +119,7 @@ public class MigrateAction implements IObjectActionDelegate
       if (element instanceof IFile)
       {
         IFile file = (IFile)element;
-        if ("genmodel".equals(file.getFileExtension()))
+        if ("genmodel".equals(file.getFileExtension())) //$NON-NLS-1$
         {
           return file;
         }
@@ -133,7 +134,7 @@ public class MigrateAction implements IObjectActionDelegate
     ResourceSet resourceSet = new ResourceSetImpl();
 
     Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-    map.put("*", new XMIResourceFactoryImpl());
+    map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 
     URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
     Resource resource = resourceSet.getResource(uri, true);
@@ -165,11 +166,11 @@ public class MigrateAction implements IObjectActionDelegate
             final Shell shell = new Shell(display);
             if (error)
             {
-              MessageDialog.openError(shell, "CDO Migrator", msg);
+              MessageDialog.openError(shell, Messages.getString("MigrateAction_10"), msg); //$NON-NLS-1$
             }
             else
             {
-              MessageDialog.openInformation(shell, "CDO Migrator", msg);
+              MessageDialog.openInformation(shell, Messages.getString("MigrateAction_10"), msg); //$NON-NLS-1$
             }
           }
           catch (RuntimeException ignore)

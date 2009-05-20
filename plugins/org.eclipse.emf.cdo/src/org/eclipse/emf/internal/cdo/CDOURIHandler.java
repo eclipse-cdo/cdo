@@ -90,12 +90,12 @@ public class CDOURIHandler implements URIHandler
 
   public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException
   {
-    throw new UnsupportedOperationException("URI: " + uri);
+    throw new UnsupportedOperationException("URI: " + uri); //$NON-NLS-1$
   }
 
   public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException
   {
-    throw new UnsupportedOperationException("URI: " + uri);
+    throw new UnsupportedOperationException("URI: " + uri); //$NON-NLS-1$
   }
 
   public Map<String, ?> contentDescription(URI uri, Map<?, ?> options) throws IOException

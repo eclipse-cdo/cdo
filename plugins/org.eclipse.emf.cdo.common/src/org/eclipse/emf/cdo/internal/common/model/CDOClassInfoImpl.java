@@ -81,7 +81,7 @@ public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
     }
     catch (ArrayIndexOutOfBoundsException ex)
     {
-      throw new IllegalStateException("Feature not mapped: " + feature, ex);
+      throw new IllegalStateException("Feature not mapped: " + feature, ex); //$NON-NLS-1$
     }
   }
 

@@ -25,7 +25,7 @@ public class MonitorTest extends AbstractOMTest
     {
       OMMonitor monitor = new Monitor();
       monitor.worked();
-      fail("IllegalStateException expected");
+      fail("IllegalStateException expected"); //$NON-NLS-1$
     }
     catch (IllegalStateException ex)
     {
@@ -36,7 +36,7 @@ public class MonitorTest extends AbstractOMTest
     {
       OMMonitor monitor = new Monitor();
       monitor.fork();
-      fail("IllegalStateException expected");
+      fail("IllegalStateException expected"); //$NON-NLS-1$
     }
     catch (IllegalStateException ex)
     {
@@ -48,7 +48,7 @@ public class MonitorTest extends AbstractOMTest
     {
       OMMonitor monitor = new Monitor();
       async = monitor.forkAsync();
-      fail("IllegalStateException expected");
+      fail("IllegalStateException expected"); //$NON-NLS-1$
     }
     catch (IllegalStateException ex)
     {
@@ -69,7 +69,7 @@ public class MonitorTest extends AbstractOMTest
     {
       OMMonitor monitor = new Monitor().begin().fork();
       monitor.worked();
-      fail("IllegalStateException expected");
+      fail("IllegalStateException expected"); //$NON-NLS-1$
     }
     catch (IllegalStateException ex)
     {
@@ -80,7 +80,7 @@ public class MonitorTest extends AbstractOMTest
     {
       OMMonitor monitor = new Monitor().begin().fork();
       monitor.fork();
-      fail("IllegalStateException expected");
+      fail("IllegalStateException expected"); //$NON-NLS-1$
     }
     catch (IllegalStateException ex)
     {
@@ -92,7 +92,7 @@ public class MonitorTest extends AbstractOMTest
     {
       OMMonitor monitor = new Monitor().begin().fork();
       async = monitor.forkAsync();
-      fail("IllegalStateException expected");
+      fail("IllegalStateException expected"); //$NON-NLS-1$
     }
     catch (IllegalStateException ex)
     {

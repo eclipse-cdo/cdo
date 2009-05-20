@@ -66,7 +66,7 @@ public class Bugzilla241463_Test extends AbstractTransportTest
     try
     {
       new TestSignalProtocol(connector);
-      fail("Exception expected");
+      fail("Exception expected"); //$NON-NLS-1$
     }
     catch (Exception expected)
     {
@@ -91,7 +91,7 @@ public class Bugzilla241463_Test extends AbstractTransportTest
             @Override
             public InternalChannel inverseOpenChannel(short channelIndex, String protocolID)
             {
-              throw new ImplementationError("Simulated problem");
+              throw new ImplementationError("Simulated problem"); //$NON-NLS-1$
             }
           };
         }

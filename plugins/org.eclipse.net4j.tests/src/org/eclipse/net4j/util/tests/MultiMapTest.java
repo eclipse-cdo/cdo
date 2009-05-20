@@ -30,14 +30,14 @@ public class MultiMapTest extends AbstractOMTest
     assertEquals(true, multiMap.isEmpty());
     assertEquals(0, multiMap.size());
     assertEquals(false, multiMap.containsKey(1));
-    assertEquals(false, multiMap.containsValue("value" + 1));
+    assertEquals(false, multiMap.containsValue("value" + 1)); //$NON-NLS-1$
     assertEquals(null, multiMap.get(1));
 
     addDelegate(multiMap, 0, 0);
     assertEquals(true, multiMap.isEmpty());
     assertEquals(0, multiMap.size());
     assertEquals(false, multiMap.containsKey(1));
-    assertEquals(false, multiMap.containsValue("value" + 1));
+    assertEquals(false, multiMap.containsValue("value" + 1)); //$NON-NLS-1$
     assertEquals(null, multiMap.get(1));
 
     addDelegate(multiMap, 1, 10);
@@ -46,27 +46,27 @@ public class MultiMapTest extends AbstractOMTest
     assertEquals(false, multiMap.isEmpty());
     assertEquals(30, multiMap.size());
     assertEquals(true, multiMap.containsKey(1));
-    assertEquals(true, multiMap.containsValue("value" + 1));
-    assertEquals("value" + 1, multiMap.get(1));
-    assertEquals("value" + 6, multiMap.get(6));
+    assertEquals(true, multiMap.containsValue("value" + 1)); //$NON-NLS-1$
+    assertEquals("value" + 1, multiMap.get(1)); //$NON-NLS-1$
+    assertEquals("value" + 6, multiMap.get(6)); //$NON-NLS-1$
 
     addDelegate(multiMap, 6, 10);
     assertEquals(false, multiMap.isEmpty());
     assertEquals(30, multiMap.size());
     assertEquals(true, multiMap.containsKey(1));
-    assertEquals(true, multiMap.containsValue("value" + 1));
-    assertEquals("value" + 1, multiMap.get(1));
-    assertEquals("value" + 6, multiMap.get(6));
+    assertEquals(true, multiMap.containsValue("value" + 1)); //$NON-NLS-1$
+    assertEquals("value" + 1, multiMap.get(1)); //$NON-NLS-1$
+    assertEquals("value" + 6, multiMap.get(6)); //$NON-NLS-1$
     assertEquals(null, multiMap.get(35));
 
     addDelegate(multiMap, 26, 10);
     assertEquals(false, multiMap.isEmpty());
     assertEquals(35, multiMap.size());
     assertEquals(true, multiMap.containsKey(1));
-    assertEquals(true, multiMap.containsValue("value" + 1));
-    assertEquals("value" + 1, multiMap.get(1));
-    assertEquals("value" + 6, multiMap.get(6));
-    assertEquals("value" + 35, multiMap.get(35));
+    assertEquals(true, multiMap.containsValue("value" + 1)); //$NON-NLS-1$
+    assertEquals("value" + 1, multiMap.get(1)); //$NON-NLS-1$
+    assertEquals("value" + 6, multiMap.get(6)); //$NON-NLS-1$
+    assertEquals("value" + 35, multiMap.get(35)); //$NON-NLS-1$
   }
 
   public void testEntrySet() throws Exception
@@ -74,31 +74,31 @@ public class MultiMapTest extends AbstractOMTest
     ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
     assertEquals(true, multiMap.entrySet().isEmpty());
     assertEquals(0, multiMap.entrySet().size());
-    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1")));
+    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 0, 0);
     assertEquals(true, multiMap.entrySet().isEmpty());
     assertEquals(0, multiMap.entrySet().size());
-    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1")));
+    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 1, 10);
     addDelegate(multiMap, 11, 10);
     addDelegate(multiMap, 21, 10);
     assertEquals(false, multiMap.entrySet().isEmpty());
     assertEquals(30, multiMap.entrySet().size());
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1")));
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 6, 10);
     assertEquals(false, multiMap.entrySet().isEmpty());
     assertEquals(30, multiMap.entrySet().size());
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1")));
-    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(35, "value35")));
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
+    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(35, "value35"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 26, 10);
     assertEquals(false, multiMap.entrySet().isEmpty());
     assertEquals(35, multiMap.entrySet().size());
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1")));
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(35, "value35")));
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(35, "value35"))); //$NON-NLS-1$
   }
 
   public void testKeySet() throws Exception
@@ -138,31 +138,31 @@ public class MultiMapTest extends AbstractOMTest
     ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
     assertEquals(true, multiMap.values().isEmpty());
     assertEquals(0, multiMap.values().size());
-    assertEquals(false, multiMap.values().contains("value1"));
+    assertEquals(false, multiMap.values().contains("value1")); //$NON-NLS-1$
 
     addDelegate(multiMap, 0, 0);
     assertEquals(true, multiMap.values().isEmpty());
     assertEquals(0, multiMap.values().size());
-    assertEquals(false, multiMap.values().contains("value1"));
+    assertEquals(false, multiMap.values().contains("value1")); //$NON-NLS-1$
 
     addDelegate(multiMap, 1, 10);
     addDelegate(multiMap, 11, 10);
     addDelegate(multiMap, 21, 10);
     assertEquals(false, multiMap.values().isEmpty());
     assertEquals(30, multiMap.values().size());
-    assertEquals(true, multiMap.values().contains("value1"));
+    assertEquals(true, multiMap.values().contains("value1")); //$NON-NLS-1$
 
     addDelegate(multiMap, 6, 10);
     assertEquals(false, multiMap.values().isEmpty());
     assertEquals(30, multiMap.values().size());
-    assertEquals(true, multiMap.values().contains("value1"));
-    assertEquals(false, multiMap.values().contains("value35"));
+    assertEquals(true, multiMap.values().contains("value1")); //$NON-NLS-1$
+    assertEquals(false, multiMap.values().contains("value35")); //$NON-NLS-1$
 
     addDelegate(multiMap, 26, 10);
     assertEquals(false, multiMap.values().isEmpty());
     assertEquals(35, multiMap.values().size());
-    assertEquals(true, multiMap.values().contains("value1"));
-    assertEquals(true, multiMap.values().contains("value35"));
+    assertEquals(true, multiMap.values().contains("value1")); //$NON-NLS-1$
+    assertEquals(true, multiMap.values().contains("value35")); //$NON-NLS-1$
   }
 
   public void testEntrySetIterator() throws Exception
@@ -231,7 +231,7 @@ public class MultiMapTest extends AbstractOMTest
     for (int i = 0; i < count; i++)
     {
       int key = start + i;
-      map.put(key, "value" + key);
+      map.put(key, "value" + key); //$NON-NLS-1$
     }
 
     multiMap.getDelegates().add(map);
@@ -243,13 +243,13 @@ public class MultiMapTest extends AbstractOMTest
     {
       if (!expectedObjects.remove(actualObject))
       {
-        fail("Unexpected object: " + actualObject);
+        fail("Unexpected object: " + actualObject); //$NON-NLS-1$
       }
     }
 
     if (!expectedObjects.isEmpty())
     {
-      fail("Missing objects: " + expectedObjects);
+      fail("Missing objects: " + expectedObjects); //$NON-NLS-1$
     }
   }
 
@@ -259,7 +259,7 @@ public class MultiMapTest extends AbstractOMTest
     for (int i = 0; i < count; i++)
     {
       int key = start + i;
-      result.add(new MapEntry<Integer, String>(key, "value" + key));
+      result.add(new MapEntry<Integer, String>(key, "value" + key)); //$NON-NLS-1$
     }
 
     return result;
@@ -283,7 +283,7 @@ public class MultiMapTest extends AbstractOMTest
     for (int i = 0; i < count; i++)
     {
       int key = start + i;
-      result.add("value" + key);
+      result.add("value" + key); //$NON-NLS-1$
     }
 
     return result;

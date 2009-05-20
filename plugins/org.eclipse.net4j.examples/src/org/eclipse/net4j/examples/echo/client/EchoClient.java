@@ -42,16 +42,16 @@ public class EchoClient
     try
     {
       // Start a connector that represents the client side of a physical connection
-      IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
+      IConnector connector = (IConnector)container.getElement("org.eclipse.net4j.connectors", "tcp", "localhost:2036"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
       EchoClientProtocol protocol = new EchoClientProtocol(connector);
-      EchoRequest request = new EchoRequest(protocol, "My cool message");
+      EchoRequest request = new EchoRequest(protocol, "My cool message"); //$NON-NLS-1$
       String echo = request.send();
       protocol.close();
 
       System.out.println();
-      System.out.println("ECHO: " + echo);
+      System.out.println("ECHO: " + echo); //$NON-NLS-1$
       System.out.println();
     }
     finally

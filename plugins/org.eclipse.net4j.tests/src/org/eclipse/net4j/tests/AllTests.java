@@ -28,7 +28,7 @@ public class AllTests
 {
   public static Test suite()
   {
-    TestSuite suite = new TestSuite("Tests for Net4j");
+    TestSuite suite = new TestSuite("Tests for Net4j"); //$NON-NLS-1$
     suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);

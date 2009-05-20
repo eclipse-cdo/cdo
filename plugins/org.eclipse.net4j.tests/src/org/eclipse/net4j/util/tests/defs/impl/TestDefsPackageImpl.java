@@ -213,11 +213,11 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
     testDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(testDefEClass, TestDef.class, "TestDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTestDef_References(), theNet4jUtilDefsPackage.getDef(), null, "references", null, 0, -1,
+    initEClass(testDefEClass, TestDef.class, "TestDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getTestDef_References(), theNet4jUtilDefsPackage.getDef(), null, "references", null, 0, -1, //$NON-NLS-1$
         TestDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTestDef_Attribute(), ecorePackage.getEString(), "attribute", null, 0, 1, TestDef.class,
+    initEAttribute(getTestDef_Attribute(), ecorePackage.getEString(), "attribute", null, 0, 1, TestDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

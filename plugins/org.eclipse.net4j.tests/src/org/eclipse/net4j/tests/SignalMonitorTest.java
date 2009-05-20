@@ -28,7 +28,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
  */
 public class SignalMonitorTest extends AbstractTransportTest
 {
-  public static final String PROTOCOL_TYPE = "protocol";
+  public static final String PROTOCOL_TYPE = "protocol"; //$NON-NLS-1$
 
   public static final short SIGNAL_ID = 1;
 
@@ -167,7 +167,7 @@ public class SignalMonitorTest extends AbstractTransportTest
     public OMMonitor begin(double totalWork)
     {
       super.begin(totalWork);
-      System.out.println("totalWork: " + getTotalWork());
+      System.out.println("totalWork: " + getTotalWork()); //$NON-NLS-1$
       return this;
     }
 
@@ -175,7 +175,7 @@ public class SignalMonitorTest extends AbstractTransportTest
     public void worked(double work)
     {
       super.worked(work);
-      System.out.println("work: " + getWork());
+      System.out.println("work: " + getWork()); //$NON-NLS-1$
     }
   }
 }

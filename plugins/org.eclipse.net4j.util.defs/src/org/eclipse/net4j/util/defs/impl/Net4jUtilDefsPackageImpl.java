@@ -548,77 +548,77 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
     challengeNegotiatorDefEClass.getESuperTypes().add(this.getNegotiatorDef());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(defContainerEClass, DefContainer.class, "DefContainer", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(defContainerEClass, DefContainer.class, "DefContainer", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDefContainer_Definitions(), this.getDef(), null, "definitions", null, 1, -1, DefContainer.class,
+    initEReference(getDefContainer_Definitions(), this.getDef(), null, "definitions", null, 1, -1, DefContainer.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getDefContainer_DefaultDefinition(), this.getDef(), null, "defaultDefinition", null, 0, 1,
+    initEReference(getDefContainer_DefaultDefinition(), this.getDef(), null, "defaultDefinition", null, 0, 1, //$NON-NLS-1$
         DefContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(defEClass, Def.class, "Def", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(defEClass, Def.class, "Def", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-    addEOperation(defEClass, ecorePackage.getEJavaObject(), "getInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEOperation(defEClass, ecorePackage.getEJavaObject(), "getInstance", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-    addEOperation(defEClass, null, "unsetInstance", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEOperation(defEClass, null, "unsetInstance", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-    initEClass(executorServiceDefEClass, ExecutorServiceDef.class, "ExecutorServiceDef", IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(executorServiceDefEClass, ExecutorServiceDef.class, "ExecutorServiceDef", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(threadPoolDefEClass, ThreadPoolDef.class, "ThreadPoolDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(threadPoolDefEClass, ThreadPoolDef.class, "ThreadPoolDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(randomizerDefEClass, RandomizerDef.class, "RandomizerDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(randomizerDefEClass, RandomizerDef.class, "RandomizerDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRandomizerDef_AlgorithmName(), ecorePackage.getEString(), "algorithmName", null, 0, 1,
+    initEAttribute(getRandomizerDef_AlgorithmName(), ecorePackage.getEString(), "algorithmName", null, 0, 1, //$NON-NLS-1$
         RandomizerDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getRandomizerDef_ProviderName(), ecorePackage.getEString(), "providerName", null, 0, 1,
+    initEAttribute(getRandomizerDef_ProviderName(), ecorePackage.getEString(), "providerName", null, 0, 1, //$NON-NLS-1$
         RandomizerDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getRandomizerDef_Seed(), ecorePackage.getEByteArray(), "seed", null, 0, 1, RandomizerDef.class,
+    initEAttribute(getRandomizerDef_Seed(), ecorePackage.getEByteArray(), "seed", null, 0, 1, RandomizerDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(userManagerDefEClass, UserManagerDef.class, "UserManagerDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(userManagerDefEClass, UserManagerDef.class, "UserManagerDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUserManagerDef_User(), this.getUser(), null, "user", null, 1, -1, UserManagerDef.class,
+    initEReference(getUserManagerDef_User(), this.getUser(), null, "user", null, 1, -1, UserManagerDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
-    initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getUser_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, User.class, !IS_TRANSIENT,
+    initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(getUser_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_Password(), ecorePackage.getEString(), "password", null, 0, 1, User.class, !IS_TRANSIENT,
+    initEAttribute(getUser_Password(), ecorePackage.getEString(), "password", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(passwordCredentialsProviderDefEClass, PasswordCredentialsProviderDef.class,
-        "PasswordCredentialsProviderDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPasswordCredentialsProviderDef_Password(), ecorePackage.getEString(), "password", null, 0, 1,
+        "PasswordCredentialsProviderDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(getPasswordCredentialsProviderDef_Password(), ecorePackage.getEString(), "password", null, 0, 1, //$NON-NLS-1$
         PasswordCredentialsProviderDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(credentialsProviderDefEClass, CredentialsProviderDef.class, "CredentialsProviderDef", IS_ABSTRACT,
+    initEClass(credentialsProviderDefEClass, CredentialsProviderDef.class, "CredentialsProviderDef", IS_ABSTRACT, //$NON-NLS-1$
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getCredentialsProviderDef_UserID(), ecorePackage.getEString(), "userID", null, 0, 1,
+    initEAttribute(getCredentialsProviderDef_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, //$NON-NLS-1$
         CredentialsProviderDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
-    initEClass(negotiatorDefEClass, NegotiatorDef.class, "NegotiatorDef", IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(negotiatorDefEClass, NegotiatorDef.class, "NegotiatorDef", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(responseNegotiatorDefEClass, ResponseNegotiatorDef.class, "ResponseNegotiatorDef", !IS_ABSTRACT,
+    initEClass(responseNegotiatorDefEClass, ResponseNegotiatorDef.class, "ResponseNegotiatorDef", !IS_ABSTRACT, //$NON-NLS-1$
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getResponseNegotiatorDef_CredentialsProvider(), this.getCredentialsProviderDef(), null,
-        "credentialsProvider", null, 0, 1, ResponseNegotiatorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        "credentialsProvider", null, 0, 1, ResponseNegotiatorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(challengeNegotiatorDefEClass, ChallengeNegotiatorDef.class, "ChallengeNegotiatorDef", !IS_ABSTRACT,
+    initEClass(challengeNegotiatorDefEClass, ChallengeNegotiatorDef.class, "ChallengeNegotiatorDef", !IS_ABSTRACT, //$NON-NLS-1$
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChallengeNegotiatorDef_UserManager(), this.getUserManagerDef(), null, "userManager", null, 0, 1,
+    initEReference(getChallengeNegotiatorDef_UserManager(), this.getUserManagerDef(), null, "userManager", null, 0, 1, //$NON-NLS-1$
         ChallengeNegotiatorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getChallengeNegotiatorDef_Randomizer(), this.getRandomizerDef(), null, "randomizer", null, 0, 1,
+    initEReference(getChallengeNegotiatorDef_Randomizer(), this.getRandomizerDef(), null, "randomizer", null, 0, 1, //$NON-NLS-1$
         ChallengeNegotiatorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -83,7 +83,7 @@ public class SignalTest extends AbstractProtocolTest
       String data = TinyData.getText();
       for (int i = 0; i < 1000; i++)
       {
-        msg("Loop " + i);
+        msg("Loop " + i); //$NON-NLS-1$
         new AsyncRequest(protocol, data).sendAsync();
         String result = new StringRequest(protocol, data).send();
         assertEquals(data, result);

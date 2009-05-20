@@ -38,7 +38,7 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
     try
     {
       Net4JUIDefsFactory theNet4JUIDefsFactory = (Net4JUIDefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/NET4J/ui/defs/1.0.0");
+          .getEFactory("http://www.eclipse.org/NET4J/ui/defs/1.0.0"); //$NON-NLS-1$
       if (theNet4JUIDefsFactory != null)
       {
         return theNet4JUIDefsFactory;
@@ -75,7 +75,7 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
     case Net4JUIDefsPackage.INTERACTIVE_CREDENTIALS_PROVIDER_DEF:
       return createInteractiveCredentialsProviderDef();
     default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

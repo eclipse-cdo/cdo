@@ -38,7 +38,7 @@ public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
     try
     {
       TestDefsFactory theTestDefsFactory = (TestDefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/NET4J/defs/tests/1.0.0");
+          .getEFactory("http://www.eclipse.org/NET4J/defs/tests/1.0.0"); //$NON-NLS-1$
       if (theTestDefsFactory != null)
       {
         return theTestDefsFactory;
@@ -74,7 +74,7 @@ public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
     case TestDefsPackage.TEST_DEF:
       return createTestDef();
     default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

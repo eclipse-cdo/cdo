@@ -40,7 +40,7 @@ import java.io.FileOutputStream;
  */
 public class UploadServer implements UploadProtocol
 {
-  public static final String FOLDER_NAME = "/temp";
+  public static final String FOLDER_NAME = "/temp"; //$NON-NLS-1$
 
   public static void main(String[] args) throws Exception
   {
@@ -59,13 +59,13 @@ public class UploadServer implements UploadProtocol
     try
     {
       // Start an acceptor
-      IAcceptor acceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "tcp", "0.0.0.0:2036");
-      OM.LOG.info("Accepting connections: " + acceptor);
+      IAcceptor acceptor = (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", "tcp", "0.0.0.0:2036"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      OM.LOG.info("Accepting connections: " + acceptor); //$NON-NLS-1$
 
       new File(FOLDER_NAME).mkdirs();
-      OM.LOG.info("Upload folder: " + FOLDER_NAME);
+      OM.LOG.info("Upload folder: " + FOLDER_NAME); //$NON-NLS-1$
 
-      System.out.println("Press any key to shutdown");
+      System.out.println("Press any key to shutdown"); //$NON-NLS-1$
       while (System.in.read() == -1)
       {
         Thread.sleep(200);
@@ -126,7 +126,7 @@ public class UploadServer implements UploadProtocol
       String fileName = in.readString();
       File file = new File(FOLDER_NAME, fileName);
       replaced = file.exists();
-      System.out.println((replaced ? "Replacing " : "Storing ") + file.getAbsolutePath());
+      System.out.println((replaced ? "Replacing " : "Storing ") + file.getAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$
 
       monitor.begin((int)size);
       BufferedOutputStream out = null;

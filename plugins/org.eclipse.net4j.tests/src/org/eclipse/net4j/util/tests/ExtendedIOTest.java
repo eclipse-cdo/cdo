@@ -120,33 +120,33 @@ public class ExtendedIOTest extends AbstractOMTest
   private HashMap<String, String> createMap()
   {
     HashMap<String, String> map = new HashMap<String, String>();
-    putMap(map, "org.eclipse.net4j.util.io.CachedFileMap.java");
-    putMap(map, "org.eclipse.net4j.util.io.CloseableIterator.java");
-    putMap(map, "org.eclipse.net4j.util.io.DataInputExtender.java");
-    putMap(map, "org.eclipse.net4j.util.io.DataOutputExtender.java");
-    putMap(map, "org.eclipse.net4j.util.io.DelegatingInputStream.java");
-    putMap(map, "org.eclipse.net4j.util.io.DelegatingOutputStream.java");
-    putMap(map, "org.eclipse.net4j.util.io.DelegatingStreamWrapper.java");
-    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataInput.java");
-    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataInputStream.java");
-    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataOutput.java");
-    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataOutputStream.java");
-    putMap(map, "org.eclipse.net4j.util.io.ExtendedIOUtil.java");
-    putMap(map, "org.eclipse.net4j.util.io.GZIPStreamWrapper.java");
-    putMap(map, "org.eclipse.net4j.util.io.IOFilter.java");
-    putMap(map, "org.eclipse.net4j.util.io.IORunnable.java");
-    putMap(map, "org.eclipse.net4j.util.io.IORuntimeException.java");
-    putMap(map, "org.eclipse.net4j.util.io.IOUtil.java");
-    putMap(map, "org.eclipse.net4j.util.io.IOVisitor.java");
-    putMap(map, "org.eclipse.net4j.util.io.IStreamWrapper.java");
-    putMap(map, "org.eclipse.net4j.util.io.NIOUtil.java");
-    putMap(map, "org.eclipse.net4j.util.io.SortedFileMap.java");
-    putMap(map, "org.eclipse.net4j.util.io.StreamWrapperChain.java");
-    putMap(map, "org.eclipse.net4j.util.io.TMPUtil.java");
-    putMap(map, "org.eclipse.net4j.util.io.XORInputStream.java");
-    putMap(map, "org.eclipse.net4j.util.io.XOROutputStream.java");
-    putMap(map, "org.eclipse.net4j.util.io.XORStreamWrapper.java");
-    putMap(map, "org.eclipse.net4j.util.io.ZIPUtil.java");
+    putMap(map, "org.eclipse.net4j.util.io.CachedFileMap.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.CloseableIterator.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.DataInputExtender.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.DataOutputExtender.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.DelegatingInputStream.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.DelegatingOutputStream.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.DelegatingStreamWrapper.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataInput.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataInputStream.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataOutput.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.ExtendedDataOutputStream.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.ExtendedIOUtil.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.GZIPStreamWrapper.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.IOFilter.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.IORunnable.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.IORuntimeException.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.IOUtil.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.IOVisitor.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.IStreamWrapper.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.NIOUtil.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.SortedFileMap.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.StreamWrapperChain.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.TMPUtil.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.XORInputStream.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.XOROutputStream.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.XORStreamWrapper.java"); //$NON-NLS-1$
+    putMap(map, "org.eclipse.net4j.util.io.ZIPUtil.java"); //$NON-NLS-1$
     return map;
   }
 

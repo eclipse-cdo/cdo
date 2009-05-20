@@ -59,7 +59,7 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
     if (path != null)
     {
       final File file = new File(path);
-      new Job("Uploading file")
+      new Job("Uploading file") //$NON-NLS-1$
       {
         @Override
         protected IStatus run(IProgressMonitor monitor)
@@ -67,7 +67,7 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
           try
           {
             boolean replaced = transferFile(file, monitor);
-            OM.LOG.info("File " + path + (replaced ? " replaced" : " stored") + " on the Net4j server.");
+            OM.LOG.info("File " + path + (replaced ? " replaced" : " stored") + " on the Net4j server."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             return Status.OK_STATUS;
           }
           catch (MonitorCanceledException ex)
@@ -76,7 +76,7 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
           }
           catch (Exception ex)
           {
-            return new Status(IStatus.ERROR, OM.BUNDLE_ID, "Problem with upload of " + path, ex);
+            return new Status(IStatus.ERROR, OM.BUNDLE_ID, "Problem with upload of " + path, ex); //$NON-NLS-1$
           }
           finally
           {
@@ -102,8 +102,8 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
     try
     {
       // Start a connector that represents the client side of a physical connection
-      IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "tcp",
-          "localhost:2036");
+      IConnector connector = (IConnector)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.connectors", "tcp", //$NON-NLS-1$ //$NON-NLS-2$
+          "localhost:2036"); //$NON-NLS-1$
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
       protocol = new SignalProtocol<Object>(PROTOCOL_NAME);

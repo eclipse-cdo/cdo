@@ -221,7 +221,7 @@ public class TestDefImpl extends DefImpl implements TestDef
     }
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (attribute: ");
+    result.append(" (attribute: "); //$NON-NLS-1$
     result.append(attribute);
     result.append(')');
     return result.toString();
@@ -230,7 +230,7 @@ public class TestDefImpl extends DefImpl implements TestDef
   @Override
   protected Object createInstance()
   {
-    return new String("TestDefStringInstance");
+    return new String("TestDefStringInstance"); //$NON-NLS-1$
   }
 
 } // TestDefImpl

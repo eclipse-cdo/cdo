@@ -97,7 +97,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
     disableConsole();
     for (int i = 0; i < 100; i++)
     {
-      IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i);
+      IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
       testSingleThreadNoData();
     }
   }
@@ -120,7 +120,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
     disableConsole();
     for (int i = 0; i < 100; i++)
     {
-      IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i);
+      IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
       testSingleThreadTinyData();
     }
   }
@@ -130,14 +130,14 @@ public abstract class ChannelTest extends AbstractProtocolTest
     MultiThreadMonitor threadMonitor = new MultiThreadMonitor(TIMEOUT);
     for (int i = 0; i < THREADS; i++)
     {
-      threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor)
+      threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor) //$NON-NLS-1$
       {
         @Override
         protected void doRun() throws Exception
         {
           for (int i = 0; i < 100; i++)
           {
-            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i);
+            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
             TestSignalProtocol protocol = openTestSignalProtocol();
             assertActive(protocol);
 
@@ -160,14 +160,14 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
     for (int i = 0; i < THREADS; i++)
     {
-      threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor)
+      threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor) //$NON-NLS-1$
       {
         @Override
         protected void doRun() throws Exception
         {
           for (int i = 0; i < 100; i++)
           {
-            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i);
+            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
             TestSignalProtocol protocol = openTestSignalProtocol();
             assertActive(protocol);
             heartBeat();
@@ -195,7 +195,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
     MultiThreadMonitor threadMonitor = new MultiThreadMonitor(TIMEOUT, 10L);
     for (int i = 0; i < THREADS; i++)
     {
-      threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor)
+      threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor) //$NON-NLS-1$
       {
         @Override
         protected void doRun() throws Exception
@@ -219,7 +219,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
             protocol.close();
             assertInactive(protocol);
             long stop = System.currentTimeMillis();
-            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i + " (" + (stop - start) + ")");
+            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i + " (" + (stop - start) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
           }
         }
       });

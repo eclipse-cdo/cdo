@@ -45,7 +45,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
     try
     {
       Net4jUtilDefsFactory theNet4jUtilDefsFactory = (Net4jUtilDefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/NET4J/util/defs/1.0.0");
+          .getEFactory("http://www.eclipse.org/NET4J/util/defs/1.0.0"); //$NON-NLS-1$
       if (theNet4jUtilDefsFactory != null)
       {
         return theNet4jUtilDefsFactory;
@@ -95,7 +95,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
     case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF:
       return createChallengeNegotiatorDef();
     default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

@@ -21,7 +21,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ServerTestProtocolFactory extends ServerProtocolFactory
 {
-  public static final String TYPE = "test.protocol";
+  public static final String TYPE = "test.protocol"; //$NON-NLS-1$
 
   private CountDownLatch counter;
 

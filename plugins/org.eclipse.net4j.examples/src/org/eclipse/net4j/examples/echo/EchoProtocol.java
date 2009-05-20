@@ -16,7 +16,7 @@ package org.eclipse.net4j.examples.echo;
  */
 public interface EchoProtocol
 {
-  public static final String PROTOCOL_NAME = "echo";
+  public static final String PROTOCOL_NAME = "echo"; //$NON-NLS-1$
 
   public static final short ECHO_SIGNAL = 1;
 }

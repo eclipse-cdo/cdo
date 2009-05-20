@@ -44,7 +44,7 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
     try
     {
       Net4jDefsFactory theNet4jDefsFactory = (Net4jDefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/NET4J/defs/1.0.0");
+          .getEFactory("http://www.eclipse.org/NET4J/defs/1.0.0"); //$NON-NLS-1$
       if (theNet4jDefsFactory != null)
       {
         return theNet4jDefsFactory;
@@ -92,7 +92,7 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
     case Net4jDefsPackage.BUFFER_POOL_DEF:
       return createBufferPoolDef();
     default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

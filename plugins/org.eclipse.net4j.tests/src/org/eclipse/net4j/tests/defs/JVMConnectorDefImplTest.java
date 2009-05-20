@@ -30,14 +30,14 @@ import java.util.concurrent.Executors;
  */
 public class JVMConnectorDefImplTest extends AbstractOMTest
 {
-  private static final String NAME = "test1";
+  private static final String NAME = "test1"; //$NON-NLS-1$
 
   public void testIncompleteInitializationThrowsIllegalArgumentException()
   {
     try
     {
       Net4jDefsFactory.eINSTANCE.createJVMConnectorDef().getInstance();
-      fail("IllegalStateException expected!");
+      fail("IllegalStateException expected!"); //$NON-NLS-1$
     }
     catch (IllegalStateException e)
     {

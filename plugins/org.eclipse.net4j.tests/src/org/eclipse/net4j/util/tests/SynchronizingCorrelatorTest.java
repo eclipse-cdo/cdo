@@ -27,16 +27,16 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
       @Override
       public void run()
       {
-        ISynchronizer<Boolean> eike = correlator.correlate("eike");
+        ISynchronizer<Boolean> eike = correlator.correlate("eike"); //$NON-NLS-1$
         result[0] = eike.get(5000);
-        msg("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]); //$NON-NLS-1$
       }
     };
 
     consumer.start();
     sleep(50);
 
-    correlator.put("eike", true);
+    correlator.put("eike", true); //$NON-NLS-1$
     consumer.join(1000);
     assertEquals(Boolean.TRUE, result[0]);
   }
@@ -58,17 +58,17 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
       @Override
       public void run()
       {
-        ISynchronizer<Boolean> eike = correlator.correlate("eike");
+        ISynchronizer<Boolean> eike = correlator.correlate("eike"); //$NON-NLS-1$
         result[0] = eike.get(5000);
-        msg("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]); //$NON-NLS-1$
       }
     };
 
     consumer.start();
     Thread.sleep(10);
 
-    boolean consumed = correlator.put("eike", true, 1000);
-    msg("Consumed: " + consumed);
+    boolean consumed = correlator.put("eike", true, 1000); //$NON-NLS-1$
+    msg("Consumed: " + consumed); //$NON-NLS-1$
     assertEquals(true, consumed);
 
     consumer.join(1000);
@@ -87,16 +87,16 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   {
     final Boolean[] result = { false };
     final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
-    correlator.put("eike", true);
+    correlator.put("eike", true); //$NON-NLS-1$
 
     final Thread consumer = new Thread()
     {
       @Override
       public void run()
       {
-        ISynchronizer<Boolean> eike = correlator.correlate("eike");
+        ISynchronizer<Boolean> eike = correlator.correlate("eike"); //$NON-NLS-1$
         result[0] = eike.get(5000);
-        msg("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]); //$NON-NLS-1$
       }
     };
 
@@ -119,8 +119,8 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   {
     final Boolean[] result = { false };
     final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
-    boolean consumed = correlator.put("eike", true, 50);
-    msg("Consumed: " + consumed);
+    boolean consumed = correlator.put("eike", true, 50); //$NON-NLS-1$
+    msg("Consumed: " + consumed); //$NON-NLS-1$
     assertEquals(false, consumed);
 
     final Thread consumer = new Thread()
@@ -128,9 +128,9 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
       @Override
       public void run()
       {
-        ISynchronizer<Boolean> eike = correlator.correlate("eike");
+        ISynchronizer<Boolean> eike = correlator.correlate("eike"); //$NON-NLS-1$
         result[0] = eike.get(5000);
-        msg("RESULT: " + result[0]);
+        msg("RESULT: " + result[0]); //$NON-NLS-1$
       }
     };
 

@@ -23,7 +23,7 @@ public class UTFTest extends AbstractOMTest
   public void testUTF8_OneOctet() throws Exception
   {
     final int MAX = UNSIGNED_SHORT_MAX / 10 + 1;
-    String part = "0123456789";
+    String part = "0123456789"; //$NON-NLS-1$
     assertEquals(10, part.length());
 
     StringBuilder builder = new StringBuilder();
@@ -39,7 +39,7 @@ public class UTFTest extends AbstractOMTest
     DataOutputStream dos = new DataOutputStream(baos);
     dos.writeUTF(str);
 
-    String received = baos.toString("UTF-8");
+    String received = baos.toString("UTF-8"); //$NON-NLS-1$
     assertEquals(str, received);
   }
 
@@ -49,7 +49,7 @@ public class UTFTest extends AbstractOMTest
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < MAX; i++)
     {
-      builder.append("\u6771");
+      builder.append("\u6771"); //$NON-NLS-1$
     }
 
     String str = builder.toString();
@@ -59,7 +59,7 @@ public class UTFTest extends AbstractOMTest
     DataOutputStream dos = new DataOutputStream(baos);
     dos.writeUTF(str);
 
-    String received = baos.toString("UTF-8");
+    String received = baos.toString("UTF-8"); //$NON-NLS-1$
     assertEquals(str, received);
   }
 }

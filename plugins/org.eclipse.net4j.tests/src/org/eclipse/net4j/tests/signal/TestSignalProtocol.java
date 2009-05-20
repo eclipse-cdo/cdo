@@ -26,7 +26,7 @@ import java.rmi.AlreadyBoundException;
  */
 public class TestSignalProtocol extends SignalProtocol<Object>
 {
-  public static final String PROTOCOL_NAME = "signal.protocol";
+  public static final String PROTOCOL_NAME = "signal.protocol"; //$NON-NLS-1$
 
   public static final short SIGNAL_INT = 1;
 
@@ -40,7 +40,7 @@ public class TestSignalProtocol extends SignalProtocol<Object>
 
   public static final short SIGNAL_EXCEPTION = 6;
 
-  public static final String SIMULATED_EXCEPTION = "Simulated exception";
+  public static final String SIMULATED_EXCEPTION = "Simulated exception"; //$NON-NLS-1$
 
   public TestSignalProtocol(IConnector connector)
   {

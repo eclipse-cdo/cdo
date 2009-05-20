@@ -31,7 +31,7 @@ import java.util.concurrent.ThreadFactory;
 public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadPoolDef
 {
 
-  private static final String THREADGROUP_IDENTIFIER = "net4j";
+  private static final String THREADGROUP_IDENTIFIER = "net4j"; //$NON-NLS-1$
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

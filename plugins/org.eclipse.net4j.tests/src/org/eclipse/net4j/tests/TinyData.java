@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
  */
 public final class TinyData
 {
-  public static final String NL = System.getProperty("line.separator");
+  public static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 
   public static StringTokenizer getTokenizer()
   {
@@ -36,6 +36,6 @@ public final class TinyData
 
   public static String getText()
   {
-    return "COPYRIGHT (C) 2004 - 2008 EIKE STEPPER, GERMANY. ALL RIGHTS RESERVED.";
+    return "COPYRIGHT (C) 2004 - 2008 EIKE STEPPER, GERMANY. ALL RIGHTS RESERVED."; //$NON-NLS-1$
   }
 }

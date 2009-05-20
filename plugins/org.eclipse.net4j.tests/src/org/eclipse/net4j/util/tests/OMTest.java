@@ -34,7 +34,7 @@ public class OMTest
     IOUtil.OUT().println(baseUrl);
     IOUtil.OUT().println();
 
-    InputStream stream = bundle.getInputStream("/plugin.xml");
+    InputStream stream = bundle.getInputStream("/plugin.xml"); //$NON-NLS-1$
 
     try
     {

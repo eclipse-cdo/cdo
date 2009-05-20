@@ -33,11 +33,11 @@ public class SecurityTest extends AbstractOMTest
 {
   private static final int TIMEOUT = 1000;
 
-  private static final String USER_ID = "stepper";
+  private static final String USER_ID = "stepper"; //$NON-NLS-1$
 
-  private static final char[] PASSWORD1 = "eike2007".toCharArray();
+  private static final char[] PASSWORD1 = "eike2007".toCharArray(); //$NON-NLS-1$
 
-  private static final char[] PASSWORD2 = "invalid".toCharArray();
+  private static final char[] PASSWORD2 = "invalid".toCharArray(); //$NON-NLS-1$
 
   private static final PasswordCredentials CREDENTIALS = new PasswordCredentials(USER_ID, PASSWORD1);
 
@@ -66,12 +66,12 @@ public class SecurityTest extends AbstractOMTest
 
     // Prepare challenge context
     challengeContext.setPeer(responseContext);
-    Thread challengeThread = new Thread(challengeContext, "challengeThread");
+    Thread challengeThread = new Thread(challengeContext, "challengeThread"); //$NON-NLS-1$
     challengeThread.start();
 
     // Prepare response context
     responseContext.setPeer(challengeContext);
-    Thread responseThread = new Thread(responseContext, "responseThread");
+    Thread responseThread = new Thread(responseContext, "responseThread"); //$NON-NLS-1$
     responseThread.start();
 
     // Prepare response negotiator
@@ -118,12 +118,12 @@ public class SecurityTest extends AbstractOMTest
 
     // Prepare challenge context
     challengeContext.setPeer(responseContext);
-    Thread challengeThread = new Thread(challengeContext, "challengeThread");
+    Thread challengeThread = new Thread(challengeContext, "challengeThread"); //$NON-NLS-1$
     challengeThread.start();
 
     // Prepare response context
     responseContext.setPeer(challengeContext);
-    Thread responseThread = new Thread(responseContext, "responseThread");
+    Thread responseThread = new Thread(responseContext, "responseThread"); //$NON-NLS-1$
     responseThread.start();
 
     // Prepare response negotiator

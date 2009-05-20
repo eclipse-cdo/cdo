@@ -77,7 +77,7 @@ public class ExceptionTest extends AbstractProtocolTest
     try
     {
       new ExceptionRequest(protocol, phase, ioProblem).send();
-      fail("Exception expected");
+      fail("Exception expected"); //$NON-NLS-1$
     }
     catch (Exception ex)
     {
@@ -94,7 +94,7 @@ public class ExceptionTest extends AbstractProtocolTest
           }
           else
           {
-            fail("RemoteException expected");
+            fail("RemoteException expected"); //$NON-NLS-1$
           }
         }
         else
@@ -116,7 +116,7 @@ public class ExceptionTest extends AbstractProtocolTest
           }
           else
           {
-            fail("RemoteException expected");
+            fail("RemoteException expected"); //$NON-NLS-1$
           }
         }
         else

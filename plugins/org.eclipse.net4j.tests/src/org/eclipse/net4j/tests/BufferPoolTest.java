@@ -64,14 +64,14 @@ public class BufferPoolTest extends AbstractOMTest
 
   private static void msg()
   {
-    msg("pooledBuffers = " + Net4jUtil.getPooledBuffers(bufferPool));
+    msg("pooledBuffers = " + Net4jUtil.getPooledBuffers(bufferPool)); //$NON-NLS-1$
   }
 
   private static boolean allocate()
   {
     try
     {
-      IOUtil.OUT().println("allocating from " + Runtime.getRuntime().freeMemory());
+      IOUtil.OUT().println("allocating from " + Runtime.getRuntime().freeMemory()); //$NON-NLS-1$
       for (int i = 0; i < 10; i++)
       {
         memory.add(new byte[1000000]);
@@ -90,7 +90,7 @@ public class BufferPoolTest extends AbstractOMTest
   private static void gc()
   {
     msg();
-    IOUtil.OUT().println("collecting garbage");
+    IOUtil.OUT().println("collecting garbage"); //$NON-NLS-1$
     System.gc();
     msg();
   }

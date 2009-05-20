@@ -184,7 +184,7 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
 
     // Initialize classes and features; add operations and parameters
     initEClass(interactiveCredentialsProviderDefEClass, InteractiveCredentialsProviderDef.class,
-        "InteractiveCredentialsProviderDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        "InteractiveCredentialsProviderDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
     // Create resource
     createResource(eNS_URI);

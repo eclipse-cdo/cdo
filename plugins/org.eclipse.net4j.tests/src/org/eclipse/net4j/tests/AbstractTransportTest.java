@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
  */
 public abstract class AbstractTransportTest extends AbstractOMTest
 {
-  protected static final String HOST = "localhost";
+  protected static final String HOST = "localhost"; //$NON-NLS-1$
 
   protected IManagedContainer container;
 
@@ -89,7 +89,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     {
       if (useJVMTransport())
       {
-        acceptor = JVMUtil.getAcceptor(container, "default");
+        acceptor = JVMUtil.getAcceptor(container, "default"); //$NON-NLS-1$
       }
       else
       {
@@ -106,7 +106,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     {
       if (useJVMTransport())
       {
-        connector = JVMUtil.getConnector(container, "default");
+        connector = JVMUtil.getConnector(container, "default"); //$NON-NLS-1$
       }
       else
       {
@@ -143,12 +143,12 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
   protected void restartContainer() throws Exception
   {
-    msg("RESTARTING CONTAINER");
+    msg("RESTARTING CONTAINER"); //$NON-NLS-1$
     stopTransport();
     LifecycleUtil.deactivate(container);
     container = createContainer();
     LifecycleUtil.activate(container);
     startTransport();
-    msg("RESTARTING CONTAINER - FINISHED");
+    msg("RESTARTING CONTAINER - FINISHED"); //$NON-NLS-1$
   }
 }

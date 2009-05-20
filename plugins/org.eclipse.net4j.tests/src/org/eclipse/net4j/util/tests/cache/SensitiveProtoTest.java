@@ -46,7 +46,7 @@ public class SensitiveProtoTest extends AbstractOMTest
     while ((ref = (KeyedAndValuedWeakReference<Integer, String>)queue.poll()) != null)
     {
       int i = ref.getKey();
-      System.out.println("Dequeued i=" + i);
+      System.out.println("Dequeued i=" + i); //$NON-NLS-1$
       if (i < 10)
       {
         map.put(i, new KeyedAndValuedWeakReference<Integer, String>(i, ref.getValue(), queue));

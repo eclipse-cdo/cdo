@@ -141,7 +141,7 @@ public class RevisionManager extends Cache<Revision>
     @Override
     public String toString()
     {
-      return "R" + id + "v" + version + (get() == null ? "" : " UNCLEARED");
+      return "R" + id + "v" + version + (get() == null ? "" : " UNCLEARED"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
   }
 }

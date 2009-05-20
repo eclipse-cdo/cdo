@@ -635,89 +635,89 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
     protocolProviderDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(connectorDefEClass, ConnectorDef.class, "ConnectorDef", IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(connectorDefEClass, ConnectorDef.class, "ConnectorDef", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConnectorDef_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, ConnectorDef.class,
+    initEAttribute(getConnectorDef_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, ConnectorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConnectorDef_BufferProvider(), this.getBufferProviderDef(), null, "bufferProvider", null, 1, 1,
+    initEReference(getConnectorDef_BufferProvider(), this.getBufferProviderDef(), null, "bufferProvider", null, 1, 1, //$NON-NLS-1$
         ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConnectorDef_ExecutorService(), theNet4jUtilDefsPackage.getExecutorServiceDef(), null,
-        "executorService", null, 1, 1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        "executorService", null, 1, 1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConnectorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null,
+    initEReference(getConnectorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null, //$NON-NLS-1$
         0, 1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConnectorDef_ClientProtocolProvider(), this.getClientProtocolFactoryDef(), null,
-        "clientProtocolProvider", null, 1, -1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        "clientProtocolProvider", null, 1, -1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(clientProtocolFactoryDefEClass, ClientProtocolFactoryDef.class, "ClientProtocolFactoryDef", IS_ABSTRACT,
+    initEClass(clientProtocolFactoryDefEClass, ClientProtocolFactoryDef.class, "ClientProtocolFactoryDef", IS_ABSTRACT, //$NON-NLS-1$
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(tcpConnectorDefEClass, TCPConnectorDef.class, "TCPConnectorDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(tcpConnectorDefEClass, TCPConnectorDef.class, "TCPConnectorDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTCPConnectorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 0, 1,
+    initEReference(getTCPConnectorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 0, 1, //$NON-NLS-1$
         TCPConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTCPConnectorDef_Host(), ecorePackage.getEString(), "host", null, 1, 1, TCPConnectorDef.class,
+    initEAttribute(getTCPConnectorDef_Host(), ecorePackage.getEString(), "host", null, 1, 1, TCPConnectorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTCPConnectorDef_Port(), ecorePackage.getEInt(), "port", null, 0, 1, TCPConnectorDef.class,
+    initEAttribute(getTCPConnectorDef_Port(), ecorePackage.getEInt(), "port", null, 0, 1, TCPConnectorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(acceptorDefEClass, AcceptorDef.class, "AcceptorDef", IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(acceptorDefEClass, AcceptorDef.class, "AcceptorDef", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAcceptorDef_BufferProvider(), this.getBufferPoolDef(), null, "bufferProvider", null, 0, 1,
+    initEReference(getAcceptorDef_BufferProvider(), this.getBufferPoolDef(), null, "bufferProvider", null, 0, 1, //$NON-NLS-1$
         AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAcceptorDef_ExecutorService(), theNet4jUtilDefsPackage.getThreadPoolDef(), null,
-        "executorService", null, 0, 1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        "executorService", null, 0, 1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAcceptorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null,
+    initEReference(getAcceptorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null, //$NON-NLS-1$
         0, 1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAcceptorDef_ServerProtocolProvider(), this.getServerProtocolFactoryDef(), null,
-        "serverProtocolProvider", null, 1, -1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        "serverProtocolProvider", null, 1, -1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(tcpAcceptorDefEClass, TCPAcceptorDef.class, "TCPAcceptorDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(tcpAcceptorDefEClass, TCPAcceptorDef.class, "TCPAcceptorDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getTCPAcceptorDef_Host(), ecorePackage.getEString(), "host", null, 1, 1, TCPAcceptorDef.class,
+    initEAttribute(getTCPAcceptorDef_Host(), ecorePackage.getEString(), "host", null, 1, 1, TCPAcceptorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTCPAcceptorDef_Port(), ecorePackage.getEInt(), "port", null, 1, 1, TCPAcceptorDef.class,
+    initEAttribute(getTCPAcceptorDef_Port(), ecorePackage.getEInt(), "port", null, 1, 1, TCPAcceptorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTCPAcceptorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 1, 1,
+    initEReference(getTCPAcceptorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 1, 1, //$NON-NLS-1$
         TCPAcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(jvmAcceptorDefEClass, JVMAcceptorDef.class, "JVMAcceptorDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(jvmAcceptorDefEClass, JVMAcceptorDef.class, "JVMAcceptorDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getJVMAcceptorDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, JVMAcceptorDef.class,
+    initEAttribute(getJVMAcceptorDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, JVMAcceptorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(jvmConnectorDefEClass, JVMConnectorDef.class, "JVMConnectorDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(jvmConnectorDefEClass, JVMConnectorDef.class, "JVMConnectorDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getJVMConnectorDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, JVMConnectorDef.class,
+    initEAttribute(getJVMConnectorDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, JVMConnectorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(httpConnectorDefEClass, HTTPConnectorDef.class, "HTTPConnectorDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(httpConnectorDefEClass, HTTPConnectorDef.class, "HTTPConnectorDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getHTTPConnectorDef_Url(), ecorePackage.getEString(), "url", null, 0, 1, HTTPConnectorDef.class,
+    initEAttribute(getHTTPConnectorDef_Url(), ecorePackage.getEString(), "url", null, 0, 1, HTTPConnectorDef.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(tcpSelectorDefEClass, TCPSelectorDef.class, "TCPSelectorDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(tcpSelectorDefEClass, TCPSelectorDef.class, "TCPSelectorDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(serverProtocolFactoryDefEClass, ServerProtocolFactoryDef.class, "ServerProtocolFactoryDef", IS_ABSTRACT,
+    initEClass(serverProtocolFactoryDefEClass, ServerProtocolFactoryDef.class, "ServerProtocolFactoryDef", IS_ABSTRACT, //$NON-NLS-1$
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(bufferProviderDefEClass, BufferProviderDef.class, "BufferProviderDef", IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(bufferProviderDefEClass, BufferProviderDef.class, "BufferProviderDef", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(bufferPoolDefEClass, BufferPoolDef.class, "BufferPoolDef", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(bufferPoolDefEClass, BufferPoolDef.class, "BufferPoolDef", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(protocolProviderDefEClass, ProtocolProviderDef.class, "ProtocolProviderDef", IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(protocolProviderDefEClass, ProtocolProviderDef.class, "ProtocolProviderDef", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource

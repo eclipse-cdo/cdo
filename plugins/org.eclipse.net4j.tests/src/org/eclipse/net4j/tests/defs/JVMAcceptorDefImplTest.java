@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
  */
 public class JVMAcceptorDefImplTest extends AbstractOMTest
 {
-  private static final String NAME = "JVMConnector1";
+  private static final String NAME = "JVMConnector1"; //$NON-NLS-1$
 
   private static final long TIMEOUT = 10000l;
 

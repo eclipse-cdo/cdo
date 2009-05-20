@@ -43,7 +43,7 @@ public class Performance
     for (int i = 0; i < 2; i++)
     {
       long start = System.currentTimeMillis();
-      InetAddress inet = InetAddress.getByName("localhost");
+      InetAddress inet = InetAddress.getByName("localhost"); //$NON-NLS-1$
       inet.getHostAddress();
       long duration = System.currentTimeMillis() - start;
 
@@ -67,10 +67,10 @@ public class Performance
 
   public static void testRouter() throws Exception
   {
-    System.out.println(Socket.class.getName() + " (ROUTER)");
+    System.out.println(Socket.class.getName() + " (ROUTER)"); //$NON-NLS-1$
     for (int i = 0; i < 2; i++)
     {
-      final SocketAddress endpoint = new InetSocketAddress(InetAddress.getByName("192.168.1.1"), 80);
+      final SocketAddress endpoint = new InetSocketAddress(InetAddress.getByName("192.168.1.1"), 80); //$NON-NLS-1$
       Socket socket = new Socket(Proxy.NO_PROXY);
 
       long start = System.currentTimeMillis();
@@ -85,10 +85,10 @@ public class Performance
 
   public static void testSocket() throws Exception
   {
-    System.out.println(Socket.class.getName() + " (LOOPBACK)");
+    System.out.println(Socket.class.getName() + " (LOOPBACK)"); //$NON-NLS-1$
     for (int i = 0; i < 2; i++)
     {
-      final SocketAddress endpoint = new InetSocketAddress(InetAddress.getByName("127.0.0.1"), 2036);
+      final SocketAddress endpoint = new InetSocketAddress(InetAddress.getByName("127.0.0.1"), 2036); //$NON-NLS-1$
       final CountDownLatch latch = new CountDownLatch(1);
       new Thread()
       {

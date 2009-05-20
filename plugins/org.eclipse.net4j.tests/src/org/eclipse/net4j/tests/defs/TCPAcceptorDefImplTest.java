@@ -31,13 +31,13 @@ public class TCPAcceptorDefImplTest extends AbstractOMTest
 
   private static final long DELAY = 500;
 
-  private static final String HOST = "localhost";
+  private static final String HOST = "localhost"; //$NON-NLS-1$
 
   private static final int PORT = 2036;
 
-  private static final String USERID = "André";
+  private static final String USERID = "André"; //$NON-NLS-1$
 
-  private static final String PASSWORD = "aPassword";
+  private static final String PASSWORD = "aPassword"; //$NON-NLS-1$
 
   private TCPConnector tcpConnector;
 

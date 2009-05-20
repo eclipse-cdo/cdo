@@ -22,8 +22,8 @@ public class ZipTest extends AbstractOMTest
 {
   public void testZip() throws Exception
   {
-    File zipFile = newFile("src.zip");
-    File sourceFolder = newFile("src");
+    File zipFile = newFile("src.zip"); //$NON-NLS-1$
+    File sourceFolder = newFile("src"); //$NON-NLS-1$
     ZIPUtil.zip(sourceFolder, false, zipFile);
   }
 

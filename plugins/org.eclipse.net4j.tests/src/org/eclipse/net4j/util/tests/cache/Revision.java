@@ -55,13 +55,13 @@ public class Revision
   @Override
   public String toString()
   {
-    return "R" + id + "v" + version;
+    return "R" + id + "v" + version; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Override
   protected void finalize() throws Throwable
   {
-    IOUtil.ERR().println("FINALIZE " + this);
+    IOUtil.ERR().println("FINALIZE " + this); //$NON-NLS-1$
     revisionManager.finalizeRevision(this);
   }
 }

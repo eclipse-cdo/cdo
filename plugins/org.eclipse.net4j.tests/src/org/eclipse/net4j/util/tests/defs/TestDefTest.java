@@ -74,7 +74,7 @@ public class TestDefTest extends AbstractOMTest
       @Override
       protected Object createInstance()
       {
-        return new String("");
+        return new String(""); //$NON-NLS-1$
       }
     };
 
@@ -96,7 +96,7 @@ public class TestDefTest extends AbstractOMTest
       @Override
       protected Object createInstance()
       {
-        return new String("");
+        return new String(""); //$NON-NLS-1$
       }
     };
 
@@ -109,7 +109,7 @@ public class TestDefTest extends AbstractOMTest
   {
     TestDef def = createTestDef();
     assertTrue(!def.isTouched());
-    def.setAttribute("aValue");
+    def.setAttribute("aValue"); //$NON-NLS-1$
     assertTrue(def.isTouched());
     def.getInstance(); // clears touched
     assertTrue(!def.isTouched());
@@ -132,7 +132,7 @@ public class TestDefTest extends AbstractOMTest
     def.getReferences().add(referencedDef);
     assertTrue(!referencedDef.isTouched());
 
-    referencedDef.setAttribute("newValue");
+    referencedDef.setAttribute("newValue"); //$NON-NLS-1$
     assertTrue(referencedDef.isTouched());
     assertTrue(def.isTouched());
   }
@@ -215,7 +215,7 @@ public class TestDefTest extends AbstractOMTest
         {
           if (isTimeout(startTime))
           {
-            throw new IllegalStateException("was not deactivated while waiting for '" + WAIT_TIMEOUT + "'!");
+            throw new IllegalStateException("was not deactivated while waiting for '" + WAIT_TIMEOUT + "'!"); //$NON-NLS-1$ //$NON-NLS-2$
           }
 
           reentrantLock.wait(WAIT_TIMEOUT);

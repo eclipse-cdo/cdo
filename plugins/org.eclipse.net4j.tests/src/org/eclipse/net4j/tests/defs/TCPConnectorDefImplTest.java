@@ -32,9 +32,9 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
 
   private static final long TIMEOUT = 10000l;
 
-  private static final String USERID = "André";
+  private static final String USERID = "André"; //$NON-NLS-1$
 
-  private static final String PASSWORD = "aPassword";
+  private static final String PASSWORD = "aPassword"; //$NON-NLS-1$
 
   private TCPAcceptor tcpAcceptor;
 

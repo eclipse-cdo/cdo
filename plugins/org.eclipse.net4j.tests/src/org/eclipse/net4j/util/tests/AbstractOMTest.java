@@ -40,11 +40,11 @@ public abstract class AbstractOMTest extends TestCase
     enableConsole();
     if (!SUPPRESS_OUTPUT)
     {
-      IOUtil.OUT().println("*******************************************************");
+      IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
       sleep(1L);
       IOUtil.ERR().println(this);
       sleep(1L);
-      IOUtil.OUT().println("*******************************************************");
+      IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
     }
 
     super.setUp();
@@ -53,7 +53,7 @@ public abstract class AbstractOMTest extends TestCase
     if (!SUPPRESS_OUTPUT)
     {
       IOUtil.OUT().println();
-      IOUtil.OUT().println("------------------------ START ------------------------");
+      IOUtil.OUT().println("------------------------ START ------------------------"); //$NON-NLS-1$
     }
   }
 
@@ -63,7 +63,7 @@ public abstract class AbstractOMTest extends TestCase
     enableConsole();
     if (!SUPPRESS_OUTPUT)
     {
-      IOUtil.OUT().println("------------------------- END -------------------------");
+      IOUtil.OUT().println("------------------------- END -------------------------"); //$NON-NLS-1$
       IOUtil.OUT().println();
     }
 
@@ -86,7 +86,7 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (SkipTestException ex)
     {
-      OM.LOG.info("Skipped " + this);
+      OM.LOG.info("Skipped " + this); //$NON-NLS-1$
     }
     catch (Throwable t)
     {
@@ -108,7 +108,7 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (SkipTestException ex)
     {
-      OM.LOG.info("Skipped " + this);
+      OM.LOG.info("Skipped " + this); //$NON-NLS-1$
     }
     catch (RuntimeException ex)
     {
@@ -200,7 +200,7 @@ public abstract class AbstractOMTest extends TestCase
     {
       if (consoleEnabled)
       {
-        IOUtil.OUT().println("--> " + m);
+        IOUtil.OUT().println("--> " + m); //$NON-NLS-1$
       }
     }
   }

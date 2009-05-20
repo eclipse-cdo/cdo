@@ -45,13 +45,13 @@ public class TCPConnectorTest extends AbstractOMTest
 {
   private static final int TIMEOUT = 10000;
 
-  private static final String USER_ID = "stepper";
+  private static final String USER_ID = "stepper"; //$NON-NLS-1$
 
-  private static final String INVALID_USER_ID = "crap";
+  private static final String INVALID_USER_ID = "crap"; //$NON-NLS-1$
 
-  private static final char[] PASSWORD = "eike2008".toCharArray();
+  private static final char[] PASSWORD = "eike2008".toCharArray(); //$NON-NLS-1$
 
-  private static final char[] INVALID_PASSWORD = "invalid".toCharArray();
+  private static final char[] INVALID_PASSWORD = "invalid".toCharArray(); //$NON-NLS-1$
 
   private static final PasswordCredentials CREDENTIALS = new PasswordCredentials(USER_ID, PASSWORD);
 
@@ -174,7 +174,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setBufferProvider(bufferPool);
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.setSelector(selector);
-    acceptor.setAddress("0.0.0.0");
+    acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
     acceptor.setPort(2036);
     acceptor.activate();
 
@@ -182,7 +182,7 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.setSelector(selector);
-    connector.setHost("localhost");
+    connector.setHost("localhost"); //$NON-NLS-1$
     connector.setPort(2036);
     connector.activate();
     assertEquals(false, connector.isActive());
@@ -199,9 +199,9 @@ public class TCPConnectorTest extends AbstractOMTest
       IOUtil.OUT().println();
       IOUtil.OUT().println();
       IOUtil.OUT().println();
-      IOUtil.OUT().println("#####################################################");
-      IOUtil.OUT().println(" RUN = " + i);
-      IOUtil.OUT().println("#####################################################");
+      IOUtil.OUT().println("#####################################################"); //$NON-NLS-1$
+      IOUtil.OUT().println(" RUN = " + i); //$NON-NLS-1$
+      IOUtil.OUT().println("#####################################################"); //$NON-NLS-1$
       IOUtil.OUT().println();
       IOUtil.OUT().println();
       IOUtil.OUT().println();
@@ -240,7 +240,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
-    acceptor.setAddress("0.0.0.0");
+    acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
     acceptor.setPort(2036);
     acceptor.activate();
 
@@ -256,7 +256,7 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
-    connector.setHost("localhost");
+    connector.setHost("localhost"); //$NON-NLS-1$
     connector.setPort(2036);
     connector.activate();
 
@@ -280,9 +280,9 @@ public class TCPConnectorTest extends AbstractOMTest
       IOUtil.OUT().println();
       IOUtil.OUT().println();
       IOUtil.OUT().println();
-      IOUtil.OUT().println("#####################################################");
-      IOUtil.OUT().println("                          RUN = " + i);
-      IOUtil.OUT().println("#####################################################");
+      IOUtil.OUT().println("#####################################################"); //$NON-NLS-1$
+      IOUtil.OUT().println("                          RUN = " + i); //$NON-NLS-1$
+      IOUtil.OUT().println("#####################################################"); //$NON-NLS-1$
       IOUtil.OUT().println();
       IOUtil.OUT().println();
       IOUtil.OUT().println();
@@ -321,7 +321,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
-    acceptor.setAddress("0.0.0.0");
+    acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
     acceptor.setPort(2036);
     acceptor.activate();
 
@@ -337,18 +337,18 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
-    connector.setHost("localhost");
+    connector.setHost("localhost"); //$NON-NLS-1$
     connector.setPort(2036);
 
     try
     {
       connector.connectAsync();
       connector.waitForConnection(TIMEOUT);
-      fail("ConnectorException expected");
+      fail("ConnectorException expected"); //$NON-NLS-1$
     }
     catch (ConnectorException ex)
     {
-      OM.LOG.info("Expected ConnectorException:", ex);
+      OM.LOG.info("Expected ConnectorException:", ex); //$NON-NLS-1$
       assertEquals(true, ex.getCause() instanceof NegotiationException);
     }
   }
@@ -383,7 +383,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
-    acceptor.setAddress("0.0.0.0");
+    acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
     acceptor.setPort(2036);
     acceptor.activate();
 
@@ -399,18 +399,18 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
-    connector.setHost("localhost");
+    connector.setHost("localhost"); //$NON-NLS-1$
     connector.setPort(2036);
 
     try
     {
       connector.connectAsync();
       connector.waitForConnection(TIMEOUT);
-      fail("ConnectorException expected");
+      fail("ConnectorException expected"); //$NON-NLS-1$
     }
     catch (ConnectorException ex)
     {
-      OM.LOG.info("Expected ConnectorException:", ex);
+      OM.LOG.info("Expected ConnectorException:", ex); //$NON-NLS-1$
       assertEquals(true, ex.getCause() instanceof NegotiationException);
     }
   }
@@ -432,7 +432,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setBufferProvider(bufferPool);
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.setSelector(selector);
-    acceptor.setAddress("0.0.0.0");
+    acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
     acceptor.setPort(2036);
     acceptor.activate();
 
@@ -440,18 +440,18 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.setSelector(selector);
-    connector.setHost("localhost");
+    connector.setHost("localhost"); //$NON-NLS-1$
     connector.setPort(2036);
-    connector.setUserID("SHOULD_FAIL_LATER");
+    connector.setUserID("SHOULD_FAIL_LATER"); //$NON-NLS-1$
 
     try
     {
       connector.connect();
-      fail("ConnectorException expected");
+      fail("ConnectorException expected"); //$NON-NLS-1$
     }
     catch (ConnectorException ex)
     {
-      OM.LOG.info("Expected ConnectorException:", ex);
+      OM.LOG.info("Expected ConnectorException:", ex); //$NON-NLS-1$
       assertEquals(true, ex.getCause() instanceof IllegalStateException);
     }
   }
@@ -473,7 +473,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setBufferProvider(bufferPool);
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.setSelector(selector);
-    acceptor.setAddress("0.0.0.0");
+    acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
     acceptor.setPort(2036);
     acceptor.activate();
 
@@ -481,7 +481,7 @@ public class TCPConnectorTest extends AbstractOMTest
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.setSelector(selector);
-    connector.setHost("localhost");
+    connector.setHost("localhost"); //$NON-NLS-1$
     connector.setPort(2036);
     connector.connect();
 
@@ -495,11 +495,11 @@ public class TCPConnectorTest extends AbstractOMTest
     try
     {
       connector.getConfig().setNegotiator(responseNegotiator);
-      fail("IllegalStateException expected");
+      fail("IllegalStateException expected"); //$NON-NLS-1$
     }
     catch (IllegalStateException ex)
     {
-      OM.LOG.info("Expected IllegalStateException:", ex);
+      OM.LOG.info("Expected IllegalStateException:", ex); //$NON-NLS-1$
     }
   }
 }

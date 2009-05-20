@@ -30,7 +30,7 @@ public final class TestProtocol extends Protocol<CountDownLatch>
 
   public void handleBuffer(IBuffer buffer)
   {
-    IOUtil.OUT().println("BUFFER ARRIVED");
+    IOUtil.OUT().println("BUFFER ARRIVED"); //$NON-NLS-1$
     buffer.release();
     getInfraStructure().countDown();
   }

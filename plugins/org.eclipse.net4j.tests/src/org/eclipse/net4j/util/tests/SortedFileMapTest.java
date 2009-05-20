@@ -25,7 +25,7 @@ public class SortedFileMapTest extends AbstractOMTest
 {
   public void testMap() throws Exception
   {
-    File file = new File("testMap.dat");
+    File file = new File("testMap.dat"); //$NON-NLS-1$
     if (file.exists())
     {
       file.delete();
@@ -38,7 +38,7 @@ public class SortedFileMapTest extends AbstractOMTest
       map = new TestMap(file);
       for (int i = 0; i < 500; i++)
       {
-        map.put(i, "Value " + i);
+        map.put(i, "Value " + i); //$NON-NLS-1$
       }
 
       for (int i = 0; i < 500; i++)
@@ -60,7 +60,7 @@ public class SortedFileMapTest extends AbstractOMTest
   {
     public TestMap(File file)
     {
-      super(file, "rw");
+      super(file, "rw"); //$NON-NLS-1$
     }
 
     @Override
@@ -99,7 +99,7 @@ public class SortedFileMapTest extends AbstractOMTest
       byte[] bytes = value.getBytes();
       if (bytes.length + 4 > getValueSize())
       {
-        throw new IllegalArgumentException("Value size of " + getValueSize() + " exceeded: " + value);
+        throw new IllegalArgumentException("Value size of " + getValueSize() + " exceeded: " + value); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       out.writeByteArray(bytes);

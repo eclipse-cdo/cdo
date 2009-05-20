@@ -44,13 +44,13 @@ public class TCPConnectivityLoss
 
   public static void sleep() throws Exception
   {
-    System.out.println("Started: " + new Date());
+    System.out.println("Started: " + new Date()); //$NON-NLS-1$
     stop = false;
     int count = 0;
     while (System.in.available() == 0)
     {
       Thread.sleep(1000L);
-      System.out.print(".");
+      System.out.print("."); //$NON-NLS-1$
       if (++count % 80 == 0)
       {
         System.out.println();
@@ -58,7 +58,7 @@ public class TCPConnectivityLoss
 
       if (stop)
       {
-        System.out.println("Loss of connectivity: " + new Date());
+        System.out.println("Loss of connectivity: " + new Date()); //$NON-NLS-1$
       }
     }
   }
@@ -85,7 +85,7 @@ public class TCPConnectivityLoss
     public static void main(String[] args) throws Exception
     {
       ManagedContainer container = createContainer();
-      ITCPConnector connector = TCPUtil.getConnector(container, "192.168.1.35");
+      ITCPConnector connector = TCPUtil.getConnector(container, "192.168.1.35"); //$NON-NLS-1$
       connector.addListener(new LifecycleEventAdapter()
       {
         @Override

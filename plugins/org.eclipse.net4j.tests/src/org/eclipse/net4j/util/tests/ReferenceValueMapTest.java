@@ -22,9 +22,9 @@ public class ReferenceValueMapTest extends AbstractOMTest
     ReferenceValueMap<String, Object> map = new ReferenceValueMap.Weak<String, Object>();
     for (int i = 0; i < 10; i++)
     {
-      map.put("SIMON", new Object());
+      map.put("SIMON", new Object()); //$NON-NLS-1$
       System.gc();
-      map.put("SIMON", new Object());
+      map.put("SIMON", new Object()); //$NON-NLS-1$
       assertEquals(true, map.size() >= 0);
     }
   }
@@ -34,9 +34,9 @@ public class ReferenceValueMapTest extends AbstractOMTest
     ReferenceValueMap<String, Object> map = new ReferenceValueMap.Weak<String, Object>();
     for (int i = 0; i < 10; i++)
     {
-      map.put("SIMON", new Object());
+      map.put("SIMON", new Object()); //$NON-NLS-1$
       System.gc();
-      map.put("SIMON2", new Object());
+      map.put("SIMON2", new Object()); //$NON-NLS-1$
       assertEquals(true, map.size() >= 1);
     }
   }

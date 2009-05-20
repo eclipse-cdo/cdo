@@ -140,7 +140,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Opened session: " + userID);
+      TRACER.trace("Opened session: " + userID); //$NON-NLS-1$
     }
 
     sessions.put(userID, session);

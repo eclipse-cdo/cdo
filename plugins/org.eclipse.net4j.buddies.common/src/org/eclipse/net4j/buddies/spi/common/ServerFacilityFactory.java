@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public abstract class ServerFacilityFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.buddies.serverFacilities";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.buddies.serverFacilities"; //$NON-NLS-1$
 
   public ServerFacilityFactory(String type)
   {

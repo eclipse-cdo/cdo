@@ -26,7 +26,7 @@ public abstract class OM
 {
   public static final String BUNDLE_ID = "org.eclipse.net4j.buddies.ui"; //$NON-NLS-1$
 
-  public static final String EXT_POINT = "facilityPaneCreators";
+  public static final String EXT_POINT = "facilityPaneCreators"; //$NON-NLS-1$
 
   public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 

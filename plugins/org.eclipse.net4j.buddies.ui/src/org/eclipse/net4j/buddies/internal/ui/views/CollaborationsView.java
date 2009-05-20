@@ -13,6 +13,7 @@ package org.eclipse.net4j.buddies.internal.ui.views;
 import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.internal.ui.CollaborationsItemProvider;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
@@ -38,6 +39,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -177,11 +179,11 @@ public class CollaborationsView extends SessionManagerView
     IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
     for (final IConfigurationElement element : elements)
     {
-      if ("facilityPaneCreator".equals(element.getName()))
+      if ("facilityPaneCreator".equals(element.getName())) //$NON-NLS-1$
       {
         try
         {
-          IFacilityPaneCreator creator = (IFacilityPaneCreator)element.createExecutableExtension("class");
+          IFacilityPaneCreator creator = (IFacilityPaneCreator)element.createExecutableExtension("class"); //$NON-NLS-1$
           facilityPaneCreators.put(creator.getType(), creator);
         }
         catch (Exception ex)
@@ -203,8 +205,8 @@ public class CollaborationsView extends SessionManagerView
 
     private StartFacilityAction(IBuddyCollaboration collaboration, String type, ImageDescriptor descriptor)
     {
-      super("Start " + StringUtil.cap(type), AS_RADIO_BUTTON);
-      setToolTipText("Start a " + type + " facility");
+      super(MessageFormat.format(Messages.getString("CollaborationsView_2"), StringUtil.cap(type)), AS_RADIO_BUTTON); //$NON-NLS-1$
+      setToolTipText(MessageFormat.format(Messages.getString("CollaborationsView_3"), type)); //$NON-NLS-1$ 
       setImageDescriptor(descriptor);
       this.collaboration = collaboration;
       this.type = type;

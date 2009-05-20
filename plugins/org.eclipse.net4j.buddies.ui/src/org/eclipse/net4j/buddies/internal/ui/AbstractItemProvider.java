@@ -14,6 +14,7 @@ import org.eclipse.net4j.buddies.IBuddyCollaboration;
 import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.common.ICollaboration;
 import org.eclipse.net4j.buddies.common.IMembership;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -188,7 +189,7 @@ public abstract class AbstractItemProvider extends ContainerItemProvider<IContai
       else if (obj instanceof IBuddyCollaboration)
       {
         final IBuddyCollaboration collaboration = (IBuddyCollaboration)obj;
-        manager.add(new SafeAction("Leave", "Leave this collaboration")
+        manager.add(new SafeAction(Messages.getString("AbstractItemProvider.0"), Messages.getString("AbstractItemProvider.1")) //$NON-NLS-1$ //$NON-NLS-2$
         {
           @Override
           protected void safeRun() throws Exception
@@ -217,7 +218,7 @@ public abstract class AbstractItemProvider extends ContainerItemProvider<IContai
 
     public RemoveAction(Object object)
     {
-      super("Remove", "Remove", ContainerView.getDeleteImageDescriptor());
+      super(Messages.getString("AbstractItemProvider.2"), Messages.getString("AbstractItemProvider.3"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
       this.object = object;
     }
 

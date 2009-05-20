@@ -213,7 +213,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getTitle());
+    return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getTitle()); //$NON-NLS-1$
   }
 
   @Override
@@ -283,7 +283,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     @Override
     public String toString()
     {
-      return MessageFormat.format("FacilityInstalledEvent[source={0}, facility={1}, remote={2}]", getSource(),
+      return MessageFormat.format("FacilityInstalledEvent[source={0}, facility={1}, remote={2}]", getSource(), //$NON-NLS-1$
           facility, remote);
     }
   }

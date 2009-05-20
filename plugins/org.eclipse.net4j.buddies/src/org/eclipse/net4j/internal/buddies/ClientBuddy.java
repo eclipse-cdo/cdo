@@ -72,13 +72,13 @@ public class ClientBuddy extends Buddy
   protected IAccount loadAccount(String userID)
   {
     // TODO Implement method ClientBuddy.loadAccount()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 
   @Override
   protected Set<String> loadFacilityTypes()
   {
     // TODO Implement method ClientBuddy.loadFacilityTypes()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 }

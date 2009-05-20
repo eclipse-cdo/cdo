@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.buddies.internal.ui.preferences;
 
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
@@ -46,21 +47,21 @@ public class BuddiesPreferencePage extends OMPreferencePage
     Composite composite = UIUtil.createGridComposite(parent, 2);
     composite.setLayoutData(UIUtil.createGridData());
 
-    new Label(composite, SWT.NONE).setText("Server:");
+    new Label(composite, SWT.NONE).setText(Messages.getString("BuddiesPreferencePage_0")); //$NON-NLS-1$
     connectorDescription = new Text(composite, SWT.BORDER);
     connectorDescription.setLayoutData(UIUtil.createGridData(true, false));
 
-    new Label(composite, SWT.NONE).setText("User ID:");
+    new Label(composite, SWT.NONE).setText(Messages.getString("BuddiesPreferencePage_1")); //$NON-NLS-1$
     userID = new Text(composite, SWT.BORDER);
     userID.setLayoutData(new GridData(100, SWT.DEFAULT));
 
-    new Label(composite, SWT.NONE).setText("Password:");
+    new Label(composite, SWT.NONE).setText(Messages.getString("BuddiesPreferencePage_2")); //$NON-NLS-1$
     password = new Text(composite, SWT.BORDER | SWT.PASSWORD);
     password.setLayoutData(new GridData(100, SWT.DEFAULT));
 
     new Label(composite, SWT.NONE);
     autoConnect = new Button(composite, SWT.CHECK);
-    autoConnect.setText("Auto Connect");
+    autoConnect.setText(Messages.getString("BuddiesPreferencePage_3")); //$NON-NLS-1$
 
     initValues();
     return composite;

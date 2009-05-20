@@ -67,6 +67,6 @@ public class MembershipKey implements IMembershipKey
   @Override
   public String toString()
   {
-    return buddy + "(" + collaboration + ")";
+    return buddy + "(" + collaboration + ")"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

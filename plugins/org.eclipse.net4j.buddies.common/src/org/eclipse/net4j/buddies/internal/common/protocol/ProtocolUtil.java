@@ -138,7 +138,7 @@ public final class ProtocolUtil
       break;
 
     default:
-      throw new IllegalArgumentException("Illegal state: " + state);
+      throw new IllegalArgumentException("Illegal state: " + state); //$NON-NLS-1$
     }
   }
 
@@ -160,7 +160,7 @@ public final class ProtocolUtil
       return IBuddy.State.DO_NOT_DISTURB;
 
     default:
-      throw new IllegalArgumentException("Illegal state: " + state);
+      throw new IllegalArgumentException("Illegal state: " + state); //$NON-NLS-1$
     }
   }
 

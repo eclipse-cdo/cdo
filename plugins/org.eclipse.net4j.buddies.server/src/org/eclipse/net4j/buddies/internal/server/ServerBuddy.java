@@ -45,18 +45,18 @@ public class ServerBuddy extends Buddy
   public IMembership[] initiate(Collection<IBuddy> buddies)
   {
     // TODO Implement method ServerBuddy.initiate()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 
   public IMembership join(long collaborationID)
   {
     // TODO Implement method ServerBuddy.join()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 
   public IMembership join(Object invitationToken)
   {
     // TODO Implement method ServerBuddy.join()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 }

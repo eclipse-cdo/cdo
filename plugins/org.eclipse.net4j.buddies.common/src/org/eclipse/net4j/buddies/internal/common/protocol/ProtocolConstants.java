@@ -15,7 +15,7 @@ package org.eclipse.net4j.buddies.internal.common.protocol;
  */
 public interface ProtocolConstants
 {
-  public static final String PROTOCOL_NAME = "buddies";
+  public static final String PROTOCOL_NAME = "buddies"; //$NON-NLS-1$
 
   public static final short SIGNAL_OPEN_SESSION = 1;
 

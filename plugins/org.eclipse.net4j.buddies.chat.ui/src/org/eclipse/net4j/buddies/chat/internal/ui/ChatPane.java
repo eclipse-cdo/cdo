@@ -12,6 +12,7 @@ package org.eclipse.net4j.buddies.chat.internal.ui;
 
 import org.eclipse.net4j.buddies.chat.IChat;
 import org.eclipse.net4j.buddies.chat.IComment;
+import org.eclipse.net4j.buddies.chat.internal.ui.messages.Messages;
 import org.eclipse.net4j.buddies.internal.chat.CommentEvent;
 import org.eclipse.net4j.buddies.internal.ui.views.CollaborationsPane;
 import org.eclipse.net4j.buddies.internal.ui.views.FacilityPane;
@@ -52,7 +53,7 @@ public class ChatPane extends FacilityPane
       CommentEvent e = (CommentEvent)event;
       IComment comment = e.getComment();
       String text = comment.getText();
-      output.append(comment.getSenderID() + ": " + text + StringUtil.NL);
+      output.append(comment.getSenderID() + ": " + text + StringUtil.NL); //$NON-NLS-1$
     }
   }
 
@@ -80,7 +81,7 @@ public class ChatPane extends FacilityPane
             if ((e.character == SWT.CR || e.character == SWT.LF) && e.stateMask == 0)
             {
               ((IChat)getFacility()).sendComment(input.getText());
-              input.setText("");
+              input.setText(""); //$NON-NLS-1$
               e.doit = false;
             }
           }
@@ -97,7 +98,7 @@ public class ChatPane extends FacilityPane
   @Override
   protected void fillCoolBar(IContributionManager manager)
   {
-    manager.add(new SafeAction("Vertical Layout", "Vertical Layout", SharedIcons
+    manager.add(new SafeAction(Messages.getString("ChatPane.2"), Messages.getString("ChatPane.3"), SharedIcons //$NON-NLS-1$ //$NON-NLS-2$
         .getDescriptor(SharedIcons.ETOOL_VERTICAL))
     {
       @Override
@@ -107,7 +108,7 @@ public class ChatPane extends FacilityPane
       }
     });
 
-    manager.add(new SafeAction("Horizontal Layout", "Horizontal Layout", SharedIcons
+    manager.add(new SafeAction(Messages.getString("ChatPane.4"), Messages.getString("ChatPane.5"), SharedIcons //$NON-NLS-1$ //$NON-NLS-2$
         .getDescriptor(SharedIcons.ETOOL_HORIZONTAL))
     {
       @Override

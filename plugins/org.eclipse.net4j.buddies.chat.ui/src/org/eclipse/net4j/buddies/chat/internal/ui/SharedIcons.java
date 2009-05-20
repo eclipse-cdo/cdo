@@ -25,21 +25,21 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String ETOOL = "etool16/";
+  private static final String ETOOL = "etool16/"; //$NON-NLS-1$
 
-  private static final String OBJ = "obj16/";
-
-  @SuppressWarnings("unused")
-  private static final String VIEW = "view16/";
+  private static final String OBJ = "obj16/"; //$NON-NLS-1$
 
   @SuppressWarnings("unused")
-  private static final String WIZBAN = "wizban/";
+  private static final String VIEW = "view16/"; //$NON-NLS-1$
 
-  public static final String OBJ_CHAT = OBJ + "chat";
+  @SuppressWarnings("unused")
+  private static final String WIZBAN = "wizban/"; //$NON-NLS-1$
 
-  public static final String ETOOL_HORIZONTAL = ETOOL + "horizontal_layout";
+  public static final String OBJ_CHAT = OBJ + "chat"; //$NON-NLS-1$
 
-  public static final String ETOOL_VERTICAL = ETOOL + "vertical_layout";
+  public static final String ETOOL_HORIZONTAL = ETOOL + "horizontal_layout"; //$NON-NLS-1$
+
+  public static final String ETOOL_VERTICAL = ETOOL + "vertical_layout"; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {
@@ -87,7 +87,7 @@ public class SharedIcons
 
     if (display == null)
     {
-      throw new IllegalStateException("display == null");
+      throw new IllegalStateException("display == null"); //$NON-NLS-1$
     }
 
     return display;
@@ -95,6 +95,6 @@ public class SharedIcons
 
   private static String mangleKey(String key)
   {
-    return "icons/full/" + key + ".gif";
+    return "icons/full/" + key + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

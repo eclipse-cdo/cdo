@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
  */
 public class ChatRoomFactory extends ServerFacilityFactory
 {
-  public static final String TYPE = "chat";
+  public static final String TYPE = "chat"; //$NON-NLS-1$
 
   public ChatRoomFactory()
   {

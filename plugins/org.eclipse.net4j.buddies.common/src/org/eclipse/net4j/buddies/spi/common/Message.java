@@ -42,11 +42,11 @@ public abstract class Message extends PlatformObject implements IMessage, Serial
 
   protected String encode(String text)
   {
-    return text.replaceAll(StringUtil.NL, "\n");
+    return text.replaceAll(StringUtil.NL, "\n"); //$NON-NLS-1$
   }
 
   protected String decode(String text)
   {
-    return text.replaceAll("\n", StringUtil.NL);
+    return text.replaceAll("\n", StringUtil.NL); //$NON-NLS-1$
   }
 }

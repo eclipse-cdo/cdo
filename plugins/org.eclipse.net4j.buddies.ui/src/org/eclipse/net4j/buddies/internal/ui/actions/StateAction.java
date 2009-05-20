@@ -14,6 +14,7 @@ import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.ISessionManager;
 import org.eclipse.net4j.buddies.common.IBuddy.State;
 import org.eclipse.net4j.buddies.internal.ui.SharedIcons;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -22,6 +23,8 @@ import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -33,7 +36,7 @@ public class StateAction extends SafeAction
   public StateAction(String text, State state, String key)
   {
     super(text, Action.AS_RADIO_BUTTON);
-    setToolTipText("Set own state to '" + text.toLowerCase() + "'");
+    setToolTipText(MessageFormat.format(Messages.getString("StateAction_0"), text.toLowerCase())); //$NON-NLS-1$
     setImageDescriptor(SharedIcons.getDescriptor(key));
     this.state = state;
   }
@@ -70,7 +73,7 @@ public class StateAction extends SafeAction
 
     public DropDownAction()
     {
-      setText("Set My State");
+      setText(Messages.getString("StateAction_2")); //$NON-NLS-1$
       setMenuCreator(this);
     }
 
@@ -157,7 +160,7 @@ public class StateAction extends SafeAction
   {
     public AvailableAction()
     {
-      super("Available", State.AVAILABLE, SharedIcons.OBJ_BUDDY);
+      super(Messages.getString("StateAction_3"), State.AVAILABLE, SharedIcons.OBJ_BUDDY); //$NON-NLS-1$
     }
   }
 
@@ -165,7 +168,7 @@ public class StateAction extends SafeAction
   {
     public LonesomeAction()
     {
-      super("Lonesome", State.LONESOME, SharedIcons.OBJ_BUDDY_LONESOME);
+      super(Messages.getString("StateAction_4"), State.LONESOME, SharedIcons.OBJ_BUDDY_LONESOME); //$NON-NLS-1$
     }
   }
 
@@ -173,7 +176,7 @@ public class StateAction extends SafeAction
   {
     public AwayAction()
     {
-      super("Away", State.AWAY, SharedIcons.OBJ_BUDDY_AWAY);
+      super(Messages.getString("StateAction_5"), State.AWAY, SharedIcons.OBJ_BUDDY_AWAY); //$NON-NLS-1$
     }
   }
 
@@ -181,7 +184,7 @@ public class StateAction extends SafeAction
   {
     public DoNotDisturbAction()
     {
-      super("Do Not Disturb", State.DO_NOT_DISTURB, SharedIcons.OBJ_BUDDY_DO_NOT_DISTURB);
+      super(Messages.getString("StateAction_6"), State.DO_NOT_DISTURB, SharedIcons.OBJ_BUDDY_DO_NOT_DISTURB); //$NON-NLS-1$
     }
   }
 }

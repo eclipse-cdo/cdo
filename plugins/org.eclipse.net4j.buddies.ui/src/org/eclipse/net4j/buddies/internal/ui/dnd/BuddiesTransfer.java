@@ -13,12 +13,14 @@ package org.eclipse.net4j.buddies.internal.ui.dnd;
 import org.eclipse.net4j.buddies.IBuddySession;
 import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.internal.ui.bundle.OM;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.internal.buddies.SessionManager;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.ui.dnd.DNDTransfer;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import java.util.List;
  */
 public class BuddiesTransfer extends DNDTransfer<IBuddy[]>
 {
-  public static final String TYPE_NAME = "buddies-transfer-format";
+  public static final String TYPE_NAME = "buddies-transfer-format"; //$NON-NLS-1$
 
   public static final BuddiesTransfer INSTANCE = new BuddiesTransfer();
 
@@ -52,7 +54,7 @@ public class BuddiesTransfer extends DNDTransfer<IBuddy[]>
     IBuddySession session = SessionManager.INSTANCE.getSession();
     if (session == null)
     {
-      OM.LOG.warn("Buddy session is not available");
+      OM.LOG.warn(Messages.getString("BuddiesTransfer_1")); //$NON-NLS-1$
       return null;
     }
 
@@ -68,7 +70,7 @@ public class BuddiesTransfer extends DNDTransfer<IBuddy[]>
       }
       else
       {
-        OM.LOG.warn("Buddy is not available: " + userID);
+        OM.LOG.warn(MessageFormat.format(Messages.getString("BuddiesTransfer_2"), userID)); //$NON-NLS-1$
       }
     }
 

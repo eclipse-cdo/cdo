@@ -38,7 +38,7 @@ public class MembershipItemProvider extends AbstractItemProvider
   @Override
   protected String getText(IMembership membership)
   {
-    return getText(membership.getBuddy()) + "(" + getText(membership.getCollaboration()) + ")";
+    return getText(membership.getBuddy()) + "(" + getText(membership.getCollaboration()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Override

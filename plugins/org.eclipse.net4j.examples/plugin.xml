@@ -17,11 +17,11 @@
          point="org.eclipse.ui.actionSets">
       <actionSet
             id="org.eclipse.net4j.examples.actionSet"
-            label="Net4j Examples"
+            label="%actionSet.label"
             visible="true">
          <menu
                id="sampleMenu"
-               label="Net4j Examples">
+               label="%menu.label">
             <separator
                   name="sampleGroup">
             </separator>
@@ -30,10 +30,10 @@
                class="org.eclipse.net4j.examples.transfer.UploadClientAction"
                icon="icons/sample.gif"
                id="org.eclipse.net4j.examples.transfer.TransferClientAction"
-               label="Upload File"
+               label="%action.label"
                menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"
-               tooltip="Upload file to Net4j server">
+               tooltip="%action.tooltip">
          </action>
       </actionSet>
    </extension>

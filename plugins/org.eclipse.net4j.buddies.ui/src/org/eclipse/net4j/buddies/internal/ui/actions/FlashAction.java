@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui.actions;
 
 import org.eclipse.net4j.buddies.ISessionManager;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 /**
@@ -20,7 +21,7 @@ public final class FlashAction extends SafeAction
 {
   public FlashAction()
   {
-    super("Flash Me", "Flash Me");
+    super(Messages.getString("FlashAction_0"), Messages.getString("FlashAction_1")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Override

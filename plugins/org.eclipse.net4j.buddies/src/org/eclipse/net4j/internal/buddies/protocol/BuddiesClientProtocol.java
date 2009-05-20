@@ -88,6 +88,6 @@ public class BuddiesClientProtocol extends SignalProtocol<ClientSession>
       }
     }
 
-    throw new IllegalStateException("No session after " + max + " milliseconds");
+    throw new IllegalStateException("No session after " + max + " milliseconds"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

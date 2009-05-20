@@ -13,7 +13,7 @@
 
 <plugin>
 
-   <extension-point id="mappingProviderFactories" name="Hibernate Mapping Provider Factories" schema="schema/mappingProviderFactories.exsd"/>
+   <extension-point id="mappingProviderFactories" name="%extension-point.name" schema="schema/mappingProviderFactories.exsd"/>
 
    <extension
          point="org.eclipse.emf.cdo.server.storeFactories">

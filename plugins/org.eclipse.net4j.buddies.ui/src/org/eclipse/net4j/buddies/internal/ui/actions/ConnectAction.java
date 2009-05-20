@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui.actions;
 
 import org.eclipse.net4j.buddies.ISessionManager;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 /**
@@ -20,7 +21,7 @@ public final class ConnectAction extends SafeAction
 {
   public ConnectAction()
   {
-    super("Connect", "Connect to buddies server");
+    super(Messages.getString("ConnectAction_0"), Messages.getString("ConnectAction_1")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Override

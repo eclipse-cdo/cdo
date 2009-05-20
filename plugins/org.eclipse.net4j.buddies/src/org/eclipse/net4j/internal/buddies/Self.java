@@ -83,13 +83,13 @@ public class Self extends Buddy
   public IMembership join(long collaborationID)
   {
     // TODO Implement method Self.join()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 
   public IMembership join(Object invitationToken)
   {
     // TODO Implement method Self.join()
-    throw new UnsupportedOperationException("Not yet implemented");
+    throw new UnsupportedOperationException("Not yet implemented"); //$NON-NLS-1$
   }
 
   @Override

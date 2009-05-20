@@ -17,5 +17,5 @@ import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
  */
 public interface ServerConstants
 {
-  public static final String TYPE = ProtocolConstants.PROTOCOL_NAME + "server";
+  public static final String TYPE = ProtocolConstants.PROTOCOL_NAME + "server"; //$NON-NLS-1$
 }

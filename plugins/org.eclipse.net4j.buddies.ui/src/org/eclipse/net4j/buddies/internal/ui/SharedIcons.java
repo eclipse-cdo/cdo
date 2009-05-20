@@ -26,25 +26,25 @@ public class SharedIcons
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
   @SuppressWarnings("unused")
-  private static final String ETOOL = "etool16/";
+  private static final String ETOOL = "etool16/"; //$NON-NLS-1$
 
-  private static final String OBJ = "obj16/";
-
-  @SuppressWarnings("unused")
-  private static final String VIEW = "view16/";
+  private static final String OBJ = "obj16/"; //$NON-NLS-1$
 
   @SuppressWarnings("unused")
-  private static final String WIZBAN = "wizban/";
+  private static final String VIEW = "view16/"; //$NON-NLS-1$
 
-  public static final String OBJ_COLLABORATION = OBJ + "collaboration";
+  @SuppressWarnings("unused")
+  private static final String WIZBAN = "wizban/"; //$NON-NLS-1$
 
-  public static final String OBJ_BUDDY = OBJ + "buddy";
+  public static final String OBJ_COLLABORATION = OBJ + "collaboration"; //$NON-NLS-1$
 
-  public static final String OBJ_BUDDY_LONESOME = OBJ + "buddy_lonesome";
+  public static final String OBJ_BUDDY = OBJ + "buddy"; //$NON-NLS-1$
 
-  public static final String OBJ_BUDDY_AWAY = OBJ + "buddy_away";
+  public static final String OBJ_BUDDY_LONESOME = OBJ + "buddy_lonesome"; //$NON-NLS-1$
 
-  public static final String OBJ_BUDDY_DO_NOT_DISTURB = OBJ + "buddy_do_not_disturb";
+  public static final String OBJ_BUDDY_AWAY = OBJ + "buddy_away"; //$NON-NLS-1$
+
+  public static final String OBJ_BUDDY_DO_NOT_DISTURB = OBJ + "buddy_do_not_disturb"; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {
@@ -92,7 +92,7 @@ public class SharedIcons
 
     if (display == null)
     {
-      throw new IllegalStateException("display == null");
+      throw new IllegalStateException("display == null"); //$NON-NLS-1$
     }
 
     return display;
@@ -100,6 +100,6 @@ public class SharedIcons
 
   private static String mangleKey(String key)
   {
-    return "icons/full/" + key + ".gif";
+    return "icons/full/" + key + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

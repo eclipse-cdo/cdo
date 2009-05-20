@@ -11,6 +11,7 @@
 package org.eclipse.net4j.buddies.internal.ui.actions;
 
 import org.eclipse.net4j.buddies.ISessionManager;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 /**
@@ -20,7 +21,7 @@ public final class ReconnectAction extends SafeAction
 {
   public ReconnectAction()
   {
-    super("Reconnect", "Reconnect to buddies server");
+    super(Messages.getString("ReconnectAction_0"), Messages.getString("ReconnectAction_1")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Override

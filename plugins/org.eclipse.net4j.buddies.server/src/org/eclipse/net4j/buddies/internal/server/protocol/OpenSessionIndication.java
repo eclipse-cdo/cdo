@@ -16,11 +16,13 @@ import org.eclipse.net4j.buddies.common.ISession;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolConstants;
 import org.eclipse.net4j.buddies.internal.common.protocol.ProtocolUtil;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
+import org.eclipse.net4j.buddies.internal.server.messages.Messages;
 import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class OpenSessionIndication extends IndicationWithResponse
       }
       else
       {
-        OM.LOG.info("User denied: " + userID);
+        OM.LOG.info(MessageFormat.format(Messages.getString("OpenSessionIndication.0"), userID)); //$NON-NLS-1$
       }
     }
   }

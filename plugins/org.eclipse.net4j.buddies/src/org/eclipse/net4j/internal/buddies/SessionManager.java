@@ -98,7 +98,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
 
   public void connect()
   {
-    new Thread("buddies-connector")
+    new Thread("buddies-connector") //$NON-NLS-1$
     {
       @Override
       public void run()
@@ -112,7 +112,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
             IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, getConnectorDescription());
             if (connector == null)
             {
-              throw new IllegalStateException("connector == null");
+              throw new IllegalStateException("connector == null"); //$NON-NLS-1$
             }
 
             boolean connected = connector.waitForConnection(5000L);
@@ -167,7 +167,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     {
       final Self self = (Self)session.getSelf();
       final IBuddy.State original = self.getState();
-      new Thread("buddies-flasher")
+      new Thread("buddies-flasher") //$NON-NLS-1$
       {
         @Override
         public void run()
@@ -275,7 +275,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     @Override
     public String toString()
     {
-      return MessageFormat.format("SessionManagerEvent[source={0}, oldState={1}, newState={2}, session={3}]",
+      return MessageFormat.format("SessionManagerEvent[source={0}, oldState={1}, newState={2}, session={3}]", //$NON-NLS-1$
           getSource(), getOldState(), getNewState(), getSession());
     }
   }

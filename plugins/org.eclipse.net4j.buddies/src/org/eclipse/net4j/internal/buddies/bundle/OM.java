@@ -36,10 +36,10 @@ public abstract class OM
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
   public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = // 
-  PREFS.init("PREF_CONNECTOR_DESCRIPTION", "tcp://localhost"); //$NON-NLS-1$
+  PREFS.init("PREF_CONNECTOR_DESCRIPTION", "tcp://localhost"); //$NON-NLS-1$ //$NON-NLS-2$
 
   public static final OMPreference<String> PREF_USER_ID = // 
-  PREFS.init("PREF_USER_ID", System.getProperty("user.name")); //$NON-NLS-1$
+  PREFS.init("PREF_USER_ID", System.getProperty("user.name")); //$NON-NLS-1$ //$NON-NLS-2$
 
   public static final OMPreference<String> PREF_PASSWORD = // 
   PREFS.initString("PREF_PASSWORD"); //$NON-NLS-1$

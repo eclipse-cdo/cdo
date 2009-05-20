@@ -169,7 +169,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getUserID());
+    return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getUserID()); //$NON-NLS-1$
   }
 
   protected Set<String> loadFacilityTypes()
@@ -213,7 +213,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     @Override
     public String toString()
     {
-      return MessageFormat.format("BuddyStateEvent[source={0}, oldState={1}, newState={2}]", getSource(),
+      return MessageFormat.format("BuddyStateEvent[source={0}, oldState={1}, newState={2}]", getSource(), //$NON-NLS-1$
           getOldState(), getNewState());
     }
   }

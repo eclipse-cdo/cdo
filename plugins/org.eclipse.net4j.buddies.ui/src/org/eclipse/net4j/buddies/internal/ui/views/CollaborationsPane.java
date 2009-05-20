@@ -16,6 +16,7 @@ import org.eclipse.net4j.buddies.common.ICollaboration;
 import org.eclipse.net4j.buddies.common.IFacility;
 import org.eclipse.net4j.buddies.common.IFacilityInstalledEvent;
 import org.eclipse.net4j.buddies.common.IMembership;
+import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -33,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -309,7 +311,7 @@ public class CollaborationsPane extends Composite implements IListener
     private ActivateFacilityAction(String type, ImageDescriptor descriptor)
     {
       super(StringUtil.cap(type), AS_RADIO_BUTTON);
-      setToolTipText("Activate " + type + " facility");
+      setToolTipText(MessageFormat.format(Messages.getString("CollaborationsPane_0"), type)); //$NON-NLS-1$
       setImageDescriptor(descriptor);
       this.type = type;
     }

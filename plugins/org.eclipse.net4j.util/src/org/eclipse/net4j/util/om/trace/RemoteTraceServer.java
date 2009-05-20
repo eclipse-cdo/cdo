@@ -61,7 +61,7 @@ public class RemoteTraceServer
     this.port = port;
     this.address = address;
     serverSocket = bind();
-    new Thread("RemoteTraceServer")
+    new Thread("RemoteTraceServer") //$NON-NLS-1$
     {
       @Override
       public void run()
@@ -277,28 +277,28 @@ public class RemoteTraceServer
     public String toString()
     {
       StringBuilder builder = new StringBuilder();
-      builder.append("TraceEvent[agentID=");
+      builder.append("TraceEvent[agentID="); //$NON-NLS-1$
       builder.append(agentID);
 
-      builder.append(", bundleID=");
+      builder.append(", bundleID="); //$NON-NLS-1$
       builder.append(bundleID);
 
-      builder.append(", tracerName=");
+      builder.append(", tracerName="); //$NON-NLS-1$
       builder.append(tracerName);
 
-      builder.append(", context=");
+      builder.append(", context="); //$NON-NLS-1$
       builder.append(context);
 
-      builder.append(", message=");
+      builder.append(", message="); //$NON-NLS-1$
       builder.append(message);
 
-      builder.append(", throwable=");
+      builder.append(", throwable="); //$NON-NLS-1$
       builder.append(throwable);
 
-      builder.append(", stackTrace=");
+      builder.append(", stackTrace="); //$NON-NLS-1$
       builder.append(stackTrace);
 
-      builder.append("]");
+      builder.append("]"); //$NON-NLS-1$
       return builder.toString();
     }
 
@@ -324,7 +324,7 @@ public class RemoteTraceServer
         return throwable;
       }
 
-      throw new IllegalArgumentException("Invalid index: " + index);
+      throw new IllegalArgumentException("Invalid index: " + index); //$NON-NLS-1$
     }
 
     public boolean hasError()
@@ -360,7 +360,7 @@ public class RemoteTraceServer
 
     public void notifyRemoteTrace(Event event)
     {
-      stream.println("[TRACE] " + event.getAgentID());
+      stream.println("[TRACE] " + event.getAgentID()); //$NON-NLS-1$
       stream.println(event.getBundleID());
       stream.println(event.getTracerName());
       stream.println(event.getContext());
@@ -378,10 +378,10 @@ public class RemoteTraceServer
         for (StackTraceElement element : stackTrace)
         {
           stream.print(element.getClassName());
-          stream.print("." + element.getMethodName());
-          stream.print("(" + element.getFileName());
-          stream.print(":" + element.getLineNumber());
-          stream.println(")");
+          stream.print("." + element.getMethodName()); //$NON-NLS-1$
+          stream.print("(" + element.getFileName()); //$NON-NLS-1$
+          stream.print(":" + element.getLineNumber()); //$NON-NLS-1$
+          stream.println(")"); //$NON-NLS-1$
         }
       }
 

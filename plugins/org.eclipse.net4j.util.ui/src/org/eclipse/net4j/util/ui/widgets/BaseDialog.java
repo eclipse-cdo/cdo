@@ -67,7 +67,7 @@ public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
     setTitle(title);
     setMessage(message);
 
-    contextMenu = new MenuManager("#PopupMenu");
+    contextMenu = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     contextMenu.setRemoveAllWhenShown(true);
     contextMenu.addMenuListener(new IMenuListener()
     {
@@ -111,7 +111,7 @@ public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
 
   protected void hookContextMenu()
   {
-    contextMenu = new MenuManager("#PopupMenu");
+    contextMenu = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     contextMenu.setRemoveAllWhenShown(true);
     contextMenu.addMenuListener(new IMenuListener()
     {

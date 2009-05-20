@@ -33,7 +33,7 @@ class MonitorCanceledIndication extends Indication
     int correlationID = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Canceling monitor of signal {0}", correlationID);
+      TRACER.format("Canceling monitor of signal {0}", correlationID); //$NON-NLS-1$
     }
 
     getProtocol().handleMonitorCanceled(correlationID);

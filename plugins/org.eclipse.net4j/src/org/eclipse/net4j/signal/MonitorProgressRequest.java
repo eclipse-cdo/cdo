@@ -41,7 +41,7 @@ class MonitorProgressRequest extends Request
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Progress of signal {0}: totalWork={1}, work={2}", correlationID, totalWork, work);
+      TRACER.format("Progress of signal {0}: totalWork={1}, work={2}", correlationID, totalWork, work); //$NON-NLS-1$
     }
 
     out.writeInt(correlationID);

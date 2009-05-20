@@ -56,7 +56,7 @@ public class UserManager extends Lifecycle implements IUserManager
 
     if (password == null)
     {
-      throw new SecurityException("No such user: " + userID);
+      throw new SecurityException("No such user: " + userID); //$NON-NLS-1$
     }
 
     try

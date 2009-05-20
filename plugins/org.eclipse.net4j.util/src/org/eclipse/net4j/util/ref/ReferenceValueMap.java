@@ -51,7 +51,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
   {
     if (!map.isEmpty())
     {
-      throw new IllegalArgumentException("!map.isEmpty()");
+      throw new IllegalArgumentException("!map.isEmpty()"); //$NON-NLS-1$
     }
 
     this.map = map;
@@ -95,7 +95,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
   {
     if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     for (KeyedReference<K, V> ref : map.values())
@@ -345,7 +345,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
     {
       if (object == null)
       {
-        throw new IllegalArgumentException("object == null");
+        throw new IllegalArgumentException("object == null"); //$NON-NLS-1$
       }
 
       if (object instanceof Map.Entry<?, ?>)
@@ -384,7 +384,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
     {
       if (a == null)
       {
-        throw new IllegalArgumentException("array == null");
+        throw new IllegalArgumentException("array == null"); //$NON-NLS-1$
       }
 
       int size = size();
@@ -412,7 +412,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
     {
       if (object == null)
       {
-        throw new IllegalArgumentException("object == null");
+        throw new IllegalArgumentException("object == null"); //$NON-NLS-1$
       }
 
       if (object instanceof Map.Entry<?, ?>)
@@ -492,7 +492,7 @@ public abstract class ReferenceValueMap<K, V> extends AbstractMap<K, V> implemen
     {
       if (lastKey == null)
       {
-        throw new IllegalStateException("lastKey == null");
+        throw new IllegalStateException("lastKey == null"); //$NON-NLS-1$
       }
 
       map.remove(lastKey);

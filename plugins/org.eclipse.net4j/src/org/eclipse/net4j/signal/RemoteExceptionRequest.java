@@ -46,7 +46,7 @@ class RemoteExceptionRequest extends Request
     if (TRACER.isEnabled())
     {
       String msg = getFirstLine(message);
-      TRACER.format("Writing remote exception for signal {0}: {1}", correlationID, msg);
+      TRACER.format("Writing remote exception for signal {0}: {1}", correlationID, msg); //$NON-NLS-1$
     }
 
     out.writeInt(correlationID);

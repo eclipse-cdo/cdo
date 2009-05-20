@@ -32,11 +32,11 @@ import java.util.ListIterator;
  */
 public class PluginElementProcessorList extends Lifecycle implements List<IElementProcessor>
 {
-  private static final String ATTR_CLASS = "class";
+  private static final String ATTR_CLASS = "class"; //$NON-NLS-1$
 
   public static final String NAMESPACE = OM.BUNDLE_ID;
 
-  public static final String EXT_POINT = "elementProcessors";
+  public static final String EXT_POINT = "elementProcessors"; //$NON-NLS-1$
 
   private List<IElementProcessor> processors = new ArrayList<IElementProcessor>();
 
@@ -48,7 +48,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
       for (IExtensionDelta delta : deltas)
       {
         // TODO Handle ExtensionDelta
-        OM.LOG.warn("ExtensionDelta not handled: " + delta);
+        OM.LOG.warn("ExtensionDelta not handled: " + delta); //$NON-NLS-1$
       }
     }
   };

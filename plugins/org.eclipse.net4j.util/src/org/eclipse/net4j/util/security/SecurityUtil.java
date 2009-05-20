@@ -29,7 +29,7 @@ import java.security.spec.InvalidKeySpecException;
  */
 public final class SecurityUtil
 {
-  public static final String PBE_WITH_MD5_AND_DES = "PBEWithMD5AndDES";
+  public static final String PBE_WITH_MD5_AND_DES = "PBEWithMD5AndDES"; //$NON-NLS-1$
 
   private SecurityUtil()
   {

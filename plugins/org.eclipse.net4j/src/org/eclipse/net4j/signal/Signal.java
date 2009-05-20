@@ -127,7 +127,7 @@ public abstract class Signal implements Runnable
   @Override
   public String toString()
   {
-    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}]", getProtocol().getType(),
+    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}]", getProtocol().getType(), //$NON-NLS-1$
         getID(), getName(), getCorrelationID());
   }
 
@@ -152,7 +152,7 @@ public abstract class Signal implements Runnable
     {
       if (threadName != null)
       {
-        Thread.currentThread().setName(threadName + "(FINISHED)");
+        Thread.currentThread().setName(threadName + "(FINISHED)"); //$NON-NLS-1$
       }
     }
   }
@@ -243,7 +243,7 @@ public abstract class Signal implements Runnable
         TRACER.trace(ex);
       }
 
-      throw new TimeoutException("Timeout");
+      throw new TimeoutException("Timeout"); //$NON-NLS-1$
     }
     catch (Exception ex)
     {

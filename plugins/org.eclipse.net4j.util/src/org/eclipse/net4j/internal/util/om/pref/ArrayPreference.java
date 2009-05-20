@@ -22,9 +22,9 @@ import java.net.URLEncoder;
  */
 public final class ArrayPreference extends Preference<String[]> implements OMPreference<String[]>
 {
-  private static final String SEPARATOR = ",";
+  private static final String SEPARATOR = ","; //$NON-NLS-1$
 
-  private static final String UTF_8 = "UTF-8";
+  private static final String UTF_8 = "UTF-8"; //$NON-NLS-1$
 
   public ArrayPreference(Preferences preferences, String name, String[] defaultValue)
   {
@@ -46,7 +46,7 @@ public final class ArrayPreference extends Preference<String[]> implements OMPre
       if (builder.length() != 0)
       {
         builder.append(SEPARATOR);
-        builder.append(" ");
+        builder.append(" "); //$NON-NLS-1$
       }
 
       try

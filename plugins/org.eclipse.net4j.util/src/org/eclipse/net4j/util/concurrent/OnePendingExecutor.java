@@ -26,7 +26,7 @@ public class OnePendingExecutor implements Executor
   {
     if (this.command != null)
     {
-      throw new IllegalStateException("One command already pending");
+      throw new IllegalStateException("One command already pending"); //$NON-NLS-1$
     }
 
     this.command = command;

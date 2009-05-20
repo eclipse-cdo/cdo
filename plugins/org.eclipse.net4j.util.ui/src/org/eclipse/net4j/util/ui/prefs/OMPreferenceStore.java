@@ -266,7 +266,7 @@ public class OMPreferenceStore implements IPreferenceStore
     OMPreference<?> pref = preferences.get(name);
     if (pref == null)
     {
-      throw new IllegalStateException("No preference for " + name);
+      throw new IllegalStateException("No preference for " + name); //$NON-NLS-1$
     }
 
     return pref;

@@ -18,11 +18,11 @@ import org.eclipse.core.runtime.IConfigurationElement;
  */
 public class FactoryDescriptor extends Factory
 {
-  private static final String ATTR_PRODUCT_GROUP = "productGroup";
+  private static final String ATTR_PRODUCT_GROUP = "productGroup"; //$NON-NLS-1$
 
-  private static final String ATTR_TYPE = "type";
+  private static final String ATTR_TYPE = "type"; //$NON-NLS-1$
 
-  private static final String ATTR_CLASS = "class";
+  private static final String ATTR_CLASS = "class"; //$NON-NLS-1$
 
   private IConfigurationElement configurationElement;
 

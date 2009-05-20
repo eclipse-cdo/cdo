@@ -30,7 +30,7 @@ public abstract class Preference<T> implements OMPreference<T>
   {
     if (defaultValue == null)
     {
-      throw new IllegalArgumentException("defaultValue == null");
+      throw new IllegalArgumentException("defaultValue == null"); //$NON-NLS-1$
     }
 
     this.preferences = preferences;
@@ -63,7 +63,7 @@ public abstract class Preference<T> implements OMPreference<T>
   {
     if (value == null)
     {
-      throw new IllegalArgumentException("value == null");
+      throw new IllegalArgumentException("value == null"); //$NON-NLS-1$
     }
 
     load();

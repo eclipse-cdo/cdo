@@ -181,7 +181,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     if (node == null)
     {
-      throw new IllegalStateException("No node for " + element);
+      throw new IllegalStateException("No node for " + element); //$NON-NLS-1$
     }
 
     return node;
@@ -278,7 +278,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     @Override
     public String toString()
     {
-      return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getElement());
+      return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getElement()); //$NON-NLS-1$
     }
 
     public final Node getParent()
@@ -297,7 +297,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       if (disposed)
       {
-        throw new IllegalStateException("Node is already disposed of");
+        throw new IllegalStateException("Node is already disposed of"); //$NON-NLS-1$
       }
     }
 
@@ -448,7 +448,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       this.container = container;
       if (container == null)
       {
-        throw new IllegalArgumentException("container == null");
+        throw new IllegalArgumentException("container == null"); //$NON-NLS-1$
       }
     }
 

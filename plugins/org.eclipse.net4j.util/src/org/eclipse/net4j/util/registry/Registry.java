@@ -156,7 +156,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
     {
       if (!transaction.isOwned())
       {
-        OM.LOG.warn("Committing thread is not owner of transaction: " + Thread.currentThread());
+        OM.LOG.warn("Committing thread is not owner of transaction: " + Thread.currentThread()); //$NON-NLS-1$
       }
 
       transaction.commit(notifications);

@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public abstract class ServerProtocolFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.serverProtocols";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.serverProtocols"; //$NON-NLS-1$
 
   public ServerProtocolFactory(String type)
   {

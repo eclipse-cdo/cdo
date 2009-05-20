@@ -161,7 +161,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   public IChannel open()
   {
-    checkState(failOverStrategy, "failOverStrategy");
+    checkState(failOverStrategy, "failOverStrategy"); //$NON-NLS-1$
     failOverStrategy.handleOpen(this);
     return getChannel();
   }
@@ -267,7 +267,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       if (signal instanceof RequestWithConfirmation<?>)
       {
         RequestWithConfirmation<?> request = (RequestWithConfirmation<?>)signal;
-        request.setRemoteException(new IllegalStateException("Request canceled due to protocol deactivation"), false);
+        request.setRemoteException(new IllegalStateException("Request canceled due to protocol deactivation"), false); //$NON-NLS-1$
       }
     }
 
@@ -322,7 +322,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       SignalReactor signal = createSignalReactor(signalID);
       if (signal == null)
       {
-        throw new IllegalArgumentException("Invalid signalID " + signalID);
+        throw new IllegalArgumentException("Invalid signalID " + signalID); //$NON-NLS-1$
       }
 
       return signal;
@@ -404,7 +404,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   void startSignal(SignalActor signalActor, long timeout) throws Exception
   {
-    checkArg(signalActor.getProtocol() == this, "Wrong protocol");
+    checkArg(signalActor.getProtocol() == this, "Wrong protocol"); //$NON-NLS-1$
     short signalID = signalActor.getID();
     int correlationID = signalActor.getCorrelationID();
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
@@ -560,7 +560,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
           IChannel channel = getChannel();
           if (channel == null)
           {
-            throw new IORuntimeException("No channel for protocol " + SignalProtocol.this);
+            throw new IORuntimeException("No channel for protocol " + SignalProtocol.this); //$NON-NLS-1$
           }
 
           IBuffer buffer = delegate.provideBuffer();

@@ -15,7 +15,7 @@ package org.eclipse.net4j.util.security;
  */
 public class ResponseNegotiatorFactory extends NegotiatorFactory
 {
-  public static final String TYPE = "response";
+  public static final String TYPE = "response"; //$NON-NLS-1$
 
   public ResponseNegotiatorFactory()
   {

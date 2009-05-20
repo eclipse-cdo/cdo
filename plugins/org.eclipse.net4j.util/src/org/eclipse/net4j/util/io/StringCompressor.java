@@ -170,7 +170,7 @@ public class StringCompressor implements StringIO
           break;
 
         default:
-          throw new IOException("Invalid info: " + info);
+          throw new IOException("Invalid info: " + info); //$NON-NLS-1$
         }
       }
     }
@@ -190,7 +190,7 @@ public class StringCompressor implements StringIO
         string = idToString.get(id);
         if (string == null)
         {
-          throw new IOException("String ID unknown: " + id);
+          throw new IOException("String ID unknown: " + id); //$NON-NLS-1$
         }
       }
     }
@@ -201,7 +201,7 @@ public class StringCompressor implements StringIO
   @Override
   public String toString()
   {
-    return MessageFormat.format("StringCompressor[client={0}]", client);
+    return MessageFormat.format("StringCompressor[client={0}]", client); //$NON-NLS-1$
   }
 
   private void acknowledge(List<Integer> acks)
@@ -259,7 +259,7 @@ public class StringCompressor implements StringIO
     {
       if (DEBUG_BYTE != in.readByte())
       {
-        throw new IOException("Not a byte value");
+        throw new IOException("Not a byte value"); //$NON-NLS-1$
       }
     }
 
@@ -272,7 +272,7 @@ public class StringCompressor implements StringIO
     {
       if (DEBUG_INT != in.readByte())
       {
-        throw new IOException("Not an integer value");
+        throw new IOException("Not an integer value"); //$NON-NLS-1$
       }
     }
 
@@ -285,7 +285,7 @@ public class StringCompressor implements StringIO
     {
       if (DEBUG_STRING != in.readByte())
       {
-        throw new IOException("Not a string value");
+        throw new IOException("Not a string value"); //$NON-NLS-1$
       }
     }
 

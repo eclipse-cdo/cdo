@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.jface.action.IAction;
@@ -52,7 +53,7 @@ public abstract class SashLayoutAction extends SafeAction implements IListener
   {
     public Vertical(SashComposite sashComposite)
     {
-      super(sashComposite, "Vertical");
+      super(sashComposite, Messages.getString("SashLayoutAction_0")); //$NON-NLS-1$
     }
 
     @Override
@@ -77,7 +78,7 @@ public abstract class SashLayoutAction extends SafeAction implements IListener
   {
     public Horizontal(SashComposite sashComposite)
     {
-      super(sashComposite, "Horizontal");
+      super(sashComposite, Messages.getString("SashLayoutAction_1")); //$NON-NLS-1$
     }
 
     @Override
@@ -106,7 +107,7 @@ public abstract class SashLayoutAction extends SafeAction implements IListener
 
     public LayoutMenu(SashComposite sashComposite)
     {
-      super("Layout");
+      super(Messages.getString("SashLayoutAction_2")); //$NON-NLS-1$
       add(verticalAction = new SashLayoutAction.Vertical(sashComposite));
       add(horizontalAction = new SashLayoutAction.Horizontal(sashComposite));
     }

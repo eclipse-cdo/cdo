@@ -69,7 +69,7 @@ public class LogDialog extends BaseDialog<Viewer>
   {
     if (textStyle == null)
     {
-      throw new IllegalArgumentException("textStyle == null");
+      throw new IllegalArgumentException("textStyle == null"); //$NON-NLS-1$
     }
 
     if (textStyle.equals(this.textStyle))
@@ -104,7 +104,7 @@ public class LogDialog extends BaseDialog<Viewer>
     {
       checkStyleRange();
       ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-      String message = t.getMessage() + "\n";
+      String message = t.getMessage() + "\n"; //$NON-NLS-1$
       bytes.write(message.getBytes());
       t.printStackTrace(new PrintStream(bytes));
 
@@ -138,7 +138,7 @@ public class LogDialog extends BaseDialog<Viewer>
     composite.setLayout(grid);
     composite.setLayoutData(UIUtil.createGridData());
 
-    font = new Font(getShell().getDisplay(), "Courier New", 9, SWT.NORMAL);
+    font = new Font(getShell().getDisplay(), "Courier New", 9, SWT.NORMAL); //$NON-NLS-1$
     checkStyleRange();
     lastStyleRange = currentStyleRange;
     checkStyleRange();

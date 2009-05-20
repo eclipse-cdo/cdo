@@ -38,27 +38,27 @@ public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> e
     super(stateEnum, eventEnum);
     if (initialState == null)
     {
-      throw new IllegalStateException("initialState == null");
+      throw new IllegalStateException("initialState == null"); //$NON-NLS-1$
     }
 
     if (successState == null)
     {
-      throw new IllegalStateException("successState == null");
+      throw new IllegalStateException("successState == null"); //$NON-NLS-1$
     }
 
     if (failureState == null)
     {
-      throw new IllegalStateException("failureState == null");
+      throw new IllegalStateException("failureState == null"); //$NON-NLS-1$
     }
 
     if (startEvent == null)
     {
-      throw new IllegalStateException("startEvent == null");
+      throw new IllegalStateException("startEvent == null"); //$NON-NLS-1$
     }
 
     if (bufferEvent == null)
     {
-      throw new IllegalStateException("bufferEvent == null");
+      throw new IllegalStateException("bufferEvent == null"); //$NON-NLS-1$
     }
 
     this.initialState = initialState;

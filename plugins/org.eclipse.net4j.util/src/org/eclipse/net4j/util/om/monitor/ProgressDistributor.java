@@ -44,7 +44,7 @@ public abstract class ProgressDistributor
       }
       else
       {
-        CheckUtil.checkArg(distribution.length == distributables.length, "distributables.length");
+        CheckUtil.checkArg(distribution.length == distributables.length, "distributables.length"); //$NON-NLS-1$
       }
 
       distributionCopy = new double[distribution.length];
@@ -59,16 +59,16 @@ public abstract class ProgressDistributor
 
     if (TRACER.isEnabled())
     {
-      StringBuilder builder = new StringBuilder("Distribution: ");
+      StringBuilder builder = new StringBuilder("Distribution: "); //$NON-NLS-1$
       for (int i = 0; i < distributionCopy.length; i++)
       {
         builder.append(distributionCopy[i] * OMMonitor.HUNDRED / total);
-        builder.append("%, ");
+        builder.append("%, "); //$NON-NLS-1$
       }
 
-      builder.append("(");
+      builder.append("("); //$NON-NLS-1$
       builder.append(this);
-      builder.append(")");
+      builder.append(")"); //$NON-NLS-1$
       TRACER.trace(builder.toString());
     }
 

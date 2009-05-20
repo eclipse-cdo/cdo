@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.widgets;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.SWT;
@@ -47,7 +48,7 @@ public class TextAndDisable extends Composite implements SelectionListener, Modi
     text.addModifyListener(this);
 
     disabled = createButton();
-    disabled.setText("Disabled");
+    disabled.setText(Messages.getString("TextAndDisable.0")); //$NON-NLS-1$
     disabled.addSelectionListener(this);
     disabled.setLayoutData(UIUtil.createGridData(false, false));
   }

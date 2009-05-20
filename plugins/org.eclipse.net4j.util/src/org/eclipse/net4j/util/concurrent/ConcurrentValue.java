@@ -89,7 +89,7 @@ public final class ConcurrentValue<T>
   {
     if (accept == null)
     {
-      throw new IllegalArgumentException("accept == null");
+      throw new IllegalArgumentException("accept == null"); //$NON-NLS-1$
     }
 
     synchronized (notifier)

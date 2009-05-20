@@ -52,6 +52,6 @@ public abstract class Factory implements IFactory
   @Override
   public String toString()
   {
-    return MessageFormat.format("Factory[{0}, {1}]", getProductGroup(), getType());
+    return MessageFormat.format("Factory[{0}, {1}]", getProductGroup(), getType()); //$NON-NLS-1$
   }
 }

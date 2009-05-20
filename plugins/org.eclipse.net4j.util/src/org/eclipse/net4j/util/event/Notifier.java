@@ -33,7 +33,7 @@ public class Notifier implements INotifier.Introspection
 
   public void addListener(IListener listener)
   {
-    CheckUtil.checkArg(listener, "listener");
+    CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
     boolean wasNotEmpty;
     boolean isNotEmpty;
     synchronized (listeners)

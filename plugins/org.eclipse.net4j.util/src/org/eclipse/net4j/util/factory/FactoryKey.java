@@ -79,7 +79,7 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[{1}]", productGroup, type);
+    return MessageFormat.format("{0}[{1}]", productGroup, type); //$NON-NLS-1$
   }
 
   public int compareTo(FactoryKey key)

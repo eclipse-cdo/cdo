@@ -33,7 +33,7 @@ public interface StringIO
     @Override
     public String toString()
     {
-      return "DIRECT";
+      return "DIRECT"; //$NON-NLS-1$
     }
   };
 

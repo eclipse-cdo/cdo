@@ -60,7 +60,7 @@ public abstract class Cache<E> extends Worker implements ICache
     super.doBeforeActivate();
     if (cacheMonitor == null)
     {
-      throw new IllegalStateException("cacheMonitor == null");
+      throw new IllegalStateException("cacheMonitor == null"); //$NON-NLS-1$
     }
   }
 
@@ -102,7 +102,7 @@ public abstract class Cache<E> extends Worker implements ICache
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Unreachable: " + element);
+      TRACER.trace("Unreachable: " + element); //$NON-NLS-1$
     }
   }
 }

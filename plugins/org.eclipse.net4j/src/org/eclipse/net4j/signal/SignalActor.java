@@ -87,12 +87,12 @@ public abstract class SignalActor extends Signal
   @Override
   String getInputMeaning()
   {
-    return "Confirming";
+    return "Confirming"; //$NON-NLS-1$
   }
 
   @Override
   String getOutputMeaning()
   {
-    return "Requesting";
+    return "Requesting"; //$NON-NLS-1$
   }
 }

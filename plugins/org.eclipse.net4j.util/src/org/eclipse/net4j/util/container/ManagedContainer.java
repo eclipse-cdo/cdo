@@ -190,7 +190,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     IFactory factory = getFactoryRegistry().get(key);
     if (factory == null)
     {
-      throw new FactoryNotFoundException("Factory not found: " + key);
+      throw new FactoryNotFoundException("Factory not found: " + key); //$NON-NLS-1$
     }
 
     return factory;
@@ -438,7 +438,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   @Override
   public String toString()
   {
-    return "ManagedContainer";
+    return "ManagedContainer"; //$NON-NLS-1$
   }
 
   protected IRegistry<IFactoryKey, IFactory> createFactoryRegistry()
@@ -617,7 +617,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     @Override
     public String toString()
     {
-      return MessageFormat.format("{0}[{1}, {2}]", productGroup, factoryType, description);
+      return MessageFormat.format("{0}[{1}, {2}]", productGroup, factoryType, description); //$NON-NLS-1$
     }
 
     public int compareTo(ElementKey key)

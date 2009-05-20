@@ -67,7 +67,7 @@ public abstract class OM
       ((OSGiBundle)OM.BUNDLE).start();
 
       // TODO Make configurable
-      PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}");
+      PrintTraceHandler.CONSOLE.setPattern("{6} [{0}] {5}"); //$NON-NLS-1$
       AbstractPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
       AbstractPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
 
@@ -83,7 +83,7 @@ public abstract class OM
       IPluginContainer container = IPluginContainer.INSTANCE;
       if (TRACER.isEnabled())
       {
-        TRACER.format("Plugin container created: {0}", container);
+        TRACER.format("Plugin container created: {0}", container); //$NON-NLS-1$
       }
     }
 

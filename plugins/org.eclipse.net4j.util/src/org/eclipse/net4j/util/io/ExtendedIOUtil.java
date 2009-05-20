@@ -114,7 +114,7 @@ public final class ExtendedIOUtil
     }
     catch (Throwable t)
     {
-      throw new IOException("Unable to allocate " + length + " bytes");
+      throw new IOException("Unable to allocate " + length + " bytes"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     in.readFully(b);
@@ -157,7 +157,7 @@ public final class ExtendedIOUtil
           {
             if (TRACER.isEnabled())
             {
-              TRACER.format("Deserializing class {0}", desc.getName());
+              TRACER.format("Deserializing class {0}", desc.getName()); //$NON-NLS-1$
             }
 
             Class<?> c = classResolver.resolveClass(desc);

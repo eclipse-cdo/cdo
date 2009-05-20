@@ -42,12 +42,12 @@ public abstract class SignalReactor extends Signal
   @Override
   String getInputMeaning()
   {
-    return "Indicating";
+    return "Indicating"; //$NON-NLS-1$
   }
 
   @Override
   String getOutputMeaning()
   {
-    return "Responding";
+    return "Responding"; //$NON-NLS-1$
   }
 }

@@ -54,7 +54,7 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
   {
     if (!isActive())
     {
-      throw new TransactionException("Transaction inactive");
+      throw new TransactionException("Transaction inactive"); //$NON-NLS-1$
     }
 
     try

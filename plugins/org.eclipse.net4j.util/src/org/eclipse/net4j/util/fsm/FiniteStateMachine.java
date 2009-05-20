@@ -31,11 +31,11 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FiniteStateMachine.class);
 
-  private static final String MSG_PROCESS = "Processing event {0} in state {1} for {2} (data={3})";
+  private static final String MSG_PROCESS = "Processing event {0} in state {1} for {2} (data={3})"; //$NON-NLS-1$
 
-  private static final String MSG_IGNORE = "Ignoring event {0} in state {1} for {2} (data={3})";
+  private static final String MSG_IGNORE = "Ignoring event {0} in state {1} for {2} (data={3})"; //$NON-NLS-1$
 
-  private static final String MSG_FAIL = "Failing event {0} in state {1} for {2} (data={3})";
+  private static final String MSG_FAIL = "Failing event {0} in state {1} for {2} (data={3})"; //$NON-NLS-1$
 
   private STATE[] states;
 
@@ -207,7 +207,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   {
     if (transition == null)
     {
-      throw new IllegalArgumentException("transition == null");
+      throw new IllegalArgumentException("transition == null"); //$NON-NLS-1$
     }
   }
 
@@ -224,7 +224,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     @Override
     public String toString()
     {
-      return "IGNORE";
+      return "IGNORE"; //$NON-NLS-1$
     }
   }
 
@@ -241,7 +241,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     @Override
     public String toString()
     {
-      return "FAIL";
+      return "FAIL"; //$NON-NLS-1$
     }
   }
 
@@ -270,7 +270,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     @Override
     public String toString()
     {
-      return MessageFormat.format("CHANGE_STATE[{0}]", targetState);
+      return MessageFormat.format("CHANGE_STATE[{0}]", targetState); //$NON-NLS-1$
     }
   }
 

@@ -21,7 +21,7 @@ public final class TMPUtil
   /**
    * @since 2.0
    */
-  public static final String SYSTEM_TEMP_FOLDER = System.getProperty("java.io.tmpdir");
+  public static final String SYSTEM_TEMP_FOLDER = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
 
   private TMPUtil()
   {
@@ -29,12 +29,12 @@ public final class TMPUtil
 
   public static File createTempFolder() throws IORuntimeException
   {
-    return createTempFolder("tmp");
+    return createTempFolder("tmp"); //$NON-NLS-1$
   }
 
   public static File createTempFolder(String prefix) throws IORuntimeException
   {
-    return createTempFolder(prefix, "");
+    return createTempFolder(prefix, ""); //$NON-NLS-1$
   }
 
   public static File createTempFolder(String prefix, String suffix) throws IORuntimeException

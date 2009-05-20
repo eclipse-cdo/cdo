@@ -47,7 +47,7 @@ public final class DescriptionUtil
 
     for (Object element : elements)
     {
-      builder.append(":");
+      builder.append(":"); //$NON-NLS-1$
       if (element != null)
       {
         builder.append(element);

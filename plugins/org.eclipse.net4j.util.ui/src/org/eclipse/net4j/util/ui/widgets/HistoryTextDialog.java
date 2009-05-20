@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class HistoryTextDialog extends InputDialog
 {
-  private static final String EMPTY = "";
+  private static final String EMPTY = ""; //$NON-NLS-1$
 
   private IHistory<String> history;
 

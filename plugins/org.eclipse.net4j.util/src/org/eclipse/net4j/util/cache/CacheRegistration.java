@@ -104,7 +104,7 @@ public class CacheRegistration implements ICacheRegistration
   {
     if (isDisposed())
     {
-      throw new IllegalStateException("disposed");
+      throw new IllegalStateException("disposed"); //$NON-NLS-1$
     }
   }
 }

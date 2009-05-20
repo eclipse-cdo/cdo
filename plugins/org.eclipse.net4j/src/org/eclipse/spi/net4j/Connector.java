@@ -92,10 +92,10 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
   public void setUserID(String userID)
   {
-    checkState(getState() != ConnectorState.CONNECTED, "Connector is already connected");
+    checkState(getState() != ConnectorState.CONNECTED, "Connector is already connected"); //$NON-NLS-1$
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting userID {0} for {1}", userID, this);
+      TRACER.format("Setting userID {0} for {1}", userID, this); //$NON-NLS-1$
     }
 
     this.userID = userID;
@@ -113,7 +113,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Setting state {0} (was {1}) for {2}", newState, oldState.toString().toLowerCase(), this);
+        TRACER.format("Setting state {0} (was {1}) for {2}", newState, oldState.toString().toLowerCase(), this); //$NON-NLS-1$
       }
 
       connectorState = newState;
@@ -177,7 +177,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   {
     if (negotiationException != null)
     {
-      throw new ConnectorException("Connector negotiation failed", negotiationException);
+      throw new ConnectorException("Connector negotiation failed", negotiationException); //$NON-NLS-1$
     }
 
     return connectorState == ConnectorState.CONNECTED;
@@ -208,7 +208,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Waiting for connection...");
+        TRACER.trace("Waiting for connection..."); //$NON-NLS-1$
       }
 
       for (;;)
@@ -357,11 +357,11 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(getConfig().getBufferProvider(), "getConfig().getBufferProvider()");
+    checkState(getConfig().getBufferProvider(), "getConfig().getBufferProvider()"); //$NON-NLS-1$
 
     if (userID != null && getConfig().getNegotiator() == null)
     {
-      throw new IllegalStateException("A UserID on this connector requires a negotiator to be configured");
+      throw new IllegalStateException("A UserID on this connector requires a negotiator to be configured"); //$NON-NLS-1$
     }
   }
 
@@ -415,7 +415,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     @Override
     public String toString()
     {
-      return MessageFormat.format("ConnectorStateEvent[source={0}, oldState={1}, newState={2}]", getSource(),
+      return MessageFormat.format("ConnectorStateEvent[source={0}, oldState={1}, newState={2}]", getSource(), //$NON-NLS-1$
           getOldState(), getNewState());
     }
   }

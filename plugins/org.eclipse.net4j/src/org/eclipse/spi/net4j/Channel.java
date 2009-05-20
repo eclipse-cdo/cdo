@@ -236,7 +236,7 @@ public class Channel extends Lifecycle implements InternalChannel
         @Override
         protected String getThreadName()
         {
-          return "ReceiveSerializer-" + Channel.this;
+          return "ReceiveSerializer-" + Channel.this; //$NON-NLS-1$
         }
       }
 

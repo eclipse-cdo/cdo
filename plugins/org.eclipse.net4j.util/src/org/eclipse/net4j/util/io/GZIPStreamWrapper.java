@@ -67,7 +67,7 @@ public class GZIPStreamWrapper implements IStreamWrapper
     final PipedInputStream pis = new PipedInputStream(pos);
 
     final GZIPOutputStream gos = new GZIPOutputStream(pos);
-    final byte[] out = "eike".getBytes();
+    final byte[] out = "eike".getBytes(); //$NON-NLS-1$
 
     Thread thread = new Thread()
     {

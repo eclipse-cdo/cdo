@@ -15,7 +15,7 @@ package org.eclipse.net4j.util.security;
  */
 public class ChallengeNegotiatorFactory extends NegotiatorFactory
 {
-  public static final String TYPE = "challenge";
+  public static final String TYPE = "challenge"; //$NON-NLS-1$
 
   public ChallengeNegotiatorFactory()
   {

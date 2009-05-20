@@ -48,7 +48,7 @@ public abstract class ContainerProtocolProvider implements IProtocolProvider
 
   public IProtocol<?> getProtocol(String type)
   {
-    return (IProtocol<?>)container.getElement(productGroup, type, "protocol-" + counter.increment(), false);
+    return (IProtocol<?>)container.getElement(productGroup, type, "protocol-" + counter.increment(), false); //$NON-NLS-1$
   }
 
   /**

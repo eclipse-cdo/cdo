@@ -18,7 +18,7 @@ import java.io.PrintStream;
  */
 public final class StringUtil
 {
-  public static final String EMPTY = "";
+  public static final String EMPTY = ""; //$NON-NLS-1$
 
   public static final String NL = System.getProperty("line.separator"); //$NON-NLS-1$
 

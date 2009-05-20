@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  */
 public final class ReflectUtil
 {
-  private static final String NAMESPACE_SEPARATOR = ".";
+  private static final String NAMESPACE_SEPARATOR = "."; //$NON-NLS-1$
 
   public static final Class<Object> ROOT_CLASS = Object.class;
 
@@ -210,7 +210,7 @@ public final class ReflectUtil
     for (int i = 2; i < stackTrace.length; i++)
     {
       StackTraceElement stackTraceElement = stackTrace[i];
-      out.println("\tat " + stackTraceElement);
+      out.println("\tat " + stackTraceElement); //$NON-NLS-1$
     }
   }
 
@@ -317,7 +317,7 @@ public final class ReflectUtil
     String name = object.getClass().getSimpleName();
     if (name.length() == 0)
     {
-      name = "anonymous";
+      name = "anonymous"; //$NON-NLS-1$
     }
 
     return name + "@" + getID(object); //$NON-NLS-1$
@@ -398,7 +398,7 @@ public final class ReflectUtil
           }
           else
           {
-            OM.LOG.warn("Value of classKey " + classKey + " is not a String");
+            OM.LOG.warn("Value of classKey " + classKey + " is not a String"); //$NON-NLS-1$ //$NON-NLS-2$
           }
         }
         else
@@ -410,7 +410,7 @@ public final class ReflectUtil
 
     if (className == null)
     {
-      throw new IllegalArgumentException("Properties do not contain a valid class name for key " + classKey);
+      throw new IllegalArgumentException("Properties do not contain a valid class name for key " + classKey); //$NON-NLS-1$
     }
 
     Class<?> c = classLoader.loadClass(className);
@@ -468,7 +468,7 @@ public final class ReflectUtil
 
           if (value == null)
           {
-            throw new IllegalArgumentException("Value of property " + name + " can not be assigned to type "
+            throw new IllegalArgumentException("Value of property " + name + " can not be assigned to type " //$NON-NLS-1$ //$NON-NLS-2$
                 + type.getName());
           }
 
@@ -487,7 +487,7 @@ public final class ReflectUtil
 
   public static boolean isSetterName(String name)
   {
-    return name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3));
+    return name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3)); //$NON-NLS-1$
   }
 
   public static String toString(Object object)
@@ -549,7 +549,7 @@ public final class ReflectUtil
         builder.append(StringUtil.NL);
         for (Object element : (Collection<?>)value)
         {
-          builder.append("    ");
+          builder.append("    "); //$NON-NLS-1$
           builder.append(element);
           builder.append(StringUtil.NL);
         }

@@ -40,7 +40,7 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
     super.doBeforeActivate();
     if (credentialsProvider == null)
     {
-      throw new IllegalStateException("credentialsProvider == null");
+      throw new IllegalStateException("credentialsProvider == null"); //$NON-NLS-1$
     }
   }
 
@@ -82,7 +82,7 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
   {
     if (!success)
     {
-      throw new NegotiationException("Negotiation failed");
+      throw new NegotiationException("Negotiation failed"); //$NON-NLS-1$
     }
   }
 

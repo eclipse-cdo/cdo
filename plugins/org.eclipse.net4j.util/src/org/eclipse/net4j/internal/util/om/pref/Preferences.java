@@ -109,7 +109,7 @@ public class Preferences extends Notifier implements OMPreferences
         {
           public void run(FileOutputStream io) throws IOException
           {
-            properties.store(io, "Preferences of " + bundle.getBundleID());
+            properties.store(io, "Preferences of " + bundle.getBundleID()); //$NON-NLS-1$
           }
         });
       }
@@ -272,7 +272,7 @@ public class Preferences extends Notifier implements OMPreferences
     String name = preference.getName();
     if (prefs.containsKey(name))
     {
-      throw new IllegalArgumentException("Duplicate name: " + name);
+      throw new IllegalArgumentException("Duplicate name: " + name); //$NON-NLS-1$
     }
 
     prefs.put(name, preference);
@@ -281,10 +281,10 @@ public class Preferences extends Notifier implements OMPreferences
 
   private File getFile()
   {
-    File file = new File(bundle.getStateLocation(), ".prefs");
+    File file = new File(bundle.getStateLocation(), ".prefs"); //$NON-NLS-1$
     if (file.exists() && !file.isFile())
     {
-      throw new IORuntimeException("Not a file: " + file.getAbsolutePath());
+      throw new IORuntimeException("Not a file: " + file.getAbsolutePath()); //$NON-NLS-1$
     }
 
     return file;

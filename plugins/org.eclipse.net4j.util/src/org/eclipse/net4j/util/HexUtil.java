@@ -113,7 +113,7 @@ public final class HexUtil
 
     if (out.length < off + slen / 2)
     {
-      throw new IndexOutOfBoundsException("Output buffer too small for input (" + out.length + '<' + off + slen / 2
+      throw new IndexOutOfBoundsException("Output buffer too small for input (" + out.length + '<' + off + slen / 2 //$NON-NLS-1$
           + ')');
     }
 
@@ -137,7 +137,7 @@ public final class HexUtil
     final String hex = Long.toHexString(v);
     if (hex.length() < 8)
     {
-      return "00000000".substring(hex.length()) + hex;
+      return "00000000".substring(hex.length()) + hex; //$NON-NLS-1$
     }
 
     return hex;

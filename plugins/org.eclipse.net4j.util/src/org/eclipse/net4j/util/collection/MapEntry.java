@@ -79,6 +79,6 @@ public class MapEntry<K, V> implements Map.Entry<K, V>
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}={1}", key, value);
+    return MessageFormat.format("{0}={1}", key, value); //$NON-NLS-1$
   }
 }

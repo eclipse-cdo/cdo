@@ -30,7 +30,7 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 {
   public static final String NAMESPACE = OM.BUNDLE_ID;
 
-  public static final String EXT_POINT = "factories";
+  public static final String EXT_POINT = "factories"; //$NON-NLS-1$
 
   private IRegistryChangeListener extensionRegistryListener = new IRegistryChangeListener()
   {
@@ -40,7 +40,7 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
       for (IExtensionDelta delta : deltas)
       {
         // TODO Handle ExtensionDelta
-        OM.LOG.warn("ExtensionDelta not handled: " + delta);
+        OM.LOG.warn("ExtensionDelta not handled: " + delta); //$NON-NLS-1$
       }
     }
   };

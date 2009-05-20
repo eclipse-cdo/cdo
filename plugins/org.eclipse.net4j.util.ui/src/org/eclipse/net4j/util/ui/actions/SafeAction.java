@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -21,7 +22,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
  */
 public abstract class SafeAction extends Action
 {
-  public static final String INTERACTIVE = "...";
+  public static final String INTERACTIVE = Messages.getString("SafeAction_0"); //$NON-NLS-1$
 
   public SafeAction()
   {
@@ -64,7 +65,7 @@ public abstract class SafeAction extends Action
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      MessageDialog.openError(null, getText(), ex.getMessage() + "\nSee the Error log for details.");
+      MessageDialog.openError(null, getText(), ex.getLocalizedMessage() + "\n" + Messages.getString("SafeAction_1")); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

@@ -44,7 +44,7 @@ public class StaticContentProvider extends StructuredContentProvider<Object>
     Object[] enumConstants = enumClass.getEnumConstants();
     if (enumConstants == null)
     {
-      throw new IllegalArgumentException("Illegal enum: " + enumClass);
+      throw new IllegalArgumentException("Illegal enum: " + enumClass); //$NON-NLS-1$
     }
 
     return enumConstants;

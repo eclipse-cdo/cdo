@@ -35,7 +35,7 @@ class MonitorProgressIndication extends Indication
     double work = in.readDouble();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Progress of signal {0}: totalWork={1}, work={2}", correlationID, totalWork, work);
+      TRACER.format("Progress of signal {0}: totalWork={1}, work={2}", correlationID, totalWork, work); //$NON-NLS-1$
     }
 
     getProtocol().handleMonitorProgress(correlationID, totalWork, work);

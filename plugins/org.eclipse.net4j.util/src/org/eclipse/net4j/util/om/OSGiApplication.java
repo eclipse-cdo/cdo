@@ -117,7 +117,7 @@ public class OSGiApplication implements IApplication
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Starting application {0}", applicationID);
+        TRACER.format("Starting application {0}", applicationID); //$NON-NLS-1$
       }
     }
     catch (RuntimeException ignore)
@@ -131,7 +131,7 @@ public class OSGiApplication implements IApplication
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Stopping application {0}", applicationID);
+        TRACER.format("Stopping application {0}", applicationID); //$NON-NLS-1$
       }
     }
     catch (RuntimeException ignore)

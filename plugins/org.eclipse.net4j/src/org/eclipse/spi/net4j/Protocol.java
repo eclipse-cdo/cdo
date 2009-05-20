@@ -144,9 +144,9 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(channel, "channel");
-    checkState(bufferProvider, "bufferProvider");
-    checkState(executorService, "executorService");
+    checkState(channel, "channel"); //$NON-NLS-1$
+    checkState(bufferProvider, "bufferProvider"); //$NON-NLS-1$
+    checkState(executorService, "executorService"); //$NON-NLS-1$
   }
 
   @Override

@@ -60,6 +60,6 @@ public class KeyedStrongReference<K, T> implements KeyedReference<K, T>
   @Override
   public String toString()
   {
-    return MessageFormat.format("KeyedStrongReference[{0} -> {1}]", key, ref);
+    return MessageFormat.format("KeyedStrongReference[{0} -> {1}]", key, ref); //$NON-NLS-1$
   }
 }

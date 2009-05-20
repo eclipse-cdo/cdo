@@ -18,9 +18,9 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
  */
 public class RandomizerFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.randomizers";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.randomizers"; //$NON-NLS-1$
 
-  public static final String TYPE = "default";
+  public static final String TYPE = "default"; //$NON-NLS-1$
 
   public RandomizerFactory()
   {

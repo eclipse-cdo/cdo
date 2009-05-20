@@ -25,27 +25,27 @@ public class SharedIcons
 {
   private static final ImageRegistry REGISTRY = new ImageRegistry(getDisplay());
 
-  private static final String TOOL = "etool16/";
+  private static final String TOOL = "etool16/"; //$NON-NLS-1$
 
-  private static final String OBJ = "obj16/";
+  private static final String OBJ = "obj16/"; //$NON-NLS-1$
 
-  private static final String VIEW = "view16/";
+  private static final String VIEW = "view16/"; //$NON-NLS-1$
 
-  public static final String OBJ_ADAPTER = OBJ + "adapter";
+  public static final String OBJ_ADAPTER = OBJ + "adapter"; //$NON-NLS-1$
 
-  public static final String OBJ_FACTORY = OBJ + "factory";
+  public static final String OBJ_FACTORY = OBJ + "factory"; //$NON-NLS-1$
 
-  public static final String OBJ_FOLDER = OBJ + "folder";
+  public static final String OBJ_FOLDER = OBJ + "folder"; //$NON-NLS-1$
 
-  public static final String OBJ_BEAN = OBJ + "javabean";
+  public static final String OBJ_BEAN = OBJ + "javabean"; //$NON-NLS-1$
 
-  public static final String VIEW_CONTAINER = VIEW + "container";
+  public static final String VIEW_CONTAINER = VIEW + "container"; //$NON-NLS-1$
 
-  public static final String TOOL_ADD = TOOL + "add";
+  public static final String TOOL_ADD = TOOL + "add"; //$NON-NLS-1$
 
-  public static final String TOOL_DELETE = TOOL + "delete";
+  public static final String TOOL_DELETE = TOOL + "delete"; //$NON-NLS-1$
 
-  public static final String TOOL_REFRESH = TOOL + "refresh";
+  public static final String TOOL_REFRESH = TOOL + "refresh"; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {
@@ -93,7 +93,7 @@ public class SharedIcons
 
     if (display == null)
     {
-      throw new IllegalStateException("display == null");
+      throw new IllegalStateException("display == null"); //$NON-NLS-1$
     }
 
     return display;
@@ -101,6 +101,6 @@ public class SharedIcons
 
   private static String mangleKey(String key)
   {
-    return "icons/full/" + key + ".gif";
+    return "icons/full/" + key + ".gif"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

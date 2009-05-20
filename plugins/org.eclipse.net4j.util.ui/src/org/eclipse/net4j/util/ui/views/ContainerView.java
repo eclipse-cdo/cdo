@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.ui.views;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.actions.IntrospectAction;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -211,7 +212,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
 
   protected void hookContextMenu()
   {
-    MenuManager menuMgr = new MenuManager("#PopupMenu");
+    MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
@@ -446,7 +447,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
   {
     private RefreshAction()
     {
-      super("Refresh", "Refresh view", getRefreshImageDescriptor());
+      super(Messages.getString("ContainerView_1"), Messages.getString("ContainerView_2"), getRefreshImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Override

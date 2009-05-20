@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.security;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -30,9 +31,9 @@ import org.eclipse.swt.widgets.Text;
  */
 public class CredentialsDialog extends BaseDialog<Viewer>
 {
-  private static final String TITLE = "Login";
+  private static final String TITLE = Messages.getString("CredentialsDialog_0"); //$NON-NLS-1$
 
-  private static final String MESSAGE = "Enter your user ID and password.";
+  private static final String MESSAGE = Messages.getString("CredentialsDialog_1"); //$NON-NLS-1$
 
   private Text userIDControl;
 
@@ -57,10 +58,10 @@ public class CredentialsDialog extends BaseDialog<Viewer>
     composite.setLayout(new GridLayout(2, false));
     composite.setLayoutData(UIUtil.createGridData());
 
-    new Label(composite, SWT.NONE).setText("User ID:");
+    new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_2")); //$NON-NLS-1$
     userIDControl = new Text(composite, SWT.BORDER);
 
-    new Label(composite, SWT.NONE).setText("Password:");
+    new Label(composite, SWT.NONE).setText(Messages.getString("CredentialsDialog_3")); //$NON-NLS-1$
     passwordControl = new Text(composite, SWT.BORDER | SWT.PASSWORD);
   }
 

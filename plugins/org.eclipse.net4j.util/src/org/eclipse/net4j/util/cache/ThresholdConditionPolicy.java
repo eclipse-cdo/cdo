@@ -25,7 +25,7 @@ public class ThresholdConditionPolicy implements ICacheMonitor.ConditionPolicy
   {
     if (thresholdRedYellow > thresholdYellowGreen)
     {
-      throw new IllegalArgumentException("thresholdRedYellow > thresholdYellowGreen");
+      throw new IllegalArgumentException("thresholdRedYellow > thresholdYellowGreen"); //$NON-NLS-1$
     }
 
     this.thresholdRedYellow = thresholdRedYellow;

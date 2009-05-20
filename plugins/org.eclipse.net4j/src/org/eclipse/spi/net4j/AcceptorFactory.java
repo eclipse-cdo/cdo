@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public abstract class AcceptorFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.acceptors";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.acceptors"; //$NON-NLS-1$
 
   public AcceptorFactory(String type)
   {

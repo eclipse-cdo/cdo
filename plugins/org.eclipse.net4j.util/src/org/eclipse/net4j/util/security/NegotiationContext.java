@@ -74,7 +74,7 @@ public abstract class NegotiationContext implements INegotiationContext
   {
     if (finishedLatch == null)
     {
-      throw new IllegalStateException("finishedLatch == null");
+      throw new IllegalStateException("finishedLatch == null"); //$NON-NLS-1$
     }
 
     try

@@ -49,7 +49,7 @@ public class LegacyBundle extends AbstractBundle
 
   public String getStateLocation()
   {
-    return new File(getPlatform().getStateFolder(), ".plugins/" + getBundleID()).getAbsolutePath();
+    return new File(getPlatform().getStateFolder(), ".plugins/" + getBundleID()).getAbsolutePath(); //$NON-NLS-1$
   }
 
   public URL getBaseURL()

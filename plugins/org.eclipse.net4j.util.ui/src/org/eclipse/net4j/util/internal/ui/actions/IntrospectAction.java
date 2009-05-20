@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.internal.ui.actions;
 
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.internal.ui.views.Net4jIntrospectorView;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -22,7 +23,7 @@ public class IntrospectAction extends SafeAction
 
   public IntrospectAction(Object object)
   {
-    super("Introspect");
+    super(Messages.getString("IntrospectAction_0")); //$NON-NLS-1$
     this.object = object;
   }
 

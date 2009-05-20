@@ -41,17 +41,17 @@ public final class IOUtil
   /**
    * @since 2.0
    */
-  public static final String WILDCARD_SINGLE_CHAR = "?";
+  public static final String WILDCARD_SINGLE_CHAR = "?"; //$NON-NLS-1$
 
   /**
    * @since 2.0
    */
-  public static final String WILDCARD_MULTI_CHARS = "*";
+  public static final String WILDCARD_MULTI_CHARS = "*"; //$NON-NLS-1$
 
   /**
    * @since 2.0
    */
-  public static final String WILDCARD_MULTI_DIRS = "**";
+  public static final String WILDCARD_MULTI_DIRS = "**"; //$NON-NLS-1$
 
   private static final char SEP = File.separatorChar;
 
@@ -233,7 +233,7 @@ public final class IOUtil
       return relative;
     }
 
-    throw new IllegalArgumentException("Different prefixes: " + fileName + " != " + folderName);
+    throw new IllegalArgumentException("Different prefixes: " + fileName + " != " + folderName); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
@@ -259,7 +259,7 @@ public final class IOUtil
     {
       if (!folder.mkdirs())
       {
-        throw new IORuntimeException("Unable to create directory " + folder.getAbsolutePath());
+        throw new IORuntimeException("Unable to create directory " + folder.getAbsolutePath()); //$NON-NLS-1$
       }
     }
   }
@@ -430,7 +430,7 @@ public final class IOUtil
   {
     if (file.length() > Integer.MAX_VALUE)
     {
-      throw new IllegalArgumentException("File too long: " + file.length());
+      throw new IllegalArgumentException("File too long: " + file.length()); //$NON-NLS-1$
     }
 
     int size = (int)file.length();
@@ -662,7 +662,7 @@ public final class IOUtil
     {
       if (!segment.equals(WILDCARD_MULTI_DIRS))
       {
-        throw new IllegalArgumentException("Invalid pattern segment: " + segment);
+        throw new IllegalArgumentException("Invalid pattern segment: " + segment); //$NON-NLS-1$
       }
 
       multiDirs = true;

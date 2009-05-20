@@ -75,7 +75,7 @@ public class RWLock extends ReentrantReadWriteLock
         }
       }
 
-      throw new TimeoutException("Acquisition of lock timed out after " + timeoutMillis + " millis");
+      throw new TimeoutException("Acquisition of lock timed out after " + timeoutMillis + " millis"); //$NON-NLS-1$ //$NON-NLS-2$
     }
     catch (Exception ex)
     {
@@ -101,7 +101,7 @@ public class RWLock extends ReentrantReadWriteLock
       }
       else
       {
-        throw new TimeoutException("Acquisition of lock timed out after " + timeoutMillis + " millis");
+        throw new TimeoutException("Acquisition of lock timed out after " + timeoutMillis + " millis"); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
     catch (InterruptedException ignore)

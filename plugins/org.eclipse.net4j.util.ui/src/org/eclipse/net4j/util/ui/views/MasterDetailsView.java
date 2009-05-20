@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.actions.SashLayoutAction;
@@ -176,9 +177,9 @@ public abstract class MasterDetailsView extends MultiViewersView
   protected void fillLocalPullDown(IMenuManager manager)
   {
     super.fillLocalPullDown(manager);
-    manager.add(new Separator("group1"));
+    manager.add(new Separator("group1")); //$NON-NLS-1$
     manager.add(new SashLayoutAction.LayoutMenu(sash));
-    manager.add(new Separator("group2"));
+    manager.add(new Separator("group2")); //$NON-NLS-1$
     manager.add(new RefreshAction());
   }
 
@@ -300,7 +301,7 @@ public abstract class MasterDetailsView extends MultiViewersView
   {
     public RefreshAction()
     {
-      super("Refresh", "Refresh", OM.getImageDescriptor("icons/full/etool16/refresh.gif"));
+      super(Messages.getString("MasterDetailsView_2"), Messages.getString("MasterDetailsView_3"), OM.getImageDescriptor("icons/full/etool16/refresh.gif")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     @Override

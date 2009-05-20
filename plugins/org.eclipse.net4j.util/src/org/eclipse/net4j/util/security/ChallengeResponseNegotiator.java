@@ -155,10 +155,10 @@ public abstract class ChallengeResponseNegotiator extends
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(encryptionAlgorithmName, "encryptionAlgorithmName");
-    checkState(encryptionSaltBytes, "encryptionSaltBytes");
-    checkState(encryptionSaltBytes.length > 0, "encryptionSaltBytes");
-    checkState(encryptionIterationCount > 0, "encryptionIterationCount");
+    checkState(encryptionAlgorithmName, "encryptionAlgorithmName"); //$NON-NLS-1$
+    checkState(encryptionSaltBytes, "encryptionSaltBytes"); //$NON-NLS-1$
+    checkState(encryptionSaltBytes.length > 0, "encryptionSaltBytes"); //$NON-NLS-1$
+    checkState(encryptionIterationCount > 0, "encryptionIterationCount"); //$NON-NLS-1$
   }
 
   @Override

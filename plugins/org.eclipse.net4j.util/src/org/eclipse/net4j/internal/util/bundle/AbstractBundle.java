@@ -220,12 +220,12 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   public InputStream getInputStream(String path) throws IOException
   {
     String base = getBaseURL().toString();
-    if (!base.endsWith("/"))
+    if (!base.endsWith("/")) //$NON-NLS-1$
     {
-      base += "/";
+      base += "/"; //$NON-NLS-1$
     }
 
-    if (path.startsWith("/"))
+    if (path.startsWith("/")) //$NON-NLS-1$
     {
       path = path.substring(1);
     }
@@ -340,7 +340,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
   public void start() throws Exception
   {
-    invokeMethod("start");
+    invokeMethod("start"); //$NON-NLS-1$
   }
 
   public void stop() throws Exception
@@ -357,7 +357,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
       OM.LOG.error(ex);
     }
 
-    invokeMethod("stop");
+    invokeMethod("stop"); //$NON-NLS-1$
   }
 
   protected OMTracer createTracer(String name)
@@ -372,7 +372,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
   protected String getConfigFileName()
   {
-    return bundleID + ".properties";
+    return bundleID + ".properties"; //$NON-NLS-1$
   }
 
   private void invokeMethod(String name) throws Exception

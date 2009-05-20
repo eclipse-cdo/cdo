@@ -20,9 +20,9 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public class BufferProviderFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.bufferProviders";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.bufferProviders"; //$NON-NLS-1$
 
-  public static final String TYPE = "default";
+  public static final String TYPE = "default"; //$NON-NLS-1$
 
   public static final short BUFFER_CAPACITY = 4096;
 

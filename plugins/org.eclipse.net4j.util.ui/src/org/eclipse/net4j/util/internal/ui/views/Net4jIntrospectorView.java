@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.action.Action;
@@ -62,7 +63,7 @@ import java.util.Stack;
  */
 public class Net4jIntrospectorView extends ViewPart implements ISelectionListener, IDoubleClickListener, IListener
 {
-  public static final String VIEW_ID = "org.eclipse.net4j.util.Net4jIntrospectorView";
+  public static final String VIEW_ID = "org.eclipse.net4j.util.Net4jIntrospectorView"; //$NON-NLS-1$
 
   private static final Object[] NO_ELEMENTS = {};
 
@@ -307,8 +308,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
 
     if (object == null)
     {
-      classLabel.setText("");
-      objectLabel.setText("");
+      classLabel.setText(""); //$NON-NLS-1$
+      objectLabel.setText(""); //$NON-NLS-1$
       currentViewer = objectViewer;
     }
     else
@@ -318,7 +319,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
       classLabel.setText(className);
 
       String value = object.toString();
-      if (value.startsWith(className + "@"))
+      if (value.startsWith(className + "@")) //$NON-NLS-1$
       {
         objectLabel.setText(value.substring(className.length()));
       }
@@ -354,7 +355,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createObjectColmuns()
   {
     Table table = objectViewer.getTable();
-    String[] columnNames = { "Field", "Value", "Declared Type", "Concrete Type" };
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_4"), Messages.getString("Net4jIntrospectorView_5"), Messages.getString("Net4jIntrospectorView_6"), Messages.getString("Net4jIntrospectorView_7") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     int[] columnWidths = { 200, 400, 300, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -362,7 +363,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createMapColmuns()
   {
     Table table = mapViewer.getTable();
-    String[] columnNames = { "Key", "Value", "Type" };
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_8"), Messages.getString("Net4jIntrospectorView_9"), Messages.getString("Net4jIntrospectorView_10") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     int[] columnWidths = { 200, 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -370,7 +371,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createIterableColmuns()
   {
     Table table = iterableViewer.getTable();
-    String[] columnNames = { "Element", "Type" };
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_11"), Messages.getString("Net4jIntrospectorView_12") }; //$NON-NLS-1$ //$NON-NLS-2$
     int[] columnWidths = { 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -378,7 +379,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createArrayColmuns()
   {
     Table table = arrayViewer.getTable();
-    String[] columnNames = { "Index", "Element", "Type" };
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_13"), Messages.getString("Net4jIntrospectorView_14"), Messages.getString("Net4jIntrospectorView_15") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     int[] columnWidths = { 50, 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -413,7 +414,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   {
     private BackAction()
     {
-      super("Back");
+      super(Messages.getString("Net4jIntrospectorView_16")); //$NON-NLS-1$
       ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
       setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_BACK));
       setDisabledImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_BACK_DISABLED));
@@ -440,7 +441,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   {
     private ContainerAction()
     {
-      super("Container");
+      super(Messages.getString("Net4jIntrospectorView_17")); //$NON-NLS-1$
       setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.VIEW_CONTAINER));
     }
 
@@ -531,11 +532,11 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
           case 0:
             return field.getName();
           case 1:
-            return value == null ? "null" : value.toString();
+            return value == null ? Messages.getString("Net4jIntrospectorView_18") : value.toString(); //$NON-NLS-1$
           case 2:
             return field.getType().getName();
           case 3:
-            return value == null ? "" : value.getClass().getName();
+            return value == null ? Messages.getString("Net4jIntrospectorView_1") : value.getClass().getName(); //$NON-NLS-1$
           }
         }
         catch (RuntimeException ex)
@@ -544,7 +545,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
         }
       }
 
-      return "";
+      return ""; //$NON-NLS-1$
     }
   }
 
@@ -584,12 +585,12 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
       switch (index)
       {
       case 0:
-        return obj == null ? "null" : obj.toString();
+        return obj == null ? Messages.getString("Net4jIntrospectorView_21") : obj.toString(); //$NON-NLS-1$
       case 1:
-        return obj == null ? "" : obj.getClass().getName();
+        return obj == null ? Messages.getString("Net4jIntrospectorView_22") : obj.getClass().getName(); //$NON-NLS-1$
       }
 
-      return "";
+      return ""; //$NON-NLS-1$
     }
   }
 
@@ -641,9 +642,9 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
           case 0:
             return String.valueOf(i);
           case 1:
-            return value == null ? "null" : value.toString();
+            return value == null ? Messages.getString("Net4jIntrospectorView_24") : value.toString(); //$NON-NLS-1$
           case 2:
-            return value == null ? "" : value.getClass().getName();
+            return value == null ? Messages.getString("Net4jIntrospectorView_25") : value.getClass().getName(); //$NON-NLS-1$
           }
         }
         catch (RuntimeException ex)
@@ -652,7 +653,7 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
         }
       }
 
-      return "";
+      return ""; //$NON-NLS-1$
     }
   }
 
@@ -691,15 +692,15 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
         switch (index)
         {
         case 0:
-          return key == null ? "null" : key.toString();
+          return key == null ? Messages.getString("Net4jIntrospectorView_27") : key.toString(); //$NON-NLS-1$
         case 1:
-          return value == null ? "null" : value.toString();
+          return value == null ? Messages.getString("Net4jIntrospectorView_28") : value.toString(); //$NON-NLS-1$
         case 2:
-          return value == null ? "" : value.getClass().getName();
+          return value == null ? Messages.getString("Net4jIntrospectorView_29") : value.getClass().getName(); //$NON-NLS-1$
         }
       }
 
-      return "";
+      return ""; //$NON-NLS-1$
     }
   }
 

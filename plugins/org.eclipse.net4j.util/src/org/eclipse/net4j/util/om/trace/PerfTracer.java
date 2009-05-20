@@ -44,7 +44,7 @@ public class PerfTracer extends ContextTracer
       if (timer != null)
       {
         duration = System.currentTimeMillis() - timer;
-        format("{0} = {1} millis", object, duration);
+        format("{0} = {1} millis", object, duration); //$NON-NLS-1$
       }
     }
 

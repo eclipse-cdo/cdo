@@ -28,7 +28,7 @@ public interface OMPreferences extends INotifier
 
   public static final double DEFAULT_DOUBLE = 0.0d;
 
-  public static final String DEFAULT_STRING = "";
+  public static final String DEFAULT_STRING = ""; //$NON-NLS-1$
 
   public static final String[] DEFAULT_ARRAY = {};
 

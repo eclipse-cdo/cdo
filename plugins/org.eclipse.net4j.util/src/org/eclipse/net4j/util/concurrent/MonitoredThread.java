@@ -232,7 +232,7 @@ public abstract class MonitoredThread extends Thread
       }
 
       shutdownThreads();
-      throw new RuntimeException("Idle timeout expired: " + thread.getName());
+      throw new RuntimeException("Idle timeout expired: " + thread.getName()); //$NON-NLS-1$
     }
 
     private void startupThreads()

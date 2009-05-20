@@ -98,6 +98,6 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
   @Override
   public String toString()
   {
-    return "SynchronizingCorrelator" + map;
+    return "SynchronizingCorrelator" + map; //$NON-NLS-1$
   }
 }

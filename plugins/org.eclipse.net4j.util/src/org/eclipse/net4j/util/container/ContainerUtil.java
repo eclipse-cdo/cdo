@@ -42,7 +42,7 @@ public final class ContainerUtil
     @Override
     public String toString()
     {
-      return "EMPTY_CONTAINER";
+      return "EMPTY_CONTAINER"; //$NON-NLS-1$
     }
   };
 

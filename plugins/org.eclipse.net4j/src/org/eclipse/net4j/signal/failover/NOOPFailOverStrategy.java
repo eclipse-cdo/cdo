@@ -67,6 +67,6 @@ public class NOOPFailOverStrategy extends Notifier implements IFailOverStrategy
   @Override
   public String toString()
   {
-    return "NOOP";
+    return "NOOP"; //$NON-NLS-1$
   }
 }

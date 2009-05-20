@@ -87,7 +87,7 @@ public class RemoteTraceHandler implements OMTraceHandler
       writeUTF(out, agentID);
       writeUTF(out, event.getTracer().getBundle().getBundleID());
       writeUTF(out, event.getTracer().getFullName());
-      writeUTF(out, event.getContext() == null ? "" : event.getContext().getName());
+      writeUTF(out, event.getContext() == null ? "" : event.getContext().getName()); //$NON-NLS-1$
       writeUTF(out, event.getMessage());
       if (event.getThrowable() == null)
       {
@@ -128,7 +128,7 @@ public class RemoteTraceHandler implements OMTraceHandler
 
   protected void writeUTF(DataOutputStream out, String str) throws IOException
   {
-    out.writeUTF(str == null ? "" : str);
+    out.writeUTF(str == null ? "" : str); //$NON-NLS-1$
   }
 
   public static String uniqueAgentID()
@@ -136,7 +136,7 @@ public class RemoteTraceHandler implements OMTraceHandler
     try
     {
       InetAddress localMachine = InetAddress.getLocalHost();
-      return localMachine.getHostName() + "#" + ++uniqueCounter;
+      return localMachine.getHostName() + "#" + ++uniqueCounter; //$NON-NLS-1$
     }
     catch (Exception ex)
     {

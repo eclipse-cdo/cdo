@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutorService;
  */
 public final class Net4jUtil
 {
-  public static final String SCHEME_SEPARATOR = "://";
+  public static final String SCHEME_SEPARATOR = "://"; //$NON-NLS-1$
 
   public static final short DEFAULT_BUFFER_CAPACITY = 4096;
 
@@ -76,7 +76,7 @@ public final class Net4jUtil
     int pos = description.indexOf(SCHEME_SEPARATOR);
     if (pos <= 0)
     {
-      throw new IllegalArgumentException("Connector type (scheme) missing: " + description);
+      throw new IllegalArgumentException("Connector type (scheme) missing: " + description); //$NON-NLS-1$
     }
 
     String factoryType = description.substring(0, pos);
@@ -84,7 +84,7 @@ public final class Net4jUtil
     String connectorDescription = description.substring(pos + SCHEME_SEPARATOR.length());
     if (StringUtil.isEmpty(connectorDescription))
     {
-      throw new IllegalArgumentException("Illegal connector description: " + description);
+      throw new IllegalArgumentException("Illegal connector description: " + description); //$NON-NLS-1$
     }
 
     return (IConnector)container.getElement(ConnectorFactory.PRODUCT_GROUP, factoryType, connectorDescription);

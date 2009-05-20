@@ -18,7 +18,7 @@ import org.eclipse.jface.viewers.Viewer;
  */
 public class DelegatingContentProvider implements IStructuredContentProvider
 {
-  public static final String NONE = "";
+  public static final String NONE = ""; //$NON-NLS-1$
 
   private IStructuredContentProvider delegate;
 

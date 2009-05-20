@@ -59,7 +59,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
   {
     if (deltas.size() != 1)
     {
-      throw new IllegalStateException("deltas.size() != 1");
+      throw new IllegalStateException("deltas.size() != 1"); //$NON-NLS-1$
     }
 
     return deltas.get(0);
@@ -118,12 +118,12 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     StringBuilder builder = new StringBuilder();
     for (IContainerDelta<E> delta : getDeltas())
     {
-      builder.append(", ");
+      builder.append(", "); //$NON-NLS-1$
       builder.append(delta.getKind());
-      builder.append("=");
+      builder.append("="); //$NON-NLS-1$
       builder.append(delta.getElement());
     }
 
-    return MessageFormat.format("ContainerEvent[source={0}{1}]", getSource(), builder.toString());
+    return MessageFormat.format("ContainerEvent[source={0}{1}]", getSource(), builder.toString()); //$NON-NLS-1$
   }
 }

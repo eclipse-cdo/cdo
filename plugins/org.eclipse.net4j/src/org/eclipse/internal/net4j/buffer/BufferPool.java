@@ -197,7 +197,7 @@ public class BufferPool extends BufferProvider implements IBufferPool, IBufferPo
   {
     public Monitor()
     {
-      setName("BufferPoolMonitor");
+      setName("BufferPoolMonitor"); //$NON-NLS-1$
       setDaemon(true);
     }
 

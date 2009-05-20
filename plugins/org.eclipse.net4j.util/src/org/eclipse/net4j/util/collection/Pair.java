@@ -86,6 +86,6 @@ public class Pair<T1, T2>
   @Override
   public String toString()
   {
-    return "Pair[" + element1 + ", " + element2 + "]";
+    return "Pair[" + element1 + ", " + element2 + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 }

@@ -64,12 +64,12 @@ public class TransportConfigurator
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Configuring Net4j server from " + configFile.getAbsolutePath());
+      TRACER.trace("Configuring Net4j server from " + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
     List<IAcceptor> acceptors = new ArrayList<IAcceptor>();
     Document document = getDocument(configFile);
-    NodeList acceptorConfigs = document.getElementsByTagName("acceptor");
+    NodeList acceptorConfigs = document.getElementsByTagName("acceptor"); //$NON-NLS-1$
     for (int i = 0; i < acceptorConfigs.getLength(); i++)
     {
       Element acceptorConfig = (Element)acceptorConfigs.item(i);
@@ -82,17 +82,17 @@ public class TransportConfigurator
 
   protected IAcceptor configureAcceptor(Element acceptorConfig)
   {
-    String type = acceptorConfig.getAttribute("type");
+    String type = acceptorConfig.getAttribute("type"); //$NON-NLS-1$
     // TODO Make the following dependent on the "type" attribute value
-    String listenAddr = acceptorConfig.getAttribute("listenAddr");
-    String port = acceptorConfig.getAttribute("port");
-    String description = (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port);
+    String listenAddr = acceptorConfig.getAttribute("listenAddr"); //$NON-NLS-1$
+    String port = acceptorConfig.getAttribute("port"); //$NON-NLS-1$
+    String description = (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     Acceptor acceptor = (Acceptor)container.getElement(AcceptorFactory.PRODUCT_GROUP, type, description, false);
 
-    NodeList negotiatorConfigs = acceptorConfig.getElementsByTagName("negotiator");
+    NodeList negotiatorConfigs = acceptorConfig.getElementsByTagName("negotiator"); //$NON-NLS-1$
     if (negotiatorConfigs.getLength() > 1)
     {
-      throw new IllegalStateException("A maximum of one negotiator can be configured for acceptor " + acceptor);
+      throw new IllegalStateException("A maximum of one negotiator can be configured for acceptor " + acceptor); //$NON-NLS-1$
     }
 
     if (negotiatorConfigs.getLength() == 1)
@@ -108,8 +108,8 @@ public class TransportConfigurator
 
   protected INegotiator configureNegotiator(Element negotiatorConfig)
   {
-    String type = negotiatorConfig.getAttribute("type");
-    String description = negotiatorConfig.getAttribute("description");
+    String type = negotiatorConfig.getAttribute("type"); //$NON-NLS-1$
+    String description = negotiatorConfig.getAttribute("description"); //$NON-NLS-1$
     return (INegotiator)container.getElement(NegotiatorFactory.PRODUCT_GROUP, type, description);
   }
 
@@ -122,11 +122,11 @@ public class TransportConfigurator
 
   protected Element getStoreConfig(Element repositoryConfig)
   {
-    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store");
+    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
     if (storeConfigs.getLength() != 1)
     {
-      String repositoryName = repositoryConfig.getAttribute("name");
-      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName);
+      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
     }
 
     return (Element)storeConfigs.item(0);
@@ -135,18 +135,18 @@ public class TransportConfigurator
   public static Map<String, String> getProperties(Element element, int levels)
   {
     Map<String, String> properties = new HashMap<String, String>();
-    collectProperties(element, "", properties, levels);
+    collectProperties(element, "", properties, levels); //$NON-NLS-1$
     return properties;
   }
 
   private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels)
   {
-    if ("property".equals(element.getNodeName()))
+    if ("property".equals(element.getNodeName())) //$NON-NLS-1$
     {
-      String name = element.getAttribute("name");
-      String value = element.getAttribute("value");
+      String name = element.getAttribute("name"); //$NON-NLS-1$
+      String value = element.getAttribute("value"); //$NON-NLS-1$
       properties.put(prefix + name, value);
-      prefix += name + ".";
+      prefix += name + "."; //$NON-NLS-1$
     }
 
     if (levels > 0)

@@ -72,7 +72,7 @@ public final class ZIPUtil
             input = context.getInputStream();
             if (input == null)
             {
-              throw new IllegalStateException("Input is null for zip entry " + name);
+              throw new IllegalStateException("Input is null for zip entry " + name); //$NON-NLS-1$
             }
 
             IOUtil.copy(input, zos, buffer);
@@ -208,7 +208,7 @@ public final class ZIPUtil
 
     public void setName(String name, boolean directory)
     {
-      this.name = name + (directory ? "/" : "");
+      this.name = name + (directory ? "/" : ""); //$NON-NLS-1$ //$NON-NLS-2$
       this.directory = directory;
     }
 
@@ -259,12 +259,12 @@ public final class ZIPUtil
             if (f2.isDirectory())
             {
               // f1=dir, f2=dir
-              if (path1.equalsIgnoreCase("/META-INF"))
+              if (path1.equalsIgnoreCase("/META-INF")) //$NON-NLS-1$
               {
                 return ORDER_KEEP;
               }
 
-              if (path2.equalsIgnoreCase("/META-INF"))
+              if (path2.equalsIgnoreCase("/META-INF")) //$NON-NLS-1$
               {
                 return ORDER_SWAP;
               }
@@ -273,12 +273,12 @@ public final class ZIPUtil
             }
 
             // f1=dir, f2=file
-            if (path1.equalsIgnoreCase("/META-INF"))
+            if (path1.equalsIgnoreCase("/META-INF")) //$NON-NLS-1$
             {
               return ORDER_KEEP;
             }
 
-            if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+            if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF")) //$NON-NLS-1$
             {
               return ORDER_SWAP;
             }
@@ -289,12 +289,12 @@ public final class ZIPUtil
           if (f2.isDirectory())
           {
             // f1=file, f2=dir
-            if (path2.equalsIgnoreCase("/META-INF"))
+            if (path2.equalsIgnoreCase("/META-INF")) //$NON-NLS-1$
             {
               return ORDER_SWAP;
             }
 
-            if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+            if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF")) //$NON-NLS-1$
             {
               return ORDER_KEEP;
             }
@@ -303,12 +303,12 @@ public final class ZIPUtil
           }
 
           // f1=file, f2=file
-          if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+          if (path1.equalsIgnoreCase("/META-INF/MANIFEST.MF")) //$NON-NLS-1$
           {
             return ORDER_KEEP;
           }
 
-          if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF"))
+          if (path2.equalsIgnoreCase("/META-INF/MANIFEST.MF")) //$NON-NLS-1$
           {
             return ORDER_SWAP;
           }

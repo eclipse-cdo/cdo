@@ -69,17 +69,17 @@ public class ChallengeNegotiator extends ChallengeResponseNegotiator
     super.doBeforeActivate();
     if (tokenLength <= 0)
     {
-      throw new IllegalStateException("tokenLength must be positive");
+      throw new IllegalStateException("tokenLength must be positive"); //$NON-NLS-1$
     }
 
     if (randomizer == null)
     {
-      throw new IllegalStateException("randomizer == null");
+      throw new IllegalStateException("randomizer == null"); //$NON-NLS-1$
     }
 
     if (userManager == null)
     {
-      throw new IllegalStateException("userManager == null");
+      throw new IllegalStateException("userManager == null"); //$NON-NLS-1$
     }
   }
 
@@ -99,7 +99,7 @@ public class ChallengeNegotiator extends ChallengeResponseNegotiator
     }
     catch (Exception ex)
     {
-      OM.LOG.error("Token encryption failed", ex);
+      OM.LOG.error("Token encryption failed", ex); //$NON-NLS-1$
       return null;
     }
   }

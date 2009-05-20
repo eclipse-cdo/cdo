@@ -20,7 +20,7 @@ import java.security.SecureRandom;
  */
 public class Randomizer extends Lifecycle implements IRandomizer
 {
-  public static final String ALGORITHM_SHA1PRNG = "SHA1PRNG";
+  public static final String ALGORITHM_SHA1PRNG = "SHA1PRNG"; //$NON-NLS-1$
 
   public static final String DEFAULT_ALGORITHM_NAME = ALGORITHM_SHA1PRNG;
 
@@ -151,7 +151,7 @@ public class Randomizer extends Lifecycle implements IRandomizer
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(algorithmName, "algorithmName");
+    checkState(algorithmName, "algorithmName"); //$NON-NLS-1$
     if (seed == null)
     {
       setSeed(System.currentTimeMillis());

@@ -50,13 +50,13 @@ public class FileUserManager extends UserManager
     super.doBeforeActivate();
     if (fileName == null)
     {
-      throw new IllegalStateException("fileName == null");
+      throw new IllegalStateException("fileName == null"); //$NON-NLS-1$
     }
 
     File file = new File(fileName);
     if (file.exists() && !file.isFile())
     {
-      throw new IllegalStateException("Not a file: " + fileName);
+      throw new IllegalStateException("Not a file: " + fileName); //$NON-NLS-1$
     }
   }
 
@@ -128,7 +128,7 @@ public class FileUserManager extends UserManager
       properties.put(entry.getKey(), new String(entry.getValue()));
     }
 
-    String comment = MessageFormat.format("User database {0,date} {0,time}", System.currentTimeMillis());
+    String comment = MessageFormat.format("User database {0,date} {0,time}", System.currentTimeMillis()); //$NON-NLS-1$
     properties.store(stream, comment);
   }
 }

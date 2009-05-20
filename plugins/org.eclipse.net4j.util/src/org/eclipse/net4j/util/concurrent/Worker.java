@@ -91,7 +91,7 @@ public abstract class Worker extends Lifecycle
       {
       }
 
-      throw new TimeoutException("Worker thread activation timed out after " + activationTimeout + " millis");
+      throw new TimeoutException("Worker thread activation timed out after " + activationTimeout + " millis"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

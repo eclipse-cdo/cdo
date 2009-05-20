@@ -84,7 +84,7 @@ public class HistoryText
 
     try
     {
-      droppedMethod = combo.getClass().getDeclaredMethod("isDropped", ReflectUtil.NO_PARAMETERS);
+      droppedMethod = combo.getClass().getDeclaredMethod("isDropped", ReflectUtil.NO_PARAMETERS); //$NON-NLS-1$
       droppedMethod.setAccessible(true);
     }
     catch (Exception ex)

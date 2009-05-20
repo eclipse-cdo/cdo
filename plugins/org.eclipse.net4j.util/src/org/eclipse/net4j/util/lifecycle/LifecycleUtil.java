@@ -63,7 +63,7 @@ public final class LifecycleUtil
   {
     if (!isActive(object))
     {
-      throw new IllegalStateException("Not active: " + object);
+      throw new IllegalStateException("Not active: " + object); //$NON-NLS-1$
     }
   }
 
@@ -74,7 +74,7 @@ public final class LifecycleUtil
   {
     if (isActive(object))
     {
-      throw new IllegalStateException("Not inactive: " + object);
+      throw new IllegalStateException("Not inactive: " + object); //$NON-NLS-1$
     }
   }
 
@@ -321,13 +321,13 @@ public final class LifecycleUtil
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
     {
       String name = method.getName();
-      if (name.equals("activate"))
+      if (name.equals("activate")) //$NON-NLS-1$
       {
         delegate.activate();
         return null;
       }
 
-      if (name.equals("deactivate"))
+      if (name.equals("deactivate")) //$NON-NLS-1$
       {
         return delegate.deactivate();
       }

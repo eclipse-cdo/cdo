@@ -27,17 +27,17 @@ public class HysteresisConditionPolicy extends ThresholdConditionPolicy
     super(thresholdRedYellow, thresholdYellowGreen);
     if (thresholdYellowRed > thresholdRedYellow)
     {
-      throw new IllegalArgumentException("thresholdYellowRed > thresholdRedYellow");
+      throw new IllegalArgumentException("thresholdYellowRed > thresholdRedYellow"); //$NON-NLS-1$
     }
 
     if (thresholdRedYellow > thresholdGreenYellow)
     {
-      throw new IllegalArgumentException("thresholdRedYellow > thresholdGreenYellow");
+      throw new IllegalArgumentException("thresholdRedYellow > thresholdGreenYellow"); //$NON-NLS-1$
     }
 
     if (thresholdGreenYellow > thresholdYellowGreen)
     {
-      throw new IllegalArgumentException("thresholdGreenYellow > thresholdYellowGreen");
+      throw new IllegalArgumentException("thresholdGreenYellow > thresholdYellowGreen"); //$NON-NLS-1$
     }
 
     this.thresholdGreenYellow = thresholdGreenYellow;
@@ -99,7 +99,7 @@ public class HysteresisConditionPolicy extends ThresholdConditionPolicy
       return Condition.RED;
 
     default:
-      throw new IllegalArgumentException("oldCondition == " + oldCondition);
+      throw new IllegalArgumentException("oldCondition == " + oldCondition); //$NON-NLS-1$
     }
   }
 }

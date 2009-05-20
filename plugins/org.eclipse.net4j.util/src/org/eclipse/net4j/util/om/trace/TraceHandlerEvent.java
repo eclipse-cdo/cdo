@@ -33,12 +33,12 @@ public class TraceHandlerEvent implements OMTraceHandlerEvent, Serializable
   {
     if (tracer == null)
     {
-      throw new IllegalArgumentException("tracer == null");
+      throw new IllegalArgumentException("tracer == null"); //$NON-NLS-1$
     }
 
     if (context == null)
     {
-      throw new IllegalArgumentException("context == null");
+      throw new IllegalArgumentException("context == null"); //$NON-NLS-1$
     }
 
     timeStamp = System.currentTimeMillis();

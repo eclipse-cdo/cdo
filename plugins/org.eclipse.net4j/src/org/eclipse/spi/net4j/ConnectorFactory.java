@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public abstract class ConnectorFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.connectors";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.connectors"; //$NON-NLS-1$
 
   public ConnectorFactory(String type)
   {

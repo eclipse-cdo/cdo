@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -57,7 +58,8 @@ public abstract class SafeActionDelegate implements IActionDelegate
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      MessageDialog.openError(null, getText(), ex.getMessage() + "\nSee the Error log for details.");
+      MessageDialog.openError(null, getText(), ex.getLocalizedMessage()
+          + "\n" + Messages.getString("SafeActionDelegate_0")); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
@@ -65,6 +67,6 @@ public abstract class SafeActionDelegate implements IActionDelegate
 
   protected String getText()
   {
-    return action == null ? "Error" : action.getText();
+    return action == null ? Messages.getString("SafeActionDelegate_1") : action.getText(); //$NON-NLS-1$
   }
 }

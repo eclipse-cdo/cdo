@@ -56,7 +56,7 @@ public final class NIOUtil
       long transfered = sourceChannel.transferTo(0, size, targetChannel);
       if (transfered != size)
       {
-        throw new ImplementationError("Seems as if a loop must be implemented here");
+        throw new ImplementationError("Seems as if a loop must be implemented here"); //$NON-NLS-1$
       }
     }
     catch (IOException ex)
@@ -89,7 +89,7 @@ public final class NIOUtil
     long q = System.currentTimeMillis();
     if (!src.isFile() || !src.exists())
     {
-      throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!");
+      throw new IllegalArgumentException("Source file '" + src.getAbsolutePath() + "' not found!"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (dst.exists())
@@ -103,12 +103,12 @@ public final class NIOUtil
       {
         if (!overwrite)
         {
-          throw new IllegalArgumentException("Destination file '" + dst.getAbsolutePath() + "' already exists!");
+          throw new IllegalArgumentException("Destination file '" + dst.getAbsolutePath() + "' already exists!"); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
       else
       {
-        throw new IllegalArgumentException("Invalid destination object '" + dst.getAbsolutePath() + "'!");
+        throw new IllegalArgumentException("Invalid destination object '" + dst.getAbsolutePath() + "'!"); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
 
@@ -117,7 +117,7 @@ public final class NIOUtil
     {
       if (!dstParent.mkdirs())
       {
-        throw new IOException("Failed to create directory " + dstParent.getAbsolutePath());
+        throw new IOException("Failed to create directory " + dstParent.getAbsolutePath()); //$NON-NLS-1$
       }
     }
 

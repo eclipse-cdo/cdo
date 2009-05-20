@@ -44,7 +44,7 @@ public abstract class OSGiActivator implements BundleActivator
     OSGiActivator.traceStart(context);
     if (omBundle == null)
     {
-      throw new IllegalStateException("bundle == null");
+      throw new IllegalStateException("bundle == null"); //$NON-NLS-1$
     }
 
     try
@@ -70,7 +70,7 @@ public abstract class OSGiActivator implements BundleActivator
     OSGiActivator.traceStop(context);
     if (omBundle == null)
     {
-      throw new IllegalStateException("bundle == null");
+      throw new IllegalStateException("bundle == null"); //$NON-NLS-1$
     }
 
     try
@@ -144,7 +144,7 @@ public abstract class OSGiActivator implements BundleActivator
     {
       if (OM.TRACER.isEnabled())
       {
-        OM.TRACER.format("Starting bundle {0}", context.getBundle().getSymbolicName());
+        OM.TRACER.format("Starting bundle {0}", context.getBundle().getSymbolicName()); //$NON-NLS-1$
       }
     }
     catch (RuntimeException ignore)
@@ -161,7 +161,7 @@ public abstract class OSGiActivator implements BundleActivator
     {
       if (OM.TRACER.isEnabled())
       {
-        OM.TRACER.format("Stopping bundle {0}", context.getBundle().getSymbolicName());
+        OM.TRACER.format("Stopping bundle {0}", context.getBundle().getSymbolicName()); //$NON-NLS-1$
       }
     }
     catch (RuntimeException ignore)

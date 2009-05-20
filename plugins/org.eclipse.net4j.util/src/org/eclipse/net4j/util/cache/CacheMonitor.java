@@ -108,7 +108,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Registering cache " + cache);
+      TRACER.trace("Registering cache " + cache); //$NON-NLS-1$
     }
 
     ICacheRegistration registration = new CacheRegistration(this, cache);
@@ -139,7 +139,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
       registration.dispose();
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Deregistered cache " + cache);
+        TRACER.trace("Deregistered cache " + cache); //$NON-NLS-1$
       }
     }
   }
@@ -150,7 +150,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     super.doBeforeActivate();
     if (conditionPolicy == null)
     {
-      throw new IllegalStateException("conditionPolicy == null");
+      throw new IllegalStateException("conditionPolicy == null"); //$NON-NLS-1$
     }
   }
 
@@ -193,7 +193,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
   {
     if (newCondition == null)
     {
-      throw new ImplementationError("newCondition == null");
+      throw new ImplementationError("newCondition == null"); //$NON-NLS-1$
     }
 
     Condition oldCondition = condition;
@@ -206,7 +206,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
 
   protected void handleConditionRED()
   {
-    OM.LOG.warn("CONDITION RED");
+    OM.LOG.warn("CONDITION RED"); //$NON-NLS-1$
   }
 
   /**

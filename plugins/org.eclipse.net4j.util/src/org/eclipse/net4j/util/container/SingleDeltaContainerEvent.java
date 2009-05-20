@@ -89,6 +89,6 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
   @Override
   public String toString()
   {
-    return MessageFormat.format("ContainerEvent[source={0}, {1}={2}]", getSource(), getDeltaElement(), getDeltaKind());
+    return MessageFormat.format("ContainerEvent[source={0}, {1}={2}]", getSource(), getDeltaElement(), getDeltaKind()); //$NON-NLS-1$
   }
 }

@@ -46,7 +46,7 @@ public class UIActivator extends AbstractUIPlugin
     OSGiActivator.traceStart(context);
     if (omBundle == null)
     {
-      throw new IllegalStateException("bundle == null");
+      throw new IllegalStateException("bundle == null"); //$NON-NLS-1$
     }
 
     try
@@ -73,7 +73,7 @@ public class UIActivator extends AbstractUIPlugin
     OSGiActivator.traceStop(context);
     if (omBundle == null)
     {
-      throw new IllegalStateException("bundle == null");
+      throw new IllegalStateException("bundle == null"); //$NON-NLS-1$
     }
 
     try

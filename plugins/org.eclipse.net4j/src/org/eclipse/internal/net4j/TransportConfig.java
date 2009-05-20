@@ -118,7 +118,7 @@ public class TransportConfig implements ITransportConfig
   public String toString()
   {
     return MessageFormat.format(
-        "TransportConfig[receiveExecutor={0}, bufferProvider={1}, protocolProvider={2}, negotiator={3}]",
+        "TransportConfig[receiveExecutor={0}, bufferProvider={1}, protocolProvider={2}, negotiator={3}]", //$NON-NLS-1$
         receiveExecutor, bufferProvider, protocolProvider, negotiator);
   }
 }

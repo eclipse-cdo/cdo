@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.internal.ui.views;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
+import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -60,7 +61,7 @@ public class Net4jContainerItemProvider extends ContainerItemProvider<IContainer
 
     public RemoveAction(ITreeSelection selection)
     {
-      super("Remove", "Remove", ContainerView.getDeleteImageDescriptor());
+      super(Messages.getString("Net4jContainerItemProvider_0"), Messages.getString("Net4jContainerItemProvider.1"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
       this.selection = selection;
     }
 

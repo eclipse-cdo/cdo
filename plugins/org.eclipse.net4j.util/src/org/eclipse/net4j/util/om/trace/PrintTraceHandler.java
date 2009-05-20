@@ -88,7 +88,7 @@ public class PrintTraceHandler implements OMTraceHandler
   {
     Class<?> context = event.getContext();
     String contextName = shortContext ? context.getSimpleName() : context.getName();
-    return Thread.currentThread().getName() + " [" + contextName + "] " + event.getMessage();
+    return Thread.currentThread().getName() + " [" + contextName + "] " + event.getMessage(); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**

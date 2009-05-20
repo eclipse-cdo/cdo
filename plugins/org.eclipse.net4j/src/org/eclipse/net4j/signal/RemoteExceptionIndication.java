@@ -38,7 +38,7 @@ class RemoteExceptionIndication extends Indication
     if (TRACER.isEnabled())
     {
       String msg = RemoteExceptionRequest.getFirstLine(message);
-      TRACER.format("Reading remote exception for signal {0}: {1}", correlationID, msg);
+      TRACER.format("Reading remote exception for signal {0}: {1}", correlationID, msg); //$NON-NLS-1$
     }
 
     try

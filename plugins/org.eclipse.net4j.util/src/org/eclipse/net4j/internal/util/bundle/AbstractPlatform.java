@@ -126,11 +126,11 @@ public abstract class AbstractPlatform implements OMPlatform
       state = System.getProperty(SYSTEM_PROPERTY_OSGI_STATE);
       if (state == null)
       {
-        state = "state";
+        state = "state"; //$NON-NLS-1$
       }
       else
       {
-        state += ".metadata";
+        state += ".metadata"; //$NON-NLS-1$
       }
     }
 
@@ -139,14 +139,14 @@ public abstract class AbstractPlatform implements OMPlatform
     {
       if (!stateFolder.mkdirs())
       {
-        OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " could not be created");
+        OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " could not be created"); //$NON-NLS-1$ //$NON-NLS-2$
         return null;
       }
     }
 
     if (!stateFolder.isDirectory())
     {
-      OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " is not a directoy");
+      OM.LOG.error("State folder " + stateFolder.getAbsolutePath() + " is not a directoy"); //$NON-NLS-1$ //$NON-NLS-2$
       return null;
     }
 
@@ -155,20 +155,20 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public File getConfigFolder()
   {
-    String config = System.getProperty(SYSTEM_PROPERTY_NET4J_CONFIG, "config");
+    String config = System.getProperty(SYSTEM_PROPERTY_NET4J_CONFIG, "config"); //$NON-NLS-1$
     File configFolder = new File(config);
     if (!configFolder.exists())
     {
       if (!configFolder.mkdirs())
       {
-        OM.LOG.error("Config folder " + configFolder.getAbsolutePath() + " could not be created");
+        OM.LOG.error("Config folder " + configFolder.getAbsolutePath() + " could not be created"); //$NON-NLS-1$ //$NON-NLS-2$
         return null;
       }
     }
 
     if (!configFolder.isDirectory())
     {
-      OM.LOG.error("Config folder " + configFolder.getAbsolutePath() + " is not a directoy");
+      OM.LOG.error("Config folder " + configFolder.getAbsolutePath() + " is not a directoy"); //$NON-NLS-1$ //$NON-NLS-2$
       return null;
     }
 
@@ -204,7 +204,7 @@ public abstract class AbstractPlatform implements OMPlatform
     }
     catch (IOException ex)
     {
-      OM.LOG.error("Config file " + configFile.getAbsolutePath() + " could not be read");
+      OM.LOG.error("Config file " + configFile.getAbsolutePath() + " could not be read"); //$NON-NLS-1$ //$NON-NLS-2$
       return null;
     }
     finally

@@ -84,7 +84,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     if (openChannelTimeout == IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT)
     {
-      return OM.BUNDLE.getDebugSupport().getDebugOption("open.channel.timeout", 10000);
+      return OM.BUNDLE.getDebugSupport().getDebugOption("open.channel.timeout", 10000); //$NON-NLS-1$
     }
 
     return openChannelTimeout;
@@ -127,7 +127,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     IProtocol<?> protocol = createProtocol(protocolID, infraStructure);
     if (protocol == null)
     {
-      throw new IllegalArgumentException("Unknown protocolID: " + protocolID);
+      throw new IllegalArgumentException("Unknown protocolID: " + protocolID); //$NON-NLS-1$
     }
 
     return openChannel(protocol);
@@ -158,7 +158,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       catch (TimeoutRuntimeException ex)
       {
         // Adjust the message for the complete timeout time
-        String message = "Registration timeout  after " + getOpenChannelTimeout() + " milliseconds";
+        String message = "Registration timeout  after " + getOpenChannelTimeout() + " milliseconds"; //$NON-NLS-1$ //$NON-NLS-2$
         throw new TimeoutRuntimeException(message, ex);
       }
     }
@@ -214,7 +214,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       if (TRACER.isEnabled())
       {
         String protocolType = protocol == null ? null : protocol.getType();
-        TRACER.format("Opening channel with protocol {0}", protocolType);
+        TRACER.format("Opening channel with protocol {0}", protocolType); //$NON-NLS-1$
       }
 
       channel.setReceiveHandler(protocol);
@@ -223,7 +223,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Opening channel without protocol");
+        TRACER.trace("Opening channel without protocol"); //$NON-NLS-1$
       }
     }
   }
@@ -239,13 +239,13 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     IProtocolProvider protocolProvider = getConfig().getProtocolProvider();
     if (protocolProvider == null)
     {
-      throw new ChannelException("No protocol provider configured");
+      throw new ChannelException("No protocol provider configured"); //$NON-NLS-1$
     }
 
     IProtocol<INFRA_STRUCTURE> protocol = (IProtocol<INFRA_STRUCTURE>)protocolProvider.getProtocol(type);
     if (protocol == null)
     {
-      throw new ChannelException("Invalid protocol factory: " + type);
+      throw new ChannelException("Invalid protocol factory: " + type); //$NON-NLS-1$
     }
 
     if (infraStructure != null)
@@ -314,7 +314,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
         ++lastChannelID;
         if (lastChannelID == start)
         {
-          throw new ChannelException("Too many channels");
+          throw new ChannelException("Too many channels"); //$NON-NLS-1$
         }
 
         if (lastChannelID > maxValue)
@@ -336,7 +336,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     short channelID = channel.getID();
     if (channelID == IBuffer.CONTROL_CHANNEL || channelID == IBuffer.NO_CHANNEL)
     {
-      throw new ChannelException("Invalid channel ID: " + channelID);
+      throw new ChannelException("Invalid channel ID: " + channelID); //$NON-NLS-1$
     }
 
     channels.put(channelID, channel);

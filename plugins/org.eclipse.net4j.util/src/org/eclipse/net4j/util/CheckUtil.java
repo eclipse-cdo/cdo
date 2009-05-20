@@ -39,7 +39,7 @@ public final class CheckUtil
   {
     if (handle == null)
     {
-      throw new IllegalArgumentException(handleName + " is null");
+      throw new IllegalArgumentException(handleName + " is null"); //$NON-NLS-1$
     }
   }
 
@@ -55,7 +55,7 @@ public final class CheckUtil
   {
     if (handle == null)
     {
-      throw new IllegalStateException(handleName + " is null");
+      throw new IllegalStateException(handleName + " is null"); //$NON-NLS-1$
     }
   }
 }

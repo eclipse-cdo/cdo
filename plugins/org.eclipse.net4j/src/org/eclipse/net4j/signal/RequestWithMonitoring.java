@@ -120,7 +120,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     double remoteWork = OMMonitor.HUNDRED - getRequestingWorkPercent() - getConfirmingWorkPercent();
     if (remoteWork < OMMonitor.ZERO)
     {
-      throw new ImplementationError("Remote work must not be negative: " + remoteWork);
+      throw new ImplementationError("Remote work must not be negative: " + remoteWork); //$NON-NLS-1$
     }
 
     mainMonitor.begin(OMMonitor.HUNDRED);

@@ -107,7 +107,7 @@ public final class UIUtil
 
     if (display == null)
     {
-      throw new IllegalStateException("No display available");
+      throw new IllegalStateException("No display available"); //$NON-NLS-1$
     }
 
     return display;
@@ -121,7 +121,7 @@ public final class UIUtil
     IWorkbench workbench = PlatformUI.getWorkbench();
     if (workbench == null)
     {
-      throw new IllegalStateException("No workbench available");
+      throw new IllegalStateException("No workbench available"); //$NON-NLS-1$
     }
 
     return workbench;
@@ -135,7 +135,7 @@ public final class UIUtil
     IWorkbenchWindow window = getWorkbench().getActiveWorkbenchWindow();
     if (window == null)
     {
-      throw new IllegalStateException("No active window available");
+      throw new IllegalStateException("No active window available"); //$NON-NLS-1$
     }
 
     return window;
@@ -149,7 +149,7 @@ public final class UIUtil
     IWorkbenchPage page = getActiveWorkbenchWindow().getActivePage();
     if (page == null)
     {
-      throw new IllegalStateException("No active page available");
+      throw new IllegalStateException("No active page available"); //$NON-NLS-1$
     }
 
     return page;
@@ -163,7 +163,7 @@ public final class UIUtil
     IWorkbenchPart part = getActiveWorkbenchPage().getActivePart();
     if (part == null)
     {
-      throw new IllegalStateException("No active part available");
+      throw new IllegalStateException("No active part available"); //$NON-NLS-1$
     }
 
     return part;
@@ -268,7 +268,7 @@ public final class UIUtil
   {
     if (control == null)
     {
-      throw new IllegalArgumentException("control == null");
+      throw new IllegalArgumentException("control == null"); //$NON-NLS-1$
     }
 
     Object data = control.getLayoutData();

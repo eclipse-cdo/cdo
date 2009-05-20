@@ -130,7 +130,7 @@ public abstract class AbstractMonitor implements OMMonitor
   {
     if (!hasBegun())
     {
-      throw new IllegalStateException("begin() has not been called");
+      throw new IllegalStateException("begin() has not been called"); //$NON-NLS-1$
     }
   }
 

@@ -71,7 +71,7 @@ public abstract class OneBorderComposite extends Composite
     borderPosition = borderPosition & POSITION_MASK;
     if (Integer.bitCount(borderPosition) != 1)
     {
-      throw new IllegalArgumentException("borderPosition: " + borderPosition);
+      throw new IllegalArgumentException("borderPosition: " + borderPosition); //$NON-NLS-1$
     }
 
     if (this.borderPosition != borderPosition)
@@ -131,16 +131,16 @@ public abstract class OneBorderComposite extends Composite
     switch (borderPosition)
     {
     case SWT.LEFT:
-      return "LEFT";
+      return "LEFT"; //$NON-NLS-1$
 
     case SWT.RIGHT:
-      return "RIGHT";
+      return "RIGHT"; //$NON-NLS-1$
 
     case SWT.TOP:
-      return "TOP";
+      return "TOP"; //$NON-NLS-1$
 
     case SWT.BOTTOM:
-      return "BOTTOM";
+      return "BOTTOM"; //$NON-NLS-1$
     }
 
     return super.toString();

@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public abstract class NegotiatorFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.Negotiators";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.Negotiators"; //$NON-NLS-1$
 
   public NegotiatorFactory(String type)
   {

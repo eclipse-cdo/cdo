@@ -72,7 +72,7 @@ public class Monitor extends AbstractMonitor
     {
       if (TIMER == null)
       {
-        TIMER = new Timer("monitor-timer", true);
+        TIMER = new Timer("monitor-timer", true); //$NON-NLS-1$
       }
 
       return TIMER;

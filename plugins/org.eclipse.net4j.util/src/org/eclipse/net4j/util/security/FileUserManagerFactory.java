@@ -17,7 +17,7 @@ package org.eclipse.net4j.util.security;
  */
 public class FileUserManagerFactory extends UserManagerFactory
 {
-  public static final String TYPE = "file";
+  public static final String TYPE = "file"; //$NON-NLS-1$
 
   public FileUserManagerFactory()
   {

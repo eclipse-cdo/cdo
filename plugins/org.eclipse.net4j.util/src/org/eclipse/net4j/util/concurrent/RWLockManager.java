@@ -256,7 +256,7 @@ public class RWLockManager<K, V> extends Lifecycle
         long elapsedTime = System.currentTimeMillis() - startTime;
         if (timeout != WAIT && elapsedTime > timeout)
         {
-          throw new TimeoutRuntimeException("Conflict with " + conflict);
+          throw new TimeoutRuntimeException("Conflict with " + conflict); //$NON-NLS-1$
         }
 
         if (timeout == WAIT)

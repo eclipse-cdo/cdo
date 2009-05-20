@@ -51,7 +51,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Activating " + this);
+          TRACER.trace("Activating " + this); //$NON-NLS-1$
         }
 
         lock();
@@ -74,7 +74,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this);
+            TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this); //$NON-NLS-1$
           }
         }
       }
@@ -99,7 +99,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Deactivating " + this);
+          TRACER.trace("Deactivating " + this); //$NON-NLS-1$
         }
 
         lock();
@@ -118,7 +118,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Ignoring deactivation in state {0} for {1}", lifecycleState, this);
+          TRACER.format("Ignoring deactivation in state {0} for {1}", lifecycleState, this); //$NON-NLS-1$
         }
       }
 
@@ -157,7 +157,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
     if (DUMPER.isEnabled())
     {
-      DUMPER.trace("DUMP" + ReflectUtil.toString(this));
+      DUMPER.trace("DUMP" + ReflectUtil.toString(this)); //$NON-NLS-1$
     }
   }
 

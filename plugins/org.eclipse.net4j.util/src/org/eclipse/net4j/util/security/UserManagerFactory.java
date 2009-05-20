@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.factory.Factory;
  */
 public abstract class UserManagerFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.userManagers";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.userManagers"; //$NON-NLS-1$
 
   public UserManagerFactory(String type)
   {

@@ -16,7 +16,6 @@ Require-Bundle: com.springsource.org.apache.commons.logging;bundle-version="[1.1
  com.springsource.org.hsqldb;bundle-version="[1.8.0,2.0.0)";visibility:=reexport,
  com.springsource.com.mysql.jdbc;bundle-version="5.1.6";visibility:=reexport,
  org.apache.derby;bundle-version="[10.0.0,11.0.0)";visibility:=reexport,
- org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.cdo.tests;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
  org.eclipse.net4j.db.hsqldb;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
  org.eclipse.net4j.db.derby;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,

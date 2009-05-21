@@ -7,8 +7,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)",
- org.eclipse.emf.cdo.server.hibernate;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
- org.hibernate;bundle-version="3.2.6"
+ org.eclipse.emf.cdo.server.hibernate;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
 Import-Package: org.eclipse.emf.teneo,
  org.eclipse.emf.teneo.extension,
  org.eclipse.emf.teneo.hibernate.cdo,

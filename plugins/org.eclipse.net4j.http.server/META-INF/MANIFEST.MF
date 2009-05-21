@@ -16,4 +16,5 @@ Import-Package: javax.servlet;version="[2.4.0,3.0.0)",
  javax.servlet.http;version="[2.4.0,3.0.0)"
 Export-Package: org.eclipse.net4j.http.internal.server;version="2.0.0";x-friends:="org.eclipse.net4j.http.tests,org.eclipse.net4j.defs",
  org.eclipse.net4j.http.internal.server.bundle;version="2.0.0";x-internal:=true,
+ org.eclipse.net4j.http.internal.server.messages;version="2.0.0";x-internal:=true,
  org.eclipse.net4j.http.server;version="2.0.0"

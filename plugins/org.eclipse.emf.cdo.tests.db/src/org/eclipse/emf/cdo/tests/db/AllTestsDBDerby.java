@@ -41,6 +41,7 @@ public class AllTestsDBDerby extends AllTestsAllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
+    // addScenario(parent, COMBINED, AllTestsDBDerby.Derby.ReusableFolder.INSTANCE, TCP, NATIVE);
     addScenario(parent, COMBINED, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
   }
 
@@ -50,52 +51,95 @@ public class AllTestsDBDerby extends AllTestsAllConfigs
   public static class Derby extends DBStoreRepositoryConfig
   {
     private static final long serialVersionUID = 1L;
-  
+
     public static final AllTestsDBDerby.Derby INSTANCE = new Derby("DBStore: Derby");
-  
-    private transient File dbFolder;
-  
-    private transient EmbeddedDataSource dataSource;
-  
+
+    protected transient File dbFolder;
+
+    protected transient EmbeddedDataSource dataSource;
+
     public Derby(String name)
     {
       super(name);
     }
-  
+
     @Override
     protected IMappingStrategy createMappingStrategy()
     {
       return CDODBUtil.createHorizontalMappingStrategy();
     }
-  
+
     @Override
     protected IDBAdapter createDBAdapter()
     {
       return new EmbeddedDerbyAdapter();
     }
-  
+
     @Override
     protected DataSource createDataSource()
     {
-      dbFolder = TMPUtil.createTempFolder("derby_", null, new File("/temp"));
+      dbFolder = createDBFolder();
       deleteDBFolder();
-  
+
       dataSource = new EmbeddedDataSource();
       dataSource.setDatabaseName(dbFolder.getAbsolutePath());
       dataSource.setCreateDatabase("create");
       return dataSource;
     }
-  
+
     @Override
     public void tearDown() throws Exception
     {
       deleteDBFolder();
       super.tearDown();
     }
-  
-    private void deleteDBFolder()
+
+    protected File createDBFolder()
+    {
+      return TMPUtil.createTempFolder("derby_", null, new File("/temp"));
+    }
+
+    protected void deleteDBFolder()
     {
       IOUtil.delete(dbFolder);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class ReusableFolder extends Derby
+    {
+      private static final long serialVersionUID = 1L;
+
+      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: Derby (Reusable Folder)");
+
+      private static File reusableFolder;
+
+      public ReusableFolder(String name)
+      {
+        super(name);
+      }
+
+      @Override
+      protected DataSource createDataSource()
+      {
+        dataSource = new EmbeddedDataSource();
+        if (reusableFolder == null)
+        {
+          reusableFolder = createDBFolder();
+          dataSource.setCreateDatabase("create");
+        }
+
+        dbFolder = reusableFolder;
+        dataSource.setDatabaseName(dbFolder.getAbsolutePath());
+        return dataSource;
+      }
+
+      @Override
+      protected void deleteDBFolder()
+      {
+        // Do nothing
+      }
     }
   }
 }

@@ -28,7 +28,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Expression;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
@@ -156,6 +155,7 @@ public class HibernatePackageHandler extends Lifecycle
   }
 
   // protected void readPackage(EPackage ePackage)
+  @SuppressWarnings("deprecation")
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     final String nsUri = packageUnit.getTopLevelPackageInfo().getPackageURI();
@@ -169,7 +169,7 @@ public class HibernatePackageHandler extends Lifecycle
     try
     {
       Criteria criteria = session.createCriteria(HibernateEPackage.class);
-      criteria.add(Expression.eq("nsUri", nsUri));
+      criteria.add(org.hibernate.criterion.Expression.eq("nsUri", nsUri));
       List<?> list = criteria.list();
       if (list.size() != 1)
       {

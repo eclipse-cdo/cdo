@@ -45,7 +45,6 @@ import org.hibernate.FlushMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Expression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -253,6 +252,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   /**
    * @since 2.0
    */
+  @SuppressWarnings("deprecation")
   public void queryResources(QueryResourcesContext context)
   {
     CDOIDHibernate folderID = getHibernateID(context.getFolderID());
@@ -263,11 +263,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     final Criteria criteria = session.createCriteria(EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
     if (folderID == null)
     {
-      criteria.add(Expression.isNull("containerID"));
+      criteria.add(org.hibernate.criterion.Expression.isNull("containerID"));
     }
     else
     {
-      criteria.add(Expression.eq("containerID", folderID));
+      criteria.add(org.hibernate.criterion.Expression.eq("containerID", folderID));
     }
 
     List<?> result = criteria.list();

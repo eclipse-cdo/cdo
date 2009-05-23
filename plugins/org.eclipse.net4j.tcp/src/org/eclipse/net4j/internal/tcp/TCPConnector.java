@@ -34,7 +34,6 @@ import org.eclipse.net4j.util.security.NegotiationException;
 import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalChannel;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
@@ -192,9 +191,13 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       setNegotiationException(ex);
       deactivate();
     }
-    catch (IOException ex)
+    catch (ClosedChannelException ex)
     {
-      OM.LOG.error(ex);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
+      }
+
       deactivate();
     }
     catch (Exception ex)
@@ -272,6 +275,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
     catch (ClosedChannelException ex)
     {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
+      }
+
       deactivate();
     }
     catch (Exception ex)

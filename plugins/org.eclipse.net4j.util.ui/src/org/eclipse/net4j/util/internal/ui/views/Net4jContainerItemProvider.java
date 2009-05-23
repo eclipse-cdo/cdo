@@ -61,7 +61,8 @@ public class Net4jContainerItemProvider extends ContainerItemProvider<IContainer
 
     public RemoveAction(ITreeSelection selection)
     {
-      super(Messages.getString("Net4jContainerItemProvider_0"), Messages.getString("Net4jContainerItemProvider.1"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
+      super(
+          Messages.getString("Net4jContainerItemProvider_0"), Messages.getString("Net4jContainerItemProvider.1"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
       this.selection = selection;
     }
 

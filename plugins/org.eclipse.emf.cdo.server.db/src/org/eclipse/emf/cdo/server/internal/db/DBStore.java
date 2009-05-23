@@ -214,8 +214,8 @@ public class DBStore extends LongIDStore implements IDBStore
     checkNull(dbAdapter, Messages.getString("DBStore.1")); //$NON-NLS-1$
     checkNull(dbConnectionProvider, Messages.getString("DBStore.0")); //$NON-NLS-1$
 
-    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(),
-        Messages.getString("DBStore.7")); //$NON-NLS-1$
+    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(), Messages
+        .getString("DBStore.7")); //$NON-NLS-1$
   }
 
   @Override
@@ -270,8 +270,7 @@ public class DBStore extends LongIDStore implements IDBStore
       OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
       lastObjectID = mappingStrategy.repairAfterCrash(dbAdapter, connection);
       lastMetaId = DBUtil.selectMaximumLong(connection, CDODBSchema.PACKAGE_INFOS_META_UB);
-      OM.LOG.info(MessageFormat
-          .format(Messages.getString("DBStore.10"), lastObjectID, lastMetaId)); //$NON-NLS-1$
+      OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), lastObjectID, lastMetaId)); //$NON-NLS-1$
     }
 
     setLastMetaID(lastMetaId);

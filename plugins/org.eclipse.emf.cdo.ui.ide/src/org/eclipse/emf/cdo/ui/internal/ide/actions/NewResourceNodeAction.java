@@ -36,7 +36,8 @@ public abstract class NewResourceNodeAction extends TransactionalBackgroundActio
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
-    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), Messages.getString("NewResourceNodeAction_0"), null, null); //$NON-NLS-1$
+    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), Messages
+        .getString("NewResourceNodeAction_0"), null, null); //$NON-NLS-1$
     if (dialog.open() == Dialog.OK)
     {
       newResourceNode = createNewResourceNode();

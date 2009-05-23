@@ -112,8 +112,8 @@ public class RemoveResourceAction implements IObjectActionDelegate
             }
             catch (Exception ex)
             {
-              OM.LOG
-                  .error(MessageFormat.format(Messages.getString("RemoveResourceAction_4"), this.getClass().getName().toString()), ex); //$NON-NLS-1$
+              OM.LOG.error(MessageFormat.format(
+                  Messages.getString("RemoveResourceAction_4"), this.getClass().getName().toString()), ex); //$NON-NLS-1$
             }
             finally
             {
@@ -121,7 +121,8 @@ public class RemoveResourceAction implements IObjectActionDelegate
             }
           }
 
-          UIUtil.setStatusBarMessage(MessageFormat.format(Messages.getString("RemoveResourceAction_5"), nodes.size()), removeImage); //$NON-NLS-1$
+          UIUtil.setStatusBarMessage(
+              MessageFormat.format(Messages.getString("RemoveResourceAction_5"), nodes.size()), removeImage); //$NON-NLS-1$
           return Status.OK_STATUS;
         }
       };

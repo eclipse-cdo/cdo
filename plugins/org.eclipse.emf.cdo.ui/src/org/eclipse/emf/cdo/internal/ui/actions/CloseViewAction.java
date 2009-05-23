@@ -40,7 +40,7 @@ public final class CloseViewAction extends ViewAction
     {
       MessageDialog dialog = new MessageDialog(getShell(), TITLE, null,
           Messages.getString("CloseViewAction.2"), MessageDialog.QUESTION, new String[] { //$NON-NLS-1$
-              IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
+          IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
       if (dialog.open() != MessageDialog.OK)
       {
         cancel();

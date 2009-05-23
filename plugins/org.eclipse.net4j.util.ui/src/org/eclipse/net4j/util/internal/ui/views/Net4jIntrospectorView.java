@@ -355,7 +355,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createObjectColmuns()
   {
     Table table = objectViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_4"), Messages.getString("Net4jIntrospectorView_5"), Messages.getString("Net4jIntrospectorView_6"), Messages.getString("Net4jIntrospectorView_7") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    String[] columnNames = {
+        Messages.getString("Net4jIntrospectorView_4"), Messages.getString("Net4jIntrospectorView_5"), Messages.getString("Net4jIntrospectorView_6"), Messages.getString("Net4jIntrospectorView_7") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     int[] columnWidths = { 200, 400, 300, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -363,7 +364,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createMapColmuns()
   {
     Table table = mapViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_8"), Messages.getString("Net4jIntrospectorView_9"), Messages.getString("Net4jIntrospectorView_10") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    String[] columnNames = {
+        Messages.getString("Net4jIntrospectorView_8"), Messages.getString("Net4jIntrospectorView_9"), Messages.getString("Net4jIntrospectorView_10") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     int[] columnWidths = { 200, 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -371,7 +373,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createIterableColmuns()
   {
     Table table = iterableViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_11"), Messages.getString("Net4jIntrospectorView_12") }; //$NON-NLS-1$ //$NON-NLS-2$
+    String[] columnNames = {
+        Messages.getString("Net4jIntrospectorView_11"), Messages.getString("Net4jIntrospectorView_12") }; //$NON-NLS-1$ //$NON-NLS-2$
     int[] columnWidths = { 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -379,7 +382,8 @@ public class Net4jIntrospectorView extends ViewPart implements ISelectionListene
   private void createArrayColmuns()
   {
     Table table = arrayViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_13"), Messages.getString("Net4jIntrospectorView_14"), Messages.getString("Net4jIntrospectorView_15") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    String[] columnNames = {
+        Messages.getString("Net4jIntrospectorView_13"), Messages.getString("Net4jIntrospectorView_14"), Messages.getString("Net4jIntrospectorView_15") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     int[] columnWidths = { 50, 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }

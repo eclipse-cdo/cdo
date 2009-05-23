@@ -79,7 +79,8 @@ public abstract class TransactionalBackgroundAction extends LongRunningActionDel
         CDOView view = transactionalObject.cdoView();
         if (!(view instanceof CDOTransaction))
         {
-          throw new IllegalStateException(MessageFormat.format(Messages.getString("TransactionalBackgroundAction_0"), transactionalObject)); //$NON-NLS-1$
+          throw new IllegalStateException(MessageFormat.format(
+              Messages.getString("TransactionalBackgroundAction_0"), transactionalObject)); //$NON-NLS-1$
         }
 
         // Bypass cancel()

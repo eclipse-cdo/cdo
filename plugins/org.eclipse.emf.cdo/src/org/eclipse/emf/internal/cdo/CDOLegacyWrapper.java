@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.model.GenUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -37,14 +36,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.EAttributeImpl;
-import org.eclipse.emf.ecore.impl.EClassImpl;
-import org.eclipse.emf.ecore.impl.EDataTypeImpl;
-import org.eclipse.emf.ecore.impl.EReferenceImpl;
-import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
-import org.eclipse.emf.ecore.impl.ETypedElementImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -59,10 +51,6 @@ import java.lang.reflect.Proxy;
  * @author Eike Stepper
  * @since 2.0
  */
-/*
- * IMPORTANT: Compile errors in this class might indicate an old version of EMF. Legacy support is only enabled for EMF
- * with fixed bug #247130. These compile errors do not affect native models!
- */
 public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyWrapper.class);
@@ -70,8 +58,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected CDOState state;
 
   protected InternalCDORevision revision;
-
-  private boolean allProxiesResolved;
 
   public CDOLegacyWrapper(InternalEObject instance)
   {
@@ -247,7 +233,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
+      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance);
     }
 
     boolean deliver = instance.eDeliver();
@@ -332,74 +318,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
   {
     instance.eSet(feature, value);
-  }
-
-  /**
-   * TODO Ed: Help to fix whole mess (avoid inverse updates)
-   */
-  private void setInstanceValueOLD(InternalEObject instance, EStructuralFeature feature, Object value)
-  {
-    // TODO Consider EStoreEObjectImpl based objects as well!
-    // TODO Don't use Java reflection
-    Class<?> instanceClass = instance.getClass();
-    String featureName = feature.getName();
-    String fieldName = featureName;// TODO safeName()
-    Field field = ReflectUtil.getField(instanceClass, fieldName);
-    if (field == null && feature.getEType() == EcorePackage.eINSTANCE.getEBoolean())
-    {
-      if (instanceClass.isAssignableFrom(EAttributeImpl.class) || instanceClass.isAssignableFrom(EClassImpl.class)
-          || instanceClass.isAssignableFrom(EDataTypeImpl.class)
-          || instanceClass.isAssignableFrom(EReferenceImpl.class)
-          || instanceClass.isAssignableFrom(EStructuralFeatureImpl.class)
-          || instanceClass.isAssignableFrom(ETypedElementImpl.class))
-      {
-        // *******************************************
-        // ID_EFLAG = 1 << 15;
-        // *******************************************
-        // ABSTRACT_EFLAG = 1 << 8;
-        // INTERFACE_EFLAG = 1 << 9;
-        // *******************************************
-        // SERIALIZABLE_EFLAG = 1 << 8;
-        // *******************************************
-        // CONTAINMENT_EFLAG = 1 << 15;
-        // RESOLVE_PROXIES_EFLAG = 1 << 16;
-        // *******************************************
-        // CHANGEABLE_EFLAG = 1 << 10;
-        // VOLATILE_EFLAG = 1 << 11;
-        // TRANSIENT_EFLAG = 1 << 12;
-        // UNSETTABLE_EFLAG = 1 << 13;
-        // DERIVED_EFLAG = 1 << 14;
-        // *******************************************
-        // ORDERED_EFLAG = 1 << 8;
-        // UNIQUE_EFLAG = 1 << 9;
-        // *******************************************
-
-        String flagName = GenUtil.getFeatureUpperName(featureName) + "_EFLAG"; //$NON-NLS-1$
-        int flagsMask = getEFlagMask(instanceClass, flagName);
-
-        field = ReflectUtil.getField(instanceClass, "eFlags"); //$NON-NLS-1$
-        int flags = (Integer)ReflectUtil.getValue(field, instance);
-        boolean on = (Boolean)value;
-        if (on)
-        {
-          flags |= flagsMask; // Add EFlag
-        }
-        else
-        {
-          flags &= ~flagsMask; // Remove EFlag
-        }
-
-        ReflectUtil.setValue(field, instance, flags);
-        return;
-      }
-    }
-
-    if (field == null)
-    {
-      throw new ImplementationError("Field not found: " + fieldName); //$NON-NLS-1$
-    }
-
-    ReflectUtil.setValue(field, instance, value);
   }
 
   /**
@@ -560,7 +478,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id); //$NON-NLS-1$
         if (TRACER.isEnabled())
         {
-          TRACER.format("Setting proxyURI {0} for {1}", uri, instance); //$NON-NLS-1$
+          TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
         }
 
         instance.eSetProxyURI(uri);
@@ -572,7 +490,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Unsetting proxyURI for {0}", instance); //$NON-NLS-1$
+          TRACER.format("Unsetting proxyURI for {0}", instance);
         }
 
         instance.eSetProxyURI(null);

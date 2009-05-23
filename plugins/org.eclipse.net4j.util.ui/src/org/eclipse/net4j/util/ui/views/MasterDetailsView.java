@@ -301,7 +301,8 @@ public abstract class MasterDetailsView extends MultiViewersView
   {
     public RefreshAction()
     {
-      super(Messages.getString("MasterDetailsView_2"), Messages.getString("MasterDetailsView_3"), OM.getImageDescriptor("icons/full/etool16/refresh.gif")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      super(
+          Messages.getString("MasterDetailsView_2"), Messages.getString("MasterDetailsView_3"), OM.getImageDescriptor("icons/full/etool16/refresh.gif")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     @Override

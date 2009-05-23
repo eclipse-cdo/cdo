@@ -84,7 +84,8 @@ public class Net4jItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     public RemoveAction(Object object)
     {
-      super(Messages.getString("Net4jItemProvider.0"), Messages.getString("Net4jItemProvider.1"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
+      super(
+          Messages.getString("Net4jItemProvider.0"), Messages.getString("Net4jItemProvider.1"), ContainerView.getDeleteImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
       this.object = object;
     }
 

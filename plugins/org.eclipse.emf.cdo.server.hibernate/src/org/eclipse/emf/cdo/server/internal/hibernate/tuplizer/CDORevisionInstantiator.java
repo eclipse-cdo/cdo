@@ -43,7 +43,8 @@ public class CDORevisionInstantiator implements Instantiator
 
   public Object instantiate(Serializable id)
   {
-    return CDORevisionUtil.createRevision(eClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, eClass.getName()));
+    return CDORevisionUtil.createRevision(eClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id,
+        eClass.getName()));
   }
 
   public boolean isInstance(Object object)

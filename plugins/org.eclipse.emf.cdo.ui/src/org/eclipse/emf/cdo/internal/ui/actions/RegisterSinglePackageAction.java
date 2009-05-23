@@ -36,7 +36,8 @@ public class RegisterSinglePackageAction extends RegisterPackagesAction
 
   public RegisterSinglePackageAction(IWorkbenchPage page, CDOSession session, String packageURI)
   {
-    super(page, packageURI, Messages.getString("RegisterSinglePackageAction.0") + packageURI, getDescriptor(packageURI), session); //$NON-NLS-1$
+    super(page, packageURI,
+        Messages.getString("RegisterSinglePackageAction.0") + packageURI, getDescriptor(packageURI), session); //$NON-NLS-1$
     this.packageURI = packageURI;
   }
 

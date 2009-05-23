@@ -92,7 +92,8 @@ public class RemoteTraceView extends ViewPart
 
   protected void createColmuns(TableViewer viewer)
   {
-    final String[] columnNames = { Messages.getString("RemoteTraceView.0"), Messages.getString("RemoteTraceView.1"), Messages.getString("RemoteTraceView.2"), Messages.getString("RemoteTraceView.3"), Messages.getString("RemoteTraceView.4"), Messages.getString("RemoteTraceView.5"), Messages.getString("RemoteTraceView.6"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+    final String[] columnNames = {
+        Messages.getString("RemoteTraceView.0"), Messages.getString("RemoteTraceView.1"), Messages.getString("RemoteTraceView.2"), Messages.getString("RemoteTraceView.3"), Messages.getString("RemoteTraceView.4"), Messages.getString("RemoteTraceView.5"), Messages.getString("RemoteTraceView.6"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
         Messages.getString("RemoteTraceView.7") }; //$NON-NLS-1$
     final int[] columnWidths = { 60, 170, 80, 160, 120, 120, 400, 200 };
     TableColumn[] columns = new TableColumn[columnNames.length];

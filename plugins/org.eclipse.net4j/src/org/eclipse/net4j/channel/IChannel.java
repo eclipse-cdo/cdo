@@ -42,19 +42,25 @@ import org.eclipse.net4j.util.security.IUserAware;
  * <p>
  * An example for opening a channel on an {@link IConnector} and sending an {@link IBuffer}:
  * <p>
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Open a channel
+ * 
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
+ * // Open a channel
  * IChannel channel = connector.openChannel(); short channelID = channel.getIndex(); // Fill a buffer Buffer buffer =
  * bufferProvider.getBuffer(); ByteBuffer byteBuffer = buffer.startPutting(channelID); byteBuffer.putDouble(15.47); //
- * Let the channel send the buffer without blocking channel.sendBuffer(buffer); </pre>
+ * Let the channel send the buffer without blocking channel.sendBuffer(buffer);
+ * </pre>
  * <p>
  * An example for receiving {@link IBuffer}s from channels on an {@link IConnector}:
  * <p>
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Create a receive
+ * 
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
+ * // Create a receive
  * handler final IBufferHandler receiveHandler = new IBufferHandler() { public void handleBuffer(IBuffer buffer) {
  * ByteBuffer byteBuffer = buffer.getByteBuffer(); IOUtil.OUT().println(&quot;Received &quot; + byteBuffer.getDouble());
  * buffer.release(); } }; // Set the receive handler to all new channels connector.addListener(new
  * ContainerEventAdapter() { protected void onAdded(IContainer container, Object element) { IChannel channel =
- * (IChannel)element; channel.setReceiveHandler(receiveHandler); } }); </pre>
+ * (IChannel)element; channel.setReceiveHandler(receiveHandler); } });
+ * </pre>
  * 
  * @author Eike Stepper
  * @noimplement This interface is <b>not</b> intended to be implemented by clients. Providers of channels (for example

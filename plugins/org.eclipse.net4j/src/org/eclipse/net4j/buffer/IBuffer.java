@@ -51,17 +51,24 @@ import java.nio.channels.SocketChannel;
  * <p>
  * An example for <b>putting</b> values into a buffer and writing it to a {@link SocketChannel}:
  * <p>
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Obtain a fresh buffer
+ * 
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
+ * // Obtain a fresh buffer
  * Buffer buffer = bufferProvider.getBuffer(); // Start filling the buffer for channelID 4711 ByteBuffer byteBuffer =
  * buffer.startPutting(4711); byteBuffer.putDouble(15.47); // Write the contents of the Buffer to a // SocketChannel
- * without blocking while (!buffer.write(socketChannel)) { // Do something else } </pre> An example for reading a buffer
- * from a {@link SocketChannel} and <b>getting</b> values from it:
+ * without blocking while (!buffer.write(socketChannel)) { // Do something else }
+ * </pre>
+ * 
+ * An example for reading a buffer from a {@link SocketChannel} and <b>getting</b> values from it:
  * <p>
- * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;"> // Obtain a fresh buffer
+ * 
+ * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
+ * // Obtain a fresh buffer
  * Buffer buffer = bufferProvider.getBuffer(); // Read the contents of the Buffer from a // SocketChannel without
  * blocking ByteBuffer byteBuffer; while ((byteBuffer = buffer.startGetting(socketChannel)) == null) { // Do something
  * else } // Access the contents of the buffer and // release it to its provider double value = byteBuffer.getDouble();
- * buffer.release(); </pre>
+ * buffer.release();
+ * </pre>
  * 
  * @see IBufferProvider
  * @see IChannel#sendBuffer(IBuffer)

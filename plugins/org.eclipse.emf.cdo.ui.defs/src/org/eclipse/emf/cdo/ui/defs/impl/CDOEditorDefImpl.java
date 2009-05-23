@@ -353,7 +353,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
    */
   private IEditorPart openCDOEditor(String resourcePath)
   {
-  // TODO Andre: Why not use CDOEditorUtil.openEditor()?
+    // TODO Andre: Why not use CDOEditorUtil.openEditor()?
     IEditorInput input = CDOEditorUtil.createCDOEditorInput((CDOView)getCdoView().getInstance(), resourcePath, false);
     IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
     CheckUtil.checkState(workbenchWindow != null && workbenchWindow.getActivePage() != null,

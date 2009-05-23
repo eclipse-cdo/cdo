@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,11 +15,15 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import java.io.IOException;
 
@@ -43,7 +47,18 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   {
     super(in, eClass);
     index = in.readInt();
-    newValue = in.readCDOFeatureValue(getFeature());
+    EStructuralFeature feature = getFeature();
+    if (FeatureMapUtil.isFeatureMap(feature))
+    {
+      int featureID = in.readInt();
+      feature = eClass.getEStructuralFeature(featureID);
+      Object innerValue = in.readCDOFeatureValue(feature);
+      newValue = CDORevisionUtil.createFeatureMapEntry(feature, innerValue);
+    }
+    else
+    {
+      newValue = in.readCDOFeatureValue(feature);
+    }
   }
 
   @Override
@@ -53,12 +68,22 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     out.writeInt(index);
     Object valueToWrite = newValue;
     EStructuralFeature feature = getFeature();
+    if (FeatureMapUtil.isFeatureMap(feature))
+    {
+      FeatureMap.Entry entry = (Entry)valueToWrite;
+      feature = entry.getEStructuralFeature();
+      valueToWrite = entry.getValue();
+
+      int featureID = eClass.getFeatureID(feature);
+      out.writeInt(featureID);
+    }
+
     if (valueToWrite != null && feature instanceof EReference)
     {
       valueToWrite = out.getIDProvider().provideCDOID(newValue);
     }
 
-    out.writeCDOFeatureValue(valueToWrite, feature);
+    out.writeCDOFeatureValue(feature, valueToWrite);
   }
 
   public int getIndex()

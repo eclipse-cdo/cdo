@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Taal - changed handling of propertygetters/setters
@@ -225,10 +225,12 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
     if (feature instanceof EReference && feature.isMany())
     {
+      // TODO Clarify feature maps
       return new CDOManyReferenceGetter(this, mappedProperty.getName());
     }
     else if (feature instanceof EReference)
     {
+      // TODO Clarify feature maps
       return new CDOReferenceGetter(this, mappedProperty.getName());
     }
 
@@ -283,11 +285,13 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
     if (feature instanceof EReference && feature.isMany())
     {
+      // TODO Clarify feature maps
       return new CDOManyReferenceSetter(this, mappedProperty.getName());
     }
 
     if (feature instanceof EReference)
     {
+      // TODO Clarify feature maps
       return new CDOReferenceSetter(this, mappedProperty.getName());
     }
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  * 		Simon McDuff - maintenance
@@ -69,13 +69,13 @@ public interface CDODataInput extends ExtendedDataInput
 
   public CDORevision readCDORevision() throws IOException;
 
-  public CDOList readCDOList(CDORevision revision, EStructuralFeature feature) throws IOException;
+  public CDOList readCDOList(EClass owner, EStructuralFeature feature) throws IOException;
 
   public Object readCDOFeatureValue(EStructuralFeature feature) throws IOException;
 
   public CDORevisionDelta readCDORevisionDelta() throws IOException;
 
-  public CDOFeatureDelta readCDOFeatureDelta(EClass eClass) throws IOException;
+  public CDOFeatureDelta readCDOFeatureDelta(EClass owner) throws IOException;
 
   /**
    * Read either a CDORevision or a primitive value.

@@ -120,7 +120,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     out.writeInt(featureDeltas.size());
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
-      out.writeCDOFeatureDelta(featureDelta, eClass);
+      out.writeCDOFeatureDelta(eClass, featureDelta);
     }
   }
 

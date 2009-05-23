@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
@@ -56,7 +55,7 @@ public class CDOListWithElementProxiesImpl extends CDOListImpl
 
     Object element = super.get(index);
 
-    return element instanceof CDOElementProxy ? InternalCDORevision.UNINITIALIZED : element;
+    return element instanceof CDOElementProxy ? UNINITIALIZED : element;
   }
 
   @Override

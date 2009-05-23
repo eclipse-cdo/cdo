@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IStoreAccessor.AdditionalRevisionCache;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -126,7 +127,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
     int fromIndex = -1;
     for (int j = chunkStart; j < chunkEnd; j++)
     {
-      if (list.get(j) == InternalCDORevision.UNINITIALIZED)
+      if (list.get(j) == InternalCDOList.UNINITIALIZED)
       {
         if (fromIndex == -1)
         {

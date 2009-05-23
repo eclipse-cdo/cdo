@@ -50,7 +50,7 @@ public interface TestFeatureMap extends EObject
    * 
    * @return the value of the '<em>Managers</em>' reference list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Managers()
-   * @model extendedMetaData="group='#people'"
+   * @model transient="true" extendedMetaData="group='#people'"
    * @generated
    */
   EList<Manager> getManagers();
@@ -66,7 +66,7 @@ public interface TestFeatureMap extends EObject
    * 
    * @return the value of the '<em>Doctors</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getTestFeatureMap_Doctors()
-   * @model containment="true" extendedMetaData="group='#people'"
+   * @model containment="true" transient="true" extendedMetaData="group='#people'"
    * @generated
    */
   EList<Doctor> getDoctors();

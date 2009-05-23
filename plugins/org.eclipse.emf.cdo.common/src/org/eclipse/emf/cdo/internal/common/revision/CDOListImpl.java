@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -17,12 +17,11 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableArrayList;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
@@ -44,7 +43,7 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     super(initialCapacity);
     for (int j = 0; j < size; j++)
     {
-      this.add(InternalCDORevision.UNINITIALIZED);
+      this.add(UNINITIALIZED);
     }
   }
 
@@ -67,9 +66,12 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
     return super.get(index);
   }
 
-  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster, EClass classifier)
+  /**
+   * There's a duplicate of this method in WrappedHibernateList!!!
+   */
+  public void adjustReferences(CDOReferenceAdjuster revisionAdjuster, EStructuralFeature feature)
   {
-    CDOType type = CDOModelUtil.getType(classifier);
+    CDOType type = CDOModelUtil.getType(feature);
     int size = size();
     for (int i = 0; i < size; i++)
     {

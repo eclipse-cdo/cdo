@@ -895,12 +895,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         {
           public CDORevision createRevision(EClass eClass, CDOID id)
           {
-            return CDORevisionUtil.create(eClass, id);
+            return CDORevisionUtil.createRevision(eClass, id);
           }
 
           public CDORevision createRevision(CDODataInput in) throws IOException
           {
-            return CDORevisionUtil.read(in);
+            return in.readCDORevision();
           }
 
           @Override

@@ -13,16 +13,20 @@ package org.eclipse.emf.cdo.internal.common.model;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMap;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,8 +41,7 @@ import java.util.Map;
  */
 public abstract class CDOTypeImpl implements CDOType
 {
-  // TODO Use an array
-  public static Map<Integer, CDOTypeImpl> ids = new HashMap<Integer, CDOTypeImpl>();
+  private static Map<Integer, CDOTypeImpl> ids = new HashMap<Integer, CDOTypeImpl>();
 
   private static final byte BOOLEAN_DEFAULT_PRIMITIVE = 0;
 
@@ -508,35 +511,40 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     public Object copyValue(Object value)
     {
-      return value;
+      FeatureMap.Entry entry = (FeatureMap.Entry)value;
+      EStructuralFeature innerFeature = entry.getEStructuralFeature();
+      Object innerValue = entry.getValue();
+      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
+
+      Object innerCopy = innerType.copyValue(innerValue);
+      return CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
     }
 
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
-      // TODO: implement CDOTypeImpl.enclosing_method(enclosing_method_arguments)
       throw new UnsupportedOperationException();
-      // CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
-      // out.writeString(featureMapEntry.getURI());
-      // out.writeCDOID(out.getIDProvider().provideCDOID(featureMapEntry.getObject()));
     }
 
     public Object readValue(CDODataInput in) throws IOException
     {
-      // TODO: implement CDOTypeImpl.enclosing_method(enclosing_method_arguments)
       throw new UnsupportedOperationException();
-      // String uri = in.readString();
-      // Object id = in.readCDOID();
-      // return new CDOFeatureMapEntryDataTypeImpl(uri, id);
     }
 
     @Override
     public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
     {
-      // TODO: implement CDOTypeImpl.enclosing_method(enclosing_method_arguments)
-      throw new UnsupportedOperationException();
-      // CDOFeatureMapEntryDataTypeImpl featureMapEntry = (CDOFeatureMapEntryDataTypeImpl)value;
-      // featureMapEntry.adjustReferences(adjuster);
-      // return value;
+      FeatureMap.Entry entry = (FeatureMap.Entry)value;
+      EStructuralFeature innerFeature = entry.getEStructuralFeature();
+      Object innerValue = entry.getValue();
+      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
+
+      Object innerCopy = innerType.adjustReferences(adjuster, innerValue);
+      if (innerCopy != innerValue)
+      {
+        value = CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
+      }
+
+      return value;
     }
   };
 
@@ -623,6 +631,17 @@ public abstract class CDOTypeImpl implements CDOType
   public Object convertToCDO(EClassifier feature, Object value)
   {
     return value;
+  }
+
+  public static CDOType getType(int typeID)
+  {
+    CDOTypeImpl type = ids.get(typeID);
+    if (type == null)
+    {
+      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOModelUtil.6"), typeID)); //$NON-NLS-1$
+    }
+
+    return type;
   }
 
   /**

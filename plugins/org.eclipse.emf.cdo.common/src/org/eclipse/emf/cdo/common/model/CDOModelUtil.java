@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -176,15 +177,22 @@ public final class CDOModelUtil
     return isCorePackage(eClass.getEPackage()) && ROOT_CLASS_NAME.equals(eClass.getName());
   }
 
-  public static CDOType getType(int typeID)
+  /**
+   * @since 2.0
+   */
+  public static CDOType getType(EStructuralFeature feature)
   {
-    CDOTypeImpl type = CDOTypeImpl.ids.get(typeID);
-    if (type == null)
+    if (FeatureMapUtil.isFeatureMap(feature))
     {
-      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOModelUtil.6"), typeID)); //$NON-NLS-1$
+      return CDOType.FEATURE_MAP_ENTRY;
     }
 
-    return type;
+    return CDOModelUtil.getType(feature.getEType());
+  }
+
+  public static CDOType getType(int typeID)
+  {
+    return CDOTypeImpl.getType(typeID);
   }
 
   /**

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -360,9 +360,9 @@ public interface CDOSessionProtocol extends PackageLoader
 
       public Object adjustReference(Object id)
       {
-        if (id == null)
+        if (id == null || id == CDOID.NULL)
         {
-          return null;
+          return id;
         }
 
         if (idProvider != null && (id instanceof CDOID || id instanceof InternalEObject))

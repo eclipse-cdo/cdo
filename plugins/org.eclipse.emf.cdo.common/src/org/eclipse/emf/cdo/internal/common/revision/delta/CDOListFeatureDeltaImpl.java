@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -79,7 +80,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     out.writeInt(featureDeltas.size());
     for (CDOFeatureDelta featureDelta : featureDeltas)
     {
-      out.writeCDOFeatureDelta(featureDelta, eClass);
+      out.writeCDOFeatureDelta(eClass, featureDelta);
     }
   }
 
@@ -158,7 +159,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   private void cleanupWithNewDelta(CDOFeatureDelta featureDelta)
   {
     EStructuralFeature feature = getFeature();
-    if (feature instanceof EReference && featureDelta instanceof CDORemoveFeatureDelta)
+    if ((feature instanceof EReference || FeatureMapUtil.isFeatureMap(feature))
+        && featureDelta instanceof CDORemoveFeatureDelta)
     {
       int indexToRemove = ((CDORemoveFeatureDelta)featureDelta).getIndex();
       reconstructAddedIndicesWithNoCopy();

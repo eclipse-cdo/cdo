@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjustable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -29,8 +28,6 @@ import java.io.IOException;
  */
 public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable
 {
-  public static final Object UNINITIALIZED = CDORevisionUtil.UNINITIALIZED;
-
   /**
    * The equivalent of <code>EStructuralFeatureImpl.NIL</code> (i.e. explicit <code>null</code>).
    */

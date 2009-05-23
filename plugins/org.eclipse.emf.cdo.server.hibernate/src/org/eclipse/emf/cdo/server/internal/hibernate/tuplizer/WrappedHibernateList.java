@@ -20,8 +20,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -90,9 +90,12 @@ public class WrappedHibernateList implements InternalCDOList
     }
   }
 
-  public void adjustReferences(CDOReferenceAdjuster adjuster, EClass classifier)
+  /**
+   * There's a duplicate of this method in CDOListImpl!!!
+   */
+  public void adjustReferences(CDOReferenceAdjuster adjuster, EStructuralFeature feature)
   {
-    CDOType type = CDOModelUtil.getType(classifier);
+    CDOType type = CDOModelUtil.getType(feature);
     int size = size();
     for (int i = 0; i < size; i++)
     {

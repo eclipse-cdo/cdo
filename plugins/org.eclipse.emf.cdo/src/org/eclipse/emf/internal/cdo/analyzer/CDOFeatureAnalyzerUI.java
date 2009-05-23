@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -104,7 +104,9 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
   @Override
   protected void doPreTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
   {
-    // Don`t handle containment relationship TODO Simon: Do yu really mean containment here? The check is different...
+    // Don`t handle containment relationship
+    // TODO Simon: Do you really mean containment here? The check is different...
+    // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
       if (lastElapseTimeBetweenOperations > maxTimeBetweenOperation || currentClusterOfFetchRule == null)

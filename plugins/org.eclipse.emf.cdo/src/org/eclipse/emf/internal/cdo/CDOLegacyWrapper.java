@@ -238,38 +238,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     Object instanceValue = getInstanceValue(instance, feature, packageRegistry);
     CDOObjectImpl.instanceToRevisionFeature(view, revision, feature, instanceValue);
-    // if (feature.isMany())
-    // {
-    // List<Object> revisionList = revision.getList(feature); // TODO lazy?
-    // revisionList.clear();
-    //
-    // if (instanceValue != null)
-    // {
-    // InternalEList<?> instanceList = (InternalEList<?>)instanceValue;
-    // if (!instanceList.isEmpty())
-    // {
-    // for (Iterator<?> it = instanceList.basicIterator(); it.hasNext();)
-    // {
-    // Object instanceElement = it.next();
-    // if (instanceElement != null && feature instanceof EReference)
-    // {
-    // instanceElement = view.convertObjectToID(instanceElement);
-    // }
-    //
-    // revisionList.add(instanceElement);
-    // }
-    // }
-    // }
-    // }
-    // else
-    // {
-    // if (instanceValue != null && feature instanceof EReference)
-    // {
-    // instanceValue = view.convertObjectToID(instanceValue);
-    // }
-    //
-    // revision.setValue(feature, instanceValue);
-    // }
   }
 
   /**
@@ -326,53 +294,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     // Attempt 4
     Object value = revision.getValue(feature);
     view.getStore().set(instance, feature, Notification.NO_INDEX, value);
-
-    // // Attempt 3
-    // Object value = revision.getValue(feature);
-    // instance.eSet(feature, value);
-
-    // // Attempt 2
-    // CDOObjectImpl.revisionToInstanceFeature(this, revision, feature);
-
-    // // Attempt 1
-    // Object value = revision.getValue(feature);
-    // if (feature.isMany())
-    // {
-    // InternalEList<Object> instanceList = (InternalEList<Object>)getInstanceValue(instance, feature, packageRegistry);
-    // if (instanceList != null)
-    // {
-    // clearEList(instanceList);
-    // if (value != null)
-    // {
-    // List<?> revisionList = (List<?>)value;
-    // if (feature instanceof EReference)
-    // {
-    // for (Object element : revisionList)
-    // {
-    // element = getEObjectFromPotentialID(view, feature, element);
-    // instanceList.basicAdd(element, null);
-    // }
-    // }
-    // else
-    // {
-    // // TODO Is this only for multi-valued attributes??
-    // for (Object element : revisionList)
-    // {
-    // instanceList.basicAdd(element, null);
-    // }
-    // }
-    // }
-    // }
-    // }
-    // else
-    // {
-    // if (feature instanceof EReference)
-    // {
-    // value = getEObjectFromPotentialID(view, feature, value);
-    // }
-    //
-    // setInstanceValue(instance, feature, value);
-    // }
   }
 
   protected Resource.Internal getInstanceResource(InternalEObject instance)

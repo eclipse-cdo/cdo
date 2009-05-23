@@ -368,6 +368,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     for (int i = 0; i < features.length; i++)
     {
       EStructuralFeature feature = features[i];
+      // TODO Clarify feature maps
       if (feature instanceof EReference && !feature.isMany() && ((EReference)feature).isContainment())
       {
         Object value = revision.getValue(feature);

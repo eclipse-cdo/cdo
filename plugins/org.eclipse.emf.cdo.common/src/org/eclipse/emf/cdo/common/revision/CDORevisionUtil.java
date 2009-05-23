@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,13 +12,14 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMap;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -35,7 +36,7 @@ public final class CDORevisionUtil
   /**
    * @since 2.0
    */
-  public static CDORevision create(EClass eClass, CDOID id)
+  public static CDORevision createRevision(EClass eClass, CDOID id)
   {
     return new CDORevisionImpl(eClass, id);
   }
@@ -43,9 +44,9 @@ public final class CDORevisionUtil
   /**
    * @since 2.0
    */
-  public static CDORevision read(CDODataInput in) throws IOException
+  public static FeatureMap.Entry createFeatureMapEntry(EStructuralFeature feature, Object value)
   {
-    return new CDORevisionImpl(in);
+    return new CDOFeatureMapEntryImpl(feature, value);
   }
 
   public static Object remapID(Object value, Map<CDOIDTemp, CDOID> idMappings)

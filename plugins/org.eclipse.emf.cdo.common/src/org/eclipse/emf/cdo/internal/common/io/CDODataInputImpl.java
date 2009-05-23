@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/213402
@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOClearFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl;
@@ -65,6 +66,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -212,13 +214,13 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     boolean notNull = readBoolean();
     if (notNull)
     {
-      return CDORevisionUtil.read(this);
+      return new CDORevisionImpl(this);
     }
 
     return null;
   }
 
-  public CDOList readCDOList(CDORevision revision, EStructuralFeature feature) throws IOException
+  public CDOList readCDOList(EClass owner, EStructuralFeature feature) throws IOException
   {
     int referenceChunk;
     int size = readInt();
@@ -240,11 +242,30 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       }
     }
 
-    CDOType type = CDOModelUtil.getType(feature.getEType());
+    Object value = null;
+    CDOType type = null;
+    boolean isFeatureMap = FeatureMapUtil.isFeatureMap(feature);
+    if (!isFeatureMap)
+    {
+      type = CDOModelUtil.getType(feature.getEType());
+    }
+
     InternalCDOList list = (InternalCDOList)getListFactory().createList(size, size, referenceChunk);
     for (int j = 0; j < referenceChunk; j++)
     {
-      Object value = type.readValue(this);
+      if (isFeatureMap)
+      {
+        int featureID = readInt();
+        EStructuralFeature innerFeature = owner.getEStructuralFeature(featureID);
+        type = CDOModelUtil.getType(innerFeature.getEType());
+        value = type.readValue(this);
+        value = CDORevisionUtil.createFeatureMapEntry(innerFeature, value);
+      }
+      else
+      {
+        value = type.readValue(this);
+      }
+
       list.set(j, value);
       if (TRACER.isEnabled())
       {
@@ -257,7 +278,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public Object readCDOFeatureValue(EStructuralFeature feature) throws IOException
   {
-    CDOType type = CDOModelUtil.getType(feature.getEType());
+    CDOType type = CDOModelUtil.getType(feature);
     if (type.canBeNull() && !feature.isMany())
     {
       if (readBoolean())
@@ -274,35 +295,35 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDORevisionDeltaImpl(this);
   }
 
-  public CDOFeatureDelta readCDOFeatureDelta(EClass eClass) throws IOException
+  public CDOFeatureDelta readCDOFeatureDelta(EClass owner) throws IOException
   {
     int typeOrdinal = readInt();
     CDOFeatureDelta.Type type = CDOFeatureDelta.Type.values()[typeOrdinal];
     switch (type)
     {
     case ADD:
-      return new CDOAddFeatureDeltaImpl(this, eClass);
+      return new CDOAddFeatureDeltaImpl(this, owner);
 
     case SET:
-      return new CDOSetFeatureDeltaImpl(this, eClass);
+      return new CDOSetFeatureDeltaImpl(this, owner);
 
     case LIST:
-      return new CDOListFeatureDeltaImpl(this, eClass);
+      return new CDOListFeatureDeltaImpl(this, owner);
 
     case MOVE:
-      return new CDOMoveFeatureDeltaImpl(this, eClass);
+      return new CDOMoveFeatureDeltaImpl(this, owner);
 
     case CLEAR:
-      return new CDOClearFeatureDeltaImpl(this, eClass);
+      return new CDOClearFeatureDeltaImpl(this, owner);
 
     case REMOVE:
-      return new CDORemoveFeatureDeltaImpl(this, eClass);
+      return new CDORemoveFeatureDeltaImpl(this, owner);
 
     case CONTAINER:
-      return new CDOContainerFeatureDeltaImpl(this, eClass);
+      return new CDOContainerFeatureDeltaImpl(this, owner);
 
     case UNSET:
-      return new CDOUnsetFeatureDeltaImpl(this, eClass);
+      return new CDOUnsetFeatureDeltaImpl(this, owner);
 
     default:
       throw new IOException(MessageFormat.format(Messages.getString("CDODataInputImpl.5"), typeOrdinal)); //$NON-NLS-1$

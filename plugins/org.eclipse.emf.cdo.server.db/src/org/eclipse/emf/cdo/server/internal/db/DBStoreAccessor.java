@@ -176,7 +176,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       return null;
     }
 
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(eClass, id);
+    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.createRevision(eClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
@@ -204,7 +204,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
 
     EClass eClass = getObjectType(id);
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(eClass, id);
+    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.createRevision(eClass, id);
 
     IClassMappingAuditSupport mapping = (IClassMappingAuditSupport)mappingStrategy.getClassMapping(eClass);
     if (mapping.readRevisionByTime(this, revision, timeStamp, listChunk))
@@ -221,7 +221,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
 
     EClass eClass = getObjectType(id);
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.create(eClass, id);
+    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.createRevision(eClass, id);
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
 
     boolean success = false;

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.common.io;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -45,6 +46,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -161,7 +165,8 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     }
   }
 
-  public void writeCDOList(CDOList list, EStructuralFeature feature, int referenceChunk) throws IOException
+  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk)
+      throws IOException
   {
     // TODO Simon: Could most of this stuff be moved into the list?
     // (only if protected methods of this class don't need to become public)
@@ -204,12 +209,25 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       writeInt(size);
     }
 
+    CDOIDProvider idProvider = getIDProvider();
+    boolean isFeatureMap = FeatureMapUtil.isFeatureMap(feature);
     for (int j = 0; j < size; j++)
     {
       Object value = list.get(j, false);
-      if (value != null && feature instanceof EReference)
+      EStructuralFeature innerFeature = feature; // Prepare for possible feature map
+      if (isFeatureMap)
       {
-        value = getIDProvider().provideCDOID(value);
+        Entry entry = (FeatureMap.Entry)value;
+        innerFeature = entry.getEStructuralFeature();
+        value = entry.getValue();
+
+        int featureID = owner.getFeatureID(innerFeature);
+        writeInt(featureID);
+      }
+
+      if (value != null && innerFeature instanceof EReference)
+      {
+        value = idProvider.provideCDOID(value);
       }
 
       if (TRACER.isEnabled())
@@ -217,16 +235,16 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
         TRACER.trace("    " + value); //$NON-NLS-1$
       }
 
-      writeCDOFeatureValue(value, feature);
+      writeCDOFeatureValue(innerFeature, value);
     }
   }
 
-  public void writeCDOFeatureValue(Object value, EStructuralFeature feature) throws IOException
+  public void writeCDOFeatureValue(EStructuralFeature feature, Object value) throws IOException
   {
     // TODO We could certainly optimized this: When a feature is a reference, NIL is only possible in the case where
     // unsettable == true. (TO be verified)
 
-    CDOType type = CDOModelUtil.getType(feature.getEType());
+    CDOType type = CDOModelUtil.getType(feature);
     if (type.canBeNull())
     {
       if (!feature.isMany())
@@ -258,9 +276,9 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     ((CDORevisionDeltaImpl)revisionDelta).write(this);
   }
 
-  public void writeCDOFeatureDelta(CDOFeatureDelta featureDelta, EClass eClass) throws IOException
+  public void writeCDOFeatureDelta(EClass owner, CDOFeatureDelta featureDelta) throws IOException
   {
-    ((CDOFeatureDeltaImpl)featureDelta).write(this, eClass);
+    ((CDOFeatureDeltaImpl)featureDelta).write(this, owner);
   }
 
   public void writeCDORevisionOrPrimitive(Object value) throws IOException

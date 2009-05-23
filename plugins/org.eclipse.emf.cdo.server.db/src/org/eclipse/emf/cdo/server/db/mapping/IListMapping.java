@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -68,7 +69,7 @@ public interface IListMapping
    * @param listChunk
    *          indicating the lazy loading behavior: {@link CDORevision#UNCHUNKED} means that the whole list should be
    *          read. Else, if <code>listChunk >= 0</code>, the list is filled with
-   *          {@link InternalCDORevision#UNINITIALIZED} and only the first <code>listChunk</code> values are read.
+   *          {@link InternalCDOList#UNINITIALIZED} and only the first <code>listChunk</code> values are read.
    */
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk);
 

@@ -164,15 +164,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * Simple dependencies are satisfied by calling this method on all dependent packages before doing anything else. This
-   * method drives initialization for interdependent packages directly, in parallel with this package, itself.
    * <p>
-   * Of this package and its interdependencies, all packages which have not yet been registered by their URI values are
-   * first created and registered. The packages are then initialized in two steps: meta-model objects for all of the
-   * packages are created before any are initialized, since one package's meta-model objects may refer to those of
-   * another.
-   * <p>
-   * Invocation of this method will not affect any packages that have already been initialized. <!-- begin-user-doc -->
+   * This method is used to initialize {@link Model5Package#eINSTANCE} when that field is accessed. Clients should not
+   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
    * @see #eNS_URI
@@ -186,8 +180,8 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
       return (Model5Package)EPackage.Registry.INSTANCE.getEPackage(Model5Package.eNS_URI);
 
     // Obtain or create and register package
-    Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE
-        .getEPackage(eNS_URI)
+    Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE
+        .get(eNS_URI)
         : new Model5PackageImpl());
 
     isInited = true;
@@ -201,6 +195,8 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     // Mark meta-data to indicate it can't be changed
     theModel5Package.freeze();
 
+    // Update the registry and return the package
+    EPackage.Registry.INSTANCE.put(Model5Package.eNS_URI, theModel5Package);
     return theModel5Package;
   }
 
@@ -568,10 +564,10 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     initEClass(testFeatureMapEClass, TestFeatureMap.class, "TestFeatureMap", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTestFeatureMap_Managers(), this.getManager(), null, "managers", null, 0, -1,
-        TestFeatureMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        TestFeatureMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTestFeatureMap_Doctors(), this.getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTestFeatureMap_People(), ecorePackage.getEFeatureMapEntry(), "people", null, 0, -1,
         TestFeatureMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
@@ -44,6 +45,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -217,6 +219,7 @@ public final class CDOStore implements EStore
       TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
+    // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
       value = cdoObject.cdoView().convertObjectToID(value, true);
@@ -234,6 +237,7 @@ public final class CDOStore implements EStore
       TRACER.format("indexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
+    // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
       value = cdoObject.cdoView().convertObjectToID(value, true);
@@ -251,6 +255,7 @@ public final class CDOStore implements EStore
       TRACER.format("lastIndexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
     }
 
+    // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
       value = cdoObject.cdoView().convertObjectToID(value, true);
@@ -282,6 +287,7 @@ public final class CDOStore implements EStore
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
     Object[] result = revision.toArray(feature);
+    // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
       for (int i = 0; i < result.length; i++)
@@ -326,6 +332,7 @@ public final class CDOStore implements EStore
 
     CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value);
     InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
+    // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
       Object oldValue = revision.basicGet(feature, index);
@@ -341,8 +348,8 @@ public final class CDOStore implements EStore
   /**
    * @since 2.0
    */
-  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature,
-      int index, Object value)
+  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index,
+      Object value)
   {
     if (value != null)
     {
@@ -369,6 +376,7 @@ public final class CDOStore implements EStore
         }
       }
 
+      // TODO Clarify feature maps
       if (feature instanceof EReference)
       {
         // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
@@ -377,14 +385,14 @@ public final class CDOStore implements EStore
       }
       else if (FeatureMapUtil.isFeatureMap(feature))
       {
-        // TODO Handle feature maps!
-        // EStructuralFeatureMapEntryDataTypeImpl entry = (EStructuralFeatureMapEntryDataTypeImpl)value;
-        // EStructuralFeature feature = (EStructuralFeature)view.getResourceSet().getEObject(
-        // URI.createURI(entry.getURI()), true);
-        // Object object = view.convertIDToObject(entry.getObject());
-        // value = FeatureMapUtil.createEntry(feature, object);
-        throw new UnsupportedOperationException(
-            "Feature maps currently not supported. See https://bugs.eclipse.org/249436"); //$NON-NLS-1$
+        FeatureMap.Entry entry = (FeatureMap.Entry)value;
+        EStructuralFeature innerFeature = entry.getEStructuralFeature();
+        Object innerValue = entry.getValue();
+        Object convertedValue = view.convertIDToObject(innerValue);
+        if (convertedValue != innerValue)
+        {
+          value = FeatureMapUtil.createEntry(innerFeature, convertedValue);
+        }
       }
       else
       {
@@ -418,12 +426,14 @@ public final class CDOStore implements EStore
       }
       else if (FeatureMapUtil.isFeatureMap(feature))
       {
-        // TODO Handle feature maps!
-        // FeatureMap.Entry entry = (FeatureMap.Entry)value;
-        // String uri = EcoreUtil.getURI(entry.getEStructuralFeature()).toString();
-        // value = CDORevisionUtil.createFeatureMapEntry(uri, entry.getValue());
-        throw new UnsupportedOperationException(
-            "Feature maps currently not supported. See https://bugs.eclipse.org/249436"); //$NON-NLS-1$
+        FeatureMap.Entry entry = (FeatureMap.Entry)value;
+        EStructuralFeature innerFeature = entry.getEStructuralFeature();
+        Object innerValue = entry.getValue();
+        Object convertedValue = view.convertObjectToID(innerValue);
+        if (convertedValue != innerValue)
+        {
+          value = CDORevisionUtil.createFeatureMapEntry(innerFeature, convertedValue);
+        }
       }
       else
       {

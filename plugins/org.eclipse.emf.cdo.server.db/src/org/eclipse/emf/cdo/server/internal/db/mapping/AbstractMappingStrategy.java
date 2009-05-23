@@ -385,7 +385,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)
   {
-    CDOType type = CDOModelUtil.getType(feature.getEType());
+    CDOType type = CDOModelUtil.getType(feature);
 
     if (type == CDOType.BOOLEAN || type == CDOType.BOOLEAN_OBJECT)
     {

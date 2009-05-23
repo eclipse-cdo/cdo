@@ -71,13 +71,13 @@ public interface CDODataOutput extends ExtendedDataOutput
 
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException;
 
-  public void writeCDOList(CDOList list, EStructuralFeature feature, int referenceChunk) throws IOException;
+  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk) throws IOException;
 
-  public void writeCDOFeatureValue(Object value, EStructuralFeature feature) throws IOException;
+  public void writeCDOFeatureValue(EStructuralFeature feature, Object value) throws IOException;
 
   public void writeCDORevisionDelta(CDORevisionDelta revisionDelta) throws IOException;
 
-  public void writeCDOFeatureDelta(CDOFeatureDelta featureDelta, EClass eClass) throws IOException;
+  public void writeCDOFeatureDelta(EClass owner, CDOFeatureDelta featureDelta) throws IOException;
 
   /**
    * Write either a CDORevision or a primitive value.

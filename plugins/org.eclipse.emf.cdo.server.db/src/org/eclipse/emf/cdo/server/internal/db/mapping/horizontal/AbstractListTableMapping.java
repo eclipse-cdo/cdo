@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -287,7 +288,7 @@ public abstract class AbstractListTableMapping implements IListMapping
           TRACER.format("Adding UNINITIALIZED for index {0} ", list.size()); //$NON-NLS-1$
         }
 
-        list.add(InternalCDORevision.UNINITIALIZED);
+        list.add(InternalCDOList.UNINITIALIZED);
       }
     }
     catch (SQLException ex)

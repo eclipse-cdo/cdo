@@ -105,7 +105,7 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
   @Override
   protected Object confirming(CDODataInput in) throws IOException
   {
-    CDOType type = CDOModelUtil.getType(feature.getEType());
+    CDOType type = CDOModelUtil.getType(feature);
     Object accessID = null;
     MoveableList<Object> list = revision.getList(feature);
     for (int i = fromIndex; i <= toIndex; i++)

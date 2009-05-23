@@ -10,7 +10,6 @@ import org.eclipse.net4j.db.IDBAdapter;
 
 import javax.sql.DataSource;
 
-
 /**
  * @author Eike Stepper
  */

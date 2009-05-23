@@ -658,6 +658,27 @@ public class FormatChecker
     ignore("reference.util.ReferenceAdapterFactory", 3);
     ignore("reference.util.ReferenceSwitch", 3);
     ignore("templates.MenuCardTemplate", 1);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EAnnotationImpl", 4);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EAttributeImpl", 5);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EClassImpl", 27);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EClassifierImpl", 12);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EDataTypeImpl", 6);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EEnumImpl", 9);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EEnumLiteralImpl", 1);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EFactoryImpl", 17);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EGenericTypeImpl", 8);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EModelElementImpl", 10);
+    ignore("org.eclipse.emf.cdo.ecore.impl.ENamedElementImpl", 4);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EOperationImpl", 5);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EPackageImpl", 13);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EParameterImpl", 3);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EReferenceImpl", 5);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EStringToStringMapEntryImpl", 4);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EStructuralFeatureImpl", 24);
+    ignore("org.eclipse.emf.cdo.ecore.impl.ETypeParameterImpl", 3);
+    ignore("org.eclipse.emf.cdo.ecore.impl.ETypedElementImpl", 3);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EcoreFactoryImpl", 8);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EcorePackageImpl", 2);
 
     report();
   }

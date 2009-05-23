@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.internal.cdo.util;
 
-
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 

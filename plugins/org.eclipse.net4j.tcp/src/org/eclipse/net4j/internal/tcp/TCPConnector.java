@@ -214,7 +214,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
    * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
    * dequeued from the outputQueue of the {@link IChannel}.
    */
-  @Override
   public void multiplexChannel(InternalChannel channel)
   {
     synchronized (writeQueue)

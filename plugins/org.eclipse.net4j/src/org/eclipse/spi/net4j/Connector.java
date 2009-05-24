@@ -331,15 +331,6 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     return null;
   }
 
-  public void multiplexChannel(InternalChannel channel)
-  {
-  }
-
-  @Override
-  protected void registerChannelWithPeer(short channelId, long timeout, IProtocol<?> protocol) throws ChannelException
-  {
-  }
-
   @Override
   protected boolean isDeferredActivation()
   {

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -46,6 +46,8 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
       handleChannelDeactivation();
     };
   };
+
+  private String userID;
 
   public Protocol(String type)
   {
@@ -130,6 +132,21 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
         bufferProvider = (InternalChannel)channel;
       }
     }
+  }
+
+  public String getUserID()
+  {
+    if (userID == null && channel != null)
+    {
+      return channel.getUserID();
+    }
+
+    return userID;
+  }
+
+  protected void setUserID(String userID)
+  {
+    this.userID = userID;
   }
 
   /**

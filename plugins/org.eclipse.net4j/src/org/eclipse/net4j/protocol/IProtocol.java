@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,13 +14,14 @@ import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.util.security.IUserAware;
 
 import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public interface IProtocol<INFRA_STRUCTURE> extends ILocationAware, IBufferHandler
+public interface IProtocol<INFRA_STRUCTURE> extends IUserAware, ILocationAware, IBufferHandler
 {
   public String getType();
 

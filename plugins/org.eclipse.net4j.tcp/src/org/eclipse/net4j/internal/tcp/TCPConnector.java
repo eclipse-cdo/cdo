@@ -446,6 +446,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       if (buffer != null)
       {
         buffer.release();
+        buffer = null;
       }
     }
   }

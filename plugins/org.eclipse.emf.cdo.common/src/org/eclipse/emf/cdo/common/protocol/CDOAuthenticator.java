@@ -3,6 +3,8 @@ package org.eclipse.emf.cdo.common.protocol;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 /**
+ * The front-end of the CDO challenge/response authentication.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

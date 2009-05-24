@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
+ * The result of an authentication operation. Carries a userID and a crypted token.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

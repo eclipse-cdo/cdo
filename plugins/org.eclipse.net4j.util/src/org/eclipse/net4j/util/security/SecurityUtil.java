@@ -30,6 +30,15 @@ import java.security.spec.InvalidKeySpecException;
 public final class SecurityUtil
 {
   public static final String PBE_WITH_MD5_AND_DES = "PBEWithMD5AndDES"; //$NON-NLS-1$
+  /**
+   * @since 2.0
+   */
+  public static final byte[] DEFAULT_SALT = { (byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c, (byte)0x7e, (byte)0xc8,
+      (byte)0xee, (byte)0x99 };
+  /**
+   * @since 2.0
+   */
+  public static final int DEFAULT_ITERATION_COUNT = 20;
 
   private SecurityUtil()
   {

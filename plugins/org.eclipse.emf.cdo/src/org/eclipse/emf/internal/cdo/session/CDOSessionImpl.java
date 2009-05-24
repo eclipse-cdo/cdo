@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -104,6 +105,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private InternalCDOPackageRegistry packageRegistry;
 
   private CDORevisionManagerImpl revisionManager;
+
+  private CDOAuthenticator authenticator;
 
   private InternalCDORemoteSessionManager remoteSessionManager;
 
@@ -232,6 +235,16 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public CDORevisionManagerImpl getRevisionManager()
   {
     return revisionManager;
+  }
+
+  public CDOAuthenticator getAuthenticator()
+  {
+    return authenticator;
+  }
+
+  public void setAuthenticator(CDOAuthenticator authenticator)
+  {
+    this.authenticator = authenticator;
   }
 
   public InternalCDORemoteSessionManager getRemoteSessionManager()

@@ -27,11 +27,13 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_OPEN_SESSION = 1;
 
-  public static final short SIGNAL_LOAD_LIBRARIES = 2;
+  public static final short SIGNAL_NEGOTIATION = 2;
 
-  public static final short SIGNAL_VIEWS_CHANGED = 3;
+  public static final short SIGNAL_LOAD_LIBRARIES = 3;
 
-  public static final short SIGNAL_RESOURCE_ID = 4;
+  public static final short SIGNAL_VIEWS_CHANGED = 4;
+
+  public static final short SIGNAL_RESOURCE_ID = 5;
 
   public static final short SIGNAL_LOAD_PACKAGES = 6;
 

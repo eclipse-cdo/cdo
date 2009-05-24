@@ -21,22 +21,11 @@ import java.nio.ByteBuffer;
 public abstract class ChallengeResponseNegotiator extends
     Negotiator<IChallengeResponse.State, IChallengeResponse.Event> implements IChallengeResponse
 {
-  /**
-   * @since 2.0
-   */
-  public static final byte[] DEFAULT_SALT = { (byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c, (byte)0x7e, (byte)0xc8,
-      (byte)0xee, (byte)0x99 };
-
-  /**
-   * @since 2.0
-   */
-  public static final int DEFAULT_COUNT = 20;
-
   private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
 
-  private byte[] encryptionSaltBytes = DEFAULT_SALT;
+  private byte[] encryptionSaltBytes = SecurityUtil.DEFAULT_SALT;
 
-  private int encryptionIterationCount = DEFAULT_COUNT;
+  private int encryptionIterationCount = SecurityUtil.DEFAULT_ITERATION_COUNT;
 
   public ChallengeResponseNegotiator(boolean initiator)
   {

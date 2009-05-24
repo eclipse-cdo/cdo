@@ -1,0 +1,48 @@
+package org.eclipse.emf.cdo.common.protocol;
+
+import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
+
+import java.io.IOException;
+import java.io.Serializable;
+
+/**
+ * @author Eike Stepper
+ * @since 2.0
+ */
+public final class CDOAuthenticationResult implements Serializable
+{
+  private static final long serialVersionUID = 1L;
+
+  private String userID;
+
+  private byte[] cryptedToken;
+
+  public CDOAuthenticationResult(String userID, byte[] cryptedToken)
+  {
+    this.userID = userID;
+    this.cryptedToken = cryptedToken;
+  }
+
+  public CDOAuthenticationResult(ExtendedDataInput in) throws IOException
+  {
+    userID = in.readString();
+    cryptedToken = in.readByteArray();
+  }
+
+  public void write(ExtendedDataOutput out) throws IOException
+  {
+    out.writeString(userID);
+    out.writeByteArray(cryptedToken);
+  }
+
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  public byte[] getCryptedToken()
+  {
+    return cryptedToken;
+  }
+}

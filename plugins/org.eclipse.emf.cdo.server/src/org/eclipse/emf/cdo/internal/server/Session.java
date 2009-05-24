@@ -67,6 +67,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
 
   private int sessionID;
 
+  private String userID;
+
   private boolean passiveUpdateEnabled = true;
 
   private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
@@ -86,12 +88,13 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   /**
    * @since 2.0
    */
-  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID)
+  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID, String userID)
       throws SessionCreationException
   {
     this.sessionManager = sessionManager;
     this.protocol = protocol;
     this.sessionID = sessionID;
+    this.userID = userID;
     protocol.addListener(protocolListener);
 
     try
@@ -135,7 +138,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public String getUserID()
   {
-    return protocol.getChannel().getUserID();
+    return userID;
   }
 
   /**

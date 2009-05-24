@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.IUserManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,9 +39,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 {
   public static final String PROP_TEST_REPOSITORY = "test.repository";
 
-  public static final String PROP_TEST_REVISION_MANAGER = "test.repository.revisionmanager";
+  public static final String PROP_TEST_REVISION_MANAGER = "test.repository.RevisionManager";
 
-  public static final String PROP_TEST_STORE = "test.repository.store";
+  public static final String PROP_TEST_USER_MANAGER = "test.repository.UserManager";
+
+  public static final String PROP_TEST_STORE = "test.repository.Store";
 
   private static final long serialVersionUID = 1L;
 
@@ -147,6 +151,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       repository.setRevisionManager((RevisionManager)revisionManager);
     }
 
+    IUserManager userManager = getTestUserManager();
+    if (userManager != null)
+    {
+      SessionManager sessionManager = new SessionManager();
+      sessionManager.setUserManager(userManager);
+      repository.setSessionManager(sessionManager);
+    }
+
     return repository;
   }
 
@@ -160,6 +172,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IRevisionManager getTestRevisionManager()
   {
     return (IRevisionManager)getTestProperty(PROP_TEST_REVISION_MANAGER);
+  }
+
+  protected IUserManager getTestUserManager()
+  {
+    return (IUserManager)getTestProperty(PROP_TEST_USER_MANAGER);
   }
 
   protected IStore getTestStore()

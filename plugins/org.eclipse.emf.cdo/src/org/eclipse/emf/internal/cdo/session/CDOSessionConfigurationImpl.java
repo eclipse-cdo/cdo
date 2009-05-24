@@ -4,19 +4,25 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
+import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
+
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -32,6 +38,8 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
   private CDOPackageRegistry packageRegistry;
 
   private CDORevisionCache revisionCache;
+
+  private CDOAuthenticator authenticator = new AuthenticatorImpl();
 
   private boolean activateOnOpen = true;
 
@@ -84,6 +92,17 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
     this.revisionCache = revisionCache;
   }
 
+  public CDOAuthenticator getAuthenticator()
+  {
+    return authenticator;
+  }
+
+  public void setAuthenticator(CDOAuthenticator authenticator)
+  {
+    checkNotOpen();
+    this.authenticator = authenticator;
+  }
+
   public boolean isActivateOnOpen()
   {
     return activateOnOpen;
@@ -122,6 +141,7 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
       session.setRepositoryName(repositoryName);
       session.setPackageRegistry((InternalCDOPackageRegistry)packageRegistry);
       session.getRevisionManager().setCache(revisionCache);
+      session.setAuthenticator(authenticator);
 
       if (activateOnOpen)
       {
@@ -141,4 +161,103 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
   }
 
   protected abstract InternalCDOSession createSession();
+
+  /**
+   * @author Eike Stepper
+   */
+  protected class AuthenticatorImpl implements CDOAuthenticator
+  {
+    private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
+
+    private byte[] encryptionSaltBytes = SecurityUtil.DEFAULT_SALT;
+
+    private int encryptionIterationCount = SecurityUtil.DEFAULT_ITERATION_COUNT;
+
+    private IPasswordCredentialsProvider credentialsProvider;
+
+    public AuthenticatorImpl()
+    {
+    }
+
+    public String getEncryptionAlgorithmName()
+    {
+      return encryptionAlgorithmName;
+    }
+
+    public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
+    {
+      checkSessionNotOpened();
+      this.encryptionAlgorithmName = encryptionAlgorithmName;
+    }
+
+    public byte[] getEncryptionSaltBytes()
+    {
+      return encryptionSaltBytes;
+    }
+
+    public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
+    {
+      checkSessionNotOpened();
+      this.encryptionSaltBytes = encryptionSaltBytes;
+    }
+
+    public int getEncryptionIterationCount()
+    {
+      return encryptionIterationCount;
+    }
+
+    public void setEncryptionIterationCount(int encryptionIterationCount)
+    {
+      checkSessionNotOpened();
+      this.encryptionIterationCount = encryptionIterationCount;
+    }
+
+    public IPasswordCredentialsProvider getCredentialsProvider()
+    {
+      return credentialsProvider;
+    }
+
+    public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
+    {
+      checkSessionNotOpened();
+      this.credentialsProvider = credentialsProvider;
+    }
+
+    public CDOAuthenticationResult authenticate(byte[] randomToken)
+    {
+      if (credentialsProvider == null)
+      {
+        throw new IllegalStateException("No credentials provider configured"); //$NON-NLS-1$
+      }
+
+      IPasswordCredentials credentials = credentialsProvider.getCredentials();
+      byte[] cryptedToken = encryptToken(credentials.getPassword(), randomToken);
+      return new CDOAuthenticationResult(credentials.getUserID(), cryptedToken);
+    }
+
+    protected byte[] encryptToken(char[] password, byte[] token)
+    {
+      try
+      {
+        return SecurityUtil.encrypt(token, password, encryptionAlgorithmName, encryptionSaltBytes,
+            encryptionIterationCount);
+      }
+      catch (RuntimeException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw new SecurityException(ex);
+      }
+    }
+
+    private void checkSessionNotOpened()
+    {
+      if (session != null)
+      {
+        throw new IllegalStateException("Not allowed after the session has been opened"); //$NON-NLS-1$
+      }
+    }
+  }
 }

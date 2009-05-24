@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -37,6 +38,10 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
 
   public void setRepositoryName(String repositoryName);
+
+  public CDOAuthenticator getAuthenticator();
+
+  public void setAuthenticator(CDOAuthenticator authenticator);
 
   public void viewDetached(InternalCDOView view);
 

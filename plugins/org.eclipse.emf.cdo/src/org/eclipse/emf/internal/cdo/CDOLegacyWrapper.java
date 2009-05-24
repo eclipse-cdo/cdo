@@ -233,7 +233,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance);
+      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
     }
 
     boolean deliver = instance.eDeliver();
@@ -478,7 +478,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + ":proxy#" + id); //$NON-NLS-1$
         if (TRACER.isEnabled())
         {
-          TRACER.format("Setting proxyURI {0} for {1}", uri, instance);
+          TRACER.format("Setting proxyURI {0} for {1}", uri, instance); //$NON-NLS-1$
         }
 
         instance.eSetProxyURI(uri);
@@ -490,7 +490,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Unsetting proxyURI for {0}", instance);
+          TRACER.format("Unsetting proxyURI for {0}", instance); //$NON-NLS-1$
         }
 
         instance.eSetProxyURI(null);

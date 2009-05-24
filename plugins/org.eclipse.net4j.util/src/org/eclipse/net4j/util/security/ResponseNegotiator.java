@@ -45,12 +45,6 @@ public class ResponseNegotiator extends ChallengeResponseNegotiator
   }
 
   @Override
-  protected void createChallenge(INegotiationContext context, ByteBuffer challenge)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   protected void handleChallenge(INegotiationContext context, ByteBuffer challenge, ByteBuffer response)
   {
     // Get random token from challenge

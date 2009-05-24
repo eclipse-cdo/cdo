@@ -15,8 +15,6 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -32,8 +30,6 @@ import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
-
-import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.BasicEList;
@@ -76,24 +72,6 @@ public final class CDOUtil
     }
 
     return false;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOSessionConfiguration createSessionConfiguration()
-  {
-    // TODO Remove before release
-    return CDONet4jUtil.createSessionConfiguration();
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static void prepareContainer(IManagedContainer container)
-  {
-    // TODO Remove before release
-    CDONet4jUtil.prepareContainer(container);
   }
 
   /**

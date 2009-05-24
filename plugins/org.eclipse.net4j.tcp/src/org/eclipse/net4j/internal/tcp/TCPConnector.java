@@ -439,5 +439,14 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
 
       super.setFinished(success);
     }
+
+    @Override
+    protected void finalize() throws Throwable
+    {
+      if (buffer != null)
+      {
+        buffer.release();
+      }
+    }
   }
 }

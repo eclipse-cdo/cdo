@@ -258,8 +258,8 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
   {
     switch (signalID)
     {
-    case CDOProtocolConstants.SIGNAL_NEGOTIATION:
-      return new NegotiationIndication(this);
+    case CDOProtocolConstants.SIGNAL_AUTHENTICATION:
+      return new AuthenticationIndication(this);
 
     case CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION:
       return new CommitNotificationIndication(this);

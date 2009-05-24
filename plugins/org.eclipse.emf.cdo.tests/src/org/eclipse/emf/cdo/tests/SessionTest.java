@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
@@ -37,6 +38,19 @@ public class SessionTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testNoAuthentication() throws Exception
+  {
+    IRepository repository = getRepository("authrepo");
+
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
+        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
+
+    CDOSession session = openSession("authrepo");
+    assertEquals(null, session.getUserID());
+    assertEquals(null, repository.getSessionManager().getSessions()[0].getUserID());
+    session.close();
+  }
+
   public void testWithAuthentication() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -44,12 +58,14 @@ public class SessionTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD1);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
-    getRepository("authrepo");
+    IRepository repository = getRepository("authrepo");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
 
     CDOSession session = openSession("authrepo");
+    assertEquals(USER_ID, session.getUserID());
+    assertEquals(USER_ID, repository.getSessionManager().getSessions()[0].getUserID());
     session.close();
   }
 

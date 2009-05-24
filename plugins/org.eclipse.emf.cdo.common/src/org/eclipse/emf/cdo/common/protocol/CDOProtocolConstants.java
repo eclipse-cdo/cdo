@@ -27,7 +27,7 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_OPEN_SESSION = 1;
 
-  public static final short SIGNAL_NEGOTIATION = 2;
+  public static final short SIGNAL_AUTHENTICATION = 2;
 
   public static final short SIGNAL_LOAD_LIBRARIES = 3;
 

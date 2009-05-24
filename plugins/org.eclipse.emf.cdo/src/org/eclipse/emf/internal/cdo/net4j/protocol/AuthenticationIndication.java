@@ -24,13 +24,13 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 /**
  * @author Eike Stepper
  */
-public class NegotiationIndication extends IndicationWithResponse
+public class AuthenticationIndication extends IndicationWithResponse
 {
   private byte[] randomToken;
 
-  public NegotiationIndication(SignalProtocol<?> protocol)
+  public AuthenticationIndication(SignalProtocol<?> protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_NEGOTIATION);
+    super(protocol, CDOProtocolConstants.SIGNAL_AUTHENTICATION);
   }
 
   @Override

@@ -18,7 +18,6 @@ package org.eclipse.emf.internal.cdo.net4j;
 import org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
@@ -53,15 +52,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   public CDOSessionProtocol getSessionProtocol()
   {
     return protocol;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public String getUserID()
-  {
-    IChannel channel = protocol.getChannel();
-    return channel == null ? null : channel.getUserID();
   }
 
   @Override

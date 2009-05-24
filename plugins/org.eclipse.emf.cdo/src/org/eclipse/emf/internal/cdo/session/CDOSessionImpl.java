@@ -98,6 +98,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private int sessionID;
 
+  private String userID;
+
   private CDOSession.Options options;
 
   private CDOSession.Repository repository;
@@ -134,6 +136,16 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public int getSessionID()
   {
     return sessionID;
+  }
+
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  public void setUserID(String userID)
+  {
+    this.userID = userID;
   }
 
   /**

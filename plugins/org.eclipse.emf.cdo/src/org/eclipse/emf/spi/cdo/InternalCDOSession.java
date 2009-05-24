@@ -43,6 +43,8 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
 
   public void setAuthenticator(CDOAuthenticator authenticator);
 
+  public void setUserID(String userID);
+
   public void viewDetached(InternalCDOView view);
 
   public void handleCommitNotification(long timeStamp, Collection<CDOPackageUnit> newPackageUnits,

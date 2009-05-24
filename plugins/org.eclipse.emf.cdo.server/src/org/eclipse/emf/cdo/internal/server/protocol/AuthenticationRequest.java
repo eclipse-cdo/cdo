@@ -20,13 +20,13 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 /**
  * @author Eike Stepper
  */
-public class NegotiationRequest extends RequestWithConfirmation<CDOAuthenticationResult>
+public class AuthenticationRequest extends RequestWithConfirmation<CDOAuthenticationResult>
 {
   private byte[] randomToken;
 
-  public NegotiationRequest(CDOServerProtocol protocol, byte[] randomToken)
+  public AuthenticationRequest(CDOServerProtocol protocol, byte[] randomToken)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_NEGOTIATION);
+    super(protocol, CDOProtocolConstants.SIGNAL_AUTHENTICATION);
     this.randomToken = randomToken;
   }
 

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.internal.server.protocol.NegotiationRequest;
+import org.eclipse.emf.cdo.internal.server.protocol.AuthenticationRequest;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -282,7 +282,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     try
     {
       byte[] randomToken = createRandomToken();
-      CDOAuthenticationResult result = new NegotiationRequest(protocol, randomToken).send(negotiationTimeout);
+      CDOAuthenticationResult result = new AuthenticationRequest(protocol, randomToken).send(negotiationTimeout);
       String userID = result.getUserID();
 
       byte[] cryptedToken = encryptToken(userID, randomToken);

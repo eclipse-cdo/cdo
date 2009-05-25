@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings
@@ -76,16 +76,13 @@ public final class CDODBUtil
   /**
    * @since 2.0
    */
-  public static IMappingStrategy createHorizontalMappingStrategy()
+  public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing)
   {
-    return new HorizontalAuditMappingStrategy();
-  }
+    if (auditing)
+    {
+      return new HorizontalAuditMappingStrategy();
+    }
 
-  /**
-   * @since 2.0
-   */
-  public static IMappingStrategy createHorizontalNonAuditMappingStrategy()
-  {
     return new HorizontalNonAuditMappingStrategy();
   }
 

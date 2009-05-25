@@ -60,28 +60,28 @@ public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
   public static class HsqldbNonAudit extends AllTestsDBHsqldb.Hsqldb
   {
     private static final long serialVersionUID = 1L;
-  
+
     public static final AllTestsDBHsqldbNonAudit.HsqldbNonAudit INSTANCE = new HsqldbNonAudit(
         "DBStore: Hsqldb (non audit)");
-  
+
     public HsqldbNonAudit(String name)
     {
       super(name);
     }
-  
+
     @Override
     protected void initRepositoryProperties(Map<String, String> props)
     {
       super.initRepositoryProperties(props);
       props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
     }
-  
+
     @Override
     protected IMappingStrategy createMappingStrategy()
     {
-      return CDODBUtil.createHorizontalNonAuditMappingStrategy();
+      return CDODBUtil.createHorizontalMappingStrategy(false);
     }
-  
+
     @Override
     protected DBStoreVerifier getVerifier(IRepository repository)
     {

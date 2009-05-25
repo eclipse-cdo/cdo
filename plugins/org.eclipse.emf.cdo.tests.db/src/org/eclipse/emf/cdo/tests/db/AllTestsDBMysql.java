@@ -51,30 +51,30 @@ public class AllTestsDBMysql extends AllTestsAllConfigs
   public static class Mysql extends DBStoreRepositoryConfig
   {
     private static final long serialVersionUID = 1L;
-  
+
     public static final AllTestsDBMysql.Mysql INSTANCE = new Mysql("DBStore: Mysql");
-  
+
     private transient DataSource setupDataSource;
-  
+
     private transient DataSource dataSource;
-  
+
     public Mysql(String name)
     {
       super(name);
     }
-  
+
     @Override
     protected IMappingStrategy createMappingStrategy()
     {
-      return CDODBUtil.createHorizontalMappingStrategy();
+      return CDODBUtil.createHorizontalMappingStrategy(true);
     }
-  
+
     @Override
     protected IDBAdapter createDBAdapter()
     {
       return new MYSQLAdapter();
     }
-  
+
     @Override
     protected DataSource createDataSource()
     {
@@ -84,13 +84,13 @@ public class AllTestsDBMysql extends AllTestsAllConfigs
       dataSource = ds;
       return dataSource;
     }
-  
+
     @Override
     public void setUp() throws Exception
     {
       dropDatabase();
       Connection connection = null;
-  
+
       try
       {
         connection = getSetupDataSource().getConnection();
@@ -103,21 +103,21 @@ public class AllTestsDBMysql extends AllTestsAllConfigs
       {
         DBUtil.close(connection);
       }
-  
+
       super.setUp();
     }
-  
+
     @Override
     public void tearDown() throws Exception
     {
       super.tearDown();
       dropDatabase();
     }
-  
+
     private void dropDatabase() throws Exception
     {
       Connection connection = null;
-  
+
       try
       {
         connection = getSetupDataSource().getConnection();
@@ -131,7 +131,7 @@ public class AllTestsDBMysql extends AllTestsAllConfigs
         DBUtil.close(connection);
       }
     }
-  
+
     private DataSource getSetupDataSource()
     {
       if (setupDataSource == null)
@@ -141,7 +141,7 @@ public class AllTestsDBMysql extends AllTestsAllConfigs
         ds.setUser("sa");
         setupDataSource = ds;
       }
-  
+
       return setupDataSource;
     }
   }

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -39,7 +39,7 @@ import java.util.Map;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
@@ -74,7 +74,7 @@ public abstract class OM
       dataSource.setDatabaseName("/gastro");
       dataSource.setCreateDatabase("create");
 
-      IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy();
+      IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true);
       IDBAdapter dbAdapter = new EmbeddedDerbyAdapter();
       IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
       IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);

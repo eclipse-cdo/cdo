@@ -69,7 +69,7 @@ public class AllTestsDBDerby extends AllTestsAllConfigs
     @Override
     protected IMappingStrategy createMappingStrategy()
     {
-      return CDODBUtil.createHorizontalMappingStrategy();
+      return CDODBUtil.createHorizontalMappingStrategy(true);
     }
 
     @Override

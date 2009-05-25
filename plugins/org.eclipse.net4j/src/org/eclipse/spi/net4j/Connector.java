@@ -352,7 +352,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
     if (userID != null && getConfig().getNegotiator() == null)
     {
-      throw new IllegalStateException("A UserID on this connector requires a negotiator to be configured"); //$NON-NLS-1$
+      throw new IllegalStateException("A user ID on this connector requires a negotiator"); //$NON-NLS-1$
     }
   }
 

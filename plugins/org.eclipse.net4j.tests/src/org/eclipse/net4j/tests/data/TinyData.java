@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.tests.data;
 
 import java.util.StringTokenizer;
 

@@ -12,6 +12,7 @@ package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;

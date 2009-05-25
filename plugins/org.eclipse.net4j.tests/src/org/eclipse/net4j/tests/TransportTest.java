@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,11 +17,17 @@ import org.eclipse.net4j.channel.ChannelInputStream;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.tests.data.HugeData;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.spi.net4j.ClientProtocolFactory;
+import org.eclipse.spi.net4j.Protocol;
+import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -75,11 +81,11 @@ public abstract class TransportTest extends AbstractProtocolTest
   {
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
-    container.registerFactory(new ServerTestProtocolFactory(counter));
-    container.registerFactory(new ClientTestProtocolFactory());
+    container.registerFactory(new TestProtocol.ServerFactory(counter));
+    container.registerFactory(new TestProtocol.ClientFactory());
     startTransport();
 
-    IChannel channel = getConnector().openChannel(ClientTestProtocolFactory.TYPE, null);
+    IChannel channel = getConnector().openChannel(TestProtocol.ClientFactory.TYPE, null);
     for (int i = 0; i < COUNT; i++)
     {
       IBuffer buffer = provideBuffer();
@@ -353,6 +359,64 @@ public abstract class TransportTest extends AbstractProtocolTest
     dataInput.close();
 
     msg(new String(b));
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class TestProtocol extends Protocol<CountDownLatch>
+  {
+    public TestProtocol(CountDownLatch counter)
+    {
+      super(ServerFactory.TYPE);
+      setInfraStructure(counter);
+    }
+
+    public void handleBuffer(IBuffer buffer)
+    {
+      IOUtil.OUT().println("BUFFER ARRIVED"); //$NON-NLS-1$
+      buffer.release();
+      getInfraStructure().countDown();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class ServerFactory extends ServerProtocolFactory
+    {
+      public static final String TYPE = "test.protocol"; //$NON-NLS-1$
+
+      private CountDownLatch counter;
+
+      public ServerFactory(CountDownLatch counter)
+      {
+        super(TYPE);
+        this.counter = counter;
+      }
+
+      public TestProtocol create(String description) throws ProductCreationException
+      {
+        return new TestProtocol(counter);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class ClientFactory extends ClientProtocolFactory
+    {
+      public static final String TYPE = ServerFactory.TYPE;
+
+      public ClientFactory()
+      {
+        super(TYPE);
+      }
+
+      public TestProtocol create(String description) throws ProductCreationException
+      {
+        return new TestProtocol(null);
+      }
+    }
   }
 
   /**

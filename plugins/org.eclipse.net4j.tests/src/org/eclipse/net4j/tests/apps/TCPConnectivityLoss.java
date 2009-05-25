@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.tests;
+package org.eclipse.net4j.tests.apps;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.tcp.ITCPConnector;

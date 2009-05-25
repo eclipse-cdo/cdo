@@ -94,6 +94,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
       addWriteLockedDescriptor(object);
       addAdaptersDescriptor(object);
       addChangeSubscriptionPoliciesDescriptor(object);
+      addURIDescriptor(object);
     }
 
     return itemPropertyDescriptors;
@@ -177,6 +178,14 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   protected void addChangeSubscriptionPoliciesDescriptor(Object object)
   {
     itemPropertyDescriptors.add(new ChangeSubscriptionPoliciesDescriptor());
+  }
+
+  /**
+   * @since 2.0
+   */
+  protected void addURIDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(new URIDescriptor());
   }
 
   /**
@@ -903,4 +912,72 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
       };
     }
   }
+
+  /**
+   * Adds the URI of a {@link CDOObject} to the Properties View.
+   * 
+   * @since 2.0
+   * @author Victor Roldan Betancort
+   */
+  public static class URIDescriptor extends CDOPropertyDescriptor implements IItemPropertyDescriptor
+  {
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.31"); //$NON-NLS-1$
+
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.32"); //$NON-NLS-1$
+
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.33"); //$NON-NLS-1$
+
+    public URIDescriptor()
+    {
+    }
+
+    public Object getPropertyValue(Object object)
+    {
+      if (object instanceof CDOObject)
+      {
+        return ((CDOObject)object).eResource().getURI().toString() + "#" + ((CDOObject)object).cdoID().toURIFragment(); //$NON-NLS-1$
+      }
+
+      return null;
+    }
+
+    public String getDescription(Object object)
+    {
+      return DESCRIPTION;
+    }
+
+    public String getDisplayName(Object object)
+    {
+      return DISPLAY_NAME;
+    }
+
+    public Object getFeature(Object object)
+    {
+      return FEATURE_ID;
+    }
+
+    public String getId(Object object)
+    {
+      return FEATURE_ID;
+    }
+
+    @Override
+    public IItemLabelProvider getLabelProvider(Object object)
+    {
+      return new DefaultLabelProvider()
+      {
+        @Override
+        public String getText(Object object)
+        {
+          if (object instanceof String)
+          {
+            return (String)object;
+          }
+
+          return null;
+        }
+      };
+    }
+  }
+
 }

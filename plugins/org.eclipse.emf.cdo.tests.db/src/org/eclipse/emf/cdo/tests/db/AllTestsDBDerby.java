@@ -14,8 +14,10 @@ import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
@@ -24,6 +26,7 @@ import org.apache.derby.jdbc.EmbeddedDataSource;
 import javax.sql.DataSource;
 
 import java.io.File;
+import java.sql.Connection;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -41,8 +44,8 @@ public class AllTestsDBDerby extends AllTestsAllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, COMBINED, AllTestsDBDerby.Derby.ReusableFolder.INSTANCE, TCP, NATIVE);
-    addScenario(parent, COMBINED, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBDerby.Derby.ReusableFolder.INSTANCE, TCP, NATIVE);
+    // addScenario(parent, COMBINED, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
   }
 
   /**
@@ -79,7 +82,7 @@ public class AllTestsDBDerby extends AllTestsAllConfigs
     protected DataSource createDataSource()
     {
       dbFolder = createDBFolder();
-      deleteDBFolder();
+      tearDownClean();
 
       dataSource = new EmbeddedDataSource();
       dataSource.setDatabaseName(dbFolder.getAbsolutePath());
@@ -90,18 +93,18 @@ public class AllTestsDBDerby extends AllTestsAllConfigs
     @Override
     public void tearDown() throws Exception
     {
-      deleteDBFolder();
+      tearDownClean();
       super.tearDown();
+    }
+
+    protected void tearDownClean()
+    {
+      IOUtil.delete(dbFolder);
     }
 
     protected File createDBFolder()
     {
-      return TMPUtil.createTempFolder("derby_", null, new File("/temp"));
-    }
-
-    protected void deleteDBFolder()
-    {
-      IOUtil.delete(dbFolder);
+      return TMPUtil.createTempFolder("derby_", "_test", new File("/temp"));
     }
 
     /**
@@ -127,18 +130,38 @@ public class AllTestsDBDerby extends AllTestsAllConfigs
         if (reusableFolder == null)
         {
           reusableFolder = createDBFolder();
-          dataSource.setCreateDatabase("create");
+          IOUtil.delete(reusableFolder);
         }
 
         dbFolder = reusableFolder;
         dataSource.setDatabaseName(dbFolder.getAbsolutePath());
+        dataSource.setCreateDatabase("create");
         return dataSource;
       }
 
       @Override
-      protected void deleteDBFolder()
+      protected void tearDownClean()
       {
-        // Do nothing
+        reusableFolder.deleteOnExit();
+        Connection connection = null;
+
+        try
+        {
+          connection = dataSource.getConnection();
+          DBUtil.dropAllTables(connection, dataSource.getDatabaseName());
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+        finally
+        {
+          DBUtil.close(connection);
+        }
       }
     }
   }

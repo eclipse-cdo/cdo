@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,6 +15,7 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -85,6 +86,7 @@ public abstract class Signal implements Runnable
 
   public SignalProtocol<?> getProtocol()
   {
+    LifecycleUtil.checkActive(protocol);
     return protocol;
   }
 
@@ -206,26 +208,26 @@ public abstract class Signal implements Runnable
 
   protected InputStream wrapInputStream(InputStream in) throws IOException
   {
-    currentStream = protocol.wrapInputStream(in);
+    currentStream = getProtocol().wrapInputStream(in);
     return (InputStream)currentStream;
   }
 
   protected OutputStream wrapOutputStream(OutputStream out) throws IOException
   {
-    currentStream = protocol.wrapOutputStream(out);
+    currentStream = getProtocol().wrapOutputStream(out);
     return (OutputStream)currentStream;
   }
 
   protected void finishInputStream(InputStream in) throws IOException
   {
     currentStream = null;
-    protocol.finishInputStream(in);
+    getProtocol().finishInputStream(in);
   }
 
   protected void finishOutputStream(OutputStream out) throws IOException
   {
     currentStream = null;
-    protocol.finishOutputStream(out);
+    getProtocol().finishOutputStream(out);
   }
 
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;

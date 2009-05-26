@@ -189,6 +189,17 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     configuration.setConnector(getConnector());
     configuration.setRepositoryName(repositoryName);
     configuration.getAuthenticator().setCredentialsProvider(getTestCredentialsProvider());
+
+    // configuration.setExceptionHandler(new CDORetryExceptionHandler(2));
+
+    // configuration.setExceptionHandler(new ExceptionHandler()
+    // {
+    // public void handleException(int attempt, Exception exception) throws Exception
+    // {
+    // throw exception;
+    // }
+    // });
+
     return configuration;
   }
 

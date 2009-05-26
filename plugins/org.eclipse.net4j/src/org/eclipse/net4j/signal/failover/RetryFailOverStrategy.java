@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.text.MessageFormat;
+
 /**
  * @author Eike Stepper
  */
@@ -24,7 +26,7 @@ public class RetryFailOverStrategy extends NOOPFailOverStrategy
   /**
    * @since 2.0
    */
-  public static final int RETRY_FOREVER = Integer.MAX_VALUE;
+  public static final int RETRY_FOREVER = -1;
 
   private int retries;
 
@@ -50,11 +52,20 @@ public class RetryFailOverStrategy extends NOOPFailOverStrategy
     return retries;
   }
 
+  /**
+   * @since 2.0
+   */
+  public boolean isRetryingForever()
+  {
+    return retries < 0;
+  }
+
   @Override
-  public void handleFailOver(ISignalProtocol<?> protocol)
+  public void handleFailOver(ISignalProtocol<?> protocol, Exception reason)
   {
     Exception exception = null;
-    for (int i = 0; i < retries; i++)
+    int max = isRetryingForever() ? Integer.MAX_VALUE : retries;
+    for (int i = 0; i < max; i++)
     {
       try
       {
@@ -72,5 +83,12 @@ public class RetryFailOverStrategy extends NOOPFailOverStrategy
     {
       throw WrappedException.wrap(exception);
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    Object arg = isRetryingForever() ? "forever" : retries;
+    return MessageFormat.format("RetryFailOverStrategy[retries={0}]", arg); //$NON-NLS-1$
   }
 }

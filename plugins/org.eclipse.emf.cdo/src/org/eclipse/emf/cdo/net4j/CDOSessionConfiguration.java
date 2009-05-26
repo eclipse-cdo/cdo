@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.net4j;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
+
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
  * @author Eike Stepper
@@ -42,6 +44,10 @@ public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDO
    * @see CDOSession#getFailOverStrategy()
    */
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
+
+  public CDOSessionProtocol.ExceptionHandler getExceptionHandler();
+
+  public void setExceptionHandler(CDOSessionProtocol.ExceptionHandler exceptionHandler);
 
   public CDOSession openSession();
 }

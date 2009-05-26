@@ -431,8 +431,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     }
   }
 
-  boolean handleFailOver(SignalActor signalActor, IChannel originalChannel)
+  boolean handleFailOver(SignalActor signalActor, IChannel originalChannel, Exception reason)
   {
+    OM.LOG.error(reason);
     if (failOverStrategy != null)
     {
       try
@@ -442,7 +443,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
           failingOver = true;
           if (originalChannel == getChannel())
           {
-            failOverStrategy.handleFailOver(this);
+            failOverStrategy.handleFailOver(this, reason);
           }
 
           // Set new OutputStream

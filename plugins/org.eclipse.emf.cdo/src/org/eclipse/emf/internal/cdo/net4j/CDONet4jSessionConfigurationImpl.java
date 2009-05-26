@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -18,6 +18,7 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.CheckUtil;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
@@ -29,6 +30,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   private IConnector connector;
 
   private IFailOverStrategy failOverStrategy;
+
+  private CDOSessionProtocol.ExceptionHandler exceptionHandler;
 
   public CDONet4jSessionConfigurationImpl()
   {
@@ -56,6 +59,17 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.failOverStrategy = failOverStrategy;
   }
 
+  public CDOSessionProtocol.ExceptionHandler getExceptionHandler()
+  {
+    return exceptionHandler;
+  }
+
+  public void setExceptionHandler(CDOSessionProtocol.ExceptionHandler exceptionHandler)
+  {
+    checkNotOpen();
+    this.exceptionHandler = exceptionHandler;
+  }
+
   @Override
   public org.eclipse.emf.cdo.net4j.CDOSession openSession()
   {
@@ -71,7 +85,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
           "Specify exactly one of connector or failOverStrategy"); //$NON-NLS-1$
     }
 
-    CDONet4jSessionImpl session = new CDONet4jSessionImpl();
+    CDONet4jSessionImpl session = new CDONet4jSessionImpl(exceptionHandler);
     CDOClientProtocol protocol = session.options().getProtocol();
     if (connector != null)
     {

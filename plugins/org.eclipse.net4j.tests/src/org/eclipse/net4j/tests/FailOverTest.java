@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -38,6 +38,41 @@ public class FailOverTest extends AbstractProtocolTest
     // Simulate a disconnect from the server.
     IAcceptor acceptor = getAcceptor();
     acceptor.close();
+
+    // Exception HERE
+    IntRequest request = new IntRequest(protocol, data);
+    int result = request.send();
+    assertEquals(data, result);
+  }
+
+  public void testFailingBeforeAndRetry() throws Exception
+  {
+    int data = 0x0a;
+    IConnector connector = startTransport();
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
+
+    // Simulate a disconnect from the server.
+    IAcceptor acceptor = getAcceptor();
+    acceptor.close();
+
+    // new Thread()
+    // {
+    // @Override
+    // public void run()
+    // {
+    // try
+    // {
+    // sleep(1000L);
+    // restartContainer();
+    // getAcceptor();
+    // }
+    // catch (Exception ex)
+    // {
+    // throw WrappedException.wrap(ex);
+    // }
+    // };
+    // }.start();
 
     // Exception HERE
     IntRequest request = new IntRequest(protocol, data);

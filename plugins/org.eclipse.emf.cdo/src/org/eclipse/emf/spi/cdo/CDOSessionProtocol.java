@@ -106,6 +106,14 @@ public interface CDOSessionProtocol extends PackageLoader
   /**
    * @author Eike Stepper
    */
+  public interface ExceptionHandler
+  {
+    public void handleException(int attempt, Exception exception) throws Exception;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public final class OpenSessionResult
   {
     private int sessionID;

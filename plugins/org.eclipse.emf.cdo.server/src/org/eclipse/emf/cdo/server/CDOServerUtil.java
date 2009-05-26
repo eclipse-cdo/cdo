@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -69,8 +69,8 @@ public final class CDOServerUtil
 
   public static void addRepository(IManagedContainer container, IRepository repository)
   {
-    LifecycleUtil.activate(repository);
     container.putElement(RepositoryFactory.PRODUCT_GROUP, RepositoryFactory.TYPE, repository.getName(), repository);
+    LifecycleUtil.activate(repository);
   }
 
   public static IRepository getRepository(IManagedContainer container, String name)

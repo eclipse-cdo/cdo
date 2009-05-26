@@ -240,11 +240,6 @@ public abstract class Signal implements Runnable
     }
     catch (EOFException ex)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace(ex);
-      }
-
       throw new TimeoutException("Timeout"); //$NON-NLS-1$
     }
     catch (Exception ex)
@@ -288,12 +283,10 @@ public abstract class Signal implements Runnable
     }
     catch (Error ex)
     {
-      OM.LOG.error(ex);
       throw ex;
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
       throw ex;
     }
     finally
@@ -320,12 +313,10 @@ public abstract class Signal implements Runnable
     }
     catch (Error ex)
     {
-      OM.LOG.error(ex);
       throw ex;
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
       throw ex;
     }
     finally

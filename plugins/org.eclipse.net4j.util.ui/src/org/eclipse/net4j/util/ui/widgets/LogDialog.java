@@ -4,13 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util.ui.widgets;
 
-import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -25,9 +25,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,22 +97,10 @@ public class LogDialog extends BaseDialog<Viewer>
 
   public void append(Throwable t)
   {
-    try
-    {
-      checkStyleRange();
-      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-      String message = t.getMessage() + "\n"; //$NON-NLS-1$
-      bytes.write(message.getBytes());
-      t.printStackTrace(new PrintStream(bytes));
-
-      String text = bytes.toString();
-      log.append(text);
-      currentStyleRange.length += text.length();
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
-    }
+    checkStyleRange();
+    String text = IOUtil.toString(t);
+    log.append(text);
+    currentStyleRange.length += text.length();
   }
 
   @Override

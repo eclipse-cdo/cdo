@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -187,7 +187,6 @@ public abstract class LongRunningAction extends SafeAction
           }
           catch (Exception ex)
           {
-            OM.LOG.error(ex);
             return new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
           }
         }

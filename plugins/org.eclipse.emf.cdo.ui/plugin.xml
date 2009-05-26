@@ -98,5 +98,11 @@
         </description>
      </decorator>
   </extension>
+  <extension
+        point="org.eclipse.net4j.util.elementProcessors">
+     <elementProcessor
+           class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler">
+     </elementProcessor>
+  </extension>
   
 </plugin>

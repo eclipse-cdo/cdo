@@ -27,8 +27,15 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  */
 public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.emf.cdo.net4j.CDOSession
 {
+  private IFailOverStrategy failOverStrategy;
+
   public CDONet4jSessionImpl()
   {
+  }
+
+  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
+  {
+    this.failOverStrategy = failOverStrategy;
   }
 
   @Override
@@ -58,8 +65,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   protected class OptionsImpl extends org.eclipse.emf.internal.cdo.session.CDOSessionImpl.OptionsImpl implements
       org.eclipse.emf.cdo.net4j.CDOSession.Options
   {
-    private IFailOverStrategy failOverStrategy;
-
     public OptionsImpl()
     {
     }
@@ -67,11 +72,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     public IFailOverStrategy getFailOverStrategy()
     {
       return failOverStrategy;
-    }
-
-    public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
-    {
-      this.failOverStrategy = failOverStrategy;
     }
 
     public CDOClientProtocol getProtocol()

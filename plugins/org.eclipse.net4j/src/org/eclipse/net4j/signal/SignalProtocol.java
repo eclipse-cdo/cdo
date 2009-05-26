@@ -64,7 +64,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   private static final ContextTracer STREAM_TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, SignalProtocol.class);
 
-  private long timeout = NO_TIMEOUT;
+  private long timeout = DEFAULT_TIMEOUT;
 
   private IStreamWrapper streamWrapper;
 

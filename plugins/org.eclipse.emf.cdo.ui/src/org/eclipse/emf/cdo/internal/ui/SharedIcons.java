@@ -66,6 +66,8 @@ public class SharedIcons
 
   public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager"; //$NON-NLS-1$
 
+  public static final String WIZBAN_PROTOCOL_PROBLEM = WIZBAN + "ProtocolProblem"; //$NON-NLS-1$
+
   public static Image getImage(String key)
   {
     key = mangleKey(key);

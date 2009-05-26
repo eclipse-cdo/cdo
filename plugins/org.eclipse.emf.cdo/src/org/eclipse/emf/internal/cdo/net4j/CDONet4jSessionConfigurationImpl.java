@@ -73,11 +73,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     CDONet4jSessionImpl session = new CDONet4jSessionImpl();
     if (connector != null)
     {
-      session.options().setFailOverStrategy(new NOOPFailOverStrategy(connector));
+      session.setFailOverStrategy(new NOOPFailOverStrategy(connector));
     }
     else if (failOverStrategy != null)
     {
-      session.options().setFailOverStrategy(failOverStrategy);
+      session.setFailOverStrategy(failOverStrategy);
     }
 
     return session;

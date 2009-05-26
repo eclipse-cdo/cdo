@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -86,6 +87,26 @@ public final class IOUtil
   public static void print(Throwable t)
   {
     print(t, System.err);
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static String toString(Throwable t)
+  {
+    try
+    {
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      String message = t.getMessage() + "\n"; //$NON-NLS-1$
+      bytes.write(message.getBytes());
+      print(t, new PrintStream(bytes));
+
+      return bytes.toString();
+    }
+    catch (IOException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   public static FileInputStream openInputStream(String fileName) throws IORuntimeException

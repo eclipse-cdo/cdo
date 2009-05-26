@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -38,13 +38,20 @@ public class FailOverStrategyInjector implements IElementProcessor
   public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
       Object element)
   {
-    if (element instanceof org.eclipse.emf.cdo.net4j.CDOSession)
+    if (element instanceof CDONet4jSessionImpl)
     {
-      NOOPFailOverStrategy failOverStrategy = new NOOPFailOverStrategy(getConnector(container, description));
-      ((org.eclipse.emf.cdo.net4j.CDOSession)element).options().getProtocol().setFailOverStrategy(failOverStrategy);
+      CDONet4jSessionImpl session = (CDONet4jSessionImpl)element;
+      NOOPFailOverStrategy failOverStrategy = getFailOverStrategy(container, description);
+      session.setFailOverStrategy(failOverStrategy);
     }
 
     return element;
+  }
+
+  protected NOOPFailOverStrategy getFailOverStrategy(IManagedContainer container, String description)
+  {
+    IConnector connector = getConnector(container, description);
+    return new NOOPFailOverStrategy(connector);
   }
 
   protected IConnector getConnector(IManagedContainer container, String description)

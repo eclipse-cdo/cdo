@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -24,6 +24,8 @@ import org.eclipse.net4j.util.io.IStreamWrapper;
 public interface ISignalProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCTURE>
 {
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
+
+  public static final long DEFAULT_TIMEOUT = 10 * 1000L;
 
   public long getTimeout();
 

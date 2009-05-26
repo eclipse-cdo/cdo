@@ -45,7 +45,6 @@ public class CDONet4jSessionFactory extends CDOSessionFactory
   {
     CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
 
-    // Give the FailOverStrategyInjector a chance
     // The session will be activated by the container
     configuration.setActivateOnOpen(false);
     configuration.setRepositoryName(repositoryName);

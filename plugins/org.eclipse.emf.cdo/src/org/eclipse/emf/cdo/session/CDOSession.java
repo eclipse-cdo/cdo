@@ -147,6 +147,8 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    */
   public Collection<CDOTimeStampContext> refresh();
 
+  public ExceptionHandler getExceptionHandler();
+
   /**
    * Returns the {@link Options options} of this session.
    */
@@ -297,5 +299,13 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
      * @see IRepository#isSupportingAudits()
      */
     public boolean isSupportingAudits();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface ExceptionHandler
+  {
+    public void handleException(CDOSession session, int attempt, Exception exception) throws Exception;
   }
 }

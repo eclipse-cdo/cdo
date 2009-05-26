@@ -31,6 +31,8 @@ import java.util.Set;
 public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
     InternalCDOPackageRegistry.PackageProcessor, InternalCDOPackageRegistry.PackageLoader, ILifecycle.Introspection
 {
+  public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
+
   public CDOSessionProtocol getSessionProtocol();
 
   public InternalCDOPackageRegistry getPackageRegistry();

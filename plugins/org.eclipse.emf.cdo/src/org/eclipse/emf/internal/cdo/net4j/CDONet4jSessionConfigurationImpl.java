@@ -10,7 +10,6 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j;
 
-import org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 
 import org.eclipse.net4j.connector.IConnector;
@@ -18,7 +17,6 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.CheckUtil;
 
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
@@ -30,8 +28,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   private IConnector connector;
 
   private IFailOverStrategy failOverStrategy;
-
-  private CDOSessionProtocol.ExceptionHandler exceptionHandler;
 
   public CDONet4jSessionConfigurationImpl()
   {
@@ -59,17 +55,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.failOverStrategy = failOverStrategy;
   }
 
-  public CDOSessionProtocol.ExceptionHandler getExceptionHandler()
-  {
-    return exceptionHandler;
-  }
-
-  public void setExceptionHandler(CDOSessionProtocol.ExceptionHandler exceptionHandler)
-  {
-    checkNotOpen();
-    this.exceptionHandler = exceptionHandler;
-  }
-
   @Override
   public org.eclipse.emf.cdo.net4j.CDOSession openSession()
   {
@@ -85,15 +70,14 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
           "Specify exactly one of connector or failOverStrategy"); //$NON-NLS-1$
     }
 
-    CDONet4jSessionImpl session = new CDONet4jSessionImpl(exceptionHandler);
-    CDOClientProtocol protocol = session.options().getProtocol();
+    CDONet4jSessionImpl session = new CDONet4jSessionImpl();
     if (connector != null)
     {
-      protocol.setFailOverStrategy(new NOOPFailOverStrategy(connector));
+      session.options().setFailOverStrategy(new NOOPFailOverStrategy(connector));
     }
     else if (failOverStrategy != null)
     {
-      protocol.setFailOverStrategy(failOverStrategy);
+      session.options().setFailOverStrategy(failOverStrategy);
     }
 
     return session;

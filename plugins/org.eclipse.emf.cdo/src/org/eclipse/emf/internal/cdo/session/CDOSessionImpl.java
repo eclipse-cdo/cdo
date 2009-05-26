@@ -36,8 +36,10 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -53,21 +55,32 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
+import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -75,6 +88,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
+import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,6 +101,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -95,6 +111,20 @@ import java.util.Set;
 public abstract class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
+
+  private ExceptionHandler exceptionHandler;
+
+  private CDOSessionProtocol sessionProtocol;
+
+  @ExcludeFromDump
+  private IListener sessionProtocolListener = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      CDOSessionImpl.this.deactivate();
+    }
+  };
 
   private int sessionID;
 
@@ -148,6 +178,17 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     this.userID = userID;
   }
 
+  public ExceptionHandler getExceptionHandler()
+  {
+    return exceptionHandler;
+  }
+
+  public void setExceptionHandler(ExceptionHandler exceptionHandler)
+  {
+    checkInactive();
+    this.exceptionHandler = exceptionHandler;
+  }
+
   /**
    * @since 2.0
    */
@@ -179,6 +220,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected CDOSession.Repository createRepository(OpenSessionResult result)
   {
     return new RepositoryImpl(repository.getName(), result);
+  }
+
+  public CDOSessionProtocol getSessionProtocol()
+  {
+    return sessionProtocol;
   }
 
   public CDOIDObject createCDOIDObject(ExtendedDataInput in)
@@ -637,7 +683,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(getSessionProtocol(), "sessionProtocol"); //$NON-NLS-1$
     checkState(repository().getName(), "repository().getName()"); //$NON-NLS-1$
   }
 
@@ -645,6 +690,13 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    sessionProtocol = createSessionProtocol();
+    if (exceptionHandler != null)
+    {
+      sessionProtocol = new DelegatingSessionProtocol(sessionProtocol);
+    }
+
+    EventUtil.addListener(sessionProtocol, sessionProtocolListener);
     revisionManager.activate();
     remoteSessionManager.activate();
     if (packageRegistry == null)
@@ -683,6 +735,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
   }
 
+  protected abstract CDOSessionProtocol createSessionProtocol();
+
   @Override
   protected void doDeactivate() throws Exception
   {
@@ -711,6 +765,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     packageRegistry.deactivate();
     packageRegistry = null;
+
+    EventUtil.removeListener(sessionProtocol, sessionProtocolListener);
+    LifecycleUtil.deactivate(sessionProtocol);
+    sessionProtocol = null;
+
     super.doDeactivate();
   }
 
@@ -858,7 +917,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return generatedPackageEmulationEnabled;
     }
 
-    public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled)
+    public synchronized void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled)
     {
       this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
       if (this.generatedPackageEmulationEnabled != generatedPackageEmulationEnabled)
@@ -875,7 +934,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return passiveUpdateEnabled;
     }
 
-    public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+    public synchronized void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
     {
       if (this.passiveUpdateEnabled != passiveUpdateEnabled)
       {
@@ -898,7 +957,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return collectionLoadingPolicy;
     }
 
-    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
+    public synchronized void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
     {
       if (policy == null)
       {
@@ -1177,6 +1236,506 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     public String toString()
     {
       return "CDOSessionInvalidationEvent: " + dirtyOIDs; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionProtocol
+  {
+    private CDOSessionProtocol delegate;
+
+    @ExcludeFromDump
+    private IListener delegateListener = new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        DelegatingSessionProtocol.this.deactivate();
+      }
+    };
+
+    public DelegatingSessionProtocol(CDOSessionProtocol delegate)
+    {
+      this.delegate = delegate;
+      activate();
+    }
+
+    public CDOSessionProtocol getDelegate()
+    {
+      return delegate;
+    }
+
+    public boolean cancelQuery(int queryId)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.cancelQuery(queryId);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void changeSubscription(int viewId, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.changeSubscription(viewId, cdoIDs, subscribeMode, clear);
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void closeView(int viewId)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.closeView(viewId);
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.commitTransaction(commitContext, monitor);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CommitTransactionResult commitTransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.commitTransactionCancel(xaContext, monitor);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.commitTransactionPhase1(xaContext, monitor);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CommitTransactionResult commitTransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.commitTransactionPhase2(xaContext, monitor);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public CommitTransactionResult commitTransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.commitTransactionPhase3(xaContext, monitor);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.getRemoteSessions(manager, subscribe);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public RepositoryTimeResult getRepositoryTime()
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.getRepositoryTime();
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.isObjectLocked(view, object, lockType, byOthers);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
+        int fromIndex, int toIndex)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadChunk(revision, feature, accessIndex, fetchIndex, fromIndex, toIndex);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void loadLibraries(Set<String> missingLibraries, File cacheFolder)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.loadLibraries(missingLibraries, cacheFolder);
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public EPackage[] loadPackages(CDOPackageUnit packageUnit)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadPackages(packageUnit);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadRevisionByVersion(id, referenceChunk, version);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadRevisions(ids, referenceChunk);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadRevisionsByTime(ids, referenceChunk, timeStamp);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void lockObjects(CDOView view, Map<CDOID, CDOIDAndVersion> objects, long timeout, LockType lockType)
+        throws InterruptedException
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.lockObjects(view, objects, timeout, lockType);
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.openSession(repositoryName, passiveUpdateEnabled);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void openView(int viewId, byte protocolViewType, long timeStamp)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.openView(viewId, protocolViewType, timeStamp);
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public List<Object> query(int viewID, AbstractQueryIterator<?> queryResult)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.query(viewID, queryResult);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public boolean[] setAudit(int viewId, long timeStamp, List<InternalCDOObject> invalidObjects)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.setAudit(viewId, timeStamp, invalidObjects);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,
+        boolean passiveUpdateEnabled)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.setPassiveUpdate(idAndVersions, initialChunkSize, passiveUpdateEnabled);
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.syncRevisions(allRevisions, initialChunkSize);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.unlockObjects(view, objects, lockType);
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public void unsubscribeRemoteSessions()
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          delegate.unsubscribeRemoteSessions();
+          return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public List<InternalCDORevision> verifyRevision(List<InternalCDORevision> revisions)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.verifyRevision(revisions);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    @Override
+    protected void doActivate() throws Exception
+    {
+      super.doActivate();
+      EventUtil.addListener(delegate, delegateListener);
+    }
+
+    @Override
+    protected void doDeactivate() throws Exception
+    {
+      EventUtil.removeListener(delegate, delegateListener);
+      LifecycleUtil.deactivate(delegate);
+      delegate = null;
+      super.doDeactivate();
+    }
+
+    private void handleException(int attempt, Exception exception)
+    {
+      try
+      {
+        getExceptionHandler().handleException(CDOSessionImpl.this, attempt, exception);
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
     }
   }
 }

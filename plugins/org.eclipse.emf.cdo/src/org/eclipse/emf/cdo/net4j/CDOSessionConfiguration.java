@@ -11,10 +11,7 @@
 package org.eclipse.emf.cdo.net4j;
 
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
-
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
  * @author Eike Stepper
@@ -23,31 +20,16 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  */
 public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDOSessionConfiguration
 {
-  /**
-   * @see CDOSession#open(ISignalProtocol)
-   */
   public IConnector getConnector();
 
-  /**
-   * @see CDOSession#open(ISignalProtocol)
-   */
   public void setConnector(IConnector connector);
 
-  /**
-   * @see CDOSession#getFailOverStrategy()
-   */
   public IFailOverStrategy getFailOverStrategy();
 
   /**
    * The fail-over strategy must be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
-   * @see CDOSession#getFailOverStrategy()
    */
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
 
-  public CDOSessionProtocol.ExceptionHandler getExceptionHandler();
-
-  public void setExceptionHandler(CDOSessionProtocol.ExceptionHandler exceptionHandler);
-
-  public CDOSession openSession();
+  public org.eclipse.emf.cdo.net4j.CDOSession openSession();
 }

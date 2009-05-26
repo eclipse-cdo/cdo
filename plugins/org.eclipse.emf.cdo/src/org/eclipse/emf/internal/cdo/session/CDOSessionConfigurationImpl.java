@@ -35,6 +35,8 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
 
   private String repositoryName;
 
+  private CDOSession.ExceptionHandler exceptionHandler;
+
   private CDOPackageRegistry packageRegistry;
 
   private CDORevisionCache revisionCache;
@@ -56,6 +58,17 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
   {
     checkNotOpen();
     this.repositoryName = repositoryName;
+  }
+
+  public CDOSession.ExceptionHandler getExceptionHandler()
+  {
+    return exceptionHandler;
+  }
+
+  public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
+  {
+    checkNotOpen();
+    this.exceptionHandler = exceptionHandler;
   }
 
   /**

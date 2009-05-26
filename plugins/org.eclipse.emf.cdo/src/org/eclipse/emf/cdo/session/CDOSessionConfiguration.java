@@ -34,12 +34,24 @@ public interface CDOSessionConfiguration
   public void setRepositoryName(String repositoryName);
 
   /**
+   * @see CDOSession#getExceptionHandler()
+   */
+  public CDOSession.ExceptionHandler getExceptionHandler();
+
+  /**
+   * A special exception handler can be set <b>before</b> the session is opened and can not be changed thereafter.
+   * 
+   * @see CDOSession#getExceptionHandler()
+   */
+  public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
+
+  /**
    * @see CDOSession#getPackageRegistry()
    */
   public CDOPackageRegistry getPackageRegistry();
 
   /**
-   * The package registry must be set <b>before</b> the session is opened and can not be changed thereafter.
+   * A special package registry can be set <b>before</b> the session is opened and can not be changed thereafter.
    * 
    * @see CDOSession#getPackageRegistry()
    */
@@ -51,7 +63,7 @@ public interface CDOSessionConfiguration
   public CDORevisionCache getRevisionCache();
 
   /**
-   * The revision cache must be set <b>before</b> the session is opened and can not be changed thereafter.
+   * A special revision cache can be set <b>before</b> the session is opened and can not be changed thereafter.
    * 
    * @see CDORevisionManagerImpl#setCache(CDORevisionCache)
    */

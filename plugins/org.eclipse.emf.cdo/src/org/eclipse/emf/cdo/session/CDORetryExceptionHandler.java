@@ -10,15 +10,13 @@
  */
 package org.eclipse.emf.cdo.session;
 
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-
 import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public class CDORetryExceptionHandler implements CDOSessionProtocol.ExceptionHandler
+public class CDORetryExceptionHandler implements CDOSession.ExceptionHandler
 {
   public static final int RETRY_FOREVER = -1;
 
@@ -44,7 +42,7 @@ public class CDORetryExceptionHandler implements CDOSessionProtocol.ExceptionHan
     return retries < 0;
   }
 
-  public void handleException(int attempt, Exception exception) throws Exception
+  public void handleException(CDOSession session, int attempt, Exception exception) throws Exception
   {
     int max = isRetryingForever() ? Integer.MAX_VALUE : retries;
     if (attempt > max)

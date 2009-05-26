@@ -51,14 +51,11 @@ public class SmartPreparedStatementCache extends AbstractPreparedStatementCache
 
   public void releasePreparedStatement(PreparedStatement ps)
   {
-    if (ps == null)
+    if (ps != null) // Bug 276926: Silently accept ps == null and do nothing.
     {
-      // Bug 276926
-      // silently accept ps == null and do nothing.
-      return;
+      CachedPreparedStatement cachedStatement = checkedOut.remove(ps);
+      cache.put(cachedStatement);
     }
-    CachedPreparedStatement cachedStatement = checkedOut.remove(ps);
-    cache.put(cachedStatement);
   }
 
   @Override

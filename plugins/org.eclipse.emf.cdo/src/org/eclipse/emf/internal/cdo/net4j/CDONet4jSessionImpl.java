@@ -15,6 +15,7 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
@@ -65,6 +66,10 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   protected class OptionsImpl extends org.eclipse.emf.internal.cdo.session.CDOSessionImpl.OptionsImpl implements
       org.eclipse.emf.cdo.net4j.CDOSession.Options
   {
+    private int commitTimeout = OM.PREF_COMMIT_MONITOR_TIMEOUT_SECONDS.getValue();
+
+    private int progressInterval = OM.PREF_COMMIT_MONITOR_PROGRESS_SECONDS.getValue();
+
     public OptionsImpl()
     {
     }
@@ -83,6 +88,26 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       }
 
       return (CDOClientProtocol)protocol;
+    }
+
+    public int getCommitTimeout()
+    {
+      return commitTimeout;
+    }
+
+    public synchronized void setCommitTimeout(int commitTimeout)
+    {
+      this.commitTimeout = commitTimeout;
+    }
+
+    public int getProgressInterval()
+    {
+      return progressInterval;
+    }
+
+    public synchronized void setProgressInterval(int progressInterval)
+    {
+      this.progressInterval = progressInterval;
     }
   }
 }

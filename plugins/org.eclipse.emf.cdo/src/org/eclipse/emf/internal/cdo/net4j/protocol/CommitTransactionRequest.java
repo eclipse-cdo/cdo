@@ -285,13 +285,17 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   @Override
   protected int getMonitorProgressSeconds()
   {
-    return OM.PREF_COMMIT_MONITOR_PROGRESS_SECONDS.getValue();
+    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)commitContext.getTransaction()
+        .getSession();
+    return session.options().getProgressInterval();
   }
 
   @Override
   protected int getMonitorTimeoutSeconds()
   {
-    return OM.PREF_COMMIT_MONITOR_TIMEOUT_SECONDS.getValue();
+    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)commitContext.getTransaction()
+        .getSession();
+    return session.options().getCommitTimeout();
   }
 
   private void writeRevisions(CDODataOutput out, Collection<?> objects) throws IOException

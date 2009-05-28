@@ -116,7 +116,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     session.close();
   }
 
-  public void testBugzilla_273565_List() throws Exception
+  public void _testBugzilla_273565_List() throws Exception
   {
     final OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     final Order order = getModel1Factory().createOrder();

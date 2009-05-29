@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,13 +16,6 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionDelta;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.IRegistryChangeEvent;
-import org.eclipse.core.runtime.IRegistryChangeListener;
-import org.eclipse.core.runtime.Platform;
-
 /**
  * @author Eike Stepper
  */
@@ -32,18 +25,7 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
   public static final String EXT_POINT = "factories"; //$NON-NLS-1$
 
-  private IRegistryChangeListener extensionRegistryListener = new IRegistryChangeListener()
-  {
-    public void registryChanged(IRegistryChangeEvent event)
-    {
-      IExtensionDelta[] deltas = event.getExtensionDeltas(NAMESPACE, EXT_POINT);
-      for (IExtensionDelta delta : deltas)
-      {
-        // TODO Handle ExtensionDelta
-        OM.LOG.warn("ExtensionDelta not handled: " + delta); //$NON-NLS-1$
-      }
-    }
-  };
+  private Object extensionRegistryListener;
 
   public PluginFactoryRegistry()
   {
@@ -71,22 +53,75 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE, EXT_POINT);
-    for (IConfigurationElement element : elements)
+    try
     {
-      registerFactory(new FactoryDescriptor(element));
+      doActivateOSGi();
     }
-
-    extensionRegistry.addRegistryChangeListener(extensionRegistryListener, NAMESPACE);
+    catch (Throwable t)
+    {
+      OM.LOG.warn(t);
+    }
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-    extensionRegistry.removeRegistryChangeListener(extensionRegistryListener);
+    try
+    {
+      doDeactivateOSGi();
+    }
+    catch (Throwable t)
+    {
+      OM.LOG.warn(t);
+    }
+
     clear();
     super.doDeactivate();
+  }
+
+  private void doActivateOSGi()
+  {
+    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform
+        .getExtensionRegistry();
+    if (extensionRegistry == null)
+    {
+      return;
+    }
+
+    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(
+        NAMESPACE, EXT_POINT);
+    for (org.eclipse.core.runtime.IConfigurationElement element : elements)
+    {
+      registerFactory(new FactoryDescriptor(element));
+    }
+
+    org.eclipse.core.runtime.IRegistryChangeListener listener = new org.eclipse.core.runtime.IRegistryChangeListener()
+    {
+      public void registryChanged(org.eclipse.core.runtime.IRegistryChangeEvent event)
+      {
+        org.eclipse.core.runtime.IExtensionDelta[] deltas = event.getExtensionDeltas(NAMESPACE, EXT_POINT);
+        for (org.eclipse.core.runtime.IExtensionDelta delta : deltas)
+        {
+          // TODO Handle ExtensionDelta
+          OM.LOG.warn("ExtensionDelta not handled: " + delta); //$NON-NLS-1$
+        }
+      }
+    };
+
+    extensionRegistry.addRegistryChangeListener(listener, NAMESPACE);
+    extensionRegistryListener = listener;
+  }
+
+  private void doDeactivateOSGi()
+  {
+    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform
+        .getExtensionRegistry();
+    if (extensionRegistry == null)
+    {
+      return;
+    }
+
+    extensionRegistry
+        .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
   }
 }

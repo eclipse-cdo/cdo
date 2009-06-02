@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.protocol;
 
-import org.eclipse.emf.cdo.internal.server.PluginRepositoryProvider;
+import org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider;
 
 /**
  * @author Eike Stepper

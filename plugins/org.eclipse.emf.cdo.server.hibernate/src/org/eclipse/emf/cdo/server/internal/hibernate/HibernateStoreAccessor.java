@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.server.IQueryContext;
+import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -308,13 +308,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return null;
   }
 
-  /**
-   * @since 2.0
-   */
-  public void executeQuery(CDOQueryInfo info, IQueryContext context)
+  public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    // TODO: implement HibernateStoreAccessor.executeQuery(info, context)
-    throw new UnsupportedOperationException();
+    return null;
   }
 
   /**

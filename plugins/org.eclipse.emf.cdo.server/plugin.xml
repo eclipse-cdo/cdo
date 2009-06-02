@@ -36,7 +36,7 @@
    	<extension 
    		point="org.eclipse.emf.cdo.server.repositoryFactories">
       	<repositoryFactory
-        	class="org.eclipse.emf.cdo.internal.server.RepositoryFactory"
+        	class="org.eclipse.emf.cdo.spi.server.RepositoryFactory"
             repositoryType="default"/>
 	</extension>
 

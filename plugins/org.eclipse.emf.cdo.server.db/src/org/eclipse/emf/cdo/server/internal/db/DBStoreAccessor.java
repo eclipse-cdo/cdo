@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.server.IQueryContext;
+import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -272,13 +272,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mappingStrategy.queryResources(this, context);
   }
 
-  /**
-   * @since 2.0
-   */
-  public void executeQuery(CDOQueryInfo info, IQueryContext context)
+  public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    // TODO: implement DBStoreAccessor.executeQuery(info, context)
-    throw new UnsupportedOperationException();
+    return null;
   }
 
   public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)

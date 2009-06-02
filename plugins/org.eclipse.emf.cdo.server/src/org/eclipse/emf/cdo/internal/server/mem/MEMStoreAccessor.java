@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.internal.server.mem;
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IQueryContext;
+import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -40,6 +41,67 @@ import java.util.List;
  */
 public class MEMStoreAccessor extends LongIDStoreAccessor
 {
+  private final IQueryHandler testQueryHandler = new IQueryHandler()
+  {
+    public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
+    {
+      List<Object> filters = new ArrayList<Object>();
+      Object context = info.getParameters().get("context"); //$NON-NLS-1$
+      Long sleep = (Long)info.getParameters().get("sleep"); //$NON-NLS-1$
+      if (context != null)
+      {
+        if (context instanceof EClass)
+        {
+          final EClass eClass = (EClass)context;
+          filters.add(new Object()
+          {
+            @Override
+            public boolean equals(Object obj)
+            {
+              InternalCDORevision revision = (InternalCDORevision)obj;
+              return revision.getEClass().equals(eClass);
+            }
+          });
+        }
+      }
+
+      for (InternalCDORevision revision : getStore().getCurrentRevisions())
+      {
+        if (sleep != null)
+        {
+          try
+          {
+            Thread.sleep(sleep);
+          }
+          catch (InterruptedException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+
+        boolean valid = true;
+
+        for (Object filter : filters)
+        {
+          if (!filter.equals(revision))
+          {
+            valid = false;
+            break;
+          }
+        }
+
+        if (valid)
+        {
+          if (!queryContext.addResult(revision))
+          {
+            // No more results allowed
+            break;
+          }
+        }
+      }
+    }
+  };
+
   private List<InternalCDORevision> newRevisions = new ArrayList<InternalCDORevision>();
 
   public MEMStoreAccessor(MEMStore store, ISession session)
@@ -222,70 +284,14 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     getStore().queryResources(context);
   }
 
-  /**
-   * @since 2.0
-   */
-  public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
+  public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    if (!info.getQueryLanguage().equals("TEST")) //$NON-NLS-1$
+    if ("TEST".equals(info.getQueryLanguage())) //$NON-NLS-1$
     {
-      throw new RuntimeException("Unsupported language " + info.getQueryLanguage()); //$NON-NLS-1$
+      return testQueryHandler;
     }
 
-    List<Object> filters = new ArrayList<Object>();
-    Object context = info.getParameters().get("context"); //$NON-NLS-1$
-    Long sleep = (Long)info.getParameters().get("sleep"); //$NON-NLS-1$
-    if (context != null)
-    {
-      if (context instanceof EClass)
-      {
-        final EClass eClass = (EClass)context;
-        filters.add(new Object()
-        {
-          @Override
-          public boolean equals(Object obj)
-          {
-            InternalCDORevision revision = (InternalCDORevision)obj;
-            return revision.getEClass().equals(eClass);
-          }
-        });
-      }
-    }
-
-    for (InternalCDORevision revision : getStore().getCurrentRevisions())
-    {
-      if (sleep != null)
-      {
-        try
-        {
-          Thread.sleep(sleep);
-        }
-        catch (InterruptedException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
-      }
-
-      boolean valid = true;
-
-      for (Object filter : filters)
-      {
-        if (!filter.equals(revision))
-        {
-          valid = false;
-          break;
-        }
-      }
-
-      if (valid)
-      {
-        if (!queryContext.addResult(revision))
-        {
-          // No more results allowed
-          break;
-        }
-      }
-    }
+    return null;
   }
 
   /**

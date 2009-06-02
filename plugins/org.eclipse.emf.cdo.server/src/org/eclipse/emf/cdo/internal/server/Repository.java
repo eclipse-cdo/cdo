@@ -4,12 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
- *    Simon McDuff - http://bugs.eclipse.org/233273    
- *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Simon McDuff - http://bugs.eclipse.org/233273
+ *    Simon McDuff - http://bugs.eclipse.org/233490
  *    Stefan Winkler - changed order of determining audit and revision delta support.
  */
 package org.eclipse.emf.cdo.internal.server;
@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -32,6 +31,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -39,7 +39,6 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -339,40 +338,35 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public IQueryHandler getQueryHandler(CDOQueryInfo info)
+  public synchronized IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    IQueryHandler handler = null;
     if (CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES.equals(info.getQueryLanguage()))
     {
-      handler = new ResourcesQueryHandler();
+      return new ResourcesQueryHandler();
     }
 
-    if (handler == null)
+    IStoreAccessor storeAccessor = StoreThreadLocal.getAccessor();
+    if (storeAccessor != null)
     {
-      if (queryHandlerProvider != null)
+      IQueryHandler handler = storeAccessor.getQueryHandler(info);
+      if (handler != null)
       {
-        handler = queryHandlerProvider.getQueryHandler(info);
-      }
-      else if (OMPlatform.INSTANCE.isOSGiRunning())
-      {
-        try
-        {
-          IQueryHandlerProvider provider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
-          handler = provider.getQueryHandler(info);
-        }
-        catch (Throwable t)
-        {
-          OM.LOG.warn("Problem with ContainerQueryHandlerProvider: " + t.getMessage()); //$NON-NLS-1$
-        }
+        return handler;
       }
     }
 
-    if (handler == null)
+    if (queryHandlerProvider == null)
     {
-      handler = StoreThreadLocal.getAccessor();
+      queryHandlerProvider = new ContainerQueryHandlerProvider(IPluginContainer.INSTANCE);
     }
 
-    return handler;
+    IQueryHandler handler = queryHandlerProvider.getQueryHandler(info);
+    if (handler != null)
+    {
+      return handler;
+    }
+
+    return null;
   }
 
   public Object[] getElements()

@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public interface IStoreAccessor extends IQueryHandler
+public interface IStoreAccessor extends IQueryHandlerProvider
 {
   /**
    * Returns the store this accessor is associated with.

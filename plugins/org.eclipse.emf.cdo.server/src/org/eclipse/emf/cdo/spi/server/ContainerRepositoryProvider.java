@@ -4,15 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
-import org.eclipse.emf.cdo.server.IQueryHandler;
-import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -20,11 +19,11 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  * @author Eike Stepper
  * @since 2.0
  */
-public class ContainerQueryHandlerProvider implements IQueryHandlerProvider
+public class ContainerRepositoryProvider implements IRepositoryProvider
 {
   private IManagedContainer container;
 
-  protected ContainerQueryHandlerProvider(IManagedContainer container)
+  public ContainerRepositoryProvider(IManagedContainer container)
   {
     this.container = container;
   }
@@ -34,8 +33,8 @@ public class ContainerQueryHandlerProvider implements IQueryHandlerProvider
     return container;
   }
 
-  public IQueryHandler getQueryHandler(CDOQueryInfo info)
+  public IRepository getRepository(String name)
   {
-    return (IQueryHandler)container.getElement(QueryHandlerFactory.PRODUCT_GROUP, info.getQueryLanguage(), null);
+    return RepositoryFactory.get(container, name);
   }
 }

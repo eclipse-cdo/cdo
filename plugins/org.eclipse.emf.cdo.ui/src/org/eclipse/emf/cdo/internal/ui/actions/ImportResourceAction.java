@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -32,7 +31,6 @@ import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -84,8 +82,6 @@ public class ImportResourceAction extends ViewAction
 
     // Source ResourceSet
     ResourceSet sourceSet = new ResourceSetImpl();
-    Map<String, Object> map = sourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-    map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
     sourceSet.setPackageRegistry(transaction.getSession().getPackageRegistry());
 
     // Source Resource

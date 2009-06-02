@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
@@ -114,6 +114,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
     CDOSessionConfiguration configuration = createSessionConfiguration(repositoryName);
     CDOSession session = configuration.openSession();
+    session.options().getProtocol().setTimeout(-1);
     session.addListener(sessionListener);
 
     synchronized (sessions)

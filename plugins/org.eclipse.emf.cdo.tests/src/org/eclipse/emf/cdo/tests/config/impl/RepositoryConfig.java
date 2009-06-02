@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IRevisionManager;
@@ -42,6 +43,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public static final String PROP_TEST_REVISION_MANAGER = "test.repository.RevisionManager";
 
   public static final String PROP_TEST_USER_MANAGER = "test.repository.UserManager";
+
+  public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
 
   public static final String PROP_TEST_STORE = "test.repository.Store";
 
@@ -159,6 +162,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       repository.setSessionManager(sessionManager);
     }
 
+    IQueryHandlerProvider queryHandlerProvider = getTestQueryHandlerProvider();
+    if (queryHandlerProvider != null)
+    {
+      repository.setQueryHandlerProvider(queryHandlerProvider);
+    }
+
     return repository;
   }
 
@@ -177,6 +186,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IUserManager getTestUserManager()
   {
     return (IUserManager)getTestProperty(PROP_TEST_USER_MANAGER);
+  }
+
+  protected IQueryHandlerProvider getTestQueryHandlerProvider()
+  {
+    return (IQueryHandlerProvider)getTestProperty(PROP_TEST_QUERY_HANDLER_PROVIDER);
   }
 
   protected IStore getTestStore()

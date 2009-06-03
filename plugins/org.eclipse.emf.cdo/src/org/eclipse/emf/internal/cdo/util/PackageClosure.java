@@ -62,12 +62,12 @@ public abstract class PackageClosure implements IPackageClosure
       TRACER.trace("Package closure for " + ePackage.getNsURI()); //$NON-NLS-1$
     }
 
-    collectContents(ePackage, visited);
+    handleEPackage(ePackage, visited);
     for (EPackage subPackage : ePackage.getESubpackages())
     {
       doCollectContents(subPackage, visited);
     }
   }
 
-  protected abstract void collectContents(EPackage ePackage, Set<EPackage> visited);
+  protected abstract void handleEPackage(EPackage ePackage, Set<EPackage> visited);
 }

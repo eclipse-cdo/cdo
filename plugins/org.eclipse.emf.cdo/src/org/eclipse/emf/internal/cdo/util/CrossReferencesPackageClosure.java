@@ -31,12 +31,12 @@ public class CrossReferencesPackageClosure extends PackageClosure
   public Set<EPackage> calculate(EPackage ePackage)
   {
     Set<EPackage> visited = new HashSet<EPackage>();
-    collectContents(ePackage, visited);
+    handleEPackage(ePackage, visited);
     return visited;
   }
 
   @Override
-  protected void collectContents(EPackage ePackage, Set<EPackage> visited)
+  protected void handleEPackage(EPackage ePackage, Set<EPackage> visited)
   {
     visited.add(ePackage);
     for (Iterator<EObject> it = ePackage.eAllContents(); it.hasNext();)
@@ -54,7 +54,7 @@ public class CrossReferencesPackageClosure extends PackageClosure
       EPackage crossReferencePackage = crossReference.eClass().getEPackage();
       if (!visited.contains(crossReferencePackage))
       {
-        collectContents(crossReferencePackage, visited);
+        handleEPackage(crossReferencePackage, visited);
       }
     }
   }

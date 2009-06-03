@@ -41,6 +41,8 @@ public class CompletePackageClosure extends PackageClosure
 
   private boolean excludeEcore;
 
+  private Set<EPackage> visitedPackages;
+
   public CompletePackageClosure()
   {
   }
@@ -51,9 +53,9 @@ public class CompletePackageClosure extends PackageClosure
   }
 
   @Override
-  protected void collectContents(EPackage ePackage, Set<EPackage> visited)
+  protected void handleEPackage(EPackage ePackage, Set<EPackage> visitedPackages)
   {
-    if (ePackage != null && visited.add(ePackage))
+    if (ePackage != null && visitedPackages.add(ePackage))
     {
       if (excludeEcore && // Optimize EPackage comparison
           (EcorePackage.eINSTANCE == ePackage || EcorePackage.eNS_URI.equals(ePackage.getNsURI())))
@@ -61,19 +63,19 @@ public class CompletePackageClosure extends PackageClosure
         return;
       }
 
-      Set<EClass> classes = new HashSet<EClass>();
-      List<EClassifier> classifiers = ePackage.getEClassifiers();
-      for (EClassifier classifier : classifiers)
+      this.visitedPackages = visitedPackages;
+      Set<EClassifier> visitedClassifiers = new HashSet<EClassifier>();
+      for (EClassifier classifier : ePackage.getEClassifiers())
       {
-        handleEClassifier(classifier, classes);
+        handleEClassifier(classifier, visitedClassifiers);
       }
 
-      for (EClass eClass : classes)
+      for (EClassifier classifier : visitedClassifiers)
       {
-        final EPackage p = eClass.getEPackage();
+        final EPackage p = classifier.getEPackage();
         if (p != null)
         {
-          if (visited.add(p))
+          if (visitedPackages.add(p))
           {
             if (TRACER.isEnabled())
             {
@@ -83,62 +85,29 @@ public class CompletePackageClosure extends PackageClosure
         }
         else
         {
-          OM.LOG.warn(MessageFormat.format(Messages.getString("CompletePackageClosure.0"), eClass.getName())); //$NON-NLS-1$
+          OM.LOG.warn(MessageFormat.format(Messages.getString("CompletePackageClosure.0"), classifier.getName())); //$NON-NLS-1$
         }
       }
     }
   }
 
-  protected void handleEClassifiers(List<EClassifier> classifiers, Set<EClass> visited)
+  protected void handleEClassifier(EClassifier classifier, Set<EClassifier> visited)
   {
-    if (classifiers != null)
+    if (classifier != null && visited.add(classifier))
     {
-      for (EClassifier classifier : classifiers)
+      handleEPackage(classifier.getEPackage(), visitedPackages);
+      handleETypeParameters(classifier.getETypeParameters(), visited);
+      if (classifier instanceof EClass)
       {
-        handleEClassifier(classifier, visited);
-      }
-    }
-  }
-
-  protected void handleEClassifier(EClassifier classifier, Set<EClass> visited)
-  {
-    if (classifier instanceof EClass)
-    {
-      handleEClass((EClass)classifier, visited);
-    }
-  }
-
-  protected void handleEClasses(List<EClass> classes, Set<EClass> visited)
-  {
-    if (classes != null)
-    {
-      for (EClass eClass : classes)
-      {
-        handleEClass(eClass, visited);
-      }
-    }
-  }
-
-  protected void handleEClass(EClass eClass, Set<EClass> visited)
-  {
-    if (eClass != null)
-    {
-      if (visited.add(eClass))
-      {
-        // if (TRACER.isEnabled())
-        // {
-        //          TRACER.trace("Found class " + eClass.getName()); //$NON-NLS-1$
-        // }
-
+        EClass eClass = (EClass)classifier;
         handleEStructuralFeatures(eClass.getEStructuralFeatures(), visited);
         handleEOperations(eClass.getEOperations(), visited);
         handleEGenericTypes(eClass.getEGenericSuperTypes(), visited);
-        handleETypeParameters(eClass.getETypeParameters(), visited);
       }
     }
   }
 
-  protected void handleEStructuralFeatures(List<EStructuralFeature> structuralFeatures, Set<EClass> visited)
+  protected void handleEStructuralFeatures(List<EStructuralFeature> structuralFeatures, Set<EClassifier> visited)
   {
     if (structuralFeatures != null)
     {
@@ -149,7 +118,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleEOperations(List<EOperation> operations, Set<EClass> visited)
+  protected void handleEOperations(List<EOperation> operations, Set<EClassifier> visited)
   {
     if (operations != null)
     {
@@ -163,7 +132,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleEParameters(List<EParameter> parameters, Set<EClass> visited)
+  protected void handleEParameters(List<EParameter> parameters, Set<EClassifier> visited)
   {
     if (parameters != null)
     {
@@ -175,7 +144,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleEGenericTypes(EList<EGenericType> genericTypes, Set<EClass> visited)
+  protected void handleEGenericTypes(EList<EGenericType> genericTypes, Set<EClassifier> visited)
   {
     if (genericTypes != null)
     {
@@ -186,7 +155,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleEGenericType(EGenericType genericType, Set<EClass> visited)
+  protected void handleEGenericType(EGenericType genericType, Set<EClassifier> visited)
   {
     if (genericType != null)
     {
@@ -199,7 +168,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleETypeParameters(EList<ETypeParameter> typeParameters, Set<EClass> visited)
+  protected void handleETypeParameters(EList<ETypeParameter> typeParameters, Set<EClassifier> visited)
   {
     if (typeParameters != null)
     {
@@ -210,7 +179,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleETypeParameter(ETypeParameter typeParameter, Set<EClass> visited)
+  protected void handleETypeParameter(ETypeParameter typeParameter, Set<EClassifier> visited)
   {
     if (typeParameter != null)
     {

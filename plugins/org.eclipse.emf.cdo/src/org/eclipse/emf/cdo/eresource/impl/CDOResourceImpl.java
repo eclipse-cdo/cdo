@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
@@ -519,24 +518,24 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       return null;
     }
 
-    CDOIDObjectFactory cdoidObjectFactory = cdoView().getSession();
-    CDOID cdoID = CDOIDUtil.read(uriFragment, cdoidObjectFactory);
-    if (CDOIDUtil.isNull(cdoID) || cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
+    try
     {
-      return null;
-    }
+      CDOIDObjectFactory cdoidObjectFactory = cdoView().getSession();
+      CDOID cdoID = CDOIDUtil.read(uriFragment, cdoidObjectFactory);
+      if (CDOIDUtil.isNull(cdoID) || cdoID.isTemporary() && !cdoView().isObjectRegistered(cdoID))
+      {
+        return null;
+      }
 
-    if (cdoID.isObject())
-    {
-      try
+      if (cdoID.isObject())
       {
         return cdoView().getObject(cdoID, true);
       }
-      catch (ObjectNotFoundException ex)
-      {
-        // Do nothing
-        // getEObject return null when the object cannot be resolved.
-      }
+    }
+    catch (Exception ex)
+    {
+      // Do nothing
+      // getEObject return null when the object cannot be resolved.
     }
 
     // If it doesn`t match to anything we return null like ResourceImpl.getEObject

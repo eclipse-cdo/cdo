@@ -466,7 +466,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   @Override
   protected void doPassivate() throws Exception
   {
-    // Do nothing
+    // this is called when the accessor is put back into the pool
+    // we want to make sure that no DB lock is held (see Bug 276926)
+    connection.rollback();
   }
 
   @Override

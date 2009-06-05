@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others. 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
  *    Stefan Winkler - redesign (prepared statements)
+ *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=276926
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -31,6 +32,7 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -53,8 +55,6 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
   private IDBField idField;
 
   private IDBField typeField;
-
-  private transient Object initializeLock = new Object();
 
   private String sqlDelete;
 
@@ -80,9 +80,6 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    Connection connection = accessor.getConnection();
-    initialize(connection);
-
     PreparedStatement stmt = null;
 
     try
@@ -114,9 +111,6 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
   public final void putObjectType(IDBStoreAccessor accessor, CDOID id, EClass type)
   {
-    Connection connection = accessor.getConnection();
-    initialize(connection);
-
     PreparedStatement stmt = null;
 
     try
@@ -144,9 +138,6 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
 
   public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    Connection connection = accessor.getConnection();
-    initialize(connection);
-
     PreparedStatement stmt = null;
 
     try
@@ -171,49 +162,8 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
     }
   }
 
-  private void initialize(Connection connection)
-  {
-    // TODO - is there a better way to initialize this
-    // e.g. doActivate() - only problem there is to get hold of a statement ....
-    synchronized (initializeLock)
-    {
-      if (table == null)
-      {
-        IDBSchema schema = mappingStrategy.getStore().getDBSchema();
-        table = schema.addTable(CDODBSchema.CDO_OBJECTS);
-        idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
-        typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT);
-        table.addIndex(IDBIndex.Type.UNIQUE, idField);
-
-        IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
-
-        Statement statement = null;
-        try
-        {
-          statement = connection.createStatement();
-          dbAdapter.createTable(table, statement);
-        }
-        catch (SQLException ex)
-        {
-          throw new DBException(ex);
-        }
-        finally
-        {
-          DBUtil.close(statement);
-        }
-      }
-
-      sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-
-      sqlInsert = "INSERT INTO " + table.getName() + " VALUES (?,?)"; //$NON-NLS-1$ //$NON-NLS-2$
-
-      sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-    }
-  }
-
   public long getMaxId(Connection connection)
   {
-    initialize(connection);
     return DBUtil.selectMaximumLong(connection, idField);
   }
 
@@ -228,6 +178,38 @@ public class ObjectTypeCache extends Lifecycle implements IObjectTypeCache
   protected void doActivate() throws Exception
   {
     metaDataManager = getMappingStrategy().getStore().getMetaDataManager();
+
+    IDBSchema schema = mappingStrategy.getStore().getDBSchema();
+    table = schema.addTable(CDODBSchema.CDO_OBJECTS);
+    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
+    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT);
+    table.addIndex(IDBIndex.Type.UNIQUE, idField);
+
+    IDBStoreAccessor writer = getMappingStrategy().getStore().getWriter(null);
+    Connection connection = writer.getConnection();
+    IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
+
+    Statement statement = null;
+    try
+    {
+      statement = connection.createStatement();
+      dbAdapter.createTable(table, statement);
+      connection.commit();
+    }
+    catch (SQLException ex)
+    {
+      connection.rollback();
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+      LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
+    }
+
+    sqlSelect = "SELECT " + typeField.getName() + " FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    sqlInsert = "INSERT INTO " + table.getName() + " VALUES (?,?)"; //$NON-NLS-1$ //$NON-NLS-2$
+    sqlDelete = "DELETE FROM " + table.getName() + " WHERE " + idField.getName() + " = ?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Override

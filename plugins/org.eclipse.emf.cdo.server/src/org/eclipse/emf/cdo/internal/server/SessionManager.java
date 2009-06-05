@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.internal.server.protocol.AuthenticationRequest;
+import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -331,7 +331,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     super.doBeforeActivate();
     if (userManager == null)
     {
-      OM.LOG.warn("No user manager configured. Users will not be authenticated");
+      OM.LOG.info("No user manager configured. Users will not be authenticated");
     }
   }
 

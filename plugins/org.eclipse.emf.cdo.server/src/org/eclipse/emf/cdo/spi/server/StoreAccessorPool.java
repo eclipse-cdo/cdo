@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,6 +14,9 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IView;
+
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -104,7 +107,7 @@ public class StoreAccessorPool
         break;
       }
 
-      accessor.deactivate();
+      LifecycleUtil.deactivate(accessor, OMLogger.Level.WARN);
     }
 
     context = null;

@@ -67,6 +67,8 @@ import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
@@ -1415,7 +1417,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   public void close()
   {
-    deactivate();
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   /**

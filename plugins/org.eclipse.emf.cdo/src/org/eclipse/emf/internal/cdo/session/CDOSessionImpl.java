@@ -67,6 +67,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.IOptionsContainer;
@@ -242,7 +243,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   public void close()
   {
-    deactivate();
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   /**
@@ -756,7 +757,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     if (invalidationRunner != null)
     {
-      invalidationRunner.deactivate();
+      LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);
       invalidationRunner = null;
     }
 

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.team.bundle;
 
 import org.eclipse.emf.cdo.internal.team.RepositoryManager;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -53,7 +54,7 @@ public abstract class OM
     @Override
     protected void doStop() throws Exception
     {
-      RepositoryManager.INSTANCE.deactivate();
+      LifecycleUtil.deactivate(RepositoryManager.INSTANCE, OMLogger.Level.WARN);
       super.doStop();
     }
   }

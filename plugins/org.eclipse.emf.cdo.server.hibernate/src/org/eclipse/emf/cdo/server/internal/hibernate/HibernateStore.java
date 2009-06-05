@@ -29,6 +29,8 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.hibernate.SessionFactory;
@@ -196,7 +198,7 @@ public class HibernateStore extends Store implements IHibernateStore
       se.drop(false, true);
     }
 
-    packageHandler.deactivate();
+    LifecycleUtil.deactivate(packageHandler, OMLogger.Level.WARN);
     if (doDropSchema)
     {
       packageHandler.doDropSchema();

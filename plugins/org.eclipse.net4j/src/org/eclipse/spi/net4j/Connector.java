@@ -17,10 +17,11 @@ import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.protocol.IProtocol;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiator;
@@ -257,11 +258,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
   public void close()
   {
-    Exception exception = deactivate();
-    if (exception != null)
-    {
-      throw WrappedException.wrap(exception);
-    }
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   public boolean isClosed()

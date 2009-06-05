@@ -13,38 +13,52 @@ package org.eclipse.net4j.util.om.log;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
+ * @since 2.0
  */
-public class PrintLogHandler extends AbstractLogHandler
+public class FileLogHandler extends AbstractLogHandler
 {
-  public static final PrintLogHandler CONSOLE = new PrintLogHandler();
+  private File logFile;
 
-  private PrintStream out;
-
-  private PrintStream err;
-
-  public PrintLogHandler(PrintStream out, PrintStream err)
+  public FileLogHandler(File logFile, Level logLevel)
   {
-    this.out = out;
-    this.err = err;
+    super(logLevel);
+    this.logFile = logFile;
   }
 
-  protected PrintLogHandler()
+  public FileLogHandler(File logFile)
   {
-    this(IOUtil.OUT(), IOUtil.ERR());
+    this.logFile = logFile;
+  }
+
+  public File getLogFile()
+  {
+    return logFile;
   }
 
   @Override
   protected void writeLog(OMLogger logger, Level level, String msg, Throwable t) throws Throwable
   {
-    PrintStream stream = level == Level.ERROR ? err : out;
-    stream.println(toString(level) + " " + msg); //$NON-NLS-1$
-    if (t != null)
+    FileOutputStream fos = null;
+
+    try
     {
-      IOUtil.print(t, stream);
+      fos = new FileOutputStream(logFile, true);
+      PrintStream stream = new PrintStream(fos);
+      stream.println(toString(level) + " " + msg); //$NON-NLS-1$
+      if (t != null)
+      {
+        IOUtil.print(t, stream);
+      }
+    }
+    finally
+    {
+      IOUtil.close(fos);
     }
   }
 }

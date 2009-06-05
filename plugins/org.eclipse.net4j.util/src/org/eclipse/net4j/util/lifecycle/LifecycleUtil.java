@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.log.OMLogger.Level;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.lang.annotation.Annotation;
@@ -184,6 +185,18 @@ public final class LifecycleUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static void deactivate(Object object, Level logLevel)
+  {
+    Exception exception = deactivate(object);
+    if (exception != null)
+    {
+      OM.LOG.log(logLevel, "Problem while deactivating " + object, exception); //$NON-NLS-1$
+    }
   }
 
   public static void deactivateNoisy(Object object) throws LifecycleException

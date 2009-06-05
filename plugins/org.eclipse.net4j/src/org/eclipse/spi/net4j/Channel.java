@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,11 +14,12 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -270,11 +271,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   public void close()
   {
-    Exception exception = deactivate();
-    if (exception != null)
-    {
-      throw WrappedException.wrap(exception);
-    }
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   public boolean isClosed()

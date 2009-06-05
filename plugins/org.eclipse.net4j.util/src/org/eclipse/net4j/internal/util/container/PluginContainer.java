@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.util.List;
@@ -48,7 +50,7 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
   {
     if (instance != null)
     {
-      instance.deactivate();
+      LifecycleUtil.deactivate(instance, OMLogger.Level.WARN);
       instance = null;
     }
   }

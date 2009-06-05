@@ -21,6 +21,8 @@ import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -171,7 +173,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   public void close()
   {
-    deactivate();
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   public boolean waitForSignals(long timeout)

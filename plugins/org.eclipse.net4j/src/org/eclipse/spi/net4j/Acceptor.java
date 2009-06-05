@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,11 +13,12 @@ package org.eclipse.spi.net4j;
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiator;
 
@@ -135,11 +136,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   public void close()
   {
-    Exception exception = deactivate();
-    if (exception != null)
-    {
-      throw WrappedException.wrap(exception);
-    }
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   public boolean isClosed()

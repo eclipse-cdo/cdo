@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.ExtendedIOAdapter;
 import org.eclipse.net4j.util.io.ExtendedIOHandler;
 import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 
 import org.eclipse.spi.net4j.InternalChannel;
 
@@ -61,11 +63,13 @@ public class HTTPClientConnector extends HTTPConnector
   {
   }
 
+  @Override
   public Location getLocation()
   {
     return Location.CLIENT;
   }
 
+  @Override
   public String getURL()
   {
     return url;
@@ -130,7 +134,7 @@ public class HTTPClientConnector extends HTTPConnector
   protected void doDeactivate() throws Exception
   {
     doDisconnect();
-    poller.deactivate();
+    LifecycleUtil.deactivate(poller, OMLogger.Level.WARN);
     httpClient = null;
     super.doDeactivate();
   }

@@ -42,6 +42,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -402,7 +403,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public void close()
   {
-    deactivate();
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   /**

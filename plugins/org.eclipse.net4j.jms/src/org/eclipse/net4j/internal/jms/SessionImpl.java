@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,6 +21,8 @@ import org.eclipse.net4j.internal.jms.protocol.JMSRollbackRequest;
 import org.eclipse.net4j.internal.jms.util.DestinationUtil;
 import org.eclipse.net4j.internal.jms.util.MessageUtil;
 import org.eclipse.net4j.util.concurrent.QueueWorker;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.log.OMLogger;
 
 import javax.jms.BytesMessage;
 import javax.jms.Destination;
@@ -318,7 +320,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
 
   public void close()
   {
-    deactivate();
+    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
   }
 
   public void run()

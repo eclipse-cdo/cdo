@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -78,14 +78,16 @@ public class TimeoutMonitor extends Monitor
   }
 
   @Override
+  public void done()
+  {
+    cancelTimeoutTask();
+    super.done();
+  }
+
+  @Override
   public void cancel(RuntimeException cancelException)
   {
-    if (timeoutTask != null)
-    {
-      timeoutTask.cancel();
-      timeoutTask = null;
-    }
-
+    cancelTimeoutTask();
     super.cancel(cancelException);
   }
 
@@ -106,6 +108,15 @@ public class TimeoutMonitor extends Monitor
   protected void handleTimeout(long untouched)
   {
     cancel(new TimeoutRuntimeException("Timeout after " + untouched + " millis")); //$NON-NLS-1$ //$NON-NLS-2$
+  }
+
+  private void cancelTimeoutTask()
+  {
+    if (timeoutTask != null)
+    {
+      timeoutTask.cancel();
+      timeoutTask = null;
+    }
   }
 
   private void scheduleTimeout()
@@ -131,7 +142,7 @@ public class TimeoutMonitor extends Monitor
       }
     };
 
-    long delay = timeout - (System.currentTimeMillis() - touched);
+    long delay = Math.max(timeout - (System.currentTimeMillis() - touched), 0L);
     getTimer().schedule(timeoutTask, delay);
   }
 }

@@ -11,14 +11,19 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
 import org.eclipse.net4j.tests.signal.AsyncRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.StringRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 
 /**
@@ -97,5 +102,34 @@ public class SignalTest extends AbstractProtocolTest
         protocol.close();
       }
     }
+  }
+
+  public void testCloseSocketChannel() throws Exception
+  {
+    TestSignalProtocol protocol = null;
+
+    try
+    {
+      IConnector connector = startTransport();
+      protocol = new TestSignalProtocol(connector);
+
+      closeSocketChannel((TCPConnector)getAcceptor().getAcceptedConnectors()[0]);
+      sleep(1000);
+      assertEquals(false, protocol.isActive());
+    }
+    finally
+    {
+      if (protocol != null)
+      {
+        protocol.close();
+      }
+    }
+  }
+
+  private void closeSocketChannel(TCPConnector connector) throws IOException
+  {
+    Field field = ReflectUtil.getField(TCPConnector.class, "socketChannel");
+    SocketChannel socketChannel = (SocketChannel)ReflectUtil.getValue(field, connector);
+    socketChannel.close();
   }
 }

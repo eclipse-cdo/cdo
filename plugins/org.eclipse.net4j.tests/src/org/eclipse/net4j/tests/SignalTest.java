@@ -126,7 +126,7 @@ public class SignalTest extends AbstractProtocolTest
     }
   }
 
-  public static void closeSocketChannel(TCPConnector connector) throws IOException
+  private static void closeSocketChannel(TCPConnector connector) throws IOException
   {
     Field field = ReflectUtil.getField(TCPConnector.class, "socketChannel");
     SocketChannel socketChannel = (SocketChannel)ReflectUtil.getValue(field, connector);

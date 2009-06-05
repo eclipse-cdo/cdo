@@ -22,11 +22,11 @@ import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.security.RandomizerFactory;
 
-import org.eclipse.internal.net4j.ExecutorServiceFactory;
 import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
 
 import org.eclipse.spi.net4j.InternalChannel;

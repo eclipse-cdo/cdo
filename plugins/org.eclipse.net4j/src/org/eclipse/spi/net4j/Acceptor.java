@@ -136,7 +136,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   public void close()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   public boolean isClosed()

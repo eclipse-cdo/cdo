@@ -320,7 +320,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
 
   public void close()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   public void run()

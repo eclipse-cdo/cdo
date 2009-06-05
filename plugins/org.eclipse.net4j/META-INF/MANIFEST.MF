@@ -38,6 +38,7 @@ Export-Package: org.eclipse.internal.net4j;version="2.0.0";
  org.eclipse.net4j.protocol;version="2.0.0",
  org.eclipse.net4j.signal;version="2.0.0",
  org.eclipse.net4j.signal.failover;version="2.0.0",
+ org.eclipse.net4j.signal.heartbeat;version="2.0.0",
  org.eclipse.net4j.signal.wrapping;version="2.0.0",
  org.eclipse.spi.net4j;version="2.0.0"
 Eclipse-BuddyPolicy: registered

@@ -403,7 +403,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
    */
   public void close()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   /**

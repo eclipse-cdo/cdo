@@ -4,13 +4,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
+import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.security.FileUserManagerFactory;
+import org.eclipse.net4j.util.security.RandomizerFactory;
 
 /**
  * @author Eike Stepper
@@ -48,6 +52,17 @@ public final class ContainerUtil
 
   private ContainerUtil()
   {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static void prepareContainer(IManagedContainer container)
+  {
+    container.registerFactory(new TimerLifecycle.DaemonFactory());
+    container.registerFactory(new ExecutorServiceFactory());
+    container.registerFactory(new RandomizerFactory());
+    container.registerFactory(new FileUserManagerFactory());
   }
 
   public static IContainer<Object> emptyContainer()

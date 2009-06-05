@@ -258,7 +258,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
   public void close()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   public boolean isClosed()

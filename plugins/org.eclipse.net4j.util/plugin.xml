@@ -19,6 +19,14 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
+            class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"
+            productGroup="org.eclipse.net4j.util.timers"
+            type="daemon"/>
+      <factory
+            class="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory"
+            productGroup="org.eclipse.net4j.executorServices"
+            type="default"/>
+      <factory
             productGroup="org.eclipse.net4j.randomizers"
             type="default"
             class="org.eclipse.net4j.util.security.RandomizerFactory"/>

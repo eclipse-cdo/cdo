@@ -156,7 +156,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
    */
   protected void handleChannelDeactivation()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   @Override

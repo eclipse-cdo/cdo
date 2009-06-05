@@ -66,7 +66,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession, ILis
   {
     protocol.close();
     protocol = null;
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   /**

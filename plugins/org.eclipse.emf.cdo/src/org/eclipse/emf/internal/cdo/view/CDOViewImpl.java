@@ -1417,7 +1417,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   public void close()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   /**

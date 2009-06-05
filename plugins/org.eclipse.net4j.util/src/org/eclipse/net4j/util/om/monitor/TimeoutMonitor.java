@@ -11,8 +11,7 @@
 package org.eclipse.net4j.util.om.monitor;
 
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
-
-import java.util.TimerTask;
+import org.eclipse.net4j.util.concurrent.Timeouter;
 
 /**
  * @author Eike Stepper
@@ -22,14 +21,11 @@ public class TimeoutMonitor extends Monitor
 {
   private long timeout;
 
-  private long touched;
-
-  private TimerTask timeoutTask;
+  private transient Timeouter timeouter;
 
   public TimeoutMonitor(long timeout)
   {
     this.timeout = timeout;
-    touched = System.currentTimeMillis();
   }
 
   public long getTimeout()
@@ -40,11 +36,18 @@ public class TimeoutMonitor extends Monitor
   public void setTimeout(long timeout)
   {
     this.timeout = timeout;
+    if (timeouter != null)
+    {
+      timeouter.setTimeout(timeout);
+    }
   }
 
   public void touch()
   {
-    touched = System.currentTimeMillis();
+    if (timeouter != null)
+    {
+      timeouter.touch();
+    }
   }
 
   @Override
@@ -52,7 +55,15 @@ public class TimeoutMonitor extends Monitor
   {
     touch();
     super.begin(totalWork);
-    scheduleTimeout();
+    timeouter = new Timeouter(getTimer(), timeout)
+    {
+      @Override
+      protected void handleTimeout(long untouched)
+      {
+        TimeoutMonitor.this.handleTimeout(untouched);
+      }
+    };
+
     return this;
   }
 
@@ -80,14 +91,14 @@ public class TimeoutMonitor extends Monitor
   @Override
   public void done()
   {
-    cancelTimeoutTask();
+    cancelTimeouter();
     super.done();
   }
 
   @Override
   public void cancel(RuntimeException cancelException)
   {
-    cancelTimeoutTask();
+    cancelTimeouter();
     super.cancel(cancelException);
   }
 
@@ -110,39 +121,12 @@ public class TimeoutMonitor extends Monitor
     cancel(new TimeoutRuntimeException("Timeout after " + untouched + " millis")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
-  private void cancelTimeoutTask()
+  private void cancelTimeouter()
   {
-    if (timeoutTask != null)
+    if (timeouter != null)
     {
-      timeoutTask.cancel();
-      timeoutTask = null;
+      timeouter.dispose();
+      timeouter = null;
     }
-  }
-
-  private void scheduleTimeout()
-  {
-    timeoutTask = new TimerTask()
-    {
-      @Override
-      public void run()
-      {
-        if (!isCanceled())
-        {
-          long untouched = System.currentTimeMillis() - touched;
-          if (untouched > timeout)
-          {
-            timeoutTask = null;
-            handleTimeout(untouched);
-          }
-          else
-          {
-            scheduleTimeout();
-          }
-        }
-      }
-    };
-
-    long delay = Math.max(timeout - (System.currentTimeMillis() - touched), 0L);
-    getTimer().schedule(timeoutTask, delay);
   }
 }

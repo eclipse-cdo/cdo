@@ -11,10 +11,10 @@
 package org.eclipse.net4j;
 
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import org.eclipse.internal.net4j.ExecutorServiceFactory;
 import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
 
 import org.eclipse.spi.net4j.InternalAcceptor;

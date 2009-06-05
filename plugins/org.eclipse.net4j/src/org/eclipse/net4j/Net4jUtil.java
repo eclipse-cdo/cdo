@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,12 +14,13 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.security.RandomizerFactory;
 
-import org.eclipse.internal.net4j.ExecutorServiceFactory;
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.buffer.BufferFactory;
 import org.eclipse.internal.net4j.buffer.BufferPool;
@@ -45,10 +46,11 @@ public final class Net4jUtil
 
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new ExecutorServiceFactory());
+    ContainerUtil.prepareContainer(container);
     container.registerFactory(new BufferProviderFactory());
-    container.registerFactory(new RandomizerFactory());
     container.addPostProcessor(new TransportInjector());
+    container.registerFactory(new HeartBeatProtocol.Server.Factory());
+    container.addPostProcessor(new HeartBeatProtocol.Server.TimerInjector());
   }
 
   public static ExecutorService getExecutorService(IManagedContainer container)

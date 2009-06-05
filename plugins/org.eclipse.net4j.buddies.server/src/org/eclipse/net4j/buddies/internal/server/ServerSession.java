@@ -58,7 +58,7 @@ public class ServerSession extends Lifecycle implements ISession, IListener
   {
     protocol.close();
     protocol = null;
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   /**

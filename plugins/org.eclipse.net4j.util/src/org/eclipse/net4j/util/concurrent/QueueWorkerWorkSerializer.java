@@ -25,6 +25,6 @@ public class QueueWorkerWorkSerializer extends QueueRunner implements IWorkSeria
 
   public void dispose()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 }

@@ -271,7 +271,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   public void close()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
   public boolean isClosed()

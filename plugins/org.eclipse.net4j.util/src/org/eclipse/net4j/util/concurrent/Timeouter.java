@@ -49,8 +49,9 @@ public abstract class Timeouter
   {
     if (timeoutTask != null)
     {
-      timeoutTask.cancel();
+      TimerTask task = timeoutTask;
       timeoutTask = null;
+      task.cancel();
     }
   }
 

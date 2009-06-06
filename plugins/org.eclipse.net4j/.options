@@ -4,7 +4,6 @@ org.eclipse.net4j/debug = true
 org.eclipse.net4j/debug.buffer = true
 org.eclipse.net4j/debug.buffer.stream = false
 org.eclipse.net4j/debug.channel = true
-org.eclipse.net4j/debug.selector = true
 org.eclipse.net4j/debug.acceptor = true
 org.eclipse.net4j/debug.connector = true
 org.eclipse.net4j/debug.signal = true

@@ -53,8 +53,6 @@ public class TimeoutMonitor extends Monitor
   @Override
   public OMMonitor begin(double totalWork)
   {
-    touch();
-    super.begin(totalWork);
     timeouter = new Timeouter(getTimer(), timeout)
     {
       @Override
@@ -64,6 +62,8 @@ public class TimeoutMonitor extends Monitor
       }
     };
 
+    touch();
+    super.begin(totalWork);
     return this;
   }
 

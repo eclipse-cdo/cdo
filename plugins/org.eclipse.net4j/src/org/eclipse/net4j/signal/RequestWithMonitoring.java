@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -236,16 +236,32 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     {
       synchronized (monitorLock)
       {
-        if (remoteMonitor != null)
+        try
         {
-          remoteMonitor.done();
+          if (remoteMonitor != null)
+          {
+            remoteMonitor.done();
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+        finally
+        {
           remoteMonitor = null;
         }
       }
 
-      if (mainMonitor != null)
+      try
       {
-        mainMonitor.done();
+        if (mainMonitor != null)
+        {
+          mainMonitor.done();
+        }
+      }
+      finally
+      {
         mainMonitor = null;
       }
     }

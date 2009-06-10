@@ -424,7 +424,14 @@ public abstract class TypeMapping implements ITypeMapping
     @Override
     protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
     {
-      return new BigInteger(resultSet.getString(column));
+      String val = resultSet.getString(column);
+
+      if (resultSet.wasNull())
+      {
+        return null;
+      }
+
+      return new BigInteger(val);
     }
 
     @Override
@@ -447,7 +454,14 @@ public abstract class TypeMapping implements ITypeMapping
     @Override
     protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
     {
-      return new BigDecimal(resultSet.getString(column));
+      String val = resultSet.getString(column);
+
+      if (resultSet.wasNull())
+      {
+        return null;
+      }
+
+      return new BigDecimal(val);
     }
 
     @Override

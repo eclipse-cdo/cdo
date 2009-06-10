@@ -133,6 +133,76 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
+  public void testByteArrayEmpty() throws Exception
+  {
+    byte saveByteArray[] = new byte[0];
+
+    {
+      EPackage packageBytes = createDynamicEPackageWithByte();
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(packageBytes);
+      CDOTransaction transaction = session.openTransaction();
+
+      EClass eClass = (EClass)packageBytes.getEClassifier("GenOfByteArray");
+      EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
+      genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
+
+      CDOResource resource = transaction.createResource("/my/resource");
+      resource.getContents().add(genOfByteArray);
+
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openModel1Session();
+      CDOView view = session.openView();
+      CDOResource resource = view.getResource("/my/resource");
+      EObject genOfByteArray = resource.getContents().get(0);
+      byte storeByteArray[] = (byte[])genOfByteArray.eGet(genOfByteArray.eClass().getEStructuralFeature("bytes"));
+      assertEquals(0, storeByteArray.length);
+      view.close();
+      session.close();
+    }
+  }
+
+  public void testByteArrayNull() throws Exception
+  {
+    byte saveByteArray[] = null;
+
+    {
+      EPackage packageBytes = createDynamicEPackageWithByte();
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(packageBytes);
+      CDOTransaction transaction = session.openTransaction();
+
+      EClass eClass = (EClass)packageBytes.getEClassifier("GenOfByteArray");
+      EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
+      genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
+
+      CDOResource resource = transaction.createResource("/my/resource");
+      resource.getContents().add(genOfByteArray);
+
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openModel1Session();
+      CDOView view = session.openView();
+      CDOResource resource = view.getResource("/my/resource");
+      EObject genOfByteArray = resource.getContents().get(0);
+      byte storeByteArray[] = (byte[])genOfByteArray.eGet(genOfByteArray.eClass().getEStructuralFeature("bytes"));
+      assertNull(storeByteArray);
+      view.close();
+      session.close();
+    }
+  }
+
   public void testBigDecimalAndBigInteger() throws Exception
   {
     BigDecimal bigDecimal = new BigDecimal(10);
@@ -174,6 +244,49 @@ public class AttributeTest extends AbstractCDOTest
       BigInteger bigIntegerStore = (BigInteger)gen.eGet(gen.eClass().getEStructuralFeature("bigInteger"));
       assertEquals(bigDecimal, bigDecimalStore);
       assertEquals(bigInteger, bigIntegerStore);
+
+      view.close();
+      session.close();
+    }
+  }
+
+  public void testBigDecimalAndBigIntegerNull() throws Exception
+  {
+    BigDecimal bigDecimal = null;
+    BigInteger bigInteger = null;
+
+    {
+      EPackage ePackage = createDynamicEPackageBigIntegerAndBigDecimal();
+      CDOSession session = openSession();
+      session.getPackageRegistry().putEPackage(ePackage);
+      CDOTransaction transaction = session.openTransaction();
+
+      EClass eClass = (EClass)ePackage.getEClassifier("Gen");
+      EStructuralFeature bigDecimalFeature = eClass.getEStructuralFeature("bigDecimal");
+      EStructuralFeature bigIntegerFeature = eClass.getEStructuralFeature("bigInteger");
+
+      EObject gen = ePackage.getEFactoryInstance().create(eClass);
+      gen.eSet(bigDecimalFeature, bigDecimal);
+      gen.eSet(bigIntegerFeature, bigInteger);
+
+      CDOResource resource = transaction.createResource("/my/resource");
+      resource.getContents().add(gen);
+
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openSession();
+      CDOView view = session.openView();
+      CDOResource resource = view.getResource("/my/resource");
+      EObject gen = resource.getContents().get(0);
+      BigDecimal bigDecimalStore = (BigDecimal)gen.eGet(gen.eClass().getEStructuralFeature("bigDecimal"));
+      BigInteger bigIntegerStore = (BigInteger)gen.eGet(gen.eClass().getEStructuralFeature("bigInteger"));
+      assertNull(bigDecimalStore);
+      assertNull(bigIntegerStore);
 
       view.close();
       session.close();

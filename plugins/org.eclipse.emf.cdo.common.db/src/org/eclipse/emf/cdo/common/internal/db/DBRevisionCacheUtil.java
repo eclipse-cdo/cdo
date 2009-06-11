@@ -26,36 +26,7 @@ import org.eclipse.net4j.util.CheckUtil;
 /**
  * @author Andre Dietisheim
  */
-public class DBRevisionCacheUtils {
-
-	public static void mandatoryInsertUpdate(PreparedStatement preparedStatement)
-			throws SQLException {
-		insertUpdate(preparedStatement);
-		if (preparedStatement.getUpdateCount() == 0) {
-			rollback(preparedStatement.getConnection());
-			throw new DBException(MessageFormat.format(
-					"No row inserted by statement \"{0}\"", preparedStatement));
-		}
-	}
-
-	public static void insertUpdate(PreparedStatement preparedStatement)
-			throws SQLException {
-		if (preparedStatement.execute()) {
-			rollback(preparedStatement.getConnection());
-			throw new DBException("No result set expected");
-		}
-		commit(preparedStatement.getConnection());
-	}
-
-	public static void rollback(Connection connection) throws SQLException {
-		assertIsNotNull(connection);
-		connection.rollback();
-	}
-
-	public static void commit(Connection connection) throws SQLException {
-		assertIsNotNull(connection);
-		connection.commit();
-	}
+public class DBRevisionCacheUtil {
 
 	/**
 	 * Asserts the given {@link CDORevision} is <tt>null</tt>.
@@ -74,22 +45,16 @@ public class DBRevisionCacheUtils {
 	}
 
 	/**
-	 * Asserts the given {@link Connection} is not <tt>null</tt>.
+	 * Gets the name of a revision of a CDOResourceNode.
 	 * 
-	 * @param connection
-	 *            the connection to check
-	 * @return the connection
-	 * @throws DBException
-	 *             if the given connection's <tt>null</tt>
+	 * @param revision
+	 *            the revision
+	 * 
+	 * @return the resource node name
 	 */
-	public static Connection assertIsNotNull(Connection connection) {
-		if (connection == null) {
-			throw new DBException("connection is null!");
-		} else {
-			return connection;
-		}
-	}
-
+	// TODO: this should be refactored and put in a place, that's more generic
+	// than this class. The same snippet's used in LRURevisionCache and
+	// MemRevisionCache
 	public static String getResourceNodeName(CDORevision revision) {
 		CheckUtil.checkArg(revision.isResourceNode(),
 				"the revision is not a resource node!");

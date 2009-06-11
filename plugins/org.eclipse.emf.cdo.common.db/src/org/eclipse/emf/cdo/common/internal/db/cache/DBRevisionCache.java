@@ -23,11 +23,12 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.eclipse.emf.cdo.common.db.CDOCommonDBUtil;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.AbstractPreparedStatementFactory;
-import org.eclipse.emf.cdo.common.internal.db.DBRevisionCacheUtils;
+import org.eclipse.emf.cdo.common.internal.db.DBRevisionCacheUtil;
 import org.eclipse.emf.cdo.common.internal.db.IPreparedStatementFactory;
 import org.eclipse.emf.cdo.common.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
@@ -119,7 +120,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 		private void setResourceNodeValues(InternalCDORevision cdoRevision,
 				PreparedStatement preparedStatement) throws SQLException {
 			if (cdoRevision.isResourceNode()) {
-				preparedStatement.setString(6, DBRevisionCacheUtils
+				preparedStatement.setString(6, DBRevisionCacheUtil
 						.getResourceNodeName(cdoRevision));
 				CDOID containerID = (CDOID) cdoRevision.getContainerID();
 				preparedStatement.setString(7, containerID.toURIFragment());
@@ -271,7 +272,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 	private void createTable() throws SQLException {
 		Connection connection = getConnection();
 		DBRevisionCacheSchema.INSTANCE.create(dbAdapter, connection);
-		DBRevisionCacheUtils.commit(connection);
+		CDOCommonDBUtil.commit(connection);
 	}
 
 	/**
@@ -284,12 +285,12 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 	 */
 	public boolean addRevision(InternalCDORevision revision) {
 		try {
-			DBRevisionCacheUtils
+			CDOCommonDBUtil
 					.mandatoryInsertUpdate(insertRevisionStatementFactory
 							.getPreparedStatement(revision, getConnection()));
 			if (revision.getVersion() > 1) {
 				// update former latest revision
-				DBRevisionCacheUtils.insertUpdate(updateRevisedStatementFactory
+				CDOCommonDBUtil.insertUpdate(updateRevisedStatementFactory
 						.getPreparedStatement(revision, getConnection()));
 			}
 
@@ -306,7 +307,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 	 */
 	public void clear() {
 		try {
-			DBRevisionCacheUtils.insertUpdate(clearStatementFactory
+			CDOCommonDBUtil.insertUpdate(clearStatementFactory
 					.getPreparedStatement(null, getConnection()));
 			clearStatementFactory.getPreparedStatement(null, getConnection())
 					.executeUpdate();
@@ -420,7 +421,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 		IDBRowHandler rowHandler = new IDBRowHandler() {
 			public boolean handle(int row, final Object... values) {
 				try {
-					DBRevisionCacheUtils
+					DBRevisionCacheUtil
 							.assertIsNull(
 									cdoRevisionArray[0],
 									"database inconsistent: there's more than 1 revision with the same id and timestamp!");
@@ -456,7 +457,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 		IDBRowHandler rowHandler = new IDBRowHandler() {
 			public boolean handle(int row, final Object... values) {
 				try {
-					DBRevisionCacheUtils
+					DBRevisionCacheUtil
 							.assertIsNull(cdoRevisionArray[0],
 									"database inconsistent: there's more than 1 revision with the same version!");
 					cdoRevisionArray[0] = toCDORevision(values[0], values[1]);
@@ -522,7 +523,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 		try {
 			InternalCDORevision cdoRevision = getRevisionByVersion(id, version);
 			if (cdoRevision != null) {
-				DBRevisionCacheUtils
+				CDOCommonDBUtil
 						.mandatoryInsertUpdate(deleteRevisionStatementFactory
 								.getPreparedStatement(cdoRevision,
 										getConnection()));
@@ -555,7 +556,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache {
 	protected Connection getConnection() {
 		try {
 			if (connection == null || connection.isClosed()) {
-				connection = DBRevisionCacheUtils
+				connection = CDOCommonDBUtil
 						.assertIsNotNull(dbConnectionProvider.getConnection());
 				connection.setAutoCommit(false);
 			}

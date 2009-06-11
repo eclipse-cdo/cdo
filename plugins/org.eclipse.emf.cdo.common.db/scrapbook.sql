@@ -35,3 +35,4 @@ SELECT id, version, created, revised FROM dbrevisioncache_revisions WHERE id = 3
 
 SELECT * FROM DBREVISIONCACHE_REVISIONS
 
+SELECT cdorevision, revised FROM dbrevisioncache_revisions WHERE id = 3 AND created <= 1244760465866 AND ( revised >= 1244760465866 OR revised = 0 ) AND resourcenode_name = 'container1'

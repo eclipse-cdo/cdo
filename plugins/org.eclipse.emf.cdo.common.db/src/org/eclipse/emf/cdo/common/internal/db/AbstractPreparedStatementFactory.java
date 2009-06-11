@@ -48,7 +48,7 @@ public abstract class AbstractPreparedStatementFactory<T> implements IPreparedSt
       }
       catch (SQLException ex)
       {
-        TRACER.format("Exception occured while closing preparedStatement \"{0}\"", preparedStatement);
+        TRACER.format("Exception occured while closing preparedStatement \"{0}\"", getSqlStatement());
       }
     }
   }

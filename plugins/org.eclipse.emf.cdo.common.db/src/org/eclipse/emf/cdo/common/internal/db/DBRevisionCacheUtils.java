@@ -11,36 +11,23 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.internal.db;
 
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-
-import org.eclipse.net4j.db.DBException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+
+import org.eclipse.emf.cdo.common.model.CDOModelConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.util.CheckUtil;
 
 /**
  * @author Andre Dietisheim
  */
 public class DBRevisionCacheUtils
 {
-
-  /**
-   * Throws the given {@link Exception} if it's not <tt>null</tt>.
-   * 
-   * @param exception
-   *          the exception
-   * @throws Exception
-   *           the exception
-   */
-  public static void throwExceptionIfPresent(Exception exception) throws Exception
-  {
-    if (exception != null)
-    {
-      throw exception;
-    }
-  }
 
   public static void mandatoryInsertUpdate(PreparedStatement preparedStatement) throws SQLException
   {
@@ -56,6 +43,7 @@ public class DBRevisionCacheUtils
   {
     if (preparedStatement.execute())
     {
+      rollback(preparedStatement.getConnection());
       throw new DBException("No result set expected");
     }
     commit(preparedStatement.getConnection());
@@ -110,6 +98,13 @@ public class DBRevisionCacheUtils
     {
       return connection;
     }
+  }
 
+  public static String getResourceNodeName(CDORevision revision)
+  {
+    CheckUtil.checkArg(revision.isResourceNode(), "the revision is not a resource node!");
+    EStructuralFeature feature = revision.getEClass().getEStructuralFeature(
+        CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+    return (String)((InternalCDORevision)revision).getValue(feature);
   }
 }

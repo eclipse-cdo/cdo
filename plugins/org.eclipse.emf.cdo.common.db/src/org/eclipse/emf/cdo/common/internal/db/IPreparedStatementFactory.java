@@ -11,16 +11,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.internal.db;
 
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 /**
  * @author Andre Dietisheim
  */
-public interface IPreparedStatementFactory<T>
+public interface IPreparedStatementFactory
 {
-  PreparedStatement getPreparedStatement(T t, Connection connection) throws Exception;
+  public PreparedStatement getPreparedStatement(InternalCDORevision revision, Connection connection) throws Exception;
 
-  void close();
-
+  public void close();
 }

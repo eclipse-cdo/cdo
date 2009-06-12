@@ -12,7 +12,10 @@
 package org.eclipse.emf.cdo.common.internal.db;
 
 import org.eclipse.emf.cdo.common.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.sql.Connection;
@@ -22,51 +25,49 @@ import java.sql.SQLException;
 /**
  * @author Andre Dietisheim
  */
-public abstract class AbstractPreparedStatementFactory<T> implements IPreparedStatementFactory<T>
+public abstract class AbstractPreparedStatementFactory implements IPreparedStatementFactory
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractPreparedStatementFactory.class);
 
   private PreparedStatement preparedStatement;
 
-  protected PreparedStatement getPreparedStatement(Connection connection) throws SQLException
+  public AbstractPreparedStatementFactory()
   {
-    if (preparedStatement == null || preparedStatement.getConnection() == null
-        || preparedStatement.getConnection().isClosed() || !preparedStatement.getConnection().equals(connection))
-    {
-      preparedStatement = createPreparedStatement(getSqlStatement(), connection);
-    }
+  }
+
+  public PreparedStatement getPreparedStatement(InternalCDORevision revision, Connection connection) throws Exception
+  {
+    PreparedStatement preparedStatement = getPreparedStatement(connection);
+    setParameters(revision, preparedStatement);
+    TRACER.trace(getSQL());
     return preparedStatement;
   }
 
   public void close()
   {
-    if (preparedStatement != null)
-    {
-      try
-      {
-        preparedStatement.close();
-      }
-      catch (SQLException ex)
-      {
-        TRACER.format("Exception occured while closing preparedStatement \"{0}\"", getSqlStatement());
-      }
-    }
+    DBUtil.close(preparedStatement);
   }
+
+  protected synchronized PreparedStatement getPreparedStatement(Connection connection) throws SQLException
+  {
+    if (preparedStatement == null)
+    {
+      preparedStatement = createPreparedStatement(getSQL(), connection);
+    }
+    else
+    {
+      CheckUtil.checkArg(preparedStatement.getConnection() == connection, "Wrong connection");
+    }
+
+    return preparedStatement;
+  }
+
+  protected abstract String getSQL();
+
+  protected abstract void setParameters(InternalCDORevision revision, PreparedStatement statement) throws Exception;
 
   private PreparedStatement createPreparedStatement(String sql, Connection connection) throws SQLException
   {
     return connection.prepareStatement(sql);
   }
-
-  public PreparedStatement getPreparedStatement(T t, Connection connection) throws Exception
-  {
-    PreparedStatement preparedStatement = getPreparedStatement(connection);
-    doSetParameters(t, preparedStatement);
-    TRACER.trace(getSqlStatement());
-    return preparedStatement;
-  }
-
-  protected abstract String getSqlStatement();
-
-  protected abstract void doSetParameters(T t, PreparedStatement preparedStatement) throws Exception;
 }

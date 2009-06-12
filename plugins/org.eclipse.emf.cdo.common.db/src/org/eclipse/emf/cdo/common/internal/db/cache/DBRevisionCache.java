@@ -11,14 +11,12 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.internal.db.cache;
 
-import org.eclipse.emf.cdo.common.db.CDOCommonDBUtil;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.AbstractPreparedStatementFactory;
 import org.eclipse.emf.cdo.common.internal.db.DBRevisionCacheUtil;
 import org.eclipse.emf.cdo.common.internal.db.IPreparedStatementFactory;
-import org.eclipse.emf.cdo.common.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -36,14 +34,12 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
-
-import javax.sql.DataSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -62,230 +58,246 @@ import java.util.List;
  */
 public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 {
+  private CDOIDObjectFactory idObjectFactory;
 
-  /** The Constant DB_REVISIONCACHE_NAME. */
-  private static final String DB_REVISIONCACHE_NAME = "org.eclipse.emf.cdo.common.db.DBRevisionCache";
+  private CDOIDProvider idProvider;
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBRevisionCache.class);
+  private CDOListFactory listFactory;
 
-  /** The data source. */
-  private DataSource dataSource;
+  private CDOPackageRegistry packageRegistry;
 
-  /** The db adapter. */
+  private CDORevisionResolver revisionResolver;
+
   private IDBAdapter dbAdapter;
 
-  /** The db connection provider. */
   private IDBConnectionProvider dbConnectionProvider;
 
-  /** The cdo id provider. */
-  private CDOIDProvider cdoIdProvider;
-
-  /** The prepared statement used to insert new revisions. */
-  private IPreparedStatementFactory<InternalCDORevision> insertRevisionStatementFactory;
+  /**
+   * The prepared statement used to insert new revisions.
+   */
+  private IPreparedStatementFactory insertRevisionStatementFactory = new InsertRevisionStatementFactory();
 
   /**
    * The prepared statement used to update the revised timestamp in the latest revision.
    */
-  private IPreparedStatementFactory<InternalCDORevision> updateRevisedStatementFactory;
+  private IPreparedStatementFactory updateRevisedStatementFactory = new UpdateRevisedStatementFactory();
 
-  /** The prepared statement used to delete a revision. */
-  private IPreparedStatementFactory<InternalCDORevision> deleteRevisionStatementFactory;
+  /**
+   * The prepared statement used to delete a revision.
+   */
+  private IPreparedStatementFactory deleteRevisionStatementFactory = new DeleteRevisionStatementFactory();
 
-  /** The prepared statement used to delete all entries. */
-  private IPreparedStatementFactory<InternalCDORevision> clearStatementFactory;
+  /**
+   * The prepared statement used to delete all entries.
+   */
+  private IPreparedStatementFactory clearStatementFactory = new ClearStatementFactory();
 
-  /** The database connection used in this cache. */
+  /**
+   * The database connection used in this cache.
+   */
   private Connection connection;
 
-  protected CDOIDObjectFactory cdoIdObjectFactory;
-
-  private CDOListFactory cdoListFactory;
-
-  private CDOPackageRegistry cdoPackageRegistry;
-
-  private CDORevisionResolver cdoRevisionResolver;
-
-  private class InsertRevisionStatementFactory extends AbstractPreparedStatementFactory<InternalCDORevision>
+  public DBRevisionCache()
   {
-    @Override
-    protected void doSetParameters(InternalCDORevision cdoRevision, PreparedStatement preparedStatement)
-        throws Exception
+  }
+
+  public CDOIDObjectFactory getIDObjectFactory()
+  {
+    return idObjectFactory;
+  }
+
+  public void setIDObjectFactory(CDOIDObjectFactory idObjectFactory)
+  {
+    this.idObjectFactory = idObjectFactory;
+  }
+
+  public CDOIDProvider getIdProvider()
+  {
+    return idProvider;
+  }
+
+  public void setIdProvider(CDOIDProvider idProvider)
+  {
+    this.idProvider = idProvider;
+  }
+
+  public CDOListFactory getListFactory()
+  {
+    return listFactory;
+  }
+
+  public void setListFactory(CDOListFactory listFactory)
+  {
+    this.listFactory = listFactory;
+  }
+
+  public CDOPackageRegistry getPackageRegistry()
+  {
+    return packageRegistry;
+  }
+
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
+  {
+    this.packageRegistry = packageRegistry;
+  }
+
+  public CDORevisionResolver getRevisionResolver()
+  {
+    return revisionResolver;
+  }
+
+  public void setRevisionResolver(CDORevisionResolver revisionResolver)
+  {
+    this.revisionResolver = revisionResolver;
+  }
+
+  public IDBAdapter getDBAdapter()
+  {
+    return dbAdapter;
+  }
+
+  public void setDBAdapter(IDBAdapter dbAdapter)
+  {
+    this.dbAdapter = dbAdapter;
+  }
+
+  public IDBConnectionProvider getDBConnectionProvider()
+  {
+    return dbConnectionProvider;
+  }
+
+  public void setDBConnectionProvider(IDBConnectionProvider dbConnectionProvider)
+  {
+    this.dbConnectionProvider = dbConnectionProvider;
+  }
+
+  public EClass getObjectType(CDOID id)
+  {
+    return null;
+  }
+
+  /**
+   * Gets the {@link CDOID} of a resource within this cache. The resource is picked if it matches the given folderID,
+   * name and timestamp TODO Use prepared statement!
+   * 
+   * @param folderID
+   *          the folder id
+   * @param name
+   *          the name
+   * @param timeStamp
+   *          the time stamp
+   * @return the resource id
+   */
+  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+    builder.append("=");
+    builder.append(folderID.toURIFragment());
+    builder.append(" AND ");
+    appendTimestampCondition(builder, timeStamp);
+    builder.append(" AND ");
+    builder.append(DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME);
+    builder.append("='");
+    builder.append(name);
+    builder.append("'");
+
+    InternalCDORevision revision = selectRevision(builder.toString());
+    if (revision == null)
     {
-      preparedStatement.setString(1, cdoRevision.getID().toURIFragment());
-      preparedStatement.setInt(2, cdoRevision.getVersion());
-      preparedStatement.setLong(3, cdoRevision.getCreated());
-      preparedStatement.setLong(4, cdoRevision.getRevised());
-      preparedStatement.setBytes(5, toBytes(cdoRevision));
-      setResourceNodeValues(cdoRevision, preparedStatement);
+      return null;
     }
 
-    private void setResourceNodeValues(InternalCDORevision cdoRevision, PreparedStatement preparedStatement)
-        throws SQLException
+    return revision.getID();
+  }
+
+  /**
+   * Gets the revision with the highest version for a given {@link CDOID}. TODO Use prepared statement!
+   * 
+   * @param id
+   *          the id
+   * @return the revision
+   */
+  public InternalCDORevision getRevision(CDOID id)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+    builder.append("=");
+    builder.append(id.toURIFragment());
+    builder.append(" AND ");
+    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+    builder.append("=");
+    builder.append(CDORevision.UNSPECIFIED_DATE);
+    return selectRevision(builder.toString());
+  }
+
+  /**
+   * Gets an {@link InternalCDORevision} that matches the given timestamp (it is >= created timestamp AND <= revised
+   * timestamp of the revision). TODO Use prepared statement!
+   * 
+   * @param id
+   *          the id
+   * @param timeStamp
+   *          the time stamp
+   * @return the revision by time
+   */
+  public InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+    builder.append("=");
+    builder.append(id.toURIFragment());
+    builder.append(" AND ");
+    appendTimestampCondition(builder, timeStamp);
+    return selectRevision(builder.toString());
+  }
+
+  /**
+   * TODO Use prepared statement!
+   */
+  public InternalCDORevision getRevisionByVersion(CDOID id, int version)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+    builder.append("=");
+    builder.append(id.toURIFragment());
+    builder.append(" AND ");
+    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+    builder.append("=");
+    builder.append(CDORevision.UNSPECIFIED_DATE);
+    return selectRevision(builder.toString());
+  }
+
+  /**
+   * Gets the latest revisions of all persisted model versions.
+   * 
+   * @return the revisions
+   */
+  public List<CDORevision> getRevisions()
+  {
+    final List<CDORevision> result = new ArrayList<CDORevision>();
+    IDBRowHandler rowHandler = new IDBRowHandler()
     {
-      if (cdoRevision.isResourceNode())
+      public boolean handle(int row, final Object... values)
       {
-        preparedStatement.setString(6, DBRevisionCacheUtil.getResourceNodeName(cdoRevision));
-        CDOID containerID = (CDOID)cdoRevision.getContainerID();
-        preparedStatement.setString(7, containerID.toURIFragment());
+        try
+        {
+          byte[] blob = (byte[])values[0];
+          result.add(toRevision(blob));
+          return true;
+        }
+        catch (IOException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
       }
-      else
-      {
-        preparedStatement.setNull(6, Types.VARCHAR);
-        preparedStatement.setNull(7, Types.INTEGER);
-      }
-    }
+    };
 
-    @Override
-    protected String getSqlStatement()
-    {
-      return "INSERT INTO " + DBRevisionCacheSchema.REVISIONS //
-          + " (" //
-          + DBRevisionCacheSchema.REVISIONS_ID //
-          + ", " + DBRevisionCacheSchema.REVISIONS_VERSION //
-          + ", " + DBRevisionCacheSchema.REVISIONS_CREATED //
-          + ", " + DBRevisionCacheSchema.REVISIONS_REVISED //
-          + ", " + DBRevisionCacheSchema.REVISIONS_CDOREVISION //
-          + ", " + DBRevisionCacheSchema.REVISIONS_RESOURCENODENAME //
-          + ", " + DBRevisionCacheSchema.REVISIONS_CONTAINERID //
-          + ") " //
-          + " VALUES (?, ?, ?, ?, ?, ? ,?)";
-    }
-  }
-
-  private class UpdateRevisedStatementFactory extends AbstractPreparedStatementFactory<InternalCDORevision>
-  {
-
-    @Override
-    protected String getSqlStatement()
-    {
-
-      return "UPDATE " + DBRevisionCacheSchema.REVISIONS //
-          + " SET " + DBRevisionCacheSchema.REVISIONS_REVISED + " = ?" //
-          + " WHERE " + DBRevisionCacheSchema.REVISIONS_ID + " = ?" //
-          + " AND " + DBRevisionCacheSchema.REVISIONS_VERSION + " = ?";
-    }
-
-    @Override
-    protected void doSetParameters(InternalCDORevision cdoRevision, PreparedStatement preparedStatement)
-        throws Exception
-    {
-      preparedStatement.setLong(1, cdoRevision.getCreated() - 1);
-      preparedStatement.setString(2, cdoRevision.getID().toURIFragment());
-      preparedStatement.setInt(3, cdoRevision.getVersion() - 1);
-    }
-  }
-
-  private class DeleteRevisionStatementFactory extends AbstractPreparedStatementFactory<InternalCDORevision>
-  {
-    @Override
-    protected void doSetParameters(InternalCDORevision cdoRevision, PreparedStatement preparedStatement)
-        throws Exception
-    {
-      preparedStatement.setString(1, cdoRevision.getID().toURIFragment());
-      preparedStatement.setInt(2, cdoRevision.getVersion());
-    }
-
-    @Override
-    protected String getSqlStatement()
-    {
-      return "DELETE FROM " + DBRevisionCacheSchema.REVISIONS //
-          + " WHERE " //
-          + " ID = ?" //
-          + " AND VERSION = ?";
-    }
-  }
-
-  private class ClearStatementFactory extends AbstractPreparedStatementFactory<InternalCDORevision>
-  {
-    @Override
-    protected String getSqlStatement()
-    {
-      return "DELETE FROM " //
-          + DBRevisionCacheSchema.REVISIONS; //
-    }
-
-    @Override
-    protected void doSetParameters(InternalCDORevision t, PreparedStatement preparedStatement) throws Exception
-    {
-    }
-  }
-
-  /**
-   * Do before activate.
-   * 
-   * @throws Exception
-   *           the exception
-   */
-  @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    checkState(dataSource, "dataSource is null!"); //$NON-NLS-1$
-    checkState(dbAdapter, "dbAdapter is null!"); //$NON-NLS-1$
-    checkState(cdoIdProvider, "cdoIDProvider is null!"); //$NON-NLS-1$
-    checkState(cdoIdObjectFactory, "cdoIdObjectFactory is null!"); //$NON-NLS-1$
-    checkState(cdoListFactory, "cdoListFactory is null!"); //$NON-NLS-1$
-    checkState(cdoPackageRegistry, "cdoPackageRegistry is null!"); //$NON-NLS-1$
-    checkState(cdoRevisionResolver, "cdoRevisionResolver is null!"); //$NON-NLS-1$
-  }
-
-  /**
-   * Do activate.
-   * 
-   * @throws Exception
-   *           the exception
-   */
-  @Override
-  protected void doActivate() throws Exception
-  {
-    super.doActivate();
-
-    insertRevisionStatementFactory = new InsertRevisionStatementFactory();
-    updateRevisedStatementFactory = new UpdateRevisedStatementFactory();
-    deleteRevisionStatementFactory = new DeleteRevisionStatementFactory();
-    clearStatementFactory = new ClearStatementFactory();
-
-    dbConnectionProvider = createDBConnectionProvider();
-    createTable();
-  }
-
-  /**
-   * Do deactivate.
-   * 
-   * @throws Exception
-   *           the exception
-   */
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    try
-    {
-      updateRevisedStatementFactory.close();
-      updateRevisedStatementFactory = null;
-      insertRevisionStatementFactory.close();
-      insertRevisionStatementFactory = null;
-      deleteRevisionStatementFactory.close();
-      deleteRevisionStatementFactory = null;
-    }
-    finally
-    {
-      DBUtil.close(connection);
-      connection = null;
-    }
-    super.doDeactivate();
-  }
-
-  /**
-   * Creates the table.
-   * 
-   * @throws SQLException
-   *           the SQL exception
-   */
-  private void createTable() throws SQLException
-  {
-    Connection connection = getConnection();
-    DBRevisionCacheSchema.INSTANCE.create(dbAdapter, connection);
-    CDOCommonDBUtil.commit(connection);
+    DBUtil.select(connection //
+        , rowHandler //
+        , DBRevisionCacheSchema.REVISIONS_REVISED + "=" + CDORevision.UNSPECIFIED_DATE //
+        , DBRevisionCacheSchema.REVISIONS_CDOREVISION);
+    return result;
   }
 
   /**
@@ -300,12 +312,12 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   {
     try
     {
-      CDOCommonDBUtil.mandatoryInsertUpdate(insertRevisionStatementFactory.getPreparedStatement(revision,
-          getConnection()));
+      PreparedStatement stmt = insertRevisionStatementFactory.getPreparedStatement(revision, connection);
+      DBRevisionCacheUtil.mandatoryInsertUpdate(stmt);
       if (revision.getVersion() > 1)
       {
-        // update former latest revision
-        CDOCommonDBUtil.insertUpdate(updateRevisedStatementFactory.getPreparedStatement(revision, getConnection()));
+        // Update former latest revision
+        DBRevisionCacheUtil.insertUpdate(updateRevisedStatementFactory.getPreparedStatement(revision, connection));
       }
 
       return true;
@@ -318,226 +330,6 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     {
       throw new DBException(ex);
     }
-  }
-
-  /**
-   * Clear.
-   */
-  public void clear()
-  {
-    try
-    {
-      CDOCommonDBUtil.insertUpdate(clearStatementFactory.getPreparedStatement(null, getConnection()));
-      clearStatementFactory.getPreparedStatement(null, getConnection()).executeUpdate();
-    }
-    catch (DBException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
-  /**
-   * Gets the object type.
-   * 
-   * @param id
-   *          the id
-   * @return the object type
-   */
-  public EClass getObjectType(CDOID id)
-  {
-    return null;
-  }
-
-  /**
-   * Gets the {@link CDOID} of a resource within this cache. The resource is picked if it matches the given folderID,
-   * name and timestamp
-   * 
-   * @param folderID
-   *          the folder id
-   * @param name
-   *          the name
-   * @param timeStamp
-   *          the time stamp
-   * @return the resource id
-   */
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-
-    StringBuilder sb = new StringBuilder();
-    sb.append(DBRevisionCacheSchema.REVISIONS_ID).append(" = ")//
-        .append(folderID.toURIFragment()); // 
-    sb.append(" AND ");
-    appendTimestampCondition(timeStamp, sb);
-    sb.append(" AND ");
-    sb.append(DBRevisionCacheSchema.REVISIONS_RESOURCENODENAME) //
-        .append(" = ").append("'").append(name).append("'");
-
-    InternalCDORevision cdoRevision = selectCDORevision(sb.toString());
-
-    if (cdoRevision != null)
-    {
-      return cdoRevision.getID();
-    }
-    else
-    {
-      return null;
-    }
-  }
-
-  /**
-   * Gets the revision with the highest version for a given {@link CDOID}.
-   * 
-   * @param id
-   *          the id
-   * @return the revision
-   */
-  public InternalCDORevision getRevision(CDOID id)
-  {
-    StringBuilder sb = new StringBuilder();
-    sb.append("id = ").append(id.toURIFragment());
-    sb.append(" AND ");
-    sb.append(DBRevisionCacheSchema.REVISIONS_REVISED).append("=").append(CDORevision.UNSPECIFIED_DATE);
-    return selectCDORevision(sb.toString());
-
-  }
-
-  /**
-   * Gets an {@link InternalCDORevision} that matches the given timestamp (it is >= created timestamp AND <= revised
-   * timestamp of the revision).
-   * 
-   * @param id
-   *          the id
-   * @param timeStamp
-   *          the time stamp
-   * @return the revision by time
-   */
-  public InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
-  {
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append(DBRevisionCacheSchema.REVISIONS_ID).append(" = ").append(id.toURIFragment());
-    stringBuilder.append(" AND ");
-    appendTimestampCondition(timeStamp, stringBuilder);
-
-    return selectCDORevision(stringBuilder.toString());
-  }
-
-  public static StringBuilder appendTimestampCondition(long timeStamp, StringBuilder stringBuilder)
-  {
-    stringBuilder.append(DBRevisionCacheSchema.REVISIONS_CREATED);
-    stringBuilder.append(" <= ");
-    stringBuilder.append(timeStamp);
-    stringBuilder.append(" AND");
-    stringBuilder.append(" ( ");
-    stringBuilder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-    stringBuilder.append(" >= ");
-    stringBuilder.append(timeStamp);
-    stringBuilder.append(" OR " + DBRevisionCacheSchema.REVISIONS_REVISED);
-    stringBuilder.append(" = " + CDORevision.UNSPECIFIED_DATE);
-    stringBuilder.append(" )");
-    return stringBuilder;
-  }
-
-  private InternalCDORevision selectCDORevision(String sql)
-  {
-    final InternalCDORevision[] cdoRevisionArray = new InternalCDORevision[1];
-    IDBRowHandler rowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        try
-        {
-          DBRevisionCacheUtil.assertIsNull(cdoRevisionArray[0],
-              "database inconsistent: there's more than 1 revision with the same id and timestamp!");
-          cdoRevisionArray[0] = toCDORevision(values[0], values[1]);
-        }
-        catch (IOException ex)
-        {
-          TRACER.format("error reading CDORevision from database \"{0}\"!", ex);
-        }
-        return true;
-      }
-    };
-
-    DBUtil.select(connection//
-        , rowHandler //
-        , sql //
-        , DBRevisionCacheSchema.REVISIONS_CDOREVISION //
-        , DBRevisionCacheSchema.REVISIONS_REVISED);
-    return cdoRevisionArray[0];
-  }
-
-  /**
-   * Gets the revision by version.
-   * 
-   * @param id
-   *          the id
-   * @param version
-   *          the version
-   * @return the revision by version
-   */
-  public InternalCDORevision getRevisionByVersion(CDOID id, int version)
-  {
-    final InternalCDORevision[] cdoRevisionArray = new InternalCDORevision[1];
-    IDBRowHandler rowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        try
-        {
-          DBRevisionCacheUtil.assertIsNull(cdoRevisionArray[0],
-              "database inconsistent: there's more than 1 revision with the same version!");
-          cdoRevisionArray[0] = toCDORevision(values[0], values[1]);
-        }
-        catch (IOException ex)
-        {
-          TRACER.format("error reading CDORevision from database \"{0}\"!", ex);
-        }
-        return true;
-      }
-    };
-
-    String uriFragment = id.toURIFragment();
-    DBUtil.select(getConnection() //
-        , rowHandler //
-        , "id = " + uriFragment + " AND VERSION = " + version //
-        , DBRevisionCacheSchema.REVISIONS_CDOREVISION //
-        , DBRevisionCacheSchema.REVISIONS_REVISED);
-    return cdoRevisionArray[0];
-  }
-
-  /**
-   * Gets the latest revisions of all persisted model versions.
-   * 
-   * @return the revisions
-   */
-  public List<CDORevision> getRevisions()
-  {
-    final List<CDORevision> cdoRevisionList = new ArrayList<CDORevision>();
-    IDBRowHandler rowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        try
-        {
-          cdoRevisionList.add(toCDORevision((byte[])values[0]));
-        }
-        catch (IOException ex)
-        {
-          TRACER.format("error reading CDORevision from database \"{0}\"!", ex);
-        }
-        return true;
-      }
-    };
-
-    DBUtil.select(getConnection() //
-        , rowHandler //
-        , DBRevisionCacheSchema.REVISIONS_REVISED + " = " + CDORevision.UNSPECIFIED_DATE //
-        , DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-    return cdoRevisionList;
   }
 
   /**
@@ -554,13 +346,14 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   {
     try
     {
-      InternalCDORevision cdoRevision = getRevisionByVersion(id, version);
-      if (cdoRevision != null)
+      InternalCDORevision revision = getRevisionByVersion(id, version);
+      if (revision != null)
       {
-        CDOCommonDBUtil.mandatoryInsertUpdate(deleteRevisionStatementFactory.getPreparedStatement(cdoRevision,
-            getConnection()));
+        PreparedStatement stmt = deleteRevisionStatementFactory.getPreparedStatement(revision, connection);
+        DBRevisionCacheUtil.mandatoryInsertUpdate(stmt);
       }
-      return cdoRevision;
+
+      return revision;
     }
     catch (DBException ex)
     {
@@ -572,44 +365,123 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     }
   }
 
-  /**
-   * Creates a {@link IDBConnectionProvider}
-   * 
-   * @return the {@link IDBConnectionProvider}
-   */
-  private IDBConnectionProvider createDBConnectionProvider()
-  {
-    return DBUtil.createConnectionProvider(dataSource);
-  }
-
-  /**
-   * Gets the {@link Connection}. If a connection was already created in a earlyer call, this connection is reused,
-   * Otherwise a new one is created
-   * 
-   * @return the connection
-   * @throws DBException
-   *           if an error occured while trying to create a connection
-   */
-  protected Connection getConnection()
+  public void clear()
   {
     try
     {
-      if (connection == null || connection.isClosed())
-      {
-        connection = CDOCommonDBUtil.assertIsNotNull(dbConnectionProvider.getConnection());
-        connection.setAutoCommit(false);
-      }
-      return connection;
-
+      PreparedStatement stmt = clearStatementFactory.getPreparedStatement(null, connection);
+      DBRevisionCacheUtil.insertUpdate(stmt);
+      stmt.executeUpdate();
     }
-    catch (SQLException ex)
+    catch (DBException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
     {
       throw new DBException(ex);
     }
   }
 
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(idObjectFactory, "idObjectFactory"); //$NON-NLS-1$
+    checkState(idProvider, "idProvider"); //$NON-NLS-1$
+    checkState(listFactory, "listFactory"); //$NON-NLS-1$
+    checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
+    checkState(revisionResolver, "revisionResolver"); //$NON-NLS-1$
+    checkState(dbAdapter, "dbAdapter"); //$NON-NLS-1$
+    checkState(dbConnectionProvider, "dbConnectionProvider"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    connection = dbConnectionProvider.getConnection();
+    connection.setAutoCommit(false);
+    createTable();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    try
+    {
+      updateRevisedStatementFactory.close();
+      updateRevisedStatementFactory = null;
+
+      insertRevisionStatementFactory.close();
+      insertRevisionStatementFactory = null;
+
+      deleteRevisionStatementFactory.close();
+      deleteRevisionStatementFactory = null;
+    }
+    finally
+    {
+      DBUtil.close(connection);
+      connection = null;
+    }
+
+    super.doDeactivate();
+  }
+
+  private void createTable() throws SQLException
+  {
+    DBRevisionCacheSchema.INSTANCE.create(dbAdapter, connection);
+    DBRevisionCacheUtil.commit(connection);
+  }
+
+  public static StringBuilder appendTimestampCondition(StringBuilder builder, long timeStamp)
+  {
+    builder.append(DBRevisionCacheSchema.REVISIONS_CREATED);
+    builder.append("<=");
+    builder.append(timeStamp);
+    builder.append(" AND");
+    builder.append(" (");
+    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+    builder.append(">=");
+    builder.append(timeStamp);
+    builder.append(" OR " + DBRevisionCacheSchema.REVISIONS_REVISED);
+    builder.append("=" + CDORevision.UNSPECIFIED_DATE);
+    builder.append(")");
+    return builder;
+  }
+
+  private InternalCDORevision selectRevision(String sql)
+  {
+    final InternalCDORevision[] result = new InternalCDORevision[1];
+    IDBRowHandler rowHandler = new IDBRowHandler()
+    {
+      public boolean handle(int row, final Object... values)
+      {
+        try
+        {
+          CheckUtil.checkState(result[0], "Database inconsistent: There is more than 1 revision satisfying the query");
+          byte[] revisionBlob = (byte[])values[0];
+          long revisedTimestamp = (Long)values[1];
+          result[0] = toRevision(revisionBlob, revisedTimestamp);
+          return true;
+        }
+        catch (IOException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    };
+
+    DBUtil.select(connection//
+        , rowHandler //
+        , sql //
+        , DBRevisionCacheSchema.REVISIONS_CDOREVISION //
+        , DBRevisionCacheSchema.REVISIONS_REVISED);
+    return result[0];
+  }
+
   /**
-   * Converts a given {@link CDORevision} to an array of bytes
+   * Converts a given {@link CDORevision revision} to an array of bytes.
    * 
    * @param revision
    *          the revision
@@ -619,17 +491,17 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    */
   private byte[] toBytes(CDORevision revision) throws IOException
   {
-    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    CDODataOutput cdoDataOutput = new CDODataOutputImpl(ExtendedDataOutputStream.wrap(byteArrayOutputStream))
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDODataOutput out = new CDODataOutputImpl(ExtendedDataOutputStream.wrap(baos))
     {
       public CDOIDProvider getIDProvider()
       {
-        return cdoIdProvider;
+        return idProvider;
       }
     };
 
-    cdoDataOutput.writeCDORevision(revision, CDORevision.UNCHUNKED);
-    return byteArrayOutputStream.toByteArray();
+    out.writeCDORevision(revision, CDORevision.UNCHUNKED);
+    return baos.toByteArray();
   }
 
   /**
@@ -638,115 +510,160 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    * latest revision gets a new revised timestamp. This timestamp's only updated in the database column 'revised', not
    * in the blob that holds the serialized instance. Therefore the revised timestamp has to be set separately
    * 
-   * @param revisedTimestampObject
+   * @param revisedTimestamp
    *          the value
-   * @param cdoInstanceData
+   * @param blob
    *          the cdo instance data
    * @return the internal cdo revision
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    */
-  private InternalCDORevision toCDORevision(Object cdoInstanceData, Object revisedTimestampObject) throws IOException
+  private InternalCDORevision toRevision(byte[] blob, long revisedTimestamp) throws IOException
   {
-    CheckUtil.checkArg(cdoInstanceData instanceof byte[], "cdoInstanceDataArray is not of type byte[]");
-    InternalCDORevision cdoRevision = toCDORevision((byte[])cdoInstanceData);
-    CheckUtil.checkArg(revisedTimestampObject instanceof Long, "revisedTimestampObject ins not of type Long");
-    // revised timestamp's updated in the revised column only (not in the
-    // blob)
-    cdoRevision.setRevised((Long)revisedTimestampObject);
-    return cdoRevision;
+    InternalCDORevision revision = toRevision(blob);
+    // Revised timestamp's updated in the revised column only (not in the blob)
+    revision.setRevised(revisedTimestamp);
+    return revision;
   }
 
   /**
    * Converts a given byteArray to a CDORevision
    * 
-   * @param byteArray
+   * @param blob
    *          the byte array
    * @return the cDO revision
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    */
-  private InternalCDORevision toCDORevision(byte[] byteArray) throws IOException
+  private InternalCDORevision toRevision(byte[] blob) throws IOException
   {
-    CDODataInput cdoDataInput = new CDODataInputImpl(ExtendedDataInputStream.wrap(new ByteArrayInputStream(byteArray)))
+    CDODataInput in = new CDODataInputImpl(ExtendedDataInputStream.wrap(new ByteArrayInputStream(blob)))
     {
       @Override
       protected CDOIDObjectFactory getIDFactory()
       {
-        return cdoIdObjectFactory;
+        return idObjectFactory;
       }
 
       @Override
       protected CDOListFactory getListFactory()
       {
-        return cdoListFactory;
+        return listFactory;
       }
 
       @Override
       protected CDOPackageRegistry getPackageRegistry()
       {
-        return cdoPackageRegistry;
+        return packageRegistry;
       }
 
       @Override
       protected CDORevisionResolver getRevisionResolver()
       {
-        return cdoRevisionResolver;
+        return revisionResolver;
       }
     };
-    return (InternalCDORevision)cdoDataInput.readCDORevision();
+
+    return (InternalCDORevision)in.readCDORevision();
   }
 
-  /**
-   * Sets the cDOID provider.
-   * 
-   * @param cdoIDProvider
-   *          the new cDOID provider
-   */
-  public void setCDOIDProvider(CDOIDProvider cdoIDProvider)
+  private class InsertRevisionStatementFactory extends AbstractPreparedStatementFactory
   {
-    cdoIdProvider = cdoIDProvider;
+    @Override
+    protected String getSQL()
+    {
+      return "INSERT INTO " + DBRevisionCacheSchema.REVISIONS //
+          + " (" //
+          + DBRevisionCacheSchema.REVISIONS_ID //
+          + ", " + DBRevisionCacheSchema.REVISIONS_VERSION //
+          + ", " + DBRevisionCacheSchema.REVISIONS_CREATED //
+          + ", " + DBRevisionCacheSchema.REVISIONS_REVISED //
+          + ", " + DBRevisionCacheSchema.REVISIONS_CDOREVISION //
+          + ", " + DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME //
+          + ", " + DBRevisionCacheSchema.REVISIONS_CONTAINERID //
+          + ") " //
+          + " VALUES (?, ?, ?, ?, ?, ? ,?)";
+    }
+
+    @Override
+    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
+    {
+      preparedStatement.setString(1, revision.getID().toURIFragment());
+      preparedStatement.setInt(2, revision.getVersion());
+      preparedStatement.setLong(3, revision.getCreated());
+      preparedStatement.setLong(4, revision.getRevised());
+      preparedStatement.setBytes(5, toBytes(revision));
+      setResourceNodeValues(revision, preparedStatement);
+    }
+
+    private void setResourceNodeValues(InternalCDORevision revision, PreparedStatement preparedStatement)
+        throws SQLException
+    {
+      if (revision.isResourceNode())
+      {
+        preparedStatement.setString(6, DBRevisionCacheUtil.getResourceNodeName(revision));
+        CDOID containerID = (CDOID)revision.getContainerID();
+        preparedStatement.setString(7, containerID.toURIFragment());
+      }
+      else
+      {
+        preparedStatement.setNull(6, Types.VARCHAR);
+        preparedStatement.setNull(7, Types.INTEGER);
+      }
+    }
   }
 
-  public void setCdoIdObjectFactory(CDOIDObjectFactory cdoIdObjectFactory)
+  private class UpdateRevisedStatementFactory extends AbstractPreparedStatementFactory
   {
-    this.cdoIdObjectFactory = cdoIdObjectFactory;
+    @Override
+    protected String getSQL()
+    {
+      return "UPDATE " + DBRevisionCacheSchema.REVISIONS //
+          + " SET " + DBRevisionCacheSchema.REVISIONS_REVISED + " = ?" //
+          + " WHERE " + DBRevisionCacheSchema.REVISIONS_ID + " = ?" //
+          + " AND " + DBRevisionCacheSchema.REVISIONS_VERSION + " = ?";
+    }
+
+    @Override
+    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
+    {
+      preparedStatement.setLong(1, revision.getCreated() - 1);
+      preparedStatement.setString(2, revision.getID().toURIFragment());
+      preparedStatement.setInt(3, revision.getVersion() - 1);
+    }
   }
 
-  public void setCdoListFactory(CDOListFactory cdoListFactory)
+  private class DeleteRevisionStatementFactory extends AbstractPreparedStatementFactory
   {
-    this.cdoListFactory = cdoListFactory;
+    @Override
+    protected String getSQL()
+    {
+      return "DELETE FROM " + DBRevisionCacheSchema.REVISIONS //
+          + " WHERE " //
+          + " ID = ?" //
+          + " AND VERSION = ?";
+    }
+
+    @Override
+    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
+    {
+      preparedStatement.setString(1, revision.getID().toURIFragment());
+      preparedStatement.setInt(2, revision.getVersion());
+    }
   }
 
-  public void setCdoPackageRegistry(CDOPackageRegistry cdoPackageRegistry)
+  private class ClearStatementFactory extends AbstractPreparedStatementFactory
   {
-    this.cdoPackageRegistry = cdoPackageRegistry;
-  }
+    @Override
+    protected String getSQL()
+    {
+      return "DELETE FROM " //
+          + DBRevisionCacheSchema.REVISIONS; //
+    }
 
-  public void setCdoRevisionResolver(CDORevisionResolver cdoRevisionResolver)
-  {
-    this.cdoRevisionResolver = cdoRevisionResolver;
-  }
-
-  /**
-   * Sets the data source.
-   * 
-   * @param dataSource
-   *          the new data source
-   */
-  public void setDataSource(DataSource dataSource)
-  {
-    this.dataSource = dataSource;
-  }
-
-  /**
-   * Sets the dB adapter.
-   * 
-   * @param dbAdapter
-   *          the new dB adapter
-   */
-  public void setDBAdapter(IDBAdapter dbAdapter)
-  {
-    this.dbAdapter = dbAdapter;
+    @Override
+    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
+    {
+    }
   }
 }

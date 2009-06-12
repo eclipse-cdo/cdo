@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReadLockObjectsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadObjectsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.WriteLockObjectsAction;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
@@ -597,7 +598,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     menuManager.insertAfter("ui-actions", refreshViewerAction); //$NON-NLS-1$
     menuManager.insertBefore(refreshViewerAction.getId(), reloadObjectsAction);
 
-    MenuManager lockingSubMenu = new MenuManager("Locking"); //$NON-NLS-1$
+    MenuManager lockingSubMenu = new MenuManager(Messages.getString("CDOActionBarContributor_0")); //$NON-NLS-1$
     lockingSubMenu.add(new Separator("ui-actions")); //$NON-NLS-1$
 
     lockingSubMenu.insertAfter("ui-actions", writeLockObjectsAction); //$NON-NLS-1$

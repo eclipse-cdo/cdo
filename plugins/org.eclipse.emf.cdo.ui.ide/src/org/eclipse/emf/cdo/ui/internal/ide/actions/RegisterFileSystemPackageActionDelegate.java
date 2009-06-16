@@ -11,23 +11,20 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
-import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.eresource.EresourceFactory;
-import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
+import org.eclipse.emf.cdo.internal.ui.actions.RegisterFilesystemPackagesAction;
 
 /**
- * @author Eike Stepper
+ * @author Victor Roldan Betancort
  */
-public class NewResourceAction extends NewResourceNodeAction
+public class RegisterFileSystemPackageActionDelegate extends SessionAwareActionDelegate
 {
-  public NewResourceAction()
+  public RegisterFileSystemPackageActionDelegate()
   {
-    super(Messages.getString("NewResourceAction_0")); //$NON-NLS-1$
   }
 
   @Override
-  protected CDOResourceNode createNewResourceNode()
+  protected void safeRun() throws Exception
   {
-    return EresourceFactory.eINSTANCE.createCDOResource();
+    new RegisterFilesystemPackagesAction(getPage(), getSession()).run();
   }
 }

@@ -77,7 +77,7 @@
                value="org.eclipse.team.core.repository=org.eclipse.emf.cdo.team.TeamProvider">
          </filter>
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.DisconnectAction"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.DisconnectActionDelegate"
                id="org.eclipse.emf.cdo.ui.ide.DisconnectAction"
                label="%action.label"
                menubarPath="team.main/projectGroup">
@@ -88,16 +88,25 @@
             id="org.eclipse.emf.cdo.ui.ide.ResourcesNodeContributions"
             objectClass="org.eclipse.emf.cdo.ui.ide.Node$ResourcesNode">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceActionDelegate"
                icon="icons/full/elcl16/NewCDOResource.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="%action.label.0">
+               label="%action.label.0"
+               tooltip="%action.tooltip">
          </action>
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderActionDelegate"
                icon="icons/full/elcl16/NewCDOResourceFolder.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="%action.label.1">
+               label="%action.label.1"
+               tooltip="%action.tooltip.0">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ImportResourceActionDelegate"
+               icon="icons/full/elcl16/import_wiz.gif"
+               id="org.eclipse.emf.cdo.ui.ide.action5"
+               label="%action.label.8"
+               tooltip="%action.tooltip.7">
          </action>
       </objectContribution>
       <objectContribution
@@ -105,10 +114,11 @@
             id="org.eclipse.emf.cdo.ui.ide.CDOResourceNodeContributions"
             objectClass="org.eclipse.emf.cdo.eresource.CDOResourceNode">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceAction"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceActionDelegate"
                icon="icons/full/elcl16/delete_edit.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="%action.label.2">
+               label="%action.label.2"
+               tooltip="%action.tooltip.1">
          </action>
       </objectContribution>
       <objectContribution
@@ -116,16 +126,62 @@
             id="org.eclipse.emf.cdo.ui.ide.CDOResourceFolderContributions"
             objectClass="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceAction"
+               class="org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction"
                icon="icons/full/elcl16/NewCDOResource.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="%action.label.3">
+               label="%action.label.3"
+               tooltip="%action.tooltip.2">
          </action>
          <action
-               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderAction"
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.NewResourceFolderActionDelegate"
                icon="icons/full/elcl16/NewCDOResourceFolder.gif"
                id="org.eclipse.emf.cdo.ui.ide.RemoveResourceAction"
-               label="%action.label.4">
+               label="%action.label.4"
+               tooltip="%action.tooltip.3">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ImportResourceActionDelegate"
+               icon="icons/full/elcl16/import_wiz.gif"
+               id="org.eclipse.emf.cdo.ui.ide.action5"
+               label="%action.label.9"
+               tooltip="%action.tooltip.8">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.ui.ide.PackageNodeActions"
+            objectClass="org.eclipse.emf.cdo.ui.ide.Node$PackagesNode">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ManagePackagesActionDelegate"
+               icon="icons/full/elcl16/EPackageIcon.gif"
+               id="org.eclipse.emf.cdo.ui.ide.managePackages"
+               label="%action.label.5"
+               tooltip="%action.tooltip.4">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.RegisterFileSystemPackageActionDelegate"
+               icon="icons/full/elcl16/FileSystemIcon.gif"
+               id="org.eclipse.emf.cdo.ui.ide.action3"
+               label="%action.label.6"
+               tooltip="%action.tooltip.5">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.RegisterWorkspacePackageActionDelegate"
+               icon="icons/full/elcl16/EcoreModelFile.gif"
+               id="org.eclipse.emf.cdo.ui.ide.action4"
+               label="%action.label.7"
+               tooltip="%action.tooltip.6">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.ui.ide.CDOResourceActionContribution"
+            objectClass="org.eclipse.emf.cdo.eresource.CDOResource">
+         <action
+               class="org.eclipse.emf.cdo.ui.internal.ide.actions.ExportResourceActionDelegate"
+               icon="icons/full/elcl16/export_wiz.gif"
+               id="org.eclipse.emf.cdo.ui.ide.action6"
+               label="%action.label.10">
          </action>
       </objectContribution> </extension>
 

@@ -26,11 +26,11 @@ import org.eclipse.ui.IWorkbenchPart;
 /**
  * @author Eike Stepper
  */
-public class DisconnectAction implements IObjectActionDelegate
+public class DisconnectActionDelegate implements IObjectActionDelegate
 {
   private IProject project;
 
-  public DisconnectAction()
+  public DisconnectActionDelegate()
   {
   }
 

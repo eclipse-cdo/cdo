@@ -31,15 +31,16 @@ import java.text.MessageFormat;
 /**
  * @author Victor Roldan Betancort
  */
-public abstract class TransactionalBackgroundAction extends LongRunningActionDelegate implements IObjectActionDelegate
+public abstract class TransactionalBackgroundActionDelegate extends LongRunningActionDelegate implements
+    IObjectActionDelegate
 {
-  private String text;
-
   private IWorkbenchPart targetPart;
+
+  private String text;
 
   private CDOObject transactionalObject;
 
-  public TransactionalBackgroundAction(String text)
+  public TransactionalBackgroundActionDelegate(String text)
   {
     this.text = text;
   }

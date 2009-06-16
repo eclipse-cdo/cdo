@@ -30,7 +30,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
@@ -43,16 +42,15 @@ import java.util.Map;
 /**
  * @author Victor Roldan Betancort
  */
-public class RemoveResourceAction implements IObjectActionDelegate
+public class RemoveResourceActionDelegate implements IObjectActionDelegate
 {
+  // private Image deleteIcon;
+
   private List<CDOResourceNode> nodes;
 
   private Shell shell;
 
-  private static Image removeImage = OM.Activator.imageDescriptorFromPlugin(OM.BUNDLE_ID,
-      "icons/full/elcl16/delete_edit.gif").createImage(); //$NON-NLS-1$
-
-  public RemoveResourceAction()
+  public RemoveResourceActionDelegate()
   {
   }
 
@@ -121,8 +119,8 @@ public class RemoveResourceAction implements IObjectActionDelegate
             }
           }
 
-          UIUtil.setStatusBarMessage(
-              MessageFormat.format(Messages.getString("RemoveResourceAction_5"), nodes.size()), removeImage); //$NON-NLS-1$
+          // UIUtil.setStatusBarMessage(
+          //              MessageFormat.format(Messages.getString("RemoveResourceAction_5"), nodes.size()), getDeleteIcon()); //$NON-NLS-1$
           return Status.OK_STATUS;
         }
       };
@@ -130,4 +128,26 @@ public class RemoveResourceAction implements IObjectActionDelegate
       job.schedule();
     }
   }
+
+  // private Image getDeleteIcon()
+  // {
+  // if (deleteIcon == null)
+  // {
+  // deleteIcon = OM.Activator
+  //          .imageDescriptorFromPlugin(OM.BUNDLE_ID, "icons/full/elcl16/delete_edit.gif").createImage(); //$NON-NLS-1$
+  // }
+  //
+  // return deleteIcon;
+  // }
+  //
+  // @Override
+  // protected void finalize() throws Throwable
+  // {
+  // if (deleteIcon != null)
+  // {
+  // deleteIcon.dispose();
+  // }
+  //
+  // super.finalize();
+  // }
 }

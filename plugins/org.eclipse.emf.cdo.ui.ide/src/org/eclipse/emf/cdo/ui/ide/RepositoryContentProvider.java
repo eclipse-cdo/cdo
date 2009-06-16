@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.ide.Node.PackagesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.ResourcesNode;
 import org.eclipse.emf.cdo.ui.ide.Node.SessionsNode;
-import org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceAction;
+import org.eclipse.emf.cdo.ui.internal.ide.actions.RemoveResourceActionDelegate;
 import org.eclipse.emf.cdo.ui.internal.ide.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -467,7 +467,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     {
       if (e.keyCode == SWT.DEL)
       {
-        RemoveResourceAction action = new RemoveResourceAction();
+        RemoveResourceActionDelegate action = new RemoveResourceActionDelegate();
         action.selectionChanged(null, getViewer().getSelection());
         action.run(null);
       }

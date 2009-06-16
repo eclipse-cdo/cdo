@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.ui.internal.ide.messages.Messages;
 /**
  * @author Eike Stepper
  */
-public class NewResourceFolderAction extends NewResourceNodeAction
+public class NewResourceFolderActionDelegate extends NewResourceNodeActionDelegate
 {
-  public NewResourceFolderAction()
+  public NewResourceFolderActionDelegate()
   {
     super(Messages.getString("NewResourceFolderAction_0")); //$NON-NLS-1$
   }

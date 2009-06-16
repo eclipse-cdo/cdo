@@ -24,24 +24,24 @@ import org.eclipse.jface.dialogs.InputDialog;
 /**
  * @author Eike Stepper
  */
-public abstract class NewResourceNodeAction extends TransactionalBackgroundAction
+public abstract class NewResourceNodeActionDelegate extends TransactionalBackgroundActionDelegate
 {
   private CDOResourceNode newResourceNode;
 
-  public NewResourceNodeAction(String text)
+  public NewResourceNodeActionDelegate(String text)
   {
     super(text);
   }
 
   @Override
-  protected final CDOObject preRun(CDOObject object)
+  protected CDOObject preRun(CDOObject object)
   {
     InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), Messages
         .getString("NewResourceNodeAction_0"), null, null); //$NON-NLS-1$
     if (dialog.open() == Dialog.OK)
     {
-      newResourceNode = createNewResourceNode();
-      newResourceNode.setName(dialog.getValue());
+      setNewResourceNode(createNewResourceNode());
+      getNewResourceNode().setName(dialog.getValue());
       return super.preRun(object);
     }
 
@@ -54,12 +54,22 @@ public abstract class NewResourceNodeAction extends TransactionalBackgroundActio
   {
     if (object instanceof CDOResourceFolder)
     {
-      ((CDOResourceFolder)object).getNodes().add(newResourceNode);
+      ((CDOResourceFolder)object).getNodes().add(getNewResourceNode());
     }
     else
     {
-      transaction.getRootResource().getContents().add(newResourceNode);
+      transaction.getRootResource().getContents().add(getNewResourceNode());
     }
+  }
+
+  protected void setNewResourceNode(CDOResourceNode newResourceNode)
+  {
+    this.newResourceNode = newResourceNode;
+  }
+
+  protected CDOResourceNode getNewResourceNode()
+  {
+    return newResourceNode;
   }
 
   protected abstract CDOResourceNode createNewResourceNode();

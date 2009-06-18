@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -51,7 +51,6 @@ public enum BufferState
    * A transition to {@link #GETTING} can be triggered by calling {@link IBuffer#flip()}.
    * <p>
    * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
-   * <p>
    */
   PUTTING,
 
@@ -62,7 +61,6 @@ public enum BufferState
    * until it returns <code>true</code>.
    * <p>
    * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
-   * <p>
    */
   WRITING,
 
@@ -74,7 +72,6 @@ public enum BufferState
    * getting data.
    * <p>
    * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
-   * <p>
    */
   READING_HEADER,
 
@@ -86,7 +83,6 @@ public enum BufferState
    * data.
    * <p>
    * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
-   * <p>
    */
   READING_BODY,
 
@@ -94,7 +90,20 @@ public enum BufferState
    * Indicates that the {@link IBuffer} can provide a {@link ByteBuffer} that can be used for getting data.
    * <p>
    * A transition to {@link #INITIAL} can be triggered by calling {@link IBuffer#clear()}.
-   * <p>
    */
-  GETTING
+  GETTING,
+
+  /**
+   * Indicates that the {@link IBuffer} is owned by its {@link IBufferProvider}.
+   * 
+   * @since 2.0
+   */
+  RELEASED,
+
+  /**
+   * Indicates that the {@link IBuffer} can not be used anymore.
+   * 
+   * @since 2.0
+   */
+  DISPOSED
 }

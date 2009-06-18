@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
+import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
@@ -79,7 +80,7 @@ public class Buffer implements InternalBuffer
   {
     if (state == BufferState.INITIAL || state == BufferState.READING_HEADER)
     {
-      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+      throw new IllegalStateException(toString());
     }
 
     return channelID;
@@ -90,43 +91,45 @@ public class Buffer implements InternalBuffer
     return (short)byteBuffer.capacity();
   }
 
-  public ByteBuffer getByteBuffer()
-  {
-    if (state != BufferState.GETTING && state != BufferState.PUTTING)
-    {
-      throw new IllegalStateException("state == " + state); //$NON-NLS-1$
-    }
-
-    return byteBuffer;
-  }
-
   public BufferState getState()
   {
     return state;
   }
 
-  /**
-   * TODO Check for multiply released buffers?
-   */
-  public void release()
+  public ByteBuffer getByteBuffer()
   {
-    errorHandler = null;
-    if (bufferProvider != null)
+    if (state != BufferState.GETTING && state != BufferState.PUTTING)
     {
-      bufferProvider.retainBuffer(this);
+      throw new IllegalStateException(toString());
     }
+
+    return byteBuffer;
   }
 
   public void clear()
   {
-    byteBuffer.clear();
     state = BufferState.INITIAL;
     channelID = NO_CHANNEL;
     eos = false;
+    byteBuffer.clear();
+  }
+
+  public void release()
+  {
+    if (state != BufferState.RELEASED)
+    {
+      state = BufferState.RELEASED;
+      errorHandler = null;
+      if (bufferProvider != null)
+      {
+        bufferProvider.retainBuffer(this);
+      }
+    }
   }
 
   public void dispose()
   {
+    state = BufferState.DISPOSED;
     bufferProvider = null;
     byteBuffer = null;
   }
@@ -137,7 +140,7 @@ public class Buffer implements InternalBuffer
     {
       if (state != BufferState.INITIAL && state != BufferState.READING_HEADER && state != BufferState.READING_BODY)
       {
-        throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+        throw new IllegalStateException(toString());
       }
 
       if (state == BufferState.INITIAL)
@@ -175,7 +178,6 @@ public class Buffer implements InternalBuffer
         state = BufferState.READING_BODY;
       }
 
-      // state == State.READING_BODY
       if (socketChannel.read(byteBuffer) == -1)
       {
         throw new ClosedChannelException();
@@ -260,7 +262,7 @@ public class Buffer implements InternalBuffer
     {
       if (state != BufferState.PUTTING && state != BufferState.WRITING)
       {
-        throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+        throw new IllegalStateException(toString());
       }
 
       if (state == BufferState.PUTTING)
@@ -326,7 +328,7 @@ public class Buffer implements InternalBuffer
     {
       if (state != BufferState.PUTTING)
       {
-        throw new IllegalStateException("state == " + state); //$NON-NLS-1$
+        throw new IllegalStateException(toString());
       }
 
       byteBuffer.flip();
@@ -348,7 +350,7 @@ public class Buffer implements InternalBuffer
   @Override
   public String toString()
   {
-    return "Buffer@" + ReflectUtil.getID(this); //$NON-NLS-1$
+    return MessageFormat.format("Buffer@{0}[{1}]", ReflectUtil.getID(this), state); //$NON-NLS-1$
   }
 
   @SuppressWarnings("deprecation")
@@ -401,7 +403,8 @@ public class Buffer implements InternalBuffer
     if (errorHandler != null)
     {
       errorHandler.handleError(t);
-      release();
     }
+
+    release();
   }
 }

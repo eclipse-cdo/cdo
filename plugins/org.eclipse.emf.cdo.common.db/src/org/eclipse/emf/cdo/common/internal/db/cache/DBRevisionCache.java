@@ -14,9 +14,9 @@ package org.eclipse.emf.cdo.common.internal.db.cache;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.internal.db.AbstractPreparedStatementFactory;
+import org.eclipse.emf.cdo.common.internal.db.AbstractQueryStatement;
+import org.eclipse.emf.cdo.common.internal.db.AbstractUpdateStatement;
 import org.eclipse.emf.cdo.common.internal.db.DBRevisionCacheUtil;
-import org.eclipse.emf.cdo.common.internal.db.IPreparedStatementFactory;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -32,20 +32,19 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.IDBRowHandler;
-import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.emf.ecore.EClass;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -71,31 +70,6 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   private IDBAdapter dbAdapter;
 
   private IDBConnectionProvider dbConnectionProvider;
-
-  /**
-   * The prepared statement used to insert new revisions.
-   */
-  private IPreparedStatementFactory insertRevisionStatementFactory = new InsertRevisionStatementFactory();
-
-  /**
-   * The prepared statement used to update the revised timestamp in the latest revision.
-   */
-  private IPreparedStatementFactory updateRevisedStatementFactory = new UpdateRevisedStatementFactory();
-
-  /**
-   * The prepared statement used to delete a revision.
-   */
-  private IPreparedStatementFactory deleteRevisionStatementFactory = new DeleteRevisionStatementFactory();
-
-  /**
-   * The prepared statement used to delete all entries.
-   */
-  private IPreparedStatementFactory clearStatementFactory = new ClearStatementFactory();
-
-  /**
-   * The database connection used in this cache.
-   */
-  private Connection connection;
 
   public DBRevisionCache()
   {
@@ -178,7 +152,9 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 
   /**
    * Gets the {@link CDOID} of a resource within this cache. The resource is picked if it matches the given folderID,
-   * name and timestamp TODO Use prepared statement!
+   * name and timestamp
+   * <p>
+   * TODO Use prepared statement!
    * 
    * @param folderID
    *          the folder id
@@ -188,47 +164,131 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    *          the time stamp
    * @return the resource id
    */
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
+  public CDOID getResourceID(final CDOID folderID, final String name, final long timeStamp)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-    builder.append("=");
-    builder.append(folderID.toURIFragment());
-    builder.append(" AND ");
-    appendTimestampCondition(builder, timeStamp);
-    builder.append(" AND ");
-    builder.append(DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME);
-    builder.append("='");
-    builder.append(name);
-    builder.append("'");
-
-    InternalCDORevision revision = selectRevision(builder.toString());
-    if (revision == null)
+    Connection connection = null;
+    try
     {
-      return null;
-    }
+      connection = getConnection();
+      AbstractQueryStatement<CDOID> query = new AbstractQueryStatement<CDOID>()
+      {
+        @Override
+        protected String getSQL()
+        {
+          StringBuilder builder = new StringBuilder();
+          builder.append("SELECT ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
+          builder.append(", ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+          builder.append(" FROM ");
+          builder.append(DBRevisionCacheSchema.REVISIONS);
+          builder.append(" WHERE ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+          builder.append("=? AND ");
+          DBRevisionCacheUtil.appendTimestampCondition(builder);
+          builder.append(" AND ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME);
+          builder.append("=?");
+          return builder.toString();
+        }
 
-    return revision.getID();
+        @Override
+        protected void setParameters(PreparedStatement preparedStatement) throws SQLException
+        {
+          preparedStatement.setString(1, folderID.toURIFragment());
+          preparedStatement.setLong(2, timeStamp);
+          preparedStatement.setLong(3, timeStamp);
+          preparedStatement.setString(4, name);
+        }
+
+        @Override
+        protected CDOID getResult(ResultSet resultSet) throws Exception
+        {
+          long revised = resultSet.getLong(2);
+          Blob blob = resultSet.getBlob(1);
+          InternalCDORevision revision = toRevision(blob, revised);
+          if (revision == null)
+          {
+            return null;
+          }
+          return revision.getID();
+        }
+      };
+      return query.query(connection);
+    }
+    catch (Exception e)
+    {
+      throw new DBException("Error while retrieving the resource ID from the database", e);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
   }
 
   /**
    * Gets the revision with the highest version for a given {@link CDOID}. TODO Use prepared statement!
    * 
    * @param id
-   *          the id
-   * @return the revision
+   *          the id to match
+   * @return the revision that was found
    */
-  public InternalCDORevision getRevision(CDOID id)
+  public InternalCDORevision getRevision(final CDOID id)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-    builder.append("=");
-    builder.append(id.toURIFragment());
-    builder.append(" AND ");
-    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-    builder.append("=");
-    builder.append(CDORevision.UNSPECIFIED_DATE);
-    return selectRevision(builder.toString());
+    Connection connection = null;
+    try
+    {
+      connection = getConnection();
+      AbstractQueryStatement<InternalCDORevision> query = createGetRevisionByIDStatement(id);
+      return query.query(connection);
+    }
+    catch (Exception e)
+    {
+      throw new DBException("Error while retrieving the revision from the database", e);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
+  }
+
+  private AbstractQueryStatement<InternalCDORevision> createGetRevisionByIDStatement(final CDOID id)
+  {
+    return new AbstractQueryStatement<InternalCDORevision>()
+    {
+      @Override
+      protected String getSQL()
+      {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
+        builder.append(", ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+        builder.append(" FROM ");
+        builder.append(DBRevisionCacheSchema.REVISIONS);
+        builder.append(" WHERE ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+        builder.append("=? AND ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+        builder.append("=");
+        builder.append(CDORevision.UNSPECIFIED_DATE);
+        return builder.toString();
+      }
+
+      @Override
+      protected void setParameters(PreparedStatement preparedStatement) throws SQLException
+      {
+        preparedStatement.setString(1, id.toURIFragment());
+      }
+
+      @Override
+      protected InternalCDORevision getResult(ResultSet resultSet) throws Exception
+      {
+        long revised = resultSet.getLong(2);
+        Blob blob = resultSet.getBlob(1);
+        return toRevision(blob, revised);
+      }
+    };
   }
 
   /**
@@ -241,31 +301,113 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    *          the time stamp
    * @return the revision by time
    */
-  public InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
+  public InternalCDORevision getRevisionByTime(final CDOID id, final long timeStamp)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-    builder.append("=");
-    builder.append(id.toURIFragment());
-    builder.append(" AND ");
-    appendTimestampCondition(builder, timeStamp);
-    return selectRevision(builder.toString());
+    Connection connection = null;
+    try
+    {
+      connection = getConnection();
+      AbstractQueryStatement<InternalCDORevision> query = new AbstractQueryStatement<InternalCDORevision>()
+      {
+        @Override
+        protected String getSQL()
+        {
+          StringBuilder builder = new StringBuilder();
+          builder.append("SELECT ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
+          builder.append(", ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+          builder.append(" FROM ");
+          builder.append(DBRevisionCacheSchema.REVISIONS);
+          builder.append(" WHERE ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+          builder.append("=? AND ");
+          appendTimestampCondition(builder);
+          return builder.toString();
+        }
+
+        @Override
+        protected void setParameters(PreparedStatement preparedStatement) throws SQLException
+        {
+          preparedStatement.setString(1, id.toURIFragment());
+          preparedStatement.setLong(2, timeStamp);
+          preparedStatement.setLong(3, timeStamp);
+        }
+
+        @Override
+        protected InternalCDORevision getResult(ResultSet resultSet) throws Exception
+        {
+          long revised = resultSet.getLong(2);
+          Blob blob = resultSet.getBlob(1);
+          return toRevision(blob, revised);
+        }
+      };
+      return query.query(connection);
+    }
+    catch (Exception e)
+    {
+      throw new DBException("Error while retrieving a revision by timestamp from the database", e);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
   }
 
   /**
    * TODO Use prepared statement!
    */
-  public InternalCDORevision getRevisionByVersion(CDOID id, int version)
+  public InternalCDORevision getRevisionByVersion(final CDOID id, final int version)
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-    builder.append("=");
-    builder.append(id.toURIFragment());
-    builder.append(" AND ");
-    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-    builder.append("=");
-    builder.append(CDORevision.UNSPECIFIED_DATE);
-    return selectRevision(builder.toString());
+    Connection connection = null;
+    try
+    {
+      connection = getConnection();
+      AbstractQueryStatement<InternalCDORevision> query = new AbstractQueryStatement<InternalCDORevision>()
+      {
+        @Override
+        protected String getSQL()
+        {
+          StringBuilder builder = new StringBuilder();
+          builder.append("SELECT ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
+          builder.append(", ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+          builder.append(" FROM ");
+          builder.append(DBRevisionCacheSchema.REVISIONS);
+          builder.append(" WHERE ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+          builder.append("=? AND ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_VERSION);
+          builder.append("=?");
+          return builder.toString();
+        }
+
+        @Override
+        protected void setParameters(PreparedStatement preparedStatement) throws SQLException
+        {
+          preparedStatement.setString(1, id.toURIFragment());
+          preparedStatement.setInt(2, version);
+        }
+
+        @Override
+        protected InternalCDORevision getResult(ResultSet resultSet) throws Exception
+        {
+          long revised = resultSet.getLong(2);
+          Blob blob = resultSet.getBlob(1);
+          return toRevision(blob, revised);
+        }
+      };
+      return query.query(connection);
+    }
+    catch (Exception e)
+    {
+      throw new DBException("Error while retrieving a revision by version from the database", e);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
   }
 
   /**
@@ -275,29 +417,57 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    */
   public List<CDORevision> getRevisions()
   {
-    final List<CDORevision> result = new ArrayList<CDORevision>();
-    IDBRowHandler rowHandler = new IDBRowHandler()
+    Connection connection = null;
+    try
     {
-      public boolean handle(int row, final Object... values)
+      connection = getConnection();
+      AbstractQueryStatement<List<CDORevision>> query = new AbstractQueryStatement<List<CDORevision>>()
       {
-        try
+        @Override
+        protected String getSQL()
         {
-          byte[] blob = (byte[])values[0];
-          result.add(toRevision(blob));
-          return true;
+          StringBuilder builder = new StringBuilder();
+          builder.append("SELECT ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
+          builder.append(", ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+          builder.append(" FROM ");
+          builder.append(DBRevisionCacheSchema.REVISIONS);
+          builder.append(" WHERE ");
+          builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+          builder.append("=");
+          builder.append(CDORevision.UNSPECIFIED_DATE);
+          return builder.toString();
         }
-        catch (IOException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
-      }
-    };
 
-    DBUtil.select(connection //
-        , rowHandler //
-        , DBRevisionCacheSchema.REVISIONS_REVISED + "=" + CDORevision.UNSPECIFIED_DATE //
-        , DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-    return result;
+        @Override
+        protected void setParameters(PreparedStatement preparedStatement) throws SQLException
+        {
+        }
+
+        @Override
+        protected List<CDORevision> getResult(ResultSet resultSet) throws Exception
+        {
+          final List<CDORevision> revisionList = new ArrayList<CDORevision>();
+          do
+          {
+            long revised = resultSet.getLong(2);
+            Blob blob = resultSet.getBlob(1);
+            revisionList.add(toRevision(blob, revised));
+          } while (resultSet.next());
+          return revisionList;
+        }
+      };
+      return query.query(connection);
+    }
+    catch (Exception e)
+    {
+      throw new DBException("Error while retrieving a revision by version from the database", e);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
   }
 
   /**
@@ -308,28 +478,124 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    *          the revision to add to this cache
    * @return true, if successful
    */
-  public boolean addRevision(InternalCDORevision revision)
+  public boolean addRevision(final InternalCDORevision revision)
   {
+    Connection connection = null;
     try
     {
-      PreparedStatement stmt = insertRevisionStatementFactory.getPreparedStatement(revision, connection);
-      DBRevisionCacheUtil.mandatoryInsertUpdate(stmt);
+      connection = getConnection();
+      AbstractUpdateStatement update = createAddRevisionStatement(revision);
+      update.update(connection);
+
       if (revision.getVersion() > 1)
       {
         // Update former latest revision
-        DBRevisionCacheUtil.insertUpdate(updateRevisedStatementFactory.getPreparedStatement(revision, connection));
+        update = createUpdateRevisedStatement(revision);
+        update.update(connection);
       }
 
       return true;
     }
-    catch (DBException ex)
+    catch (DBException e)
     {
-      throw ex;
+      throw e;
     }
-    catch (Exception ex)
+    catch (Exception e)
     {
-      throw new DBException(ex);
+      throw new DBException("Error while retrieving the revision from the database", e);
     }
+    finally
+    {
+      DBUtil.close(connection);
+    }
+  }
+
+  private AbstractUpdateStatement createUpdateRevisedStatement(final InternalCDORevision revision)
+  {
+    return new AbstractUpdateStatement()
+    {
+      @Override
+      protected String getSQL()
+      {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UPDATE ");
+        builder.append(DBRevisionCacheSchema.REVISIONS);
+        builder.append(" SET ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+        builder.append(" =? WHERE ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+        builder.append(" =? AND ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_VERSION);
+        builder.append(" =?");
+        return builder.toString();
+      }
+
+      @Override
+      protected void setParameters(PreparedStatement preparedStatement) throws SQLException
+      {
+        preparedStatement.setLong(1, revision.getCreated() - 1);
+        preparedStatement.setString(2, revision.getID().toURIFragment());
+        preparedStatement.setInt(3, revision.getVersion() - 1);
+      }
+    };
+  }
+
+  private AbstractUpdateStatement createAddRevisionStatement(final InternalCDORevision revision)
+  {
+    return new AbstractUpdateStatement()
+    {
+      @Override
+      protected String getSQL()
+      {
+        StringBuilder builder = new StringBuilder();
+        builder.append("INSERT INTO ");
+        builder.append(DBRevisionCacheSchema.REVISIONS);
+        builder.append(" (");
+        builder.append(DBRevisionCacheSchema.REVISIONS_ID);
+        builder.append(", ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_VERSION);
+        builder.append(", ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_CREATED);
+        builder.append(", ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+        builder.append(", ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
+        builder.append(", ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME);
+        builder.append(", ");
+        builder.append(DBRevisionCacheSchema.REVISIONS_CONTAINERID);
+        builder.append(") ");
+        builder.append(" VALUES (?, ?, ?, ?, ?, ? ,?)");
+        return builder.toString();
+      }
+
+      @Override
+      protected void setParameters(PreparedStatement preparedStatement) throws Exception
+      {
+        preparedStatement.setString(1, revision.getID().toURIFragment());
+        preparedStatement.setInt(2, revision.getVersion());
+        preparedStatement.setLong(3, revision.getCreated());
+        preparedStatement.setLong(4, revision.getRevised());
+        preparedStatement.setBytes(5, toBytes(revision));
+        setResourceNodeValues(revision, preparedStatement);
+      }
+
+      private void setResourceNodeValues(InternalCDORevision revision, PreparedStatement preparedStatement)
+          throws SQLException
+      {
+        if (revision.isResourceNode())
+        {
+          preparedStatement.setString(6, DBRevisionCacheUtil.getResourceNodeName(revision));
+          CDOID containerID = (CDOID)revision.getContainerID();
+          preparedStatement.setString(7, containerID.toURIFragment());
+        }
+        else
+        {
+          preparedStatement.setNull(6, Types.VARCHAR);
+          preparedStatement.setNull(7, Types.INTEGER);
+        }
+      }
+    };
   }
 
   /**
@@ -344,42 +610,72 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    */
   public InternalCDORevision removeRevision(CDOID id, int version)
   {
+    Connection connection = null;
     try
     {
-      InternalCDORevision revision = getRevisionByVersion(id, version);
+      connection = getConnection();
+      final InternalCDORevision revision = getRevisionByVersion(id, version);
       if (revision != null)
       {
-        PreparedStatement stmt = deleteRevisionStatementFactory.getPreparedStatement(revision, connection);
-        DBRevisionCacheUtil.mandatoryInsertUpdate(stmt);
-      }
+        AbstractUpdateStatement update = new AbstractUpdateStatement()
+        {
+          @Override
+          protected String getSQL()
+          {
+            StringBuilder builder = new StringBuilder();
+            builder.append("DELETE FROM ");
+            builder.append(DBRevisionCacheSchema.REVISIONS);
+            builder.append(" WHERE ID = ? AND VERSION = ?");
+            return builder.toString();
+          }
 
+          @Override
+          protected void setParameters(PreparedStatement preparedStatement) throws Exception
+          {
+            preparedStatement.setString(1, revision.getID().toURIFragment());
+            preparedStatement.setInt(2, revision.getVersion());
+          }
+        };
+        update.update(connection);
+      }
       return revision;
     }
-    catch (DBException ex)
+    catch (Exception e)
     {
-      throw ex;
+      throw new DBException("Error while removing a revision from the database", e);
     }
-    catch (Exception ex)
+    finally
     {
-      throw new DBException(ex);
+      DBUtil.close(connection);
     }
   }
 
   public void clear()
   {
+    Connection connection = null;
     try
     {
-      PreparedStatement stmt = clearStatementFactory.getPreparedStatement(null, connection);
-      DBRevisionCacheUtil.insertUpdate(stmt);
-      stmt.executeUpdate();
+      connection = getConnection();
+      AbstractUpdateStatement update = new AbstractUpdateStatement()
+      {
+        @Override
+        protected String getSQL()
+        {
+          StringBuilder builder = new StringBuilder();
+          builder.append("DELETE FROM  ");
+          builder.append(DBRevisionCacheSchema.REVISIONS);
+          return builder.toString();
+        }
+      };
+      update.update(connection);
     }
-    catch (DBException ex)
+    catch (Exception e)
     {
-      throw ex;
+      throw new DBException("Error while clearing the database", e);
     }
-    catch (Exception ex)
+    finally
     {
-      throw new DBException(ex);
+      DBUtil.close(connection);
     }
   }
 
@@ -388,120 +684,53 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   {
     super.doBeforeActivate();
     checkState(idObjectFactory, "idObjectFactory"); //$NON-NLS-1$
-    checkState(idProvider, "idProvider"); //$NON-NLS-1$
-    checkState(listFactory, "listFactory"); //$NON-NLS-1$
-    checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
-    checkState(revisionResolver, "revisionResolver"); //$NON-NLS-1$
-    checkState(dbAdapter, "dbAdapter"); //$NON-NLS-1$
-    checkState(dbConnectionProvider, "dbConnectionProvider"); //$NON-NLS-1$
+    checkState(idProvider, "idProvider");
+    checkState(listFactory, "listFactory");
+    checkState(packageRegistry, "packageRegistry");
+    checkState(revisionResolver, "revisionResolver");
+    checkState(dbAdapter, "dbAdapter");
+    checkState(dbConnectionProvider, "dbConnectionProvider");
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    connection = dbConnectionProvider.getConnection();
-    connection.setAutoCommit(false);
     createTable();
   }
 
-  @Override
-  protected void doDeactivate() throws Exception
+  /**
+   * Creates the table that's used to store the cached revisions.
+   * 
+   * @throws SQLException
+   *           the SQL exception
+   */
+  private void createTable() throws SQLException
   {
+    Connection connection = null;
     try
     {
-      updateRevisedStatementFactory.close();
-      updateRevisedStatementFactory = null;
-
-      insertRevisionStatementFactory.close();
-      insertRevisionStatementFactory = null;
-
-      deleteRevisionStatementFactory.close();
-      deleteRevisionStatementFactory = null;
+      connection = getConnection();
+      DBRevisionCacheSchema.INSTANCE.create(dbAdapter, connection);
+      DBRevisionCacheUtil.commit(connection);
     }
     finally
     {
       DBUtil.close(connection);
-      connection = null;
     }
-
-    super.doDeactivate();
   }
 
-  private void createTable() throws SQLException
-  {
-    DBRevisionCacheSchema.INSTANCE.create(dbAdapter, connection);
-    DBRevisionCacheUtil.commit(connection);
-  }
-
-  public static StringBuilder appendTimestampCondition(StringBuilder builder, long timeStamp)
+  private static StringBuilder appendTimestampCondition(StringBuilder builder)
   {
     builder.append(DBRevisionCacheSchema.REVISIONS_CREATED);
-    builder.append("<=");
-    builder.append(timeStamp);
-    builder.append(" AND");
-    builder.append(" (");
+    builder.append("<=? AND (");
     builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-    builder.append(">=");
-    builder.append(timeStamp);
-    builder.append(" OR " + DBRevisionCacheSchema.REVISIONS_REVISED);
-    builder.append("=" + CDORevision.UNSPECIFIED_DATE);
+    builder.append(">=? OR ");
+    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+    builder.append("=");
+    builder.append(CDORevision.UNSPECIFIED_DATE);
     builder.append(")");
     return builder;
-  }
-
-  private InternalCDORevision selectRevision(String sql)
-  {
-    final InternalCDORevision[] result = new InternalCDORevision[1];
-    IDBRowHandler rowHandler = new IDBRowHandler()
-    {
-      public boolean handle(int row, final Object... values)
-      {
-        try
-        {
-          CheckUtil.checkState(result[0], "Database inconsistent: There is more than 1 revision satisfying the query");
-          byte[] revisionBlob = (byte[])values[0];
-          long revisedTimestamp = (Long)values[1];
-          result[0] = toRevision(revisionBlob, revisedTimestamp);
-          return true;
-        }
-        catch (IOException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
-      }
-    };
-
-    DBUtil.select(connection//
-        , rowHandler //
-        , sql //
-        , DBRevisionCacheSchema.REVISIONS_CDOREVISION //
-        , DBRevisionCacheSchema.REVISIONS_REVISED);
-    return result[0];
-  }
-
-  /**
-   * Converts a given {@link CDORevision revision} to an array of bytes.
-   * 
-   * @param revision
-   *          the revision
-   * @return the bytes
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
-   */
-  private byte[] toBytes(CDORevision revision) throws IOException
-  {
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDODataOutput out = new CDODataOutputImpl(ExtendedDataOutputStream.wrap(baos))
-    {
-      public CDOIDProvider getIDProvider()
-      {
-        return idProvider;
-      }
-    };
-
-    out.writeCDORevision(revision, CDORevision.UNCHUNKED);
-    return baos.toByteArray();
   }
 
   /**
@@ -517,27 +746,20 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    * @return the internal cdo revision
    * @throws IOException
    *           Signals that an I/O exception has occurred.
+   * @throws SQLException
    */
-  private InternalCDORevision toRevision(byte[] blob, long revisedTimestamp) throws IOException
+  private InternalCDORevision toRevision(Blob blob, long revisedTimestamp) throws IOException, SQLException
   {
-    InternalCDORevision revision = toRevision(blob);
+    CDODataInput dataInput = getCDODataInput(ExtendedDataInputStream.wrap(blob.getBinaryStream()));
+    InternalCDORevision revision = (InternalCDORevision)dataInput.readCDORevision();
     // Revised timestamp's updated in the revised column only (not in the blob)
     revision.setRevised(revisedTimestamp);
     return revision;
   }
 
-  /**
-   * Converts a given byteArray to a CDORevision
-   * 
-   * @param blob
-   *          the byte array
-   * @return the cDO revision
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
-   */
-  private InternalCDORevision toRevision(byte[] blob) throws IOException
+  private CDODataInput getCDODataInput(ExtendedDataInputStream inputStream) throws IOException
   {
-    CDODataInput in = new CDODataInputImpl(ExtendedDataInputStream.wrap(new ByteArrayInputStream(blob)))
+    return new CDODataInputImpl(inputStream)
     {
       @Override
       protected CDOIDObjectFactory getIDFactory()
@@ -563,107 +785,48 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         return revisionResolver;
       }
     };
-
-    return (InternalCDORevision)in.readCDORevision();
   }
 
-  private class InsertRevisionStatementFactory extends AbstractPreparedStatementFactory
+  /**
+   * Converts a given {@link CDORevision} to a byte array.
+   * 
+   * @param revision
+   *          the revision
+   * @return the array of bytes for the given revision
+   * @throws IOException
+   *           Signals an error has occurred while writing the revision to the byte array.
+   */
+  private byte[] toBytes(InternalCDORevision revision) throws IOException
   {
-    @Override
-    protected String getSQL()
-    {
-      return "INSERT INTO " + DBRevisionCacheSchema.REVISIONS //
-          + " (" //
-          + DBRevisionCacheSchema.REVISIONS_ID //
-          + ", " + DBRevisionCacheSchema.REVISIONS_VERSION //
-          + ", " + DBRevisionCacheSchema.REVISIONS_CREATED //
-          + ", " + DBRevisionCacheSchema.REVISIONS_REVISED //
-          + ", " + DBRevisionCacheSchema.REVISIONS_CDOREVISION //
-          + ", " + DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME //
-          + ", " + DBRevisionCacheSchema.REVISIONS_CONTAINERID //
-          + ") " //
-          + " VALUES (?, ?, ?, ?, ?, ? ,?)";
-    }
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    CDODataOutput dataOutput = getCDODataOutput(ExtendedDataOutputStream.wrap(byteArrayOutputStream));
+    dataOutput.writeCDORevision(revision, CDORevision.UNCHUNKED);
+    return byteArrayOutputStream.toByteArray();
+  }
 
-    @Override
-    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
+  private CDODataOutput getCDODataOutput(ExtendedDataOutput extendedDataOutputStream)
+  {
+    return new CDODataOutputImpl(extendedDataOutputStream)
     {
-      preparedStatement.setString(1, revision.getID().toURIFragment());
-      preparedStatement.setInt(2, revision.getVersion());
-      preparedStatement.setLong(3, revision.getCreated());
-      preparedStatement.setLong(4, revision.getRevised());
-      preparedStatement.setBytes(5, toBytes(revision));
-      setResourceNodeValues(revision, preparedStatement);
-    }
-
-    private void setResourceNodeValues(InternalCDORevision revision, PreparedStatement preparedStatement)
-        throws SQLException
-    {
-      if (revision.isResourceNode())
+      public CDOIDProvider getIDProvider()
       {
-        preparedStatement.setString(6, DBRevisionCacheUtil.getResourceNodeName(revision));
-        CDOID containerID = (CDOID)revision.getContainerID();
-        preparedStatement.setString(7, containerID.toURIFragment());
+        return idProvider;
       }
-      else
-      {
-        preparedStatement.setNull(6, Types.VARCHAR);
-        preparedStatement.setNull(7, Types.INTEGER);
-      }
-    }
+    };
   }
 
-  private class UpdateRevisedStatementFactory extends AbstractPreparedStatementFactory
+  /**
+   * Gets a connection from the {@link IDBConnectionProvider} within this cache. The Connection is set not auto commit
+   * transactions.
+   * 
+   * @return the connection
+   * @throws SQLException
+   *           Signals that an error occured while getting the connection from the connection provider
+   */
+  private Connection getConnection() throws SQLException
   {
-    @Override
-    protected String getSQL()
-    {
-      return "UPDATE " + DBRevisionCacheSchema.REVISIONS //
-          + " SET " + DBRevisionCacheSchema.REVISIONS_REVISED + " = ?" //
-          + " WHERE " + DBRevisionCacheSchema.REVISIONS_ID + " = ?" //
-          + " AND " + DBRevisionCacheSchema.REVISIONS_VERSION + " = ?";
-    }
-
-    @Override
-    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
-    {
-      preparedStatement.setLong(1, revision.getCreated() - 1);
-      preparedStatement.setString(2, revision.getID().toURIFragment());
-      preparedStatement.setInt(3, revision.getVersion() - 1);
-    }
-  }
-
-  private class DeleteRevisionStatementFactory extends AbstractPreparedStatementFactory
-  {
-    @Override
-    protected String getSQL()
-    {
-      return "DELETE FROM " + DBRevisionCacheSchema.REVISIONS //
-          + " WHERE " //
-          + " ID = ?" //
-          + " AND VERSION = ?";
-    }
-
-    @Override
-    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
-    {
-      preparedStatement.setString(1, revision.getID().toURIFragment());
-      preparedStatement.setInt(2, revision.getVersion());
-    }
-  }
-
-  private class ClearStatementFactory extends AbstractPreparedStatementFactory
-  {
-    @Override
-    protected String getSQL()
-    {
-      return "DELETE FROM " //
-          + DBRevisionCacheSchema.REVISIONS; //
-    }
-
-    @Override
-    protected void setParameters(InternalCDORevision revision, PreparedStatement preparedStatement) throws Exception
-    {
-    }
+    Connection connection = dbConnectionProvider.getConnection();
+    connection.setAutoCommit(false);
+    return connection;
   }
 }

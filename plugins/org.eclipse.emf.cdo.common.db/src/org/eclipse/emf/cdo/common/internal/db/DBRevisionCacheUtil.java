@@ -11,6 +11,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.internal.db;
 
+import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCacheSchema;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -22,14 +23,27 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class DBRevisionCacheUtil.
+ * 
  * @author Andre Dietisheim
  */
 public class DBRevisionCacheUtil
 {
+
+  /**
+   * Mandatory insert update.
+   * 
+   * @param preparedStatement
+   *          the prepared statement
+   * @throws SQLException
+   *           the SQL exception
+   */
   public static void mandatoryInsertUpdate(PreparedStatement preparedStatement) throws SQLException
   {
     insertUpdate(preparedStatement);
@@ -40,6 +54,14 @@ public class DBRevisionCacheUtil
     }
   }
 
+  /**
+   * Insert update.
+   * 
+   * @param preparedStatement
+   *          the prepared statement
+   * @throws SQLException
+   *           the SQL exception
+   */
   public static void insertUpdate(PreparedStatement preparedStatement) throws SQLException
   {
     if (preparedStatement.execute())
@@ -51,12 +73,42 @@ public class DBRevisionCacheUtil
     commit(preparedStatement.getConnection());
   }
 
+  /**
+   * Query.
+   * 
+   * @param preparedStatement
+   *          the prepared statement
+   * @return the result set
+   * @throws SQLException
+   *           the SQL exception
+   */
+  public static ResultSet query(PreparedStatement preparedStatement) throws SQLException
+  {
+    return preparedStatement.executeQuery();
+  }
+
+  /**
+   * Rollback.
+   * 
+   * @param connection
+   *          the connection
+   * @throws SQLException
+   *           the SQL exception
+   */
   public static void rollback(Connection connection) throws SQLException
   {
     CheckUtil.checkArg(connection, "connection");
     connection.rollback();
   }
 
+  /**
+   * Commit.
+   * 
+   * @param connection
+   *          the connection
+   * @throws SQLException
+   *           the SQL exception
+   */
   public static void commit(Connection connection) throws SQLException
   {
     CheckUtil.checkArg(connection, "connection");
@@ -72,6 +124,8 @@ public class DBRevisionCacheUtil
    *          the message to use when throwing the {@link DBException}
    * @throws DBException
    *           if the given CDORevision's not <tt>null</tt>
+   * @throws SQLException
+   *           the SQL exception
    */
   public static void assertIsNull(CDORevision cdoRevision, String message) throws SQLException
   {
@@ -79,6 +133,26 @@ public class DBRevisionCacheUtil
     {
       throw new SQLException(message);
     }
+  }
+
+  /**
+   * Appends the timestamp condition (prepared statement) to a given string builder.
+   * 
+   * @param builder
+   *          the builder
+   * @return the string builder
+   */
+  public static StringBuilder appendTimestampCondition(StringBuilder builder)
+  {
+    builder.append(DBRevisionCacheSchema.REVISIONS_CREATED);
+    builder.append("<= ? AND (");
+    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+    builder.append(">= ? OR ");
+    builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
+    builder.append("=");
+    builder.append(CDORevision.UNSPECIFIED_DATE);
+    builder.append(")");
+    return builder;
   }
 
   /**

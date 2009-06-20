@@ -153,8 +153,6 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   /**
    * Gets the {@link CDOID} of a resource within this cache. The resource is picked if it matches the given folderID,
    * name and timestamp
-   * <p>
-   * TODO Use prepared statement!
    * 
    * @param folderID
    *          the folder id
@@ -227,7 +225,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   }
 
   /**
-   * Gets the revision with the highest version for a given {@link CDOID}. TODO Use prepared statement!
+   * Gets the revision with the highest version for a given {@link CDOID}.
    * 
    * @param id
    *          the id to match
@@ -293,7 +291,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 
   /**
    * Gets an {@link InternalCDORevision} that matches the given timestamp (it is >= created timestamp AND <= revised
-   * timestamp of the revision). TODO Use prepared statement!
+   * timestamp of the revision).
    * 
    * @param id
    *          the id
@@ -355,7 +353,13 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   }
 
   /**
-   * TODO Use prepared statement!
+   * Gets a {@link InternalCDORevision} by a given id and version.
+   * 
+   * @param id
+   *          the id to match the revision against
+   * @param version
+   *          the version to match the revision against
+   * @return the revision by version
    */
   public InternalCDORevision getRevisionByVersion(final CDOID id, final int version)
   {

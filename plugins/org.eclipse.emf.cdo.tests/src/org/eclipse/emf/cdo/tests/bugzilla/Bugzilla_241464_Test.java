@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
@@ -58,9 +57,9 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     {
       Customer customer = (Customer)resource.getContents().get(0);
       System.out.println(customer.getName());
-      fail("SignalRemoteException expected");
+      fail("IllegalStateException expected");
     }
-    catch (RemoteException success)
+    catch (IllegalStateException success)
     {
     }
     finally

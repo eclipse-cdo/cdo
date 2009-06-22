@@ -418,8 +418,10 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   protected void doDeactivate() throws Exception
   {
     protocol.removeListener(protocolListener);
-    protocol = null;
     protocolListener = null;
+
+    LifecycleUtil.deactivate(protocol, OMLogger.Level.DEBUG);
+    protocol = null;
 
     for (IView view : getViewsArray())
     {

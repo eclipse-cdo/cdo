@@ -9,7 +9,6 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-
 <feature
       id="org.eclipse.emf.cdo.sdk"
       label="%featureName"
@@ -53,8 +52,7 @@
 
    <includes
          id="org.eclipse.emf.cdo.server.hibernate"
-         version="0.0.0"
-         optional="true"/>
+         version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.server.hibernate.source"

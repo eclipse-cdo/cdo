@@ -1213,6 +1213,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return view;
     }
 
+    public boolean isRemote()
+    {
+      return view == null;
+    }
+
     public long getTimeStamp()
     {
       return timeStamp;

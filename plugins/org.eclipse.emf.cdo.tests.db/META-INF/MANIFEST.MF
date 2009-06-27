@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.db;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -9,12 +9,12 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.tests.db.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
-Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.cdo.server.db;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
- org.eclipse.net4j.db.hsqldb;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
- org.eclipse.net4j.db.derby;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
- org.eclipse.net4j.db.mysql;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
- org.eclipse.net4j.db.h2;bundle-version="[2.0.0,3.0.0)";visibility:=reexport
+Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.emf.cdo.server.db;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.hsqldb;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.derby;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.mysql;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.h2;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Eclipse-BuddyPolicy: dependent
 Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)",
  org.apache.derby.jdbc,

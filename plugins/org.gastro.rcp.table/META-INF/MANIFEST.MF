@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Gastro Table
 Bundle-SymbolicName: org.gastro.rcp.table; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.gastro.rcp.internal.table.Activator
 Require-Bundle: org.gastro.rcp;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy

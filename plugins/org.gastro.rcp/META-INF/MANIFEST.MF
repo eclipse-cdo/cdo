@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Gastro RCP
 Bundle-SymbolicName: org.gastro.rcp; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.gastro.internal.rcp.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
- org.eclipse.net4j.tcp;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
+ org.eclipse.net4j.tcp;bundle-version="[2.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.ui;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.edit.ui;bundle-version="2.5.0";visibility:=reexport,
  org.gastro.business;bundle-version="1.0.0";visibility:=reexport,
@@ -20,8 +20,8 @@ Export-Package: org.eclipse.nebula.animation,
  org.eclipse.nebula.jface.galleryviewer,
  org.eclipse.nebula.widgets.gallery,
  org.eclipse.nebula.widgets.pshelf,
- org.gastro.internal.rcp;version="1.0.0";x-internal:=true,
- org.gastro.rcp;version="1.0.0"
+ org.gastro.internal.rcp;version="3.0.0";x-internal:=true,
+ org.gastro.rcp;version="3.0.0"
 Bundle-ClassPath: .,
  org.eclipse.nebula.widgets.pshelf_1.0.0.HEAD.jar,
  org.eclipse.nebula.widgets.gallery_0.5.0.HEAD.jar

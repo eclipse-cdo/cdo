@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Gastro Server Web Support
 Bundle-SymbolicName: org.gastro.server.web;singleton:=true
-Bundle-Version: 3.0.0.qualifier
+Bundle-Version: 2.0.1.qualifier
 Bundle-Activator: org.gastro.server.internal.web.OM$Activator
 Bundle-Vendor: www.gastro.org
 Require-Bundle: org.apache.commons.logging;bundle-version="1.0.0",

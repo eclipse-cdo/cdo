@@ -40,16 +40,16 @@ public class LifecycleEventAdapter implements IListener
     switch (event.getKind())
     {
     case ABOUT_TO_ACTIVATE:
-      onAboutToActivate(event.getLifecycle());
+      onAboutToActivate(event.getSource());
       break;
     case ACTIVATED:
-      onActivated(event.getLifecycle());
+      onActivated(event.getSource());
       break;
     case ABOUT_TO_DEACTIVATE:
-      onAboutToDeactivate(event.getLifecycle());
+      onAboutToDeactivate(event.getSource());
       break;
     case DEACTIVATED:
-      onDeactivated(event.getLifecycle());
+      onDeactivated(event.getSource());
       break;
     }
   }

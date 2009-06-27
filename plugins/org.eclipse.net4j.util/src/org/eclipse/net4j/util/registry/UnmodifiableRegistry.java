@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -33,6 +33,22 @@ public class UnmodifiableRegistry<K, V> implements IRegistry<K, V>
   public void removeListener(IListener listener)
   {
     delegate.removeListener(listener);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public IListener[] getListeners()
+  {
+    return delegate.getListeners();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public boolean hasListeners()
+  {
+    return delegate.hasListeners();
   }
 
   public V put(K key, V value)

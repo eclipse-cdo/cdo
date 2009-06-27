@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.Introspection
+public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
 {
   /**
    * @since 2.0

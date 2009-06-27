@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.NonBlockingIntCounter;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -422,21 +423,25 @@ public class Channel extends Lifecycle implements InternalChannel
   /**
    * @author Eike Stepper
    */
-  private final class SendQueueEventImpl implements SendQueueEvent
+  private final class SendQueueEventImpl extends Event implements SendQueueEvent
   {
+    private static final long serialVersionUID = 1L;
+
     private Type type;
 
     private final int queueSize;
 
     private SendQueueEventImpl(Type type, int queueSize)
     {
+      super(Channel.this);
       this.type = type;
       this.queueSize = queueSize;
     }
 
+    @Override
     public InternalChannel getSource()
     {
-      return Channel.this;
+      return (InternalChannel)super.getSource();
     }
 
     public Type getType()

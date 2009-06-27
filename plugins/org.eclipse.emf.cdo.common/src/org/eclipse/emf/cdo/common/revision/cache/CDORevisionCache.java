@@ -25,7 +25,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDORevisionCache extends INotifier.Introspection
+public interface CDORevisionCache extends INotifier
 {
   public EClass getObjectType(CDOID id);
 
@@ -53,7 +53,10 @@ public interface CDORevisionCache extends INotifier.Introspection
    */
   public interface EvictionEvent extends IEvent
   {
-    public CDORevisionCache getCache();
+    /**
+     * @since 3.0
+     */
+    public CDORevisionCache getSource();
 
     public CDOID getID();
 

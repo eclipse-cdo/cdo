@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Sash;
 /**
  * @author Eike Stepper
  */
-public abstract class SashComposite extends Composite implements INotifier.Introspection
+public abstract class SashComposite extends Composite implements INotifier
 {
   private final SashListener sashListener = new SashListener();
 

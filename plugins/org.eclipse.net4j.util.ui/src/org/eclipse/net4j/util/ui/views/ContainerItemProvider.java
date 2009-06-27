@@ -15,7 +15,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.ILifecycleState;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.jface.viewers.TreePath;
@@ -84,8 +84,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
         else
         {
           Object childElement = child.getElement();
-          ILifecycleState lifecycleState = LifecycleUtil.getLifecycleState(childElement);
-          if (lifecycleState == ILifecycleState.INACTIVE || lifecycleState == ILifecycleState.DEACTIVATING)
+          LifecycleState lifecycleState = LifecycleUtil.getLifecycleState(childElement);
+          if (lifecycleState == LifecycleState.INACTIVE || lifecycleState == LifecycleState.DEACTIVATING)
           {
             handleInactiveElement(it, child);
           }

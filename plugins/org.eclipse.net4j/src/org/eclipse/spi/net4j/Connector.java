@@ -19,7 +19,6 @@ import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.Event;
-import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -378,16 +377,17 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
     private ConnectorState newState;
 
-    public ConnectorStateEvent(INotifier notifier, ConnectorState oldState, ConnectorState newState)
+    public ConnectorStateEvent(IConnector source, ConnectorState oldState, ConnectorState newState)
     {
-      super(notifier);
+      super(source);
       this.oldState = oldState;
       this.newState = newState;
     }
 
-    public IConnector getConnector()
+    @Override
+    public IConnector getSource()
     {
-      return (IConnector)getSource();
+      return getSource();
     }
 
     public ConnectorState getOldState()

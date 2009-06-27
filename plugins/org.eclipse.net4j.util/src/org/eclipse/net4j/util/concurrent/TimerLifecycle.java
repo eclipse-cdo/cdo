@@ -15,9 +15,9 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.ILifecycleState;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
 
 import java.util.Timer;
 
@@ -25,7 +25,7 @@ import java.util.Timer;
  * @author Eike Stepper
  * @since 2.0
  */
-public class TimerLifecycle extends Timer implements ILifecycle.Introspection
+public class TimerLifecycle extends Timer implements ILifecycle
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.timers";
 
@@ -61,7 +61,10 @@ public class TimerLifecycle extends Timer implements ILifecycle.Introspection
     activate();
   }
 
-  public final ILifecycleState getLifecycleState()
+  /**
+   * @since 3.0
+   */
+  public final LifecycleState getLifecycleState()
   {
     return delegate.getLifecycleState();
   }

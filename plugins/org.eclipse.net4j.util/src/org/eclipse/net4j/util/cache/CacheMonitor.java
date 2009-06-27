@@ -227,9 +227,10 @@ public class CacheMonitor extends Worker implements ICacheMonitor
       this.newCondition = newCondition;
     }
 
-    public ICacheMonitor getCacheMonitor()
+    @Override
+    public ICacheMonitor getSource()
     {
-      return CacheMonitor.this;
+      return (ICacheMonitor)super.getSource();
     }
 
     public Condition getOldCondition()

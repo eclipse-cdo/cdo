@@ -1536,9 +1536,10 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       super(CDOViewImpl.this);
     }
 
-    public CDOViewImpl getView()
+    @Override
+    public CDOViewImpl getSource()
     {
-      return CDOViewImpl.this;
+      return (CDOViewImpl)super.getSource();
     }
   }
 

@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class Notifier implements INotifier.Introspection
+public class Notifier implements INotifier
 {
   /**
    * TODO Optimize by storing an array

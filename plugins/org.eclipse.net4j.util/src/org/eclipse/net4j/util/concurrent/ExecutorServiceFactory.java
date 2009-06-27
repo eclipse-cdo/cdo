@@ -11,9 +11,12 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.concurrent.ExecutorService;
@@ -59,9 +62,11 @@ public class ExecutorServiceFactory extends Factory
     return LifecycleUtil.delegateLifecycle(getClass().getClassLoader(), executorService, ExecutorService.class,
         new ILifecycle()
         {
+          private boolean active;
+
           public void activate() throws LifecycleException
           {
-            // Do nothing
+            active = true;
           }
 
           public Exception deactivate()
@@ -69,12 +74,43 @@ public class ExecutorServiceFactory extends Factory
             try
             {
               executorService.shutdown();
+              active = false;
               return null;
             }
             catch (Exception ex)
             {
               return ex;
             }
+          }
+
+          public LifecycleState getLifecycleState()
+          {
+            return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
+          }
+
+          public boolean isActive()
+          {
+            return active;
+          }
+
+          public void addListener(IListener listener)
+          {
+            // Do nothing
+          }
+
+          public void removeListener(IListener listener)
+          {
+            // Do nothing
+          }
+
+          public IListener[] getListeners()
+          {
+            return EventUtil.NO_LISTENERS;
+          }
+
+          public boolean hasListeners()
+          {
+            return false;
           }
         });
   }

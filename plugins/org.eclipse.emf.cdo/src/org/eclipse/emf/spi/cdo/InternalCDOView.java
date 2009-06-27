@@ -37,7 +37,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle.Introspection
+public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 {
   public void setViewID(int viewId);
 

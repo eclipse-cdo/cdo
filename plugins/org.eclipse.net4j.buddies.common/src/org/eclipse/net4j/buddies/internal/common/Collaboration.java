@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -149,7 +149,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     if (!facilities.containsKey(type))
     {
       facilities.put(type, facility);
-      fireEvent(new FacilityInstalledEvent(facility, remote));
+      fireEvent(new FacilityInstalledEvent(this, facility, remote));
       facility.addListener(this);
       return true;
     }
@@ -250,7 +250,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
   /**
    * @author Eike Stepper
    */
-  private final class FacilityInstalledEvent extends Event implements IFacilityInstalledEvent
+  private static final class FacilityInstalledEvent extends Event implements IFacilityInstalledEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -258,16 +258,17 @@ public class Collaboration extends MembershipContainer implements ICollaboration
 
     private boolean remote;
 
-    public FacilityInstalledEvent(IFacility facility, boolean remote)
+    public FacilityInstalledEvent(ICollaboration source, IFacility facility, boolean remote)
     {
-      super(Collaboration.this);
+      super(source);
       this.facility = facility;
       this.remote = remote;
     }
 
-    public ICollaboration getCollaboration()
+    @Override
+    public ICollaboration getSource()
     {
-      return Collaboration.this;
+      return (ICollaboration)super.getSource();
     }
 
     public IFacility getFacility()

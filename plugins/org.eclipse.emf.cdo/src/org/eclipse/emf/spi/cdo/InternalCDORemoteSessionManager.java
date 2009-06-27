@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager, ILifecycle.Introspection
+public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager, ILifecycle
 {
   public CDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed);
 

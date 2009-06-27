@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -37,21 +38,24 @@ public final class LifecycleUtil
   {
   }
 
-  public static ILifecycleState getLifecycleState(Object object)
+  /**
+   * @since 3.0
+   */
+  public static LifecycleState getLifecycleState(Object object)
   {
-    if (object instanceof ILifecycle.Introspection)
+    if (object instanceof ILifecycle)
     {
-      return ((ILifecycle.Introspection)object).getLifecycleState();
+      return ((ILifecycle)object).getLifecycleState();
     }
 
-    return ILifecycleState.ACTIVE;
+    return LifecycleState.ACTIVE;
   }
 
   public static boolean isActive(Object object)
   {
-    if (object instanceof ILifecycle.Introspection)
+    if (object instanceof ILifecycle)
     {
-      return ((ILifecycle.Introspection)object).isActive();
+      return ((ILifecycle)object).isActive();
     }
 
     return object != null;
@@ -343,6 +347,38 @@ public final class LifecycleUtil
       if (name.equals("deactivate")) //$NON-NLS-1$
       {
         return delegate.deactivate();
+      }
+
+      if (name.equals("isActive")) //$NON-NLS-1$
+      {
+        return delegate.isActive();
+      }
+
+      if (name.equals("getLifecycleState")) //$NON-NLS-1$
+      {
+        return delegate.getLifecycleState();
+      }
+
+      if (name.equals("getListeners")) //$NON-NLS-1$
+      {
+        return delegate.getListeners();
+      }
+
+      if (name.equals("hasListeners")) //$NON-NLS-1$
+      {
+        return delegate.hasListeners();
+      }
+
+      if (name.equals("addListener")) //$NON-NLS-1$
+      {
+        delegate.addListener((IListener)args[0]);
+        return null;
+      }
+
+      if (name.equals("removeListener")) //$NON-NLS-1$
+      {
+        delegate.removeListener((IListener)args[0]);
+        return null;
       }
 
       try

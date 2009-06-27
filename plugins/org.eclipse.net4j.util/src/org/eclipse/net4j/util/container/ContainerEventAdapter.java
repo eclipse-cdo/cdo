@@ -38,7 +38,7 @@ public class ContainerEventAdapter<E> implements IListener
 
   protected void notifyContainerEvent(IContainerEvent<E> event)
   {
-    final IContainer<E> container = event.getContainer();
+    final IContainer<E> container = event.getSource();
     event.accept(new IContainerEventVisitor<E>()
     {
       public void added(E element)

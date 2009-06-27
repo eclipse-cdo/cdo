@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public interface IManagedContainer extends IContainer<Object>, ILifecycle.Introspection
+public interface IManagedContainer extends IContainer<Object>, ILifecycle
 {
   public IRegistry<IFactoryKey, IFactory> getFactoryRegistry();
 

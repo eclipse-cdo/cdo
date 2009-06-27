@@ -26,7 +26,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecycle.Introspection
+public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecycle
 {
   public MetaInstanceMapper getMetaInstanceMapper();
 

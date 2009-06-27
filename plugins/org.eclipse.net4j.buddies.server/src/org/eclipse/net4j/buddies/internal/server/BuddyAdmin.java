@@ -243,10 +243,10 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin, I
           {
             try
             {
-              if (!ObjectUtil.equals(session.getSelf(), e.getBuddy()))
+              if (!ObjectUtil.equals(session.getSelf(), e.getSource()))
               {
                 BuddiesServerProtocol protocol = (BuddiesServerProtocol)session.getProtocol();
-                new BuddyStateNotification(protocol, e.getBuddy().getUserID(), e.getNewState()).sendAsync();
+                new BuddyStateNotification(protocol, e.getSource().getUserID(), e.getNewState()).sendAsync();
               }
             }
             catch (Exception ex)

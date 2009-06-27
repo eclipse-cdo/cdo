@@ -1203,9 +1203,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       this.detachedObjects = detachedObjects;
     }
 
-    public CDOSession getSession()
+    @Override
+    public CDOSession getSource()
     {
-      return (CDOSession)getSource();
+      return (CDOSession)super.getSource();
     }
 
     public InternalCDOView getView()

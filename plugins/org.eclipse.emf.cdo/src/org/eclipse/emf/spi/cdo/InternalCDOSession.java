@@ -29,7 +29,7 @@ import java.util.Set;
  * @since 2.0
  */
 public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
-    InternalCDOPackageRegistry.PackageProcessor, InternalCDOPackageRegistry.PackageLoader, ILifecycle.Introspection
+    InternalCDOPackageRegistry.PackageProcessor, InternalCDOPackageRegistry.PackageLoader, ILifecycle
 {
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 

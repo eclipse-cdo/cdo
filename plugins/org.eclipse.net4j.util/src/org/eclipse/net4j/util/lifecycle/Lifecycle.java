@@ -22,7 +22,7 @@ import java.util.concurrent.Semaphore;
 /**
  * @author Eike Stepper
  */
-public class Lifecycle extends Notifier implements ILifecycle.Introspection
+public class Lifecycle extends Notifier implements ILifecycle
 {
   public static boolean USE_LABEL = true;
 
@@ -34,7 +34,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
 
   private static final boolean LOCKING = true;
 
-  private ILifecycleState lifecycleState = ILifecycleState.INACTIVE;
+  private LifecycleState lifecycleState = LifecycleState.INACTIVE;
 
   @ExcludeFromDump
   private Semaphore lifecycleSemaphore = new Semaphore(1);
@@ -50,7 +50,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
     try
     {
-      if (lifecycleState == ILifecycleState.INACTIVE)
+      if (lifecycleState == LifecycleState.INACTIVE)
       {
         if (TRACER.isEnabled())
         {
@@ -58,7 +58,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         }
 
         lock();
-        lifecycleState = ILifecycleState.ACTIVATING;
+        lifecycleState = LifecycleState.ACTIVATING;
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
 
         doBeforeActivate();
@@ -98,7 +98,7 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
     try
     {
-      if (lifecycleState == ILifecycleState.ACTIVE)
+      if (lifecycleState == LifecycleState.ACTIVE)
       {
         if (TRACER.isEnabled())
         {
@@ -106,12 +106,12 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
         }
 
         lock();
-        lifecycleState = ILifecycleState.DEACTIVATING;
+        lifecycleState = LifecycleState.DEACTIVATING;
         doBeforeDeactivate();
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE));
 
         doDeactivate();
-        lifecycleState = ILifecycleState.INACTIVE;
+        lifecycleState = LifecycleState.INACTIVE;
         unlock();
         fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
         return null;
@@ -129,20 +129,23 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
     }
     catch (Exception ex)
     {
-      lifecycleState = ILifecycleState.INACTIVE;
+      lifecycleState = LifecycleState.INACTIVE;
       unlock();
       return ex;
     }
   }
 
-  public final ILifecycleState getLifecycleState()
+  /**
+   * @since 3.0
+   */
+  public final LifecycleState getLifecycleState()
   {
     return lifecycleState;
   }
 
   public final boolean isActive()
   {
-    return lifecycleState == ILifecycleState.ACTIVE;
+    return lifecycleState == LifecycleState.ACTIVE;
   }
 
   @Override
@@ -206,13 +209,13 @@ public class Lifecycle extends Notifier implements ILifecycle.Introspection
   {
     if (successful)
     {
-      lifecycleState = ILifecycleState.ACTIVE;
+      lifecycleState = LifecycleState.ACTIVE;
       unlock();
       fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED));
     }
     else
     {
-      lifecycleState = ILifecycleState.INACTIVE;
+      lifecycleState = LifecycleState.INACTIVE;
       unlock();
     }
   }

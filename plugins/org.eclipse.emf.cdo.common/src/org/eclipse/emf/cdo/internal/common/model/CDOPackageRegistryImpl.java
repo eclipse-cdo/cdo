@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -28,8 +28,10 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.lifecycle.ILifecycleState;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -361,14 +363,34 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return MessageFormat.format("{0}[packageLoader={1}]", getClass().getSimpleName(), getPackageLoader()); //$NON-NLS-1$
   }
 
+  public void addListener(IListener listener)
+  {
+    // Do nothing
+  }
+
+  public void removeListener(IListener listener)
+  {
+    // Do nothing
+  }
+
+  public IListener[] getListeners()
+  {
+    return EventUtil.NO_LISTENERS;
+  }
+
+  public boolean hasListeners()
+  {
+    return false;
+  }
+
   public synchronized boolean isActive()
   {
     return active;
   }
 
-  public synchronized ILifecycleState getLifecycleState()
+  public synchronized LifecycleState getLifecycleState()
   {
-    return active ? ILifecycleState.ACTIVE : ILifecycleState.INACTIVE;
+    return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
   }
 
   public synchronized void activate() throws LifecycleException

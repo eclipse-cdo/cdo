@@ -23,9 +23,9 @@ import org.eclipse.net4j.util.security.INegotiator;
  * <AREA SHAPE="RECT" COORDS="449,50,547,73" HREF="ConnectorState.html#CONNECTING"> <AREA SHAPE="RECT"
  * COORDS="449,133,549,159" HREF="ConnectorState.html#NEGOTIATING"> <AREA SHAPE="RECT" COORDS="451,216,545,240"
  * HREF="ConnectorState.html#CONNECTED"> <AREA SHAPE="POLYGON" COORDS="10,89,11,183,164,183,163,109,77,109,77,89,11,88"
- * HREF="../util/lifecycle/ILifecycle.Introspection.html#isActive()"> <AREA SHAPE="POLYGON"
+ * HREF="../util/lifecycle/ILifecycle.html#isActive()"> <AREA SHAPE="POLYGON"
  * COORDS="429,10,428,262,597,263,597,30,483,29,483,10,428,11"
- * HREF="../util/lifecycle/ILifecycle.Introspection.html#isActive()"> </MAP>
+ * HREF="../util/lifecycle/ILifecycle.html#isActive()"> </MAP>
  * 
  * @see IConnector#getState()
  * @author Eike Stepper
@@ -41,7 +41,7 @@ public enum ConnectorState
    * can be triggered by calling {@link IConnector#connect(long)} or {@link IConnector#connectAsync()}.
    * 
    * @see IConnector#getState()
-   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */
   DISCONNECTED,
 
@@ -54,7 +54,7 @@ public enum ConnectorState
    * connection is successfully established the state of the connector automatically transitions to {@link #NEGOTIATING}.
    * 
    * @see IConnector#getState()
-   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */
   CONNECTING,
 
@@ -72,7 +72,7 @@ public enum ConnectorState
    * able to do so.
    * 
    * @see IConnector#getState()
-   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */
   NEGOTIATING,
 
@@ -85,7 +85,7 @@ public enum ConnectorState
    * {@link #DISCONNECTED} can be triggered by calling {@link IConnector#disconnect()}.
    * 
    * @see IConnector#getState()
-   * @see org.eclipse.net4j.util.lifecycle.ILifecycle.Introspection#isActive()
+   * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */
   CONNECTED
 }

@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.security.FileUserManagerFactory;
 import org.eclipse.net4j.util.security.RandomizerFactory;
@@ -25,6 +26,7 @@ public final class ContainerUtil
 
   private static final IContainer<Object> EMPTY = new IContainer<Object>()
   {
+
     public Object[] getElements()
     {
       return NO_ELEMENTS;
@@ -41,6 +43,16 @@ public final class ContainerUtil
 
     public void removeListener(IListener listener)
     {
+    }
+
+    public IListener[] getListeners()
+    {
+      return EventUtil.NO_LISTENERS;
+    }
+
+    public boolean hasListeners()
+    {
+      return false;
     }
 
     @Override

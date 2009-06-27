@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -38,10 +38,14 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     this.deltas = deltas;
   }
 
+  /**
+   * @since 3.0
+   */
+  @Override
   @SuppressWarnings("unchecked")
-  public IContainer<E> getContainer()
+  public IContainer<E> getSource()
   {
-    return (IContainer<E>)getSource();
+    return (IContainer<E>)super.getSource();
   }
 
   public boolean isEmpty()

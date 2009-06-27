@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,6 +14,7 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.util.Queue;
@@ -45,5 +46,36 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle.I
 
   public void handleBufferFromMultiplexer(IBuffer buffer);
 
+  /**
+   * @since 3.0
+   */
+  public long getReceivedBuffers();
+
+  /**
+   * @since 3.0
+   */
+  public long getSentBuffers();
+
   public Queue<IBuffer> getSendQueue();
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public interface SendQueueEvent extends IEvent
+  {
+    public InternalChannel getSource();
+
+    public Type getType();
+
+    public int getQueueSize();
+
+    /**
+     * @author Eike Stepper
+     */
+    public enum Type
+    {
+      ENQUEUED, DEQUEUED
+    }
+  }
 }

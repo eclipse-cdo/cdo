@@ -15,6 +15,7 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
+import org.eclipse.net4j.util.concurrent.NonBlockingIntCounter;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -23,6 +24,8 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
+
+import org.eclipse.spi.net4j.InternalChannel.SendQueueEvent.Type;
 
 import java.text.MessageFormat;
 import java.util.Queue;
@@ -53,6 +56,10 @@ public class Channel extends Lifecycle implements InternalChannel
   private IWorkSerializer receiveSerializer;
 
   private transient Queue<IBuffer> sendQueue;
+
+  private transient long sentBuffers;
+
+  private transient long receivedBuffers;
 
   public Channel()
   {
@@ -124,6 +131,22 @@ public class Channel extends Lifecycle implements InternalChannel
     this.receiveHandler = receiveHandler;
   }
 
+  /**
+   * @since 3.0
+   */
+  public long getSentBuffers()
+  {
+    return sentBuffers;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public long getReceivedBuffers()
+  {
+    return receivedBuffers;
+  }
+
   public Queue<IBuffer> getSendQueue()
   {
     return sendQueue;
@@ -160,6 +183,7 @@ public class Channel extends Lifecycle implements InternalChannel
     else
     {
       sendQueue.add(buffer);
+      ++sentBuffers;
       channelMultiplexer.multiplexChannel(this);
     }
   }
@@ -173,6 +197,7 @@ public class Channel extends Lifecycle implements InternalChannel
         TRACER.format("Handling buffer from multiplexer: {0} --> {1}", buffer, this); //$NON-NLS-1$
       }
 
+      ++receivedBuffers;
       receiveSerializer.addWork(createReceiverWork(buffer));
     }
     else
@@ -184,7 +209,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   protected ReceiverWork createReceiverWork(IBuffer buffer)
   {
-    return new ReceiverWork(this, buffer);
+    return new ReceiverWork(buffer);
   }
 
   public short getBufferCapacity()
@@ -220,7 +245,7 @@ public class Channel extends Lifecycle implements InternalChannel
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    sendQueue = new ConcurrentLinkedQueue<IBuffer>();
+    sendQueue = new SendQueue();
     if (receiveExecutor == null)
     {
       receiveSerializer = new SynchronousWorkSerializer();
@@ -282,21 +307,21 @@ public class Channel extends Lifecycle implements InternalChannel
   /**
    * @author Eike Stepper
    */
-  protected static class ReceiverWork implements Runnable
+  protected class ReceiverWork implements Runnable
   {
-    private final InternalChannel channel;
-
     private final IBuffer buffer;
 
-    public ReceiverWork(InternalChannel channel, IBuffer buffer)
+    /**
+     * @since 3.0
+     */
+    public ReceiverWork(IBuffer buffer)
     {
-      this.channel = channel;
       this.buffer = buffer;
     }
 
     public void run()
     {
-      IBufferHandler receiveHandler = channel.getReceiveHandler();
+      IBufferHandler receiveHandler = getReceiveHandler();
       if (receiveHandler != null)
       {
         receiveHandler.handleBuffer(buffer);
@@ -306,6 +331,122 @@ public class Channel extends Lifecycle implements InternalChannel
         // Shutting down
         buffer.release();
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  protected class SendQueue extends ConcurrentLinkedQueue<IBuffer>
+  {
+    private static final long serialVersionUID = 1L;
+
+    private NonBlockingIntCounter size = new NonBlockingIntCounter();
+
+    public SendQueue()
+    {
+    }
+
+    @Override
+    public boolean add(IBuffer o)
+    {
+      super.add(o);
+      added();
+      return true;
+    }
+
+    @Override
+    public boolean offer(IBuffer o)
+    {
+      super.offer(o);
+      added();
+      return true;
+    }
+
+    @Override
+    public IBuffer poll()
+    {
+      IBuffer result = super.poll();
+      if (result != null)
+      {
+        removed();
+      }
+
+      return result;
+    }
+
+    @Override
+    public IBuffer remove()
+    {
+      IBuffer result = super.remove();
+      if (result != null)
+      {
+        removed();
+      }
+
+      return result;
+    }
+
+    @Override
+    public boolean remove(Object o)
+    {
+      boolean result = super.remove(o);
+      if (result)
+      {
+        removed();
+      }
+
+      return result;
+    }
+
+    private void added()
+    {
+      int queueSize = size.increment();
+      if (hasListeners())
+      {
+        fireEvent(new SendQueueEventImpl(Type.ENQUEUED, queueSize));
+      }
+    }
+
+    private void removed()
+    {
+      int queueSize = size.decrement();
+      if (hasListeners())
+      {
+        fireEvent(new SendQueueEventImpl(Type.DEQUEUED, queueSize));
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SendQueueEventImpl implements SendQueueEvent
+  {
+    private Type type;
+
+    private final int queueSize;
+
+    private SendQueueEventImpl(Type type, int queueSize)
+    {
+      this.type = type;
+      this.queueSize = queueSize;
+    }
+
+    public InternalChannel getSource()
+    {
+      return Channel.this;
+    }
+
+    public Type getType()
+    {
+      return type;
+    }
+
+    public int getQueueSize()
+    {
+      return queueSize;
     }
   }
 }

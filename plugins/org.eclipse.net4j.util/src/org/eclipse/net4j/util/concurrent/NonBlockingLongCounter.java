@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -43,6 +43,20 @@ public final class NonBlockingLongCounter
     } while (!value.compareAndSet(v, v + 1));
 
     return v + 1;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public long decrement()
+  {
+    long v;
+    do
+    {
+      v = value.get();
+    } while (!value.compareAndSet(v, v - 1));
+
+    return v - 1;
   }
 
   @Override

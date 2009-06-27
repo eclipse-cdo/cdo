@@ -96,14 +96,14 @@ public enum BufferState
   /**
    * Indicates that the {@link IBuffer} is owned by its {@link IBufferProvider}.
    * 
-   * @since 2.0
+   * @since 3.0
    */
   RELEASED,
 
   /**
    * Indicates that the {@link IBuffer} can not be used anymore.
    * 
-   * @since 2.0
+   * @since 3.0
    */
   DISPOSED
 }

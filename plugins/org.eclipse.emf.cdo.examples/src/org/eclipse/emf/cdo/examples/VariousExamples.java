@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 3.0
  */
 public class VariousExamples
 {

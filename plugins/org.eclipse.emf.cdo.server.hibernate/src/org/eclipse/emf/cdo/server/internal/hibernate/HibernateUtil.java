@@ -163,6 +163,11 @@ public class HibernateUtil
       return (CDOIDHibernate)revision.getID();
     }
 
+    return getCDOIDHibernate(revision);
+  }
+
+  public CDOIDHibernate getCDOIDHibernate(final CDORevision revision)
+  {
     final Session session = getHibernateSession();
     if (!(revision.getID() instanceof CDOIDHibernate))
     {

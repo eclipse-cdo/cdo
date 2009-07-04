@@ -15,8 +15,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.collection.PersistentCollection;
-import org.hibernate.collection.PersistentList;
 import org.hibernate.engine.SessionFactoryImplementor;
+
+import java.util.List;
 
 /**
  * @author Martin Taal
@@ -41,9 +42,13 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
       return;
     }
 
-    if (!(value instanceof PersistentList))
+    if (!(value instanceof PersistentCollection))
     {
-      throw new IllegalArgumentException("Value is not a persistentlist but a " + value.getClass().getName());
+      throw new IllegalArgumentException("Value is not a PersistentCollection but a " + value.getClass().getName());
+    }
+    if (!(value instanceof List))
+    {
+      throw new IllegalArgumentException("Value is not a list but a " + value.getClass().getName());
     }
 
     // Only set it in the listholder
@@ -54,11 +59,10 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
     // persistentlist, hibernatemoveablelistwrapper, real list, if so then the real list should be set
     final InternalCDORevision revision = (InternalCDORevision)target;
     final Object currentValue = revision.getValue(getEStructuralFeature());
-    final PersistentList pl = (PersistentList)value;
     if (currentValue == null)
     {
       final WrappedHibernateList whl = new WrappedHibernateList();
-      whl.setDelegate(pl);
+      whl.setDelegate((List)value);
       super.set(target, whl, factory);
     }
   }

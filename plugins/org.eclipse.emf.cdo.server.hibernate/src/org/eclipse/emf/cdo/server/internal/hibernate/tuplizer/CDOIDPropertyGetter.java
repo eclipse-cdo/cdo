@@ -74,10 +74,10 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
   private void setCDOID(CDORevision target, Object value)
   {
     InternalCDORevision revision = (InternalCDORevision)target;
-    HibernateCommitContext hcc = null;
+    HibernateCommitContext commitContext = null;
     if (HibernateThreadContext.isCommitContextSet())
     {
-      hcc = HibernateThreadContext.getCommitContext();
+      commitContext = HibernateThreadContext.getCommitContext();
     }
 
     CDOID cdoID = revision.getID();
@@ -86,9 +86,9 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getEClass().getName());
       revision.setID(newCDOID);
-      if (hcc != null)
+      if (commitContext != null)
       {
-        hcc.setNewID(cdoID, newCDOID);
+        commitContext.setNewID(cdoID, newCDOID);
       }
     }
     else if (cdoID instanceof CDOIDTemp)
@@ -96,10 +96,10 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getEClass().getName());
       revision.setID(newCDOID);
-      if (hcc != null)
+      if (commitContext != null)
       {
-        hcc.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
-        hcc.setNewID(cdoID, newCDOID);
+        commitContext.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
+        commitContext.setNewID(cdoID, newCDOID);
       }
     }
   }

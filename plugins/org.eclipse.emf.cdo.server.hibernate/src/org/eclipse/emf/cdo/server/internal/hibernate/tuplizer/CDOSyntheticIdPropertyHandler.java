@@ -36,7 +36,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
@@ -97,10 +97,10 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       return;
     }
 
-    HibernateCommitContext hcc = null;
+    HibernateCommitContext commitContext = null;
     if (HibernateThreadContext.isCommitContextSet())
     {
-      hcc = HibernateThreadContext.getCommitContext();
+      commitContext = HibernateThreadContext.getCommitContext();
     }
 
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
@@ -110,9 +110,9 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getEClass().getName());
       revision.setID(newCDOID);
-      if (hcc != null)
+      if (commitContext != null)
       {
-        hcc.setNewID(cdoID, newCDOID);
+        commitContext.setNewID(cdoID, newCDOID);
       }
     }
     else if (cdoID instanceof CDOIDTemp)
@@ -120,10 +120,10 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
       CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
           revision.getEClass().getName());
       revision.setID(newCDOID);
-      if (hcc != null)
+      if (commitContext != null)
       {
-        hcc.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
-        hcc.setNewID(cdoID, newCDOID);
+        commitContext.getCommitContext().addIDMapping((CDOIDTemp)cdoID, newCDOID);
+        commitContext.setNewID(cdoID, newCDOID);
       }
     }
     else

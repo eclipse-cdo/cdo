@@ -52,7 +52,7 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, version={3})", getClass().getSimpleName(), getIds(), //$NON-NLS-1$
+    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, version={3})", getClass().getSimpleName(), getIDs(), //$NON-NLS-1$
         getReferenceChunk(), version);
   }
 }

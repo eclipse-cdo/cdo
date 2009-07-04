@@ -53,6 +53,6 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   public String toString()
   {
     return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, timeStamp={3})", getClass().getSimpleName(), //$NON-NLS-1$
-        getIds(), getReferenceChunk(), timeStamp);
+        getIDs(), getReferenceChunk(), timeStamp);
   }
 }

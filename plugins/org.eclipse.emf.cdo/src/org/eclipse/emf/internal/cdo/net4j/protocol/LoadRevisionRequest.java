@@ -52,6 +52,16 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     this.referenceChunk = referenceChunk;
   }
 
+  public Collection<CDOID> getIDs()
+  {
+    return ids;
+  }
+
+  public int getReferenceChunk()
+  {
+    return referenceChunk;
+  }
+
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
@@ -137,16 +147,6 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
     }
 
     return revisions;
-  }
-
-  public Collection<CDOID> getIds()
-  {
-    return ids;
-  }
-
-  public int getReferenceChunk()
-  {
-    return referenceChunk;
   }
 
   @Override

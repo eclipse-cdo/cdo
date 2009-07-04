@@ -53,7 +53,7 @@ public class CommitTransactionPhase1Request extends CommitTransactionRequest
     }
 
     result = confirmingTransactionResult(in);
-    confirmingIdMapping(in, result);
+    confirmingIDMappings(in, result);
     return result;
   }
 }

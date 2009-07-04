@@ -167,7 +167,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
 
     result = confirmingTransactionResult(in);
     confirmingNewPackage(in, result);
-    confirmingIdMapping(in, result);
+    confirmingIDMappings(in, result);
     return result;
   }
 
@@ -265,9 +265,9 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   }
 
   /*
-   * Write ids that are needed
+   * Write IDs that are needed
    */
-  protected void confirmingIdMapping(CDODataInput in, CommitTransactionResult result) throws IOException
+  protected void confirmingIDMappings(CDODataInput in, CommitTransactionResult result) throws IOException
   {
     for (;;)
     {

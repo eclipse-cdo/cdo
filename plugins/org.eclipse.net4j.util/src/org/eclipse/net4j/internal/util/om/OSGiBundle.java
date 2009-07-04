@@ -43,7 +43,7 @@ public class OSGiBundle extends AbstractBundle
   {
     try
     {
-      URL entry = getBundleContext().getBundle().getEntry("."); //$NON-NLS-1$
+      URL entry = getBundleContext().getBundle().getEntry("/"); //$NON-NLS-1$
       URL baseURL = FileLocator.resolve(entry);
       String str = baseURL.toExternalForm();
       if (str.endsWith("/./")) //$NON-NLS-1$

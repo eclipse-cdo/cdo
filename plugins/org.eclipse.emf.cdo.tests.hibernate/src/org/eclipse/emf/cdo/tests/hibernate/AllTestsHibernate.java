@@ -11,7 +11,14 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.AuditTest;
+import org.eclipse.emf.cdo.tests.DBStoreTest;
+import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
+import org.eclipse.emf.cdo.tests.AuditTest.LocalAuditTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
+
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,4 +40,15 @@ public class AllTestsHibernate extends AllTestsAllConfigs
   {
     addScenario(parent, COMBINED, HIBERNATE, TCP, NATIVE);
   }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  {
+    super.initTestClasses(testClasses);
+    testClasses.remove(AuditTest.class);
+    testClasses.remove(LocalAuditTest.class);
+    testClasses.remove(MEMStoreQueryTest.class);
+    testClasses.remove(DBStoreTest.class);
+  }
+
 }

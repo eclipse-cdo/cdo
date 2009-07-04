@@ -47,7 +47,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -359,11 +358,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // keep track for which cdoRevisions the container id needs to be repaired afterwards
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
 
-      // TODO Martin: Why create an additional list?
-      final List<InternalCDORevision> revisions = Arrays.asList(context.getNewObjects());
-
       // first save the non-cdoresources
-      for (CDORevision revision : revisions)
+      for (CDORevision revision : context.getNewObjects())
       {
         if (revision instanceof InternalCDORevision)
         {

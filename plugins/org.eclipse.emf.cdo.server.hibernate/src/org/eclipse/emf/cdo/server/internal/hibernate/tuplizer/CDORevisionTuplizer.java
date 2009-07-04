@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -233,6 +234,11 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       // TODO Clarify feature maps
       return new CDOReferenceGetter(this, mappedProperty.getName());
     }
+    else if (feature instanceof EAttribute && feature.isMany())
+    {
+      // TODO Clarify feature maps
+      return new CDOManyAttributeGetter(this, mappedProperty.getName());
+    }
 
     return new CDOPropertyGetter(this, mappedProperty.getName());
   }
@@ -287,6 +293,12 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       // TODO Clarify feature maps
       return new CDOManyReferenceSetter(this, mappedProperty.getName());
+    }
+
+    if (feature instanceof EAttribute && feature.isMany())
+    {
+      // TODO Clarify feature maps
+      return new CDOManyAttributeSetter(this, mappedProperty.getName());
     }
 
     if (feature instanceof EReference)

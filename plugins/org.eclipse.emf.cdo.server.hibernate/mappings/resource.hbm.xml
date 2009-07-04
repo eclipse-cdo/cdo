@@ -46,12 +46,11 @@
 			<list name="contents" lazy="true" cascade="all,delete-orphan">
 				<key />
 				<list-index />
-				<element
-					type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
+				<many-to-any
+					id-type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDAnyUserType">
 					<column name="entityName" />
-					<column name="idString" />
-					<column name="idBinary" length="1000" />
-				</element>
+					<column name="idvalue" />
+				</many-to-any>
 			</list>
 		</subclass>
 	</class>

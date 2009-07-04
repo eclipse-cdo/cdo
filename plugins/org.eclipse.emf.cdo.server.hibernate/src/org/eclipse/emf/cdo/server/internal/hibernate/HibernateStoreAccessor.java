@@ -355,27 +355,27 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         session.delete(revision);
       }
 
-      // keep track for which cdoRevisions the container id needs to be repaired afterwards
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
-
-      // first save the non-cdoresources
-      for (CDORevision revision : context.getNewObjects())
+      for (InternalCDORevision revision : context.getNewObjects())
       {
+        // keep track for which cdoRevisions the container id needs to be repaired afterwards
         if (revision instanceof InternalCDORevision)
         {
-          final CDOID containerID = (CDOID)((InternalCDORevision)revision).getContainerID();
+          final CDOID containerID = (CDOID)revision.getContainerID();
           if (containerID instanceof CDOIDTemp && !containerID.isNull())
           {
-            repairContainerIDs.add((InternalCDORevision)revision);
+            repairContainerIDs.add(revision);
           }
         }
 
-        session.merge(HibernateUtil.getInstance().getEntityName(revision), revision);
+        session.save(HibernateUtil.getInstance().getEntityName(revision), revision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Persisted new Object " + revision.getEClass().getName() + " id: " + revision.getID());
         }
       }
+
+      session.flush();
 
       for (CDORevision revision : context.getDirtyObjects())
       {
@@ -505,4 +505,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     // TODO This method is called right after this accessor is removed from a pool
   }
+
+  private boolean isResource(CDORevision cdoRevision)
+  {
+    return cdoRevision.getEClass() == EresourcePackage.eINSTANCE.getCDOResource();
+  }
+
 }

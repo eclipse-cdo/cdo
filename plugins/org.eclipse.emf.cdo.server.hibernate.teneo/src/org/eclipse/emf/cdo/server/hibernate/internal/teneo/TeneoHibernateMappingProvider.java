@@ -23,7 +23,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
+import org.eclipse.emf.teneo.extension.ExtensionUtil;
 import org.eclipse.emf.teneo.hibernate.cdo.CDOHelper;
+import org.eclipse.emf.teneo.hibernate.mapper.ManyAttributeMapper;
 
 import org.hibernate.cfg.Configuration;
 
@@ -67,6 +69,8 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
       TRACER.trace(mapping);
     }
 
+    // System.err.println(mapping);
+
     configuration.addXML(mapping);
     if (TRACER.isEnabled())
     {
@@ -92,6 +96,10 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     epacks.remove(EresourcePackage.eINSTANCE);
 
     final EPackage[] ePackageArray = epacks.toArray(new EPackage[epacks.size()]);
+
+    extensionManager.registerExtension(ExtensionUtil.createExtension(ManyAttributeMapper.class,
+        CDOManyAttributeMapper.class, false));
+
     properties.put("teneo.mapping.also_map_as_class", "false"); //$NON-NLS-1$ //$NON-NLS-2$
     String hbm = CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
     // System.err.println(hbm);

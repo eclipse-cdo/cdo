@@ -75,9 +75,9 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
   {
     InternalCDORevision revision = (InternalCDORevision)target;
     HibernateCommitContext hcc = null;
-    if (HibernateThreadContext.isHibernateCommitContextSet())
+    if (HibernateThreadContext.isCommitContextSet())
     {
-      hcc = HibernateThreadContext.getHibernateCommitContext();
+      hcc = HibernateThreadContext.getCommitContext();
     }
 
     CDOID cdoID = revision.getID();

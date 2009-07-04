@@ -128,7 +128,7 @@ public class HibernateUtil
    */
   public Session getHibernateSession()
   {
-    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentHibernateStoreAccessor();
+    final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
     return accessor.getHibernateSession();
   }
 
@@ -145,9 +145,9 @@ public class HibernateUtil
     return props;
   }
 
-  public String getEntityName(CDORevision cdoRevision)
+  public String getEntityName(CDORevision revision)
   {
-    return cdoRevision.getEClass().getName();
+    return revision.getEClass().getName();
   }
 
   /**
@@ -155,27 +155,27 @@ public class HibernateUtil
    * returning or by persisting the object. Note assumes that the hibernate session and CommitContext are set in
    * HibernateThreadContext.
    */
-  public CDOIDHibernate getCDOIDHibernate(CDOID cdoID)
+  public CDOIDHibernate getCDOIDHibernate(CDOID id)
   {
-    final CDORevision cdoRevision = getCDORevision(cdoID);
-    if (cdoRevision.getID() instanceof CDOIDHibernate)
+    final CDORevision revision = getCDORevision(id);
+    if (revision.getID() instanceof CDOIDHibernate)
     {
-      return (CDOIDHibernate)cdoRevision.getID();
+      return (CDOIDHibernate)revision.getID();
     }
 
     final Session session = getHibernateSession();
-    if (!(cdoRevision.getID() instanceof CDOIDHibernate))
+    if (!(revision.getID() instanceof CDOIDHibernate))
     {
-      session.saveOrUpdate(cdoRevision);
+      session.saveOrUpdate(revision);
     }
 
-    if (!(cdoRevision.getID() instanceof CDOIDHibernate))
+    if (!(revision.getID() instanceof CDOIDHibernate))
     {
-      throw new IllegalStateException("CDORevision " + cdoRevision.getEClass().getName() + " " + cdoRevision.getID()
+      throw new IllegalStateException("CDORevision " + revision.getEClass().getName() + " " + revision.getID()
           + " does not have a hibernate cdoid after saving/updating it");
     }
 
-    return (CDOIDHibernate)cdoRevision.getID();
+    return (CDOIDHibernate)revision.getID();
   }
 
   public InternalCDORevision getCDORevision(Object target)
@@ -201,16 +201,16 @@ public class HibernateUtil
       return null;
     }
 
-    if (HibernateThreadContext.isHibernateCommitContextSet())
+    if (HibernateThreadContext.isCommitContextSet())
     {
-      final HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+      final HibernateCommitContext commitContext = HibernateThreadContext.getCommitContext();
       InternalCDORevision revision;
-      if ((revision = hcc.getDirtyObject(id)) != null)
+      if ((revision = commitContext.getDirtyObject(id)) != null)
       {
         return revision;
       }
 
-      if ((revision = hcc.getNewObject(id)) != null)
+      if ((revision = commitContext.getNewObject(id)) != null)
       {
         return revision;
       }
@@ -218,7 +218,7 @@ public class HibernateUtil
       // maybe the temp was already translated
       if (id instanceof CDOIDTemp)
       {
-        final CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
+        final CDOID newID = commitContext.getCommitContext().getIDMappings().get(id);
         if (newID != null)
         {
           return getCDORevision(newID);
@@ -232,9 +232,9 @@ public class HibernateUtil
           + id.getClass().getName() + ": " + id);
     }
 
-    final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
+    final CDOIDHibernate hibernateID = (CDOIDHibernate)id;
     final Session session = getHibernateSession();
-    return (InternalCDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
+    return (InternalCDORevision)session.get(hibernateID.getEntityName(), hibernateID.getId());
   }
 
   public InternalCDORevision getCDORevisionNullable(CDOID id)
@@ -244,16 +244,16 @@ public class HibernateUtil
       return null;
     }
 
-    if (HibernateThreadContext.isHibernateCommitContextSet())
+    if (HibernateThreadContext.isCommitContextSet())
     {
-      final HibernateCommitContext hcc = HibernateThreadContext.getHibernateCommitContext();
+      final HibernateCommitContext commitContext = HibernateThreadContext.getCommitContext();
       InternalCDORevision revision;
-      if ((revision = hcc.getDirtyObject(id)) != null)
+      if ((revision = commitContext.getDirtyObject(id)) != null)
       {
         return revision;
       }
 
-      if ((revision = hcc.getNewObject(id)) != null)
+      if ((revision = commitContext.getNewObject(id)) != null)
       {
         return revision;
       }
@@ -261,7 +261,7 @@ public class HibernateUtil
       // maybe the temp was already translated
       if (id instanceof CDOIDTemp)
       {
-        final CDOID newID = hcc.getCommitContext().getIDMappings().get(id);
+        final CDOID newID = commitContext.getCommitContext().getIDMappings().get(id);
         if (newID != null)
         {
           return getCDORevision(newID);
@@ -274,9 +274,9 @@ public class HibernateUtil
       return null;
     }
 
-    final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)id;
+    final CDOIDHibernate hibernateID = (CDOIDHibernate)id;
     final Session session = getHibernateSession();
-    return (InternalCDORevision)session.get(cdoIDHibernate.getEntityName(), cdoIDHibernate.getId());
+    return (InternalCDORevision)session.get(hibernateID.getEntityName(), hibernateID.getId());
   }
 
   public int convertStringToFeatureID(EObject contained, String value)

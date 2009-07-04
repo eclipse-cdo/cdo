@@ -36,7 +36,7 @@ import java.util.Map;
  * Is only used for synthetic id's.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 @SuppressWarnings("unchecked")
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor
@@ -98,9 +98,9 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
     }
 
     HibernateCommitContext hcc = null;
-    if (HibernateThreadContext.isHibernateCommitContextSet())
+    if (HibernateThreadContext.isCommitContextSet())
     {
-      hcc = HibernateThreadContext.getHibernateCommitContext();
+      hcc = HibernateThreadContext.getCommitContext();
     }
 
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);

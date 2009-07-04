@@ -66,7 +66,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public HibernateStoreAccessor(HibernateStore store, ISession session)
   {
     super(store, session);
-    HibernateThreadContext.setCurrentHibernateStoreAccessor(this);
+    HibernateThreadContext.setCurrentStoreAccessor(this);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
@@ -76,7 +76,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public HibernateStoreAccessor(HibernateStore store, ITransaction transaction)
   {
     super(store, transaction);
-    HibernateThreadContext.setCurrentHibernateStoreAccessor(this);
+    HibernateThreadContext.setCurrentStoreAccessor(this);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Created " + this.getClass().getName() + " for repository " + store.getRepository().getName());
@@ -339,65 +339,65 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       session.setFlushMode(FlushMode.MANUAL);
 
       // first repair the version for all dirty objects
-      for (CDORevision cdoRevision : context.getDirtyObjects())
+      for (CDORevision revision : context.getDirtyObjects())
       {
-        if (cdoRevision instanceof InternalCDORevision)
+        if (revision instanceof InternalCDORevision)
         {
-          InternalCDORevision internalCDORevision = (InternalCDORevision)cdoRevision;
-          internalCDORevision.setVersion(cdoRevision.getVersion() - 1);
-          adjustRevisions.add(internalCDORevision);
+          InternalCDORevision internalRevision = (InternalCDORevision)revision;
+          internalRevision.setVersion(internalRevision.getVersion() - 1);
+          adjustRevisions.add(internalRevision);
         }
       }
 
       // delete all objects
-      for (CDOID cdoID : context.getDetachedObjects())
+      for (CDOID id : context.getDetachedObjects())
       {
-        final CDORevision revision = HibernateUtil.getInstance().getCDORevision(cdoID);
+        final CDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
         session.delete(revision);
       }
-
-      // TODO Martin: Why create an additional list?
-      final List<InternalCDORevision> cdoRevisions = Arrays.asList(context.getNewObjects());
 
       // keep track for which cdoRevisions the container id needs to be repaired afterwards
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
 
+      // TODO Martin: Why create an additional list?
+      final List<InternalCDORevision> revisions = Arrays.asList(context.getNewObjects());
+
       // first save the non-cdoresources
-      for (CDORevision cdoRevision : cdoRevisions)
+      for (CDORevision revision : revisions)
       {
-        if (cdoRevision instanceof InternalCDORevision)
+        if (revision instanceof InternalCDORevision)
         {
-          final CDOID containerID = (CDOID)((InternalCDORevision)cdoRevision).getContainerID();
+          final CDOID containerID = (CDOID)((InternalCDORevision)revision).getContainerID();
           if (containerID instanceof CDOIDTemp && !containerID.isNull())
           {
-            repairContainerIDs.add((InternalCDORevision)cdoRevision);
+            repairContainerIDs.add((InternalCDORevision)revision);
           }
         }
 
-        session.merge(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
+        session.merge(HibernateUtil.getInstance().getEntityName(revision), revision);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Persisted new Object " + cdoRevision.getEClass().getName() + " id: " + cdoRevision.getID());
+          TRACER.trace("Persisted new Object " + revision.getEClass().getName() + " id: " + revision.getID());
         }
       }
 
-      for (CDORevision cdoRevision : context.getDirtyObjects())
+      for (CDORevision revision : context.getDirtyObjects())
       {
-        session.merge(HibernateUtil.getInstance().getEntityName(cdoRevision), cdoRevision);
+        session.merge(HibernateUtil.getInstance().getEntityName(revision), revision);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Updated Object " + cdoRevision.getEClass().getName() + " id: " + cdoRevision.getID());
+          TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID());
         }
       }
 
       session.flush();
 
       // now do an update of the container without incrementing the version
-      for (InternalCDORevision cdoRevision : repairContainerIDs)
+      for (InternalCDORevision revision : repairContainerIDs)
       {
-        final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)cdoRevision.getContainerID());
-        final String entityName = HibernateUtil.getInstance().getEntityName(cdoRevision);
-        final CDOIDHibernate id = (CDOIDHibernate)cdoRevision.getID();
+        final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)revision.getContainerID());
+        final String entityName = HibernateUtil.getInstance().getEntityName(revision);
+        final CDOIDHibernate id = (CDOIDHibernate)revision.getID();
         final CDOIDHibernate containerID = (CDOIDHibernate)container.getID();
         final String hqlUpdate = "update " + entityName
             + " set contID_Entity = :contEntity, contID_ID=:contID, contID_class=:contClass where e_id = :id";
@@ -421,9 +421,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
     finally
     {
-      for (InternalCDORevision cdoRevision : adjustRevisions)
+      for (InternalCDORevision revision : adjustRevisions)
       {
-        cdoRevision.setVersion(cdoRevision.getVersion() + 1);
+        revision.setVersion(revision.getVersion() + 1);
       }
     }
 
@@ -494,7 +494,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
     finally
     {
-      HibernateThreadContext.setCurrentHibernateStoreAccessor(this);
+      HibernateThreadContext.setCurrentStoreAccessor(this);
     }
   }
 

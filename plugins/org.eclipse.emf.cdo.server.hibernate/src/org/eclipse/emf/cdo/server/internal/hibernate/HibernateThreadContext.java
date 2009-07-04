@@ -27,17 +27,17 @@ public class HibernateThreadContext
 
   private static ThreadLocal<HibernateStoreAccessor> accessor = new ThreadLocal<HibernateStoreAccessor>();
 
-  public static HibernateStoreAccessor getCurrentHibernateStoreAccessor()
+  public static HibernateStoreAccessor getCurrentStoreAccessor()
   {
     return accessor.get();
   }
 
-  public static void setCurrentHibernateStoreAccessor(HibernateStoreAccessor hbStoreAccessor)
+  public static void setCurrentStoreAccessor(HibernateStoreAccessor storeAccessor)
   {
-    accessor.set(hbStoreAccessor);
+    accessor.set(storeAccessor);
   }
 
-  public static HibernateCommitContext getHibernateCommitContext()
+  public static HibernateCommitContext getCommitContext()
   {
     HibernateCommitContext result = commitContext.get();
     if (result == null)
@@ -48,7 +48,7 @@ public class HibernateThreadContext
     return result;
   }
 
-  public static boolean isHibernateCommitContextSet()
+  public static boolean isCommitContextSet()
   {
     return commitContext.get() != null;
   }

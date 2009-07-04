@@ -122,9 +122,6 @@ public interface CDOSessionProtocol extends PackageLoader
 
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
-    // private Map<InternalCDOPackageUnit, CDOPackageUnit.Type> repositoryActualTypes = new
-    // HashMap<InternalCDOPackageUnit, CDOPackageUnit.Type>();
-
     public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime,
         boolean repositorySupportingAudits, CDOIDLibraryDescriptor libraryDescriptor)
     {
@@ -174,11 +171,6 @@ public interface CDOSessionProtocol extends PackageLoader
     {
       return packageUnits;
     }
-
-    // public Map<InternalCDOPackageUnit, CDOPackageUnit.Type> getRepositoryActualTypes()
-    // {
-    // return repositoryActualTypes;
-    // }
   }
 
   /**

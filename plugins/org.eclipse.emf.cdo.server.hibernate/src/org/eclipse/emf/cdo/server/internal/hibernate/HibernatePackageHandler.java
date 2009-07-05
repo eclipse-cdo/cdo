@@ -286,6 +286,7 @@ public class HibernatePackageHandler extends Lifecycle
       sessionFactory = null;
     }
 
+    configuration = null;
     super.doDeactivate();
   }
 

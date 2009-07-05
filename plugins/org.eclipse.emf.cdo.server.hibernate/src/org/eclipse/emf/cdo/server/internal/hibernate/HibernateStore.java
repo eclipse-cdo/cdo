@@ -190,6 +190,8 @@ public class HibernateStore extends Store implements IHibernateStore
       hibernateSessionFactory = null;
     }
 
+    hibernateConfiguration = null;
+
     // and now do the drop action
     if (doDropSchema)
     {

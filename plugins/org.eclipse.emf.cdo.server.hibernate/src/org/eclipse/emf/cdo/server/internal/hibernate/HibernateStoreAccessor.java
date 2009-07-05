@@ -505,10 +505,4 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   {
     // TODO This method is called right after this accessor is removed from a pool
   }
-
-  private boolean isResource(CDORevision cdoRevision)
-  {
-    return cdoRevision.getEClass() == EresourcePackage.eINSTANCE.getCDOResource();
-  }
-
 }

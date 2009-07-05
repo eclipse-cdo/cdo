@@ -190,8 +190,6 @@ public class HibernateStore extends Store implements IHibernateStore
       hibernateSessionFactory = null;
     }
 
-    hibernateConfiguration = null;
-
     // and now do the drop action
     if (doDropSchema)
     {
@@ -199,6 +197,8 @@ public class HibernateStore extends Store implements IHibernateStore
       final SchemaExport se = new SchemaExport(conf);
       se.drop(false, true);
     }
+
+    hibernateConfiguration = null;
 
     LifecycleUtil.deactivate(packageHandler, OMLogger.Level.WARN);
     if (doDropSchema)

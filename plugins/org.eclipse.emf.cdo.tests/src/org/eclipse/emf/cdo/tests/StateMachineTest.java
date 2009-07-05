@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution() throws Exception{} and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -584,8 +584,8 @@ public class StateMachineTest extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
-    super.doSetUp();
     skipUnlessConfig(SessionConfig.JVM.INSTANCE);
+    super.doSetUp();
   }
 
   private static void assertFailure(IllegalStateException ex)

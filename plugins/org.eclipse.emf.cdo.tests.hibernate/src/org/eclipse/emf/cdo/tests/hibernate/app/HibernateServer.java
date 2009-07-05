@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Martin Taal - extended testcase
  */
-package org.eclipse.emf.cdo.tests.hibernate;
+package org.eclipse.emf.cdo.tests.hibernate.app;
 
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 

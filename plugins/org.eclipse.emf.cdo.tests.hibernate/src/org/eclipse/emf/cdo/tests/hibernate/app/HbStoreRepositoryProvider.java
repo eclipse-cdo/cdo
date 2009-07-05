@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.hibernate;
+package org.eclipse.emf.cdo.tests.hibernate.app;
 
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.TeneoHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
-import org.eclipse.emf.cdo.tests.StoreRepositoryProvider;
 
 import org.eclipse.net4j.util.WrappedException;
 

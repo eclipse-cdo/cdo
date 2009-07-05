@@ -1278,7 +1278,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    */
   protected ChangeSubscriptionManager createChangeSubscriptionManager()
   {
-    return new ChangeSubscriptionManager();
+    return new ChangeSubscriptionManager(this);
   }
 
   /**
@@ -1640,12 +1640,16 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    * @author Simon McDuff
    * @since 2.0
    */
-  protected class ChangeSubscriptionManager
+  protected static class ChangeSubscriptionManager
   {
-    private Map<CDOID, SubscribeEntry> subscriptions = new HashMap<CDOID, SubscribeEntry>()
+    private CDOViewImpl view;
+
+    private Map<CDOID, SubscribeEntry> subscriptions = new HashMap<CDOID, SubscribeEntry>();
+
+    public ChangeSubscriptionManager(CDOViewImpl view)
     {
-      private static final long serialVersionUID = 1L;
-    };
+      this.view = view;
+    }
 
     public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
@@ -1669,14 +1673,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
      */
     protected void notifyChangeSubcriptionPolicy()
     {
-      boolean policiesPresent = options().hasChangeSubscriptionPolicies();
+      boolean policiesPresent = view.options().hasChangeSubscriptionPolicies();
       synchronized (subscriptions)
       {
         subscriptions.clear();
         List<CDOID> cdoIDs = new ArrayList<CDOID>();
         if (policiesPresent)
         {
-          for (InternalCDOObject cdoObject : getObjectsArray())
+          for (InternalCDOObject cdoObject : view.getObjectsArray())
           {
             int count = getNumberOfValidAdapter(cdoObject);
             if (count > 0)
@@ -1739,9 +1743,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       return null;
     }
 
-    protected void request(List<CDOID> cdoIDs, boolean clear, boolean subscribeMode)
+    protected void request(List<CDOID> ids, boolean clear, boolean subscribeMode)
     {
-      session.getSessionProtocol().changeSubscription(getViewID(), cdoIDs, subscribeMode, clear);
+      view.session.getSessionProtocol().changeSubscription(view.getViewID(), ids, subscribeMode, clear);
     }
 
     protected int getNumberOfValidAdapter(InternalCDOObject object)
@@ -1770,8 +1774,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         if (shouldSubscribe(eObject, adapter))
         {
-          InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, CDOViewImpl.this);
-          if (internalCDOObject.cdoView() != CDOViewImpl.this)
+          InternalCDOObject internalCDOObject = FSMUtil.adapt(eObject, view);
+          if (internalCDOObject.cdoView() != view)
           {
             throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.27"), internalCDOObject)); //$NON-NLS-1$
           }
@@ -1783,7 +1787,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     private boolean shouldSubscribe(EObject eObject, Adapter adapter)
     {
-      for (CDOAdapterPolicy policy : options().getChangeSubscriptionPolicies())
+      for (CDOAdapterPolicy policy : view.options().getChangeSubscriptionPolicies())
       {
         if (policy.isValid(eObject, adapter))
         {
@@ -1796,7 +1800,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     private void subscribe(CDOID id, InternalCDOObject cdoObject, int adjust)
     {
-      boolean policiesPresent = options().hasChangeSubscriptionPolicies();
+      boolean policiesPresent = view.options().hasChangeSubscriptionPolicies();
       synchronized (subscriptions)
       {
         int count = 0;
@@ -1854,23 +1858,27 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     private void addEntry(CDOID key, InternalCDOObject object, int count)
     {
-      subscriptions.put(key, new SubscribeEntry(key, object, count));
+      subscriptions.put(key, new SubscribeEntry(object, count));
     }
 
-    class SubscribeEntry
+    /**
+     * @author Eike Stepper
+     */
+    protected static final class SubscribeEntry
     {
-      private CDOID id;
-
-      private int count = 0;
+      private int count;
 
       private InternalCDOObject object;
 
-      public SubscribeEntry(CDOID id, InternalCDOObject object, int count)
+      public SubscribeEntry(InternalCDOObject object, int count)
       {
-        super();
-        this.id = id;
         this.count = count;
         this.object = object;
+      }
+
+      public InternalCDOObject getObject()
+      {
+        return object;
       }
 
       public int getCount()
@@ -1881,16 +1889,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       public void setCount(int count)
       {
         this.count = count;
-      }
-
-      public CDOID getId()
-      {
-        return id;
-      }
-
-      public InternalCDOObject getObject()
-      {
-        return object;
       }
     }
   }

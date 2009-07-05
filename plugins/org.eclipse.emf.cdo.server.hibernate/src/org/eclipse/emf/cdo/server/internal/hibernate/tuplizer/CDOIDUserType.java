@@ -119,10 +119,10 @@ public class CDOIDUserType implements UserType
     // try to resolve the temp id
     else if (value instanceof CDOIDTemp)
     {
-      final CDORevision cdoRevision = HibernateUtil.getInstance().getCDORevisionNullable((CDOID)value);
-      if (cdoRevision != null)
+      final CDORevision revision = HibernateUtil.getInstance().getCDORevisionNullable((CDOID)value);
+      if (revision != null)
       {
-        value = cdoRevision.getID();
+        value = revision.getID();
       }
 
       // still a temp one, don't do anything for now
@@ -134,31 +134,27 @@ public class CDOIDUserType implements UserType
       }
       else
       {
-        final CDOIDHibernate cdoID = (CDOIDHibernate)value;
-        statement.setString(index, cdoID.getEntityName());
-        statement.setString(index + 1, cdoID.getId().toString());
-        statement.setString(index + 2, cdoID.getId().getClass().getName());
+        final CDOIDHibernate id = (CDOIDHibernate)value;
+        statement.setString(index, id.getEntityName());
+        statement.setString(index + 1, id.getId().toString());
+        statement.setString(index + 2, id.getId().getClass().getName());
       }
     }
     else
     {
-      CDOIDHibernate cdoID;
-      // if (value instanceof CDOIDTemp)
-      // {
-      // cdoID = HibernateUtil.getInstance().getCDOIDHibernate((CDOID)value);
-      // }
+      CDOIDHibernate id;
       if (value instanceof CDORevision)
       {
-        cdoID = (CDOIDHibernate)((CDORevision)value).getID();
+        id = HibernateUtil.getInstance().getCDOIDHibernate((CDORevision)value);
       }
       else
       {
-        cdoID = (CDOIDHibernate)value;
+        id = (CDOIDHibernate)value;
       }
 
-      statement.setString(index, cdoID.getEntityName());
-      statement.setString(index + 1, cdoID.getId().toString());
-      statement.setString(index + 2, cdoID.getId().getClass().getName());
+      statement.setString(index, id.getEntityName());
+      statement.setString(index + 1, id.getId().toString());
+      statement.setString(index + 2, id.getId().getClass().getName());
     }
   }
 

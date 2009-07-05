@@ -472,6 +472,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   protected void doActivate() throws Exception
   {
+    HibernateThreadContext.setCurrentStoreAccessor(this);
   }
 
   @Override
@@ -486,23 +487,29 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     try
     {
       endHibernateSession();
-      PersistableListHolder.getInstance().clearListMapping();
     }
     finally
     {
-      HibernateThreadContext.setCurrentStoreAccessor(this);
+      clearThreadState();
     }
   }
 
   @Override
   protected void doPassivate() throws Exception
   {
-    // TODO This method is called right before this accessor is added to a pool
+    clearThreadState();
   }
 
   @Override
   protected void doUnpassivate() throws Exception
   {
-    // TODO This method is called right after this accessor is removed from a pool
+    HibernateThreadContext.setCurrentStoreAccessor(this);
+  }
+
+  private void clearThreadState()
+  {
+    PersistableListHolder.getInstance().clearListMapping();
+    HibernateThreadContext.setCurrentStoreAccessor(null);
+    HibernateThreadContext.setCommitContext(null);
   }
 }

@@ -35,7 +35,7 @@ public class PersistableListHolder
 
   private static PersistableListHolder instance = new PersistableListHolder();
 
-  private ThreadLocal<Map<Key, PersistentCollection>> listMapping = new ThreadLocal<Map<Key, PersistentCollection>>();
+  private static ThreadLocal<Map<Key, PersistentCollection>> listMapping = new ThreadLocal<Map<Key, PersistentCollection>>();
 
   public PersistableListHolder()
   {

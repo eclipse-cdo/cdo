@@ -1274,6 +1274,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return delegate;
     }
 
+    public CDOSession getSession()
+    {
+      return (CDOSession)delegate.getSession();
+    }
+
     public boolean cancelQuery(int queryId)
     {
       int attempt = 0;

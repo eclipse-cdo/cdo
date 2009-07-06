@@ -45,7 +45,7 @@ public class View implements IView
   {
     this.session = session;
     this.viewID = viewID;
-    repository = session.getSessionManager().getRepository();
+    repository = session.getManager().getRepository();
   }
 
   public Session getSession()

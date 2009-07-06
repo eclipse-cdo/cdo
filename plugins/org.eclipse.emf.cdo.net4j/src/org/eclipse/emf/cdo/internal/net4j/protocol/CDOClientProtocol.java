@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
@@ -57,7 +56,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDOProtocol, CDOSessionProtocol
+public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDOSessionProtocol
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING,
       CDORevisionManagerImpl.class);

@@ -9,13 +9,13 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.internal.server.protocol;
+package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.Pair;

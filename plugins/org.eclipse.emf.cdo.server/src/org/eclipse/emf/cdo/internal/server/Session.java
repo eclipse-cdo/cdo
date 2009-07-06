@@ -24,20 +24,17 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
-import org.eclipse.emf.cdo.internal.server.protocol.CommitNotificationRequest;
-import org.eclipse.emf.cdo.internal.server.protocol.RemoteSessionNotificationRequest;
 import org.eclipse.emf.cdo.server.IAudit;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -62,9 +59,9 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class Session extends Container<IView> implements ISession, CDOIDProvider, CDOCommonSession.Options
 {
-  private SessionManager sessionManager;
+  private SessionManager manager;
 
-  private CDOServerProtocol protocol;
+  private ISessionProtocol protocol;
 
   private int sessionID;
 
@@ -89,14 +86,14 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   /**
    * @since 2.0
    */
-  public Session(SessionManager sessionManager, CDOServerProtocol protocol, int sessionID, String userID)
+  public Session(SessionManager manager, ISessionProtocol protocol, int sessionID, String userID)
       throws SessionCreationException
   {
-    this.sessionManager = sessionManager;
+    this.manager = manager;
     this.protocol = protocol;
     this.sessionID = sessionID;
     this.userID = userID;
-    protocol.addListener(protocolListener);
+    EventUtil.addListener(protocol, protocolListener);
 
     try
     {
@@ -124,9 +121,14 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     return this;
   }
 
-  public SessionManager getSessionManager()
+  public SessionManager getManager()
   {
-    return sessionManager;
+    return manager;
+  }
+
+  public ISessionProtocol getProtocol()
+  {
+    return protocol;
   }
 
   public int getSessionID()
@@ -161,7 +163,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       this.subscribed = subscribed;
       byte opcode = subscribed ? CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED
           : CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED;
-      sessionManager.handleRemoteSessionNotification(opcode, this);
+      manager.handleRemoteSessionNotification(opcode, this);
     }
   }
 
@@ -308,49 +310,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
       detachedObjects = subDetached;
     }
 
-    try
-    {
-      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty() || packageUnits.length > 0)
-      {
-        IChannel channel = protocol.getChannel();
-        if (LifecycleUtil.isActive(channel))
-        {
-          new CommitNotificationRequest(channel, timeStamp, packageUnits, dirtyIDs, detachedObjects, newDeltas)
-              .sendAsync();
-        }
-        else
-        {
-          OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-        }
-      }
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void handleRemoteSessionNotification(byte opcode, ISession session)
-  {
-    try
-    {
-      IChannel channel = protocol.getChannel();
-      if (LifecycleUtil.isActive(channel))
-      {
-        new RemoteSessionNotificationRequest(channel, opcode, session).sendAsync();
-      }
-      else
-      {
-        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-      }
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
+    protocol.sendCommitNotification(timeStamp, packageUnits, dirtyIDs, detachedObjects, newDeltas);
   }
 
   public CDOID provideCDOID(Object idObject)
@@ -366,7 +326,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
       List<CDORevision> additionalRevisions)
   {
-    RevisionManager revisionManager = (RevisionManager)getSessionManager().getRepository().getRevisionManager();
+    RevisionManager revisionManager = (RevisionManager)getManager().getRepository().getRevisionManager();
     EClass eClass = revision.getEClass();
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
     for (int i = 0; i < features.length; i++)
@@ -417,7 +377,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
   @Override
   protected void doDeactivate() throws Exception
   {
-    protocol.removeListener(protocolListener);
+    EventUtil.removeListener(protocol, protocolListener);
     protocolListener = null;
 
     LifecycleUtil.deactivate(protocol, OMLogger.Level.DEBUG);
@@ -429,8 +389,8 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     }
 
     views = null;
-    sessionManager.sessionClosed(this);
-    sessionManager = null;
+    manager.sessionClosed(this);
+    manager = null;
     super.doDeactivate();
   }
 }

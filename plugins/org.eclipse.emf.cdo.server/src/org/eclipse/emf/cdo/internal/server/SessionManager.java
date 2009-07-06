@@ -19,12 +19,11 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.internal.server.protocol.AuthenticationRequest;
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
+import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -47,8 +46,6 @@ public class SessionManager extends Container<ISession> implements ISessionManag
 {
   public static final int DEFAULT_TOKEN_LENGTH = 1024;
 
-  public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 
   private IRepository repository;
@@ -64,8 +61,6 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   private IRandomizer randomizer;
 
   private IUserManager userManager;
-
-  private long negotiationTimeout = DEFAULT_NEGOTIATION_TIMEOUT;
 
   private Map<Integer, Session> sessions = new HashMap<Integer, Session>();
 
@@ -160,16 +155,6 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     this.userManager = userManager;
   }
 
-  public long getNegotiationTimeout()
-  {
-    return negotiationTimeout;
-  }
-
-  public void setNegotiationTimeout(long negotiationTimeout)
-  {
-    this.negotiationTimeout = negotiationTimeout;
-  }
-
   public Session[] getSessions()
   {
     synchronized (sessions)
@@ -207,7 +192,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   /**
    * @since 2.0
    */
-  public Session openSession(CDOServerProtocol protocol) throws SessionCreationException
+  public Session openSession(ISessionProtocol sessionProtocol) throws SessionCreationException
   {
     int id = ++lastSessionID;
     if (TRACER.isEnabled())
@@ -215,8 +200,8 @@ public class SessionManager extends Container<ISession> implements ISessionManag
       TRACER.trace("Opening session " + id); //$NON-NLS-1$
     }
 
-    String userID = authenticateUser(protocol);
-    Session session = new Session(this, protocol, id, userID);
+    String userID = authenticateUser(sessionProtocol);
+    Session session = new Session(this, sessionProtocol, id, userID);
     synchronized (sessions)
     {
       sessions.put(id, session);
@@ -267,12 +252,12 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     {
       if (session != excludedSession && session.isSubscribed())
       {
-        session.handleRemoteSessionNotification(opcode, excludedSession);
+        session.getProtocol().sendRemoteSessionNotification(opcode, excludedSession);
       }
     }
   }
 
-  protected String authenticateUser(CDOServerProtocol protocol) throws SecurityException
+  protected String authenticateUser(ISessionProtocol protocol) throws SecurityException
   {
     if (userManager == null)
     {
@@ -282,7 +267,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     try
     {
       byte[] randomToken = createRandomToken();
-      CDOAuthenticationResult result = new AuthenticationRequest(protocol, randomToken).send(negotiationTimeout);
+      CDOAuthenticationResult result = protocol.sendAuthenticationChallenge(randomToken);
       String userID = result.getUserID();
 
       byte[] cryptedToken = encryptToken(userID, randomToken);

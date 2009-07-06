@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
+import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -113,7 +114,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     super.setUp();
     repositories = new HashMap<String, IRepository>();
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-    CDOServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
+    CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
       public IRepository getRepository(String name)
       {

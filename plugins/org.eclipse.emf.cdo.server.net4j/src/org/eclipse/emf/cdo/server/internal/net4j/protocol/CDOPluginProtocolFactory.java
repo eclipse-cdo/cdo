@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.protocol;
+package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider;
 

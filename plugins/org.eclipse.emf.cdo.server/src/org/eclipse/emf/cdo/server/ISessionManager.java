@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocol;
+import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -43,5 +43,5 @@ public interface ISessionManager extends IContainer<ISession>
    * @return Never <code>null</code>
    * @since 2.0
    */
-  public ISession openSession(CDOServerProtocol protocol) throws SessionCreationException;
+  public ISession openSession(ISessionProtocol sessionProtocol) throws SessionCreationException;
 }

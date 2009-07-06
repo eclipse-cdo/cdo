@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.db.DBUtil;
@@ -88,7 +89,7 @@ public abstract class OM
 
       repository = CDOServerUtil.createRepository("gastro", store, props);
       CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
-      CDOServerUtil.prepareContainer(IPluginContainer.INSTANCE);
+      CDONet4jServerUtil.prepareContainer(IPluginContainer.INSTANCE);
 
       acceptor = (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", "0.0.0.0:2036");
       OM.LOG.info("Gastro server started");

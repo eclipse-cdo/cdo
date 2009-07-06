@@ -6,7 +6,7 @@
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
 	http://www.eclipse.org/legal/epl-v10.html
-	
+
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
@@ -18,29 +18,25 @@
 
 	<extension
 		point="org.eclipse.net4j.util.factories">
-		<factory
-        	productGroup="org.eclipse.net4j.serverProtocols"
-            type="cdo"
-            class="org.eclipse.emf.cdo.internal.server.protocol.CDOPluginProtocolFactory"/>
       	<factory
             type="challenge"
             productGroup="org.eclipse.net4j.Negotiators"
             class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
    	</extension>
-   
-	<extension 
+
+	<extension
 		point="org.eclipse.net4j.util.elementProcessors">
 		<elementProcessor class="org.eclipse.net4j.util.security.ChallengeNegotiatorConfigurer"/>
     </extension>
-   
-   	<extension 
+
+   	<extension
    		point="org.eclipse.emf.cdo.server.repositoryFactories">
       	<repositoryFactory
         	class="org.eclipse.emf.cdo.spi.server.RepositoryFactory"
             repositoryType="default"/>
 	</extension>
 
-   	<extension 
+   	<extension
    		point="org.eclipse.emf.cdo.server.storeFactories">
       	<storeFactory
         	class="org.eclipse.emf.cdo.internal.server.mem.MEMStoreFactory"
@@ -55,7 +51,7 @@
 			<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
  		</application>
 	</extension>
-	
+
    	<extension
         id="product"
         point="org.eclipse.core.runtime.products">

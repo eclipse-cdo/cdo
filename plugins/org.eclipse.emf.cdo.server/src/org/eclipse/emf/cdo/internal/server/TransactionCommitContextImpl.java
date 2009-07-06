@@ -309,7 +309,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
 
   protected long createTimeStamp()
   {
-    Repository repository = (Repository)transaction.getSession().getSessionManager().getRepository();
+    Repository repository = (Repository)transaction.getSession().getManager().getRepository();
     return repository.createCommitTimeStamp();
   }
 

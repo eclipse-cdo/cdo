@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
+import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
@@ -53,7 +54,7 @@ public class ImportXML
     IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container
     Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
     JVMUtil.prepareContainer(container); // Prepare the JVM transport
-    CDOServerUtil.prepareContainer(container); // Prepare the CDO server
+    CDONet4jServerUtil.prepareContainer(container); // Prepare the CDO server
     CDONet4jUtil.prepareContainer(container); // Prepare the CDO client
     container.activate();
 

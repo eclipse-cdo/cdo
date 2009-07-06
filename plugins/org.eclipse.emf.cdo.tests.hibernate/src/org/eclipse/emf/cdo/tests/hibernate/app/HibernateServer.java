@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Martin Taal - extended testcase
@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.hibernate.app;
 
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
@@ -81,9 +82,9 @@ public class HibernateServer
 
     // Prepare the standalone infra structure (not needed when running inside Eclipse)
     IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container
-    Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
     TCPUtil.prepareContainer(container); // Prepare the TCP transport
-    CDOServerUtil.prepareContainer(container); // Prepare the CDO server
+    Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
+    CDONet4jServerUtil.prepareContainer(container); // Prepare the CDO server
     container.activate();
     return container;
   }

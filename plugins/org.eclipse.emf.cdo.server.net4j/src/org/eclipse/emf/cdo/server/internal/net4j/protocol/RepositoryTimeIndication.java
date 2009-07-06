@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.protocol;
+package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 

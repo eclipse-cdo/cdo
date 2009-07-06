@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.internal.server.protocol.CDOServerProtocolFactory;
-import org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -55,16 +53,6 @@ public final class CDOServerUtil
     repository.setStore(store);
     repository.setProperties(props);
     return repository;
-  }
-
-  public static void prepareContainer(IManagedContainer container, IRepositoryProvider repositoryProvider)
-  {
-    container.registerFactory(new CDOServerProtocolFactory(repositoryProvider));
-  }
-
-  public static void prepareContainer(IManagedContainer container)
-  {
-    prepareContainer(container, new ContainerRepositoryProvider(container));
   }
 
   public static void addRepository(IManagedContainer container, IRepository repository)

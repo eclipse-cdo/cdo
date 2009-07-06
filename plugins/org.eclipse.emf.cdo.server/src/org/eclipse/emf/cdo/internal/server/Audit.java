@@ -32,7 +32,7 @@ public class Audit extends View implements IAudit
   public Audit(Session session, int viewID, long timeStamp)
   {
     super(session, viewID);
-    IRepository repository = getSession().getSessionManager().getRepository();
+    IRepository repository = getSession().getManager().getRepository();
     setTimeStamp(repository, timeStamp);
   }
 
@@ -51,7 +51,7 @@ public class Audit extends View implements IAudit
   public List<CDORevision> setTimeStamp(long timeStamp, List<CDOID> invalidObjects)
   {
     checkOpen();
-    IRepository repository = getSession().getSessionManager().getRepository();
+    IRepository repository = getSession().getManager().getRepository();
     setTimeStamp(repository, timeStamp);
     return repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp, false);
   }

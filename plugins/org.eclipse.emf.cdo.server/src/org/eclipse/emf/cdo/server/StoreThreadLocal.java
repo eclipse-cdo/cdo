@@ -64,7 +64,7 @@ public final class StoreThreadLocal
     if (accessor == null)
     {
       ISession session = getSession();
-      IStore store = session.getSessionManager().getRepository().getStore();
+      IStore store = session.getManager().getRepository().getStore();
       accessor = store.getReader(session);
       ACCESSOR.set(accessor);
     }

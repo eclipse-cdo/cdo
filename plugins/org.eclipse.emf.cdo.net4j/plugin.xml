@@ -16,11 +16,11 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocolFactory"
+            class="org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory"
             productGroup="org.eclipse.net4j.clientProtocols"
             type="cdo"/>
       <factory
-            class="org.eclipse.emf.internal.cdo.net4j.CDONet4jSessionFactory"
+            class="org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionFactory"
             productGroup="org.eclipse.emf.cdo.sessions"
             type="cdo"/>
    </extension>
@@ -28,7 +28,7 @@
    <extension
          point="org.eclipse.net4j.util.elementProcessors">
       <elementProcessor
-            class="org.eclipse.emf.internal.cdo.net4j.FailOverStrategyInjector">
+            class="org.eclipse.emf.cdo.internal.net4j.FailOverStrategyInjector">
       </elementProcessor>
    </extension>
 

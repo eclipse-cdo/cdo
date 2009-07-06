@@ -4,36 +4,37 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - maintenance
- *    Victor Roldan Betancort - maintenance
  **************************************************************************/
-package org.eclipse.emf.cdo.net4j;
+package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
-import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
+import org.eclipse.spi.net4j.ClientProtocolFactory;
+
 /**
- * @since 2.0
  * @author Eike Stepper
  */
-public final class CDONet4jUtil
+public final class CDOClientProtocolFactory extends ClientProtocolFactory
 {
-  private CDONet4jUtil()
+  public static final String TYPE = CDOProtocolConstants.PROTOCOL_NAME;
+
+  public CDOClientProtocolFactory()
   {
+    super(TYPE);
   }
 
-  public static CDOSessionConfiguration createSessionConfiguration()
+  public CDOClientProtocol create(String description)
   {
-    return new CDONet4jSessionConfigurationImpl();
+    return new CDOClientProtocol();
   }
 
-  public static void prepareContainer(IManagedContainer container)
+  public static CDOClientProtocol get(IManagedContainer container, String description)
   {
-    container.registerFactory(new CDOClientProtocolFactory());
+    return (CDOClientProtocol)container.getElement(PRODUCT_GROUP, TYPE, description);
   }
 }

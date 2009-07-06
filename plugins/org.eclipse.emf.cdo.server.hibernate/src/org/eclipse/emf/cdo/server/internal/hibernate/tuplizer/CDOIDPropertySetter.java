@@ -39,8 +39,13 @@ public class CDOIDPropertySetter extends CDOPropertySetter
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
+    InternalCDORevision revision = (InternalCDORevision)target;
     if (value == null)
     {
+      if (getEStructuralFeature().isUnsettable())
+      {
+        revision.unset(getEStructuralFeature());
+      }
       return;
     }
 
@@ -50,7 +55,6 @@ public class CDOIDPropertySetter extends CDOPropertySetter
       commitContext = HibernateThreadContext.getCommitContext();
     }
 
-    InternalCDORevision revision = (InternalCDORevision)target;
     CDOID revisionID = revision.getID();
     if (revisionID == null)
     {

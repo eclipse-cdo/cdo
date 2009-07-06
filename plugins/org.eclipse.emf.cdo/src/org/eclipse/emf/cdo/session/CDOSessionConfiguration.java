@@ -18,7 +18,6 @@ import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
 public interface CDOSessionConfiguration

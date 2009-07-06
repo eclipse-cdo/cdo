@@ -50,7 +50,6 @@ import java.util.Collection;
  * various <code>openXYZ</code> methods are provided for this purpose.
  * 
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
 public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOptionsContainer

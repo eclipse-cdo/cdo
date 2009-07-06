@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/233490
@@ -13,10 +13,11 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -30,25 +31,25 @@ import java.util.StringTokenizer;
  */
 public class View implements IView
 {
-  private Session session;
+  private InternalSession session;
 
   private int viewID;
 
-  private IRepository repository;
+  private InternalRepository repository;
 
   private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
 
   /**
    * @since 2.0
    */
-  public View(Session session, int viewID)
+  public View(InternalSession session, int viewID)
   {
     this.session = session;
     this.viewID = viewID;
     repository = session.getManager().getRepository();
   }
 
-  public Session getSession()
+  public InternalSession getSession()
   {
     return session;
   }
@@ -69,7 +70,7 @@ public class View implements IView
   /**
    * @since 2.0
    */
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     checkOpen();
     return repository;

@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -25,6 +23,8 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.AdditionalRevisionCache;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 
@@ -38,9 +38,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class RevisionManager extends CDORevisionResolverImpl implements IRevisionManager
+public class RevisionManager extends CDORevisionResolverImpl implements InternalRevisionManager
 {
-  private IRepository repository;
+  private InternalRepository repository;
 
   private AdditionalRevisionCache additionalRevisionCache;
 
@@ -54,7 +54,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   /**
    * @since 2.0
    */
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     return repository;
   }
@@ -62,7 +62,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   /**
    * @since 2.0
    */
-  public void setRepository(IRepository repository)
+  public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
   }

@@ -4,11 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.server;
+
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -18,7 +20,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  */
 public final class StoreThreadLocal
 {
-  private static final ThreadLocal<ISession> SESSION = new InheritableThreadLocal<ISession>();
+  private static final ThreadLocal<InternalSession> SESSION = new InheritableThreadLocal<InternalSession>();
 
   private static final ThreadLocal<IStoreAccessor> ACCESSOR = new InheritableThreadLocal<IStoreAccessor>();
 
@@ -28,7 +30,7 @@ public final class StoreThreadLocal
   {
   }
 
-  public static void setSession(ISession session)
+  public static void setSession(InternalSession session)
   {
     SESSION.set(session);
     ACCESSOR.set(null);
@@ -41,9 +43,9 @@ public final class StoreThreadLocal
    * @throws IllegalStateException
    *           if no session is associated with the current thread.
    */
-  public static ISession getSession()
+  public static InternalSession getSession()
   {
-    ISession session = SESSION.get();
+    InternalSession session = SESSION.get();
     if (session == null)
     {
       throw new IllegalStateException("session == null"); //$NON-NLS-1$

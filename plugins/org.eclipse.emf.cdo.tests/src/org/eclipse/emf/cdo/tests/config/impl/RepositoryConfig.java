@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -23,6 +22,8 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -51,7 +52,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static final long serialVersionUID = 1L;
 
-  private transient Map<String, IRepository> repositories;
+  private transient Map<String, InternalRepository> repositories;
 
   public RepositoryConfig(String name)
   {
@@ -78,9 +79,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return repositoryProperties;
   }
 
-  public synchronized IRepository getRepository(String name)
+  public synchronized InternalRepository getRepository(String name)
   {
-    IRepository repository = repositories.get(name);
+    InternalRepository repository = repositories.get(name);
     if (repository == null)
     {
       repository = getTestRepository();
@@ -112,7 +113,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public void setUp() throws Exception
   {
     super.setUp();
-    repositories = new HashMap<String, IRepository>();
+    repositories = new HashMap<String, InternalRepository>();
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
@@ -139,7 +140,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     super.tearDown();
   }
 
-  protected IRepository createRepository(String name)
+  protected InternalRepository createRepository(String name)
   {
     IStore store = getTestStore();
     if (store == null)
@@ -148,7 +149,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     Map<String, String> props = getRepositoryProperties();
-    Repository repository = (Repository)CDOServerUtil.createRepository(name, store, props);
+    InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, props);
     IRevisionManager revisionManager = getTestRevisionManager();
     if (revisionManager != null)
     {
@@ -158,7 +159,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     IUserManager userManager = getTestUserManager();
     if (userManager != null)
     {
-      SessionManager sessionManager = new SessionManager();
+      InternalSessionManager sessionManager = new SessionManager();
       sessionManager.setUserManager(userManager);
       repository.setSessionManager(sessionManager);
     }
@@ -174,9 +175,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected abstract IStore createStore();
 
-  protected IRepository getTestRepository()
+  protected InternalRepository getTestRepository()
   {
-    return (IRepository)getTestProperty(PROP_TEST_REPOSITORY);
+    return (InternalRepository)getTestProperty(PROP_TEST_REPOSITORY);
   }
 
   protected IRevisionManager getTestRevisionManager()

@@ -26,8 +26,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
-import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.internal.server.Transaction;
 import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
 import org.eclipse.emf.cdo.server.IStore;
@@ -37,6 +35,8 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.util.WrappedException;
@@ -107,14 +107,14 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     return (CDOServerProtocol)super.getProtocol();
   }
 
-  protected Session getSession()
+  protected InternalSession getSession()
   {
-    return (Session)getProtocol().getSession();
+    return getProtocol().getSession();
   }
 
-  protected Repository getRepository()
+  protected InternalRepository getRepository()
   {
-    Repository repository = (Repository)getSession().getManager().getRepository();
+    InternalRepository repository = getSession().getManager().getRepository();
     if (!LifecycleUtil.isActive(repository))
     {
       throw new IllegalStateException("Repository has been deactivated"); //$NON-NLS-1$

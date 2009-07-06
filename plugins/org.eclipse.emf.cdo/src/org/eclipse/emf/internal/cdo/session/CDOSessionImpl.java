@@ -55,7 +55,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
-import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;

@@ -14,10 +14,8 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -25,12 +23,12 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IAudit;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
@@ -57,7 +55,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class Session extends Container<IView> implements ISession, CDOIDProvider, CDOCommonSession.Options
+public class Session extends Container<IView> implements InternalSession
 {
   private SessionManager manager;
 

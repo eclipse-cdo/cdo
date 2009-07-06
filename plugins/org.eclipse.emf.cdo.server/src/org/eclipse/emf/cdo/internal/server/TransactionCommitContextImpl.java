@@ -31,6 +31,8 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
@@ -93,7 +95,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
   public TransactionCommitContextImpl(Transaction transaction)
   {
     this.transaction = transaction;
-    Repository repository = (Repository)transaction.getRepository();
+    InternalRepository repository = transaction.getRepository();
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
     packageRegistry.activate();
   }
@@ -257,7 +259,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
       adjustTimeStamps();
       monitor.worked();
 
-      Repository repository = (Repository)transaction.getRepository();
+      InternalRepository repository = transaction.getRepository();
       computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());
 
       lockObjects();
@@ -309,7 +311,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
 
   protected long createTimeStamp()
   {
-    Repository repository = (Repository)transaction.getSession().getManager().getRepository();
+    InternalRepository repository = transaction.getSession().getManager().getRepository();
     return repository.createCommitTimeStamp();
   }
 
@@ -411,7 +413,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
 
     try
     {
-      LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
+      InternalLockManager lockManager = transaction.getRepository().getLockManager();
       lockManager.lock(RWLockManager.LockType.WRITE, transaction, lockedObjects, 1000);
     }
     catch (TimeoutRuntimeException exception)
@@ -425,7 +427,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
   {
     if (!lockedObjects.isEmpty())
     {
-      LockManager lockManager = ((Repository)transaction.getRepository()).getLockManager();
+      InternalLockManager lockManager = transaction.getRepository().getLockManager();
       lockManager.unlock(RWLockManager.LockType.WRITE, transaction, lockedObjects);
       lockedObjects.clear();
     }
@@ -558,7 +560,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
 
       if (isAutoReleaseLocksEnabled())
       {
-        ((Repository)transaction.getRepository()).getLockManager().unlock(transaction);
+        transaction.getRepository().getLockManager().unlock(transaction);
       }
 
       monitor.worked();
@@ -576,7 +578,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
 
   private void addNewPackageUnits(OMMonitor monitor)
   {
-    Repository repository = (Repository)transaction.getRepository();
+    InternalRepository repository = transaction.getRepository();
     InternalCDOPackageRegistry repositoryPackageRegistry = repository.getPackageRegistry(false);
     synchronized (repositoryPackageRegistry)
     {

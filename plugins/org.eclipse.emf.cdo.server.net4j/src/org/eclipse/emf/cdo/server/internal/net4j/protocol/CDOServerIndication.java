@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
@@ -21,9 +21,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
-import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -49,14 +49,14 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     return (CDOServerProtocol)super.getProtocol();
   }
 
-  protected Session getSession()
+  protected InternalSession getSession()
   {
-    return (Session)getProtocol().getSession();
+    return getProtocol().getSession();
   }
 
-  protected Repository getRepository()
+  protected InternalRepository getRepository()
   {
-    Repository repository = (Repository)getSession().getManager().getRepository();
+    InternalRepository repository = getSession().getManager().getRepository();
     if (!LifecycleUtil.isActive(repository))
     {
       throw new IllegalStateException("Repository has been deactivated"); //$NON-NLS-1$

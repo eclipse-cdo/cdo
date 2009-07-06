@@ -4,24 +4,37 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.config;
+package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
-import java.util.Map;
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
+
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
  * @author Eike Stepper
  */
-public interface IRepositoryConfig extends IConfig
+public class EmbeddedSession extends CDOSessionImpl
 {
-  public static final String REPOSITORY_NAME = "repo1";
+  private InternalRepository repository;
 
-  public Map<String, String> getRepositoryProperties();
+  public EmbeddedSession()
+  {
+  }
 
-  public InternalRepository getRepository(String name);
+  public InternalRepository getRepository()
+  {
+    return repository;
+  }
+
+  @Override
+  protected CDOSessionProtocol createSessionProtocol()
+  {
+    return new EmbeddedSessionProtocol(this);
+  }
 }

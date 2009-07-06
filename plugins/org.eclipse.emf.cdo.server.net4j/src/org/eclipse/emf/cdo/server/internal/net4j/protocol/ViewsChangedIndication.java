@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.ImplementationError;
 
@@ -35,7 +35,7 @@ public class ViewsChangedIndication extends CDOServerIndication
   {
     int viewID = in.readInt();
     byte kind = in.readByte();
-    Session session = getSession();
+    InternalSession session = getSession();
 
     switch (kind)
     {

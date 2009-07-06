@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrentValue;
@@ -78,7 +79,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
   public void postCommit(boolean success)
   {
     StoreThreadLocal.setAccessor(getAccessor());
-    Repository repository = (Repository)getTransaction().getRepository();
+    InternalRepository repository = getTransaction().getRepository();
     repository.getCommitManager().remove(this);
     super.postCommit(success);
   }

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -52,7 +53,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider
    * 
    * @since 2.0
    */
-  public ISession getSession();
+  public InternalSession getSession();
 
   /**
    * @since 2.0

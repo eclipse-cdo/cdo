@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
-
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
@@ -25,23 +23,10 @@ public interface ISessionManager extends IContainer<ISession>
    */
   public IRepository getRepository();
 
-  /**
-   * Internal.
-   * 
-   * @since 2.0
-   */
-  public void setRepository(IRepository repository);
-
   public ISession[] getSessions();
 
   /**
    * @since 2.0
    */
   public ISession getSession(int sessionID);
-
-  /**
-   * @return Never <code>null</code>
-   * @since 2.0
-   */
-  public ISession openSession(ISessionProtocol sessionProtocol) throws SessionCreationException;
 }

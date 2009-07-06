@@ -14,9 +14,9 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -534,7 +534,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    Repository repo = (Repository)getRepository();
+    InternalRepository repo = getRepository();
     CDOSession session = openModel1Session();
 
     CDOTransaction transaction = session.openTransaction();
@@ -553,7 +553,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     Company company = getModel1Factory().createCompany();
 
-    Repository repo = (Repository)getRepository();
+    InternalRepository repo = getRepository();
     CDOSession session = openModel1Session();
 
     CDOTransaction transaction = session.openTransaction();

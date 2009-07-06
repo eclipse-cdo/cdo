@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,13 +14,13 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.server.Repository;
-import org.eclipse.emf.cdo.internal.server.Session;
-import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -37,9 +37,9 @@ public class OpenSessionIndication extends RepositoryTimeIndication
 
   private boolean passiveUpdateEnabled;
 
-  private Repository repository;
+  private InternalRepository repository;
 
-  private Session session;
+  private InternalSession session;
 
   public OpenSessionIndication(CDOServerProtocol protocol)
   {
@@ -47,13 +47,13 @@ public class OpenSessionIndication extends RepositoryTimeIndication
   }
 
   @Override
-  protected Repository getRepository()
+  protected InternalRepository getRepository()
   {
     return repository;
   }
 
   @Override
-  protected Session getSession()
+  protected InternalSession getSession()
   {
     return session;
   }
@@ -82,13 +82,13 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     {
       CDOServerProtocol protocol = getProtocol();
       IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
-      repository = (Repository)repositoryProvider.getRepository(repositoryName);
+      repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
       if (repository == null)
       {
         throw new RepositoryNotFoundException(repositoryName);
       }
 
-      SessionManager sessionManager = repository.getSessionManager();
+      InternalSessionManager sessionManager = repository.getSessionManager();
       session = sessionManager.openSession(protocol);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 

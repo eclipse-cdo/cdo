@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -89,8 +90,9 @@ public class LoadChunkIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    InternalCDORevision revision = getRepository().getRevisionManager().getRevisionByVersion(id, 0, version);
-    getRepository().getRevisionManager().ensureChunk(revision, feature, fromIndex, toIndex + 1);
+    RevisionManager revisionManager = (RevisionManager)getRepository().getRevisionManager();
+    InternalCDORevision revision = revisionManager.getRevisionByVersion(id, 0, version);
+    revisionManager.ensureChunk(revision, feature, fromIndex, toIndex + 1);
 
     CDOType type = CDOModelUtil.getType(feature);
     MoveableList<Object> list = revision.getList(feature);

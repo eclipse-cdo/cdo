@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -47,9 +47,9 @@ public class GetRemoteSessionsIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    Session localSession = getSession();
-    Session[] sessions = getSession().getManager().getSessions();
-    for (Session session : sessions)
+    InternalSession localSession = getSession();
+    InternalSession[] sessions = getSession().getManager().getSessions();
+    for (InternalSession session : sessions)
     {
       if (session != localSession)
       {

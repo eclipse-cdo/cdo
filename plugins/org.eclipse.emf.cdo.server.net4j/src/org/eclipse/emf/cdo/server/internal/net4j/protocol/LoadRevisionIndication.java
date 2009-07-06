@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.RevisionManager;
+import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -173,8 +174,8 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected InternalCDORevision getRevision(CDOID id)
   {
-    RevisionManager revisionManager = getRepository().getRevisionManager();
-    return revisionManager.getRevision(id, referenceChunk);
+    IRevisionManager revisionManager = getRepository().getRevisionManager();
+    return (InternalCDORevision)revisionManager.getRevision(id, referenceChunk);
   }
 
   private void collectRevisions(InternalCDORevision revision, Set<CDOID> revisions,
@@ -189,8 +190,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
     visitedFetchRules.add(fetchRule);
 
-    RevisionManager revisionManager = (RevisionManager)getSession().getManager().getRepository()
-        .getRevisionManager();
+    RevisionManager revisionManager = (RevisionManager)getSession().getManager().getRepository().getRevisionManager();
     for (EStructuralFeature feature : fetchRule.getFeatures())
     {
       if (feature.isMany())

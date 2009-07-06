@@ -12,6 +12,7 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.util.collection.HashBag;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.ArrayList;
@@ -31,12 +32,8 @@ import java.util.Map.Entry;
  * @author Simon McDuff
  * @since 2.0
  */
-public class RWLockManager<K, V> extends Lifecycle
+public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, V>
 {
-  public static final int WAIT = 0;
-
-  public static final int NO_WAIT = 1;
-
   private LockStrategy<K, V> writeLockStrategy = new LockStrategy<K, V>()
   {
     public boolean canObtainLock(LockEntry<K, V> entry, V context)
@@ -624,13 +621,5 @@ public class RWLockManager<K, V> extends Lifecycle
     {
       throw new UnsupportedOperationException();
     }
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  public static enum LockType
-  {
-    WRITE, READ
   }
 }

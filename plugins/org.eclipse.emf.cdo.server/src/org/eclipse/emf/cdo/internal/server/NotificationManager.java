@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,11 +15,12 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.server.INotificationManager;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -30,25 +31,25 @@ import java.util.List;
  * @author Simon McDuff
  * @since 2.0
  */
-public class NotificationManager extends Lifecycle implements INotificationManager
+public class NotificationManager extends Lifecycle implements InternalNotificationManager
 {
-  private IRepository repository;
+  private InternalRepository repository;
 
   public NotificationManager()
   {
   }
 
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     return repository;
   }
 
-  public void setRepository(IRepository repository)
+  public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
   }
 
-  public void notifyCommit(ISession session, IStoreAccessor.CommitContext commitContext)
+  public void notifyCommit(InternalSession session, IStoreAccessor.CommitContext commitContext)
   {
     CDORevisionDelta[] arrayOfDeltas = commitContext.getDirtyObjectDeltas();
     CDOID[] arrayOfDetachedObjects = commitContext.getDetachedObjects();
@@ -74,9 +75,9 @@ public class NotificationManager extends Lifecycle implements INotificationManag
         detachedObjects.add(arrayOfDetachedObjects[i]);
       }
 
-      SessionManager sessionManager = (SessionManager)repository.getSessionManager();
+      InternalSessionManager sessionManager = repository.getSessionManager();
       sessionManager.handleCommitNotification(commitContext.getTimeStamp(), arrayOfNewPackageUnit, dirtyIDs,
-          detachedObjects, deltas, (Session)session);
+          detachedObjects, deltas, session);
     }
   }
 }

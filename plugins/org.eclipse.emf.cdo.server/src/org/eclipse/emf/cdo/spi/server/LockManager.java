@@ -4,15 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IView;
@@ -27,9 +26,9 @@ import org.eclipse.net4j.util.event.IListener;
  * @author Simon McDuff
  * @since 2.0
  */
-public class LockManager extends RWLockManager<CDOID, IView>
+public class LockManager extends RWLockManager<CDOID, IView> implements InternalLockManager
 {
-  private IRepository repository;
+  private InternalRepository repository;
 
   @ExcludeFromDump
   private transient IListener sessionListener = new ContainerEventAdapter<IView>()
@@ -61,12 +60,12 @@ public class LockManager extends RWLockManager<CDOID, IView>
   {
   }
 
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     return repository;
   }
 
-  public void setRepository(IRepository repository)
+  public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
   }

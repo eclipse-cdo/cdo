@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/233490    
+ *    Simon McDuff - http://bugs.eclipse.org/233490
  *    Simon McDuff - http://bugs.eclipse.org/213402
  */
 package org.eclipse.emf.cdo.internal.server;
@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IAudit;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Audit extends View implements IAudit
 {
   private long timeStamp;
 
-  public Audit(Session session, int viewID, long timeStamp)
+  public Audit(InternalSession session, int viewID, long timeStamp)
   {
     super(session, viewID);
     IRepository repository = getSession().getManager().getRepository();

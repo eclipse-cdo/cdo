@@ -12,7 +12,8 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
-import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -30,9 +31,9 @@ import java.util.concurrent.Future;
  * @author Simon McDuff
  * @since 2.0
  */
-public class CommitManager extends Lifecycle
+public class CommitManager extends Lifecycle implements InternalCommitManager
 {
-  private IRepository repository;
+  private InternalRepository repository;
 
   @ExcludeFromDump
   private transient ExecutorService executors;
@@ -46,12 +47,12 @@ public class CommitManager extends Lifecycle
   {
   }
 
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     return repository;
   }
 
-  public void setRepository(IRepository repository)
+  public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
   }

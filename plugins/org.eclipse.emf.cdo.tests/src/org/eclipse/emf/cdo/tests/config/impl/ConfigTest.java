@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IContainerConfig;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
@@ -197,7 +198,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   /**
    *@category Repository
    */
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     return getRepositoryConfig().getRepository(IRepositoryConfig.REPOSITORY_NAME);
   }

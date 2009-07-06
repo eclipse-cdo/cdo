@@ -24,14 +24,22 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
+import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.LockManager;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -57,7 +65,7 @@ import java.util.UUID;
  * @author Eike Stepper
  * @since 2.0
  */
-public class Repository extends Container<Object> implements IRepository, InternalCDOPackageRegistry.PackageLoader
+public class Repository extends Container<Object> implements InternalRepository
 {
   private String name;
 
@@ -75,17 +83,17 @@ public class Repository extends Container<Object> implements IRepository, Intern
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private SessionManager sessionManager;
+  private InternalSessionManager sessionManager;
 
   private RevisionManager revisionManager;
 
-  private QueryManager queryManager;
+  private InternalQueryManager queryManager;
 
-  private NotificationManager notificationManager;
+  private InternalNotificationManager notificationManager;
 
-  private CommitManager commitManager;
+  private InternalCommitManager commitManager;
 
-  private LockManager lockManager;
+  private InternalLockManager lockManager;
 
   private IQueryHandlerProvider queryHandlerProvider;
 
@@ -206,7 +214,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
     this.packageRegistry = packageRegistry;
   }
 
-  public SessionManager getSessionManager()
+  public InternalSessionManager getSessionManager()
   {
     return sessionManager;
   }
@@ -214,7 +222,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public void setSessionManager(SessionManager sessionManager)
+  public void setSessionManager(InternalSessionManager sessionManager)
   {
     this.sessionManager = sessionManager;
   }
@@ -235,7 +243,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public QueryManager getQueryManager()
+  public InternalQueryManager getQueryManager()
   {
     return queryManager;
   }
@@ -243,7 +251,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public void setQueryManager(QueryManager queryManager)
+  public void setQueryManager(InternalQueryManager queryManager)
   {
     this.queryManager = queryManager;
   }
@@ -251,7 +259,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public NotificationManager getNotificationManager()
+  public InternalNotificationManager getNotificationManager()
   {
     return notificationManager;
   }
@@ -259,7 +267,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public void setNotificationManager(NotificationManager notificationManager)
+  public void setNotificationManager(InternalNotificationManager notificationManager)
   {
     this.notificationManager = notificationManager;
   }
@@ -267,7 +275,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public CommitManager getCommitManager()
+  public InternalCommitManager getCommitManager()
   {
     return commitManager;
   }
@@ -275,7 +283,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public void setCommitManager(CommitManager commitManager)
+  public void setCommitManager(InternalCommitManager commitManager)
   {
     this.commitManager = commitManager;
   }
@@ -283,7 +291,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public LockManager getLockManager()
+  public InternalLockManager getLockManager()
   {
     return lockManager;
   }
@@ -291,7 +299,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public void setLockManager(LockManager lockManager)
+  public void setLockManager(InternalLockManager lockManager)
   {
     this.lockManager = lockManager;
   }
@@ -467,7 +475,8 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public void notifyReadAccessHandlers(Session session, CDORevision[] revisions, List<CDORevision> additionalRevisions)
+  public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions,
+      List<CDORevision> additionalRevisions)
   {
     ReadAccessHandler[] handlers;
     synchronized (readAccessHandlers)
@@ -491,7 +500,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
   /**
    * @since 2.0
    */
-  public void notifyWriteAccessHandlers(Transaction transaction, IStoreAccessor.CommitContext commitContext,
+  public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
       OMMonitor monitor)
   {
     WriteAccessHandler[] handlers;
@@ -723,7 +732,7 @@ public class Repository extends Container<Object> implements IRepository, Intern
       return new CDOPackageRegistryImpl();
     }
 
-    protected SessionManager createSessionManager()
+    protected InternalSessionManager createSessionManager()
     {
       return new SessionManager();
     }
@@ -733,22 +742,22 @@ public class Repository extends Container<Object> implements IRepository, Intern
       return new RevisionManager();
     }
 
-    protected QueryManager createQueryManager()
+    protected InternalQueryManager createQueryManager()
     {
       return new QueryManager();
     }
 
-    protected NotificationManager createNotificationManager()
+    protected InternalNotificationManager createNotificationManager()
     {
       return new NotificationManager();
     }
 
-    protected CommitManager createCommitManager()
+    protected InternalCommitManager createCommitManager()
     {
       return new CommitManager();
     }
 
-    protected LockManager createLockManager()
+    protected InternalLockManager createLockManager()
     {
       return new LockManager();
     }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,9 +15,11 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
@@ -36,11 +38,11 @@ import java.util.concurrent.Future;
  * @author Simon McDuff
  * @since 2.0
  */
-public class QueryManager extends Lifecycle
+public class QueryManager extends Lifecycle implements InternalQueryManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, QueryManager.class);
 
-  private IRepository repository;
+  private InternalRepository repository;
 
   private Map<Integer, QueryContext> queryContexts = new ConcurrentHashMap<Integer, QueryContext>();
 
@@ -54,12 +56,12 @@ public class QueryManager extends Lifecycle
   {
   }
 
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     return repository;
   }
 
-  public void setRepository(IRepository repository)
+  public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
   }
@@ -246,7 +248,7 @@ public class QueryManager extends Lifecycle
 
     public void run()
     {
-      Session session = (Session)queryResult.getView().getSession();
+      InternalSession session = (InternalSession)queryResult.getView().getSession();
       StoreThreadLocal.setSession(session);
 
       try

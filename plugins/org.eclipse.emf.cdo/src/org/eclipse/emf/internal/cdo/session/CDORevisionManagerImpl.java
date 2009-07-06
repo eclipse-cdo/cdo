@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
-import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;

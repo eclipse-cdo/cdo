@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -117,8 +116,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return !((Repository)getRepository()).getQueryManager().isRunning(
-            ((CDOQueryResultIteratorImpl<?>)result).getQueryID());
+        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
       }
     }.timedOut();
 
@@ -144,8 +142,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return !((Repository)getRepository()).getQueryManager().isRunning(
-            ((CDOQueryResultIteratorImpl<?>)result).getQueryID());
+        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
       }
     }.timedOut();
 
@@ -168,8 +165,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return !((Repository)getRepository()).getQueryManager().isRunning(
-            ((CDOQueryResultIteratorImpl<?>)result).getQueryID());
+        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
       }
     }.timedOut();
 

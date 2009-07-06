@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
@@ -72,14 +72,14 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return reader;
   }
 
-  public ISession getSession()
+  public InternalSession getSession()
   {
     if (context instanceof ITransaction)
     {
-      return ((ITransaction)context).getSession();
+      return (InternalSession)((ITransaction)context).getSession();
     }
 
-    return (ISession)context;
+    return (InternalSession)context;
   }
 
   public ITransaction getTransaction()

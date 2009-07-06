@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EStructuralFeature;

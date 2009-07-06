@@ -19,11 +19,12 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -42,13 +43,13 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class SessionManager extends Container<ISession> implements ISessionManager
+public class SessionManager extends Container<ISession> implements InternalSessionManager
 {
   public static final int DEFAULT_TOKEN_LENGTH = 1024;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 
-  private IRepository repository;
+  private InternalRepository repository;
 
   private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
 
@@ -62,7 +63,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
 
   private IUserManager userManager;
 
-  private Map<Integer, Session> sessions = new HashMap<Integer, Session>();
+  private Map<Integer, InternalSession> sessions = new HashMap<Integer, InternalSession>();
 
   private int lastSessionID;
 
@@ -76,7 +77,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   /**
    * @since 2.0
    */
-  public IRepository getRepository()
+  public InternalRepository getRepository()
   {
     return repository;
   }
@@ -84,7 +85,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   /**
    * @since 2.0
    */
-  public void setRepository(IRepository repository)
+  public void setRepository(InternalRepository repository)
   {
     checkInactive();
     this.repository = repository;
@@ -155,18 +156,18 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     this.userManager = userManager;
   }
 
-  public Session[] getSessions()
+  public InternalSession[] getSessions()
   {
     synchronized (sessions)
     {
-      return sessions.values().toArray(new Session[sessions.size()]);
+      return sessions.values().toArray(new InternalSession[sessions.size()]);
     }
   }
 
   /**
    * @since 2.0
    */
-  public Session getSession(int sessionID)
+  public InternalSession getSession(int sessionID)
   {
     checkActive();
     synchronized (sessions)
@@ -175,7 +176,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
   }
 
-  public ISession[] getElements()
+  public InternalSession[] getElements()
   {
     return getSessions();
   }
@@ -192,7 +193,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   /**
    * @since 2.0
    */
-  public Session openSession(ISessionProtocol sessionProtocol) throws SessionCreationException
+  public InternalSession openSession(ISessionProtocol sessionProtocol) throws SessionCreationException
   {
     int id = ++lastSessionID;
     if (TRACER.isEnabled())
@@ -201,7 +202,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     }
 
     String userID = authenticateUser(sessionProtocol);
-    Session session = new Session(this, sessionProtocol, id, userID);
+    InternalSession session = createSession(id, userID, sessionProtocol);
     synchronized (sessions)
     {
       sessions.put(id, session);
@@ -212,10 +213,15 @@ public class SessionManager extends Container<ISession> implements ISessionManag
     return session;
   }
 
-  public void sessionClosed(Session session)
+  protected InternalSession createSession(int id, String userID, ISessionProtocol protocol)
+  {
+    return new Session(this, protocol, id, userID);
+  }
+
+  public void sessionClosed(InternalSession session)
   {
     int sessionID = session.getSessionID();
-    ISession removeSession = null;
+    InternalSession removeSession = null;
     synchronized (sessions)
     {
       removeSession = sessions.remove(sessionID);
@@ -232,9 +238,9 @@ public class SessionManager extends Container<ISession> implements ISessionManag
    * @since 2.0
    */
   public void handleCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
-      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas, Session excludedSession)
+      List<CDOID> detachedObjects, List<CDORevisionDelta> deltas, InternalSession excludedSession)
   {
-    for (Session session : getSessions())
+    for (InternalSession session : getSessions())
     {
       if (session != excludedSession)
       {
@@ -246,9 +252,9 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   /**
    * @since 2.0
    */
-  public void handleRemoteSessionNotification(byte opcode, Session excludedSession)
+  public void handleRemoteSessionNotification(byte opcode, InternalSession excludedSession)
   {
-    for (Session session : getSessions())
+    for (InternalSession session : getSessions())
     {
       if (session != excludedSession && session.isSubscribed())
       {
@@ -338,7 +344,7 @@ public class SessionManager extends Container<ISession> implements ISessionManag
   @Override
   protected void doDeactivate() throws Exception
   {
-    Session[] activeSessions = getSessions();
+    InternalSession[] activeSessions = getSessions();
     for (int i = 0; i < activeSessions.length; i++)
     {
       LifecycleUtil.deactivate(activeSessions[i]);

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -37,7 +38,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOServerProtocol extends SignalProtocol<ISession> implements ISessionProtocol
+public class CDOServerProtocol extends SignalProtocol<InternalSession> implements ISessionProtocol
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 
@@ -53,7 +54,7 @@ public class CDOServerProtocol extends SignalProtocol<ISession> implements ISess
     this.repositoryProvider = repositoryProvider;
   }
 
-  public ISession getSession()
+  public InternalSession getSession()
   {
     return getInfraStructure();
   }

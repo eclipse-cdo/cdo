@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -16,10 +16,10 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
-import org.eclipse.emf.cdo.internal.server.QueryManager;
 import org.eclipse.emf.cdo.internal.server.QueryResult;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -45,7 +45,7 @@ public class QueryIndication extends CDOReadIndication
     int viewID = in.readInt();
     CDOQueryInfo cdoQuery = new CDOQueryInfoImpl(in); // TODO Add CDODataInput.readCDOQueryInfo()
     IView view = getSession().getView(viewID);
-    QueryManager queryManager = getRepository().getQueryManager();
+    InternalQueryManager queryManager = getRepository().getQueryManager();
     queryResult = queryManager.execute(view, cdoQuery);
   }
 

@@ -40,6 +40,6 @@ public class RepositoryFactory implements IRepositoryFactory
 
   public static IRepository get(IManagedContainer container, String name)
   {
-    return (Repository)container.getElement(PRODUCT_GROUP, TYPE, name);
+    return (IRepository)container.getElement(PRODUCT_GROUP, TYPE, name);
   }
 }

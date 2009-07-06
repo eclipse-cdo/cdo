@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOAudit;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -29,6 +32,8 @@ import java.util.List;
  */
 public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_AUDIT, CDOAuditImpl.class);
+
   private long timeStamp;
 
   /**
@@ -62,6 +67,10 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
       List<InternalCDOObject> invalidObjects = getInvalidObjects(timeStamp);
       boolean[] existanceFlags = getSession().getSessionProtocol().setAudit(getViewID(), timeStamp, invalidObjects);
       this.timeStamp = timeStamp;
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Changed audit time: {0,date} {0,time}", timeStamp);
+      }
 
       int i = 0;
       for (InternalCDOObject invalidObject : invalidObjects)

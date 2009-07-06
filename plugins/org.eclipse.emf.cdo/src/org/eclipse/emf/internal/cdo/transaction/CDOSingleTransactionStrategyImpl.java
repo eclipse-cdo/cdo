@@ -34,7 +34,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 {
   public static final CDOSingleTransactionStrategyImpl INSTANCE = new CDOSingleTransactionStrategyImpl();
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSCTION,
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION,
       CDOSingleTransactionStrategyImpl.class);
 
   public CDOSingleTransactionStrategyImpl()

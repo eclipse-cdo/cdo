@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -45,8 +45,8 @@ public abstract class AbstractCDOTest extends ConfigTest
     }
     finally
     {
-      org.eclipse.emf.internal.cdo.bundle.OM.PREF_COMMIT_MONITOR_PROGRESS_SECONDS.setValue(60);
-      org.eclipse.emf.internal.cdo.bundle.OM.PREF_COMMIT_MONITOR_TIMEOUT_SECONDS.setValue(60 * 60);
+      org.eclipse.emf.internal.cdo.net4j.bundle.OM.PREF_COMMIT_MONITOR_PROGRESS_SECONDS.setValue(60);
+      org.eclipse.emf.internal.cdo.net4j.bundle.OM.PREF_COMMIT_MONITOR_TIMEOUT_SECONDS.setValue(60 * 60);
       org.eclipse.internal.net4j.bundle.OM.DEBUG.setEnabled(false);
       org.eclipse.net4j.internal.tcp.bundle.OM.DEBUG.setEnabled(false);
       CDOPackageTypeRegistry.INSTANCE.reset();

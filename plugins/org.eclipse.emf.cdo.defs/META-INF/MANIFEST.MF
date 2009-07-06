@@ -9,7 +9,8 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.net4j.defs;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.net4j.util.defs;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
- org.eclipse.emf.cdo;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
+ org.eclipse.emf.cdo;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.emf.cdo.net4j;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.cdo.defs;version="3.0.0",
  org.eclipse.emf.cdo.defs.impl;version="3.0.0",

@@ -16,25 +16,6 @@
    <extension-point id="viewProviders" name="%extension-point.name.0" schema="schema/viewProviders.exsd"/>
 
    <extension
-         point="org.eclipse.net4j.util.factories">
-      <factory
-            class="org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocolFactory"
-            productGroup="org.eclipse.net4j.clientProtocols"
-            type="cdo"/>
-      <factory
-            class="org.eclipse.emf.internal.cdo.net4j.CDONet4jSessionFactory"
-            productGroup="org.eclipse.emf.cdo.sessions"
-            type="cdo"/>
-   </extension>
-
-   <extension
-         point="org.eclipse.net4j.util.elementProcessors">
-      <elementProcessor
-            class="org.eclipse.emf.internal.cdo.net4j.FailOverStrategyInjector">
-      </elementProcessor>
-   </extension>
-
-   <extension
   			point="org.eclipse.emf.ecore.generated_package">
      <package
        		uri="http://www.eclipse.org/emf/CDO/Eresource/2.0.0"
@@ -51,5 +32,4 @@
       </parser>
    </extension>
    
-
 </plugin>

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,8 +12,6 @@ package org.eclipse.emf.internal.cdo.bundle;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.net4j.protocol.CommitTransactionRequest;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -35,29 +33,23 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_UTIL = DEBUG.tracer("util"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_MODEL = DEBUG.tracer("model"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_PROTOCOL = DEBUG.tracer("protocol"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_REPOSITORY = DEBUG.tracer("repository"); //$NON-NLS-1$
-
   public static final OMTracer DEBUG_SESSION = DEBUG.tracer("session"); //$NON-NLS-1$
+
+  public static final OMTracer DEBUG_MODEL = DEBUG_SESSION.tracer("model"); //$NON-NLS-1$
+
+  public static final OMTracer DEBUG_REVISION = DEBUG_SESSION.tracer("revision"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_VIEW = DEBUG.tracer("view"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_TRANSCTION = DEBUG.tracer("transaction"); //$NON-NLS-1$
+  public static final OMTracer DEBUG_TRANSACTION = DEBUG_VIEW.tracer("transaction"); //$NON-NLS-1$
+
+  public static final OMTracer DEBUG_AUDIT = DEBUG_VIEW.tracer("audit"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_OBJECT = DEBUG.tracer("object"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_STATEMACHINE = DEBUG.tracer("statemachine"); //$NON-NLS-1$
+  public static final OMTracer DEBUG_STATEMACHINE = DEBUG_OBJECT.tracer("statemachine"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_STORE = DEBUG.tracer("store"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_RESOURCE = DEBUG.tracer("resource"); //$NON-NLS-1$
-
-  public static final OMTracer DEBUG_REVISION = DEBUG.tracer("revision"); //$NON-NLS-1$
+  public static final OMTracer DEBUG_STORE = DEBUG_OBJECT.tracer("store"); //$NON-NLS-1$
 
   public static final OMTracer PERF = BUNDLE.tracer("perf"); //$NON-NLS-1$
 
@@ -86,10 +78,4 @@ public abstract class OM
 
   public static final OMPreference<Integer> PREF_REVISION_LOADING_CHUNK_SIZE = //
   PREFS.init("PREF_REVISION_LOADING_CHUNK_SIZE", CDOView.Options.NO_REVISION_PREFETCHING); //$NON-NLS-1$
-
-  public static final OMPreference<Integer> PREF_COMMIT_MONITOR_PROGRESS_SECONDS = //
-  PREFS.init("PREF_COMMIT_MONITOR_PROGRESS_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_PROGRESS_SECONDS); //$NON-NLS-1$
-
-  public static final OMPreference<Integer> PREF_COMMIT_MONITOR_TIMEOUT_SECONDS = //
-  PREFS.init("PREF_COMMIT_MONITOR_TIMEOUT_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS); //$NON-NLS-1$
 }

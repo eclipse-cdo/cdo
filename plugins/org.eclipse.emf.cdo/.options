@@ -1,19 +1,18 @@
 # Debugging and tracing options
 
 org.eclipse.emf.cdo/debug = true
-org.eclipse.emf.cdo/debug.util = true
-org.eclipse.emf.cdo/debug.model = true
-org.eclipse.emf.cdo/debug.protocol = true
-org.eclipse.emf.cdo/debug.repository = true
+
 org.eclipse.emf.cdo/debug.session = true
-org.eclipse.emf.cdo/debug.adapter = true
+org.eclipse.emf.cdo/debug.session.model = true
+org.eclipse.emf.cdo/debug.session.revision = true
+
 org.eclipse.emf.cdo/debug.view = true
-org.eclipse.emf.cdo/debug.transaction = true
+org.eclipse.emf.cdo/debug.view.transaction = true
+org.eclipse.emf.cdo/debug.view.audit = true
+
 org.eclipse.emf.cdo/debug.object = false
-org.eclipse.emf.cdo/debug.statemachine = false
-org.eclipse.emf.cdo/debug.store = false
-org.eclipse.emf.cdo/debug.resource = true
-org.eclipse.emf.cdo/debug.revision = true
+org.eclipse.emf.cdo/debug.object.statemachine = false
+org.eclipse.emf.cdo/debug.object.store = false
 
 org.eclipse.emf.cdo/perf = false
 org.eclipse.emf.cdo/perf.revision = false

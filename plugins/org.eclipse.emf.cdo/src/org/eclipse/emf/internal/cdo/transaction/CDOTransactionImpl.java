@@ -90,7 +90,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransaction
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSCTION, CDOTransactionImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOTransactionImpl.class);
 
   /**
    * TODO Optimize by storing an array. See {@link Notifier}.

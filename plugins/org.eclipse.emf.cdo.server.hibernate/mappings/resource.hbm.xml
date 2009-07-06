@@ -33,7 +33,7 @@
 			lazy="false" discriminator-value="cdoresourcefolder">
 			<meta attribute="eclassName">CDOResourceFolder</meta>
 			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
-			<list name="nodes" lazy="true" cascade="merge, persist, save-update, refresh, lock, evict, replicate">
+			<list name="nodes" lazy="false" cascade="merge, persist, save-update, refresh, lock, evict, replicate">
 				<key column="folderid" />
 				<list-index />
 				<one-to-many entity-name="CDOResourceNode" />
@@ -43,7 +43,7 @@
 			discriminator-value="cdoresource">
 			<meta attribute="eclassName">CDOResource</meta>
 			<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
-			<list name="contents" lazy="true" cascade="all,delete-orphan">
+			<list name="contents" lazy="false" cascade="all,delete-orphan">
 				<key />
 				<list-index />
 				<many-to-any

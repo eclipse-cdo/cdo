@@ -324,7 +324,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   @Override
   public void write(IStoreAccessor.CommitContext context, OMMonitor monitor)
   {
-    List<InternalCDORevision> adjustRevisions = new ArrayList<InternalCDORevision>();
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackageUnits().length > 0)
     {
@@ -337,14 +336,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final Session session = getHibernateSession();
       session.setFlushMode(FlushMode.MANUAL);
 
-      // first repair the version for all dirty objects
+      // first decrease the version for all dirty objects
+      // hibernate will increase it again
       for (CDORevision revision : context.getDirtyObjects())
       {
         if (revision instanceof InternalCDORevision)
         {
           InternalCDORevision internalRevision = (InternalCDORevision)revision;
           internalRevision.setVersion(internalRevision.getVersion() - 1);
-          adjustRevisions.add(internalRevision);
         }
       }
 
@@ -352,7 +351,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       for (CDOID id : context.getDetachedObjects())
       {
         final CDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
-        session.delete(revision);
+        // maybe deleted in parallell?
+        if (revision != null)
+        {
+          session.delete(revision);
+        }
       }
 
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
@@ -368,18 +371,16 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           }
         }
 
-        session.save(HibernateUtil.getInstance().getEntityName(revision), revision);
+        session.saveOrUpdate(HibernateUtil.getInstance().getEntityName(revision), revision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Persisted new Object " + revision.getEClass().getName() + " id: " + revision.getID());
         }
       }
 
-      session.flush();
-
       for (CDORevision revision : context.getDirtyObjects())
       {
-        session.merge(HibernateUtil.getInstance().getEntityName(revision), revision);
+        session.saveOrUpdate(HibernateUtil.getInstance().getEntityName(revision), revision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID());
@@ -414,13 +415,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       OM.LOG.error(e);
       throw WrappedException.wrap(e);
-    }
-    finally
-    {
-      for (InternalCDORevision revision : adjustRevisions)
-      {
-        revision.setVersion(revision.getVersion() + 1);
-      }
     }
 
     context.applyIDMappings(monitor);

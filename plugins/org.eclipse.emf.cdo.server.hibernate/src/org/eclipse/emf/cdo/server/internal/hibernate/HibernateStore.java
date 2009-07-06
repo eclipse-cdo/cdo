@@ -201,10 +201,6 @@ public class HibernateStore extends Store implements IHibernateStore
     hibernateConfiguration = null;
 
     LifecycleUtil.deactivate(packageHandler, OMLogger.Level.WARN);
-    if (doDropSchema)
-    {
-      packageHandler.doDropSchema();
-    }
 
     super.doDeactivate();
   }

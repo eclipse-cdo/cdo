@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -28,13 +29,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Delegate which stores and retrieves cdo packages.
@@ -64,7 +68,13 @@ public class HibernatePackageHandler extends Lifecycle
 
   private Collection<InternalCDOPackageUnit> packageUnits = null;
 
+  private Map<String, byte[]> ePackageBlobsByRootUri = null;
+
+  private Map<String, EPackage[]> ePackagesByRootUri = null;
+
   private HibernateStore hibernateStore;
+
+  private boolean doDropSchema = false;
 
   /**
    * TODO Necessary to pass/store/dump the properties from the store?
@@ -107,7 +117,7 @@ public class HibernatePackageHandler extends Lifecycle
       // first store and update the packageunits and the epackages
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
-        session.saveOrUpdate("CDOPackageUnit", new HibernateCDOPackageUnit(packageUnit));
+        final HibernateCDOPackageUnitDTO hbPackageUnitDTO = new HibernateCDOPackageUnitDTO(packageUnit);
 
         if (packageUnit.getPackageInfos().length > 0)
         {
@@ -116,9 +126,10 @@ public class HibernatePackageHandler extends Lifecycle
           hbEPackage.setNsUri(rootNSUri);
           final EPackage.Registry registry = hibernateStore.getRepository().getPackageRegistry();
           final EPackage rootEPackage = registry.getEPackage(rootNSUri);
-          hbEPackage.setEPackageBlob(EMFUtil.getEPackageBytes(rootEPackage, true, registry));
-          session.saveOrUpdate(hbEPackage);
+          hbPackageUnitDTO.setEPackageBlob(EMFUtil.getEPackageBytes(rootEPackage, true, registry));
         }
+
+        session.saveOrUpdate("CDOPackageUnit", hbPackageUnitDTO);
 
         updated = true;
       }
@@ -164,38 +175,21 @@ public class HibernatePackageHandler extends Lifecycle
       TRACER.trace("Reading EPackages with root uri " + nsUri + " from db");
     }
 
-    Session session = getSessionFactory().openSession();
-    session.beginTransaction();
-    try
+    EPackage[] epacks = ePackagesByRootUri.get(nsUri);
+    if (epacks == null)
     {
-      Criteria criteria = session.createCriteria(HibernateEPackage.class);
-      criteria.add(org.hibernate.criterion.Expression.eq("nsUri", nsUri));
-      List<?> list = criteria.list();
-      if (list.size() != 1)
+      final byte[] ePackageBlob = ePackageBlobsByRootUri.get(nsUri);
+      if (ePackageBlob == null)
       {
-        throw new IllegalArgumentException("EPackage with uri " + nsUri + " not present in the db");
+        throw new IllegalArgumentException("EPackages with root uri " + nsUri + " not found");
       }
 
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Found " + list.size() + " EPackages in DB");
-      }
-
-      final HibernateEPackage hbEPackage = (HibernateEPackage)list.get(0);
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Read EPackage: " + nsUri);
-      }
-
-      final EPackage rootEPackage = EMFUtil.createEPackage(nsUri, hbEPackage.getEPackageBlob(), ZIP_PACKAGE_BYTES,
-          hibernateStore.getRepository().getPackageRegistry());
-      return EMFUtil.getAllPackages(rootEPackage);
+      final EPackage rootEPackage = EMFUtil
+          .createEPackage(nsUri, ePackageBlob, ZIP_PACKAGE_BYTES, getPackageRegistry());
+      epacks = EMFUtil.getAllPackages(rootEPackage);
+      ePackagesByRootUri.put(nsUri, epacks);
     }
-    finally
-    {
-      session.getTransaction().commit();
-      session.close();
-    }
+    return epacks;
   }
 
   @SuppressWarnings("unchecked")
@@ -205,7 +199,7 @@ public class HibernatePackageHandler extends Lifecycle
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Reading EPackages from db");
+        TRACER.trace("Reading Package Units from db");
       }
 
       Session session = getSessionFactory().openSession();
@@ -219,7 +213,17 @@ public class HibernatePackageHandler extends Lifecycle
           TRACER.trace("Found " + list.size() + " CDOPackageUnits in DB");
         }
 
-        packageUnits = (Collection<InternalCDOPackageUnit>)list;
+        CDOModelUtil.createPackageUnit();
+
+        packageUnits = new ArrayList<InternalCDOPackageUnit>();
+        ePackagesByRootUri = new HashMap<String, EPackage[]>();
+        ePackageBlobsByRootUri = new HashMap<String, byte[]>();
+        for (HibernateCDOPackageUnitDTO dto : (Collection<HibernateCDOPackageUnitDTO>)list)
+        {
+          packageUnits.add(dto.createCDOPackageUnit(getPackageRegistry()));
+          // cache the blob because resolving the epackages right away gives errors
+          ePackageBlobsByRootUri.put(dto.getNsUri(), dto.getEPackageBlob());
+        }
       }
       finally
       {
@@ -229,14 +233,8 @@ public class HibernatePackageHandler extends Lifecycle
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Finished reading EPackages");
+      TRACER.trace("Finished reading Package Units");
     }
-  }
-
-  void doDropSchema()
-  {
-    final SchemaExport se = new SchemaExport(configuration);
-    se.drop(false, true);
   }
 
   public synchronized SessionFactory getSessionFactory()
@@ -286,7 +284,13 @@ public class HibernatePackageHandler extends Lifecycle
       sessionFactory = null;
     }
 
+    if (doDropSchema)
+    {
+      final SchemaExport se = new SchemaExport(configuration);
+      se.drop(false, true);
+    }
     configuration = null;
+
     super.doDeactivate();
   }
 
@@ -305,6 +309,20 @@ public class HibernatePackageHandler extends Lifecycle
       configuration = new Configuration();
       configuration.addInputStream(in);
       configuration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(hibernateStore));
+      // prevent the drop at session factory close...
+      // the drop is done by the HibernateStore
+      if (configuration.getProperty(Environment.HBM2DDL_AUTO) != null
+          && configuration.getProperty(Environment.HBM2DDL_AUTO).startsWith("create"))
+      {
+        doDropSchema = true;
+        // note that the value create also re-creates the db and drops the old one
+        configuration.setProperty(Environment.HBM2DDL_AUTO, "update");
+      }
+      else
+      {
+        doDropSchema = false;
+      }
+
     }
     catch (Exception ex)
     {

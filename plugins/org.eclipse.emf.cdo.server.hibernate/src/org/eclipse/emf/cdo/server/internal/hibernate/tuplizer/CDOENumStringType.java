@@ -11,7 +11,7 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOENumStringType.java,v 1.3 2009-05-05 11:10:26 estepper Exp $
+ * $Id: CDOENumStringType.java,v 1.4 2009-07-06 13:05:05 mtaal Exp $
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
@@ -36,7 +36,7 @@ import java.util.Properties;
  * Implements the EMF UserType for an Enum
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.3 $ $Date: 2009-05-05 11:10:26 $
+ * @version $Revision: 1.4 $ $Date: 2009-07-06 13:05:05 $
  */
 public class CDOENumStringType implements UserType, ParameterizedType
 {
@@ -138,7 +138,7 @@ public class CDOENumStringType implements UserType, ParameterizedType
     Enumerator enumValue = localCache.get(name);
     if (enumValue != null)
     {
-      return enumValue;
+      return enumValue.getValue();
     }
 
     enumValue = enumInstance.getEEnumLiteralByLiteral(name.trim());

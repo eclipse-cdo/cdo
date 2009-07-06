@@ -14,6 +14,9 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionPropertyAccessor.CDORevisionSetter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.property.Setter;
@@ -29,9 +32,32 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
 {
   private static final long serialVersionUID = 1L;
 
+  private final boolean convertByteArray;
+
   public CDOPropertySetter(CDORevisionTuplizer tuplizer, String propertyName)
   {
     super(tuplizer, propertyName);
+
+    // handle a special case CDO/EMF expect a byte[] but Hibernate
+    // will return a Byte[]
+    final EStructuralFeature eFeature = getEStructuralFeature();
+    if (eFeature instanceof EAttribute)
+    {
+      final EAttribute eAttribute = (EAttribute)eFeature;
+      if (eAttribute.getEAttributeType().getInstanceClass() != null
+          && byte[].class.isAssignableFrom(eAttribute.getEAttributeType().getInstanceClass()))
+      {
+        convertByteArray = true;
+      }
+      else
+      {
+        convertByteArray = false;
+      }
+    }
+    else
+    {
+      convertByteArray = false;
+    }
   }
 
   public Method getMethod()
@@ -47,6 +73,25 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     InternalCDORevision revision = (InternalCDORevision)target;
-    revision.setValue(getEStructuralFeature(), value);
+
+    // handle a special case: the byte array.
+    // hibernate will pass a Byte[] while CDO wants a byte[] (object vs. primitive array)
+
+    if (value instanceof Byte[] && convertByteArray)
+    {
+      final Byte[] objectArray = (Byte[])value;
+      final byte[] newValue = new byte[objectArray.length];
+      int i = 0;
+      for (byte b : objectArray)
+      {
+        newValue[i++] = b;
+      }
+      revision.setValue(getEStructuralFeature(), newValue);
+    }
+    else
+    {
+      revision.setValue(getEStructuralFeature(), value);
+    }
+
   }
 }

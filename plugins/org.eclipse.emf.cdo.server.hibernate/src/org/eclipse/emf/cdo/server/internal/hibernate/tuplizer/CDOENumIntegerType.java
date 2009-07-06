@@ -11,7 +11,7 @@
  *   Martin Taal
  * </copyright>
  *
- * $Id: CDOENumIntegerType.java,v 1.2 2009-05-05 11:10:26 estepper Exp $
+ * $Id: CDOENumIntegerType.java,v 1.3 2009-07-06 13:05:05 mtaal Exp $
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
@@ -29,7 +29,7 @@ import java.util.HashMap;
  * Implements the EMF UserType for an Enum in a dynamic model, for an integer field.
  * 
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
- * @version $Revision: 1.2 $ $Date: 2009-05-05 11:10:26 $
+ * @version $Revision: 1.3 $ $Date: 2009-07-06 13:05:05 $
  */
 public class CDOENumIntegerType extends CDOENumStringType
 {
@@ -56,12 +56,12 @@ public class CDOENumIntegerType extends CDOENumStringType
     Enumerator enumValue = localCache.get(objValue);
     if (enumValue != null)
     {
-      return enumValue;
+      return enumValue.getValue();
     }
 
     enumValue = enumInstance.getEEnumLiteral(objValue.intValue());
     localCache.put(objValue, enumValue);
-    return enumValue;
+    return enumValue.getValue();
   }
 
   /*
@@ -74,6 +74,10 @@ public class CDOENumIntegerType extends CDOENumStringType
     if (value == null)
     {
       st.setNull(index, Types.INTEGER);
+    }
+    if (value instanceof Integer)
+    {
+      st.setInt(index, (Integer)value);
     }
     else
     {

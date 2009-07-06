@@ -14,10 +14,12 @@
  */
 package org.eclipse.emf.cdo.internal.server.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
@@ -25,7 +27,7 @@ import org.eclipse.net4j.util.io.StringIO;
 /**
  * @author Eike Stepper
  */
-public class CDOServerProtocol extends CDOProtocolImpl
+public class CDOServerProtocol extends SignalProtocol<CDOCommonSession> implements CDOProtocol
 {
   private IRepositoryProvider repositoryProvider;
 
@@ -33,7 +35,13 @@ public class CDOServerProtocol extends CDOProtocolImpl
 
   public CDOServerProtocol(IRepositoryProvider repositoryProvider)
   {
+    super(CDOProtocolConstants.PROTOCOL_NAME);
     this.repositoryProvider = repositoryProvider;
+  }
+
+  public CDOCommonSession getSession()
+  {
+    return getInfraStructure();
   }
 
   public IRepositoryProvider getRepositoryProvider()

@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.TransportException;
-import org.eclipse.emf.cdo.internal.common.protocol.CDOProtocolImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -30,6 +30,7 @@ import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLockManager.LockType;
@@ -56,7 +57,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProtocol
+public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDOProtocol, CDOSessionProtocol
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING,
       CDORevisionManagerImpl.class);
@@ -65,6 +66,12 @@ public class CDOClientProtocol extends CDOProtocolImpl implements CDOSessionProt
 
   public CDOClientProtocol()
   {
+    super(CDOProtocolConstants.PROTOCOL_NAME);
+  }
+
+  public CDOSession getSession()
+  {
+    return getInfraStructure();
   }
 
   public StringIO getPackageURICompressor()

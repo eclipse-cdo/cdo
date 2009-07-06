@@ -15,10 +15,13 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j;
 
+import org.eclipse.emf.cdo.net4j.CDOSession;
+
 import org.eclipse.emf.internal.cdo.net4j.bundle.OM;
 import org.eclipse.emf.internal.cdo.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -79,7 +82,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       return failOverStrategy;
     }
 
-    public CDOClientProtocol getProtocol()
+    public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession> getProtocol()
     {
       CDOSessionProtocol protocol = getSessionProtocol();
       if (protocol instanceof DelegatingSessionProtocol)
@@ -87,7 +90,9 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
         protocol = ((DelegatingSessionProtocol)protocol).getDelegate();
       }
 
-      return (CDOClientProtocol)protocol;
+      @SuppressWarnings("unchecked")
+      ISignalProtocol<CDOSession> signalProtocol = (ISignalProtocol<CDOSession>)protocol;
+      return signalProtocol;
     }
 
     public int getCommitTimeout()

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
@@ -19,8 +19,7 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
-
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -40,12 +39,12 @@ public class LockObjectsRequest extends AbstractSyncRevisionsRequest
 
   private CDOView view;
 
-  private RWLockManager.LockType lockType;
+  private LockType lockType;
 
   private long timeout;
 
   public LockObjectsRequest(CDOClientProtocol protocol, CDOView view, Map<CDOID, CDOIDAndVersion> idAndVersions,
-      int referenceChunk, long timeout, RWLockManager.LockType lockType)
+      int referenceChunk, long timeout, LockType lockType)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS, idAndVersions, referenceChunk);
     this.view = view;
@@ -65,7 +64,7 @@ public class LockObjectsRequest extends AbstractSyncRevisionsRequest
     if (TRACER.isEnabled())
     {
       TRACER.format("Locking of type {0} requested for view {1} with timeout {2}", //$NON-NLS-1$
-          lockType == RWLockManager.LockType.READ ? "read" : "write", view.getViewID(), timeout); //$NON-NLS-1$ //$NON-NLS-2$
+          lockType == LockType.READ ? "read" : "write", view.getViewID(), timeout); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

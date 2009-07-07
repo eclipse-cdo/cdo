@@ -30,6 +30,9 @@ public final class StoreThreadLocal
   {
   }
 
+  /**
+   * @since 3.0
+   */
   public static void setSession(InternalSession session)
   {
     SESSION.set(session);
@@ -42,6 +45,7 @@ public final class StoreThreadLocal
    * @return Never <code>null</code>.
    * @throws IllegalStateException
    *           if no session is associated with the current thread.
+   * @since 3.0
    */
   public static InternalSession getSession()
   {

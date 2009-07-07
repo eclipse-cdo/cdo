@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;

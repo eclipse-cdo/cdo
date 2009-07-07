@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
@@ -50,7 +51,7 @@ public class LockingManagerTest extends AbstractCDOTest
         keys.add(1);
         try
         {
-          lockingManager.lock(RWLockManager.LockType.WRITE, 1, keys, 50000);
+          lockingManager.lock(LockType.WRITE, 1, keys, 50000);
         }
         catch (InterruptedException ex)
         {
@@ -67,36 +68,36 @@ public class LockingManagerTest extends AbstractCDOTest
     keys.add(4);
 
     msg("Context 1 have readlock 1,2,3,4");
-    lockingManager.lock(RWLockManager.LockType.READ, 1, keys, 1000);
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 1, 1));
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 1, 2));
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 1, 3));
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 1, 4));
+    lockingManager.lock(LockType.READ, 1, keys, 1000);
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 1));
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 2));
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 3));
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 4));
 
     keys.clear();
     keys.add(1);
     keys.add(2);
     keys.add(3);
     msg("Context 2 have readlock 1,2,3");
-    lockingManager.lock(RWLockManager.LockType.READ, 2, keys, 1000);
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 2, 1));
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 2, 2));
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 2, 3));
-    assertEquals(true, lockingManager.hasLockByOthers(RWLockManager.LockType.READ, 2, 1));
-    assertEquals(true, lockingManager.hasLockByOthers(RWLockManager.LockType.READ, 1, 1));
+    lockingManager.lock(LockType.READ, 2, keys, 1000);
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 2, 1));
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 2, 2));
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 2, 3));
+    assertEquals(true, lockingManager.hasLockByOthers(LockType.READ, 2, 1));
+    assertEquals(true, lockingManager.hasLockByOthers(LockType.READ, 1, 1));
 
     keys.clear();
     keys.add(4);
     msg("Context 1 have readlock 1,2,3,4 and writeLock 4");
-    lockingManager.lock(RWLockManager.LockType.WRITE, 1, keys, 1000);
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.READ, 1, 4));
-    assertEquals(true, lockingManager.hasLock(RWLockManager.LockType.WRITE, 1, 4));
+    lockingManager.lock(LockType.WRITE, 1, keys, 1000);
+    assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 4));
+    assertEquals(true, lockingManager.hasLock(LockType.WRITE, 1, 4));
 
     keys.clear();
     keys.add(1);
     try
     {
-      lockingManager.lock(RWLockManager.LockType.WRITE, 1, keys, 1000);
+      lockingManager.lock(LockType.WRITE, 1, keys, 1000);
       fail("Should not have exception");
     }
     catch (RuntimeException expected)
@@ -112,13 +113,13 @@ public class LockingManagerTest extends AbstractCDOTest
     keys.add(1);
     keys.add(2);
     keys.add(3);
-    lockingManager.unlock(RWLockManager.LockType.READ, 2, keys);
+    lockingManager.unlock(LockType.READ, 2, keys);
     ITimeOuter timeOuter = new PollingTimeOuter(200, 100)
     {
       @Override
       protected boolean successful()
       {
-        return lockingManager.hasLock(RWLockManager.LockType.WRITE, 1, 1);
+        return lockingManager.hasLock(LockType.WRITE, 1, 1);
       }
     };
 
@@ -130,11 +131,11 @@ public class LockingManagerTest extends AbstractCDOTest
     final RWLockManager<Integer, Integer> lockingManager = new RWLockManager<Integer, Integer>();
     Set<Integer> keys = new HashSet<Integer>();
     keys.add(1);
-    lockingManager.lock(RWLockManager.LockType.READ, 1, keys, 10000);
-    lockingManager.unlock(RWLockManager.LockType.READ, 1, keys);
+    lockingManager.lock(LockType.READ, 1, keys, 10000);
+    lockingManager.unlock(LockType.READ, 1, keys);
     try
     {
-      lockingManager.unlock(RWLockManager.LockType.READ, 1, keys);
+      lockingManager.unlock(LockType.READ, 1, keys);
       fail("Should have an exception");
     }
     catch (IllegalMonitorStateException exception)
@@ -255,11 +256,11 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), RWLockManager.LockType.WRITE, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.WAIT);
 
     try
     {
-      transaction2.lockObjects(Collections.singletonList(cdoCompany2), RWLockManager.LockType.WRITE, 1000);
+      transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
       fail("Should have an exception");
     }
     catch (TimeoutRuntimeException ex)
@@ -327,11 +328,11 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), RWLockManager.LockType.WRITE, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.WAIT);
 
     try
     {
-      transaction2.lockObjects(Collections.singletonList(cdoCompany2), RWLockManager.LockType.WRITE, 1000);
+      transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
       fail("Should have an exception");
     }
     catch (TimeoutRuntimeException ex)
@@ -353,7 +354,7 @@ public class LockingManagerTest extends AbstractCDOTest
     Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), RWLockManager.LockType.READ, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.READ, CDOLock.WAIT);
     company2.setCity("Ottawa");
 
     try
@@ -380,7 +381,7 @@ public class LockingManagerTest extends AbstractCDOTest
     Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), RWLockManager.LockType.WRITE, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.WAIT);
     company2.setCity("Ottawa");
 
     try
@@ -546,7 +547,7 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     cdoCompany.cdoReadLock().lock();
     transaction.close();
-    assertEquals(false, repo.getLockManager().hasLock(RWLockManager.LockType.READ, view, cdoCompany.cdoID()));
+    assertEquals(false, repo.getLockManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
   }
 
   public void testSessionClose() throws Exception
@@ -567,7 +568,7 @@ public class LockingManagerTest extends AbstractCDOTest
     session.close();
 
     sleep(100);
-    assertEquals(false, repo.getLockManager().hasLock(RWLockManager.LockType.READ, view, cdoCompany.cdoID()));
+    assertEquals(false, repo.getLockManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
   }
 
   public void testBugzilla_270345() throws Exception

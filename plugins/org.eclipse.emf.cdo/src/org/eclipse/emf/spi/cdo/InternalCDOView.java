@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOStore;
 
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -94,7 +94,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public Object convertIDToObject(Object potentialID);
 
-  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType, boolean byOthers);
+  /**
+   * @since 3.0
+   */
+  public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers);
 
   public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter);
 
@@ -114,11 +117,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * lock, it is not guarantee that the state didn't change immediately after.
    * <p>
    * <code>
-   * if (cdoObject.cdoState() != CDOState.PROXY) 
+   * if (cdoObject.cdoState() != CDOState.PROXY)
    * {
    *  // At this point could be a proxy!
    *  cdoObject.cdoRevision();
-   * }  
+   * }
    * </code>
    * <p>
    * The reason were we didn't use {@link CDOView#getLock()} is to not allow the access of that lock to the users since

@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.util.ServerException;
 
-
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;

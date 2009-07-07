@@ -26,6 +26,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSession.Options
 {

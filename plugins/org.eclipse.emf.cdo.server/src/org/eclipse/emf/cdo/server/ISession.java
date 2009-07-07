@@ -21,8 +21,14 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface ISession extends CDOCommonSession, IContainer<IView>
 {
+  /**
+   * @since 3.0
+   */
   public ISessionManager getManager();
 
+  /**
+   * @since 3.0
+   */
   public ISessionProtocol getProtocol();
 
   /**

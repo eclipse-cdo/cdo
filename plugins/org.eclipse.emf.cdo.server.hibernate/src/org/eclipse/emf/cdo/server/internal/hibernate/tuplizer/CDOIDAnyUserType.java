@@ -84,6 +84,7 @@ public class CDOIDAnyUserType implements UserType
     {
       return null;
     }
+
     final int end1 = value.indexOf(SEPARATOR);
     final int start2 = end1 + SEPARATOR.length();
 

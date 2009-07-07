@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class LockObjectsIndication extends AbstractSyncRevisionsIndication
 {
-  private RWLockManager.LockType lockType;
+  private LockType lockType;
 
   private List<CDOID> ids = new ArrayList<CDOID>();
 

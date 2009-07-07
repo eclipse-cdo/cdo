@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
@@ -17,8 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
-
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -34,12 +33,12 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
 
   private CDOObject object;
 
-  private RWLockManager.LockType lockType;
+  private LockType lockType;
 
   private boolean byOthers;
 
-  public ObjectLockedRequest(CDOClientProtocol protocol, CDOView view, CDOObject object,
-      RWLockManager.LockType lockType, boolean byOthers)
+  public ObjectLockedRequest(CDOClientProtocol protocol, CDOView view, CDOObject object, LockType lockType,
+      boolean byOthers)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OBJECT_LOCKED);
     this.view = view;
@@ -54,7 +53,7 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
     if (TRACER.isEnabled())
     {
       TRACER.format("Requesting if object {0} has  of lock for object {1}", object.cdoID(), //$NON-NLS-1$
-          lockType == RWLockManager.LockType.READ ? "read" : "write"); //$NON-NLS-1$ //$NON-NLS-2$
+          lockType == LockType.READ ? "read" : "write"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     out.writeInt(view.getViewID());

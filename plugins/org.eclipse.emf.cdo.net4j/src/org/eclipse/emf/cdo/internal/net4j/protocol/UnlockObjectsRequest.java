@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  **************************************************************************/
@@ -17,8 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
-
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -35,10 +34,10 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
 
   private Collection<? extends CDOObject> objects;
 
-  private RWLockManager.LockType lockType;
+  private LockType lockType;
 
   public UnlockObjectsRequest(CDOClientProtocol protocol, CDOView view, Collection<? extends CDOObject> objects,
-      RWLockManager.LockType lockType)
+      LockType lockType)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS);
     this.view = view;
@@ -64,7 +63,7 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Unlocking of type {0} requested for view {1}", lockType == RWLockManager.LockType.READ ? "read" //$NON-NLS-1$ //$NON-NLS-2$
+        TRACER.format("Unlocking of type {0} requested for view {1}", lockType == LockType.READ ? "read" //$NON-NLS-1$ //$NON-NLS-2$
             : "write", view.getViewID()); //$NON-NLS-1$
       }
 

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 
-
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;

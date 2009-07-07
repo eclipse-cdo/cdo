@@ -51,7 +51,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider
   /**
    * Returns the session this accessor is associated with.
    * 
-   * @since 2.0
+   * @since 3.0
    */
   public InternalSession getSession();
 

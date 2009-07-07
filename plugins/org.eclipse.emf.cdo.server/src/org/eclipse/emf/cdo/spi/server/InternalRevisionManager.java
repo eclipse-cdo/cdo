@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalRevisionManager extends IRevisionManager
 {

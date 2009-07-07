@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 
-
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalTransaction extends ITransaction, InternalView
 {

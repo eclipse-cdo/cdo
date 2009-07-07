@@ -72,6 +72,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     return reader;
   }
 
+  /**
+   * @since 3.0
+   */
   public InternalSession getSession()
   {
     if (context instanceof ITransaction)

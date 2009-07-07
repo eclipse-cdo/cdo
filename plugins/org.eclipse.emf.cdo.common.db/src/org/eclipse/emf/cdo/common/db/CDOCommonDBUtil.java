@@ -24,7 +24,7 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 3.0
  */
 public final class CDOCommonDBUtil
 {

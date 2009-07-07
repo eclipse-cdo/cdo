@@ -9,12 +9,14 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.spi.server;
+package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
@@ -24,7 +26,7 @@ import org.eclipse.net4j.util.event.IListener;
 
 /**
  * @author Simon McDuff
- * @since 2.0
+ * @since 3.0
  */
 public class LockManager extends RWLockManager<CDOID, IView> implements InternalLockManager
 {

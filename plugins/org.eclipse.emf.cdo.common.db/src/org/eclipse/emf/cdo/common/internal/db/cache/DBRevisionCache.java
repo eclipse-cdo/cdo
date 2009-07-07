@@ -209,9 +209,11 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           {
             return null;
           }
+
           return revision.getID();
         }
       };
+
       return query.query(connection);
     }
     catch (Exception e)
@@ -234,6 +236,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   public InternalCDORevision getRevision(final CDOID id)
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();
@@ -302,6 +305,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   public InternalCDORevision getRevisionByTime(final CDOID id, final long timeStamp)
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();
@@ -340,6 +344,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           return toRevision(blob, revised);
         }
       };
+
       return query.query(connection);
     }
     catch (Exception e)
@@ -364,6 +369,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   public InternalCDORevision getRevisionByVersion(final CDOID id, final int version)
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();
@@ -402,6 +408,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           return toRevision(blob, revised);
         }
       };
+
       return query.query(connection);
     }
     catch (Exception e)
@@ -422,6 +429,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   public List<CDORevision> getRevisions()
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();
@@ -453,15 +461,18 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         protected List<CDORevision> getResult(ResultSet resultSet) throws Exception
         {
           final List<CDORevision> revisionList = new ArrayList<CDORevision>();
+
           do
           {
             long revised = resultSet.getLong(2);
             Blob blob = resultSet.getBlob(1);
             revisionList.add(toRevision(blob, revised));
           } while (resultSet.next());
+
           return revisionList;
         }
       };
+
       return query.query(connection);
     }
     catch (Exception e)
@@ -485,6 +496,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   public boolean addRevision(final InternalCDORevision revision)
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();
@@ -615,6 +627,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   public InternalCDORevision removeRevision(CDOID id, int version)
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();
@@ -640,8 +653,10 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
             preparedStatement.setInt(2, revision.getVersion());
           }
         };
+
         update.update(connection);
       }
+
       return revision;
     }
     catch (Exception e)
@@ -657,6 +672,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   public void clear()
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();
@@ -671,6 +687,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           return builder.toString();
         }
       };
+
       update.update(connection);
     }
     catch (Exception e)
@@ -712,6 +729,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   private void createTable() throws SQLException
   {
     Connection connection = null;
+
     try
     {
       connection = getConnection();

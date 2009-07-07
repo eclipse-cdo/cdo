@@ -26,7 +26,6 @@ public final class ContainerUtil
 
   private static final IContainer<Object> EMPTY = new IContainer<Object>()
   {
-
     public Object[] getElements()
     {
       return NO_ELEMENTS;

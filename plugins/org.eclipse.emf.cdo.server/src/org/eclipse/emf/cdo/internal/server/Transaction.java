@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
-
 import java.text.MessageFormat;
 
 /**

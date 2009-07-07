@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalQueryResult extends BlockingCloseableIterator<Object>
 {

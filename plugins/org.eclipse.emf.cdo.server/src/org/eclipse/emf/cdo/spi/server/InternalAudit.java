@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.server.IAudit;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalAudit extends IAudit, InternalView
 {
-
 }

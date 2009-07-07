@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalQueryManager
 {

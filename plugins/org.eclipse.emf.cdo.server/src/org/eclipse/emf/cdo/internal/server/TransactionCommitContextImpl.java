@@ -37,8 +37,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -416,7 +416,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     try
     {
       InternalLockManager lockManager = transaction.getRepository().getLockManager();
-      lockManager.lock(RWLockManager.LockType.WRITE, transaction, lockedObjects, 1000);
+      lockManager.lock(LockType.WRITE, transaction, lockedObjects, 1000);
     }
     catch (TimeoutRuntimeException exception)
     {
@@ -430,7 +430,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     if (!lockedObjects.isEmpty())
     {
       InternalLockManager lockManager = transaction.getRepository().getLockManager();
-      lockManager.unlock(RWLockManager.LockType.WRITE, transaction, lockedObjects);
+      lockManager.unlock(LockType.WRITE, transaction, lockedObjects);
       lockedObjects.clear();
     }
   }

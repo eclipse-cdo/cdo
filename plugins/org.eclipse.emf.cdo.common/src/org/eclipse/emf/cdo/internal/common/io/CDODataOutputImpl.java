@@ -37,7 +37,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -331,9 +331,9 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     }
   }
 
-  public void writeCDOLockType(RWLockManager.LockType lockType) throws IOException
+  public void writeCDOLockType(LockType lockType) throws IOException
   {
-    writeBoolean(lockType == RWLockManager.LockType.WRITE ? true : false);
+    writeBoolean(lockType == LockType.WRITE ? true : false);
   }
 
   protected StringIO getPackageURICompressor()

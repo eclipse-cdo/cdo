@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import java.util.concurrent.locks.Lock;
 
@@ -37,8 +38,10 @@ public interface CDOLock extends Lock
 
   /**
    * TODO Simon: JavaDoc
+   * 
+   * @since 3.0
    */
-  public RWLockManager.LockType getType();
+  public LockType getType();
 
   /**
    * Returns <code>true</code> if this lock is currently held by the requesting {@link CDOView view}, <code>false</code>

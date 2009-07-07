@@ -94,13 +94,19 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
 
   private Object lockChanged = new Object();
 
-  public void lock(RWLockManager.LockType type, V context, Collection<? extends K> objectsToLock, long timeout)
+  /**
+   * @since 3.0
+   */
+  public void lock(LockType type, V context, Collection<? extends K> objectsToLock, long timeout)
       throws InterruptedException
   {
     lock(getLockingStrategy(type), context, objectsToLock, timeout);
   }
 
-  public void lock(RWLockManager.LockType type, V context, K objectToLock, long timeout) throws InterruptedException
+  /**
+   * @since 3.0
+   */
+  public void lock(LockType type, V context, K objectToLock, long timeout) throws InterruptedException
   {
     lock(type, context, Collections.singletonList(objectToLock), timeout);
   }
@@ -110,8 +116,9 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
    * 
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
+   * @since 3.0
    */
-  public void unlock(RWLockManager.LockType type, V context, Collection<? extends K> objectsToLock)
+  public void unlock(LockType type, V context, Collection<? extends K> objectsToLock)
   {
     unlock(getLockingStrategy(type), context, objectsToLock);
   }
@@ -153,26 +160,32 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
     }
   }
 
-  public boolean hasLock(RWLockManager.LockType type, V context, K objectToLock)
+  /**
+   * @since 3.0
+   */
+  public boolean hasLock(LockType type, V context, K objectToLock)
   {
     return hasLock(getLockingStrategy(type), context, objectToLock);
   }
 
-  public boolean hasLockByOthers(RWLockManager.LockType type, V context, K objectToLock)
+  /**
+   * @since 3.0
+   */
+  public boolean hasLockByOthers(LockType type, V context, K objectToLock)
   {
     LockStrategy<K, V> lockingStrategy = getLockingStrategy(type);
     LockEntry<K, V> entry = getLockEntry(objectToLock);
     return null != entry && lockingStrategy.isLockedByOthers(entry, context);
   }
 
-  private LockStrategy<K, V> getLockingStrategy(RWLockManager.LockType type)
+  private LockStrategy<K, V> getLockingStrategy(LockType type)
   {
-    if (type == RWLockManager.LockType.READ)
+    if (type == LockType.READ)
     {
       return readLockStrategy;
     }
 
-    if (type == RWLockManager.LockType.WRITE)
+    if (type == LockType.WRITE)
     {
       return writeLockStrategy;
     }

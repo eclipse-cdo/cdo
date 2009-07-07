@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
-
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 

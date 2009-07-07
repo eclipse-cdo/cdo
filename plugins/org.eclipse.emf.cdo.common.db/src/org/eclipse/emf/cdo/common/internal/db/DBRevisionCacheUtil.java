@@ -27,15 +27,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DBRevisionCacheUtil.
- * 
  * @author Andre Dietisheim
  */
 public class DBRevisionCacheUtil
 {
-
   /**
    * Mandatory insert update.
    * 

@@ -10,13 +10,13 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.concurrent.ExecutionException;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalCommitManager
 {

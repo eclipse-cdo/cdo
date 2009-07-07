@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.util.CDOEvent;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
@@ -127,7 +127,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    *    {
    *      throw new TimeoutException();
    *    }
-   *    
    *    try
    *    {
    *      float sum = 0;
@@ -135,7 +134,6 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
    *      {
    *        sum += detail.getPrice();
    *      }
-   *      
    *      System.out.println(&quot;Sum: &quot; + sum);
    *    }
    *    finally
@@ -273,14 +271,16 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
 
   /**
    * Locks the given objects. Once the objects are locked, they will not be changed remotely or go in conflict state.
+   * 
+   * @since 3.0
    */
-  public void lockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType, long timeout)
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
       throws InterruptedException;
 
   /**
    * Unlocks the given locked objects of this view.
    */
-  public void unlockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType);
+  public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType);
 
   /**
    * Unlocks all locked objects of this view.

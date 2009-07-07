@@ -46,6 +46,7 @@ public class CDOManyReferenceSetter extends CDOPropertySetter
     {
       throw new IllegalArgumentException("Value is not a PersistentCollection but a " + value.getClass().getName());
     }
+
     if (!(value instanceof List))
     {
       throw new IllegalArgumentException("Value is not a list but a " + value.getClass().getName());

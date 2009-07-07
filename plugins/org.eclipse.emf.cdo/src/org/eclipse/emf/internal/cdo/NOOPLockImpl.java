@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOLock;
 
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -73,7 +73,10 @@ public class NOOPLockImpl implements CDOLock
     throw new UnsupportedOperationException();
   }
 
-  public RWLockManager.LockType getType()
+  /**
+   * @since 3.0
+   */
+  public LockType getType()
   {
     return null;
   }

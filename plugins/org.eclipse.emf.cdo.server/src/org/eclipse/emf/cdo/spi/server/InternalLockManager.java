@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalLockManager extends IRWLockManager<CDOID, IView>
 {

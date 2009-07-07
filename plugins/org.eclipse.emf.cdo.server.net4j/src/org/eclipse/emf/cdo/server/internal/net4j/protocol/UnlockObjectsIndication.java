@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class UnlockObjectsIndication extends CDOReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    RWLockManager.LockType lockType = in.readCDOLockType();
+    LockType lockType = in.readCDOLockType();
     int size = in.readInt();
 
     IView view = getSession().getView(viewID);

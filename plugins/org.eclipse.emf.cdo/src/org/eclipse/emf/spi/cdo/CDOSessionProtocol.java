@@ -83,11 +83,20 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader
 
   public boolean cancelQuery(int queryId);
 
+  /**
+   * @since 3.0
+   */
   public void lockObjects(CDOView view, Map<CDOID, CDOIDAndVersion> objects, long timeout, LockType lockType)
       throws InterruptedException;
 
+  /**
+   * @since 3.0
+   */
   public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType);
 
+  /**
+   * @since 3.0
+   */
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers);
 
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor);

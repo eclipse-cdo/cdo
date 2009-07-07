@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.IView;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalView extends IView
 {

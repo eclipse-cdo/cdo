@@ -26,10 +26,10 @@ public interface IRWLockManager<K, V>
 
   public static final int NO_WAIT = 1;
 
-  public void lock(IRWLockManager.LockType type, V context, Collection<? extends K> objectsToLock, long timeout)
+  public void lock(LockType type, V context, Collection<? extends K> objectsToLock, long timeout)
       throws InterruptedException;
 
-  public void lock(IRWLockManager.LockType type, V context, K objectToLock, long timeout) throws InterruptedException;
+  public void lock(LockType type, V context, K objectToLock, long timeout) throws InterruptedException;
 
   /**
    * Attempts to release for a given locktype, context and objects.
@@ -37,16 +37,16 @@ public interface IRWLockManager<K, V>
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
    */
-  public void unlock(IRWLockManager.LockType type, V context, Collection<? extends K> objectsToLock);
+  public void unlock(LockType type, V context, Collection<? extends K> objectsToLock);
 
   /**
    * Attempts to release all locks(read and write) for a given context.
    */
   public void unlock(V context);
 
-  public boolean hasLock(IRWLockManager.LockType type, V context, K objectToLock);
+  public boolean hasLock(LockType type, V context, K objectToLock);
 
-  public boolean hasLockByOthers(IRWLockManager.LockType type, V context, K objectToLock);
+  public boolean hasLockByOthers(LockType type, V context, K objectToLock);
 
   /**
    * @author Simon McDuff

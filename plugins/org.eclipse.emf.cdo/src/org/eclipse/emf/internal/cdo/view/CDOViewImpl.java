@@ -64,7 +64,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.HashBag;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -276,7 +276,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
    * @throws InterruptedException
    * @since 2.0
    */
-  public void lockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType, long timeout)
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
       throws InterruptedException
   {
     checkActive();
@@ -298,7 +298,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
-  public void unlockObjects(Collection<? extends CDOObject> objects, RWLockManager.LockType lockType)
+  public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType)
   {
     checkActive();
     session.getSessionProtocol().unlockObjects(this, objects, lockType);
@@ -315,7 +315,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
-  public boolean isObjectLocked(CDOObject object, RWLockManager.LockType lockType, boolean byOthers)
+  public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers)
   {
     checkActive();
     return session.getSessionProtocol().isObjectLocked(this, object, lockType, byOthers);

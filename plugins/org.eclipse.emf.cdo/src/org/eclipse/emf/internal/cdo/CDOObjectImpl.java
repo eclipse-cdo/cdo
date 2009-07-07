@@ -27,8 +27,8 @@ import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -179,7 +179,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     // Should we cache the locks ?
-    return new CDOLockImpl(RWLockManager.LockType.READ);
+    return new CDOLockImpl(LockType.READ);
   }
 
   /**
@@ -193,7 +193,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     // Should we cache the locks ?
-    return new CDOLockImpl(RWLockManager.LockType.WRITE);
+    return new CDOLockImpl(LockType.WRITE);
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -1076,14 +1076,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   private final class CDOLockImpl implements CDOLock
   {
-    private RWLockManager.LockType type;
+    private LockType type;
 
-    public CDOLockImpl(RWLockManager.LockType type)
+    public CDOLockImpl(LockType type)
     {
       this.type = type;
     }
 
-    public RWLockManager.LockType getType()
+    public LockType getType()
     {
       return type;
     }

@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public interface InternalRepository extends IRepository, InternalCDOPackageRegistry.PackageLoader
 {

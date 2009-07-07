@@ -309,7 +309,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    return null;
+    final HibernateQueryHandler queryHandler = new HibernateQueryHandler();
+    queryHandler.setHibernateStoreAccessor(this);
+    return queryHandler;
   }
 
   /**

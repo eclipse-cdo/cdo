@@ -121,9 +121,7 @@ public class HibernatePackageHandler extends Lifecycle
 
         if (packageUnit.getPackageInfos().length > 0)
         {
-          final HibernateEPackage hbEPackage = new HibernateEPackage();
           final String rootNSUri = packageUnit.getTopLevelPackageInfo().getPackageURI();
-          hbEPackage.setNsUri(rootNSUri);
           final EPackage.Registry registry = hibernateStore.getRepository().getPackageRegistry();
           final EPackage rootEPackage = registry.getEPackage(rootNSUri);
           hbPackageUnitDTO.setEPackageBlob(EMFUtil.getEPackageBytes(rootEPackage, true, registry));
@@ -165,8 +163,6 @@ public class HibernatePackageHandler extends Lifecycle
     return packageUnits;
   }
 
-  // protected void readPackage(EPackage ePackage)
-  @SuppressWarnings("deprecation")
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     final String nsUri = packageUnit.getTopLevelPackageInfo().getPackageURI();

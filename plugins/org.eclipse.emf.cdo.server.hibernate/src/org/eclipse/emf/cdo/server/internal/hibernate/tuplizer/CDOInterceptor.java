@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.EmptyInterceptor;
+import org.hibernate.type.Type;
+
+import java.io.Serializable;
 
 /**
  * Resolves entitynames, todo: use entityname strategy!
@@ -41,4 +44,12 @@ public class CDOInterceptor extends EmptyInterceptor
     InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(object);
     return revision.getEClass().getName();
   }
+
+  @Override
+  public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState,
+      String[] propertyNames, Type[] types)
+  {
+    return false;
+  }
+
 }

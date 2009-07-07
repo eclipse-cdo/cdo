@@ -11,18 +11,17 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
-import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
@@ -150,10 +149,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     Map<String, String> props = getRepositoryProperties();
     InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, props);
-    IRevisionManager revisionManager = getTestRevisionManager();
+    InternalRevisionManager revisionManager = getTestRevisionManager();
     if (revisionManager != null)
     {
-      repository.setRevisionManager((RevisionManager)revisionManager);
+      repository.setRevisionManager(revisionManager);
     }
 
     IUserManager userManager = getTestUserManager();
@@ -180,9 +179,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return (InternalRepository)getTestProperty(PROP_TEST_REPOSITORY);
   }
 
-  protected IRevisionManager getTestRevisionManager()
+  protected InternalRevisionManager getTestRevisionManager()
   {
-    return (IRevisionManager)getTestProperty(PROP_TEST_REVISION_MANAGER);
+    return (InternalRevisionManager)getTestProperty(PROP_TEST_REVISION_MANAGER);
   }
 
   protected IUserManager getTestUserManager()

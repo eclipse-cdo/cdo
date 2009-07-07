@@ -11,9 +11,10 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -41,7 +42,7 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   private boolean shutdownExecutorService = false;
 
   @ExcludeFromDump
-  private transient Map<Transaction, TransactionCommitContextEntry> contextEntries = new ConcurrentHashMap<Transaction, TransactionCommitContextEntry>();
+  private transient Map<InternalTransaction, TransactionCommitContextEntry> contextEntries = new ConcurrentHashMap<InternalTransaction, TransactionCommitContextEntry>();
 
   public CommitManager()
   {
@@ -122,13 +123,13 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   /**
    * Waiting for a commit to be done.
    */
-  public void waitForTermination(Transaction transaction) throws InterruptedException, ExecutionException
+  public void waitForTermination(InternalTransaction transaction) throws InterruptedException, ExecutionException
   {
     TransactionCommitContextEntry contextEntry = contextEntries.get(transaction);
     contextEntry.getFuture().get();
   }
 
-  public InternalCommitContext get(Transaction transaction)
+  public InternalCommitContext get(InternalTransaction transaction)
   {
     TransactionCommitContextEntry contextEntry = contextEntries.get(transaction);
     if (contextEntry != null)

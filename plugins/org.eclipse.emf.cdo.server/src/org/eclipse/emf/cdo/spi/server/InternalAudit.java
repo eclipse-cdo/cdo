@@ -10,20 +10,12 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.server.IAudit;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalQueryManager
+public interface InternalAudit extends IAudit, InternalView
 {
-  public InternalRepository getRepository();
 
-  public void setRepository(InternalRepository repository);
-
-  public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo);
-
-  public boolean isRunning(int queryID);
-
-  public void cancel(int queryID);
 }

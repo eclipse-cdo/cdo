@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -31,8 +30,11 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
@@ -55,7 +57,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Simon McDuff
  * @since 2.0
  */
-public class TransactionCommitContextImpl implements Transaction.InternalCommitContext
+public class TransactionCommitContextImpl implements InternalCommitContext
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION,
       TransactionCommitContextImpl.class);
@@ -88,11 +90,11 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
 
   private String rollbackMessage;
 
-  private Transaction transaction;
+  private InternalTransaction transaction;
 
   private boolean autoReleaseLocksEnabled;
 
-  public TransactionCommitContextImpl(Transaction transaction)
+  public TransactionCommitContextImpl(InternalTransaction transaction)
   {
     this.transaction = transaction;
     InternalRepository repository = transaction.getRepository();
@@ -105,7 +107,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     return transaction.getViewID();
   }
 
-  public Transaction getTransaction()
+  public InternalTransaction getTransaction()
   {
     return transaction;
   }
@@ -460,8 +462,8 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     CDOID id = dirtyObjectDelta.getID();
     int version = dirtyObjectDelta.getOriginVersion();
 
-    CDORevisionResolver revisionResolver = transaction.getRepository().getRevisionManager();
-    CDORevision originObject = revisionResolver.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
+    InternalRevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+    CDORevision originObject = revisionManager.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
     if (originObject != null)
     {
       if (loadOnDemand)
@@ -473,8 +475,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
           {
             InternalCDORevision internalOriginObject = (InternalCDORevision)originObject;
             // TODO ensureChunk should get promoted to API because the cast is not really nice here.
-            ((RevisionManager)revisionResolver).ensureChunk(internalOriginObject, feature, 0, internalOriginObject
-                .getList(feature).size());
+            revisionManager.ensureChunk(internalOriginObject, feature, 0, internalOriginObject.getList(feature).size());
           }
         }
       }
@@ -606,7 +607,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
     try
     {
       monitor.begin(revisions.length);
-      RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
+      InternalRevisionManager revisionManager = transaction.getRepository().getRevisionManager();
       for (CDORevision revision : revisions)
       {
         if (revision != null)
@@ -643,7 +644,7 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
   private void detachObjects(OMMonitor monitor)
   {
     detachedRevisions.clear();
-    RevisionManager revisionManager = (RevisionManager)transaction.getRepository().getRevisionManager();
+    InternalRevisionManager revisionManager = transaction.getRepository().getRevisionManager();
     CDOID[] detachedObjects = getDetachedObjects();
 
     try
@@ -651,7 +652,8 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
       monitor.begin(detachedObjects.length);
       for (CDOID id : detachedObjects)
       {
-        InternalCDORevision revision = revisionManager.getRevision(id, CDORevision.UNCHUNKED, false);
+        InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevision(id, CDORevision.UNCHUNKED,
+            false);
         if (revision != null)
         {
           detachedRevisions.add(revision);

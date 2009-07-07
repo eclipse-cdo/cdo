@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrentValue;
@@ -30,7 +31,7 @@ public class XATransactionCommitContext extends TransactionCommitContextImpl
 
   private ConcurrentValue<CommitState> state = new ConcurrentValue<CommitState>(CommitState.STARTING);
 
-  public XATransactionCommitContext(Transaction transaction)
+  public XATransactionCommitContext(InternalTransaction transaction)
   {
     super(transaction);
   }

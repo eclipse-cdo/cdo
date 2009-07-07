@@ -18,8 +18,10 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
+import org.eclipse.emf.cdo.spi.server.InternalQueryResult;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
@@ -88,9 +90,9 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     this.executors = executors;
   }
 
-  public QueryResult execute(IView view, CDOQueryInfo queryInfo)
+  public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo)
   {
-    QueryResult queryResult = new QueryResult(view, queryInfo, nextQuery());
+    InternalQueryResult queryResult = new QueryResult(view, queryInfo, nextQuery());
     QueryContext queryContext = new QueryContext(queryResult);
     execute(queryContext);
     return queryResult;
@@ -160,7 +162,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
   {
     private long timeStamp;
 
-    private QueryResult queryResult;
+    private InternalQueryResult queryResult;
 
     private boolean started;
 
@@ -187,21 +189,21 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       }
     };
 
-    public QueryContext(QueryResult queryResult)
+    public QueryContext(InternalQueryResult queryResult)
     {
       this.queryResult = queryResult;
 
       // Remember the timeStamp because it can change for audits
-      View view = (View)getView();
+      InternalView view = getView();
       timeStamp = view.getTimeStamp();
     }
 
-    public QueryResult getQueryResult()
+    public InternalQueryResult getQueryResult()
     {
       return queryResult;
     }
 
-    public IView getView()
+    public InternalView getView()
     {
       return queryResult.getView();
     }
@@ -248,7 +250,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
     public void run()
     {
-      InternalSession session = (InternalSession)queryResult.getView().getSession();
+      InternalSession session = queryResult.getView().getSession();
       StoreThreadLocal.setSession(session);
 
       try
@@ -273,13 +275,13 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
     public void addListener()
     {
-      IView view = getQueryResult().getView();
+      InternalView view = getQueryResult().getView();
       view.getSession().addListener(sessionListener);
     }
 
     public void removeListener()
     {
-      IView view = getQueryResult().getView();
+      InternalView view = getQueryResult().getView();
       view.getSession().removeListener(sessionListener);
     }
   }

@@ -10,20 +10,25 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.server.IView;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalQueryManager
+public interface InternalView extends IView
 {
+  public InternalSession getSession();
+
   public InternalRepository getRepository();
 
-  public void setRepository(InternalRepository repository);
+  public void subscribe(CDOID id);
 
-  public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo);
+  public void unsubscribe(CDOID id);
 
-  public boolean isRunning(int queryID);
+  public boolean hasSubscription(CDOID id);
 
-  public void cancel(int queryID);
+  public void clearChangeSubscription();
+
+  public void doClose();
 }

@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.LockManager;
@@ -85,7 +86,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalSessionManager sessionManager;
 
-  private RevisionManager revisionManager;
+  private InternalRevisionManager revisionManager;
 
   private InternalQueryManager queryManager;
 
@@ -227,7 +228,7 @@ public class Repository extends Container<Object> implements InternalRepository
     this.sessionManager = sessionManager;
   }
 
-  public RevisionManager getRevisionManager()
+  public InternalRevisionManager getRevisionManager()
   {
     return revisionManager;
   }
@@ -235,7 +236,7 @@ public class Repository extends Container<Object> implements InternalRepository
   /**
    * @since 2.0
    */
-  public void setRevisionManager(RevisionManager revisionManager)
+  public void setRevisionManager(InternalRevisionManager revisionManager)
   {
     this.revisionManager = revisionManager;
   }
@@ -737,7 +738,7 @@ public class Repository extends Container<Object> implements InternalRepository
       return new SessionManager();
     }
 
-    protected RevisionManager createRevisionManager()
+    protected InternalRevisionManager createRevisionManager()
     {
       return new RevisionManager();
     }

@@ -15,8 +15,8 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.IAudit;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.spi.server.InternalAudit;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import java.text.MessageFormat;
@@ -26,7 +26,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public class Audit extends View implements IAudit
+public class Audit extends View implements InternalAudit
 {
   private long timeStamp;
 

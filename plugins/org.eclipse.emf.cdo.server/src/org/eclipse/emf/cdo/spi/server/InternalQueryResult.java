@@ -11,19 +11,19 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.BlockingCloseableIterator;
+import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalQueryManager
+public interface InternalQueryResult extends BlockingCloseableIterator<Object>
 {
-  public InternalRepository getRepository();
+  public int getQueryID();
 
-  public void setRepository(InternalRepository repository);
+  public CDOQueryInfo getQueryInfo();
 
-  public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo);
+  public InternalView getView();
 
-  public boolean isRunning(int queryID);
-
-  public void cancel(int queryID);
+  public CDOQueryQueue<Object> getQueue();
 }

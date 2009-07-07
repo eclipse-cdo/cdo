@@ -22,13 +22,17 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.server.IAudit;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalAudit;
+import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
@@ -57,7 +61,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class Session extends Container<IView> implements InternalSession
 {
-  private SessionManager manager;
+  private InternalSessionManager manager;
 
   private ISessionProtocol protocol;
 
@@ -67,7 +71,7 @@ public class Session extends Container<IView> implements InternalSession
 
   private boolean passiveUpdateEnabled = true;
 
-  private ConcurrentMap<Integer, IView> views = new ConcurrentHashMap<Integer, IView>();
+  private ConcurrentMap<Integer, InternalView> views = new ConcurrentHashMap<Integer, InternalView>();
 
   @ExcludeFromDump
   private IListener protocolListener = new LifecycleEventAdapter()
@@ -84,7 +88,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public Session(SessionManager manager, ISessionProtocol protocol, int sessionID, String userID)
+  public Session(InternalSessionManager manager, ISessionProtocol protocol, int sessionID, String userID)
       throws SessionCreationException
   {
     this.manager = manager;
@@ -119,7 +123,7 @@ public class Session extends Container<IView> implements InternalSession
     return this;
   }
 
-  public SessionManager getManager()
+  public InternalSessionManager getManager()
   {
     return manager;
   }
@@ -182,7 +186,7 @@ public class Session extends Container<IView> implements InternalSession
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
-  public View[] getElements()
+  public InternalView[] getElements()
   {
     checkActive();
     return getViews();
@@ -195,18 +199,18 @@ public class Session extends Container<IView> implements InternalSession
     return views.isEmpty();
   }
 
-  public View[] getViews()
+  public InternalView[] getViews()
   {
     checkActive();
     return getViewsArray();
   }
 
-  private View[] getViewsArray()
+  private InternalView[] getViewsArray()
   {
-    return views.values().toArray(new View[views.size()]);
+    return views.values().toArray(new InternalView[views.size()]);
   }
 
-  public IView getView(int viewID)
+  public InternalView getView(int viewID)
   {
     checkActive();
     return views.get(viewID);
@@ -215,10 +219,10 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public IView openView(int viewID)
+  public InternalView openView(int viewID)
   {
     checkActive();
-    IView view = new View(this, viewID);
+    InternalView view = new View(this, viewID);
     addView(view);
     return view;
   }
@@ -226,10 +230,10 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public IAudit openAudit(int viewID, long timeStamp)
+  public InternalAudit openAudit(int viewID, long timeStamp)
   {
     checkActive();
-    IAudit audit = new Audit(this, viewID, timeStamp);
+    InternalAudit audit = new Audit(this, viewID, timeStamp);
     addView(audit);
     return audit;
   }
@@ -240,12 +244,12 @@ public class Session extends Container<IView> implements InternalSession
   public ITransaction openTransaction(int viewID)
   {
     checkActive();
-    ITransaction transaction = new Transaction(this, viewID);
+    InternalTransaction transaction = new Transaction(this, viewID);
     addView(transaction);
     return transaction;
   }
 
-  private void addView(IView view)
+  private void addView(InternalView view)
   {
     checkActive();
     views.put(view.getViewID(), view);
@@ -255,7 +259,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public void viewClosed(View view)
+  public void viewClosed(InternalView view)
   {
     if (views.remove(view.getViewID()) == view)
     {
@@ -275,12 +279,14 @@ public class Session extends Container<IView> implements InternalSession
       dirtyIDs = Collections.emptyList();
     }
 
+    InternalView[] views = getViews();
+
     // Look if someone needs to know something about modified objects
     List<CDORevisionDelta> newDeltas = new ArrayList<CDORevisionDelta>();
     for (CDORevisionDelta delta : deltas)
     {
       CDOID lookupID = delta.getID();
-      for (View view : getViews())
+      for (InternalView view : views)
       {
         if (view.hasSubscription(lookupID))
         {
@@ -295,7 +301,7 @@ public class Session extends Container<IView> implements InternalSession
       List<CDOID> subDetached = new ArrayList<CDOID>();
       for (CDOID id : detachedObjects)
       {
-        for (View view : getViews())
+        for (InternalView view : views)
         {
           if (view.hasSubscription(id))
           {
@@ -324,7 +330,7 @@ public class Session extends Container<IView> implements InternalSession
   public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
       List<CDORevision> additionalRevisions)
   {
-    RevisionManager revisionManager = (RevisionManager)getManager().getRepository().getRevisionManager();
+    InternalRevisionManager revisionManager = getManager().getRepository().getRevisionManager();
     EClass eClass = revision.getEClass();
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
     for (int i = 0; i < features.length; i++)
@@ -339,7 +345,8 @@ public class Session extends Container<IView> implements InternalSession
           CDOID id = (CDOID)value;
           if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
+            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager
+                .getRevision(id, referenceChunk);
             revisions.add(id);
             additionalRevisions.add(containedRevision);
 

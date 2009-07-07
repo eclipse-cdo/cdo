@@ -34,17 +34,17 @@ public interface InternalSessionManager extends ISessionManager
 
   public InternalSession[] getSessions();
 
-  /**
-   * @since 2.0
-   */
   public InternalSession getSession(int sessionID);
 
   /**
    * @return Never <code>null</code>
-   * @since 2.0
    */
   public InternalSession openSession(ISessionProtocol sessionProtocol) throws SessionCreationException;
 
+  public void sessionClosed(InternalSession session);
+
   public void handleCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
       List<CDOID> detachedObjects, List<CDORevisionDelta> deltas, InternalSession excludedSession);
+
+  public void handleRemoteSessionNotification(byte opcode, InternalSession excludedSession);
 }

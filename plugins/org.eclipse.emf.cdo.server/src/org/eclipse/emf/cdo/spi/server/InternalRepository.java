@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -28,7 +27,9 @@ import java.util.List;
  */
 public interface InternalRepository extends IRepository, InternalCDOPackageRegistry.PackageLoader
 {
-  public void setRevisionManager(RevisionManager revisionManager);
+  public InternalRevisionManager getRevisionManager();
+
+  public void setRevisionManager(InternalRevisionManager revisionManager);
 
   public InternalSessionManager getSessionManager();
 

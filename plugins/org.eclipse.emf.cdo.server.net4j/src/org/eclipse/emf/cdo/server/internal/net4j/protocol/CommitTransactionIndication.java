@@ -26,17 +26,17 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
-import org.eclipse.emf.cdo.internal.server.Transaction;
-import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.util.WrappedException;
@@ -370,12 +370,12 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     out.writeCDOID(CDOID.NULL);
   }
 
-  protected Transaction getTransaction(int viewID)
+  protected InternalTransaction getTransaction(int viewID)
   {
-    IView view = getSession().getView(viewID);
-    if (view instanceof Transaction)
+    InternalView view = getSession().getView(viewID);
+    if (view instanceof InternalTransaction)
     {
-      return (Transaction)view;
+      return (InternalTransaction)view;
     }
 
     throw new IllegalStateException("Illegal transaction: " + view); //$NON-NLS-1$

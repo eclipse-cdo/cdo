@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -914,8 +913,8 @@ public class InvalidationTest extends AbstractCDOTest
     if (isRemoveRevision)
     {
       clearCache(getRepository().getRevisionManager());
-      ((RevisionManager)getRepository().getRevisionManager()).removeCachedRevision(resourceA.cdoID(), 1);
-      ((RevisionManager)getRepository().getRevisionManager()).removeCachedRevision(resourceA.cdoID(), 2);
+      getRepository().getRevisionManager().removeCachedRevision(resourceA.cdoID(), 1);
+      getRepository().getRevisionManager().removeCachedRevision(resourceA.cdoID(), 2);
     }
 
     msg("Checking after commit");

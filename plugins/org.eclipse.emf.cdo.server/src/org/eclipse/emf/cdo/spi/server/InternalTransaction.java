@@ -10,20 +10,12 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.server.ITransaction;
 
 /**
  * @author Eike Stepper
  */
-public interface InternalQueryManager
+public interface InternalTransaction extends ITransaction, InternalView
 {
-  public InternalRepository getRepository();
-
-  public void setRepository(InternalRepository repository);
-
-  public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo);
-
-  public boolean isRunning(int queryID);
-
-  public void cancel(int queryID);
+  public InternalCommitContext createCommitContext();
 }

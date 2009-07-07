@@ -14,10 +14,10 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -29,7 +29,7 @@ import java.util.StringTokenizer;
 /**
  * @author Eike Stepper
  */
-public class View implements IView
+public class View implements InternalView
 {
   private InternalSession session;
 

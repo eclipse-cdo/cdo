@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.emf.cdo.internal.server.Transaction;
-import org.eclipse.emf.cdo.internal.server.Transaction.InternalCommitContext;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -41,7 +39,7 @@ public interface InternalCommitManager
   /**
    * Waiting for a commit to be done.
    */
-  public void waitForTermination(Transaction transaction) throws InterruptedException, ExecutionException;
+  public void waitForTermination(InternalTransaction transaction) throws InterruptedException, ExecutionException;
 
-  public InternalCommitContext get(Transaction transaction);
+  public InternalCommitContext get(InternalTransaction transaction);
 }

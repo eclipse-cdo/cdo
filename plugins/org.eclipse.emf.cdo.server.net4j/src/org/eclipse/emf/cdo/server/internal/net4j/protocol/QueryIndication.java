@@ -16,10 +16,10 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
-import org.eclipse.emf.cdo.internal.server.QueryResult;
-import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
+import org.eclipse.emf.cdo.spi.server.InternalQueryResult;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -32,7 +32,7 @@ public class QueryIndication extends CDOReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryIndication.class);
 
-  private QueryResult queryResult;
+  private InternalQueryResult queryResult;
 
   public QueryIndication(CDOServerProtocol protocol)
   {
@@ -44,7 +44,7 @@ public class QueryIndication extends CDOReadIndication
   {
     int viewID = in.readInt();
     CDOQueryInfo cdoQuery = new CDOQueryInfoImpl(in); // TODO Add CDODataInput.readCDOQueryInfo()
-    IView view = getSession().getView(viewID);
+    InternalView view = getSession().getView(viewID);
     InternalQueryManager queryManager = getRepository().getQueryManager();
     queryResult = queryManager.execute(view, cdoQuery);
   }

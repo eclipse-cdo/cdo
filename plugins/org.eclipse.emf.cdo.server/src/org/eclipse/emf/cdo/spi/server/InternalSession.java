@@ -17,9 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.internal.server.View;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import java.util.List;
@@ -32,13 +31,19 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSessi
 {
   public InternalSessionManager getManager();
 
-  public IView[] getViews();
+  public InternalView[] getViews();
 
-  public IView getView(int viewID);
+  public InternalView getView(int viewID);
+
+  public InternalView openView(int viewID);
+
+  public InternalAudit openAudit(int viewID, long timeStamp);
+
+  public ITransaction openTransaction(int viewID);
 
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled);
 
-  public void viewClosed(View view);
+  public void viewClosed(InternalView view);
 
   public void setSubscribed(boolean subscribed);
 

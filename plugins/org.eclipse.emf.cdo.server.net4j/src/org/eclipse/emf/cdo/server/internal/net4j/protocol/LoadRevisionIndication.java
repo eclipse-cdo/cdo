@@ -17,10 +17,10 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -190,7 +190,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
     visitedFetchRules.add(fetchRule);
 
-    RevisionManager revisionManager = (RevisionManager)getSession().getManager().getRepository().getRevisionManager();
+    InternalRevisionManager revisionManager = getSession().getManager().getRepository().getRevisionManager();
     for (EStructuralFeature feature : fetchRule.getFeatures())
     {
       if (feature.isMany())
@@ -205,7 +205,8 @@ public class LoadRevisionIndication extends CDOReadIndication
             CDOID id = (CDOID)value;
             if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
             {
-              InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
+              InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id,
+                  referenceChunk);
               revisions.add(containedRevision.getID());
               additionalRevisions.add(containedRevision);
               collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);
@@ -221,7 +222,8 @@ public class LoadRevisionIndication extends CDOReadIndication
           CDOID id = (CDOID)value;
           if (!id.isNull() && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = revisionManager.getRevision(id, referenceChunk);
+            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager
+                .getRevision(id, referenceChunk);
             revisions.add(containedRevision.getID());
             additionalRevisions.add(containedRevision);
             collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);

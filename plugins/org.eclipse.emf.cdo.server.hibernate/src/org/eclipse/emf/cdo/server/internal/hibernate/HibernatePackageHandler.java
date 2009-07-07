@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -84,12 +86,28 @@ public class HibernatePackageHandler extends Lifecycle
     hibernateStore = store;
   }
 
+  /**
+   * @return the full list of EPackages registered in the PackageRegistry of the commit context as well as the EPackages
+   *         registered earlier.
+   * @see CommitContext#getPackageRegistry()
+   * @see Repository#getPackageRegistry()
+   */
   public List<EPackage> getEPackages()
   {
     List<EPackage> ePackages = new ArrayList<EPackage>();
-    for (EPackage ePackage : getPackageRegistry().getEPackages())
+    final Repository localRepository = (Repository)hibernateStore.getRepository();
+
+    for (EPackage ePackage : localRepository.getPackageRegistry(false).getEPackages())
     {
       ePackages.add(ePackage);
+    }
+
+    for (EPackage ePackage : localRepository.getPackageRegistry(true).getEPackages())
+    {
+      if (!ePackages.contains(ePackage))
+      {
+        ePackages.add(ePackage);
+      }
     }
 
     return ePackages;

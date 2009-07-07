@@ -14,9 +14,10 @@ import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
-import org.eclipse.emf.cdo.tests.MetaTest;
+import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.AuditTest.LocalAuditTest;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -53,6 +54,15 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=244141
     testClasses.remove(AuditTest.class);
     testClasses.remove(LocalAuditTest.class);
+    testClasses.remove(Bugzilla_252214_Test.class);
+
+    // replace a test with our local implementation
+    // for 2 reasons: featuremap is not yet supported
+    // the MultiValueOfAttributeTest class has a method
+    // testListOfInteger which has a List with a null value
+    // this is not nicely supported by Hibernate
+    testClasses.remove(MultiValuedOfAttributeTest.class);
+    testClasses.remove(HibernateMultiValuedOfAttributeTest.class);
 
     // MemStore is not relevant
     testClasses.remove(MEMStoreQueryTest.class);
@@ -62,18 +72,16 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     testClasses.remove(XATransactionTest.class);
     testClasses.remove(Bugzilla_259869_Test.class);
 
-    // External refs are not yet supported
+    // External refs are supported but they need @External annotations
+    // also this testcase contains XA Transaction things
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282651
     testClasses.remove(ExternalReferenceTest.class);
-
-    // Metaref is not yet supported
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=282655
-    testClasses.remove(MetaTest.class);
 
     // add the hibernate query test
     testClasses.add(HibernateQueryTest.class);
 
     // testClasses.clear();
+    // testClasses.add(ResourceTest.class);
     // testClasses.add(AttributeTest.class);
     // testClasses.add(Bugzilla_258933_Test.class);
   }

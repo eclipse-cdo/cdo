@@ -12,6 +12,9 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDMeta;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.hibernate.HibernateException;
@@ -32,7 +35,15 @@ public class CDOReferenceGetter extends CDOPropertyGetter
   public Object get(Object target) throws HibernateException
   {
     final Object o = super.get(target);
-    if (o instanceof CDOID)
+    if (o instanceof CDOID && CDOIDUtil.isNull((CDOID)o))
+    {
+      return null;
+    }
+    else if (o instanceof CDOIDMeta || o instanceof CDOIDExternal)
+    {
+      return o;
+    }
+    else if (o instanceof CDOID)
     {
       return HibernateUtil.getInstance().getCDORevision((CDOID)o);
     }

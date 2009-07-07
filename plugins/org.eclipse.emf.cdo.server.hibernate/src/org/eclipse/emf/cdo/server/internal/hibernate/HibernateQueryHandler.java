@@ -53,7 +53,6 @@ public class HibernateQueryHandler implements IQueryHandler
     // get a transaction, the hibernateStoreAccessor is placed in a threadlocal
     // so all db access uses the same session.
     final Session session = hibernateStoreAccessor.getHibernateSession();
-    session.beginTransaction();
     try
     {
       // create the query
@@ -105,6 +104,7 @@ public class HibernateQueryHandler implements IQueryHandler
         query.setMaxResults(info.getMaxResults());
       }
       // and go for the query
+      // future extension: support iterate, scroll through a parameter
       for (Object o : query.list())
       {
         final boolean addOneMore = context.addResult(o);
@@ -116,7 +116,6 @@ public class HibernateQueryHandler implements IQueryHandler
     }
     finally
     {
-      session.getTransaction().commit();
       hibernateStoreAccessor.endHibernateSession();
     }
   }

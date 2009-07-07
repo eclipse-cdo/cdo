@@ -12,6 +12,9 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDMeta;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
@@ -108,6 +111,15 @@ public class HibernateMoveableListWrapper implements List<Object>, MoveableList<
       return null;
     }
 
+    if (o instanceof CDOID && CDOIDUtil.isNull((CDOID)o))
+    {
+      return null;
+    }
+    else if (o instanceof CDOIDMeta || o instanceof CDOIDExternal)
+    {
+      return o;
+    }
+
     // is already resolved
     if (!(o instanceof CDOID))
     {
@@ -130,6 +142,11 @@ public class HibernateMoveableListWrapper implements List<Object>, MoveableList<
 
   protected CDOID getCDOID(Object o)
   {
+    if (o instanceof CDOIDMeta || o instanceof CDOIDExternal)
+    {
+      return (CDOID)o;
+    }
+
     CDORevision cdoRevision = (CDORevision)o;
     return cdoRevision.getID();
   }

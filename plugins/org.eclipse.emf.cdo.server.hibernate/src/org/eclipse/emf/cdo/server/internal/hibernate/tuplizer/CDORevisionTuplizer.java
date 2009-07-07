@@ -226,17 +226,14 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
     if (feature instanceof EReference && feature.isMany())
     {
-      // TODO Clarify feature maps
       return new CDOManyReferenceGetter(this, mappedProperty.getName());
     }
     else if (feature instanceof EReference)
     {
-      // TODO Clarify feature maps
       return new CDOReferenceGetter(this, mappedProperty.getName());
     }
     else if (feature instanceof EAttribute && feature.isMany())
     {
-      // TODO Clarify feature maps
       return new CDOManyAttributeGetter(this, mappedProperty.getName());
     }
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
+import org.eclipse.emf.cdo.server.hibernate.teneo.CDOHelper;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
@@ -24,7 +25,6 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 import org.eclipse.emf.teneo.extension.ExtensionUtil;
-import org.eclipse.emf.teneo.hibernate.cdo.CDOHelper;
 import org.eclipse.emf.teneo.hibernate.mapper.ManyAttributeMapper;
 
 import org.hibernate.cfg.Configuration;
@@ -65,16 +65,16 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     final String mapping = generateMapping();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Generated hibernate mapping:"); //$NON-NLS-1$
+      TRACER.trace("Generated hibernate mapping:");
       TRACER.trace(mapping);
     }
 
-    // System.err.println(mapping);
+    System.err.println(mapping);
 
     configuration.addXML(mapping);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Added mapping to configuration"); //$NON-NLS-1$
+      TRACER.trace("Added mapping to configuration");
     }
   }
 
@@ -84,7 +84,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Generating Hibernate Mapping"); //$NON-NLS-1$
+      TRACER.trace("Generating Hibernate Mapping");
     }
 
     final Properties properties = HibernateUtil.getInstance().getPropertiesFromStore(getHibernateStore());
@@ -100,11 +100,11 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     extensionManager.registerExtension(ExtensionUtil.createExtension(ManyAttributeMapper.class,
         CDOManyAttributeMapper.class, false));
 
-    properties.put("teneo.mapping.also_map_as_class", "false"); //$NON-NLS-1$ //$NON-NLS-2$
+    properties.put("teneo.mapping.also_map_as_class", "false");
     String hbm = CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
     // System.err.println(hbm);
     // to solve an issue with older versions of teneo
-    hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
+    hbm = hbm.replaceAll("_cont", "cont");
     return hbm;
   }
 

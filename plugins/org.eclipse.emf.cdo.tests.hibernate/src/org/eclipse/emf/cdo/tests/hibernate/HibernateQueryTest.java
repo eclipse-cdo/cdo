@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateLongImpl;
+import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateQueryHandler;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -255,7 +255,7 @@ public class HibernateQueryTest extends AbstractCDOTest
             "select so from SalesOrder so where so.customer.id=:customerId");
         final CDOObject cdoObject = (CDOObject)customer;
         final CDOID cdoID = cdoObject.cdoID();
-        final CDOIDHibernateLongImpl cdoIDHibernate = (CDOIDHibernateLongImpl)cdoID;
+        final CDOIDHibernate cdoIDHibernate = (CDOIDHibernate)cdoID;
         orderQuery.setParameter("customerId", cdoIDHibernate.getId());
         final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
         assertEquals(NUM_OF_SALES_ORDERS, sos.size());

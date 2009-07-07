@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.hibernate.HibernateException;
@@ -34,6 +36,10 @@ public class CDOReferenceSetter extends CDOPropertySetter
     if (value == null)
     {
       super.set(target, null, factory);
+    }
+    else if (value instanceof CDOIDMeta || value instanceof CDOIDExternal)
+    {
+      super.set(target, value, factory);
     }
     else
     {

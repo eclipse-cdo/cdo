@@ -224,6 +224,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
   {
+    if (!(id instanceof CDOIDHibernate))
+    {
+      return null;
+    }
     return HibernateUtil.getInstance().getCDORevision(id);
   }
 
@@ -251,7 +255,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   /**
    * @since 2.0
    */
-  @SuppressWarnings("deprecation")
   public void queryResources(QueryResourcesContext context)
   {
     CDOIDHibernate folderID = getHibernateID(context.getFolderID());
@@ -262,11 +265,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     final Criteria criteria = session.createCriteria(EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
     if (folderID == null)
     {
-      criteria.add(org.hibernate.criterion.Expression.isNull("containerID"));
+      criteria.add(org.hibernate.criterion.Restrictions.isNull("containerID"));
     }
     else
     {
-      criteria.add(org.hibernate.criterion.Expression.eq("containerID", folderID));
+      criteria.add(org.hibernate.criterion.Restrictions.eq("containerID", folderID));
     }
 
     List<?> result = criteria.list();
@@ -349,17 +352,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         }
       }
 
-      // delete all objects
-      for (CDOID id : context.getDetachedObjects())
-      {
-        final CDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
-        // maybe deleted in parallell?
-        if (revision != null)
-        {
-          session.delete(revision);
-        }
-      }
-
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
       for (InternalCDORevision revision : context.getNewObjects())
       {
@@ -380,12 +372,35 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         }
       }
 
+      session.flush();
+
       for (CDORevision revision : context.getDirtyObjects())
       {
-        session.saveOrUpdate(HibernateUtil.getInstance().getEntityName(revision), revision);
+        final CDOIDHibernate hibernateCDOID = (CDOIDHibernate)revision.getID();
+        // Object loadedRevision = session.get(hibernateCDOID.getEntityName(), hibernateCDOID.getId());
+        // if (loadedRevision != revision)
+        // {
+        // session.merge(revision);
+        // }
+        // else
+        // {
+        session.saveOrUpdate(hibernateCDOID.getEntityName(), revision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID());
+        }
+      }
+
+      session.flush();
+
+      // delete all objects
+      for (CDOID id : context.getDetachedObjects())
+      {
+        final CDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
+        // maybe deleted in parallell?
+        if (revision != null)
+        {
+          session.delete(revision);
         }
       }
 

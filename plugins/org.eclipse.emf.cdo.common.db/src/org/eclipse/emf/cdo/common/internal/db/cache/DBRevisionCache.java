@@ -174,19 +174,19 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         protected String getSQL()
         {
           StringBuilder builder = new StringBuilder();
-          builder.append("SELECT ");
+          builder.append("SELECT "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-          builder.append(", ");
+          builder.append(", "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-          builder.append(" FROM ");
+          builder.append(" FROM "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS);
-          builder.append(" WHERE ");
+          builder.append(" WHERE "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-          builder.append("=? AND ");
-          DBRevisionCacheUtil.appendTimestampCondition(builder);
-          builder.append(" AND ");
+          builder.append("=? AND "); //$NON-NLS-1$
+          appendTimestampCondition(builder);
+          builder.append(" AND "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME);
-          builder.append("=?");
+          builder.append("=?"); //$NON-NLS-1$
           return builder.toString();
         }
 
@@ -218,7 +218,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving the resource ID from the database", e);
+      throw new DBException("Error while retrieving the resource ID from the database", e); //$NON-NLS-1$
     }
     finally
     {
@@ -245,7 +245,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving the revision from the database", e);
+      throw new DBException("Error while retrieving the revision from the database", e); //$NON-NLS-1$
     }
     finally
     {
@@ -261,17 +261,17 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
       protected String getSQL()
       {
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT ");
+        builder.append("SELECT "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-        builder.append(" FROM ");
+        builder.append(" FROM "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS);
-        builder.append(" WHERE ");
+        builder.append(" WHERE "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-        builder.append("=? AND ");
+        builder.append("=? AND "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-        builder.append("=");
+        builder.append("="); //$NON-NLS-1$
         builder.append(CDORevision.UNSPECIFIED_DATE);
         return builder.toString();
       }
@@ -309,21 +309,21 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     try
     {
       connection = getConnection();
-      AbstractQueryStatement<InternalCDORevision> query = new AbstractQueryStatement<InternalCDORevision>()
+      AbstractQueryStatement<InternalCDORevision> statement = new AbstractQueryStatement<InternalCDORevision>()
       {
         @Override
         protected String getSQL()
         {
           StringBuilder builder = new StringBuilder();
-          builder.append("SELECT ");
+          builder.append("SELECT "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-          builder.append(", ");
+          builder.append(", "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-          builder.append(" FROM ");
+          builder.append(" FROM "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS);
-          builder.append(" WHERE ");
+          builder.append(" WHERE "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-          builder.append("=? AND ");
+          builder.append("=? AND "); //$NON-NLS-1$
           appendTimestampCondition(builder);
           return builder.toString();
         }
@@ -344,12 +344,11 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           return toRevision(blob, revised);
         }
       };
-
-      return query.query(connection);
+      return statement.query(connection);
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving a revision by timestamp from the database", e);
+      throw new DBException("Error while retrieving a revision by timestamp from the database", e); //$NON-NLS-1$
     }
     finally
     {
@@ -373,23 +372,23 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     try
     {
       connection = getConnection();
-      AbstractQueryStatement<InternalCDORevision> query = new AbstractQueryStatement<InternalCDORevision>()
+      AbstractQueryStatement<InternalCDORevision> statement = new AbstractQueryStatement<InternalCDORevision>()
       {
         @Override
         protected String getSQL()
         {
           StringBuilder builder = new StringBuilder();
-          builder.append("SELECT ");
+          builder.append("SELECT "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-          builder.append(", ");
+          builder.append(", "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-          builder.append(" FROM ");
+          builder.append(" FROM "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS);
-          builder.append(" WHERE ");
+          builder.append(" WHERE "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-          builder.append("=? AND ");
+          builder.append("=? AND "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_VERSION);
-          builder.append("=?");
+          builder.append("=?"); //$NON-NLS-1$
           return builder.toString();
         }
 
@@ -408,12 +407,11 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           return toRevision(blob, revised);
         }
       };
-
-      return query.query(connection);
+      return statement.query(connection);
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving a revision by version from the database", e);
+      throw new DBException("Error while retrieving a revision by version from the database", e); //$NON-NLS-1$
     }
     finally
     {
@@ -439,15 +437,15 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         protected String getSQL()
         {
           StringBuilder builder = new StringBuilder();
-          builder.append("SELECT ");
+          builder.append("SELECT "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-          builder.append(", ");
+          builder.append(", "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-          builder.append(" FROM ");
+          builder.append(" FROM "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS);
-          builder.append(" WHERE ");
+          builder.append(" WHERE "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-          builder.append("=");
+          builder.append("="); //$NON-NLS-1$
           builder.append(CDORevision.UNSPECIFIED_DATE);
           return builder.toString();
         }
@@ -477,7 +475,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving a revision by version from the database", e);
+      throw new DBException("Error while retrieving a revision by version from the database", e); //$NON-NLS-1$
     }
     finally
     {
@@ -518,7 +516,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     }
     catch (Exception e)
     {
-      throw new DBException("Error while retrieving the revision from the database", e);
+      throw new DBException("Error while retrieving the revision from the database", e); //$NON-NLS-1$
     }
     finally
     {
@@ -534,15 +532,15 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
       protected String getSQL()
       {
         StringBuilder builder = new StringBuilder();
-        builder.append("UPDATE ");
+        builder.append("UPDATE "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS);
-        builder.append(" SET ");
+        builder.append(" SET "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-        builder.append(" =? WHERE ");
+        builder.append(" =? WHERE "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-        builder.append(" =? AND ");
+        builder.append(" =? AND "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_VERSION);
-        builder.append(" =?");
+        builder.append(" =?"); //$NON-NLS-1$
         return builder.toString();
       }
 
@@ -564,24 +562,24 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
       protected String getSQL()
       {
         StringBuilder builder = new StringBuilder();
-        builder.append("INSERT INTO ");
+        builder.append("INSERT INTO "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS);
-        builder.append(" (");
+        builder.append(" ("); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_ID);
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_VERSION);
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_CREATED);
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_CDOREVISION);
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_RESOURCENODE_NAME);
-        builder.append(", ");
+        builder.append(", "); //$NON-NLS-1$
         builder.append(DBRevisionCacheSchema.REVISIONS_CONTAINERID);
-        builder.append(") ");
-        builder.append(" VALUES (?, ?, ?, ?, ?, ? ,?)");
+        builder.append(") "); //$NON-NLS-1$
+        builder.append(" VALUES (?, ?, ?, ?, ?, ? ,?)"); //$NON-NLS-1$
         return builder.toString();
       }
 
@@ -596,6 +594,17 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         setResourceNodeValues(revision, preparedStatement);
       }
 
+      /**
+       * Sets the values in the prepared statment, that are related to the given revision. If the revision is a resource
+       * node, the values are set otherwise the fields are set to <tt>null</tt>
+       * 
+       * @param revision
+       *          the revision
+       * @param preparedStatement
+       *          the prepared statement
+       * @throws SQLException
+       *           the SQL exception
+       */
       private void setResourceNodeValues(InternalCDORevision revision, PreparedStatement preparedStatement)
           throws SQLException
       {
@@ -622,7 +631,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    *          the id of the revision to remove
    * @param version
    *          the version of the revision to remove
-   * @return the {@link InternalCDORevision} that was remove, <tt>null</tt> otherwise
+   * @return the {@link InternalCDORevision} that was removed, <tt>null</tt> otherwise
    */
   public InternalCDORevision removeRevision(CDOID id, int version)
   {
@@ -630,19 +639,19 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 
     try
     {
-      connection = getConnection();
       final InternalCDORevision revision = getRevisionByVersion(id, version);
       if (revision != null)
       {
-        AbstractUpdateStatement update = new AbstractUpdateStatement()
+        connection = getConnection();
+        AbstractUpdateStatement statement = new AbstractUpdateStatement()
         {
           @Override
           protected String getSQL()
           {
             StringBuilder builder = new StringBuilder();
-            builder.append("DELETE FROM ");
+            builder.append("DELETE FROM "); //$NON-NLS-1$
             builder.append(DBRevisionCacheSchema.REVISIONS);
-            builder.append(" WHERE ID = ? AND VERSION = ?");
+            builder.append(" WHERE ID =? AND VERSION =?"); //$NON-NLS-1$
             return builder.toString();
           }
 
@@ -653,15 +662,14 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
             preparedStatement.setInt(2, revision.getVersion());
           }
         };
-
-        update.update(connection);
+        statement.update(connection);
       }
 
       return revision;
     }
     catch (Exception e)
     {
-      throw new DBException("Error while removing a revision from the database", e);
+      throw new DBException("Error while removing a revision from the database", e); //$NON-NLS-1$
     }
     finally
     {
@@ -669,6 +677,9 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     }
   }
 
+  /**
+   * Removes all revisions from this cache (and its database).
+   */
   public void clear()
   {
     Connection connection = null;
@@ -682,7 +693,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         protected String getSQL()
         {
           StringBuilder builder = new StringBuilder();
-          builder.append("DELETE FROM  ");
+          builder.append("DELETE FROM  "); //$NON-NLS-1$
           builder.append(DBRevisionCacheSchema.REVISIONS);
           return builder.toString();
         }
@@ -705,12 +716,12 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   {
     super.doBeforeActivate();
     checkState(idObjectFactory, "idObjectFactory"); //$NON-NLS-1$
-    checkState(idProvider, "idProvider");
-    checkState(listFactory, "listFactory");
-    checkState(packageRegistry, "packageRegistry");
-    checkState(revisionResolver, "revisionResolver");
-    checkState(dbAdapter, "dbAdapter");
-    checkState(dbConnectionProvider, "dbConnectionProvider");
+    checkState(idProvider, "idProvider"); //$NON-NLS-1$
+    checkState(listFactory, "listFactory");//$NON-NLS-1$ 
+    checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
+    checkState(revisionResolver, "revisionResolver"); //$NON-NLS-1$
+    checkState(dbAdapter, "dbAdapter"); //$NON-NLS-1$
+    checkState(dbConnectionProvider, "dbConnectionProvider"); //$NON-NLS-1$
   }
 
   @Override
@@ -721,10 +732,10 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   }
 
   /**
-   * Creates the table that's used to store the cached revisions.
+   * Creates the (single) table that's used to store the cached revisions.
    * 
    * @throws SQLException
-   *           the SQL exception
+   *           Signals that an error has occured while getting the connection or committing the transaction
    */
   private void createTable() throws SQLException
   {
@@ -734,7 +745,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     {
       connection = getConnection();
       DBRevisionCacheSchema.INSTANCE.create(dbAdapter, connection);
-      DBRevisionCacheUtil.commit(connection);
+      connection.commit();
     }
     finally
     {
@@ -745,13 +756,13 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   private static StringBuilder appendTimestampCondition(StringBuilder builder)
   {
     builder.append(DBRevisionCacheSchema.REVISIONS_CREATED);
-    builder.append("<=? AND (");
+    builder.append("<=? AND ("); //$NON-NLS-1$
     builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-    builder.append(">=? OR ");
+    builder.append(">=? OR "); //$NON-NLS-1$
     builder.append(DBRevisionCacheSchema.REVISIONS_REVISED);
-    builder.append("=");
+    builder.append("="); //$NON-NLS-1$
     builder.append(CDORevision.UNSPECIFIED_DATE);
-    builder.append(")");
+    builder.append(")"); //$NON-NLS-1$
     return builder;
   }
 
@@ -762,13 +773,14 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    * in the blob that holds the serialized instance. Therefore the revised timestamp has to be set separately
    * 
    * @param revisedTimestamp
-   *          the value
+   *          the revised timestamp to set to the revision
    * @param blob
-   *          the cdo instance data
-   * @return the internal cdo revision
+   *          the blob that holds the revision
+   * @return the revision
    * @throws IOException
-   *           Signals that an I/O exception has occurred.
+   *           Signals that an error has occurred while reading the revision from the blob.
    * @throws SQLException
+   *           Signals that an error hass occured while getting the binary stream from the blob
    */
   private InternalCDORevision toRevision(Blob blob, long revisedTimestamp) throws IOException, SQLException
   {
@@ -838,8 +850,8 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   }
 
   /**
-   * Gets a connection from the {@link IDBConnectionProvider} within this cache. The Connection is set not auto commit
-   * transactions.
+   * Gets a connection from the {@link IDBConnectionProvider} within this cache. The Connection is set not to auto
+   * commit transactions.
    * 
    * @return the connection
    * @throws SQLException

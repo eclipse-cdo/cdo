@@ -94,7 +94,13 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public RepositoryTimeResult getRepositoryTime()
   {
-    return null;
+    RepositoryTimeResult result = new RepositoryTimeResult();
+    long timeStamp = System.currentTimeMillis();
+    result.setRequested(timeStamp);
+    result.setIndicated(timeStamp);
+    result.setRequested(timeStamp);
+    result.setIndicated(timeStamp);
+    return result;
   }
 
   public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,

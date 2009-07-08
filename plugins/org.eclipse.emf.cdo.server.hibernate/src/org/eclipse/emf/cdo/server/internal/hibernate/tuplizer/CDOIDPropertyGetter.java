@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -80,11 +81,13 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
       commitContext = HibernateThreadContext.getCommitContext();
     }
 
+    final HibernateStoreAccessor storeAccessor = HibernateThreadContext.getCurrentStoreAccessor();
+    final String entityName = storeAccessor.getStore().getEntityName(revision.getEClass());
+
     CDOID cdoID = revision.getID();
     if (cdoID == null)
     {
-      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
-          revision.getEClass().getName());
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value, entityName);
       revision.setID(newCDOID);
       if (commitContext != null)
       {
@@ -93,8 +96,7 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
     }
     else if (cdoID instanceof CDOIDTemp)
     {
-      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value,
-          revision.getEClass().getName());
+      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value, entityName);
       revision.setID(newCDOID);
       if (commitContext != null)
       {

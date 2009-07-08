@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Martin Taal
+ *    Martin Taal 
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
@@ -34,13 +34,10 @@ import java.util.Properties;
  */
 public class CDOIDExternalUserType implements UserType, ParameterizedType
 {
+
   private static final String META_PREFIX = "MID";
 
   private static final int[] SQL_TYPES = { Types.VARCHAR };
-
-  public CDOIDExternalUserType()
-  {
-  }
 
   public int[] sqlTypes()
   {
@@ -68,12 +65,10 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
     {
       return true;
     }
-
     if (x == null || y == null)
     {
       return false;
     }
-
     return x.equals(y);
   }
 
@@ -84,12 +79,10 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
     {
       return null;
     }
-
     if (data.startsWith(META_PREFIX))
     {
       return CDOIDUtil.createMeta(Long.parseLong(data.substring(META_PREFIX.length())));
     }
-
     return CDOIDUtil.createExternal(data);
   }
 
@@ -100,7 +93,6 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
       statement.setNull(index, Types.VARCHAR);
       return;
     }
-
     final Object localValue;
     if (value instanceof CDORevision)
     {

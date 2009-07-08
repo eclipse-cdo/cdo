@@ -146,9 +146,10 @@ public class HibernateUtil
     return props;
   }
 
+  @Deprecated
   public String getEntityName(CDORevision revision)
   {
-    return revision.getEClass().getName();
+    return HibernateThreadContext.getCurrentStoreAccessor().getStore().getEntityName(revision.getEClass());
   }
 
   /**
@@ -303,10 +304,11 @@ public class HibernateUtil
     return getContainerFeatureId(eContainingClass, contained, eFeature);
   }
 
-  private int getContainerFeatureId(EClass containingEClass, EObject contained, EStructuralFeature eFeature)
+  public int getContainerFeatureId(EClass containingEClass, EObject contained, EStructuralFeature eFeature)
   {
     if (eFeature instanceof EAttribute)
     {
+      // featuremap??
       return InternalEObject.EOPPOSITE_FEATURE_BASE - containingEClass.getFeatureID(eFeature);
     }
 

@@ -120,29 +120,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    */
   public void commitRollbackHibernateSession()
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Commiting hibernate session");
-    }
-
-    if (isErrorOccured())
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Rolling back hb transaction");
-      }
-
-      hibernateSession.getTransaction().rollback();
-    }
-    else
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Committing hb transaction");
-      }
-
-      hibernateSession.getTransaction().commit();
-    }
+    endHibernateSession();
   }
 
   /**
@@ -163,7 +141,29 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       {
         if (hibernateSession.getTransaction().isActive())
         {
-          commitRollbackHibernateSession();
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Commiting hibernate session");
+          }
+
+          if (isErrorOccured())
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("Rolling back hb transaction");
+            }
+
+            hibernateSession.getTransaction().rollback();
+          }
+          else
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("Committing hb transaction");
+            }
+
+            hibernateSession.getTransaction().commit();
+          }
         }
       }
       finally
@@ -181,6 +181,21 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       beginHibernateSession();
     }
+
+    return hibernateSession;
+  }
+
+  public Session getNewHibernateSession()
+  {
+    if (hibernateSession != null)
+    {
+      endHibernateSession();
+    }
+    if (hibernateSession != null)
+    {
+      throw new IllegalStateException("Hibernate session should be null");
+    }
+    beginHibernateSession();
 
     return hibernateSession;
   }
@@ -224,12 +239,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
   {
-    if (id instanceof CDOIDHibernate)
+    if (!(id instanceof CDOIDHibernate))
     {
-      return HibernateUtil.getInstance().getCDORevision(id);
+      return null;
     }
-
-    return null;
+    return HibernateUtil.getInstance().getCDORevision(id);
   }
 
   public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)
@@ -304,8 +318,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
       // TODO Can this happen? When?
       final long longID = CDOIDUtil.getLong(id);
-      return CDOIDHibernateFactoryImpl.getInstance().createCDOID(longID,
-          EresourcePackage.eINSTANCE.getCDOResourceNode().getName());
+      final String entityName = getStore().getEntityName(EresourcePackage.eINSTANCE.getCDOResourceNode());
+      return CDOIDHibernateFactoryImpl.getInstance().createCDOID(longID, entityName);
     }
 
     return null;
@@ -338,8 +352,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
     try
     {
-      // start with fresh hibernate session
-      final Session session = getHibernateSession();
+      // start with fresh hibernate session to prevent side effects
+      final Session session = getNewHibernateSession();
       session.setFlushMode(FlushMode.MANUAL);
 
       // first decrease the version for all dirty objects
@@ -353,6 +367,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         }
       }
 
+      // order is 1) insert, 2) update and then delete
+      // this order is the most stable
+
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
       for (InternalCDORevision revision : context.getNewObjects())
       {
@@ -365,8 +382,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
             repairContainerIDs.add(revision);
           }
         }
-
-        session.saveOrUpdate(HibernateUtil.getInstance().getEntityName(revision), revision);
+        final String entityName = getStore().getEntityName(revision.getEClass());
+        session.saveOrUpdate(entityName, revision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Persisted new Object " + revision.getEClass().getName() + " id: " + revision.getID());
@@ -411,15 +428,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       for (InternalCDORevision revision : repairContainerIDs)
       {
         final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)revision.getContainerID());
-        final String entityName = HibernateUtil.getInstance().getEntityName(revision);
+        final String entityName = getStore().getEntityName(revision.getEClass());
         final CDOIDHibernate id = (CDOIDHibernate)revision.getID();
-        final CDOIDHibernate containerID = (CDOIDHibernate)container.getID();
-        final String hqlUpdate = "update " + entityName
-            + " set contID_Entity = :contEntity, contID_ID=:contID, contID_class=:contClass where e_id = :id";
+        final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY
+            + " = :containerInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
         final Query qry = session.createQuery(hqlUpdate);
-        qry.setParameter("contEntity", containerID.getEntityName());
-        qry.setParameter("contID", containerID.getId().toString());
-        qry.setParameter("contClass", containerID.getId().getClass().getName());
+        qry.setParameter("containerInfo", ContainerInfoConverter.getInstance().convertContainerRelationToString(
+            revision, container.getID()));
         qry.setParameter("id", id.getId());
         if (qry.executeUpdate() != 1)
         {
@@ -458,9 +473,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       getStore().getPackageHandler().writePackageUnits(packageUnits);
     }
-
-    // Set a new hibernatesession in the thread
-    resetHibernateSession();
   }
 
   @Override

@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Taal - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate.teneo;
 
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOEFeatureAnnotator;
+import org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOManyAttributeMapper;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOMappingContext;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -19,6 +20,7 @@ import org.eclipse.emf.teneo.annotations.mapper.EFeatureAnnotator;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 import org.eclipse.emf.teneo.extension.ExtensionUtil;
+import org.eclipse.emf.teneo.hibernate.mapper.ManyAttributeMapper;
 import org.eclipse.emf.teneo.hibernate.mapper.MappingContext;
 import org.eclipse.emf.teneo.hibernate.mapper.MappingUtil;
 
@@ -32,6 +34,7 @@ import java.util.Properties;
  */
 public class CDOHelper
 {
+
   public static final String GENERATE_FOR_CDO = "generate_for_cdo";
 
   private static CDOHelper instance = new CDOHelper();
@@ -60,6 +63,11 @@ public class CDOHelper
         false));
     extensionManager.registerExtension(ExtensionUtil.createExtension(EFeatureAnnotator.class,
         CDOEFeatureAnnotator.class, false));
+
+    extensionManager.registerExtension(ExtensionUtil.createExtension(ManyAttributeMapper.class,
+        CDOManyAttributeMapper.class, false));
+    // extensionManager.registerExtension(ExtensionUtil.createExtension(BasicMapper.class, CDOBasicMapper.class,
+    // false));
   }
 
   /**

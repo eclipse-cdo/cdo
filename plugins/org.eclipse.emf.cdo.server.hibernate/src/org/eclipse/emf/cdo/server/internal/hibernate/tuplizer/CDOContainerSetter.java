@@ -1,29 +1,32 @@
 /**
- * Copyright (c) 2004 - 2009 Martin Taal and others.
+ * Copyright (c) 2009 Martin Taal and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
- *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
- *    Eike Stepper - maintenance
+ *    Martin Taal
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.ContainerInfoConverter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionFactoryImplementor;
 
 /**
+ * Sets the container information from the String (stored in the db) back into the CDORevision.
+ * 
+ * @see ContainerInfoConverter
  * @author Martin Taal
  */
-public class CDOContainingFeatureIDSetter extends CDOPropertySetter
+public class CDOContainerSetter extends CDOPropertySetter
 {
   private static final long serialVersionUID = 1L;
 
-  public CDOContainingFeatureIDSetter(CDORevisionTuplizer tuplizer, String propertyName)
+  public CDOContainerSetter(CDORevisionTuplizer tuplizer, String propertyName)
   {
     super(tuplizer, propertyName);
   }
@@ -32,7 +35,7 @@ public class CDOContainingFeatureIDSetter extends CDOPropertySetter
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
     final InternalCDORevision revision = (InternalCDORevision)target;
-    revision.setContainingFeatureID((Integer)value);
+    ContainerInfoConverter.getInstance().setContainerRelationFromString(revision, (String)value);
   }
 
   @Override

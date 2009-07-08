@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Taal - copied from CDORevisionPropertyHandler and adapted
  *    Eike Stepper - maintenance
@@ -76,6 +76,7 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
 
     // handle a special case: the byte array.
     // hibernate will pass a Byte[] while CDO wants a byte[] (object vs. primitive array)
+
     if (value instanceof Byte[] && convertByteArray)
     {
       final Byte[] objectArray = (Byte[])value;
@@ -85,12 +86,12 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
       {
         newValue[i++] = b;
       }
-
       revision.setValue(getEStructuralFeature(), newValue);
     }
     else
     {
       revision.setValue(getEStructuralFeature(), value);
     }
+
   }
 }

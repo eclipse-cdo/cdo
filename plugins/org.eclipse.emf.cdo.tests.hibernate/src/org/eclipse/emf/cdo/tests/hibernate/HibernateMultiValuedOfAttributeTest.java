@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Taal
  */
@@ -19,12 +19,6 @@ import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
  */
 public class HibernateMultiValuedOfAttributeTest extends MultiValuedOfAttributeTest
 {
-  // overridden because not yet supported by CDO-Hibernate
-  @Override
-  public void testFeatureMaps() throws Exception
-  {
-  }
-
   @Override
   // overridden because there is a null value in the List created by the supermethod
   public void testListOfInteger() throws Exception
@@ -36,4 +30,5 @@ public class HibernateMultiValuedOfAttributeTest extends MultiValuedOfAttributeT
     // testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInteger(), getModel5Package()
     // .getGenListOfInteger_Elements());
   }
+
 }

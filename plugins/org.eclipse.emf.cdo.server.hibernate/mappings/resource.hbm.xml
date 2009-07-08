@@ -19,10 +19,8 @@
 			access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
 			<meta attribute="syntheticVersion">true</meta>
 		</version>
-		<property name="containerID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
-			<column name="contID_Entity" unique-key="resourcepath"/>
-			<column name="contID_ID" unique-key="resourcepath"/>
-			<column name="contID_class" unique-key="resourcepath"/>
+		<property name="containerID" type="string">
+			<column name="container_id" unique-key="resourcepath"/>
 		</property>
 		<property name="name" type="string" length="255">
 			<column name="name" unique-key="resourcepath"/>

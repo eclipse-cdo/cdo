@@ -4,11 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Taal - initial API and implementation
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
+
+import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType;
 
 import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedEClass;
 import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedEStructuralFeature;
@@ -24,13 +27,10 @@ import java.util.List;
  */
 public class CDOEntityMapper extends EntityMapper
 {
+
   private PAnnotatedEClass currentEntity = null;
 
   private boolean addedExtraMappings = false;
-
-  public CDOEntityMapper()
-  {
-  }
 
   @Override
   public void processEntity(PAnnotatedEClass entity)
@@ -58,21 +58,12 @@ public class CDOEntityMapper extends EntityMapper
     {
       final Element entityElement = getHbmContext().getCurrent();
       final Element resourceElement = entityElement.addElement("property");
-      resourceElement.addAttribute("name", "resourceID");
-      resourceElement.addElement("column").addAttribute("name", "resID_Entity");
-      resourceElement.addElement("column").addAttribute("name", "resID_ID");
-      resourceElement.addElement("column").addAttribute("name", "resID_class");
-      resourceElement.addAttribute("type", "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType");
+      resourceElement.addAttribute("name", CDOHibernateConstants.RESOURCE_PROPERTY);
+      resourceElement.addElement("column").addAttribute("name", CDOHibernateConstants.RESOURCE_PROPERTY_COLUMN);
+      resourceElement.addAttribute("type", CDOIDUserType.class.getName());
       final Element containerElement = entityElement.addElement("property");
-      containerElement.addAttribute("name", "containerID");
-      containerElement.addElement("column").addAttribute("name", "contID_Entity");
-      containerElement.addElement("column").addAttribute("name", "contID_ID");
-      containerElement.addElement("column").addAttribute("name", "contID_class");
-      containerElement.addAttribute("type", "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType");
-      final Element containingFeatureElement = entityElement.addElement("property");
-      containingFeatureElement.addAttribute("name", "containingFeatureID");
-      containingFeatureElement.addAttribute("column", "contFeatureID");
-      containingFeatureElement.addAttribute("type", "int");
+      containerElement.addAttribute("name", CDOHibernateConstants.CONTAINER_PROPERTY).addAttribute("type", "string");
+      containerElement.addElement("column").addAttribute("name", CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN);
       addedExtraMappings = true;
     }
   }

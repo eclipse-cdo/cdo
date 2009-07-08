@@ -33,12 +33,18 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EClass;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -74,6 +80,60 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private SystemInformation systemInformation;
 
+  private Map<String, EClass> entityNameToEClass = null;
+
+  private Map<EClass, String> eClassToEntityName = null;
+
+  private Map<String, String> identifierPropertyNameByEntity = null;
+
+  public String getIdentifierPropertyName(String entityName)
+  {
+    return identifierPropertyNameByEntity.get(entityName);
+  }
+
+  public void addEntityNameEClassMapping(String entityName, EClass eClass)
+  {
+    if (entityNameToEClass.get(entityName) != null)
+    {
+      final EClass currentEClass = entityNameToEClass.get(entityName);
+      throw new IllegalArgumentException("There is a entity name collision for EClasses "
+          + currentEClass.getEPackage().getName() + "." + currentEClass.getName() + "/"
+          + eClass.getEPackage().getName() + "." + eClass.getName());
+    }
+    entityNameToEClass.put(entityName, eClass);
+    eClassToEntityName.put(eClass, entityName);
+  }
+
+  public String getEntityName(EClass eClass)
+  {
+    if (eClass == null)
+    {
+      throw new IllegalArgumentException("EClass argument is null");
+    }
+    final String entityName = eClassToEntityName.get(eClass);
+    if (entityName == null)
+    {
+      throw new IllegalArgumentException("EClass " + eClass.getName()
+          + " does not have an entity name, has it been mapped to Hibernate?");
+    }
+    return entityName;
+  }
+
+  public EClass getEClass(String entityName)
+  {
+    if (entityName == null)
+    {
+      throw new IllegalArgumentException("entityname argument is null");
+    }
+    final EClass eClass = entityNameToEClass.get(entityName);
+    if (eClass == null)
+    {
+      throw new IllegalArgumentException("entityname " + entityName
+          + " does not map to an EClass, has it been mapped to Hibernate?");
+    }
+    return eClass;
+  }
+
   public HibernateStore(IHibernateMappingProvider mappingProvider)
   {
     super(TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE), set(RevisionParallelism.NONE));
@@ -102,9 +162,26 @@ public class HibernateStore extends Store implements IHibernateStore
 
       currentHibernateStore.set(this);
 
+      entityNameToEClass = new HashMap<String, EClass>();
+      eClassToEntityName = new HashMap<EClass, String>();
+      identifierPropertyNameByEntity = new HashMap<String, String>();
+
       try
       {
         initConfiguration();
+
+        final Iterator<?> iterator = hibernateConfiguration.getClassMappings();
+        while (iterator.hasNext())
+        {
+          final PersistentClass pc = (PersistentClass)iterator.next();
+          if (pc.getIdentifierProperty() == null)
+          {
+            // happens for featuremaps for now...
+            continue;
+          }
+          identifierPropertyNameByEntity.put(pc.getEntityName(), pc.getIdentifierProperty().getName());
+        }
+
         hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
       }
       finally
@@ -269,8 +346,8 @@ public class HibernateStore extends Store implements IHibernateStore
         TRACER.trace("Adding resource.hbm.xml to configuration");
       }
 
-      in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
-      hibernateConfiguration.addInputStream(in);
+      // in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
+      // hibernateConfiguration.addInputStream(in);
       hibernateConfiguration.setInterceptor(new CDOInterceptor());
       hibernateConfiguration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(this));
 

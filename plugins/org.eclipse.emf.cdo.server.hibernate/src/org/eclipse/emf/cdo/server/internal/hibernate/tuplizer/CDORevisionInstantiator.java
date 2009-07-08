@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreAccessor;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
@@ -30,6 +32,8 @@ public class CDORevisionInstantiator implements Instantiator
 
   private EClass eClass;
 
+  private String entityName;
+
   public CDORevisionInstantiator(CDORevisionTuplizer tuplizer, PersistentClass mappingInfo)
   {
     eClass = tuplizer.getEClass();
@@ -43,8 +47,12 @@ public class CDORevisionInstantiator implements Instantiator
 
   public Object instantiate(Serializable id)
   {
-    return CDORevisionUtil.createRevision(eClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id,
-        eClass.getName()));
+    if (entityName == null)
+    {
+      final HibernateStoreAccessor storeAccessor = HibernateThreadContext.getCurrentStoreAccessor();
+      entityName = storeAccessor.getStore().getEntityName(eClass);
+    }
+    return CDORevisionUtil.createRevision(eClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, entityName));
   }
 
   public boolean isInstance(Object object)

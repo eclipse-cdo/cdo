@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -66,14 +67,20 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();
 
     // find the EClass/Package
-    // TODO: error handling if meta attribute not present
-    // TODO: error handling if entityname not set
     String entityName = mappingInfo.getEntityName();
     String ePackageURI = mappingInfo.getMetaAttribute("epackage").getValue();
+    String eClassName = mappingInfo.getMetaAttribute("eclassName").getValue();
+
+    if (ePackageURI == null || eClassName == null)
+    {
+      throw new IllegalArgumentException("The mapping for the persistentclass " + mappingInfo.getEntityName()
+          + " is incorrect, there should be meta data tags for both epackage and "
+          + "eclassname, one or both are missing.");
+    }
 
     if (TRACER.isEnabled())
     {
-      TRACER.trace("EntityName/packageURI " + entityName + " " + ePackageURI);
+      TRACER.trace("EntityName/eclassname/packageURI " + entityName + "/" + eClassName + "/" + ePackageURI);
     }
 
     for (EPackage ePackage : hbStore.getPackageHandler().getEPackages())
@@ -85,7 +92,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
 
       for (EClass localCdoClass : EMFUtil.getPersistentClasses(ePackage))
       {
-        if (localCdoClass.getName().compareTo(entityName) == 0)
+        if (localCdoClass.getName().compareTo(eClassName) == 0)
         {
           eClass = localCdoClass;
           break;
@@ -97,7 +104,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       for (EClass localCdoClass : EMFUtil.getPersistentClasses(EresourcePackage.eINSTANCE))
       {
-        if (localCdoClass.getName().compareTo(entityName) == 0)
+        if (localCdoClass.getName().compareTo(eClassName) == 0)
         {
           eClass = localCdoClass;
           if (TRACER.isEnabled())
@@ -109,6 +116,9 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
         }
       }
     }
+
+    // add the entityName <--> EClass mapping
+    HibernateStore.getCurrentHibernateStore().addEntityNameEClassMapping(entityName, eClass);
 
     if (eClass == null)
     {
@@ -206,21 +216,13 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return new CDOVersionPropertyGetter(this, mappedProperty.getName());
     }
-    else if (mappedProperty.getName().compareTo("resourceID") == 0)
+    else if (mappedProperty.getName().compareTo(CDOHibernateConstants.RESOURCE_PROPERTY) == 0)
     {
       return new CDOResourceIDGetter(this, mappedProperty.getName());
     }
-    else if (mappedProperty.getName().compareTo("containerID") == 0)
+    else if (mappedProperty.getName().compareTo(CDOHibernateConstants.CONTAINER_PROPERTY) == 0)
     {
-      return new CDOContainerIDGetter(this, mappedProperty.getName());
-    }
-    else if (mappedProperty.getName().compareTo("containingFeatureID") == 0)
-    {
-      return new CDOContainingFeatureIDGetter(this, mappedProperty.getName());
-    }
-    else if (mappedProperty.getName().compareTo("containingFeatureName") == 0)
-    {
-      return new CDOContainingFeatureIDGetter(this, mappedProperty.getName());
+      return new CDOContainerGetter(this, mappedProperty.getName());
     }
 
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
@@ -264,25 +266,14 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       return new CDOVersionPropertySetter(this, mappedProperty.getName());
     }
 
-    // TODO: externalize this
-    if (mappedProperty.getName().compareTo("resourceID") == 0)
+    if (mappedProperty.getName().compareTo(CDOHibernateConstants.RESOURCE_PROPERTY) == 0)
     {
       return new CDOResourceIDSetter(this, mappedProperty.getName());
     }
 
-    if (mappedProperty.getName().compareTo("containerID") == 0)
+    if (mappedProperty.getName().compareTo(CDOHibernateConstants.CONTAINER_PROPERTY) == 0)
     {
-      return new CDOContainerIDSetter(this, mappedProperty.getName());
-    }
-
-    if (mappedProperty.getName().compareTo("containingFeatureID") == 0)
-    {
-      return new CDOContainingFeatureIDSetter(this, mappedProperty.getName());
-    }
-
-    if (mappedProperty.getName().compareTo("containingFeatureName") == 0)
-    {
-      return new CDOContainingFeatureIDSetter(this, mappedProperty.getName());
+      return new CDOContainerSetter(this, mappedProperty.getName());
     }
 
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());

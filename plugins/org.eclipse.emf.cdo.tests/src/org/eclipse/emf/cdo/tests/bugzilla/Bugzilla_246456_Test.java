@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -17,8 +17,7 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.two.TwoLevelRevisionCa
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
-
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
@@ -34,7 +33,7 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
 
     msg("Opening transaction");
     InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
-    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)transaction.getSession().getRevisionManager();
+    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
     ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityRevised(10);
     ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityCurrent(10);
 

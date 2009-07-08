@@ -7,17 +7,15 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- * 		Simon McDuff - maintenance
  */
-package org.eclipse.emf.cdo.session;
+package org.eclipse.emf.cdo.server.embedded;
 
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 3.0
  */
-public interface CDORevisionManager extends CDORevisionResolver
+public interface CDOSession extends org.eclipse.emf.cdo.session.CDOSession
 {
-  public CDOSession getSession();
+
 }

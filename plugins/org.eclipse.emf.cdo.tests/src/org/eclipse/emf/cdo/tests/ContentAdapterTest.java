@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,12 +20,11 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
@@ -86,7 +85,7 @@ public class ContentAdapterTest extends AbstractCDOTest
       InternalCDOSession session = (InternalCDOSession)openModel1Session();
 
       CDOFetchRuleManagerInfo info = new CDOFetchRuleManagerInfo();
-      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)session.getRevisionManager();
+      InternalCDORevisionManager revisionManager = session.getRevisionManager();
       revisionManager.setRuleManager(info);
 
       InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();

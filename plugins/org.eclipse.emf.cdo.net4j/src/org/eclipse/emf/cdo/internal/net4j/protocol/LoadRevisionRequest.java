@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -19,9 +19,9 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
-
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -87,7 +87,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
       out.writeCDOID(id);
     }
 
-    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getSession().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
     CDOFetchRuleManager ruleManager = revisionManager.getRuleManager();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
@@ -135,7 +135,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
         TRACER.format("Reading {0} additional revisions", additionalSize); //$NON-NLS-1$
       }
 
-      CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)getSession().getRevisionManager();
+      InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
       for (int i = 0; i < additionalSize; i++)
       {
         InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();

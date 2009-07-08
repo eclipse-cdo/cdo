@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
+import org.eclipse.emf.cdo.server.embedded.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
@@ -19,12 +20,13 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 /**
  * @author Eike Stepper
  */
-public class EmbeddedSession extends CDOSessionImpl
+public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
 {
   private InternalRepository repository;
 
-  public EmbeddedSession()
+  public EmbeddedClientSession(InternalRepository repository)
   {
+    this.repository = repository;
   }
 
   public InternalRepository getRepository()
@@ -35,6 +37,6 @@ public class EmbeddedSession extends CDOSessionImpl
   @Override
   protected CDOSessionProtocol createSessionProtocol()
   {
-    return new EmbeddedSessionProtocol(this);
+    return new EmbeddedClientSessionProtocol(this);
   }
 }

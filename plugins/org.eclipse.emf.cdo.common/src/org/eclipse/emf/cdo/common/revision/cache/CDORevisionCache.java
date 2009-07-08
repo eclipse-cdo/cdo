@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.revision.cache;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.event.IEvent;
@@ -27,6 +28,11 @@ import java.util.List;
  */
 public interface CDORevisionCache extends INotifier
 {
+  /**
+   * @since 3.0
+   */
+  public static final CDORevisionCache NOOP = NOOPRevisionCache.INSTANCE;
+
   public EClass getObjectType(CDOID id);
 
   public InternalCDORevision getRevision(CDOID id);

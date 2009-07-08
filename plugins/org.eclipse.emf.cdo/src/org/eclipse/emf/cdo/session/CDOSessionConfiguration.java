@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
-
 /**
  * @author Eike Stepper
  * @since 2.0
@@ -57,14 +55,14 @@ public interface CDOSessionConfiguration
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);
 
   /**
-   * @see CDORevisionManagerImpl#getCache()
+   * @see CDORevisionManager#getCache()
    */
   public CDORevisionCache getRevisionCache();
 
   /**
    * A special revision cache can be set <b>before</b> the session is opened and can not be changed thereafter.
    * 
-   * @see CDORevisionManagerImpl#setCache(CDORevisionCache)
+   * @see CDORevisionManager#setCache(CDORevisionCache)
    */
   public void setRevisionCache(CDORevisionCache revisionCache);
 

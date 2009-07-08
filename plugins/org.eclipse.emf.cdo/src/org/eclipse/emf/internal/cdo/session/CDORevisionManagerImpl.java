@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Collection;
@@ -34,7 +35,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements CDORevisionManager
+public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements InternalCDORevisionManager
 {
   private InternalCDOSession session;
 

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
+
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import java.util.Collection;
@@ -31,6 +32,11 @@ import java.util.Set;
 public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
     InternalCDOPackageRegistry.PackageProcessor, InternalCDOPackageRegistry.PackageLoader, ILifecycle
 {
+  /**
+   * @since 3.0
+   */
+  public InternalCDORevisionManager getRevisionManager();
+
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 
   public CDOSessionProtocol getSessionProtocol();

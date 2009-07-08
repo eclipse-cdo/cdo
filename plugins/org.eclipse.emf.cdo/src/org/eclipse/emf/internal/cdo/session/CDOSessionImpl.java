@@ -83,6 +83,7 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -137,7 +138,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private CDORevisionManagerImpl revisionManager;
+  private InternalCDORevisionManager revisionManager;
 
   private CDOAuthenticator authenticator;
 
@@ -291,9 +292,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return getSessionProtocol().loadPackages(packageUnit);
   }
 
-  public CDORevisionManagerImpl getRevisionManager()
+  public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
+  }
+
+  public void setRevisionManager(InternalCDORevisionManager revisionManager)
+  {
+    this.revisionManager = revisionManager;
   }
 
   public CDOAuthenticator getAuthenticator()
@@ -631,7 +637,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return new CDOPackageRegistryImpl();
   }
 
-  protected CDORevisionManagerImpl createRevisionManager()
+  protected InternalCDORevisionManager createRevisionManager()
   {
     return new CDORevisionManagerImpl(this);
   }
@@ -698,7 +704,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     EventUtil.addListener(sessionProtocol, sessionProtocolListener);
-    revisionManager.activate();
+    LifecycleUtil.activate(revisionManager);
     remoteSessionManager.activate();
     if (packageRegistry == null)
     {
@@ -708,8 +714,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     packageRegistry.setPackageProcessor(this);
     packageRegistry.setPackageLoader(this);
     packageRegistry.activate();
-    // EMFUtil.registerPackage(EcorePackage.eINSTANCE, packageRegistry);
-    // EMFUtil.registerPackage(EresourcePackage.eINSTANCE, packageRegistry);
 
     String name = repository().getName();
     boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
@@ -736,8 +740,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
   }
 
-  protected abstract CDOSessionProtocol createSessionProtocol();
-
   @Override
   protected void doDeactivate() throws Exception
   {
@@ -761,7 +763,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       invalidationRunner = null;
     }
 
-    revisionManager.deactivate();
+    LifecycleUtil.deactivate(revisionManager);
     revisionManager = null;
 
     packageRegistry.deactivate();
@@ -773,6 +775,13 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     super.doDeactivate();
   }
+
+  protected void activateRevisionManager()
+  {
+    LifecycleUtil.activate(revisionManager);
+  }
+
+  protected abstract CDOSessionProtocol createSessionProtocol();
 
   private void handleLibraryDescriptor(CDOIDLibraryDescriptor libraryDescriptor) throws Exception
   {

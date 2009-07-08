@@ -25,8 +25,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
-
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -58,8 +56,7 @@ import java.util.Set;
  */
 public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDOSessionProtocol
 {
-  private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING,
-      CDORevisionManagerImpl.class);
+  private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDOClientProtocol.class);
 
   private StringIO packageURICompressor = new StringCompressor(true);
 

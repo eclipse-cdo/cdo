@@ -24,9 +24,9 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerModelBased;
 import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
@@ -87,7 +87,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
 
     msg("Opening session");
     InternalCDOSession session = (InternalCDOSession)openModel1Session();
-    CDORevisionManagerImpl revisionManager = (CDORevisionManagerImpl)session.getRevisionManager();
+    InternalCDORevisionManager revisionManager = session.getRevisionManager();
     revisionManager.setRuleManager(new CDOFetchRuleManagerThreadLocal());
 
     msg("Opening transaction");

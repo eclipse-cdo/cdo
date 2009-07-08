@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 /**
  * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
@@ -43,7 +44,8 @@ public interface CDOCollectionLoadingPolicy
     public Object resolveProxy(CDORevisionManager revisionManager, CDORevision revision, EStructuralFeature feature,
         int accessIndex, int serverIndex)
     {
-      return revisionManager.loadChunkByRange(revision, feature, accessIndex, serverIndex, accessIndex, accessIndex);
+      return ((InternalCDORevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex,
+          serverIndex, accessIndex, accessIndex);
     }
   };
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
@@ -14,10 +14,9 @@ package org.eclipse.emf.internal.cdo.revision;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDORevisionManager;
 
-import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 import java.text.MessageFormat;
 
@@ -45,7 +44,7 @@ public final class CDOElementProxyImpl implements CDOElementProxy
 
   public Object resolve(CDORevisionManager revisionManager, CDORevision revision, EStructuralFeature feature, int index)
   {
-    return ((CDORevisionManagerImpl)revisionManager).resolveElementProxy(revision, feature, index, getIndex());
+    return ((InternalCDORevisionManager)revisionManager).resolveElementProxy(revision, feature, index, getIndex());
   }
 
   @Override

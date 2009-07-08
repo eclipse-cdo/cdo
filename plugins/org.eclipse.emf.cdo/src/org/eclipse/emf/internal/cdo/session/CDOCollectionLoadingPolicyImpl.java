@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 /**
  * @author Simon McDuff
@@ -109,6 +110,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
       }
     }
 
-    return revisionManager.loadChunkByRange(revision, feature, accessIndex, fetchIndex, fromIndex, toIndex);
+    return ((InternalCDORevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex, fetchIndex,
+        fromIndex, toIndex);
   }
 }

@@ -50,6 +50,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 {
   private EmbeddedClientSession session;
 
+  // A separate session protocol instance is required because the getSession() methods are ambiguous!
   private EmbeddedServerSessionProtocol serverSessionProtocol;
 
   private InternalRepository repository;
@@ -78,10 +79,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
 
     activate();
-    OpenSessionResult result = serverSessionProtocol.openSession(repository, passiveUpdateEnabled);
-    session.setPackageRegistry(repository.getPackageRegistry());
-    session.setPackageRegistry(repository.getPackageRegistry());
-    return result;
+    return serverSessionProtocol.openSession(repository, passiveUpdateEnabled);
   }
 
   public void loadLibraries(Set<String> missingLibraries, File cacheFolder)

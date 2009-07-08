@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -31,6 +33,7 @@ import java.util.List;
  */
 public class EmbeddedServerSessionProtocol extends Lifecycle implements ISessionProtocol
 {
+  // A separate session protocol instance is required because the getSession() methods are ambiguous!
   private EmbeddedClientSessionProtocol clientSessionProtocol;
 
   private InternalSession session;
@@ -67,9 +70,17 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
   public OpenSessionResult openSession(InternalRepository repository, boolean passiveUpdateEnabled)
   {
     session = repository.getSessionManager().openSession(this);
+    session.setPassiveUpdateEnabled(passiveUpdateEnabled);
+
     OpenSessionResult result = new OpenSessionResult(session.getSessionID(), repository.getUUID(), repository
         .getCreationTime(), repository.isSupportingAudits(), null);
-    // xxx();
+
+    InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+    for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
+    {
+      result.getPackageUnits().add(packageUnit);
+    }
+
     return result;
   }
 }

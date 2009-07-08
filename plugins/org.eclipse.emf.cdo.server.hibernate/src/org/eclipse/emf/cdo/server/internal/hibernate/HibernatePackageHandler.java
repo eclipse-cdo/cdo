@@ -203,6 +203,7 @@ public class HibernatePackageHandler extends Lifecycle
       epacks = EMFUtil.getAllPackages(rootEPackage);
       ePackagesByRootUri.put(nsUri, epacks);
     }
+
     return epacks;
   }
 
@@ -303,8 +304,8 @@ public class HibernatePackageHandler extends Lifecycle
       final SchemaExport se = new SchemaExport(configuration);
       se.drop(false, true);
     }
-    configuration = null;
 
+    configuration = null;
     super.doDeactivate();
   }
 
@@ -336,7 +337,6 @@ public class HibernatePackageHandler extends Lifecycle
       {
         doDropSchema = false;
       }
-
     }
     catch (Exception ex)
     {

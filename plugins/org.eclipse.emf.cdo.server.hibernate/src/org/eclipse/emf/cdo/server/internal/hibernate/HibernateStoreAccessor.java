@@ -224,11 +224,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
   {
-    if (!(id instanceof CDOIDHibernate))
+    if (id instanceof CDOIDHibernate)
     {
-      return null;
+      return HibernateUtil.getInstance().getCDORevision(id);
     }
-    return HibernateUtil.getInstance().getCDORevision(id);
+
+    return null;
   }
 
   public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)

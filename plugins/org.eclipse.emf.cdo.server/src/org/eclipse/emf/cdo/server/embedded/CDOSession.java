@@ -10,12 +10,10 @@
  */
 package org.eclipse.emf.cdo.server.embedded;
 
-
 /**
  * @author Eike Stepper
  * @since 3.0
  */
 public interface CDOSession extends org.eclipse.emf.cdo.session.CDOSession
 {
-
 }

@@ -344,6 +344,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           return toRevision(blob, revised);
         }
       };
+
       return statement.query(connection);
     }
     catch (Exception e)
@@ -407,6 +408,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
           return toRevision(blob, revised);
         }
       };
+
       return statement.query(connection);
     }
     catch (Exception e)
@@ -662,6 +664,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
             preparedStatement.setInt(2, revision.getVersion());
           }
         };
+
         statement.update(connection);
       }
 
@@ -717,7 +720,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     super.doBeforeActivate();
     checkState(idObjectFactory, "idObjectFactory"); //$NON-NLS-1$
     checkState(idProvider, "idProvider"); //$NON-NLS-1$
-    checkState(listFactory, "listFactory");//$NON-NLS-1$ 
+    checkState(listFactory, "listFactory");//$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
     checkState(revisionResolver, "revisionResolver"); //$NON-NLS-1$
     checkState(dbAdapter, "dbAdapter"); //$NON-NLS-1$

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal
  */
@@ -38,7 +38,6 @@ import java.util.List;
  */
 public class HibernateQueryTest extends AbstractCDOTest
 {
-
   private static final int NUM_OF_PRODUCTS = 20;
 
   private static final int NUM_OF_CUSTOMERS = 5;
@@ -187,6 +186,7 @@ public class HibernateQueryTest extends AbstractCDOTest
               {
                 found |= od.getProduct() == product;
               }
+
               assertTrue(found);
             }
           }
@@ -297,8 +297,10 @@ public class HibernateQueryTest extends AbstractCDOTest
         {
           assertTrue(!allProducts.contains(newProduct));
         }
+
         allProducts.addAll(queriedProducts);
       }
+
       assertEquals(NUM_OF_PRODUCTS, allProducts.size());
     }
 
@@ -380,6 +382,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       {
         resource.getContents().add(createSalesOrder(i * 10 + k, customer, customerProducts));
       }
+
       productCounter += NUM_OF_PRODUCTS_CUSTOMER;
     }
   }
@@ -404,6 +407,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       orderDetail.setPrice(count++ * index * 1.1f);
       orderDetail.setProduct(product);
     }
+
     return orderDetails;
   }
 
@@ -420,7 +424,7 @@ public class HibernateQueryTest extends AbstractCDOTest
     {
       product.setVat(VAT.VAT7);
     }
+
     return product;
   }
-
 }

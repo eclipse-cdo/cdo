@@ -23,5 +23,4 @@ public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDO
   public void setRepository(IRepository repository);
 
   public org.eclipse.emf.cdo.server.embedded.CDOSession openSession();
-
 }

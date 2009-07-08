@@ -51,5 +51,4 @@ public class CDOInterceptor extends EmptyInterceptor
   {
     return false;
   }
-
 }

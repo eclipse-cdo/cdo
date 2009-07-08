@@ -13,11 +13,11 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -90,12 +90,12 @@ public class HibernatePackageHandler extends Lifecycle
    * @return the full list of EPackages registered in the PackageRegistry of the commit context as well as the EPackages
    *         registered earlier.
    * @see CommitContext#getPackageRegistry()
-   * @see Repository#getPackageRegistry()
+   * @see InternalRepository#getPackageRegistry()
    */
   public List<EPackage> getEPackages()
   {
     List<EPackage> ePackages = new ArrayList<EPackage>();
-    final Repository localRepository = (Repository)hibernateStore.getRepository();
+    final InternalRepository localRepository = (InternalRepository)hibernateStore.getRepository();
 
     for (EPackage ePackage : localRepository.getPackageRegistry(false).getEPackages())
     {

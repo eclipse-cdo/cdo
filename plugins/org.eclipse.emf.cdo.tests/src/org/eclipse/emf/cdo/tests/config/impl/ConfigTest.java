@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -460,14 +461,34 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 
   protected void skipConfig(Config config)
   {
-    skipTest(getContainerConfig() == config || getRepositoryConfig() == config || getSessionConfig() == config
+    skipTest(getContainerConfig() == config //
+        || getRepositoryConfig() == config //
+        || getSessionConfig() == config //
         || getModelConfig() == config);
   }
 
   protected void skipUnlessConfig(Config config)
   {
-    skipTest(getContainerConfig() != config && getRepositoryConfig() != config && getSessionConfig() != config
+    skipTest(getContainerConfig() != config //
+        && getRepositoryConfig() != config //
+        && getSessionConfig() != config //
         && getModelConfig() != config);
+  }
+
+  protected void skipConfig(String name)
+  {
+    skipTest(ObjectUtil.equals(getContainerConfig(), name) //
+        || ObjectUtil.equals(getRepositoryConfig(), name) //
+        || ObjectUtil.equals(getSessionConfig(), name) //
+        || ObjectUtil.equals(getModelConfig(), name));
+  }
+
+  protected void skipUnlessConfig(String name)
+  {
+    skipTest(!ObjectUtil.equals(getContainerConfig(), name) //
+        && !ObjectUtil.equals(getRepositoryConfig(), name) //
+        && !ObjectUtil.equals(getSessionConfig(), name) //
+        && !ObjectUtil.equals(getModelConfig(), name));
   }
 
   protected void clearCache(IRevisionManager revisionManager)

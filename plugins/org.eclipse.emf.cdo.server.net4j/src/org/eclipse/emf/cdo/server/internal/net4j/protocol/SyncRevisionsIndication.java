@@ -49,7 +49,6 @@ public class SyncRevisionsIndication extends AbstractSyncRevisionsIndication
     }
 
     reader.refreshRevisions();
-
     super.indicating(in);
   }
 

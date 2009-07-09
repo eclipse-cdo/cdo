@@ -54,6 +54,8 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
           CDOObject customerToLoad = transaction.getObject(CDOUtil.getCDOObject(customer).cdoID());
           while (!done[0])
           {
+            Thread.sleep(10);
+
             // Could fail if the attach is not thread safe
             transaction.reload(customerToLoad);
           }

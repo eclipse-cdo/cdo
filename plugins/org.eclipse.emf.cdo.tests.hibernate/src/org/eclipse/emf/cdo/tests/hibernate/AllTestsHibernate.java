@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
+import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;

@@ -100,6 +100,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(RepositoryTest.class);
     testClasses.add(LockingManagerTest.class);
     testClasses.add(MultiValuedOfAttributeTest.class);
+    testClasses.add(FeatureMapTest.class);
     testClasses.add(AdapterManagerTest.class);
     testClasses.add(ConflictResolverTest.class);
 

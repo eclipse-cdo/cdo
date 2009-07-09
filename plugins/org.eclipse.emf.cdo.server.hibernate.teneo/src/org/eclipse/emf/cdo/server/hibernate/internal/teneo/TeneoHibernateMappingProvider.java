@@ -11,15 +11,20 @@
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM;
 import org.eclipse.emf.cdo.server.hibernate.teneo.CDOHelper;
+import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
@@ -92,6 +97,8 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     epacks.remove(EcorePackage.eINSTANCE);
     // epacks.remove(EresourcePackage.eINSTANCE);
 
+    addUniqueConstraintAnnotation();
+
     final EPackage[] ePackageArray = epacks.toArray(new EPackage[epacks.size()]);
     String hbm = CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
     // System.err.println(hbm);
@@ -124,8 +131,22 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     }
   }
 
-  protected void addUniqueConstraintAnnotationsToResourcePackage()
+  // see the CDOEntityMapper, there an explicit unique-key is added to
+  // a column also
+  private void addUniqueConstraintAnnotation()
   {
-
+    final EClass eClass = EresourcePackage.eINSTANCE.getCDOResourceNode();
+    // already been here
+    if (eClass.getEAnnotation("teneo.jpa") != null)
+    {
+      return;
+    }
+    final EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    annotation.setSource("teneo.jpa");
+    final String tableAnnotation = "@Table(uniqueConstraints={@UniqueConstraint(columnNames={\""
+        + CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN + "\", \""
+        + EresourcePackage.eINSTANCE.getCDOResourceNode_Name().getName() + "\"})})";
+    annotation.getDetails().put("value", tableAnnotation);
+    eClass.getEAnnotations().add(annotation);
   }
 }

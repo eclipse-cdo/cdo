@@ -371,6 +371,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // this order is the most stable
 
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
+      final List<InternalCDORevision> repairResourceIDs = new ArrayList<InternalCDORevision>();
       for (InternalCDORevision revision : context.getNewObjects())
       {
         // keep track for which cdoRevisions the container id needs to be repaired afterwards
@@ -380,6 +381,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           if (containerID instanceof CDOIDTemp && !containerID.isNull())
           {
             repairContainerIDs.add(revision);
+          }
+          final CDOID resourceID = revision.getResourceID();
+          if (resourceID instanceof CDOIDTemp && !resourceID.isNull())
+          {
+            repairResourceIDs.add(revision);
           }
         }
         final String entityName = getStore().getEntityName(revision.getEClass());
@@ -425,22 +431,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       session.flush();
 
       // now do an update of the container without incrementing the version
-      for (InternalCDORevision revision : repairContainerIDs)
-      {
-        final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)revision.getContainerID());
-        final String entityName = getStore().getEntityName(revision.getEClass());
-        final CDOIDHibernate id = (CDOIDHibernate)revision.getID();
-        final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY
-            + " = :containerInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
-        final Query qry = session.createQuery(hqlUpdate);
-        qry.setParameter("containerInfo", ContainerInfoConverter.getInstance().convertContainerRelationToString(
-            revision, container.getID()));
-        qry.setParameter("id", id.getId());
-        if (qry.executeUpdate() != 1)
-        {
-          throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
-        }
-      }
+      repairContainerIDs(repairContainerIDs, session);
+      repairResourceIDs(repairResourceIDs, session);
 
       session.flush();
     }
@@ -451,6 +443,46 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
 
     context.applyIDMappings(monitor);
+  }
+
+  private void repairContainerIDs(List<InternalCDORevision> repairContainerIDs, Session session)
+  {
+    for (InternalCDORevision revision : repairContainerIDs)
+    {
+      final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)revision.getContainerID());
+      final String entityName = getStore().getEntityName(revision.getEClass());
+      final CDOIDHibernate id = (CDOIDHibernate)revision.getID();
+      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY
+          + " = :containerInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
+      final Query qry = session.createQuery(hqlUpdate);
+      qry.setParameter("containerInfo", ContainerInfoConverter.getInstance().convertContainerRelationToString(revision,
+          container.getID()));
+      qry.setParameter("id", id.getId());
+      if (qry.executeUpdate() != 1)
+      {
+        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
+      }
+    }
+  }
+
+  private void repairResourceIDs(List<InternalCDORevision> repairResourceIDs, Session session)
+  {
+    for (InternalCDORevision revision : repairResourceIDs)
+    {
+      final CDORevision resource = HibernateUtil.getInstance().getCDORevision(revision.getResourceID());
+      final String entityName = getStore().getEntityName(revision.getEClass());
+      final CDOIDHibernate id = (CDOIDHibernate)revision.getID();
+      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.RESOURCE_PROPERTY
+          + " = :resourceInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
+      final Query qry = session.createQuery(hqlUpdate);
+      qry.setParameter("resourceInfo", resource.getID());
+      qry.setParameter("id", id.getId());
+      if (qry.executeUpdate() != 1)
+      {
+        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
+      }
+    }
+
   }
 
   @Override

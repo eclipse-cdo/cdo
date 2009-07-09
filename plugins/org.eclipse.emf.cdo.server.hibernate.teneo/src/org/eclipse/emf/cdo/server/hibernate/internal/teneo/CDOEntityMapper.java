@@ -10,6 +10,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType;
 
@@ -61,9 +62,19 @@ public class CDOEntityMapper extends EntityMapper
       resourceElement.addAttribute("name", CDOHibernateConstants.RESOURCE_PROPERTY);
       resourceElement.addElement("column").addAttribute("name", CDOHibernateConstants.RESOURCE_PROPERTY_COLUMN);
       resourceElement.addAttribute("type", CDOIDUserType.class.getName());
+
       final Element containerElement = entityElement.addElement("property");
       containerElement.addAttribute("name", CDOHibernateConstants.CONTAINER_PROPERTY).addAttribute("type", "string");
-      containerElement.addElement("column").addAttribute("name", CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN);
+      final Element columnElement = containerElement.addElement("column").addAttribute("name",
+          CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN);
+
+      if (getHbmContext().getCurrentEClass() == EresourcePackage.eINSTANCE.getCDOResourceNode())
+      {
+        // not nice but teneo will assign the first unique-key the number c0
+        // and there is only one unique constraint
+        columnElement.addAttribute("unique-key", "c0");
+      }
+
       addedExtraMappings = true;
     }
   }

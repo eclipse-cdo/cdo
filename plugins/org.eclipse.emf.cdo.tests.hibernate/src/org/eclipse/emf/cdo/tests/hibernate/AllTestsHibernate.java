@@ -107,7 +107,7 @@ public class AllTestsHibernate extends AllTestsAllConfigs
     testClasses.add(HibernateBugzilla_258933_Test.class);
 
     // testClasses.clear();
-    // testClasses.add(ComplexTest.class);
+    // testClasses.add(ContainmentTest.class);
     // testClasses.add(HibernateQueryTest.class);
     // testClasses.add(Bugzilla_252909_Test.class);
     // testClasses.add(Bugzilla_258933_Test.class);

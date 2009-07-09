@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
@@ -30,7 +29,7 @@ import junit.framework.TestSuite;
 /**
  * @author Stefan Winkler
  */
-public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
+public class AllTestsDBHsqldbNonAudit extends DBConfigs
 {
   public static Test suite()
   {

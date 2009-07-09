@@ -274,6 +274,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
+    if (SQLQueryHandler.QUERY_LANGUAGE.equals(info.getQueryLanguage()))
+    {
+      return new SQLQueryHandler(this);
+    }
+
     return null;
   }
 

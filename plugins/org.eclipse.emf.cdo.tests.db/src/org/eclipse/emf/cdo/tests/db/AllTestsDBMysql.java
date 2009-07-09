@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -32,7 +31,7 @@ import junit.framework.TestSuite;
 /**
  * @author Simon McDuff
  */
-public class AllTestsDBMysql extends AllTestsAllConfigs
+public class AllTestsDBMysql extends DBConfigs
 {
   public static Test suite()
   {

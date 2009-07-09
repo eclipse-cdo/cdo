@@ -98,19 +98,21 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     long timeStamp = System.currentTimeMillis();
     result.setRequested(timeStamp);
     result.setIndicated(timeStamp);
-    result.setRequested(timeStamp);
-    result.setIndicated(timeStamp);
+    result.setResponded(timeStamp);
+    result.setConfirmed(timeStamp);
     return result;
   }
 
   public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,
       boolean passiveUpdateEnabled)
   {
+    serverSessionProtocol.getSession().setPassiveUpdateEnabled(passiveUpdateEnabled);
   }
 
+  @SuppressWarnings("unchecked")
   public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    return null;
+    return (List<InternalCDORevision>)(List<?>)repository.getRevisionManager().getRevisions(ids, referenceChunk);
   }
 
   public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)

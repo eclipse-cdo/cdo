@@ -47,6 +47,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
       {
         revision.unset(getEStructuralFeature());
       }
+
       return;
     }
 

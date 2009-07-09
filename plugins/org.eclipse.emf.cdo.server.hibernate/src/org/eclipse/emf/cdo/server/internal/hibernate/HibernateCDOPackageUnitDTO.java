@@ -95,6 +95,7 @@ public class HibernateCDOPackageUnitDTO
     {
       ((InternalCDOPackageInfo)packageInfo).setPackageUnit(packageUnit);
     }
+
     return packageUnit;
   }
 

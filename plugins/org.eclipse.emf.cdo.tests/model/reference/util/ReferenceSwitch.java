@@ -97,9 +97,7 @@ public class ReferenceSwitch<T>
       Reference reference = (Reference)theEObject;
       T result = caseReference(reference);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

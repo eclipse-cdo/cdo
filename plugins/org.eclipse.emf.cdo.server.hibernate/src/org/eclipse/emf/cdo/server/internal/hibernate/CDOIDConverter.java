@@ -89,6 +89,7 @@ public class CDOIDConverter
     {
       return META_CODE + ((CDOIDMeta)cdoID).getLongValue();
     }
+
     if (cdoID instanceof CDOIDExternal)
     {
       return EXT_CODE + ((CDOIDExternal)cdoID).getURI();
@@ -119,22 +120,26 @@ public class CDOIDConverter
     {
       return null;
     }
+
     if (strID.startsWith(META_CODE))
     {
       final String idPart = strID.substring(META_CODE.length());
       return CDOIDUtil.createMeta(Long.parseLong(idPart));
     }
+
     if (strID.startsWith(EXT_CODE))
     {
       final String idPart = strID.substring(EXT_CODE.length());
       return CDOIDUtil.createExternal(idPart);
     }
+
     final String[] idParts = strID.split(SEPARATOR);
     if (idParts.length != 3)
     {
       throw new IllegalArgumentException("CDOID as string " + strID
           + " can not be converted to a valid CDOIDHibernate.");
     }
+
     final String entityName = idParts[0];
     final Serializable id = getId(idParts[1], idParts[2]);
     return CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, entityName);
@@ -160,5 +165,4 @@ public class CDOIDConverter
       throw WrappedException.wrap(e);
     }
   }
-
 }

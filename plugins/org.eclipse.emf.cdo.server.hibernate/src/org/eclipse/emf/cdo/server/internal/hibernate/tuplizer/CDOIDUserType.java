@@ -116,6 +116,7 @@ public class CDOIDUserType implements UserType
       statement.setNull(index, Types.VARCHAR);
       return;
     }
+
     statement.setString(index, strValue);
   }
 

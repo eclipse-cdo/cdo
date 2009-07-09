@@ -100,6 +100,7 @@ public class HibernateStore extends Store implements IHibernateStore
           + currentEClass.getEPackage().getName() + "." + currentEClass.getName() + "/"
           + eClass.getEPackage().getName() + "." + eClass.getName());
     }
+
     entityNameToEClass.put(entityName, eClass);
     eClassToEntityName.put(eClass, entityName);
   }
@@ -110,12 +111,14 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       throw new IllegalArgumentException("EClass argument is null");
     }
+
     final String entityName = eClassToEntityName.get(eClass);
     if (entityName == null)
     {
       throw new IllegalArgumentException("EClass " + eClass.getName()
           + " does not have an entity name, has it been mapped to Hibernate?");
     }
+
     return entityName;
   }
 
@@ -125,12 +128,14 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       throw new IllegalArgumentException("entityname argument is null");
     }
+
     final EClass eClass = entityNameToEClass.get(entityName);
     if (eClass == null)
     {
       throw new IllegalArgumentException("entityname " + entityName
           + " does not map to an EClass, has it been mapped to Hibernate?");
     }
+
     return eClass;
   }
 
@@ -179,6 +184,7 @@ public class HibernateStore extends Store implements IHibernateStore
             // happens for featuremaps for now...
             continue;
           }
+
           identifierPropertyNameByEntity.put(pc.getEntityName(), pc.getIdentifierProperty().getName());
         }
 
@@ -276,9 +282,7 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     hibernateConfiguration = null;
-
     LifecycleUtil.deactivate(packageHandler, OMLogger.Level.WARN);
-
     super.doDeactivate();
   }
 

@@ -105,6 +105,7 @@ public class ContainerInfoConverter
       final EStructuralFeature eFeature = containerEClass.getEStructuralFeature(featureID);
       return strCDOID + SEPARATOR + "-" + eFeature.getName();
     }
+
     final EClass eContainedEClass = cdoRevision.getEClass();
     final EStructuralFeature eFeature = eContainedEClass.getEStructuralFeature(cdoRevision.getContainingFeatureID());
     return strCDOID + SEPARATOR + eFeature.getName();
@@ -126,6 +127,7 @@ public class ContainerInfoConverter
     {
       return;
     }
+
     final int index = containerInfo.lastIndexOf(SEPARATOR);
     if (index == -1)
     {

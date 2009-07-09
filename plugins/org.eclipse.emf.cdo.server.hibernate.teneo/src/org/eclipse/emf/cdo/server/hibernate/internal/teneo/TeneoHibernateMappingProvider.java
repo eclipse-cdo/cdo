@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - initial API and implementation
  *    Eike Stepper - http://bugs.eclipse.org/238300
@@ -141,6 +141,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     {
       return;
     }
+
     final EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
     annotation.setSource("teneo.jpa");
     final String tableAnnotation = "@Table(uniqueConstraints={@UniqueConstraint(columnNames={\""

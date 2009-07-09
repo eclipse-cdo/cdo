@@ -93,16 +93,19 @@ public class HibernateQueryHandler implements IQueryHandler
           }
         }
       }
+
       // set the first result
       if (firstResult > -1)
       {
         query.setFirstResult(firstResult);
       }
+
       // the max result
       if (info.getMaxResults() != CDOQueryInfo.UNLIMITED_RESULTS)
       {
         query.setMaxResults(info.getMaxResults());
       }
+
       // and go for the query
       // future extension: support iterate, scroll through a parameter
       for (Object o : query.list())
@@ -129,5 +132,4 @@ public class HibernateQueryHandler implements IQueryHandler
   {
     this.hibernateStoreAccessor = hibernateStoreAccessor;
   }
-
 }

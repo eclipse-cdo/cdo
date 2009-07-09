@@ -191,12 +191,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       endHibernateSession();
     }
+
     if (hibernateSession != null)
     {
       throw new IllegalStateException("Hibernate session should be null");
     }
-    beginHibernateSession();
 
+    beginHibernateSession();
     return hibernateSession;
   }
 
@@ -243,6 +244,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       return null;
     }
+
     return HibernateUtil.getInstance().getCDORevision(id);
   }
 
@@ -382,12 +384,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           {
             repairContainerIDs.add(revision);
           }
+
           final CDOID resourceID = revision.getResourceID();
           if (resourceID instanceof CDOIDTemp && !resourceID.isNull())
           {
             repairResourceIDs.add(revision);
           }
         }
+
         final String entityName = getStore().getEntityName(revision.getEClass());
         session.saveOrUpdate(entityName, revision);
         if (TRACER.isEnabled())
@@ -482,7 +486,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
       }
     }
-
   }
 
   @Override

@@ -20,7 +20,7 @@ package org.eclipse.emf.cdo.tests.model1;
  * </p>
  * 
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrderAddress()
- * @model
+ * @model annotation="teneo.jpa value='@AssociationOverride(name=\"orderDetails\", joinColumns=@JoinColumn(name=\"orderdetails_orderaddressid\"))'"
  * @generated
  */
 public interface OrderAddress extends Address, Order, OrderDetail

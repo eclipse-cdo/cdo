@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - initial API and implementation
  **************************************************************************/
@@ -23,6 +23,9 @@ import org.eclipse.emf.teneo.simpledom.Element;
  */
 public class CDOBasicMapper extends BasicMapper
 {
+  public CDOBasicMapper()
+  {
+  }
 
   @Override
   protected void setType(PAnnotatedEAttribute paAttribute, Element propElement)
@@ -46,8 +49,6 @@ public class CDOBasicMapper extends BasicMapper
           eAttribute.getEAttributeType().getName());
       typeElement.addElement("param").addAttribute("name", HbMapperConstants.EPACKAGE_PARAM).addText(
           eAttribute.getEAttributeType().getEPackage().getNsURI());
-
     }
   }
-
 }

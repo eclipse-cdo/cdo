@@ -71,7 +71,7 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
     switch (eClass.getClassifierID())
     {
     case ReferencePackage.REFERENCE:
-      return createReference();
+      return (EObject)createReference();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

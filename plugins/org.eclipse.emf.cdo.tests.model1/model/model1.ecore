@@ -31,6 +31,9 @@
         eType="#//SalesOrder" eOpposite="#//SalesOrder/customer"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Order">
+    <eAnnotations source="teneo.jpa">
+      <details key="value" value="@Entity(name=&quot;BaseOrder&quot;)"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1"
         eType="#//OrderDetail" containment="true" eOpposite="#//OrderDetail/order"/>
   </eClassifiers>
@@ -72,6 +75,9 @@
     <eLiterals name="vat15" value="15"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderAddress" eSuperTypes="#//Address #//Order #//OrderDetail">
+    <eAnnotations source="teneo.jpa">
+      <details key="value" value="@AssociationOverride(name=&quot;orderDetails&quot;, joinColumns=@JoinColumn(name=&quot;orderdetails_orderaddressid&quot;))"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="testAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>

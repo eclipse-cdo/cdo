@@ -156,15 +156,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * Simple dependencies are satisfied by calling this method on all dependent packages before doing anything else. This
-   * method drives initialization for interdependent packages directly, in parallel with this package, itself.
    * <p>
-   * Of this package and its interdependencies, all packages which have not yet been registered by their URI values are
-   * first created and registered. The packages are then initialized in two steps: meta-model objects for all of the
-   * packages are created before any are initialized, since one package's meta-model objects may refer to those of
-   * another.
-   * <p>
-   * Invocation of this method will not affect any packages that have already been initialized. <!-- begin-user-doc -->
+   * This method is used to initialize {@link Model1Package#eINSTANCE} when that field is accessed. Clients should not
+   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
    * @see #eNS_URI
@@ -178,8 +172,8 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
       return (Model1Package)EPackage.Registry.INSTANCE.getEPackage(Model1Package.eNS_URI);
 
     // Obtain or create and register package
-    Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof Model1PackageImpl ? EPackage.Registry.INSTANCE
-        .getEPackage(eNS_URI)
+    Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model1PackageImpl ? EPackage.Registry.INSTANCE
+        .get(eNS_URI)
         : new Model1PackageImpl());
 
     isInited = true;
@@ -193,6 +187,8 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     // Mark meta-data to indicate it can't be changed
     theModel1Package.freeze();
 
+    // Update the registry and return the package
+    EPackage.Registry.INSTANCE.put(Model1Package.eNS_URI, theModel1Package);
     return theModel1Package;
   }
 
@@ -812,6 +808,23 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
     // Create resource
     createResource(eNS_URI);
+
+    // Create annotations
+    // teneo.jpa
+    createTeneoAnnotations();
+  }
+
+  /**
+   * Initializes the annotations for <b>teneo.jpa</b>. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected void createTeneoAnnotations()
+  {
+    String source = "teneo.jpa";
+    addAnnotation(orderEClass, source, new String[] { "value", "@Entity(name=\"BaseOrder\")" });
+    addAnnotation(orderAddressEClass, source, new String[] { "value",
+        "@AssociationOverride(name=\"orderDetails\", joinColumns=@JoinColumn(name=\"orderdetails_orderaddressid\"))" });
   }
 
 } // Model1PackageImpl

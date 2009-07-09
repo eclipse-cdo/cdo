@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,61 +29,6 @@ public abstract class AbstractCapabilityTest extends TestCase
   public AbstractCapabilityTest(String name)
   {
     super(name);
-  }
-
-  abstract protected IDBConnectionProvider getConnectionProvider();
-
-  @Override
-  protected void setUp() throws Exception
-  {
-    // create table
-    Connection conn = getConnectionProvider().getConnection();
-    conn.setAutoCommit(false);
-    Statement stmt = conn.createStatement();
-
-    // make sure tables don't exist!
-    try
-    {
-      stmt.execute("drop table status_table");
-    }
-    catch (Exception e)
-    {
-    }
-
-    try
-    {
-      stmt.execute("drop table change_table");
-    }
-    catch (Exception e)
-    {
-    }
-
-    stmt.execute("create table status_table (trans varchar(255), status varchar(255))");
-    stmt.execute("insert into status_table values ('transaction1', 'unchanged')");
-    stmt.execute("insert into status_table values ('transaction2', 'unchanged')");
-
-    stmt.execute("create table change_table (trans varchar(255), status varchar(255))");
-    stmt.execute("insert into change_table values ('transaction1', 'unchanged')");
-    stmt.execute("insert into change_table values ('transaction2', 'unchanged')");
-
-    conn.commit();
-    stmt.close();
-    conn.close();
-  };
-
-  @Override
-  protected void tearDown() throws Exception
-  {
-    Connection conn = getConnectionProvider().getConnection();
-    conn.setAutoCommit(true);
-    Statement stmt = conn.createStatement();
-
-    stmt.execute("drop table status_table");
-    stmt.execute("drop table change_table");
-
-    stmt.close();
-    conn.close();
-
   }
 
   public void testDirtyRead() throws Exception
@@ -118,8 +63,8 @@ public abstract class AbstractCapabilityTest extends TestCase
         }
       };
     };
-    t.start();
 
+    t.start();
     Thread.sleep(300);
 
     IDBConnectionProvider provider = getConnectionProvider();
@@ -191,8 +136,8 @@ public abstract class AbstractCapabilityTest extends TestCase
         }
       }
     };
-    t.start();
 
+    t.start();
     Thread.sleep(100);
 
     IDBConnectionProvider provider = getConnectionProvider();
@@ -239,8 +184,61 @@ public abstract class AbstractCapabilityTest extends TestCase
     view.close();
 
     msg("----------------------------------------------------------");
-
   }
+
+  @Override
+  protected void setUp() throws Exception
+  {
+    // create table
+    Connection conn = getConnectionProvider().getConnection();
+    conn.setAutoCommit(false);
+    Statement stmt = conn.createStatement();
+
+    // make sure tables don't exist!
+    try
+    {
+      stmt.execute("drop table status_table");
+    }
+    catch (Exception e)
+    {
+    }
+
+    try
+    {
+      stmt.execute("drop table change_table");
+    }
+    catch (Exception e)
+    {
+    }
+
+    stmt.execute("create table status_table (trans varchar(255), status varchar(255))");
+    stmt.execute("insert into status_table values ('transaction1', 'unchanged')");
+    stmt.execute("insert into status_table values ('transaction2', 'unchanged')");
+
+    stmt.execute("create table change_table (trans varchar(255), status varchar(255))");
+    stmt.execute("insert into change_table values ('transaction1', 'unchanged')");
+    stmt.execute("insert into change_table values ('transaction2', 'unchanged')");
+
+    conn.commit();
+    stmt.close();
+    conn.close();
+  }
+
+  @Override
+  protected void tearDown() throws Exception
+  {
+    Connection conn = getConnectionProvider().getConnection();
+    conn.setAutoCommit(true);
+    Statement stmt = conn.createStatement();
+
+    stmt.execute("drop table status_table");
+    stmt.execute("drop table change_table");
+
+    stmt.close();
+    conn.close();
+  }
+
+  protected abstract IDBConnectionProvider getConnectionProvider();
 
   private void msg(String string)
   {
@@ -336,5 +334,4 @@ public abstract class AbstractCapabilityTest extends TestCase
       }
     }
   }
-
 }

@@ -655,6 +655,8 @@ public class FormatChecker
     ignore("reference.impl.ReferenceFactoryImpl", 2);
     ignore("reference.impl.ReferenceImpl", 1);
     ignore("reference.impl.ReferencePackageImpl", 3);
+    ignore("reference.impl.ReferencePackageImpl", 1);
+    ignore("reference.util.ReferenceSwitch", 2);
     ignore("reference.util.ReferenceAdapterFactory", 3);
     ignore("reference.util.ReferenceSwitch", 3);
     ignore("templates.MenuCardTemplate", 1);

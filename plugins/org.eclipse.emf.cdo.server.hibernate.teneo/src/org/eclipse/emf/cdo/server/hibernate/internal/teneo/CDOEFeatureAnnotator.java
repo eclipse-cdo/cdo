@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Taal - initial API and implementation
  *    Eike Stepper - maintenance
@@ -24,6 +24,9 @@ import org.eclipse.emf.teneo.annotations.pannotation.PannotationFactory;
  */
 public class CDOEFeatureAnnotator extends EFeatureAnnotator
 {
+  public CDOEFeatureAnnotator()
+  {
+  }
 
   @Override
   public void annotate(PAnnotatedEStructuralFeature aStructuralFeature)
@@ -34,8 +37,8 @@ public class CDOEFeatureAnnotator extends EFeatureAnnotator
     if (aStructuralFeature instanceof PAnnotatedEReference)
     {
       final PAnnotatedEReference paReference = (PAnnotatedEReference)aStructuralFeature;
-
       final boolean refersToEcoreModelElement = paReference.getModelEReference().getEReferenceType().getEPackage() == EcorePackage.eINSTANCE;
+
       // these are done with a <any ..> mapping
       final boolean refersToEObject = paReference.getModelEReference().getEReferenceType() == EcorePackage.eINSTANCE
           .getEObject();

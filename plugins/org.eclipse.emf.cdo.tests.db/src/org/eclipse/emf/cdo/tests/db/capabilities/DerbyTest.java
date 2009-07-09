@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -23,6 +23,8 @@ import java.io.File;
  */
 public class DerbyTest extends AbstractCapabilityTest
 {
+  private IDBConnectionProvider provider;
+
   public DerbyTest()
   {
     super("derby");
@@ -32,10 +34,7 @@ public class DerbyTest extends AbstractCapabilityTest
     derbyds.setDatabaseName(dbFolder.getAbsolutePath());
     derbyds.setCreateDatabase("create");
     provider = DBUtil.createConnectionProvider(derbyds);
-
   }
-
-  IDBConnectionProvider provider = null;
 
   @Override
   protected IDBConnectionProvider getConnectionProvider()

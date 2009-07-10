@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -31,6 +32,8 @@ import java.util.Set;
 public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
     InternalCDOPackageRegistry.PackageProcessor, InternalCDOPackageRegistry.PackageLoader, ILifecycle
 {
+  public CDOSessionProtocol getSessionProtocol();
+
   /**
    * @since 3.0
    */
@@ -38,7 +41,10 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 
-  public CDOSessionProtocol getSessionProtocol();
+  /**
+   * @since 3.0
+   */
+  public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager);
 
   public InternalCDOPackageRegistry getPackageRegistry();
 

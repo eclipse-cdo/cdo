@@ -87,8 +87,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
       out.writeCDOID(id);
     }
 
-    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
-    CDOFetchRuleManager ruleManager = revisionManager.getRuleManager();
+    CDOFetchRuleManager ruleManager = getSession().getFetchRuleManager();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
     {

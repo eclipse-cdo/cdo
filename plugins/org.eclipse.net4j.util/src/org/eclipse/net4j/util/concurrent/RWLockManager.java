@@ -118,9 +118,9 @@ public class RWLockManager<K, V> extends Lifecycle implements IRWLockManager<K, 
    *           Unlocking objects without lock.
    * @since 3.0
    */
-  public void unlock(LockType type, V context, Collection<? extends K> objectsToLock)
+  public void unlock(LockType type, V context, Collection<? extends K> objectsToUnlock)
   {
-    unlock(getLockingStrategy(type), context, objectsToLock);
+    unlock(getLockingStrategy(type), context, objectsToUnlock);
   }
 
   /**

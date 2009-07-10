@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOEvent;
 import org.eclipse.emf.cdo.view.CDOAudit;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -75,6 +76,11 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    * @since 3.0
    */
   public CDORevisionResolver getRevisionManager();
+
+  /**
+   * @since 3.0
+   */
+  public CDOFetchRuleManager getFetchRuleManager();
 
   /**
    * Returns the CDO {@link CDORemoteSessionManager remote session manager} that keeps track of the other remote

@@ -12,20 +12,20 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -38,8 +38,6 @@ import java.util.Set;
 public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements InternalCDORevisionManager
 {
   private InternalCDOSession session;
-
-  private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
 
   private RWLockManager<CDORevisionResolver, Object> lockmanager = new RWLockManager<CDORevisionResolver, Object>();
 
@@ -64,31 +62,10 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements I
   /**
    * @since 2.0
    */
-  public CDOFetchRuleManager getRuleManager()
-  {
-    return ruleManager;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setRuleManager(CDOFetchRuleManager ruleManager)
-  {
-    this.ruleManager = ruleManager;
-  }
-
-  public CDOIDObjectFactory getCDOIDObjectFactory()
-  {
-    return session;
-  }
-
-  /**
-   * @since 2.0
-   */
   public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
   {
-    return session.options().getCollectionLoadingPolicy().resolveProxy(this, revision, feature, accessIndex,
-        serverIndex);
+    CDOCollectionLoadingPolicy policy = session.options().getCollectionLoadingPolicy();
+    return policy.resolveProxy(this, revision, feature, accessIndex, serverIndex);
   }
 
   /**
@@ -97,8 +74,8 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements I
   public Object loadChunkByRange(CDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
-    return session.getSessionProtocol().loadChunk((InternalCDORevision)revision, feature, accessIndex, fetchIndex,
-        fromIndex, toIndex);
+    CDOSessionProtocol protocol = session.getSessionProtocol();
+    return protocol.loadChunk((InternalCDORevision)revision, feature, accessIndex, fetchIndex, fromIndex, toIndex);
   }
 
   @Override

@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
@@ -83,11 +84,11 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
@@ -139,6 +140,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private InternalCDOPackageRegistry packageRegistry;
 
   private InternalCDORevisionManager revisionManager;
+
+  private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
 
   private CDOAuthenticator authenticator;
 
@@ -302,6 +305,22 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     this.revisionManager = revisionManager;
   }
 
+  /**
+   * @since 3.0
+   */
+  public CDOFetchRuleManager getFetchRuleManager()
+  {
+    return ruleManager;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
+  {
+    ruleManager = fetchRuleManager;
+  }
+
   public CDOAuthenticator getAuthenticator()
   {
     return authenticator;
@@ -458,6 +477,36 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     checkActive();
     return views.isEmpty();
+  }
+
+  /**
+   * @since 2.0
+   */
+  public Collection<CDOTimeStampContext> refresh()
+  {
+    // If passive update is turned on we don`t need to refresh.
+    // We do not throw an exception since the client could turn
+    // that feature on or off without affecting their code.
+    checkActive();
+    if (!options().isPassiveUpdateEnabled())
+    {
+      Map<CDOID, CDOIDAndVersion> allRevisions = getAllCDOIDAndVersion();
+  
+      try
+      {
+        if (!allRevisions.isEmpty())
+        {
+          int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
+          return getSessionProtocol().syncRevisions(allRevisions, initialChunkSize);
+        }
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+  
+    return Collections.emptyList();
   }
 
   /**
@@ -864,36 +913,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     return uniqueObjects;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public Collection<CDOTimeStampContext> refresh()
-  {
-    // If passive update is turned on we don`t need to refresh.
-    // We do not throw an exception since the client could turn
-    // that feature on or off without affecting their code.
-    checkActive();
-    if (!options().isPassiveUpdateEnabled())
-    {
-      Map<CDOID, CDOIDAndVersion> allRevisions = getAllCDOIDAndVersion();
-
-      try
-      {
-        if (!allRevisions.isEmpty())
-        {
-          int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
-          return getSessionProtocol().syncRevisions(allRevisions, initialChunkSize);
-        }
-      }
-      catch (Exception ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
-    }
-
-    return Collections.emptyList();
   }
 
   /**

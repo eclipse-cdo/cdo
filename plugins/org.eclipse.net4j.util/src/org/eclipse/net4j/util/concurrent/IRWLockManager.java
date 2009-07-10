@@ -37,7 +37,7 @@ public interface IRWLockManager<K, V>
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
    */
-  public void unlock(LockType type, V context, Collection<? extends K> objectsToLock);
+  public void unlock(LockType type, V context, Collection<? extends K> objectsToUnlock);
 
   /**
    * Attempts to release all locks(read and write) for a given context.

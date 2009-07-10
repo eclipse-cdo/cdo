@@ -95,13 +95,7 @@ public interface CDOProtocolConstants
   // //////////////////////////////////////////////////////////////////////
   // View Management
 
-  public static final byte VIEW_TRANSACTION = 1;
-
-  public static final byte VIEW_AUDIT = 2;
-
-  public static final byte VIEW_READONLY = 3;
-
-  public static final byte VIEW_CLOSED = 4;
+  public static final byte VIEW_CLOSED = -1;
 
   // //////////////////////////////////////////////////////////////////////
   // Query Support

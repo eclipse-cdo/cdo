@@ -11,6 +11,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
@@ -76,7 +77,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
 
   public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize);
 
-  public void openView(int viewId, byte protocolViewType, long timeStamp);
+  /**
+   * @since 3.0
+   */
+  public void openView(int viewId, CDOCommonView.Type type, long timeStamp);
 
   public void closeView(int viewId);
 

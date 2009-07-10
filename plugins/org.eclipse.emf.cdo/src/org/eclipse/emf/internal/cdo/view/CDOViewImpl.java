@@ -1483,7 +1483,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   protected void doActivate() throws Exception
   {
-    session.getSessionProtocol().openView(getViewID(), getProtocolViewType(), getTimeStamp());
+    session.getSessionProtocol().openView(getViewID(), getViewType(), getTimeStamp());
   }
 
   /**
@@ -1503,25 +1503,6 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     lastLookupID = null;
     lastLookupObject = null;
     options = null;
-  }
-
-  private byte getProtocolViewType()
-  {
-    Type viewType = getViewType();
-    switch (viewType)
-    {
-    case READONLY:
-      return CDOProtocolConstants.VIEW_READONLY;
-
-    case TRANSACTION:
-      return CDOProtocolConstants.VIEW_TRANSACTION;
-
-    case AUDIT:
-      return CDOProtocolConstants.VIEW_AUDIT;
-
-    default:
-      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.26"), viewType)); //$NON-NLS-1$
-    }
   }
 
   /**

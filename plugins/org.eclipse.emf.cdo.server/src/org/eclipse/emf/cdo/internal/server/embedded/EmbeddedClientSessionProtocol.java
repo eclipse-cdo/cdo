@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -115,46 +116,45 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
-  @SuppressWarnings("unchecked")
   public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    return (List<InternalCDORevision>)(List<?>)repository.getRevisionManager().getRevisions(ids, referenceChunk);
+    throw new UnsupportedOperationException();
   }
 
   public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
-  public void openView(int viewId, byte protocolViewType, long timeStamp)
+  public void openView(int viewId, CDOCommonView.Type viewType, long timeStamp)
   {
   }
 

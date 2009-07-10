@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -149,9 +150,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new SyncRevisionsRequest(this, idAndVersions, initialChunkSize));
   }
 
-  public void openView(int viewId, byte protocolViewType, long timeStamp)
+  public void openView(int viewId, CDOCommonView.Type viewType, long timeStamp)
   {
-    send(new ViewsChangedRequest(this, viewId, protocolViewType, timeStamp));
+    send(new ViewsChangedRequest(this, viewId, viewType, timeStamp));
   }
 
   public void closeView(int viewId)

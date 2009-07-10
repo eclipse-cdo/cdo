@@ -16,6 +16,7 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
@@ -1676,14 +1677,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void openView(int viewId, byte protocolViewType, long timeStamp)
+    public void openView(int viewId, CDOCommonView.Type viewType, long timeStamp)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.openView(viewId, protocolViewType, timeStamp);
+          delegate.openView(viewId, viewType, timeStamp);
           return;
         }
         catch (Exception ex)

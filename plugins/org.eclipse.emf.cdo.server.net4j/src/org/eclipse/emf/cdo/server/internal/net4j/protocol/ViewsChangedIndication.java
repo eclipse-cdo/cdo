@@ -10,13 +10,12 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
-
-import org.eclipse.net4j.util.ImplementationError;
 
 import java.io.IOException;
 
@@ -34,35 +33,34 @@ public class ViewsChangedIndication extends CDOServerIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    byte kind = in.readByte();
+    byte viewType = in.readByte();
     InternalSession session = getSession();
 
-    switch (kind)
+    if (viewType == CDOProtocolConstants.VIEW_CLOSED)
     {
-    case CDOProtocolConstants.VIEW_CLOSED:
       IView view = session.getView(viewID);
       if (view != null)
       {
         view.close();
       }
+    }
+    else
+    {
+      switch (CDOCommonView.Type.values()[viewType])
+      {
+      case TRANSACTION:
+        session.openTransaction(viewID);
+        break;
 
-      break;
+      case READONLY:
+        session.openView(viewID);
+        break;
 
-    case CDOProtocolConstants.VIEW_TRANSACTION:
-      session.openTransaction(viewID);
-      break;
-
-    case CDOProtocolConstants.VIEW_READONLY:
-      session.openView(viewID);
-      break;
-
-    case CDOProtocolConstants.VIEW_AUDIT:
-      long timeStamp = in.readLong();
-      session.openAudit(viewID, timeStamp);
-      break;
-
-    default:
-      throw new ImplementationError("Invalid kind: " + kind); //$NON-NLS-1$
+      case AUDIT:
+        long timeStamp = in.readLong();
+        session.openAudit(viewID, timeStamp);
+        break;
+      }
     }
   }
 

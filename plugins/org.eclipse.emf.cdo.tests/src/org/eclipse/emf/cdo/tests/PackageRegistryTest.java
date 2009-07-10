@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -223,11 +221,7 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     {
       // Create resource in session 1
-      CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
-      configuration.setConnector(getConnector());
-      configuration.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
-
-      CDOSession session = configuration.openSession();
+      CDOSession session = openSession(IRepositoryConfig.REPOSITORY_NAME);
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.createResource("/res");
 

@@ -221,6 +221,39 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   /**
    * @author Eike Stepper
    */
+  public static final class Embedded extends SessionConfig
+  {
+    public static final String NAME = "Embedded";
+
+    public static final Embedded INSTANCE = new Embedded();
+
+    private static final long serialVersionUID = 1L;
+
+    public Embedded()
+    {
+      super(NAME);
+    }
+
+    @Override
+    public void setUp() throws Exception
+    {
+      super.setUp();
+    }
+
+    public IAcceptor getAcceptor()
+    {
+      return null;
+    }
+
+    public IConnector getConnector()
+    {
+      return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static final class TCP extends SessionConfig
   {
     public static final String NAME = "TCP";

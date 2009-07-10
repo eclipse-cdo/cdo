@@ -21,6 +21,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -249,8 +250,15 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     public void setUp() throws Exception
     {
       super.setUp();
-      TCPUtil.prepareContainer(getCurrentTest().getClientContainer());
-      TCPUtil.prepareContainer(getCurrentTest().getServerContainer());
+
+      IManagedContainer clientContainer = getCurrentTest().getClientContainer();
+      TCPUtil.prepareContainer(clientContainer);
+
+      IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+      if (serverContainer != clientContainer)
+      {
+        TCPUtil.prepareContainer(serverContainer);
+      }
     }
   }
 

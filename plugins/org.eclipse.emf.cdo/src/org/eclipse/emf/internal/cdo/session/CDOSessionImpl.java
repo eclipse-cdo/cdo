@@ -788,20 +788,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     EventUtil.addListener(sessionProtocol, sessionProtocolListener);
-
-    revisionManager.setRevisionLoader(sessionProtocol);
-    revisionManager.setRevisionLocker(this);
-    LifecycleUtil.activate(revisionManager);
-
+    activateRevisionManager();
     remoteSessionManager.activate();
     if (packageRegistry == null)
     {
       packageRegistry = createPackageRegistry();
     }
 
-    packageRegistry.setPackageProcessor(this);
-    packageRegistry.setPackageLoader(this);
-    packageRegistry.activate();
+    activatePackageRegistry();
 
     String name = repository().getName();
     boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
@@ -828,6 +822,20 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
   }
 
+  protected void activatePackageRegistry()
+  {
+    packageRegistry.setPackageProcessor(this);
+    packageRegistry.setPackageLoader(this);
+    packageRegistry.activate();
+  }
+
+  protected void activateRevisionManager()
+  {
+    revisionManager.setRevisionLoader(sessionProtocol);
+    revisionManager.setRevisionLocker(this);
+    LifecycleUtil.activate(revisionManager);
+  }
+
   @Override
   protected void doDeactivate() throws Exception
   {
@@ -851,10 +859,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       invalidationRunner = null;
     }
 
-    LifecycleUtil.deactivate(revisionManager);
+    deactivateRevisionManager();
     revisionManager = null;
 
-    packageRegistry.deactivate();
+    deactivatePackageRegistry();
     packageRegistry = null;
 
     EventUtil.removeListener(sessionProtocol, sessionProtocolListener);
@@ -864,9 +872,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     super.doDeactivate();
   }
 
-  protected void activateRevisionManager()
+  protected void deactivatePackageRegistry()
   {
-    LifecycleUtil.activate(revisionManager);
+    packageRegistry.deactivate();
+  }
+
+  protected void deactivateRevisionManager()
+  {
+    LifecycleUtil.deactivate(revisionManager);
   }
 
   protected abstract CDOSessionProtocol createSessionProtocol();

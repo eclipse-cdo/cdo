@@ -4,16 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.session.CDOSession;
-
-import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.connector.IConnector;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -26,9 +23,9 @@ public interface ISessionConfig extends IConfig
 
   public void stopTransport() throws Exception;
 
-  public IAcceptor getAcceptor();
-
-  public IConnector getConnector();
+  // public IAcceptor getAcceptor();
+  //
+  // public IConnector getConnector();
 
   public CDOSession openMangoSession();
 

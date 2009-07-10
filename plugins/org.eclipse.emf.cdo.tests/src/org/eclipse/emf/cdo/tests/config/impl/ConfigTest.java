@@ -37,8 +37,6 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 
-import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -229,22 +227,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public void stopTransport() throws Exception
   {
     getSessionConfig().stopTransport();
-  }
-
-  /**
-   *@category Session
-   */
-  public IAcceptor getAcceptor()
-  {
-    return getSessionConfig().getAcceptor();
-  }
-
-  /**
-   *@category Session
-   */
-  public IConnector getConnector()
-  {
-    return getSessionConfig().getConnector();
   }
 
   /**

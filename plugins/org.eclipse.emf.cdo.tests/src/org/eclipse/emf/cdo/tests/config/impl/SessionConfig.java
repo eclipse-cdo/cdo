@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSession;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
@@ -54,27 +56,10 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   public void startTransport() throws Exception
   {
-    IAcceptor acceptor = getAcceptor();
-    LifecycleUtil.activate(acceptor);
-
-    IConnector connector = getConnector();
-    LifecycleUtil.activate(connector);
   }
 
   public void stopTransport() throws Exception
   {
-    ConfigTest currentTest = getCurrentTest();
-    if (currentTest.hasClientContainer())
-    {
-      IConnector connector = getConnector();
-      connector.close();
-    }
-
-    if (currentTest.hasServerContainer())
-    {
-      IAcceptor acceptor = getAcceptor();
-      acceptor.close();
-    }
   }
 
   public CDOSession openMangoSession()
@@ -114,8 +99,10 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   public CDOSession openSession(String repositoryName)
   {
     CDOSessionConfiguration configuration = createSessionConfiguration(repositoryName);
+    configuration.getAuthenticator().setCredentialsProvider(getTestCredentialsProvider());
+
     CDOSession session = configuration.openSession();
-    session.options().getProtocol().setTimeout(-1);
+    configureSession(session);
     session.addListener(sessionListener);
 
     synchronized (sessions)
@@ -185,24 +172,10 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     return (IPasswordCredentialsProvider)getTestProperty(PROP_TEST_CREDENTIALS_PROVIDER);
   }
 
-  private CDOSessionConfiguration createSessionConfiguration(String repositoryName)
+  protected abstract CDOSessionConfiguration createSessionConfiguration(String repositoryName);
+
+  protected void configureSession(CDOSession session)
   {
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
-    configuration.setConnector(getConnector());
-    configuration.setRepositoryName(repositoryName);
-    configuration.getAuthenticator().setCredentialsProvider(getTestCredentialsProvider());
-
-    // configuration.setExceptionHandler(new CDORetryExceptionHandler(2));
-
-    // configuration.setExceptionHandler(new ExceptionHandler()
-    // {
-    // public void handleException(int attempt, Exception exception) throws Exception
-    // {
-    // throw exception;
-    // }
-    // });
-
-    return configuration;
   }
 
   private void removeDynamicPackagesFromGlobalRegistry()
@@ -235,26 +208,80 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     }
 
     @Override
-    public void setUp() throws Exception
+    protected CDOSessionConfiguration createSessionConfiguration(String repositoryName)
     {
-      super.setUp();
-    }
+      IRepository repository = getCurrentTest().getRepository(repositoryName);
 
-    public IAcceptor getAcceptor()
-    {
-      return null;
-    }
-
-    public IConnector getConnector()
-    {
-      return null;
+      org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration configuration = CDOServerUtil
+          .createSessionConfiguration();
+      configuration.setRepository(repository);
+      return configuration;
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  public static final class TCP extends SessionConfig
+  public static abstract class Net4j extends SessionConfig
+  {
+    private static final long serialVersionUID = 1L;
+
+    public Net4j(String name)
+    {
+      super(name);
+    }
+
+    @Override
+    public void startTransport() throws Exception
+    {
+      IAcceptor acceptor = getAcceptor();
+      LifecycleUtil.activate(acceptor);
+
+      IConnector connector = getConnector();
+      LifecycleUtil.activate(connector);
+    }
+
+    @Override
+    public void stopTransport() throws Exception
+    {
+      ConfigTest currentTest = getCurrentTest();
+      if (currentTest.hasClientContainer())
+      {
+        IConnector connector = getConnector();
+        connector.close();
+      }
+
+      if (currentTest.hasServerContainer())
+      {
+        IAcceptor acceptor = getAcceptor();
+        acceptor.close();
+      }
+    }
+
+    @Override
+    protected CDOSessionConfiguration createSessionConfiguration(String repositoryName)
+    {
+      org.eclipse.emf.cdo.net4j.CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+      configuration.setConnector(getConnector());
+      configuration.setRepositoryName(repositoryName);
+      return configuration;
+    }
+
+    @Override
+    protected void configureSession(CDOSession session)
+    {
+      ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(-1);
+    }
+
+    public abstract IAcceptor getAcceptor();
+
+    public abstract IConnector getConnector();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class TCP extends Net4j
   {
     public static final String NAME = "TCP";
 
@@ -269,11 +296,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       super(NAME);
     }
 
+    @Override
     public IAcceptor getAcceptor()
     {
       return TCPUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
     }
 
+    @Override
     public IConnector getConnector()
     {
       return TCPUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
@@ -298,7 +327,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   /**
    * @author Eike Stepper
    */
-  public static final class JVM extends SessionConfig
+  public static final class JVM extends Net4j
   {
     public static final String NAME = "JVM";
 
@@ -313,11 +342,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       super(NAME);
     }
 
+    @Override
     public IAcceptor getAcceptor()
     {
       return JVMUtil.getAcceptor(getCurrentTest().getServerContainer(), ACCEPTOR_NAME);
     }
 
+    @Override
     public IConnector getConnector()
     {
       return JVMUtil.getConnector(getCurrentTest().getClientContainer(), ACCEPTOR_NAME);

@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration;
+import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -44,6 +46,14 @@ public final class CDOServerUtil
 {
   private CDOServerUtil()
   {
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOSessionConfiguration createSessionConfiguration()
+  {
+    return new EmbeddedClientSessionConfiguration();
   }
 
   public static IRepository createRepository(String name, IStore store, Map<String, String> props)

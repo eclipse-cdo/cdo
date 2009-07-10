@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -679,7 +679,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
-    CDORevisionResolver revisionManager = session.getRevisionManager();
+    CDORevisionManager revisionManager = session.getRevisionManager();
     int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
     return (InternalCDORevision)revisionManager.getRevision(id, initialChunkSize, loadOnDemand);
   }

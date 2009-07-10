@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver.RevisionLocker;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -44,7 +44,7 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, Pack
   /**
    * @since 3.0
    */
-  public InternalCDORevisionResolver getRevisionManager();
+  public InternalCDORevisionManager getRevisionManager();
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 

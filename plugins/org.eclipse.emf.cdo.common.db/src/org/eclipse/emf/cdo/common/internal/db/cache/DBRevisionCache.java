@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
@@ -65,7 +65,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 
   private CDOPackageRegistry packageRegistry;
 
-  private CDORevisionResolver revisionResolver;
+  private CDORevisionManager revisionManager;
 
   private IDBAdapter dbAdapter;
 
@@ -115,14 +115,14 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     this.packageRegistry = packageRegistry;
   }
 
-  public CDORevisionResolver getRevisionResolver()
+  public CDORevisionManager getRevisionManager()
   {
-    return revisionResolver;
+    return revisionManager;
   }
 
-  public void setRevisionResolver(CDORevisionResolver revisionResolver)
+  public void setRevisionManager(CDORevisionManager revisionManager)
   {
-    this.revisionResolver = revisionResolver;
+    this.revisionManager = revisionManager;
   }
 
   public IDBAdapter getDBAdapter()
@@ -722,7 +722,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     checkState(idProvider, "idProvider"); //$NON-NLS-1$
     checkState(listFactory, "listFactory");//$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
-    checkState(revisionResolver, "revisionResolver"); //$NON-NLS-1$
+    checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
     checkState(dbAdapter, "dbAdapter"); //$NON-NLS-1$
     checkState(dbConnectionProvider, "dbConnectionProvider"); //$NON-NLS-1$
   }
@@ -817,9 +817,9 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
       }
 
       @Override
-      protected CDORevisionResolver getRevisionResolver()
+      protected CDORevisionManager getRevisionManager()
       {
-        return revisionResolver;
+        return revisionManager;
       }
     };
   }

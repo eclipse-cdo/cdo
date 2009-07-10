@@ -19,8 +19,8 @@ import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver.RevisionLoader;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -34,9 +34,9 @@ import java.util.List;
  */
 public interface InternalRepository extends IRepository, PackageLoader, RevisionLoader
 {
-  public InternalCDORevisionResolver getRevisionManager();
+  public InternalCDORevisionManager getRevisionManager();
 
-  public void setRevisionManager(InternalCDORevisionResolver revisionManager);
+  public void setRevisionManager(InternalCDORevisionManager revisionManager);
 
   public InternalSessionManager getSessionManager();
 

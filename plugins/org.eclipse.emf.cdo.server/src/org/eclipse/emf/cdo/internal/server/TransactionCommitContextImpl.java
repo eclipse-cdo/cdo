@@ -30,7 +30,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -463,7 +463,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     int version = dirtyObjectDelta.getOriginVersion();
 
     InternalRepository repository = transaction.getRepository();
-    InternalCDORevisionResolver revisionManager = repository.getRevisionManager();
+    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
     CDORevision originObject = revisionManager.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
     if (originObject != null)
@@ -609,7 +609,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     try
     {
       monitor.begin(revisions.length);
-      InternalCDORevisionResolver revisionManager = transaction.getRepository().getRevisionManager();
+      InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
       for (CDORevision revision : revisions)
       {
         if (revision != null)
@@ -646,7 +646,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
   private void detachObjects(OMMonitor monitor)
   {
     detachedRevisions.clear();
-    InternalCDORevisionResolver revisionManager = transaction.getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
     CDOID[] detachedObjects = getDetachedObjects();
 
     try

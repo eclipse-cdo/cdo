@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IContainerConfig;
@@ -491,9 +491,9 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
         && !ObjectUtil.equals(getModelConfig(), name));
   }
 
-  protected void clearCache(CDORevisionResolver revisionManager)
+  protected void clearCache(CDORevisionManager revisionManager)
   {
-    ((InternalCDORevisionResolver)revisionManager).getCache().clear();
+    ((InternalCDORevisionManager)revisionManager).getCache().clear();
   }
 
   public void restartScenario() throws Exception

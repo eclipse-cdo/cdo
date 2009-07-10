@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import java.util.Collection;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalCDORevisionResolver extends CDORevisionResolver
+public interface InternalCDORevisionManager extends CDORevisionManager
 {
   public RevisionLoader getRevisionLoader();
 

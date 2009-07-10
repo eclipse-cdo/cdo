@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -61,7 +61,7 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
   /**
    * @since 3.0
    */
-  public CDORevisionResolver getRevisionManager();
+  public CDORevisionManager getRevisionManager();
 
   public ISessionManager getSessionManager();
 

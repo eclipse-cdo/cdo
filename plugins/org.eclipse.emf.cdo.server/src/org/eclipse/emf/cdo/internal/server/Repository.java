@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStore;
@@ -39,7 +39,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
@@ -93,7 +93,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private InternalCDORevisionResolver revisionManager;
+  private InternalCDORevisionManager revisionManager;
 
   private InternalSessionManager sessionManager;
 
@@ -427,7 +427,7 @@ public class Repository extends Container<Object> implements InternalRepository
     this.sessionManager = sessionManager;
   }
 
-  public InternalCDORevisionResolver getRevisionManager()
+  public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
   }
@@ -435,7 +435,7 @@ public class Repository extends Container<Object> implements InternalRepository
   /**
    * @since 2.0
    */
-  public void setRevisionManager(InternalCDORevisionResolver revisionManager)
+  public void setRevisionManager(InternalCDORevisionManager revisionManager)
   {
     this.revisionManager = revisionManager;
   }
@@ -937,9 +937,9 @@ public class Repository extends Container<Object> implements InternalRepository
       return new SessionManager();
     }
 
-    protected InternalCDORevisionResolver createRevisionManager()
+    protected InternalCDORevisionManager createRevisionManager()
     {
-      return new CDORevisionResolverImpl();
+      return new CDORevisionManagerImpl();
     }
 
     protected InternalQueryManager createQueryManager()

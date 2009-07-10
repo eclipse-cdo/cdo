@@ -17,10 +17,10 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -174,7 +174,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
   protected InternalCDORevision getRevision(CDOID id)
   {
-    CDORevisionResolver revisionManager = getRepository().getRevisionManager();
+    CDORevisionManager revisionManager = getRepository().getRevisionManager();
     return (InternalCDORevision)revisionManager.getRevision(id, referenceChunk);
   }
 
@@ -190,7 +190,7 @@ public class LoadRevisionIndication extends CDOReadIndication
 
     visitedFetchRules.add(fetchRule);
 
-    InternalCDORevisionResolver revisionManager = getSession().getManager().getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getSession().getManager().getRepository().getRevisionManager();
     for (EStructuralFeature feature : fetchRule.getFeatures())
     {
       if (feature.isMany())

@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -45,7 +45,7 @@ public class VerifyRevisionIndication extends CDOReadIndication
       TRACER.format("Reading {0} IDs and versions", size); //$NON-NLS-1$
     }
 
-    InternalCDORevisionResolver revisionManager = getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     timeStamps = new long[size];
     for (int i = 0; i < size; i++)
     {

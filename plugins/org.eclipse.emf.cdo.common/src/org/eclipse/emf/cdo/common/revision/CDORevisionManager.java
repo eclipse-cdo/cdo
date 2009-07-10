@@ -20,13 +20,12 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @since 3.0
  */
-public interface CDORevisionResolver
+public interface CDORevisionManager
 {
   /**
    * @return The type of an object if a revision for that object is in the revision cache, <code>null</code> otherwise.
-   * @since 2.0
    */
   public EClass getObjectType(CDOID id);
 
@@ -50,19 +49,10 @@ public interface CDORevisionResolver
 
   public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk);
 
-  /**
-   * @since 2.0
-   */
   public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp,
       boolean loadMissingRevisions);
 
-  /**
-   * @since 2.0
-   */
   public CDOID getResourceID(CDOID folderID, String name, long timeStamp);
 
-  /**
-   * @since 2.0
-   */
   public CDORevisionCache getCache();
 }

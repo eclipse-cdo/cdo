@@ -145,7 +145,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache)
   {
     InternalCDORevision storeRevision = getStore().getRevision(id);
-    // CDORevisionResolver revisionManager = getStore().getRepository().getRevisionManager();
+    // CDORevisionManager revisionManager = getStore().getRepository().getRevisionManager();
     // InternalCDORevision newRevision = new InternalCDORevision(revisionManager, storeRevision.getEClass(),
     // storeRevision
     // .getID());

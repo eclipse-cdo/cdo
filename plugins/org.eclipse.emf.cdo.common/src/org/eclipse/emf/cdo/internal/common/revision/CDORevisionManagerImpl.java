@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -35,9 +35,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDORevisionResolverImpl extends Lifecycle implements InternalCDORevisionResolver
+public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevisionManager
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionResolverImpl.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionManagerImpl.class);
 
   private RevisionLoader revisionLoader;
 
@@ -51,7 +51,7 @@ public class CDORevisionResolverImpl extends Lifecycle implements InternalCDORev
   @ExcludeFromDump
   private Object revisedLock = new Object();
 
-  public CDORevisionResolverImpl()
+  public CDORevisionManagerImpl()
   {
   }
 

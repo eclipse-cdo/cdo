@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import org.eclipse.net4j.db.IDBAdapter;
@@ -42,12 +42,12 @@ public final class CDOCommonDBUtil
    * @param idObjectFactory
    * @param listFactory
    * @param packageRegistry
-   * @param revisionResolver
+   * @param revisionManager
    * @param dbConnectionProvider
    */
   public static CDORevisionCache createDBCache(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
       CDOIDProvider idProvider, CDOIDObjectFactory idObjectFactory, CDOListFactory listFactory,
-      CDOPackageRegistry packageRegistry, CDORevisionResolver revisionResolver)
+      CDOPackageRegistry packageRegistry, CDORevisionManager revisionManager)
   {
     DBRevisionCache cache = new DBRevisionCache();
     cache.setDBAdapter(dbAdapter);
@@ -56,7 +56,7 @@ public final class CDOCommonDBUtil
     cache.setIDObjectFactory(idObjectFactory);
     cache.setListFactory(listFactory);
     cache.setPackageRegistry(packageRegistry);
-    cache.setRevisionResolver(revisionResolver);
+    cache.setRevisionManager(revisionManager);
 
     return cache;
   }

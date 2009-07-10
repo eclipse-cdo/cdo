@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -61,7 +61,7 @@ public interface CDOCollectionLoadingPolicy
 
   /**
    * Defines a strategy to be used when the collection needs to resolve one element.
-   * {@link CDORevisionResolver#loadChunkByRange(CDORevision, EStructuralFeature, int, int, int, int)} should be used to
+   * {@link CDORevisionManager#loadChunkByRange(CDORevision, EStructuralFeature, int, int, int, int)} should be used to
    * resolve them.
    * 
    * @since 3.0

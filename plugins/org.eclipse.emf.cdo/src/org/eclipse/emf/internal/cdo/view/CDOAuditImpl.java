@@ -12,7 +12,7 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOAudit;
 
@@ -97,7 +97,7 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
     InternalCDOSession session = getSession();
     int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
 
-    CDORevisionResolver revisionManager = session.getRevisionManager();
+    CDORevisionManager revisionManager = session.getRevisionManager();
     return (InternalCDORevision)revisionManager.getRevisionByTime(id, initialChunkSize, timeStamp, loadOnDemand);
   }
 

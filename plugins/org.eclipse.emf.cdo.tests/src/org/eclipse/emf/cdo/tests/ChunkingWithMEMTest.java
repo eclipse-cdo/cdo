@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -62,7 +62,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       session.close();
     }
 
-    InternalCDORevisionResolver revisionManager = getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     revisionManager.removeCachedRevision(revisionToRemove);
 
     msg("Opening session");
@@ -121,7 +121,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       session.close();
     }
 
-    InternalCDORevisionResolver revisionManager = getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     revisionManager.removeCachedRevision(revisionToRemove);
 
     msg("Opening session");

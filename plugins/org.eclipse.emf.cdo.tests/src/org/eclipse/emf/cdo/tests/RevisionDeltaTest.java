@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -203,7 +203,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
 
     transaction.commit();
 
-    InternalCDORevisionResolver revisionManager = getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     CDORevision revision = CDOUtil.getCDOObject(customer).cdoRevision();
     revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
 

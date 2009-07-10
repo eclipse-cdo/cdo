@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -133,7 +133,7 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
         TRACER.format("Reading {0} additional revisions", additionalSize); //$NON-NLS-1$
       }
 
-      InternalCDORevisionResolver revisionManager = getSession().getRevisionManager();
+      InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
       for (int i = 0; i < additionalSize; i++)
       {
         InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();

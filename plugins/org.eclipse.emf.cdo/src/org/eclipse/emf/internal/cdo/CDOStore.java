@@ -29,7 +29,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaI
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -365,7 +365,7 @@ public final class CDOStore implements EStore
         {
           CDOID id = (CDOID)value;
           CDOList list = revision.getList(feature);
-          InternalCDORevisionResolver revisionManager = view.getSession().getRevisionManager();
+          InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
           CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
           Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, feature, list, index, id);
           if (!listOfIDs.isEmpty())

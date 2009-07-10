@@ -33,7 +33,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
@@ -41,7 +41,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
@@ -142,7 +142,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private InternalCDORevisionResolver revisionManager;
+  private InternalCDORevisionManager revisionManager;
 
   private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
 
@@ -320,12 +320,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     lockmanager.unlock(LockType.WRITE, key, singletonCollection);
   }
 
-  public InternalCDORevisionResolver getRevisionManager()
+  public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
   }
 
-  public void setRevisionManager(InternalCDORevisionResolver revisionManager)
+  public void setRevisionManager(InternalCDORevisionManager revisionManager)
   {
     this.revisionManager = revisionManager;
   }
@@ -720,9 +720,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return new CDOPackageRegistryImpl();
   }
 
-  protected InternalCDORevisionResolver createRevisionManager()
+  protected InternalCDORevisionManager createRevisionManager()
   {
-    return new CDORevisionResolverImpl();
+    return new CDORevisionManagerImpl();
   }
 
   protected InternalCDORemoteSessionManager createRemoteSessionManager()

@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -359,7 +359,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   protected abstract CDOPackageRegistry getPackageRegistry();
 
-  protected abstract CDORevisionResolver getRevisionResolver();
+  protected abstract CDORevisionManager getRevisionManager();
 
   protected abstract CDOIDObjectFactory getIDFactory();
 

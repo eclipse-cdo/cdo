@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -723,7 +723,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         revision.adjustReferences(data.getReferenceAdjuster());
       }
 
-      InternalCDORevisionResolver revisionManager = view.getSession().getRevisionManager();
+      InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
       revisionManager.addCachedRevision(revision);
       changeState(object, CDOState.CLEAN);
     }

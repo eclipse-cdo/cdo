@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
@@ -140,7 +140,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     indicating(new CDODataInputImpl(in)
     {
       @Override
-      protected CDORevisionResolver getRevisionResolver()
+      protected CDORevisionManager getRevisionManager()
       {
         return CommitTransactionIndication.this.getRepository().getRevisionManager();
       }

@@ -28,7 +28,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
@@ -132,7 +132,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       }
 
       @Override
-      protected CDORevisionResolver getRevisionResolver()
+      protected CDORevisionManager getRevisionManager()
       {
         return getSession().getRevisionManager();
       }

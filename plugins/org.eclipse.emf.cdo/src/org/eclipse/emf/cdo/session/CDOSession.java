@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -70,12 +70,12 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
   public CDOPackageRegistry getPackageRegistry();
 
   /**
-   * Returns the CDO {@link CDORevisionResolver revision manager} that manages the {@link CDORevision revisions} of the
+   * Returns the CDO {@link CDORevisionManager revision manager} that manages the {@link CDORevision revisions} of the
    * repository of this session.
    * 
    * @since 3.0
    */
-  public CDORevisionResolver getRevisionManager();
+  public CDORevisionManager getRevisionManager();
 
   /**
    * @since 3.0

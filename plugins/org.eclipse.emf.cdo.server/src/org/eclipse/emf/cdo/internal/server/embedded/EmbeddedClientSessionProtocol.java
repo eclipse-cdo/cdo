@@ -121,32 +121,32 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Should not be called");
   }
 
   public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Should not be called");
   }
 
   public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Should not be called");
   }
 
   public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Should not be called");
   }
 
   public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Should not be called");
   }
 
   public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
   {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Should not be called");
   }
 
   public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize)
@@ -164,74 +164,73 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public void changeSubscription(int viewId, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
   {
+    throw new UnsupportedOperationException();
   }
 
   public List<Object> query(int viewID, AbstractQueryIterator<?> queryResult)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public boolean cancelQuery(int queryId)
   {
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
   {
-    return false;
+    throw new UnsupportedOperationException();
   }
 
   public void lockObjects(CDOView view, Map<CDOID, CDOIDAndVersion> objects, long timeout, LockType lockType)
       throws InterruptedException
   {
+    throw new UnsupportedOperationException();
   }
 
   public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType)
   {
+    throw new UnsupportedOperationException();
   }
 
   public boolean[] setAudit(int viewId, long timeStamp, List<InternalCDOObject> invalidObjects)
   {
-    return null;
-  }
-
-  public List<InternalCDORevision> verifyRevision(List<InternalCDORevision> revisions)
-  {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public CommitTransactionResult commitTransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public CommitTransactionResult commitTransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public CommitTransactionResult commitTransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public CommitTransactionResult commitTransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
   {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   public void unsubscribeRemoteSessions()
   {
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -246,6 +245,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   protected void doDeactivate() throws Exception
   {
     serverSessionProtocol.deactivate();
+    serverSessionProtocol = null;
     super.doDeactivate();
   }
 

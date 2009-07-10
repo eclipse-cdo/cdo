@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -36,14 +37,11 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -358,70 +356,70 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void reload(InternalCDOObject... objects)
   {
-    InternalCDOView view = null;
-    Map<CDOID, InternalCDOObject> ids = new HashMap<CDOID, InternalCDOObject>();
-    List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
-    List<InternalCDORevision> revised = new ArrayList<InternalCDORevision>();
-    // Detect the view
-    for (InternalCDOObject object : objects)
-    {
-      if (view == null)
-      {
-        view = object.cdoView();
-        break;
-      }
-    }
-
-    if (view != null)
-    {
-      ReentrantLock lock = lockView(view);
-
-      try
-      {
-        for (InternalCDOObject object : objects)
-        {
-          CDOState state = object.cdoState();
-          if (state != CDOState.TRANSIENT && state != CDOState.PREPARED && state != CDOState.NEW
-              && state != CDOState.CONFLICT && state != CDOState.INVALID_CONFLICT && state != CDOState.INVALID)
-          {
-            InternalCDORevision revision = object.cdoRevision();
-            // Revision is null for proxy state
-            if (revision != null)
-            {
-              if (revision.isCurrent())
-              {
-                revisions.add(revision);
-              }
-              else
-              {
-                revised.add(revision);
-              }
-            }
-
-            ids.put(object.cdoID(), object);
-          }
-        }
-
-        InternalCDOSession session = view.getSession();
-        revisions = session.getSessionProtocol().verifyRevision(revisions);
-
-        revisions.addAll(revised);
-        for (InternalCDORevision revision : revisions)
-        {
-          InternalCDOObject object = ids.get(revision.getID());
-          if (TRACER.isEnabled())
-          {
-            trace(object, CDOEvent.RELOAD);
-          }
-
-          process(object, CDOEvent.RELOAD, null);
-        }
-      }
-      finally
-      {
-        unlockView(lock);
-      }
-    }
+    // InternalCDOView view = null;
+    // Map<CDOID, InternalCDOObject> ids = new HashMap<CDOID, InternalCDOObject>();
+    // List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
+    // List<InternalCDORevision> revised = new ArrayList<InternalCDORevision>();
+    // // Detect the view
+    // for (InternalCDOObject object : objects)
+    // {
+    // if (view == null)
+    // {
+    // view = object.cdoView();
+    // break;
+    // }
+    // }
+    //
+    // if (view != null)
+    // {
+    // ReentrantLock lock = lockView(view);
+    //
+    // try
+    // {
+    // for (InternalCDOObject object : objects)
+    // {
+    // CDOState state = object.cdoState();
+    // if (state != CDOState.TRANSIENT && state != CDOState.PREPARED && state != CDOState.NEW
+    // && state != CDOState.CONFLICT && state != CDOState.INVALID_CONFLICT && state != CDOState.INVALID)
+    // {
+    // InternalCDORevision revision = object.cdoRevision();
+    // // Revision is null for proxy state
+    // if (revision != null)
+    // {
+    // if (revision.isCurrent())
+    // {
+    // revisions.add(revision);
+    // }
+    // else
+    // {
+    // revised.add(revision);
+    // }
+    // }
+    //
+    // ids.put(object.cdoID(), object);
+    // }
+    // }
+    //
+    // InternalCDOSession session = view.getSession();
+    // revisions = session.getSessionProtocol().verifyRevisions(revisions);
+    //
+    // revisions.addAll(revised);
+    // for (InternalCDORevision revision : revisions)
+    // {
+    // InternalCDOObject object = ids.get(revision.getID());
+    // if (TRACER.isEnabled())
+    // {
+    // trace(object, CDOEvent.RELOAD);
+    // }
+    //
+    // process(object, CDOEvent.RELOAD, null);
+    // }
+    // }
+    // finally
+    // {
+    // unlockView(lock);
+    // }
+    // }
   }
 
   /**
@@ -725,7 +723,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         revision.adjustReferences(data.getReferenceAdjuster());
       }
 
-      InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
+      InternalCDORevisionResolver revisionManager = view.getSession().getRevisionManager();
       revisionManager.addCachedRevision(revision);
       changeState(object, CDOState.CLEAN);
     }

@@ -65,7 +65,7 @@ public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
     return null;
   }
 
-  public boolean addRevision(InternalCDORevision revision)
+  public boolean addRevision(CDORevision revision)
   {
     return false;
   }

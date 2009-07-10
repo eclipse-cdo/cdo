@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -13,9 +13,8 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -24,7 +23,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.common.util.EList;
 
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * @author Simon McDuff
@@ -64,7 +62,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       session.close();
     }
 
-    TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
+    InternalCDORevisionResolver revisionManager = getRepository().getRevisionManager();
     revisionManager.removeCachedRevision(revisionToRemove);
 
     msg("Opening session");
@@ -123,7 +121,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       session.close();
     }
 
-    TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
+    InternalCDORevisionResolver revisionManager = getRepository().getRevisionManager();
     revisionManager.removeCachedRevision(revisionToRemove);
 
     msg("Opening session");
@@ -148,24 +146,5 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
 
     transaction.commit();
     session.close();
-  }
-
-  @Override
-  public Map<String, Object> getTestProperties()
-  {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, new TestRevisionManager());
-    return testProperties;
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  private class TestRevisionManager extends RevisionManager
-  {
-    public void removeCachedRevision(CDORevision revision)
-    {
-      super.removeCachedRevision(revision.getID(), revision.getVersion());
-    }
   }
 }

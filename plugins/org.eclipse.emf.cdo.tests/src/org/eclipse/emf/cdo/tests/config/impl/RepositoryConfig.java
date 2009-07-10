@@ -20,8 +20,8 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
@@ -149,7 +149,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     Map<String, String> props = getRepositoryProperties();
     InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, props);
-    InternalRevisionManager revisionManager = getTestRevisionManager();
+    InternalCDORevisionResolver revisionManager = getTestRevisionManager();
     if (revisionManager != null)
     {
       repository.setRevisionManager(revisionManager);
@@ -179,9 +179,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return (InternalRepository)getTestProperty(PROP_TEST_REPOSITORY);
   }
 
-  protected InternalRevisionManager getTestRevisionManager()
+  protected InternalCDORevisionResolver getTestRevisionManager()
   {
-    return (InternalRevisionManager)getTestProperty(PROP_TEST_REVISION_MANAGER);
+    return (InternalCDORevisionResolver)getTestProperty(PROP_TEST_REVISION_MANAGER);
   }
 
   protected IUserManager getTestUserManager()

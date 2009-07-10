@@ -15,34 +15,42 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.InternalNotificationManager;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -50,7 +58,9 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
 import java.text.MessageFormat;
@@ -83,9 +93,9 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private InternalSessionManager sessionManager;
+  private InternalCDORevisionResolver revisionManager;
 
-  private InternalRevisionManager revisionManager;
+  private InternalSessionManager sessionManager;
 
   private InternalQueryManager queryManager;
 
@@ -186,6 +196,196 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadPackageUnit((InternalCDOPackageUnit)packageUnit);
   }
 
+  public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    return accessor.readRevision(id, referenceChunk, revisionManager.getCache());
+  }
+
+  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  {
+    if (isSupportingAudits())
+    {
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      return accessor.readRevisionByTime(id, referenceChunk, revisionManager.getCache(), timeStamp);
+    }
+
+    // TODO Simon*: Is this check necessary here?
+    // TODO Eike: To have better exception message.
+    // By knowing if the back-end supports it, it let know the user that it could be achieved by changing its
+    // configuration file at the server.
+    // if (getRepository().getStore().hasAuditingSupport())
+    // {
+    // throw new UnsupportedOperationException(
+    // "Auditing supports isn't activated (see IRepository.Props.PROP_SUPPORTING_AUDITS).");
+    // }
+
+    throw new IllegalStateException("No support for auditing mode"); //$NON-NLS-1$
+  }
+
+  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    if (isSupportingAudits())
+    {
+      return accessor.readRevisionByVersion(id, referenceChunk, revisionManager.getCache(), version);
+    }
+
+    InternalCDORevision revision = loadRevision(id, referenceChunk);
+    if (revision.getVersion() == version)
+    {
+      return revision;
+    }
+
+    throw new IllegalStateException("Cannot access object with id " + id + " and version " + version); //$NON-NLS-1$ //$NON-NLS-2$
+  }
+
+  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
+    for (CDOID id : ids)
+    {
+      InternalCDORevision revision = accessor.readRevision(id, referenceChunk, revisionManager.getCache());
+      revisions.add(revision);
+    }
+
+    return revisions;
+  }
+
+  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  {
+    List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
+    for (CDOID id : ids)
+    {
+      InternalCDORevision revision = loadRevisionByTime(id, referenceChunk, timeStamp);
+      revisions.add(revision);
+    }
+
+    return revisions;
+  }
+
+  public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
+  {
+    IStoreAccessor accessor = null;
+    if (isVerifyingRevisions())
+    {
+      accessor = StoreThreadLocal.getAccessor();
+      revision = accessor.verifyRevision(revision);
+    }
+
+    ensureChunks(revision, referenceChunk, accessor);
+    return revision;
+  }
+
+  protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreAccessor accessor)
+  {
+    EClass eClass = revision.getEClass();
+    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
+    for (int i = 0; i < features.length; i++)
+    {
+      EStructuralFeature feature = features[i];
+      if (feature.isMany())
+      {
+        MoveableList<Object> list = revision.getList(feature);
+        int chunkEnd = Math.min(referenceChunk, list.size());
+        accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
+      }
+    }
+  }
+
+  public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
+      int chunkEnd)
+  {
+    MoveableList<Object> list = revision.getList(feature);
+    chunkEnd = Math.min(chunkEnd, list.size());
+    return ensureChunk(revision, feature, StoreThreadLocal.getAccessor(), list, chunkStart, chunkEnd);
+  }
+
+  protected IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature,
+      IStoreAccessor accessor, MoveableList<Object> list, int chunkStart, int chunkEnd)
+  {
+    IStoreChunkReader chunkReader = null;
+    int fromIndex = -1;
+    for (int j = chunkStart; j < chunkEnd; j++)
+    {
+      if (list.get(j) == InternalCDOList.UNINITIALIZED)
+      {
+        if (fromIndex == -1)
+        {
+          fromIndex = j;
+        }
+      }
+      else
+      {
+        if (fromIndex != -1)
+        {
+          if (chunkReader == null)
+          {
+            if (accessor == null)
+            {
+              accessor = StoreThreadLocal.getAccessor();
+            }
+
+            chunkReader = accessor.createChunkReader(revision, feature);
+          }
+
+          int toIndex = j;
+          if (fromIndex == toIndex - 1)
+          {
+            chunkReader.addSimpleChunk(fromIndex);
+          }
+          else
+          {
+            chunkReader.addRangedChunk(fromIndex, toIndex);
+          }
+
+          fromIndex = -1;
+        }
+      }
+    }
+
+    // Add last chunk
+    if (fromIndex != -1)
+    {
+      if (chunkReader == null)
+      {
+        if (accessor == null)
+        {
+          accessor = StoreThreadLocal.getAccessor();
+        }
+
+        chunkReader = accessor.createChunkReader(revision, feature);
+      }
+
+      int toIndex = chunkEnd;
+      if (fromIndex == toIndex - 1)
+      {
+        chunkReader.addSimpleChunk(fromIndex);
+      }
+      else
+      {
+        chunkReader.addRangedChunk(fromIndex, toIndex);
+      }
+    }
+
+    if (chunkReader != null)
+    {
+      List<Chunk> chunks = chunkReader.executeRead();
+      for (Chunk chunk : chunks)
+      {
+        int startIndex = chunk.getStartIndex();
+        for (int indexInChunk = 0; indexInChunk < chunk.size(); indexInChunk++)
+        {
+          Object id = chunk.get(indexInChunk);
+          list.set(startIndex + indexInChunk, id);
+        }
+      }
+    }
+
+    return accessor;
+  }
+
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext)
   {
     if (considerCommitContext)
@@ -227,7 +427,7 @@ public class Repository extends Container<Object> implements InternalRepository
     this.sessionManager = sessionManager;
   }
 
-  public InternalRevisionManager getRevisionManager()
+  public InternalCDORevisionResolver getRevisionManager()
   {
     return revisionManager;
   }
@@ -235,7 +435,7 @@ public class Repository extends Container<Object> implements InternalRepository
   /**
    * @since 2.0
    */
-  public void setRevisionManager(InternalRevisionManager revisionManager)
+  public void setRevisionManager(InternalCDORevisionResolver revisionManager)
   {
     this.revisionManager = revisionManager;
   }
@@ -551,8 +751,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
     packageRegistry.setReplacingDescriptors(true);
     packageRegistry.setPackageLoader(this);
+    revisionManager.setRevisionLoader(this);
     sessionManager.setRepository(this);
-    revisionManager.setRepository(this);
     queryManager.setRepository(this);
     notificationManager.setRepository(this);
     commitManager.setRepository(this);
@@ -737,9 +937,9 @@ public class Repository extends Container<Object> implements InternalRepository
       return new SessionManager();
     }
 
-    protected InternalRevisionManager createRevisionManager()
+    protected InternalCDORevisionResolver createRevisionManager()
     {
-      return new RevisionManager();
+      return new CDORevisionResolverImpl();
     }
 
     protected InternalQueryManager createQueryManager()

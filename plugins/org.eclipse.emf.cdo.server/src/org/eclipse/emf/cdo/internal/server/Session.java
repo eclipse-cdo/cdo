@@ -26,9 +26,9 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.SessionCreationException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalAudit;
-import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
@@ -330,7 +330,7 @@ public class Session extends Container<IView> implements InternalSession
   public void collectContainedRevisions(InternalCDORevision revision, int referenceChunk, Set<CDOID> revisions,
       List<CDORevision> additionalRevisions)
   {
-    InternalRevisionManager revisionManager = getManager().getRepository().getRevisionManager();
+    InternalCDORevisionResolver revisionManager = getManager().getRepository().getRevisionManager();
     EClass eClass = revision.getEClass();
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(eClass);
     for (int i = 0; i < features.length; i++)

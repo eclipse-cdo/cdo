@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -83,26 +84,26 @@ public interface IStoreAccessor extends IQueryHandlerProvider
    * Reads a current revision (i.e. one with revised == 0) from the back-end. Returns <code>null</code> if the id is
    * invalid.
    * 
-   * @since 2.0
+   * @since 3.0
    */
-  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache);
+  public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache);
 
   /**
    * Reads a revision with the given version from the back-end. This method will only be called by the framework if
    * {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is invalid.
    * 
-   * @since 2.0
+   * @since 3.0
    */
-  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version);
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, CDORevisionCacheAdder cache, int version);
 
   /**
    * Reads a revision from the back-end that was valid at the given timeStamp. This method will only be called by the
    * framework if {@link IRepository#isSupportingAudits()} is <code>true</code>. Returns <code>null</code> if the id is
    * invalid.
    * 
-   * @since 2.0
+   * @since 3.0
    */
-  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp);
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, CDORevisionCacheAdder cache, long timeStamp);
 
   /**
    * Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
@@ -297,14 +298,5 @@ public interface IStoreAccessor extends IQueryHandlerProvider
     {
       public CDOID getResourceID();
     }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 2.0
-   */
-  public interface AdditionalRevisionCache
-  {
-    public void cacheRevision(InternalCDORevision revision);
   }
 }

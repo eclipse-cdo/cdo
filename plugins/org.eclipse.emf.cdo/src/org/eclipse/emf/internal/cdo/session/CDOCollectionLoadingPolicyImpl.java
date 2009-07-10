@@ -12,15 +12,16 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
  * @author Simon McDuff
@@ -48,8 +49,8 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
     return resolveChunkSize;
   }
 
-  public Object resolveProxy(CDORevisionResolver revisionManager, CDORevision rev, EStructuralFeature feature,
-      int accessIndex, int serverIndex)
+  public Object resolveProxy(CDOSession session, CDORevision rev, EStructuralFeature feature, int accessIndex,
+      int serverIndex)
   {
     // Get proxy values
     InternalCDORevision revision = (InternalCDORevision)rev;
@@ -110,7 +111,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
       }
     }
 
-    return ((InternalCDORevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex, fetchIndex,
-        fromIndex, toIndex);
+    CDOSessionProtocol protocol = ((InternalCDOSession)session).getSessionProtocol();
+    return protocol.loadChunk(revision, feature, accessIndex, fetchIndex, fromIndex, toIndex);
   }
 }

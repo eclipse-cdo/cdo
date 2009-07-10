@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver.RevisionLoader;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -47,7 +48,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDOSessionProtocol extends CDOProtocol, PackageLoader
+public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, RevisionLoader
 {
   public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled);
 
@@ -58,16 +59,20 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader
 
   public RepositoryTimeResult getRepositoryTime();
 
+  /**
+   * @param revision
+   * @param feature
+   * @param accessIndex
+   *          Index of the item access at the client (with modifications)
+   * @param fetchIndex
+   *          Index of the item access at the server (without any modifications)
+   * @param fromIndex
+   *          Load objects at the client from fromIndex (inclusive)
+   * @param toIndex
+   *          Load objects at the client to toIndex (inclusive)
+   */
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
       int fromIndex, int toIndex);
-
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk);
-
-  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp);
-
-  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version);
-
-  public List<InternalCDORevision> verifyRevision(List<InternalCDORevision> revisions);
 
   public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize);
 

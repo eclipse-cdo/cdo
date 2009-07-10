@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -75,9 +74,9 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return objectType;
   }
 
-  public InternalCDORevision getRevision(CDOID id)
+  public CDORevision getRevision(CDOID id)
   {
-    InternalCDORevision revision = level1.getRevision(id);
+    CDORevision revision = level1.getRevision(id);
     if (revision == null)
     {
       revision = level2.getRevision(id);
@@ -86,9 +85,9 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public InternalCDORevision getRevisionByTime(CDOID id, long timeStamp)
+  public CDORevision getRevisionByTime(CDOID id, long timeStamp)
   {
-    InternalCDORevision revision = level1.getRevisionByTime(id, timeStamp);
+    CDORevision revision = level1.getRevisionByTime(id, timeStamp);
     if (revision == null)
     {
       revision = level2.getRevisionByTime(id, timeStamp);
@@ -97,9 +96,9 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public InternalCDORevision getRevisionByVersion(CDOID id, int version)
+  public CDORevision getRevisionByVersion(CDOID id, int version)
   {
-    InternalCDORevision revision = level1.getRevisionByVersion(id, version);
+    CDORevision revision = level1.getRevisionByVersion(id, version);
     if (revision == null)
     {
       revision = level2.getRevisionByVersion(id, version);
@@ -116,14 +115,14 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return revisions;
   }
 
-  public boolean addRevision(InternalCDORevision revision)
+  public boolean addRevision(CDORevision revision)
   {
     return level1.addRevision(revision);
   }
 
-  public InternalCDORevision removeRevision(CDOID id, int version)
+  public CDORevision removeRevision(CDOID id, int version)
   {
-    InternalCDORevision revision = level1.removeRevision(id, version);
+    CDORevision revision = level1.removeRevision(id, version);
     if (revision == null)
     {
       revision = level2.removeRevision(id, version);
@@ -154,7 +153,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     if (event instanceof EvictionEvent)
     {
       EvictionEvent e = (EvictionEvent)event;
-      InternalCDORevision revision = e.getRevision();
+      CDORevision revision = e.getRevision();
       if (revision != null)
       {
         CDORevisionCache cache = e.getSource();
@@ -170,7 +169,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     }
   }
 
-  protected void evictedFromLevel1(InternalCDORevision revision)
+  protected void evictedFromLevel1(CDORevision revision)
   {
     level2.addRevision(revision);
     if (TRACER.isEnabled())
@@ -179,7 +178,7 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     }
   }
 
-  protected void evictedFromLevel2(InternalCDORevision revision)
+  protected void evictedFromLevel2(CDORevision revision)
   {
   }
 

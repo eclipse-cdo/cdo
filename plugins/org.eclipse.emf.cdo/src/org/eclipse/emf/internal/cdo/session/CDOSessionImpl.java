@@ -28,12 +28,12 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
@@ -56,6 +57,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -86,7 +88,6 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -141,9 +142,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private InternalCDORevisionManager revisionManager;
+  private InternalCDORevisionResolver revisionManager;
 
   private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
+
+  private IRWLockManager<CDOSessionImpl, Object> lockmanager = new RWLockManager<CDOSessionImpl, Object>();
+
+  @ExcludeFromDump
+  private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
 
   private CDOAuthenticator authenticator;
 
@@ -220,6 +226,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return repository;
   }
 
+  public void setRepository(CDOSession.Repository repository)
+  {
+    this.repository = repository;
+  }
+
   /**
    * @param result
    * @since 2.0
@@ -260,11 +271,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return !isActive();
   }
 
-  public void setRepositoryName(String repositoryName)
-  {
-    repository = new TemporaryRepositoryName(repositoryName);
-  }
-
   /**
    * @since 2.0
    */
@@ -297,12 +303,29 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return getSessionProtocol().loadPackages(packageUnit);
   }
 
-  public InternalCDORevisionManager getRevisionManager()
+  public void acquireAtomicRequestLock(Object key)
+  {
+    try
+    {
+      lockmanager.lock(LockType.WRITE, key, this, RWLockManager.WAIT);
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  public void releaseAtomicRequestLock(Object key)
+  {
+    lockmanager.unlock(LockType.WRITE, key, singletonCollection);
+  }
+
+  public InternalCDORevisionResolver getRevisionManager()
   {
     return revisionManager;
   }
 
-  public void setRevisionManager(InternalCDORevisionManager revisionManager)
+  public void setRevisionManager(InternalCDORevisionResolver revisionManager)
   {
     this.revisionManager = revisionManager;
   }
@@ -512,6 +535,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   }
 
   /**
+   * @since 3.0
+   */
+  public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
+  {
+    CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
+    return policy.resolveProxy(this, revision, feature, accessIndex, serverIndex);
+  }
+
+  /**
    * @since 2.0
    */
   public void handleSyncResponse(long timestamp, Collection<CDOPackageUnit> newPackageUnits,
@@ -688,9 +720,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return new CDOPackageRegistryImpl();
   }
 
-  protected InternalCDORevisionManager createRevisionManager()
+  protected InternalCDORevisionResolver createRevisionManager()
   {
-    return new CDORevisionManagerImpl(this);
+    return new CDORevisionResolverImpl();
   }
 
   protected InternalCDORemoteSessionManager createRemoteSessionManager()
@@ -756,7 +788,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     EventUtil.addListener(sessionProtocol, sessionProtocolListener);
 
-    revisionManager.setLockmanager(new RWLockManager<CDORevisionResolver, Object>());
+    revisionManager.setRevisionLoader(sessionProtocol);
+    revisionManager.setRevisionLocker(this);
     LifecycleUtil.activate(revisionManager);
 
     remoteSessionManager.activate();
@@ -1168,49 +1201,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @author Eike Stepper
    */
-  private static final class TemporaryRepositoryName implements CDOSession.Repository
-  {
-    private String name;
-
-    public TemporaryRepositoryName(String name)
-    {
-      this.name = name;
-    }
-
-    public String getName()
-    {
-      return name;
-    }
-
-    public long getCreationTime()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public long getCurrentTime()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public long getCurrentTime(boolean forceRefresh)
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public String getUUID()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public boolean isSupportingAudits()
-    {
-      throw new UnsupportedOperationException();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
   private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent
   {
     private static final long serialVersionUID = 1L;
@@ -1490,23 +1480,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
-        int fromIndex, int toIndex)
-    {
-      int attempt = 0;
-      for (;;)
-      {
-        try
-        {
-          return delegate.loadChunk(revision, feature, accessIndex, fetchIndex, fromIndex, toIndex);
-        }
-        catch (Exception ex)
-        {
-          handleException(++attempt, ex);
-        }
-      }
-    }
-
     public void loadLibraries(Set<String> missingLibraries, File cacheFolder)
     {
       int attempt = 0;
@@ -1532,6 +1505,55 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         try
         {
           return delegate.loadPackages(packageUnit);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
+        int fromIndex, int toIndex)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadChunk(revision, feature, accessIndex, fetchIndex, fromIndex, toIndex);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadRevision(id, referenceChunk);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.loadRevisionByTime(id, referenceChunk, timeStamp);
         }
         catch (Exception ex)
         {
@@ -1580,6 +1602,38 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         try
         {
           return delegate.loadRevisionsByTime(ids, referenceChunk, timeStamp);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    // public List<InternalCDORevision> verifyRevisions(List<InternalCDORevision> revisions)
+    // {
+    // int attempt = 0;
+    // for (;;)
+    // {
+    // try
+    // {
+    // return delegate.verifyRevisions(revisions);
+    // }
+    // catch (Exception ex)
+    // {
+    // handleException(++attempt, ex);
+    // }
+    // }
+    // }
+
+    public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.verifyRevision(revision, referenceChunk);
         }
         catch (Exception ex)
         {
@@ -1731,22 +1785,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         {
           delegate.unsubscribeRemoteSessions();
           return;
-        }
-        catch (Exception ex)
-        {
-          handleException(++attempt, ex);
-        }
-      }
-    }
-
-    public List<InternalCDORevision> verifyRevision(List<InternalCDORevision> revisions)
-    {
-      int attempt = 0;
-      for (;;)
-      {
-        try
-        {
-          return delegate.verifyRevision(revisions);
         }
         catch (Exception ex)
         {

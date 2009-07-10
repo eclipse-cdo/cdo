@@ -15,12 +15,19 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver.RevisionLocker;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.Collection;
 import java.util.Set;
@@ -29,15 +36,15 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
-    InternalCDOPackageRegistry.PackageProcessor, InternalCDOPackageRegistry.PackageLoader, ILifecycle
+public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, PackageProcessor, PackageLoader,
+    RevisionLocker, ILifecycle
 {
   public CDOSessionProtocol getSessionProtocol();
 
   /**
    * @since 3.0
    */
-  public InternalCDORevisionManager getRevisionManager();
+  public InternalCDORevisionResolver getRevisionManager();
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 
@@ -50,8 +57,6 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
 
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
 
-  public void setRepositoryName(String repositoryName);
-
   public CDOAuthenticator getAuthenticator();
 
   public void setAuthenticator(CDOAuthenticator authenticator);
@@ -59,6 +64,11 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
   public void setUserID(String userID);
 
   public void viewDetached(InternalCDOView view);
+
+  /**
+   * @since 3.0
+   */
+  public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex);
 
   public void handleCommitNotification(long timeStamp, Collection<CDOPackageUnit> newPackageUnits,
       Set<CDOIDAndVersion> dirtyOIDs, Collection<CDOID> detachedObjects, Collection<CDORevisionDelta> deltas,

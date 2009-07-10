@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.common.revision.cache;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.revision.cache.noop.NOOPRevisionCache;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
@@ -26,7 +25,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDORevisionCache extends INotifier
+public interface CDORevisionCache extends INotifier, CDORevisionCacheAdder
 {
   /**
    * @since 3.0
@@ -35,20 +34,30 @@ public interface CDORevisionCache extends INotifier
 
   public EClass getObjectType(CDOID id);
 
-  public InternalCDORevision getRevision(CDOID id);
+  /**
+   * @since 3.0
+   */
+  public CDORevision getRevision(CDOID id);
 
-  public InternalCDORevision getRevisionByTime(CDOID id, long timeStamp);
+  /**
+   * @since 3.0
+   */
+  public CDORevision getRevisionByTime(CDOID id, long timeStamp);
 
-  public InternalCDORevision getRevisionByVersion(CDOID id, int version);
+  /**
+   * @since 3.0
+   */
+  public CDORevision getRevisionByVersion(CDOID id, int version);
 
-  public InternalCDORevision removeRevision(CDOID id, int version);
+  /**
+   * @since 3.0
+   */
+  public CDORevision removeRevision(CDOID id, int version);
 
   /**
    * Returns a list of {@link CDORevision revisions} that are current.
    */
   public List<CDORevision> getRevisions();
-
-  public boolean addRevision(InternalCDORevision revision);
 
   public CDOID getResourceID(CDOID folderID, String name, long timeStamp);
 
@@ -68,6 +77,9 @@ public interface CDORevisionCache extends INotifier
 
     public int getVersion();
 
-    public InternalCDORevision getRevision();
+    /**
+     * @since 3.0
+     */
+    public CDORevision getRevision();
   }
 }

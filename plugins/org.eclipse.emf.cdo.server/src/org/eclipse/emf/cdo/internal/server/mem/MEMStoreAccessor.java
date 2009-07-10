@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server.mem;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
@@ -141,10 +142,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     throw new UnsupportedOperationException();
   }
 
-  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
+  public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache)
   {
     InternalCDORevision storeRevision = getStore().getRevision(id);
-    // IRevisionManager revisionManager = getStore().getRepository().getRevisionManager();
+    // CDORevisionResolver revisionManager = getStore().getRepository().getRevisionManager();
     // InternalCDORevision newRevision = new InternalCDORevision(revisionManager, storeRevision.getEClass(),
     // storeRevision
     // .getID());
@@ -168,12 +169,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
     return storeRevision;
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, CDORevisionCacheAdder cache, long timeStamp)
   {
     return getStore().getRevisionByTime(id, timeStamp);
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, CDORevisionCacheAdder cache, int version)
   {
     return getStore().getRevisionByVersion(id, version);
   }

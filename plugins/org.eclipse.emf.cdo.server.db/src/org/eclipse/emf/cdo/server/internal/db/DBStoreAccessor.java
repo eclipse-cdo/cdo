@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
@@ -163,7 +164,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return result;
   }
 
-  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
+  public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache)
   {
     if (TRACER.isEnabled())
     {
@@ -189,7 +190,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, CDORevisionCacheAdder cache, long timeStamp)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
 
@@ -216,7 +217,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     return null;
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, CDORevisionCacheAdder cache, int version)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
 

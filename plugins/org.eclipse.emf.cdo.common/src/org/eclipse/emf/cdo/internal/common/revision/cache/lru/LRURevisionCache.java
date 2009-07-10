@@ -158,7 +158,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return null;
   }
 
-  public synchronized boolean addRevision(InternalCDORevision revision)
+  public synchronized boolean addRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
     {
@@ -166,7 +166,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
           revision, revision.getCreated(), revision.getRevised(), revision.isCurrent());
     }
 
-    RevisionHolder newHolder = createHolder(revision);
+    RevisionHolder newHolder = createHolder((InternalCDORevision)revision);
     LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
     list.add((DLRevisionHolder)newHolder);
 
@@ -191,7 +191,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
       }
     }
 
-    adjustHolder(revision, newHolder, lastHolder, holder);
+    adjustHolder((InternalCDORevision)revision, newHolder, lastHolder, holder);
     return true;
   }
 

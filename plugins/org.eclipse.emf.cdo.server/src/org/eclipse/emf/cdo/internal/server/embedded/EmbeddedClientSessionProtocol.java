@@ -112,10 +112,20 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  @SuppressWarnings("unchecked")
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
+      int fromIndex, int toIndex)
   {
-    return (List<InternalCDORevision>)(List<?>)repository.getRevisionManager().getRevisions(ids, referenceChunk);
+    return null;
+  }
+
+  public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+  {
+    return null;
+  }
+
+  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  {
+    return null;
   }
 
   public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
@@ -123,13 +133,18 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     return null;
   }
 
+  @SuppressWarnings("unchecked")
+  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  {
+    return (List<InternalCDORevision>)(List<?>)repository.getRevisionManager().getRevisions(ids, referenceChunk);
+  }
+
   public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
     return null;
   }
 
-  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
-      int fromIndex, int toIndex)
+  public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
   {
     return null;
   }

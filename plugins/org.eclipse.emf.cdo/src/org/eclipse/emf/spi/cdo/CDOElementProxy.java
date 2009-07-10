@@ -12,7 +12,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -28,5 +28,5 @@ public interface CDOElementProxy
   /**
    * @since 3.0
    */
-  public Object resolve(CDORevisionResolver revisionManager, CDORevision revision, EStructuralFeature feature, int index);
+  public Object resolve(CDOSession session, CDORevision revision, EStructuralFeature feature, int index);
 }

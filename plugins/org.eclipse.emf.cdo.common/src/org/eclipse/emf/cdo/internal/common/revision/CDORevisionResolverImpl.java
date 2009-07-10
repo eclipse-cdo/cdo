@@ -14,18 +14,13 @@ package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.concurrent.IRWLockManager;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -34,24 +29,21 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDORevisionResolverImpl extends Lifecycle implements InternalCDORevisionResolver
+public class CDORevisionResolverImpl extends Lifecycle implements InternalCDORevisionResolver
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionResolverImpl.class);
 
+  private RevisionLoader revisionLoader;
+
+  private RevisionLocker revisionLocker;
+
   private CDORevisionCache cache;
-
-  private IRWLockManager<CDORevisionResolver, Object> lockmanager;
-
-  @ExcludeFromDump
-  private Set<CDORevisionResolverImpl> singletonCollection = Collections.singleton(this);
 
   @ExcludeFromDump
   private Object loadAndAddLock = new Object();
@@ -63,6 +55,26 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
   {
   }
 
+  public RevisionLoader getRevisionLoader()
+  {
+    return revisionLoader;
+  }
+
+  public void setRevisionLoader(RevisionLoader revisionLoader)
+  {
+    this.revisionLoader = revisionLoader;
+  }
+
+  public RevisionLocker getRevisionLocker()
+  {
+    return revisionLocker;
+  }
+
+  public void setRevisionLocker(RevisionLocker revisionLocker)
+  {
+    this.revisionLocker = revisionLocker;
+  }
+
   public CDORevisionCache getCache()
   {
     return cache;
@@ -71,16 +83,6 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
   public void setCache(CDORevisionCache cache)
   {
     this.cache = cache;
-  }
-
-  public IRWLockManager<CDORevisionResolver, Object> getLockmanager()
-  {
-    return lockmanager;
-  }
-
-  public void setLockmanager(IRWLockManager<CDORevisionResolver, Object> lockmanager)
-  {
-    this.lockmanager = lockmanager;
   }
 
   public boolean containsRevision(CDOID id)
@@ -109,7 +111,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
 
     try
     {
-      InternalCDORevision revision = cache.getRevision(id);
+      InternalCDORevision revision = (InternalCDORevision)cache.getRevision(id);
       if (revision != null)
       {
         if (timeStamp == CDORevision.UNSPECIFIED_DATE)
@@ -134,7 +136,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
 
     try
     {
-      InternalCDORevision revision = cache.getRevisionByVersion(id, version);
+      InternalCDORevision revision = (InternalCDORevision)cache.getRevisionByVersion(id, version);
       if (revision != null)
       {
         if (timeStamp == CDORevision.UNSPECIFIED_DATE)
@@ -164,7 +166,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
 
     try
     {
-      InternalCDORevision revision = cache.getRevision(id);
+      InternalCDORevision revision = (InternalCDORevision)cache.getRevision(id);
       if (revision == null)
       {
         if (loadOnDemand)
@@ -174,7 +176,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
             TRACER.format("Loading revision {0}", id); //$NON-NLS-1$
           }
 
-          revision = loadRevision(id, referenceChunk);
+          revision = revisionLoader.loadRevision(id, referenceChunk);
           addCachedRevisionIfNotNull(revision);
         }
       }
@@ -207,7 +209,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
 
     try
     {
-      InternalCDORevision revision = cache.getRevisionByTime(id, timeStamp);
+      InternalCDORevision revision = (InternalCDORevision)cache.getRevisionByTime(id, timeStamp);
       if (revision == null)
       {
         if (loadOnDemand)
@@ -217,7 +219,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
             TRACER.format("Loading revision {0} by time {1,date} {1,time}", id, timeStamp); //$NON-NLS-1$
           }
 
-          revision = loadRevisionByTime(id, referenceChunk, timeStamp);
+          revision = revisionLoader.loadRevisionByTime(id, referenceChunk, timeStamp);
           addCachedRevisionIfNotNull(revision);
         }
       }
@@ -250,7 +252,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
 
     try
     {
-      InternalCDORevision revision = cache.getRevisionByVersion(id, version);
+      InternalCDORevision revision = (InternalCDORevision)cache.getRevisionByVersion(id, version);
       if (revision == null)
       {
         if (loadOnDemand)
@@ -260,7 +262,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
             TRACER.format("Loading revision {0} by version {1}", id, version); //$NON-NLS-1$
           }
 
-          revision = loadRevisionByVersion(id, referenceChunk, version);
+          revision = revisionLoader.loadRevisionByVersion(id, referenceChunk, version);
           addCachedRevisionIfNotNull(revision);
         }
       }
@@ -293,7 +295,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
 
       try
       {
-        List<InternalCDORevision> missingRevisions = loadRevisions(missingIDs, referenceChunk);
+        List<InternalCDORevision> missingRevisions = revisionLoader.loadRevisions(missingIDs, referenceChunk);
         handleMissingRevisions(revisions, missingRevisions);
       }
       finally
@@ -326,7 +328,8 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
 
       try
       {
-        List<InternalCDORevision> missingRevisions = loadRevisionsByTime(missingIDs, referenceChunk, timeStamp);
+        List<InternalCDORevision> missingRevisions = revisionLoader.loadRevisionsByTime(missingIDs, referenceChunk,
+            timeStamp);
         handleMissingRevisions(revisions, missingRevisions);
       }
       finally
@@ -356,7 +359,7 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
     }
   }
 
-  public boolean addCachedRevision(InternalCDORevision revision)
+  public boolean addCachedRevision(CDORevision revision)
   {
     if (revision != null)
     {
@@ -364,6 +367,11 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
     }
 
     throw new IllegalArgumentException("revision == null"); //$NON-NLS-1$
+  }
+
+  public void removeCachedRevision(CDORevision revision)
+  {
+    removeCachedRevision(revision.getID(), revision.getVersion());
   }
 
   public void removeCachedRevision(CDOID id, int version)
@@ -380,17 +388,6 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
   {
     return revision;
   }
-
-  protected abstract InternalCDORevision loadRevision(CDOID id, int referenceChunk);
-
-  protected abstract InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
-
-  protected abstract InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version);
-
-  protected abstract List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk);
-
-  protected abstract List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk,
-      long timeStamp);
 
   @Override
   protected void doBeforeActivate() throws Exception
@@ -416,26 +413,19 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
     super.doDeactivate();
   }
 
-  protected void acquireAtomicRequestLock(Object key)
+  private void acquireAtomicRequestLock(Object key)
   {
-    if (lockmanager != null)
+    if (revisionLocker != null)
     {
-      try
-      {
-        lockmanager.lock(LockType.WRITE, key, this, RWLockManager.WAIT);
-      }
-      catch (InterruptedException ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
+      revisionLocker.acquireAtomicRequestLock(key);
     }
   }
 
-  protected void releaseAtomicRequestLock(Object key)
+  private void releaseAtomicRequestLock(Object key)
   {
-    if (lockmanager != null)
+    if (revisionLocker != null)
     {
-      lockmanager.unlock(LockType.WRITE, key, singletonCollection);
+      revisionLocker.releaseAtomicRequestLock(key);
     }
   }
 

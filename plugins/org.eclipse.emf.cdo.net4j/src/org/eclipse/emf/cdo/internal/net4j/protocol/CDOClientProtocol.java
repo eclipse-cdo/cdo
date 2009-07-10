@@ -47,6 +47,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -108,6 +109,16 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
+  public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+  {
+    return loadRevisions(Collections.singleton(id), referenceChunk).get(0);
+  }
+
+  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  {
+    return loadRevisionsByTime(Collections.singleton(id), referenceChunk, timeStamp).get(0);
+  }
+
   public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
     return send(new LoadRevisionRequest(this, ids, referenceChunk));
@@ -123,7 +134,12 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadRevisionByVersionRequest(this, id, referenceChunk, version)).get(0);
   }
 
-  public List<InternalCDORevision> verifyRevision(List<InternalCDORevision> revisions) throws TransportException
+  public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
+  {
+    return revision;
+  }
+
+  public List<InternalCDORevision> verifyRevisions(List<InternalCDORevision> revisions) throws TransportException
   {
     return send(new VerifyRevisionRequest(this, revisions));
   }

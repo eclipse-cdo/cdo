@@ -14,9 +14,11 @@ package org.eclipse.emf.cdo.session;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
  * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
@@ -42,11 +44,12 @@ public interface CDOCollectionLoadingPolicy
       return CDORevision.UNCHUNKED;
     }
 
-    public Object resolveProxy(CDORevisionResolver revisionManager, CDORevision revision, EStructuralFeature feature,
-        int accessIndex, int serverIndex)
+    public Object resolveProxy(CDOSession session, CDORevision revision, EStructuralFeature feature, int accessIndex,
+        int serverIndex)
     {
-      return ((InternalCDORevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex,
-          serverIndex, accessIndex, accessIndex);
+      CDOSessionProtocol protocol = ((InternalCDOSession)session).getSessionProtocol();
+      return protocol.loadChunk((InternalCDORevision)revision, feature, accessIndex, serverIndex, accessIndex,
+          accessIndex);
     }
   };
 
@@ -63,6 +66,6 @@ public interface CDOCollectionLoadingPolicy
    * 
    * @since 3.0
    */
-  public Object resolveProxy(CDORevisionResolver revisionManager, CDORevision revision, EStructuralFeature feature,
-      int accessIndex, int serverIndex);
+  public Object resolveProxy(CDOSession session, CDORevision revision, EStructuralFeature feature, int accessIndex,
+      int serverIndex);
 }

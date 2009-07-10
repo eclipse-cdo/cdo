@@ -30,10 +30,10 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalRevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -462,7 +462,9 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     CDOID id = dirtyObjectDelta.getID();
     int version = dirtyObjectDelta.getOriginVersion();
 
-    InternalRevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+    InternalRepository repository = transaction.getRepository();
+    InternalCDORevisionResolver revisionManager = repository.getRevisionManager();
+
     CDORevision originObject = revisionManager.getRevisionByVersion(id, CDORevision.UNCHUNKED, version, loadOnDemand);
     if (originObject != null)
     {
@@ -475,7 +477,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
           {
             InternalCDORevision internalOriginObject = (InternalCDORevision)originObject;
             // TODO ensureChunk should get promoted to API because the cast is not really nice here.
-            revisionManager.ensureChunk(internalOriginObject, feature, 0, internalOriginObject.getList(feature).size());
+            repository.ensureChunk(internalOriginObject, feature, 0, internalOriginObject.getList(feature).size());
           }
         }
       }
@@ -607,7 +609,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
     try
     {
       monitor.begin(revisions.length);
-      InternalRevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+      InternalCDORevisionResolver revisionManager = transaction.getRepository().getRevisionManager();
       for (CDORevision revision : revisions)
       {
         if (revision != null)
@@ -644,7 +646,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
   private void detachObjects(OMMonitor monitor)
   {
     detachedRevisions.clear();
-    InternalRevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+    InternalCDORevisionResolver revisionManager = transaction.getRepository().getRevisionManager();
     CDOID[] detachedObjects = getDetachedObjects();
 
     try

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
@@ -238,7 +239,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return getStore().getPackageHandler().loadPackageUnit(packageUnit);
   }
 
-  public InternalCDORevision readRevision(CDOID id, int listChunk, AdditionalRevisionCache cache)
+  public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache)
   {
     if (!(id instanceof CDOIDHibernate))
     {
@@ -248,12 +249,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return HibernateUtil.getInstance().getCDORevision(id);
   }
 
-  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, AdditionalRevisionCache cache, long timeStamp)
+  public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, CDORevisionCacheAdder cache, long timeStamp)
   {
     throw new UnsupportedOperationException();
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, AdditionalRevisionCache cache, int version)
+  public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, CDORevisionCacheAdder cache, int version)
   {
     // TODO Could be necessary to implement
     throw new UnsupportedOperationException();

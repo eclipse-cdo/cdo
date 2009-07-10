@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.net4j.CDOSession;
+
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 
 import org.eclipse.net4j.connector.IConnector;
@@ -84,7 +86,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     }
 
     CDONet4jSessionImpl session = new CDONet4jSessionImpl();
-    session.setRepositoryName(repositoryName);
+    session.setRepository(new TemporaryRepositoryName(repositoryName));
     if (connector != null)
     {
       session.setFailOverStrategy(new NOOPFailOverStrategy(connector));
@@ -95,5 +97,48 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     }
 
     return session;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class TemporaryRepositoryName implements CDOSession.Repository
+  {
+    private String name;
+
+    public TemporaryRepositoryName(String name)
+    {
+      this.name = name;
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    public long getCreationTime()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public long getCurrentTime()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public long getCurrentTime(boolean forceRefresh)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public String getUUID()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isSupportingAudits()
+    {
+      throw new UnsupportedOperationException();
+    }
   }
 }

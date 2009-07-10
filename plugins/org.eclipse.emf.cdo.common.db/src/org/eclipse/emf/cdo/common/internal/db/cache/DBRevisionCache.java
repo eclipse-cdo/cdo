@@ -493,20 +493,20 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    *          the revision to add to this cache
    * @return true, if successful
    */
-  public boolean addRevision(final InternalCDORevision revision)
+  public boolean addRevision(final CDORevision revision)
   {
     Connection connection = null;
 
     try
     {
       connection = getConnection();
-      AbstractUpdateStatement update = createAddRevisionStatement(revision);
+      AbstractUpdateStatement update = createAddRevisionStatement((InternalCDORevision)revision);
       update.update(connection);
 
       if (revision.getVersion() > 1)
       {
         // Update former latest revision
-        update = createUpdateRevisedStatement(revision);
+        update = createUpdateRevisedStatement((InternalCDORevision)revision);
         update.update(connection);
       }
 

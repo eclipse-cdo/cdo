@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -20,9 +20,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
-import org.eclipse.emf.cdo.internal.server.RevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -203,8 +203,9 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
 
     transaction.commit();
 
-    TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
-    revisionManager.removeCachedRevision(CDOUtil.getCDOObject(customer).cdoRevision());
+    InternalCDORevisionResolver revisionManager = getRepository().getRevisionManager();
+    CDORevision revision = CDOUtil.getCDOObject(customer).cdoRevision();
+    revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
 
     SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
@@ -218,16 +219,5 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
   private InternalCDORevision getCopyCDORevision(Object object)
   {
     return (InternalCDORevision)((CDOObject)object).cdoRevision().copy();
-  }
-
-  /**
-   * @author Simon McDuff
-   */
-  public static class TestRevisionManager extends RevisionManager
-  {
-    public void removeCachedRevision(CDORevision revision)
-    {
-      super.removeCachedRevision(revision.getID(), revision.getVersion());
-    }
   }
 }

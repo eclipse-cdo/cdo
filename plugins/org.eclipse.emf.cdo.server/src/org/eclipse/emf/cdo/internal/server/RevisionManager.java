@@ -13,7 +13,6 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -54,22 +53,9 @@ public class RevisionManager extends CDORevisionResolverImpl implements Internal
   /**
    * @since 2.0
    */
-  public InternalRepository getRepository()
-  {
-    return repository;
-  }
-
-  /**
-   * @since 2.0
-   */
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
-  }
-
-  public CDOIDObjectFactory getCDOIDObjectFactory()
-  {
-    return repository.getStore().getCDOIDObjectFactory();
   }
 
   /**
@@ -220,7 +206,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements Internal
   @Override
   protected InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    if (getRepository().isSupportingAudits())
+    if (repository.isSupportingAudits())
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       return accessor.readRevisionByTime(id, referenceChunk, additionalRevisionCache, timeStamp);
@@ -236,7 +222,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements Internal
     // "Auditing supports isn't activated (see IRepository.Props.PROP_SUPPORTING_AUDITS).");
     // }
 
-    throw new UnsupportedOperationException("No support for auditing mode"); //$NON-NLS-1$
+    throw new IllegalStateException("No support for auditing mode"); //$NON-NLS-1$
   }
 
   /**
@@ -246,7 +232,7 @@ public class RevisionManager extends CDORevisionResolverImpl implements Internal
   protected InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    if (getRepository().isSupportingAudits())
+    if (repository.isSupportingAudits())
     {
       return accessor.readRevisionByVersion(id, referenceChunk, additionalRevisionCache, version);
     }
@@ -285,15 +271,6 @@ public class RevisionManager extends CDORevisionResolverImpl implements Internal
     }
 
     return revisions;
-  }
-
-  /**
-   * TODO Move this to the cache(s)
-   */
-  protected int getLRUCapacity(String prop)
-  {
-    String capacity = repository.getProperties().get(prop);
-    return capacity == null ? 0 : Integer.valueOf(capacity);
   }
 
   @Override

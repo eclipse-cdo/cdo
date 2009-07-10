@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +35,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOXXRevisionManagerImpl extends CDORevisionResolverImpl implements InternalCDOXXRevisionManager
+public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements InternalCDORevisionManager
 {
   private InternalCDOSession session;
 
@@ -43,12 +43,12 @@ public class CDOXXRevisionManagerImpl extends CDORevisionResolverImpl implements
 
   private RWLockManager<CDORevisionResolver, Object> lockmanager = new RWLockManager<CDORevisionResolver, Object>();
 
-  private Set<CDOXXRevisionManagerImpl> singletonCollection = Collections.singleton(this);
+  private Set<CDORevisionManagerImpl> singletonCollection = Collections.singleton(this);
 
   /**
    * @since 2.0
    */
-  public CDOXXRevisionManagerImpl(InternalCDOSession session)
+  public CDORevisionManagerImpl(InternalCDOSession session)
   {
     this.session = session;
   }

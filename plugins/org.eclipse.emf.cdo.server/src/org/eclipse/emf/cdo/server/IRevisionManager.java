@@ -18,8 +18,4 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
  */
 public interface IRevisionManager extends CDORevisionResolver
 {
-  /**
-   * @since 2.0
-   */
-  public IRepository getRepository();
 }

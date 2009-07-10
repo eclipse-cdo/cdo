@@ -87,7 +87,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
@@ -138,7 +138,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private InternalCDOXXRevisionManager revisionManager;
+  private InternalCDORevisionManager revisionManager;
 
   private CDOAuthenticator authenticator;
 
@@ -292,12 +292,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return getSessionProtocol().loadPackages(packageUnit);
   }
 
-  public InternalCDOXXRevisionManager getRevisionManager()
+  public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
   }
 
-  public void setRevisionManager(InternalCDOXXRevisionManager revisionManager)
+  public void setRevisionManager(InternalCDORevisionManager revisionManager)
   {
     this.revisionManager = revisionManager;
   }
@@ -637,9 +637,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return new CDOPackageRegistryImpl();
   }
 
-  protected InternalCDOXXRevisionManager createRevisionManager()
+  protected InternalCDORevisionManager createRevisionManager()
   {
-    return new CDOXXRevisionManagerImpl(this);
+    return new CDORevisionManagerImpl(this);
   }
 
   protected InternalCDORemoteSessionManager createRemoteSessionManager()

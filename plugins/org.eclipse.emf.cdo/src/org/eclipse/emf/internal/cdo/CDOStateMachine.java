@@ -39,7 +39,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.ArrayList;
@@ -725,7 +725,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         revision.adjustReferences(data.getReferenceAdjuster());
       }
 
-      InternalCDOXXRevisionManager revisionManager = view.getSession().getRevisionManager();
+      InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
       revisionManager.addCachedRevision(revision);
       changeState(object, CDOState.CLEAN);
     }

@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 import java.text.MessageFormat;
 
@@ -44,7 +44,7 @@ public final class CDOElementProxyImpl implements CDOElementProxy
 
   public Object resolve(CDORevisionResolver revisionManager, CDORevision revision, EStructuralFeature feature, int index)
   {
-    return ((InternalCDOXXRevisionManager)revisionManager).resolveElementProxy(revision, feature, index, getIndex());
+    return ((InternalCDORevisionManager)revisionManager).resolveElementProxy(revision, feature, index, getIndex());
   }
 
   @Override

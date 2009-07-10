@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public interface InternalRevisionManager extends IRevisionManager, InternalCDORevisionResolver
 {
-  public InternalRepository getRepository();
-
   public void setRepository(InternalRepository repository);
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,

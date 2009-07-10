@@ -26,7 +26,7 @@ import org.eclipse.emf.internal.cdo.transaction.CDOTimeStampContextImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -75,7 +75,7 @@ public abstract class AbstractSyncRevisionsRequest extends CDOClientRequest<Coll
   @Override
   protected Collection<CDOTimeStampContext> confirming(CDODataInput in) throws IOException
   {
-    InternalCDOXXRevisionManager revisionManager = getSession().getRevisionManager();
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
     TreeMap<Long, CDOTimeStampContext> mapofContext = new TreeMap<Long, CDOTimeStampContext>();
 
     int size = in.readInt();

@@ -20,7 +20,7 @@ import org.eclipse.net4j.util.collection.MoveableList;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 /**
  * @author Simon McDuff
@@ -110,7 +110,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
       }
     }
 
-    return ((InternalCDOXXRevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex, fetchIndex,
+    return ((InternalCDORevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex, fetchIndex,
         fromIndex, toIndex);
   }
 }

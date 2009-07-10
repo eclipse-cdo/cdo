@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 /**
  * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
@@ -45,7 +45,7 @@ public interface CDOCollectionLoadingPolicy
     public Object resolveProxy(CDORevisionResolver revisionManager, CDORevision revision, EStructuralFeature feature,
         int accessIndex, int serverIndex)
     {
-      return ((InternalCDOXXRevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex,
+      return ((InternalCDORevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex,
           serverIndex, accessIndex, accessIndex);
     }
   };

@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.tests.model1.Supplier;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 /**
  * @author Simon McDuff
@@ -33,7 +33,7 @@ public class Bugzilla_246456_Test extends AbstractCDOTest
 
     msg("Opening transaction");
     InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
-    InternalCDOXXRevisionManager revisionManager = transaction.getSession().getRevisionManager();
+    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
     ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityRevised(10);
     ((LRURevisionCache)((TwoLevelRevisionCache)revisionManager.getCache()).getLevel1()).setCapacityCurrent(10);
 

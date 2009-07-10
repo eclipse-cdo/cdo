@@ -34,7 +34,7 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory,
   /**
    * @since 3.0
    */
-  public InternalCDOXXRevisionManager getRevisionManager();
+  public InternalCDORevisionManager getRevisionManager();
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
 

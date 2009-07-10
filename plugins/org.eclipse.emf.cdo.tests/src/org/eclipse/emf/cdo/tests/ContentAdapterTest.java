@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -85,7 +85,7 @@ public class ContentAdapterTest extends AbstractCDOTest
       InternalCDOSession session = (InternalCDOSession)openModel1Session();
 
       CDOFetchRuleManagerInfo info = new CDOFetchRuleManagerInfo();
-      InternalCDOXXRevisionManager revisionManager = session.getRevisionManager();
+      InternalCDORevisionManager revisionManager = session.getRevisionManager();
       revisionManager.setRuleManager(info);
 
       InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();

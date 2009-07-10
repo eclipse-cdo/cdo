@@ -49,7 +49,7 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
-import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -365,7 +365,7 @@ public final class CDOStore implements EStore
         {
           CDOID id = (CDOID)value;
           CDOList list = revision.getList(feature);
-          InternalCDOXXRevisionManager revisionManager = view.getSession().getRevisionManager();
+          InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
           CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
           Collection<CDOID> listOfIDs = policy.loadAhead(revisionManager, eObject, feature, list, index, id);
           if (!listOfIDs.isEmpty())

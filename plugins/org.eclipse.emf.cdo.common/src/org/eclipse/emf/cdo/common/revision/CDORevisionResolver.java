@@ -4,14 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import org.eclipse.emf.ecore.EClass;
@@ -25,8 +24,6 @@ import java.util.List;
  */
 public interface CDORevisionResolver
 {
-  public CDOIDObjectFactory getCDOIDObjectFactory();
-
   /**
    * @return The type of an object if a revision for that object is in the revision cache, <code>null</code> otherwise.
    * @since 2.0

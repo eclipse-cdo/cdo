@@ -13,9 +13,10 @@ package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
+import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
 
 /**
  * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
@@ -41,10 +42,10 @@ public interface CDOCollectionLoadingPolicy
       return CDORevision.UNCHUNKED;
     }
 
-    public Object resolveProxy(CDORevisionManager revisionManager, CDORevision revision, EStructuralFeature feature,
+    public Object resolveProxy(CDORevisionResolver revisionManager, CDORevision revision, EStructuralFeature feature,
         int accessIndex, int serverIndex)
     {
-      return ((InternalCDORevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex,
+      return ((InternalCDOXXRevisionManager)revisionManager).loadChunkByRange(revision, feature, accessIndex,
           serverIndex, accessIndex, accessIndex);
     }
   };
@@ -57,9 +58,11 @@ public interface CDOCollectionLoadingPolicy
 
   /**
    * Defines a strategy to be used when the collection needs to resolve one element.
-   * {@link CDORevisionManager#loadChunkByRange(CDORevision, EStructuralFeature, int, int, int, int)} should be used to
+   * {@link CDORevisionResolver#loadChunkByRange(CDORevision, EStructuralFeature, int, int, int, int)} should be used to
    * resolve them.
+   * 
+   * @since 3.0
    */
-  public Object resolveProxy(CDORevisionManager revisionManager, CDORevision revision, EStructuralFeature feature,
+  public Object resolveProxy(CDORevisionResolver revisionManager, CDORevision revision, EStructuralFeature feature,
       int accessIndex, int serverIndex);
 }

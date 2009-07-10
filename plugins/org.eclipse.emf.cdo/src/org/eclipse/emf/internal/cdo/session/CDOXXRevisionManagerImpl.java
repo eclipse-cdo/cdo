@@ -14,8 +14,8 @@ package org.eclipse.emf.internal.cdo.session;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
-import org.eclipse.emf.cdo.session.CDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
@@ -24,8 +24,8 @@ import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,20 +35,20 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements InternalCDORevisionManager
+public class CDOXXRevisionManagerImpl extends CDORevisionResolverImpl implements InternalCDOXXRevisionManager
 {
   private InternalCDOSession session;
 
   private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
 
-  private RWLockManager<CDORevisionManager, Object> lockmanager = new RWLockManager<CDORevisionManager, Object>();
+  private RWLockManager<CDORevisionResolver, Object> lockmanager = new RWLockManager<CDORevisionResolver, Object>();
 
-  private Set<CDORevisionManagerImpl> singletonCollection = Collections.singleton(this);
+  private Set<CDOXXRevisionManagerImpl> singletonCollection = Collections.singleton(this);
 
   /**
    * @since 2.0
    */
-  public CDORevisionManagerImpl(InternalCDOSession session)
+  public CDOXXRevisionManagerImpl(InternalCDOSession session)
   {
     this.session = session;
   }

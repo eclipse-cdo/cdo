@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.session.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 
 import org.eclipse.emf.ecore.EObject;
@@ -37,7 +37,7 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
     this.chunkSize = chunkSize;
   }
 
-  public Collection<CDOID> loadAhead(CDORevisionManager revisionManager, EObject eObject, EStructuralFeature feature,
+  public Collection<CDOID> loadAhead(CDORevisionResolver revisionManager, EObject eObject, EStructuralFeature feature,
       CDOList list, int accessIndex, CDOID accessID)
   {
     if (chunkSize > 1 && !revisionManager.containsRevision(accessID))

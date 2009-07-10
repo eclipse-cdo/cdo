@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.session.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -29,7 +29,7 @@ public interface CDORevisionPrefetchingPolicy
 {
   public static final CDORevisionPrefetchingPolicy NO_PREFETCHING = new CDORevisionPrefetchingPolicy()
   {
-    public Collection<CDOID> loadAhead(CDORevisionManager revisionManager, EObject targetObject,
+    public Collection<CDOID> loadAhead(CDORevisionResolver revisionManager, EObject targetObject,
         EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID)
     {
       return Collections.emptyList();
@@ -38,7 +38,7 @@ public interface CDORevisionPrefetchingPolicy
 
   /**
    * @param revisionManager
-   *          Lookup availability of objects in the cache with {@link CDORevisionManager#containsRevision(CDOID)}.
+   *          Lookup availability of objects in the cache with {@link CDORevisionResolver#containsRevision(CDOID)}.
    * @param targetObject
    *          Container of the list
    * @param feature
@@ -46,7 +46,8 @@ public interface CDORevisionPrefetchingPolicy
    * @param accessIndex
    * @param accessID
    * @return Should return a list of id's to be fetch.
+   * @since 3.0
    */
-  public Collection<CDOID> loadAhead(CDORevisionManager revisionManager, EObject targetObject,
+  public Collection<CDOID> loadAhead(CDORevisionResolver revisionManager, EObject targetObject,
       EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID);
 }

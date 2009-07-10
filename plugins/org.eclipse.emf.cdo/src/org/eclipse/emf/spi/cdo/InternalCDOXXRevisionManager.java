@@ -11,7 +11,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.session.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalCDORevisionManager extends CDORevisionManager, InternalCDORevisionResolver
+public interface InternalCDOXXRevisionManager extends CDORevisionResolver, InternalCDORevisionResolver
 {
   public CDOFetchRuleManager getRuleManager();
 

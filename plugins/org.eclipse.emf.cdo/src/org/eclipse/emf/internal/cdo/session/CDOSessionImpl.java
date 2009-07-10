@@ -83,11 +83,11 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
-import org.eclipse.emf.spi.cdo.InternalCDORevisionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
+import org.eclipse.emf.spi.cdo.InternalCDOXXRevisionManager;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
@@ -138,7 +138,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private InternalCDOPackageRegistry packageRegistry;
 
-  private InternalCDORevisionManager revisionManager;
+  private InternalCDOXXRevisionManager revisionManager;
 
   private CDOAuthenticator authenticator;
 
@@ -292,12 +292,12 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return getSessionProtocol().loadPackages(packageUnit);
   }
 
-  public InternalCDORevisionManager getRevisionManager()
+  public InternalCDOXXRevisionManager getRevisionManager()
   {
     return revisionManager;
   }
 
-  public void setRevisionManager(InternalCDORevisionManager revisionManager)
+  public void setRevisionManager(InternalCDOXXRevisionManager revisionManager)
   {
     this.revisionManager = revisionManager;
   }
@@ -637,9 +637,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return new CDOPackageRegistryImpl();
   }
 
-  protected InternalCDORevisionManager createRevisionManager()
+  protected InternalCDOXXRevisionManager createRevisionManager()
   {
-    return new CDORevisionManagerImpl(this);
+    return new CDOXXRevisionManagerImpl(this);
   }
 
   protected InternalCDORemoteSessionManager createRemoteSessionManager()

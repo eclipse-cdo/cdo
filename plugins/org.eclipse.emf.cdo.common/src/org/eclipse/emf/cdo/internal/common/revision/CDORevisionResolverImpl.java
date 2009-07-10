@@ -14,13 +14,18 @@ package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionResolver;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.IRWLockManager;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -29,8 +34,10 @@ import org.eclipse.emf.ecore.EClass;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -40,6 +47,11 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionResolverImpl.class);
 
   private CDORevisionCache cache;
+
+  private IRWLockManager<CDORevisionResolver, Object> lockmanager;
+
+  @ExcludeFromDump
+  private Set<CDORevisionResolverImpl> singletonCollection = Collections.singleton(this);
 
   @ExcludeFromDump
   private Object loadAndAddLock = new Object();
@@ -59,6 +71,16 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
   public void setCache(CDORevisionCache cache)
   {
     this.cache = cache;
+  }
+
+  public IRWLockManager<CDORevisionResolver, Object> getLockmanager()
+  {
+    return lockmanager;
+  }
+
+  public void setLockmanager(IRWLockManager<CDORevisionResolver, Object> lockmanager)
+  {
+    this.lockmanager = lockmanager;
   }
 
   public boolean containsRevision(CDOID id)
@@ -394,12 +416,27 @@ public abstract class CDORevisionResolverImpl extends Lifecycle implements Inter
     super.doDeactivate();
   }
 
-  protected void acquireAtomicRequestLock(Object lockObject)
+  protected void acquireAtomicRequestLock(Object key)
   {
+    if (lockmanager != null)
+    {
+      try
+      {
+        lockmanager.lock(LockType.WRITE, key, this, RWLockManager.WAIT);
+      }
+      catch (InterruptedException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
   }
 
-  protected void releaseAtomicRequestLock(Object lockObject)
+  protected void releaseAtomicRequestLock(Object key)
   {
+    if (lockmanager != null)
+    {
+      lockmanager.unlock(LockType.WRITE, key, singletonCollection);
+    }
   }
 
   private void handleMissingRevisions(List<CDORevision> revisions, List<InternalCDORevision> missingRevisions)

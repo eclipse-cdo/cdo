@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.spi.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+
+import org.eclipse.net4j.util.concurrent.IRWLockManager;
 
 import java.util.List;
 
@@ -22,6 +25,10 @@ import java.util.List;
  */
 public interface InternalCDORevisionResolver extends CDORevisionResolver
 {
+  public void setCache(CDORevisionCache cache);
+
+  public void setLockmanager(IRWLockManager<CDORevisionResolver, Object> lockmanager);
+
   public List<CDORevision> getCachedRevisions();
 
   public boolean addCachedRevision(InternalCDORevision revision);

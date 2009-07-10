@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager;
+
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.Collection;
@@ -67,7 +69,7 @@ public interface CDORevisionResolver
   public CDORevisionCache getCache();
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  public void setCache(CDORevisionCache cache);
+  public IRWLockManager<CDORevisionResolver, Object> getLockmanager();
 }

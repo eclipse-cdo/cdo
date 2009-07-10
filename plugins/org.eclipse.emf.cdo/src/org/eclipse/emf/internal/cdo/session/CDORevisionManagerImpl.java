@@ -13,14 +13,9 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-
-import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -30,7 +25,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -38,10 +32,6 @@ import java.util.Set;
 public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements InternalCDORevisionManager
 {
   private InternalCDOSession session;
-
-  private RWLockManager<CDORevisionResolver, Object> lockmanager = new RWLockManager<CDORevisionResolver, Object>();
-
-  private Set<CDORevisionManagerImpl> singletonCollection = Collections.singleton(this);
 
   /**
    * @since 2.0
@@ -106,24 +96,5 @@ public class CDORevisionManagerImpl extends CDORevisionResolverImpl implements I
   protected List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
     return session.getSessionProtocol().loadRevisionsByTime(ids, referenceChunk, timeStamp);
-  }
-
-  @Override
-  protected void acquireAtomicRequestLock(Object key)
-  {
-    try
-    {
-      lockmanager.lock(LockType.WRITE, key, this, RWLockManager.WAIT);
-    }
-    catch (InterruptedException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
-  }
-
-  @Override
-  protected void releaseAtomicRequestLock(Object key)
-  {
-    lockmanager.unlock(LockType.WRITE, key, singletonCollection);
   }
 }

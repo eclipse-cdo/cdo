@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionResolver;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -56,6 +57,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.QueueRunner;
+import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
@@ -491,7 +493,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     if (!options().isPassiveUpdateEnabled())
     {
       Map<CDOID, CDOIDAndVersion> allRevisions = getAllCDOIDAndVersion();
-  
+
       try
       {
         if (!allRevisions.isEmpty())
@@ -505,7 +507,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         throw WrappedException.wrap(ex);
       }
     }
-  
+
     return Collections.emptyList();
   }
 
@@ -753,7 +755,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     EventUtil.addListener(sessionProtocol, sessionProtocolListener);
+
+    revisionManager.setLockmanager(new RWLockManager<CDORevisionResolver, Object>());
     LifecycleUtil.activate(revisionManager);
+
     remoteSessionManager.activate();
     if (packageRegistry == null)
     {

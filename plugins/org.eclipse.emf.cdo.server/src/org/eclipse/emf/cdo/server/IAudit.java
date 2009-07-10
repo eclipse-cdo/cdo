@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/213402
@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import java.util.List;
 
@@ -25,5 +24,8 @@ public interface IAudit extends IView
 {
   public long getTimeStamp();
 
-  public List<CDORevision> setTimeStamp(long timeStamp, List<CDOID> invalidObjects);
+  /**
+   * @since 3.0
+   */
+  public boolean[] setTimeStamp(long timeStamp, List<CDOID> invalidObjects);
 }

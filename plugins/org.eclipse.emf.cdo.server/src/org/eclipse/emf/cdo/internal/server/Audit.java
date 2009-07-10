@@ -49,12 +49,20 @@ public class Audit extends View implements InternalAudit
     return timeStamp;
   }
 
-  public List<CDORevision> setTimeStamp(long timeStamp, List<CDOID> invalidObjects)
+  public boolean[] setTimeStamp(long timeStamp, List<CDOID> invalidObjects)
   {
     checkOpen();
     IRepository repository = getSession().getManager().getRepository();
     setTimeStamp(repository, timeStamp);
-    return repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp, false);
+    List<CDORevision> revisions = repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp,
+        false);
+    boolean[] existanceFlags = new boolean[revisions.size()];
+    for (int i = 0; i < existanceFlags.length; i++)
+    {
+      existanceFlags[i] = revisions.get(i) != null;
+    }
+
+    return existanceFlags;
   }
 
   @Override

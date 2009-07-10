@@ -19,7 +19,9 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalAudit;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -39,6 +41,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -154,15 +157,34 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void openView(int viewId, CDOCommonView.Type viewType, long timeStamp)
+  public void openView(int viewID, CDOCommonView.Type viewType, long timeStamp)
   {
+    switch (viewType)
+    {
+    case AUDIT:
+      serverSessionProtocol.getSession().openAudit(viewID, timeStamp);
+      break;
+
+    case READONLY:
+      serverSessionProtocol.getSession().openView(viewID);
+      break;
+
+    case TRANSACTION:
+      serverSessionProtocol.getSession().openTransaction(viewID);
+      break;
+    }
   }
 
-  public void closeView(int viewId)
+  public void closeView(int viewID)
   {
+    InternalView view = serverSessionProtocol.getSession().getView(viewID);
+    if (view != null)
+    {
+      view.close();
+    }
   }
 
-  public void changeSubscription(int viewId, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
+  public void changeSubscription(int viewID, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
   {
     throw new UnsupportedOperationException();
   }
@@ -172,7 +194,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public boolean cancelQuery(int queryId)
+  public boolean cancelQuery(int queryID)
   {
     throw new UnsupportedOperationException();
   }
@@ -193,9 +215,16 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public boolean[] setAudit(int viewId, long timeStamp, List<InternalCDOObject> invalidObjects)
+  public boolean[] setAudit(int viewID, long timeStamp, List<InternalCDOObject> invalidObjects)
   {
-    throw new UnsupportedOperationException();
+    List<CDOID> ids = new ArrayList<CDOID>(invalidObjects.size());
+    for (InternalCDOObject object : invalidObjects)
+    {
+      ids.add(object.cdoID());
+    }
+
+    InternalAudit audit = (InternalAudit)serverSessionProtocol.getSession().getView(viewID);
+    return audit.setTimeStamp(timeStamp, ids);
   }
 
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext commitContext, OMMonitor monitor)

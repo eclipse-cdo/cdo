@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IAudit;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
@@ -32,7 +31,7 @@ public class SetAuditIndication extends CDOReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, SetAuditIndication.class);
 
-  private List<CDORevision> revisions;
+  private boolean[] existanceFlags;
 
   public SetAuditIndication(CDOServerProtocol protocol)
   {
@@ -75,7 +74,7 @@ public class SetAuditIndication extends CDOReadIndication
     if (view instanceof IAudit)
     {
       IAudit audit = (IAudit)view;
-      revisions = audit.setTimeStamp(timeStamp, invalidObjects);
+      existanceFlags = audit.setTimeStamp(timeStamp, invalidObjects);
     }
   }
 
@@ -84,19 +83,18 @@ public class SetAuditIndication extends CDOReadIndication
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing {0} existanceFlags", revisions.size()); //$NON-NLS-1$
+      TRACER.format("Writing {0} existanceFlags", existanceFlags.length); //$NON-NLS-1$
     }
 
-    out.writeInt(revisions.size());
-    for (CDORevision revision : revisions)
+    out.writeInt(existanceFlags.length);
+    for (int i = 0; i < existanceFlags.length; i++)
     {
-      boolean existanceFlag = revision != null;
       if (TRACER.isEnabled())
       {
-        TRACER.format("Writing existanceFlag: {0}", existanceFlag); //$NON-NLS-1$
+        TRACER.format("Writing existanceFlag: {0}", existanceFlags[i]); //$NON-NLS-1$
       }
 
-      out.writeBoolean(existanceFlag);
+      out.writeBoolean(existanceFlags[i]);
     }
   }
 }

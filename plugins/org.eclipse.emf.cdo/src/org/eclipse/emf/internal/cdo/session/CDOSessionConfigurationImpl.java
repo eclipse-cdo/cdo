@@ -10,13 +10,10 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
@@ -35,10 +32,6 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
 
   private CDOSession.ExceptionHandler exceptionHandler;
 
-  private CDOPackageRegistry packageRegistry;
-
-  private CDORevisionCache revisionCache;
-
   private CDOAuthenticator authenticator = new AuthenticatorImpl();
 
   private boolean activateOnOpen = true;
@@ -56,40 +49,6 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
   {
     checkNotOpen();
     this.exceptionHandler = exceptionHandler;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOPackageRegistry getPackageRegistry()
-  {
-    return packageRegistry;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
-  {
-    checkNotOpen();
-    this.packageRegistry = packageRegistry;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDORevisionCache getRevisionCache()
-  {
-    return revisionCache;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void setRevisionCache(CDORevisionCache revisionCache)
-  {
-    checkNotOpen();
-    this.revisionCache = revisionCache;
   }
 
   public CDOAuthenticator getAuthenticator()
@@ -138,8 +97,7 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
     if (!isSessionOpen())
     {
       session = createSession();
-      session.setPackageRegistry((InternalCDOPackageRegistry)packageRegistry);
-      session.getRevisionManager().setCache(revisionCache);
+      session.setExceptionHandler(exceptionHandler);
       session.setAuthenticator(authenticator);
 
       if (activateOnOpen)

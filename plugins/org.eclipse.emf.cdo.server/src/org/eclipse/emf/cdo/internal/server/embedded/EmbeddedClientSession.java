@@ -11,8 +11,6 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.server.embedded.CDOSession;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
@@ -29,6 +27,8 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   public EmbeddedClientSession(InternalRepository repository)
   {
     this.repository = repository;
+    setPackageRegistry(repository.getPackageRegistry(false));
+    setRevisionManager(repository.getRevisionManager());
   }
 
   public InternalRepository getRepository()
@@ -40,18 +40,6 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   protected CDOSessionProtocol createSessionProtocol()
   {
     return new EmbeddedClientSessionProtocol(this);
-  }
-
-  @Override
-  protected InternalCDOPackageRegistry createPackageRegistry()
-  {
-    return repository.getPackageRegistry(false);
-  }
-
-  @Override
-  protected InternalCDORevisionManager createRevisionManager()
-  {
-    return repository.getRevisionManager();
   }
 
   @Override

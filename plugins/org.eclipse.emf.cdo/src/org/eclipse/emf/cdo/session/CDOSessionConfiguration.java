@@ -10,10 +10,7 @@
  */
 package org.eclipse.emf.cdo.session;
 
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 /**
  * @author Eike Stepper
@@ -32,30 +29,6 @@ public interface CDOSessionConfiguration
    * @see CDOSession#getExceptionHandler()
    */
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
-
-  /**
-   * @see CDOSession#getPackageRegistry()
-   */
-  public CDOPackageRegistry getPackageRegistry();
-
-  /**
-   * A special package registry can be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
-   * @see CDOSession#getPackageRegistry()
-   */
-  public void setPackageRegistry(CDOPackageRegistry packageRegistry);
-
-  /**
-   * @see CDORevisionManager#getCache()
-   */
-  public CDORevisionCache getRevisionCache();
-
-  /**
-   * A special revision cache can be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
-   * @see CDORevisionManager#setCache(CDORevisionCache)
-   */
-  public void setRevisionCache(CDORevisionCache revisionCache);
 
   /**
    * Returns the authenticator of this configuration, never <code>null</code>.

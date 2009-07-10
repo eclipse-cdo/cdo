@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -31,7 +29,6 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
 
   public EmbeddedClientSessionConfiguration()
   {
-    setRevisionCache(CDORevisionCache.NOOP);
   }
 
   public InternalRepository getRepository()
@@ -43,18 +40,6 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
   {
     checkNotOpen();
     this.repository = (InternalRepository)repository;
-  }
-
-  @Override
-  public CDOPackageRegistry getPackageRegistry()
-  {
-    return repository.getPackageRegistry();
-  }
-
-  @Override
-  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
-  {
-    throw new UnsupportedOperationException("The package registry of the repository must be used");
   }
 
   @Override

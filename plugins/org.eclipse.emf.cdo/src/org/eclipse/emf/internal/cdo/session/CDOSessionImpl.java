@@ -172,9 +172,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   public CDOSessionImpl()
   {
-    options = createOptions();
-    revisionManager = createRevisionManager();
     remoteSessionManager = createRemoteSessionManager();
+    options = createOptions();
   }
 
   public int getSessionID()
@@ -788,6 +787,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     EventUtil.addListener(sessionProtocol, sessionProtocolListener);
+    if (revisionManager == null)
+    {
+      revisionManager = createRevisionManager();
+    }
+
     activateRevisionManager();
     remoteSessionManager.activate();
     if (packageRegistry == null)
@@ -886,6 +890,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private void handleLibraryDescriptor(CDOIDLibraryDescriptor libraryDescriptor) throws Exception
   {
+    if (libraryDescriptor == null)
+    {
+      return;
+    }
+
     String factoryName = libraryDescriptor.getFactoryName();
     if (TRACER.isEnabled())
     {

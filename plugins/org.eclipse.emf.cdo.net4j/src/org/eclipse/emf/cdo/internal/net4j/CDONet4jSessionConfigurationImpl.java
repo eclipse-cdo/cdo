@@ -10,7 +10,11 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
 
@@ -32,6 +36,10 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   private IConnector connector;
 
   private IFailOverStrategy failOverStrategy;
+
+  private CDOPackageRegistry packageRegistry;
+
+  private CDORevisionManager revisionManager;
 
   public CDONet4jSessionConfigurationImpl()
   {
@@ -70,6 +78,28 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.failOverStrategy = failOverStrategy;
   }
 
+  public CDOPackageRegistry getPackageRegistry()
+  {
+    return packageRegistry;
+  }
+
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry)
+  {
+    checkNotOpen();
+    this.packageRegistry = packageRegistry;
+  }
+
+  public CDORevisionManager getRevisionManager()
+  {
+    return revisionManager;
+  }
+
+  public void setRevisionManager(CDORevisionManager revisionManager)
+  {
+    checkNotOpen();
+    this.revisionManager = revisionManager;
+  }
+
   @Override
   public org.eclipse.emf.cdo.net4j.CDOSession openSession()
   {
@@ -86,6 +116,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     }
 
     CDONet4jSessionImpl session = new CDONet4jSessionImpl();
+    session.setPackageRegistry((InternalCDOPackageRegistry)packageRegistry);
+    session.setRevisionManager((InternalCDORevisionManager)revisionManager);
     session.setRepository(new TemporaryRepositoryName(repositoryName));
     if (connector != null)
     {

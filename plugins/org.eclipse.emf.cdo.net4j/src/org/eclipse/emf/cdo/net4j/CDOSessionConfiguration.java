@@ -10,13 +10,16 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.net4j;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
- * @since 2.0
+ * @since 3.0
  */
 public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDOSessionConfiguration
 {
@@ -34,6 +37,30 @@ public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDO
    * The fail-over strategy must be set <b>before</b> the session is opened and can not be changed thereafter.
    */
   public void setFailOverStrategy(IFailOverStrategy failOverStrategy);
+
+  /**
+   * @see CDOSession#getPackageRegistry()
+   */
+  public CDOPackageRegistry getPackageRegistry();
+
+  /**
+   * A special package registry can be set <b>before</b> the session is opened and can not be changed thereafter.
+   * 
+   * @see CDOSession#getPackageRegistry()
+   */
+  public void setPackageRegistry(CDOPackageRegistry packageRegistry);
+
+  /**
+   * @see CDOSession#getRevisionManager()
+   * @since 3.0
+   */
+  public CDORevisionManager getRevisionManager();
+
+  /**
+   * @see CDOSession#getRevisionManager()
+   * @since 3.0
+   */
+  public void setRevisionManager(CDORevisionManager revisionManager);
 
   public org.eclipse.emf.cdo.net4j.CDOSession openSession();
 }

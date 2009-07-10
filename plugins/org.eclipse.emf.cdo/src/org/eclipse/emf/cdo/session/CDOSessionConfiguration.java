@@ -21,16 +21,6 @@ import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 public interface CDOSessionConfiguration
 {
   /**
-   * @see CDOSession#getName()
-   */
-  public String getRepositoryName();
-
-  /**
-   * @see CDOSession#getName()
-   */
-  public void setRepositoryName(String repositoryName);
-
-  /**
    * @see CDOSession#getExceptionHandler()
    */
   public CDOSession.ExceptionHandler getExceptionHandler();

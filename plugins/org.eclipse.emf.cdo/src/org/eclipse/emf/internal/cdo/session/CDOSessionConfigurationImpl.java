@@ -33,8 +33,6 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
 {
   private InternalCDOSession session;
 
-  private String repositoryName;
-
   private CDOSession.ExceptionHandler exceptionHandler;
 
   private CDOPackageRegistry packageRegistry;
@@ -47,17 +45,6 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
 
   public CDOSessionConfigurationImpl()
   {
-  }
-
-  public String getRepositoryName()
-  {
-    return repositoryName;
-  }
-
-  public void setRepositoryName(String repositoryName)
-  {
-    checkNotOpen();
-    this.repositoryName = repositoryName;
   }
 
   public CDOSession.ExceptionHandler getExceptionHandler()
@@ -151,7 +138,6 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
     if (!isSessionOpen())
     {
       session = createSession();
-      session.setRepositoryName(repositoryName);
       session.setPackageRegistry((InternalCDOPackageRegistry)packageRegistry);
       session.getRevisionManager().setCache(revisionCache);
       session.setAuthenticator(authenticator);

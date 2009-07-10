@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -75,11 +73,11 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     OpenSessionResult result = new OpenSessionResult(session.getSessionID(), repository.getUUID(), repository
         .getCreationTime(), repository.isSupportingAudits(), null);
 
-    InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-    for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
-    {
-      result.getPackageUnits().add(packageUnit);
-    }
+    // InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+    // for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
+    // {
+    // result.getPackageUnits().add(packageUnit);
+    // }
 
     return result;
   }

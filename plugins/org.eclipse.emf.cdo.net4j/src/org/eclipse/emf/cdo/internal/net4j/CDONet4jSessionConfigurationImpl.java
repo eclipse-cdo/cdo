@@ -25,12 +25,25 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImpl implements
     org.eclipse.emf.cdo.net4j.CDOSessionConfiguration
 {
+  private String repositoryName;
+
   private IConnector connector;
 
   private IFailOverStrategy failOverStrategy;
 
   public CDONet4jSessionConfigurationImpl()
   {
+  }
+
+  public String getRepositoryName()
+  {
+    return repositoryName;
+  }
+
+  public void setRepositoryName(String repositoryName)
+  {
+    checkNotOpen();
+    this.repositoryName = repositoryName;
   }
 
   public IConnector getConnector()
@@ -71,6 +84,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     }
 
     CDONet4jSessionImpl session = new CDONet4jSessionImpl();
+    session.setRepositoryName(repositoryName);
     if (connector != null)
     {
       session.setFailOverStrategy(new NOOPFailOverStrategy(connector));

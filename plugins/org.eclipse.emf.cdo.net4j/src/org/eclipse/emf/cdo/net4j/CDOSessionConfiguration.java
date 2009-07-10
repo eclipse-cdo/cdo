@@ -20,6 +20,10 @@ import org.eclipse.net4j.signal.failover.IFailOverStrategy;
  */
 public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDOSessionConfiguration
 {
+  public String getRepositoryName();
+
+  public void setRepositoryName(String repositoryName);
+
   public IConnector getConnector();
 
   public void setConnector(IConnector connector);

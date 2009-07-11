@@ -62,7 +62,10 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
   public void activateSession(InternalCDOSession session) throws Exception
   {
     super.activateSession(session);
-    session.setSessionProtocol(new EmbeddedClientSessionProtocol((EmbeddedClientSession)session));
+    EmbeddedClientSessionProtocol protocol = new EmbeddedClientSessionProtocol((EmbeddedClientSession)session);
+    session.setSessionProtocol(protocol);
+    protocol.activate();
+
     session.setRepositoryInfo(new RepositoryInfo());
   }
 

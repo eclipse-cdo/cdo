@@ -16,13 +16,13 @@
 package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
-import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
@@ -31,15 +31,25 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  */
 public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.emf.cdo.net4j.CDOSession
 {
-  private IFailOverStrategy failOverStrategy;
-
-  public CDONet4jSessionImpl()
+  public CDONet4jSessionImpl(CDONet4jSessionConfigurationImpl configuration)
   {
+    super(configuration);
   }
 
-  public void setFailOverStrategy(IFailOverStrategy failOverStrategy)
+  @Override
+  public CDONet4jSessionConfigurationImpl getConfiguration()
   {
-    this.failOverStrategy = failOverStrategy;
+    return (CDONet4jSessionConfigurationImpl)super.getConfiguration();
+  }
+
+  public InternalCDOPackageRegistry getPackageRegistry()
+  {
+    return getConfiguration().getPackageRegistry();
+  }
+
+  public InternalCDORevisionManager getRevisionManager()
+  {
+    return getConfiguration().getRevisionManager();
   }
 
   @Override
@@ -54,15 +64,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     return new OptionsImpl();
   }
 
-  @Override
-  protected CDOClientProtocol createSessionProtocol()
-  {
-    CDOClientProtocol protocol = new CDOClientProtocol();
-    protocol.setInfraStructure(this);
-    protocol.setFailOverStrategy(options().getFailOverStrategy());
-    return protocol;
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -75,11 +76,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
     public OptionsImpl()
     {
-    }
-
-    public IFailOverStrategy getFailOverStrategy()
-    {
-      return failOverStrategy;
     }
 
     public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession> getProtocol()

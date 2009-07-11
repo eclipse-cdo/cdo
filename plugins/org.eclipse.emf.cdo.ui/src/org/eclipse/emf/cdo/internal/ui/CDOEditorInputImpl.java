@@ -95,7 +95,7 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
       return new Path(resourcePath).lastSegment();
     }
 
-    return view.getSession().repository().getName();
+    return view.getSession().getRepositoryInfo().getName();
   }
 
   public IPersistableElement getPersistable()
@@ -111,7 +111,7 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
     }
 
     CDOSession session = view.getSession();
-    String repositoryName = session.repository().getName();
+    String repositoryName = session.getRepositoryInfo().getName();
 
     StringBuilder builder = new StringBuilder();
     builder.append(repositoryName);

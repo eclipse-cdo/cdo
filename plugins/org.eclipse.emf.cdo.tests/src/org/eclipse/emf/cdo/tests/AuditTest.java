@@ -68,21 +68,21 @@ public class AuditTest extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
     long commitTime1 = transaction.getLastCommitTime();
-    assertEquals(true, session.repository().getCreationTime() < commitTime1);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
 
     company.setName("Sympedia");
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
     assertEquals(true, commitTime1 < commitTime2);
-    assertEquals(true, session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
 
     company.setName("Eclipse");
     transaction.commit();
     long commitTime3 = transaction.getLastCommitTime();
     assertEquals(true, commitTime2 < commitTime3);
-    assertEquals(true, session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
 
     closeSession1();
@@ -111,21 +111,21 @@ public class AuditTest extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
     long commitTime1 = transaction.getLastCommitTime();
-    assertEquals(true, session.repository().getCreationTime() < commitTime1);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
 
     company.setName("Sympedia");
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
     assertEquals(true, commitTime1 < commitTime2);
-    assertEquals(true, session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
 
     company.setName("Eclipse");
     transaction.commit();
     long commitTime3 = transaction.getLastCommitTime();
     assertEquals(true, commitTime2 < commitTime3);
-    assertEquals(true, session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
 
     closeSession1();
@@ -166,21 +166,21 @@ public class AuditTest extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
     long commitTime1 = transaction.getLastCommitTime();
-    assertEquals(true, session.repository().getCreationTime() < commitTime1);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime1);
     assertEquals("ESC", company.getName());
 
     company.setName("Sympedia");
     transaction.commit();
     long commitTime2 = transaction.getLastCommitTime();
     assertEquals(true, commitTime1 < commitTime2);
-    assertEquals(true, session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Sympedia", company.getName());
 
     company.setName("Eclipse");
     transaction.commit();
     long commitTime3 = transaction.getLastCommitTime();
     assertEquals(true, commitTime2 < commitTime3);
-    assertEquals(true, session.repository().getCreationTime() < commitTime2);
+    assertEquals(true, session.getRepositoryInfo().getCreationTime() < commitTime2);
     assertEquals("Eclipse", company.getName());
 
     closeSession1();
@@ -322,7 +322,7 @@ public class AuditTest extends AbstractCDOTest
     closeSession1();
 
     session = openSession2();
-    session.openAudit(session.repository().getCreationTime());
+    session.openAudit(session.getRepositoryInfo().getCreationTime());
     session.close();
   }
 
@@ -463,7 +463,7 @@ public class AuditTest extends AbstractCDOTest
     public void testRepositoryCreationTime() throws Exception
     {
       CDOSession session = openSession();
-      long repositoryCreationTime = session.repository().getCreationTime();
+      long repositoryCreationTime = session.getRepositoryInfo().getCreationTime();
       assertEquals(getRepository().getCreationTime(), repositoryCreationTime);
       assertEquals(getRepository().getStore().getCreationTime(), repositoryCreationTime);
     }
@@ -471,7 +471,7 @@ public class AuditTest extends AbstractCDOTest
     public void testRepositoryTime() throws Exception
     {
       CDOSession session = openSession();
-      long repositoryTime = session.repository().getCurrentTime();
+      long repositoryTime = session.getRepositoryInfo().getCurrentTime();
       assertEquals(true, Math.abs(System.currentTimeMillis() - repositoryTime) < 500);
     }
 

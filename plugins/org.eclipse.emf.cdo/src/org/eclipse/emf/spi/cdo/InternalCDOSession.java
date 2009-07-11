@@ -12,11 +12,12 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
@@ -39,7 +40,19 @@ import java.util.Set;
 public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, PackageProcessor, PackageLoader,
     RevisionLocker, ILifecycle
 {
+  /**
+   * @since 3.0
+   */
+  public InternalCDOSessionConfiguration getConfiguration();
+
   public CDOSessionProtocol getSessionProtocol();
+
+  /**
+   * @since 3.0
+   */
+  public void setSessionProtocol(CDOSessionProtocol sessionProtocol);
+
+  public InternalCDOPackageRegistry getPackageRegistry();
 
   /**
    * @since 3.0
@@ -53,13 +66,25 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, Pack
    */
   public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager);
 
-  public InternalCDOPackageRegistry getPackageRegistry();
+  /**
+   * @since 3.0
+   */
+  public void setRepositoryInfo(CDORepositoryInfo repositoryInfo);
 
-  public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
+  /**
+   * @since 3.0
+   */
+  public void setLibraryDescriptor(CDOIDLibraryDescriptor libraryDescriptor) throws Exception;
 
-  public CDOAuthenticator getAuthenticator();
+  /**
+   * @since 3.0
+   */
+  public void setRemoteSessionManager(InternalCDORemoteSessionManager remoteSessionManager);
 
-  public void setAuthenticator(CDOAuthenticator authenticator);
+  /**
+   * @since 3.0
+   */
+  public void setSessionID(int sessionID);
 
   public void setUserID(String userID);
 

@@ -53,7 +53,7 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider im
     for (Object element : container.getElements(CDOSessionFactory.PRODUCT_GROUP))
     {
       CDOSession session = (CDOSession)element;
-      String uuid = session.repository().getUUID();
+      String uuid = session.getRepositoryInfo().getUUID();
       if (repoUUID.equals(uuid))
       {
         CDOView view = openView(session, resourceSet);

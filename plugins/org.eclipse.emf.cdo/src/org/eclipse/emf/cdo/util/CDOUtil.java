@@ -235,7 +235,7 @@ public final class CDOUtil
     if (revision.getVersion() != version)
     {
       CDOSession session = object.cdoView().getSession();
-      if (!session.repository().isSupportingAudits())
+      if (!session.getRepositoryInfo().isSupportingAudits())
       {
         throw new IllegalStateException(Messages.getString("CDOUtil.0")); //$NON-NLS-1$
       }

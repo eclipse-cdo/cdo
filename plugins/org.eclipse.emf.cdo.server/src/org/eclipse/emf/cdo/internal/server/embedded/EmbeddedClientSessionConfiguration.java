@@ -48,14 +48,67 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     return (org.eclipse.emf.cdo.server.embedded.CDOSession)super.openSession();
   }
 
-  @Override
-  protected InternalCDOSession createSession()
+  public InternalCDOSession createSession()
   {
     if (isActivateOnOpen())
     {
       CheckUtil.checkState(repository, "Specify a repository"); //$NON-NLS-1$
     }
 
-    return new EmbeddedClientSession(repository);
+    return new EmbeddedClientSession(this);
+  }
+
+  @Override
+  public void activateSession(InternalCDOSession session) throws Exception
+  {
+    super.activateSession(session);
+    session.setSessionProtocol(new EmbeddedClientSessionProtocol((EmbeddedClientSession)session));
+    session.setRepositoryInfo(new RepositoryInfo());
+  }
+
+  @Override
+  public void deactivateSession(InternalCDOSession session) throws Exception
+  {
+    super.deactivateSession(session);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected class RepositoryInfo implements org.eclipse.emf.cdo.session.CDORepositoryInfo
+  {
+    public RepositoryInfo()
+    {
+    }
+
+    public long getCreationTime()
+    {
+      return repository.getCreationTime();
+    }
+
+    public long getCurrentTime()
+    {
+      return getCurrentTime(false);
+    }
+
+    public long getCurrentTime(boolean forceRefresh)
+    {
+      return System.currentTimeMillis();
+    }
+
+    public String getName()
+    {
+      return repository.getName();
+    }
+
+    public String getUUID()
+    {
+      return repository.getUUID();
+    }
+
+    public boolean isSupportingAudits()
+    {
+      return repository.isSupportingAudits();
+    }
   }
 }

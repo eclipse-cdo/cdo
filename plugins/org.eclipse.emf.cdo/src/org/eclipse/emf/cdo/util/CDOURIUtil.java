@@ -133,7 +133,7 @@ public class CDOURIUtil
 
   public static URI createResourceURI(CDOSession session, String path)
   {
-    return createResourceURI(session == null ? null : session.repository().getUUID(), path);
+    return createResourceURI(session == null ? null : session.getRepositoryInfo().getUUID(), path);
   }
 
   /**

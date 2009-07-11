@@ -60,14 +60,14 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
       resource.getContents().add(company);
       transaction.commit();
       commitTime1 = transaction.getLastCommitTime();
-      assertTrue(session.repository().getCreationTime() < commitTime1);
+      assertTrue(session.getRepositoryInfo().getCreationTime() < commitTime1);
       assertEquals("ESC", company.getName());
 
       company.setName("Sympedia");
       transaction.commit();
       commitTime2 = transaction.getLastCommitTime();
       assertTrue(commitTime1 < commitTime2);
-      assertTrue(session.repository().getCreationTime() < commitTime2);
+      assertTrue(session.getRepositoryInfo().getCreationTime() < commitTime2);
       assertEquals("Sympedia", company.getName());
     }
 

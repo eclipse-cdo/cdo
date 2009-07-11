@@ -117,7 +117,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Repository {0} not found", repositoryName); //$NON-NLS-1$
+        TRACER.format("CDORepositoryInfo {0} not found", repositoryName); //$NON-NLS-1$
       }
 
       out.writeInt(CDOProtocolConstants.ERROR_REPOSITORY_NOT_FOUND);

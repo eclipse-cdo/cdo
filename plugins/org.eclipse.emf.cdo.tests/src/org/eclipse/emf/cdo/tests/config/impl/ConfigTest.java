@@ -168,10 +168,10 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   // /////////////////////////////////////////////////////////////////////////
-  // //////////////////////// Repository /////////////////////////////////////
+  // //////////////////////// CDORepositoryInfo /////////////////////////////////////
 
   /**
-   *@category Repository
+   *@category CDORepositoryInfo
    */
   public IRepositoryConfig getRepositoryConfig()
   {
@@ -179,7 +179,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Repository
+   *@category CDORepositoryInfo
    */
   public Map<String, String> getRepositoryProperties()
   {
@@ -187,7 +187,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Repository
+   *@category CDORepositoryInfo
    */
   public IRepository getRepository(String name)
   {
@@ -195,7 +195,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   }
 
   /**
-   *@category Repository
+   *@category CDORepositoryInfo
    */
   public InternalRepository getRepository()
   {

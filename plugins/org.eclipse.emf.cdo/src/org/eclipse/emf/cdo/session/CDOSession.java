@@ -39,7 +39,7 @@ import java.util.Collection;
  * <p>
  * A session has the following responsibilities:
  * <ul>
- * <li> {@link CDOSession#repository() Repository information}
+ * <li> {@link CDOSession#getRepositoryInfo() CDORepositoryInfo information}
  * <li> {@link CDOSession#getPackageRegistry() Package registry}
  * <li> {@link CDOSession#getPackageUnitManager() Package unit management}
  * <li> {@link CDOSession#getRevisionManager() Data management}
@@ -54,6 +54,11 @@ import java.util.Collection;
  */
 public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOptionsContainer
 {
+  /**
+   * @since 3.0
+   */
+  public CDOSessionConfiguration getConfiguration();
+
   /**
    * Returns the EMF {@link EPackage.Registry package registry} that is used by all {@link EObject objects} of all
    * {@link CDOView views} of this session.
@@ -161,10 +166,12 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
   public Options options();
 
   /**
-   * Returns an instance of {@link Repository} that describes the model repository this {@link CDOSession session} is
-   * connected to.
+   * Returns an instance of {@link CDORepositoryInfo} that describes the model repository this {@link CDOSession
+   * session} is connected to.
+   * 
+   * @since 3.0
    */
-  public Repository repository();
+  public CDORepositoryInfo getRepositoryInfo();
 
   /**
    * @author Simon McDuff
@@ -212,58 +219,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
     public interface CollectionLoadingPolicyEvent extends IOptionsEvent
     {
     }
-  }
-
-  /**
-   * Describes a model repository a {@link CDOSession session} is connected to.
-   * 
-   * @author Eike Stepper
-   * @see CDOSession#repository()
-   */
-  public interface Repository
-  {
-    /**
-     * Returns the name of this repository.
-     * 
-     * @see IRepository#getName()
-     */
-    public String getName();
-
-    /**
-     * Returns the UUID of this repository.
-     * 
-     * @see IRepository#getUUID()
-     */
-    public String getUUID();
-
-    /**
-     * Returns the creation time of this repository.
-     * 
-     * @see IRepository#getCreationTime()
-     */
-    public long getCreationTime();
-
-    /**
-     * Returns the approximate current time of this repository.
-     * <p>
-     * Same as calling <code>getCurrentTime(false)</code>.
-     * 
-     * @see #getCurrentTime(boolean)
-     */
-    public long getCurrentTime();
-
-    /**
-     * Returns the approximate current time of this repository by optionally refreshing the approximation from the
-     * server.
-     */
-    public long getCurrentTime(boolean forceRefresh);
-
-    /**
-     * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
-     * 
-     * @see IRepository#isSupportingAudits()
-     */
-    public boolean isSupportingAudits();
   }
 
   /**

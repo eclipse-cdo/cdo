@@ -56,7 +56,7 @@ public class CDOURIHandler implements URIHandler
   public boolean canHandle(URI uri)
   {
     return CDO_URI_SCHEME.equals(uri.scheme())
-        && view.getSession().repository().getUUID().equals(CDOURIUtil.extractRepositoryUUID(uri));
+        && view.getSession().getRepositoryInfo().getUUID().equals(CDOURIUtil.extractRepositoryUUID(uri));
   }
 
   public boolean exists(URI uri, Map<?, ?> options)

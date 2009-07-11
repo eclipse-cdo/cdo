@@ -91,7 +91,7 @@ public class RepositoryConfigurator
     String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
     if (StringUtil.isEmpty(repositoryName))
     {
-      throw new IllegalArgumentException("Repository name is missing or empty"); //$NON-NLS-1$
+      throw new IllegalArgumentException("CDORepositoryInfo name is missing or empty"); //$NON-NLS-1$
     }
 
     String repositoryType = repositoryConfig.getAttribute("type"); //$NON-NLS-1$
@@ -149,7 +149,7 @@ public class RepositoryConfigurator
         "repositoryFactory", "repositoryType", type); //$NON-NLS-1$ //$NON-NLS-2$
     if (factory == null)
     {
-      throw new IllegalStateException("Repository factory not found: " + type); //$NON-NLS-1$
+      throw new IllegalStateException("CDORepositoryInfo factory not found: " + type); //$NON-NLS-1$
     }
 
     return factory;

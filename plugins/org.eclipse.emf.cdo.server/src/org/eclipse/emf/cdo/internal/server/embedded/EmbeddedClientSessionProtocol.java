@@ -36,7 +36,6 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
@@ -79,7 +78,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     repository = session.getRepository();
     if (!ObjectUtil.equals(repository.getName(), repositoryName))
     {
-      throw new IllegalArgumentException("Repository name does not match: " + repositoryName);
+      throw new IllegalArgumentException("CDORepositoryInfo name does not match: " + repositoryName);
     }
 
     activate();
@@ -280,8 +279,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public CDOAuthenticationResult handleAuthenticationChallenge(byte[] randomToken) throws Exception
   {
-    InternalCDOSession session = getSession();
-    CDOAuthenticator authenticator = session.getAuthenticator();
+    CDOAuthenticator authenticator = getSession().getConfiguration().getAuthenticator();
     if (authenticator == null)
     {
       throw new IllegalStateException("No authenticator configured"); //$NON-NLS-1$

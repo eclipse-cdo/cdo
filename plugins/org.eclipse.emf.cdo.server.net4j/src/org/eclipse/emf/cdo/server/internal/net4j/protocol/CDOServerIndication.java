@@ -59,7 +59,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     InternalRepository repository = getSession().getManager().getRepository();
     if (!LifecycleUtil.isActive(repository))
     {
-      throw new IllegalStateException("Repository has been deactivated"); //$NON-NLS-1$
+      throw new IllegalStateException("CDORepositoryInfo has been deactivated"); //$NON-NLS-1$
     }
 
     return repository;

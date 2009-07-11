@@ -99,7 +99,7 @@ public final class CDOServerUtil
       }
     }
 
-    throw new IllegalStateException("Repository config not found: " + repositoryName); //$NON-NLS-1$
+    throw new IllegalStateException("CDORepositoryInfo config not found: " + repositoryName); //$NON-NLS-1$
   }
 
   /**

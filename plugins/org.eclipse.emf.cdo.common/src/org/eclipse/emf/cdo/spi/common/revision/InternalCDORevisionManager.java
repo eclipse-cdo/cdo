@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -22,7 +24,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 3.0
  */
-public interface InternalCDORevisionManager extends CDORevisionManager
+public interface InternalCDORevisionManager extends CDORevisionManager, ILifecycle
 {
   public RevisionLoader getRevisionLoader();
 

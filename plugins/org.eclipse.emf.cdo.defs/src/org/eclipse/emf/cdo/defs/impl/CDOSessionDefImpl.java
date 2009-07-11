@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOSessionDefImpl#getConnectorDef <em>Connector Def</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOSessionDefImpl#getRepositoryName <em>Repository Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOSessionDefImpl#getRepositoryName <em>CDORepositoryInfo Name</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOSessionDefImpl#getCdoPackageRegistryDef <em>Cdo Package Registry Def
  * </em>}</li>
  * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOSessionDefImpl#isLegacySupportEnabled <em>Legacy Support Enabled</em>}</li>
@@ -71,7 +71,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected boolean connectorDefESet;
 
   /**
-   * The default value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute. <!-- begin-user-doc -->
+   * The default value of the '{@link #getRepositoryName() <em>CDORepositoryInfo Name</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
    * @see #getRepositoryName()
@@ -81,7 +81,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected static final String REPOSITORY_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getRepositoryName() <em>CDORepositoryInfo Name</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
    * @see #getRepositoryName()

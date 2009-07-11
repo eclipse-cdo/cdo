@@ -172,7 +172,7 @@ public interface CDODefsPackage extends EPackage
   int CDO_SESSION_DEF__CONNECTOR_DEF = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Repository Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>CDORepositoryInfo Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
@@ -597,9 +597,9 @@ public interface CDODefsPackage extends EPackage
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getRepositoryName
-   * <em>Repository Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>CDORepositoryInfo Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the attribute '<em>Repository Name</em>'.
+   * @return the meta object for the attribute '<em>CDORepositoryInfo Name</em>'.
    * @see org.eclipse.emf.cdo.defs.CDOSessionDef#getRepositoryName()
    * @see #getCDOSessionDef()
    * @generated
@@ -925,7 +925,7 @@ public interface CDODefsPackage extends EPackage
     EReference CDO_SESSION_DEF__CONNECTOR_DEF = eINSTANCE.getCDOSessionDef_ConnectorDef();
 
     /**
-     * The meta object literal for the '<em><b>Repository Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>CDORepositoryInfo Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
      * @generated

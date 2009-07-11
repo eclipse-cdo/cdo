@@ -13,42 +13,49 @@ package org.eclipse.emf.internal.cdo.session;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionConfigurationImpl implements CDOSessionConfiguration
+public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionConfiguration
 {
-  private InternalCDOSession session;
-
-  private CDOSession.ExceptionHandler exceptionHandler;
+  private boolean passiveUpdateEnabled = true;
 
   private CDOAuthenticator authenticator = new AuthenticatorImpl();
 
+  private CDOSession.ExceptionHandler exceptionHandler;
+
   private boolean activateOnOpen = true;
+
+  private InternalCDOSession session;
 
   public CDOSessionConfigurationImpl()
   {
   }
 
-  public CDOSession.ExceptionHandler getExceptionHandler()
+  public boolean isPassiveUpdateEnabled()
   {
-    return exceptionHandler;
+    return passiveUpdateEnabled;
   }
 
-  public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
+  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     checkNotOpen();
-    this.exceptionHandler = exceptionHandler;
+    this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
   public CDOAuthenticator getAuthenticator()
@@ -60,6 +67,17 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
   {
     checkNotOpen();
     this.authenticator = authenticator;
+  }
+
+  public CDOSession.ExceptionHandler getExceptionHandler()
+  {
+    return exceptionHandler;
+  }
+
+  public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
+  {
+    checkNotOpen();
+    this.exceptionHandler = exceptionHandler;
   }
 
   public boolean isActivateOnOpen()
@@ -98,8 +116,6 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
     {
       session = createSession();
       session.setExceptionHandler(exceptionHandler);
-      session.setAuthenticator(authenticator);
-
       if (activateOnOpen)
       {
         session.activate();
@@ -109,6 +125,39 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
     return session;
   }
 
+  public InternalCDOSession getSession()
+  {
+    checkOpen();
+    return session;
+  }
+
+  public void activateSession(InternalCDOSession session) throws Exception
+  {
+    InternalCDORemoteSessionManager remoteSessionManager = new CDORemoteSessionManagerImpl(session);
+    session.setRemoteSessionManager(remoteSessionManager);
+    remoteSessionManager.activate();
+  }
+
+  public void deactivateSession(InternalCDOSession session) throws Exception
+  {
+    CDORemoteSessionManager remoteSessionManager = session.getRemoteSessionManager();
+    session.setRemoteSessionManager(null);
+    LifecycleUtil.deactivate(remoteSessionManager);
+
+    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+    LifecycleUtil.deactivate(sessionProtocol);
+    session.setSessionProtocol(null);
+    session = null;
+  }
+
+  protected void checkOpen()
+  {
+    if (!isSessionOpen())
+    {
+      throw new IllegalStateException(Messages.getString("CDOSessionConfigurationImpl.1")); //$NON-NLS-1$
+    }
+  }
+
   protected void checkNotOpen()
   {
     if (isSessionOpen())
@@ -116,8 +165,6 @@ public abstract class CDOSessionConfigurationImpl implements CDOSessionConfigura
       throw new IllegalStateException(Messages.getString("CDOSessionConfigurationImpl.0")); //$NON-NLS-1$
     }
   }
-
-  protected abstract InternalCDOSession createSession();
 
   /**
    * @author Eike Stepper

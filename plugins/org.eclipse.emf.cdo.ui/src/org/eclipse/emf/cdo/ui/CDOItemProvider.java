@@ -159,7 +159,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   public static String getSessionLabel(CDOSession session)
   {
     return MessageFormat.format(
-        Messages.getString("CDOItemProvider.0"), session.repository().getName(), session.getSessionID()); //$NON-NLS-1$ 
+        Messages.getString("CDOItemProvider.0"), session.getRepositoryInfo().getName(), session.getSessionID()); //$NON-NLS-1$ 
   }
 
   /**

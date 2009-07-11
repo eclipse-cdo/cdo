@@ -20,7 +20,7 @@ import org.eclipse.net4j.util.defs.Def;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getConnectorDef <em>Connector Def</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getRepositoryName <em>Repository Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getRepositoryName <em>CDORepositoryInfo Name</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getCdoPackageRegistryDef <em>Cdo Package Registry Def</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.defs.CDOSessionDef#isLegacySupportEnabled <em>Legacy Support Enabled</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getFailOverStrategyDef <em>Fail Over Strategy Def</em>}</li>
@@ -88,14 +88,14 @@ public interface CDOSessionDef extends Def
   boolean isSetConnectorDef();
 
   /**
-   * Returns the value of the '<em><b>Repository Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>CDORepositoryInfo Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Repository Name</em>' attribute isn't clear, there really should be more of a
+   * If the meaning of the '<em>CDORepositoryInfo Name</em>' attribute isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Repository Name</em>' attribute.
+   * @return the value of the '<em>CDORepositoryInfo Name</em>' attribute.
    * @see #setRepositoryName(String)
    * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getCDOSessionDef_RepositoryName()
    * @model unique="false" required="true" ordered="false"
@@ -104,11 +104,11 @@ public interface CDOSessionDef extends Def
   String getRepositoryName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getRepositoryName <em>Repository Name</em>}'
+   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOSessionDef#getRepositoryName <em>CDORepositoryInfo Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
-   *          the new value of the '<em>Repository Name</em>' attribute.
+   *          the new value of the '<em>CDORepositoryInfo Name</em>' attribute.
    * @see #getRepositoryName()
    * @generated
    */

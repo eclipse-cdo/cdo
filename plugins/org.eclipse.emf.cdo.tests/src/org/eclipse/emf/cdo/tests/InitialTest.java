@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -127,6 +128,8 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     assertNotNull(session);
     assertEquals(false, session.isClosed());
+    assertEquals(RepositoryConfig.REPOSITORY_NAME, session.getRepositoryInfo().getName());
+    assertEquals(RepositoryConfig.REPOSITORY_NAME, session.getRepositoryInfo().getUUID());
   }
 
   public void testStartTransaction() throws Exception
@@ -151,7 +154,7 @@ public class InitialTest extends AbstractCDOTest
     msg("Creating resource");
     CDOResource resource = transaction.createResource("/test1");
     assertNew(resource, transaction);
-    assertEquals(URI.createURI("cdo://" + session.repository().getUUID() + "/test1"), resource.getURI());
+    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
     ResourceSet expected = transaction.getResourceSet();
     ResourceSet actual = resource.getResourceSet();
     assertEquals(expected, actual);
@@ -473,7 +476,7 @@ public class InitialTest extends AbstractCDOTest
       msg("Getting resource");
       CDOResource resource = transaction.getResource("/test1", true);
       assertNotNull(resource);
-      assertEquals(URI.createURI("cdo://" + session.repository().getUUID() + "/test1"), resource.getURI());
+      assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.CLEAN, resource.cdoState());
@@ -489,7 +492,7 @@ public class InitialTest extends AbstractCDOTest
       CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(
           CDOURIUtil.createResourceURI(transaction, "/test1"), true);
       assertNotNull(resource);
-      assertEquals(URI.createURI("cdo://" + session.repository().getUUID() + "/test1"), resource.getURI());
+      assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.CLEAN, resource.cdoState());
@@ -670,7 +673,10 @@ public class InitialTest extends AbstractCDOTest
     msg("Getting resource");
     CDOResource resource = transaction.getResource("/test1");
     assertNotNull(resource);
-    assertEquals(URI.createURI("cdo://" + session.repository().getUUID() + "/test1"), resource.getURI());
+
+    URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1");
+    URI resourceURI = resource.getURI();
+    assertEquals(uri, resourceURI);
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(transaction, resource.cdoView());

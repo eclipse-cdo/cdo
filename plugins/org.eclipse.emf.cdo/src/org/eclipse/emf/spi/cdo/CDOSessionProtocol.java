@@ -51,8 +51,6 @@ import java.util.Set;
  */
 public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, RevisionLoader
 {
-  public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled);
-
   public void loadLibraries(Set<String> missingLibraries, File cacheFolder);
 
   public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,

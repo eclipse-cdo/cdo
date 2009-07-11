@@ -11,96 +11,40 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.server.embedded.CDOSession;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
-
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
 /**
  * @author Eike Stepper
  */
 public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
 {
-  private InternalRepository repository;
-
-  public EmbeddedClientSession(InternalRepository repository)
+  public EmbeddedClientSession(EmbeddedClientSessionConfiguration configuration)
   {
-    this.repository = repository;
-    setPackageRegistry(repository.getPackageRegistry(false));
-    setRevisionManager(repository.getRevisionManager());
+    super(configuration);
+  }
+
+  @Override
+  public EmbeddedClientSessionConfiguration getConfiguration()
+  {
+    return (EmbeddedClientSessionConfiguration)super.getConfiguration();
   }
 
   public InternalRepository getRepository()
   {
-    return repository;
+    return getConfiguration().getRepository();
   }
 
-  @Override
-  protected org.eclipse.emf.cdo.session.CDOSession.Repository createRepository(OpenSessionResult result)
+  public InternalCDOPackageRegistry getPackageRegistry()
   {
-    return new org.eclipse.emf.cdo.session.CDOSession.Repository()
-    {
-      public long getCreationTime()
-      {
-        return repository.getCreationTime();
-      }
-
-      public long getCurrentTime()
-      {
-        return getCurrentTime(false);
-      }
-
-      public long getCurrentTime(boolean forceRefresh)
-      {
-        return System.currentTimeMillis();
-      }
-
-      public String getName()
-      {
-        return repository.getName();
-      }
-
-      public String getUUID()
-      {
-        return repository.getUUID();
-      }
-
-      public boolean isSupportingAudits()
-      {
-        return repository.isSupportingAudits();
-      }
-    };
+    return getRepository().getPackageRegistry();
   }
 
-  @Override
-  protected CDOSessionProtocol createSessionProtocol()
+  public InternalCDORevisionManager getRevisionManager()
   {
-    return new EmbeddedClientSessionProtocol(this);
-  }
-
-  @Override
-  protected void activatePackageRegistry()
-  {
-    // Do nothing
-  }
-
-  @Override
-  protected void activateRevisionManager()
-  {
-    // Do nothing
-  }
-
-  @Override
-  protected void deactivatePackageRegistry()
-  {
-    // Do nothing
-  }
-
-  @Override
-  protected void deactivateRevisionManager()
-  {
-    // Do nothing
+    return getRepository().getRevisionManager();
   }
 }

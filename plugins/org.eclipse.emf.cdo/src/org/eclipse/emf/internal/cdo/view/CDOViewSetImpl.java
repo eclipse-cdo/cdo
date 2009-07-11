@@ -125,7 +125,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void add(InternalCDOView view)
   {
-    String repositoryUUID = view.getSession().repository().getUUID();
+    String repositoryUUID = view.getSession().getRepositoryInfo().getUUID();
     synchronized (views)
     {
       CDOView lookupView = mapOfViews.get(repositoryUUID);
@@ -147,7 +147,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void remove(InternalCDOView view)
   {
-    String repositoryUUID = view.getSession().repository().getUUID();
+    String repositoryUUID = view.getSession().getRepositoryInfo().getUUID();
     List<Resource> resToRemove = new ArrayList<Resource>();
     synchronized (views)
     {

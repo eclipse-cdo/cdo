@@ -281,7 +281,7 @@ public class SavePointTest extends AbstractCDOTest
    * client2 commits
    * client1 rolls back to save point
    * Result:
-   * Repository: object1 not modified, object2 is modified
+   * CDORepositoryInfo: object1 not modified, object2 is modified
    * client1: same as repository
    * client2: same as repository
    *</pre>
@@ -315,7 +315,7 @@ public class SavePointTest extends AbstractCDOTest
     // client1 rolls back to save point
     savepoint.rollback();
 
-    // Repository: object1 not modified, object2 is modified
+    // CDORepositoryInfo: object1 not modified, object2 is modified
     CDOSession client3 = openSession();
     CDOView view = client3.openView();
     CDOResource object1Test = view.getResource("/object1");

@@ -46,12 +46,10 @@ import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -81,11 +79,6 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   {
     open();
     return send(new OpenSessionRequest(this, repositoryName, passiveUpdateEnabled));
-  }
-
-  public void loadLibraries(Set<String> missingLibraries, File cacheFolder)
-  {
-    send(new LoadLibrariesRequest(this, missingLibraries, cacheFolder));
   }
 
   public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,

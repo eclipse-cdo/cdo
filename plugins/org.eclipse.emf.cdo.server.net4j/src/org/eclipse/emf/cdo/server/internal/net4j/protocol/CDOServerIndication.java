@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -97,12 +96,6 @@ public abstract class CDOServerIndication extends IndicationWithResponse
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
-      }
-
-      @Override
-      protected CDOIDObjectFactory getIDFactory()
-      {
-        return getStore().getCDOIDObjectFactory();
       }
 
       @Override

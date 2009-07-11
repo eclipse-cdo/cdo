@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.common.db;
 
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -36,24 +35,15 @@ public final class CDOCommonDBUtil
    * Creates and returns a new JDBC-based revision cache.
    * <p>
    * TODO Add all config parameters!
-   * 
-   * @param dbAdapter
-   * @param idProvider
-   * @param idObjectFactory
-   * @param listFactory
-   * @param packageRegistry
-   * @param revisionManager
-   * @param dbConnectionProvider
    */
   public static CDORevisionCache createDBCache(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
-      CDOIDProvider idProvider, CDOIDObjectFactory idObjectFactory, CDOListFactory listFactory,
-      CDOPackageRegistry packageRegistry, CDORevisionManager revisionManager)
+      CDOIDProvider idProvider, CDOListFactory listFactory, CDOPackageRegistry packageRegistry,
+      CDORevisionManager revisionManager)
   {
     DBRevisionCache cache = new DBRevisionCache();
     cache.setDBAdapter(dbAdapter);
     cache.setDBConnectionProvider(dbConnectionProvider);
     cache.setIdProvider(idProvider);
-    cache.setIDObjectFactory(idObjectFactory);
     cache.setListFactory(listFactory);
     cache.setPackageRegistry(packageRegistry);
     cache.setRevisionManager(revisionManager);

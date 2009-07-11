@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.common.internal.db.cache;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.AbstractQueryStatement;
 import org.eclipse.emf.cdo.common.internal.db.AbstractUpdateStatement;
@@ -58,8 +57,6 @@ import java.util.List;
  */
 public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 {
-  private CDOIDObjectFactory idObjectFactory;
-
   private CDOIDProvider idProvider;
 
   private CDOListFactory listFactory;
@@ -74,16 +71,6 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 
   public DBRevisionCache()
   {
-  }
-
-  public CDOIDObjectFactory getIDObjectFactory()
-  {
-    return idObjectFactory;
-  }
-
-  public void setIDObjectFactory(CDOIDObjectFactory idObjectFactory)
-  {
-    this.idObjectFactory = idObjectFactory;
   }
 
   public CDOIDProvider getIdProvider()
@@ -725,7 +712,6 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(idObjectFactory, "idObjectFactory"); //$NON-NLS-1$
     checkState(idProvider, "idProvider"); //$NON-NLS-1$
     checkState(listFactory, "listFactory");//$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
@@ -805,12 +791,6 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   {
     return new CDODataInputImpl(inputStream)
     {
-      @Override
-      protected CDOIDObjectFactory getIDFactory()
-      {
-        return idObjectFactory;
-      }
-
       @Override
       protected CDOListFactory getListFactory()
       {

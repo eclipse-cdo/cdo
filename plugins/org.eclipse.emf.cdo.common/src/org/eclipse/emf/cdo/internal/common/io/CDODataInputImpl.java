@@ -14,8 +14,6 @@ package org.eclipse.emf.cdo.internal.common.io;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDObject;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -51,6 +49,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -184,8 +183,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
     case OBJECT:
     {
-      CDOIDObject id = getIDFactory().createCDOIDObject(this);
-      ((AbstractCDOID)id).read(this);
+      AbstractCDOID id = new CDOIDLongImpl();
+      id.read(this);
       return id;
     }
 
@@ -364,8 +363,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   protected abstract CDOPackageRegistry getPackageRegistry();
 
   protected abstract CDORevisionManager getRevisionManager();
-
-  protected abstract CDOIDObjectFactory getIDFactory();
 
   protected abstract CDOListFactory getListFactory();
 }

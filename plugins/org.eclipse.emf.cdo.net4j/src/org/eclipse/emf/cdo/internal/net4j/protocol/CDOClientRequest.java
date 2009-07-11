@@ -4,14 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -76,12 +75,6 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
   {
     return confirming(new CDODataInputImpl(in)
     {
-      @Override
-      protected CDOIDObjectFactory getIDFactory()
-      {
-        return getSession();
-      }
-
       @Override
       protected CDOListFactory getListFactory()
       {

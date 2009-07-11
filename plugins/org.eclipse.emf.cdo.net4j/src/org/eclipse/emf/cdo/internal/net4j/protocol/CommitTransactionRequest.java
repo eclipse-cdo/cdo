@@ -16,7 +16,6 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -135,12 +134,6 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       protected CDORevisionManager getRevisionManager()
       {
         return getSession().getRevisionManager();
-      }
-
-      @Override
-      protected CDOIDObjectFactory getIDFactory()
-      {
-        return getSession();
       }
 
       @Override

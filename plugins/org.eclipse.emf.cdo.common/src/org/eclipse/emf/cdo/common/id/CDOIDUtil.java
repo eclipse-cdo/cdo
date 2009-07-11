@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/226778    
- *    Simon McDuff - http://bugs.eclipse.org/213402   
+ *    Simon McDuff - http://bugs.eclipse.org/226778
+ *    Simon McDuff - http://bugs.eclipse.org/213402
  */
 package org.eclipse.emf.cdo.common.id;
 
@@ -24,15 +24,12 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
-import org.eclipse.emf.cdo.spi.common.id.CDOIDLibraryDescriptorImpl;
 import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
@@ -135,9 +132,9 @@ public final class CDOIDUtil
    * <p>
    * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
    * 
-   * @since 2.0
+   * @since 3.0
    */
-  public static CDOID read(String uriFragment, CDOIDObjectFactory factory)
+  public static CDOID read(String uriFragment)
   {
     byte ordinal = Byte.valueOf(uriFragment.substring(0, 1));
     if (TRACER.isEnabled())
@@ -177,8 +174,8 @@ public final class CDOIDUtil
 
     case OBJECT:
     {
-      CDOIDObject id = factory.createCDOIDObject(fragment);
-      ((AbstractCDOID)id).read(fragment);
+      AbstractCDOID id = new CDOIDLongImpl();
+      id.read(fragment);
       return id;
     }
 
@@ -235,11 +232,6 @@ public final class CDOIDUtil
   public static CDOIDMetaRange createMetaRange(CDOID lowerBound, int count)
   {
     return new CDOIDMetaRangeImpl(lowerBound, count);
-  }
-
-  public static CDOIDLibraryDescriptor readLibraryDescriptor(ExtendedDataInput in) throws IOException
-  {
-    return new CDOIDLibraryDescriptorImpl(in);
   }
 
   public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)

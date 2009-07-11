@@ -12,8 +12,6 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -37,8 +35,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, PackageProcessor, PackageLoader,
-    RevisionLocker, ILifecycle
+public interface InternalCDOSession extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, ILifecycle
 {
   /**
    * @since 3.0
@@ -70,11 +67,6 @@ public interface InternalCDOSession extends CDOSession, CDOIDObjectFactory, Pack
    * @since 3.0
    */
   public void setRepositoryInfo(CDORepositoryInfo repositoryInfo);
-
-  /**
-   * @since 3.0
-   */
-  public void setLibraryDescriptor(CDOIDLibraryDescriptor libraryDescriptor) throws Exception;
 
   /**
    * @since 3.0

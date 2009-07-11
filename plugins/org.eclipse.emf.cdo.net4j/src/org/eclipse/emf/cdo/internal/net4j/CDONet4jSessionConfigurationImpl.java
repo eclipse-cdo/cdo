@@ -156,7 +156,6 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     OpenSessionResult result = protocol.openSession(repositoryName, isPassiveUpdateEnabled());
     session.setSessionID(result.getSessionID());
     session.setRepositoryInfo(new RepositoryInfo(repositoryName, result));
-    session.setLibraryDescriptor(result.getLibraryDescriptor());
 
     for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
     {

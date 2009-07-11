@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
@@ -36,14 +35,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -51,8 +48,6 @@ import java.util.Set;
  */
 public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, RevisionLoader
 {
-  public void loadLibraries(Set<String> missingLibraries, File cacheFolder);
-
   public void setPassiveUpdate(Map<CDOID, CDOIDAndVersion> idAndVersions, int initialChunkSize,
       boolean passiveUpdateEnabled);
 
@@ -135,18 +130,18 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
 
     private boolean repositorySupportingAudits;
 
-    private CDOIDLibraryDescriptor libraryDescriptor;
-
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
+    /**
+     * @since 3.0
+     */
     public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime,
-        boolean repositorySupportingAudits, CDOIDLibraryDescriptor libraryDescriptor)
+        boolean repositorySupportingAudits)
     {
       this.sessionID = sessionID;
       this.repositoryUUID = repositoryUUID;
       this.repositoryCreationTime = repositoryCreationTime;
       this.repositorySupportingAudits = repositorySupportingAudits;
-      this.libraryDescriptor = libraryDescriptor;
     }
 
     public int getSessionID()
@@ -177,11 +172,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
     public void setRepositoryTimeResult(RepositoryTimeResult repositoryTimeResult)
     {
       this.repositoryTimeResult = repositoryTimeResult;
-    }
-
-    public CDOIDLibraryDescriptor getLibraryDescriptor()
-    {
-      return libraryDescriptor;
     }
 
     public List<InternalCDOPackageUnit> getPackageUnits()

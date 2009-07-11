@@ -19,9 +19,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.common.id.CDOIDObject;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
@@ -58,8 +55,6 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
-import org.eclipse.net4j.util.io.ExtendedDataInput;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -86,9 +81,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -142,9 +134,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private InternalCDORemoteSessionManager remoteSessionManager;
 
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
-
-  @ExcludeFromDump
-  private CDOIDObjectFactory cdoidObjectFactory;
 
   @ExcludeFromDump
   private transient QueueRunner invalidationRunner;
@@ -230,19 +219,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol)
   {
     this.sessionProtocol = sessionProtocol;
-  }
-
-  public CDOIDObject createCDOIDObject(ExtendedDataInput in)
-  {
-    return cdoidObjectFactory.createCDOIDObject(in);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOIDObject createCDOIDObject(String in)
-  {
-    return cdoidObjectFactory.createCDOIDObject(in);
   }
 
   public void close()
@@ -693,6 +669,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
    */
   protected void initView(InternalCDOView view, ResourceSet resourceSet)
   {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Initializing new {0} view", view.getViewType());
+    }
+
     InternalCDOViewSet viewSet = SessionUtil.prepareResourceSet(resourceSet);
     synchronized (views)
     {
@@ -768,74 +749,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     EventUtil.removeListener(sessionProtocol, sessionProtocolListener);
     getConfiguration().deactivateSession(this);
     super.doDeactivate();
-  }
-
-  public void setLibraryDescriptor(CDOIDLibraryDescriptor libraryDescriptor) throws Exception
-  {
-    if (libraryDescriptor == null)
-    {
-      return;
-    }
-
-    String factoryName = libraryDescriptor.getFactoryName();
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Using CDOID factory: {0}", factoryName);
-    }
-
-    File cacheFolder = getCacheFolder();
-    ClassLoader classLoader = OM.class.getClassLoader();
-
-    Set<String> neededLibraries = createSet(libraryDescriptor.getLibraryNames());
-    if (!neededLibraries.isEmpty())
-    {
-      IOUtil.mkdirs(cacheFolder);
-      Set<String> existingLibraries = createSet(cacheFolder.list());
-      Set<String> missingLibraries = new HashSet<String>(neededLibraries);
-      missingLibraries.removeAll(existingLibraries);
-      if (!missingLibraries.isEmpty())
-      {
-        getSessionProtocol().loadLibraries(missingLibraries, cacheFolder);
-      }
-    }
-
-    int i = 0;
-    URL[] urls = new URL[neededLibraries.size()];
-    for (String neededLibrary : neededLibraries)
-    {
-      File lib = new File(cacheFolder, neededLibrary);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Using CDOID library: {0}", lib.getAbsolutePath());
-      }
-
-      urls[i++] = new URL("file:///" + lib.getAbsolutePath());
-    }
-
-    classLoader = new URLClassLoader(urls, classLoader);
-    Class<?> factoryClass = classLoader.loadClass(factoryName);
-    cdoidObjectFactory = (CDOIDObjectFactory)factoryClass.newInstance();
-  }
-
-  private File getCacheFolder()
-  {
-    String stateLocation = OM.BUNDLE.getStateLocation();
-    File repos = new File(stateLocation, "repos"); //$NON-NLS-1$
-    return new File(repos, getRepositoryInfo().getUUID());
-  }
-
-  private Set<String> createSet(String[] fileNames)
-  {
-    Set<String> set = new HashSet<String>();
-    for (String fileName : fileNames)
-    {
-      if (fileName.endsWith(".jar"))
-      {
-        set.add(fileName);
-      }
-    }
-
-    return set;
   }
 
   private Map<CDOID, CDOIDAndVersion> getAllCDOIDAndVersion()
@@ -1256,23 +1169,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         try
         {
           return delegate.isObjectLocked(view, object, lockType, byOthers);
-        }
-        catch (Exception ex)
-        {
-          handleException(++attempt, ex);
-        }
-      }
-    }
-
-    public void loadLibraries(Set<String> missingLibraries, File cacheFolder)
-    {
-      int attempt = 0;
-      for (;;)
-      {
-        try
-        {
-          delegate.loadLibraries(missingLibraries, cacheFolder);
-          return;
         }
         catch (Exception ex)
         {

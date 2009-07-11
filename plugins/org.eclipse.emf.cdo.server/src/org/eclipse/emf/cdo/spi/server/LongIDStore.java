@@ -4,15 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.spi.common.id.CDOIDLongFactoryImpl;
@@ -44,16 +42,6 @@ public abstract class LongIDStore extends Store
   public CDOIDObjectFactory getCDOIDObjectFactory()
   {
     return CDOID_OBJECT_FACTORY;
-  }
-
-  public CDOIDLibraryDescriptor getCDOIDLibraryDescriptor()
-  {
-    return CDOID_OBJECT_FACTORY.getLibraryHandler();
-  }
-
-  public CDOIDLibraryProvider getCDOIDLibraryProvider()
-  {
-    return CDOID_OBJECT_FACTORY.getLibraryHandler();
   }
 
   public long getLastObjectID()

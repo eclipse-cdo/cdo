@@ -88,7 +88,7 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
     {
       CDOIDExternalTempImpl tempID = entry.getKey();
       URI oldURIExternal = URI.createURI(tempID.toURIFragment());
-      CDOID oldCDOID = CDOIDUtil.read(oldURIExternal.fragment(), null);
+      CDOID oldCDOID = CDOIDUtil.read(oldURIExternal.fragment());
 
       InternalCDOXACommitContext commitContext = context.getTransactionManager().getCommitContext(entry.getValue());
       if (commitContext == null)

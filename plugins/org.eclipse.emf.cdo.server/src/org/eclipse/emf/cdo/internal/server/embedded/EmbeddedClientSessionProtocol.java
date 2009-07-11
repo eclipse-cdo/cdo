@@ -39,12 +39,10 @@ import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -83,11 +81,6 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
     activate();
     return serverSessionProtocol.openSession(repository, passiveUpdateEnabled);
-  }
-
-  public void loadLibraries(Set<String> missingLibraries, File cacheFolder)
-  {
-    throw new UnsupportedOperationException("Should not be called");
   }
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)

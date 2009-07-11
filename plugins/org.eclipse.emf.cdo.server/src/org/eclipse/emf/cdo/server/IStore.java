@@ -4,14 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
-import org.eclipse.emf.cdo.common.id.CDOIDLibraryProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 
@@ -42,10 +40,6 @@ public interface IStore
   public String getType();
 
   public CDOIDObjectFactory getCDOIDObjectFactory();
-
-  public CDOIDLibraryDescriptor getCDOIDLibraryDescriptor();
-
-  public CDOIDLibraryProvider getCDOIDLibraryProvider();
 
   /**
    * @since 2.0

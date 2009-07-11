@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -54,12 +53,6 @@ public abstract class CDOClientIndication extends Indication
   {
     indicating(new CDODataInputImpl(in)
     {
-      @Override
-      protected CDOIDObjectFactory getIDFactory()
-      {
-        return getSession();
-      }
-
       @Override
       protected StringIO getPackageURICompressor()
       {

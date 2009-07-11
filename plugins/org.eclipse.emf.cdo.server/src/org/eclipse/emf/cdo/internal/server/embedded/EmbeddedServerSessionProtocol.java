@@ -70,15 +70,7 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     session = repository.getSessionManager().openSession(this);
     session.setPassiveUpdateEnabled(passiveUpdateEnabled);
 
-    OpenSessionResult result = new OpenSessionResult(session.getSessionID(), repository.getUUID(), repository
-        .getCreationTime(), repository.isSupportingAudits(), null);
-
-    // InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-    // for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
-    // {
-    // result.getPackageUnits().add(packageUnit);
-    // }
-
-    return result;
+    return new OpenSessionResult(session.getSessionID(), repository.getUUID(), repository.getCreationTime(), repository
+        .isSupportingAudits());
   }
 }

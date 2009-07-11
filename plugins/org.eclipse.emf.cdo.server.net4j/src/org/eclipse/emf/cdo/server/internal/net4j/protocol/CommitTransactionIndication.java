@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
@@ -155,12 +154,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
-      }
-
-      @Override
-      protected CDOIDObjectFactory getIDFactory()
-      {
-        return CommitTransactionIndication.this.getStore().getCDOIDObjectFactory();
       }
 
       @Override

@@ -29,8 +29,6 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_AUTHENTICATION = 2;
 
-  public static final short SIGNAL_LOAD_LIBRARIES = 3;
-
   public static final short SIGNAL_VIEWS_CHANGED = 4;
 
   public static final short SIGNAL_RESOURCE_ID = 5;

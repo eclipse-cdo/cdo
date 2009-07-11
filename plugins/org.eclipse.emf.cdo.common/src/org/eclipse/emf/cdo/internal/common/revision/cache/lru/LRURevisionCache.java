@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -160,6 +161,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
   public synchronized boolean addRevision(CDORevision revision)
   {
+    CheckUtil.checkArg(revision, "revision");
     if (TRACER.isEnabled())
     {
       TRACER.format("Adding revision: {0}, created={1,date} {1,time}, revised={2,date} {2,time}, current={3}", //$NON-NLS-1$
@@ -193,6 +195,11 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
 
     adjustHolder((InternalCDORevision)revision, newHolder, lastHolder, holder);
     return true;
+  }
+
+  public synchronized void removeRevision(CDORevision revision)
+  {
+    removeRevision(revision.getID(), revision.getVersion());
   }
 
   public synchronized InternalCDORevision removeRevision(CDOID id, int version)

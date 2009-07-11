@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
 /**
  * @author Eike Stepper
@@ -34,6 +35,43 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   public InternalRepository getRepository()
   {
     return repository;
+  }
+
+  @Override
+  protected org.eclipse.emf.cdo.session.CDOSession.Repository createRepository(OpenSessionResult result)
+  {
+    return new org.eclipse.emf.cdo.session.CDOSession.Repository()
+    {
+      public long getCreationTime()
+      {
+        return repository.getCreationTime();
+      }
+
+      public long getCurrentTime()
+      {
+        return getCurrentTime(false);
+      }
+
+      public long getCurrentTime(boolean forceRefresh)
+      {
+        return System.currentTimeMillis();
+      }
+
+      public String getName()
+      {
+        return repository.getName();
+      }
+
+      public String getUUID()
+      {
+        return repository.getUUID();
+      }
+
+      public boolean isSupportingAudits()
+      {
+        return repository.isSupportingAudits();
+      }
+    };
   }
 
   @Override

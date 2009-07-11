@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 
@@ -92,7 +91,7 @@ public abstract class AbstractSyncRevisionsRequest extends CDOClientRequest<Coll
 
       Set<CDOIDAndVersion> dirtyObjects = getMap(mapofContext, revised).getDirtyObjects();
       dirtyObjects.add(CDOIDUtil.createIDAndVersion(idAndVersion.getID(), idAndVersion.getVersion()));
-      revisionManager.addCachedRevision((InternalCDORevision)revision);
+      revisionManager.getCache().addRevision(revision);
     }
 
     if (TRACER.isEnabled())

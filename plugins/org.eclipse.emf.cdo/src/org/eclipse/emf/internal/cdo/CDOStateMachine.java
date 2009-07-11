@@ -724,7 +724,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
-      revisionManager.addCachedRevision(revision);
+      revisionManager.getCache().addRevision(revision);
       changeState(object, CDOState.CLEAN);
     }
   }

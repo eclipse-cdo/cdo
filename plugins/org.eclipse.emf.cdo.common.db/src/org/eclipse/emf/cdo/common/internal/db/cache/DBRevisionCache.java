@@ -32,6 +32,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -495,6 +496,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
    */
   public boolean addRevision(final CDORevision revision)
   {
+    CheckUtil.checkArg(revision, "revision");
     Connection connection = null;
 
     try
@@ -623,6 +625,11 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         }
       }
     };
+  }
+
+  public void removeRevision(CDORevision revision)
+  {
+    removeRevision(revision.getID(), revision.getVersion());
   }
 
   /**

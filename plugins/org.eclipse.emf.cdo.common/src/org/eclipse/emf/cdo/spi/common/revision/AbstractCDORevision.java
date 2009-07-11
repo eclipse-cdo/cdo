@@ -174,6 +174,13 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     return classInfo.getEClass();
   }
 
+  /**
+   * @since 3.0
+   */
+  public void setEClass(EClass eClass)
+  {
+  }
+
   public CDOID getID()
   {
     return id;
@@ -183,7 +190,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting ID: {0}", id); //$NON-NLS-1$
+      TRACER.format("Setting ID: {0}", id);
     }
 
     this.id = id;
@@ -198,7 +205,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting version for {0}: v{1}", this, version); //$NON-NLS-1$
+      TRACER.format("Setting version for {0}: v{1}", this, version);
     }
 
     this.version = version;
@@ -213,7 +220,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting transactional {0}: v{1}", this, -(version + 1)); //$NON-NLS-1$
+      TRACER.format("Setting transactional {0}: v{1}", this, -(version + 1));
     }
 
     version = -(version + 1);
@@ -224,7 +231,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting untransactional {0}: v{1}", this, Math.abs(version)); //$NON-NLS-1$
+      TRACER.format("Setting untransactional {0}: v{1}", this, Math.abs(version));
     }
 
     version = Math.abs(version);
@@ -239,7 +246,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting created {0}: {1,date} {1,time}", this, created); //$NON-NLS-1$
+      TRACER.format("Setting created {0}: {1,date} {1,time}", this, created);
     }
 
     this.created = created;
@@ -254,12 +261,12 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (revised != UNSPECIFIED_DATE && revised < Math.max(0, created))
     {
-      throw new IllegalArgumentException("created=" + created + ", revised=" + revised); //$NON-NLS-1$ //$NON-NLS-2$
+      throw new IllegalArgumentException("created=" + created + ", revised=" + revised);
     }
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting revised {0}: {1,date} {1,time}", this, revised); //$NON-NLS-1$
+      TRACER.format("Setting revised {0}: {1,date} {1,time}", this, revised);
     }
 
     this.revised = revised;
@@ -320,7 +327,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting resourceID {0}: {1}", this, resourceID); //$NON-NLS-1$
+      TRACER.format("Setting resourceID {0}: {1}", this, resourceID);
     }
 
     this.resourceID = resourceID;
@@ -335,7 +342,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting containerID {0}: {1}", this, containerID); //$NON-NLS-1$
+      TRACER.format("Setting containerID {0}: {1}", this, containerID);
     }
 
     this.containerID = containerID;
@@ -350,7 +357,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Setting containingFeatureID {0}: {1}", this, containingFeatureID); //$NON-NLS-1$
+      TRACER.format("Setting containingFeatureID {0}: {1}", this, containingFeatureID);
     }
 
     this.containingFeatureID = containingFeatureID;
@@ -410,7 +417,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (!feature.isMany())
     {
-      throw new IllegalStateException("!feature.isMany()"); //$NON-NLS-1$
+      throw new IllegalStateException("!feature.isMany()");
     }
 
     return getList(feature).toArray();
@@ -420,7 +427,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (!feature.isMany())
     {
-      throw new IllegalStateException("!feature.isMany()"); //$NON-NLS-1$
+      throw new IllegalStateException("!feature.isMany()");
     }
 
     return getList(feature).toArray(array);
@@ -475,7 +482,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Adjusting references for revision {0}", this); //$NON-NLS-1$
+      TRACER.format("Adjusting references for revision {0}", this);
     }
 
     resourceID = (CDOID)revisionAdjuster.adjustReference(resourceID);
@@ -507,7 +514,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   @Override
   public String toString()
   {
-    return getEClass().getName() + "@" + id + "v" + version; //$NON-NLS-1$ //$NON-NLS-2$
+    return getEClass().getName() + "@" + id + "v" + version;
   }
 
   public Object getValue(EStructuralFeature feature)
@@ -557,8 +564,8 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     }
     catch (ArrayIndexOutOfBoundsException ex)
     {
-      throw new IllegalArgumentException(MessageFormat.format(
-          Messages.getString("AbstractCDORevision.20"), feature, classInfo), ex); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.20"), feature,
+          classInfo), ex);
     }
   }
 
@@ -624,7 +631,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
         value = in.readCDOFeatureValue(feature);
         if (TRACER.isEnabled())
         {
-          TRACER.format("Read feature {0}: {1}", feature.getName(), value); //$NON-NLS-1$
+          TRACER.format("Read feature {0}: {1}", feature.getName(), value);
         }
       }
 
@@ -655,7 +662,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Writing feature {0}: {1}", feature.getName(), value); //$NON-NLS-1$
+          TRACER.format("Writing feature {0}: {1}", feature.getName(), value);
         }
 
         out.writeCDOFeatureValue(feature, value);
@@ -667,7 +674,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (FeatureMapUtil.isFeatureMap(feature))
     {
-      throw new ImplementationError("Single-valued feature maps not handled, yet."); //$NON-NLS-1$
+      throw new ImplementationError("Single-valued feature maps not handled, yet.");
     }
   }
 
@@ -681,12 +688,12 @@ public abstract class AbstractCDORevision implements InternalCDORevision
         CDOID newID = idMappings.get(oldID);
         if (newID == null)
         {
-          throw new IllegalStateException(MessageFormat.format(Messages.getString("AbstractCDORevision.2"), oldID)); //$NON-NLS-1$
+          throw new IllegalStateException(MessageFormat.format(Messages.getString("AbstractCDORevision.2"), oldID));
         }
 
         if (TRACER.isEnabled())
         {
-          TRACER.format("Adjusting ID: {0} --> {1}", oldID, newID); //$NON-NLS-1$
+          TRACER.format("Adjusting ID: {0} --> {1}", oldID, newID);
         }
 
         return newID;

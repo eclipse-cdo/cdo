@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -53,6 +52,4 @@ public interface CDORevisionManager
       boolean loadMissingRevisions);
 
   public CDOID getResourceID(CDOID folderID, String name, long timeStamp);
-
-  public CDORevisionCache getCache();
 }

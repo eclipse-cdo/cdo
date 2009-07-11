@@ -52,6 +52,11 @@ public interface CDORevisionCache extends INotifier, CDORevisionCacheAdder
   /**
    * @since 3.0
    */
+  public void removeRevision(CDORevision revision);
+
+  /**
+   * @since 3.0
+   */
   public CDORevision removeRevision(CDOID id, int version);
 
   /**

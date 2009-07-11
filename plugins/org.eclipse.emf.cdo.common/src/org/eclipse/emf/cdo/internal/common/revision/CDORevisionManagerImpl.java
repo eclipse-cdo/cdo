@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -42,6 +43,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   private RevisionLoader revisionLoader;
 
   private RevisionLocker revisionLocker;
+
+  private CDORevisionFactory factory;
 
   private CDORevisionCache cache;
 
@@ -73,6 +76,16 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   public void setRevisionLocker(RevisionLocker revisionLocker)
   {
     this.revisionLocker = revisionLocker;
+  }
+
+  public CDORevisionFactory getFactory()
+  {
+    return factory;
+  }
+
+  public void setFactory(CDORevisionFactory factory)
+  {
+    this.factory = factory;
   }
 
   public CDORevisionCache getCache()
@@ -116,7 +129,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       {
         if (timeStamp == CDORevision.UNSPECIFIED_DATE)
         {
-          removeCachedRevision(revision.getID(), revision.getVersion());
+          getCache().removeRevision(revision.getID(), revision.getVersion());
         }
         else
         {
@@ -141,7 +154,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       {
         if (timeStamp == CDORevision.UNSPECIFIED_DATE)
         {
-          removeCachedRevision(revision.getID(), revision.getVersion());
+          getCache().removeRevision(revision.getID(), revision.getVersion());
         }
         else
         {
@@ -346,42 +359,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return cache.getResourceID(folderID, name, timeStamp);
   }
 
-  public List<CDORevision> getCachedRevisions()
-  {
-    return cache.getRevisions();
-  }
-
   private void addCachedRevisionIfNotNull(InternalCDORevision revision)
   {
     if (revision != null)
     {
       cache.addRevision(revision);
     }
-  }
-
-  public boolean addCachedRevision(CDORevision revision)
-  {
-    if (revision != null)
-    {
-      return cache.addRevision(revision);
-    }
-
-    throw new IllegalArgumentException("revision == null"); //$NON-NLS-1$
-  }
-
-  public void removeCachedRevision(CDORevision revision)
-  {
-    removeCachedRevision(revision.getID(), revision.getVersion());
-  }
-
-  public void removeCachedRevision(CDOID id, int version)
-  {
-    cache.removeRevision(id, version);
-  }
-
-  public void clearCache()
-  {
-    cache.clear();
   }
 
   protected InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)

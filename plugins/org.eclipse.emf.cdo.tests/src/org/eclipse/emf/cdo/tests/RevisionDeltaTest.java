@@ -205,7 +205,7 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
 
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     CDORevision revision = CDOUtil.getCDOObject(customer).cdoRevision();
-    revisionManager.removeCachedRevision(revision.getID(), revision.getVersion());
+    revisionManager.getCache().removeRevision(revision.getID(), revision.getVersion());
 
     SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);

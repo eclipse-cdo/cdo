@@ -614,7 +614,7 @@ public class TransactionCommitContextImpl implements InternalCommitContext
       {
         if (revision != null)
         {
-          revisionManager.addCachedRevision((InternalCDORevision)revision);
+          revisionManager.getCache().addRevision(revision);
         }
 
         monitor.worked();

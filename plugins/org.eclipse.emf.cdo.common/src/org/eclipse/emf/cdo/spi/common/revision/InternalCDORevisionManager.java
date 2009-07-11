@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
@@ -32,17 +32,13 @@ public interface InternalCDORevisionManager extends CDORevisionManager
 
   public void setRevisionLocker(RevisionLocker revisionLocker);
 
+  public CDORevisionFactory getFactory();
+
+  public void setFactory(CDORevisionFactory factory);
+
+  public CDORevisionCache getCache();
+
   public void setCache(CDORevisionCache cache);
-
-  public List<CDORevision> getCachedRevisions();
-
-  public boolean addCachedRevision(CDORevision revision);
-
-  public void removeCachedRevision(CDORevision revision);
-
-  public void removeCachedRevision(CDOID id, int version);
-
-  public void clearCache();
 
   public void revisedRevision(CDOID id, long timeStamp);
 

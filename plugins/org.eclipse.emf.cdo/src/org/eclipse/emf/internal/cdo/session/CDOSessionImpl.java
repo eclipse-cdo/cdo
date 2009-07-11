@@ -709,7 +709,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOSession[{0}, {1}]", repository().getName(), sessionID); //$NON-NLS-1$
+    String name = repository == null ? "?" : repository.getName();
+    return MessageFormat.format("CDOSession[{0}, {1}]", name, sessionID); //$NON-NLS-1$
   }
 
   /**
@@ -767,13 +768,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       viewSet.remove(view);
       throw ex;
     }
-  }
-
-  @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    checkState(repository().getName(), "repository().getName()"); //$NON-NLS-1$
   }
 
   @Override
@@ -965,7 +959,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     // Need to add Revision from revisionManager since we do not have all objects in view.
-    for (CDORevision revision : getRevisionManager().getCachedRevisions())
+    for (CDORevision revision : getRevisionManager().getCache().getRevisions())
     {
       if (!uniqueObjects.containsKey(revision.getID()))
       {

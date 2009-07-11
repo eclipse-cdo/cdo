@@ -102,7 +102,7 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     res2.getContents().add(company2);
 
     trans.commit();
-    session2.getRevisionManager().getCache().clear();
+    clearCache(session2.getRevisionManager());
     assertFalse(FSMUtil.isConflict(res2));
     session2.refresh();
     assertTrue(FSMUtil.isConflict(res2));

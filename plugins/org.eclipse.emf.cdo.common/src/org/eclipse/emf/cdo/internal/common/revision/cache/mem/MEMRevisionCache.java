@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.KeyedPhantomReference;
@@ -146,6 +147,7 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
 
   public boolean addRevision(CDORevision revision)
   {
+    CheckUtil.checkArg(revision, "revision");
     CDOID id = revision.getID();
     synchronized (cacheLists)
     {
@@ -158,6 +160,11 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
 
       return list.addRevision((InternalCDORevision)revision);
     }
+  }
+
+  public void removeRevision(CDORevision revision)
+  {
+    removeRevision(revision.getID(), revision.getVersion());
   }
 
   public InternalCDORevision removeRevision(CDOID id, int version)

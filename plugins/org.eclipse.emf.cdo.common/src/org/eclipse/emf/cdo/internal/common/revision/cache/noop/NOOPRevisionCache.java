@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.emf.ecore.EClass;
@@ -67,7 +68,12 @@ public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
 
   public boolean addRevision(CDORevision revision)
   {
+    CheckUtil.checkArg(revision, "revision");
     return false;
+  }
+
+  public void removeRevision(CDORevision revision)
+  {
   }
 
   public InternalCDORevision removeRevision(CDOID id, int version)

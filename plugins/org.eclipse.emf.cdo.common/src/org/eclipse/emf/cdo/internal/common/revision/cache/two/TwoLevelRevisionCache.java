@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -117,7 +118,13 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
 
   public boolean addRevision(CDORevision revision)
   {
+    CheckUtil.checkArg(revision, "revision");
     return level1.addRevision(revision);
+  }
+
+  public void removeRevision(CDORevision revision)
+  {
+    removeRevision(revision.getID(), revision.getVersion());
   }
 
   public CDORevision removeRevision(CDOID id, int version)

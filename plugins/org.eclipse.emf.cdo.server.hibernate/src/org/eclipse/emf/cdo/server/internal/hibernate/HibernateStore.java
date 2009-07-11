@@ -11,13 +11,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
-import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
 import org.eclipse.emf.cdo.spi.server.Store;
@@ -51,8 +49,6 @@ public class HibernateStore extends Store implements IHibernateStore
   public static final String TYPE = "hibernate";
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStore.class);
-
-  private static final CDOIDObjectFactory CDOID_OBJECT_FACTORY = new CDOIDHibernateFactoryImpl();
 
   /**
    * Used to give different extensions of Hibernate a context when initializing
@@ -188,11 +184,6 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     return hibernateSessionFactory;
-  }
-
-  public CDOIDObjectFactory getCDOIDObjectFactory()
-  {
-    return CDOID_OBJECT_FACTORY;
   }
 
   @Override

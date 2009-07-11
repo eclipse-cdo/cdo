@@ -11,9 +11,7 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.spi.common.id.CDOIDLongFactoryImpl;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
@@ -25,8 +23,6 @@ import java.util.Set;
  */
 public abstract class LongIDStore extends Store
 {
-  private static final CDOIDLongFactoryImpl CDOID_OBJECT_FACTORY = new CDOIDLongFactoryImpl();
-
   @ExcludeFromDump
   private transient long lastObjectID;
 
@@ -37,11 +33,6 @@ public abstract class LongIDStore extends Store
       Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
   {
     super(type, supportedChangeFormats, supportedRevisionTemporalities, supportedRevisionParallelisms);
-  }
-
-  public CDOIDObjectFactory getCDOIDObjectFactory()
-  {
-    return CDOID_OBJECT_FACTORY;
   }
 
   public long getLastObjectID()

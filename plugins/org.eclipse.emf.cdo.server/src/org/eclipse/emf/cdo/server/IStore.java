@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
-import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
@@ -38,8 +37,6 @@ public interface IStore
    * @since 2.0
    */
   public String getType();
-
-  public CDOIDObjectFactory getCDOIDObjectFactory();
 
   /**
    * @since 2.0

@@ -20,6 +20,9 @@ public interface InternalCDOIDObject extends CDOIDObject
 {
   public SubType getSubType();
 
+  /**
+   * @author Eike Stepper
+   */
   public enum SubType
   {
     LONG, STRING, LONG_WITH_ECLASS, STRING_WITH_ECLASS

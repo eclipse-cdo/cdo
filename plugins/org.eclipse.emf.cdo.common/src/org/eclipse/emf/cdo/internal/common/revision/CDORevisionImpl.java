@@ -13,8 +13,6 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -25,8 +23,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.io.IOException;
-
 /**
  * @author Eike Stepper
  */
@@ -34,17 +30,12 @@ public class CDORevisionImpl extends AbstractCDORevision
 {
   private Object[] values;
 
-  public CDORevisionImpl(EClass eClass, CDOID id)
+  public CDORevisionImpl(EClass eClass)
   {
-    super(eClass, id);
+    super(eClass);
   }
 
-  public CDORevisionImpl(CDODataInput in) throws IOException
-  {
-    super(in);
-  }
-
-  public CDORevisionImpl(CDORevisionImpl source)
+  protected CDORevisionImpl(CDORevisionImpl source)
   {
     super(source);
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());

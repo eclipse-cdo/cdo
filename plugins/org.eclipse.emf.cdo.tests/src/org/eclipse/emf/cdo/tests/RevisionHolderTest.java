@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
@@ -278,6 +279,11 @@ public class RevisionHolderTest extends AbstractCDOTest
       this(id, 0, CDORevision.UNSPECIFIED_DATE);
     }
 
+    public EClass getEClass()
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public CDOID getID()
     {
       return id;
@@ -333,11 +339,6 @@ public class RevisionHolderTest extends AbstractCDOTest
       return (revised == UNSPECIFIED_DATE || revised >= timeStamp) && timeStamp >= created;
     }
 
-    public EClass getEClass()
-    {
-      throw new UnsupportedOperationException();
-    }
-
     public CDORevisionData data()
     {
       throw new UnsupportedOperationException();
@@ -371,6 +372,11 @@ public class RevisionHolderTest extends AbstractCDOTest
     public CDORevision copy()
     {
       return new TestRevision(CDOIDUtil.getLong(id), version, created, revised);
+    }
+
+    public void read(CDODataInput in) throws IOException
+    {
+      throw new UnsupportedOperationException();
     }
 
     public void write(CDODataOutput out, int referenceChunk) throws IOException

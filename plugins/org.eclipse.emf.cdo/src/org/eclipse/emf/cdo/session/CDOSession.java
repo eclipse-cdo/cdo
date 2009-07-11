@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
@@ -219,16 +218,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
     public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
 
     /**
-     * Returns the CDORevisionFactory currently being used by this session.
-     */
-    public CDORevisionFactory getRevisionFactory();
-
-    /**
-     * Sets the CDORevisionFactory to be used by this session.
-     */
-    public void setRevisionFactory(CDORevisionFactory factory);
-
-    /**
      * @author Eike Stepper
      */
     public interface GeneratedPackageEmulationEvent extends IOptionsEvent, CDOEvent
@@ -246,13 +235,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
      * @author Eike Stepper
      */
     public interface CollectionLoadingPolicyEvent extends IOptionsEvent, CDOEvent
-    {
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    public interface RevisionFactoryEvent extends IOptionsEvent, CDOEvent
     {
     }
   }

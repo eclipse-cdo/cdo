@@ -23,13 +23,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDLibraryDescriptor;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -79,7 +76,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -99,7 +95,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
@@ -982,8 +977,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     private CDOCollectionLoadingPolicy collectionLoadingPolicy;
 
-    private CDORevisionFactory revisionFactory;
-
     public OptionsImpl()
     {
       // TODO Remove preferences from core
@@ -1055,42 +1048,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public synchronized CDORevisionFactory getRevisionFactory()
-    {
-      if (revisionFactory == null)
-      {
-        revisionFactory = new CDORevisionFactory()
-        {
-          public CDORevision createRevision(EClass eClass, CDOID id)
-          {
-            return CDORevisionUtil.createRevision(eClass, id);
-          }
-
-          public CDORevision createRevision(CDODataInput in) throws IOException
-          {
-            return in.readCDORevision();
-          }
-
-          @Override
-          public String toString()
-          {
-            return "DefaultRevisionFactory"; //$NON-NLS-1$
-          }
-        };
-      }
-
-      return revisionFactory;
-    }
-
-    public synchronized void setRevisionFactory(CDORevisionFactory revisionFactory)
-    {
-      if (this.revisionFactory != revisionFactory)
-      {
-        this.revisionFactory = revisionFactory;
-        fireEvent(new RevisionFactoryEventImpl());
-      }
-    }
-
     /**
      * @author Eike Stepper
      */
@@ -1126,19 +1083,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       private static final long serialVersionUID = 1L;
 
       public CollectionLoadingPolicyEventImpl()
-      {
-        super(OptionsImpl.this);
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class RevisionFactoryEventImpl extends OptionsEvent implements RevisionFactoryEvent
-    {
-      private static final long serialVersionUID = 1L;
-
-      public RevisionFactoryEventImpl()
       {
         super(OptionsImpl.this);
       }

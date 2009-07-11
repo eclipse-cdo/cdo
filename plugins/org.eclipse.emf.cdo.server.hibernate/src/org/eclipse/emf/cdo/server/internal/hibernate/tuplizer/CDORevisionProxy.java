@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
@@ -48,6 +49,11 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return new CDORevisionProxy(li);
   }
 
+  public void read(CDODataInput in) throws IOException
+  {
+    li.getRevision().read(in);
+  }
+
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     li.getRevision().write(out, referenceChunk);
@@ -61,6 +67,131 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public LazyInitializer getHibernateLazyInitializer()
   {
     return li;
+  }
+
+  public EClass getEClass()
+  {
+    return li.getRevision().getEClass();
+  }
+
+  public Object getContainerID()
+  {
+    return li.getRevision().getContainerID();
+  }
+
+  public void setContainerID(Object containerID)
+  {
+    li.getRevision().setContainerID(containerID);
+  }
+
+  public int getContainingFeatureID()
+  {
+    return li.getRevision().getContainingFeatureID();
+  }
+
+  public void setContainingFeatureID(int containingFeatureID)
+  {
+    li.getRevision().setContainingFeatureID(containingFeatureID);
+  }
+
+  public CDORevisionData data()
+  {
+    return li.getRevision().data();
+  }
+
+  public CDOID getID()
+  {
+    return li.getRevision().getID();
+  }
+
+  public void setID(CDOID id)
+  {
+    li.getRevision().setID(id);
+  }
+
+  public int getVersion()
+  {
+    return li.getRevision().getVersion();
+  }
+
+  public void setVersion(int version)
+  {
+    li.getRevision().setVersion(version);
+  }
+
+  public boolean isTransactional()
+  {
+    return li.getRevision().isTransactional();
+  }
+
+  public int setTransactional()
+  {
+    return li.getRevision().setTransactional();
+  }
+
+  public void setUntransactional()
+  {
+    li.getRevision().setUntransactional();
+  }
+
+  public CDOID getResourceID()
+  {
+    return li.getRevision().getResourceID();
+  }
+
+  public void setResourceID(CDOID resourceID)
+  {
+    li.getRevision().setResourceID(resourceID);
+  }
+
+  public long getCreated()
+  {
+    return li.getRevision().getCreated();
+  }
+
+  public void setCreated(long created)
+  {
+    li.getRevision().setCreated(created);
+  }
+
+  public long getRevised()
+  {
+    return li.getRevision().getRevised();
+  }
+
+  public void setRevised(long revised)
+  {
+    li.getRevision().setRevised(revised);
+  }
+
+  public boolean isCurrent()
+  {
+    return li.getRevision().isCurrent();
+  }
+
+  public boolean isValid(long timeStamp)
+  {
+    return li.getRevision().isValid(timeStamp);
+  }
+
+  public CDORevision revision()
+  {
+    return li.getRevision().revision();
+  }
+
+  public boolean isResourceNode()
+  {
+    return li.getRevision().isResourceNode();
+  }
+
+  public boolean isResourceFolder()
+  {
+    return li.getRevision().isResourceFolder();
+  }
+
+  public boolean isResource()
+  {
+    return li.getRevision().isResource();
   }
 
   public void add(EStructuralFeature feature, int index, Object value)
@@ -93,34 +224,9 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().get(feature, index);
   }
 
-  public EClass getEClass()
+  public Object getValue(EStructuralFeature feature)
   {
-    return li.getRevision().getEClass();
-  }
-
-  public Object getContainerID()
-  {
-    return li.getRevision().getContainerID();
-  }
-
-  public int getContainingFeatureID()
-  {
-    return li.getRevision().getContainingFeatureID();
-  }
-
-  public long getCreated()
-  {
-    return li.getRevision().getCreated();
-  }
-
-  public CDORevisionData data()
-  {
-    return li.getRevision().data();
-  }
-
-  public CDOID getID()
-  {
-    return li.getRevision().getID();
+    return li.getRevision().getValue(feature);
   }
 
   public CDOList getList(EStructuralFeature feature, int size)
@@ -138,74 +244,14 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     li.getRevision().setList(feature, list);
   }
 
-  public CDOID getResourceID()
-  {
-    return li.getRevision().getResourceID();
-  }
-
-  public long getRevised()
-  {
-    return li.getRevision().getRevised();
-  }
-
-  public CDORevision revision()
-  {
-    return li.getRevision().revision();
-  }
-
-  public Object getValue(EStructuralFeature feature)
-  {
-    return li.getRevision().getValue(feature);
-  }
-
-  public int getVersion()
-  {
-    return li.getRevision().getVersion();
-  }
-
-  public int hashCode(EStructuralFeature feature)
-  {
-    return li.getRevision().hashCode(feature);
-  }
-
   public int indexOf(EStructuralFeature feature, Object value)
   {
     return li.getRevision().indexOf(feature, value);
   }
 
-  public boolean isCurrent()
-  {
-    return li.getRevision().isCurrent();
-  }
-
   public boolean isEmpty(EStructuralFeature feature)
   {
     return li.getRevision().isEmpty(feature);
-  }
-
-  public boolean isResourceNode()
-  {
-    return li.getRevision().isResourceNode();
-  }
-
-  public boolean isResourceFolder()
-  {
-    return li.getRevision().isResourceFolder();
-  }
-
-  public boolean isResource()
-  {
-    return li.getRevision().isResource();
-  }
-
-  public boolean isTransactional()
-  {
-    return li.getRevision().isTransactional();
-  }
-
-  public boolean isValid(long timeStamp)
-  {
-    return li.getRevision().isValid(timeStamp);
   }
 
   public int lastIndexOf(EStructuralFeature feature, Object value)
@@ -233,60 +279,15 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
     return li.getRevision().set(feature, index, value);
   }
 
-  public void setContainerID(Object containerID)
-  {
-    li.getRevision().setContainerID(containerID);
-  }
-
-  public void setContainingFeatureID(int containingFeatureID)
-  {
-    li.getRevision().setContainingFeatureID(containingFeatureID);
-  }
-
-  public void setCreated(long created)
-  {
-    li.getRevision().setCreated(created);
-  }
-
-  public void setID(CDOID id)
-  {
-    li.getRevision().setID(id);
-  }
-
   @SuppressWarnings("deprecation")
   public void setListSize(EStructuralFeature feature, int size)
   {
     li.getRevision().setListSize(feature, size);
   }
 
-  public void setResourceID(CDOID resourceID)
-  {
-    li.getRevision().setResourceID(resourceID);
-  }
-
-  public void setRevised(long revised)
-  {
-    li.getRevision().setRevised(revised);
-  }
-
-  public int setTransactional()
-  {
-    return li.getRevision().setTransactional();
-  }
-
-  public void setUntransactional()
-  {
-    li.getRevision().setUntransactional();
-  }
-
   public Object setValue(EStructuralFeature feature, Object value)
   {
     return li.getRevision().setValue(feature, value);
-  }
-
-  public void setVersion(int version)
-  {
-    li.getRevision().setVersion(version);
   }
 
   public int size(EStructuralFeature feature)
@@ -317,5 +318,10 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public Object basicSet(EStructuralFeature feature, int index, Object value)
   {
     return li.getRevision().basicSet(feature, index, value);
+  }
+
+  public int hashCode(EStructuralFeature feature)
+  {
+    return li.getRevision().hashCode(feature);
   }
 }

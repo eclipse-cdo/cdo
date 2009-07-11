@@ -75,30 +75,30 @@ public abstract class AbstractCDORevision implements InternalCDORevision
 
   private int containingFeatureID;
 
-  public AbstractCDORevision(EClass eClass, CDOID id)
+  /**
+   * @since 3.0
+   */
+  public AbstractCDORevision(EClass eClass)
   {
-    if (eClass.isAbstract())
+    if (eClass != null)
     {
-      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.0"), eClass)); //$NON-NLS-1$
-    }
+      if (eClass.isAbstract())
+      {
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.0"), eClass)); //$NON-NLS-1$
+      }
 
-    if (CDOIDUtil.isNull(id))
-    {
-      throw new IllegalArgumentException(Messages.getString("AbstractCDORevision.1")); //$NON-NLS-1$
+      classInfo = CDOModelUtil.getClassInfo(eClass);
+      version = 0;
+      created = UNSPECIFIED_DATE;
+      revised = UNSPECIFIED_DATE;
+      resourceID = CDOID.NULL;
+      containerID = CDOID.NULL;
+      containingFeatureID = 0;
+      initValues(classInfo.getAllPersistentFeatures());
     }
-
-    classInfo = CDOModelUtil.getClassInfo(eClass);
-    this.id = id;
-    version = 0;
-    created = UNSPECIFIED_DATE;
-    revised = UNSPECIFIED_DATE;
-    resourceID = CDOID.NULL;
-    containerID = CDOID.NULL;
-    containingFeatureID = 0;
-    initValues(classInfo.getAllPersistentFeatures());
   }
 
-  public AbstractCDORevision(AbstractCDORevision source)
+  protected AbstractCDORevision(AbstractCDORevision source)
   {
     classInfo = source.classInfo;
     id = source.id;
@@ -110,7 +110,10 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     containingFeatureID = source.containingFeatureID;
   }
 
-  public AbstractCDORevision(CDODataInput in) throws IOException
+  /**
+   * @since 3.0
+   */
+  public void read(CDODataInput in) throws IOException
   {
     READING.start(this);
     EClassifier classifier = in.readCDOClassifierRefAndResolve();
@@ -174,13 +177,6 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     return classInfo.getEClass();
   }
 
-  /**
-   * @since 3.0
-   */
-  public void setEClass(EClass eClass)
-  {
-  }
-
   public CDOID getID()
   {
     return id;
@@ -188,6 +184,11 @@ public abstract class AbstractCDORevision implements InternalCDORevision
 
   public void setID(CDOID id)
   {
+    if (CDOIDUtil.isNull(id))
+    {
+      throw new IllegalArgumentException(Messages.getString("AbstractCDORevision.1")); //$NON-NLS-1$
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Setting ID: {0}", id);

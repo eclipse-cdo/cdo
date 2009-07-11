@@ -376,6 +376,11 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    if (factory == null)
+    {
+      factory = CDORevisionFactory.DEFAULT;
+    }
+
     if (cache == null)
     {
       cache = CDORevisionCacheUtil.createDefaultCache();

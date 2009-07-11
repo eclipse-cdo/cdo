@@ -4,18 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.common.revision;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.io.CDODataInput;
-
 import org.eclipse.emf.ecore.EClass;
-
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -23,7 +18,19 @@ import java.io.IOException;
  */
 public interface CDORevisionFactory
 {
-  public CDORevision createRevision(EClass eClass, CDOID id);
+  /**
+   * @since 3.0
+   */
+  public static final CDORevisionFactory DEFAULT = new CDORevisionFactory()
+  {
+    public CDORevision createRevision(EClass eClass)
+    {
+      return new org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl(eClass);
+    }
+  };
 
-  public CDORevision createRevision(CDODataInput in) throws IOException;
+  /**
+   * @since 3.0
+   */
+  public CDORevision createRevision(EClass eClass);
 }

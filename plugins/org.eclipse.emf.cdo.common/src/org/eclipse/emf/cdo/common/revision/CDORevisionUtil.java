@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
@@ -31,14 +30,6 @@ public final class CDORevisionUtil
 
   private CDORevisionUtil()
   {
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDORevision createRevision(EClass eClass, CDOID id)
-  {
-    return new CDORevisionImpl(eClass, id);
   }
 
   /**

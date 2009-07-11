@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -28,6 +30,8 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,7 +62,7 @@ public abstract class Store extends Lifecycle implements IStore
 
   private RevisionParallelism revisionParallelism = RevisionParallelism.NONE;
 
-  private IRepository repository;
+  private InternalRepository repository;
 
   @ExcludeFromDump
   private transient long lastMetaID;
@@ -105,14 +109,17 @@ public abstract class Store extends Lifecycle implements IStore
     return type;
   }
 
-  public IRepository getRepository()
+  /**
+   * @since 3.0
+   */
+  public InternalRepository getRepository()
   {
     return repository;
   }
 
   public void setRepository(IRepository repository)
   {
-    this.repository = repository;
+    this.repository = (InternalRepository)repository;
   }
 
   public Set<ChangeFormat> getSupportedChangeFormats()
@@ -238,6 +245,17 @@ public abstract class Store extends Lifecycle implements IStore
   public ProgressDistributor getIndicatingCommitDistributor()
   {
     return indicatingCommitDistributor;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public InternalCDORevision createRevision(EClass eClass, CDOID id)
+  {
+    CDORevisionFactory factory = repository.getRevisionManager().getFactory();
+    InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass);
+    revision.setID(id);
+    return revision;
   }
 
   protected void releaseAccessor(StoreAccessor accessor)

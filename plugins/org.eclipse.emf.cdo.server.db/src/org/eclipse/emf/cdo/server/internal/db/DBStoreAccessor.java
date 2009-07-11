@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -177,7 +176,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       return null;
     }
 
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.createRevision(eClass, id);
+    InternalCDORevision revision = getStore().createRevision(eClass, id);
 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
@@ -205,7 +204,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
 
     EClass eClass = getObjectType(id);
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.createRevision(eClass, id);
+    InternalCDORevision revision = getStore().createRevision(eClass, id);
 
     IClassMappingAuditSupport mapping = (IClassMappingAuditSupport)mappingStrategy.getClassMapping(eClass);
     if (mapping.readRevisionByTime(this, revision, timeStamp, listChunk))
@@ -222,7 +221,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
 
     EClass eClass = getObjectType(id);
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionUtil.createRevision(eClass, id);
+    InternalCDORevision revision = getStore().createRevision(eClass, id);
     IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
 
     boolean success = false;

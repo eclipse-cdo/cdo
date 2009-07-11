@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjustable;
@@ -95,6 +96,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   @Deprecated
   public void setListSize(EStructuralFeature feature, int size);
+
+  /**
+   * @since 3.0
+   */
+  public void read(CDODataInput in) throws IOException;
 
   public void write(CDODataOutput out, int referenceChunk) throws IOException;
 }

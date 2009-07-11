@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOEvent;
 import org.eclipse.emf.cdo.view.CDOAudit;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -177,23 +176,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
     public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled);
 
     /**
-     * Specifies whether objects will be invalidated due by other users changes.
-     * <p>
-     * Example:
-     * <p>
-     * <code>session.setPassiveUpdateEnabled(false);</code>
-     * <p>
-     * By default this property is enabled. If this property is disabled the latest versions of objects can still be
-     * obtained by calling {@link #refresh()}.
-     * <p>
-     * Passive update can be disabled in cases where more performance is needed and/or more control over when objects
-     * will be refreshed.
-     * <p>
-     * When enabled again, a refresh will be automatically performed to be in sync with the server.
-     */
-    public void setPassiveUpdateEnabled(boolean enabled);
-
-    /**
      * The {@link CDOCollectionLoadingPolicy collection loading policy} of this {@link CDOSession session} controls how
      * a list gets populated. By default, when an object is fetched, all its elements are filled with the proper values.
      * <p>
@@ -206,7 +188,7 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
      * </ol>
      * Example:
      * <p>
-     * <code>CDONet4jUtil.createCollectionLoadingPolicy(initialElements, subsequentElements);</code>
+     * <code>CDOUtil.createCollectionLoadingPolicy(initialElements, subsequentElements);</code>
      * <p>
      * The user can also provide its own implementation of the CDOCollectionLoadingPolicy interface.
      */
@@ -220,21 +202,14 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
     /**
      * @author Eike Stepper
      */
-    public interface GeneratedPackageEmulationEvent extends IOptionsEvent, CDOEvent
+    public interface GeneratedPackageEmulationEvent extends IOptionsEvent
     {
     }
 
     /**
      * @author Eike Stepper
      */
-    public interface PassiveUpdateEvent extends IOptionsEvent, CDOEvent
-    {
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    public interface CollectionLoadingPolicyEvent extends IOptionsEvent, CDOEvent
+    public interface CollectionLoadingPolicyEvent extends IOptionsEvent
     {
     }
   }

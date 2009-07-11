@@ -10,14 +10,14 @@
  */
 package org.eclipse.emf.cdo.session;
 
-import org.eclipse.emf.cdo.util.CDOEvent;
+import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOSessionEvent extends CDOEvent
+public interface CDOSessionEvent extends IEvent
 {
   /**
    * @since 3.0

@@ -42,8 +42,6 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSessi
 
   public ITransaction openTransaction(int viewID);
 
-  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled);
-
   public void viewClosed(InternalView view);
 
   public void setSubscribed(boolean subscribed);

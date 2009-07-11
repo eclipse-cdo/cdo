@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.util.CDOEvent;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.options.IOptionsEvent;
@@ -130,14 +129,14 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
     /**
      * @author Eike Stepper
      */
-    public interface ConflictResolversEvent extends IOptionsEvent, CDOEvent
+    public interface ConflictResolversEvent extends IOptionsEvent
     {
     }
 
     /**
      * @author Eike Stepper
      */
-    public interface AutoReleaseLockEvent extends IOptionsEvent, CDOEvent
+    public interface AutoReleaseLockEvent extends IOptionsEvent
     {
     }
   }

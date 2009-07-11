@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOEvent;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -418,23 +417,23 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
      */
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
-    public interface CacheReferenceTypeEvent extends IOptionsEvent, CDOEvent
+    public interface CacheReferenceTypeEvent extends IOptionsEvent
     {
     }
 
-    public interface ReferencePolicyEvent extends IOptionsEvent, CDOEvent
+    public interface ReferencePolicyEvent extends IOptionsEvent
     {
     }
 
-    public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent, CDOEvent
+    public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent
     {
     }
 
-    public interface InvalidationNotificationEvent extends IOptionsEvent, CDOEvent
+    public interface InvalidationNotificationEvent extends IOptionsEvent
     {
     }
 
-    public interface RevisionPrefetchingPolicyEvent extends IOptionsEvent, CDOEvent
+    public interface RevisionPrefetchingPolicyEvent extends IOptionsEvent
     {
     }
   }

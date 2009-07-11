@@ -88,6 +88,8 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    */
   public CDORemoteSessionManager getRemoteSessionManager();
 
+  public ExceptionHandler getExceptionHandler();
+
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
    * 
@@ -154,8 +156,6 @@ public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOpti
    * {@link #isPassiveUpdateEnabled()} is <code>true</code>, this method will return immediately without doing anything.
    */
   public Collection<CDOTimeStampContext> refresh();
-
-  public ExceptionHandler getExceptionHandler();
 
   /**
    * Returns the {@link Options options} of this session.

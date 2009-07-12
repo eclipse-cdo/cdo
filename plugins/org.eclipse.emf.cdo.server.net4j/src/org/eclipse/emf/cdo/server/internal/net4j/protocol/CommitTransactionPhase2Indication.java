@@ -41,7 +41,7 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
   @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    indicatingTransaction(in);
+    initializeCommitContext(in);
     XATransactionCommitContext xaContextContext = (XATransactionCommitContext)commitContext;
 
     int size = in.readInt();
@@ -89,7 +89,7 @@ public class CommitTransactionPhase2Indication extends CommitTransactionIndicati
   }
 
   @Override
-  protected void indicatingTransaction(CDODataInput in) throws Exception
+  protected void initializeCommitContext(CDODataInput in) throws Exception
   {
     int viewID = in.readInt();
     commitContext = getRepository().getCommitManager().get(getTransaction(viewID));

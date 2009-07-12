@@ -113,55 +113,10 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     }, monitor);
   }
 
-  @Override
-  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
-  {
-    return confirming(new CDODataInputImpl(in)
-    {
-      @Override
-      protected StringIO getPackageURICompressor()
-      {
-        return getProtocol().getPackageURICompressor();
-      }
-
-      @Override
-      protected CDOPackageRegistry getPackageRegistry()
-      {
-        return getSession().getPackageRegistry();
-      }
-
-      @Override
-      protected CDORevisionManager getRevisionManager()
-      {
-        return getSession().getRevisionManager();
-      }
-
-      @Override
-      protected CDOListFactory getListFactory()
-      {
-        return CDOListWithElementProxiesImpl.FACTORY;
-      }
-    }, monitor);
-  }
-
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
     requestingCommit(out);
-  }
-
-  protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
-  {
-    CommitTransactionResult result = confirmingCheckError(in);
-    if (result != null)
-    {
-      return result;
-    }
-
-    result = confirmingTransactionResult(in);
-    confirmingNewPackage(in, result);
-    confirmingIDMappings(in, result);
-    return result;
   }
 
   protected void requestingTransactionInfo(CDODataOutput out) throws IOException
@@ -215,6 +170,51 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     {
       out.writeCDOID(id);
     }
+  }
+
+  @Override
+  protected final CommitTransactionResult confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
+  {
+    return confirming(new CDODataInputImpl(in)
+    {
+      @Override
+      protected StringIO getPackageURICompressor()
+      {
+        return getProtocol().getPackageURICompressor();
+      }
+  
+      @Override
+      protected CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getPackageRegistry();
+      }
+  
+      @Override
+      protected CDORevisionManager getRevisionManager()
+      {
+        return getSession().getRevisionManager();
+      }
+  
+      @Override
+      protected CDOListFactory getListFactory()
+      {
+        return CDOListWithElementProxiesImpl.FACTORY;
+      }
+    }, monitor);
+  }
+
+  protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
+  {
+    CommitTransactionResult result = confirmingCheckError(in);
+    if (result != null)
+    {
+      return result;
+    }
+  
+    result = confirmingTransactionResult(in);
+    confirmingNewPackage(in, result);
+    confirmingIDMappings(in, result);
+    return result;
   }
 
   protected CommitTransactionResult confirmingCheckError(CDODataInput in) throws IOException

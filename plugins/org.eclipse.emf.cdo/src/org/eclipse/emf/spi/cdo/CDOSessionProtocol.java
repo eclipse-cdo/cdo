@@ -269,6 +269,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
 
     private long timeStamp;
 
+    // private List<CDOIDMetaRange> metaIDRanges = new ArrayList<CDOIDMetaRange>();
+
     private Map<CDOIDTemp, CDOID> idMappings = new HashMap<CDOIDTemp, CDOID>();
 
     private CDOReferenceAdjuster referenceAdjuster;
@@ -326,6 +328,22 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
     {
       idMappings.put(oldID, newID);
     }
+
+    // /**
+    // * @since 3.0
+    // */
+    // public List<CDOIDMetaRange> getMetaIDRanges()
+    // {
+    // return metaIDRanges;
+    // }
+    //
+    // /**
+    // * @since 3.0
+    // */
+    // public void addMetaIDRange(CDOIDMetaRange metaIDRange)
+    // {
+    // metaIDRanges.add(metaIDRange);
+    // }
 
     protected PostCommitReferenceAdjuster createReferenceAdjuster()
     {

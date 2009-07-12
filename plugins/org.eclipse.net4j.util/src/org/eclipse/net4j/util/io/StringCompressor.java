@@ -51,8 +51,6 @@ public class StringCompressor implements StringIO
 
   private List<Integer> pendingAcknowledgements = new ArrayList<Integer>();
 
-  private Object lock = new Object();
-
   /**
    * Creates a StringCompressor instance.
    * 
@@ -80,7 +78,7 @@ public class StringCompressor implements StringIO
     ID id;
     List<Integer> acknowledgements = null;
     boolean stringFollows = false;
-    synchronized (lock)
+    synchronized (this)
     {
       id = stringToID.get(string);
       if (id == null)
@@ -175,7 +173,7 @@ public class StringCompressor implements StringIO
       }
     }
 
-    synchronized (lock)
+    synchronized (this)
     {
       if (string != null)
       {
@@ -243,7 +241,10 @@ public class StringCompressor implements StringIO
     out.writeInt(value);
   }
 
-  private void writeString(ExtendedDataOutput out, String value) throws IOException
+  /**
+   * @since 3.0
+   */
+  protected void writeString(ExtendedDataOutput out, String value) throws IOException
   {
     if (DEBUG)
     {
@@ -279,7 +280,10 @@ public class StringCompressor implements StringIO
     return in.readInt();
   }
 
-  private String readString(ExtendedDataInput in) throws IOException
+  /**
+   * @since 3.0
+   */
+  protected String readString(ExtendedDataInput in) throws IOException
   {
     if (DEBUG)
     {
@@ -319,6 +323,54 @@ public class StringCompressor implements StringIO
     public void setAcknowledged()
     {
       acknowledged = true;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public static class Counting extends StringCompressor
+  {
+    private long stringsRead;
+
+    private long stringsWritten;
+
+    public Counting(boolean client)
+    {
+      super(client);
+    }
+
+    public long getStringsRead()
+    {
+      return stringsRead;
+    }
+
+    public long getStringsWritten()
+    {
+      return stringsWritten;
+    }
+
+    @Override
+    protected String readString(ExtendedDataInput in) throws IOException
+    {
+      synchronized (this)
+      {
+        ++stringsRead;
+      }
+
+      return super.readString(in);
+    }
+
+    @Override
+    protected void writeString(ExtendedDataOutput out, String value) throws IOException
+    {
+      synchronized (this)
+      {
+        ++stringsWritten;
+      }
+
+      super.writeString(out, value);
     }
   }
 }

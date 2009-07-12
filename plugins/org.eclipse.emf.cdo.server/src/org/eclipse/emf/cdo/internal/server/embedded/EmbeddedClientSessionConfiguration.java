@@ -65,7 +65,7 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     EmbeddedClientSessionProtocol protocol = new EmbeddedClientSessionProtocol((EmbeddedClientSession)session);
     session.setSessionProtocol(protocol);
     protocol.activate();
-
+    protocol.openSession(isPassiveUpdateEnabled());
     session.setRepositoryInfo(new RepositoryInfo());
   }
 

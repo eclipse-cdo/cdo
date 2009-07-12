@@ -704,12 +704,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   }
 
   @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-  }
-
-  @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
@@ -1357,14 +1351,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public List<Object> query(int viewID, AbstractQueryIterator<?> queryResult)
+    public void query(int viewID, AbstractQueryIterator<?> queryResult)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.query(viewID, queryResult);
+          delegate.query(viewID, queryResult);
+          return;
         }
         catch (Exception ex)
         {

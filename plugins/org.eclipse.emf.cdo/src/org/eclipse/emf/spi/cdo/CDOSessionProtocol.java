@@ -81,7 +81,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
 
   public void changeSubscription(int viewId, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear);
 
-  public List<Object> query(int viewID, AbstractQueryIterator<?> queryResult);
+  /**
+   * @since 3.0
+   */
+  public void query(int viewID, AbstractQueryIterator<?> queryResult);
 
   public boolean cancelQuery(int queryId);
 

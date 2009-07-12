@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -26,13 +27,15 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalAudit;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
+import org.eclipse.emf.cdo.spi.server.InternalQueryResult;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -81,14 +84,9 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     return serverSessionProtocol;
   }
 
-  public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled)
+  public InternalSession openSession(boolean passiveUpdateEnabled)
   {
     repository = session.getRepository();
-    if (!ObjectUtil.equals(repository.getName(), repositoryName))
-    {
-      throw new IllegalArgumentException("CDORepositoryInfo name does not match: " + repositoryName);
-    }
-
     activate();
     return serverSessionProtocol.openSession(repository, passiveUpdateEnabled);
   }
@@ -161,18 +159,19 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public void openView(int viewID, CDOCommonView.Type viewType, long timeStamp)
   {
+    InternalSession session = serverSessionProtocol.getSession();
     switch (viewType)
     {
     case AUDIT:
-      serverSessionProtocol.getSession().openAudit(viewID, timeStamp);
+      session.openAudit(viewID, timeStamp);
       break;
 
     case READONLY:
-      serverSessionProtocol.getSession().openView(viewID);
+      session.openView(viewID);
       break;
 
     case TRANSACTION:
-      serverSessionProtocol.getSession().openTransaction(viewID);
+      session.openTransaction(viewID);
       break;
     }
   }
@@ -191,9 +190,35 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public List<Object> query(int viewID, AbstractQueryIterator<?> queryResult)
+  public void query(int viewID, AbstractQueryIterator<?> query)
   {
-    throw new UnsupportedOperationException();
+    InternalView view = serverSessionProtocol.getSession().getView(viewID);
+    InternalQueryManager queryManager = repository.getQueryManager();
+    InternalQueryResult result = queryManager.execute(view, query.getQueryInfo());
+
+    query.setQueryID(result.getQueryID());
+    CDOQueryQueue<Object> resultQueue = query.getQueue();
+
+    try
+    {
+      while (result.hasNext())
+      {
+        Object object = result.next();
+        resultQueue.add(object);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      resultQueue.setException(ex);
+    }
+    catch (Throwable throwable)
+    {
+      resultQueue.setException(new RuntimeException(throwable.getMessage(), throwable));
+    }
+    finally
+    {
+      resultQueue.close();
+    }
   }
 
   public boolean cancelQuery(int queryID)
@@ -231,54 +256,62 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext clientCommitContext, OMMonitor monitor)
   {
-    InternalCDOTransaction clientTransaction = clientCommitContext.getTransaction();
-    int viewID = clientTransaction.getViewID();
-
-    InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(viewID);
-    InternalCommitContext serverCommitContext = serverTransaction.createCommitContext();
-    serverCommitContext.preCommit();
-    serverCommitContext.setAutoReleaseLocksEnabled(clientTransaction.options().isAutoReleaseLocksEnabled());
-
-    List<CDOPackageUnit> npu = clientCommitContext.getNewPackageUnits();
-    serverCommitContext.setNewPackageUnits(npu.toArray(new InternalCDOPackageUnit[npu.size()]));
-
-    Collection<CDOResource> nr = clientCommitContext.getNewResources().values();
-    Collection<CDOObject> no = clientCommitContext.getNewObjects().values();
-    InternalCDORevision[] array = new InternalCDORevision[nr.size() + no.size()];
-    int index = 0;
-    for (CDOResource resource : nr)
+    monitor.begin(2);
+    CommitTransactionResult result;
+    try
     {
-      array[index++] = (InternalCDORevision)resource.cdoRevision();
+      InternalCDOTransaction clientTransaction = clientCommitContext.getTransaction();
+      int viewID = clientTransaction.getViewID();
+
+      InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(viewID);
+      InternalCommitContext serverCommitContext = serverTransaction.createCommitContext();
+      serverCommitContext.preCommit();
+      serverCommitContext.setAutoReleaseLocksEnabled(clientTransaction.options().isAutoReleaseLocksEnabled());
+
+      List<CDOPackageUnit> npu = clientCommitContext.getNewPackageUnits();
+      serverCommitContext.setNewPackageUnits(npu.toArray(new InternalCDOPackageUnit[npu.size()]));
+
+      Collection<CDOResource> nr = clientCommitContext.getNewResources().values();
+      Collection<CDOObject> no = clientCommitContext.getNewObjects().values();
+      InternalCDORevision[] array = new InternalCDORevision[nr.size() + no.size()];
+      int index = 0;
+      for (CDOResource resource : nr)
+      {
+        array[index++] = (InternalCDORevision)resource.cdoRevision();
+      }
+
+      for (CDOObject object : no)
+      {
+        array[index++] = (InternalCDORevision)object.cdoRevision();
+      }
+
+      serverCommitContext.setNewObjects(array);
+
+      Collection<CDORevisionDelta> rd = clientCommitContext.getRevisionDeltas().values();
+      serverCommitContext.setDirtyObjectDeltas(rd.toArray(new InternalCDORevisionDelta[rd.size()]));
+
+      Set<CDOID> detachedObjects = clientCommitContext.getDetachedObjects().keySet();
+      serverCommitContext.setDetachedObjects(detachedObjects.toArray(new CDOID[detachedObjects.size()]));
+
+      serverCommitContext.write(monitor.fork());
+      if (serverCommitContext.getRollbackMessage() == null)
+      {
+        serverCommitContext.commit(monitor.fork());
+      }
+      else
+      {
+        monitor.worked();
+      }
+
+      result = new CommitTransactionResult(clientCommitContext, serverCommitContext.getTimeStamp());
+      for (Entry<CDOIDTemp, CDOID> entry : serverCommitContext.getIDMappings().entrySet())
+      {
+        result.addIDMapping(entry.getKey(), entry.getValue());
+      }
     }
-
-    for (CDOObject object : no)
+    finally
     {
-      array[index++] = (InternalCDORevision)object.cdoRevision();
-    }
-
-    serverCommitContext.setNewObjects(array);
-
-    Collection<CDORevisionDelta> rd = clientCommitContext.getRevisionDeltas().values();
-    serverCommitContext.setDirtyObjectDeltas(rd.toArray(new InternalCDORevisionDelta[rd.size()]));
-
-    Set<CDOID> detachedObjects = clientCommitContext.getDetachedObjects().keySet();
-    serverCommitContext.setDetachedObjects(detachedObjects.toArray(new CDOID[detachedObjects.size()]));
-
-    serverCommitContext.write(monitor.fork());
-    if (serverCommitContext.getRollbackMessage() == null)
-    {
-      serverCommitContext.commit(monitor.fork());
-    }
-    else
-    {
-      monitor.worked();
-    }
-
-    CommitTransactionResult result = new CommitTransactionResult(clientCommitContext, serverCommitContext
-        .getTimeStamp());
-    for (Entry<CDOIDTemp, CDOID> entry : serverCommitContext.getIDMappings().entrySet())
-    {
-      result.addIDMapping(entry.getKey(), entry.getValue());
+      monitor.done();
     }
 
     return result;

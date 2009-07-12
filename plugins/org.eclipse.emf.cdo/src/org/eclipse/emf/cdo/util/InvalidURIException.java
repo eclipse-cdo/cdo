@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -30,7 +30,7 @@ public class InvalidURIException extends CDOException
 
   public InvalidURIException(URI uri, Throwable cause)
   {
-    super(MessageFormat.format(Messages.getString("InvalidURIException.0"), uri, cause)); //$NON-NLS-1$
+    super(MessageFormat.format(Messages.getString("InvalidURIException.0"), uri, cause), cause); //$NON-NLS-1$
     this.uri = uri;
   }
 

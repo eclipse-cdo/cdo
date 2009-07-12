@@ -52,12 +52,11 @@ public class QueryIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    int numberOfResults = 0;
-
     // Return queryID immediately.
     out.writeInt(queryResult.getQueryID());
     flush();
 
+    int numberOfResults = 0;
     while (queryResult.hasNext())
     {
       Object object = queryResult.next();

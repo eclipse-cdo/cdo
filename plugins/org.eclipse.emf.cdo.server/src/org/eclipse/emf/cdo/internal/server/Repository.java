@@ -889,7 +889,7 @@ public class Repository extends Container<Object> implements InternalRepository
     @Override
     protected void doBeforeActivate() throws Exception
     {
-      if (getPackageRegistry() == null)
+      if (getPackageRegistry(false) == null)
       {
         setPackageRegistry(createPackageRegistry());
       }

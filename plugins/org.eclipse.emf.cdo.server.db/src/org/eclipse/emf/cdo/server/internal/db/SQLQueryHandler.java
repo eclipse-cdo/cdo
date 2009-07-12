@@ -99,7 +99,7 @@ public class SQLQueryHandler implements IQueryHandler
 
       HashMap<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
       query = parse(query, paramMap);
-      statement = connection.prepareStatement(query);
+      statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
       for (String key : info.getParameters().keySet())
       {

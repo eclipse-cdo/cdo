@@ -36,6 +36,13 @@ public class CommitTransactionPhase1Indication extends CommitTransactionIndicati
   }
 
   @Override
+  protected void indicatingTransaction(CDODataInput in) throws Exception
+  {
+    int viewID = in.readInt();
+    commitContext = new XATransactionCommitContext(getTransaction(viewID));
+  }
+
+  @Override
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     String exceptionMessage = null;
@@ -60,12 +67,5 @@ public class CommitTransactionPhase1Indication extends CommitTransactionIndicati
       respondingTimestamp(out);
       respondingMappingNewObjects(out);
     }
-  }
-
-  @Override
-  protected void indicatingTransaction(CDODataInput in) throws Exception
-  {
-    int viewID = in.readInt();
-    commitContext = new XATransactionCommitContext(getTransaction(viewID));
   }
 }

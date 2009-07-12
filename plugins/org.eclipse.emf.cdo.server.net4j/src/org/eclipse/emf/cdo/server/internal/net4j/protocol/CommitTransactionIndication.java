@@ -164,24 +164,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }, monitor);
   }
 
-  @Override
-  protected final void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
-  {
-    responding(new CDODataOutputImpl(out)
-    {
-      @Override
-      protected StringIO getPackageURICompressor()
-      {
-        return getProtocol().getPackageURICompressor();
-      }
-
-      public CDOIDProvider getIDProvider()
-      {
-        return CommitTransactionIndication.this.getSession();
-      }
-    }, monitor);
-  }
-
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     try
@@ -205,10 +187,121 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
   }
 
+  protected void indicatingCommit(CDODataInput in, OMMonitor monitor) throws Exception
+  {
+    // Create commit context
+    indicatingTransaction(in);
+    commitContext.preCommit();
+  
+    boolean autoReleaseLocksEnabled = in.readBoolean();
+    commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
+  
+    InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
+    InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
+    InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
+    CDOID[] detachedObjects = new CDOID[in.readInt()];
+    monitor.begin(newPackageUnits.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
+  
+    try
+    {
+      // New package units
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Reading {0} new package units", newPackageUnits.length); //$NON-NLS-1$
+      }
+  
+      InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
+      for (int i = 0; i < newPackageUnits.length; i++)
+      {
+        newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(packageRegistry);
+        packageRegistry.putPackageUnit(newPackageUnits[i]); // Must happen before readCDORevision!!!
+        monitor.worked();
+      }
+  
+      // When all packages are deserialized and registered, resolve them
+      for (InternalCDOPackageUnit packageUnit : newPackageUnits)
+      {
+        for (EPackage ePackage : packageUnit.getEPackages(true))
+        {
+          EcoreUtil.resolveAll(ePackage);
+        }
+      }
+  
+      // New objects
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Reading {0} new objects", newObjects.length); //$NON-NLS-1$
+      }
+  
+      for (int i = 0; i < newObjects.length; i++)
+      {
+        newObjects[i] = (InternalCDORevision)in.readCDORevision();
+        monitor.worked();
+      }
+  
+      // Dirty objects
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length); //$NON-NLS-1$
+      }
+  
+      for (int i = 0; i < dirtyObjectDeltas.length; i++)
+      {
+        dirtyObjectDeltas[i] = (InternalCDORevisionDelta)in.readCDORevisionDelta();
+        monitor.worked();
+      }
+  
+      for (int i = 0; i < detachedObjects.length; i++)
+      {
+        detachedObjects[i] = in.readCDOID();
+        monitor.worked();
+      }
+  
+      commitContext.setNewPackageUnits(newPackageUnits);
+      commitContext.setNewObjects(newObjects);
+      commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
+      commitContext.setDetachedObjects(detachedObjects);
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  protected void indicatingTransaction(CDODataInput in) throws Exception
+  {
+    int viewID = in.readInt();
+    commitContext = getTransaction(viewID).createCommitContext();
+  }
+
+  protected void indicatingCommit(OMMonitor monitor)
+  {
+    ProgressDistributor distributor = getStore().getIndicatingCommitDistributor();
+    distributor.run(ops, commitContext, monitor);
+  }
+
+  @Override
+  protected final void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
+  {
+    responding(new CDODataOutputImpl(out)
+    {
+      @Override
+      protected StringIO getPackageURICompressor()
+      {
+        return getProtocol().getPackageURICompressor();
+      }
+  
+      public CDOIDProvider getIDProvider()
+      {
+        return CommitTransactionIndication.this.getSession();
+      }
+    }, monitor);
+  }
+
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     boolean success = false;
-
+  
     try
     {
       success = respondingException(out, commitContext.getRollbackMessage());
@@ -225,99 +318,6 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     }
   }
 
-  protected void indicatingTransaction(CDODataInput in) throws Exception
-  {
-    int viewID = in.readInt();
-    commitContext = getTransaction(viewID).createCommitContext();
-  }
-
-  protected void indicatingCommit(CDODataInput in, OMMonitor monitor) throws Exception
-  {
-    // Create commit context
-    indicatingTransaction(in);
-    commitContext.preCommit();
-
-    boolean autoReleaseLocksEnabled = in.readBoolean();
-    commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
-
-    InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
-    InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
-    InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
-    CDOID[] detachedObjects = new CDOID[in.readInt()];
-    monitor.begin(newPackageUnits.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
-
-    try
-    {
-      // New package units
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} new package units", newPackageUnits.length); //$NON-NLS-1$
-      }
-
-      InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
-      for (int i = 0; i < newPackageUnits.length; i++)
-      {
-        newPackageUnits[i] = (InternalCDOPackageUnit)in.readCDOPackageUnit(packageRegistry);
-        packageRegistry.putPackageUnit(newPackageUnits[i]); // Must happen before readCDORevision!!!
-        monitor.worked();
-      }
-
-      // When all packages are deserialized and registered, resolve them
-      for (InternalCDOPackageUnit packageUnit : newPackageUnits)
-      {
-        for (EPackage ePackage : packageUnit.getEPackages(true))
-        {
-          EcoreUtil.resolveAll(ePackage);
-        }
-      }
-
-      // New objects
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} new objects", newObjects.length); //$NON-NLS-1$
-      }
-
-      for (int i = 0; i < newObjects.length; i++)
-      {
-        newObjects[i] = (InternalCDORevision)in.readCDORevision();
-        monitor.worked();
-      }
-
-      // Dirty objects
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length); //$NON-NLS-1$
-      }
-
-      for (int i = 0; i < dirtyObjectDeltas.length; i++)
-      {
-        dirtyObjectDeltas[i] = (InternalCDORevisionDelta)in.readCDORevisionDelta();
-        monitor.worked();
-      }
-
-      for (int i = 0; i < detachedObjects.length; i++)
-      {
-        detachedObjects[i] = in.readCDOID();
-        monitor.worked();
-      }
-
-      commitContext.setNewPackageUnits(newPackageUnits);
-      commitContext.setNewObjects(newObjects);
-      commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
-      commitContext.setDetachedObjects(detachedObjects);
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  protected void indicatingCommit(OMMonitor monitor)
-  {
-    ProgressDistributor distributor = getStore().getIndicatingCommitDistributor();
-    distributor.run(ops, commitContext, monitor);
-  }
-
   protected boolean respondingException(CDODataOutput out, String rollbackMessage) throws Exception
   {
     boolean success = rollbackMessage == null;
@@ -326,7 +326,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     {
       out.writeString(rollbackMessage);
     }
-
+  
     return success;
   }
 

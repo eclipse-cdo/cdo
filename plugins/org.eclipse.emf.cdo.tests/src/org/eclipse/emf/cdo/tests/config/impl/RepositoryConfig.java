@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
@@ -112,6 +113,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public void setUp() throws Exception
   {
     super.setUp();
+    StoreThreadLocal.release();
     repositories = new HashMap<String, InternalRepository>();
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
@@ -136,6 +138,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     repositories.clear();
     repositories = null;
+    StoreThreadLocal.release();
     super.tearDown();
   }
 

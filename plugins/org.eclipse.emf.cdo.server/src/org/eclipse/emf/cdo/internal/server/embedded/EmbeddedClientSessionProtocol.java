@@ -223,7 +223,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public boolean cancelQuery(int queryID)
   {
-    throw new UnsupportedOperationException();
+    repository.getQueryManager().cancel(queryID);
+    return true;
   }
 
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)

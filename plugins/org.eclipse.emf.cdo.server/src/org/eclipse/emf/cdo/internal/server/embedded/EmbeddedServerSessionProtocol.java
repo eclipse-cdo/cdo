@@ -22,8 +22,6 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
-
 import java.util.List;
 
 /**
@@ -46,6 +44,13 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     return clientSessionProtocol;
   }
 
+  public InternalSession openSession(InternalRepository repository, boolean passiveUpdateEnabled)
+  {
+    session = repository.getSessionManager().openSession(this);
+    session.setPassiveUpdateEnabled(passiveUpdateEnabled);
+    return session;
+  }
+
   public InternalSession getSession()
   {
     return session;
@@ -63,14 +68,5 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
 
   public void sendRemoteSessionNotification(byte opcode, ISession session)
   {
-  }
-
-  public OpenSessionResult openSession(InternalRepository repository, boolean passiveUpdateEnabled)
-  {
-    session = repository.getSessionManager().openSession(this);
-    session.setPassiveUpdateEnabled(passiveUpdateEnabled);
-
-    return new OpenSessionResult(session.getSessionID(), repository.getUUID(), repository.getCreationTime(), repository
-        .isSupportingAudits());
   }
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -23,13 +23,11 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Simon McDuff
  */
-public class QueryRequest extends CDOClientRequest<List<Object>>
+public class QueryRequest extends CDOClientRequest<Boolean>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryRequest.class);
 
@@ -53,13 +51,12 @@ public class QueryRequest extends CDOClientRequest<List<Object>>
   }
 
   @Override
-  protected List<Object> confirming(CDODataInput in) throws IOException
+  protected Boolean confirming(CDODataInput in) throws IOException
   {
     int queryID = in.readInt();
     queryResult.setQueryID(queryID);
 
     CDOQueryQueue<Object> resultQueue = queryResult.getQueue();
-    List<Object> result = new ArrayList<Object>();
 
     try
     {
@@ -90,6 +87,6 @@ public class QueryRequest extends CDOClientRequest<List<Object>>
       resultQueue.close();
     }
 
-    return result;
+    return true;
   }
 }

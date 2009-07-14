@@ -62,7 +62,8 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   /**
    * @author Eike Stepper
    */
-  private class PackageRegistry extends Lifecycle implements InternalCDOPackageRegistry
+  @Deprecated
+  public class PackageRegistry extends Lifecycle implements InternalCDOPackageRegistry
   {
     public PackageRegistry()
     {

@@ -4,10 +4,12 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444  
+ *    Stefan Winkler - bug 271444: [DB] Multiple refactorings
+ *    Kai Schlamp - bug 282976: [DB] Influence Mappings through EAnnotations
+ *    Stefan Winkler - bug 282976: [DB] Influence Mappings through EAnnotations
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -27,7 +29,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.db.DBException;
-import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -35,12 +36,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import java.sql.Connection;
@@ -60,36 +57,9 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MetaDataManager.class);
 
-  private static Map<EClassifier, DBType> typeMap = new HashMap<EClassifier, DBType>();
-
   private static final boolean ZIP_PACKAGE_BYTES = true;
 
   private IDBStore store;
-
-  static
-  {
-    typeMap.put(EcorePackage.eINSTANCE.getEDate(), DBType.TIMESTAMP);
-    typeMap.put(EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR);
-    typeMap.put(EcorePackage.eINSTANCE.getEByteArray(), DBType.BLOB);
-
-    typeMap.put(EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN);
-    typeMap.put(EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT);
-    typeMap.put(EcorePackage.eINSTANCE.getEChar(), DBType.CHAR);
-    typeMap.put(EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE);
-    typeMap.put(EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT);
-    typeMap.put(EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER);
-    typeMap.put(EcorePackage.eINSTANCE.getELong(), DBType.BIGINT);
-    typeMap.put(EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT);
-
-    typeMap.put(EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN);
-    typeMap.put(EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT);
-    typeMap.put(EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR);
-    typeMap.put(EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE);
-    typeMap.put(EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT);
-    typeMap.put(EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER);
-    typeMap.put(EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT);
-    typeMap.put(EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT);
-  }
 
   public MetaDataManager(IDBStore store)
   {
@@ -191,27 +161,6 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       monitor.done();
     }
-  }
-
-  public DBType getDBType(EClassifier type)
-  {
-    if (type instanceof EClass)
-    {
-      return DBType.BIGINT;
-    }
-
-    if (type instanceof EEnum)
-    {
-      return DBType.INTEGER;
-    }
-
-    DBType dbType = typeMap.get(type);
-    if (dbType != null)
-    {
-      return dbType;
-    }
-
-    return DBType.VARCHAR;
   }
 
   protected IDBStore getStore()

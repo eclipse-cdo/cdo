@@ -112,23 +112,23 @@ public class DBStoreTest extends AbstractCDOTest
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource("/test");
-  
+
     Company e = Model1Factory.eINSTANCE.createCompany();
     e.setName(s);
     // this escapes only the string!
     // resulting string only contains one backslash
-  
+
     resource.getContents().add(e);
     transaction.commit();
-  
+
     transaction.close();
     session.close();
     clearCache(getRepository().getRevisionManager());
-  
+
     session = openModel1Session();
     CDOView view = session.openView();
     resource = view.getResource("/test");
-  
+
     assertEquals(1, resource.getContents().size());
     e = (Company)resource.getContents().get(0);
     assertEquals(s, e.getName());

@@ -9,13 +9,13 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - 282976: [DB] Influence Mappings through EAnnotations
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -385,70 +385,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)
   {
-    CDOType type = CDOModelUtil.getType(feature);
-
-    if (type == CDOType.BOOLEAN || type == CDOType.BOOLEAN_OBJECT)
-    {
-      return new TypeMapping.TMBoolean(this, feature);
-    }
-    else if (type == CDOType.BYTE || type == CDOType.BYTE_OBJECT)
-    {
-      return new TypeMapping.TMByte(this, feature);
-    }
-    else if (type == CDOType.CHAR || type == CDOType.CHARACTER_OBJECT)
-    {
-      return new TypeMapping.TMCharacter(this, feature);
-    }
-    else if (type == CDOType.DATE)
-    {
-      return new TypeMapping.TMDate(this, feature);
-    }
-    else if (type == CDOType.DOUBLE || type == CDOType.DOUBLE_OBJECT)
-    {
-      return new TypeMapping.TMDouble(this, feature);
-    }
-    else if (type == CDOType.FLOAT || type == CDOType.FLOAT_OBJECT)
-    {
-      return new TypeMapping.TMFloat(this, feature);
-    }
-    else if (type == CDOType.INT || type == CDOType.INTEGER_OBJECT)
-    {
-      return new TypeMapping.TMInteger(this, feature);
-    }
-    else if (type == CDOType.LONG || type == CDOType.LONG_OBJECT)
-    {
-      return new TypeMapping.TMLong(this, feature);
-    }
-    else if (type == CDOType.OBJECT)
-    {
-      return new TypeMapping.TMObject(this, feature);
-    }
-    else if (type == CDOType.SHORT || type == CDOType.SHORT_OBJECT)
-    {
-      return new TypeMapping.TMShort(this, feature);
-    }
-    else if (type == CDOType.ENUM)
-    {
-      return new TypeMapping.TMEnum(this, feature);
-    }
-    else if (type == CDOType.STRING || type == CDOType.CUSTOM)
-    {
-      return new TypeMapping.TMString(this, feature);
-    }
-    else if (type == CDOType.BIG_INTEGER)
-    {
-      return new TypeMapping.TMBigInteger(this, feature);
-    }
-    else if (type == CDOType.BIG_DECIMAL)
-    {
-      return new TypeMapping.TMBigDecimal(this, feature);
-    }
-    else if (type == CDOType.BYTE_ARRAY)
-    {
-      return new TypeMapping.TMBytes(this, feature);
-    }
-
-    throw new ImplementationError("Unrecognized CDOType: " + type); //$NON-NLS-1$
+    return TypeMappingFactory.createTypeMapping(this, feature);
   }
 
   public final IListMapping createListMapping(EClass containingClass, EStructuralFeature feature)

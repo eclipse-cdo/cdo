@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Kai Schlamp - bug 282976: [DB] Influence Mappings through EAnnotations
  */
 package org.eclipse.net4j.db;
 
@@ -31,6 +32,8 @@ public enum DBType
   CHAR(1), //
   VARCHAR(12), //
   LONGVARCHAR(-1, "LONG VARCHAR"), // //$NON-NLS-1$
+  CLOB(2005), //
+
   DATE(91)
   {
     @Override
@@ -102,15 +105,6 @@ public enum DBType
     {
       throw new UnsupportedOperationException();
     }
-  }, //
-
-  CLOB(2005)
-  {
-    @Override
-    public void appendValue(StringBuilder builder, Object value)
-    {
-      throw new UnsupportedOperationException();
-    }
   }; //
 
   private int code;
@@ -163,5 +157,23 @@ public enum DBType
         builder.append(value);
       }
     }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static DBType getTypeByKeyword(String keyword)
+  {
+    DBType[] values = DBType.values();
+    for (int i = 0; i < values.length; i++)
+    {
+      DBType dbType = values[i];
+      if (dbType.getKeyword().equalsIgnoreCase(keyword))
+      {
+        return dbType;
+      }
+    }
+
+    return null;
   }
 }

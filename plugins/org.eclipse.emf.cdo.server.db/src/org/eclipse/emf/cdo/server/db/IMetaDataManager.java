@@ -4,19 +4,19 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444  
+ *    Stefan Winkler - bug 271444: [DB] Multiple refactorings
+ *    Kai Schlamp - bug 282976: [DB] Influence Mappings through EAnnotations
+ *    Stefan Winkler - bug 282976: [DB] Influence Mappings through EAnnotations
  */
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
-import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -63,10 +63,10 @@ public interface IMetaDataManager
 /**
    * Reads information about package units present in the database.
    * @param connection the DB connection to read from.
-   * @return a collection of package unit information records which can be 
+   * @return a collection of package unit information records which can be
    *   passed to {@link IMetaDataManager#loadPackageUnit(Connection, InternalCDOPackageUnit))
    *   in order to read the EPackage.
-   *   
+   *
    * @since 2.0
    */
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection);
@@ -83,14 +83,4 @@ public interface IMetaDataManager
    * @since 2.0
    */
   public void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
-
-  /**
-   * Get the DB type associated with the given {@link EClassifier}.
-   * 
-   * @param eType
-   *          the type to look up.
-   * @return the {@link DBType} of the given {@link EClassifier}.
-   * @since 2.0
-   */
-  public DBType getDBType(EClassifier eType);
 }

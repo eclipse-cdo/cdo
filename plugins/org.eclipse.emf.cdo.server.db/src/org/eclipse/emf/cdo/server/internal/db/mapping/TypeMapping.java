@@ -7,8 +7,10 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
- *    Stefan Winkler - 275303: [DB] DBStore does not handle BIG_INTEGER and BIG_DECIMAL
+ *    Stefan Winkler - bug 271444: [DB] Multiple refactorings
+ *    Stefan Winkler - bug 275303: [DB] DBStore does not handle BIG_INTEGER and BIG_DECIMAL
+ *    Kai Schlamp - bug 282976: [DB] Influence Mappings through EAnnotations
+ *    Stefan Winkler - bug 282976: [DB] Influence Mappings through EAnnotations
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -17,7 +19,9 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.MetaDataManager;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBType;
@@ -48,6 +52,8 @@ public abstract class TypeMapping implements ITypeMapping
 
   private IDBField field;
 
+  private DBType dbType;
+
   /**
    * Create a new type mapping
    * 
@@ -56,10 +62,11 @@ public abstract class TypeMapping implements ITypeMapping
    * @param feature
    *          the feature to be mapped.
    */
-  public TypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature)
+  protected TypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
   {
     this.mappingStrategy = mappingStrategy;
     this.feature = feature;
+    dbType = type;
   }
 
   public final void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision revision)
@@ -143,13 +150,27 @@ public abstract class TypeMapping implements ITypeMapping
 
   protected DBType getDBType()
   {
-    return mappingStrategy.getStore().getMetaDataManager().getDBType(feature.getEType());
+    return dbType;
   }
 
   protected int getDBLength(DBType type)
   {
+    String value = DBAnnotation.COLUMN_LENGTH.getValue(feature);
+    if (value != null)
+    {
+      try
+      {
+        return Integer.parseInt(value);
+      }
+      catch (NumberFormatException e)
+      {
+        OM.LOG.error("Illegal columnLength annotation of feature " + feature.getName());
+      }
+    }
+
     // TODO: implement DBAdapter.getDBLength
     // mappingStrategy.getStore().getDBAdapter().getDBLength(type);
+    // which should then return the correct default field length for the db type
     return type == DBType.VARCHAR ? 32672 : IDBField.DEFAULT;
   }
 
@@ -160,9 +181,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMEnum extends TypeMapping
   {
-    public TMEnum(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMEnum(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -187,9 +208,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMString extends TypeMapping
   {
-    public TMString(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMString(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -204,9 +225,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMShort extends TypeMapping
   {
-    public TMShort(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMShort(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -222,9 +243,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMObject extends TypeMapping
   {
-    public TMObject(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMObject(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -251,9 +272,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMLong extends TypeMapping
   {
-    public TMLong(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMLong(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -268,9 +289,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMInteger extends TypeMapping
   {
-    public TMInteger(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMInteger(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -285,9 +306,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMFloat extends TypeMapping
   {
-    public TMFloat(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMFloat(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -302,9 +323,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMDouble extends TypeMapping
   {
-    public TMDouble(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMDouble(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -319,9 +340,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMDate extends TypeMapping
   {
-    public TMDate(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMDate(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -342,9 +363,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMCharacter extends TypeMapping
   {
-    public TMCharacter(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMCharacter(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -371,9 +392,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMByte extends TypeMapping
   {
-    public TMByte(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMByte(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -388,9 +409,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMBytes extends TypeMapping
   {
-    public TMBytes(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMBytes(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -405,9 +426,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMBoolean extends TypeMapping
   {
-    public TMBoolean(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMBoolean(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -422,9 +443,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMBigInteger extends TypeMapping
   {
-    public TMBigInteger(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMBigInteger(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override
@@ -452,9 +473,9 @@ public abstract class TypeMapping implements ITypeMapping
    */
   public static class TMBigDecimal extends TypeMapping
   {
-    public TMBigDecimal(IMappingStrategy strategy, EStructuralFeature feature)
+    public TMBigDecimal(IMappingStrategy strategy, EStructuralFeature feature, DBType type)
     {
-      super(strategy, feature);
+      super(strategy, feature, type);
     }
 
     @Override

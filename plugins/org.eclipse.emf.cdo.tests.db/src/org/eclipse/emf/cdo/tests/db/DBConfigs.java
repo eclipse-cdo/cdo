@@ -26,5 +26,6 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     super.initTestClasses(testClasses);
     testClasses.add(DBStoreTest.class);
     testClasses.add(SQLQueryTest.class);
+    testClasses.add(DBAnnotationsTest.class);
   }
 }

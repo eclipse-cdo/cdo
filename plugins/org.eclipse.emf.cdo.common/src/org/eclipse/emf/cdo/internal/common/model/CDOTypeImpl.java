@@ -457,11 +457,22 @@ public abstract class CDOTypeImpl implements CDOType
     {
       for (EEnumLiteral literal : ((EEnum)type).getELiterals())
       {
-        if (literal.getInstance() == value)
+        if (literal == value || literal.getInstance() == value)
         {
           return literal.getValue();
         }
       }
+
+      // EEnumLiteral[] literals = ((EEnum)type).getELiterals().toArray(
+      // new EEnumLiteral[((EEnum)type).getELiterals().size()]);
+      // for (EEnumLiteral literal : literals)
+      // {
+      // Enumerator instance = literal.getInstance();
+      // if (instance == value)
+      // {
+      // return literal.getValue();
+      // }
+      // }
 
       throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOTypeImpl.23"), value)); //$NON-NLS-1$
     }

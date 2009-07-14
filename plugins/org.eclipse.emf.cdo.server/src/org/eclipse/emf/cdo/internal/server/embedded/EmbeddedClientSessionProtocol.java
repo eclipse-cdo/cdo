@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -93,7 +94,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
-    throw new UnsupportedOperationException("Should not be called");
+    throw new ImplementationError("Should not be called");
   }
 
   public RepositoryTimeResult getRepositoryTime()
@@ -124,32 +125,32 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    throw new UnsupportedOperationException("Should not be called");
+    throw new ImplementationError("Should not be called");
   }
 
   public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    throw new UnsupportedOperationException("Should not be called");
+    throw new ImplementationError("Should not be called");
   }
 
   public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    throw new UnsupportedOperationException("Should not be called");
+    throw new ImplementationError("Should not be called");
   }
 
   public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    throw new UnsupportedOperationException("Should not be called");
+    throw new ImplementationError("Should not be called");
   }
 
   public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    throw new UnsupportedOperationException("Should not be called");
+    throw new ImplementationError("Should not be called");
   }
 
   public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
   {
-    throw new UnsupportedOperationException("Should not be called");
+    throw new ImplementationError("Should not be called");
   }
 
   public Collection<CDOTimeStampContext> syncRevisions(Map<CDOID, CDOIDAndVersion> allRevisions, int initialChunkSize)

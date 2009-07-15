@@ -194,19 +194,16 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   protected void listenersEmptyChanged(boolean empty)
   {
     IContainerEvent<CDORemoteSession> event = null;
-    if (empty)
+    synchronized (this)
     {
-      synchronized (this)
+      if (empty)
       {
         if (!forceSubscription)
         {
           event = unsubscribe();
         }
       }
-    }
-    else
-    {
-      synchronized (this)
+      else
       {
         if (!subscribed)
         {
@@ -221,6 +218,9 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
+  /**
+   * Needs to be synchronized externally.
+   */
   private IContainerEvent<CDORemoteSession> subscribe()
   {
     List<CDORemoteSession> result = localSession.getSessionProtocol().getRemoteSessions(this, true);
@@ -235,6 +235,9 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     return event;
   }
 
+  /**
+   * Needs to be synchronized externally.
+   */
   private IContainerEvent<CDORemoteSession> unsubscribe()
   {
     localSession.getSessionProtocol().unsubscribeRemoteSessions();

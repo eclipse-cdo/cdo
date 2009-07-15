@@ -21,4 +21,11 @@
             class="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOPluginProtocolFactory"/>
    	</extension>
 
+	 <extension
+	       point="org.eclipse.emf.cdo.server.appExtensions">
+	    <appExtension
+	          class="org.eclipse.emf.cdo.server.internal.net4j.bundle.Net4jAppExtension">
+	    </appExtension>
+	 </extension>
+
 </plugin>

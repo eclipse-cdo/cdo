@@ -13,13 +13,20 @@ package org.eclipse.emf.cdo.internal.server.bundle;
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.internal.server.messages.Messages;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.spi.server.IAppExtension;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiApplication;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -29,6 +36,8 @@ public class CDOServerApplication extends OSGiApplication
   public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
 
   private IRepository[] repositories;
+
+  private List<IAppExtension> extensions = new ArrayList<IAppExtension>();
 
   public CDOServerApplication()
   {
@@ -49,6 +58,8 @@ public class CDOServerApplication extends OSGiApplication
       {
         OM.LOG.warn(Messages.getString("CDOServerApplication.3") + configFile.getAbsolutePath()); //$NON-NLS-1$
       }
+
+      startExtensions(configFile);
     }
     else
     {
@@ -62,6 +73,18 @@ public class CDOServerApplication extends OSGiApplication
   protected void doStop() throws Exception
   {
     OM.LOG.info(Messages.getString("CDOServerApplication.7")); //$NON-NLS-1$
+    for (IAppExtension extension : extensions)
+    {
+      try
+      {
+        extension.stop();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
     if (repositories != null)
     {
       for (IRepository repository : repositories)
@@ -72,5 +95,27 @@ public class CDOServerApplication extends OSGiApplication
 
     OM.LOG.info(Messages.getString("CDOServerApplication.8")); //$NON-NLS-1$
     super.doStop();
+  }
+
+  private void startExtensions(File configFile)
+  {
+    IExtensionRegistry registry = Platform.getExtensionRegistry();
+    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, IAppExtension.EXT_POINT);
+    for (final IConfigurationElement element : elements)
+    {
+      if ("appExtension".equals(element.getName())) //$NON-NLS-1$
+      {
+        try
+        {
+          IAppExtension extension = (IAppExtension)element.createExecutableExtension("class"); //$NON-NLS-1$
+          extension.start(configFile);
+          extensions.add(extension);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
   }
 }

@@ -25,4 +25,11 @@
             type="cdo"/>
    </extension>
 
+   <extension
+         point="org.eclipse.net4j.util.elementProcessors">
+      <elementProcessor
+            class="org.eclipse.emf.cdo.internal.net4j.FailOverStrategyInjector">
+      </elementProcessor>
+   </extension>
+
 </plugin>

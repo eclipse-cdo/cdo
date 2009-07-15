@@ -133,7 +133,8 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
 
   public void activateSession(InternalCDOSession session) throws Exception
   {
-    InternalCDORemoteSessionManager remoteSessionManager = new CDORemoteSessionManagerImpl(session);
+    InternalCDORemoteSessionManager remoteSessionManager = new CDORemoteSessionManagerImpl();
+    remoteSessionManager.setLocalSession(session);
     session.setRemoteSessionManager(remoteSessionManager);
     remoteSessionManager.activate();
   }

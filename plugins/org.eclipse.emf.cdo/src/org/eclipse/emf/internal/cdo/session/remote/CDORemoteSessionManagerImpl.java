@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,8 +17,10 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 
+import org.eclipse.emf.spi.cdo.InternalCDORemoteSession;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -40,14 +42,18 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   private Map<Integer, CDORemoteSession> remoteSessions = new HashMap<Integer, CDORemoteSession>();
 
-  public CDORemoteSessionManagerImpl(InternalCDOSession localSession)
+  public CDORemoteSessionManagerImpl()
   {
-    this.localSession = localSession;
   }
 
   public InternalCDOSession getLocalSession()
   {
     return localSession;
+  }
+
+  public void setLocalSession(InternalCDOSession localSession)
+  {
+    this.localSession = localSession;
   }
 
   public synchronized CDORemoteSession[] getRemoteSessions()
@@ -82,18 +88,25 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   public synchronized void setForceSubscription(boolean forceSubscription)
   {
-    this.forceSubscription = forceSubscription;
-    if (forceSubscription && !subscribed)
+    IContainerEvent<CDORemoteSession> event = null;
+    synchronized (this)
     {
-      IContainerEvent<CDORemoteSession> event = subscribe();
-      // TODO don't fire inside sync block!
+      this.forceSubscription = forceSubscription;
+      if (forceSubscription && !subscribed)
+      {
+        event = subscribe();
+      }
+    }
+
+    if (event != null)
+    {
       fireEvent(event);
     }
   }
 
-  public CDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed)
+  public InternalCDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed)
   {
-    CDORemoteSessionImpl remoteSession = new CDORemoteSessionImpl(this, sessionID, userID);
+    InternalCDORemoteSession remoteSession = new CDORemoteSessionImpl(this, sessionID, userID);
     remoteSession.setSubscribed(subscribed);
     return remoteSession;
   }
@@ -101,68 +114,91 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   public synchronized void handleRemoteSessionOpened(int sessionID, String userID)
   {
     CDORemoteSession remoteSession = createRemoteSession(sessionID, userID, false);
-    remoteSessions.put(sessionID, remoteSession);
-    // TODO don't fire inside sync block!
+    synchronized (this)
+    {
+      remoteSessions.put(sessionID, remoteSession);
+    }
+
     fireElementAddedEvent(remoteSession);
   }
 
-  public synchronized void handleRemoteSessionClosed(int sessionID)
+  public void handleRemoteSessionClosed(int sessionID)
   {
-    CDORemoteSession remoteSession = remoteSessions.remove(sessionID);
+    CDORemoteSession remoteSession = null;
+    synchronized (this)
+    {
+      remoteSession = remoteSessions.remove(sessionID);
+    }
+
     if (remoteSession != null)
     {
-      // TODO don't fire inside sync block!
       fireElementRemovedEvent(remoteSession);
     }
   }
 
-  public synchronized void handleRemoteSessionSubscribed(int sessionID, final boolean subscribed)
+  public void handleRemoteSessionSubscribed(int sessionID, final boolean subscribed)
   {
-    final CDORemoteSessionImpl remoteSession = (CDORemoteSessionImpl)remoteSessions.get(sessionID);
-    if (remoteSession != null)
+    IEvent event = null;
+    synchronized (this)
     {
-      remoteSession.setSubscribed(subscribed);
-      // TODO don't fire inside sync block!
-      fireEvent(new CDORemoteSessionEvent.SubscriptionChanged()
+      final InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
+      if (remoteSession != null)
       {
-        public INotifier getSource()
+        remoteSession.setSubscribed(subscribed);
+        event = new CDORemoteSessionEvent.SubscriptionChanged()
         {
-          return CDORemoteSessionManagerImpl.this;
-        }
+          public INotifier getSource()
+          {
+            return CDORemoteSessionManagerImpl.this;
+          }
 
-        public CDORemoteSession getRemoteSession()
-        {
-          return remoteSession;
-        }
+          public CDORemoteSession getRemoteSession()
+          {
+            return remoteSession;
+          }
 
-        public boolean isSubscribed()
-        {
-          return subscribed;
-        }
-      });
+          public boolean isSubscribed()
+          {
+            return subscribed;
+          }
+        };
+      }
+    }
+
+    if (event != null)
+    {
+      fireEvent(event);
     }
   }
 
   @Override
-  protected synchronized void listenersEmptyChanged(boolean empty)
+  protected void listenersEmptyChanged(boolean empty)
   {
+    IContainerEvent<CDORemoteSession> event = null;
     if (empty)
     {
-      if (!forceSubscription)
+      synchronized (this)
       {
-        IContainerEvent<CDORemoteSession> event = unsubscribe();
-        // TODO don't fire inside sync block!
-        fireEvent(event);
+        if (!forceSubscription)
+        {
+          event = unsubscribe();
+        }
       }
     }
     else
     {
-      if (!subscribed)
+      synchronized (this)
       {
-        IContainerEvent<CDORemoteSession> event = subscribe();
-        // TODO don't fire inside sync block!
-        fireEvent(event);
+        if (!subscribed)
+        {
+          event = subscribe();
+        }
       }
+    }
+
+    if (event != null)
+    {
+      fireEvent(event);
     }
   }
 

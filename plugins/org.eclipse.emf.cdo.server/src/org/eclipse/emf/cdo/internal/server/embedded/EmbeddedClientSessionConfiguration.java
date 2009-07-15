@@ -10,8 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.server.embedded;
 
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
@@ -27,6 +31,8 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
 {
   private InternalRepository repository;
 
+  private InternalCDORevisionManager revisionManager;
+
   public EmbeddedClientSessionConfiguration()
   {
   }
@@ -40,6 +46,16 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
   {
     checkNotOpen();
     this.repository = (InternalRepository)repository;
+  }
+
+  public InternalCDORevisionManager getRevisionManager()
+  {
+    return revisionManager;
+  }
+
+  public void setRevisionManager(CDORevisionManager revisionManager)
+  {
+    this.revisionManager = (InternalCDORevisionManager)revisionManager;
   }
 
   @Override
@@ -67,11 +83,19 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     protocol.activate();
     protocol.openSession(isPassiveUpdateEnabled());
     session.setRepositoryInfo(new RepositoryInfo());
+
+    revisionManager = new CDORevisionManagerImpl();
+    revisionManager.setCache(CDORevisionCache.NOOP);
+    revisionManager.setRevisionLoader(session.getSessionProtocol());
+    revisionManager.setRevisionLocker(session);
+    revisionManager.activate();
   }
 
   @Override
   public void deactivateSession(InternalCDOSession session) throws Exception
   {
+    revisionManager.deactivate();
+    revisionManager = null;
     super.deactivateSession(session);
   }
 

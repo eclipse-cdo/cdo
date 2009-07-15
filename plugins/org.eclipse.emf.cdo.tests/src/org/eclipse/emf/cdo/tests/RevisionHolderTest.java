@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
@@ -380,6 +381,11 @@ public class RevisionHolderTest extends AbstractCDOTest
     }
 
     public void write(CDODataOutput out, int referenceChunk) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void convertEObjects(CDOIDProvider oidProvider)
     {
       throw new UnsupportedOperationException();
     }

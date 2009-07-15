@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -103,4 +104,9 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public void read(CDODataInput in) throws IOException;
 
   public void write(CDODataOutput out, int referenceChunk) throws IOException;
+
+  /**
+   * @since 3.0
+   */
+  public void convertEObjects(CDOIDProvider oidProvider);
 }

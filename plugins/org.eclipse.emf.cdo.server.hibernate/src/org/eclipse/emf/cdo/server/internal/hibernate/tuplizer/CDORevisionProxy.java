@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -57,6 +58,11 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     li.getRevision().write(out, referenceChunk);
+  }
+
+  public void convertEObjects(CDOIDProvider idProvider)
+  {
+    li.getRevision().convertEObjects(idProvider);
   }
 
   public Object writeReplace()

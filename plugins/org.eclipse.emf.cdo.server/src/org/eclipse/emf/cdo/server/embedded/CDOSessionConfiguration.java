@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.embedded;
 
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 
 /**
@@ -21,6 +22,10 @@ public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDO
   public IRepository getRepository();
 
   public void setRepository(IRepository repository);
+
+  public CDORevisionManager getRevisionManager();
+
+  public void setRevisionManager(CDORevisionManager revisionManager);
 
   public org.eclipse.emf.cdo.server.embedded.CDOSession openSession();
 }

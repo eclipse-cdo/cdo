@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -125,27 +126,78 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
   public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
   {
-    throw new ImplementationError("Should not be called");
+    try
+    {
+      InternalSession session = serverSessionProtocol.getSession();
+      StoreThreadLocal.setSession(session);
+      return (InternalCDORevision)repository.getRevisionManager().getRevision(id, referenceChunk);
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
   {
-    throw new ImplementationError("Should not be called");
+    try
+    {
+      InternalSession session = serverSessionProtocol.getSession();
+      StoreThreadLocal.setSession(session);
+      return (InternalCDORevision)repository.getRevisionManager().getRevisionByTime(id, referenceChunk, timeStamp);
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
   {
-    throw new ImplementationError("Should not be called");
+    try
+    {
+      InternalSession session = serverSessionProtocol.getSession();
+      StoreThreadLocal.setSession(session);
+      return (InternalCDORevision)repository.getRevisionManager().getRevisionByVersion(id, referenceChunk, version);
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
   {
-    throw new ImplementationError("Should not be called");
+    try
+    {
+      InternalSession session = serverSessionProtocol.getSession();
+      StoreThreadLocal.setSession(session);
+      @SuppressWarnings("unchecked")
+      List<InternalCDORevision> revisions = (List<InternalCDORevision>)(List<?>)repository.getRevisionManager()
+          .getRevisions(ids, referenceChunk);
+      return revisions;
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
   {
-    throw new ImplementationError("Should not be called");
+    try
+    {
+      InternalSession session = serverSessionProtocol.getSession();
+      StoreThreadLocal.setSession(session);
+      @SuppressWarnings("unchecked")
+      List<InternalCDORevision> revisions = (List<InternalCDORevision>)(List<?>)repository.getRevisionManager()
+          .getRevisionsByTime(ids, referenceChunk, timeStamp, true);
+      return revisions;
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
@@ -259,14 +311,17 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext clientCommitContext, OMMonitor monitor)
   {
     monitor.begin(2);
-    CommitTransactionResult result;
+    boolean success = false;
+    InternalCommitContext serverCommitContext = null;
+    CommitTransactionResult result = null;
+
     try
     {
       InternalCDOTransaction clientTransaction = clientCommitContext.getTransaction();
       int viewID = clientTransaction.getViewID();
 
       InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(viewID);
-      InternalCommitContext serverCommitContext = serverTransaction.createCommitContext();
+      serverCommitContext = serverTransaction.createCommitContext();
       serverCommitContext.preCommit();
       serverCommitContext.setAutoReleaseLocksEnabled(clientTransaction.options().isAutoReleaseLocksEnabled());
 
@@ -279,12 +334,16 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
       int index = 0;
       for (CDOResource resource : nr)
       {
-        array[index++] = (InternalCDORevision)resource.cdoRevision();
+        InternalCDORevision revision = (InternalCDORevision)resource.cdoRevision();
+        revision.convertEObjects(clientTransaction);
+        array[index++] = revision;
       }
 
       for (CDOObject object : no)
       {
-        array[index++] = (InternalCDORevision)object.cdoRevision();
+        InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+        revision.convertEObjects(clientTransaction);
+        array[index++] = revision;
       }
 
       serverCommitContext.setNewObjects(array);
@@ -296,7 +355,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
       serverCommitContext.setDetachedObjects(detachedObjects.toArray(new CDOID[detachedObjects.size()]));
 
       serverCommitContext.write(monitor.fork());
-      if (serverCommitContext.getRollbackMessage() == null)
+      success = serverCommitContext.getRollbackMessage() == null;
+      if (success)
       {
         serverCommitContext.commit(monitor.fork());
       }
@@ -313,6 +373,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
     finally
     {
+      if (serverCommitContext != null)
+      {
+        serverCommitContext.postCommit(success);
+      }
+
       monitor.done();
     }
 

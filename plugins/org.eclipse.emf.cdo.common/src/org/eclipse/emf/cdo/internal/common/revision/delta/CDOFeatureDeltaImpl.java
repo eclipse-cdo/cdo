@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+
+import org.eclipse.net4j.util.CheckUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -32,6 +34,7 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
 
   protected CDOFeatureDeltaImpl(EStructuralFeature feature)
   {
+    CheckUtil.checkArg(feature, "feature");
     this.feature = feature;
   }
 
@@ -39,6 +42,7 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
   {
     int featureID = in.readInt();
     feature = eClass.getEStructuralFeature(featureID);
+    CheckUtil.checkState(feature, "feature");
   }
 
   public void write(CDODataOutput out, EClass eClass) throws IOException

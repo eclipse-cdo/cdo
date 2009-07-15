@@ -15,8 +15,11 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
@@ -67,6 +70,16 @@ public abstract class TypeMapping implements ITypeMapping
     this.mappingStrategy = mappingStrategy;
     this.feature = feature;
     dbType = type;
+  }
+
+  public final IMappingStrategy getMappingStrategy()
+  {
+    return mappingStrategy;
+  }
+
+  public final EStructuralFeature getFeature()
+  {
+    return feature;
   }
 
   public final void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision revision)
@@ -120,11 +133,6 @@ public abstract class TypeMapping implements ITypeMapping
     }
 
     return value;
-  }
-
-  public final EStructuralFeature getFeature()
-  {
-    return feature;
   }
 
   protected final Object getRevisionValue(InternalCDORevision revision)
@@ -257,13 +265,26 @@ public abstract class TypeMapping implements ITypeMapping
         return null;
       }
 
-      return CDOIDUtil.createLong(id);
+      IExternalReferenceManager externalRefs = getMappingStrategy().getStore().getExternalReferenceManager();
+      return CDODBUtil.convertLongToCDOID(externalRefs, getAccessor(), id);
     }
 
     @Override
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
-      super.doSetValue(stmt, index, CDODBUtil.getLong((CDOID)value));
+      super.doSetValue(stmt, index, CDODBUtil.convertCDOIDToLong(getMappingStrategy().getStore()
+          .getExternalReferenceManager(), getAccessor(), (CDOID)value));
+    }
+
+    private IDBStoreAccessor getAccessor()
+    {
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      if (accessor == null)
+      {
+        throw new IllegalStateException("Can only be called from within a valid IDBStoreAccessor context");
+      }
+
+      return (IDBStoreAccessor)accessor;
     }
   }
 

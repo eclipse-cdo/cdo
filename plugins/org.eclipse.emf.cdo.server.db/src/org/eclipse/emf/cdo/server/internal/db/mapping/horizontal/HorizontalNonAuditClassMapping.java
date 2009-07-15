@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
+ *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -192,8 +193,10 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt.setLong(col++, accessor.getStore().getMetaDataManager().getMetaID(revision.getEClass()));
       stmt.setLong(col++, revision.getCreated());
       stmt.setLong(col++, revision.getRevised());
-      stmt.setLong(col++, CDOIDUtil.getLong(revision.getResourceID()));
-      stmt.setLong(col++, CDODBUtil.getLong((CDOID)revision.getContainerID()));
+      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision
+          .getResourceID()));
+      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, (CDOID)revision
+          .getContainerID()));
       stmt.setInt(col++, revision.getContainingFeatureID());
 
       for (ITypeMapping mapping : getValueMappings())
@@ -295,7 +298,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(pstmt, revision);
+      boolean success = readValuesFromStatement(pstmt, revision, accessor);
 
       // Read multival tables only if revision exists
       if (success)
@@ -486,8 +489,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
       stmt.setInt(col++, newVersion);
       stmt.setLong(col++, created);
-      stmt.setLong(col++, CDODBUtil.getLong(newResourceId));
-      stmt.setLong(col++, CDODBUtil.getLong(newContainerId));
+      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newResourceId));
+      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newContainerId));
       stmt.setInt(col++, newContainingFeatureId);
 
       for (Pair<ITypeMapping, Object> change : attributeChanges)

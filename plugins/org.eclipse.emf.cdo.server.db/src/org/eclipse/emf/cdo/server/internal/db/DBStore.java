@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -60,6 +62,10 @@ public class DBStore extends LongIDStore implements IDBStore
 
   private IDBConnectionProvider dbConnectionProvider;
 
+  private IMetaDataManager metaDataManager;
+
+  private IExternalReferenceManager.Internal externalReferenceManager;
+
   @ExcludeFromDump
   private transient ProgressDistributor accessorWriteDistributor = new ProgressDistributor.Geometric()
   {
@@ -81,8 +87,6 @@ public class DBStore extends LongIDStore implements IDBStore
 
   @ExcludeFromDump
   private transient StoreAccessorPool writerPool = new StoreAccessorPool(this, null);
-
-  private transient IMetaDataManager metaDataManager;
 
   public DBStore()
   {
@@ -127,6 +131,27 @@ public class DBStore extends LongIDStore implements IDBStore
   public void setDataSource(DataSource dataSource)
   {
     dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
+  }
+
+  public IMetaDataManager getMetaDataManager()
+  {
+    return metaDataManager;
+  }
+
+  public IExternalReferenceManager getExternalReferenceManager()
+  {
+    return externalReferenceManager;
+  }
+
+  @Override
+  public Set<ChangeFormat> getSupportedChangeFormats()
+  {
+    if (mappingStrategy.hasDeltaSupport())
+    {
+      return set(ChangeFormat.DELTA);
+    }
+
+    return set(ChangeFormat.REVISION);
   }
 
   public ProgressDistributor getAccessorWriteDistributor()
@@ -242,6 +267,10 @@ public class DBStore extends LongIDStore implements IDBStore
         reStart(connection);
       }
 
+      externalReferenceManager = createExternalReferenceManager();
+      externalReferenceManager.setStore(this);
+      LifecycleUtil.activate(externalReferenceManager);
+
       connection.commit();
     }
     finally
@@ -314,6 +343,9 @@ public class DBStore extends LongIDStore implements IDBStore
     LifecycleUtil.deactivate(metaDataManager);
     metaDataManager = null;
 
+    LifecycleUtil.deactivate(externalReferenceManager);
+    externalReferenceManager = null;
+
     try
     {
       connection = getConnection();
@@ -355,6 +387,11 @@ public class DBStore extends LongIDStore implements IDBStore
     super.doDeactivate();
   }
 
+  protected IExternalReferenceManager.Internal createExternalReferenceManager()
+  {
+    return new ExternalReferenceManager();
+  }
+
   protected IDBSchema createSchema()
   {
     String name = getRepository().getName();
@@ -369,23 +406,5 @@ public class DBStore extends LongIDStore implements IDBStore
   protected long getShutdownTime()
   {
     return System.currentTimeMillis();
-  }
-
-  public IMetaDataManager getMetaDataManager()
-  {
-    return metaDataManager;
-  }
-
-  @Override
-  public Set<ChangeFormat> getSupportedChangeFormats()
-  {
-    if (mappingStrategy.hasDeltaSupport())
-    {
-      return set(ChangeFormat.DELTA);
-    }
-    else
-    {
-      return set(ChangeFormat.REVISION);
-    }
   }
 }

@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings
- *      https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
- *
+ *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  */
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
@@ -120,24 +120,29 @@ public final class CDODBUtil
   }
 
   /**
-   * Get the long value of a CDOID (by delegating to {@link CDOIDUtil#getLong(org.eclipse.emf.cdo.common.id.CDOID)}) In
-   * addition, provide a check for external IDs which are not supported by the DBStore
-   * 
-   * @param id
-   *          the ID to convert to long
-   * @return the long value of the ID
-   * @throws IllegalArgumentException
-   *           if the ID is not convertibla
-   * @since 2.0
+   * @since 3.0
    */
-  public static long getLong(CDOID id)
+  public static long convertCDOIDToLong(IExternalReferenceManager manager, IDBStoreAccessor accessor, CDOID id)
   {
-    if (id != null && id.getType() == CDOID.Type.EXTERNAL_OBJECT)
+    if (id.getType() == CDOID.Type.EXTERNAL_OBJECT)
     {
-      throw new IllegalArgumentException("DBStore does not support external references: " + id); //$NON-NLS-1$
+      return manager.mapExternalReference(accessor, (CDOIDExternal)id);
     }
 
     return CDOIDUtil.getLong(id);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOID convertLongToCDOID(IExternalReferenceManager manager, IDBStoreAccessor accessor, long id)
+  {
+    if (id < 0)
+    {
+      return manager.unmapExternalReference(accessor, id);
+    }
+
+    return CDOIDUtil.createLong(id);
   }
 
   /**

@@ -59,13 +59,16 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   public synchronized CDORemoteSession[] getRemoteSessions()
   {
     Collection<CDORemoteSession> remoteSessions;
-    if (subscribed)
+    synchronized (this)
     {
-      remoteSessions = this.remoteSessions.values();
-    }
-    else
-    {
-      remoteSessions = localSession.getSessionProtocol().getRemoteSessions(this, false);
+      if (subscribed)
+      {
+        remoteSessions = this.remoteSessions.values();
+      }
+      else
+      {
+        remoteSessions = localSession.getSessionProtocol().getRemoteSessions(this, false);
+      }
     }
 
     return remoteSessions.toArray(new CDORemoteSession[remoteSessions.size()]);
@@ -76,25 +79,41 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     return getRemoteSessions();
   }
 
-  public synchronized boolean isSubscribed()
+  public boolean isSubscribed()
   {
-    return subscribed;
+    synchronized (this)
+    {
+      return subscribed;
+    }
   }
 
-  public synchronized boolean isForceSubscription()
+  public boolean isForceSubscription()
   {
-    return forceSubscription;
+    synchronized (this)
+    {
+      return forceSubscription;
+    }
   }
 
-  public synchronized void setForceSubscription(boolean forceSubscription)
+  public void setForceSubscription(boolean forceSubscription)
   {
     IContainerEvent<CDORemoteSession> event = null;
     synchronized (this)
     {
       this.forceSubscription = forceSubscription;
-      if (forceSubscription && !subscribed)
+      if (forceSubscription)
       {
-        event = subscribe();
+        if (!subscribed)
+        {
+          event = subscribe();
+        }
+      }
+      else
+      {
+        if (!hasListeners())
+        {
+          event = unsubscribe();
+        }
       }
     }
 
@@ -111,7 +130,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     return remoteSession;
   }
 
-  public synchronized void handleRemoteSessionOpened(int sessionID, String userID)
+  public void handleRemoteSessionOpened(int sessionID, String userID)
   {
     CDORemoteSession remoteSession = createRemoteSession(sessionID, userID, false);
     synchronized (this)

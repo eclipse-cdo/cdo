@@ -63,7 +63,7 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
     this.subscribed = subscribed;
   }
 
-  public void sendCustomData(String type, byte[] data)
+  public boolean sendCustomData(String type, byte[] data)
   {
     if (!manager.isSubscribed())
     {
@@ -75,7 +75,7 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
       throw new CDOException("Remote session is not subscribed");
     }
 
-    manager.getLocalSession().getSessionProtocol().sendCustomData(this, type, data);
+    return manager.getLocalSession().getSessionProtocol().sendCustomData(this, type, data);
   }
 
   public int compareTo(CDORemoteSession obj)

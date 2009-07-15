@@ -263,9 +263,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new CustomDataRequest(this, receiver, type, data));
   }
 
-  public void unsubscribeRemoteSessions()
+  public boolean unsubscribeRemoteSessions()
   {
-    send(new UnsubscribeRemoteSessionsRequest(this));
+    return send(new UnsubscribeRemoteSessionsRequest(this));
   }
 
   @Override
@@ -281,6 +281,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
     case CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION:
       return new RemoteSessionNotificationIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_CUSTOM_DATA_NOTIFICATION:
+      return new CustomDataNotificationIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

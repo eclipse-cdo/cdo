@@ -14,8 +14,4 @@ org.eclipse.emf.cdo/debug.object = false
 org.eclipse.emf.cdo/debug.object.statemachine = false
 org.eclipse.emf.cdo/debug.object.store = false
 
-org.eclipse.emf.cdo/perf = false
-org.eclipse.emf.cdo/perf.revision = false
-org.eclipse.emf.cdo/perf.revision.loading = false
-
 org.eclipse.emf.cdo/load.resource.before.notification = false

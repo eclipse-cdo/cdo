@@ -232,6 +232,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS:
       return new UnsubscribeRemoteSessionsIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_CUSTOM_DATA:
+      return new CustomDataIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

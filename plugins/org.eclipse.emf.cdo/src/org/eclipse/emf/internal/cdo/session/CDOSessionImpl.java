@@ -1451,15 +1451,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public void unsubscribeRemoteSessions()
+    public boolean unsubscribeRemoteSessions()
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          delegate.unsubscribeRemoteSessions();
-          return;
+          return delegate.unsubscribeRemoteSessions();
         }
         catch (Exception ex)
         {

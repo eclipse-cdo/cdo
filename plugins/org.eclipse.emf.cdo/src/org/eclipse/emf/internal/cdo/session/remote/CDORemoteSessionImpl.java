@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.internal.cdo.session.remote;
 
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSession;
@@ -64,6 +65,16 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
 
   public void sendCustomData(String type, byte[] data)
   {
+    if (!manager.isSubscribed())
+    {
+      throw new CDOException("Local session is not subscribed");
+    }
+
+    if (!isSubscribed())
+    {
+      throw new CDOException("Remote session is not subscribed");
+    }
+
     manager.getLocalSession().getSessionProtocol().sendCustomData(this, type, data);
   }
 

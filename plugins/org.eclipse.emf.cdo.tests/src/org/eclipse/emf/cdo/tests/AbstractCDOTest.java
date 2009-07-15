@@ -26,7 +26,9 @@ import org.eclipse.net4j.tests.AbstractTransportTest;
 
 import org.eclipse.emf.ecore.EObject;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
@@ -189,6 +191,43 @@ public abstract class AbstractCDOTest extends ConfigTest
         CDOTransaction transaction = (CDOTransaction)view;
         assertEquals(transaction.getLastCommitTime(), object.cdoRevision().getCreated());
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class AsyncResult<T>
+  {
+    public static final long DEFAULT_TIMEOUT = 30 * 1000;
+
+    private volatile T value;
+
+    private CountDownLatch latch = new CountDownLatch(1);
+
+    public AsyncResult()
+    {
+    }
+
+    public void setValue(T value)
+    {
+      this.value = value;
+      latch.countDown();
+    }
+
+    public T getValue(long timeout) throws Exception
+    {
+      if (!latch.await(timeout, TimeUnit.MILLISECONDS))
+      {
+        throw new TimeoutException("Result value not available after " + timeout + " milli seconds");
+      }
+
+      return value;
+    }
+
+    public T getValue() throws Exception
+    {
+      return getValue(DEFAULT_TIMEOUT);
     }
   }
 

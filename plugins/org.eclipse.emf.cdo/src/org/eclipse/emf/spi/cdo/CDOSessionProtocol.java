@@ -121,7 +121,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
    */
   public boolean sendCustomData(CDORemoteSession receiver, String type, byte[] data);
 
-  public void unsubscribeRemoteSessions();
+  /**
+   * @since 3.0
+   */
+  public boolean unsubscribeRemoteSessions();
 
   /**
    * @author Eike Stepper

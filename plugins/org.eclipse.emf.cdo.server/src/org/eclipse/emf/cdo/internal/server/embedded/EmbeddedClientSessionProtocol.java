@@ -409,6 +409,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
+  public boolean sendCustomData(CDORemoteSession receiver, String type, byte[] data)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void unsubscribeRemoteSessions()
   {
     throw new UnsupportedOperationException();

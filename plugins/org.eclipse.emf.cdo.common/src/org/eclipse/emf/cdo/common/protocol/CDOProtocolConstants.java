@@ -79,9 +79,19 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_GET_REMOTE_SESSIONS = 28;
 
-  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 29;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CUSTOM_DATA = 29;
 
-  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 30;
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_CUSTOM_DATA_NOTIFICATION = 30;
+
+  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 31;
+
+  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 32;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Management
@@ -121,4 +131,9 @@ public interface CDOProtocolConstants
   public static final byte REMOTE_SESSION_SUBSCRIBED = 3;
 
   public static final byte REMOTE_SESSION_UNSUBSCRIBED = 4;
+
+  /**
+   * @since 3.0
+   */
+  public static final byte REMOTE_SESSION_CUSTOM_DATA = 5;
 }

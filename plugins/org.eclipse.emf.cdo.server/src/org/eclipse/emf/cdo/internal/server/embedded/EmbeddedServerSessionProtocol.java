@@ -64,9 +64,16 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
   public void sendCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
       List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas)
   {
+    throw new UnsupportedOperationException();
   }
 
   public void sendRemoteSessionNotification(byte opcode, ISession session)
   {
+    throw new UnsupportedOperationException();
+  }
+
+  public void sendCustomDataNotification(InternalSession sender, String type, byte[] data)
+  {
+    throw new UnsupportedOperationException();
   }
 }

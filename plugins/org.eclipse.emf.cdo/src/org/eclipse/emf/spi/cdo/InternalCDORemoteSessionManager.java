@@ -40,4 +40,9 @@ public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
   public void handleRemoteSessionClosed(int sessionID);
 
   public void handleRemoteSessionSubscribed(int sessionID, boolean subscribed);
+
+  /**
+   * @since 3.0
+   */
+  public void handleRemoteSessionCustomData(int sessionID, String type, byte[] data);
 }

@@ -263,6 +263,14 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  public void sendCustomData(InternalSession sender, InternalSession receiver, String type, byte[] data)
+  {
+    if (receiver != null && receiver.isSubscribed())
+    {
+      receiver.getProtocol().sendCustomDataNotification(sender, type, data);
+    }
+  }
+
   protected String authenticateUser(ISessionProtocol protocol) throws SecurityException
   {
     if (userManager == null)

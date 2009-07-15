@@ -62,6 +62,11 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
     this.subscribed = subscribed;
   }
 
+  public void sendCustomData(String type, byte[] data)
+  {
+    manager.getLocalSession().getSessionProtocol().sendCustomData(this, type, data);
+  }
+
   public int compareTo(CDORemoteSession obj)
   {
     int result = userID.compareTo(obj.getUserID());

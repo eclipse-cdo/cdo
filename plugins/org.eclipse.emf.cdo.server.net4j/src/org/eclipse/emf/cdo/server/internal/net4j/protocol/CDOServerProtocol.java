@@ -129,6 +129,26 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  public void sendCustomDataNotification(InternalSession sender, String type, byte[] data)
+  {
+    try
+    {
+      IChannel channel = getChannel();
+      if (LifecycleUtil.isActive(channel))
+      {
+        new CustomDataNotificationRequest(channel, sender, type, data).sendAsync();
+      }
+      else
+      {
+        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+  }
+
   @Override
   protected SignalReactor createSignalReactor(short signalID)
   {

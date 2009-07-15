@@ -48,4 +48,6 @@ public interface InternalSessionManager extends ISessionManager
       List<CDOID> detachedObjects, List<CDORevisionDelta> deltas, InternalSession excludedSession);
 
   public void handleRemoteSessionNotification(byte opcode, InternalSession excludedSession);
+
+  public void sendCustomData(InternalSession sender, InternalSession receiver, String type, byte[] data);
 }

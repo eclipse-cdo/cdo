@@ -258,6 +258,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new GetRemoteSessionsRequest(this, manager, subscribe));
   }
 
+  public boolean sendCustomData(CDORemoteSession receiver, String type, byte[] data)
+  {
+    return send(new CustomDataRequest(this, receiver, type, data));
+  }
+
   public void unsubscribeRemoteSessions()
   {
     send(new UnsubscribeRemoteSessionsRequest(this));

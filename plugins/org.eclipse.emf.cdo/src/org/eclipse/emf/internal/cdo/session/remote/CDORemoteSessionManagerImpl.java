@@ -56,7 +56,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     this.localSession = localSession;
   }
 
-  public synchronized CDORemoteSession[] getRemoteSessions()
+  public CDORemoteSession[] getRemoteSessions()
   {
     Collection<CDORemoteSession> remoteSessions;
     synchronized (this)
@@ -179,6 +179,45 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
           public boolean isSubscribed()
           {
             return subscribed;
+          }
+        };
+      }
+    }
+
+    if (event != null)
+    {
+      fireEvent(event);
+    }
+  }
+
+  public void handleRemoteSessionCustomData(int sessionID, final String type, final byte[] data)
+  {
+    IEvent event = null;
+    synchronized (this)
+    {
+      final InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
+      if (remoteSession != null)
+      {
+        event = new CDORemoteSessionEvent.CustomData()
+        {
+          public INotifier getSource()
+          {
+            return CDORemoteSessionManagerImpl.this;
+          }
+
+          public CDORemoteSession getRemoteSession()
+          {
+            return remoteSession;
+          }
+
+          public String getType()
+          {
+            return type;
+          }
+
+          public byte[] getData()
+          {
+            return data;
           }
         };
       }

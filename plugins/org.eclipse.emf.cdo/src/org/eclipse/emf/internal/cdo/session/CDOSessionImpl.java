@@ -1123,22 +1123,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
-    {
-      int attempt = 0;
-      for (;;)
-      {
-        try
-        {
-          return delegate.getRemoteSessions(manager, subscribe);
-        }
-        catch (Exception ex)
-        {
-          handleException(++attempt, ex);
-        }
-      }
-    }
-
     public RepositoryTimeResult getRepositoryTime()
     {
       int attempt = 0;
@@ -1427,6 +1411,38 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         {
           delegate.unlockObjects(view, objects, lockType);
           return;
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.getRemoteSessions(manager, subscribe);
+        }
+        catch (Exception ex)
+        {
+          handleException(++attempt, ex);
+        }
+      }
+    }
+
+    public boolean sendCustomData(CDORemoteSession receiver, String type, byte[] data)
+    {
+      int attempt = 0;
+      for (;;)
+      {
+        try
+        {
+          return delegate.sendCustomData(receiver, type, data);
         }
         catch (Exception ex)
         {

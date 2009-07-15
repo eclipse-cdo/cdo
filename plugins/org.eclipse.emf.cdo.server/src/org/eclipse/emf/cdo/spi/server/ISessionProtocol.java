@@ -32,4 +32,6 @@ public interface ISessionProtocol extends CDOProtocol
       List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas);
 
   public void sendRemoteSessionNotification(byte opcode, ISession session);
+
+  public void sendCustomDataNotification(InternalSession sender, String type, byte[] data);
 }

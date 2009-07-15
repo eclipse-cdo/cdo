@@ -33,6 +33,11 @@ public interface CDORemoteSessionEvent extends IEvent
    */
   public interface CustomData extends CDORemoteSessionEvent
   {
+    /**
+     * @since 3.0
+     */
+    public String getType();
+
     public byte[] getData();
   }
 }

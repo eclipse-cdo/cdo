@@ -90,13 +90,24 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
   public void setForceSubscription(boolean forceSubscription);
 
   /**
+   * An {@link IEvent event} that is fired by a {@link #getSource() remote session manager} after the
+   * {@link CDORemoteSessionManager#isSubscribed() subscription mode} of the
+   * {@link CDORemoteSessionManager#getLocalSession() local session} changed.
+   * 
    * @author Eike Stepper
    * @since 3.0
    */
   public interface LocalSubscriptionChangedEvent extends IEvent
   {
+    /**
+     * Returns the remote session manager that fired this event.
+     */
     public CDORemoteSessionManager getSource();
 
+    /**
+     * Returns <code>true</code> if the {@link #getSource() remote session manager} was subscribed, <code>false</code>
+     * otherwise.
+     */
     public boolean isSubscribed();
   }
 
@@ -110,26 +121,49 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
     {
     }
 
+    /**
+     * Called if the {@link CDORemoteSessionManager#isSubscribed() subscription mode} of the local session changed.
+     */
     protected void onLocalSubscription(boolean subscribed)
     {
     }
 
+    /**
+     * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a new remote session
+     * was opened to the same repository as the local session.
+     */
     protected void onOpened(CDORemoteSession remoteSession)
     {
     }
 
+    /**
+     * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a remote session to
+     * the same repository as the local session was closed.
+     */
     protected void onClosed(CDORemoteSession remoteSession)
     {
     }
 
+    /**
+     * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a remote session
+     * {@link CDORemoteSession#isSubscribed() subscribed} to the same repository as the local session.
+     */
     protected void onSubscribed(CDORemoteSession remoteSession)
     {
     }
 
+    /**
+     * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a remote session
+     * {@link CDORemoteSession#isSubscribed() unsubscribed} from the same repository as the local session.
+     */
     protected void onUnsubscribed(CDORemoteSession remoteSession)
     {
     }
 
+    /**
+     * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a remote session
+     * {@link CDORemoteSession#sendCustomData(String, byte[]) sent} custom data to the local session.
+     */
     protected void onCustomData(CDORemoteSession remoteSession, String type, byte[] data)
     {
     }

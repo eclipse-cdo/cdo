@@ -12,13 +12,13 @@ package org.eclipse.emf.internal.cdo.session.remote;
 
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
-import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSession;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
@@ -97,7 +97,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   public void setForceSubscription(boolean forceSubscription)
   {
-    IContainerEvent<CDORemoteSession> event = null;
+    IEvent[] events = null;
     synchronized (this)
     {
       this.forceSubscription = forceSubscription;
@@ -105,22 +105,19 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       {
         if (!subscribed)
         {
-          event = subscribe();
+          events = subscribe();
         }
       }
       else
       {
         if (!hasListeners())
         {
-          event = unsubscribe();
+          events = unsubscribe();
         }
       }
     }
 
-    if (event != null)
-    {
-      fireEvent(event);
-    }
+    fireEvents(events);
   }
 
   public InternalCDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed)
@@ -160,15 +157,16 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     IEvent event = null;
     synchronized (this)
     {
+      final CDORemoteSessionManager source = this;
       final InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
       if (remoteSession != null)
       {
         remoteSession.setSubscribed(subscribed);
         event = new CDORemoteSessionEvent.SubscriptionChanged()
         {
-          public INotifier getSource()
+          public CDORemoteSessionManager getSource()
           {
-            return CDORemoteSessionManagerImpl.this;
+            return source;
           }
 
           public CDORemoteSession getRemoteSession()
@@ -195,14 +193,15 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     IEvent event = null;
     synchronized (this)
     {
+      final CDORemoteSessionManager source = this;
       final InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
       if (remoteSession != null)
       {
         event = new CDORemoteSessionEvent.CustomData()
         {
-          public INotifier getSource()
+          public CDORemoteSessionManager getSource()
           {
-            return CDORemoteSessionManagerImpl.this;
+            return source;
           }
 
           public CDORemoteSession getRemoteSession()
@@ -232,35 +231,32 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   @Override
   protected void listenersEmptyChanged(boolean empty)
   {
-    IContainerEvent<CDORemoteSession> event = null;
+    IEvent[] events = null;
     synchronized (this)
     {
       if (empty)
       {
         if (!forceSubscription)
         {
-          event = unsubscribe();
+          events = unsubscribe();
         }
       }
       else
       {
         if (!subscribed)
         {
-          event = subscribe();
+          events = subscribe();
         }
       }
     }
 
-    if (event != null)
-    {
-      fireEvent(event);
-    }
+    fireEvents(events);
   }
 
   /**
    * Needs to be synchronized externally.
    */
-  private IContainerEvent<CDORemoteSession> subscribe()
+  private IEvent[] subscribe()
   {
     List<CDORemoteSession> result = localSession.getSessionProtocol().getRemoteSessions(this, true);
     ContainerEvent<CDORemoteSession> event = new ContainerEvent<CDORemoteSession>(this);
@@ -271,13 +267,14 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
 
     subscribed = true;
-    return event;
+    IEvent[] events = { new LocalSubscriptionChangedEventImpl(true), event.isEmpty() ? null : event };
+    return events;
   }
 
   /**
    * Needs to be synchronized externally.
    */
-  private IContainerEvent<CDORemoteSession> unsubscribe()
+  private IEvent[] unsubscribe()
   {
     localSession.getSessionProtocol().unsubscribeRemoteSessions();
     ContainerEvent<CDORemoteSession> event = new ContainerEvent<CDORemoteSession>(this);
@@ -288,6 +285,49 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
     remoteSessions.clear();
     subscribed = false;
-    return event;
+    IEvent[] events = { new LocalSubscriptionChangedEventImpl(false), event.isEmpty() ? null : event };
+    return events;
+  }
+
+  private void fireEvents(IEvent[] events)
+  {
+    if (events != null)
+    {
+      for (int i = 0; i < events.length; i++)
+      {
+        IEvent event = events[i];
+        if (event != null)
+        {
+          fireEvent(event);
+        }
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class LocalSubscriptionChangedEventImpl extends Event implements LocalSubscriptionChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private boolean subscribed;
+
+    public LocalSubscriptionChangedEventImpl(boolean subscribed)
+    {
+      super(CDORemoteSessionManagerImpl.this);
+      this.subscribed = subscribed;
+    }
+
+    @Override
+    public CDORemoteSessionManager getSource()
+    {
+      return (CDORemoteSessionManager)super.getSource();
+    }
+
+    public boolean isSubscribed()
+    {
+      return subscribed;
+    }
   }
 }

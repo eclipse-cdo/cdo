@@ -18,6 +18,11 @@ import org.eclipse.net4j.util.event.IEvent;
  */
 public interface CDORemoteSessionEvent extends IEvent
 {
+  /**
+   * @since 3.0
+   */
+  public CDORemoteSessionManager getSource();
+
   public CDORemoteSession getRemoteSession();
 
   /**

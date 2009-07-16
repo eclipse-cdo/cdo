@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.session.remote;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent.CustomData;
 
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
@@ -87,4 +88,93 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
    * @see #setForceSubscription(boolean)
    */
   public void setForceSubscription(boolean forceSubscription);
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public interface LocalSubscriptionChangedEvent extends IEvent
+  {
+    public CDORemoteSessionManager getSource();
+
+    public boolean isSubscribed();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public static class EventAdapter extends ContainerEventAdapter<CDORemoteSession>
+  {
+    public EventAdapter()
+    {
+    }
+
+    protected void onLocalSubscription(boolean subscribed)
+    {
+    }
+
+    protected void onOpened(CDORemoteSession remoteSession)
+    {
+    }
+
+    protected void onClosed(CDORemoteSession remoteSession)
+    {
+    }
+
+    protected void onSubscribed(CDORemoteSession remoteSession)
+    {
+    }
+
+    protected void onUnsubscribed(CDORemoteSession remoteSession)
+    {
+    }
+
+    protected void onCustomData(CDORemoteSession remoteSession, String type, byte[] data)
+    {
+    }
+
+    @Override
+    protected void notifyOtherEvent(IEvent event)
+    {
+      if (event instanceof LocalSubscriptionChangedEvent)
+      {
+        LocalSubscriptionChangedEvent e = (LocalSubscriptionChangedEvent)event;
+        onLocalSubscription(e.isSubscribed());
+      }
+      else if (event instanceof CDORemoteSessionEvent.SubscriptionChanged)
+      {
+        CDORemoteSessionEvent.SubscriptionChanged e = (CDORemoteSessionEvent.SubscriptionChanged)event;
+        if (e.isSubscribed())
+        {
+          onSubscribed(e.getRemoteSession());
+        }
+        else
+        {
+          onUnsubscribed(e.getRemoteSession());
+        }
+      }
+      else if (event instanceof CDORemoteSessionEvent.CustomData)
+      {
+        CDORemoteSessionEvent.CustomData e = (CDORemoteSessionEvent.CustomData)event;
+        onCustomData(e.getRemoteSession(), e.getType(), e.getData());
+      }
+      else
+      {
+        super.notifyOtherEvent(event);
+      }
+    }
+
+    @Override
+    protected final void onAdded(IContainer<CDORemoteSession> container, CDORemoteSession element)
+    {
+      onOpened(element);
+    }
+
+    @Override
+    protected final void onRemoved(IContainer<CDORemoteSession> container, CDORemoteSession element)
+    {
+      onClosed(element);
+    }
+  }
 }

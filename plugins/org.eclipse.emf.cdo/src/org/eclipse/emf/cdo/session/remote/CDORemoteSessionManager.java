@@ -124,7 +124,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
     /**
      * Called if the {@link CDORemoteSessionManager#isSubscribed() subscription mode} of the local session changed.
      */
-    protected void onLocalSubscription(boolean subscribed)
+    protected void onLocalSubscriptionChanged(boolean subscribed)
     {
     }
 
@@ -174,7 +174,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
       if (event instanceof LocalSubscriptionChangedEvent)
       {
         LocalSubscriptionChangedEvent e = (LocalSubscriptionChangedEvent)event;
-        onLocalSubscription(e.isSubscribed());
+        onLocalSubscriptionChanged(e.isSubscribed());
       }
       else if (event instanceof CDORemoteSessionEvent.SubscriptionChanged)
       {

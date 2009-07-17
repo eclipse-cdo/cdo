@@ -37,7 +37,7 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
     {
       if (part != instance)
       {
-        Object object = UIUtil.getElementIdOne(selection);
+        Object object = UIUtil.getElementIfOne(selection);
         CDOSession session = CDOUtil.getSession(object);
         if (session != null)
         {

@@ -172,7 +172,7 @@ public final class UIUtil
   /**
    * @since 3.0
    */
-  public static Object getElementIdOne(ISelection selection)
+  public static Object getElementIfOne(ISelection selection)
   {
     if (selection instanceof IStructuredSelection)
     {

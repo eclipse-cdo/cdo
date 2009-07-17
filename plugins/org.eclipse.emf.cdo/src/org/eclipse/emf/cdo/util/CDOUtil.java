@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
@@ -30,6 +31,8 @@ import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
+
+import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.BasicEList;
@@ -54,6 +57,43 @@ public final class CDOUtil
 {
   private CDOUtil()
   {
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOSession getSession(Object object)
+  {
+    if (object == null)
+    {
+      return null;
+    }
+
+    CDOSession session = AdapterUtil.adapt(object, CDOSession.class);
+    if (session != null)
+    {
+      return session;
+    }
+
+    CDOView view = AdapterUtil.adapt(object, CDOView.class);
+    if (view != null)
+    {
+      return view.getSession();
+    }
+
+    CDOObject cdoObject = AdapterUtil.adapt(object, CDOObject.class);
+    if (cdoObject != null)
+    {
+      return cdoObject.cdoView().getSession();
+    }
+
+    CDORemoteSessionManager remoteSessionManager = AdapterUtil.adapt(object, CDORemoteSessionManager.class);
+    if (remoteSessionManager != null)
+    {
+      return remoteSessionManager.getLocalSession();
+    }
+
+    return null;
   }
 
   /**

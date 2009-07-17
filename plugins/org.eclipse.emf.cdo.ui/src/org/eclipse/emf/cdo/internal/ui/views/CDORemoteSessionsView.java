@@ -10,22 +10,23 @@
  */
 package org.eclipse.emf.cdo.internal.ui.views;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
-import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 
+/**
+ * @author Eike Stepper
+ */
 public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessionManager>
 {
   private static CDORemoteSessionsView instance;
@@ -34,60 +35,15 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
   {
     public void selectionChanged(IWorkbenchPart part, ISelection selection)
     {
-      if (part == instance)
+      if (part != instance)
       {
-        return;
-      }
-
-      Object object = getObject(selection);
-      CDOSession session = getSession(object);
-      if (session != null)
-      {
-        setContainer(session.getRemoteSessionManager());
-      }
-    }
-
-    private Object getObject(ISelection selection)
-    {
-      if (selection instanceof IStructuredSelection)
-      {
-        IStructuredSelection ssel = (IStructuredSelection)selection;
-        if (ssel.size() == 1)
+        Object object = UIUtil.getElementIdOne(selection);
+        CDOSession session = CDOUtil.getSession(object);
+        if (session != null)
         {
-          return ssel.getFirstElement();
+          setContainer(session.getRemoteSessionManager());
         }
       }
-
-      return null;
-    }
-
-    private CDOSession getSession(Object object)
-    {
-      CDOSession session = AdapterUtil.adapt(object, CDOSession.class);
-      if (session != null)
-      {
-        return session;
-      }
-
-      CDOView view = AdapterUtil.adapt(object, CDOView.class);
-      if (view != null)
-      {
-        return view.getSession();
-      }
-
-      CDOObject cdoObject = AdapterUtil.adapt(object, CDOObject.class);
-      if (cdoObject != null)
-      {
-        return cdoObject.cdoView().getSession();
-      }
-
-      CDORemoteSessionManager remoteSessionManager = AdapterUtil.adapt(object, CDORemoteSessionManager.class);
-      if (remoteSessionManager != null)
-      {
-        return remoteSessionManager.getLocalSession();
-      }
-
-      return null;
     }
   };
 

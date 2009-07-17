@@ -170,6 +170,23 @@ public final class UIUtil
   }
 
   /**
+   * @since 3.0
+   */
+  public static Object getElementIdOne(ISelection selection)
+  {
+    if (selection instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+      if (ssel.size() == 1)
+      {
+        return ssel.getFirstElement();
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * @since 2.0
    */
   public static Object getElement(ISelection selection)

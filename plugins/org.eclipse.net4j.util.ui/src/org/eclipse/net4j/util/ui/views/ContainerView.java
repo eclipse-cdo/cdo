@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.SharedIcons;
 import org.eclipse.net4j.util.internal.ui.actions.IntrospectAction;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
@@ -592,9 +593,25 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     {
       if (this.container != container)
       {
+        IListener containerListener = getContainerListener();
+        if (containerListener != null && this.container != null)
+        {
+          this.container.removeListener(containerListener);
+        }
+
         this.container = container;
+        if (containerListener != null && this.container != null)
+        {
+          this.container.addListener(containerListener);
+        }
+
         resetInput();
       }
+    }
+
+    protected IListener getContainerListener()
+    {
+      return null;
     }
   }
 }

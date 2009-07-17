@@ -66,6 +66,11 @@ public interface CDOType
   public static final CDOType BYTE_ARRAY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BYTE_ARRAY;
 
   /**
+   * @since 3.0
+   */
+  public static final CDOType OBJECT_ARRAY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.OBJECT_ARRAY;
+
+  /**
    * @since 2.0
    */
   public static final CDOType BIG_DECIMAL = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BIG_DECIMAL;
@@ -76,9 +81,14 @@ public interface CDOType
   public static final CDOType BIG_INTEGER = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.BIG_INTEGER;
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  public static final CDOType ENUM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.ENUM;
+  public static final CDOType ENUM_ORDINAL = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.ENUM_ORDINAL;
+
+  /**
+   * @since 3.0
+   */
+  public static final CDOType ENUM_LITERAL = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.ENUM_LITERAL;
 
   public static final CDOType CUSTOM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.CUSTOM;
 

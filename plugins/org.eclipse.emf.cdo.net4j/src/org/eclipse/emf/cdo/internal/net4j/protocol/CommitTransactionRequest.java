@@ -100,15 +100,20 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   {
     requesting(new CDODataOutputImpl(out)
     {
-      @Override
-      protected StringIO getPackageURICompressor()
+      public CDOPackageRegistry getPackageRegistry()
       {
-        return getProtocol().getPackageURICompressor();
+        return getSession().getPackageRegistry();
       }
 
       public CDOIDProvider getIDProvider()
       {
         return CommitTransactionRequest.this.getIDProvider();
+      }
+
+      @Override
+      protected StringIO getPackageURICompressor()
+      {
+        return getProtocol().getPackageURICompressor();
       }
     }, monitor);
   }
@@ -182,19 +187,19 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
       {
         return getProtocol().getPackageURICompressor();
       }
-  
+
       @Override
       protected CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
       }
-  
+
       @Override
       protected CDORevisionManager getRevisionManager()
       {
         return getSession().getRevisionManager();
       }
-  
+
       @Override
       protected CDOListFactory getListFactory()
       {
@@ -210,7 +215,7 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
     {
       return result;
     }
-  
+
     result = confirmingTransactionResult(in);
     confirmingNewPackage(in, result);
     confirmingIDMappings(in, result);

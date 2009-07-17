@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -129,6 +130,46 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   {
     LifecycleUtil.checkActive(this);
     return super.get(key);
+  }
+
+  public Set<String> getAllKeys()
+  {
+    Set<String> result = new HashSet<String>();
+    result.addAll(keySet());
+    if (delegateRegistry != null)
+    {
+      if (delegateRegistry instanceof CDOPackageRegistry)
+      {
+        result.addAll(((CDOPackageRegistry)delegateRegistry).getAllKeys());
+      }
+      else
+      {
+        result.addAll(delegateRegistry.keySet());
+      }
+    }
+
+    return result;
+  }
+
+  public Object getWithDelegation(String nsURI, boolean resolve)
+  {
+    Object result = getFrom(this, nsURI, resolve);
+    if (result == null && delegateRegistry != null)
+    {
+      result = getFrom(delegateRegistry, nsURI, resolve);
+    }
+
+    return result;
+  }
+
+  private static Object getFrom(EPackage.Registry registry, String nsURI, boolean resolve)
+  {
+    if (resolve)
+    {
+      return registry.getEPackage(nsURI);
+    }
+
+    return registry.get(nsURI);
   }
 
   public Object basicPut(String nsURI, Object value)

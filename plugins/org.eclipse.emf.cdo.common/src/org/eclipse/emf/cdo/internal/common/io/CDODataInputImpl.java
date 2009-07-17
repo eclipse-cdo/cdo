@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.common.io;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
@@ -49,7 +51,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
-import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
+import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -57,7 +59,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.StringIO;
@@ -131,8 +132,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public EClassifier readCDOClassifierRefAndResolve() throws IOException
   {
-    CDOClassifierRef classRef = readCDOClassifierRef();
-    return classRef.resolve(getPackageRegistry());
+    CDOClassifierRef classifierRef = readCDOClassifierRef();
+    EClassifier classifier = classifierRef.resolve(getPackageRegistry());
+    if (classifier == null)
+    {
+      throw new IOException("Unable to resolve " + classifierRef);
+    }
+
+    return classifier;
   }
 
   public CDOType readCDOType() throws IOException
@@ -145,6 +152,15 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOID readCDOID() throws IOException
   {
     byte ordinal = readByte();
+
+    // A subtype of OBJECT
+    if (ordinal < 0)
+    {
+      // The ordinal value is negated in the stream to distinguish from the main type.
+      // Note: Added 1 because ordinal start at 0, so correct by minus 1.
+      return readCDOIDObject(-ordinal - 1);
+    }
+
     if (TRACER.isEnabled())
     {
       String type;
@@ -183,14 +199,41 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
     case OBJECT:
     {
-      AbstractCDOID id = new CDOIDLongImpl();
+      // should normally not occur is handled by
+      // readCDOIDObject, code remains here
+      // for backward compatibility
+      AbstractCDOID id = new CDOIDObjectLongImpl();
       id.read(this);
       return id;
     }
 
     default:
-      throw new ImplementationError();
+      throw new IOException("Illegal type: " + type);
     }
+  }
+
+  private CDOID readCDOIDObject(int subTypeOrdinal) throws IOException
+  {
+    if (TRACER.isEnabled())
+    {
+      String subType;
+
+      try
+      {
+        subType = InternalCDOIDObject.SubType.values()[subTypeOrdinal].toString();
+      }
+      catch (RuntimeException ex)
+      {
+        subType = ex.getMessage();
+      }
+
+      TRACER.format("Reading CDOIDObject of sub type {0} ({1})", subTypeOrdinal, subType); //$NON-NLS-1$
+    }
+
+    InternalCDOIDObject.SubType subType = InternalCDOIDObject.SubType.values()[subTypeOrdinal];
+    AbstractCDOID id = CDOIDUtil.createCDOIDObject(subType);
+    id.read(this);
+    return id;
   }
 
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException

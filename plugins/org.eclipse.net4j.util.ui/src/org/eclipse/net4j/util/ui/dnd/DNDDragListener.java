@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,19 +21,25 @@ import org.eclipse.swt.dnd.Transfer;
  */
 public abstract class DNDDragListener<TYPE> extends DragSourceAdapter
 {
-  private Transfer transfer;
+  private Transfer[] transfers;
 
   private StructuredViewer viewer;
 
-  public DNDDragListener(Transfer transfer, StructuredViewer viewer)
+  /**
+   * @since 3.0
+   */
+  protected DNDDragListener(Transfer[] transfers, StructuredViewer viewer)
   {
-    this.transfer = transfer;
+    this.transfers = transfers;
     this.viewer = viewer;
   }
 
-  public Transfer getTransfer()
+  /**
+   * @since 3.0
+   */
+  public Transfer[] getTransfers()
   {
-    return transfer;
+    return transfers;
   }
 
   public StructuredViewer getViewer()
@@ -44,10 +50,14 @@ public abstract class DNDDragListener<TYPE> extends DragSourceAdapter
   @Override
   public void dragSetData(DragSourceEvent event)
   {
-    if (transfer.isSupportedType(event.dataType))
+    for (Transfer transfer : transfers)
     {
-      IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
-      event.data = getObject(selection);
+      if (transfer.isSupportedType(event.dataType))
+      {
+        IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+        event.data = getObject(selection);
+        break;
+      }
     }
   }
 

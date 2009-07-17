@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -19,7 +19,6 @@ public final class AdapterUtil
   {
   }
 
-  @SuppressWarnings("unchecked")
   public static <TYPE> TYPE adapt(Object object, Class<TYPE> type)
   {
     if (object == null)
@@ -47,7 +46,9 @@ public final class AdapterUtil
       }
     }
 
-    return (TYPE)adapter;
+    @SuppressWarnings("unchecked")
+    TYPE result = (TYPE)adapter;
+    return result;
   }
 
   /**

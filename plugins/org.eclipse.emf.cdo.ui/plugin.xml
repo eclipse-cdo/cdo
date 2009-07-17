@@ -39,6 +39,13 @@
             id="org.eclipse.emf.cdo.CDOWatchListView"
             name="%view.name.1">
       </view>
+      <view
+            category="org.eclipse.emf.cdo"
+            class="org.eclipse.emf.cdo.internal.ui.views.CDORemoteSessionsView"
+            icon="icons/full/view16/watch_list.gif"
+            id="org.eclipse.emf.cdo.CDORemoteSessionsView"
+            name="%view.name.2">
+      </view>
    </extension>
    
    <extension

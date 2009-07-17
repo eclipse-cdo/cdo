@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,19 +21,28 @@ import org.eclipse.swt.dnd.TransferData;
  */
 public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
 {
-  private Transfer transfer;
+  private Transfer[] transfers;
 
+  /**
+   * Specifies if dropping between two viewer elements is allowed.
+   */
   private boolean dropBetweenEnabled;
 
-  protected DNDDropAdapter(Transfer transfer, StructuredViewer viewer)
+  /**
+   * @since 3.0
+   */
+  protected DNDDropAdapter(Transfer[] transfers, StructuredViewer viewer)
   {
     super(viewer);
-    this.transfer = transfer;
+    this.transfers = transfers;
   }
 
-  public Transfer getTransfer()
+  /**
+   * @since 3.0
+   */
+  public Transfer[] getTransfers()
   {
-    return transfer;
+    return transfers;
   }
 
   @Override
@@ -83,10 +92,23 @@ public abstract class DNDDropAdapter<TYPE> extends ViewerDropAdapter
   @Override
   public boolean validateDrop(Object target, int operation, TransferData type)
   {
-    return transfer.isSupportedType(type) && validateTarget(target, operation);
+    if (target != null && !validateTarget(target, operation))
+    {
+      return false;
+    }
+
+    for (Transfer transfer : transfers)
+    {
+      if (transfer.isSupportedType(type))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  protected abstract boolean performDrop(TYPE data, Object target);
-
   protected abstract boolean validateTarget(Object target, int operation);
+
+  protected abstract boolean performDrop(TYPE data, Object target);
 }

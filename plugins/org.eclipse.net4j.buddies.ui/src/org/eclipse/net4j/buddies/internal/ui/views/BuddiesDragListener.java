@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -30,9 +30,9 @@ public class BuddiesDragListener extends DNDDragListener<IBuddy[]>
 {
   private static final Transfer[] TRANSFERS = new Transfer[] { BuddiesTransfer.INSTANCE };
 
-  public BuddiesDragListener(StructuredViewer viewer)
+  protected BuddiesDragListener(StructuredViewer viewer)
   {
-    super(BuddiesTransfer.INSTANCE, viewer);
+    super(TRANSFERS, viewer);
   }
 
   @Override

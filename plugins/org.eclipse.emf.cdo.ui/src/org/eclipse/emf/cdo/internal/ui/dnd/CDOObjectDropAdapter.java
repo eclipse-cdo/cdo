@@ -22,7 +22,6 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.dnd.TransferData;
 
 import java.util.ArrayList;
 
@@ -31,11 +30,11 @@ import java.util.ArrayList;
  */
 public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
 {
-  private static final Transfer[] TRANSFERS = new Transfer[] { org.eclipse.emf.edit.ui.dnd.LocalTransfer.getInstance() };
+  public static final Transfer[] TRANSFERS = new Transfer[] { org.eclipse.emf.edit.ui.dnd.LocalTransfer.getInstance() };
 
   protected CDOObjectDropAdapter(StructuredViewer viewer)
   {
-    super(org.eclipse.emf.edit.ui.dnd.LocalTransfer.getInstance(), viewer);
+    super(TRANSFERS, viewer);
     setExpandEnabled(false);
   }
 
@@ -65,14 +64,14 @@ public class CDOObjectDropAdapter extends DNDDropAdapter<TreeSelection>
   @Override
   protected boolean validateTarget(Object target, int operation)
   {
-    return false;
+    return true;
   }
 
-  @Override
-  public boolean validateDrop(Object target, int operation, TransferData type)
-  {
-    return getTransfer().isSupportedType(type);
-  }
+  // @Override
+  // public boolean validateDrop(Object target, int operation, TransferData type)
+  // {
+  // return getTransfers()[0].isSupportedType(type);
+  // }
 
   public static void support(StructuredViewer viewer)
   {

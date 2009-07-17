@@ -135,7 +135,6 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   public void createPartControl(Composite parent)
   {
     // Create Viewer
-    getSite().setSelectionProvider(this);
     viewer = createViewer(parent);
 
     // This listener always refreshes viewer upon notification
@@ -156,6 +155,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     createContextMenu();
     hookKeyboardActions();
     createViewPulldownMenu();
+    getSite().setSelectionProvider(this);
   }
 
   private void createActions()

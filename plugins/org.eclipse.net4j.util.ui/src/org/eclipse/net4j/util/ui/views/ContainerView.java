@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,8 +29,10 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -44,7 +46,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
 
-public abstract class ContainerView extends ViewPart implements ISetSelectionTarget
+public abstract class ContainerView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
 {
   private Shell shell;
 
@@ -118,9 +120,58 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     }
   }
 
+  /**
+   * @since 3.0
+   */
+  public ISelection getSelection()
+  {
+    if (viewer != null)
+    {
+      return viewer.getSelection();
+    }
+
+    return StructuredSelection.EMPTY;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void setSelection(ISelection selection)
+  {
+    if (viewer != null)
+    {
+      viewer.setSelection(selection);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void addSelectionChangedListener(ISelectionChangedListener listener)
+  {
+    if (viewer != null)
+    {
+      viewer.addSelectionChangedListener(listener);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void removeSelectionChangedListener(ISelectionChangedListener listener)
+  {
+    if (viewer != null)
+    {
+      viewer.removeSelectionChangedListener(listener);
+    }
+  }
+
   public void selectReveal(ISelection selection)
   {
-    viewer.setSelection(selection, true);
+    if (viewer != null)
+    {
+      viewer.setSelection(selection, true);
+    }
   }
 
   @Override
@@ -146,7 +197,7 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     viewer.setSorter(new ContainerNameSorter());
     resetInput();
     viewer.addSelectionChangedListener(selectionListener);
-    getSite().setSelectionProvider(viewer);
+    getSite().setSelectionProvider(this);
     return viewer.getControl();
   }
 
@@ -454,6 +505,34 @@ public abstract class ContainerView extends ViewPart implements ISetSelectionTar
     protected void safeRun() throws Exception
     {
       viewer.refresh(false);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public static class Default<CONTAINER extends IContainer<?>> extends ContainerView
+  {
+    private CONTAINER container;
+
+    public Default()
+    {
+    }
+
+    @Override
+    protected CONTAINER getContainer()
+    {
+      return container;
+    }
+
+    public void setContainer(CONTAINER container)
+    {
+      if (this.container != container)
+      {
+        this.container = container;
+        resetInput();
+      }
     }
   }
 }

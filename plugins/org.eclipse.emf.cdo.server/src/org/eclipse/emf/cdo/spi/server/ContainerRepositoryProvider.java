@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 
@@ -35,6 +36,14 @@ public class ContainerRepositoryProvider implements IRepositoryProvider
 
   public IRepository getRepository(String name)
   {
-    return RepositoryFactory.get(container, name);
+    try
+    {
+      return RepositoryFactory.get(container, name);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      return null;
+    }
   }
 }

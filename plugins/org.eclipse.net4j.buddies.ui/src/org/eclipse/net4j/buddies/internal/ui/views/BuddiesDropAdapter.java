@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -24,12 +24,21 @@ import org.eclipse.swt.dnd.Transfer;
  */
 public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
 {
-  private static final Transfer[] TRANSFERS = new Transfer[] { BuddiesTransfer.INSTANCE };
+  /**
+   * @since 3.0
+   */
+  public static final Transfer[] TRANSFERS = new Transfer[] { BuddiesTransfer.INSTANCE };
 
-  public BuddiesDropAdapter(StructuredViewer viewer)
+  protected BuddiesDropAdapter(StructuredViewer viewer)
   {
-    super(BuddiesTransfer.INSTANCE, viewer);
+    super(TRANSFERS, viewer);
     setExpandEnabled(false);
+  }
+
+  @Override
+  protected boolean validateTarget(Object target, int operation)
+  {
+    return target instanceof IBuddyCollaboration;
   }
 
   @Override
@@ -38,12 +47,6 @@ public class BuddiesDropAdapter extends DNDDropAdapter<IBuddy[]>
     IBuddyCollaboration collaboration = (IBuddyCollaboration)target;
     collaboration.invite(buddies);
     return true;
-  }
-
-  @Override
-  protected boolean validateTarget(Object target, int operation)
-  {
-    return target instanceof IBuddyCollaboration;
   }
 
   public static void support(StructuredViewer viewer)

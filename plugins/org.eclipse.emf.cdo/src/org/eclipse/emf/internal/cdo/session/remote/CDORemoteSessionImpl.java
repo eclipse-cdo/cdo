@@ -115,6 +115,8 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0} ({1}", userID, sessionID); //$NON-NLS-1$
+    String repo = manager.getLocalSession().getRepositoryInfo().getName();
+    String user = userID == null ? repo : userID + "@" + repo;
+    return MessageFormat.format("{0} ({1})", user, sessionID); //$NON-NLS-1$
   }
 }

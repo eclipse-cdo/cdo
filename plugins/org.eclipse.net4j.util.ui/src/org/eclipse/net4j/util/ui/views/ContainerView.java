@@ -35,6 +35,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -228,6 +230,42 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
         return text;
       }
+
+      @Override
+      public Color getForeground(Object obj)
+      {
+        Color color = getElementForeground(obj);
+        if (color == null)
+        {
+          color = super.getForeground(obj);
+        }
+
+        return color;
+      }
+
+      @Override
+      public Color getBackground(Object obj)
+      {
+        Color color = getElementBackground(obj);
+        if (color == null)
+        {
+          color = super.getBackground(obj);
+        }
+
+        return color;
+      }
+
+      @Override
+      public Font getFont(Object obj)
+      {
+        Font font = getElementFont(obj);
+        if (font == null)
+        {
+          font = super.getFont(obj);
+        }
+
+        return font;
+      }
     };
   }
 
@@ -237,6 +275,30 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   }
 
   protected Image getElementImage(Object element)
+  {
+    return null;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public Color getElementForeground(Object element)
+  {
+    return null;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public Color getElementBackground(Object element)
+  {
+    return null;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public Font getElementFont(Object element)
   {
     return null;
   }

@@ -283,7 +283,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.0
    */
-  public Color getElementForeground(Object element)
+  protected Color getElementForeground(Object element)
   {
     return null;
   }
@@ -291,7 +291,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.0
    */
-  public Color getElementBackground(Object element)
+  protected Color getElementBackground(Object element)
   {
     return null;
   }
@@ -299,7 +299,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.0
    */
-  public Font getElementFont(Object element)
+  protected Font getElementFont(Object element)
   {
     return null;
   }
@@ -390,7 +390,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   {
     try
     {
-      getSite().getShell().getDisplay().syncExec(new Runnable()
+      getDisplay().syncExec(new Runnable()
       {
         public void run()
         {
@@ -440,6 +440,17 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     default:
       return true;
     }
+  }
+
+  protected Display getDisplay()
+  {
+    Display display = viewer.getControl().getDisplay();
+    if (display == null)
+    {
+      display = UIUtil.getDisplay();
+    }
+
+    return display;
   }
 
   public void refreshViewer(boolean updateLabels)
@@ -523,17 +534,6 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     }
   }
 
-  protected Display getDisplay()
-  {
-    Display display = viewer.getControl().getDisplay();
-    if (display == null)
-    {
-      display = UIUtil.getDisplay();
-    }
-
-    return display;
-  }
-
   public static ImageDescriptor getAddImageDescriptor()
   {
     return SharedIcons.getDescriptor(SharedIcons.TOOL_ADD);
@@ -583,6 +583,11 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     {
     }
 
+    protected IListener getContainerListener()
+    {
+      return null;
+    }
+
     @Override
     protected CONTAINER getContainer()
     {
@@ -607,11 +612,6 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
         resetInput();
       }
-    }
-
-    protected IListener getContainerListener()
-    {
-      return null;
     }
   }
 }

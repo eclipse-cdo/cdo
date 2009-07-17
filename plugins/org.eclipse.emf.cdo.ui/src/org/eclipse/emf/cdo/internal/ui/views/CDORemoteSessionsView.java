@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -32,6 +34,8 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessionManager>
 {
+  private static final String TYPE_TEXT_MESSAGE = "org.eclipse.emf.cdo.ui.TextMessage";
+
   private ISelectionListener selectionListener = new ISelectionListener()
   {
     public void selectionChanged(IWorkbenchPart part, ISelection selection)
@@ -51,6 +55,12 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
   private IListener containerListener = new CDORemoteSessionManager.EventAdapter()
   {
     @Override
+    protected void onLocalSubscriptionChanged(boolean subscribed)
+    {
+      getViewer().getControl().setEnabled(subscribed);
+    }
+
+    @Override
     protected void onSubscribed(CDORemoteSession remoteSession)
     {
       refreshElement(remoteSession, true);
@@ -63,8 +73,30 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
     }
 
     @Override
-    protected void onCustomData(CDORemoteSession remoteSession, String type, byte[] data)
+    protected void onCustomData(final CDORemoteSession remoteSession, String type, final byte[] data)
     {
+      if (TYPE_TEXT_MESSAGE.equals(type))
+      {
+        try
+        {
+          getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                MessageDialog.openInformation(getShell(), "Message from " + remoteSession, new String(data));
+              }
+              catch (RuntimeException ignore)
+              {
+              }
+            }
+          });
+        }
+        catch (RuntimeException ignore)
+        {
+        }
+      }
     }
   };
 
@@ -82,8 +114,10 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
   @Override
   protected Control createUI(Composite parent)
   {
+    Control control = super.createUI(parent);
+    getViewer().getControl().setEnabled(false);
     getSite().getWorkbenchWindow().getSelectionService().addPostSelectionListener(selectionListener);
-    return super.createUI(parent);
+    return control;
   }
 
   @Override
@@ -93,7 +127,7 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
   }
 
   @Override
-  public Color getElementForeground(Object element)
+  protected Color getElementForeground(Object element)
   {
     if (element instanceof CDORemoteSession)
     {
@@ -105,5 +139,27 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
     }
 
     return null;
+  }
+
+  @Override
+  protected void doubleClicked(Object element)
+  {
+    if (element instanceof CDORemoteSession)
+    {
+      CDORemoteSession remoteSession = (CDORemoteSession)element;
+      if (remoteSession.isSubscribed())
+      {
+        InputDialog dlg = new InputDialog(getShell(), "Message to " + remoteSession, "Message:", "", null);
+        if (dlg.open() == InputDialog.OK)
+        {
+          String message = dlg.getValue();
+          remoteSession.sendCustomData(TYPE_TEXT_MESSAGE, message.getBytes());
+        }
+
+        return;
+      }
+    }
+
+    super.doubleClicked(element);
   }
 }

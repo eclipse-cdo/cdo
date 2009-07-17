@@ -15,8 +15,14 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.FileLogHandler;
+import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import junit.framework.TestCase;
 import junit.framework.TestResult;
@@ -29,6 +35,23 @@ public abstract class AbstractOMTest extends TestCase
   public static boolean SUPPRESS_OUTPUT;
 
   private static boolean consoleEnabled;
+
+  static
+  {
+    try
+    {
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+      String prefix = AbstractOMTest.class.getName() + "-" + formatter.format(new Date()) + "-";
+      File logFile = File.createTempFile(prefix, ".log");
+      OMPlatform.INSTANCE.addLogHandler(new FileLogHandler(logFile, OMLogger.Level.WARN));
+      IOUtil.ERR().println("Logging errors and warnings to " + logFile);
+      IOUtil.ERR().println();
+    }
+    catch (Throwable ex)
+    {
+      IOUtil.print(ex);
+    }
+  }
 
   protected AbstractOMTest()
   {
@@ -164,6 +187,11 @@ public abstract class AbstractOMTest extends TestCase
   public static void sleep(long millis)
   {
     ConcurrencyUtil.sleep(millis);
+  }
+
+  public static void assertInstanceOf(Class<?> expected, Object object)
+  {
+    assertTrue("Not an instance of " + expected + ": " + object.getClass().getName(), expected.isInstance(object));
   }
 
   public static void assertActive(Object object)

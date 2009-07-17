@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -69,7 +70,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private Map<String, EClass> entityNameToEClass = null;
 
-  private Map<EClass, String> eClassToEntityName = null;
+  private Map<String, String> eClassToEntityName = null;
 
   private Map<String, String> identifierPropertyNameByEntity = null;
 
@@ -89,7 +90,8 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     entityNameToEClass.put(entityName, eClass);
-    eClassToEntityName.put(eClass, entityName);
+    eClassToEntityName.put(eClass.getEPackage().getNsURI() + CDOClassifierRef.URI_SEPARATOR + eClass.getName(),
+        entityName);
   }
 
   public String getEntityName(EClass eClass)
@@ -99,10 +101,29 @@ public class HibernateStore extends Store implements IHibernateStore
       throw new IllegalArgumentException("EClass argument is null");
     }
 
-    final String entityName = eClassToEntityName.get(eClass);
+    final String entityName = eClassToEntityName.get(eClass.getEPackage().getNsURI() + CDOClassifierRef.URI_SEPARATOR
+        + eClass.getName());
     if (entityName == null)
     {
       throw new IllegalArgumentException("EClass " + eClass.getName()
+          + " does not have an entity name, has it been mapped to Hibernate?");
+    }
+
+    return entityName;
+  }
+
+  public String getEntityName(CDOClassifierRef classifierRef)
+  {
+    if (classifierRef == null)
+    {
+      throw new IllegalArgumentException("classifierRef argument is null");
+    }
+
+    final String entityName = eClassToEntityName.get(classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR
+        + classifierRef.getClassifierName());
+    if (entityName == null)
+    {
+      throw new IllegalArgumentException("EClass " + classifierRef
           + " does not have an entity name, has it been mapped to Hibernate?");
     }
 
@@ -155,7 +176,7 @@ public class HibernateStore extends Store implements IHibernateStore
       currentHibernateStore.set(this);
 
       entityNameToEClass = new HashMap<String, EClass>();
-      eClassToEntityName = new HashMap<EClass, String>();
+      eClassToEntityName = new HashMap<String, String>();
       identifierPropertyNameByEntity = new HashMap<String, String>();
 
       try

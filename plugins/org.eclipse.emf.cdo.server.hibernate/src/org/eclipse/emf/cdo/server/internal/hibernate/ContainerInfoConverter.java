@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
-import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
@@ -88,8 +88,8 @@ public class ContainerInfoConverter
       return null;
     }
 
-    final String strCDOID = CDOIDConverter.getInstance().convertCDOIDToString(containerID);
-    if (!(containerID instanceof CDOIDHibernate))
+    final String strCDOID = HibernateUtil.getInstance().convertCDOIDToString(containerID);
+    if (!HibernateUtil.getInstance().isStoreCreatedID(containerID))
     {
       // does not support changing models....
       return strCDOID + SEPARATOR + cdoRevision.getContainingFeatureID();
@@ -98,9 +98,9 @@ public class ContainerInfoConverter
     // get the feature name...
     if (cdoRevision.getContainingFeatureID() < 0)
     {
-      final CDOIDHibernate containerHibID = (CDOIDHibernate)containerID;
+      final String entityName = HibernateUtil.getInstance().getEntityName(containerID);
       final HibernateStore store = HibernateThreadContext.getCurrentStoreAccessor().getStore();
-      final EClass containerEClass = store.getEClass(containerHibID.getEntityName());
+      final EClass containerEClass = store.getEClass(entityName);
       final int featureID = InternalEObject.EOPPOSITE_FEATURE_BASE - cdoRevision.getContainingFeatureID();
       final EStructuralFeature eFeature = containerEClass.getEStructuralFeature(featureID);
       return strCDOID + SEPARATOR + "-" + eFeature.getName();
@@ -136,23 +136,22 @@ public class ContainerInfoConverter
     }
 
     // get/set the container id
-    final CDOID containerID = CDOIDConverter.getInstance().convertStringToCDOID(containerInfo.substring(0, index));
+    final CDOID containerID = HibernateUtil.getInstance().convertStringToCDOID(containerInfo.substring(0, index));
     cdoRevision.setContainerID(containerID);
 
     final String containerFeatureStr = containerInfo.substring(index + SEPARATOR.length());
-
     if (containerID instanceof CDOIDMeta || containerID instanceof CDOIDExternal)
     {
       cdoRevision.setContainingFeatureID(Integer.parseInt(containerFeatureStr));
       return;
     }
 
-    final CDOIDHibernate containerHibID = (CDOIDHibernate)containerID;
     if (containerFeatureStr.startsWith("-"))
     {
       // part of the container eClass
-      final HibernateStore store = HibernateThreadContext.getCurrentStoreAccessor().getStore();
-      final EClass containerEClass = store.getEClass(containerHibID.getEntityName());
+      final CDOClassifierRef classifierRef = ((CDOClassifierRef.Provider)containerID).getClassifierRef();
+      final EClass containerEClass = HibernateUtil.getInstance().getEClass(classifierRef);
+
       // substring 1 because the string starts with a minus
       final EStructuralFeature eFeature = containerEClass.getEStructuralFeature(containerFeatureStr.substring(1));
       final int containerFeatureID = InternalEObject.EOPPOSITE_FEATURE_BASE - containerEClass.getFeatureID(eFeature);

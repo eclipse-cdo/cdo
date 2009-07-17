@@ -190,6 +190,11 @@ public abstract class AbstractOMTest extends TestCase
     ConcurrencyUtil.sleep(millis);
   }
 
+  public static void assertInstanceOf(Class<?> expected, Object object)
+  {
+    assertTrue("Not an instance of " + expected + ": " + object.getClass().getName(), expected.isInstance(object));
+  }
+
   public static void assertActive(Object object)
   {
     assertEquals(true, LifecycleUtil.isActive(object));

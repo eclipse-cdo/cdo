@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
@@ -49,6 +50,11 @@ public abstract class CDOServerRequest extends Request
   {
     requesting(new CDODataOutputImpl(out)
     {
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getManager().getRepository().getPackageRegistry();
+      }
+
       @Override
       protected StringIO getPackageURICompressor()
       {

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -23,18 +24,17 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStoreAccessor;
-import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
-import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
+import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -52,6 +52,13 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * Implements the runtime behavior of accessing the hibernate store using queries and doing write and commit. The
+ * HibernateStoreAccessor corresponds roughly to a Hibernate session. It offers methods to create and close them and
+ * implements transaction handling. The main update/create/delete operations are done in the
+ * {@link #write(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, OMMonitor)} method.
+ * 
+ * @see HibernateStore
+ * @see HibernatePackageHandler
  * @author Eike Stepper
  * @author Martin Taal
  */
@@ -63,6 +70,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   private boolean errorOccured = false;
 
+  /**
+   * Constructor
+   * 
+   * @param store
+   *          the {@link Store} used by the accessor.
+   * @param session
+   *          the client session (not a Hibernate Session)
+   */
   public HibernateStoreAccessor(HibernateStore store, ISession session)
   {
     super(store, session);
@@ -73,6 +88,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
+  /**
+   * Constructor for a specific transaction
+   * 
+   * @param store
+   *          the HibernateStore backing this accessor
+   * @param transaction
+   *          the client transaction (not the a Hibernate transaction)
+   */
   public HibernateStoreAccessor(HibernateStore store, ITransaction transaction)
   {
     super(store, transaction);
@@ -90,6 +113,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     beginHibernateSession();
   }
 
+  /**
+   * @return the backing store
+   */
   @Override
   public HibernateStore getStore()
   {
@@ -97,7 +123,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * starts a hibernate session and begins a transaction
+   * Starts a hibernate session and begins a transaction.
    * 
    * @since 2.0
    */
@@ -115,7 +141,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * Commits the session
+   * Calls {@link #endHibernateSession()}, commits the transaction and closes the session.
    * 
    * @since 2.0
    */
@@ -125,7 +151,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * commits/rollbacks and closes the session
+   * Commits/rollbacks and closes the session
    * 
    * @since 2.0
    */
@@ -176,6 +202,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     hibernateSession = null;
   }
 
+  /**
+   * @return the current hibernate session. If there is none then a new one is created and a transaction is started
+   */
   public Session getHibernateSession()
   {
     if (hibernateSession == null)
@@ -186,6 +215,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return hibernateSession;
   }
 
+  /**
+   * Closes/commits the current hibernate session if there is one, and starts a new one and begins a transaction.
+   * 
+   * @return a newly created Hibernate Session
+   */
   public Session getNewHibernateSession()
   {
     if (hibernateSession != null)
@@ -203,6 +237,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
+   * @return true if an error occured during database actions. Normally means that the transaction will be rolled back
+   *         and not committed.
    * @since 2.0
    */
   public boolean isErrorOccured()
@@ -218,50 +254,83 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     this.errorOccured = errorOccured;
   }
 
+  /**
+   * Note: the Hibernate store does not support the {@link StoreChunkReader} concept!.
+   * 
+   * @return a {@link HibernateStoreChunkReader} (which throws UnsupportedOperationExceptions for most methods
+   */
   public HibernateStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     return new HibernateStoreChunkReader(this, revision, feature);
   }
 
-  public CloseableIterator<Object> createQueryIterator(CDOQueryInfo queryInfo)
-  {
-    // TODO: implement HibernateStoreAccessor.createQueryIterator(queryInfo)
-    throw new UnsupportedOperationException();
-  }
-
+  /**
+   * @return the current collection of package units.
+   * @see HibernateStore
+   * @see HibernatePackageHandler
+   */
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
     return getStore().getPackageHandler().getPackageUnits();
   }
 
+  /**
+   * Loads the package units from the database and returns the EPackage instances.
+   * 
+   * @return the loaded EPackage instances.
+   * @see HibernatePackageHandler
+   */
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     return getStore().getPackageHandler().loadPackageUnit(packageUnit);
   }
 
+  /**
+   * Reads the revision from the database. using the passed id.
+   * 
+   * @param id
+   *          identifies the CDORevision to read
+   * @param listChunk
+   *          not used by Hibernate
+   * @param cache
+   *          the revision cache, the read revision is added to the cache
+   * @return the read revision
+   */
   public InternalCDORevision readRevision(CDOID id, int listChunk, CDORevisionCacheAdder cache)
   {
-    if (!(id instanceof CDOIDHibernate))
+    if (!HibernateUtil.getInstance().isStoreCreatedID(id))
     {
       return null;
     }
 
-    return HibernateUtil.getInstance().getCDORevision(id);
+    final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
+    if (revision != null)
+    {
+      cache.addRevision(revision);
+    }
+
+    return revision;
   }
 
+  /**
+   * Not supported by the Hibernate Store, auditing is not supported
+   */
   public InternalCDORevision readRevisionByTime(CDOID id, int listChunk, CDORevisionCacheAdder cache, long timeStamp)
   {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * Not supported by the Hibernate Store, auditing is not supported
+   */
   public InternalCDORevision readRevisionByVersion(CDOID id, int listChunk, CDORevisionCacheAdder cache, int version)
   {
-    // TODO Could be necessary to implement
     throw new UnsupportedOperationException();
   }
 
   /**
-   * TODO Clarify the meaning of {@link IStoreAccessor#refreshRevisions()}
+   * TODO Clarify the meaning of {@link IStoreAccessor#refreshRevisions()} Does nothing in the Hibernate Store
+   * implementation.
    * 
    * @since 2.0
    */
@@ -271,11 +340,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
+   * Queries for resources in a certain folder and returns them in the context object
+   * 
+   * @param context
+   *          the context provides input parameters (the folder) and is used to store the results of the query.
    * @since 2.0
    */
   public void queryResources(QueryResourcesContext context)
   {
-    CDOIDHibernate folderID = getHibernateID(context.getFolderID());
+    final CDOID folderID = getHibernateID(context.getFolderID());
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
 
@@ -310,24 +383,30 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
-  private CDOIDHibernate getHibernateID(CDOID id)
+  private CDOID getHibernateID(CDOID id)
   {
     if (!CDOIDUtil.isNull(id))
     {
-      if (id instanceof CDOIDHibernate)
+      if (HibernateUtil.getInstance().isStoreCreatedID(id))
       {
-        return (CDOIDHibernate)id;
+        return id;
       }
 
       // TODO Can this happen? When?
-      final long longID = CDOIDUtil.getLong(id);
-      final String entityName = getStore().getEntityName(EresourcePackage.eINSTANCE.getCDOResourceNode());
-      return CDOIDHibernateFactoryImpl.getInstance().createCDOID(longID, entityName);
+      // the folder id is always a long
+      final Long idValue = CDOIDUtil.getLong(id);
+      return CDOIDUtil.createLongWithClassifier(new CDOClassifierRef(EresourcePackage.eINSTANCE.getCDOResourceNode()),
+          idValue);
     }
 
     return null;
   }
 
+  /**
+   * @param info
+   *          the query information, is not used actively in this method.
+   * @return a new instance of {@link HibernateQueryHandler}
+   */
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     final HibernateQueryHandler queryHandler = new HibernateQueryHandler();
@@ -336,7 +415,10 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   /**
-   * Is handled through {@link #endHibernateSession()}.
+   * Commits the session, {@see {@link #commitRollbackHibernateSession()}.
+   * 
+   * @param monitor
+   *          , not used
    */
   public void commit(OMMonitor monitor)
   {
@@ -344,6 +426,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     HibernateThreadContext.setCommitContext(null);
   }
 
+  /**
+   * Performs the main write and update actions. Persists new EPackages, updates changed objects, creates new ones and
+   * removes deleted objects. Updates both container as well as resource associations.
+   * 
+   * @param context
+   *          the context contains the changed, new and to-be-removed objects
+   * @param monitor
+   *          not used by this method
+   */
   @Override
   public void write(IStoreAccessor.CommitContext context, OMMonitor monitor)
   {
@@ -371,7 +462,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       }
 
       // order is 1) insert, 2) update and then delete
-      // this order is the most stable
+      // this order is the most stable! Do not change it without testing
 
       final List<InternalCDORevision> repairContainerIDs = new ArrayList<InternalCDORevision>();
       final List<InternalCDORevision> repairResourceIDs = new ArrayList<InternalCDORevision>();
@@ -405,15 +496,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
       for (CDORevision revision : context.getDirtyObjects())
       {
-        final CDOIDHibernate hibernateCDOID = (CDOIDHibernate)revision.getID();
-        // Object loadedRevision = session.get(hibernateCDOID.getEntityName(), hibernateCDOID.getId());
-        // if (loadedRevision != revision)
-        // {
-        // session.merge(revision);
-        // }
-        // else
-        // {
-        session.saveOrUpdate(hibernateCDOID.getEntityName(), revision);
+        final String entityName = HibernateUtil.getInstance().getEntityName(revision.getID());
+        session.saveOrUpdate(entityName, revision);
         if (TRACER.isEnabled())
         {
           TRACER.trace("Updated Object " + revision.getEClass().getName() + " id: " + revision.getID());
@@ -456,13 +540,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)revision.getContainerID());
       final String entityName = getStore().getEntityName(revision.getEClass());
-      final CDOIDHibernate id = (CDOIDHibernate)revision.getID();
+      final CDOID id = revision.getID();
       final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY
           + " = :containerInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
       final Query qry = session.createQuery(hqlUpdate);
       qry.setParameter("containerInfo", ContainerInfoConverter.getInstance().convertContainerRelationToString(revision,
           container.getID()));
-      qry.setParameter("id", id.getId());
+      qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id));
       if (qry.executeUpdate() != 1)
       {
         throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
@@ -476,12 +560,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       final CDORevision resource = HibernateUtil.getInstance().getCDORevision(revision.getResourceID());
       final String entityName = getStore().getEntityName(revision.getEClass());
-      final CDOIDHibernate id = (CDOIDHibernate)revision.getID();
+      final CDOID id = revision.getID();
       final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.RESOURCE_PROPERTY
           + " = :resourceInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id";
       final Query qry = session.createQuery(hqlUpdate);
       qry.setParameter("resourceInfo", resource.getID());
-      qry.setParameter("id", id.getId());
+      qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id));
       if (qry.executeUpdate() != 1)
       {
         throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id);
@@ -503,6 +587,15 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     HibernateThreadContext.setCommitContext(null);
   }
 
+  /**
+   * Writes package units to the datbaase.
+   * 
+   * @param packageUnits
+   *          the package units to write to the database
+   * @param monitor
+   *          not used by the store
+   * @see HibernatePackageHandler
+   */
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     if (packageUnits != null && packageUnits.length != 0)

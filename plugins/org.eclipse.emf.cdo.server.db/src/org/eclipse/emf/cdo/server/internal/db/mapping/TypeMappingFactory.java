@@ -218,7 +218,7 @@ public enum TypeMappingFactory
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.DOUBLE, DBType.DOUBLE), DOUBLE_MAPPING);
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.DOUBLE_OBJECT, DBType.DOUBLE), DOUBLE_MAPPING);
 
-    mappingTable.put(new Pair<CDOType, DBType>(CDOType.ENUM, DBType.INTEGER), ENUM_MAPPING);
+    mappingTable.put(new Pair<CDOType, DBType>(CDOType.ENUM_ORDINAL, DBType.INTEGER), ENUM_MAPPING);
 
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.FLOAT, DBType.FLOAT), FLOAT_MAPPING);
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.FLOAT_OBJECT, DBType.FLOAT), FLOAT_MAPPING);

@@ -31,7 +31,6 @@ import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 
 import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -105,30 +104,6 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     // to solve an issue with older versions of teneo
     hbm = hbm.replaceAll("_cont", "cont");
     return hbm;
-  }
-
-  // this will check the global package registry and read the epackages from
-  // there if the epackage is already present there
-  protected List<EPackage> resolveSubPackages(EPackage ePackage)
-  {
-    final List<EPackage> result = new ArrayList<EPackage>();
-    resolveSubPackages(ePackage, result);
-    return result;
-  }
-
-  private void resolveSubPackages(EPackage ePackage, List<EPackage> result)
-  {
-    EPackage globalPackage = EPackage.Registry.INSTANCE.getEPackage(ePackage.getNsURI());
-    if (globalPackage != null)
-    {
-      ePackage = globalPackage;
-    }
-
-    result.add(ePackage);
-    for (EPackage subEPackage : ePackage.getESubpackages())
-    {
-      resolveSubPackages(subEPackage, result);
-    }
   }
 
   // see the CDOEntityMapper, there an explicit unique-key is added to

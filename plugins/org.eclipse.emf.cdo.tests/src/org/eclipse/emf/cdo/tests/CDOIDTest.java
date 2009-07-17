@@ -16,10 +16,10 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDNullImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
-import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
 
 /**
  * @author Stefan Winkler
@@ -39,7 +39,7 @@ public class CDOIDTest extends AbstractCDOTest
 
   public void testGetLong_LongId()
   {
-    CDOIDLongImpl id = new CDOIDLongImpl(123L);
+    CDOIDObjectLongImpl id = new CDOIDObjectLongImpl(123L);
     assertEquals(123L, CDOIDUtil.getLong(id));
   }
 

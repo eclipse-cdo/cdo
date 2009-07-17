@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -51,19 +51,16 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     return "oid:" + toURIFragment(); //$NON-NLS-1$
   }
 
-  @Override
   public void read(String fragmentPart)
   {
     uri = fragmentPart;
   }
 
-  @Override
   public void read(ExtendedDataInput in) throws IOException
   {
     uri = in.readString();
   }
 
-  @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeString(uri);

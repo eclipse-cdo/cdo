@@ -9,22 +9,28 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778
  *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Martin Taal - Added subtype handling and EClass conversion, http://bugs.eclipse.org/283106
  */
 package org.eclipse.emf.cdo.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongWithClassifierImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringWithClassifierImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
-import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
+import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -65,9 +71,9 @@ public final class CDOIDUtil
       return AbstractCDOIDLong.NULL_VALUE;
 
     case OBJECT:
-      if (id instanceof CDOIDLongImpl)
+      if (id instanceof AbstractCDOIDLong)
       {
-        return ((CDOIDLongImpl)id).getLongValue();
+        return ((AbstractCDOIDLong)id).getLongValue();
       }
 
       throw new IllegalArgumentException(MessageFormat.format(
@@ -85,7 +91,8 @@ public final class CDOIDUtil
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.2")); //$NON-NLS-1$
 
     default:
-      throw new ImplementationError(MessageFormat.format(Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
     }
   }
 
@@ -97,6 +104,22 @@ public final class CDOIDUtil
   public static CDOIDTemp createTempObject(int value)
   {
     return new CDOIDTempObjectImpl(value);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOID createStringWithClassifier(CDOClassifierRef classifierRef, String value)
+  {
+    return new CDOIDObjectStringWithClassifierImpl(classifierRef, value);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOID createLongWithClassifier(CDOClassifierRef classifierRef, long value)
+  {
+    return new CDOIDObjectLongWithClassifierImpl(classifierRef, value);
   }
 
   /**
@@ -117,12 +140,12 @@ public final class CDOIDUtil
 
   public static CDOID createLong(long value)
   {
-    if (value == 0L)
+    if (value == AbstractCDOIDLong.NULL_VALUE)
     {
       return CDOID.NULL;
     }
 
-    return new CDOIDLongImpl(value);
+    return new CDOIDObjectLongImpl(value);
   }
 
   /**
@@ -136,6 +159,12 @@ public final class CDOIDUtil
    */
   public static CDOID read(String uriFragment)
   {
+    // An OBJECT subtype has a negative value
+    if (uriFragment.startsWith("-"))
+    {
+      return createCDOIDObject(uriFragment);
+    }
+
     byte ordinal = Byte.valueOf(uriFragment.substring(0, 1));
     if (TRACER.isEnabled())
     {
@@ -174,14 +203,86 @@ public final class CDOIDUtil
 
     case OBJECT:
     {
-      AbstractCDOID id = new CDOIDLongImpl();
-      id.read(fragment);
-      return id;
+      // Normally this case should not occur (is an OBJECT subtype).
+      throw new ImplementationError();
     }
 
     default:
       throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOIDUtil.5"), uriFragment)); //$NON-NLS-1$
     }
+  }
+
+  private static CDOID createCDOIDObject(String uriFragment)
+  {
+    byte negOrdinal = Byte.valueOf(uriFragment.substring(0, 2));
+    int ordinal = -1 * negOrdinal - 1;
+    if (TRACER.isEnabled())
+    {
+      try
+      {
+        String type = InternalCDOIDObject.SubType.values()[ordinal].toString();
+        TRACER.format("Reading CDOID Object of subType {0} ({1})", ordinal, type); //$NON-NLS-1$
+      }
+      catch (RuntimeException ex)
+      {
+        TRACER.trace(ex);
+      }
+    }
+
+    InternalCDOIDObject.SubType subType = InternalCDOIDObject.SubType.values()[ordinal];
+    AbstractCDOID id = createCDOIDObject(subType);
+    // note position 2 in the uriFragment is a /
+    // see the write method
+    String fragment = uriFragment.substring(3);
+    id.read(fragment);
+    return id;
+  }
+
+  /**
+   * Creates the correct implementation class for the passed {@link InternalCDOIDObject.SubType}.
+   * 
+   * @param subType
+   *          the subType for which to create an empty CDOID instance
+   * @return the instance of CDOIDObject which represents the subtype.
+   * @since 3.0
+   */
+  public static AbstractCDOID createCDOIDObject(InternalCDOIDObject.SubType subType)
+  {
+    if (subType == null)
+    {
+      throw new IllegalArgumentException("SubType may not be null");
+    }
+
+    InternalCDOIDObject id;
+    switch (subType)
+    {
+    case LONG:
+      id = new CDOIDObjectLongImpl();
+      break;
+
+    case STRING:
+      id = new CDOIDObjectStringImpl();
+      break;
+
+    case LONG_WITH_CLASSIFIER:
+      id = new CDOIDObjectLongWithClassifierImpl();
+      break;
+
+    case STRING_WITH_CLASSIFIER:
+      id = new CDOIDObjectStringWithClassifierImpl();
+      break;
+
+    default:
+      throw new IllegalArgumentException("Subtype " + subType.name() + " not supported");
+    }
+
+    if (id.getSubType() != subType)
+    {
+      throw new IllegalStateException("Subtype of created id " + id + " is unequal (" + id.getSubType().name()
+          + ") to requested subtype " + subType.name());
+    }
+
+    return (AbstractCDOID)id;
   }
 
   /**
@@ -200,25 +301,35 @@ public final class CDOIDUtil
       id = CDOID.NULL;
     }
 
-    Type type = id.getType();
-    int ordinal = type.ordinal();
-    if (TRACER.isEnabled())
+    if (id instanceof InternalCDOIDObject)
     {
-      TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
+      InternalCDOIDObject internalCDOID = (InternalCDOIDObject)id;
+      int subOrdinal = (internalCDOID.getSubType().ordinal() + 1) * -1;
+      builder.append(subOrdinal);
     }
-
-    builder.append(ordinal);
-    switch (type)
+    else
     {
-    case NULL:
-    case TEMP_OBJECT:
-    case TEMP_META:
-    case META:
-    case OBJECT:
-      break;
+      Type type = id.getType();
+      int ordinal = type.ordinal();
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing CDOID of type {0} ({1})", ordinal, type); //$NON-NLS-1$
+      }
 
-    default:
-      throw new ImplementationError();
+      builder.append(ordinal);
+      switch (type)
+      {
+      case NULL:
+      case TEMP_OBJECT:
+      case TEMP_META:
+      case META:
+      case EXTERNAL_OBJECT:
+      case OBJECT:
+        break;
+
+      default:
+        throw new ImplementationError();
+      }
     }
 
     builder.append("/" + id.toURIFragment()); //$NON-NLS-1$

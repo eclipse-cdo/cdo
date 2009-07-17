@@ -10,10 +10,12 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
@@ -30,13 +32,14 @@ public class CDORevisionInstantiator implements Instantiator
 {
   private static final long serialVersionUID = 1L;
 
-  private EClass eClass;
+  private final EClass eClass;
 
-  private String entityName;
+  private final CDOClassifierRef classifierRef;
 
   public CDORevisionInstantiator(CDORevisionTuplizer tuplizer, PersistentClass mappingInfo)
   {
     eClass = tuplizer.getEClass();
+    classifierRef = new CDOClassifierRef(eClass);
   }
 
   public Object instantiate()
@@ -49,12 +52,8 @@ public class CDORevisionInstantiator implements Instantiator
   {
     final HibernateStoreAccessor storeAccessor = HibernateThreadContext.getCurrentStoreAccessor();
     HibernateStore store = storeAccessor.getStore();
-    if (entityName == null)
-    {
-      entityName = store.getEntityName(eClass);
-    }
-
-    return store.createRevision(eClass, CDOIDHibernateFactoryImpl.getInstance().createCDOID(id, entityName));
+    final CDOID cdoID = HibernateUtil.getInstance().createCDOID(classifierRef, id);
+    return store.createRevision(eClass, cdoID);
   }
 
   public boolean isInstance(Object object)

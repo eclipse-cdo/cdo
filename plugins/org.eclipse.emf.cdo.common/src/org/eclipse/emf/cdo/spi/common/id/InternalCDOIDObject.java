@@ -25,6 +25,6 @@ public interface InternalCDOIDObject extends CDOIDObject
    */
   public enum SubType
   {
-    LONG, STRING, LONG_WITH_ECLASS, STRING_WITH_ECLASS
+    LONG, STRING, LONG_WITH_CLASSIFIER, STRING_WITH_CLASSIFIER
   }
 }

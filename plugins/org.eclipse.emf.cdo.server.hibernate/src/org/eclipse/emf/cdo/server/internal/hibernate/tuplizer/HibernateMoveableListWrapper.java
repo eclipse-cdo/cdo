@@ -27,7 +27,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Wraps a moveable list so that hibernate always sees an object view while cdo always sees a cdoid view.
+ * Wraps a moveable list so that hibernate always sees an object view while cdo always sees a cdoid view. The same for
+ * EEnum: cdo wants to see an int (the ordinal), hibernate the real eenum value. This to support querying with EENum
+ * parameters.
  * 
  * @author Martin Taal
  */

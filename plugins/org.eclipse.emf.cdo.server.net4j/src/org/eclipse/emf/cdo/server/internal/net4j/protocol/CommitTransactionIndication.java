@@ -192,16 +192,16 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     // Create commit context
     initializeCommitContext(in);
     commitContext.preCommit();
-  
+
     boolean autoReleaseLocksEnabled = in.readBoolean();
     commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
-  
+
     InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
     InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
     InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
     CDOID[] detachedObjects = new CDOID[in.readInt()];
     monitor.begin(newPackageUnits.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
-  
+
     try
     {
       // New package units
@@ -209,7 +209,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       {
         TRACER.format("Reading {0} new package units", newPackageUnits.length); //$NON-NLS-1$
       }
-  
+
       InternalCDOPackageRegistry packageRegistry = commitContext.getPackageRegistry();
       for (int i = 0; i < newPackageUnits.length; i++)
       {
@@ -217,7 +217,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
         packageRegistry.putPackageUnit(newPackageUnits[i]); // Must happen before readCDORevision!!!
         monitor.worked();
       }
-  
+
       // When all packages are deserialized and registered, resolve them
       for (InternalCDOPackageUnit packageUnit : newPackageUnits)
       {
@@ -226,37 +226,37 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
           EcoreUtil.resolveAll(ePackage);
         }
       }
-  
+
       // New objects
       if (TRACER.isEnabled())
       {
         TRACER.format("Reading {0} new objects", newObjects.length); //$NON-NLS-1$
       }
-  
+
       for (int i = 0; i < newObjects.length; i++)
       {
         newObjects[i] = (InternalCDORevision)in.readCDORevision();
         monitor.worked();
       }
-  
+
       // Dirty objects
       if (TRACER.isEnabled())
       {
         TRACER.format("Reading {0} dirty object deltas", dirtyObjectDeltas.length); //$NON-NLS-1$
       }
-  
+
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
         dirtyObjectDeltas[i] = (InternalCDORevisionDelta)in.readCDORevisionDelta();
         monitor.worked();
       }
-  
+
       for (int i = 0; i < detachedObjects.length; i++)
       {
         detachedObjects[i] = in.readCDOID();
         monitor.worked();
       }
-  
+
       commitContext.setNewPackageUnits(newPackageUnits);
       commitContext.setNewObjects(newObjects);
       commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
@@ -285,15 +285,20 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   {
     responding(new CDODataOutputImpl(out)
     {
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return commitContext.getPackageRegistry();
+      }
+
+      public CDOIDProvider getIDProvider()
+      {
+        return CommitTransactionIndication.this.getSession();
+      }
+
       @Override
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
-      }
-  
-      public CDOIDProvider getIDProvider()
-      {
-        return CommitTransactionIndication.this.getSession();
       }
     }, monitor);
   }
@@ -301,7 +306,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
   protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
     boolean success = false;
-  
+
     try
     {
       success = respondingException(out, commitContext.getRollbackMessage());
@@ -326,7 +331,7 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
     {
       out.writeString(rollbackMessage);
     }
-  
+
     return success;
   }
 

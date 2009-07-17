@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateQueryHandler;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -233,9 +234,9 @@ public class HibernateQueryTest extends AbstractCDOTest
     enableConsole();
   }
 
-  // TODO revisit this part when the hibernate id handling has been changed
-  @SuppressWarnings("restriction")
-  public void _testQueryWithID() throws Exception
+  // Tests id handling
+  // See: https://bugs.eclipse.org/bugs/show_bug.cgi?id=283106
+  public void testQueryWithID() throws Exception
   {
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -255,14 +256,44 @@ public class HibernateQueryTest extends AbstractCDOTest
             "select so from SalesOrder so where so.customer.id=:customerId");
         final CDOObject cdoObject = (CDOObject)customer;
         final CDOID cdoID = cdoObject.cdoID();
-        final org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate cdoIDHibernate = (org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate)cdoID;
-        orderQuery.setParameter("customerId", cdoIDHibernate.getId());
+        orderQuery.setParameter("customerId", HibernateUtil.getInstance().getIdValue(cdoID));
         final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
         assertEquals(NUM_OF_SALES_ORDERS, sos.size());
         for (SalesOrder so : sos)
         {
           assertEquals(customer, so.getCustomer());
         }
+      }
+    }
+
+    transaction.commit();
+    enableConsole();
+  }
+
+  public void testQueryObjectArray() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    createTestSet(session);
+
+    msg("Opening transaction for querying");
+    CDOTransaction transaction = session.openTransaction();
+
+    {
+      msg("Query for order details");
+      CDOQuery query = transaction.createQuery("hql",
+          "select od, od.order, od.product.vat, od.price from OrderDetail as od where od.product.vat=:vat");
+      query.setParameter("vat", VAT.VAT15);
+      for (Object[] values : query.getResult(Object[].class))
+      {
+        assertInstanceOf(OrderDetail.class, values[0]);
+        assertInstanceOf(SalesOrder.class, values[1]);
+        assertInstanceOf(VAT.class, values[2]);
+        assertEquals(VAT.VAT15, values[2]);
+        assertInstanceOf(Float.class, values[3]);
+        final SalesOrder order = (SalesOrder)values[1];
+        assertTrue(order.getOrderDetails().contains(values[0]));
       }
     }
 

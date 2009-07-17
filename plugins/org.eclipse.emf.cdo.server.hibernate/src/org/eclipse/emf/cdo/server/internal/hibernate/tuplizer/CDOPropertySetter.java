@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionPropert
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.HibernateException;
@@ -91,7 +92,15 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     }
     else
     {
-      revision.setValue(getEStructuralFeature(), value);
+      // hibernate sees enums, cdo sees int's
+      if (value instanceof EEnumLiteral)
+      {
+        revision.setValue(getEStructuralFeature(), ((EEnumLiteral)value).getValue());
+      }
+      else
+      {
+        revision.setValue(getEStructuralFeature(), value);
+      }
     }
   }
 }

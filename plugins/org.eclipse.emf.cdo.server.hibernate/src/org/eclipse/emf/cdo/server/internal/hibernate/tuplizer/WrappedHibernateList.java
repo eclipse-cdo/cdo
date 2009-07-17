@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
@@ -30,7 +31,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Wraps a moveable list so that hibernate always sees an object view while cdo always sees a cdoid view.
+ * Wraps a moveable list so that hibernate always sees an object view while cdo always sees a cdoid view. The same for
+ * EEnum: cdo wants to see an int (the ordinal), hibernate the real eenum value. This to support querying with EENum
+ * parameters.
  * 
  * @author Martin Taal
  */
@@ -225,6 +228,11 @@ public class WrappedHibernateList implements InternalCDOList
       return ((CDORevision)value).getID();
     }
 
+    if (value instanceof EEnumLiteral)
+    {
+      return ((EEnumLiteral)value).getValue();
+    }
+
     return value;
   }
 
@@ -348,9 +356,16 @@ public class WrappedHibernateList implements InternalCDOList
     public Object next()
     {
       Object o = delegate.next();
+
       if (o instanceof CDOID)
       {
         return HibernateUtil.getInstance().getCDORevision((CDOID)o);
+      }
+
+      // CDO always wants to have the integer for an EENUM
+      if (o instanceof EEnumLiteral)
+      {
+        return ((EEnumLiteral)o).getValue();
       }
 
       return o;

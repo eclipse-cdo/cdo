@@ -21,10 +21,12 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -207,7 +209,7 @@ public final class CDOModelUtil
 
     if (classifier instanceof EEnum)
     {
-      return CDOType.ENUM;
+      return CDOType.ENUM_ORDINAL;
     }
 
     if (isCorePackage(classifier.getEPackage()))
@@ -287,6 +289,16 @@ public final class CDOModelUtil
     if (primitiveType == Character.class)
     {
       return CDOType.CHAR;
+    }
+
+    if (primitiveType == Object[].class)
+    {
+      return CDOType.OBJECT_ARRAY;
+    }
+
+    if (EEnumLiteral.class.isAssignableFrom(primitiveType) || Enumerator.class.isAssignableFrom(primitiveType))
+    {
+      return CDOType.ENUM_LITERAL;
     }
 
     throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOModelUtil.7"), primitiveType)); //$NON-NLS-1$

@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -43,8 +45,8 @@ public final class CDOClassifierRef
 
   public CDOClassifierRef(String packageURI, String classifierName)
   {
-    this.packageURI = packageURI;
-    this.classifierName = classifierName;
+    this.packageURI = packageURI.intern();
+    this.classifierName = classifierName.intern();
   }
 
   public CDOClassifierRef(CDODataInput in) throws IOException
@@ -87,8 +89,40 @@ public final class CDOClassifierRef
   }
 
   @Override
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+
+    if (obj != null && obj.getClass() == CDOClassifierRef.class)
+    {
+      CDOClassifierRef that = (CDOClassifierRef)obj;
+      return ObjectUtil.equals(packageURI, that.packageURI) && ObjectUtil.equals(classifierName, that.classifierName);
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return packageURI.hashCode() ^ classifierName.hashCode();
+  }
+
+  @Override
   public String toString()
   {
     return MessageFormat.format("CDOClassifierRef({0}, {1})", packageURI, classifierName); //$NON-NLS-1$
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public interface Provider
+  {
+    public CDOClassifierRef getClassifierRef();
   }
 }

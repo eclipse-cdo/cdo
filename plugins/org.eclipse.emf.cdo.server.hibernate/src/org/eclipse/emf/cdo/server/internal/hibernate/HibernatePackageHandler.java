@@ -70,9 +70,9 @@ public class HibernatePackageHandler extends Lifecycle
 
   private Collection<InternalCDOPackageUnit> packageUnits = null;
 
-  private Map<String, byte[]> ePackageBlobsByRootUri = null;
+  private Map<String, byte[]> ePackageBlobsByRootUri = new HashMap<String, byte[]>();
 
-  private Map<String, EPackage[]> ePackagesByRootUri = null;
+  private Map<String, EPackage[]> ePackagesByRootUri = new HashMap<String, EPackage[]>();
 
   private HibernateStore hibernateStore;
 
@@ -95,7 +95,7 @@ public class HibernatePackageHandler extends Lifecycle
   public List<EPackage> getEPackages()
   {
     List<EPackage> ePackages = new ArrayList<EPackage>();
-    final InternalRepository localRepository = (InternalRepository)hibernateStore.getRepository();
+    final InternalRepository localRepository = hibernateStore.getRepository();
 
     for (EPackage ePackage : localRepository.getPackageRegistry(false).getEPackages())
     {
@@ -115,7 +115,7 @@ public class HibernatePackageHandler extends Lifecycle
 
   private InternalCDOPackageRegistry getPackageRegistry()
   {
-    return (InternalCDOPackageRegistry)hibernateStore.getRepository().getPackageRegistry();
+    return hibernateStore.getRepository().getPackageRegistry();
   }
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits)
@@ -231,8 +231,6 @@ public class HibernatePackageHandler extends Lifecycle
         CDOModelUtil.createPackageUnit();
 
         packageUnits = new ArrayList<InternalCDOPackageUnit>();
-        ePackagesByRootUri = new HashMap<String, EPackage[]>();
-        ePackageBlobsByRootUri = new HashMap<String, byte[]>();
         for (HibernateCDOPackageUnitDTO dto : (Collection<HibernateCDOPackageUnitDTO>)list)
         {
           packageUnits.add(dto.createCDOPackageUnit(getPackageRegistry()));

@@ -13,11 +13,10 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
-import org.eclipse.emf.cdo.server.hibernate.internal.id.CDOIDHibernateFactoryImpl;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext;
-import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
@@ -40,7 +39,7 @@ public class CDOIDPropertySetter extends CDOPropertySetter
   @Override
   public void set(Object target, Object value, SessionFactoryImplementor factory) throws HibernateException
   {
-    InternalCDORevision revision = (InternalCDORevision)target;
+    final InternalCDORevision revision = (InternalCDORevision)target;
     if (value == null)
     {
       if (getEStructuralFeature().isUnsettable())
@@ -51,46 +50,31 @@ public class CDOIDPropertySetter extends CDOPropertySetter
       return;
     }
 
-    HibernateCommitContext commitContext = null;
-    if (HibernateThreadContext.isCommitContextSet())
+    final CDOID revisionID = revision.getID();
+    if (revisionID == null || revisionID instanceof CDOIDTemp)
     {
-      commitContext = HibernateThreadContext.getCommitContext();
-    }
-
-    final HibernateStoreAccessor storeAccessor = HibernateThreadContext.getCurrentStoreAccessor();
-    final String entityName = storeAccessor.getStore().getEntityName(revision.getEClass());
-
-    CDOID revisionID = revision.getID();
-    if (revisionID == null)
-    {
-      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value, entityName);
+      final CDOID newCDOID = HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(revision.getEClass()), value);
       revision.setID(newCDOID);
-      if (commitContext != null)
+      if (HibernateThreadContext.isCommitContextSet())
       {
+        final HibernateCommitContext commitContext = HibernateThreadContext.getCommitContext();
         commitContext.setNewID(revisionID, newCDOID);
-      }
-    }
-    else if (revisionID instanceof CDOIDTemp)
-    {
-      CDOIDHibernate newCDOID = CDOIDHibernateFactoryImpl.getInstance().createCDOID((Serializable)value, entityName);
-      revision.setID(newCDOID);
-      if (commitContext != null)
-      {
-        commitContext.getCommitContext().addIDMapping((CDOIDTemp)revisionID, newCDOID);
-        commitContext.setNewID(revisionID, newCDOID);
+        if (revisionID instanceof CDOIDTemp)
+        {
+          commitContext.getCommitContext().addIDMapping((CDOIDTemp)revisionID, newCDOID);
+        }
       }
     }
     else
     {
-      CDOIDHibernate hbCDOID = (CDOIDHibernate)revision.getID();
-      if (hbCDOID.getId() == null)
+      final Serializable idValue = HibernateUtil.getInstance().getIdValue(revisionID);
+      if (idValue == null)
       {
-        // TODO: how can this happen?
-        hbCDOID.setId((Serializable)value);
+        throw new IllegalStateException("ID value is null for revision " + revision);
       }
-      else if (!hbCDOID.getId().equals(value))
+      else if (!idValue.equals(value))
       {
-        throw new IllegalStateException("Current id and new id are different " + value + "/" + hbCDOID.getId());
+        throw new IllegalStateException("Current id and new id are different " + value + "/" + idValue);
       }
     }
 

@@ -12,12 +12,14 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
-import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+
+import java.io.Serializable;
 
 /**
  * Implements server side HQL query execution..
@@ -82,10 +84,12 @@ public class HibernateQueryHandler implements IQueryHandler
         {
           // in case the parameter is a CDOID get the object from the db
           final Object param = info.getParameters().get(key);
-          if (param instanceof CDOIDHibernate)
+          if (param instanceof CDOID && HibernateUtil.getInstance().isStoreCreatedID((CDOID)param))
           {
-            final CDOIDHibernate hibernateId = (CDOIDHibernate)param;
-            query.setEntity(key, session.get(hibernateId.getEntityName(), hibernateId.getId()));
+            final CDOID cdoID = (CDOID)param;
+            final String entityName = HibernateUtil.getInstance().getEntityName(cdoID);
+            final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
+            query.setEntity(key, session.get(entityName, idValue));
           }
           else
           {

@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.hibernate.id.CDOIDHibernate;
-import org.eclipse.emf.cdo.server.internal.hibernate.CDOIDConverter;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.hibernate.Hibernate;
@@ -86,7 +84,7 @@ public class CDOIDUserType implements UserType
       return null;
     }
 
-    return CDOIDConverter.getInstance().convertStringToCDOID(value);
+    return HibernateUtil.getInstance().convertStringToCDOID(value);
   }
 
   public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
@@ -110,7 +108,7 @@ public class CDOIDUserType implements UserType
       value = HibernateUtil.getInstance().getCDOIDHibernate((CDORevision)value);
     }
 
-    final String strValue = CDOIDConverter.getInstance().convertCDOIDToString((CDOID)value);
+    final String strValue = HibernateUtil.getInstance().convertCDOIDToString((CDOID)value);
     if (strValue == null)
     {
       statement.setNull(index, Types.VARCHAR);

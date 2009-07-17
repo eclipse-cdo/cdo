@@ -12,9 +12,9 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
-import org.eclipse.emf.cdo.spi.common.id.CDOIDLongImpl;
 
 import org.eclipse.net4j.db.DBUtil;
 
@@ -184,7 +184,7 @@ public class SQLQueryHandler implements IQueryHandler
 
           if (cdoObjectQuery)
           {
-            context.addResult(new CDOIDLongImpl(resultSet.getLong(1)));
+            context.addResult(CDOIDUtil.createLong(resultSet.getLong(1)));
           }
           else
           {

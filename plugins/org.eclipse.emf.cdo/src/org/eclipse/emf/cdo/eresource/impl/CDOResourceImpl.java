@@ -533,7 +533,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     catch (Exception ex)
     {
       // Do nothing
-      // getEObject return null when the object cannot be resolved.
+      // Return null if the object cannot be resolved.
     }
 
     // If it doesn`t match to anything we return null like ResourceImpl.getEObject

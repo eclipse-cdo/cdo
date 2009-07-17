@@ -832,6 +832,11 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   {
     return new CDODataOutputImpl(extendedDataOutputStream)
     {
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return packageRegistry;
+      }
+
       public CDOIDProvider getIDProvider()
       {
         return idProvider;

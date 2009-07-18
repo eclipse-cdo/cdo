@@ -343,8 +343,8 @@ public class HibernateStore extends Store implements IHibernateStore
         TRACER.trace("Adding resource.hbm.xml to configuration");
       }
 
-      // in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
-      // hibernateConfiguration.addInputStream(in);
+      in = OM.BUNDLE.getInputStream("mappings/resource.hbm.xml");
+      hibernateConfiguration.addInputStream(in);
       hibernateConfiguration.setInterceptor(new CDOInterceptor());
       hibernateConfiguration.setProperties(HibernateUtil.getInstance().getPropertiesFromStore(this));
 

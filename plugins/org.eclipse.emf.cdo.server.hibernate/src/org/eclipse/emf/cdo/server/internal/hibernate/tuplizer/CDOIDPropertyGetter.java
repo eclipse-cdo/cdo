@@ -44,7 +44,11 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
       if (!isVirtualProperty())
       {
         final Object value = super.get(target);
-        setCDOID(revision, value);
+        // todo: value can be null for generated values?
+        if (value != null)
+        {
+          setCDOID(revision, value);
+        }
         return value;
       }
 

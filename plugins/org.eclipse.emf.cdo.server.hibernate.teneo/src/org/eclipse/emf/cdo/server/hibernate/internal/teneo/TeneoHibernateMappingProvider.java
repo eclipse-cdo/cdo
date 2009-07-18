@@ -94,7 +94,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     final List<EPackage> epacks = getHibernateStore().getPackageHandler().getEPackages();
     // remove the ecore and resource package
     epacks.remove(EcorePackage.eINSTANCE);
-    // epacks.remove(EresourcePackage.eINSTANCE);
+    epacks.remove(EresourcePackage.eINSTANCE);
 
     addUniqueConstraintAnnotation();
 

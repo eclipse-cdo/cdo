@@ -11,13 +11,16 @@
 package org.eclipse.emf.cdo.session.remote;
 
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent.CustomData;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent.MessageReceived;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * Provides collaborative access to the {@link #getRemoteSessions() remote sessions} that are connected to the same
@@ -34,7 +37,7 @@ import org.eclipse.net4j.util.event.IListener;
  * sessions.
  * <li> {@link CDORemoteSessionEvent.SubscriptionChanged} to reflect the ability of the remote session to receive and
  * possibly handle remote messages from other sessions.
- * <li> {@link CDORemoteSessionEvent.CustomData} to deliver custom data
+ * <li> {@link CDORemoteSessionEvent.MessageReceived} to deliver custom data
  * {@link CDORemoteSession#sendCustomData(String, byte[]) sent} from other sessions .
  * </ul>
  * 
@@ -58,8 +61,8 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
 
   /**
    * Returns <code>true</code> if this CDORemoteSessionManager is subscribed to changes in the set of remote sessions
-   * and delivers {@link CustomData custom data events}, <code>false</code> otherwise. It is subscribed if at least one
-   * is true:
+   * and delivers {@link MessageReceived custom data events}, <code>false</code> otherwise. It is subscribed if at least
+   * one is true:
    * <ol>
    * <li>At least one {@link IListener listener} is registered with this remote session manager.
    * <li>{@link #isForceSubscription() Force subscription} is <code>true</code>.
@@ -72,8 +75,8 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
 
   /**
    * Returns <code>true</code> if this CDORemoteSessionManager shall be subscribed to changes in the set of remote
-   * sessions and delivers {@link CustomData custom data events} even if no {@link IListener listener} is registered,
-   * <code>false</code> otherwise.
+   * sessions and delivers {@link MessageReceived custom data events} even if no {@link IListener listener} is
+   * registered, <code>false</code> otherwise.
    * 
    * @see #addListener(IListener)
    * @see #setForceSubscription(boolean)
@@ -88,6 +91,24 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
    * @see #setForceSubscription(boolean)
    */
   public void setForceSubscription(boolean forceSubscription);
+
+  /**
+   * Sends a multicast message to the subscribed recipients.
+   * 
+   * @return The set of {@link CDORemoteSession recipients} that the message has been forwarded to by the server.
+   *         <b>Note:</b> No assumption must be made on whether a recipient session received the message and was able to
+   *         handle it adequately!
+   * @since 3.0
+   */
+  public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, CDORemoteSession... recipients);
+
+  /**
+   * Same as {@link #sendMessage(CDORemoteSessionMessage, CDORemoteSession...)} but with a recipients {@link Collection
+   * collection}.
+   * 
+   * @since 3.0
+   */
+  public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Collection<CDORemoteSession> recipients);
 
   /**
    * An {@link IEvent event} that is fired by a {@link #getSource() remote session manager} after the
@@ -164,7 +185,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
      * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a remote session
      * {@link CDORemoteSession#sendCustomData(String, byte[]) sent} custom data to the local session.
      */
-    protected void onCustomData(CDORemoteSession remoteSession, String type, byte[] data)
+    protected void onMessageReceived(CDORemoteSession remoteSession, CDORemoteSessionMessage message)
     {
     }
 
@@ -188,10 +209,10 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
           onUnsubscribed(e.getRemoteSession());
         }
       }
-      else if (event instanceof CDORemoteSessionEvent.CustomData)
+      else if (event instanceof CDORemoteSessionEvent.MessageReceived)
       {
-        CDORemoteSessionEvent.CustomData e = (CDORemoteSessionEvent.CustomData)event;
-        onCustomData(e.getRemoteSession(), e.getType(), e.getData());
+        CDORemoteSessionEvent.MessageReceived e = (CDORemoteSessionEvent.MessageReceived)event;
+        onMessageReceived(e.getRemoteSession(), e.getMessage());
       }
       else
       {

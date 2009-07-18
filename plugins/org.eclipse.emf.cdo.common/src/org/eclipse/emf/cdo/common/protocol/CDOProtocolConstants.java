@@ -82,12 +82,12 @@ public interface CDOProtocolConstants
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_CUSTOM_DATA = 29;
+  public static final short SIGNAL_REMOTE_MESSAGE = 29;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_CUSTOM_DATA_NOTIFICATION = 30;
+  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 30;
 
   public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 31;
 

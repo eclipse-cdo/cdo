@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
@@ -1435,14 +1436,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public boolean sendCustomData(CDORemoteSession receiver, String type, byte[] data)
+    public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.sendCustomData(receiver, type, data);
+          return delegate.sendRemoteMessage(message, recipients);
         }
         catch (Exception ex)
         {

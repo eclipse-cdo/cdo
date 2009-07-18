@@ -13,7 +13,9 @@ package org.eclipse.emf.internal.cdo.session.remote;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 
+import org.eclipse.net4j.util.collection.ArrayIterator;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
@@ -24,10 +26,15 @@ import org.eclipse.emf.spi.cdo.InternalCDORemoteSession;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -120,6 +127,46 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     fireEvents(events);
   }
 
+  public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, CDORemoteSession... recipients)
+  {
+    return sendMessage(message, new ArrayIterator<CDORemoteSession>(recipients));
+  }
+
+  public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Collection<CDORemoteSession> recipients)
+  {
+    return sendMessage(message, recipients.iterator());
+  }
+
+  private Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Iterator<CDORemoteSession> recipients)
+  {
+    List<CDORemoteSession> subscribed = new ArrayList<CDORemoteSession>();
+    while (recipients.hasNext())
+    {
+      CDORemoteSession recipient = recipients.next();
+      if (recipient.isSubscribed())
+      {
+        subscribed.add(recipient);
+      }
+    }
+
+    if (subscribed.isEmpty())
+    {
+      return Collections.emptySet();
+    }
+
+    Set<Integer> sessionIDs = localSession.getSessionProtocol().sendRemoteMessage(message, subscribed);
+    Set<CDORemoteSession> result = new HashSet<CDORemoteSession>();
+    for (CDORemoteSession recipient : subscribed)
+    {
+      if (sessionIDs.contains(recipient.getSessionID()))
+      {
+        result.add(recipient);
+      }
+    }
+
+    return result;
+  }
+
   public InternalCDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed)
   {
     InternalCDORemoteSession remoteSession = new CDORemoteSessionImpl(this, sessionID, userID);
@@ -188,7 +235,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
-  public void handleRemoteSessionCustomData(int sessionID, final String type, final byte[] data)
+  public void handleRemoteSessionMessage(int sessionID, final CDORemoteSessionMessage message)
   {
     IEvent event = null;
     synchronized (this)
@@ -197,7 +244,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       final InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
       if (remoteSession != null)
       {
-        event = new CDORemoteSessionEvent.CustomData()
+        event = new CDORemoteSessionEvent.MessageReceived()
         {
           public CDORemoteSessionManager getSource()
           {
@@ -209,14 +256,9 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
             return remoteSession;
           }
 
-          public String getType()
+          public CDORemoteSessionMessage getMessage()
           {
-            return type;
-          }
-
-          public byte[] getData()
-          {
-            return data;
+            return message;
           }
         };
       }

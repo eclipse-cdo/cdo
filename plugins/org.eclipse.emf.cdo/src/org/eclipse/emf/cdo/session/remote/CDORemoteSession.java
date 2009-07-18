@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.session.remote;
 
 import org.eclipse.emf.cdo.common.util.CDOException;
-import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent.CustomData;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent.MessageReceived;
 
 /**
  * Represents a remote session that is connected to the same repository as the
@@ -40,24 +40,20 @@ public interface CDORemoteSession extends Comparable<CDORemoteSession>
 
   /**
    * Returns <code>true</code> if this remote session is subscribed to changes in the set of remote sessions and
-   * delivers {@link CustomData custom data events}, <code>false</code> otherwise.
+   * delivers {@link MessageReceived custom data events}, <code>false</code> otherwise.
    */
   public boolean isSubscribed();
 
   /**
-   * Sends a type string and a byte array of custom data to this remote session if both the local and the remote session
-   * are subscribed.
+   * Sends a unicast message to this remote session if it is subscribed.
    * 
    * @return <code>true</code> if the server received the custom data message, <code>false</code> otherwise.
    *         <b>Note:</b> No assumption must be made on whether the recipient session received the message and was able
    *         to handle it adequately!
    * @throws CDOException
    *           if this remote session is not subscribed.
-   * @throws CDOException
-   *           if the local session is not subscribed.
    * @see #isSubscribed()
-   * @see CDORemoteSessionManager#isSubscribed()
    * @since 3.0
    */
-  public boolean sendCustomData(String type, byte[] data);
+  public boolean sendMessage(CDORemoteSessionMessage message);
 }

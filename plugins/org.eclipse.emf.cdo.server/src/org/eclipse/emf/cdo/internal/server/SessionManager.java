@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.SessionCreationException;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -35,6 +36,7 @@ import org.eclipse.net4j.util.security.NegotiationException;
 import org.eclipse.net4j.util.security.Randomizer;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -263,12 +265,20 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  public void sendCustomData(InternalSession sender, InternalSession receiver, String type, byte[] data)
+  public List<Integer> sendMessage(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
   {
-    if (receiver != null && receiver.isSubscribed())
+    List<Integer> result = new ArrayList<Integer>();
+    for (int i = 0; i < recipients.length; i++)
     {
-      receiver.getProtocol().sendCustomDataNotification(sender, type, data);
+      InternalSession recipient = getSession(recipients[i]);
+      if (recipient != null && recipient.isSubscribed())
+      {
+        recipient.getProtocol().sendRemoteMessageNotification(sender, message);
+        result.add(recipient.getSessionID());
+      }
     }
+
+    return result;
   }
 
   protected String authenticateUser(ISessionProtocol protocol) throws SecurityException

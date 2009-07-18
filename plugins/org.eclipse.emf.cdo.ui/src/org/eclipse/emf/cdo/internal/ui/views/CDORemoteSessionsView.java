@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.views;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.event.IListener;
@@ -73,9 +74,9 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
     }
 
     @Override
-    protected void onCustomData(final CDORemoteSession remoteSession, String type, final byte[] data)
+    protected void onMessageReceived(final CDORemoteSession remoteSession, final CDORemoteSessionMessage message)
     {
-      if (TYPE_TEXT_MESSAGE.equals(type))
+      if (TYPE_TEXT_MESSAGE.equals(message.getType()))
       {
         try
         {
@@ -85,7 +86,8 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
             {
               try
               {
-                MessageDialog.openInformation(getShell(), "Message from " + remoteSession, new String(data));
+                MessageDialog.openInformation(getShell(), "Message from " + remoteSession,
+                    new String(message.getData()));
               }
               catch (RuntimeException ignore)
               {
@@ -153,7 +155,7 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
         if (dlg.open() == InputDialog.OK)
         {
           String message = dlg.getValue();
-          remoteSession.sendCustomData(TYPE_TEXT_MESSAGE, message.getBytes());
+          remoteSession.sendMessage(new CDORemoteSessionMessage(TYPE_TEXT_MESSAGE, message.getBytes()));
         }
 
         return;

@@ -11,10 +11,10 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -214,10 +214,10 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof CDORemoteSessionEvent.CustomData)
+        if (event instanceof CDORemoteSessionEvent.MessageReceived)
         {
-          CDORemoteSessionEvent.CustomData e = (CDORemoteSessionEvent.CustomData)event;
-          result1.setValue(e.getData());
+          CDORemoteSessionEvent.MessageReceived e = (CDORemoteSessionEvent.MessageReceived)event;
+          result1.setValue(e.getMessage().getData());
         }
       }
     });
@@ -227,7 +227,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
     byte[] data = "This is a custom data test".getBytes();
     CDORemoteSession remoteSession = session2.getRemoteSessionManager().getRemoteSessions()[0];
-    remoteSession.sendCustomData("type", data);
+    remoteSession.sendMessage(new CDORemoteSessionMessage("type", data));
 
     assertEquals(true, Arrays.equals(data, result1.getValue()));
     session2.close();
@@ -243,10 +243,10 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     {
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof CDORemoteSessionEvent.CustomData)
+        if (event instanceof CDORemoteSessionEvent.MessageReceived)
         {
-          CDORemoteSessionEvent.CustomData e = (CDORemoteSessionEvent.CustomData)event;
-          result1.setValue(e.getData());
+          CDORemoteSessionEvent.MessageReceived e = (CDORemoteSessionEvent.MessageReceived)event;
+          result1.setValue(e.getMessage().getData());
         }
       }
     });
@@ -256,14 +256,8 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
     byte[] data = "This is a custom data test".getBytes();
     CDORemoteSession remoteSession = session2.getRemoteSessionManager().getRemoteSessions()[0];
 
-    try
-    {
-      remoteSession.sendCustomData("type", data);
-      fail("CDOException expected");
-    }
-    catch (CDOException expected)
-    {
-    }
+    boolean sent = remoteSession.sendMessage(new CDORemoteSessionMessage("type", data));
+    assertEquals(true, sent);
 
     session2.close();
     session1.close();
@@ -272,21 +266,14 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
   public void testCustomDataRemotelyUnsubscribed() throws Exception
   {
     CDOSession session1 = openSession();
-
     CDOSession session2 = openSession();
     session2.getRemoteSessionManager().setForceSubscription(true);
 
     byte[] data = "This is a custom data test".getBytes();
     CDORemoteSession remoteSession = session2.getRemoteSessionManager().getRemoteSessions()[0];
 
-    try
-    {
-      remoteSession.sendCustomData("type", data);
-      fail("CDOException expected");
-    }
-    catch (CDOException expected)
-    {
-    }
+    boolean sent = remoteSession.sendMessage(new CDORemoteSessionMessage("type", data));
+    assertEquals(false, sent);
 
     session2.close();
     session1.close();

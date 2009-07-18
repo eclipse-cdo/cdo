@@ -15,10 +15,10 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -26,22 +26,20 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class CustomDataNotificationRequest extends CDOServerRequest
+public class RemoteMessageNotificationRequest extends CDOServerRequest
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CustomDataNotificationRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
+      RemoteMessageNotificationRequest.class);
 
   private int senderID;
 
-  private String type;
+  private CDORemoteSessionMessage message;
 
-  private byte[] data;
-
-  public CustomDataNotificationRequest(IChannel channel, InternalSession sender, String type, byte[] data)
+  public RemoteMessageNotificationRequest(IChannel channel, InternalSession sender, CDORemoteSessionMessage message)
   {
-    super(channel, CDOProtocolConstants.SIGNAL_CUSTOM_DATA_NOTIFICATION);
+    super(channel, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION);
     senderID = sender.getSessionID();
-    this.type = type;
-    this.data = data;
+    this.message = message;
   }
 
   @Override
@@ -55,15 +53,9 @@ public class CustomDataNotificationRequest extends CDOServerRequest
     out.writeInt(senderID);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Writing type: " + type); //$NON-NLS-1$
+      TRACER.trace("Writing message: " + message); //$NON-NLS-1$
     }
 
-    out.writeString(type);
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Writing data: " + HexUtil.bytesToHex(data)); //$NON-NLS-1$
-    }
-
-    out.writeByteArray(data);
+    message.write(out);
   }
 }

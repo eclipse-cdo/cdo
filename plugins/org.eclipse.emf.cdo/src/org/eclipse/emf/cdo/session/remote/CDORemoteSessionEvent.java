@@ -35,14 +35,10 @@ public interface CDORemoteSessionEvent extends IEvent
 
   /**
    * @author Eike Stepper
+   * @since 3.0
    */
-  public interface CustomData extends CDORemoteSessionEvent
+  public interface MessageReceived extends CDORemoteSessionEvent
   {
-    /**
-     * @since 3.0
-     */
-    public String getType();
-
-    public byte[] getData();
+    public CDORemoteSessionMessage getMessage();
   }
 }

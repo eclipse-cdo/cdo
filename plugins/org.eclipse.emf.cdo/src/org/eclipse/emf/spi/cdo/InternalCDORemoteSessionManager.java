@@ -11,6 +11,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -44,5 +45,5 @@ public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
   /**
    * @since 3.0
    */
-  public void handleRemoteSessionCustomData(int sessionID, String type, byte[] data);
+  public void handleRemoteSessionMessage(int sessionID, CDORemoteSessionMessage message);
 }

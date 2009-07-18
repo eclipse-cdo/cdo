@@ -31,14 +31,11 @@ public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSes
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, GetRemoteSessionsRequest.class);
 
-  private InternalCDORemoteSessionManager manager;
-
   private boolean subscribe;
 
-  public GetRemoteSessionsRequest(CDOClientProtocol protocol, InternalCDORemoteSessionManager manager, boolean subscribe)
+  public GetRemoteSessionsRequest(CDOClientProtocol protocol, boolean subscribe)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_GET_REMOTE_SESSIONS);
-    this.manager = manager;
     this.subscribe = subscribe;
   }
 
@@ -68,6 +65,7 @@ public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSes
 
       String userID = in.readString();
       boolean subscribed = in.readBoolean();
+      InternalCDORemoteSessionManager manager = getSession().getRemoteSessionManager();
       CDORemoteSession remoteSession = manager.createRemoteSession(sessionID, userID, subscribed);
       result.add(remoteSession);
     }

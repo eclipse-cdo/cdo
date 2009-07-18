@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.SessionCreationException;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 
 import org.eclipse.net4j.util.security.IUserManager;
 
@@ -49,5 +50,5 @@ public interface InternalSessionManager extends ISessionManager
 
   public void handleRemoteSessionNotification(byte opcode, InternalSession excludedSession);
 
-  public void sendCustomData(InternalSession sender, InternalSession receiver, String type, byte[] data);
+  public List<Integer> sendMessage(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
 }

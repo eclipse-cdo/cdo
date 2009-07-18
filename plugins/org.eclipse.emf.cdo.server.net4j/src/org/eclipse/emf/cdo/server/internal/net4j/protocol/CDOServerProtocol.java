@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
@@ -129,14 +130,15 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
-  public void sendCustomDataNotification(InternalSession sender, String type, byte[] data)
+  public boolean sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message)
   {
     try
     {
       IChannel channel = getChannel();
       if (LifecycleUtil.isActive(channel))
       {
-        new CustomDataNotificationRequest(channel, sender, type, data).sendAsync();
+        new RemoteMessageNotificationRequest(channel, sender, message).sendAsync();
+        return true;
       }
       else
       {
@@ -147,6 +149,8 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     {
       OM.LOG.error(ex);
     }
+
+    return false;
   }
 
   @Override
@@ -232,8 +236,8 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS:
       return new UnsubscribeRemoteSessionsIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_CUSTOM_DATA:
-      return new CustomDataIndication(this);
+    case CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE:
+      return new RemoteMessageIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

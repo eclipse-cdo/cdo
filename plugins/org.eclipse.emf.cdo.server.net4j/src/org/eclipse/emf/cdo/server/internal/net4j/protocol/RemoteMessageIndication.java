@@ -14,54 +14,60 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class CustomDataIndication extends CDOReadIndication
+public class RemoteMessageIndication extends CDOReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CustomDataIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RemoteMessageIndication.class);
 
-  public CustomDataIndication(CDOServerProtocol protocol)
+  private List<Integer> result;
+
+  public RemoteMessageIndication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_CUSTOM_DATA);
+    super(protocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE);
   }
 
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int receiverID = in.readInt();
+    CDORemoteSessionMessage message = new CDORemoteSessionMessage(in);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Read receiverID: " + receiverID); //$NON-NLS-1$
+      TRACER.trace("Read message: " + message); //$NON-NLS-1$
     }
 
-    String type = in.readString();
+    int count = in.readInt();
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Read type: " + type); //$NON-NLS-1$
+      TRACER.format("Reading {0} recipients", count); //$NON-NLS-1$
     }
 
-    byte[] data = in.readByteArray();
-    if (TRACER.isEnabled())
+    int[] recipients = new int[count];
+    for (int i = 0; i < recipients.length; i++)
     {
-      TRACER.trace("Read data: " + data); //$NON-NLS-1$
+      recipients[i] = in.readInt();
     }
 
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    InternalSession receiver = sessionManager.getSession(receiverID);
-    sessionManager.sendCustomData(getSession(), receiver, type, data);
+    result = sessionManager.sendMessage(getSession(), message, recipients);
   }
 
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeBoolean(true);
+    out.writeInt(result.size());
+    for (Integer recipient : result)
+    {
+      out.writeInt(recipient);
+    }
   }
 }

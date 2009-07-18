@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -38,6 +38,11 @@ public final class HexUtil
    */
   public static final String bytesToHex(byte[] bs, int off, int length)
   {
+    if (bs == null)
+    {
+      return null;
+    }
+
     if (bs.length <= off || bs.length < off + length)
     {
       throw new IllegalArgumentException();
@@ -77,6 +82,11 @@ public final class HexUtil
 
   public static final String bytesToHex(byte[] bs)
   {
+    if (bs == null)
+    {
+      return null;
+    }
+
     return bytesToHex(bs, 0, bs.length);
   }
 

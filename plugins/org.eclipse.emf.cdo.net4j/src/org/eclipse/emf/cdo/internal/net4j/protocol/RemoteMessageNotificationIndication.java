@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -24,14 +25,14 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class CustomDataNotificationIndication extends CDOClientIndication
+public class RemoteMessageNotificationIndication extends CDOClientIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      CustomDataNotificationIndication.class);
+      RemoteMessageNotificationIndication.class);
 
-  public CustomDataNotificationIndication(CDOClientProtocol protocol)
+  public RemoteMessageNotificationIndication(CDOClientProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_CUSTOM_DATA_NOTIFICATION);
+    super(protocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION);
   }
 
   @Override
@@ -43,19 +44,13 @@ public class CustomDataNotificationIndication extends CDOClientIndication
       TRACER.trace("Read senderID: " + senderID); //$NON-NLS-1$
     }
 
-    String type = in.readString();
+    CDORemoteSessionMessage message = new CDORemoteSessionMessage(in);
     if (TRACER.isEnabled())
     {
-      TRACER.trace("Read type: " + type); //$NON-NLS-1$
-    }
-
-    byte[] data = in.readByteArray();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Read data: " + data); //$NON-NLS-1$
+      TRACER.trace("Read message: " + message); //$NON-NLS-1$
     }
 
     InternalCDORemoteSessionManager remoteSessionManager = getSession().getRemoteSessionManager();
-    remoteSessionManager.handleRemoteSessionCustomData(senderID, type, data);
+    remoteSessionManager.handleRemoteSessionMessage(senderID, message);
   }
 }

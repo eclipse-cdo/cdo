@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTimeStampContext;
@@ -50,6 +51,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -255,12 +257,12 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
   {
-    return send(new GetRemoteSessionsRequest(this, manager, subscribe));
+    return send(new GetRemoteSessionsRequest(this, subscribe));
   }
 
-  public boolean sendCustomData(CDORemoteSession receiver, String type, byte[] data)
+  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
   {
-    return send(new CustomDataRequest(this, receiver, type, data));
+    return send(new RemoteMessageRequest(this, message, recipients));
   }
 
   public boolean unsubscribeRemoteSessions()
@@ -282,8 +284,8 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     case CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION:
       return new RemoteSessionNotificationIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_CUSTOM_DATA_NOTIFICATION:
-      return new CustomDataNotificationIndication(this);
+    case CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION:
+      return new RemoteMessageNotificationIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

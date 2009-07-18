@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 
 import java.util.List;
 
@@ -33,5 +34,5 @@ public interface ISessionProtocol extends CDOProtocol
 
   public void sendRemoteSessionNotification(byte opcode, ISession session);
 
-  public void sendCustomDataNotification(InternalSession sender, String type, byte[] data);
+  public boolean sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message);
 }

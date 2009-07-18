@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 
@@ -89,7 +90,9 @@ public class HibernateQueryHandler implements IQueryHandler
             final CDOID cdoID = (CDOID)param;
             final String entityName = HibernateUtil.getInstance().getEntityName(cdoID);
             final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
-            query.setEntity(key, session.get(entityName, idValue));
+            final CDORevision revision = (CDORevision)session.get(entityName, idValue);
+            query.setEntity(key, revision);
+            hibernateStoreAccessor.addToRevisionCache(revision);
           }
           else
           {
@@ -115,6 +118,7 @@ public class HibernateQueryHandler implements IQueryHandler
       for (Object o : query.list())
       {
         final boolean addOneMore = context.addResult(o);
+        hibernateStoreAccessor.addToRevisionCache(o);
         if (!addOneMore)
         {
           return;

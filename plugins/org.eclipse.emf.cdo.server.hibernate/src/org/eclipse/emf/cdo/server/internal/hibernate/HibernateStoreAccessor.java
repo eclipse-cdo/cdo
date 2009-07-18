@@ -70,6 +70,25 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   private boolean errorOccured = false;
 
+  public void addToRevisionCache(Object object)
+  {
+    if (object instanceof CDORevision)
+    {
+      getStore().getRepository().getRevisionManager().getCache().addRevision((CDORevision)object);
+    }
+    else if (object instanceof Object[])
+    {
+      // handle hibernate query result
+      final Object[] objects = (Object[])object;
+      for (Object o : objects)
+      {
+        addToRevisionCache(o);
+      }
+    }
+    // also primitive types can get here, ignore those
+
+  }
+
   /**
    * Constructor
    * 

@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -65,7 +67,9 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
   public void sendCommitNotification(long timeStamp, CDOPackageUnit[] packageUnits, List<CDOIDAndVersion> dirtyIDs,
       List<CDOID> detachedObjects, List<CDORevisionDelta> newDeltas)
   {
-    throw new UnsupportedOperationException();
+    EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
+    clientSession.handleCommitNotification(timeStamp, Arrays.asList(packageUnits), new HashSet<CDOIDAndVersion>(
+        dirtyIDs), detachedObjects, newDeltas, null);
   }
 
   public void sendRemoteSessionNotification(byte opcode, ISession session)

@@ -79,6 +79,31 @@ public class ComplexTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+    String path1 = "/resources/folder1/" + uniqueCounter;
+    String path2 = "/resources/folder2/" + uniqueCounter;
+    ++uniqueCounter;
+
+    init(path1, path2);
+    commit();
+  }
+
+  private void purgeCaches()
+  {
+    // according to Eike's comment at Bug 249681, client caches are
+    // ignored, if a new session is opened.
+    // server caches are wiped by the clearCache call.
+    String path1 = resource1.getPath();
+    String path2 = resource2.getPath();
+
+    transaction.close();
+    session.close();
+
+    clearCache(getRepository().getRevisionManager());
+    init(path1, path2);
+  }
+
+  private void init(String path1, String path2)
+  {
     factory = getModel4Factory();
 
     session = openSession();
@@ -87,43 +112,13 @@ public class ComplexTest extends AbstractCDOTest
 
     transaction = session.openTransaction();
 
-    String path1 = "/resources/folder1/" + uniqueCounter;
-    String path2 = "/resources/folder2/" + uniqueCounter;
-    ++uniqueCounter;
-
-    resource1 = transaction.createResource(path1);
-    resource2 = transaction.createResource(path2);
-
-    commit();
+    resource1 = transaction.getOrCreateResource(path1);
+    resource2 = transaction.getOrCreateResource(path2);
   }
 
   private void commit()
   {
     transaction.commit();
-  }
-
-  private void purgeCaches()
-  {
-    // according to Eike's comment at Bug 249681, client caches are
-    // ignored, if a new session is opened.
-    // server caches are wiped by the clearCache call.
-
-    String path1 = resource1.getPath();
-    String path2 = resource2.getPath();
-
-    transaction.close();
-    session.close();
-
-    clearCache(getRepository().getRevisionManager());
-
-    session = openSession();
-    session.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
-    session.getPackageRegistry().putEPackage(getModel4Package());
-
-    transaction = session.openTransaction();
-
-    resource1 = transaction.getResource(path1);
-    resource2 = transaction.getResource(path2);
   }
 
   public void testPlainSingleNonContainedBidirectional()

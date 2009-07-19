@@ -36,6 +36,7 @@ public class AutoAttacherTest extends AbstractCDOTest
     new CDOAutoAttacher(transaction);
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
     Product1 product = getModel1Factory().createProduct1();
+    product.setName("product");
 
     {
       assertTransient(product);

@@ -69,11 +69,13 @@ public class RollbackTest extends AbstractCDOTest
     Category category2 = company2.getCategories().get(0);
     category2.setName("client2");
     Product1 product2 = getModel1Factory().createProduct1();
+    product2.setName("product2");
     category2.getProducts().add(product2);
 
     // Client1
     category1.setName("client1");
     Product1 product1 = getModel1Factory().createProduct1();
+    product1.setName("product1");
     category1.getProducts().add(product1);
 
     msg("Checking state of category");

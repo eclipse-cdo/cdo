@@ -48,7 +48,7 @@ public interface Product1 extends EObject
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getProduct1_Name()
-   * @model
+   * @model annotation="teneo.jpa value='@Id'"
    * @generated
    */
   String getName();

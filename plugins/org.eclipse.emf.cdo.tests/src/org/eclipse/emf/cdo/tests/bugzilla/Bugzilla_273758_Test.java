@@ -44,6 +44,7 @@ public class Bugzilla_273758_Test extends AbstractCDOTest
       // Product1 will reference both OrderDetails
 
       Product1 product = getModel1Factory().createProduct1();
+      product.setName("product");
       OrderDetail detail1 = getModel1Factory().createOrderDetail();
       detail1.setPrice(1.99f);
       OrderDetail detail2 = getModel1Factory().createOrderDetail();

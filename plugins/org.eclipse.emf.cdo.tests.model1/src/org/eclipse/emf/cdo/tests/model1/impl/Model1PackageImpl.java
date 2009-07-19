@@ -823,6 +823,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   {
     String source = "teneo.jpa";
     addAnnotation(orderEClass, source, new String[] { "value", "@Entity(name=\"BaseOrder\")" });
+    addAnnotation(getProduct1_Name(), source, new String[] { "value", "@Id" });
     addAnnotation(orderAddressEClass, source, new String[] { "value",
         "@AssociationOverride(name=\"orderDetails\", joinColumns=@JoinColumn(name=\"orderdetails_orderaddressid\"))" });
   }

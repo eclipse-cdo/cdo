@@ -40,6 +40,8 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
     Order order1 = getModel1Factory().createOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     Product1 product = getModel1Factory().createProduct1();
+    product.setName("product");
+
     EList<EObject> contentList = resource.getContents();
     resource.getContents().add(order1);
     order1.getOrderDetails().add(orderDetail);

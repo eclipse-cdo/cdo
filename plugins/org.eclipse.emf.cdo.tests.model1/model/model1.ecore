@@ -62,7 +62,11 @@
         eType="#//Product1" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Product1">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@Id"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1"
         eType="#//OrderDetail" eOpposite="#//OrderDetail/product"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vat" eType="#//VAT" defaultValueLiteral="vat15"/>

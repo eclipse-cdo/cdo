@@ -85,8 +85,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         addToRevisionCache(o);
       }
     }
-    // also primitive types can get here, ignore those
 
+    // also primitive types can get here, ignore those
   }
 
   /**

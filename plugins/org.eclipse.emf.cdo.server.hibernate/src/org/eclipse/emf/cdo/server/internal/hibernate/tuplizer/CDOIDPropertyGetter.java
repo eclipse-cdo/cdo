@@ -49,6 +49,7 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
         {
           setCDOID(revision, value);
         }
+
         return value;
       }
 

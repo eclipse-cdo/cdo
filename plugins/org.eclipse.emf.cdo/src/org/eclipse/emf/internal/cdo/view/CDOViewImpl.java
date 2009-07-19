@@ -507,7 +507,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       Object value = folderRevision.data().get(nodesFeature, i);
       value = getStore().resolveProxy(folderRevision, nodesFeature, i, value);
 
-      CDORevision childRevision = getLocalRevision((CDOID)convertObjectToID(value, false));
+      CDORevision childRevision = getLocalRevision((CDOID)convertObjectToID(value));
       if (name.equals(childRevision.data().get(nameFeature, 0)))
       {
         return childRevision.getID();
@@ -978,21 +978,25 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return potentialObject;
   }
 
-  private CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
+  protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
   {
-    boolean newOrTransient = FSMUtil.isTransient(object) || FSMUtil.isNew(object);
-    if (!(onlyPersistedID && newOrTransient))
+    if (onlyPersistedID)
     {
-      CDOView view = object.cdoView();
-      if (view == this)
+      if (FSMUtil.isTransient(object) || FSMUtil.isNew(object))
       {
-        return object.cdoID();
+        return null;
       }
+    }
 
-      if (view != null && view.getSession() == getSession())
-      {
-        return object.cdoID();
-      }
+    CDOView view = object.cdoView();
+    if (view == this)
+    {
+      return object.cdoID();
+    }
+
+    if (view != null && view.getSession() == getSession())
+    {
+      return object.cdoID();
     }
 
     return null;

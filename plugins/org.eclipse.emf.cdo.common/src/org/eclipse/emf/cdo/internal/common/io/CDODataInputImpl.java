@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -257,7 +256,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     boolean notNull = readBoolean();
     if (notNull)
     {
-      CDORevisionFactory factory = ((InternalCDORevisionManager)getRevisionManager()).getFactory();
+      CDORevisionFactory factory = ((InternalCDORevisionManager)getRevisionFactory()).getFactory();
       InternalCDORevision revision = (InternalCDORevision)factory.createRevision(null);
       revision.read(this);
       return revision;
@@ -405,7 +404,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   protected abstract CDOPackageRegistry getPackageRegistry();
 
-  protected abstract CDORevisionManager getRevisionManager();
+  protected abstract CDORevisionFactory getRevisionFactory();
 
   protected abstract CDOListFactory getListFactory();
 }

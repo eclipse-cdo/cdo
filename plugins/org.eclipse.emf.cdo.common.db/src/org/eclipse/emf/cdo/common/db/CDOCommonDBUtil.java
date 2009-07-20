@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 
 import org.eclipse.net4j.db.IDBAdapter;
@@ -38,7 +38,7 @@ public final class CDOCommonDBUtil
    */
   public static CDORevisionCache createDBCache(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
       CDOIDProvider idProvider, CDOListFactory listFactory, CDOPackageRegistry packageRegistry,
-      CDORevisionManager revisionManager)
+      CDORevisionFactory revisionFactory)
   {
     DBRevisionCache cache = new DBRevisionCache();
     cache.setDBAdapter(dbAdapter);
@@ -46,7 +46,7 @@ public final class CDOCommonDBUtil
     cache.setIdProvider(idProvider);
     cache.setListFactory(listFactory);
     cache.setPackageRegistry(packageRegistry);
-    cache.setRevisionManager(revisionManager);
+    cache.setRevisionFactory(revisionFactory);
     return cache;
   }
 }

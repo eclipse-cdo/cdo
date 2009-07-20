@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
@@ -63,7 +63,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 
   private CDOPackageRegistry packageRegistry;
 
-  private CDORevisionManager revisionManager;
+  private CDORevisionFactory revisionFactory;
 
   private IDBAdapter dbAdapter;
 
@@ -103,14 +103,14 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     this.packageRegistry = packageRegistry;
   }
 
-  public CDORevisionManager getRevisionManager()
+  public CDORevisionFactory getRevisionFactory()
   {
-    return revisionManager;
+    return revisionFactory;
   }
 
-  public void setRevisionManager(CDORevisionManager revisionManager)
+  public void setRevisionFactory(CDORevisionFactory revisionFactory)
   {
-    this.revisionManager = revisionManager;
+    this.revisionFactory = revisionFactory;
   }
 
   public IDBAdapter getDBAdapter()
@@ -715,7 +715,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
     checkState(idProvider, "idProvider"); //$NON-NLS-1$
     checkState(listFactory, "listFactory");//$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
-    checkState(revisionManager, "revisionManager"); //$NON-NLS-1$
+    checkState(revisionFactory, "revisionFactory"); //$NON-NLS-1$
     checkState(dbAdapter, "dbAdapter"); //$NON-NLS-1$
     checkState(dbConnectionProvider, "dbConnectionProvider"); //$NON-NLS-1$
   }
@@ -804,9 +804,9 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
       }
 
       @Override
-      protected CDORevisionManager getRevisionManager()
+      protected CDORevisionFactory getRevisionFactory()
       {
-        return revisionManager;
+        return revisionFactory;
       }
     };
   }

@@ -33,11 +33,11 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
@@ -56,7 +56,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -256,8 +255,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     boolean notNull = readBoolean();
     if (notNull)
     {
-      CDORevisionFactory factory = ((InternalCDORevisionManager)getRevisionFactory()).getFactory();
-      InternalCDORevision revision = (InternalCDORevision)factory.createRevision(null);
+      InternalCDORevision revision = (InternalCDORevision)getRevisionFactory().createRevision(null);
       revision.read(this);
       return revision;
     }

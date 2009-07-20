@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
@@ -72,9 +72,9 @@ public abstract class CDOClientIndication extends Indication
       }
 
       @Override
-      protected CDORevisionManager getRevisionManager()
+      protected CDORevisionFactory getRevisionFactory()
       {
-        return getSession().getRevisionManager();
+        return getSession().getRevisionManager().getFactory();
       }
     });
   }

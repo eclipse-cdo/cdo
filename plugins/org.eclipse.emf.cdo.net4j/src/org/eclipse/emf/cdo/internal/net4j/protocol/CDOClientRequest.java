@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.io.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 
@@ -99,9 +99,9 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       }
 
       @Override
-      protected CDORevisionManager getRevisionManager()
+      protected CDORevisionFactory getRevisionFactory()
       {
-        return getSession().getRevisionManager();
+        return getSession().getRevisionManager().getFactory();
       }
     });
   }

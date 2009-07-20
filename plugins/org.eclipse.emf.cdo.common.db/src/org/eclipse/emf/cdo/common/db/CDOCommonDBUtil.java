@@ -47,7 +47,6 @@ public final class CDOCommonDBUtil
     cache.setListFactory(listFactory);
     cache.setPackageRegistry(packageRegistry);
     cache.setRevisionManager(revisionManager);
-
     return cache;
   }
 }

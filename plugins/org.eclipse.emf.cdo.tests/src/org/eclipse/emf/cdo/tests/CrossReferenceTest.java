@@ -4,12 +4,15 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -18,8 +21,13 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.transaction.TransactionException;
+
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 
 /**
  * @author Eike Stepper
@@ -257,5 +265,125 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     SalesOrder salesOrder2B = customerB.getSalesOrders().get(1);
     assertClean(salesOrder2B, viewB);
+  }
+
+  public void testDetachXRef() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+
+    Company company = getModel1Factory().createCompany();
+    company.getCustomers().add(customer);
+    company.getSalesOrders().add(salesOrder);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/company/resource");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    company.getCustomers().remove(customer);
+
+    try
+    {
+      transaction.commit();
+      fail("TransactionException expected");
+    }
+    catch (TransactionException expected)
+    {
+    }
+  }
+
+  public void testDetachXRefReattach() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+
+    Company company = getModel1Factory().createCompany();
+    company.getCustomers().add(customer);
+    company.getSalesOrders().add(salesOrder);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/company/resource");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    company.getCustomers().remove(customer);
+    company.getCustomers().add(customer);
+
+    transaction.commit();
+  }
+
+  public void testDetachXRefExternal() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+
+    Company company = getModel1Factory().createCompany();
+    company.getCustomers().add(customer);
+    company.getSalesOrders().add(salesOrder);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/company/resource");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    Resource externalResource = new ResourceImpl(URI.createFileURI("/x/y/z"));
+    transaction.getResourceSet().getResources().add(externalResource);
+    externalResource.getContents().add(customer);
+
+    transaction.commit();
+    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
+    assertTrue(id.isExternal());
+  }
+
+  public void _testDetachXRefExternalReattach() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+
+    Company company = getModel1Factory().createCompany();
+    company.getCustomers().add(customer);
+    company.getSalesOrders().add(salesOrder);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/company/resource");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    Resource externalResource = new ResourceImpl(URI.createFileURI("/x/y/z"));
+    transaction.getResourceSet().getResources().add(externalResource);
+    externalResource.getContents().add(customer);
+
+    transaction.commit();
+    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
+    assertTrue(id.isExternal());
+
+    company.getCustomers().add(customer);
+    transaction.commit();
+    data = ((CDOObject)salesOrder).cdoRevision().data();
+    id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
+    assertFalse(id.isExternal());
   }
 }

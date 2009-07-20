@@ -7,7 +7,8 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings 
+ *    Stefan Winkler - Bug 283998: [DB] Chunk reading for multiple chunks fails
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -402,9 +403,12 @@ public abstract class AbstractListTableMapping implements IListMapping
       int chunkIndex = 0;
       int indexInChunk = 0;
 
+      int resultCounter = 0;
+
       while (resultSet.next())
       {
         Object value = typeMapping.readValue(resultSet, 1);
+        resultCounter++;
 
         if (chunk == null)
         {
@@ -434,6 +438,17 @@ public abstract class AbstractListTableMapping implements IListMapping
           chunk = null;
           indexInChunk = 0;
         }
+      }
+
+      // check if result set and chunks matched
+      for (Chunk ch : chunks)
+      {
+        resultCounter -= ch.size();
+      }
+
+      if (resultCounter != 0)
+      {
+        throw new IllegalStateException("ResultSet contained " + -resultCounter + " entries less than expected.");
       }
 
       if (TRACER.isEnabled())

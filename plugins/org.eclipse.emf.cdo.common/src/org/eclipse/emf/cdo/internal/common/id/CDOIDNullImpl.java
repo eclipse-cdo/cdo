@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - http://bugs.eclipse.org/226778    
- *                   
+ *    Simon McDuff - http://bugs.eclipse.org/226778
+ *
  */
 package org.eclipse.emf.cdo.internal.common.id;
 
@@ -39,6 +39,36 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDMeta, CDO
   public Type getType()
   {
     return Type.NULL;
+  }
+
+  public boolean isDangling()
+  {
+    return false;
+  }
+
+  public boolean isExternal()
+  {
+    return false;
+  }
+
+  public boolean isMeta()
+  {
+    return false;
+  }
+
+  public boolean isNull()
+  {
+    return true;
+  }
+
+  public boolean isObject()
+  {
+    return false;
+  }
+
+  public boolean isTemporary()
+  {
+    return false;
   }
 
   public int getIntValue()

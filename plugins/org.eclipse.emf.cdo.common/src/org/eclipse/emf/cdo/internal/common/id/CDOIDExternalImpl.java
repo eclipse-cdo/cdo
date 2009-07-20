@@ -35,14 +35,44 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     this.uri = uri;
   }
 
-  public String getURI()
-  {
-    return uri;
-  }
-
   public Type getType()
   {
     return Type.EXTERNAL_OBJECT;
+  }
+
+  public boolean isDangling()
+  {
+    return false;
+  }
+
+  public boolean isExternal()
+  {
+    return true;
+  }
+
+  public boolean isMeta()
+  {
+    return false;
+  }
+
+  public boolean isNull()
+  {
+    return false;
+  }
+
+  public boolean isObject()
+  {
+    return true;
+  }
+
+  public boolean isTemporary()
+  {
+    return false;
+  }
+
+  public String getURI()
+  {
+    return uri;
   }
 
   @Override
@@ -51,16 +81,19 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
     return "oid:" + toURIFragment(); //$NON-NLS-1$
   }
 
+  @Override
   public void read(String fragmentPart)
   {
     uri = fragmentPart;
   }
 
+  @Override
   public void read(ExtendedDataInput in) throws IOException
   {
     uri = in.readString();
   }
 
+  @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeString(uri);
@@ -79,7 +112,7 @@ public class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExternal
       return true;
     }
 
-    // Could CDOIDExternalTempImpl and CDOIDExternalImpl have the same uri. We don't want to mixed them.
+    // Could CDOIDTempObjectExternalImpl and CDOIDExternalImpl have the same uri. We don't want to mixed them.
     if (obj != null && obj.getClass() == getClass())
     {
       CDOIDExternal that = (CDOIDExternal)obj;

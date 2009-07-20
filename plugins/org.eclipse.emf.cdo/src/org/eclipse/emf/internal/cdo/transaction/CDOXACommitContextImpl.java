@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
@@ -54,9 +54,9 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
 
   private InternalCDOCommitContext delegateCommitContext;
 
-  private Map<CDOIDExternalTempImpl, InternalCDOTransaction> requestedIDs = new HashMap<CDOIDExternalTempImpl, InternalCDOTransaction>();
+  private Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> requestedIDs = new HashMap<CDOIDTempObjectExternalImpl, InternalCDOTransaction>();
 
-  private Map<InternalCDOObject, CDOIDExternalTempImpl> objectToID = new HashMap<InternalCDOObject, CDOIDExternalTempImpl>();
+  private Map<InternalCDOObject, CDOIDTempObjectExternalImpl> objectToID = new HashMap<InternalCDOObject, CDOIDTempObjectExternalImpl>();
 
   public CDOXACommitContextImpl(CDOXATransactionImpl manager, InternalCDOCommitContext commitContext)
   {
@@ -99,7 +99,7 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getTransaction();
   }
 
-  public Map<CDOIDExternalTempImpl, InternalCDOTransaction> getRequestedIDs()
+  public Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> getRequestedIDs()
   {
     return requestedIDs;
   }
@@ -144,11 +144,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   {
     CDOID id = getTransaction().provideCDOID(idOrObject);
 
-    if (id instanceof CDOIDExternalTempImpl)
+    if (id instanceof CDOIDTempObjectExternalImpl)
     {
       if (idOrObject instanceof InternalEObject)
       {
-        CDOIDExternalTempImpl proxyTemp = (CDOIDExternalTempImpl)id;
+        CDOIDTempObjectExternalImpl proxyTemp = (CDOIDTempObjectExternalImpl)id;
         if (!requestedIDs.containsKey(proxyTemp))
         {
           InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject((InternalEObject)idOrObject);
@@ -181,7 +181,7 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
       {
         public Object adjustReference(Object id)
         {
-          CDOIDExternalTempImpl externalID = objectToID.get(id);
+          CDOIDTempObjectExternalImpl externalID = objectToID.get(id);
           if (externalID != null)
           {
             id = externalID;

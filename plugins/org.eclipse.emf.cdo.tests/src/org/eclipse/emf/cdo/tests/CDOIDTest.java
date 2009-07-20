@@ -11,13 +11,13 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDNullImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 
@@ -63,13 +63,13 @@ public class CDOIDTest extends AbstractCDOTest
 
   public void testGetLong_ExtTempId()
   {
-    CDOIDExternalTempImpl id = new CDOIDExternalTempImpl("cdo://repo123/resource456");
+    CDOIDTempObjectExternalImpl id = new CDOIDTempObjectExternalImpl("cdo://repo123/resource456");
     assertIllegalArgument(id);
   }
 
   public void testGetLong_ExtId()
   {
-    CDOIDExternalImpl id = new CDOIDExternalImpl("cdo://repo123/resource456");
+    CDOIDExternal id = CDOIDUtil.createExternal("cdo://repo123/resource456");
     assertIllegalArgument(id);
   }
 

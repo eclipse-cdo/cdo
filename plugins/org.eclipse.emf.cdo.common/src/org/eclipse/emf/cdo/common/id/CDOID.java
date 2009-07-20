@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778
@@ -33,6 +33,11 @@ public interface CDOID extends Serializable, Comparable<CDOID>
   public boolean isTemporary();
 
   /**
+   * @since 3.0
+   */
+  public boolean isDangling();
+
+  /**
    * @since 2.0
    */
   public boolean isExternal();
@@ -54,6 +59,11 @@ public interface CDOID extends Serializable, Comparable<CDOID>
      * @since 2.0
      */
     EXTERNAL_OBJECT,
+
+    /**
+     * @since 3.0
+     */
+    DANGLING_OBJECT,
 
     /**
      * @since 2.0

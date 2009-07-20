@@ -92,6 +92,13 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public Object convertObjectToID(Object potentialObject, boolean onlyPersistedID);
 
+  // TTT /**
+  // * @param target
+  // * @since 3.0
+  // */
+  // public CDOIDDangling convertDanglingObjectToID(InternalCDOObject source, EStructuralFeature feature,
+  // InternalEObject target);
+
   public Object convertIDToObject(Object potentialID);
 
   /**

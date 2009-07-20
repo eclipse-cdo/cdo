@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.internal.net4j.messages.Messages;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
@@ -76,7 +76,7 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
   protected void requestingIdMapping(CDODataOutput out) throws IOException
   {
     InternalCDOXACommitContext context = getCommitContext();
-    Map<CDOIDExternalTempImpl, InternalCDOTransaction> requestedIDs = context.getRequestedIDs();
+    Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> requestedIDs = context.getRequestedIDs();
     int size = requestedIDs.size();
     out.writeInt(size);
     if (PROTOCOL.isEnabled())
@@ -84,9 +84,9 @@ public class CommitTransactionPhase2Request extends CommitTransactionRequest
       PROTOCOL.format("Number of ids requested: {0}", size); //$NON-NLS-1$
     }
 
-    for (Entry<CDOIDExternalTempImpl, InternalCDOTransaction> entry : requestedIDs.entrySet())
+    for (Entry<CDOIDTempObjectExternalImpl, InternalCDOTransaction> entry : requestedIDs.entrySet())
     {
-      CDOIDExternalTempImpl tempID = entry.getKey();
+      CDOIDTempObjectExternalImpl tempID = entry.getKey();
       URI oldURIExternal = URI.createURI(tempID.toURIFragment());
       CDOID oldCDOID = CDOIDUtil.read(oldURIExternal.fragment());
 

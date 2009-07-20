@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -149,7 +148,7 @@ public class CDOURIUtil
     CDOIDUtil.write(builder, newCDOID);
 
     baseURI = baseURI.trimFragment().appendFragment(builder.toString());
-    return new CDOIDExternalImpl(baseURI.toString());
+    return CDOIDUtil.createExternal(baseURI.toString());
   }
 
   public static List<String> analyzePath(URI uri)

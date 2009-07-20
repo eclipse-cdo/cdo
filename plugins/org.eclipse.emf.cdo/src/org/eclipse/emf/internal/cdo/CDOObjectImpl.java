@@ -323,7 +323,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       if (!eFeature.isTransient())
       {
         Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
-        instanceToRevisionFeature(view, revision, eFeature, setting);
+        instanceToRevisionFeature(view, this, eFeature, setting);
       }
     }
 
@@ -1037,9 +1037,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  public static void instanceToRevisionFeature(InternalCDOView view, InternalCDORevision revision,
+  public static void instanceToRevisionFeature(InternalCDOView view, InternalCDOObject object,
       EStructuralFeature feature, Object setting)
   {
     if (TRACER.isEnabled())
@@ -1048,6 +1048,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     CDOStore cdoStore = view.getStore();
+    InternalCDORevision revision = object.cdoRevision();
 
     if (feature.isMany())
     {
@@ -1058,14 +1059,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         EList<Object> list = (EList<Object>)setting;
         for (Object value : list)
         {
-          value = cdoStore.convertToCDO(feature, value);
+          value = cdoStore.convertToCDO(object, feature, value);
           revision.add(feature, index++, value);
         }
       }
     }
     else
     {
-      setting = cdoStore.convertToCDO(feature, setting);
+      setting = cdoStore.convertToCDO(object, feature, setting);
       revision.set(feature, 0, setting);
     }
   }

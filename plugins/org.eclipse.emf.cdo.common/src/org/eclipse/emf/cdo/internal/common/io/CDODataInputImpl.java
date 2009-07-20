@@ -34,7 +34,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
@@ -195,7 +195,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       return new CDOIDExternalImpl(readString());
 
     case EXTERNAL_TEMP_OBJECT:
-      return new CDOIDExternalTempImpl(readString());
+      return new CDOIDTempObjectExternalImpl(readString());
 
     case OBJECT:
     {

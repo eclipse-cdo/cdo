@@ -83,6 +83,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -107,7 +108,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private long lastCommitTime = CDORevision.UNSPECIFIED_DATE;
 
-  private int lastTemporaryID;
+  private AtomicInteger lastTemporaryID = new AtomicInteger();
 
   private CDOTransactionStrategy transactionStrategy;
 
@@ -320,7 +321,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOIDTemp getNextTemporaryID()
   {
-    return CDOIDUtil.createTempObject(++lastTemporaryID);
+    return CDOIDUtil.createTempObject(lastTemporaryID.incrementAndGet());
   }
 
   /**
@@ -544,6 +545,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return null;
   }
 
+  // TTT Map<InternalEObject, CDOIDDanglingImpl> danglingObjects = new HashMap<InternalEObject, CDOIDDanglingImpl>();
+  //
+  // @Override
+  // public CDOIDDangling convertDanglingObjectToID(InternalCDOObject source, EStructuralFeature feature,
+  // InternalEObject target)
+  // {
+  // CDOIDDanglingImpl id;
+  // synchronized (danglingObjects)
+  // {
+  // id = danglingObjects.get(target);
+  // if (id == null)
+  // {
+  // id = new CDOIDDanglingImpl(lastTemporaryID.incrementAndGet(), target);
+  // danglingObjects.put(target, id);
+  // }
+  // }
+  //
+  // id.addReference(source, feature);
+  // return id;
+  // }
+
   /**
    * @since 2.0
    */
@@ -595,6 +617,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     try
     {
+      // TTT convertDanglingObjects();
       getTransactionStrategy().commit(this, progressMonitor);
     }
     catch (TransactionException ex)
@@ -611,6 +634,35 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     commit(null);
   }
+
+  // TTT private void convertDanglingObjects()
+  // {
+  // for (CDOIDDanglingImpl id : danglingObjects.values())
+  // {
+  //
+  // for (Reference reference : id.getReferences())
+  // {
+  // convertDanglingObject(reference.getSourceObject(), reference.getSourceFeature(), id);
+  // }
+  // }
+  // }
+  //
+  // private void convertDanglingObject(CDOObject object, EStructuralFeature feature, CDOIDDangling id)
+  // {
+  // InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+  // Object value = revision.getValue(feature);
+  // if (value instanceof List<?>)
+  // {
+  // List<?> list = (List<?>)value;
+  // for (int i = 0; i < list.size(); i++)
+  // {
+  // if (list.get(i) == id)
+  // {
+  //
+  // }
+  // }
+  // }
+  // }
 
   /**
    * @since 2.0
@@ -1148,7 +1200,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     firstSavepoint.getSharedDetachedObjects().clear();
     dirty = false;
     conflict = 0;
-    lastTemporaryID = 0;
+    lastTemporaryID.set(0);
   }
 
   public Map<CDOID, CDOObject> getDirtyObjects()

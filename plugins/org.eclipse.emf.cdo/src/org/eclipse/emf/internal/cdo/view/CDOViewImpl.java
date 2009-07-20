@@ -910,7 +910,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         InternalCDOObject object = (InternalCDOObject)idOrObject;
         if (object.cdoView() != null && FSMUtil.isNew(object))
         {
-          return CDOIDUtil.createExternalTemp(uri);
+          return CDOIDUtil.createTempObjectExternal(uri);
         }
       }
 
@@ -978,7 +978,13 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return potentialObject;
   }
 
-  protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
+  // TTT public CDOIDDangling convertDanglingObjectToID(InternalCDOObject source, EStructuralFeature feature,
+  // InternalEObject target)
+  // {
+  // throw new IllegalStateException("Dangling objects not possible outside of a transaction");
+  // }
+
+  private CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
   {
     if (onlyPersistedID)
     {

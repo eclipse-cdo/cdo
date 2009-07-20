@@ -16,11 +16,11 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 /**
  * @author Simon McDuff
  */
-public class CDOIDExternalTempImpl extends CDOIDExternalImpl implements CDOIDTemp
+public class CDOIDTempObjectExternalImpl extends CDOIDExternalImpl implements CDOIDTemp
 {
   private static final long serialVersionUID = 1L;
 
-  public CDOIDExternalTempImpl(String uri)
+  public CDOIDTempObjectExternalImpl(String uri)
   {
     super(uri);
   }

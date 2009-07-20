@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDMetaRangeImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
@@ -26,6 +25,7 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongWithClassifierImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectStringWithClassifierImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempMetaImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
@@ -109,6 +109,24 @@ public final class CDOIDUtil
   /**
    * @since 3.0
    */
+  public static CDOIDExternal createTempObjectExternal(String uri)
+  {
+    return new CDOIDTempObjectExternalImpl(uri);
+  }
+
+  public static CDOID createLong(long value)
+  {
+    if (value == AbstractCDOIDLong.NULL_VALUE)
+    {
+      return CDOID.NULL;
+    }
+
+    return new CDOIDObjectLongImpl(value);
+  }
+
+  /**
+   * @since 3.0
+   */
   public static CDOID createStringWithClassifier(CDOClassifierRef classifierRef, String value)
   {
     return new CDOIDObjectStringWithClassifierImpl(classifierRef, value);
@@ -128,24 +146,6 @@ public final class CDOIDUtil
   public static CDOIDExternal createExternal(String uri)
   {
     return new CDOIDExternalImpl(uri);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOIDExternal createExternalTemp(String uri)
-  {
-    return new CDOIDExternalTempImpl(uri);
-  }
-
-  public static CDOID createLong(long value)
-  {
-    if (value == AbstractCDOIDLong.NULL_VALUE)
-    {
-      return CDOID.NULL;
-    }
-
-    return new CDOIDObjectLongImpl(value);
   }
 
   /**
@@ -199,7 +199,7 @@ public final class CDOIDUtil
       return new CDOIDExternalImpl(fragment);
 
     case EXTERNAL_TEMP_OBJECT:
-      return new CDOIDExternalTempImpl(fragment);
+      return new CDOIDTempObjectExternalImpl(fragment);
 
     case OBJECT:
     {

@@ -26,14 +26,6 @@ public class CDOIDObjectLongImpl extends AbstractCDOIDLong implements InternalCD
   {
   }
 
-  /**
-   * @since 3.0
-   */
-  public SubType getSubType()
-  {
-    return SubType.LONG;
-  }
-
   public CDOIDObjectLongImpl(long value)
   {
     super(value);
@@ -42,6 +34,44 @@ public class CDOIDObjectLongImpl extends AbstractCDOIDLong implements InternalCD
   public Type getType()
   {
     return Type.OBJECT;
+  }
+
+  public boolean isDangling()
+  {
+    return false;
+  }
+
+  public boolean isExternal()
+  {
+    return false;
+  }
+
+  public boolean isMeta()
+  {
+    return false;
+  }
+
+  public boolean isNull()
+  {
+    return false;
+  }
+
+  public boolean isObject()
+  {
+    return true;
+  }
+
+  public boolean isTemporary()
+  {
+    return false;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public SubType getSubType()
+  {
+    return SubType.LONG;
   }
 
   @Override

@@ -37,6 +37,36 @@ public class CDOIDObjectStringImpl extends AbstractCDOIDString implements Intern
     return Type.OBJECT;
   }
 
+  public boolean isDangling()
+  {
+    return false;
+  }
+
+  public boolean isExternal()
+  {
+    return false;
+  }
+
+  public boolean isMeta()
+  {
+    return false;
+  }
+
+  public boolean isNull()
+  {
+    return false;
+  }
+
+  public boolean isObject()
+  {
+    return true;
+  }
+
+  public boolean isTemporary()
+  {
+    return false;
+  }
+
   public SubType getSubType()
   {
     return SubType.STRING;

@@ -11,7 +11,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalTempImpl;
+import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 
@@ -37,7 +37,7 @@ public interface InternalCDOXATransaction extends CDOXATransaction
   {
     public InternalCDOXATransaction getTransactionManager();
 
-    public Map<CDOIDExternalTempImpl, InternalCDOTransaction> getRequestedIDs();
+    public Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> getRequestedIDs();
 
     public CommitTransactionResult getResult();
   }

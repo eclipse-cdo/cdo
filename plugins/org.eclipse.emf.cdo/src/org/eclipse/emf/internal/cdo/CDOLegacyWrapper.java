@@ -223,7 +223,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected void instanceToRevisionFeature(EStructuralFeature feature, CDOPackageRegistry packageRegistry)
   {
     Object instanceValue = getInstanceValue(instance, feature, packageRegistry);
-    CDOObjectImpl.instanceToRevisionFeature(view, revision, feature, instanceValue);
+    CDOObjectImpl.instanceToRevisionFeature(view, this, feature, instanceValue);
   }
 
   /**

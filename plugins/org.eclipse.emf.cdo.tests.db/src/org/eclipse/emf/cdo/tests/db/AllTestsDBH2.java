@@ -13,8 +13,10 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
@@ -23,6 +25,7 @@ import org.h2.jdbcx.JdbcDataSource;
 import javax.sql.DataSource;
 
 import java.io.File;
+import java.sql.Connection;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,7 +43,7 @@ public class AllTestsDBH2 extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBH2.H2.INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.INSTANCE, JVM, NATIVE);
   }
 
   /**
@@ -84,13 +87,6 @@ public class AllTestsDBH2 extends DBConfigs
       return dataSource;
     }
 
-    @Override
-    public void tearDown() throws Exception
-    {
-      tearDownClean();
-      super.tearDown();
-    }
-
     protected void tearDownClean()
     {
       IOUtil.delete(dbFolder);
@@ -99,6 +95,66 @@ public class AllTestsDBH2 extends DBConfigs
     protected File createDBFolder()
     {
       return TMPUtil.createTempFolder("h2_", "_test", new File("/temp"));
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class ReusableFolder extends H2
+    {
+      private static final long serialVersionUID = 1L;
+
+      public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: H2 (Reusable Folder)");
+
+      private static File reusableFolder;
+
+      public ReusableFolder(String name)
+      {
+        super(name);
+      }
+
+      @Override
+      protected DataSource createDataSource()
+      {
+        dataSource = new JdbcDataSource();
+        if (reusableFolder == null)
+        {
+          reusableFolder = createDBFolder();
+          IOUtil.delete(reusableFolder);
+        }
+
+        dbFolder = reusableFolder;
+        dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath());
+
+        tearDownClean();
+
+        return dataSource;
+      }
+
+      @Override
+      protected void tearDownClean()
+      {
+        reusableFolder.deleteOnExit();
+        Connection connection = null;
+
+        try
+        {
+          connection = dataSource.getConnection();
+          DBUtil.dropAllTables(connection, null); // null is the default catalog for H2.
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+        finally
+        {
+          DBUtil.close(connection);
+        }
+      }
     }
   }
 }

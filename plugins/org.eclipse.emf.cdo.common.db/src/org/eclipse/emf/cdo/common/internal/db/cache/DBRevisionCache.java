@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.common.internal.db.cache;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.internal.db.AbstractQueryStatement;
 import org.eclipse.emf.cdo.common.internal.db.AbstractUpdateStatement;
 import org.eclipse.emf.cdo.common.internal.db.DBRevisionCacheUtil;
@@ -56,6 +57,8 @@ import java.util.List;
  */
 public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 {
+  private CDOIDProvider idProvider;
+
   private CDOListFactory listFactory;
 
   private CDOPackageRegistry packageRegistry;
@@ -68,6 +71,16 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
 
   public DBRevisionCache()
   {
+  }
+
+  public CDOIDProvider getIdProvider()
+  {
+    return idProvider;
+  }
+
+  public void setIdProvider(CDOIDProvider idProvider)
+  {
+    this.idProvider = idProvider;
   }
 
   public CDOListFactory getListFactory()
@@ -589,7 +602,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
         if (revision.isResourceNode())
         {
           preparedStatement.setString(6, DBRevisionCacheUtil.getResourceNodeName(revision));
-          CDOID containerID = revision.getContainerID();
+          CDOID containerID = (CDOID)revision.getContainerID();
           preparedStatement.setString(7, containerID.toURIFragment());
         }
         else
@@ -699,6 +712,7 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    checkState(idProvider, "idProvider"); //$NON-NLS-1$
     checkState(listFactory, "listFactory");//$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
     checkState(revisionFactory, "revisionFactory"); //$NON-NLS-1$
@@ -821,6 +835,11 @@ public class DBRevisionCache extends Lifecycle implements CDORevisionCache
       public CDOPackageRegistry getPackageRegistry()
       {
         return packageRegistry;
+      }
+
+      public CDOIDProvider getIDProvider()
+      {
+        return idProvider;
       }
     };
   }

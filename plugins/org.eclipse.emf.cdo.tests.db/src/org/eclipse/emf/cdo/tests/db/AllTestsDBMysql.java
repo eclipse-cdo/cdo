@@ -24,6 +24,8 @@ import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -41,7 +43,7 @@ public class AllTestsDBMysql extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBMysql.Mysql.INSTANCE, TCP, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBMysql.Mysql.INSTANCE, JVM, NATIVE);
   }
 
   /**
@@ -55,7 +57,7 @@ public class AllTestsDBMysql extends DBConfigs
 
     private transient DataSource setupDataSource;
 
-    private transient DataSource dataSource;
+    private transient ArrayList<String> databases = new ArrayList<String>();
 
     public Mysql(String name)
     {
@@ -75,58 +77,66 @@ public class AllTestsDBMysql extends DBConfigs
     }
 
     @Override
-    protected DataSource createDataSource()
+    protected DataSource createDataSource(String repoName)
     {
       MysqlDataSource ds = new MysqlDataSource();
-      ds.setUrl("jdbc:mysql://localhost/cdodb1");
+
+      initDatabase("test_" + repoName);
+
+      ds.setUrl("jdbc:mysql://localhost/test_" + repoName);
       ds.setUser("sa");
-      dataSource = ds;
-      return dataSource;
+      return ds;
     }
 
-    @Override
-    public void setUp() throws Exception
+    private void initDatabase(String dbName)
     {
-      dropDatabase();
+      dropDatabase(dbName);
       Connection connection = null;
+      Statement stmt = null;
 
       try
       {
         connection = getSetupDataSource().getConnection();
-        connection.prepareStatement("create database cdodb1").execute();
+        stmt = connection.createStatement();
+        stmt.execute("create database " + dbName);
       }
       catch (SQLException ignore)
       {
       }
       finally
       {
+        DBUtil.close(stmt);
         DBUtil.close(connection);
       }
 
-      super.setUp();
     }
 
     @Override
     public void tearDown() throws Exception
     {
       super.tearDown();
-      dropDatabase();
+      for (String dbName : databases)
+      {
+        dropDatabase(dbName);
+      }
     }
 
-    private void dropDatabase() throws Exception
+    private void dropDatabase(String dbName)
     {
       Connection connection = null;
-
+      Statement stmt = null;
       try
       {
         connection = getSetupDataSource().getConnection();
-        connection.prepareStatement("DROP database cdodb1").execute();
+        stmt = connection.createStatement();
+        stmt.execute("DROP database " + dbName);
       }
       catch (SQLException ignore)
       {
       }
       finally
       {
+        DBUtil.close(stmt);
         DBUtil.close(connection);
       }
     }

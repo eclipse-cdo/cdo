@@ -29,6 +29,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
@@ -47,7 +48,7 @@ public class AllTestsDBHsqldb extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBHsqldb.Hsqldb.INSTANCE, TCP, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBHsqldb.Hsqldb.INSTANCE, JVM, NATIVE);
   }
 
   @Override
@@ -70,7 +71,7 @@ public class AllTestsDBHsqldb extends DBConfigs
 
     public static boolean USE_VERIFIER = false;
 
-    private transient HSQLDBDataSource dataSource;
+    private transient ArrayList<HSQLDBDataSource> dataSources = new ArrayList<HSQLDBDataSource>();
 
     public Hsqldb(String name)
     {
@@ -90,10 +91,11 @@ public class AllTestsDBHsqldb extends DBConfigs
     }
 
     @Override
-    protected DataSource createDataSource()
+    protected DataSource createDataSource(String repoName)
     {
-      dataSource = new HSQLDBDataSource();
-      dataSource.setDatabase("jdbc:hsqldb:mem:dbtest");
+
+      HSQLDBDataSource dataSource = new HSQLDBDataSource();
+      dataSource.setDatabase("jdbc:hsqldb:mem:" + repoName);
       dataSource.setUser("sa");
 
       try
@@ -104,6 +106,8 @@ public class AllTestsDBHsqldb extends DBConfigs
       {
         OM.LOG.warn(ex.getMessage());
       }
+
+      dataSources.add(dataSource);
 
       return dataSource;
     }
@@ -142,14 +146,14 @@ public class AllTestsDBHsqldb extends DBConfigs
 
     private void shutDownHsqldb() throws SQLException
     {
-      if (dataSource != null)
+      for (HSQLDBDataSource ds : dataSources)
       {
         Connection connection = null;
         Statement statement = null;
 
         try
         {
-          connection = dataSource.getConnection();
+          connection = ds.getConnection();
           statement = connection.createStatement();
           statement.execute("SHUTDOWN");
         }
@@ -157,9 +161,10 @@ public class AllTestsDBHsqldb extends DBConfigs
         {
           DBUtil.close(statement);
           DBUtil.close(connection);
-          dataSource = null;
         }
       }
+
+      dataSources.clear();
     }
   }
 }

@@ -26,6 +26,8 @@ import javax.sql.DataSource;
 
 import java.io.File;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -43,7 +45,7 @@ public class AllTestsDBDerby extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBDerby.Derby.ReusableFolder.INSTANCE, TCP, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBDerby.Derby.ReusableFolder.INSTANCE, JVM, NATIVE);
     // addScenario(parent, COMBINED, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
   }
 
@@ -56,9 +58,7 @@ public class AllTestsDBDerby extends DBConfigs
 
     public static final AllTestsDBDerby.Derby INSTANCE = new Derby("DBStore: Derby");
 
-    protected transient File dbFolder;
-
-    protected transient EmbeddedDataSource dataSource;
+    private transient ArrayList<File> dbFolders = new ArrayList<File>();
 
     public Derby(String name)
     {
@@ -78,32 +78,39 @@ public class AllTestsDBDerby extends DBConfigs
     }
 
     @Override
-    protected DataSource createDataSource()
+    protected DataSource createDataSource(String repoName)
     {
-      dbFolder = createDBFolder();
-      tearDownClean();
+      File dbFolder = createDBFolder(repoName);
+      dbFolders.add(dbFolder);
 
-      dataSource = new EmbeddedDataSource();
+      tearDownClean(dbFolder);
+
+      EmbeddedDataSource dataSource = new EmbeddedDataSource();
       dataSource.setDatabaseName(dbFolder.getAbsolutePath());
       dataSource.setCreateDatabase("create");
+
       return dataSource;
     }
 
     @Override
     public void tearDown() throws Exception
     {
-      tearDownClean();
+      for (File folder : dbFolders)
+      {
+        tearDownClean(folder);
+      }
+      
       super.tearDown();
     }
 
-    protected void tearDownClean()
+    protected void tearDownClean(File dbFolder)
     {
       IOUtil.delete(dbFolder);
     }
 
-    protected File createDBFolder()
+    protected File createDBFolder(String repo)
     {
-      return TMPUtil.createTempFolder("derby_", "_test", new File("/temp"));
+      return TMPUtil.createTempFolder("derby_" + repo + "_", "_test", new File("/temp"));
     }
 
     /**
@@ -115,7 +122,9 @@ public class AllTestsDBDerby extends DBConfigs
 
       public static final ReusableFolder INSTANCE = new ReusableFolder("DBStore: Derby (Reusable Folder)");
 
-      private static File reusableFolder;
+      private static HashMap<String, File> dbFolders = new HashMap<String, File>();
+
+      private static HashMap<File, EmbeddedDataSource> dataSources = new HashMap<File, EmbeddedDataSource>();
 
       public ReusableFolder(String name)
       {
@@ -123,26 +132,34 @@ public class AllTestsDBDerby extends DBConfigs
       }
 
       @Override
-      protected DataSource createDataSource()
+      protected DataSource createDataSource(String repoName)
       {
-        dataSource = new EmbeddedDataSource();
+        EmbeddedDataSource dataSource = new EmbeddedDataSource();
+        File reusableFolder = dbFolders.get(repoName);
+
         if (reusableFolder == null)
         {
-          reusableFolder = createDBFolder();
+          reusableFolder = createDBFolder(repoName);
           IOUtil.delete(reusableFolder);
+          dbFolders.put(repoName, reusableFolder);
         }
 
-        dbFolder = reusableFolder;
-        dataSource.setDatabaseName(dbFolder.getAbsolutePath());
+        dataSource.setDatabaseName(reusableFolder.getAbsolutePath());
         dataSource.setCreateDatabase("create");
+        dataSources.put(reusableFolder, dataSource);
+
+        tearDownClean(reusableFolder);
+
         return dataSource;
       }
 
       @Override
-      protected void tearDownClean()
+      protected void tearDownClean(File folder)
       {
-        reusableFolder.deleteOnExit();
+        folder.deleteOnExit();
         Connection connection = null;
+
+        EmbeddedDataSource dataSource = dataSources.get(folder);
 
         try
         {

@@ -26,6 +26,8 @@ import javax.sql.DataSource;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -57,8 +59,6 @@ public class AllTestsDBH2 extends DBConfigs
 
     protected transient File dbFolder;
 
-    protected transient JdbcDataSource dataSource;
-
     public H2(String name)
     {
       super(name);
@@ -77,13 +77,16 @@ public class AllTestsDBH2 extends DBConfigs
     }
 
     @Override
-    protected DataSource createDataSource()
+    protected DataSource createDataSource(String repoName)
     {
-      dbFolder = createDBFolder();
-      tearDownClean();
+      if (dbFolder == null)
+      {
+        dbFolder = createDBFolder();
+        tearDownClean();
+      }
 
-      dataSource = new JdbcDataSource();
-      dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath());
+      JdbcDataSource dataSource = new JdbcDataSource();
+      dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
       return dataSource;
     }
 
@@ -108,25 +111,52 @@ public class AllTestsDBH2 extends DBConfigs
 
       private static File reusableFolder;
 
+      private static JdbcDataSource defaultDataSource;
+
+      private transient ArrayList<String> repoNames = new ArrayList<String>();
+
       public ReusableFolder(String name)
       {
         super(name);
       }
 
       @Override
-      protected DataSource createDataSource()
+      protected DataSource createDataSource(String repoName)
       {
-        dataSource = new JdbcDataSource();
         if (reusableFolder == null)
         {
           reusableFolder = createDBFolder();
           IOUtil.delete(reusableFolder);
         }
-
         dbFolder = reusableFolder;
-        dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath());
 
-        tearDownClean();
+        if (defaultDataSource == null)
+        {
+          defaultDataSource = new JdbcDataSource();
+          defaultDataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test");
+        }
+
+        Connection conn = null;
+        Statement stmt = null;
+        try
+        {
+          conn = defaultDataSource.getConnection();
+          stmt = conn.createStatement();
+          stmt.execute("DROP SCHEMA IF EXISTS " + repoName);
+          stmt.execute("CREATE SCHEMA " + repoName);
+        }
+        catch (Exception e)
+        {
+          e.printStackTrace();
+        }
+        finally
+        {
+          DBUtil.close(conn);
+          DBUtil.close(stmt);
+        }
+
+        JdbcDataSource dataSource = new JdbcDataSource();
+        dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
 
         return dataSource;
       }
@@ -134,17 +164,23 @@ public class AllTestsDBH2 extends DBConfigs
       @Override
       protected void tearDownClean()
       {
+        for (String repoName : repoNames)
+        {
+          tearDownClean(repoName);
+        }
+      }
+
+      protected void tearDownClean(String repoName)
+      {
         reusableFolder.deleteOnExit();
         Connection connection = null;
+        Statement stmt = null;
 
         try
         {
-          connection = dataSource.getConnection();
-          DBUtil.dropAllTables(connection, null); // null is the default catalog for H2.
-        }
-        catch (RuntimeException ex)
-        {
-          throw ex;
+          connection = defaultDataSource.getConnection();
+          stmt = connection.createStatement();
+          stmt.execute("DROP SCHEMA " + repoName);
         }
         catch (Exception ex)
         {
@@ -152,6 +188,7 @@ public class AllTestsDBH2 extends DBConfigs
         }
         finally
         {
+          DBUtil.close(stmt);
           DBUtil.close(connection);
         }
       }

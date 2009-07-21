@@ -48,8 +48,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
 
-  public static final String PROP_TEST_STORE = "test.repository.Store";
-
   private static final long serialVersionUID = 1L;
 
   private transient Map<String, InternalRepository> repositories;
@@ -144,12 +142,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected InternalRepository createRepository(String name)
   {
-    IStore store = getTestStore();
-    if (store == null)
-    {
-      store = createStore();
-    }
-
+    IStore store = createStore(name);
     Map<String, String> props = getRepositoryProperties();
     InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, props);
     InternalCDORevisionManager revisionManager = getTestRevisionManager();
@@ -175,7 +168,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return repository;
   }
 
-  protected abstract IStore createStore();
+  protected abstract IStore createStore(String repoName);
 
   protected InternalRepository getTestRepository()
   {
@@ -197,11 +190,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return (IQueryHandlerProvider)getTestProperty(PROP_TEST_QUERY_HANDLER_PROVIDER);
   }
 
-  protected IStore getTestStore()
-  {
-    return (IStore)getTestProperty(PROP_TEST_STORE);
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -217,7 +205,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     @Override
-    protected IStore createStore()
+    protected IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
     }

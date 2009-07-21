@@ -23,11 +23,11 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   }
 
   @Override
-  public IStore createStore()
+  public IStore createStore(String repoName)
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();
     IDBAdapter dbAdapter = createDBAdapter();
-    DataSource dataSource = createDataSource();
+    DataSource dataSource = createDataSource(repoName);
     return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
   }
 
@@ -35,5 +35,5 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
 
   protected abstract IDBAdapter createDBAdapter();
 
-  protected abstract DataSource createDataSource();
+  protected abstract DataSource createDataSource(String repoName);
 }

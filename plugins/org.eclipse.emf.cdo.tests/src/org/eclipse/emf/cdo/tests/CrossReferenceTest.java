@@ -386,4 +386,96 @@ public class CrossReferenceTest extends AbstractCDOTest
     id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
     assertFalse(id.isExternal());
   }
+
+  public void testNewMakeExternal() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+
+    Company company = getModel1Factory().createCompany();
+    company.getCustomers().add(customer);
+    company.getSalesOrders().add(salesOrder);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/company/resource");
+    resource.getContents().add(company);
+    // DO NOT: transaction.commit();
+
+    Resource externalResource = new ResourceImpl(URI.createFileURI("/x/y/z"));
+    transaction.getResourceSet().getResources().add(externalResource);
+    externalResource.getContents().add(customer);
+
+    transaction.commit();
+    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
+    assertTrue(id.isExternal());
+  }
+
+  public void testExternalMakeNew() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+
+    Company company = getModel1Factory().createCompany();
+    // DO NOT: company.getCustomers().add(customer);
+    company.getSalesOrders().add(salesOrder);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/company/resource");
+    resource.getContents().add(company);
+    // DO NOT: transaction.commit();
+
+    Resource externalResource = new ResourceImpl(URI.createFileURI("/x/y/z"));
+    transaction.getResourceSet().getResources().add(externalResource);
+    externalResource.getContents().add(customer);
+
+    company.getCustomers().add(customer);
+
+    transaction.commit();
+    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
+    assertFalse(id.isExternal());
+  }
+
+  public void testExternalMakeDangling() throws Exception
+  {
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName("customer");
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
+    salesOrder.setCustomer(customer);
+
+    Company company = getModel1Factory().createCompany();
+    // DO NOT: company.getCustomers().add(customer);
+    company.getSalesOrders().add(salesOrder);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/my/company/resource");
+    resource.getContents().add(company);
+    // DO NOT: transaction.commit();
+
+    Resource externalResource = new ResourceImpl(URI.createFileURI("/x/y/z"));
+    transaction.getResourceSet().getResources().add(externalResource);
+    externalResource.getContents().add(customer);
+
+    transaction.commit();
+    CDORevisionData data = ((CDOObject)salesOrder).cdoRevision().data();
+    CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
+    assertTrue(id.isExternal());
+
+    externalResource.getContents().remove(customer);
+    transaction.commit(); // Should be dangling reference now, but we can not detect ;-(
+  }
 }

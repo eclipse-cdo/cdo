@@ -435,7 +435,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   boolean handleFailOver(SignalActor signalActor, IChannel originalChannel, Exception reason)
   {
-    OM.LOG.error(reason);
     if (failOverStrategy != null)
     {
       try

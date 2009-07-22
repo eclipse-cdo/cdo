@@ -28,22 +28,21 @@ public abstract class DBConfigs extends AllTestsAllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     super.initTestClasses(testClasses);
-
     testClasses.add(DBStoreTest.class);
     testClasses.add(SQLQueryTest.class);
     testClasses.add(DBAnnotationsTest.class);
 
     // fails because of Bug 283992
     testClasses.remove(ResourceTest.class);
-    testClasses.add(DBResourceTest.class);
+    testClasses.add(DISABLE_ResourceTest.class);
 
     // fails because of Bug 284109
     testClasses.remove(XATransactionTest.class);
-    testClasses.add(DBXATransactionTest.class);
+    testClasses.add(DISABLE_XATransactionTest.class);
 
     // fails because of Bug 284110
     testClasses.remove(Bugzilla_258933_Test.class);
-    testClasses.add(DBBugzilla_258933_Test.class);
+    testClasses.add(DISABLE_Bugzilla_258933_Test.class);
 
     // fails because of Bug 254455
     testClasses.remove(FeatureMapTest.class);

@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.tests.XATransactionTest;
 /**
  * @author Eike Stepper
  */
-public class DBXATransactionTest extends XATransactionTest
+public class DISABLE_XATransactionTest extends XATransactionTest
 {
   @Override
   public void testNotUsingXATransaction_Exception() throws Exception

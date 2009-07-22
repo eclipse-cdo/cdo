@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.tests.ResourceTest;
 /**
  * @author Eike Stepper
  */
-public class DBResourceTest extends ResourceTest
+public class DISABLE_ResourceTest extends ResourceTest
 {
   @Override
   public void testDeleteResource() throws Exception

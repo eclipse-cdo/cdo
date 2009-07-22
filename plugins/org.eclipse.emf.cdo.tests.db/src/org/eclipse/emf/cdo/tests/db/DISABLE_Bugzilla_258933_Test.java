@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 /**
  * @author Eike Stepper
  */
-public class DBBugzilla_258933_Test extends Bugzilla_258933_Test
+public class DISABLE_Bugzilla_258933_Test extends Bugzilla_258933_Test
 {
   @Override
   public void testBugzilla_258933_String() throws Exception

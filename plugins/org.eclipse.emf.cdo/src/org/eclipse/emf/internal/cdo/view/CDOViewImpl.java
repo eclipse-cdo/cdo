@@ -1492,8 +1492,24 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   @Override
   protected void doDeactivate() throws Exception
   {
-    session.getSessionProtocol().closeView(getViewID());
-    session.viewDetached(this);
+    try
+    {
+      session.getSessionProtocol().closeView(getViewID());
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    try
+    {
+      session.viewDetached(this);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+
     session = null;
     objects = null;
     store = null;

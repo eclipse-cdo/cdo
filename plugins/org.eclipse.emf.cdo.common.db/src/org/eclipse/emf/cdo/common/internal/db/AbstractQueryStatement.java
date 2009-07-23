@@ -11,6 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.common.internal.db;
 
+import org.eclipse.net4j.db.DBUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,17 +28,26 @@ public abstract class AbstractQueryStatement<Result> extends AbstractDBAccessor
 
   public Result query(Connection connection) throws Exception
   {
-    PreparedStatement preparedStatement = getPreparedStatement(connection);
-    ResultSet resultSet = preparedStatement.executeQuery();
-    connection.commit();
-    if (resultSet.next())
+    PreparedStatement preparedStatement = null;
+    try
     {
-      Result result = getResult(resultSet);
-      resultSet.close();
-      return result;
-    }
 
-    return null;
+      preparedStatement = getPreparedStatement(connection);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      connection.commit();
+      if (resultSet.next())
+      {
+        Result result = getResult(resultSet);
+        resultSet.close();
+        return result;
+      }
+
+      return null;
+    }
+    finally
+    {
+      DBUtil.close(preparedStatement);
+    }
   }
 
   protected abstract Result getResult(ResultSet resultSet) throws Exception;

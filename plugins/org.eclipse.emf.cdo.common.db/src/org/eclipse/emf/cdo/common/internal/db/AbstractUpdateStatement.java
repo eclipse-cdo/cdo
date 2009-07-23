@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.common.internal.db;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,14 +29,22 @@ public abstract class AbstractUpdateStatement extends AbstractDBAccessor
 
   public void update(Connection connection) throws Exception
   {
-    PreparedStatement preparedStatement = getPreparedStatement(connection);
-    preparedStatement.executeUpdate();
-    if (preparedStatement.getUpdateCount() == 0)
+    PreparedStatement preparedStatement = null;
+    try
     {
-      throw new DBException(MessageFormat.format("No row inserted by statement \"{0}\"", getSQL()));
-    }
+      preparedStatement = getPreparedStatement(connection);
+      preparedStatement.executeUpdate();
+      if (preparedStatement.getUpdateCount() == 0)
+      {
+        throw new DBException(MessageFormat.format("No row inserted by statement \"{0}\"", getSQL()));
+      }
 
-    connection.commit();
+      connection.commit();
+    }
+    finally
+    {
+      DBUtil.close(preparedStatement);
+    }
   }
 
   @Override

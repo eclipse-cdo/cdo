@@ -24,7 +24,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
+import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
@@ -33,7 +33,7 @@ import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
-import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.h2.jdbcx.JdbcDataSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,12 +71,11 @@ public abstract class OM
     protected void doStart() throws Exception
     {
       OM.LOG.info("Gastro server starting");
-      EmbeddedDataSource dataSource = new EmbeddedDataSource();
-      dataSource.setDatabaseName("/gastro");
-      dataSource.setCreateDatabase("create");
+      JdbcDataSource dataSource = new JdbcDataSource();
+      dataSource.setURL("jdbc:h2:/temp/gastro");
 
       IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true);
-      IDBAdapter dbAdapter = new EmbeddedDerbyAdapter();
+      IDBAdapter dbAdapter = new H2Adapter();
       IDBConnectionProvider dbConnectionProvider = DBUtil.createConnectionProvider(dataSource);
       IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 

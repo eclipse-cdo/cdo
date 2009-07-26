@@ -131,6 +131,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
         protected void indicating(ExtendedDataInputStream in) throws Exception
         {
           checkState(in.readBoolean() == HEART_BEAT, "Invalid heart beat"); //$NON-NLS-1$
+          timeouter.touch();
         }
       };
     }
@@ -191,9 +192,9 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     @Override
     protected SignalReactor createSignalReactor(short signalID)
     {
-      if (signalID == SIGNAL_HEART_BEAT)
+      if (signalID == SIGNAL_START)
       {
-        return new Indication(Server.this, SIGNAL_HEART_BEAT, "HeartBeat") //$NON-NLS-1$
+        return new Indication(Server.this, SIGNAL_START, "Start") //$NON-NLS-1$
         {
           @Override
           protected void indicating(ExtendedDataInputStream in) throws Exception

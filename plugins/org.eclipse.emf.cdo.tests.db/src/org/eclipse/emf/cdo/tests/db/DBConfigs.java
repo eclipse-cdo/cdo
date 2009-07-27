@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
-import org.eclipse.emf.cdo.tests.ResourceTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -31,10 +30,6 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     testClasses.add(DBStoreTest.class);
     testClasses.add(SQLQueryTest.class);
     testClasses.add(DBAnnotationsTest.class);
-
-    // fails because of Bug 283992
-    testClasses.remove(ResourceTest.class);
-    testClasses.add(DISABLE_ResourceTest.class);
 
     // fails because of Bug 284109
     testClasses.remove(XATransactionTest.class);

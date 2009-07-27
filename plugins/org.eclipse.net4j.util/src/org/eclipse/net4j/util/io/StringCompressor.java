@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.util.CheckUtil;
+
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -23,23 +25,23 @@ import java.util.Map;
  */
 public class StringCompressor implements StringIO
 {
-  private static final boolean DEBUG = false;
-
-  private static final byte DEBUG_STRING = 0;
-
-  private static final byte DEBUG_INT = 1;
-
-  private static final byte DEBUG_BYTE = 2;
-
   private static final int NULL_ID = 0;
 
   private static final int INFO_FOLLOWS = Integer.MIN_VALUE;
 
-  private static final byte NOTHING_FOLLOWS = 0;
+  private static final byte NOTHING_FOLLOWS = 1;
 
-  private static final byte STRING_FOLLOWS = 1;
+  private static final byte STRING_FOLLOWS = 2;
 
-  private static final byte ACK_FOLLOWS = 2;
+  private static final byte ACK_FOLLOWS = 3;
+
+  private static final boolean DEBUG = false;
+
+  private static final byte DEBUG_STRING = -1;
+
+  private static final byte DEBUG_INT = -2;
+
+  private static final byte DEBUG_BYTE = -3;
 
   private boolean client;
 
@@ -69,6 +71,11 @@ public class StringCompressor implements StringIO
 
   public void write(ExtendedDataOutput out, String string) throws IOException
   {
+    if (DEBUG)
+    {
+      trace("BEGIN", string);
+    }
+
     if (string == null)
     {
       writeInt(out, NULL_ID);
@@ -132,6 +139,11 @@ public class StringCompressor implements StringIO
 
   public String read(ExtendedDataInput in) throws IOException
   {
+    if (DEBUG)
+    {
+      trace("BEGIN", "?");
+    }
+
     int id = readInt(in);
     if (id == NULL_ID)
     {
@@ -175,16 +187,15 @@ public class StringCompressor implements StringIO
 
     synchronized (this)
     {
+      acknowledge(acks);
       if (string != null)
       {
-        acknowledge(acks);
         stringToID.put(string, new ID(id));
         idToString.put(id, string);
         pendingAcknowledgements.add(id);
       }
       else
       {
-        acknowledge(acks);
         string = idToString.get(id);
         if (string == null)
         {
@@ -225,6 +236,7 @@ public class StringCompressor implements StringIO
   {
     if (DEBUG)
     {
+      trace("writeByte", value);
       out.writeByte(DEBUG_BYTE);
     }
 
@@ -235,6 +247,7 @@ public class StringCompressor implements StringIO
   {
     if (DEBUG)
     {
+      trace("writeInt", value);
       out.writeByte(DEBUG_INT);
     }
 
@@ -248,6 +261,7 @@ public class StringCompressor implements StringIO
   {
     if (DEBUG)
     {
+      trace("writeString", value);
       out.writeByte(DEBUG_STRING);
     }
 
@@ -258,26 +272,40 @@ public class StringCompressor implements StringIO
   {
     if (DEBUG)
     {
-      if (DEBUG_BYTE != in.readByte())
+      byte type = in.readByte();
+      if (DEBUG_BYTE != type)
       {
-        throw new IOException("Not a byte value"); //$NON-NLS-1$
+        throw new IOException("Not a byte value (type=" + type + ")"); //$NON-NLS-1$
       }
     }
 
-    return in.readByte();
+    byte value = in.readByte();
+    if (DEBUG)
+    {
+      trace("readByte", value);
+    }
+
+    return value;
   }
 
   private int readInt(ExtendedDataInput in) throws IOException
   {
     if (DEBUG)
     {
-      if (DEBUG_INT != in.readByte())
+      byte type = in.readByte();
+      if (DEBUG_INT != type)
       {
-        throw new IOException("Not an integer value"); //$NON-NLS-1$
+        throw new IOException("Not an integer value (type=" + type + ")"); //$NON-NLS-1$
       }
     }
 
-    return in.readInt();
+    int value = in.readInt();
+    if (DEBUG)
+    {
+      trace("readInt", value);
+    }
+
+    return value;
   }
 
   /**
@@ -287,13 +315,59 @@ public class StringCompressor implements StringIO
   {
     if (DEBUG)
     {
-      if (DEBUG_STRING != in.readByte())
+      byte type = in.readByte();
+      if (DEBUG_STRING != type)
       {
-        throw new IOException("Not a string value"); //$NON-NLS-1$
+        throw new IOException("Not a string value (type=" + type + ")"); //$NON-NLS-1$
       }
     }
 
-    return in.readString();
+    String value = in.readString();
+    if (DEBUG)
+    {
+      trace("readString", value);
+    }
+
+    return value;
+  }
+
+  private void trace(String prefix, Object value)
+  {
+    if (value instanceof Byte)
+    {
+      byte opcode = (Byte)value;
+      switch (opcode)
+      {
+      case NOTHING_FOLLOWS:
+        value = "NOTHING_FOLLOWS";
+        break;
+
+      case STRING_FOLLOWS:
+        value = "STRING_FOLLOWS";
+        break;
+
+      case ACK_FOLLOWS:
+        value = "STRING_FOLLOWS";
+        break;
+      }
+    }
+
+    if (value instanceof Integer)
+    {
+      int opcode = (Integer)value;
+      if (opcode == INFO_FOLLOWS)
+      {
+        value = "INFO_FOLLOWS";
+      }
+    }
+
+    String msg = "[" + Thread.currentThread().getName() + "] " + prefix + ": " + value;
+    if (!client)
+    {
+      msg = "                                                                   " + msg;
+    }
+
+    IOUtil.OUT().println(msg);
   }
 
   /**
@@ -307,6 +381,7 @@ public class StringCompressor implements StringIO
 
     public ID(int value)
     {
+      CheckUtil.checkArg(value != INFO_FOLLOWS, "value");
       this.value = value;
     }
 

@@ -127,7 +127,7 @@ public class FeatureMapTest extends AbstractCDOTest
     tx.commit();
   }
 
-  // TTT
+  // XXX Remove me
   @Override
   public void setUp() throws Exception
   {

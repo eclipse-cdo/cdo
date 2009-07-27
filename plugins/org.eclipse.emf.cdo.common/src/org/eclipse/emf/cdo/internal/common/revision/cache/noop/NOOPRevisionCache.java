@@ -61,11 +61,6 @@ public class NOOPRevisionCache extends Lifecycle implements CDORevisionCache
     return null;
   }
 
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    return null;
-  }
-
   public boolean addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");

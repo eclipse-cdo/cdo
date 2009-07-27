@@ -92,11 +92,6 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     return getDelegate().getObjectType(id);
   }
 
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    return getDelegate().getResourceID(folderID, name, timeStamp);
-  }
-
   public CDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand)
   {
     return getDelegate().getRevision(id, referenceChunk, loadOnDemand);

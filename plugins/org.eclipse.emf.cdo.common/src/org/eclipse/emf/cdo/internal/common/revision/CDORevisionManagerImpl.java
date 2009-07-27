@@ -354,11 +354,6 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return revisions;
   }
 
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    return cache.getResourceID(folderID, name, timeStamp);
-  }
-
   private void addCachedRevisionIfNotNull(InternalCDORevision revision)
   {
     if (revision != null)

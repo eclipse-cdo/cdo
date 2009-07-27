@@ -31,8 +31,6 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_VIEWS_CHANGED = 4;
 
-  public static final short SIGNAL_RESOURCE_ID = 5;
-
   public static final short SIGNAL_LOAD_PACKAGES = 6;
 
   public static final short SIGNAL_LOAD_REVISION = 7;

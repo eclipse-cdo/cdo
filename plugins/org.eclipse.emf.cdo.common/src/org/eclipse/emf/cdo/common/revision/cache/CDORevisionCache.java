@@ -64,8 +64,6 @@ public interface CDORevisionCache extends INotifier, CDORevisionCacheAdder
    */
   public List<CDORevision> getRevisions();
 
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp);
-
   public void clear();
 
   /**

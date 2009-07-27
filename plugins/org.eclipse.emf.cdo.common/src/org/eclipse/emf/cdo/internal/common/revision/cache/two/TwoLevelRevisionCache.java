@@ -138,17 +138,6 @@ public class TwoLevelRevisionCache extends Lifecycle implements CDORevisionCache
     return revision;
   }
 
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    CDOID id = level1.getResourceID(folderID, name, timeStamp);
-    if (id == null)
-    {
-      id = level2.getResourceID(folderID, name, timeStamp);
-    }
-
-    return id;
-  }
-
   public void clear()
   {
     level1.clear();

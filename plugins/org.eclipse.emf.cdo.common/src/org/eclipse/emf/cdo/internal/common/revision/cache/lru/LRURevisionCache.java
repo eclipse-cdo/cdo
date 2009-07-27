@@ -12,8 +12,6 @@
 package org.eclipse.emf.cdo.internal.common.revision.cache.lru;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -21,12 +19,10 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -242,49 +238,11 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
     return lookupHolder != null;
   }
 
-  public synchronized CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    CDOID[] ids = getRevisionIDs();
-    for (CDOID id : ids)
-    {
-      RevisionHolder holder = getHolder(id);
-      if (holder != null)
-      {
-        InternalCDORevision revision = holder.getRevision();
-        if (revision.isResourceNode())
-        {
-          revision = getRevisionByTime(holder, timeStamp);
-          if (revision != null)
-          {
-            CDOID revisionFolderID = (CDOID)revision.getContainerID();
-            if (CDOIDUtil.equals(revisionFolderID, folderID))
-            {
-              EStructuralFeature feature = revision.getEClass().getEStructuralFeature(
-                  CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
-              String revisionName = (String)revision.getValue(feature);
-              if (ObjectUtil.equals(revisionName, name))
-              {
-                return revision.getID();
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return null;
-  }
-
   public synchronized void clear()
   {
     revisions.clear();
     currentLRU = new LRU(capacityCurrent);
     revisedLRU = new LRU(capacityRevised);
-  }
-
-  private synchronized CDOID[] getRevisionIDs()
-  {
-    return revisions.keySet().toArray(new CDOID[revisions.size()]);
   }
 
   private InternalCDORevision getRevisionByTime(RevisionHolder holder, long timeStamp)

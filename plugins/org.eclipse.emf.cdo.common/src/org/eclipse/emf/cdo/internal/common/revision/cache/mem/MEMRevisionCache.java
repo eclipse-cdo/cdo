@@ -15,7 +15,6 @@ package org.eclipse.emf.cdo.internal.common.revision.cache.mem;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -24,7 +23,6 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.KeyedPhantomReference;
 import org.eclipse.net4j.util.ref.KeyedReference;
@@ -35,7 +33,6 @@ import org.eclipse.net4j.util.ref.ReferenceQueueWorker;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.lang.ref.Reference;
 import java.text.MessageFormat;
@@ -189,35 +186,12 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     return null;
   }
 
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    CDOID[] ids = getRevisionIDs();
-    for (CDOID id : ids)
-    {
-      synchronized (cacheLists)
-      {
-        CacheList list = cacheLists.get(id);
-        if (list != null)
-        {
-          return list.getResourceID(folderID, name, timeStamp);
-        }
-      }
-    }
-
-    return null;
-  }
-
   public void clear()
   {
     synchronized (cacheLists)
     {
       cacheLists.clear();
     }
-  }
-
-  private synchronized CDOID[] getRevisionIDs()
-  {
-    return cacheLists.keySet().toArray(new CDOID[cacheLists.size()]);
   }
 
   @Override
@@ -328,27 +302,6 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     public InternalCDORevision getRevisionByTime(long timeStamp)
     {
       return getRevisionByTime(timeStamp, false);
-    }
-
-    public CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-    {
-      InternalCDORevision revision = getRevisionByTime(timeStamp, true);
-      if (revision != null)
-      {
-        CDOID revisionFolderID = (CDOID)revision.getContainerID();
-        if (CDOIDUtil.equals(revisionFolderID, folderID))
-        {
-          EStructuralFeature feature = revision.getEClass().getEStructuralFeature(
-              CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
-          String revisionName = (String)revision.getValue(feature);
-          if (ObjectUtil.equals(revisionName, name))
-          {
-            return revision.getID();
-          }
-        }
-      }
-
-      return null;
     }
 
     public void removeRevision(int version)

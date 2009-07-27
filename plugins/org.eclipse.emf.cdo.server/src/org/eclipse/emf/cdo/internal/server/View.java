@@ -13,18 +13,13 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
-import org.eclipse.net4j.util.StringUtil;
-
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -74,44 +69,6 @@ public class View implements InternalView
   {
     checkOpen();
     return repository;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public CDOID getResourceID(String path)
-  {
-    checkOpen();
-    long timeStamp = getTimeStamp();
-    CDOID resourceID = null;
-
-    StringTokenizer tokenizer = new StringTokenizer(path, "/"); //$NON-NLS-1$
-    while (tokenizer.hasMoreTokens())
-    {
-      String token = tokenizer.nextToken();
-      if (!StringUtil.isEmpty(token))
-      {
-        resourceID = getResourceID(resourceID, token, timeStamp);
-        if (resourceID == null)
-        {
-          return null;
-        }
-      }
-    }
-
-    return resourceID;
-  }
-
-  private CDOID getResourceID(CDOID folderID, String name, long timeStamp)
-  {
-    CDOID id = repository.getRevisionManager().getResourceID(folderID, name, timeStamp);
-    if (id == null)
-    {
-      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      id = accessor.readResourceID(folderID, name, timeStamp);
-    }
-
-    return id;
   }
 
   /**

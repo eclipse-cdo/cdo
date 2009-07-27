@@ -164,9 +164,6 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_VIEWS_CHANGED:
       return new ViewsChangedIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_RESOURCE_ID:
-      return new ResourceIDIndication(this);
-
     case CDOProtocolConstants.SIGNAL_LOAD_PACKAGES:
       return new LoadPackagesIndication(this);
 

@@ -50,6 +50,4 @@ public interface CDORevisionManager
 
   public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp,
       boolean loadMissingRevisions);
-
-  public CDOID getResourceID(CDOID folderID, String name, long timeStamp);
 }

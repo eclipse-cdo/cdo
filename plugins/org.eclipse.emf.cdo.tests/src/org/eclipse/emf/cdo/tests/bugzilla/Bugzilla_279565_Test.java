@@ -1,0 +1,128 @@
+/**
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.bugzilla;
+
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
+/**
+ * Invalid listener might prevent CDOTransaction to close properly
+ * <p>
+ * See https://bugs.eclipse.org/279565
+ * 
+ * @author Eike Stepper
+ */
+public class Bugzilla_279565_Test extends AbstractCDOTest
+{
+  public void testBugzilla_279565() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction tx = session.openTransaction();
+    ResourceSet resourceSet = tx.getResourceSet();
+    resourceSet.eAdapters().add(new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        throw new IllegalStateException("Simulated exception");
+      }
+    });
+
+    try
+    {
+      tx.getOrCreateResource("/test");
+      fail("IllegalStateException expected");
+    }
+    catch (IllegalStateException sucess)
+    {
+    }
+
+    tx.close();
+    sleep(1000);
+
+    // Expect only the root resource
+    assertEquals(1, resourceSet.getResources().size());
+  }
+
+  public void testBugzilla_279565_OwnResourceSet() throws Exception
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.eAdapters().add(new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        throw new IllegalStateException("Simulated exception");
+      }
+    });
+
+    CDOSession session = openSession();
+    CDOTransaction tx = session.openTransaction();
+    tx.getOrCreateResource("/test");
+    tx.close();
+
+    sleep(1000);
+    assertEquals(0, resourceSet.getResources().size());
+  }
+
+  public void testBugzilla_279565_TXListener() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction tx = session.openTransaction();
+    ResourceSet resourceSet = tx.getResourceSet();
+    tx.addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        throw new IllegalStateException("Simulated exception");
+      }
+    });
+
+    tx.getOrCreateResource("/test");
+    tx.close();
+
+    sleep(1000);
+    assertEquals(0, resourceSet.getResources().size());
+  }
+
+  public void testBugzilla_279565_AddedFromRemote() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction tx = session.openTransaction();
+    ResourceSet resourceSet = tx.getResourceSet();
+    resourceSet.eAdapters().add(new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        throw new IllegalStateException("Simulated exception");
+      }
+    });
+
+    CDOSession session2 = openSession();
+    CDOTransaction tx2 = session2.openTransaction();
+    tx2.getOrCreateResource("/test");
+    session2.close();
+
+    sleep(1000);
+    assertEquals(0, resourceSet.getResources().size());
+    tx.close();
+  }
+}

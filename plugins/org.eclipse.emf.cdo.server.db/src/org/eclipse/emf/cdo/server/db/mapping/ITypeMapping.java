@@ -8,11 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
+ *    Christopher Albert - 254455: [DB] Support FeatureMaps https://bugs.eclipse.org/bugs/show_bug.cgi?id=254455  
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
@@ -42,6 +44,12 @@ public interface ITypeMapping
   public IDBField getField();
 
   /**
+   * @return The db type which is associated with this mapping.
+   * @since 3.0
+   */
+  public DBType getDBType();
+
+  /**
    * Creates the DBField and adds it to the given table. The name of the DBField is derived from the feature.
    * 
    * @param table
@@ -59,6 +67,17 @@ public interface ITypeMapping
    *          the name for the DBField.
    */
   public void createDBField(IDBTable table, String fieldName);
+
+  /**
+   * Sets the DBField. The name of the DBField is explicitly determined by the corresponding parameter.
+   * 
+   * @param table
+   *          the table to add this field to.
+   * @param fieldName
+   *          the name for the DBField.
+   * @since 3.0
+   */
+  public void setDBField(IDBTable table, String fieldName);
 
   /**
    * Set the given value to the JDBC {@link PreparedStatement} using an appropriate <code>setXxx</code> method.

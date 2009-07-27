@@ -26,8 +26,11 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Stefan Winkler
@@ -173,6 +176,8 @@ public enum TypeMappingFactory
 
   private static Map<Pair<CDOType, DBType>, TypeMappingFactory> mappingTable = new HashMap<Pair<CDOType, DBType>, TypeMappingFactory>();
 
+  private static Set<DBType> defaultFeatureMapDBTypes;
+
   static
   {
     /* --- initialize default types --- */
@@ -237,8 +242,7 @@ public enum TypeMappingFactory
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.STRING, DBType.VARCHAR), STRING_MAPPING);
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.STRING, DBType.CLOB), STRING_MAPPING);
 
-    // preliminary
-    mappingTable.put(new Pair<CDOType, DBType>(CDOType.FEATURE_MAP_ENTRY, DBType.VARCHAR), STRING_MAPPING);
+    defaultFeatureMapDBTypes = new HashSet<DBType>(defaultTypeMap.values());
   }
 
   protected abstract ITypeMapping doCreateTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature,
@@ -297,5 +301,10 @@ public enum TypeMappingFactory
     }
 
     return DBType.VARCHAR;
+  }
+
+  public static Collection<DBType> getDefaultFeatureMapDBTypes()
+  {
+    return defaultFeatureMapDBTypes;
   }
 }

@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -395,5 +396,14 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return mapping;
   }
 
+  public final IListMapping createFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
+  {
+    checkArg(FeatureMapUtil.isFeatureMap(feature), "Only FeatureMaps allowed."); //$NON-NLS-1$
+    IListMapping mapping = doCreateFeatureMapMapping(containingClass, feature);
+    return mapping;
+  }
+
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
+
+  public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
 }

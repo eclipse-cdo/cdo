@@ -152,6 +152,19 @@ public class CDODBSchema extends DBSchema
 
   public static final String LIST_VALUE = "cdo_value"; //$NON-NLS-1$
 
+  /**
+   * Field names of featuremap tables
+   */
+  public static final String FEATUREMAP_REVISION_ID = "cdo_id"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_VERSION = "cdo_version"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_IDX = "cdo_idx"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_TAG = "cdo_tag"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_VALUE = "cdo_value"; //$NON-NLS-1$
+
   private CDODBSchema()
   {
     super("CDO"); //$NON-NLS-1$

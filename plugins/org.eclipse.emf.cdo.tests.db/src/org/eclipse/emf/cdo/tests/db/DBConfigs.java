@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
-import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -38,8 +37,5 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     // fails because of Bug 284110
     testClasses.remove(Bugzilla_258933_Test.class);
     testClasses.add(DISABLE_Bugzilla_258933_Test.class);
-
-    // fails because of Bug 254455
-    testClasses.remove(FeatureMapTest.class);
   }
 }

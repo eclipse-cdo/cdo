@@ -112,6 +112,11 @@ public abstract class TypeMapping implements ITypeMapping
     field = table.addField(fieldName, fieldType, fieldLength);
   }
 
+  public final void setDBField(IDBTable table, String fieldName)
+  {
+    field = table.getField(fieldName);
+  }
+
   public final IDBField getField()
   {
     return field;
@@ -156,7 +161,7 @@ public abstract class TypeMapping implements ITypeMapping
     return getDBType().getCode();
   }
 
-  protected DBType getDBType()
+  public DBType getDBType()
   {
     return dbType;
   }

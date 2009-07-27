@@ -40,6 +40,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -132,7 +133,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       if (feature.isMany())
       {
-        listMappings.add(mappingStrategy.createListMapping(eClass, feature));
+        if (FeatureMapUtil.isFeatureMap(feature))
+        {
+          listMappings.add(mappingStrategy.createFeatureMapMapping(eClass, feature));
+        }
+        else
+        {
+          listMappings.add(mappingStrategy.createListMapping(eClass, feature));
+        }
       }
     }
 

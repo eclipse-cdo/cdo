@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.util.om.OMPlatform;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -125,15 +123,6 @@ public class FeatureMapTest extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(pkg);
     resource.getContents().add(dummyObj);
     tx.commit();
-  }
-
-  // XXX Remove me
-  @Override
-  public void setUp() throws Exception
-  {
-    OMPlatform.INSTANCE.setDebugging(false);
-    super.setUp();
-    OMPlatform.INSTANCE.setDebugging(false);
   }
 
   public void _testAddDifferentTypes()

@@ -93,7 +93,6 @@ public class AllTestsDBHsqldb extends DBConfigs
     @Override
     protected DataSource createDataSource(String repoName)
     {
-
       HSQLDBDataSource dataSource = new HSQLDBDataSource();
       dataSource.setDatabase("jdbc:hsqldb:mem:" + repoName);
       dataSource.setUser("sa");
@@ -108,7 +107,6 @@ public class AllTestsDBHsqldb extends DBConfigs
       }
 
       dataSources.add(dataSource);
-
       return dataSource;
     }
 

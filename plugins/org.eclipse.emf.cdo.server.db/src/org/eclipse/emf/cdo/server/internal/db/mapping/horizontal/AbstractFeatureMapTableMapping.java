@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
- *    Christopher Albert - 254455: [DB] Support FeatureMaps https://bugs.eclipse.org/bugs/show_bug.cgi?id=254455  
+ *    Christopher Albert - 254455: [DB] Support FeatureMaps https://bugs.eclipse.org/bugs/show_bug.cgi?id=254455
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -253,11 +253,13 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       builder.append(fields[i].getName());
       builder.append(", "); //$NON-NLS-1$
     }
+
     for (int i = 0; i < columnNames.size(); i++)
     {
       builder.append(columnNames.get(i));
       builder.append(", "); //$NON-NLS-1$
     }
+
     builder.append(CDODBSchema.FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_TAG);
@@ -266,8 +268,8 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
     {
       builder.append("?, ");
     }
-    builder.append("?, ?)");
 
+    builder.append("?, ?)");
     sqlInsert = builder.toString();
   }
 
@@ -636,6 +638,7 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
       addFeature(tag);
       column = tagMap.get(tag);
     }
+
     return column;
   }
 
@@ -649,13 +652,13 @@ public abstract class AbstractFeatureMapTableMapping implements IListMapping
 
   protected ITypeMapping getTypeMapping(Long tag)
   {
-
     ITypeMapping typeMapping = typeMappings.get(tag);
     if (typeMapping == null)
     {
       addFeature(tag);
       typeMapping = typeMappings.get(tag);
     }
+
     return typeMapping;
   }
 

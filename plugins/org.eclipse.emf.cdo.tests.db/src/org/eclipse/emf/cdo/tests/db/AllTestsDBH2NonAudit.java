@@ -153,8 +153,8 @@ public class AllTestsDBH2NonAudit extends DBConfigs
           reusableFolder = createDBFolder();
           IOUtil.delete(reusableFolder);
         }
-        dbFolder = reusableFolder;
 
+        dbFolder = reusableFolder;
         if (defaultDataSource == null)
         {
           defaultDataSource = new JdbcDataSource();

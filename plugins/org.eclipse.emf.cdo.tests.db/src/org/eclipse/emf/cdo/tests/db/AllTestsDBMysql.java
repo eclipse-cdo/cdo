@@ -108,7 +108,6 @@ public class AllTestsDBMysql extends DBConfigs
         DBUtil.close(stmt);
         DBUtil.close(connection);
       }
-
     }
 
     @Override

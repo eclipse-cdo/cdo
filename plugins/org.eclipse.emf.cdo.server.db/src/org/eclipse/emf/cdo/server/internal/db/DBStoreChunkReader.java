@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - Bug 283998: [DB] Chunk reading for multiple chunks fails
@@ -60,6 +60,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     {
       builder.append(" OR "); //$NON-NLS-1$
     }
+
     builder.append(CDODBSchema.LIST_IDX);
     builder.append("="); //$NON-NLS-1$
     builder.append(index);

@@ -31,7 +31,6 @@ public abstract class AbstractQueryStatement<Result> extends AbstractDBAccessor
     PreparedStatement preparedStatement = null;
     try
     {
-
       preparedStatement = getPreparedStatement(connection);
       ResultSet resultSet = preparedStatement.executeQuery();
       connection.commit();

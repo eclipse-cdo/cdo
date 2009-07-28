@@ -60,7 +60,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDOClientProtocol.class);
 
-  private StringIO packageURICompressor = new StringCompressor(true);
+  private StringIO packageURICompressor = StringCompressor.BYPASS ? StringIO.DIRECT : new StringCompressor(true);
 
   public CDOClientProtocol()
   {

@@ -25,6 +25,11 @@ import java.util.Map;
  */
 public class StringCompressor implements StringIO
 {
+  /**
+   * @since 3.0
+   */
+  public static boolean BYPASS = false;
+
   private static final int NULL_ID = 0;
 
   private static final int INFO_FOLLOWS = Integer.MIN_VALUE;

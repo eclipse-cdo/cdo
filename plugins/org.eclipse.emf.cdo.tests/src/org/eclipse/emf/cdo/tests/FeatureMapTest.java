@@ -138,8 +138,8 @@ public class FeatureMapTest extends AbstractCDOTest
     fm.add(ref1, dummyObj);
     fm.add(longObj, 12345678901234567L);
     fm.add(ref2, dummyObj);
-    fm.add(bool, false);
-    fm.add(ref2, null);
+    fm.add(bool, false); // Overwrites bool=true
+    fm.add(ref2, null); // Overwrites ref2=dummyObj
 
     assertEquals(8, fm.size());
 

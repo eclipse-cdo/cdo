@@ -51,6 +51,26 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.net4j.db.derby.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.h2.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.hsqldb.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.mysql.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.db.postgresql.source"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.net4j.ui"
          version="0.0.0"/>
 
@@ -67,14 +87,15 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.doc"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.net4j.defs"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.net4j.defs.source"
          version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.doc"
+         version="0.0.0"/>
+
 </feature>

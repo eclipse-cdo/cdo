@@ -51,14 +51,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.server.hibernate"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.hibernate.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.examples"
          version="0.0.0"/>
 
@@ -84,5 +76,9 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.hibernate.source"
+         version="0.0.0"/>
 
 </feature>

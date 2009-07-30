@@ -35,13 +35,6 @@
    </url>
 
    <plugin
-         id="org.apache.derby"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.net4j.db"
          download-size="0"
          install-size="0"

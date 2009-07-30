@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
-import org.eclipse.net4j.tests.AbstractOMTest;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.ecore.resource.Resource;
 

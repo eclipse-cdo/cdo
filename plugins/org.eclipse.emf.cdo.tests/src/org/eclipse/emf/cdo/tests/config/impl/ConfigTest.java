@@ -37,11 +37,11 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 
-import org.eclipse.net4j.tests.AbstractOMTest;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.ecore.EPackage;
 

@@ -52,10 +52,15 @@ public final class CDOClassifierRef
   public CDOClassifierRef(CDODataInput in) throws IOException
   {
     String uri = in.readCDOPackageURI();
+    if (uri == null)
+    {
+      throw new IOException(Messages.getString("CDOClassifierRef.1") + uri); //$NON-NLS-1$
+    }
+
     int hash = uri.lastIndexOf(URI_SEPARATOR);
     if (hash == -1)
     {
-      throw new IOException("Invalid classifier URI: " + uri); //$NON-NLS-1$
+      throw new IOException(Messages.getString("CDOClassifierRef.1") + uri); //$NON-NLS-1$
     }
 
     packageURI = uri.substring(0, hash);

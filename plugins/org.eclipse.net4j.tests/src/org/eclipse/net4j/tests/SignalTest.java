@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
@@ -41,8 +40,8 @@ public class SignalTest extends AbstractProtocolTest
 
     try
     {
-      IConnector connector = startTransport();
-      protocol = new TestSignalProtocol(connector);
+      startTransport();
+      protocol = new TestSignalProtocol(getConnector());
       int data = 0x0a;
       int result = new IntRequest(protocol, data).send();
       assertEquals(data, result);
@@ -62,8 +61,8 @@ public class SignalTest extends AbstractProtocolTest
 
     try
     {
-      IConnector connector = startTransport();
-      protocol = new TestSignalProtocol(connector);
+      startTransport();
+      protocol = new TestSignalProtocol(getConnector());
       byte[] data = TinyData.getBytes();
       byte[] result = new ArrayRequest(protocol, data).send();
       assertEquals(true, Arrays.equals(data, result));
@@ -83,9 +82,9 @@ public class SignalTest extends AbstractProtocolTest
 
     try
     {
-      IConnector connector = startTransport();
+      startTransport();
       OMPlatform.INSTANCE.setDebugging(false);
-      protocol = new TestSignalProtocol(connector);
+      protocol = new TestSignalProtocol(getConnector());
       String data = TinyData.getText();
       for (int i = 0; i < 1000; i++)
       {
@@ -110,8 +109,8 @@ public class SignalTest extends AbstractProtocolTest
 
     try
     {
-      IConnector connector = startTransport();
-      protocol = new TestSignalProtocol(connector);
+      startTransport();
+      protocol = new TestSignalProtocol(getConnector());
 
       closeSocketChannel((TCPConnector)getAcceptor().getAcceptedConnectors()[0]);
       sleep(1000); // TODO Better timeout for server build!

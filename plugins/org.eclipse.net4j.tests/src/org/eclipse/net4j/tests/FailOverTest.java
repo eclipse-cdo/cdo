@@ -11,7 +11,6 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.failover.IFailOverStrategy;
 import org.eclipse.net4j.signal.failover.NOOPFailOverStrategy;
 import org.eclipse.net4j.signal.failover.RetryFailOverStrategy;
@@ -31,8 +30,8 @@ public class FailOverTest extends AbstractProtocolTest
   public void testFailingBefore() throws Exception
   {
     int data = 0x0a;
-    IConnector connector = startTransport();
-    IFailOverStrategy failOverStrategy = new NOOPFailOverStrategy(connector);
+    startTransport();
+    IFailOverStrategy failOverStrategy = new NOOPFailOverStrategy(getConnector());
     TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Simulate a disconnect from the server.
@@ -48,8 +47,8 @@ public class FailOverTest extends AbstractProtocolTest
   public void testFailingBeforeAndRetry() throws Exception
   {
     int data = 0x0a;
-    IConnector connector = startTransport();
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    startTransport();
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
     TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Simulate a disconnect from the server.
@@ -83,8 +82,8 @@ public class FailOverTest extends AbstractProtocolTest
   public void testFailingDuring() throws Exception
   {
     int data = 0x0a;
-    IConnector connector = startTransport();
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    startTransport();
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
     TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Exception HERE
@@ -101,8 +100,8 @@ public class FailOverTest extends AbstractProtocolTest
   public void testFailingDuring2() throws Exception
   {
     int data = 0x0a;
-    IConnector connector = startTransport();
-    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(connector);
+    startTransport();
+    IFailOverStrategy failOverStrategy = new RetryFailOverStrategy(getConnector());
     TestSignalProtocol protocol = new TestSignalProtocol(failOverStrategy);
 
     // Exception HERE

@@ -15,8 +15,8 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
@@ -69,7 +69,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
   protected IManagedContainer createContainer()
   {
-    IManagedContainer container = new ManagedContainer();
+    IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container);
     if (useJVMTransport())
     {
@@ -117,7 +117,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
     return connector;
   }
 
-  protected IConnector startTransport() throws Exception
+  protected void startTransport() throws Exception
   {
     if (container != null)
     {
@@ -126,10 +126,7 @@ public abstract class AbstractTransportTest extends AbstractOMTest
 
       IConnector connector = getConnector();
       LifecycleUtil.activate(connector);
-      return connector;
     }
-
-    return null;
   }
 
   protected void stopTransport() throws Exception

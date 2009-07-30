@@ -4,14 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.tests.bugzilla;
 
 import org.eclipse.net4j.TransportInjector;
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
@@ -60,12 +59,12 @@ public class Bugzilla241463_Test extends AbstractTransportTest
 
   public void testBugzilla241463() throws Exception
   {
-    IConnector connector = startTransport();
-    connector.setOpenChannelTimeout(2000L);
+    startTransport();
+    getConnector().setOpenChannelTimeout(2000L);
 
     try
     {
-      new TestSignalProtocol(connector);
+      new TestSignalProtocol(getConnector());
       fail("Exception expected"); //$NON-NLS-1$
     }
     catch (Exception expected)

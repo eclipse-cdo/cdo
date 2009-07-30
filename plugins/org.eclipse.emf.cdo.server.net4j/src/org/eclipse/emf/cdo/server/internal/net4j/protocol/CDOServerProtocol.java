@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -46,9 +47,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
   private IRepositoryProvider repositoryProvider;
 
-  private StringIO packageURICompressor = StringIO.DIRECT;
-
-  // private StringIO packageURICompressor = new StringCompressor(false);
+  private StringIO packageURICompressor = StringCompressor.BYPASS ? StringIO.DIRECT : new StringCompressor(false);
 
   public CDOServerProtocol(IRepositoryProvider repositoryProvider)
   {

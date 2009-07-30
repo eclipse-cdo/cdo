@@ -11,7 +11,6 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
@@ -39,8 +38,6 @@ public abstract class ChannelTest extends AbstractProtocolTest
   private static final long TIMEOUT = 20000;
 
   private static final int THREADS = 40;
-
-  private IConnector connector;
 
   private List<TestSignalProtocol> protocols;
 
@@ -253,14 +250,13 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
     protocols = null;
 
-    connector.close();
-    connector = null;
+    getConnector().close();
     super.doTearDown();
   }
 
   private TestSignalProtocol openTestSignalProtocol()
   {
-    final TestSignalProtocol protocol = new TestSignalProtocol(connector);
+    final TestSignalProtocol protocol = new TestSignalProtocol(getConnector());
     synchronized (protocols)
     {
       protocols.add(protocol);

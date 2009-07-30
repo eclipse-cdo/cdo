@@ -39,6 +39,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.net4j.db.derby"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.net4j.db.h2"
          version="0.0.0"/>
 
@@ -60,10 +64,6 @@
 
    <includes
          id="org.eclipse.emf.cdo.server.hibernate"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.db.derby"
          version="0.0.0"/>
 
 </feature>

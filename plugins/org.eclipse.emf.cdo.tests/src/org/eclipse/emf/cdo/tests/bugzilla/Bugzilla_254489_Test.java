@@ -68,16 +68,14 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
     transaction1.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(5, 200)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return companyA2Adapter.getNotifications().size() == 1;
       }
-    }.timedOut();
-
-    assertFalse(timedOut);
+    }.assertNoTimeOut();
 
     Category category2 = (Category)companyA2Adapter.getNotifications().get(0).getNewValue();
     assertNotSame(category2, category1A);

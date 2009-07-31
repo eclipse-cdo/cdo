@@ -367,7 +367,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     resource.getContents().add(order); // 1 modif + 1 attach
     resource.getContents().remove(order); // 1 modif + 1 detach
 
-    boolean timedOut = new PollingTimeOuter(200, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
@@ -375,9 +375,8 @@ public class TransactionHandlerTest extends AbstractCDOTest
         return handler.listOfAddingObject.size() == 1 && handler.listOfDetachingObject.size() == 1
             && handler.listOfModifyinObject.size() == 2;
       }
-    }.timedOut();
+    }.assertNoTimeOut();
 
-    assertEquals(false, timedOut);
     // Wait a little bit to let the async finish. It is only there to not have Transaction not active exception and
     // mislead the test.
     Thread.sleep(300);

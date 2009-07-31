@@ -59,15 +59,15 @@ public class StringCompressorTest extends AbstractOMTest
     run(10, 10);
   }
 
-  public void testBidi100() throws Exception
+  public void testBidi50() throws Exception
   {
-    run(100, 100);
+    run(50, 50);
   }
 
-  public void testBidi1Plus100() throws Exception
+  public void testBidi1Plus50() throws Exception
   {
     run(1, 1);
-    run(100, 100);
+    run(50, 50);
   }
 
   @Override
@@ -91,7 +91,6 @@ public class StringCompressorTest extends AbstractOMTest
   private void run(int toServer, int toClient) throws IOException, InterruptedException
   {
     CountDownLatch latch = new CountDownLatch(toServer + toClient);
-
     while (toServer > 0 || toClient > 0)
     {
       if (toServer > 0)
@@ -107,7 +106,7 @@ public class StringCompressorTest extends AbstractOMTest
       }
     }
 
-    latch.await(60, TimeUnit.SECONDS);
+    latch.await(300, TimeUnit.SECONDS);
   }
 
   private static String[] createStrings(int count, long seed)
@@ -229,6 +228,7 @@ public class StringCompressorTest extends AbstractOMTest
         for (int i = 0; i < indices.length; i++)
         {
           int index = indices[i];
+          msg(getName() + " --> " + i);
           compressor.write(out, strings[index]);
           if (SLEEP_WRITER > 0)
           {
@@ -275,6 +275,7 @@ public class StringCompressorTest extends AbstractOMTest
         for (int i = 0; i < indices.length; i++)
         {
           int index = indices[i];
+          msg(getName() + " --> " + i);
           String toBeRead = strings[index];
 
           String read = compressor.read(in);

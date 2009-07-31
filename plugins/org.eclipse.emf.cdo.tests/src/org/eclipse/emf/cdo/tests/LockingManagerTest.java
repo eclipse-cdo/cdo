@@ -114,16 +114,14 @@ public class LockingManagerTest extends AbstractCDOTest
     keys.add(2);
     keys.add(3);
     lockingManager.unlock(LockType.READ, 2, keys);
-    ITimeOuter timeOuter = new PollingTimeOuter(200, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return lockingManager.hasLock(LockType.WRITE, 1, 1);
       }
-    };
-
-    assertEquals(false, timeOuter.timedOut());
+    }.assertNoTimeOut();
   }
 
   public void testBasicWrongUnlock() throws Exception

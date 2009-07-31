@@ -4,9 +4,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
- *    Simon McDuff - initial API and implementation   
+ *    Simon McDuff - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
@@ -58,16 +58,14 @@ public class Bugzilla_267050_Test extends AbstractCDOTest
     res.getContents().add(specialPurchaseOrder);
     transaction.commit();
 
-    boolean timedOut = new PollingTimeOuter(10, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return newPackagesUnits[0] != null;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
 
     assertEquals(1, newPackagesUnits[0].size());
     assertEquals(getModel1Package().getNsURI(), newPackagesUnits[0].iterator().next().getTopLevelPackageInfo()

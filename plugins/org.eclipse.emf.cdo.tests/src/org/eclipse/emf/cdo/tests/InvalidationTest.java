@@ -132,7 +132,7 @@ public class InvalidationTest extends AbstractCDOTest
     transaction.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(200, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
@@ -140,9 +140,7 @@ public class InvalidationTest extends AbstractCDOTest
         String name = category1B.getName();
         return "CHANGED NAME".equals(name);
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
   }
 
   public void testSeparateViewNotification() throws Exception
@@ -242,8 +240,8 @@ public class InvalidationTest extends AbstractCDOTest
     category1A.setName("CHANGED NAME");
 
     msg("Checking before commit");
-    LockTimeOuter timeOuter = new LockTimeOuter(lock, 500);
-    boolean timedOut = timeOuter.timedOut();
+    LockTimeOuter timeOuter = new LockTimeOuter(lock);
+    boolean timedOut = timeOuter.timedOut(10000);
     assertEquals(true, timedOut);
     assertEquals(false, unlocked[0]);
 
@@ -253,7 +251,7 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Checking after commit");
     if (!unlocked[0])
     {
-      timedOut = timeOuter.timedOut();
+      timedOut = timeOuter.timedOut(10000);
       assertEquals(true, timedOut);
     }
   }
@@ -292,22 +290,27 @@ public class InvalidationTest extends AbstractCDOTest
 
     trans1.commit();
 
-    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return CDOUtil.getCDOObject(res2).cdoState() == CDOState.CONFLICT;
       }
-    };
-
-    assertEquals(false, timeOuter.timedOut());
+    }.assertNoTimeOut();
 
     final Customer customerA2 = getModel1Factory().createCustomer();
     res1.getContents().add(customerA2);
     trans1.commit();
 
-    assertEquals(false, timeOuter.timedOut());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return CDOUtil.getCDOObject(res2).cdoState() == CDOState.CONFLICT;
+      }
+    }.assertNoTimeOut();
 
     trans2.rollback();
     assertEquals(2, res1.getContents().size());
@@ -348,16 +351,14 @@ public class InvalidationTest extends AbstractCDOTest
 
     trans1.commit();
 
-    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return CDOUtil.getCDOObject(res2).cdoState() == CDOState.INVALID_CONFLICT;
       }
-    };
-
-    assertEquals(false, timeOuter.timedOut());
+    }.assertNoTimeOut();
 
     trans2.rollback();
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(res2).cdoState());
@@ -450,23 +451,28 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Changing name");
     category1A.setName("CHANGED NAME");
 
-    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    msg("Checking before commit");
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return "CHANGED NAME".equals(category1B.getName());
       }
-    };
-
-    msg("Checking before commit");
-    assertEquals(true, timeOuter.timedOut());
+    }.assertTimeOut();
 
     msg("Committing");
     transaction.commit();
 
     msg("Checking after commit");
-    assertEquals(false, timeOuter.timedOut());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME".equals(category1B.getName());
+      }
+    }.assertNoTimeOut();
   }
 
   /**
@@ -521,7 +527,7 @@ public class InvalidationTest extends AbstractCDOTest
     transactionB.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(200, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
@@ -530,9 +536,7 @@ public class InvalidationTest extends AbstractCDOTest
         String name = categoryA.getName();
         return "CHANGED NAME".equals(name);
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
   }
 
   public void testRefreshEmptyRepository() throws Exception
@@ -599,28 +603,40 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Changing name");
     category1A.setName("CHANGED NAME");
 
-    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+    msg("Checking before commit");
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return "CHANGED NAME".equals(category1B.getName());
       }
-    };
-
-    msg("Checking before commit");
-    assertEquals(true, timeOuter.timedOut());
+    }.assertTimeOut();
 
     msg("Committing");
     transaction.commit();
 
     msg("Checking after commit");
-    assertEquals(true, timeOuter.timedOut());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME".equals(category1B.getName());
+      }
+    }.assertTimeOut();
 
     assertEquals(1, sessionB.refresh().size());
 
     msg("Checking after sync");
-    assertEquals(false, timeOuter.timedOut());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return "CHANGED NAME".equals(category1B.getName());
+      }
+    }.assertNoTimeOut();
   }
 
   public void testPassiveUpdateOnAndOff() throws Exception
@@ -687,71 +703,72 @@ public class InvalidationTest extends AbstractCDOTest
     msg("Changing name");
     category1A.setName("CHANGED NAME");
 
-    ITimeOuter timeOuterB = new PollingTimeOuter(10, 100)
+    class TimeOuterB extends PollingTimeOuter
     {
       @Override
       protected boolean successful()
       {
         return "CHANGED NAME".equals(category1B.getName());
       }
-    };
+    }
 
-    ITimeOuter timeOuterC = new PollingTimeOuter(10, 100)
+    class TimeOuterC extends PollingTimeOuter
     {
       @Override
       protected boolean successful()
       {
         return "CHANGED NAME".equals(category1C.getName());
       }
-    };
+    }
 
     msg("Checking before commit");
-    assertEquals(true, timeOuterB.timedOut());
-    assertEquals(true, timeOuterC.timedOut());
+    new TimeOuterB().assertTimeOut();
+    new TimeOuterC().assertTimeOut();
 
     msg("Committing");
     transaction.commit();
 
     msg("Checking after commit");
-    assertEquals(true, timeOuterB.timedOut());
-    assertEquals(false, timeOuterC.timedOut());
+    new TimeOuterB().assertTimeOut();
+    new TimeOuterC().assertNoTimeOut();
 
     // It should refresh the session
     sessionB.options().setPassiveUpdateEnabled(true);
 
     msg("Checking after sync");
-    assertEquals(false, timeOuterB.timedOut());
-    assertEquals(false, timeOuterC.timedOut());
+    new TimeOuterB().assertNoTimeOut();
+    new TimeOuterC().assertNoTimeOut();
 
     category1A.setName("CHANGED NAME-VERSION2");
 
-    ITimeOuter timeOuterB_2 = new PollingTimeOuter(10, 100)
+    class TimeOuterB_2 extends PollingTimeOuter
     {
       @Override
       protected boolean successful()
       {
         return "CHANGED NAME-VERSION2".equals(category1B.getName());
       }
-    };
+    }
 
-    ITimeOuter timeOuterC_2 = new PollingTimeOuter(10, 100)
+    class TimeOuterC_2 extends PollingTimeOuter
     {
       @Override
       protected boolean successful()
       {
         return "CHANGED NAME-VERSION2".equals(category1C.getName());
       }
-    };
+    }
 
     msg("Checking after sync");
-    assertEquals(true, timeOuterB_2.timedOut());
-    assertEquals(true, timeOuterC_2.timedOut());
+    new TimeOuterB_2().assertTimeOut();
+    new TimeOuterC_2().assertTimeOut();
 
     msg("Committing");
     transaction.commit();
 
-    assertEquals(false, timeOuterB_2.timedOut());
-    assertEquals(false, timeOuterC_2.timedOut());
+    msg("Checking after sync");
+    new TimeOuterB_2().assertNoTimeOut();
+    new TimeOuterC_2().assertNoTimeOut();
   }
 
   public void testDetach() throws Exception
@@ -796,34 +813,39 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+
+    msg("Checking before commit");
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
       }
-    };
-
-    ITimeOuter timeOuterNotification = new PollingTimeOuter(20, 100)
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().size() == 1;
-      }
-    };
-
-    msg("Checking before commit");
-    assertEquals(true, timeOuter.timedOut());
+    }.assertTimeOut();
 
     assertEquals(0, testAdapter.getNotifications().size());
     msg("Committing");
     transaction.commit();
 
     msg("Checking after commit");
-    assertEquals(false, timeOuter.timedOut());
-    assertEquals(false, timeOuterNotification.timedOut());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
+      }
+    }.assertNoTimeOut();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return testAdapter.getNotifications().size() == 1;
+      }
+    }.assertNoTimeOut();
   }
 
   public void testDetachAndPassiveUpdate() throws Exception
@@ -880,26 +902,16 @@ public class InvalidationTest extends AbstractCDOTest
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-    ITimeOuter timeOuter = new PollingTimeOuter(20, 100)
+
+    msg("Checking before commit");
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
       }
-    };
-
-    ITimeOuter timeOuterNotification = new PollingTimeOuter(20, 100)
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().size() == 1;
-      }
-    };
-
-    msg("Checking before commit");
-    assertEquals(true, timeOuter.timedOut());
+    }.assertTimeOut();
 
     assertEquals(0, testAdapter.getNotifications().size());
     msg("Committing");
@@ -918,14 +930,37 @@ public class InvalidationTest extends AbstractCDOTest
     }
 
     msg("Checking after commit");
-    assertEquals(true, timeOuter.timedOut());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
+      }
+    }.assertTimeOut();
+
     assertEquals(0, testAdapter.getNotifications().size());
 
     sessionB.refresh();
 
     msg("Checking after commit");
-    assertEquals(false, timeOuter.timedOut());
-    assertEquals(false, timeOuterNotification.timedOut());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
+      }
+    }.assertNoTimeOut();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return testAdapter.getNotifications().size() == 1;
+      }
+    }.assertNoTimeOut();
   }
 
   /**

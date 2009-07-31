@@ -91,16 +91,15 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     transaction1.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(10, 200)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return testAdapter.getNotifications().size() == 1;
       }
-    }.timedOut();
+    }.assertNoTimeOut();
 
-    assertEquals(false, timedOut);
     assertEquals(false, ((InternalCDOTransaction)transB1).hasSubscription(companyID));
   }
 

@@ -111,16 +111,14 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     result.close();
 
-    boolean timedOut = new PollingTimeOuter(500, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
 
     CDOSession session = transaction.getSession();
     transaction.close();
@@ -137,16 +135,15 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     CDOSession session = transaction.getSession();
     transaction.close();
-    boolean timedOut = new PollingTimeOuter(500, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
       }
-    }.timedOut();
+    }.assertNoTimeOut();
 
-    assertEquals(false, timedOut);
     session.close();
   }
 
@@ -160,16 +157,14 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     transaction.getSession().close();
 
-    boolean timedOut = new PollingTimeOuter(500, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
   }
 
   public void testMEMStoreQueryAsync_UnsupportedLanguage() throws Exception

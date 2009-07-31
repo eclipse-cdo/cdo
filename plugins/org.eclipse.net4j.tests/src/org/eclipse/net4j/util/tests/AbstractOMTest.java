@@ -12,7 +12,11 @@ package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.FileLogHandler;
@@ -23,7 +27,13 @@ import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 
@@ -32,6 +42,10 @@ import junit.framework.TestResult;
  */
 public abstract class AbstractOMTest extends TestCase
 {
+  public static final long DEFAULT_TIMEOUT = 30 * 1000;
+
+  public static final long DEFAULT_TIMEOUT_EXPECTED = 2 * 1000;
+
   public static boolean SUPPRESS_OUTPUT;
 
   private static boolean consoleEnabled;
@@ -184,6 +198,38 @@ public abstract class AbstractOMTest extends TestCase
   {
   }
 
+  public static void assertEquals(Object expected, Object actual)
+  {
+    // IMPORTANT: Give possible CDOLegacyWrapper a chance for actual, too
+    if (actual != null && actual.equals(expected))
+    {
+      return;
+    }
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  public static void assertEquals(String message, Object expected, Object actual)
+  {
+    if (expected == null && actual == null)
+    {
+      return;
+    }
+
+    if (expected != null && expected.equals(actual))
+    {
+      return;
+    }
+
+    // IMPORTANT: Give possible CDOLegacyWrapper a chance for actual, too
+    if (actual != null && actual.equals(expected))
+    {
+      return;
+    }
+
+    failNotEquals(message, expected, actual);
+  }
+
   public static void sleep(long millis)
   {
     ConcurrencyUtil.sleep(millis);
@@ -194,14 +240,62 @@ public abstract class AbstractOMTest extends TestCase
     assertTrue("Not an instance of " + expected + ": " + object.getClass().getName(), expected.isInstance(object));
   }
 
-  public static void assertActive(Object object)
+  public static void assertActive(Object object) throws InterruptedException
   {
-    assertEquals(true, LifecycleUtil.isActive(object));
+    final LatchTimeOuter timeOuter = new LatchTimeOuter();
+    IListener listener = new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onActivated(ILifecycle lifecycle)
+      {
+        timeOuter.countDown();
+      }
+    };
+
+    EventUtil.addListener(object, listener);
+
+    try
+    {
+      if (LifecycleUtil.isActive(object))
+      {
+        timeOuter.countDown();
+      }
+
+      timeOuter.assertNoTimeOut();
+    }
+    finally
+    {
+      EventUtil.removeListener(object, listener);
+    }
   }
 
-  public static void assertInactive(Object object)
+  public static void assertInactive(Object object) throws InterruptedException
   {
-    assertEquals(false, LifecycleUtil.isActive(object));
+    final LatchTimeOuter timeOuter = new LatchTimeOuter();
+    IListener listener = new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        timeOuter.countDown();
+      }
+    };
+
+    EventUtil.addListener(object, listener);
+
+    try
+    {
+      if (!LifecycleUtil.isActive(object))
+      {
+        timeOuter.countDown();
+      }
+
+      timeOuter.assertNoTimeOut();
+    }
+    finally
+    {
+      EventUtil.removeListener(object, listener);
+    }
   }
 
   public static void assertSimilar(double expected, double actual, int precision)
@@ -252,5 +346,184 @@ public abstract class AbstractOMTest extends TestCase
   private static final class SkipTestException extends RuntimeException
   {
     private static final long serialVersionUID = 1L;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class AsyncResult<T>
+  {
+    private volatile T value;
+
+    private CountDownLatch latch = new CountDownLatch(1);
+
+    public AsyncResult()
+    {
+    }
+
+    public void setValue(T value)
+    {
+      this.value = value;
+      latch.countDown();
+    }
+
+    public T getValue(long timeout) throws Exception
+    {
+      if (!latch.await(timeout, TimeUnit.MILLISECONDS))
+      {
+        throw new TimeoutException("Result value not available after " + timeout + " milli seconds");
+      }
+
+      return value;
+    }
+
+    public T getValue() throws Exception
+    {
+      return getValue(DEFAULT_TIMEOUT);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static interface ITimeOuter
+  {
+    public boolean timedOut(long timeoutMillis) throws InterruptedException;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class TimeOuter implements ITimeOuter
+  {
+    public boolean timedOut() throws InterruptedException
+    {
+      return timedOut(DEFAULT_TIMEOUT);
+    }
+
+    public void assertTimeOut(long timeoutMillis) throws InterruptedException
+    {
+      assertEquals("Timeout expected", true, timedOut(timeoutMillis));
+    }
+
+    public void assertTimeOut() throws InterruptedException
+    {
+      assertTimeOut(DEFAULT_TIMEOUT_EXPECTED);
+    }
+
+    public void assertNoTimeOut(long timeoutMillis) throws InterruptedException
+    {
+      assertEquals(false, timedOut(timeoutMillis));
+    }
+
+    public void assertNoTimeOut() throws InterruptedException
+    {
+      assertNoTimeOut(DEFAULT_TIMEOUT);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class PollingTimeOuter extends TimeOuter
+  {
+    private static final long SLEEP_MILLIS = 100;
+
+    public PollingTimeOuter()
+    {
+    }
+
+    public boolean timedOut(long timeoutMillis) throws InterruptedException
+    {
+      int retries = (int)Math.round(timeoutMillis / SLEEP_MILLIS + .5d);
+      for (int i = 0; i < retries; i++)
+      {
+        if (successful())
+        {
+          return false;
+        }
+
+        sleep(SLEEP_MILLIS);
+      }
+
+      return true;
+    }
+
+    protected abstract boolean successful();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class LockTimeOuter extends TimeOuter
+  {
+    private Lock lock;
+
+    public LockTimeOuter(Lock lock)
+    {
+      this.lock = lock;
+    }
+
+    public Lock getLock()
+    {
+      return lock;
+    }
+
+    public boolean timedOut(long timeoutMillis) throws InterruptedException
+    {
+      Condition condition = lock.newCondition();
+      return !condition.await(timeoutMillis, TimeUnit.MILLISECONDS);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class LatchTimeOuter extends TimeOuter
+  {
+    private CountDownLatch latch;
+
+    public LatchTimeOuter(CountDownLatch latch)
+    {
+      this.latch = latch;
+    }
+
+    public LatchTimeOuter(int count)
+    {
+      this(new CountDownLatch(count));
+    }
+
+    public LatchTimeOuter()
+    {
+      this(1);
+    }
+
+    public CountDownLatch getLatch()
+    {
+      return latch;
+    }
+
+    public long getCount()
+    {
+      return latch.getCount();
+    }
+
+    public void countDown()
+    {
+      latch.countDown();
+    }
+
+    public void countDown(int n)
+    {
+      for (int i = 0; i < n; i++)
+      {
+        countDown();
+      }
+    }
+
+    public boolean timedOut(long timeoutMillis) throws InterruptedException
+    {
+      return !latch.await(timeoutMillis, TimeUnit.MILLISECONDS);
+    }
   }
 }

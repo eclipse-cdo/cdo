@@ -105,7 +105,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Thread.sleep(1000);
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(10, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
@@ -113,9 +113,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
         return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || policy == null
             && adapter.getNotifications().size() == 0;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
 
     // Switching policy to the other
     transaction.options().removeChangeSubscriptionPolicy(policy);
@@ -140,7 +138,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Thread.sleep(1000);
 
     msg("Checking after commit");
-    timedOut = new PollingTimeOuter(10, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
@@ -148,9 +146,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
         return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || enabled2 == null
             && adapter.getNotifications().size() == 0;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
   }
 
   public void testSeparateSession() throws Exception
@@ -220,7 +216,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction2.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(10, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
@@ -228,9 +224,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
         return policy == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || policy == null
             && adapter.getNotifications().size() == 0;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
 
     // Switching policy to the other
     transaction.options().removeChangeSubscriptionPolicy(policy);
@@ -251,7 +245,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction2.commit();
 
     msg("Checking after commit");
-    timedOut = new PollingTimeOuter(10, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
@@ -259,9 +253,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
         return enabled2 == CDOAdapterPolicy.ALL && adapter.getNotifications().size() == 1 || enabled2 == null
             && adapter.getNotifications().size() == 0;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
   }
 
   public void testTemporaryObject() throws Exception
@@ -319,16 +311,14 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction2.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(10, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return adapter.getNotifications().size() == 1;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
   }
 
   public void testSeparateSession_CUSTOM() throws Exception
@@ -394,16 +384,14 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction2.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(5, 200)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return adapter.getNotifications().size() == 1;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
 
     // Switching policy to the other
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
@@ -420,16 +408,14 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction2.commit();
 
     msg("Checking after commit");
-    timedOut = new PollingTimeOuter(10, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return adapter.getNotifications().size() == 2;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
   }
 
   public void testNotificationChain() throws Exception
@@ -492,16 +478,15 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction2.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(5, 200)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return adapter.getNotifications().size() == 3;
       }
-    }.timedOut();
+    }.assertNoTimeOut();
 
-    assertEquals(false, timedOut);
     int count = 0;
     for (Notification notification : adapter.getNotifications())
     {

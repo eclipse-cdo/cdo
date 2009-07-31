@@ -37,7 +37,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     sleep(100);
 
     correlator.put("eike", true); //$NON-NLS-1$
-    consumer.join(1000);
+    consumer.join(DEFAULT_TIMEOUT);
     assertEquals(Boolean.TRUE, result[0]);
   }
 

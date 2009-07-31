@@ -90,16 +90,14 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
     transaction.commit();
 
     msg("Checking after commit");
-    boolean timedOut = new PollingTimeOuter(200, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return counter.getNotifications().size() == 1;
       }
-    }.timedOut();
-
-    assertEquals(false, timedOut);
+    }.assertNoTimeOut();
 
     /********* transaction 2 ***************/
     EMap<String, EObject> mapOfEObjectAfterCommit = genRefMap.getElements();

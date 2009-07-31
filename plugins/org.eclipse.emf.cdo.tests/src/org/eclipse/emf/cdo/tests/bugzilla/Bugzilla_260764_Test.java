@@ -71,16 +71,15 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
     assertEquals(0, adapter.getNotifications().size());
     transaction2.commit();
 
-    boolean timedOut = new PollingTimeOuter(5, 200)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return adapter.getNotifications().size() == 1;
       }
-    }.timedOut();
+    }.assertNoTimeOut();
 
-    assertEquals(false, timedOut);
     CDODeltaNotification cdoNotification = (CDODeltaNotification)adapter.getNotifications().get(0);
     assertEquals(false, cdoNotification.hasNext());
     assertEquals(getModel1Package().getOrder_OrderDetails(), cdoNotification.getFeature());

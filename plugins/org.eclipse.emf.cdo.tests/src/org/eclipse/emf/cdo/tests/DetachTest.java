@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -350,17 +350,16 @@ public class DetachTest extends AbstractCDOTest
     assertTrue(transaction1.isDirty());
     transaction1.commit();
 
-    boolean timedOut = new PollingTimeOuter(20, 100)
+    new PollingTimeOuter()
     {
       @Override
       protected boolean successful()
       {
         return rSet2.getResources().size() == 0;
       }
-    }.timedOut();
+    }.assertNoTimeOut();
 
     assertEquals(1, rSet1.getResources().size());
-    assertEquals(false, timedOut);
     assertTransient(res);
     assertInvalid(res2);
   }

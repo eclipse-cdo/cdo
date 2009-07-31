@@ -199,33 +199,16 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
-  public void handleRemoteSessionSubscribed(int sessionID, final boolean subscribed)
+  public void handleRemoteSessionSubscribed(int sessionID, boolean subscribed)
   {
     IEvent event = null;
     synchronized (this)
     {
-      final CDORemoteSessionManager source = this;
-      final InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
+      InternalCDORemoteSession remoteSession = (InternalCDORemoteSession)remoteSessions.get(sessionID);
       if (remoteSession != null)
       {
         remoteSession.setSubscribed(subscribed);
-        event = new CDORemoteSessionEvent.SubscriptionChanged()
-        {
-          public CDORemoteSessionManager getSource()
-          {
-            return source;
-          }
-
-          public CDORemoteSession getRemoteSession()
-          {
-            return remoteSession;
-          }
-
-          public boolean isSubscribed()
-          {
-            return subscribed;
-          }
-        };
+        event = new SubscriptionChangedEventImpl(remoteSession, subscribed);
       }
     }
 
@@ -365,6 +348,41 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     public CDORemoteSessionManager getSource()
     {
       return (CDORemoteSessionManager)super.getSource();
+    }
+
+    public boolean isSubscribed()
+    {
+      return subscribed;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SubscriptionChangedEventImpl extends Event implements CDORemoteSessionEvent.SubscriptionChanged
+  {
+    private static final long serialVersionUID = 1L;
+
+    private InternalCDORemoteSession remoteSession;
+
+    private boolean subscribed;
+
+    public SubscriptionChangedEventImpl(InternalCDORemoteSession remoteSession, boolean subscribed)
+    {
+      super(CDORemoteSessionManagerImpl.this);
+      this.remoteSession = remoteSession;
+      this.subscribed = subscribed;
+    }
+
+    @Override
+    public CDORemoteSessionManager getSource()
+    {
+      return (CDORemoteSessionManager)super.getSource();
+    }
+
+    public CDORemoteSession getRemoteSession()
+    {
+      return remoteSession;
     }
 
     public boolean isSubscribed()

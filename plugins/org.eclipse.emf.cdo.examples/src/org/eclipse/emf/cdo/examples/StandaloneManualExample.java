@@ -4,18 +4,18 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.examples;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.examples.company.CompanyFactory;
+import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.FactoriesProtocolProvider;
@@ -87,7 +87,7 @@ public class StandaloneManualExample
 
     // Open session
     CDOSession session = configuration.openSession();
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
 
     // Open transaction
     CDOTransaction transaction = session.openTransaction();
@@ -96,7 +96,7 @@ public class StandaloneManualExample
     CDOResource resource = transaction.getOrCreateResource("/path/to/my/resource"); //$NON-NLS-1$
 
     // Work with the resource and commit the transaction
-    EObject object = Model1Factory.eINSTANCE.createCompany();
+    EObject object = CompanyFactory.eINSTANCE.createCompany();
     resource.getContents().add(object);
     transaction.commit();
 

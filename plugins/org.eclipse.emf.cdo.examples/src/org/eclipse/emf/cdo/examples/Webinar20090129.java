@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.examples;
 
-import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.examples.company.Company;
+import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 public class Webinar20090129
 {
-  private static final EPackage MODEL = Model1Package.eINSTANCE;
+  private static final EPackage MODEL = CompanyPackage.eINSTANCE;
 
   public static void xmlSetup() throws IOException
   {

@@ -73,10 +73,9 @@ public abstract class ChannelTest extends AbstractProtocolTest
     assertInactive(protocol);
     assertInactive(channel);
 
-    sleep(50);
-    assertEquals(0, serverConnector.getChannels().size());
     assertInactive(serverChannel);
     assertInactive(serverProtocol);
+    assertEquals(0, serverConnector.getChannels().size());
 
     Set<ILifecycle> deactivatedSet = deactivationListener.getDeactivatedSet();
     assertEquals(true, deactivatedSet.contains(channel));

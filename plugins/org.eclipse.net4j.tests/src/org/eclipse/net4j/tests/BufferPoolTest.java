@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -55,7 +55,7 @@ public class BufferPoolTest extends AbstractOMTest
 
     while (Net4jUtil.getPooledBuffers(bufferPool) > 0 && allocate())
     {
-      sleep(200);
+      sleep(100);
       ReflectUtil.dump(bufferPool);
     }
 

@@ -31,9 +31,9 @@ public class StringCompressorTest extends AbstractOMTest
 
   private static long SLEEP_READER = 0;
 
-  private static final String[] strings = createStrings(500, 837456);
+  private static final String[] strings = createStrings(50, 837456);
 
-  private static final int[] indices = createIndices(10000, 500, 9087346);
+  private static final int[] indices = createIndices(100, 50, 9087346);
 
   private StringCompressor.Counting client;
 
@@ -59,15 +59,10 @@ public class StringCompressorTest extends AbstractOMTest
     run(10, 10);
   }
 
-  public void testBidi50() throws Exception
-  {
-    run(50, 50);
-  }
-
-  public void testBidi1Plus50() throws Exception
+  public void testBidi1Plus10() throws Exception
   {
     run(1, 1);
-    run(50, 50);
+    run(10, 10);
   }
 
   @Override

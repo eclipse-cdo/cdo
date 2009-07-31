@@ -34,6 +34,19 @@
       <discovery label="%emftUpdateSiteName" url="http://download.eclipse.org/modeling/emft/updates/"/>
    </url>
 
+   <plugin
+         id="org.eclipse.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.ant.optional.junit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
    <includes
          id="org.eclipse.net4j.tests"
          version="0.0.0"/>

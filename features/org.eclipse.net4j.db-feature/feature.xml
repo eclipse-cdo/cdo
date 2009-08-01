@@ -5,7 +5,7 @@
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
 	http://www.eclipse.org/legal/epl-v10.html
-	
+
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
@@ -35,14 +35,14 @@
    </url>
 
    <plugin
-         id="org.eclipse.net4j.db"
+         id="org.eclipse.net4j.util"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.net4j.db.derby"
+         id="org.eclipse.net4j.db"
          download-size="0"
          install-size="0"
          version="0.0.0"

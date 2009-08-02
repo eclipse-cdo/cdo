@@ -47,7 +47,16 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
   public void testSingleThreadNoData() throws Exception
   {
-    final DeactivationListener deactivationListener = new DeactivationListener();
+    final LatchTimeOuter timeOuter = new LatchTimeOuter(4);
+    final DeactivationListener deactivationListener = new DeactivationListener()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        super.onDeactivated(lifecycle);
+        timeOuter.countDown();
+      }
+    };
 
     TestSignalProtocol protocol = openTestSignalProtocol();
     protocol.addListener(deactivationListener);
@@ -77,6 +86,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
     assertInactive(serverProtocol);
     assertEquals(0, serverConnector.getChannels().size());
 
+    timeOuter.assertNoTimeOut();
     Set<ILifecycle> deactivatedSet = deactivationListener.getDeactivatedSet();
     assertEquals(true, deactivatedSet.contains(channel));
     assertEquals(true, deactivatedSet.contains(protocol));
@@ -280,7 +290,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
   /**
    * @author Eike Stepper
    */
-  private static final class DeactivationListener extends LifecycleEventAdapter
+  private static class DeactivationListener extends LifecycleEventAdapter
   {
     private Set<ILifecycle> deactivatedSet = new HashSet<ILifecycle>();
 
@@ -296,7 +306,11 @@ public abstract class ChannelTest extends AbstractProtocolTest
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
-      deactivatedSet.add(lifecycle);
+      synchronized (deactivatedSet)
+      {
+        deactivatedSet.add(lifecycle);
+        deactivatedSet.notifyAll();
+      }
     }
   }
 

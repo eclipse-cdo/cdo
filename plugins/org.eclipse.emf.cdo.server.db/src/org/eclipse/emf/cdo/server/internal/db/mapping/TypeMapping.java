@@ -11,6 +11,7 @@
  *    Stefan Winkler - bug 275303: [DB] DBStore does not handle BIG_INTEGER and BIG_DECIMAL
  *    Kai Schlamp - bug 282976: [DB] Influence Mappings through EAnnotations
  *    Stefan Winkler - bug 282976: [DB] Influence Mappings through EAnnotations
+ *    Stefan Winkler - bug 285270: [DB] Support XSD based models
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -31,6 +32,8 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.math.BigDecimal;
@@ -521,6 +524,42 @@ public abstract class TypeMapping implements ITypeMapping
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
       stmt.setString(index, ((BigDecimal)value).toPlainString());
+    }
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  public static class TMCustom extends TypeMapping
+  {
+    private EDataType dataType;
+
+    private EFactory factory;
+
+    public TMCustom(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
+    {
+      super(mappingStrategy, feature, type);
+      dataType = (EDataType)getFeature().getEType();
+      factory = dataType.getEPackage().getEFactoryInstance();
+    }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      String svalue = factory.convertToString(dataType, value);
+      stmt.setString(index, svalue);
+    }
+
+    @Override
+    protected Object getResultSetValue(ResultSet resultSet, int column) throws SQLException
+    {
+      String val = resultSet.getString(column);
+      if (resultSet.wasNull())
+      {
+        return null;
+      }
+
+      return factory.createFromString(dataType, val);
     }
   }
 }

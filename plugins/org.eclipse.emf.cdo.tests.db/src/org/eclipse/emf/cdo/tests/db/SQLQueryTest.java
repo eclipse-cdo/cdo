@@ -8,6 +8,8 @@
  * Contributors:
  *    Kai Schlamp - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Kai Schlamp - Bug 284812: [DB] Query non CDO object fails
+ *    Stefan Winkler - Bug 284812: [DB] Query non CDO object fails
  */
 package org.eclipse.emf.cdo.tests.db;
 
@@ -211,9 +213,55 @@ public class SQLQueryTest extends AbstractCDOTest
     enableConsole();
   }
 
+  public void testNonCdoObjectQueries() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    createTestSet(session);
+
+    msg("Opening transaction for querying");
+    CDOTransaction transaction = session.openTransaction();
+
+    {
+      msg("Query for customer street strings.");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT STREET FROM REPO1.CUSTOMER");
+      cdoQuery.setParameter("cdoObjectQuery", false);
+      List<String> streets = new ArrayList<String>(cdoQuery.getResult(String.class));
+      for (int i = 0; i < 5; i++)
+      {
+        assertTrue(streets.contains("Street " + i));
+      }
+    }
+  }
+
+  public void testNonCdoObjectQueries_Null() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openModel1Session();
+
+    createTestSet(session);
+
+    msg("Opening transaction for querying");
+    CDOTransaction transaction = session.openTransaction();
+
+    {
+      msg("Query for customer city strings.");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CITY FROM REPO1.CUSTOMER");
+      cdoQuery.setParameter("cdoObjectQuery", false);
+      List<String> cities = new ArrayList<String>(cdoQuery.getResult(String.class));
+
+      assertTrue(cities.contains(null));
+      for (int i = 1; i < 5; i++)
+      {
+        assertTrue(cities.contains("City " + i));
+      }
+    }
+  }
+
   private void createTestSet(CDOSession session)
   {
-    disableConsole();
+    // disableConsole();
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
 
@@ -242,7 +290,16 @@ public class SQLQueryTest extends AbstractCDOTest
     for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
     {
       final Customer customer = getModel1Factory().createCustomer();
-      customer.setCity("City " + i);
+
+      if (i == 0)
+      {
+        // set first city null for null-test-case
+        customer.setCity(null);
+      }
+      else
+      {
+        customer.setCity("City " + i);
+      }
       customer.setName(i + "");
       customer.setStreet("Street " + i);
       resource.getContents().add(customer);

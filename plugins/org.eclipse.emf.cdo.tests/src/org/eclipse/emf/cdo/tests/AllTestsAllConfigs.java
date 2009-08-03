@@ -105,6 +105,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
     testClasses.add(FeatureMapTest.class);
     testClasses.add(AdapterManagerTest.class);
     testClasses.add(ConflictResolverTest.class);
+    testClasses.add(DynamicXSDTest.class);
 
     // Specific for MEMStore
     testClasses.add(MEMStoreQueryTest.class);

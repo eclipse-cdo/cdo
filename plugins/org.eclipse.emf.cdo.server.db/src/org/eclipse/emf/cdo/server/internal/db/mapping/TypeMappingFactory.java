@@ -8,6 +8,7 @@
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Stefan Winkler - bug 285270: [DB] Support XSD based models
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -170,6 +171,15 @@ public enum TypeMappingFactory
     {
       return new TypeMapping.TMBytes(mappingStrategy, feature, type);
     }
+  },
+
+  CUSTOM_MAPPING
+  {
+    @Override
+    public ITypeMapping doCreateTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType type)
+    {
+      return new TypeMapping.TMCustom(mappingStrategy, feature, type);
+    }
   };
 
   private static Map<EClassifier, DBType> defaultTypeMap = new HashMap<EClassifier, DBType>();
@@ -242,6 +252,9 @@ public enum TypeMappingFactory
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.STRING, DBType.VARCHAR), STRING_MAPPING);
     mappingTable.put(new Pair<CDOType, DBType>(CDOType.STRING, DBType.CLOB), STRING_MAPPING);
 
+    mappingTable.put(new Pair<CDOType, DBType>(CDOType.CUSTOM, DBType.VARCHAR), CUSTOM_MAPPING);
+    mappingTable.put(new Pair<CDOType, DBType>(CDOType.CUSTOM, DBType.CLOB), CUSTOM_MAPPING);
+
     defaultFeatureMapDBTypes = new HashSet<DBType>(defaultTypeMap.values());
   }
 
@@ -300,6 +313,7 @@ public enum TypeMappingFactory
       return dbType;
     }
 
+    // Fallback (e.g., for CUSTOM types)
     return DBType.VARCHAR;
   }
 

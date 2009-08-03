@@ -300,6 +300,7 @@ public class SQLQueryTest extends AbstractCDOTest
       {
         customer.setCity("City " + i);
       }
+
       customer.setName(i + "");
       customer.setStreet("Street " + i);
       resource.getContents().add(customer);

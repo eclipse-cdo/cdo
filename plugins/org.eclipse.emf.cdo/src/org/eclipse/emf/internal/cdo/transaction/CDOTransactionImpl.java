@@ -1399,6 +1399,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             session.handleCommitNotification(timeStamp, newPackageUnits, dirtyIDs, detachedIDs, deltasCopy,
                 getTransaction());
           }
+          else
+          {
+            session.setLastUpdateTime(timeStamp);
+          }
 
           lastCommitTime = timeStamp;
           for (CDOTransactionHandler handler : getHandlers())

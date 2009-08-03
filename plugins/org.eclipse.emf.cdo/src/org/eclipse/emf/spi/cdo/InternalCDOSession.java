@@ -85,6 +85,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
 
   public void setUserID(String userID);
 
+  /**
+   * @since 3.0
+   */
+  public void setLastUpdateTime(long lastUpdateTime);
+
   public void viewDetached(InternalCDOView view);
 
   /**

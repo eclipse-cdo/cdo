@@ -99,6 +99,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
+  private static final long NO_TIMEOUT = -1;
+
   private InternalCDOSessionConfiguration configuration;
 
   private ExceptionHandler exceptionHandler;
@@ -119,6 +121,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private String userID;
 
+  private long lastUpdateTime;
+
+  @ExcludeFromDump
+  private Object lastUpdateTimeLock = new Object();
+
   private CDOSession.Options options = createOptions();
 
   private CDORepositoryInfo repositoryInfo;
@@ -137,13 +144,13 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
   @ExcludeFromDump
-  private transient QueueRunner invalidationRunner;
+  private QueueRunner invalidationRunner;
 
   @ExcludeFromDump
-  private transient Object invalidationRunnerLock = new Object();
+  private Object invalidationRunnerLock = new Object();
 
   @ExcludeFromDump
-  private transient int lastViewID;
+  private int lastViewID;
 
   public CDOSessionImpl(InternalCDOSessionConfiguration configuration)
   {
@@ -480,6 +487,58 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return Collections.emptyList();
   }
 
+  public long getLastUpdateTime()
+  {
+    synchronized (lastUpdateTimeLock)
+    {
+      return lastUpdateTime;
+    }
+  }
+
+  public void setLastUpdateTime(long lastUpdateTime)
+  {
+    synchronized (lastUpdateTimeLock)
+    {
+      this.lastUpdateTime = lastUpdateTime;
+      lastUpdateTimeLock.notifyAll();
+    }
+  }
+
+  public void waitForUpdate(long updateTime)
+  {
+    waitForUpdate(updateTime, NO_TIMEOUT);
+  }
+
+  public boolean waitForUpdate(long updateTime, long timeoutMillis)
+  {
+    long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
+    for (;;)
+    {
+      synchronized (lastUpdateTimeLock)
+      {
+        if (lastUpdateTime >= updateTime)
+        {
+          return true;
+        }
+
+        long now = System.currentTimeMillis();
+        if (now >= end)
+        {
+          return false;
+        }
+
+        try
+        {
+          lastUpdateTimeLock.wait(end - now);
+        }
+        catch (InterruptedException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    }
+  }
+
   /**
    * @since 3.0
    */
@@ -600,6 +659,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
+    setLastUpdateTime(timeStamp);
     fireInvalidationEvent(timeStamp, newPackageUnits, dirtyOIDs, detachedObjects, excludedView);
   }
 

@@ -90,7 +90,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   {
     try
     {
-      if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty() || packageUnits.length > 0)
+      // if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty() || packageUnits.length > 0)
       {
         IChannel channel = getChannel();
         if (LifecycleUtil.isActive(channel))

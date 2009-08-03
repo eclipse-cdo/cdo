@@ -14,8 +14,10 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.UserManager;
@@ -36,6 +38,81 @@ public class SessionTest extends AbstractCDOTest
     CDOSession session = openSession();
     assertEquals(getRepository().isSupportingAudits(), session.getRepositoryInfo().isSupportingAudits());
     session.close();
+  }
+
+  public void testLastUpdateLocal() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.createResource("ttt");
+    transaction.commit();
+
+    waitForUpdate(transaction.getLastCommitTime(), session);
+    session.close();
+  }
+
+  public void testLastUpdateRemote() throws Exception
+  {
+    CDOSession session1 = openSession();
+    final CDOTransaction transaction = session1.openTransaction();
+    transaction.createResource("ttt");
+    transaction.commit();
+
+    final CDOSession session2 = openSession();
+    waitForUpdate(transaction.getLastCommitTime(), session2);
+
+    transaction.createResource("xxx");
+    transaction.commit();
+    waitForUpdate(transaction.getLastCommitTime(), session2);
+
+    session1.close();
+    session2.close();
+  }
+
+  private void waitForUpdate(final long updateTime, final CDOSession session) throws InterruptedException
+  {
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return updateTime == session.getLastUpdateTime();
+      }
+    }.assertNoTimeOut();
+  }
+
+  public void testWaitForUpdateLocal() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.createResource("ttt");
+    transaction.commit();
+
+    assertEquals(true, session.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT));
+    session.close();
+  }
+
+  public void testWaitForUpdateRemote() throws Exception
+  {
+    final CDOTransaction transaction = openSession().openTransaction();
+    transaction.createResource("ttt");
+
+    new Thread()
+    {
+      @Override
+      public void run()
+      {
+        ConcurrencyUtil.sleep(4000);
+        msg("Committing NOW!");
+        transaction.commit();
+      };
+    }.start();
+
+    CDOSession session2 = openSession();
+    assertEquals(true, session2.waitForUpdate(System.currentTimeMillis() + 2000L, DEFAULT_TIMEOUT));
+
+    transaction.getSession().close();
+    session2.close();
   }
 
   public void testNoAuthentication() throws Exception

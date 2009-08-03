@@ -139,6 +139,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
 
     private long repositoryCreationTime;
 
+    private long lastUpdateTime;
+
     private RepositoryTimeResult repositoryTimeResult;
 
     private boolean repositorySupportingAudits;
@@ -148,12 +150,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
     /**
      * @since 3.0
      */
-    public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime,
+    public OpenSessionResult(int sessionID, String repositoryUUID, long repositoryCreationTime, long lastUpdateTime,
         boolean repositorySupportingAudits)
     {
       this.sessionID = sessionID;
       this.repositoryUUID = repositoryUUID;
       this.repositoryCreationTime = repositoryCreationTime;
+      this.lastUpdateTime = lastUpdateTime;
       this.repositorySupportingAudits = repositorySupportingAudits;
     }
 
@@ -185,6 +188,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
     public void setRepositoryTimeResult(RepositoryTimeResult repositoryTimeResult)
     {
       this.repositoryTimeResult = repositoryTimeResult;
+    }
+
+    /**
+     * @since 3.0
+     */
+    public long getLastUpdateTime()
+    {
+      return lastUpdateTime;
     }
 
     public List<InternalCDOPackageUnit> getPackageUnits()
@@ -268,7 +279,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, Revision
     {
       return MessageFormat
           .format(
-              "RepositoryTime[requested={0,date} {0,time}, indicated={1,date} {1,time}, responded={2,date} {2,time}, confirmed={3,date} {3,time}]", //$NON-NLS-1$
+              "RepositoryTime[requested={0,date} {0,time}, indicated={1,date} {1,time}, responded={2,date} {2,time}, confirmed={3,date} {3,time}]",
               requested, indicated, responded, confirmed);
     }
   }

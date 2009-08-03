@@ -107,6 +107,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
 
       out.writeString(repository.getUUID());
       out.writeLong(repository.getCreationTime());
+      out.writeLong(repository.getLastCommitTimeStamp());
       out.writeBoolean(repository.isSupportingAudits());
 
       CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();

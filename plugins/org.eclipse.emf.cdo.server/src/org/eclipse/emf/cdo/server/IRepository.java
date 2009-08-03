@@ -78,6 +78,13 @@ public interface IRepository extends IContainer<Object>, IQueryHandlerProvider
   public long getCreationTime();
 
   /**
+   * Returns the time stamp of the last commit operation.
+   * 
+   * @since 3.0
+   */
+  public long getLastCommitTimeStamp();
+
+  /**
    * Validates the given timeStamp against the repository time.
    * 
    * @throws IllegalArgumentException

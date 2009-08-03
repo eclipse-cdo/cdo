@@ -82,6 +82,8 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
     session.setSessionProtocol(protocol);
     protocol.activate();
     protocol.openSession(isPassiveUpdateEnabled());
+
+    session.setLastUpdateTime(repository.getLastCommitTimeStamp());
     session.setRepositoryInfo(new RepositoryInfo());
 
     revisionManager = new CDORevisionManagerImpl();

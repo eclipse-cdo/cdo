@@ -504,6 +504,14 @@ public class Repository extends Container<Object> implements InternalRepository
     this.lockManager = lockManager;
   }
 
+  public long getLastCommitTimeStamp()
+  {
+    synchronized (lastCommitTimeStampLock)
+    {
+      return lastCommitTimeStamp;
+    }
+  }
+
   /**
    * @since 2.0
    */

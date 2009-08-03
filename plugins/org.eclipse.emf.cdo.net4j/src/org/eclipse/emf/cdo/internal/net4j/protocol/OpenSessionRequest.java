@@ -99,13 +99,20 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       TRACER.format("Read repositoryCreationTime: {0,date} {0,time}", repositoryCreationTime); //$NON-NLS-1$
     }
 
+    long lastUpdateTime = in.readLong();
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read lastUpdateTime: {0,date} {0,time}", lastUpdateTime); //$NON-NLS-1$
+    }
+
     boolean repositorySupportingAudits = in.readBoolean();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read repositorySupportingAudits: {0}", repositorySupportingAudits); //$NON-NLS-1$
     }
 
-    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, repositorySupportingAudits);
+    result = new OpenSessionResult(sessionID, repositoryUUID, repositoryCreationTime, lastUpdateTime,
+        repositorySupportingAudits);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
     for (int i = 0; i < packageUnits.length; i++)

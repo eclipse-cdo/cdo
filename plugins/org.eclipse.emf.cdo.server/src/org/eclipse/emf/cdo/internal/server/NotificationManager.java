@@ -57,27 +57,30 @@ public class NotificationManager extends Lifecycle implements InternalNotificati
     int dirtyIDSize = arrayOfDeltas == null ? 0 : arrayOfDeltas.length;
     int detachedObjectsSize = arrayOfDetachedObjects == null ? 0 : arrayOfDetachedObjects.length;
 
-    if (dirtyIDSize > 0 || detachedObjectsSize > 0 || arrayOfNewPackageUnit.length > 0)
+    InternalSessionManager sessionManager = repository.getSessionManager();
+    List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(dirtyIDSize);
+    List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
+    List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(dirtyIDSize);
+    if (dirtyIDSize > 0 || detachedObjectsSize > 0)
     {
-      List<CDOIDAndVersion> dirtyIDs = new ArrayList<CDOIDAndVersion>(dirtyIDSize);
-      List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(dirtyIDSize);
       for (int i = 0; i < dirtyIDSize; i++)
       {
         CDORevisionDelta delta = arrayOfDeltas[i];
         CDOIDAndVersion dirtyIDAndVersion = CDOIDUtil.createIDAndVersion(delta.getID(), delta.getOriginVersion());
         dirtyIDs.add(dirtyIDAndVersion);
+
+        // TODO Avoid creating a temp list
         deltas.add(delta);
       }
 
-      List<CDOID> detachedObjects = new ArrayList<CDOID>(detachedObjectsSize);
       for (int i = 0; i < detachedObjectsSize; i++)
       {
+        // TODO Avoid creating a temp list
         detachedObjects.add(arrayOfDetachedObjects[i]);
       }
-
-      InternalSessionManager sessionManager = repository.getSessionManager();
-      sessionManager.handleCommitNotification(commitContext.getTimeStamp(), arrayOfNewPackageUnit, dirtyIDs,
-          detachedObjects, deltas, session);
     }
+
+    sessionManager.handleCommitNotification(commitContext.getTimeStamp(), arrayOfNewPackageUnit, dirtyIDs,
+        detachedObjects, deltas, session);
   }
 }

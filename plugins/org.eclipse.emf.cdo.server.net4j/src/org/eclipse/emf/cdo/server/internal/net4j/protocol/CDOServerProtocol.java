@@ -90,18 +90,15 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   {
     try
     {
-      // if (!dirtyIDs.isEmpty() || !newDeltas.isEmpty() || !detachedObjects.isEmpty() || packageUnits.length > 0)
+      IChannel channel = getChannel();
+      if (LifecycleUtil.isActive(channel))
       {
-        IChannel channel = getChannel();
-        if (LifecycleUtil.isActive(channel))
-        {
-          new CommitNotificationRequest(channel, timeStamp, packageUnits, dirtyIDs, detachedObjects, newDeltas)
-              .sendAsync();
-        }
-        else
-        {
-          OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
-        }
+        new CommitNotificationRequest(channel, timeStamp, packageUnits, dirtyIDs, detachedObjects, newDeltas)
+            .sendAsync();
+      }
+      else
+      {
+        OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
       }
     }
     catch (Exception ex)

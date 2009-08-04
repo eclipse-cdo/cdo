@@ -109,6 +109,7 @@ public abstract class AllTestsAllConfigs extends ConfigTestSuite
 
     // Specific for MEMStore
     testClasses.add(MEMStoreQueryTest.class);
+    testClasses.add(DBRevisionCacheTest.class);
 
     // Specific for DBStore
     testClasses.add(DBStoreTest.class);

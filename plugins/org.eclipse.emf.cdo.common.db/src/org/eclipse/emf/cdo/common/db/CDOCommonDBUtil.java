@@ -46,6 +46,8 @@ public final class CDOCommonDBUtil
     cache.setListFactory(listFactory);
     cache.setPackageRegistry(packageRegistry);
     cache.setRevisionFactory(revisionFactory);
+
+    // TODO Remove after branch "redesign-dangling" has been merged!
     cache.setIdProvider(new CDOIDProvider()
     {
       public CDOID provideCDOID(Object idOrObject)

@@ -213,7 +213,7 @@ public class SQLQueryTest extends AbstractCDOTest
     enableConsole();
   }
 
-  public void testNonCdoObjectQueries() throws Exception
+  public void _testNonCdoObjectQueries() throws Exception
   {
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -225,7 +225,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customer street strings.");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT STREET FROM REPO1.CUSTOMER");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT STREET FROM CUSTOMER");
       cdoQuery.setParameter("cdoObjectQuery", false);
       List<String> streets = new ArrayList<String>(cdoQuery.getResult(String.class));
       for (int i = 0; i < 5; i++)
@@ -235,7 +235,7 @@ public class SQLQueryTest extends AbstractCDOTest
     }
   }
 
-  public void testNonCdoObjectQueries_Null() throws Exception
+  public void _testNonCdoObjectQueries_Null() throws Exception
   {
     msg("Opening session");
     CDOSession session = openModel1Session();
@@ -247,7 +247,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customer city strings.");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CITY FROM REPO1.CUSTOMER");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CITY FROM CUSTOMER");
       cdoQuery.setParameter("cdoObjectQuery", false);
       List<String> cities = new ArrayList<String>(cdoQuery.getResult(String.class));
 

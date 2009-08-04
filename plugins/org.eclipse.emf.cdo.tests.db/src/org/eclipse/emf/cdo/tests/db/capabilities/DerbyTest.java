@@ -28,7 +28,7 @@ public class DerbyTest extends AbstractCapabilityTest
   public DerbyTest()
   {
     super("derby");
-    File dbFolder = TMPUtil.createTempFolder("derby_", "_test", new File("c:/temp"));
+    File dbFolder = TMPUtil.createTempFolder("derby_", "_test");
     dbFolder.delete();
     EmbeddedDataSource derbyds = new EmbeddedDataSource();
     derbyds.setDatabaseName(dbFolder.getAbsolutePath());

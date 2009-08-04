@@ -443,34 +443,34 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 
   protected void skipConfig(Config config)
   {
-    skipTest(getContainerConfig() == config //
-        || getRepositoryConfig() == config //
-        || getSessionConfig() == config //
-        || getModelConfig() == config);
+    skipTest(ObjectUtil.equals(getContainerConfig(), config) //
+        || ObjectUtil.equals(getRepositoryConfig(), config) //
+        || ObjectUtil.equals(getSessionConfig(), config) //
+        || ObjectUtil.equals(getModelConfig(), config));
   }
 
   protected void skipUnlessConfig(Config config)
   {
-    skipTest(getContainerConfig() != config //
-        && getRepositoryConfig() != config //
-        && getSessionConfig() != config //
-        && getModelConfig() != config);
+    skipTest(!ObjectUtil.equals(getContainerConfig(), config) //
+        && !ObjectUtil.equals(getRepositoryConfig(), config) //
+        && !ObjectUtil.equals(getSessionConfig(), config) //
+        && !ObjectUtil.equals(getModelConfig(), config));
   }
 
   protected void skipConfig(String name)
   {
-    skipTest(ObjectUtil.equals(getContainerConfig(), name) //
-        || ObjectUtil.equals(getRepositoryConfig(), name) //
-        || ObjectUtil.equals(getSessionConfig(), name) //
-        || ObjectUtil.equals(getModelConfig(), name));
+    skipTest(ObjectUtil.equals(getContainerConfig().getName(), name) //
+        || ObjectUtil.equals(getRepositoryConfig().getName(), name) //
+        || ObjectUtil.equals(getSessionConfig().getName(), name) //
+        || ObjectUtil.equals(getModelConfig().getName(), name));
   }
 
   protected void skipUnlessConfig(String name)
   {
-    skipTest(!ObjectUtil.equals(getContainerConfig(), name) //
-        && !ObjectUtil.equals(getRepositoryConfig(), name) //
-        && !ObjectUtil.equals(getSessionConfig(), name) //
-        && !ObjectUtil.equals(getModelConfig(), name));
+    skipTest(!ObjectUtil.equals(getContainerConfig().getName(), name) //
+        && !ObjectUtil.equals(getRepositoryConfig().getName(), name) //
+        && !ObjectUtil.equals(getSessionConfig().getName(), name) //
+        && !ObjectUtil.equals(getModelConfig().getName(), name));
   }
 
   protected void clearCache(CDORevisionManager revisionManager)

@@ -10,8 +10,12 @@ Bundle-Activator: org.eclipse.emf.cdo.tests.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.net4j.tests;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.derby;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.db.h2;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.4.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.common;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.emf.cdo.common.db;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.net4j;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.server;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
@@ -24,6 +28,8 @@ Require-Bundle: org.eclipse.net4j.tests;bundle-version="[3.0.0,4.0.0)";visibilit
  org.eclipse.emf.cdo.tests.model4interfaces;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.tests.model5;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.defs;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
+Import-Package: org.apache.derby.jdbc;version="[10.0.0,11.0.0)",
+ org.h2.jdbcx;version="[1.1.0,1.2.0)"
 Export-Package: base;version="3.0.0",
  base.impl;version="3.0.0",
  base.util;version="3.0.0",

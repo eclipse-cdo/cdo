@@ -25,7 +25,6 @@ public class AutomatedTests
     suite.addTest(AllTestsDBHsqldbNonAudit.suite());
     suite.addTest(AllTestsDBH2.suite());
     suite.addTest(AllTestsDBH2NonAudit.suite());
-    suite.addTest(AllTestsDBDerby.suite());
     return suite;
   }
 }

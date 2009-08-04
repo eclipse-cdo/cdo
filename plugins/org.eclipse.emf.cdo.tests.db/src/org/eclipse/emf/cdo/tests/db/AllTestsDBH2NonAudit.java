@@ -122,7 +122,7 @@ public class AllTestsDBH2NonAudit extends DBConfigs
 
     protected File createDBFolder()
     {
-      return TMPUtil.createTempFolder("h2_", "_test", new File("/temp"));
+      return TMPUtil.createTempFolder("h2_", "_test");
     }
 
     /**

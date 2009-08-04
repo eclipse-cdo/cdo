@@ -99,7 +99,7 @@ public class AllTestsDBDerby extends DBConfigs
       {
         tearDownClean(folder);
       }
-      
+
       super.tearDown();
     }
 
@@ -110,7 +110,7 @@ public class AllTestsDBDerby extends DBConfigs
 
     protected File createDBFolder(String repo)
     {
-      return TMPUtil.createTempFolder("derby_" + repo + "_", "_test", new File("/temp"));
+      return TMPUtil.createTempFolder("derby_" + repo + "_", "_test");
     }
 
     /**

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -19,12 +19,39 @@ import java.io.IOException;
 public final class TMPUtil
 {
   /**
+   * @since 3.0
+   */
+  public static final String TEMP_FOLDER_PROPERTY = "org.eclipse.net4j.util.io.tmpdir";
+
+  /**
    * @since 2.0
    */
   public static final String SYSTEM_TEMP_FOLDER = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
 
   private TMPUtil()
   {
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static File getTempFolder()
+  {
+    String tempFolder = System.getProperty(TEMP_FOLDER_PROPERTY);
+    if (tempFolder == null)
+    {
+      tempFolder = SYSTEM_TEMP_FOLDER;
+    }
+
+    return new File(tempFolder);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void setTempFolder(String tempFolder)
+  {
+    System.setProperty(TEMP_FOLDER_PROPERTY, tempFolder);
   }
 
   public static File createTempFolder() throws IORuntimeException
@@ -39,7 +66,7 @@ public final class TMPUtil
 
   public static File createTempFolder(String prefix, String suffix) throws IORuntimeException
   {
-    return createTempFolder(prefix, suffix, null);
+    return createTempFolder(prefix, suffix, getTempFolder());
   }
 
   public static File createTempFolder(String prefix, String suffix, File directory) throws IORuntimeException

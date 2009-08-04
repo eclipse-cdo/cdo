@@ -63,6 +63,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testLengthAnnotationNegative() throws Exception
   {
+    // HSQL does not support length annotations
+    skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
+    skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
+
     msg("Opening session");
     EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
@@ -130,6 +134,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testTypeAnnotationByMetaData()
   {
+    // HSQL does not support length annotations
+    skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
+    skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
+
     msg("Opening session");
     EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
     addTypeAnnotation(model1, "CLOB");

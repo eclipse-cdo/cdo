@@ -15,9 +15,9 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.db.CDOCommonDBUtil;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.internal.db.cache.DBRevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -49,7 +49,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
 {
   private static final String RESOURCE_PATH = "/res1";
 
-  private DBRevisionCache revisionCache;
+  private CDORevisionCache revisionCache;
 
   private CDOResource resource;
 
@@ -77,7 +77,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
       DBUtil.close(connection);
     }
 
-    revisionCache = (DBRevisionCache)CDOCommonDBUtil.createDBCache(//
+    revisionCache = CDOCommonDBUtil.createDBCache(//
         new H2Adapter() //
         , DBUtil.createConnectionProvider(dataSource)//
         , CDOListFactory.DEFAULT//
@@ -105,7 +105,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     revisionCache.addRevision(cdoRevision);
 
     CDOID cdoID = ((CDOObject)company).cdoID();
-    InternalCDORevision fetchedCDORevision = revisionCache.getRevision(cdoID);
+    CDORevision fetchedCDORevision = revisionCache.getRevision(cdoID);
     assertTrue(CDOIDUtil.equals(cdoRevision.getID(), fetchedCDORevision.getID()));
   }
 
@@ -124,7 +124,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     InternalCDORevision secondRevision = company.cdoRevision();
     revisionCache.addRevision(secondRevision);
 
-    InternalCDORevision fetchedCDORevision = revisionCache.getRevision(company.cdoID());
+    CDORevision fetchedCDORevision = revisionCache.getRevision(company.cdoID());
     assertEquals(2, fetchedCDORevision.getVersion());
   }
 
@@ -139,7 +139,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     InternalCDORevision firstRevision = company.cdoRevision();
     revisionCache.addRevision(firstRevision);
 
-    InternalCDORevision fetchedRevision = revisionCache.getRevision(cdoID);
+    CDORevision fetchedRevision = revisionCache.getRevision(cdoID);
     assertTrue(fetchedRevision.getRevised() == 0);
   }
 
@@ -184,7 +184,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     revisionCache.addRevision(secondRevision);
 
     // fetch older version and check version and ID equality
-    InternalCDORevision fetchedRevision = revisionCache.getRevisionByVersion(cdoID, firstRevision.getVersion());
+    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(cdoID, firstRevision.getVersion());
     assertNotNull(fetchedRevision);
     assertTrue(firstRevision.getID().equals(fetchedRevision.getID()));
     assertTrue(firstRevision.getVersion() == fetchedRevision.getVersion());
@@ -202,7 +202,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     InternalCDORevision firstVersion = company.cdoRevision();
     revisionCache.addRevision(firstVersion);
 
-    InternalCDORevision fetchedRevision = revisionCache.getRevision(cdoID);
+    CDORevision fetchedRevision = revisionCache.getRevision(cdoID);
     assertTrue(fetchedRevision.getRevised() == 0);
 
     // add new version
@@ -242,7 +242,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     revisionCache.addRevision(thirdRevision);
 
     // fetch version by timstampt check version and ID equality
-    InternalCDORevision fetchedRevision = revisionCache.getRevisionByTime(cdoID, secondRevision.getCreated());
+    CDORevision fetchedRevision = revisionCache.getRevisionByTime(cdoID, secondRevision.getCreated());
     assertTrue(secondRevision.getID().equals(fetchedRevision.getID()));
     assertTrue(secondRevision.getVersion() == fetchedRevision.getVersion());
   }
@@ -288,7 +288,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     InternalCDORevision secondVersion = company.cdoRevision();
     revisionCache.addRevision(secondVersion);
 
-    InternalCDORevision removedRevision = revisionCache.removeRevision(firstVersion.getID(), firstVersion.getVersion());
+    CDORevision removedRevision = revisionCache.removeRevision(firstVersion.getID(), firstVersion.getVersion());
     assertEquals(firstVersion, removedRevision);
   }
 
@@ -329,7 +329,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     revisionCache.addRevision(secondVersion);
 
     revisionCache.removeRevision(secondVersion.getID(), secondVersion.getVersion());
-    InternalCDORevision fetchedRevision = revisionCache.getRevision(firstVersion.getID());
+    CDORevision fetchedRevision = revisionCache.getRevision(firstVersion.getID());
     assertNull(fetchedRevision);
   }
 
@@ -350,8 +350,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     revisionCache.addRevision(secondVersion);
 
     revisionCache.removeRevision(firstVersion.getID(), firstVersion.getVersion());
-    InternalCDORevision fetchedRevision = revisionCache.getRevisionByTime(firstVersion.getID(), firstVersion
-        .getRevised() - 1);
+    CDORevision fetchedRevision = revisionCache.getRevisionByTime(firstVersion.getID(), firstVersion.getRevised() - 1);
     assertNull(fetchedRevision);
   }
 
@@ -372,15 +371,14 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     revisionCache.addRevision(secondVersion);
 
     revisionCache.clear();
-    InternalCDORevision fetchedRevision = revisionCache.getRevisionByVersion(firstVersion.getID(), firstVersion
-        .getVersion());
+    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(firstVersion.getID(), firstVersion.getVersion());
     assertNull(fetchedRevision);
 
     fetchedRevision = revisionCache.getRevisionByVersion(secondVersion.getID(), secondVersion.getVersion());
     assertNull(fetchedRevision);
   }
 
-  private void assertEquals(InternalCDORevision thisRevision, InternalCDORevision thatRevision)
+  private void assertEquals(CDORevision thisRevision, CDORevision thatRevision)
   {
     assertEquals(thisRevision.getVersion(), thatRevision.getVersion());
     assertEquals(thisRevision.getCreated(), thatRevision.getCreated());
@@ -397,7 +395,7 @@ public class DBRevisionCacheTest extends AbstractCDOTest
   @SuppressWarnings("unused")
   private static class DerbyDBProvider implements IDBProvider
   {
-    private static final String DB_NAME = "/temp/dbRevisionCache1";
+    private static final String DB_NAME = TMPUtil.createTempFolder("derby").getAbsolutePath();
 
     public DataSource createDataSource()
     {

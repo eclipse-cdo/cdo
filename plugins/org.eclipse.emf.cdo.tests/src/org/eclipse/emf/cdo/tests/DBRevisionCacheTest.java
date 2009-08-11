@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -46,8 +47,6 @@ import java.util.Map;
  */
 public class DBRevisionCacheTest extends AbstractCDOTest
 {
-  private static final String DB_NAME = "/temp/dbRevisionCache1";
-
   private static final String RESOURCE_PATH = "/res1";
 
   private DBRevisionCache revisionCache;
@@ -398,6 +397,8 @@ public class DBRevisionCacheTest extends AbstractCDOTest
   @SuppressWarnings("unused")
   private static class DerbyDBProvider implements IDBProvider
   {
+    private static final String DB_NAME = "/temp/dbRevisionCache1";
+
     public DataSource createDataSource()
     {
       Map<Object, Object> properties = new HashMap<Object, Object>();
@@ -418,6 +419,8 @@ public class DBRevisionCacheTest extends AbstractCDOTest
 
   private static class H2DBProvider implements IDBProvider
   {
+    private static final String DB_NAME = TMPUtil.createTempFolder("h2db").getAbsolutePath();
+
     public DataSource createDataSource()
     {
       JdbcDataSource dataSource = new JdbcDataSource();

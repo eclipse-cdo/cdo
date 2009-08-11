@@ -379,7 +379,6 @@ public class DBRevisionCacheTest extends AbstractCDOTest
 
     fetchedRevision = revisionCache.getRevisionByVersion(secondVersion.getID(), secondVersion.getVersion());
     assertNull(fetchedRevision);
-
   }
 
   private void assertEquals(InternalCDORevision thisRevision, InternalCDORevision thatRevision)
@@ -399,7 +398,6 @@ public class DBRevisionCacheTest extends AbstractCDOTest
   @SuppressWarnings("unused")
   private static class DerbyDBProvider implements IDBProvider
   {
-
     public DataSource createDataSource()
     {
       Map<Object, Object> properties = new HashMap<Object, Object>();
@@ -434,6 +432,5 @@ public class DBRevisionCacheTest extends AbstractCDOTest
     {
       DBUtil.dropAllTables(connection, null);
     }
-
   }
 }

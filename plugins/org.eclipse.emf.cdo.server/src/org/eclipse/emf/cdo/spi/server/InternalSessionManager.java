@@ -51,5 +51,4 @@ public interface InternalSessionManager extends ISessionManager
   public void handleRemoteSessionNotification(byte opcode, InternalSession excludedSession);
 
   public List<Integer> sendMessage(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
-
 }

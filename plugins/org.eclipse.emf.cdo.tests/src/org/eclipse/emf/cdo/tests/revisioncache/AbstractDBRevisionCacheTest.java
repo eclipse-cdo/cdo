@@ -25,39 +25,24 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import javax.sql.DataSource;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * @author Andre Dietisheim
  */
 public abstract class AbstractDBRevisionCacheTest extends AbstractCDORevisionCacheTest
 {
-  protected interface IDBProvider
-  {
-    public DataSource createDataSource();
-
-    public void dropAllTables(Connection connection);
-
-    public IDBAdapter getAdapter();
-  }
+  private DataSource dataSource;
 
   @Override
   protected CDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {
-    IDBProvider dbProvider = createDbProvider();
-    DataSource dataSource = dbProvider.createDataSource();
-    Connection connection = dataSource.getConnection();
+    DataSource dataSource = getDataSource();
 
-    try
-    {
-      dbProvider.dropAllTables(connection);
-    }
-    finally
-    {
-      DBUtil.close(connection);
-    }
+    clearDb(dataSource);
 
     CDORevisionCache revisionCache = CDOCommonDBUtil.createDBCache(//
-        dbProvider.getAdapter() //
+        getAdapter() //
         , DBUtil.createConnectionProvider(dataSource)//
         , CDOListFactory.DEFAULT//
         , session.getPackageRegistry() //
@@ -66,5 +51,32 @@ public abstract class AbstractDBRevisionCacheTest extends AbstractCDORevisionCac
     return revisionCache;
   }
 
-  protected abstract IDBProvider createDbProvider();
+  private DataSource getDataSource()
+  {
+    if (dataSource == null)
+    {
+      dataSource = createDataSource();
+    }
+    return dataSource;
+  }
+
+  private void clearDb(DataSource dataSource) throws SQLException
+  {
+    Connection connection = dataSource.getConnection();
+    try
+    {
+      dropAllTables(connection);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
+  }
+
+  protected abstract DataSource createDataSource();
+
+  protected abstract void dropAllTables(Connection connection);
+
+  protected abstract IDBAdapter getAdapter();
+
 }

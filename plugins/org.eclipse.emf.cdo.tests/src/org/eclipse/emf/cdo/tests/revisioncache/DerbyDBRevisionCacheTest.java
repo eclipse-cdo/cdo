@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2009 Andre Dietisheim (Bern, Switzerland) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,42 +22,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Eike Stepper
+ * @author Andre Dietisheim
  */
 public class DerbyDBRevisionCacheTest extends AbstractDBRevisionCacheTest
 {
+  private static final String DB_NAME = TMPUtil.createTempFolder("derby").getAbsolutePath();
 
-  private static class DerbyDBProvider implements IDBProvider
+  @Override
+  public DataSource createDataSource()
   {
-    private static final String DB_NAME = TMPUtil.createTempFolder("derby").getAbsolutePath();
+    Map<Object, Object> properties = new HashMap<Object, Object>();
+    properties.put("class", "org.apache.derby.jdbc.EmbeddedDataSource");
+    properties.put("databaseName", DB_NAME);
+    properties.put("createDatabase", "create");
+    return DBUtil.createDataSource(properties);
+  }
 
-    public DataSource createDataSource()
-    {
-      Map<Object, Object> properties = new HashMap<Object, Object>();
-      properties.put("class", "org.apache.derby.jdbc.EmbeddedDataSource");
-      properties.put("databaseName", DB_NAME);
-      properties.put("createDatabase", "create");
-      return DBUtil.createDataSource(properties);
-    }
-
-    /**
-     * Drop all table on a given derby database.
-     */
-    public void dropAllTables(Connection connection)
-    {
-      DBUtil.dropAllTables(connection, DB_NAME);
-    }
-
-    public IDBAdapter getAdapter()
-    {
-      return new EmbeddedDerbyAdapter();
-    }
+  /**
+   * Drop all table on a given derby database.
+   */
+  @Override
+  public void dropAllTables(Connection connection)
+  {
+    DBUtil.dropAllTables(connection, DB_NAME);
   }
 
   @Override
-  protected IDBProvider createDbProvider()
+  public IDBAdapter getAdapter()
   {
-    return new DerbyDBProvider();
+    return new EmbeddedDerbyAdapter();
   }
-
 }

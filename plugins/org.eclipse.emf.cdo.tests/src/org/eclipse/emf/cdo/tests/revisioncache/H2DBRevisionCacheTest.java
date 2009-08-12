@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2009 Andre Dietisheim (Bern, Switzerland) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,40 +22,32 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- * @author Eike Stepper
+ * @author Andre Dietisheim
  */
 public class H2DBRevisionCacheTest extends AbstractDBRevisionCacheTest
 {
+  private static final String DB_NAME = TMPUtil.createTempFolder("h2db").getAbsolutePath();
 
-  private static class H2DBProvider implements IDBProvider
+  /**
+   * Drop all table on a given h2 database.
+   */
+  @Override
+  public void dropAllTables(Connection connection)
   {
-    private static final String DB_NAME = TMPUtil.createTempFolder("h2db").getAbsolutePath();
-
-    public DataSource createDataSource()
-    {
-      JdbcDataSource dataSource = new JdbcDataSource();
-      dataSource.setURL("jdbc:h2:" + DB_NAME);
-      return dataSource;
-    }
-
-    /**
-     * Drop all table on a given h2 database.
-     */
-    public void dropAllTables(Connection connection)
-    {
-      DBUtil.dropAllTables(connection, null);
-    }
-
-    public IDBAdapter getAdapter()
-    {
-      return new H2Adapter();
-    }
+    DBUtil.dropAllTables(connection, null);
   }
 
   @Override
-  protected IDBProvider createDbProvider()
+  public IDBAdapter getAdapter()
   {
-    return new H2DBProvider();
+    return new H2Adapter();
   }
 
+  @Override
+  protected DataSource createDataSource()
+  {
+    JdbcDataSource dataSource = new JdbcDataSource();
+    dataSource.setURL("jdbc:h2:" + DB_NAME);
+    return dataSource;
+  }
 }

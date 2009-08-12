@@ -17,15 +17,16 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Recipe</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.gastro.inventory.Recipe#getIngredients <em>Ingredients</em>}</li>
- * <li>{@link org.gastro.inventory.Recipe#getDepartment <em>Department</em>}</li>
- * <li>{@link org.gastro.inventory.Recipe#getCost <em>Cost</em>}</li>
+ *   <li>{@link org.gastro.inventory.Recipe#getIngredients <em>Ingredients</em>}</li>
+ *   <li>{@link org.gastro.inventory.Recipe#getDepartment <em>Department</em>}</li>
+ *   <li>{@link org.gastro.inventory.Recipe#getCost <em>Cost</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getRecipe()
  * @model
  * @generated
@@ -33,15 +34,15 @@ import org.eclipse.emf.common.util.EList;
 public interface Recipe extends Product
 {
   /**
-   * Returns the value of the '<em><b>Ingredients</b></em>' containment reference list. The list contents are of type
-   * {@link org.gastro.inventory.Ingredient}. It is bidirectional and its opposite is '
-   * {@link org.gastro.inventory.Ingredient#getRecipe <em>Recipe</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Ingredients</b></em>' containment reference list.
+   * The list contents are of type {@link org.gastro.inventory.Ingredient}.
+   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Ingredient#getRecipe <em>Recipe</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Ingredients</em>' containment reference list isn't clear, there really should be more of
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Ingredients</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getRecipe_Ingredients()
    * @see org.gastro.inventory.Ingredient#getRecipe
@@ -51,14 +52,14 @@ public interface Recipe extends Product
   EList<Ingredient> getIngredients();
 
   /**
-   * Returns the value of the '<em><b>Department</b></em>' container reference. It is bidirectional and its opposite is
-   * '{@link org.gastro.inventory.Department#getRecipes <em>Recipes</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Department</b></em>' container reference.
+   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Department#getRecipes <em>Recipes</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Department</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Department</em>' container reference.
    * @see #setDepartment(Department)
    * @see org.gastro.inventory.InventoryPackage#getRecipe_Department()
@@ -80,12 +81,12 @@ public interface Recipe extends Product
   void setDepartment(Department value);
 
   /**
-   * Returns the value of the '<em><b>Cost</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Cost</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Cost</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Cost</em>' attribute.
    * @see org.gastro.inventory.InventoryPackage#getRecipe_Cost()
    * @model transient="true" changeable="false" volatile="true" derived="true"

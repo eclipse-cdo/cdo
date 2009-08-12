@@ -34,17 +34,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.gastro.inventory.Ingredient} object. <!-- begin-user-doc --> <!--
+ * This is the item provider adapter for a {@link org.gastro.inventory.Ingredient} object.
+ * <!-- begin-user-doc --> <!--
  * end-user-doc -->
- * 
  * @generated
  */
 public class IngredientItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
-   * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This constructs an instance from a factory and a notifier.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public IngredientItemProvider(AdapterFactory adapterFactory)
@@ -53,8 +53,8 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
-   * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns the property descriptors for the adapted class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -71,8 +71,8 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds a property descriptor for the Product feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Product feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addProductPropertyDescriptor(Object object)
@@ -84,8 +84,8 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds a property descriptor for the Quantity feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Quantity feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addQuantityPropertyDescriptor(Object object)
@@ -99,7 +99,6 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -109,8 +108,8 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
-   * This returns Ingredient.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns Ingredient.gif.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -154,9 +153,9 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
-   * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+   * that can be created under this object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -166,8 +165,8 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
   }
 
   /**
-   * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

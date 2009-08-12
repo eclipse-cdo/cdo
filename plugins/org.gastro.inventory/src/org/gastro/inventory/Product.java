@@ -17,13 +17,14 @@ import org.eclipse.emf.cdo.CDOObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Product</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.gastro.inventory.Product#getName <em>Name</em>}</li>
+ *   <li>{@link org.gastro.inventory.Product#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getProduct()
  * @model abstract="true"
  * @extends CDOObject
@@ -32,12 +33,12 @@ import org.eclipse.emf.cdo.CDOObject;
 public interface Product extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.gastro.inventory.InventoryPackage#getProduct_Name()
@@ -47,11 +48,10 @@ public interface Product extends CDOObject
   String getName();
 
   /**
-   * Sets the value of the '{@link org.gastro.inventory.Product#getName <em>Name</em>}' attribute. <!-- begin-user-doc
+   * Sets the value of the '{@link org.gastro.inventory.Product#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Name</em>' attribute.
+   * @param value the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
@@ -59,7 +59,6 @@ public interface Product extends CDOObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @model kind="operation"
    * @generated
    */

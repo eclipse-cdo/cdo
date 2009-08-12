@@ -19,15 +19,16 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Menu Card</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.gastro.inventory.MenuCard#getTitle <em>Title</em>}</li>
- * <li>{@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}</li>
- * <li>{@link org.gastro.inventory.MenuCard#getSections <em>Sections</em>}</li>
+ *   <li>{@link org.gastro.inventory.MenuCard#getTitle <em>Title</em>}</li>
+ *   <li>{@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}</li>
+ *   <li>{@link org.gastro.inventory.MenuCard#getSections <em>Sections</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getMenuCard()
  * @model
  * @extends CDOObject
@@ -36,12 +37,12 @@ import org.eclipse.emf.common.util.EList;
 public interface MenuCard extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Title</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Title</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Title</em>' attribute.
    * @see #setTitle(String)
    * @see org.gastro.inventory.InventoryPackage#getMenuCard_Title()
@@ -62,14 +63,14 @@ public interface MenuCard extends CDOObject
   void setTitle(String value);
 
   /**
-   * Returns the value of the '<em><b>Restaurant</b></em>' container reference. It is bidirectional and its opposite is
-   * '{@link org.gastro.inventory.Restaurant#getMenuCards <em>Menu Cards</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Restaurant</b></em>' container reference.
+   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Restaurant#getMenuCards <em>Menu Cards</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Restaurant</em>' container reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Restaurant</em>' container reference.
    * @see #setRestaurant(Restaurant)
    * @see org.gastro.inventory.InventoryPackage#getMenuCard_Restaurant()
@@ -80,26 +81,24 @@ public interface MenuCard extends CDOObject
   Restaurant getRestaurant();
 
   /**
-   * Sets the value of the '{@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}' container
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Restaurant</em>' container reference.
+   * Sets the value of the '{@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}' container reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Restaurant</em>' container reference.
    * @see #getRestaurant()
    * @generated
    */
   void setRestaurant(Restaurant value);
 
   /**
-   * Returns the value of the '<em><b>Sections</b></em>' containment reference list. The list contents are of type
-   * {@link org.gastro.inventory.Section}. It is bidirectional and its opposite is '
-   * {@link org.gastro.inventory.Section#getMenuCard <em>Menu Card</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Sections</b></em>' containment reference list.
+   * The list contents are of type {@link org.gastro.inventory.Section}.
+   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Section#getMenuCard <em>Menu Card</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Sections</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Sections</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getMenuCard_Sections()
    * @see org.gastro.inventory.Section#getMenuCard

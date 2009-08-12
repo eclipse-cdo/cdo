@@ -28,19 +28,18 @@ import org.gastro.inventory.StockProduct;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.inventory.impl.StockImpl#getProducts <em>Products</em>}</li>
- * <li>{@link org.gastro.inventory.impl.StockImpl#getName <em>Name</em>}</li>
- * <li>{@link org.gastro.inventory.impl.StockImpl#getDepartment <em>Department</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.StockImpl#getProducts <em>Products</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.StockImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.StockImpl#getDepartment <em>Department</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class StockImpl extends CDOObjectImpl implements Stock
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected StockImpl()
@@ -50,7 +49,6 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -61,7 +59,6 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -72,7 +69,6 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -83,7 +79,6 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -93,7 +88,6 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -103,7 +97,6 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Department getDepartment()
@@ -113,7 +106,6 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDepartment(Department newDepartment)

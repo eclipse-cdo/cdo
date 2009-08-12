@@ -47,7 +47,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOResourceNodeImpl()
@@ -57,7 +56,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +66,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -79,7 +76,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOResourceFolder getFolder()
@@ -89,7 +85,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setFolderGen(CDOResourceFolder newFolder)
@@ -133,7 +128,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -143,7 +137,6 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNameGen(String newName)

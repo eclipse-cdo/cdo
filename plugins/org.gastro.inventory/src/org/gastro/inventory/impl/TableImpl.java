@@ -24,18 +24,17 @@ import org.gastro.inventory.Table;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.inventory.impl.TableImpl#getSeats <em>Seats</em>}</li>
- * <li>{@link org.gastro.inventory.impl.TableImpl#getRestaurant <em>Restaurant</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.TableImpl#getSeats <em>Seats</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.TableImpl#getRestaurant <em>Restaurant</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TableImpl extends StationImpl implements Table
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected TableImpl()
@@ -45,7 +44,6 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getSeats()
@@ -66,7 +63,6 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setSeats(int newSeats)
@@ -76,7 +72,6 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Restaurant getRestaurant()
@@ -86,7 +81,6 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setRestaurant(Restaurant newRestaurant)

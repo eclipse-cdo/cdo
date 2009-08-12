@@ -39,22 +39,21 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model. <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.defs.CDODefsPackage
  * @generated
  */
 public class CDODefsAdapterFactory extends AdapterFactoryImpl
 {
   /**
-   * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached model package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected static CDODefsPackage modelPackage;
 
   /**
-   * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the adapter factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CDODefsAdapterFactory()
@@ -66,10 +65,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Returns whether this factory is applicable for the type of the object. <!-- begin-user-doc --> This implementation
+   * Returns whether this factory is applicable for the type of the object.
+   * <!-- begin-user-doc --> This implementation
    * returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
    * end-user-doc -->
-   * 
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
@@ -88,126 +87,108 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * The switch that delegates to the <code>createXXX</code> methods. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The switch that delegates to the <code>createXXX</code> methods.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected CDODefsSwitch<Adapter> modelSwitch = new CDODefsSwitch<Adapter>()
-  {
-    @Override
-    public Adapter caseCDOViewDef(CDOViewDef object)
     {
-      return createCDOViewDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOTransactionDef(CDOTransactionDef object)
-    {
-      return createCDOTransactionDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOAuditDef(CDOAuditDef object)
-    {
-      return createCDOAuditDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOSessionDef(CDOSessionDef object)
-    {
-      return createCDOSessionDefAdapter();
-    }
-
-    @Override
-    public Adapter caseFailOverStrategyDef(FailOverStrategyDef object)
-    {
-      return createFailOverStrategyDefAdapter();
-    }
-
-    @Override
-    public Adapter caseRetryFailOverStrategyDef(RetryFailOverStrategyDef object)
-    {
-      return createRetryFailOverStrategyDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOPackageRegistryDef(CDOPackageRegistryDef object)
-    {
-      return createCDOPackageRegistryDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOEagerPackageRegistryDef(CDOEagerPackageRegistryDef object)
-    {
-      return createCDOEagerPackageRegistryDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOLazyPackageRegistryDef(CDOLazyPackageRegistryDef object)
-    {
-      return createCDOLazyPackageRegistryDefAdapter();
-    }
-
-    @Override
-    public Adapter caseEPackageDef(EPackageDef object)
-    {
-      return createEPackageDefAdapter();
-    }
-
-    @Override
-    public Adapter caseEDynamicPackageDef(EDynamicPackageDef object)
-    {
-      return createEDynamicPackageDefAdapter();
-    }
-
-    @Override
-    public Adapter caseEGlobalPackageDef(EGlobalPackageDef object)
-    {
-      return createEGlobalPackageDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOClientProtocolFactoryDef(CDOClientProtocolFactoryDef object)
-    {
-      return createCDOClientProtocolFactoryDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCDOResourceDef(CDOResourceDef object)
-    {
-      return createCDOResourceDefAdapter();
-    }
-
-    @Override
-    public Adapter caseDef(Def object)
-    {
-      return createDefAdapter();
-    }
-
-    @Override
-    public Adapter caseProtocolProviderDef(ProtocolProviderDef object)
-    {
-      return createProtocolProviderDefAdapter();
-    }
-
-    @Override
-    public Adapter caseClientProtocolFactoryDef(ClientProtocolFactoryDef object)
-    {
-      return createClientProtocolFactoryDefAdapter();
-    }
-
-    @Override
-    public Adapter defaultCase(EObject object)
-    {
-      return createEObjectAdapter();
-    }
-  };
+      @Override
+      public Adapter caseCDOViewDef(CDOViewDef object)
+      {
+        return createCDOViewDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOTransactionDef(CDOTransactionDef object)
+      {
+        return createCDOTransactionDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOAuditDef(CDOAuditDef object)
+      {
+        return createCDOAuditDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOSessionDef(CDOSessionDef object)
+      {
+        return createCDOSessionDefAdapter();
+      }
+      @Override
+      public Adapter caseFailOverStrategyDef(FailOverStrategyDef object)
+      {
+        return createFailOverStrategyDefAdapter();
+      }
+      @Override
+      public Adapter caseRetryFailOverStrategyDef(RetryFailOverStrategyDef object)
+      {
+        return createRetryFailOverStrategyDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOPackageRegistryDef(CDOPackageRegistryDef object)
+      {
+        return createCDOPackageRegistryDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOEagerPackageRegistryDef(CDOEagerPackageRegistryDef object)
+      {
+        return createCDOEagerPackageRegistryDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOLazyPackageRegistryDef(CDOLazyPackageRegistryDef object)
+      {
+        return createCDOLazyPackageRegistryDefAdapter();
+      }
+      @Override
+      public Adapter caseEPackageDef(EPackageDef object)
+      {
+        return createEPackageDefAdapter();
+      }
+      @Override
+      public Adapter caseEDynamicPackageDef(EDynamicPackageDef object)
+      {
+        return createEDynamicPackageDefAdapter();
+      }
+      @Override
+      public Adapter caseEGlobalPackageDef(EGlobalPackageDef object)
+      {
+        return createEGlobalPackageDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOClientProtocolFactoryDef(CDOClientProtocolFactoryDef object)
+      {
+        return createCDOClientProtocolFactoryDefAdapter();
+      }
+      @Override
+      public Adapter caseCDOResourceDef(CDOResourceDef object)
+      {
+        return createCDOResourceDefAdapter();
+      }
+      @Override
+      public Adapter caseDef(Def object)
+      {
+        return createDefAdapter();
+      }
+      @Override
+      public Adapter caseProtocolProviderDef(ProtocolProviderDef object)
+      {
+        return createProtocolProviderDefAdapter();
+      }
+      @Override
+      public Adapter caseClientProtocolFactoryDef(ClientProtocolFactoryDef object)
+      {
+        return createClientProtocolFactoryDefAdapter();
+      }
+      @Override
+      public Adapter defaultCase(EObject object)
+      {
+        return createEObjectAdapter();
+      }
+    };
 
   /**
-   * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param target
-   *          the object to adapt.
+   * Creates an adapter for the <code>target</code>.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param target the object to adapt.
    * @return the adapter for the <code>target</code>.
    * @generated
    */
@@ -221,7 +202,6 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOViewDef <em>CDO View Def</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOViewDef
    * @generated
@@ -232,11 +212,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOTransactionDef
-   * <em>CDO Transaction Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOTransactionDef <em>CDO Transaction Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOTransactionDef
    * @generated
@@ -250,7 +229,6 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOAuditDef <em>CDO Audit Def</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOAuditDef
    * @generated
@@ -261,10 +239,9 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOSessionDef
-   * <em>CDO Session Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOSessionDef <em>CDO Session Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOSessionDef
    * @generated
@@ -275,11 +252,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.FailOverStrategyDef
-   * <em>Fail Over Strategy Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.FailOverStrategyDef <em>Fail Over Strategy Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.FailOverStrategyDef
    * @generated
@@ -290,11 +266,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.RetryFailOverStrategyDef
-   * <em>Retry Fail Over Strategy Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.RetryFailOverStrategyDef <em>Retry Fail Over Strategy Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.RetryFailOverStrategyDef
    * @generated
@@ -305,11 +280,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOPackageRegistryDef
-   * <em>CDO Package Registry Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOPackageRegistryDef <em>CDO Package Registry Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOPackageRegistryDef
    * @generated
@@ -320,11 +294,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOEagerPackageRegistryDef
-   * <em>CDO Eager Package Registry Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOEagerPackageRegistryDef <em>CDO Eager Package Registry Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOEagerPackageRegistryDef
    * @generated
@@ -335,11 +308,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOLazyPackageRegistryDef
-   * <em>CDO Lazy Package Registry Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOLazyPackageRegistryDef <em>CDO Lazy Package Registry Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOLazyPackageRegistryDef
    * @generated
@@ -353,7 +325,6 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.EPackageDef <em>EPackage Def</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.EPackageDef
    * @generated
@@ -364,11 +335,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.EDynamicPackageDef
-   * <em>EDynamic Package Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.EDynamicPackageDef <em>EDynamic Package Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.EDynamicPackageDef
    * @generated
@@ -379,11 +349,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.EGlobalPackageDef
-   * <em>EGlobal Package Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.EGlobalPackageDef <em>EGlobal Package Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.EGlobalPackageDef
    * @generated
@@ -394,11 +363,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOClientProtocolFactoryDef
-   * <em>CDO Client Protocol Factory Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOClientProtocolFactoryDef <em>CDO Client Protocol Factory Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOClientProtocolFactoryDef
    * @generated
@@ -409,10 +377,9 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOResourceDef
-   * <em>CDO Resource Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.defs.CDOResourceDef <em>CDO Resource Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.defs.CDOResourceDef
    * @generated
@@ -437,11 +404,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.defs.ProtocolProviderDef
-   * <em>Protocol Provider Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.defs.ProtocolProviderDef <em>Protocol Provider Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.defs.ProtocolProviderDef
    * @generated
@@ -452,11 +418,10 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.defs.ClientProtocolFactoryDef
-   * <em>Client Protocol Factory Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.defs.ClientProtocolFactoryDef <em>Client Protocol Factory Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.defs.ClientProtocolFactoryDef
    * @generated
@@ -467,9 +432,9 @@ public class CDODefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for the default case. <!-- begin-user-doc --> This default implementation returns null. <!--
+   * Creates a new adapter for the default case.
+   * <!-- begin-user-doc --> This default implementation returns null. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @generated
    */

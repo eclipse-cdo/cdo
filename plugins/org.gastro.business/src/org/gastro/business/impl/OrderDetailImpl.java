@@ -28,21 +28,20 @@ import org.gastro.inventory.Offering;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.business.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
- * <li>{@link org.gastro.business.impl.OrderDetailImpl#getOffering <em>Offering</em>}</li>
- * <li>{@link org.gastro.business.impl.OrderDetailImpl#getQuantity <em>Quantity</em>}</li>
- * <li>{@link org.gastro.business.impl.OrderDetailImpl#getState <em>State</em>}</li>
- * <li>{@link org.gastro.business.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
+ *   <li>{@link org.gastro.business.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
+ *   <li>{@link org.gastro.business.impl.OrderDetailImpl#getOffering <em>Offering</em>}</li>
+ *   <li>{@link org.gastro.business.impl.OrderDetailImpl#getQuantity <em>Quantity</em>}</li>
+ *   <li>{@link org.gastro.business.impl.OrderDetailImpl#getState <em>State</em>}</li>
+ *   <li>{@link org.gastro.business.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected OrderDetailImpl()
@@ -52,7 +51,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -63,7 +61,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -74,7 +71,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Order getOrder()
@@ -84,7 +80,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setOrder(Order newOrder)
@@ -94,7 +89,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Offering getOffering()
@@ -104,7 +98,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setOffering(Offering newOffering)
@@ -114,7 +107,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getQuantity()
@@ -124,7 +116,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setQuantity(int newQuantity)
@@ -134,7 +125,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public OrderState getState()
@@ -144,7 +134,6 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setState(OrderState newState)

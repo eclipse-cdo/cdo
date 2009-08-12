@@ -181,7 +181,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation"; //$NON-NLS-1$
@@ -207,9 +206,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   private CDOEventHandler eventHandler;
 
   /**
-   * This keeps track of the editing domain that is used to track all changes to the model. <!-- begin-user-doc --> <!--
+   * This keeps track of the editing domain that is used to track all changes to the model.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   protected AdapterFactoryEditingDomain editingDomain;
@@ -223,67 +222,65 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected ComposedAdapterFactory adapterFactory;
 
   /**
-   * This is the content outline page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is the content outline page.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected IContentOutlinePage contentOutlinePage;
 
   /**
-   * This is a kludge... <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is a kludge...
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected IStatusLineManager contentOutlineStatusLineManager;
 
   /**
-   * This is the content outline page's viewer. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is the content outline page's viewer.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected TreeViewer contentOutlineViewer;
 
   /**
-   * This is the property sheet page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is the property sheet page.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected PropertySheetPage propertySheetPage;
 
   /**
-   * This is the viewer that shadows the selection in the content outline. The parent relation must be correctly defined
-   * for this to work. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is the viewer that shadows the selection in the content outline.
+   * The parent relation must be correctly defined for this to work.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected TreeViewer selectionViewer;
 
   /**
-   * This keeps track of the active content viewer, which may be either one of the viewers in the pages or the content
-   * outline viewer. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This keeps track of the active content viewer, which may be either one of the viewers in the pages or the content outline viewer.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Viewer currentViewer;
 
   /**
-   * This listens to which ever viewer is active. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This listens to which ever viewer is active.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected ISelectionChangedListener selectionChangedListener;
 
   /**
-   * This keeps track of all the {@link org.eclipse.jface.viewers.ISelectionChangedListener}s that are listening to this
-   * editor. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This keeps track of all the {@link org.eclipse.jface.viewers.ISelectionChangedListener}s that are listening to this editor.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Collection<ISelectionChangedListener> selectionChangedListeners = new ArrayList<ISelectionChangedListener>();
 
   /**
-   * This keeps track of the selection of the editor as a whole. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This keeps track of the selection of the editor as a whole.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected ISelection editorSelection = StructuredSelection.EMPTY;
@@ -297,8 +294,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   protected MarkerHelper markerHelper = new EditUIMarkerHelper();
 
   /**
-   * This listens for when the outline becomes active <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This listens for when the outline becomes active
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected IPartListener partListener = new IPartListener()
@@ -350,44 +347,44 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   };
 
   /**
-   * Resources that have been removed since last activation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Resources that have been removed since last activation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Collection<Resource> removedResources = new ArrayList<Resource>();
 
   /**
-   * Resources that have been changed since last activation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Resources that have been changed since last activation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Collection<Resource> changedResources = new ArrayList<Resource>();
 
   /**
-   * Resources that have been saved. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Resources that have been saved.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Collection<Resource> savedResources = new ArrayList<Resource>();
 
   /**
-   * Map to store the diagnostic associated with a resource. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Map to store the diagnostic associated with a resource.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Map<Resource, Diagnostic> resourceToDiagnosticMap = new LinkedHashMap<Resource, Diagnostic>();
 
   /**
-   * Controls whether the problem indication should be updated. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Controls whether the problem indication should be updated.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected boolean updateProblemIndication = true;
 
   /**
-   * Adapter used to update the problem indication when resources are demanded loaded. <!-- begin-user-doc --> <!--
+   * Adapter used to update the problem indication when resources are demanded loaded.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   protected EContentAdapter problemIndicationAdapter = new EContentAdapter()
@@ -448,8 +445,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   };
 
   /**
-   * This listens for workspace changes. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This listens for workspace changes.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected IResourceChangeListener resourceChangeListener = new IResourceChangeListener()
@@ -474,7 +471,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED
                   && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet.getResource(URI.createURI(delta.getFullPath().toString()), false);
+                Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath()
+                    .toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -503,37 +501,37 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
         }
 
-        ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
+        final ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
         delta.accept(visitor);
 
         if (!visitor.getRemovedResources().isEmpty())
         {
-          removedResources.addAll(visitor.getRemovedResources());
-          if (!isDirty())
+          getSite().getShell().getDisplay().asyncExec(new Runnable()
           {
-            getSite().getShell().getDisplay().asyncExec(new Runnable()
+            public void run()
             {
-              public void run()
+              removedResources.addAll(visitor.getRemovedResources());
+              if (!isDirty())
               {
                 getSite().getPage().closeEditor(CDOEditor.this, false);
               }
-            });
-          }
+            }
+          });
         }
 
         if (!visitor.getChangedResources().isEmpty())
         {
-          changedResources.addAll(visitor.getChangedResources());
-          if (getSite().getPage().getActiveEditor() == CDOEditor.this)
+          getSite().getShell().getDisplay().asyncExec(new Runnable()
           {
-            getSite().getShell().getDisplay().asyncExec(new Runnable()
+            public void run()
             {
-              public void run()
+              changedResources.addAll(visitor.getChangedResources());
+              if (getSite().getPage().getActiveEditor() == CDOEditor.this)
               {
                 handleActivate();
               }
-            });
-          }
+            }
+          });
         }
       }
       catch (CoreException exception)
@@ -544,8 +542,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   };
 
   /**
-   * Handles activation of the editor or it's associated views. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Handles activation of the editor or it's associated views.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void handleActivate()
@@ -584,8 +582,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * Handles what to do with changed resources on activation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Handles what to do with changed resources on activation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void handleChangedResources()
@@ -629,16 +627,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * Updates the problems indication with the information described in the specified diagnostic. <!-- begin-user-doc -->
+   * Updates the problems indication with the information described in the specified diagnostic.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected void updateProblemIndication()
   {
     if (updateProblemIndication)
     {
-      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui.editor", 0, null, //$NON-NLS-1$
+      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui", 0, null,
           new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
@@ -694,19 +692,19 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * Shows a dialog that asks if conflicting changes should be discarded. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Shows a dialog that asks if conflicting changes should be discarded.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected boolean handleDirtyConflict()
   {
-    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"), //$NON-NLS-1$
-        getString("_WARN_FileConflict")); //$NON-NLS-1$
+    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"),
+        getString("_WARN_FileConflict"));
   }
 
   /**
-   * This creates a model editor. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This creates a model editor.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CDOEditor()
@@ -716,8 +714,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This sets up the editing domain for the model editor. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This sets up the editing domain for the model editor.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void initializeEditingDomainGen()
@@ -739,28 +737,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       public void commandStackChanged(final EventObject event)
       {
-        if (getContainer() != null && !getContainer().isDisposed())
+        getContainer().getDisplay().asyncExec(new Runnable()
         {
-          getContainer().getDisplay().asyncExec(new Runnable()
+          public void run()
           {
-            public void run()
-            {
-              firePropertyChange(IEditorPart.PROP_DIRTY);
+            firePropertyChange(IEditorPart.PROP_DIRTY);
 
-              // Try to select the affected objects.
-              //
-              Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-              if (mostRecentCommand != null)
-              {
-                setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-              }
-              if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
-              {
-                propertySheetPage.refresh();
-              }
+            // Try to select the affected objects.
+            //
+            Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+            if (mostRecentCommand != null)
+            {
+              setSelectionToViewer(mostRecentCommand.getAffectedObjects());
             }
-          });
-        }
+            if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed())
+            {
+              propertySheetPage.refresh();
+            }
+          }
+        });
       }
     });
 
@@ -781,8 +776,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is here for the listener to be able to call it. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is here for the listener to be able to call it.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -792,8 +787,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This sets the selection into whichever viewer is active. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This sets the selection into whichever viewer is active.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setSelectionToViewer(Collection<?> collection)
@@ -803,11 +798,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     //
     if (theSelection != null && !theSelection.isEmpty())
     {
-      // I don't know if this should be run this deferred
-      // because we might have to give the editor a chance to process the viewer update events
-      // and hence to update the views first.
-      //
-      //
       Runnable runnable = new Runnable()
       {
         public void run()
@@ -820,15 +810,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           }
         }
       };
-      runnable.run();
+      getSite().getShell().getDisplay().asyncExec(runnable);
     }
   }
 
   /**
-   * This returns the editing domain as required by the {@link IEditingDomainProvider} interface. This is important for
-   * implementing the static methods of {@link AdapterFactoryEditingDomain} and for supporting
-   * {@link org.eclipse.emf.edit.ui.action.CommandAction}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns the editing domain as required by the {@link IEditingDomainProvider} interface.
+   * This is important for implementing the static methods of {@link AdapterFactoryEditingDomain}
+   * and for supporting {@link org.eclipse.emf.edit.ui.action.CommandAction}.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EditingDomain getEditingDomain()
@@ -838,14 +828,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public class ReverseAdapterFactoryContentProvider extends AdapterFactoryContentProvider
   {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public ReverseAdapterFactoryContentProvider(AdapterFactory adapterFactory)
@@ -855,7 +843,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -867,7 +854,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -879,7 +865,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -891,7 +876,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -902,9 +886,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This makes sure that one content viewer, either for the current page or the outline view, if it has focus, is the
-   * current one. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This makes sure that one content viewer, either for the current page or the outline view, if it has focus,
+   * is the current one.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setCurrentViewer(Viewer viewer)
@@ -953,9 +937,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This returns the viewer as required by the {@link IViewerProvider} interface. <!-- begin-user-doc --> <!--
+   * This returns the viewer as required by the {@link IViewerProvider} interface.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public Viewer getViewer()
@@ -971,8 +955,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void createContextMenuFor(StructuredViewer viewer)
   {
-    MenuManager contextMenu = new MenuManager("#PopUp"); //$NON-NLS-1$
-    contextMenu.add(new Separator("additions")); //$NON-NLS-1$
+    MenuManager contextMenu = new MenuManager("#PopUp");
+    contextMenu.add(new Separator("additions"));
     contextMenu.setRemoveAllWhenShown(true);
     contextMenu.addMenuListener(this);
     Menu menu = contextMenu.createContextMenu(viewer.getControl());
@@ -996,7 +980,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * This is the method called to load a resource into the editing domain's resource set based on the editor's input.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void createModelGen()
@@ -1096,25 +1079,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * Returns a diagnostic describing the errors and warnings listed in the resource and the specified exception (if
-   * any). <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a diagnostic describing the errors and warnings listed in the resource
+   * and the specified exception (if any).
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Diagnostic analyzeResourceProblems(Resource resource, Exception exception)
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui.editor", 0, //$NON-NLS-1$
-          getString("_UI_CreateModelError_message", resource.getURI()), //$NON-NLS-1$
-          new Object[] { exception == null ? (Object)resource : exception });
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
+          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource
+          : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
     else if (exception != null)
     {
-      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui.editor", 0, getString( //$NON-NLS-1$
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception }); //$NON-NLS-1$
+      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
+          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
     }
     else
     {
@@ -1153,7 +1136,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       createContextMenuFor(selectionViewer);
       int pageIndex = addPage(tree);
-      setPageText(pageIndex, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
+      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
@@ -1383,8 +1366,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is used to track the active viewer. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is used to track the active viewer.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -1399,8 +1382,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is how the framework determines which interfaces we implement. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is how the framework determines which interfaces we implement.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -1499,8 +1482,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This accesses a cached version of the property sheet. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This accesses a cached version of the property sheet.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public IPropertySheetPage getPropertySheetPage()
@@ -1530,9 +1513,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This deals with how we want selection in the outliner to affect the other views. <!-- begin-user-doc --> <!--
+   * This deals with how we want selection in the outliner to affect the other views.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public void handleContentOutlineSelection(ISelection selection)
@@ -1573,9 +1556,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is for implementing {@link IEditorPart} and simply saves the model file. <!-- begin-user-doc --> <!--
+   * This is for implementing {@link IEditorPart} and simply saves the model file.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public void doSaveGen(IProgressMonitor progressMonitor)
@@ -1740,10 +1723,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This returns whether something has been persisted to the URI of the specified resource. The implementation uses the
-   * URI converter from the editor's resource set to try to open an input stream. <!-- begin-user-doc --> <!--
+   * This returns whether something has been persisted to the URI of the specified resource.
+   * The implementation uses the URI converter from the editor's resource set to try to open an input stream. 
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   protected boolean isPersisted(Resource resource)
@@ -1766,8 +1749,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This always returns true because it is not currently supported. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This always returns true because it is not currently supported.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean isSaveAsAllowedGen()
@@ -1785,8 +1768,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This also changes the editor's input. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This also changes the editor's input.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -1824,7 +1807,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void gotoMarker(IMarker marker)
@@ -1852,8 +1834,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is called during startup. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is called during startup.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initGen(IEditorSite site, IEditorInput editorInput)
@@ -1881,7 +1863,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -1891,8 +1872,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void addSelectionChangedListener(ISelectionChangedListener listener)
@@ -1901,8 +1882,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This implements {@link org.eclipse.jface.viewers.ISelectionProvider}.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void removeSelectionChangedListener(ISelectionChangedListener listener)
@@ -1913,7 +1894,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * This implements {@link org.eclipse.jface.viewers.ISelectionProvider} to return this editor's overall selection.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ISelection getSelection()
@@ -1923,8 +1903,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * This implements {@link org.eclipse.jface.viewers.ISelectionProvider} to set this editor's overall selection.
-   * Calling this result will notify the listeners. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Calling this result will notify the listeners.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setSelection(ISelection selection)
@@ -1940,7 +1920,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setStatusLineManager(ISelection selection)
@@ -1957,32 +1936,32 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
         case 0:
         {
-          statusLineManager.setMessage(getString("_UI_NoObjectSelected")); //$NON-NLS-1$
+          statusLineManager.setMessage(getString("_UI_NoObjectSelected"));
           break;
         }
         case 1:
         {
           String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
-          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text)); //$NON-NLS-1$
+          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text));
           break;
         }
         default:
         {
-          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size()))); //$NON-NLS-1$
+          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size())));
           break;
         }
         }
       }
       else
       {
-        statusLineManager.setMessage(""); //$NON-NLS-1$
+        statusLineManager.setMessage("");
       }
     }
   }
 
   /**
-   * This looks up a string in the plugin's plugin.properties file. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This looks up a string in the plugin's plugin.properties file.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   private static String getString(String key)
@@ -1991,8 +1970,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This looks up a string in plugin.properties, making a substitution. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This looks up a string in plugin.properties, making a substitution.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   private static String getString(String key, Object s1)
@@ -2001,9 +1980,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This implements {@link org.eclipse.jface.action.IMenuListener} to help fill the context menus with contributions
-   * from the Edit menu. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This implements {@link org.eclipse.jface.action.IMenuListener} to help fill the context menus with contributions from the Edit menu.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void menuAboutToShowGen(IMenuManager menuManager)
@@ -2238,7 +2216,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EditingDomainActionBarContributor getActionBarContributor()
@@ -2248,7 +2225,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public IActionBars getActionBars()
@@ -2258,7 +2234,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public AdapterFactory getAdapterFactory()
@@ -2268,7 +2243,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void disposeGen()
@@ -2360,8 +2334,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * Returns whether the outline view should be presented to the user. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the outline view should be presented to the user.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected boolean showOutlineView()

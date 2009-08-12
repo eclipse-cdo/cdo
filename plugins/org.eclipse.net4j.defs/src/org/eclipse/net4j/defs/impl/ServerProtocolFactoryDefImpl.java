@@ -21,14 +21,13 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class ServerProtocolFactoryDefImpl extends ProtocolProviderDefImpl implements ServerProtocolFactoryDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ServerProtocolFactoryDefImpl()
@@ -38,7 +37,6 @@ public abstract class ServerProtocolFactoryDefImpl extends ProtocolProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

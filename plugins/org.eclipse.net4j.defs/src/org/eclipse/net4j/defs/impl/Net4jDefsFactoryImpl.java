@@ -29,22 +29,20 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Net4jDefsFactory init()
   {
     try
     {
-      Net4jDefsFactory theNet4jDefsFactory = (Net4jDefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/NET4J/defs/1.0.0"); //$NON-NLS-1$
+      Net4jDefsFactory theNet4jDefsFactory = (Net4jDefsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/NET4J/defs/1.0.0"); 
       if (theNet4jDefsFactory != null)
       {
         return theNet4jDefsFactory;
@@ -58,8 +56,8 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Net4jDefsFactoryImpl()
@@ -69,7 +67,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,28 +74,20 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
   {
     switch (eClass.getClassifierID())
     {
-    case Net4jDefsPackage.TCP_CONNECTOR_DEF:
-      return createTCPConnectorDef();
-    case Net4jDefsPackage.TCP_ACCEPTOR_DEF:
-      return createTCPAcceptorDef();
-    case Net4jDefsPackage.JVM_ACCEPTOR_DEF:
-      return createJVMAcceptorDef();
-    case Net4jDefsPackage.JVM_CONNECTOR_DEF:
-      return createJVMConnectorDef();
-    case Net4jDefsPackage.HTTP_CONNECTOR_DEF:
-      return createHTTPConnectorDef();
-    case Net4jDefsPackage.TCP_SELECTOR_DEF:
-      return createTCPSelectorDef();
-    case Net4jDefsPackage.BUFFER_POOL_DEF:
-      return createBufferPoolDef();
-    default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+      case Net4jDefsPackage.TCP_CONNECTOR_DEF: return createTCPConnectorDef();
+      case Net4jDefsPackage.TCP_ACCEPTOR_DEF: return createTCPAcceptorDef();
+      case Net4jDefsPackage.JVM_ACCEPTOR_DEF: return createJVMAcceptorDef();
+      case Net4jDefsPackage.JVM_CONNECTOR_DEF: return createJVMConnectorDef();
+      case Net4jDefsPackage.HTTP_CONNECTOR_DEF: return createHTTPConnectorDef();
+      case Net4jDefsPackage.TCP_SELECTOR_DEF: return createTCPSelectorDef();
+      case Net4jDefsPackage.BUFFER_POOL_DEF: return createBufferPoolDef();
+      default:
+        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPConnectorDef createTCPConnectorDef()
@@ -109,7 +98,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPAcceptorDef createTCPAcceptorDef()
@@ -120,7 +108,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public JVMAcceptorDef createJVMAcceptorDef()
@@ -131,7 +118,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public JVMConnectorDef createJVMConnectorDef()
@@ -142,7 +128,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public HTTPConnectorDef createHTTPConnectorDef()
@@ -153,7 +138,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPSelectorDef createTCPSelectorDef()
@@ -164,7 +148,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BufferPoolDef createBufferPoolDef()
@@ -175,7 +158,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Net4jDefsPackage getNet4jDefsPackage()
@@ -185,7 +167,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

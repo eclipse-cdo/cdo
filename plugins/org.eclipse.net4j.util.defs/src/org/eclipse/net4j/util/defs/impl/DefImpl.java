@@ -32,7 +32,7 @@ import java.util.List;
  * <!-- begin-user-doc --> An implementation of the model object ' <em><b>Definition</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class DefImpl extends EObjectImpl implements Def

@@ -59,7 +59,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected EPackageDefImpl()
@@ -69,7 +68,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -80,7 +78,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getNsURI()
@@ -90,7 +87,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNsURI(String newNsURI)
@@ -103,7 +99,6 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -111,15 +106,14 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.EPACKAGE_DEF__NS_URI:
-      return getNsURI();
+      case CDODefsPackage.EPACKAGE_DEF__NS_URI:
+        return getNsURI();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -127,16 +121,15 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.EPACKAGE_DEF__NS_URI:
-      setNsURI((String)newValue);
-      return;
+      case CDODefsPackage.EPACKAGE_DEF__NS_URI:
+        setNsURI((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -144,16 +137,15 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.EPACKAGE_DEF__NS_URI:
-      setNsURI(NS_URI_EDEFAULT);
-      return;
+      case CDODefsPackage.EPACKAGE_DEF__NS_URI:
+        setNsURI(NS_URI_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -161,22 +153,20 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.EPACKAGE_DEF__NS_URI:
-      return NS_URI_EDEFAULT == null ? nsURI != null : !NS_URI_EDEFAULT.equals(nsURI);
+      case CDODefsPackage.EPACKAGE_DEF__NS_URI:
+        return NS_URI_EDEFAULT == null ? nsURI != null : !NS_URI_EDEFAULT.equals(nsURI);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy())
-      return super.toString();
+    if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (nsURI: ");

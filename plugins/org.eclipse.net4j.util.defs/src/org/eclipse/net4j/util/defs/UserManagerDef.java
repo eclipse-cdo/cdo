@@ -30,14 +30,14 @@ import org.eclipse.emf.common.util.EList;
 public interface UserManagerDef extends Def
 {
   /**
-   * Returns the value of the '<em><b>User</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.net4j.util.defs.User}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>User</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.net4j.util.defs.User}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>User</em>' reference list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>User</em>' reference list.
    * @see #isSetUser()
    * @see #unsetUser()
@@ -50,7 +50,6 @@ public interface UserManagerDef extends Def
   /**
    * Unsets the value of the '{@link org.eclipse.net4j.util.defs.UserManagerDef#getUser <em>User</em>}' reference list.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see #isSetUser()
    * @see #getUser()
    * @generated
@@ -58,9 +57,8 @@ public interface UserManagerDef extends Def
   void unsetUser();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.UserManagerDef#getUser <em>User</em>}'
-   * reference list is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.UserManagerDef#getUser <em>User</em>}' reference list is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>User</em>' reference list is set.
    * @see #unsetUser()
    * @see #getUser()

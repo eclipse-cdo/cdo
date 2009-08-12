@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.ui.defs.CDOUIDefsFactory
  * @model kind="package"
  * @generated
@@ -35,29 +34,29 @@ import org.eclipse.emf.ecore.EReference;
 public interface CDOUIDefsPackage extends EPackage
 {
   /**
-   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNAME = "defs";
 
   /**
-   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace URI.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/ui/defs/1.0.0";
 
   /**
-   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_PREFIX = "cdo.ui.defs";
 
   /**
-   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   CDOUIDefsPackage eINSTANCE = org.eclipse.emf.cdo.ui.defs.impl.CDOUIDefsPackageImpl.init();
@@ -73,25 +72,24 @@ public interface CDOUIDefsPackage extends EPackage
   int EDITOR_DEF = 0;
 
   /**
-   * The feature id for the '<em><b>Editor ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Editor ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int EDITOR_DEF__EDITOR_ID = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Editor Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Editor Def</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int EDITOR_DEF_FEATURE_COUNT = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.ui.defs.impl.CDOEditorDefImpl <em>CDO Editor Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.ui.defs.impl.CDOEditorDefImpl <em>CDO Editor Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.ui.defs.impl.CDOEditorDefImpl
    * @see org.eclipse.emf.cdo.ui.defs.impl.CDOUIDefsPackageImpl#getCDOEditorDef()
    * @generated
@@ -99,24 +97,24 @@ public interface CDOUIDefsPackage extends EPackage
   int CDO_EDITOR_DEF = 1;
 
   /**
-   * The feature id for the '<em><b>Editor ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Editor ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_EDITOR_DEF__EDITOR_ID = EDITOR_DEF__EDITOR_ID;
 
   /**
-   * The feature id for the '<em><b>Cdo View</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Cdo View</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_EDITOR_DEF__CDO_VIEW = EDITOR_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Resource Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Resource Path</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -142,9 +140,8 @@ public interface CDOUIDefsPackage extends EPackage
   EClass getEditorDef();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.ui.defs.EditorDef#getEditorID
-   * <em>Editor ID</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.ui.defs.EditorDef#getEditorID <em>Editor ID</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Editor ID</em>'.
    * @see org.eclipse.emf.cdo.ui.defs.EditorDef#getEditorID()
    * @see #getEditorDef()
@@ -163,9 +160,8 @@ public interface CDOUIDefsPackage extends EPackage
   EClass getCDOEditorDef();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.ui.defs.CDOEditorDef#getCdoView
-   * <em>Cdo View</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.ui.defs.CDOEditorDef#getCdoView <em>Cdo View</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Cdo View</em>'.
    * @see org.eclipse.emf.cdo.ui.defs.CDOEditorDef#getCdoView()
    * @see #getCDOEditorDef()
@@ -174,9 +170,8 @@ public interface CDOUIDefsPackage extends EPackage
   EReference getCDOEditorDef_CdoView();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.ui.defs.CDOEditorDef#getResourcePath
-   * <em>Resource Path</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.ui.defs.CDOEditorDef#getResourcePath <em>Resource Path</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Resource Path</em>'.
    * @see org.eclipse.emf.cdo.ui.defs.CDOEditorDef#getResourcePath()
    * @see #getCDOEditorDef()
@@ -185,8 +180,8 @@ public interface CDOUIDefsPackage extends EPackage
   EAttribute getCDOEditorDef_ResourcePath();
 
   /**
-   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -201,15 +196,13 @@ public interface CDOUIDefsPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.ui.defs.impl.EditorDefImpl <em>Editor Def</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.ui.defs.impl.EditorDefImpl <em>Editor Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.ui.defs.impl.EditorDefImpl
      * @see org.eclipse.emf.cdo.ui.defs.impl.CDOUIDefsPackageImpl#getEditorDef()
      * @generated
@@ -217,17 +210,16 @@ public interface CDOUIDefsPackage extends EPackage
     EClass EDITOR_DEF = eINSTANCE.getEditorDef();
 
     /**
-     * The meta object literal for the '<em><b>Editor ID</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Editor ID</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute EDITOR_DEF__EDITOR_ID = eINSTANCE.getEditorDef_EditorID();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.ui.defs.impl.CDOEditorDefImpl
-     * <em>CDO Editor Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.ui.defs.impl.CDOEditorDefImpl <em>CDO Editor Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.ui.defs.impl.CDOEditorDefImpl
      * @see org.eclipse.emf.cdo.ui.defs.impl.CDOUIDefsPackageImpl#getCDOEditorDef()
      * @generated
@@ -235,17 +227,17 @@ public interface CDOUIDefsPackage extends EPackage
     EClass CDO_EDITOR_DEF = eINSTANCE.getCDOEditorDef();
 
     /**
-     * The meta object literal for the '<em><b>Cdo View</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Cdo View</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference CDO_EDITOR_DEF__CDO_VIEW = eINSTANCE.getCDOEditorDef_CdoView();
 
     /**
-     * The meta object literal for the '<em><b>Resource Path</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Resource Path</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute CDO_EDITOR_DEF__RESOURCE_PATH = eINSTANCE.getCDOEditorDef_ResourcePath();

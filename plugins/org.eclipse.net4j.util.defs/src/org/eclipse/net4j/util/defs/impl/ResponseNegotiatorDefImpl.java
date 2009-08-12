@@ -28,11 +28,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.impl.ResponseNegotiatorDefImpl#getCredentialsProvider <em>Credentials Provider
- * </em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.ResponseNegotiatorDefImpl#getCredentialsProvider <em>Credentials Provider</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements ResponseNegotiatorDef
@@ -49,7 +48,6 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ResponseNegotiatorDefImpl()
@@ -59,7 +57,6 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -70,7 +67,6 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CredentialsProviderDef getCredentialsProvider()
@@ -82,9 +78,7 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
       if (credentialsProvider != oldCredentialsProvider)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider,
-              credentialsProvider));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider, credentialsProvider));
       }
     }
     return credentialsProvider;
@@ -92,7 +86,6 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CredentialsProviderDef basicGetCredentialsProvider()
@@ -102,7 +95,6 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setCredentialsProvider(CredentialsProviderDef newCredentialsProvider)
@@ -110,14 +102,11 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
     CredentialsProviderDef oldCredentialsProvider = credentialsProvider;
     credentialsProvider = newCredentialsProvider;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider,
-          credentialsProvider));
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider, credentialsProvider));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -125,17 +114,15 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
-      if (resolve)
-        return getCredentialsProvider();
-      return basicGetCredentialsProvider();
+      case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
+        if (resolve) return getCredentialsProvider();
+        return basicGetCredentialsProvider();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -143,16 +130,15 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
-      setCredentialsProvider((CredentialsProviderDef)newValue);
-      return;
+      case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
+        setCredentialsProvider((CredentialsProviderDef)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -160,16 +146,15 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
-      setCredentialsProvider((CredentialsProviderDef)null);
-      return;
+      case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
+        setCredentialsProvider((CredentialsProviderDef)null);
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -177,8 +162,8 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
-      return credentialsProvider != null;
+      case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
+        return credentialsProvider != null;
     }
     return super.eIsSet(featureID);
   }

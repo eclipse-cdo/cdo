@@ -25,17 +25,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplContainedElementNPLImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplContainedElementNPLImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplContainedElementNPL
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ImplContainedElementNPLImpl()
@@ -45,7 +44,6 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -77,7 +73,6 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -87,7 +82,6 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -108,7 +102,6 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

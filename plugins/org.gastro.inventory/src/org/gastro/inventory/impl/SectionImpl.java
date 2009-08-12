@@ -28,20 +28,19 @@ import org.gastro.inventory.Section;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.inventory.impl.SectionImpl#getMenuCard <em>Menu Card</em>}</li>
- * <li>{@link org.gastro.inventory.impl.SectionImpl#getOfferings <em>Offerings</em>}</li>
- * <li>{@link org.gastro.inventory.impl.SectionImpl#getTitle <em>Title</em>}</li>
- * <li>{@link org.gastro.inventory.impl.SectionImpl#getText <em>Text</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.SectionImpl#getMenuCard <em>Menu Card</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.SectionImpl#getOfferings <em>Offerings</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.SectionImpl#getTitle <em>Title</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.SectionImpl#getText <em>Text</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SectionImpl extends CDOObjectImpl implements Section
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected SectionImpl()
@@ -51,7 +50,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -62,7 +60,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -73,7 +70,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public MenuCard getMenuCard()
@@ -83,7 +79,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setMenuCard(MenuCard newMenuCard)
@@ -93,7 +88,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -104,7 +98,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getTitle()
@@ -114,7 +107,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTitle(String newTitle)
@@ -124,7 +116,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getText()
@@ -134,7 +125,6 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setText(String newText)

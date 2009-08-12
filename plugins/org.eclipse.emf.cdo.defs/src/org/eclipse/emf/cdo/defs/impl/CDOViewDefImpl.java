@@ -30,19 +30,19 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl#getCdoSessionDef <em>Cdo Session Def</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl#getCdoSessionDef <em>Cdo Session Def</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 {
 
   /**
-   * The cached value of the '{@link #getCdoSessionDef() <em>Cdo Session Def</em>}' reference. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getCdoSessionDef() <em>Cdo Session Def</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getCdoSessionDef()
    * @generated
    * @ordered
@@ -51,7 +51,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOViewDefImpl()
@@ -61,7 +60,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -72,7 +70,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOSessionDef getCdoSessionDef()
@@ -84,8 +81,7 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
       if (cdoSessionDef != oldCdoSessionDef)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF,
-              oldCdoSessionDef, cdoSessionDef));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF, oldCdoSessionDef, cdoSessionDef));
       }
     }
     return cdoSessionDef;
@@ -93,7 +89,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOSessionDef basicGetCdoSessionDef()
@@ -103,7 +98,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setCdoSessionDef(CDOSessionDef newCdoSessionDef)
@@ -111,13 +105,11 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
     CDOSessionDef oldCdoSessionDef = cdoSessionDef;
     cdoSessionDef = newCdoSessionDef;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF,
-          oldCdoSessionDef, cdoSessionDef));
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF, oldCdoSessionDef, cdoSessionDef));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -125,17 +117,15 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
-      if (resolve)
-        return getCdoSessionDef();
-      return basicGetCdoSessionDef();
+      case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
+        if (resolve) return getCdoSessionDef();
+        return basicGetCdoSessionDef();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -143,16 +133,15 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
-      setCdoSessionDef((CDOSessionDef)newValue);
-      return;
+      case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
+        setCdoSessionDef((CDOSessionDef)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -160,16 +149,15 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
-      setCdoSessionDef((CDOSessionDef)null);
-      return;
+      case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
+        setCdoSessionDef((CDOSessionDef)null);
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -177,8 +165,8 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
-      return cdoSessionDef != null;
+      case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
+        return cdoSessionDef != null;
     }
     return super.eIsSet(featureID);
   }

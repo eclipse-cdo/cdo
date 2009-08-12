@@ -15,7 +15,8 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>IContained Element No Parent Link</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#getIContainedElementNoParentLink()
  * @model interface="true" abstract="true"
  * @generated

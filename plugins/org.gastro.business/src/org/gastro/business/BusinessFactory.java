@@ -18,54 +18,53 @@ import org.eclipse.emf.ecore.EFactory;
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
- * 
  * @see org.gastro.business.BusinessPackage
  * @generated
  */
 public interface BusinessFactory extends EFactory
 {
   /**
-   * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   BusinessFactory eINSTANCE = org.gastro.business.impl.BusinessFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Day</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>Day</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Day</em>'.
    * @generated
    */
   BusinessDay createBusinessDay();
 
   /**
-   * Returns a new object of class '<em>Order</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>Order</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Order</em>'.
    * @generated
    */
   Order createOrder();
 
   /**
-   * Returns a new object of class '<em>Order Detail</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>Order Detail</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Order Detail</em>'.
    * @generated
    */
   OrderDetail createOrderDetail();
 
   /**
-   * Returns a new object of class '<em>Waiter</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>Waiter</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Waiter</em>'.
    * @generated
    */
   Waiter createWaiter();
 
   /**
-   * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.
    * @generated
    */

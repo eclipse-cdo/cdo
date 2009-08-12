@@ -24,17 +24,16 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefSingleContainedImpl#getElement <em>Element</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefSingleContainedImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSingleContained
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected GenRefSingleContainedImpl()
@@ -44,7 +43,6 @@ public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -55,7 +53,6 @@ public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,7 +63,6 @@ public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EObject getElement()
@@ -76,7 +72,6 @@ public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setElement(EObject newElement)

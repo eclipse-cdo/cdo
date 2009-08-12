@@ -68,22 +68,21 @@ import java.util.Map;
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model. <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package
  * @generated
  */
 public class model4AdapterFactory extends AdapterFactoryImpl
 {
   /**
-   * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached model package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected static model4Package modelPackage;
 
   /**
-   * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the adapter factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public model4AdapterFactory()
@@ -95,10 +94,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Returns whether this factory is applicable for the type of the object. <!-- begin-user-doc --> This implementation
+   * Returns whether this factory is applicable for the type of the object.
+   * <!-- begin-user-doc --> This implementation
    * returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
    * end-user-doc -->
-   * 
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
@@ -117,8 +116,8 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * The switch that delegates to the <code>createXXX</code> methods. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The switch that delegates to the <code>createXXX</code> methods.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected model4Switch<Adapter> modelSwitch = new model4Switch<Adapter>()
@@ -413,10 +412,9 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   };
 
   /**
-   * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param target
-   *          the object to adapt.
+   * Creates an adapter for the <code>target</code>.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param target the object to adapt.
    * @return the adapter for the <code>target</code>.
    * @generated
    */
@@ -427,11 +425,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleContained
-   * <em>Ref Single Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleContained <em>Ref Single Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefSingleContained
    * @generated
@@ -442,11 +439,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.SingleContainedElement
-   * <em>Single Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.SingleContainedElement <em>Single Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.SingleContainedElement
    * @generated
@@ -457,11 +453,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleNonContained
-   * <em>Ref Single Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleNonContained <em>Ref Single Non Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefSingleNonContained
    * @generated
@@ -472,11 +467,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement
-   * <em>Single Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement <em>Single Non Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement
    * @generated
@@ -487,11 +481,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiContained
-   * <em>Ref Multi Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiContained <em>Ref Multi Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiContained
    * @generated
@@ -502,11 +495,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.MultiContainedElement
-   * <em>Multi Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.MultiContainedElement <em>Multi Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.MultiContainedElement
    * @generated
@@ -517,11 +509,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContained
-   * <em>Ref Multi Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContained <em>Ref Multi Non Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContained
    * @generated
@@ -532,11 +523,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement
-   * <em>Multi Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement <em>Multi Non Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement
    * @generated
@@ -547,11 +537,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL
-   * <em>Ref Single Contained NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL <em>Ref Single Contained NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL
    * @generated
@@ -562,11 +551,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL
-   * <em>Ref Single Non Contained NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL <em>Ref Single Non Contained NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL
    * @generated
@@ -577,11 +565,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL
-   * <em>Ref Multi Contained NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL <em>Ref Multi Contained NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL
    * @generated
@@ -592,11 +579,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL
-   * <em>Ref Multi Non Contained NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL <em>Ref Multi Non Contained NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL
    * @generated
@@ -607,11 +593,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite
-   * <em>Contained Element No Opposite</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite <em>Contained Element No Opposite</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite
    * @generated
@@ -622,11 +607,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefSingleContained
-   * <em>Gen Ref Single Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefSingleContained <em>Gen Ref Single Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefSingleContained
    * @generated
@@ -637,11 +621,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained
-   * <em>Gen Ref Single Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained <em>Gen Ref Single Non Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained
    * @generated
@@ -652,11 +635,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiContained
-   * <em>Gen Ref Multi Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiContained <em>Gen Ref Multi Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiContained
    * @generated
@@ -667,11 +649,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained
-   * <em>Gen Ref Multi Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained <em>Gen Ref Multi Non Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained
    * @generated
@@ -682,11 +663,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainer
-   * <em>Impl Single Ref Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainer <em>Impl Single Ref Container</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainer
    * @generated
@@ -697,11 +677,9 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement <em>Impl Single Ref Contained Element</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement <em>Impl Single Ref Contained Element</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement
    * @generated
@@ -712,11 +690,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer
-   * <em>Impl Single Ref Non Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer <em>Impl Single Ref Non Container</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer
    * @generated
@@ -727,12 +704,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement
-   * <em>Impl Single Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement <em>Impl Single Ref Non Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null
    * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement
    * @generated
@@ -743,11 +718,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainer
-   * <em>Impl Multi Ref Non Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainer <em>Impl Multi Ref Non Container</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainer
    * @generated
@@ -758,12 +732,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement
-   * <em>Impl Multi Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement <em>Impl Multi Ref Non Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null
    * so that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement
    * @generated
@@ -774,11 +746,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainer
-   * <em>Impl Multi Ref Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainer <em>Impl Multi Ref Container</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainer
    * @generated
@@ -789,11 +760,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainedElement
-   * <em>Impl Multi Ref Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainedElement <em>Impl Multi Ref Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainedElement
    * @generated
@@ -804,11 +774,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainerNPL
-   * <em>Impl Single Ref Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainerNPL <em>Impl Single Ref Container NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainerNPL
    * @generated
@@ -819,11 +788,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL
-   * <em>Impl Single Ref Non Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL <em>Impl Single Ref Non Container NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL
    * @generated
@@ -834,11 +802,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL
-   * <em>Impl Multi Ref Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL <em>Impl Multi Ref Container NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL
    * @generated
@@ -849,11 +816,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainerNPL
-   * <em>Impl Multi Ref Non Container NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainerNPL <em>Impl Multi Ref Non Container NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainerNPL
    * @generated
@@ -864,11 +830,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL
-   * <em>Impl Contained Element NPL</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL <em>Impl Contained Element NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL
    * @generated
@@ -879,11 +844,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained
-   * <em>Gen Ref Multi NU Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained <em>Gen Ref Multi NU Non Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained
    * @generated
@@ -894,11 +858,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained
-   * <em>Gen Ref Map Non Contained</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained <em>Gen Ref Map Non Contained</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained
    * @generated
@@ -938,12 +901,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
-   * <em>ISingle Ref Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement <em>ISingle Ref Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that
    * we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement
    * @generated
@@ -969,12 +930,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
-   * <em>ISingle Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement <em>ISingle Ref Non Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement
    * @generated
@@ -1000,12 +959,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
-   * <em>IMulti Ref Non Contained Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement <em>IMulti Ref Non Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement
    * @generated
@@ -1016,11 +973,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
-   * <em>IMulti Ref Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer <em>IMulti Ref Container</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer
    * @generated
@@ -1031,11 +987,9 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement <em>IMulti Ref Contained Element</em>}
-   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement <em>IMulti Ref Contained Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
    * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement
    * @generated
@@ -1061,11 +1015,9 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL <em>ISingle Ref Non Container NPL</em>}
-   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL <em>ISingle Ref Non Container NPL</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
    * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL
    * @generated
@@ -1091,11 +1043,9 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL <em>IMulti Ref Non Container NPL</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL <em>IMulti Ref Non Container NPL</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL
    * @generated
@@ -1106,12 +1056,10 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
-   * <em>IContained Element No Parent Link</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink <em>IContained Element No Parent Link</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IContainedElementNoParentLink
    * @generated
@@ -1122,10 +1070,9 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
-   * <em>INamed Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model4interfaces.INamedElement <em>INamed Element</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.INamedElement
    * @generated
@@ -1136,9 +1083,9 @@ public class model4AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for the default case. <!-- begin-user-doc --> This default implementation returns null. <!--
+   * Creates a new adapter for the default case.
+   * <!-- begin-user-doc --> This default implementation returns null. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @generated
    */

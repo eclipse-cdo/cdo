@@ -22,14 +22,13 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class BufferProviderDefImpl extends DefImpl implements BufferProviderDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected BufferProviderDefImpl()
@@ -39,7 +38,6 @@ public abstract class BufferProviderDefImpl extends DefImpl implements BufferPro
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

@@ -28,18 +28,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.RetryFailOverStrategyDefImpl#getRetries <em>Retries</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.impl.RetryFailOverStrategyDefImpl#getRetries <em>Retries</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implements RetryFailOverStrategyDef
 {
   /**
-   * The default value of the '{@link #getRetries() <em>Retries</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getRetries() <em>Retries</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getRetries()
    * @generated
    * @ordered
@@ -47,9 +47,9 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
   protected static final int RETRIES_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getRetries() <em>Retries</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getRetries() <em>Retries</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getRetries()
    * @generated
    * @ordered
@@ -57,8 +57,8 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
   protected int retries = RETRIES_EDEFAULT;
 
   /**
-   * This is true if the Retries attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is true if the Retries attribute has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -66,7 +66,6 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RetryFailOverStrategyDefImpl()
@@ -76,7 +75,6 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -87,7 +85,6 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getRetries()
@@ -97,7 +94,6 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setRetries(int newRetries)
@@ -107,13 +103,11 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
     boolean oldRetriesESet = retriesESet;
     retriesESet = true;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES,
-          oldRetries, retries, !oldRetriesESet));
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES, oldRetries, retries, !oldRetriesESet));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetRetries()
@@ -123,13 +117,11 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
     retries = RETRIES_EDEFAULT;
     retriesESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES,
-          oldRetries, RETRIES_EDEFAULT, oldRetriesESet));
+      eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES, oldRetries, RETRIES_EDEFAULT, oldRetriesESet));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetRetries()
@@ -139,7 +131,6 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -147,15 +138,14 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
   {
     switch (featureID)
     {
-    case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-      return new Integer(getRetries());
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        return getRetries();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -163,16 +153,15 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
   {
     switch (featureID)
     {
-    case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-      setRetries(((Integer)newValue).intValue());
-      return;
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        setRetries((Integer)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -180,16 +169,15 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
   {
     switch (featureID)
     {
-    case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-      unsetRetries();
-      return;
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        unsetRetries();
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -197,29 +185,24 @@ public class RetryFailOverStrategyDefImpl extends FailOverStrategyDefImpl implem
   {
     switch (featureID)
     {
-    case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
-      return isSetRetries();
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF__RETRIES:
+        return isSetRetries();
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy())
-      return super.toString();
+    if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (retries: ");
-    if (retriesESet)
-      result.append(retries);
-    else
-      result.append("<unset>");
+    if (retriesESet) result.append(retries); else result.append("<unset>");
     result.append(')');
     return result.toString();
   }

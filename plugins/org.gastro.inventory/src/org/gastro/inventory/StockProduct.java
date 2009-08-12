@@ -15,16 +15,17 @@ package org.gastro.inventory;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Stock Product</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.gastro.inventory.StockProduct#getStock <em>Stock</em>}</li>
- * <li>{@link org.gastro.inventory.StockProduct#getCost <em>Cost</em>}</li>
- * <li>{@link org.gastro.inventory.StockProduct#getAvailable <em>Available</em>}</li>
- * <li>{@link org.gastro.inventory.StockProduct#getOrderLimit <em>Order Limit</em>}</li>
+ *   <li>{@link org.gastro.inventory.StockProduct#getStock <em>Stock</em>}</li>
+ *   <li>{@link org.gastro.inventory.StockProduct#getCost <em>Cost</em>}</li>
+ *   <li>{@link org.gastro.inventory.StockProduct#getAvailable <em>Available</em>}</li>
+ *   <li>{@link org.gastro.inventory.StockProduct#getOrderLimit <em>Order Limit</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getStockProduct()
  * @model
  * @generated
@@ -32,14 +33,14 @@ package org.gastro.inventory;
 public interface StockProduct extends Product
 {
   /**
-   * Returns the value of the '<em><b>Stock</b></em>' container reference. It is bidirectional and its opposite is '
-   * {@link org.gastro.inventory.Stock#getProducts <em>Products</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Stock</b></em>' container reference.
+   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Stock#getProducts <em>Products</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Stock</em>' container reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Stock</em>' container reference.
    * @see #setStock(Stock)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_Stock()
@@ -61,12 +62,12 @@ public interface StockProduct extends Product
   void setStock(Stock value);
 
   /**
-   * Returns the value of the '<em><b>Cost</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Cost</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Cost</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Cost</em>' attribute.
    * @see #setCost(float)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_Cost()
@@ -87,13 +88,13 @@ public interface StockProduct extends Product
   void setCost(float value);
 
   /**
-   * Returns the value of the '<em><b>Available</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Available</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Available</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Available</em>' attribute.
    * @see #setAvailable(int)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_Available()
@@ -114,13 +115,13 @@ public interface StockProduct extends Product
   void setAvailable(int value);
 
   /**
-   * Returns the value of the '<em><b>Order Limit</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Order Limit</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Order Limit</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Order Limit</em>' attribute.
    * @see #setOrderLimit(int)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_OrderLimit()
@@ -132,9 +133,7 @@ public interface StockProduct extends Product
   /**
    * Sets the value of the '{@link org.gastro.inventory.StockProduct#getOrderLimit <em>Order Limit</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Order Limit</em>' attribute.
+   * @param value the new value of the '<em>Order Limit</em>' attribute.
    * @see #getOrderLimit()
    * @generated
    */

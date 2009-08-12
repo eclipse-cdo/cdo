@@ -23,14 +23,13 @@ import org.eclipse.emf.ecore.EClass;
  * '. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class InteractiveCredentialsProviderDefImpl extends DefImpl implements InteractiveCredentialsProviderDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected InteractiveCredentialsProviderDefImpl()
@@ -40,7 +39,6 @@ public class InteractiveCredentialsProviderDefImpl extends DefImpl implements In
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

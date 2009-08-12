@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOTransactionDefImpl extends CDOViewDefImpl implements CDOTransactionDef
@@ -30,7 +30,6 @@ public class CDOTransactionDefImpl extends CDOViewDefImpl implements CDOTransact
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOTransactionDefImpl()
@@ -40,7 +39,6 @@ public class CDOTransactionDefImpl extends CDOViewDefImpl implements CDOTransact
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

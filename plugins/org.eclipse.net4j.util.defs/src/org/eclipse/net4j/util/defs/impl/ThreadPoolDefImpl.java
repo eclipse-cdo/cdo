@@ -35,7 +35,6 @@ public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ThreadPoolDefImpl()
@@ -45,7 +44,6 @@ public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

@@ -20,14 +20,13 @@ import derived.DerivedPackage;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class DerivedClassImpl extends BaseClassImpl implements DerivedClass
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected DerivedClassImpl()
@@ -37,7 +36,6 @@ public class DerivedClassImpl extends BaseClassImpl implements DerivedClass
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -48,7 +46,6 @@ public class DerivedClassImpl extends BaseClassImpl implements DerivedClass
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void decrement()

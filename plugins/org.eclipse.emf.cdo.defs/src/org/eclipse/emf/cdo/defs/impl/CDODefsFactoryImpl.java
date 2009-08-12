@@ -36,22 +36,20 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static CDODefsFactory init()
   {
     try
     {
-      CDODefsFactory theCDODefsFactory = (CDODefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/defs/1.0.0");
+      CDODefsFactory theCDODefsFactory = (CDODefsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/defs/1.0.0"); 
       if (theCDODefsFactory != null)
       {
         return theCDODefsFactory;
@@ -65,8 +63,8 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CDODefsFactoryImpl()
@@ -76,7 +74,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -84,38 +81,25 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
   {
     switch (eClass.getClassifierID())
     {
-    case CDODefsPackage.CDO_VIEW_DEF:
-      return createCDOViewDef();
-    case CDODefsPackage.CDO_TRANSACTION_DEF:
-      return createCDOTransactionDef();
-    case CDODefsPackage.CDO_AUDIT_DEF:
-      return createCDOAuditDef();
-    case CDODefsPackage.CDO_SESSION_DEF:
-      return createCDOSessionDef();
-    case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF:
-      return createRetryFailOverStrategyDef();
-    case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF:
-      return createCDOPackageRegistryDef();
-    case CDODefsPackage.CDO_EAGER_PACKAGE_REGISTRY_DEF:
-      return createCDOEagerPackageRegistryDef();
-    case CDODefsPackage.CDO_LAZY_PACKAGE_REGISTRY_DEF:
-      return createCDOLazyPackageRegistryDef();
-    case CDODefsPackage.EDYNAMIC_PACKAGE_DEF:
-      return createEDynamicPackageDef();
-    case CDODefsPackage.EGLOBAL_PACKAGE_DEF:
-      return createEGlobalPackageDef();
-    case CDODefsPackage.CDO_CLIENT_PROTOCOL_FACTORY_DEF:
-      return createCDOClientProtocolFactoryDef();
-    case CDODefsPackage.CDO_RESOURCE_DEF:
-      return createCDOResourceDef();
-    default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+      case CDODefsPackage.CDO_VIEW_DEF: return createCDOViewDef();
+      case CDODefsPackage.CDO_TRANSACTION_DEF: return createCDOTransactionDef();
+      case CDODefsPackage.CDO_AUDIT_DEF: return createCDOAuditDef();
+      case CDODefsPackage.CDO_SESSION_DEF: return createCDOSessionDef();
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF: return createRetryFailOverStrategyDef();
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF: return createCDOPackageRegistryDef();
+      case CDODefsPackage.CDO_EAGER_PACKAGE_REGISTRY_DEF: return createCDOEagerPackageRegistryDef();
+      case CDODefsPackage.CDO_LAZY_PACKAGE_REGISTRY_DEF: return createCDOLazyPackageRegistryDef();
+      case CDODefsPackage.EDYNAMIC_PACKAGE_DEF: return createEDynamicPackageDef();
+      case CDODefsPackage.EGLOBAL_PACKAGE_DEF: return createEGlobalPackageDef();
+      case CDODefsPackage.CDO_CLIENT_PROTOCOL_FACTORY_DEF: return createCDOClientProtocolFactoryDef();
+      case CDODefsPackage.CDO_RESOURCE_DEF: return createCDOResourceDef();
+      default:
+        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -123,16 +107,15 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case CDODefsPackage.RESOURCE_MODE:
-      return createResourceModeFromString(eDataType, initialValue);
-    default:
-      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+      case CDODefsPackage.RESOURCE_MODE:
+        return createResourceModeFromString(eDataType, initialValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -140,16 +123,15 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case CDODefsPackage.RESOURCE_MODE:
-      return convertResourceModeToString(eDataType, instanceValue);
-    default:
-      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+      case CDODefsPackage.RESOURCE_MODE:
+        return convertResourceModeToString(eDataType, instanceValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOViewDef createCDOViewDef()
@@ -160,7 +142,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOTransactionDef createCDOTransactionDef()
@@ -171,7 +152,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOAuditDef createCDOAuditDef()
@@ -182,7 +162,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOSessionDef createCDOSessionDef()
@@ -193,7 +172,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public RetryFailOverStrategyDef createRetryFailOverStrategyDef()
@@ -204,18 +182,16 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOPackageRegistryDef createCDOPackageRegistryDef()
   {
-    CDOPackageRegistryDefImpl ePackageRegistryDef = new CDOPackageRegistryDefImpl();
-    return ePackageRegistryDef;
+    CDOPackageRegistryDefImpl cdoPackageRegistryDef = new CDOPackageRegistryDefImpl();
+    return cdoPackageRegistryDef;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOEagerPackageRegistryDef createCDOEagerPackageRegistryDef()
@@ -226,7 +202,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOLazyPackageRegistryDef createCDOLazyPackageRegistryDef()
@@ -237,7 +212,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EDynamicPackageDef createEDynamicPackageDef()
@@ -248,7 +222,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EGlobalPackageDef createEGlobalPackageDef()
@@ -259,7 +232,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOClientProtocolFactoryDef createCDOClientProtocolFactoryDef()
@@ -270,7 +242,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOResourceDef createCDOResourceDef()
@@ -281,21 +252,17 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ResourceMode createResourceModeFromString(EDataType eDataType, String initialValue)
   {
     ResourceMode result = ResourceMode.get(initialValue);
-    if (result == null)
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-          + eDataType.getName() + "'");
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     return result;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String convertResourceModeToString(EDataType eDataType, Object instanceValue)
@@ -305,7 +272,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDODefsPackage getCDODefsPackage()
@@ -315,7 +281,6 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

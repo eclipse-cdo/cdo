@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -71,7 +71,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected boolean connectorDefESet;
 
   /**
-   * The default value of the '{@link #getRepositoryName() <em>CDORepositoryInfo Name</em>}' attribute. <!-- begin-user-doc -->
+   * The default value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
    * @see #getRepositoryName()
@@ -81,7 +81,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected static final String REPOSITORY_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getRepositoryName() <em>CDORepositoryInfo Name</em>}' attribute. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
    * @see #getRepositoryName()
@@ -92,13 +92,14 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * The cached value of the '{@link #getCdoPackageRegistryDef() <em>Cdo Package Registry Def</em>}' reference. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
+   * begin-user-doc -->
    * 
+   * @since 3.0 <!-- end-user-doc -->
    * @see #getCdoPackageRegistryDef()
    * @generated
    * @ordered
    */
-  protected CDOPackageRegistryDef ePackageRegistryDef;
+  protected CDOPackageRegistryDef cdoPackageRegistryDef;
 
   /**
    * The default value of the '{@link #isLegacySupportEnabled() <em>Legacy Support Enabled</em>}' attribute. <!--
@@ -173,8 +174,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       if (connectorDef != oldConnectorDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
               oldConnectorDef, connectorDef));
+        }
       }
     }
     return connectorDef;
@@ -224,8 +227,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldConnectorDefESet = connectorDefESet;
     connectorDefESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
           oldConnectorDef, connectorDef, !oldConnectorDefESet));
+    }
   }
 
   /**
@@ -240,8 +245,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     connectorDef = null;
     connectorDefESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
           oldConnectorDef, null, oldConnectorDefESet));
+    }
   }
 
   /**
@@ -274,8 +281,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     String oldRepositoryName = repositoryName;
     repositoryName = newRepositoryName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME,
           oldRepositoryName, repositoryName));
+    }
   }
 
   /**
@@ -285,18 +294,20 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
    */
   public CDOPackageRegistryDef getCdoPackageRegistryDef()
   {
-    if (ePackageRegistryDef != null && ePackageRegistryDef.eIsProxy())
+    if (cdoPackageRegistryDef != null && cdoPackageRegistryDef.eIsProxy())
     {
-      InternalEObject oldCdoPackageRegistryDef = (InternalEObject)ePackageRegistryDef;
-      ePackageRegistryDef = (CDOPackageRegistryDef)eResolveProxy(oldCdoPackageRegistryDef);
-      if (ePackageRegistryDef != oldCdoPackageRegistryDef)
+      InternalEObject oldCdoPackageRegistryDef = (InternalEObject)cdoPackageRegistryDef;
+      cdoPackageRegistryDef = (CDOPackageRegistryDef)eResolveProxy(oldCdoPackageRegistryDef);
+      if (cdoPackageRegistryDef != oldCdoPackageRegistryDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, ePackageRegistryDef));
+              CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, cdoPackageRegistryDef));
+        }
       }
     }
-    return ePackageRegistryDef;
+    return cdoPackageRegistryDef;
   }
 
   /**
@@ -306,7 +317,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
    */
   public CDOPackageRegistryDef basicGetCdoPackageRegistryDef()
   {
-    return ePackageRegistryDef;
+    return cdoPackageRegistryDef;
   }
 
   /**
@@ -316,11 +327,13 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
    */
   public void setCdoPackageRegistryDef(CDOPackageRegistryDef newCdoPackageRegistryDef)
   {
-    CDOPackageRegistryDef oldCdoPackageRegistryDef = ePackageRegistryDef;
-    ePackageRegistryDef = newCdoPackageRegistryDef;
+    CDOPackageRegistryDef oldCdoPackageRegistryDef = cdoPackageRegistryDef;
+    cdoPackageRegistryDef = newCdoPackageRegistryDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF,
-          oldCdoPackageRegistryDef, ePackageRegistryDef));
+          oldCdoPackageRegistryDef, cdoPackageRegistryDef));
+    }
   }
 
   /**
@@ -343,8 +356,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldLegacySupportEnabled = legacySupportEnabled;
     legacySupportEnabled = newLegacySupportEnabled;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED,
           oldLegacySupportEnabled, legacySupportEnabled));
+    }
   }
 
   /**
@@ -361,8 +376,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       if (failOverStrategyDef != oldFailOverStrategyDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF, oldFailOverStrategyDef, failOverStrategyDef));
+        }
       }
     }
     return failOverStrategyDef;
@@ -411,8 +428,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldFailOverStrategyDefESet = failOverStrategyDefESet;
     failOverStrategyDefESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF,
           oldFailOverStrategyDef, failOverStrategyDef, !oldFailOverStrategyDefESet));
+    }
   }
 
   /**
@@ -427,8 +446,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     failOverStrategyDef = null;
     failOverStrategyDefESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF,
           oldFailOverStrategyDef, null, oldFailOverStrategyDefESet));
+    }
   }
 
   /**
@@ -453,19 +474,25 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     {
     case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
       if (resolve)
+      {
         return getConnectorDef();
+      }
       return basicGetConnectorDef();
     case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
       return getRepositoryName();
     case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
       if (resolve)
+      {
         return getCdoPackageRegistryDef();
+      }
       return basicGetCdoPackageRegistryDef();
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
-      return isLegacySupportEnabled() ? Boolean.TRUE : Boolean.FALSE;
+      return isLegacySupportEnabled();
     case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
       if (resolve)
+      {
         return getFailOverStrategyDef();
+      }
       return basicGetFailOverStrategyDef();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -491,7 +518,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       setCdoPackageRegistryDef((CDOPackageRegistryDef)newValue);
       return;
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
-      setLegacySupportEnabled(((Boolean)newValue).booleanValue());
+      setLegacySupportEnabled((Boolean)newValue);
       return;
     case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
       setFailOverStrategyDef((FailOverStrategyDef)newValue);
@@ -545,7 +572,7 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       return REPOSITORY_NAME_EDEFAULT == null ? repositoryName != null : !REPOSITORY_NAME_EDEFAULT
           .equals(repositoryName);
     case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
-      return ePackageRegistryDef != null;
+      return cdoPackageRegistryDef != null;
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
       return legacySupportEnabled != LEGACY_SUPPORT_ENABLED_EDEFAULT;
     case CDODefsPackage.CDO_SESSION_DEF__FAIL_OVER_STRATEGY_DEF:
@@ -563,7 +590,9 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (repositoryName: ");

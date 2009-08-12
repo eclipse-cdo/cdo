@@ -23,22 +23,20 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Net4JUIDefsFactory init()
   {
     try
     {
-      Net4JUIDefsFactory theNet4JUIDefsFactory = (Net4JUIDefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/NET4J/ui/defs/1.0.0"); //$NON-NLS-1$
+      Net4JUIDefsFactory theNet4JUIDefsFactory = (Net4JUIDefsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/NET4J/ui/defs/1.0.0"); 
       if (theNet4JUIDefsFactory != null)
       {
         return theNet4JUIDefsFactory;
@@ -48,13 +46,12 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
     {
       EcorePlugin.INSTANCE.log(exception);
     }
-
     return new Net4JUIDefsFactoryImpl();
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Net4JUIDefsFactoryImpl()
@@ -64,7 +61,6 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -72,16 +68,14 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
   {
     switch (eClass.getClassifierID())
     {
-    case Net4JUIDefsPackage.INTERACTIVE_CREDENTIALS_PROVIDER_DEF:
-      return createInteractiveCredentialsProviderDef();
-    default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+      case Net4JUIDefsPackage.INTERACTIVE_CREDENTIALS_PROVIDER_DEF: return createInteractiveCredentialsProviderDef();
+      default:
+        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public InteractiveCredentialsProviderDef createInteractiveCredentialsProviderDef()
@@ -92,7 +86,6 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Net4JUIDefsPackage getNet4JUIDefsPackage()
@@ -102,7 +95,6 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

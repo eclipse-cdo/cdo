@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.model3.impl;
 
-import org.eclipse.emf.cdo.tests.model3.*;
 import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;

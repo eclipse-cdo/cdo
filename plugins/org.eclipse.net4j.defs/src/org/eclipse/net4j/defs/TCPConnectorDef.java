@@ -30,13 +30,13 @@ package org.eclipse.net4j.defs;
 public interface TCPConnectorDef extends ConnectorDef
 {
   /**
-   * Returns the value of the '<em><b>Tcp Selector Def</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Tcp Selector Def</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Tcp Selector Def</em>' reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Tcp Selector Def</em>' reference.
    * @see #setTcpSelectorDef(TCPSelectorDef)
    * @see org.eclipse.net4j.defs.Net4jDefsPackage#getTCPConnectorDef_TcpSelectorDef()
@@ -46,23 +46,21 @@ public interface TCPConnectorDef extends ConnectorDef
   TCPSelectorDef getTcpSelectorDef();
 
   /**
-   * Sets the value of the '{@link org.eclipse.net4j.defs.TCPConnectorDef#getTcpSelectorDef <em>Tcp Selector Def</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Tcp Selector Def</em>' reference.
+   * Sets the value of the '{@link org.eclipse.net4j.defs.TCPConnectorDef#getTcpSelectorDef <em>Tcp Selector Def</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tcp Selector Def</em>' reference.
    * @see #getTcpSelectorDef()
    * @generated
    */
   void setTcpSelectorDef(TCPSelectorDef value);
 
   /**
-   * Returns the value of the '<em><b>Host</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Host</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Host</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Host</em>' attribute.
    * @see #setHost(String)
    * @see org.eclipse.net4j.defs.Net4jDefsPackage#getTCPConnectorDef_Host()
@@ -83,12 +81,12 @@ public interface TCPConnectorDef extends ConnectorDef
   void setHost(String value);
 
   /**
-   * Returns the value of the '<em><b>Port</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Port</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Port</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Port</em>' attribute.
    * @see #isSetPort()
    * @see #unsetPort()
@@ -124,9 +122,8 @@ public interface TCPConnectorDef extends ConnectorDef
   void unsetPort();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.net4j.defs.TCPConnectorDef#getPort <em>Port</em>}' attribute
-   * is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.net4j.defs.TCPConnectorDef#getPort <em>Port</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Port</em>' attribute is set.
    * @see #unsetPort()
    * @see #getPort()

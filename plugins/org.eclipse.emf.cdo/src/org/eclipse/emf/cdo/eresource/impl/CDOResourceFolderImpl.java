@@ -27,19 +27,19 @@ import java.util.Map;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource Folder</b></em>'.
  * 
  * @since 2.0<!-- end-user-doc -->
- *        <p>
- *        The following features are implemented:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl#getNodes <em>Nodes</em>}</li>
- *        </ul>
- *        </p>
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl#getNodes <em>Nodes</em>}</li>
+ * </ul>
+ * </p>
+ *
  * @generated
  */
 public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDOResourceFolder
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOResourceFolderImpl()
@@ -57,7 +57,6 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +67,6 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

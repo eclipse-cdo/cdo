@@ -23,22 +23,20 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static TestDefsFactory init()
   {
     try
     {
-      TestDefsFactory theTestDefsFactory = (TestDefsFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/NET4J/defs/tests/1.0.0"); //$NON-NLS-1$
+      TestDefsFactory theTestDefsFactory = (TestDefsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/NET4J/defs/tests/1.0.0"); 
       if (theTestDefsFactory != null)
       {
         return theTestDefsFactory;
@@ -52,8 +50,8 @@ public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public TestDefsFactoryImpl()
@@ -63,7 +61,6 @@ public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -71,16 +68,14 @@ public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
   {
     switch (eClass.getClassifierID())
     {
-    case TestDefsPackage.TEST_DEF:
-      return createTestDef();
-    default:
-      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+      case TestDefsPackage.TEST_DEF: return createTestDef();
+      default:
+        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TestDef createTestDef()
@@ -91,7 +86,6 @@ public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TestDefsPackage getTestDefsPackage()
@@ -101,7 +95,6 @@ public class TestDefsFactoryImpl extends EFactoryImpl implements TestDefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

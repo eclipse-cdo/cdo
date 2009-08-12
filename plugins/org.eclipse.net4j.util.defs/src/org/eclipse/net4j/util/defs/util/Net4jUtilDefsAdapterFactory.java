@@ -33,22 +33,21 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model. <!-- end-user-doc -->
- * 
  * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage
  * @generated
  */
 public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
 {
   /**
-   * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached model package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected static Net4jUtilDefsPackage modelPackage;
 
   /**
-   * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the adapter factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Net4jUtilDefsAdapterFactory()
@@ -60,10 +59,10 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Returns whether this factory is applicable for the type of the object. <!-- begin-user-doc --> This implementation
+   * Returns whether this factory is applicable for the type of the object.
+   * <!-- begin-user-doc --> This implementation
    * returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
    * end-user-doc -->
-   * 
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
@@ -82,96 +81,83 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * The switch that delegates to the <code>createXXX</code> methods. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The switch that delegates to the <code>createXXX</code> methods.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected Net4jUtilDefsSwitch<Adapter> modelSwitch = new Net4jUtilDefsSwitch<Adapter>()
-  {
-    @Override
-    public Adapter caseDefContainer(DefContainer object)
     {
-      return createDefContainerAdapter();
-    }
-
-    @Override
-    public Adapter caseDef(Def object)
-    {
-      return createDefAdapter();
-    }
-
-    @Override
-    public Adapter caseExecutorServiceDef(ExecutorServiceDef object)
-    {
-      return createExecutorServiceDefAdapter();
-    }
-
-    @Override
-    public Adapter caseThreadPoolDef(ThreadPoolDef object)
-    {
-      return createThreadPoolDefAdapter();
-    }
-
-    @Override
-    public Adapter caseRandomizerDef(RandomizerDef object)
-    {
-      return createRandomizerDefAdapter();
-    }
-
-    @Override
-    public Adapter caseUserManagerDef(UserManagerDef object)
-    {
-      return createUserManagerDefAdapter();
-    }
-
-    @Override
-    public Adapter caseUser(User object)
-    {
-      return createUserAdapter();
-    }
-
-    @Override
-    public Adapter casePasswordCredentialsProviderDef(PasswordCredentialsProviderDef object)
-    {
-      return createPasswordCredentialsProviderDefAdapter();
-    }
-
-    @Override
-    public Adapter caseCredentialsProviderDef(CredentialsProviderDef object)
-    {
-      return createCredentialsProviderDefAdapter();
-    }
-
-    @Override
-    public Adapter caseNegotiatorDef(NegotiatorDef object)
-    {
-      return createNegotiatorDefAdapter();
-    }
-
-    @Override
-    public Adapter caseResponseNegotiatorDef(ResponseNegotiatorDef object)
-    {
-      return createResponseNegotiatorDefAdapter();
-    }
-
-    @Override
-    public Adapter caseChallengeNegotiatorDef(ChallengeNegotiatorDef object)
-    {
-      return createChallengeNegotiatorDefAdapter();
-    }
-
-    @Override
-    public Adapter defaultCase(EObject object)
-    {
-      return createEObjectAdapter();
-    }
-  };
+      @Override
+      public Adapter caseDefContainer(DefContainer object)
+      {
+        return createDefContainerAdapter();
+      }
+      @Override
+      public Adapter caseDef(Def object)
+      {
+        return createDefAdapter();
+      }
+      @Override
+      public Adapter caseExecutorServiceDef(ExecutorServiceDef object)
+      {
+        return createExecutorServiceDefAdapter();
+      }
+      @Override
+      public Adapter caseThreadPoolDef(ThreadPoolDef object)
+      {
+        return createThreadPoolDefAdapter();
+      }
+      @Override
+      public Adapter caseRandomizerDef(RandomizerDef object)
+      {
+        return createRandomizerDefAdapter();
+      }
+      @Override
+      public Adapter caseUserManagerDef(UserManagerDef object)
+      {
+        return createUserManagerDefAdapter();
+      }
+      @Override
+      public Adapter caseUser(User object)
+      {
+        return createUserAdapter();
+      }
+      @Override
+      public Adapter casePasswordCredentialsProviderDef(PasswordCredentialsProviderDef object)
+      {
+        return createPasswordCredentialsProviderDefAdapter();
+      }
+      @Override
+      public Adapter caseCredentialsProviderDef(CredentialsProviderDef object)
+      {
+        return createCredentialsProviderDefAdapter();
+      }
+      @Override
+      public Adapter caseNegotiatorDef(NegotiatorDef object)
+      {
+        return createNegotiatorDefAdapter();
+      }
+      @Override
+      public Adapter caseResponseNegotiatorDef(ResponseNegotiatorDef object)
+      {
+        return createResponseNegotiatorDefAdapter();
+      }
+      @Override
+      public Adapter caseChallengeNegotiatorDef(ChallengeNegotiatorDef object)
+      {
+        return createChallengeNegotiatorDefAdapter();
+      }
+      @Override
+      public Adapter defaultCase(EObject object)
+      {
+        return createEObjectAdapter();
+      }
+    };
 
   /**
-   * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param target
-   *          the object to adapt.
+   * Creates an adapter for the <code>target</code>.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param target the object to adapt.
    * @return the adapter for the <code>target</code>.
    * @generated
    */
@@ -182,10 +168,9 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.DefContainer
-   * <em>Def Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.DefContainer <em>Def Container</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.DefContainer
    * @generated
@@ -210,11 +195,10 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ExecutorServiceDef
-   * <em>Executor Service Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ExecutorServiceDef <em>Executor Service Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.ExecutorServiceDef
    * @generated
@@ -225,10 +209,9 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ThreadPoolDef
-   * <em>Thread Pool Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ThreadPoolDef <em>Thread Pool Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.ThreadPoolDef
    * @generated
@@ -239,10 +222,9 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.RandomizerDef
-   * <em>Randomizer Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.RandomizerDef <em>Randomizer Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.RandomizerDef
    * @generated
@@ -253,10 +235,9 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.UserManagerDef
-   * <em>User Manager Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.UserManagerDef <em>User Manager Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.UserManagerDef
    * @generated
@@ -281,11 +262,10 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.PasswordCredentialsProviderDef
-   * <em>Password Credentials Provider Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.PasswordCredentialsProviderDef <em>Password Credentials Provider Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so
    * that we can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.PasswordCredentialsProviderDef
    * @generated
@@ -296,11 +276,10 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.CredentialsProviderDef
-   * <em>Credentials Provider Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.CredentialsProviderDef <em>Credentials Provider Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.CredentialsProviderDef
    * @generated
@@ -311,10 +290,9 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.NegotiatorDef
-   * <em>Negotiator Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.NegotiatorDef <em>Negotiator Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.NegotiatorDef
    * @generated
@@ -325,11 +303,10 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ResponseNegotiatorDef
-   * <em>Response Negotiator Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ResponseNegotiatorDef <em>Response Negotiator Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.ResponseNegotiatorDef
    * @generated
@@ -340,11 +317,10 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ChallengeNegotiatorDef
-   * <em>Challenge Negotiator Def</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we
+   * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.ChallengeNegotiatorDef <em>Challenge Negotiator Def</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we
    * can easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.ChallengeNegotiatorDef
    * @generated
@@ -355,9 +331,9 @@ public class Net4jUtilDefsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for the default case. <!-- begin-user-doc --> This default implementation returns null. <!--
+   * Creates a new adapter for the default case.
+   * <!-- begin-user-doc --> This default implementation returns null. <!--
    * end-user-doc -->
-   * 
    * @return the new adapter.
    * @generated
    */

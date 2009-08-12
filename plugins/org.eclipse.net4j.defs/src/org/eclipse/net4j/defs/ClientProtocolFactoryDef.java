@@ -14,7 +14,8 @@ package org.eclipse.net4j.defs;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Client Protocol Factory Def</b></em>'. <!--
  * end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.net4j.defs.Net4jDefsPackage#getClientProtocolFactoryDef()
  * @model abstract="true"
  * @generated

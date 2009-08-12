@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.gastro.business.BusinessFactory
  * @model kind="package"
  * @generated
@@ -36,29 +35,29 @@ import org.eclipse.emf.ecore.EReference;
 public interface BusinessPackage extends EPackage
 {
   /**
-   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNAME = "business";
 
   /**
-   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace URI.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_URI = "http://www.gastro.org/business/1.0";
 
   /**
-   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_PREFIX = "business";
 
   /**
-   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   BusinessPackage eINSTANCE = org.gastro.business.impl.BusinessPackageImpl.init();
@@ -74,59 +73,59 @@ public interface BusinessPackage extends EPackage
   int BUSINESS_DAY = 0;
 
   /**
-   * The feature id for the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Date</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int BUSINESS_DAY__DATE = 0;
 
   /**
-   * The feature id for the '<em><b>Menu Card</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Menu Card</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int BUSINESS_DAY__MENU_CARD = 1;
 
   /**
-   * The feature id for the '<em><b>Orders</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Orders</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int BUSINESS_DAY__ORDERS = 2;
 
   /**
-   * The feature id for the '<em><b>Waiters</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Waiters</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int BUSINESS_DAY__WAITERS = 3;
 
   /**
-   * The feature id for the '<em><b>Closed</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Closed</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int BUSINESS_DAY__CLOSED = 4;
 
   /**
-   * The number of structural features of the '<em>Day</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Day</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int BUSINESS_DAY_FEATURE_COUNT = 5;
 
   /**
-   * The meta object id for the '{@link org.gastro.business.impl.OrderImpl <em>Order</em>}' class. <!-- begin-user-doc
+   * The meta object id for the '{@link org.gastro.business.impl.OrderImpl <em>Order</em>}' class.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see org.gastro.business.impl.OrderImpl
    * @see org.gastro.business.impl.BusinessPackageImpl#getOrder()
    * @generated
@@ -134,42 +133,42 @@ public interface BusinessPackage extends EPackage
   int ORDER = 1;
 
   /**
-   * The feature id for the '<em><b>Business Day</b></em>' container reference. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Business Day</b></em>' container reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int ORDER__BUSINESS_DAY = 0;
 
   /**
-   * The feature id for the '<em><b>Table</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Table</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER__TABLE = 1;
 
   /**
-   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Order Details</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int ORDER__ORDER_DETAILS = 2;
 
   /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Number</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER__NUMBER = 3;
 
   /**
-   * The number of structural features of the '<em>Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Order</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -186,40 +185,40 @@ public interface BusinessPackage extends EPackage
   int ORDER_DETAIL = 2;
 
   /**
-   * The feature id for the '<em><b>Order</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Order</b></em>' container reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER_DETAIL__ORDER = 0;
 
   /**
-   * The feature id for the '<em><b>Offering</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Offering</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER_DETAIL__OFFERING = 1;
 
   /**
-   * The feature id for the '<em><b>Quantity</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Quantity</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER_DETAIL__QUANTITY = 2;
 
   /**
-   * The feature id for the '<em><b>State</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>State</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER_DETAIL__STATE = 3;
 
   /**
-   * The feature id for the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Price</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -235,9 +234,9 @@ public interface BusinessPackage extends EPackage
   int ORDER_DETAIL_FEATURE_COUNT = 5;
 
   /**
-   * The meta object id for the '{@link org.gastro.business.impl.WaiterImpl <em>Waiter</em>}' class. <!-- begin-user-doc
+   * The meta object id for the '{@link org.gastro.business.impl.WaiterImpl <em>Waiter</em>}' class.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see org.gastro.business.impl.WaiterImpl
    * @see org.gastro.business.impl.BusinessPackageImpl#getWaiter()
    * @generated
@@ -245,58 +244,58 @@ public interface BusinessPackage extends EPackage
   int WAITER = 3;
 
   /**
-   * The feature id for the '<em><b>Business Day</b></em>' container reference. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Business Day</b></em>' container reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int WAITER__BUSINESS_DAY = 0;
 
   /**
-   * The feature id for the '<em><b>Tables</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Tables</b></em>' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int WAITER__TABLES = 1;
 
   /**
-   * The feature id for the '<em><b>Employee</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Employee</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int WAITER__EMPLOYEE = 2;
 
   /**
-   * The feature id for the '<em><b>From</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>From</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int WAITER__FROM = 3;
 
   /**
-   * The feature id for the '<em><b>Until</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Until</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int WAITER__UNTIL = 4;
 
   /**
-   * The number of structural features of the '<em>Waiter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Waiter</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int WAITER_FEATURE_COUNT = 5;
 
   /**
-   * The meta object id for the '{@link org.gastro.business.OrderState <em>Order State</em>}' enum. <!-- begin-user-doc
+   * The meta object id for the '{@link org.gastro.business.OrderState <em>Order State</em>}' enum.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see org.gastro.business.OrderState
    * @see org.gastro.business.impl.BusinessPackageImpl#getOrderState()
    * @generated
@@ -304,9 +303,9 @@ public interface BusinessPackage extends EPackage
   int ORDER_STATE = 4;
 
   /**
-   * Returns the meta object for class '{@link org.gastro.business.BusinessDay <em>Day</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.gastro.business.BusinessDay <em>Day</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Day</em>'.
    * @see org.gastro.business.BusinessDay
    * @generated
@@ -327,7 +326,6 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.gastro.business.BusinessDay#getMenuCard <em>Menu Card</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference '<em>Menu Card</em>'.
    * @see org.gastro.business.BusinessDay#getMenuCard()
    * @see #getBusinessDay()
@@ -336,9 +334,8 @@ public interface BusinessPackage extends EPackage
   EReference getBusinessDay_MenuCard();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.business.BusinessDay#getOrders
-   * <em>Orders</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.business.BusinessDay#getOrders <em>Orders</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Orders</em>'.
    * @see org.gastro.business.BusinessDay#getOrders()
    * @see #getBusinessDay()
@@ -347,9 +344,8 @@ public interface BusinessPackage extends EPackage
   EReference getBusinessDay_Orders();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.business.BusinessDay#getWaiters
-   * <em>Waiters</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.business.BusinessDay#getWaiters <em>Waiters</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Waiters</em>'.
    * @see org.gastro.business.BusinessDay#getWaiters()
    * @see #getBusinessDay()
@@ -369,9 +365,9 @@ public interface BusinessPackage extends EPackage
   EAttribute getBusinessDay_Closed();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.business.Order <em>Order</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for class '{@link org.gastro.business.Order <em>Order</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for class '<em>Order</em>'.
    * @see org.gastro.business.Order
    * @generated
@@ -379,9 +375,8 @@ public interface BusinessPackage extends EPackage
   EClass getOrder();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.business.Order#getBusinessDay
-   * <em>Business Day</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.business.Order#getBusinessDay <em>Business Day</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Business Day</em>'.
    * @see org.gastro.business.Order#getBusinessDay()
    * @see #getOrder()
@@ -401,9 +396,8 @@ public interface BusinessPackage extends EPackage
   EReference getOrder_Table();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.business.Order#getOrderDetails
-   * <em>Order Details</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.business.Order#getOrderDetails <em>Order Details</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Order Details</em>'.
    * @see org.gastro.business.Order#getOrderDetails()
    * @see #getOrder()
@@ -433,9 +427,8 @@ public interface BusinessPackage extends EPackage
   EClass getOrderDetail();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.business.OrderDetail#getOrder
-   * <em>Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.business.OrderDetail#getOrder <em>Order</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Order</em>'.
    * @see org.gastro.business.OrderDetail#getOrder()
    * @see #getOrderDetail()
@@ -446,7 +439,6 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.gastro.business.OrderDetail#getOffering <em>Offering</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference '<em>Offering</em>'.
    * @see org.gastro.business.OrderDetail#getOffering()
    * @see #getOrderDetail()
@@ -457,7 +449,6 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.OrderDetail#getQuantity <em>Quantity</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Quantity</em>'.
    * @see org.gastro.business.OrderDetail#getQuantity()
    * @see #getOrderDetail()
@@ -488,9 +479,9 @@ public interface BusinessPackage extends EPackage
   EAttribute getOrderDetail_Price();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.business.Waiter <em>Waiter</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.gastro.business.Waiter <em>Waiter</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Waiter</em>'.
    * @see org.gastro.business.Waiter
    * @generated
@@ -498,9 +489,8 @@ public interface BusinessPackage extends EPackage
   EClass getWaiter();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.business.Waiter#getBusinessDay
-   * <em>Business Day</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.business.Waiter#getBusinessDay <em>Business Day</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Business Day</em>'.
    * @see org.gastro.business.Waiter#getBusinessDay()
    * @see #getWaiter()
@@ -553,9 +543,9 @@ public interface BusinessPackage extends EPackage
   EAttribute getWaiter_Until();
 
   /**
-   * Returns the meta object for enum '{@link org.gastro.business.OrderState <em>Order State</em>}'. <!-- begin-user-doc
+   * Returns the meta object for enum '{@link org.gastro.business.OrderState <em>Order State</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for enum '<em>Order State</em>'.
    * @see org.gastro.business.OrderState
    * @generated
@@ -563,8 +553,8 @@ public interface BusinessPackage extends EPackage
   EEnum getOrderState();
 
   /**
-   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -579,7 +569,6 @@ public interface BusinessPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   interface Literals
@@ -595,41 +584,41 @@ public interface BusinessPackage extends EPackage
     EClass BUSINESS_DAY = eINSTANCE.getBusinessDay();
 
     /**
-     * The meta object literal for the '<em><b>Date</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Date</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute BUSINESS_DAY__DATE = eINSTANCE.getBusinessDay_Date();
 
     /**
-     * The meta object literal for the '<em><b>Menu Card</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Menu Card</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference BUSINESS_DAY__MENU_CARD = eINSTANCE.getBusinessDay_MenuCard();
 
     /**
-     * The meta object literal for the '<em><b>Orders</b></em>' containment reference list feature. <!-- begin-user-doc
+     * The meta object literal for the '<em><b>Orders</b></em>' containment reference list feature.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference BUSINESS_DAY__ORDERS = eINSTANCE.getBusinessDay_Orders();
 
     /**
-     * The meta object literal for the '<em><b>Waiters</b></em>' containment reference list feature. <!-- begin-user-doc
+     * The meta object literal for the '<em><b>Waiters</b></em>' containment reference list feature.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference BUSINESS_DAY__WAITERS = eINSTANCE.getBusinessDay_Waiters();
 
     /**
-     * The meta object literal for the '<em><b>Closed</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Closed</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute BUSINESS_DAY__CLOSED = eINSTANCE.getBusinessDay_Closed();
@@ -645,17 +634,17 @@ public interface BusinessPackage extends EPackage
     EClass ORDER = eINSTANCE.getOrder();
 
     /**
-     * The meta object literal for the '<em><b>Business Day</b></em>' container reference feature. <!-- begin-user-doc
+     * The meta object literal for the '<em><b>Business Day</b></em>' container reference feature.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference ORDER__BUSINESS_DAY = eINSTANCE.getOrder_BusinessDay();
 
     /**
-     * The meta object literal for the '<em><b>Table</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Table</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference ORDER__TABLE = eINSTANCE.getOrder_Table();
@@ -669,9 +658,9 @@ public interface BusinessPackage extends EPackage
     EReference ORDER__ORDER_DETAILS = eINSTANCE.getOrder_OrderDetails();
 
     /**
-     * The meta object literal for the '<em><b>Number</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Number</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute ORDER__NUMBER = eINSTANCE.getOrder_Number();
@@ -679,7 +668,6 @@ public interface BusinessPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.business.impl.OrderDetailImpl <em>Order Detail</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see org.gastro.business.impl.OrderDetailImpl
      * @see org.gastro.business.impl.BusinessPackageImpl#getOrderDetail()
      * @generated
@@ -687,41 +675,41 @@ public interface BusinessPackage extends EPackage
     EClass ORDER_DETAIL = eINSTANCE.getOrderDetail();
 
     /**
-     * The meta object literal for the '<em><b>Order</b></em>' container reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Order</b></em>' container reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference ORDER_DETAIL__ORDER = eINSTANCE.getOrderDetail_Order();
 
     /**
-     * The meta object literal for the '<em><b>Offering</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Offering</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference ORDER_DETAIL__OFFERING = eINSTANCE.getOrderDetail_Offering();
 
     /**
-     * The meta object literal for the '<em><b>Quantity</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Quantity</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute ORDER_DETAIL__QUANTITY = eINSTANCE.getOrderDetail_Quantity();
 
     /**
-     * The meta object literal for the '<em><b>State</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>State</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute ORDER_DETAIL__STATE = eINSTANCE.getOrderDetail_State();
 
     /**
-     * The meta object literal for the '<em><b>Price</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Price</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute ORDER_DETAIL__PRICE = eINSTANCE.getOrderDetail_Price();
@@ -737,41 +725,41 @@ public interface BusinessPackage extends EPackage
     EClass WAITER = eINSTANCE.getWaiter();
 
     /**
-     * The meta object literal for the '<em><b>Business Day</b></em>' container reference feature. <!-- begin-user-doc
+     * The meta object literal for the '<em><b>Business Day</b></em>' container reference feature.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference WAITER__BUSINESS_DAY = eINSTANCE.getWaiter_BusinessDay();
 
     /**
-     * The meta object literal for the '<em><b>Tables</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Tables</b></em>' reference list feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference WAITER__TABLES = eINSTANCE.getWaiter_Tables();
 
     /**
-     * The meta object literal for the '<em><b>Employee</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Employee</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference WAITER__EMPLOYEE = eINSTANCE.getWaiter_Employee();
 
     /**
-     * The meta object literal for the '<em><b>From</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>From</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute WAITER__FROM = eINSTANCE.getWaiter_From();
 
     /**
-     * The meta object literal for the '<em><b>Until</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Until</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute WAITER__UNTIL = eINSTANCE.getWaiter_Until();

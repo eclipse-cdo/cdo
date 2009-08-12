@@ -41,22 +41,21 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.defs.CDODefsPackage
  * @generated
  */
 public class CDODefsSwitch<T>
 {
   /**
-   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached model package
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected static CDODefsPackage modelPackage;
 
   /**
-   * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the switch.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CDODefsSwitch()
@@ -70,7 +69,6 @@ public class CDODefsSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -82,7 +80,6 @@ public class CDODefsSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -95,14 +92,16 @@ public class CDODefsSwitch<T>
     else
     {
       List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+      return
+        eSuperTypes.isEmpty() ?
+          defaultCase(theEObject) :
+          doSwitch(eSuperTypes.get(0), theEObject);
     }
   }
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -110,175 +109,136 @@ public class CDODefsSwitch<T>
   {
     switch (classifierID)
     {
-    case CDODefsPackage.CDO_VIEW_DEF:
-    {
-      CDOViewDef cdoViewDef = (CDOViewDef)theEObject;
-      T result = caseCDOViewDef(cdoViewDef);
-      if (result == null)
-        result = caseDef(cdoViewDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_TRANSACTION_DEF:
-    {
-      CDOTransactionDef cdoTransactionDef = (CDOTransactionDef)theEObject;
-      T result = caseCDOTransactionDef(cdoTransactionDef);
-      if (result == null)
-        result = caseCDOViewDef(cdoTransactionDef);
-      if (result == null)
-        result = caseDef(cdoTransactionDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_AUDIT_DEF:
-    {
-      CDOAuditDef cdoAuditDef = (CDOAuditDef)theEObject;
-      T result = caseCDOAuditDef(cdoAuditDef);
-      if (result == null)
-        result = caseCDOViewDef(cdoAuditDef);
-      if (result == null)
-        result = caseDef(cdoAuditDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_SESSION_DEF:
-    {
-      CDOSessionDef cdoSessionDef = (CDOSessionDef)theEObject;
-      T result = caseCDOSessionDef(cdoSessionDef);
-      if (result == null)
-        result = caseDef(cdoSessionDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.FAIL_OVER_STRATEGY_DEF:
-    {
-      FailOverStrategyDef failOverStrategyDef = (FailOverStrategyDef)theEObject;
-      T result = caseFailOverStrategyDef(failOverStrategyDef);
-      if (result == null)
-        result = caseDef(failOverStrategyDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF:
-    {
-      RetryFailOverStrategyDef retryFailOverStrategyDef = (RetryFailOverStrategyDef)theEObject;
-      T result = caseRetryFailOverStrategyDef(retryFailOverStrategyDef);
-      if (result == null)
-        result = caseFailOverStrategyDef(retryFailOverStrategyDef);
-      if (result == null)
-        result = caseDef(retryFailOverStrategyDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF:
-    {
-      CDOPackageRegistryDef ePackageRegistryDef = (CDOPackageRegistryDef)theEObject;
-      T result = caseCDOPackageRegistryDef(ePackageRegistryDef);
-      if (result == null)
-        result = caseDef(ePackageRegistryDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_EAGER_PACKAGE_REGISTRY_DEF:
-    {
-      CDOEagerPackageRegistryDef cdoEagerPackageRegistryDef = (CDOEagerPackageRegistryDef)theEObject;
-      T result = caseCDOEagerPackageRegistryDef(cdoEagerPackageRegistryDef);
-      if (result == null)
-        result = caseCDOPackageRegistryDef(cdoEagerPackageRegistryDef);
-      if (result == null)
-        result = caseDef(cdoEagerPackageRegistryDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_LAZY_PACKAGE_REGISTRY_DEF:
-    {
-      CDOLazyPackageRegistryDef cdoLazyPackageRegistryDef = (CDOLazyPackageRegistryDef)theEObject;
-      T result = caseCDOLazyPackageRegistryDef(cdoLazyPackageRegistryDef);
-      if (result == null)
-        result = caseCDOPackageRegistryDef(cdoLazyPackageRegistryDef);
-      if (result == null)
-        result = caseDef(cdoLazyPackageRegistryDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.EPACKAGE_DEF:
-    {
-      EPackageDef ePackageDef = (EPackageDef)theEObject;
-      T result = caseEPackageDef(ePackageDef);
-      if (result == null)
-        result = caseDef(ePackageDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.EDYNAMIC_PACKAGE_DEF:
-    {
-      EDynamicPackageDef eDynamicPackageDef = (EDynamicPackageDef)theEObject;
-      T result = caseEDynamicPackageDef(eDynamicPackageDef);
-      if (result == null)
-        result = caseEPackageDef(eDynamicPackageDef);
-      if (result == null)
-        result = caseDef(eDynamicPackageDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.EGLOBAL_PACKAGE_DEF:
-    {
-      EGlobalPackageDef eGlobalPackageDef = (EGlobalPackageDef)theEObject;
-      T result = caseEGlobalPackageDef(eGlobalPackageDef);
-      if (result == null)
-        result = caseEPackageDef(eGlobalPackageDef);
-      if (result == null)
-        result = caseDef(eGlobalPackageDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_CLIENT_PROTOCOL_FACTORY_DEF:
-    {
-      CDOClientProtocolFactoryDef cdoClientProtocolFactoryDef = (CDOClientProtocolFactoryDef)theEObject;
-      T result = caseCDOClientProtocolFactoryDef(cdoClientProtocolFactoryDef);
-      if (result == null)
-        result = caseClientProtocolFactoryDef(cdoClientProtocolFactoryDef);
-      if (result == null)
-        result = caseProtocolProviderDef(cdoClientProtocolFactoryDef);
-      if (result == null)
-        result = caseDef(cdoClientProtocolFactoryDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    case CDODefsPackage.CDO_RESOURCE_DEF:
-    {
-      CDOResourceDef cdoResourceDef = (CDOResourceDef)theEObject;
-      T result = caseCDOResourceDef(cdoResourceDef);
-      if (result == null)
-        result = caseDef(cdoResourceDef);
-      if (result == null)
-        result = defaultCase(theEObject);
-      return result;
-    }
-    default:
-      return defaultCase(theEObject);
+      case CDODefsPackage.CDO_VIEW_DEF:
+      {
+        CDOViewDef cdoViewDef = (CDOViewDef)theEObject;
+        T result = caseCDOViewDef(cdoViewDef);
+        if (result == null) result = caseDef(cdoViewDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_TRANSACTION_DEF:
+      {
+        CDOTransactionDef cdoTransactionDef = (CDOTransactionDef)theEObject;
+        T result = caseCDOTransactionDef(cdoTransactionDef);
+        if (result == null) result = caseCDOViewDef(cdoTransactionDef);
+        if (result == null) result = caseDef(cdoTransactionDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_AUDIT_DEF:
+      {
+        CDOAuditDef cdoAuditDef = (CDOAuditDef)theEObject;
+        T result = caseCDOAuditDef(cdoAuditDef);
+        if (result == null) result = caseCDOViewDef(cdoAuditDef);
+        if (result == null) result = caseDef(cdoAuditDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_SESSION_DEF:
+      {
+        CDOSessionDef cdoSessionDef = (CDOSessionDef)theEObject;
+        T result = caseCDOSessionDef(cdoSessionDef);
+        if (result == null) result = caseDef(cdoSessionDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.FAIL_OVER_STRATEGY_DEF:
+      {
+        FailOverStrategyDef failOverStrategyDef = (FailOverStrategyDef)theEObject;
+        T result = caseFailOverStrategyDef(failOverStrategyDef);
+        if (result == null) result = caseDef(failOverStrategyDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.RETRY_FAIL_OVER_STRATEGY_DEF:
+      {
+        RetryFailOverStrategyDef retryFailOverStrategyDef = (RetryFailOverStrategyDef)theEObject;
+        T result = caseRetryFailOverStrategyDef(retryFailOverStrategyDef);
+        if (result == null) result = caseFailOverStrategyDef(retryFailOverStrategyDef);
+        if (result == null) result = caseDef(retryFailOverStrategyDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF:
+      {
+        CDOPackageRegistryDef cdoPackageRegistryDef = (CDOPackageRegistryDef)theEObject;
+        T result = caseCDOPackageRegistryDef(cdoPackageRegistryDef);
+        if (result == null) result = caseDef(cdoPackageRegistryDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_EAGER_PACKAGE_REGISTRY_DEF:
+      {
+        CDOEagerPackageRegistryDef cdoEagerPackageRegistryDef = (CDOEagerPackageRegistryDef)theEObject;
+        T result = caseCDOEagerPackageRegistryDef(cdoEagerPackageRegistryDef);
+        if (result == null) result = caseCDOPackageRegistryDef(cdoEagerPackageRegistryDef);
+        if (result == null) result = caseDef(cdoEagerPackageRegistryDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_LAZY_PACKAGE_REGISTRY_DEF:
+      {
+        CDOLazyPackageRegistryDef cdoLazyPackageRegistryDef = (CDOLazyPackageRegistryDef)theEObject;
+        T result = caseCDOLazyPackageRegistryDef(cdoLazyPackageRegistryDef);
+        if (result == null) result = caseCDOPackageRegistryDef(cdoLazyPackageRegistryDef);
+        if (result == null) result = caseDef(cdoLazyPackageRegistryDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.EPACKAGE_DEF:
+      {
+        EPackageDef ePackageDef = (EPackageDef)theEObject;
+        T result = caseEPackageDef(ePackageDef);
+        if (result == null) result = caseDef(ePackageDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.EDYNAMIC_PACKAGE_DEF:
+      {
+        EDynamicPackageDef eDynamicPackageDef = (EDynamicPackageDef)theEObject;
+        T result = caseEDynamicPackageDef(eDynamicPackageDef);
+        if (result == null) result = caseEPackageDef(eDynamicPackageDef);
+        if (result == null) result = caseDef(eDynamicPackageDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.EGLOBAL_PACKAGE_DEF:
+      {
+        EGlobalPackageDef eGlobalPackageDef = (EGlobalPackageDef)theEObject;
+        T result = caseEGlobalPackageDef(eGlobalPackageDef);
+        if (result == null) result = caseEPackageDef(eGlobalPackageDef);
+        if (result == null) result = caseDef(eGlobalPackageDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_CLIENT_PROTOCOL_FACTORY_DEF:
+      {
+        CDOClientProtocolFactoryDef cdoClientProtocolFactoryDef = (CDOClientProtocolFactoryDef)theEObject;
+        T result = caseCDOClientProtocolFactoryDef(cdoClientProtocolFactoryDef);
+        if (result == null) result = caseClientProtocolFactoryDef(cdoClientProtocolFactoryDef);
+        if (result == null) result = caseProtocolProviderDef(cdoClientProtocolFactoryDef);
+        if (result == null) result = caseDef(cdoClientProtocolFactoryDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CDODefsPackage.CDO_RESOURCE_DEF:
+      {
+        CDOResourceDef cdoResourceDef = (CDOResourceDef)theEObject;
+        T result = caseCDOResourceDef(cdoResourceDef);
+        if (result == null) result = caseDef(cdoResourceDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      default: return defaultCase(theEObject);
     }
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>CDO View Def</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>CDO View Def</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO View Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -289,11 +249,10 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>CDO Transaction Def</em>'. <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>CDO Transaction Def</em>'.
+   * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Transaction Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -304,11 +263,10 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>CDO Audit Def</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>CDO Audit Def</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Audit Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -319,11 +277,10 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>CDO Session Def</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>CDO Session Def</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Session Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -414,11 +371,10 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EPackage Def</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>EPackage Def</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EPackage Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -445,11 +401,10 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EGlobal Package Def</em>'. <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>EGlobal Package Def</em>'.
+   * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EGlobal Package Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -476,11 +431,10 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>CDO Resource Def</em>'. <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>CDO Resource Def</em>'.
+   * <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO Resource Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -491,11 +445,10 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Def</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Def</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -538,12 +491,11 @@ public class CDODefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated

@@ -24,18 +24,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.impl.CredentialsProviderDefImpl#getUserID <em>User ID</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.CredentialsProviderDefImpl#getUserID <em>User ID</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class CredentialsProviderDefImpl extends DefImpl implements CredentialsProviderDef
 {
   /**
-   * The default value of the '{@link #getUserID() <em>User ID</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getUserID() <em>User ID</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getUserID()
    * @generated
    * @ordered
@@ -43,9 +43,9 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
   protected static final String USER_ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getUserID() <em>User ID</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getUserID() <em>User ID</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getUserID()
    * @generated
    * @ordered
@@ -54,7 +54,6 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CredentialsProviderDefImpl()
@@ -64,7 +63,6 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -75,7 +73,6 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getUserID()
@@ -85,7 +82,6 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUserID(String newUserID)
@@ -93,13 +89,11 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
     String oldUserID = userID;
     userID = newUserID;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID,
-          oldUserID, userID));
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID, oldUserID, userID));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -107,15 +101,14 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
-      return getUserID();
+      case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
+        return getUserID();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -123,16 +116,15 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
-      setUserID((String)newValue);
-      return;
+      case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
+        setUserID((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -140,16 +132,15 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
-      setUserID(USER_ID_EDEFAULT);
-      return;
+      case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
+        setUserID(USER_ID_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -157,22 +148,20 @@ public abstract class CredentialsProviderDefImpl extends DefImpl implements Cred
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
-      return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
+      case Net4jUtilDefsPackage.CREDENTIALS_PROVIDER_DEF__USER_ID:
+        return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy())
-      return super.toString();
+    if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userID: ");

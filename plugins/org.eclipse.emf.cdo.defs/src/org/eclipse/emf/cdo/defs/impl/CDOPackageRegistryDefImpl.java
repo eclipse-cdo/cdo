@@ -34,10 +34,10 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOPackageRegistryDefImpl#getPackages <em>Packages</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.impl.CDOPackageRegistryDefImpl#getPackages <em>Packages</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegistryDef
@@ -81,8 +81,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   {
     if (packages == null)
     {
-      packages = new EObjectContainmentEList<EPackageDef>(EPackageDef.class, this,
-          CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES);
+      packages = new EObjectContainmentEList<EPackageDef>(EPackageDef.class, this, CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES);
     }
     return packages;
   }
@@ -104,8 +103,8 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-      return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -127,8 +126,8 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-      return getPackages();
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        return getPackages();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -148,10 +147,10 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-      getPackages().clear();
-      getPackages().addAll((Collection<? extends EPackageDef>)newValue);
-      return;
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        getPackages().clear();
+        getPackages().addAll((Collection<? extends EPackageDef>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -168,9 +167,9 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-      getPackages().clear();
-      return;
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        getPackages().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -188,8 +187,8 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
   {
     switch (featureID)
     {
-    case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
-      return packages != null && !packages.isEmpty();
+      case CDODefsPackage.CDO_PACKAGE_REGISTRY_DEF__PACKAGES:
+        return packages != null && !packages.isEmpty();
     }
     return super.eIsSet(featureID);
   }

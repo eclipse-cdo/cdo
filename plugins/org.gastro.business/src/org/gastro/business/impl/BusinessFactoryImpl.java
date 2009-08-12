@@ -30,14 +30,13 @@ import org.gastro.business.Waiter;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static BusinessFactory init()
@@ -59,8 +58,8 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public BusinessFactoryImpl()
@@ -70,7 +69,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -93,7 +91,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -110,7 +107,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -127,7 +123,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BusinessDay createBusinessDay()
@@ -138,7 +133,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Order createOrder()
@@ -149,7 +143,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public OrderDetail createOrderDetail()
@@ -160,7 +153,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Waiter createWaiter()
@@ -171,7 +163,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public OrderState createOrderStateFromString(EDataType eDataType, String initialValue)
@@ -185,7 +176,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String convertOrderStateToString(EDataType eDataType, Object instanceValue)
@@ -195,7 +185,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BusinessPackage getBusinessPackage()
@@ -205,7 +194,6 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

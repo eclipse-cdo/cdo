@@ -27,21 +27,20 @@ import org.gastro.inventory.Section;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.inventory.impl.OfferingImpl#getProduct <em>Product</em>}</li>
- * <li>{@link org.gastro.inventory.impl.OfferingImpl#getName <em>Name</em>}</li>
- * <li>{@link org.gastro.inventory.impl.OfferingImpl#getDescription <em>Description</em>}</li>
- * <li>{@link org.gastro.inventory.impl.OfferingImpl#getPrice <em>Price</em>}</li>
- * <li>{@link org.gastro.inventory.impl.OfferingImpl#getSection <em>Section</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.OfferingImpl#getProduct <em>Product</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.OfferingImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.OfferingImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.OfferingImpl#getPrice <em>Price</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.OfferingImpl#getSection <em>Section</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class OfferingImpl extends CDOObjectImpl implements Offering
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected OfferingImpl()
@@ -51,7 +50,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -62,7 +60,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -73,7 +70,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product getProduct()
@@ -83,7 +79,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setProduct(Product newProduct)
@@ -93,7 +88,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -103,7 +97,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -113,7 +106,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getDescription()
@@ -123,7 +115,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDescription(String newDescription)
@@ -133,7 +124,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public float getPrice()
@@ -143,7 +133,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPrice(float newPrice)
@@ -153,7 +142,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Section getSection()
@@ -163,7 +151,6 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setSection(Section newSection)

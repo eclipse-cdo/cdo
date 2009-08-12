@@ -36,8 +36,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnectorDef
 {
   /**
-   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getUrl()
    * @generated
    * @ordered
@@ -45,8 +45,8 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   protected static final String URL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getUrl()
    * @generated
    * @ordered
@@ -55,7 +55,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected HTTPConnectorDefImpl()
@@ -65,7 +64,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -76,7 +74,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getUrl()
@@ -86,7 +83,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUrl(String newUrl)
@@ -99,7 +95,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -107,15 +102,14 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   {
     switch (featureID)
     {
-    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-      return getUrl();
+      case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+        return getUrl();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -123,16 +117,15 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   {
     switch (featureID)
     {
-    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-      setUrl((String)newValue);
-      return;
+      case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+        setUrl((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -140,16 +133,15 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   {
     switch (featureID)
     {
-    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-      setUrl(URL_EDEFAULT);
-      return;
+      case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+        setUrl(URL_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -157,22 +149,20 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   {
     switch (featureID)
     {
-    case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
-      return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+      case Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL:
+        return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy())
-      return super.toString();
+    if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

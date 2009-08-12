@@ -31,20 +31,20 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.impl.ChallengeNegotiatorDefImpl#getUserManager <em>User Manager</em>}</li>
- * <li>{@link org.eclipse.net4j.util.defs.impl.ChallengeNegotiatorDefImpl#getRandomizer <em>Randomizer</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.ChallengeNegotiatorDefImpl#getUserManager <em>User Manager</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.ChallengeNegotiatorDefImpl#getRandomizer <em>Randomizer</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements ChallengeNegotiatorDef
 {
 
   /**
-   * The cached value of the '{@link #getUserManager() <em>User Manager</em>}' reference. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getUserManager() <em>User Manager</em>}' reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getUserManager()
    * @generated
    * @ordered
@@ -52,9 +52,9 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
   protected UserManagerDef userManager;
 
   /**
-   * The cached value of the '{@link #getRandomizer() <em>Randomizer</em>}' reference. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getRandomizer() <em>Randomizer</em>}' reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getRandomizer()
    * @generated
    * @ordered
@@ -63,7 +63,6 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ChallengeNegotiatorDefImpl()
@@ -73,7 +72,6 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -84,7 +82,6 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public UserManagerDef getUserManager()
@@ -96,8 +93,7 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
       if (userManager != oldUserManager)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER, oldUserManager, userManager));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER, oldUserManager, userManager));
       }
     }
     return userManager;
@@ -105,7 +101,6 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public UserManagerDef basicGetUserManager()
@@ -115,7 +110,6 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUserManager(UserManagerDef newUserManager)
@@ -123,13 +117,11 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
     UserManagerDef oldUserManager = userManager;
     userManager = newUserManager;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER, oldUserManager, userManager));
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER, oldUserManager, userManager));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public RandomizerDef getRandomizer()
@@ -141,8 +133,7 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
       if (randomizer != oldRandomizer)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER, oldRandomizer, randomizer));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER, oldRandomizer, randomizer));
       }
     }
     return randomizer;
@@ -150,7 +141,6 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public RandomizerDef basicGetRandomizer()
@@ -160,7 +150,6 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setRandomizer(RandomizerDef newRandomizer)
@@ -168,13 +157,11 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
     RandomizerDef oldRandomizer = randomizer;
     randomizer = newRandomizer;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER,
-          oldRandomizer, randomizer));
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER, oldRandomizer, randomizer));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -182,21 +169,18 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
-      if (resolve)
-        return getUserManager();
-      return basicGetUserManager();
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
-      if (resolve)
-        return getRandomizer();
-      return basicGetRandomizer();
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
+        if (resolve) return getUserManager();
+        return basicGetUserManager();
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
+        if (resolve) return getRandomizer();
+        return basicGetRandomizer();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -204,19 +188,18 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
-      setUserManager((UserManagerDef)newValue);
-      return;
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
-      setRandomizer((RandomizerDef)newValue);
-      return;
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
+        setUserManager((UserManagerDef)newValue);
+        return;
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
+        setRandomizer((RandomizerDef)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -224,19 +207,18 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
-      setUserManager((UserManagerDef)null);
-      return;
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
-      setRandomizer((RandomizerDef)null);
-      return;
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
+        setUserManager((UserManagerDef)null);
+        return;
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
+        setRandomizer((RandomizerDef)null);
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -244,10 +226,10 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
   {
     switch (featureID)
     {
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
-      return userManager != null;
-    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
-      return randomizer != null;
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
+        return userManager != null;
+      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
+        return randomizer != null;
     }
     return super.eIsSet(featureID);
   }

@@ -26,19 +26,18 @@ import org.gastro.inventory.Recipe;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.inventory.impl.RecipeImpl#getIngredients <em>Ingredients</em>}</li>
- * <li>{@link org.gastro.inventory.impl.RecipeImpl#getDepartment <em>Department</em>}</li>
- * <li>{@link org.gastro.inventory.impl.RecipeImpl#getCost <em>Cost</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.RecipeImpl#getIngredients <em>Ingredients</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.RecipeImpl#getDepartment <em>Department</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.RecipeImpl#getCost <em>Cost</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RecipeImpl extends ProductImpl implements Recipe
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RecipeImpl()
@@ -48,7 +47,6 @@ public class RecipeImpl extends ProductImpl implements Recipe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -59,7 +57,6 @@ public class RecipeImpl extends ProductImpl implements Recipe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -70,7 +67,6 @@ public class RecipeImpl extends ProductImpl implements Recipe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Department getDepartment()
@@ -80,7 +76,6 @@ public class RecipeImpl extends ProductImpl implements Recipe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDepartment(Department newDepartment)

@@ -15,7 +15,8 @@ import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Impl Single Ref Non Container</b></em>'. <!--
  * end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplSingleRefNonContainer()
  * @model
  * @generated

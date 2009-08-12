@@ -34,17 +34,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.gastro.business.Waiter} object. <!-- begin-user-doc --> <!--
+ * This is the item provider adapter for a {@link org.gastro.business.Waiter} object.
+ * <!-- begin-user-doc --> <!--
  * end-user-doc -->
- * 
  * @generated
  */
 public class WaiterItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
-   * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This constructs an instance from a factory and a notifier.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public WaiterItemProvider(AdapterFactory adapterFactory)
@@ -53,8 +53,8 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns the property descriptors for the adapted class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -73,8 +73,8 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This adds a property descriptor for the Tables feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Tables feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addTablesPropertyDescriptor(Object object)
@@ -86,8 +86,8 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This adds a property descriptor for the Employee feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Employee feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addEmployeePropertyDescriptor(Object object)
@@ -99,8 +99,8 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This adds a property descriptor for the From feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the From feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addFromPropertyDescriptor(Object object)
@@ -113,8 +113,8 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This adds a property descriptor for the Until feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Until feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addUntilPropertyDescriptor(Object object)
@@ -128,7 +128,6 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -138,8 +137,8 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This returns Waiter.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns Waiter.gif.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -161,9 +160,9 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
-   * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This handles model notifications by calling {@link #updateChildren} to update any cached
+   * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -182,9 +181,9 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
-   * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+   * that can be created under this object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -194,8 +193,8 @@ public class WaiterItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
-   * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

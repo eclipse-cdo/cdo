@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.net4j.defs.Net4jDefsFactory
  * @model kind="package"
  * @generated
@@ -35,29 +34,29 @@ import org.eclipse.emf.ecore.EReference;
 public interface Net4jDefsPackage extends EPackage
 {
   /**
-   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNAME = "defs"; //$NON-NLS-1$
 
   /**
-   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace URI.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/NET4J/defs/1.0.0"; //$NON-NLS-1$
 
   /**
-   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_PREFIX = "net4j.defs"; //$NON-NLS-1$
 
   /**
-   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   Net4jDefsPackage eINSTANCE = org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl.init();
@@ -65,7 +64,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.net4j.defs.impl.ConnectorDefImpl <em>Connector Def</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see org.eclipse.net4j.defs.impl.ConnectorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getConnectorDef()
    * @generated
@@ -73,41 +71,41 @@ public interface Net4jDefsPackage extends EPackage
   int CONNECTOR_DEF = 0;
 
   /**
-   * The feature id for the '<em><b>User ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CONNECTOR_DEF__USER_ID = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Buffer Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Buffer Provider</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CONNECTOR_DEF__BUFFER_PROVIDER = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Executor Service</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Executor Service</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CONNECTOR_DEF__EXECUTOR_SERVICE = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Negotiator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Negotiator</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CONNECTOR_DEF__NEGOTIATOR = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 3;
 
   /**
-   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -123,9 +121,8 @@ public interface Net4jDefsPackage extends EPackage
   int CONNECTOR_DEF_FEATURE_COUNT = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 5;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.ProtocolProviderDefImpl
-   * <em>Protocol Provider Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.ProtocolProviderDefImpl <em>Protocol Provider Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.ProtocolProviderDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getProtocolProviderDef()
    * @generated
@@ -133,18 +130,17 @@ public interface Net4jDefsPackage extends EPackage
   int PROTOCOL_PROVIDER_DEF = 12;
 
   /**
-   * The number of structural features of the '<em>Protocol Provider Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Protocol Provider Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int PROTOCOL_PROVIDER_DEF_FEATURE_COUNT = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.ClientProtocolFactoryDefImpl
-   * <em>Client Protocol Factory Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.ClientProtocolFactoryDefImpl <em>Client Protocol Factory Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.ClientProtocolFactoryDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getClientProtocolFactoryDef()
    * @generated
@@ -152,18 +148,17 @@ public interface Net4jDefsPackage extends EPackage
   int CLIENT_PROTOCOL_FACTORY_DEF = 1;
 
   /**
-   * The number of structural features of the '<em>Client Protocol Factory Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Client Protocol Factory Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int CLIENT_PROTOCOL_FACTORY_DEF_FEATURE_COUNT = PROTOCOL_PROVIDER_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.TCPConnectorDefImpl <em>TCP Connector Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.TCPConnectorDefImpl <em>TCP Connector Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.TCPConnectorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getTCPConnectorDef()
    * @generated
@@ -171,74 +166,74 @@ public interface Net4jDefsPackage extends EPackage
   int TCP_CONNECTOR_DEF = 2;
 
   /**
-   * The feature id for the '<em><b>User ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__USER_ID = CONNECTOR_DEF__USER_ID;
 
   /**
-   * The feature id for the '<em><b>Buffer Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Buffer Provider</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__BUFFER_PROVIDER = CONNECTOR_DEF__BUFFER_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Executor Service</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Executor Service</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__EXECUTOR_SERVICE = CONNECTOR_DEF__EXECUTOR_SERVICE;
 
   /**
-   * The feature id for the '<em><b>Negotiator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Negotiator</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__NEGOTIATOR = CONNECTOR_DEF__NEGOTIATOR;
 
   /**
-   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER = CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Tcp Selector Def</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Tcp Selector Def</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF = CONNECTOR_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Host</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Host</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__HOST = CONNECTOR_DEF_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Port</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Port</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_CONNECTOR_DEF__PORT = CONNECTOR_DEF_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>TCP Connector Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>TCP Connector Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -255,33 +250,33 @@ public interface Net4jDefsPackage extends EPackage
   int ACCEPTOR_DEF = 3;
 
   /**
-   * The feature id for the '<em><b>Buffer Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Buffer Provider</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ACCEPTOR_DEF__BUFFER_PROVIDER = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Executor Service</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Executor Service</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ACCEPTOR_DEF__EXECUTOR_SERVICE = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Negotiator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Negotiator</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ACCEPTOR_DEF__NEGOTIATOR = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Server Protocol Provider</b></em>' reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Server Protocol Provider</b></em>' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -297,9 +292,8 @@ public interface Net4jDefsPackage extends EPackage
   int ACCEPTOR_DEF_FEATURE_COUNT = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 4;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.TCPAcceptorDefImpl <em>TCP Acceptor Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.TCPAcceptorDefImpl <em>TCP Acceptor Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.TCPAcceptorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getTCPAcceptorDef()
    * @generated
@@ -307,75 +301,74 @@ public interface Net4jDefsPackage extends EPackage
   int TCP_ACCEPTOR_DEF = 4;
 
   /**
-   * The feature id for the '<em><b>Buffer Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Buffer Provider</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF__BUFFER_PROVIDER = ACCEPTOR_DEF__BUFFER_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Executor Service</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Executor Service</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF__EXECUTOR_SERVICE = ACCEPTOR_DEF__EXECUTOR_SERVICE;
 
   /**
-   * The feature id for the '<em><b>Negotiator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Negotiator</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF__NEGOTIATOR = ACCEPTOR_DEF__NEGOTIATOR;
 
   /**
-   * The feature id for the '<em><b>Server Protocol Provider</b></em>' reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Server Protocol Provider</b></em>' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER = ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Host</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Host</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF__HOST = ACCEPTOR_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Port</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Port</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF__PORT = ACCEPTOR_DEF_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Tcp Selector Def</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Tcp Selector Def</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF = ACCEPTOR_DEF_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>TCP Acceptor Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>TCP Acceptor Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int TCP_ACCEPTOR_DEF_FEATURE_COUNT = ACCEPTOR_DEF_FEATURE_COUNT + 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.JVMAcceptorDefImpl <em>JVM Acceptor Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.JVMAcceptorDefImpl <em>JVM Acceptor Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.JVMAcceptorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getJVMAcceptorDef()
    * @generated
@@ -383,59 +376,58 @@ public interface Net4jDefsPackage extends EPackage
   int JVM_ACCEPTOR_DEF = 5;
 
   /**
-   * The feature id for the '<em><b>Buffer Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Buffer Provider</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_ACCEPTOR_DEF__BUFFER_PROVIDER = ACCEPTOR_DEF__BUFFER_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Executor Service</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Executor Service</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_ACCEPTOR_DEF__EXECUTOR_SERVICE = ACCEPTOR_DEF__EXECUTOR_SERVICE;
 
   /**
-   * The feature id for the '<em><b>Negotiator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Negotiator</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_ACCEPTOR_DEF__NEGOTIATOR = ACCEPTOR_DEF__NEGOTIATOR;
 
   /**
-   * The feature id for the '<em><b>Server Protocol Provider</b></em>' reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Server Protocol Provider</b></em>' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int JVM_ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER = ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_ACCEPTOR_DEF__NAME = ACCEPTOR_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>JVM Acceptor Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>JVM Acceptor Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int JVM_ACCEPTOR_DEF_FEATURE_COUNT = ACCEPTOR_DEF_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.JVMConnectorDefImpl <em>JVM Connector Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.JVMConnectorDefImpl <em>JVM Connector Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.JVMConnectorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getJVMConnectorDef()
    * @generated
@@ -443,67 +435,66 @@ public interface Net4jDefsPackage extends EPackage
   int JVM_CONNECTOR_DEF = 6;
 
   /**
-   * The feature id for the '<em><b>User ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_CONNECTOR_DEF__USER_ID = CONNECTOR_DEF__USER_ID;
 
   /**
-   * The feature id for the '<em><b>Buffer Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Buffer Provider</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_CONNECTOR_DEF__BUFFER_PROVIDER = CONNECTOR_DEF__BUFFER_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Executor Service</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Executor Service</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_CONNECTOR_DEF__EXECUTOR_SERVICE = CONNECTOR_DEF__EXECUTOR_SERVICE;
 
   /**
-   * The feature id for the '<em><b>Negotiator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Negotiator</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_CONNECTOR_DEF__NEGOTIATOR = CONNECTOR_DEF__NEGOTIATOR;
 
   /**
-   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int JVM_CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER = CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int JVM_CONNECTOR_DEF__NAME = CONNECTOR_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>JVM Connector Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>JVM Connector Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int JVM_CONNECTOR_DEF_FEATURE_COUNT = CONNECTOR_DEF_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.HTTPConnectorDefImpl <em>HTTP Connector Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.HTTPConnectorDefImpl <em>HTTP Connector Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.HTTPConnectorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getHTTPConnectorDef()
    * @generated
@@ -511,67 +502,66 @@ public interface Net4jDefsPackage extends EPackage
   int HTTP_CONNECTOR_DEF = 7;
 
   /**
-   * The feature id for the '<em><b>User ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int HTTP_CONNECTOR_DEF__USER_ID = CONNECTOR_DEF__USER_ID;
 
   /**
-   * The feature id for the '<em><b>Buffer Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Buffer Provider</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int HTTP_CONNECTOR_DEF__BUFFER_PROVIDER = CONNECTOR_DEF__BUFFER_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Executor Service</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Executor Service</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int HTTP_CONNECTOR_DEF__EXECUTOR_SERVICE = CONNECTOR_DEF__EXECUTOR_SERVICE;
 
   /**
-   * The feature id for the '<em><b>Negotiator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Negotiator</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int HTTP_CONNECTOR_DEF__NEGOTIATOR = CONNECTOR_DEF__NEGOTIATOR;
 
   /**
-   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Client Protocol Provider</b></em>' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int HTTP_CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER = CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER;
 
   /**
-   * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Url</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int HTTP_CONNECTOR_DEF__URL = CONNECTOR_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>HTTP Connector Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>HTTP Connector Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int HTTP_CONNECTOR_DEF_FEATURE_COUNT = CONNECTOR_DEF_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.TCPSelectorDefImpl <em>TCP Selector Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.TCPSelectorDefImpl <em>TCP Selector Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.TCPSelectorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getTCPSelectorDef()
    * @generated
@@ -579,18 +569,17 @@ public interface Net4jDefsPackage extends EPackage
   int TCP_SELECTOR_DEF = 8;
 
   /**
-   * The number of structural features of the '<em>TCP Selector Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>TCP Selector Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int TCP_SELECTOR_DEF_FEATURE_COUNT = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.ServerProtocolFactoryDefImpl
-   * <em>Server Protocol Factory Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.ServerProtocolFactoryDefImpl <em>Server Protocol Factory Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.ServerProtocolFactoryDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getServerProtocolFactoryDef()
    * @generated
@@ -598,18 +587,17 @@ public interface Net4jDefsPackage extends EPackage
   int SERVER_PROTOCOL_FACTORY_DEF = 9;
 
   /**
-   * The number of structural features of the '<em>Server Protocol Factory Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Server Protocol Factory Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int SERVER_PROTOCOL_FACTORY_DEF_FEATURE_COUNT = PROTOCOL_PROVIDER_DEF_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.BufferProviderDefImpl <em>Buffer Provider Def</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.net4j.defs.impl.BufferProviderDefImpl <em>Buffer Provider Def</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.net4j.defs.impl.BufferProviderDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getBufferProviderDef()
    * @generated
@@ -617,9 +605,9 @@ public interface Net4jDefsPackage extends EPackage
   int BUFFER_PROVIDER_DEF = 10;
 
   /**
-   * The number of structural features of the '<em>Buffer Provider Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Buffer Provider Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -628,7 +616,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.net4j.defs.impl.BufferPoolDefImpl <em>Buffer Pool Def</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see org.eclipse.net4j.defs.impl.BufferPoolDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getBufferPoolDef()
    * @generated
@@ -636,9 +623,9 @@ public interface Net4jDefsPackage extends EPackage
   int BUFFER_POOL_DEF = 11;
 
   /**
-   * The number of structural features of the '<em>Buffer Pool Def</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Buffer Pool Def</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -657,7 +644,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.ConnectorDef#getUserID <em>User ID</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>User ID</em>'.
    * @see org.eclipse.net4j.defs.ConnectorDef#getUserID()
    * @see #getConnectorDef()
@@ -666,9 +652,8 @@ public interface Net4jDefsPackage extends EPackage
   EAttribute getConnectorDef_UserID();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.ConnectorDef#getBufferProvider
-   * <em>Buffer Provider</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.ConnectorDef#getBufferProvider <em>Buffer Provider</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Buffer Provider</em>'.
    * @see org.eclipse.net4j.defs.ConnectorDef#getBufferProvider()
    * @see #getConnectorDef()
@@ -677,9 +662,8 @@ public interface Net4jDefsPackage extends EPackage
   EReference getConnectorDef_BufferProvider();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.ConnectorDef#getExecutorService
-   * <em>Executor Service</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.ConnectorDef#getExecutorService <em>Executor Service</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Executor Service</em>'.
    * @see org.eclipse.net4j.defs.ConnectorDef#getExecutorService()
    * @see #getConnectorDef()
@@ -688,9 +672,8 @@ public interface Net4jDefsPackage extends EPackage
   EReference getConnectorDef_ExecutorService();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.ConnectorDef#getNegotiator
-   * <em>Negotiator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.ConnectorDef#getNegotiator <em>Negotiator</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Negotiator</em>'.
    * @see org.eclipse.net4j.defs.ConnectorDef#getNegotiator()
    * @see #getConnectorDef()
@@ -711,9 +694,8 @@ public interface Net4jDefsPackage extends EPackage
   EReference getConnectorDef_ClientProtocolProvider();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.net4j.defs.ClientProtocolFactoryDef
-   * <em>Client Protocol Factory Def</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.net4j.defs.ClientProtocolFactoryDef <em>Client Protocol Factory Def</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Client Protocol Factory Def</em>'.
    * @see org.eclipse.net4j.defs.ClientProtocolFactoryDef
    * @generated
@@ -731,9 +713,8 @@ public interface Net4jDefsPackage extends EPackage
   EClass getTCPConnectorDef();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.TCPConnectorDef#getTcpSelectorDef
-   * <em>Tcp Selector Def</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.TCPConnectorDef#getTcpSelectorDef <em>Tcp Selector Def</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Tcp Selector Def</em>'.
    * @see org.eclipse.net4j.defs.TCPConnectorDef#getTcpSelectorDef()
    * @see #getTCPConnectorDef()
@@ -744,7 +725,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.TCPConnectorDef#getHost <em>Host</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Host</em>'.
    * @see org.eclipse.net4j.defs.TCPConnectorDef#getHost()
    * @see #getTCPConnectorDef()
@@ -755,7 +735,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.TCPConnectorDef#getPort <em>Port</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Port</em>'.
    * @see org.eclipse.net4j.defs.TCPConnectorDef#getPort()
    * @see #getTCPConnectorDef()
@@ -774,9 +753,8 @@ public interface Net4jDefsPackage extends EPackage
   EClass getAcceptorDef();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.AcceptorDef#getBufferProvider
-   * <em>Buffer Provider</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.AcceptorDef#getBufferProvider <em>Buffer Provider</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Buffer Provider</em>'.
    * @see org.eclipse.net4j.defs.AcceptorDef#getBufferProvider()
    * @see #getAcceptorDef()
@@ -785,9 +763,8 @@ public interface Net4jDefsPackage extends EPackage
   EReference getAcceptorDef_BufferProvider();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.AcceptorDef#getExecutorService
-   * <em>Executor Service</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.AcceptorDef#getExecutorService <em>Executor Service</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Executor Service</em>'.
    * @see org.eclipse.net4j.defs.AcceptorDef#getExecutorService()
    * @see #getAcceptorDef()
@@ -796,9 +773,8 @@ public interface Net4jDefsPackage extends EPackage
   EReference getAcceptorDef_ExecutorService();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.AcceptorDef#getNegotiator
-   * <em>Negotiator</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.AcceptorDef#getNegotiator <em>Negotiator</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Negotiator</em>'.
    * @see org.eclipse.net4j.defs.AcceptorDef#getNegotiator()
    * @see #getAcceptorDef()
@@ -831,7 +807,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.TCPAcceptorDef#getHost <em>Host</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Host</em>'.
    * @see org.eclipse.net4j.defs.TCPAcceptorDef#getHost()
    * @see #getTCPAcceptorDef()
@@ -842,7 +817,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.TCPAcceptorDef#getPort <em>Port</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Port</em>'.
    * @see org.eclipse.net4j.defs.TCPAcceptorDef#getPort()
    * @see #getTCPAcceptorDef()
@@ -851,9 +825,8 @@ public interface Net4jDefsPackage extends EPackage
   EAttribute getTCPAcceptorDef_Port();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.TCPAcceptorDef#getTcpSelectorDef
-   * <em>Tcp Selector Def</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.net4j.defs.TCPAcceptorDef#getTcpSelectorDef <em>Tcp Selector Def</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Tcp Selector Def</em>'.
    * @see org.eclipse.net4j.defs.TCPAcceptorDef#getTcpSelectorDef()
    * @see #getTCPAcceptorDef()
@@ -874,7 +847,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.JVMAcceptorDef#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.net4j.defs.JVMAcceptorDef#getName()
    * @see #getJVMAcceptorDef()
@@ -895,7 +867,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.JVMConnectorDef#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.net4j.defs.JVMConnectorDef#getName()
    * @see #getJVMConnectorDef()
@@ -906,7 +877,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.HTTPConnectorDef <em>HTTP Connector Def</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>HTTP Connector Def</em>'.
    * @see org.eclipse.net4j.defs.HTTPConnectorDef
    * @generated
@@ -916,7 +886,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.defs.HTTPConnectorDef#getUrl <em>Url</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Url</em>'.
    * @see org.eclipse.net4j.defs.HTTPConnectorDef#getUrl()
    * @see #getHTTPConnectorDef()
@@ -935,9 +904,8 @@ public interface Net4jDefsPackage extends EPackage
   EClass getTCPSelectorDef();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.net4j.defs.ServerProtocolFactoryDef
-   * <em>Server Protocol Factory Def</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.net4j.defs.ServerProtocolFactoryDef <em>Server Protocol Factory Def</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Server Protocol Factory Def</em>'.
    * @see org.eclipse.net4j.defs.ServerProtocolFactoryDef
    * @generated
@@ -947,7 +915,6 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.BufferProviderDef <em>Buffer Provider Def</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Buffer Provider Def</em>'.
    * @see org.eclipse.net4j.defs.BufferProviderDef
    * @generated
@@ -965,9 +932,8 @@ public interface Net4jDefsPackage extends EPackage
   EClass getBufferPoolDef();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.net4j.defs.ProtocolProviderDef
-   * <em>Protocol Provider Def</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.net4j.defs.ProtocolProviderDef <em>Protocol Provider Def</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Protocol Provider Def</em>'.
    * @see org.eclipse.net4j.defs.ProtocolProviderDef
    * @generated
@@ -975,8 +941,8 @@ public interface Net4jDefsPackage extends EPackage
   EClass getProtocolProviderDef();
 
   /**
-   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -991,15 +957,13 @@ public interface Net4jDefsPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ConnectorDefImpl <em>Connector Def</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ConnectorDefImpl <em>Connector Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.ConnectorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getConnectorDef()
      * @generated
@@ -1007,33 +971,33 @@ public interface Net4jDefsPackage extends EPackage
     EClass CONNECTOR_DEF = eINSTANCE.getConnectorDef();
 
     /**
-     * The meta object literal for the '<em><b>User ID</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>User ID</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute CONNECTOR_DEF__USER_ID = eINSTANCE.getConnectorDef_UserID();
 
     /**
-     * The meta object literal for the '<em><b>Buffer Provider</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Buffer Provider</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference CONNECTOR_DEF__BUFFER_PROVIDER = eINSTANCE.getConnectorDef_BufferProvider();
 
     /**
-     * The meta object literal for the '<em><b>Executor Service</b></em>' reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Executor Service</b></em>' reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference CONNECTOR_DEF__EXECUTOR_SERVICE = eINSTANCE.getConnectorDef_ExecutorService();
 
     /**
-     * The meta object literal for the '<em><b>Negotiator</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Negotiator</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference CONNECTOR_DEF__NEGOTIATOR = eINSTANCE.getConnectorDef_Negotiator();
@@ -1047,9 +1011,8 @@ public interface Net4jDefsPackage extends EPackage
     EReference CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER = eINSTANCE.getConnectorDef_ClientProtocolProvider();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ClientProtocolFactoryDefImpl
-     * <em>Client Protocol Factory Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ClientProtocolFactoryDefImpl <em>Client Protocol Factory Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.ClientProtocolFactoryDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getClientProtocolFactoryDef()
      * @generated
@@ -1057,9 +1020,8 @@ public interface Net4jDefsPackage extends EPackage
     EClass CLIENT_PROTOCOL_FACTORY_DEF = eINSTANCE.getClientProtocolFactoryDef();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.TCPConnectorDefImpl
-     * <em>TCP Connector Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.TCPConnectorDefImpl <em>TCP Connector Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.TCPConnectorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getTCPConnectorDef()
      * @generated
@@ -1067,33 +1029,32 @@ public interface Net4jDefsPackage extends EPackage
     EClass TCP_CONNECTOR_DEF = eINSTANCE.getTCPConnectorDef();
 
     /**
-     * The meta object literal for the '<em><b>Tcp Selector Def</b></em>' reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Tcp Selector Def</b></em>' reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF = eINSTANCE.getTCPConnectorDef_TcpSelectorDef();
 
     /**
-     * The meta object literal for the '<em><b>Host</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Host</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute TCP_CONNECTOR_DEF__HOST = eINSTANCE.getTCPConnectorDef_Host();
 
     /**
-     * The meta object literal for the '<em><b>Port</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Port</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute TCP_CONNECTOR_DEF__PORT = eINSTANCE.getTCPConnectorDef_Port();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl <em>Acceptor Def</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl <em>Acceptor Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.AcceptorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getAcceptorDef()
      * @generated
@@ -1101,25 +1062,25 @@ public interface Net4jDefsPackage extends EPackage
     EClass ACCEPTOR_DEF = eINSTANCE.getAcceptorDef();
 
     /**
-     * The meta object literal for the '<em><b>Buffer Provider</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Buffer Provider</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference ACCEPTOR_DEF__BUFFER_PROVIDER = eINSTANCE.getAcceptorDef_BufferProvider();
 
     /**
-     * The meta object literal for the '<em><b>Executor Service</b></em>' reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Executor Service</b></em>' reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference ACCEPTOR_DEF__EXECUTOR_SERVICE = eINSTANCE.getAcceptorDef_ExecutorService();
 
     /**
-     * The meta object literal for the '<em><b>Negotiator</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Negotiator</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference ACCEPTOR_DEF__NEGOTIATOR = eINSTANCE.getAcceptorDef_Negotiator();
@@ -1133,9 +1094,8 @@ public interface Net4jDefsPackage extends EPackage
     EReference ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER = eINSTANCE.getAcceptorDef_ServerProtocolProvider();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.TCPAcceptorDefImpl <em>TCP Acceptor Def</em>}
-     * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.TCPAcceptorDefImpl <em>TCP Acceptor Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.TCPAcceptorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getTCPAcceptorDef()
      * @generated
@@ -1143,33 +1103,32 @@ public interface Net4jDefsPackage extends EPackage
     EClass TCP_ACCEPTOR_DEF = eINSTANCE.getTCPAcceptorDef();
 
     /**
-     * The meta object literal for the '<em><b>Host</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Host</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute TCP_ACCEPTOR_DEF__HOST = eINSTANCE.getTCPAcceptorDef_Host();
 
     /**
-     * The meta object literal for the '<em><b>Port</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Port</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute TCP_ACCEPTOR_DEF__PORT = eINSTANCE.getTCPAcceptorDef_Port();
 
     /**
-     * The meta object literal for the '<em><b>Tcp Selector Def</b></em>' reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Tcp Selector Def</b></em>' reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF = eINSTANCE.getTCPAcceptorDef_TcpSelectorDef();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.JVMAcceptorDefImpl <em>JVM Acceptor Def</em>}
-     * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.JVMAcceptorDefImpl <em>JVM Acceptor Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.JVMAcceptorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getJVMAcceptorDef()
      * @generated
@@ -1177,17 +1136,16 @@ public interface Net4jDefsPackage extends EPackage
     EClass JVM_ACCEPTOR_DEF = eINSTANCE.getJVMAcceptorDef();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute JVM_ACCEPTOR_DEF__NAME = eINSTANCE.getJVMAcceptorDef_Name();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.JVMConnectorDefImpl
-     * <em>JVM Connector Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.JVMConnectorDefImpl <em>JVM Connector Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.JVMConnectorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getJVMConnectorDef()
      * @generated
@@ -1195,17 +1153,16 @@ public interface Net4jDefsPackage extends EPackage
     EClass JVM_CONNECTOR_DEF = eINSTANCE.getJVMConnectorDef();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute JVM_CONNECTOR_DEF__NAME = eINSTANCE.getJVMConnectorDef_Name();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.HTTPConnectorDefImpl
-     * <em>HTTP Connector Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.HTTPConnectorDefImpl <em>HTTP Connector Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.HTTPConnectorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getHTTPConnectorDef()
      * @generated
@@ -1213,17 +1170,16 @@ public interface Net4jDefsPackage extends EPackage
     EClass HTTP_CONNECTOR_DEF = eINSTANCE.getHTTPConnectorDef();
 
     /**
-     * The meta object literal for the '<em><b>Url</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute HTTP_CONNECTOR_DEF__URL = eINSTANCE.getHTTPConnectorDef_Url();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.TCPSelectorDefImpl <em>TCP Selector Def</em>}
-     * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.TCPSelectorDefImpl <em>TCP Selector Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.TCPSelectorDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getTCPSelectorDef()
      * @generated
@@ -1231,9 +1187,8 @@ public interface Net4jDefsPackage extends EPackage
     EClass TCP_SELECTOR_DEF = eINSTANCE.getTCPSelectorDef();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ServerProtocolFactoryDefImpl
-     * <em>Server Protocol Factory Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ServerProtocolFactoryDefImpl <em>Server Protocol Factory Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.ServerProtocolFactoryDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getServerProtocolFactoryDef()
      * @generated
@@ -1241,9 +1196,8 @@ public interface Net4jDefsPackage extends EPackage
     EClass SERVER_PROTOCOL_FACTORY_DEF = eINSTANCE.getServerProtocolFactoryDef();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.BufferProviderDefImpl
-     * <em>Buffer Provider Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.BufferProviderDefImpl <em>Buffer Provider Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.BufferProviderDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getBufferProviderDef()
      * @generated
@@ -1251,9 +1205,8 @@ public interface Net4jDefsPackage extends EPackage
     EClass BUFFER_PROVIDER_DEF = eINSTANCE.getBufferProviderDef();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.BufferPoolDefImpl <em>Buffer Pool Def</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.BufferPoolDefImpl <em>Buffer Pool Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.BufferPoolDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getBufferPoolDef()
      * @generated
@@ -1261,9 +1214,8 @@ public interface Net4jDefsPackage extends EPackage
     EClass BUFFER_POOL_DEF = eINSTANCE.getBufferPoolDef();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ProtocolProviderDefImpl
-     * <em>Protocol Provider Def</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.net4j.defs.impl.ProtocolProviderDefImpl <em>Protocol Provider Def</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.net4j.defs.impl.ProtocolProviderDefImpl
      * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getProtocolProviderDef()
      * @generated

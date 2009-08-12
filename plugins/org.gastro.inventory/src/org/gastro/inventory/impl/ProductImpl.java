@@ -25,17 +25,16 @@ import org.gastro.inventory.Product;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.inventory.impl.ProductImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.ProductImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class ProductImpl extends CDOObjectImpl implements Product
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ProductImpl()
@@ -45,7 +44,6 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -77,7 +73,6 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)

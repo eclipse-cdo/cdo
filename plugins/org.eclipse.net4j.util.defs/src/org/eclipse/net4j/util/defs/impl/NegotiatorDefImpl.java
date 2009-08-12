@@ -20,14 +20,13 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Negotiator Def</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class NegotiatorDefImpl extends DefImpl implements NegotiatorDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected NegotiatorDefImpl()
@@ -37,7 +36,6 @@ public abstract class NegotiatorDefImpl extends DefImpl implements NegotiatorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

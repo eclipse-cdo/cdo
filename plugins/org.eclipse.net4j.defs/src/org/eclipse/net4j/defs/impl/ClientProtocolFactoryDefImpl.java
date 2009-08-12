@@ -21,14 +21,13 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class ClientProtocolFactoryDefImpl extends ProtocolProviderDefImpl implements ClientProtocolFactoryDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ClientProtocolFactoryDefImpl()
@@ -38,7 +37,6 @@ public abstract class ClientProtocolFactoryDefImpl extends ProtocolProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

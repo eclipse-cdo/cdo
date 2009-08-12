@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.gastro.inventory.InventoryFactory
  * @model kind="package"
  * @generated
@@ -35,37 +34,37 @@ import org.eclipse.emf.ecore.EReference;
 public interface InventoryPackage extends EPackage
 {
   /**
-   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNAME = "inventory";
 
   /**
-   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace URI.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_URI = "http://www.gastro.org/inventory/1.0";
 
   /**
-   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_PREFIX = "inventory";
 
   /**
-   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   InventoryPackage eINSTANCE = org.gastro.inventory.impl.InventoryPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.gastro.inventory.impl.StockImpl <em>Stock</em>}' class. <!-- begin-user-doc
+   * The meta object id for the '{@link org.gastro.inventory.impl.StockImpl <em>Stock</em>}' class.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see org.gastro.inventory.impl.StockImpl
    * @see org.gastro.inventory.impl.InventoryPackageImpl#getStock()
    * @generated
@@ -73,17 +72,17 @@ public interface InventoryPackage extends EPackage
   int STOCK = 0;
 
   /**
-   * The feature id for the '<em><b>Products</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Products</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int STOCK__PRODUCTS = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -99,8 +98,8 @@ public interface InventoryPackage extends EPackage
   int STOCK__DEPARTMENT = 2;
 
   /**
-   * The number of structural features of the '<em>Stock</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Stock</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -117,16 +116,16 @@ public interface InventoryPackage extends EPackage
   int PRODUCT = 1;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int PRODUCT__NAME = 0;
 
   /**
-   * The number of structural features of the '<em>Product</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Product</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -143,40 +142,40 @@ public interface InventoryPackage extends EPackage
   int STOCK_PRODUCT = 2;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int STOCK_PRODUCT__NAME = PRODUCT__NAME;
 
   /**
-   * The feature id for the '<em><b>Stock</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Stock</b></em>' container reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int STOCK_PRODUCT__STOCK = PRODUCT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Cost</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Cost</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int STOCK_PRODUCT__COST = PRODUCT_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Available</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Available</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int STOCK_PRODUCT__AVAILABLE = PRODUCT_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Order Limit</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Order Limit</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -202,17 +201,17 @@ public interface InventoryPackage extends EPackage
   int RECIPE = 3;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int RECIPE__NAME = PRODUCT__NAME;
 
   /**
-   * The feature id for the '<em><b>Ingredients</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Ingredients</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -228,16 +227,16 @@ public interface InventoryPackage extends EPackage
   int RECIPE__DEPARTMENT = PRODUCT_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Cost</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Cost</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int RECIPE__COST = PRODUCT_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>Recipe</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Recipe</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -254,32 +253,32 @@ public interface InventoryPackage extends EPackage
   int INGREDIENT = 4;
 
   /**
-   * The feature id for the '<em><b>Recipe</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Recipe</b></em>' container reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int INGREDIENT__RECIPE = 0;
 
   /**
-   * The feature id for the '<em><b>Product</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Product</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int INGREDIENT__PRODUCT = 1;
 
   /**
-   * The feature id for the '<em><b>Quantity</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Quantity</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int INGREDIENT__QUANTITY = 2;
 
   /**
-   * The number of structural features of the '<em>Ingredient</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Ingredient</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -296,8 +295,8 @@ public interface InventoryPackage extends EPackage
   int MENU_CARD = 5;
 
   /**
-   * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Title</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -313,17 +312,17 @@ public interface InventoryPackage extends EPackage
   int MENU_CARD__RESTAURANT = 1;
 
   /**
-   * The feature id for the '<em><b>Sections</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Sections</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int MENU_CARD__SECTIONS = 2;
 
   /**
-   * The number of structural features of the '<em>Menu Card</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Menu Card</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -340,51 +339,51 @@ public interface InventoryPackage extends EPackage
   int RESTAURANT = 6;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int RESTAURANT__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Departments</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Departments</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int RESTAURANT__DEPARTMENTS = 1;
 
   /**
-   * The feature id for the '<em><b>Menu Cards</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Menu Cards</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int RESTAURANT__MENU_CARDS = 2;
 
   /**
-   * The feature id for the '<em><b>Tables</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Tables</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int RESTAURANT__TABLES = 3;
 
   /**
-   * The feature id for the '<em><b>Stations</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Stations</b></em>' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int RESTAURANT__STATIONS = 4;
 
   /**
-   * The number of structural features of the '<em>Restaurant</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Restaurant</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -401,16 +400,16 @@ public interface InventoryPackage extends EPackage
   int STATION = 11;
 
   /**
-   * The feature id for the '<em><b>Station ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Station ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int STATION__STATION_ID = 0;
 
   /**
-   * The number of structural features of the '<em>Station</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Station</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -427,17 +426,17 @@ public interface InventoryPackage extends EPackage
   int DEPARTMENT = 7;
 
   /**
-   * The feature id for the '<em><b>Station ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Station ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int DEPARTMENT__STATION_ID = STATION__STATION_ID;
 
   /**
-   * The feature id for the '<em><b>Recipes</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Recipes</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -453,26 +452,26 @@ public interface InventoryPackage extends EPackage
   int DEPARTMENT__RESTAURANT = STATION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Employees</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Employees</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int DEPARTMENT__EMPLOYEES = STATION_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Stocks</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Stocks</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int DEPARTMENT__STOCKS = STATION_FEATURE_COUNT + 3;
 
   /**
-   * The number of structural features of the '<em>Department</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Department</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -489,57 +488,57 @@ public interface InventoryPackage extends EPackage
   int OFFERING = 8;
 
   /**
-   * The feature id for the '<em><b>Product</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Product</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int OFFERING__PRODUCT = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int OFFERING__NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Description</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int OFFERING__DESCRIPTION = 2;
 
   /**
-   * The feature id for the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Price</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int OFFERING__PRICE = 3;
 
   /**
-   * The feature id for the '<em><b>Section</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Section</b></em>' container reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int OFFERING__SECTION = 4;
 
   /**
-   * The number of structural features of the '<em>Offering</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Offering</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int OFFERING_FEATURE_COUNT = 5;
 
   /**
-   * The meta object id for the '{@link org.gastro.inventory.impl.TableImpl <em>Table</em>}' class. <!-- begin-user-doc
+   * The meta object id for the '{@link org.gastro.inventory.impl.TableImpl <em>Table</em>}' class.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see org.gastro.inventory.impl.TableImpl
    * @see org.gastro.inventory.impl.InventoryPackageImpl#getTable()
    * @generated
@@ -547,16 +546,16 @@ public interface InventoryPackage extends EPackage
   int TABLE = 9;
 
   /**
-   * The feature id for the '<em><b>Station ID</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Station ID</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int TABLE__STATION_ID = STATION__STATION_ID;
 
   /**
-   * The feature id for the '<em><b>Seats</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Seats</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -572,8 +571,8 @@ public interface InventoryPackage extends EPackage
   int TABLE__RESTAURANT = STATION_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Table</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Table</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -599,16 +598,16 @@ public interface InventoryPackage extends EPackage
   int EMPLOYEE__DEPARTMENT = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int EMPLOYEE__NAME = 1;
 
   /**
-   * The number of structural features of the '<em>Employee</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Employee</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -634,42 +633,42 @@ public interface InventoryPackage extends EPackage
   int SECTION__MENU_CARD = 0;
 
   /**
-   * The feature id for the '<em><b>Offerings</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Offerings</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int SECTION__OFFERINGS = 1;
 
   /**
-   * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Title</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SECTION__TITLE = 2;
 
   /**
-   * The feature id for the '<em><b>Text</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Text</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SECTION__TEXT = 3;
 
   /**
-   * The number of structural features of the '<em>Section</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Section</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SECTION_FEATURE_COUNT = 4;
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Stock <em>Stock</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for class '{@link org.gastro.inventory.Stock <em>Stock</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for class '<em>Stock</em>'.
    * @see org.gastro.inventory.Stock
    * @generated
@@ -677,9 +676,8 @@ public interface InventoryPackage extends EPackage
   EClass getStock();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Stock#getProducts
-   * <em>Products</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Stock#getProducts <em>Products</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Products</em>'.
    * @see org.gastro.inventory.Stock#getProducts()
    * @see #getStock()
@@ -699,9 +697,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getStock_Name();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Stock#getDepartment
-   * <em>Department</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Stock#getDepartment <em>Department</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Department</em>'.
    * @see org.gastro.inventory.Stock#getDepartment()
    * @see #getStock()
@@ -710,9 +707,9 @@ public interface InventoryPackage extends EPackage
   EReference getStock_Department();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Product <em>Product</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.gastro.inventory.Product <em>Product</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Product</em>'.
    * @see org.gastro.inventory.Product
    * @generated
@@ -741,9 +738,8 @@ public interface InventoryPackage extends EPackage
   EClass getStockProduct();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.StockProduct#getStock
-   * <em>Stock</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.StockProduct#getStock <em>Stock</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Stock</em>'.
    * @see org.gastro.inventory.StockProduct#getStock()
    * @see #getStockProduct()
@@ -763,9 +759,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getStockProduct_Cost();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gastro.inventory.StockProduct#getAvailable
-   * <em>Available</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.gastro.inventory.StockProduct#getAvailable <em>Available</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Available</em>'.
    * @see org.gastro.inventory.StockProduct#getAvailable()
    * @see #getStockProduct()
@@ -774,9 +769,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getStockProduct_Available();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gastro.inventory.StockProduct#getOrderLimit
-   * <em>Order Limit</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.gastro.inventory.StockProduct#getOrderLimit <em>Order Limit</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Order Limit</em>'.
    * @see org.gastro.inventory.StockProduct#getOrderLimit()
    * @see #getStockProduct()
@@ -785,9 +779,9 @@ public interface InventoryPackage extends EPackage
   EAttribute getStockProduct_OrderLimit();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Recipe <em>Recipe</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.gastro.inventory.Recipe <em>Recipe</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Recipe</em>'.
    * @see org.gastro.inventory.Recipe
    * @generated
@@ -795,9 +789,8 @@ public interface InventoryPackage extends EPackage
   EClass getRecipe();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Recipe#getIngredients
-   * <em>Ingredients</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Recipe#getIngredients <em>Ingredients</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Ingredients</em>'.
    * @see org.gastro.inventory.Recipe#getIngredients()
    * @see #getRecipe()
@@ -806,9 +799,8 @@ public interface InventoryPackage extends EPackage
   EReference getRecipe_Ingredients();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Recipe#getDepartment
-   * <em>Department</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Recipe#getDepartment <em>Department</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Department</em>'.
    * @see org.gastro.inventory.Recipe#getDepartment()
    * @see #getRecipe()
@@ -838,9 +830,8 @@ public interface InventoryPackage extends EPackage
   EClass getIngredient();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Ingredient#getRecipe
-   * <em>Recipe</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Ingredient#getRecipe <em>Recipe</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Recipe</em>'.
    * @see org.gastro.inventory.Ingredient#getRecipe()
    * @see #getIngredient()
@@ -851,7 +842,6 @@ public interface InventoryPackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.gastro.inventory.Ingredient#getProduct <em>Product</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference '<em>Product</em>'.
    * @see org.gastro.inventory.Ingredient#getProduct()
    * @see #getIngredient()
@@ -862,7 +852,6 @@ public interface InventoryPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.inventory.Ingredient#getQuantity <em>Quantity</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Quantity</em>'.
    * @see org.gastro.inventory.Ingredient#getQuantity()
    * @see #getIngredient()
@@ -871,9 +860,9 @@ public interface InventoryPackage extends EPackage
   EAttribute getIngredient_Quantity();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.MenuCard <em>Menu Card</em>}'. <!-- begin-user-doc
+   * Returns the meta object for class '{@link org.gastro.inventory.MenuCard <em>Menu Card</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Menu Card</em>'.
    * @see org.gastro.inventory.MenuCard
    * @generated
@@ -892,9 +881,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getMenuCard_Title();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.MenuCard#getRestaurant
-   * <em>Restaurant</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Restaurant</em>'.
    * @see org.gastro.inventory.MenuCard#getRestaurant()
    * @see #getMenuCard()
@@ -903,9 +891,8 @@ public interface InventoryPackage extends EPackage
   EReference getMenuCard_Restaurant();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.MenuCard#getSections
-   * <em>Sections</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.MenuCard#getSections <em>Sections</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Sections</em>'.
    * @see org.gastro.inventory.MenuCard#getSections()
    * @see #getMenuCard()
@@ -935,9 +922,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getRestaurant_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Restaurant#getDepartments
-   * <em>Departments</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Restaurant#getDepartments <em>Departments</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Departments</em>'.
    * @see org.gastro.inventory.Restaurant#getDepartments()
    * @see #getRestaurant()
@@ -946,9 +932,8 @@ public interface InventoryPackage extends EPackage
   EReference getRestaurant_Departments();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Restaurant#getMenuCards
-   * <em>Menu Cards</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Restaurant#getMenuCards <em>Menu Cards</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Menu Cards</em>'.
    * @see org.gastro.inventory.Restaurant#getMenuCards()
    * @see #getRestaurant()
@@ -957,9 +942,8 @@ public interface InventoryPackage extends EPackage
   EReference getRestaurant_MenuCards();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Restaurant#getTables
-   * <em>Tables</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Restaurant#getTables <em>Tables</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Tables</em>'.
    * @see org.gastro.inventory.Restaurant#getTables()
    * @see #getRestaurant()
@@ -968,9 +952,8 @@ public interface InventoryPackage extends EPackage
   EReference getRestaurant_Tables();
 
   /**
-   * Returns the meta object for the reference list '{@link org.gastro.inventory.Restaurant#getStations
-   * <em>Stations</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference list '{@link org.gastro.inventory.Restaurant#getStations <em>Stations</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference list '<em>Stations</em>'.
    * @see org.gastro.inventory.Restaurant#getStations()
    * @see #getRestaurant()
@@ -989,9 +972,8 @@ public interface InventoryPackage extends EPackage
   EClass getDepartment();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Department#getRecipes
-   * <em>Recipes</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Department#getRecipes <em>Recipes</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Recipes</em>'.
    * @see org.gastro.inventory.Department#getRecipes()
    * @see #getDepartment()
@@ -1000,9 +982,8 @@ public interface InventoryPackage extends EPackage
   EReference getDepartment_Recipes();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Department#getRestaurant
-   * <em>Restaurant</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Department#getRestaurant <em>Restaurant</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Restaurant</em>'.
    * @see org.gastro.inventory.Department#getRestaurant()
    * @see #getDepartment()
@@ -1011,9 +992,8 @@ public interface InventoryPackage extends EPackage
   EReference getDepartment_Restaurant();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Department#getEmployees
-   * <em>Employees</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Department#getEmployees <em>Employees</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Employees</em>'.
    * @see org.gastro.inventory.Department#getEmployees()
    * @see #getDepartment()
@@ -1022,9 +1002,8 @@ public interface InventoryPackage extends EPackage
   EReference getDepartment_Employees();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Department#getStocks
-   * <em>Stocks</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Department#getStocks <em>Stocks</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Stocks</em>'.
    * @see org.gastro.inventory.Department#getStocks()
    * @see #getDepartment()
@@ -1033,9 +1012,9 @@ public interface InventoryPackage extends EPackage
   EReference getDepartment_Stocks();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Offering <em>Offering</em>}'. <!-- begin-user-doc
+   * Returns the meta object for class '{@link org.gastro.inventory.Offering <em>Offering</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Offering</em>'.
    * @see org.gastro.inventory.Offering
    * @generated
@@ -1065,9 +1044,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getOffering_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gastro.inventory.Offering#getDescription
-   * <em>Description</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.gastro.inventory.Offering#getDescription <em>Description</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Description</em>'.
    * @see org.gastro.inventory.Offering#getDescription()
    * @see #getOffering()
@@ -1087,9 +1065,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getOffering_Price();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Offering#getSection
-   * <em>Section</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Offering#getSection <em>Section</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Section</em>'.
    * @see org.gastro.inventory.Offering#getSection()
    * @see #getOffering()
@@ -1098,9 +1075,9 @@ public interface InventoryPackage extends EPackage
   EReference getOffering_Section();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Table <em>Table</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for class '{@link org.gastro.inventory.Table <em>Table</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for class '<em>Table</em>'.
    * @see org.gastro.inventory.Table
    * @generated
@@ -1119,9 +1096,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getTable_Seats();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Table#getRestaurant
-   * <em>Restaurant</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Table#getRestaurant <em>Restaurant</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Restaurant</em>'.
    * @see org.gastro.inventory.Table#getRestaurant()
    * @see #getTable()
@@ -1130,9 +1106,9 @@ public interface InventoryPackage extends EPackage
   EReference getTable_Restaurant();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Employee <em>Employee</em>}'. <!-- begin-user-doc
+   * Returns the meta object for class '{@link org.gastro.inventory.Employee <em>Employee</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Employee</em>'.
    * @see org.gastro.inventory.Employee
    * @generated
@@ -1140,9 +1116,8 @@ public interface InventoryPackage extends EPackage
   EClass getEmployee();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Employee#getDepartment
-   * <em>Department</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Employee#getDepartment <em>Department</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Department</em>'.
    * @see org.gastro.inventory.Employee#getDepartment()
    * @see #getEmployee()
@@ -1162,9 +1137,9 @@ public interface InventoryPackage extends EPackage
   EAttribute getEmployee_Name();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Station <em>Station</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.gastro.inventory.Station <em>Station</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Station</em>'.
    * @see org.gastro.inventory.Station
    * @generated
@@ -1174,7 +1149,6 @@ public interface InventoryPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.inventory.Station#getStationID <em>Station ID</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the attribute '<em>Station ID</em>'.
    * @see org.gastro.inventory.Station#getStationID()
    * @see #getStation()
@@ -1183,9 +1157,9 @@ public interface InventoryPackage extends EPackage
   EAttribute getStation_StationID();
 
   /**
-   * Returns the meta object for class '{@link org.gastro.inventory.Section <em>Section</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for class '{@link org.gastro.inventory.Section <em>Section</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Section</em>'.
    * @see org.gastro.inventory.Section
    * @generated
@@ -1193,9 +1167,8 @@ public interface InventoryPackage extends EPackage
   EClass getSection();
 
   /**
-   * Returns the meta object for the container reference '{@link org.gastro.inventory.Section#getMenuCard
-   * <em>Menu Card</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the container reference '{@link org.gastro.inventory.Section#getMenuCard <em>Menu Card</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Menu Card</em>'.
    * @see org.gastro.inventory.Section#getMenuCard()
    * @see #getSection()
@@ -1204,9 +1177,8 @@ public interface InventoryPackage extends EPackage
   EReference getSection_MenuCard();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Section#getOfferings
-   * <em>Offerings</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference list '{@link org.gastro.inventory.Section#getOfferings <em>Offerings</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Offerings</em>'.
    * @see org.gastro.inventory.Section#getOfferings()
    * @see #getSection()
@@ -1237,8 +1209,8 @@ public interface InventoryPackage extends EPackage
   EAttribute getSection_Text();
 
   /**
-   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -1253,7 +1225,6 @@ public interface InventoryPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   interface Literals
@@ -1277,17 +1248,17 @@ public interface InventoryPackage extends EPackage
     EReference STOCK__PRODUCTS = eINSTANCE.getStock_Products();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute STOCK__NAME = eINSTANCE.getStock_Name();
 
     /**
-     * The meta object literal for the '<em><b>Department</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Department</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference STOCK__DEPARTMENT = eINSTANCE.getStock_Department();
@@ -1303,17 +1274,16 @@ public interface InventoryPackage extends EPackage
     EClass PRODUCT = eINSTANCE.getProduct();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute PRODUCT__NAME = eINSTANCE.getProduct_Name();
 
     /**
-     * The meta object literal for the '{@link org.gastro.inventory.impl.StockProductImpl <em>Stock Product</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.gastro.inventory.impl.StockProductImpl <em>Stock Product</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.gastro.inventory.impl.StockProductImpl
      * @see org.gastro.inventory.impl.InventoryPackageImpl#getStockProduct()
      * @generated
@@ -1321,33 +1291,33 @@ public interface InventoryPackage extends EPackage
     EClass STOCK_PRODUCT = eINSTANCE.getStockProduct();
 
     /**
-     * The meta object literal for the '<em><b>Stock</b></em>' container reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Stock</b></em>' container reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference STOCK_PRODUCT__STOCK = eINSTANCE.getStockProduct_Stock();
 
     /**
-     * The meta object literal for the '<em><b>Cost</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Cost</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute STOCK_PRODUCT__COST = eINSTANCE.getStockProduct_Cost();
 
     /**
-     * The meta object literal for the '<em><b>Available</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Available</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute STOCK_PRODUCT__AVAILABLE = eINSTANCE.getStockProduct_Available();
 
     /**
-     * The meta object literal for the '<em><b>Order Limit</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Order Limit</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute STOCK_PRODUCT__ORDER_LIMIT = eINSTANCE.getStockProduct_OrderLimit();
@@ -1371,17 +1341,17 @@ public interface InventoryPackage extends EPackage
     EReference RECIPE__INGREDIENTS = eINSTANCE.getRecipe_Ingredients();
 
     /**
-     * The meta object literal for the '<em><b>Department</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Department</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference RECIPE__DEPARTMENT = eINSTANCE.getRecipe_Department();
 
     /**
-     * The meta object literal for the '<em><b>Cost</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Cost</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute RECIPE__COST = eINSTANCE.getRecipe_Cost();
@@ -1389,7 +1359,6 @@ public interface InventoryPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.inventory.impl.IngredientImpl <em>Ingredient</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see org.gastro.inventory.impl.IngredientImpl
      * @see org.gastro.inventory.impl.InventoryPackageImpl#getIngredient()
      * @generated
@@ -1397,25 +1366,25 @@ public interface InventoryPackage extends EPackage
     EClass INGREDIENT = eINSTANCE.getIngredient();
 
     /**
-     * The meta object literal for the '<em><b>Recipe</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Recipe</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference INGREDIENT__RECIPE = eINSTANCE.getIngredient_Recipe();
 
     /**
-     * The meta object literal for the '<em><b>Product</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Product</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference INGREDIENT__PRODUCT = eINSTANCE.getIngredient_Product();
 
     /**
-     * The meta object literal for the '<em><b>Quantity</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Quantity</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute INGREDIENT__QUANTITY = eINSTANCE.getIngredient_Quantity();
@@ -1431,17 +1400,17 @@ public interface InventoryPackage extends EPackage
     EClass MENU_CARD = eINSTANCE.getMenuCard();
 
     /**
-     * The meta object literal for the '<em><b>Title</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute MENU_CARD__TITLE = eINSTANCE.getMenuCard_Title();
 
     /**
-     * The meta object literal for the '<em><b>Restaurant</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Restaurant</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference MENU_CARD__RESTAURANT = eINSTANCE.getMenuCard_Restaurant();
@@ -1457,7 +1426,6 @@ public interface InventoryPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.inventory.impl.RestaurantImpl <em>Restaurant</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see org.gastro.inventory.impl.RestaurantImpl
      * @see org.gastro.inventory.impl.InventoryPackageImpl#getRestaurant()
      * @generated
@@ -1465,9 +1433,9 @@ public interface InventoryPackage extends EPackage
     EClass RESTAURANT = eINSTANCE.getRestaurant();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute RESTAURANT__NAME = eINSTANCE.getRestaurant_Name();
@@ -1489,17 +1457,17 @@ public interface InventoryPackage extends EPackage
     EReference RESTAURANT__MENU_CARDS = eINSTANCE.getRestaurant_MenuCards();
 
     /**
-     * The meta object literal for the '<em><b>Tables</b></em>' containment reference list feature. <!-- begin-user-doc
+     * The meta object literal for the '<em><b>Tables</b></em>' containment reference list feature.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference RESTAURANT__TABLES = eINSTANCE.getRestaurant_Tables();
 
     /**
-     * The meta object literal for the '<em><b>Stations</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Stations</b></em>' reference list feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference RESTAURANT__STATIONS = eINSTANCE.getRestaurant_Stations();
@@ -1507,7 +1475,6 @@ public interface InventoryPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.inventory.impl.DepartmentImpl <em>Department</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @see org.gastro.inventory.impl.DepartmentImpl
      * @see org.gastro.inventory.impl.InventoryPackageImpl#getDepartment()
      * @generated
@@ -1515,17 +1482,17 @@ public interface InventoryPackage extends EPackage
     EClass DEPARTMENT = eINSTANCE.getDepartment();
 
     /**
-     * The meta object literal for the '<em><b>Recipes</b></em>' containment reference list feature. <!-- begin-user-doc
+     * The meta object literal for the '<em><b>Recipes</b></em>' containment reference list feature.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference DEPARTMENT__RECIPES = eINSTANCE.getDepartment_Recipes();
 
     /**
-     * The meta object literal for the '<em><b>Restaurant</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Restaurant</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference DEPARTMENT__RESTAURANT = eINSTANCE.getDepartment_Restaurant();
@@ -1539,9 +1506,9 @@ public interface InventoryPackage extends EPackage
     EReference DEPARTMENT__EMPLOYEES = eINSTANCE.getDepartment_Employees();
 
     /**
-     * The meta object literal for the '<em><b>Stocks</b></em>' containment reference list feature. <!-- begin-user-doc
+     * The meta object literal for the '<em><b>Stocks</b></em>' containment reference list feature.
+     * <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference DEPARTMENT__STOCKS = eINSTANCE.getDepartment_Stocks();
@@ -1557,41 +1524,41 @@ public interface InventoryPackage extends EPackage
     EClass OFFERING = eINSTANCE.getOffering();
 
     /**
-     * The meta object literal for the '<em><b>Product</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Product</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference OFFERING__PRODUCT = eINSTANCE.getOffering_Product();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute OFFERING__NAME = eINSTANCE.getOffering_Name();
 
     /**
-     * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute OFFERING__DESCRIPTION = eINSTANCE.getOffering_Description();
 
     /**
-     * The meta object literal for the '<em><b>Price</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Price</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute OFFERING__PRICE = eINSTANCE.getOffering_Price();
 
     /**
-     * The meta object literal for the '<em><b>Section</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Section</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference OFFERING__SECTION = eINSTANCE.getOffering_Section();
@@ -1607,17 +1574,17 @@ public interface InventoryPackage extends EPackage
     EClass TABLE = eINSTANCE.getTable();
 
     /**
-     * The meta object literal for the '<em><b>Seats</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Seats</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute TABLE__SEATS = eINSTANCE.getTable_Seats();
 
     /**
-     * The meta object literal for the '<em><b>Restaurant</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Restaurant</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference TABLE__RESTAURANT = eINSTANCE.getTable_Restaurant();
@@ -1633,17 +1600,17 @@ public interface InventoryPackage extends EPackage
     EClass EMPLOYEE = eINSTANCE.getEmployee();
 
     /**
-     * The meta object literal for the '<em><b>Department</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Department</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference EMPLOYEE__DEPARTMENT = eINSTANCE.getEmployee_Department();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute EMPLOYEE__NAME = eINSTANCE.getEmployee_Name();
@@ -1659,9 +1626,9 @@ public interface InventoryPackage extends EPackage
     EClass STATION = eINSTANCE.getStation();
 
     /**
-     * The meta object literal for the '<em><b>Station ID</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Station ID</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute STATION__STATION_ID = eINSTANCE.getStation_StationID();
@@ -1677,9 +1644,9 @@ public interface InventoryPackage extends EPackage
     EClass SECTION = eINSTANCE.getSection();
 
     /**
-     * The meta object literal for the '<em><b>Menu Card</b></em>' container reference feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Menu Card</b></em>' container reference feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference SECTION__MENU_CARD = eINSTANCE.getSection_MenuCard();
@@ -1693,17 +1660,17 @@ public interface InventoryPackage extends EPackage
     EReference SECTION__OFFERINGS = eINSTANCE.getSection_Offerings();
 
     /**
-     * The meta object literal for the '<em><b>Title</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute SECTION__TITLE = eINSTANCE.getSection_Title();
 
     /**
-     * The meta object literal for the '<em><b>Text</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute SECTION__TEXT = eINSTANCE.getSection_Text();

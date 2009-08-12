@@ -16,7 +16,8 @@ import org.eclipse.emf.cdo.tests.model4interfaces.INamedElement;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Impl Contained Element NPL</b></em>'. <!--
  * end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplContainedElementNPL()
  * @model
  * @generated

@@ -25,17 +25,16 @@ import org.gastro.inventory.Station;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.inventory.impl.StationImpl#getStationID <em>Station ID</em>}</li>
+ *   <li>{@link org.gastro.inventory.impl.StationImpl#getStationID <em>Station ID</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class StationImpl extends CDOObjectImpl implements Station
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected StationImpl()
@@ -45,7 +44,6 @@ public abstract class StationImpl extends CDOObjectImpl implements Station
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public abstract class StationImpl extends CDOObjectImpl implements Station
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public abstract class StationImpl extends CDOObjectImpl implements Station
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getStationID()
@@ -77,7 +73,6 @@ public abstract class StationImpl extends CDOObjectImpl implements Station
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setStationID(String newStationID)

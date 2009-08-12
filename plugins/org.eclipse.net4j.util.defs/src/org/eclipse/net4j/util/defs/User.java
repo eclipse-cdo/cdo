@@ -15,14 +15,15 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>User</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.User#getUserID <em>User ID</em>}</li>
- * <li>{@link org.eclipse.net4j.util.defs.User#getPassword <em>Password</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.User#getUserID <em>User ID</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.User#getPassword <em>Password</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getUser()
  * @model
  * @generated
@@ -30,13 +31,13 @@ import org.eclipse.emf.ecore.EObject;
 public interface User extends EObject
 {
   /**
-   * Returns the value of the '<em><b>User ID</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>User ID</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>User ID</em>' attribute.
    * @see #setUserID(String)
    * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getUser_UserID()
@@ -57,13 +58,13 @@ public interface User extends EObject
   void setUserID(String value);
 
   /**
-   * Returns the value of the '<em><b>Password</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Password</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Password</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Password</em>' attribute.
    * @see #setPassword(String)
    * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getUser_Password()

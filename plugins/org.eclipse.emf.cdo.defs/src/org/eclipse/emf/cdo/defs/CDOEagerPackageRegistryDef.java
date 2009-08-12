@@ -14,7 +14,8 @@ package org.eclipse.emf.cdo.defs;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Eager Package Registry Def</b></em>'. <!--
  * end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getCDOEagerPackageRegistryDef()
  * @model
  * @generated

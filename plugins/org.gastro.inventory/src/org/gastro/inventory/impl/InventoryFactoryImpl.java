@@ -35,14 +35,13 @@ import org.gastro.inventory.Table;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static InventoryFactory init()
@@ -64,8 +63,8 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public InventoryFactoryImpl()
@@ -75,7 +74,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -112,7 +110,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Stock createStock()
@@ -123,7 +120,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public StockProduct createStockProduct()
@@ -134,7 +130,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Recipe createRecipe()
@@ -145,7 +140,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Ingredient createIngredient()
@@ -156,7 +150,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public MenuCard createMenuCard()
@@ -167,7 +160,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Restaurant createRestaurant()
@@ -178,7 +170,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Department createDepartment()
@@ -189,7 +180,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Offering createOffering()
@@ -200,7 +190,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Table createTable()
@@ -211,7 +200,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Employee createEmployee()
@@ -222,7 +210,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Section createSection()
@@ -233,7 +220,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public InventoryPackage getInventoryPackage()
@@ -243,7 +229,6 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

@@ -15,23 +15,22 @@ import org.eclipse.emf.ecore.EFactory;
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage
  * @generated
  */
 public interface model4interfacesFactory extends EFactory
 {
   /**
-   * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   model4interfacesFactory eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesFactoryImpl
       .init();
 
   /**
-   * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.
    * @generated
    */

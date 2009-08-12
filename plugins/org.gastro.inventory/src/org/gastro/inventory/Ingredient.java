@@ -17,15 +17,16 @@ import org.eclipse.emf.cdo.CDOObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Ingredient</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.gastro.inventory.Ingredient#getRecipe <em>Recipe</em>}</li>
- * <li>{@link org.gastro.inventory.Ingredient#getProduct <em>Product</em>}</li>
- * <li>{@link org.gastro.inventory.Ingredient#getQuantity <em>Quantity</em>}</li>
+ *   <li>{@link org.gastro.inventory.Ingredient#getRecipe <em>Recipe</em>}</li>
+ *   <li>{@link org.gastro.inventory.Ingredient#getProduct <em>Product</em>}</li>
+ *   <li>{@link org.gastro.inventory.Ingredient#getQuantity <em>Quantity</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getIngredient()
  * @model
  * @extends CDOObject
@@ -34,14 +35,14 @@ import org.eclipse.emf.cdo.CDOObject;
 public interface Ingredient extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Recipe</b></em>' container reference. It is bidirectional and its opposite is '
-   * {@link org.gastro.inventory.Recipe#getIngredients <em>Ingredients</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Recipe</b></em>' container reference.
+   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Recipe#getIngredients <em>Ingredients</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Recipe</em>' container reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Recipe</em>' container reference.
    * @see #setRecipe(Recipe)
    * @see org.gastro.inventory.InventoryPackage#getIngredient_Recipe()
@@ -63,13 +64,13 @@ public interface Ingredient extends CDOObject
   void setRecipe(Recipe value);
 
   /**
-   * Returns the value of the '<em><b>Product</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Product</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Product</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Product</em>' reference.
    * @see #setProduct(Product)
    * @see org.gastro.inventory.InventoryPackage#getIngredient_Product()
@@ -90,13 +91,13 @@ public interface Ingredient extends CDOObject
   void setProduct(Product value);
 
   /**
-   * Returns the value of the '<em><b>Quantity</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Quantity</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Quantity</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Quantity</em>' attribute.
    * @see #setQuantity(int)
    * @see org.gastro.inventory.InventoryPackage#getIngredient_Quantity()

@@ -23,17 +23,18 @@ import java.util.Date;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Day</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.gastro.business.BusinessDay#getDate <em>Date</em>}</li>
- * <li>{@link org.gastro.business.BusinessDay#getMenuCard <em>Menu Card</em>}</li>
- * <li>{@link org.gastro.business.BusinessDay#getOrders <em>Orders</em>}</li>
- * <li>{@link org.gastro.business.BusinessDay#getWaiters <em>Waiters</em>}</li>
- * <li>{@link org.gastro.business.BusinessDay#isClosed <em>Closed</em>}</li>
+ *   <li>{@link org.gastro.business.BusinessDay#getDate <em>Date</em>}</li>
+ *   <li>{@link org.gastro.business.BusinessDay#getMenuCard <em>Menu Card</em>}</li>
+ *   <li>{@link org.gastro.business.BusinessDay#getOrders <em>Orders</em>}</li>
+ *   <li>{@link org.gastro.business.BusinessDay#getWaiters <em>Waiters</em>}</li>
+ *   <li>{@link org.gastro.business.BusinessDay#isClosed <em>Closed</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.business.BusinessPackage#getBusinessDay()
  * @model
  * @extends CDOObject
@@ -42,12 +43,12 @@ import java.util.Date;
 public interface BusinessDay extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Date</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Date</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Date</em>' attribute.
    * @see #setDate(Date)
    * @see org.gastro.business.BusinessPackage#getBusinessDay_Date()
@@ -68,13 +69,13 @@ public interface BusinessDay extends CDOObject
   void setDate(Date value);
 
   /**
-   * Returns the value of the '<em><b>Menu Card</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Menu Card</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Menu Card</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Menu Card</em>' reference.
    * @see #setMenuCard(MenuCard)
    * @see org.gastro.business.BusinessPackage#getBusinessDay_MenuCard()
@@ -95,15 +96,15 @@ public interface BusinessDay extends CDOObject
   void setMenuCard(MenuCard value);
 
   /**
-   * Returns the value of the '<em><b>Orders</b></em>' containment reference list. The list contents are of type
-   * {@link org.gastro.business.Order}. It is bidirectional and its opposite is '
-   * {@link org.gastro.business.Order#getBusinessDay <em>Business Day</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Orders</b></em>' containment reference list.
+   * The list contents are of type {@link org.gastro.business.Order}.
+   * It is bidirectional and its opposite is '{@link org.gastro.business.Order#getBusinessDay <em>Business Day</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Orders</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Orders</em>' containment reference list.
    * @see org.gastro.business.BusinessPackage#getBusinessDay_Orders()
    * @see org.gastro.business.Order#getBusinessDay
@@ -113,15 +114,15 @@ public interface BusinessDay extends CDOObject
   EList<Order> getOrders();
 
   /**
-   * Returns the value of the '<em><b>Waiters</b></em>' containment reference list. The list contents are of type
-   * {@link org.gastro.business.Waiter}. It is bidirectional and its opposite is '
-   * {@link org.gastro.business.Waiter#getBusinessDay <em>Business Day</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Waiters</b></em>' containment reference list.
+   * The list contents are of type {@link org.gastro.business.Waiter}.
+   * It is bidirectional and its opposite is '{@link org.gastro.business.Waiter#getBusinessDay <em>Business Day</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Waiters</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Waiters</em>' containment reference list.
    * @see org.gastro.business.BusinessPackage#getBusinessDay_Waiters()
    * @see org.gastro.business.Waiter#getBusinessDay
@@ -131,12 +132,12 @@ public interface BusinessDay extends CDOObject
   EList<Waiter> getWaiters();
 
   /**
-   * Returns the value of the '<em><b>Closed</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Closed</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Closed</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Closed</em>' attribute.
    * @see #setClosed(boolean)
    * @see org.gastro.business.BusinessPackage#getBusinessDay_Closed()

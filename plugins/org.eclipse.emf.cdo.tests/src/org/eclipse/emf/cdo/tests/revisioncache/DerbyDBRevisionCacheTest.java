@@ -1,0 +1,56 @@
+/**
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.revisioncache;
+
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
+
+import javax.sql.DataSource;
+
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Eike Stepper
+ */
+public class DerbyDBRevisionCacheTest extends AbstractDBRevisionCacheTest
+{
+
+  private static class DerbyDBProvider implements IDBProvider
+  {
+    private static final String DB_NAME = TMPUtil.createTempFolder("derby").getAbsolutePath();
+
+    public DataSource createDataSource()
+    {
+      Map<Object, Object> properties = new HashMap<Object, Object>();
+      properties.put("class", "org.apache.derby.jdbc.EmbeddedDataSource");
+      properties.put("databaseName", DB_NAME);
+      properties.put("createDatabase", "create");
+      return DBUtil.createDataSource(properties);
+    }
+
+    /**
+     * Drop all table on a given derby database.
+     */
+    public void dropAllTables(Connection connection)
+    {
+      DBUtil.dropAllTables(connection, DB_NAME);
+    }
+  }
+
+  @Override
+  protected IDBProvider createDbProvider()
+  {
+    return new DerbyDBProvider();
+  }
+
+}

@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -36,6 +36,8 @@ public abstract class AbstractDBRevisionCacheTest extends AbstractCDORevisionCac
     public DataSource createDataSource();
 
     public void dropAllTables(Connection connection);
+
+    public IDBAdapter getAdapter();
   }
 
   @Override
@@ -55,7 +57,7 @@ public abstract class AbstractDBRevisionCacheTest extends AbstractCDORevisionCac
     }
 
     CDORevisionCache revisionCache = CDOCommonDBUtil.createDBCache(//
-        new H2Adapter() //
+        dbProvider.getAdapter() //
         , DBUtil.createConnectionProvider(dataSource)//
         , CDOListFactory.DEFAULT//
         , session.getPackageRegistry() //

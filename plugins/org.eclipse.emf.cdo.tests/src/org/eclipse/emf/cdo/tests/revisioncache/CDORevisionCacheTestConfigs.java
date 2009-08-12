@@ -27,7 +27,6 @@ public class CDORevisionCacheTestConfigs extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
-    testClasses.add(MEMRevisionCacheTest.class);
     testClasses.add(DerbyDBRevisionCacheTest.class);
     testClasses.add(H2DBRevisionCacheTest.class);
     testClasses.add(MEMRevisionCacheTest.class);

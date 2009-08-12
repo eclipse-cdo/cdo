@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.tests.revisioncache;
 
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.h2.jdbcx.JdbcDataSource;
@@ -42,6 +44,11 @@ public class H2DBRevisionCacheTest extends AbstractDBRevisionCacheTest
     public void dropAllTables(Connection connection)
     {
       DBUtil.dropAllTables(connection, null);
+    }
+
+    public IDBAdapter getAdapter()
+    {
+      return new H2Adapter();
     }
   }
 

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.tests.revisioncache;
 
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
 import org.eclipse.net4j.util.io.TMPUtil;
 
 import javax.sql.DataSource;
@@ -44,6 +46,11 @@ public class DerbyDBRevisionCacheTest extends AbstractDBRevisionCacheTest
     public void dropAllTables(Connection connection)
     {
       DBUtil.dropAllTables(connection, DB_NAME);
+    }
+
+    public IDBAdapter getAdapter()
+    {
+      return new EmbeddedDerbyAdapter();
     }
   }
 

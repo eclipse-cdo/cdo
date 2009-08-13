@@ -51,6 +51,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractCDOTest
     InternalCDOSession session = (InternalCDOSession)openSession();
     resource = createResource(session);
     revisionCache = createRevisionCache(session);
+    LifecycleUtil.activate(revisionCache);
   }
 
   private CDOResource createResource(CDOSession session)
@@ -341,6 +342,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractCDOTest
     return resource;
   }
 
+  @SuppressWarnings("unused")
   private boolean isTestFor(String testName)
   {
     assertNotNull(testName);

@@ -222,7 +222,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractCDOTest
     assertEquals(2, revisionList.size());
   }
 
-  public void testRevisionMayBeRemoved()
+  public void testReturnsRemovedVersionWhenRemoving()
   {
     CDOTransaction transaction = (CDOTransaction)resource.cdoView();
     CompanyImpl company = (CompanyImpl)getModel1Factory().createCompany();
@@ -339,6 +339,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractCDOTest
   protected CDOResource getResource()
   {
     return resource;
+  }
+
+  private boolean isTestFor(String testName)
+  {
+    assertNotNull(testName);
+    return getClass().getSimpleName().toLowerCase().indexOf(testName.toLowerCase()) >= 0;
   }
 
   protected abstract CDORevisionCache createRevisionCache(CDOSession session) throws Exception;

@@ -19,6 +19,14 @@ import org.eclipse.emf.cdo.session.CDOSession;
  */
 public class MEMRevisionCacheTest extends AbstractCDORevisionCacheTest
 {
+
+  @Override
+  public void testReturnsRemovedVersionWhenRemoving()
+  {
+    // test's not possible!
+    // MemRevisionCache does always return null when removing revisions
+  }
+
   @Override
   protected CDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {

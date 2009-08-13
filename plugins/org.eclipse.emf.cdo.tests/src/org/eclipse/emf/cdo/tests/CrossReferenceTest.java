@@ -451,6 +451,8 @@ public class CrossReferenceTest extends AbstractCDOTest
 
   public void testExternalMakeDangling() throws Exception
   {
+    skipConfig("Hibernate");
+
     Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
 

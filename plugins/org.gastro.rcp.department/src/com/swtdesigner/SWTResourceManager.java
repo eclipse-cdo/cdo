@@ -29,7 +29,7 @@ import java.util.Map;
  * <p>
  * Copyright (c) 2003 - 2007, Instantiations, Inc. <br>
  * All Rights Reserved
- * 
+ *
  * @author scheglov_ke
  * @author Dan Rubel
  */
@@ -45,7 +45,7 @@ public class SWTResourceManager
 
   /**
    * Returns the system {@link Color} matching the specific ID.
-   * 
+   *
    * @param systemColorID
    *          the ID value for the color
    * @return the system {@link Color} matching the specific ID
@@ -58,7 +58,7 @@ public class SWTResourceManager
 
   /**
    * Returns a {@link Color} given its red, green and blue component values.
-   * 
+   *
    * @param r
    *          the red component of the color
    * @param g
@@ -74,7 +74,7 @@ public class SWTResourceManager
 
   /**
    * Returns a {@link Color} given its RGB value.
-   * 
+   *
    * @param rgb
    *          the {@link RGB} value of the color
    * @return the {@link Color} matching the RGB value
@@ -88,6 +88,7 @@ public class SWTResourceManager
       color = new Color(display, rgb);
       m_colorMap.put(rgb, color);
     }
+
     return color;
   }
 
@@ -100,6 +101,7 @@ public class SWTResourceManager
     {
       ((Color)I.next()).dispose();
     }
+
     m_colorMap.clear();
   }
 
@@ -115,7 +117,7 @@ public class SWTResourceManager
 
   /**
    * Returns an {@link Image} encoded by the specified {@link InputStream}.
-   * 
+   *
    * @param stream
    *          the {@link InputStream} encoding the image data
    * @return the {@link Image} encoded by the specified input stream
@@ -130,6 +132,7 @@ public class SWTResourceManager
       {
         return new Image(display, data, data.getTransparencyMask());
       }
+
       return new Image(display, data);
     }
     finally
@@ -140,7 +143,7 @@ public class SWTResourceManager
 
   /**
    * Returns an {@link Image} stored in the file at the specified path.
-   * 
+   *
    * @param path
    *          the path to the image file
    * @return the {@link Image} stored in the file at the specified path
@@ -161,12 +164,13 @@ public class SWTResourceManager
         m_imageMap.put(path, image);
       }
     }
+
     return image;
   }
 
   /**
    * Returns an {@link Image} stored in the file at the specified path relative to the specified class.
-   * 
+   *
    * @param clazz
    *          the {@link Class} relative to which to find the image
    * @param path
@@ -190,6 +194,7 @@ public class SWTResourceManager
         m_imageMap.put(key, image);
       }
     }
+
     return image;
   }
 
@@ -201,12 +206,12 @@ public class SWTResourceManager
   private static Image getMissingImage()
   {
     Image image = new Image(Display.getCurrent(), MISSING_IMAGE_SIZE, MISSING_IMAGE_SIZE);
-    //
+
     GC gc = new GC(image);
     gc.setBackground(getColor(SWT.COLOR_RED));
     gc.fillRectangle(0, 0, MISSING_IMAGE_SIZE, MISSING_IMAGE_SIZE);
     gc.dispose();
-    //
+
     return image;
   }
 
@@ -242,7 +247,7 @@ public class SWTResourceManager
 
   /**
    * Returns an {@link Image} composed of a base image decorated by another image.
-   * 
+   *
    * @param baseImage
    *          the base {@link Image} that should be decorated
    * @param decorator
@@ -256,7 +261,7 @@ public class SWTResourceManager
 
   /**
    * Returns an {@link Image} composed of a base image decorated by another image.
-   * 
+   *
    * @param baseImage
    *          the base {@link Image} that should be decorated
    * @param decorator
@@ -271,27 +276,29 @@ public class SWTResourceManager
     {
       throw new IllegalArgumentException("Wrong decorate corner");
     }
+
     Map cornerDecoratedImageMap = m_decoratedImageMap[corner];
     if (cornerDecoratedImageMap == null)
     {
       cornerDecoratedImageMap = new HashMap();
       m_decoratedImageMap[corner] = cornerDecoratedImageMap;
     }
+
     Map decoratedMap = (Map)cornerDecoratedImageMap.get(baseImage);
     if (decoratedMap == null)
     {
       decoratedMap = new HashMap();
       cornerDecoratedImageMap.put(baseImage, decoratedMap);
     }
-    //
+
     Image result = (Image)decoratedMap.get(decorator);
     if (result == null)
     {
       Rectangle bib = baseImage.getBounds();
       Rectangle dib = decorator.getBounds();
-      //
+
       result = new Image(Display.getCurrent(), bib.width, bib.height);
-      //
+
       GC gc = new GC(result);
       gc.drawImage(baseImage, 0, 0);
       if (corner == TOP_LEFT)
@@ -310,10 +317,12 @@ public class SWTResourceManager
       {
         gc.drawImage(decorator, bib.width - dib.width, bib.height - dib.height);
       }
+
       gc.dispose();
-      //
+
       decoratedMap.put(decorator, result);
     }
+
     return result;
   }
 
@@ -328,8 +337,10 @@ public class SWTResourceManager
       {
         ((Image)I.next()).dispose();
       }
+
       m_imageMap.clear();
     }
+
     // dispose decorated images
     for (int i = 0; i < m_decoratedImageMap.length; i++)
     {
@@ -344,8 +355,10 @@ public class SWTResourceManager
             Image image = (Image)J.next();
             image.dispose();
           }
+
           decoratedMap.clear();
         }
+
         cornerDecoratedImageMap.clear();
       }
     }
@@ -368,7 +381,7 @@ public class SWTResourceManager
 
   /**
    * Returns a {@link Font} based on its name, height and style.
-   * 
+   *
    * @param name
    *          the name of the font
    * @param height
@@ -385,7 +398,7 @@ public class SWTResourceManager
   /**
    * Returns a {@link Font} based on its name, height and style. Windows-specific strikeout and underline flags are also
    * supported.
-   * 
+   *
    * @param name
    *          the name of the font
    * @param size
@@ -417,6 +430,7 @@ public class SWTResourceManager
             {
               logFontClass.getField("lfStrikeOut").set(logFont, new Byte((byte)1)); //$NON-NLS-1$
             }
+
             if (underline)
             {
               logFontClass.getField("lfUnderline").set(logFont, new Byte((byte)1)); //$NON-NLS-1$
@@ -428,15 +442,17 @@ public class SWTResourceManager
           System.err.println("Unable to set underline or strikeout" + " (probably on a non-Windows platform). " + e); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
+
       font = new Font(Display.getCurrent(), fontData);
       m_fontMap.put(fontName, font);
     }
+
     return font;
   }
 
   /**
    * Returns a bold version of the given {@link Font}.
-   * 
+   *
    * @param baseFont
    *          the {@link Font} for which a bold version is desired
    * @return the bold version of the given {@link Font}
@@ -451,6 +467,7 @@ public class SWTResourceManager
       font = new Font(Display.getCurrent(), data.getName(), data.getHeight(), SWT.BOLD);
       m_fontToBoldFontMap.put(baseFont, font);
     }
+
     return font;
   }
 
@@ -464,12 +481,15 @@ public class SWTResourceManager
     {
       ((Font)iter.next()).dispose();
     }
+
     m_fontMap.clear();
+
     // clear bold fonts
     for (Iterator iter = m_fontToBoldFontMap.values().iterator(); iter.hasNext();)
     {
       ((Font)iter.next()).dispose();
     }
+
     m_fontToBoldFontMap.clear();
   }
 

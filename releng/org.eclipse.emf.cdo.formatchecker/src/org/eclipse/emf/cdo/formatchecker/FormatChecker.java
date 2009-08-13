@@ -29,6 +29,8 @@ import java.util.Map.Entry;
  */
 public class FormatChecker
 {
+  private static final String COPYRIGHT = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.";
+
   private static Map<String, List<Integer>> complaints = new HashMap<String, List<Integer>>();
 
   public static void main(String[] args) throws IOException
@@ -36,31 +38,35 @@ public class FormatChecker
     File folder = new File(args.length == 0 ? "/develop/ws/cdo" : args[0]);
     recurse(folder);
 
+    ignore("com.swtdesigner.ResourceManager", 2);
+    ignore("com.swtdesigner.SWTResourceManager", 2);
+
     ignore("base.BaseClass", 1);
     ignore("base.BaseFactory", 1);
     ignore("base.BasePackage", 2);
     ignore("base.impl.BaseClassImpl", 1);
     ignore("base.impl.BaseFactoryImpl", 2);
-    ignore("base.impl.BasePackageImpl", 3);
+    ignore("base.impl.BasePackageImpl", 1);
     ignore("base.util.BaseAdapterFactory", 3);
-    ignore("base.util.BaseSwitch", 3);
-    ignore("com.swtdesigner.ResourceManager", 48);
-    ignore("com.swtdesigner.SWTResourceManager", 40);
+    ignore("base.util.BaseSwitch", 2);
+
     ignore("derived.DerivedClass", 1);
     ignore("derived.DerivedFactory", 1);
     ignore("derived.DerivedPackage", 2);
     ignore("derived.impl.DerivedClassImpl", 1);
+    ignore("derived.impl.DerivedPackageImpl", 1);
     ignore("derived.impl.DerivedFactoryImpl", 2);
-    ignore("derived.impl.DerivedPackageImpl", 3);
+    ignore("derived.util.DerivedSwitch", 2);
     ignore("derived.util.DerivedAdapterFactory", 3);
-    ignore("derived.util.DerivedSwitch", 4);
+
     ignore("interface_.IInterface", 1);
     ignore("interface_.InterfaceFactory", 1);
     ignore("interface_.InterfacePackage", 2);
+    ignore("interface_.impl.InterfacePackageImpl", 1);
     ignore("interface_.impl.InterfaceFactoryImpl", 2);
-    ignore("interface_.impl.InterfacePackageImpl", 3);
     ignore("interface_.util.InterfaceAdapterFactory", 3);
-    ignore("interface_.util.InterfaceSwitch", 3);
+    ignore("interface_.util.InterfaceSwitch", 2);
+
     ignore("org.eclipse.emf.cdo.defs.CDOAuditDef", 1);
     ignore("org.eclipse.emf.cdo.defs.CDODefsFactory", 1);
     ignore("org.eclipse.emf.cdo.defs.CDODefsPackage", 2);
@@ -74,23 +80,46 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.defs.FailOverStrategyDef", 1);
     ignore("org.eclipse.emf.cdo.defs.ResourceMode", 4);
     ignore("org.eclipse.emf.cdo.defs.RetryFailOverStrategyDef", 1);
+    ignore("org.eclipse.emf.cdo.defs.impl.CDODefsPackageImpl", 2);
+    ignore("org.eclipse.emf.cdo.defs.impl.CDOSessionDefImpl", 13);
     ignore("org.eclipse.emf.cdo.defs.impl.CDOAuditDefImpl", 5);
-    ignore("org.eclipse.emf.cdo.defs.impl.CDOClientProtocolFactoryDefImpl", 1);
     ignore("org.eclipse.emf.cdo.defs.impl.CDODefsFactoryImpl", 2);
-    ignore("org.eclipse.emf.cdo.defs.impl.CDODefsPackageImpl", 1);
     ignore("org.eclipse.emf.cdo.defs.impl.CDOEagerPackageRegistryDefImpl", 1);
     ignore("org.eclipse.emf.cdo.defs.impl.CDOPackageRegistryDefImpl", 9);
     ignore("org.eclipse.emf.cdo.defs.impl.CDOResourceDefImpl", 8);
-    ignore("org.eclipse.emf.cdo.defs.impl.CDOSessionDefImpl", 10);
     ignore("org.eclipse.emf.cdo.defs.impl.CDOTransactionDefImpl", 2);
     ignore("org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl", 6);
     ignore("org.eclipse.emf.cdo.defs.impl.EDynamicPackageDefImpl", 5);
     ignore("org.eclipse.emf.cdo.defs.impl.EPackageDefImpl", 5);
     ignore("org.eclipse.emf.cdo.defs.impl.FailOverStrategyDefImpl", 6);
     ignore("org.eclipse.emf.cdo.defs.impl.RetryFailOverStrategyDefImpl", 5);
-    ignore("org.eclipse.emf.cdo.defs.util.CDODefsAdapterFactory", 3);
+    ignore("org.eclipse.emf.cdo.defs.util.CDODefsAdapterFactory", 20);
     ignore("org.eclipse.emf.cdo.defs.util.CDODefsSwitch", 2);
     ignore("org.eclipse.emf.cdo.defs.util.CDODefsUtil", 3);
+
+    ignore("org.eclipse.emf.cdo.ecore.impl.CDOSuperAdapter", 1);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EAnnotationImpl", 5);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EAttributeImpl", 6);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EClassImpl", 28);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EClassifierImpl", 13);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EDataTypeImpl", 7);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EEnumImpl", 10);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EEnumLiteralImpl", 2);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EFactoryImpl", 18);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EGenericTypeImpl", 9);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EModelElementImpl", 11);
+    ignore("org.eclipse.emf.cdo.ecore.impl.ENamedElementImpl", 5);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EOperationImpl", 6);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EPackageImpl", 14);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EParameterImpl", 4);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EReferenceImpl", 6);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EStringToStringMapEntryImpl", 5);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EStructuralFeatureImpl", 25);
+    ignore("org.eclipse.emf.cdo.ecore.impl.ETypeParameterImpl", 4);
+    ignore("org.eclipse.emf.cdo.ecore.impl.ETypedElementImpl", 4);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EcoreFactoryImpl", 9);
+    ignore("org.eclipse.emf.cdo.ecore.impl.EcorePackageImpl", 3);
+
     ignore("org.eclipse.emf.cdo.examples.company.Address", 1);
     ignore("org.eclipse.emf.cdo.examples.company.Category", 1);
     ignore("org.eclipse.emf.cdo.examples.company.Company", 1);
@@ -133,6 +162,7 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.examples.company.provider.SupplierItemProvider", 3);
     ignore("org.eclipse.emf.cdo.examples.company.util.CompanyAdapterFactory", 3);
     ignore("org.eclipse.emf.cdo.examples.company.util.CompanySwitch", 21);
+
     ignore("org.eclipse.emf.cdo.emodel.CDOAnnotation", 1);
     ignore("org.eclipse.emf.cdo.emodel.CDOModelElement", 1);
     ignore("org.eclipse.emf.cdo.emodel.CDONamedElement", 1);
@@ -151,29 +181,89 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.emodel.util.EmodelAdapterFactory", 3);
     ignore("org.eclipse.emf.cdo.emodel.util.EmodelSwitch", 2);
     ignore("org.eclipse.emf.cdo.emodel.util.EmodelValidator", 2);
+
     ignore("org.eclipse.emf.cdo.eresource.CDOResource", 1);
     ignore("org.eclipse.emf.cdo.eresource.CDOResourceFolder", 1);
     ignore("org.eclipse.emf.cdo.eresource.CDOResourceNode", 1);
     ignore("org.eclipse.emf.cdo.eresource.EresourceFactory", 1);
     ignore("org.eclipse.emf.cdo.eresource.EresourcePackage", 2);
     ignore("org.eclipse.emf.cdo.eresource.impl.EresourceFactoryImpl", 2);
-    ignore("org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl", 3);
+    ignore("org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl", 1);
     ignore("org.eclipse.emf.cdo.eresource.provider.CDOResourceFolderItemProvider", 5);
     ignore("org.eclipse.emf.cdo.eresource.provider.CDOResourceItemProvider", 4);
     ignore("org.eclipse.emf.cdo.eresource.provider.CDOResourceNodeItemProvider", 3);
     ignore("org.eclipse.emf.cdo.eresource.provider.EresourceEditPlugin", 1);
-    ignore("org.eclipse.emf.cdo.eresource.provider.EresourceItemProviderAdapterFactory", 2);
+    ignore("org.eclipse.emf.cdo.eresource.provider.EresourceItemProviderAdapterFactory", 1);
     ignore("org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory", 3);
-    ignore("org.eclipse.emf.cdo.eresource.util.EresourceSwitch", 7);
+    ignore("org.eclipse.emf.cdo.eresource.util.EresourceSwitch", 2);
+
     ignore("org.eclipse.emf.cdo.internal.ui.editor.CDOActionBarContributor", 5);
     ignore("org.eclipse.emf.cdo.internal.ui.editor.CDOEditor", 11);
     ignore("org.eclipse.emf.cdo.internal.ui.editor.PluginDelegator", 1);
+
+    ignore("org.eclipse.emf.cdo.server.file.FileStore", 1);
+    ignore("org.eclipse.emf.cdo.server.file.FileStoreAccessor", 1);
+
+    ignore("org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOBasicMapper", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOEFeatureAnnotator", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOEntityMapper", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOManyAttributeMapper", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.internal.teneo.CDOMappingContext", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.internal.teneo.TeneoHibernateMappingProvider", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.internal.teneo.TeneoHibernateMappingProviderFactory", 1);
+    ignore("org.eclipse.emf.cdo.server.hibernate.teneo.CDOHelper", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractFeatureMapTableMapping", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractListTableMapping", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateConstants", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.ContainerInfoConverter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.FileHibernateMappingProvider", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.FileHibernateMappingProviderFactory", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.HibernateCDOPackageUnitDTO", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.HibernateCommitContext", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.HibernateMappingProvider", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.HibernateQueryHandler", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.HibernateThreadContext", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.SystemInformation", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOContainerGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOContainerSetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumIntegerType", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumStringType", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDAnyUserType", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDExternalUserType", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDMetaRangeUserType", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDPropertyGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDPropertySetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOManyAttributeGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOManyAttributeSetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOManyReferenceGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOManyReferenceSetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertyGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertyHandler", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOPropertySetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOReferenceGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOReferenceSetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOResourceIDGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOResourceIDSetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOTypeUserType", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOVersionPropertyGetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOVersionPropertySetter", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.HibernateMoveableListWrapper", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.PersistableListHolder", 1);
+    ignore("org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList", 1);
+
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.impl.model4interfacesFactoryImpl", 2);
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.impl.model4interfacesPackageImpl", 3);
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesFactory", 1);
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage", 2);
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.util.model4interfacesAdapterFactory", 3);
     ignore("org.eclipse.emf.cdo.tests.legacy.model4interfaces.util.model4interfacesSwitch", 16);
+
     ignore("org.eclipse.emf.cdo.tests.mango.MangoFactory", 1);
     ignore("org.eclipse.emf.cdo.tests.mango.MangoPackage", 2);
     ignore("org.eclipse.emf.cdo.tests.mango.Parameter", 1);
@@ -192,6 +282,7 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.tests.mango.provider.ValueListItemProvider", 3);
     ignore("org.eclipse.emf.cdo.tests.mango.util.MangoAdapterFactory", 3);
     ignore("org.eclipse.emf.cdo.tests.mango.util.MangoSwitch", 2);
+
     ignore("org.eclipse.emf.cdo.tests.model1.Address", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.Category", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.Company", 1);
@@ -206,6 +297,7 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.tests.model1.SalesOrder", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.Supplier", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.VAT", 4);
+
     ignore("org.eclipse.emf.cdo.tests.model1.diagram.edit.commands.CategoryCreateCommand", 3);
     ignore("org.eclipse.emf.cdo.tests.model1.diagram.edit.commands.CategoryProducts2CreateCommand", 7);
     ignore("org.eclipse.emf.cdo.tests.model1.diagram.edit.commands.CategoryProducts2ReorientCommand", 9);
@@ -349,6 +441,7 @@ public class FormatChecker
     ignore("org.eclipse.emf.cdo.tests.model1.diagram.view.factories.SalesOrderViewFactory", 4);
     ignore("org.eclipse.emf.cdo.tests.model1.diagram.view.factories.SupplierNameViewFactory", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.diagram.view.factories.SupplierViewFactory", 4);
+
     ignore("org.eclipse.emf.cdo.tests.model1.impl.AddressImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl", 1);
     ignore("org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl", 1);
@@ -756,7 +849,6 @@ public class FormatChecker
 
   private static void processJava(File file) throws IOException
   {
-    // System.out.println(file.getAbsolutePath());
     String name = file.getName();
     name = name.substring(0, name.length() - ".java".length());
 
@@ -765,6 +857,7 @@ public class FormatChecker
 
     try
     {
+      int copyrightLine = -1;
       String packageName = null;
       String last = "";
       String line;
@@ -774,6 +867,18 @@ public class FormatChecker
         ++i;
         if (packageName == null)
         {
+          if (copyrightLine == -1 && line.startsWith("/**"))
+          {
+            copyrightLine = 0;
+            continue;
+          }
+
+          if (copyrightLine == 0 && line.startsWith(" * " + COPYRIGHT))
+          {
+            copyrightLine = i;
+            continue;
+          }
+
           if (line.startsWith("package "))
           {
             packageName = line.substring("package ".length()); // Remove prefix "package "
@@ -801,13 +906,18 @@ public class FormatChecker
         }
         else if (last.equals("empty"))
         {
-          if (type.equals("empty")||type.equals("}"))
+          if (type.equals("empty") || type.equals("}"))
           {
             complain(name, i);
           }
         }
 
         last = type;
+      }
+
+      if (copyrightLine <= 0)
+      {
+        complain(name, 1);
       }
     }
     finally

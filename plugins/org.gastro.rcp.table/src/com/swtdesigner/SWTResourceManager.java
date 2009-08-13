@@ -88,6 +88,7 @@ public class SWTResourceManager
       color = new Color(display, rgb);
       m_colorMap.put(rgb, color);
     }
+
     return color;
   }
 
@@ -100,6 +101,7 @@ public class SWTResourceManager
     {
       ((Color)I.next()).dispose();
     }
+
     m_colorMap.clear();
   }
 
@@ -130,6 +132,7 @@ public class SWTResourceManager
       {
         return new Image(display, data, data.getTransparencyMask());
       }
+
       return new Image(display, data);
     }
     finally
@@ -161,6 +164,7 @@ public class SWTResourceManager
         m_imageMap.put(path, image);
       }
     }
+
     return image;
   }
 
@@ -190,6 +194,7 @@ public class SWTResourceManager
         m_imageMap.put(key, image);
       }
     }
+
     return image;
   }
 
@@ -201,12 +206,12 @@ public class SWTResourceManager
   private static Image getMissingImage()
   {
     Image image = new Image(Display.getCurrent(), MISSING_IMAGE_SIZE, MISSING_IMAGE_SIZE);
-    //
+
     GC gc = new GC(image);
     gc.setBackground(getColor(SWT.COLOR_RED));
     gc.fillRectangle(0, 0, MISSING_IMAGE_SIZE, MISSING_IMAGE_SIZE);
     gc.dispose();
-    //
+
     return image;
   }
 
@@ -271,27 +276,29 @@ public class SWTResourceManager
     {
       throw new IllegalArgumentException("Wrong decorate corner");
     }
+
     Map cornerDecoratedImageMap = m_decoratedImageMap[corner];
     if (cornerDecoratedImageMap == null)
     {
       cornerDecoratedImageMap = new HashMap();
       m_decoratedImageMap[corner] = cornerDecoratedImageMap;
     }
+
     Map decoratedMap = (Map)cornerDecoratedImageMap.get(baseImage);
     if (decoratedMap == null)
     {
       decoratedMap = new HashMap();
       cornerDecoratedImageMap.put(baseImage, decoratedMap);
     }
-    //
+
     Image result = (Image)decoratedMap.get(decorator);
     if (result == null)
     {
       Rectangle bib = baseImage.getBounds();
       Rectangle dib = decorator.getBounds();
-      //
+
       result = new Image(Display.getCurrent(), bib.width, bib.height);
-      //
+
       GC gc = new GC(result);
       gc.drawImage(baseImage, 0, 0);
       if (corner == TOP_LEFT)
@@ -310,10 +317,12 @@ public class SWTResourceManager
       {
         gc.drawImage(decorator, bib.width - dib.width, bib.height - dib.height);
       }
+
       gc.dispose();
-      //
+
       decoratedMap.put(decorator, result);
     }
+
     return result;
   }
 
@@ -323,13 +332,16 @@ public class SWTResourceManager
   public static void disposeImages()
   {
     // dispose loaded images
+
     {
       for (Iterator I = m_imageMap.values().iterator(); I.hasNext();)
       {
         ((Image)I.next()).dispose();
       }
+
       m_imageMap.clear();
     }
+
     // dispose decorated images
     for (int i = 0; i < m_decoratedImageMap.length; i++)
     {
@@ -344,8 +356,10 @@ public class SWTResourceManager
             Image image = (Image)J.next();
             image.dispose();
           }
+
           decoratedMap.clear();
         }
+
         cornerDecoratedImageMap.clear();
       }
     }
@@ -417,6 +431,7 @@ public class SWTResourceManager
             {
               logFontClass.getField("lfStrikeOut").set(logFont, new Byte((byte)1)); //$NON-NLS-1$
             }
+
             if (underline)
             {
               logFontClass.getField("lfUnderline").set(logFont, new Byte((byte)1)); //$NON-NLS-1$
@@ -428,9 +443,11 @@ public class SWTResourceManager
           System.err.println("Unable to set underline or strikeout" + " (probably on a non-Windows platform). " + e); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
+
       font = new Font(Display.getCurrent(), fontData);
       m_fontMap.put(fontName, font);
     }
+
     return font;
   }
 
@@ -451,6 +468,7 @@ public class SWTResourceManager
       font = new Font(Display.getCurrent(), data.getName(), data.getHeight(), SWT.BOLD);
       m_fontToBoldFontMap.put(baseFont, font);
     }
+
     return font;
   }
 
@@ -464,12 +482,14 @@ public class SWTResourceManager
     {
       ((Font)iter.next()).dispose();
     }
+
     m_fontMap.clear();
     // clear bold fonts
     for (Iterator iter = m_fontToBoldFontMap.values().iterator(); iter.hasNext();)
     {
       ((Font)iter.next()).dispose();
     }
+
     m_fontToBoldFontMap.clear();
   }
 

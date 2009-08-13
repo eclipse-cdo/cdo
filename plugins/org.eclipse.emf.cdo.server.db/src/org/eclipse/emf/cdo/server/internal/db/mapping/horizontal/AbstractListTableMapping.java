@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings 
+ *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings
  *    Stefan Winkler - Bug 283998: [DB] Chunk reading for multiple chunks fails
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;

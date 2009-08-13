@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.io.TMPUtil;
 
 import javax.sql.DataSource;
 
+import java.io.File;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,9 @@ import java.util.Map;
  */
 public class DerbyDBRevisionCacheTest extends AbstractDBRevisionCacheTest
 {
-  private static final String DB_NAME = TMPUtil.createTempFolder("derby").getAbsolutePath();
+  private static final String DB_NAME = TMPUtil.getTempFolder().getAbsolutePath() //
+      + File.separatorChar //
+      + "derbyDBRevisionCacheTest";
 
   @Override
   public DataSource createDataSource()

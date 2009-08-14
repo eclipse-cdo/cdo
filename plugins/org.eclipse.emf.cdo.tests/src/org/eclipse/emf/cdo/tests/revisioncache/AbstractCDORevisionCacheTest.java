@@ -43,6 +43,7 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.List;
@@ -52,7 +53,6 @@ import java.util.List;
  */
 public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 {
-
   private static final String RESOURCE_PATH = "/res1";
 
   private CDOResource resource;
@@ -68,8 +68,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
     sessionFactory = new SessionFactory();
     LifecycleUtil.activate(sessionFactory);
-    CDOSession session = sessionFactory.openSession();
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    CDOSession session = sessionFactory.openSession(Model1Package.eINSTANCE);
 
     resource = createResource(session);
     revisionCache = createRevisionCache(session);
@@ -415,10 +414,16 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
       LifecycleUtil.deactivate(serverContainer);
     }
 
-    protected CDOSession openSession()
+    protected CDOSession openSession(EPackage... ePackages)
     {
       CheckUtil.checkNull(configuration, "session configuration is null, factory is not activated.");
-      return configuration.openSession();
+
+      CDOSession session = configuration.openSession();
+      for (EPackage ePackage : ePackages)
+      {
+        session.getPackageRegistry().putEPackage(ePackage);
+      }
+      return session;
     }
 
     private CDOSessionConfiguration prepareSession()

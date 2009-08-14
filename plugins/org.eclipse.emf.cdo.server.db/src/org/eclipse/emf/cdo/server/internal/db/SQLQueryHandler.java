@@ -8,14 +8,17 @@
  * Contributors:
  *    Kai Schlamp - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Kai Schlamp - Bug 284812: [DB] Query non CDO object fails
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 
 import java.sql.Connection;
@@ -81,9 +84,10 @@ public class SQLQueryHandler implements IQueryHandler
    */
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
-    if (!QUERY_LANGUAGE.equals(info.getQueryLanguage()))
+    String language = info.getQueryLanguage();
+    if (!QUERY_LANGUAGE.equals(language))
     {
-      throw new IllegalArgumentException("Query language " + info.getQueryLanguage() + " not supported by this store");
+      throw new IllegalArgumentException("Unsupported query language: " + language);
     }
 
     Connection connection = storeAccessor.getConnection();
@@ -95,7 +99,7 @@ public class SQLQueryHandler implements IQueryHandler
     {
       int firstResult = -1;
       boolean queryStatement = true;
-      boolean cdoObjectQuery = true;
+      boolean objectQuery = true;
 
       HashMap<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
       query = parse(query, paramMap);
@@ -142,7 +146,7 @@ public class SQLQueryHandler implements IQueryHandler
           {
             try
             {
-              cdoObjectQuery = (Boolean)o;
+              objectQuery = (Boolean)o;
             }
             catch (ClassCastException ex)
             {
@@ -161,7 +165,8 @@ public class SQLQueryHandler implements IQueryHandler
           Integer[] indexes = paramMap.get(key).toArray(new Integer[0]);
           for (int i = 0; i < indexes.length; i++)
           {
-            statement.setObject(indexes[i], info.getParameters().get(key));
+            Object parameter = info.getParameters().get(key);
+            statement.setObject(indexes[i], parameter);
           }
         }
       }
@@ -174,21 +179,24 @@ public class SQLQueryHandler implements IQueryHandler
           resultSet.absolute(firstResult);
         }
 
+        int maxResults = info.getMaxResults();
         int counter = 0;
         while (resultSet.next())
         {
-          if (info.getMaxResults() != -1 && counter++ >= info.getMaxResults())
+          if (maxResults != CDOQueryInfo.UNLIMITED_RESULTS && counter++ >= maxResults)
           {
             break;
           }
 
-          if (cdoObjectQuery)
+          if (objectQuery)
           {
-            context.addResult(CDOIDUtil.createLong(resultSet.getLong(1)));
+            CDOID result = CDOIDUtil.createLong(resultSet.getLong(1));
+            context.addResult(result);
           }
           else
           {
-            context.addResult(resultSet.getLong(1));
+            Object result = resultSet.getObject(1);
+            context.addResult(result);
           }
         }
       }
@@ -200,7 +208,7 @@ public class SQLQueryHandler implements IQueryHandler
     }
     catch (SQLException ex)
     {
-      throw new IllegalArgumentException("Illegal SQL query: " + query, ex);
+      throw new DBException("Problem while executing SQL query: " + query, ex);
     }
     finally
     {

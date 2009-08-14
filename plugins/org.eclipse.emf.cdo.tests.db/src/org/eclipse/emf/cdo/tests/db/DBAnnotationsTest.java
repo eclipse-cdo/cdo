@@ -172,6 +172,115 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
+  public void testTableNameAnnotationByMetaData()
+  {
+    msg("Opening session");
+    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    addTableNameAnnotation(model1, "Subject");
+    CDOSession session = openSession(model1);
+
+    disableConsole();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+
+    msg("Commit a category.");
+    EClass eClass = (EClass)model1.getEClassifier("Category");
+    EObject category = model1.getEFactoryInstance().create(eClass);
+
+    resource.getContents().add(category);
+    transaction.commit();
+
+    msg("Check if table name was correctly set.");
+    new DBStoreVerifier(getRepository())
+    {
+      @Override
+      protected void doVerify() throws Exception
+      {
+        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
+        ResultSet rset = metaData.getTables(null, null, "SUBJECT", null);
+        rset.next();
+        Assert.assertEquals("SUBJECT", rset.getString(3));
+      }
+    }.verify();
+  }
+
+  public void testColumnNameAnnotationByMetaData()
+  {
+    msg("Opening session");
+    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    addColumnNameAnnotation(model1, "TOPIC");
+    CDOSession session = openSession(model1);
+
+    disableConsole();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+
+    msg("Commit a category.");
+    EClass eClass = (EClass)model1.getEClassifier("Category");
+    EObject category = model1.getEFactoryInstance().create(eClass);
+
+    resource.getContents().add(category);
+    transaction.commit();
+
+    msg("Check if table name was correctly set.");
+    new DBStoreVerifier(getRepository())
+    {
+      @Override
+      protected void doVerify() throws Exception
+      {
+        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
+        ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "TOPIC");
+        rset.next();
+        Assert.assertEquals("TOPIC", rset.getString(4));
+      }
+    }.verify();
+  }
+
+  public void testColumnNameTypeAnnotationByMetaData()
+  {
+    msg("Opening session");
+    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");
+    CDOSession session = openSession(model1);
+
+    disableConsole();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+
+    msg("Commit a category.");
+    EClass eClass = (EClass)model1.getEClassifier("Category");
+    EObject category = model1.getEFactoryInstance().create(eClass);
+
+    resource.getContents().add(category);
+    transaction.commit();
+
+    msg("Check if table name was correctly set.");
+    new DBStoreVerifier(getRepository())
+    {
+      @Override
+      protected void doVerify() throws Exception
+      {
+        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
+        ResultSet rset = metaData.getColumns(null, null, "CATEGORY", "TOPIC");
+        rset.next();
+        Assert.assertEquals("TOPIC", rset.getString(4));
+        Assert.assertEquals("CLOB", rset.getString(6));
+      }
+    }.verify();
+  }
+
   private void addLengthAnnotation(EPackage model1, String value)
   {
     EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
@@ -188,6 +297,39 @@ public class DBAnnotationsTest extends AbstractCDOTest
     EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
     annotation.setSource("http://www.eclipse.org/CDO/DBStore");
     annotation.getDetails().put("columnType", value);
+
+    EClass category = (EClass)model1.getEClassifier("Category");
+    EStructuralFeature element = category.getEStructuralFeature(Model1Package.CATEGORY__NAME);
+    element.getEAnnotations().add(annotation);
+  }
+
+  private void addTableNameAnnotation(EPackage model1, String value)
+  {
+    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    annotation.getDetails().put("tableName", value);
+
+    EClass category = (EClass)model1.getEClassifier("Category");
+    category.getEAnnotations().add(annotation);
+  }
+
+  private void addColumnNameAnnotation(EPackage model1, String value)
+  {
+    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    annotation.getDetails().put("columnName", value);
+
+    EClass category = (EClass)model1.getEClassifier("Category");
+    EStructuralFeature element = category.getEStructuralFeature(Model1Package.CATEGORY__NAME);
+    element.getEAnnotations().add(annotation);
+  }
+
+  private void addColumnNameAndTypeAnnoation(EPackage model1, String name, String type)
+  {
+    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    annotation.getDetails().put("columnName", name);
+    annotation.getDetails().put("columnType", type);
 
     EClass category = (EClass)model1.getEClassifier("Category");
     EStructuralFeature element = category.getEStructuralFeature(Model1Package.CATEGORY__NAME);

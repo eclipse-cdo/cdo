@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.ObjectIDIterator;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -223,13 +224,21 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
     if (element instanceof EClass)
     {
-      name = isQualifiedNames() ? EMFUtil.getQualifiedName((EClass)element, NAME_SEPARATOR) : element.getName();
       typePrefix = TYPE_PREFIX_CLASS;
+      name = DBAnnotation.TABLE_NAME.getValue(element);
+      if (name == null)
+      {
+        name = isQualifiedNames() ? EMFUtil.getQualifiedName((EClass)element, NAME_SEPARATOR) : element.getName();
+      }
     }
     else if (element instanceof EPackage)
     {
-      name = isQualifiedNames() ? EMFUtil.getQualifiedName((EPackage)element, NAME_SEPARATOR) : element.getName();
       typePrefix = TYPE_PREFIX_PACKAGE;
+      name = DBAnnotation.TABLE_NAME.getValue(element);
+      if (name == null)
+      {
+        name = isQualifiedNames() ? EMFUtil.getQualifiedName((EPackage)element, NAME_SEPARATOR) : element.getName();
+      }
     }
     else
     {
@@ -247,7 +256,12 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public String getTableName(EClass eClass, EStructuralFeature feature)
   {
-    String name = isQualifiedNames() ? EMFUtil.getQualifiedName(eClass, NAME_SEPARATOR) : eClass.getName();
+    String name = DBAnnotation.TABLE_NAME.getValue(eClass);
+    if (name == null)
+    {
+      name = isQualifiedNames() ? EMFUtil.getQualifiedName(eClass, NAME_SEPARATOR) : eClass.getName();
+    }
+
     name += NAME_SEPARATOR;
     name += feature.getName();
     name += FEATEURE_TABLE_SUFFIX;
@@ -264,8 +278,14 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public String getFieldName(EStructuralFeature feature)
   {
-    return getName(feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
-        getMaxFieldNameLength());
+    String name = DBAnnotation.COLUMN_NAME.getValue(feature);
+    if (name == null)
+    {
+      name = getName(feature.getName(), TYPE_PREFIX_FEATURE + getMetaDataManager().getMetaID(feature),
+          getMaxFieldNameLength());
+    }
+
+    return name;
   }
 
   private String getName(String name, String suffix, int maxLength)

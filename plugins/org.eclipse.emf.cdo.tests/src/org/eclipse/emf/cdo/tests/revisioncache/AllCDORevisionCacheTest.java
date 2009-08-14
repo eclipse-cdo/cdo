@@ -18,7 +18,6 @@ import junit.framework.TestSuite;
  */
 public class AllCDORevisionCacheTest
 {
-
   public static Test suite()
   {
     TestSuite suite = new TestSuite("Tests for CDORevisionCache"); //$NON-NLS-1$

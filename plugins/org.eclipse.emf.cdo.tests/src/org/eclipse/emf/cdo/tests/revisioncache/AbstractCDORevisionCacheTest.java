@@ -7,7 +7,6 @@
  *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
- *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.tests.revisioncache;
 
@@ -19,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.impl.AddressImpl;
@@ -27,8 +27,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
-
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.List;
 
@@ -39,22 +37,23 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 {
   private static final String RESOURCE_PATH = "/res1";
 
+  private static final int MAX_THREADS = 10;
+
   private CDOResource resource;
 
   private CDORevisionCache revisionCache;
 
-  private SessionFactory sessionFactory;
+  private CDOSession session;
 
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
 
-    sessionFactory = new SessionFactory();
+    Session sessionFactory = new Session();
     LifecycleUtil.activate(sessionFactory);
-    CDOSession session = sessionFactory.openSession(Model1Package.eINSTANCE);
-
-    resource = createResource(session);
+    session = sessionFactory.getSession(Model1Package.eINSTANCE);
+    resource = createResource();
     revisionCache = createRevisionCache(session);
     LifecycleUtil.activate(revisionCache);
   }
@@ -62,25 +61,14 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
   @Override
   protected void doTearDown() throws Exception
   {
-    LifecycleUtil.deactivate(sessionFactory);
+    LifecycleUtil.deactivate(session);
     LifecycleUtil.deactivate(revisionCache);
-    LifecycleUtil.deactivate(resource.cdoView().getSession());
     super.doTearDown();
-  }
-
-  private CDOResource createResource(CDOSession session)
-  {
-    InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
-    return transaction.createResource(RESOURCE_PATH);
   }
 
   public void testAddedRevisionIsGettable()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    company.setName("Puzzle");
-    resource.getContents().add(company);
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision cdoRevision = company.cdoRevision();
     revisionCache.addRevision(cdoRevision);
 
@@ -91,17 +79,14 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testGetRevisionReturnsLatestVersion()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    company.setName("Puzzle");
-    resource.getContents().add(company);
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstRevision = company.cdoRevision();
     revisionCache.addRevision(firstRevision);
 
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondRevision = company.cdoRevision();
+    assertEquals(2, secondRevision.getVersion());
     revisionCache.addRevision(secondRevision);
 
     CDORevision fetchedCDORevision = revisionCache.getRevision(company.cdoID());
@@ -110,37 +95,29 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testAddedRevisionIsNotRevised()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    company.setName("Puzzle");
-    resource.getContents().add(company);
-    transaction.commit();
-    CDOID cdoID = ((CDOObject)company).cdoID();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstRevision = company.cdoRevision();
     revisionCache.addRevision(firstRevision);
 
+    CDOID cdoID = company.cdoID();
     CDORevision fetchedRevision = revisionCache.getRevision(cdoID);
     assertTrue(fetchedRevision.getRevised() == 0);
   }
 
   public void testFormerVersionIsGettable()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    company.setName("Puzzle");
-    resource.getContents().add(company);
-    transaction.commit();
-    CDOID cdoID = ((CDOObject)company).cdoID();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstRevision = company.cdoRevision();
     revisionCache.addRevision(firstRevision);
 
     // add new version
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondRevision = company.cdoRevision();
     revisionCache.addRevision(secondRevision);
 
     // fetch older version and check version and ID equality
+    CDOID cdoID = company.cdoID();
     CDORevision fetchedRevision = revisionCache.getRevisionByVersion(cdoID, firstRevision.getVersion());
     assertNotNull(fetchedRevision);
     assertTrue(firstRevision.getID().equals(fetchedRevision.getID()));
@@ -149,12 +126,8 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testAddRevisionUpdatesRevisedTimeStampOfLastRevision()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    company.setName("Puzzle");
-    resource.getContents().add(company);
-    transaction.commit();
-    CDOID cdoID = ((CDOObject)company).cdoID();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
+    CDOID cdoID = company.cdoID();
 
     InternalCDORevision firstVersion = company.cdoRevision();
     revisionCache.addRevision(firstVersion);
@@ -164,7 +137,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
     // add new version
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondVersion = company.cdoRevision();
     revisionCache.addRevision(secondVersion);
 
@@ -177,28 +150,24 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testTheFormerRevisionOf2VersionsMayBeFetchedByTimestamp()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    company.setName("Puzzle");
-    resource.getContents().add(company);
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     CDOID cdoID = ((CDOObject)company).cdoID();
     InternalCDORevision firstRevision = company.cdoRevision();
     revisionCache.addRevision(firstRevision);
 
     // add new version
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondRevision = company.cdoRevision();
     revisionCache.addRevision(secondRevision);
 
     // add new version
     company.setName("CDO");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision thirdRevision = company.cdoRevision();
     revisionCache.addRevision(thirdRevision);
 
-    // fetch version by timstampt check version and ID equality
+    // fetch version by timstamp check version and ID equality
     CDORevision fetchedRevision = revisionCache.getRevisionByTime(cdoID, secondRevision.getCreated());
     assertTrue(secondRevision.getID().equals(fetchedRevision.getID()));
     assertTrue(secondRevision.getVersion() == fetchedRevision.getVersion());
@@ -206,23 +175,17 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testGiven3ObjectsOf2TypesGetRevisionsReturns2Versions()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    resource.getContents().add(company);
-
-    company.setName("Puzzle");
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     revisionCache.addRevision(company.cdoRevision());
 
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     revisionCache.addRevision(company.cdoRevision());
 
     AddressImpl address = (AddressImpl)Model1Factory.eINSTANCE.createAddress();
     address.setStreet("Eigerplatz 4");
     resource.getContents().add(address);
-    transaction.commit();
-
+    ((CDOTransaction)company.cdoView()).commit();
     revisionCache.addRevision(address.cdoRevision());
 
     List<CDORevision> revisionList = revisionCache.getRevisions();
@@ -231,17 +194,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testReturnsRemovedVersionWhenRemoving()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    resource.getContents().add(company);
-
-    company.setName("Puzzle");
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
     revisionCache.addRevision(firstVersion);
 
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondVersion = company.cdoRevision();
     revisionCache.addRevision(secondVersion);
 
@@ -252,17 +210,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testRemovedRevisionIsRemovedFromCache()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    resource.getContents().add(company);
-
-    company.setName("Puzzle");
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
     revisionCache.addRevision(firstVersion);
 
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondVersion = company.cdoRevision();
     revisionCache.addRevision(secondVersion);
 
@@ -272,17 +225,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testRemoveSecondRevisionResultsInNoActiveRevision()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    resource.getContents().add(company);
-
-    company.setName("Puzzle");
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
     revisionCache.addRevision(firstVersion);
 
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondVersion = company.cdoRevision();
     revisionCache.addRevision(secondVersion);
 
@@ -293,17 +241,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testRemovedRevisionIsNotGettableByTimeStamp()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    resource.getContents().add(company);
-
-    company.setName("Puzzle");
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
     revisionCache.addRevision(firstVersion);
 
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondVersion = company.cdoRevision();
     revisionCache.addRevision(secondVersion);
 
@@ -314,17 +257,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
   public void testClearedCacheDoesNotContainAnyRevisions()
   {
-    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
-    resource.getContents().add(company);
-
-    company.setName("Puzzle");
-    transaction.commit();
+    CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
     InternalCDORevision firstVersion = company.cdoRevision();
     revisionCache.addRevision(firstVersion);
 
     company.setName("Andre");
-    transaction.commit();
+    ((CDOTransaction)company.cdoView()).commit();
     InternalCDORevision secondVersion = company.cdoRevision();
     revisionCache.addRevision(secondVersion);
 
@@ -336,6 +274,64 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertNull(fetchedRevision);
   }
 
+  public void testConcurrentAccess() throws Throwable
+  {
+
+    Runnable[] testCases = new Runnable[] {
+
+    new Runnable()
+    {
+      public void run()
+      {
+        // transactions are not thread safe, open a new one
+        CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle", session.openTransaction());
+        CDORevision revision = company.cdoRevision();
+        revisionCache.addRevision(revision);
+        CDORevision fetchedRevision = revisionCache.getRevision(revision.getID());
+        assertNotNull(fetchedRevision != null);
+      }
+    }, new Runnable()
+    {
+      public void run()
+      {
+        CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle", session.openTransaction());
+        CDORevision revision = company.cdoRevision();
+        revisionCache.addRevision(revision);
+        CDORevision fetchedRevision = revisionCache.getRevisionByVersion(revision.getID(), revision.getVersion());
+        assertEquals(revision.getVersion(), fetchedRevision.getVersion());
+        assertEquals(revision.getCreated(), fetchedRevision.getCreated());
+      }
+    }, new Runnable()
+    {
+      public void run()
+      {
+        CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle", session.openTransaction());
+        CDORevision revision = company.cdoRevision();
+        revisionCache.addRevision(revision);
+        revisionCache.removeRevision(revision.getID(), revision.getVersion());
+      }
+    }, new Runnable()
+    {
+      public void run()
+      {
+        revisionCache.getRevisions();
+      }
+    }, new Runnable()
+    {
+      public void run()
+      {
+        CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle", session.openTransaction());
+        CDORevision revision = company.cdoRevision();
+        revisionCache.addRevision(revision);
+        CDORevision fetchedRevision = revisionCache.getRevisionByTime(revision.getID(), revision.getCreated());
+        assertEquals(revision.getVersion(), fetchedRevision.getVersion());
+        assertEquals(revision.getCreated(), fetchedRevision.getCreated());
+        revisionCache.removeRevision(revision.getID(), revision.getVersion());
+      }
+    } };
+    ConcurrentTestCaseExecutor.execute(testCases, MAX_THREADS, 50);
+  }
+
   private void assertEqualRevisions(CDORevision thisRevision, CDORevision thatRevision)
   {
     assertEquals(thisRevision.getVersion(), thatRevision.getVersion());
@@ -343,11 +339,27 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     assertEquals(thisRevision.getRevised(), thatRevision.getRevised());
   }
 
-  @SuppressWarnings("unused")
-  private boolean isTestFor(String testName)
+  private Company createCompanyInResource(String name)
   {
-    assertNotNull(testName);
-    return getClass().getSimpleName().toLowerCase().indexOf(testName.toLowerCase()) >= 0;
+    CDOTransaction transaction = (CDOTransaction)resource.cdoView();
+    return createCompanyInResource(name, transaction);
+  }
+
+  private Company createCompanyInResource(String name, CDOTransaction transaction)
+  {
+    CompanyImpl company = (CompanyImpl)Model1Factory.eINSTANCE.createCompany();
+    company.setName(name);
+    resource.getContents().add(company);
+    transaction.commit();
+    return company;
+  }
+
+  private CDOResource createResource()
+  {
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource(RESOURCE_PATH);
+    transaction.commit();
+    return resource;
   }
 
   protected abstract CDORevisionCache createRevisionCache(CDOSession session) throws Exception;

@@ -34,13 +34,11 @@ import org.eclipse.emf.ecore.EPackage;
 /**
  * @author Andre Dietisheim
  */
-public class SessionFactory extends Lifecycle
+public class Session extends Lifecycle
 {
   private static final String CONNECTOR_NAME = "server1";
 
   private static final String REPO_NAME = "repo1";
-
-  private CDOSession session;
 
   private IManagedContainer serverContainer;
 
@@ -54,9 +52,9 @@ public class SessionFactory extends Lifecycle
 
   private IJVMConnector connector;
 
-  private CDOSessionConfiguration configuration;
+  private CDOSession session;
 
-  SessionFactory()
+  public Session()
   {
   }
 
@@ -65,7 +63,7 @@ public class SessionFactory extends Lifecycle
   {
     super.doActivate();
     createRepository(REPO_NAME);
-    configuration = prepareSession();
+    session = createSession();
   }
 
   @Override
@@ -80,11 +78,9 @@ public class SessionFactory extends Lifecycle
     LifecycleUtil.deactivate(serverContainer);
   }
 
-  protected CDOSession openSession(EPackage... ePackages)
+  public CDOSession getSession(EPackage... ePackages)
   {
-    CheckUtil.checkNull(configuration, "session configuration is null, factory is not activated.");
-
-    CDOSession session = configuration.openSession();
+    CDOSession session = getSession();
     for (EPackage ePackage : ePackages)
     {
       session.getPackageRegistry().putEPackage(ePackage);
@@ -92,7 +88,13 @@ public class SessionFactory extends Lifecycle
     return session;
   }
 
-  private CDOSessionConfiguration prepareSession()
+  public CDOSession getSession()
+  {
+    CheckUtil.checkState(session != null, "Session not activated!");
+    return session;
+  }
+
+  private CDOSession createSession()
   {
     clientContainer = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(clientContainer);
@@ -105,7 +107,8 @@ public class SessionFactory extends Lifecycle
     connector = JVMUtil.getConnector(clientContainer, CONNECTOR_NAME);
     configuration.setConnector(connector);
     configuration.setRepositoryName(REPO_NAME);
-    return configuration;
+
+    return configuration.openSession();
   }
 
   protected void createRepository(String repositoryName)
@@ -120,10 +123,5 @@ public class SessionFactory extends Lifecycle
     store = MEMStoreUtil.createMEMStore();
     repository = CDOServerUtil.createRepository(repositoryName, store, null);
     CDOServerUtil.addRepository(serverContainer, repository);
-  }
-
-  public CDOSession getSession()
-  {
-    return session;
   }
 }

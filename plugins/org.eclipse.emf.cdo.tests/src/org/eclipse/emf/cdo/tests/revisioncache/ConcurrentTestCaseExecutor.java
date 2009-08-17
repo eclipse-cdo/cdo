@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ *    Andre Dietisheim - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.revisioncache;
 
@@ -17,32 +17,71 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
+ * A class that implements a concurrent execution environment for runnables. It waits until all runnables submitted for
+ * execution are terminated and returns the first throwable that occurs
+ * 
  * @author Andre Dietisheim
  */
 public class ConcurrentTestCaseExecutor
 {
 
-  public static void execute(Runnable[] runnables, int maxThreads, int loops) throws Throwable
+  /**
+   * Executes Runnables in concurrent manner. The first Throwable thrown by those runnables is thrown back to the
+   * caller.
+   * 
+   * @param runnables
+   *          the runnables to execute
+   * @param maxThreads
+   *          the maximum number of threads to use
+   * @param numOfExecution
+   *          the number of executions per runnable
+   * @throws Throwable
+   *           the throwable
+   */
+  public static void execute(Runnable[] runnables, int maxThreads, int numOfExecution) throws Throwable
   {
     ExecutorService threadPool = Executors.newFixedThreadPool(maxThreads);
-    Future<Throwable>[] futures = executeTestCases(loops, threadPool, runnables);
+    Future<Throwable>[] futures = execute(numOfExecution, threadPool, runnables);
     throwOnFailure(futures);
   }
 
+  /**
+   * Executes the runnables. The runnables are wrapped in Callables when they're submitted to the thread pool.
+   * 
+   * @param loops
+   *          the loops
+   * @param threadPool
+   *          the thread pool
+   * @param runnables
+   *          the runnables
+   * @return the future<throwable>[] that allow to wait for the runnables result
+   */
   @SuppressWarnings("unchecked")
-  private static Future<Throwable>[] executeTestCases(int loops, ExecutorService threadPool, Runnable[] runnables)
+  private static Future<Throwable>[] execute(int loops, ExecutorService threadPool, Runnable[] runnables)
   {
     Future<Throwable>[] futures = new Future[loops * runnables.length];
     for (int j = 0; j < loops; j++)
     {
       for (int i = 0; i < runnables.length; i++)
       {
-        futures[j * runnables.length + i] = threadPool.submit(new ConcurrentTestCase(runnables[i]));
+        futures[j * runnables.length + i] = threadPool.submit(new ThrowableCatchingWrapper(runnables[i]));
       }
     }
     return futures;
   }
 
+  /**
+   * Throw a throwable if it occured while executing the runnables
+   * 
+   * @param futures
+   *          the futures
+   * @throws InterruptedException
+   *           the interrupted exception
+   * @throws ExecutionException
+   *           the execution exception
+   * @throws Throwable
+   *           the throwable
+   */
   private static void throwOnFailure(Future<Throwable>[] futures) throws InterruptedException, ExecutionException,
       Throwable
   {
@@ -56,15 +95,33 @@ public class ConcurrentTestCaseExecutor
     }
   }
 
-  private static class ConcurrentTestCase implements Callable<Throwable>
+  /**
+   * A Wrapper for runnables that catches a Throwable that occur when running the runnable
+   */
+  private static class ThrowableCatchingWrapper implements Callable<Throwable>
   {
+
+    /** The runnable. */
     private Runnable runnable;
 
-    private ConcurrentTestCase(Runnable runnable)
+    /**
+     * Instantiates a new concurrent test case.
+     * 
+     * @param runnable
+     *          the runnable
+     */
+    private ThrowableCatchingWrapper(Runnable runnable)
     {
       this.runnable = runnable;
     }
 
+    /**
+     * Call.
+     * 
+     * @return the throwable
+     * @throws Exception
+     *           the exception
+     */
     public Throwable call() throws Exception
     {
       try

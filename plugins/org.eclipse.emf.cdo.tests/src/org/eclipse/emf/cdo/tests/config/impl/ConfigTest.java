@@ -53,6 +53,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import junit.framework.TestResult;
+
 /**
  * @author Eike Stepper
  */
@@ -439,6 +441,32 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   {
     return MessageFormat.format("{0}.{1} [{2}, {3}, {4}, {5}]", getClass().getSimpleName(), getName(),
         getContainerConfig(), getRepositoryConfig(), getSessionConfig(), getModelConfig());
+  }
+
+  @Override
+  public TestResult run()
+  {
+    try
+    {
+      return super.run();
+    }
+    catch (Throwable ex)
+    {
+      throw new ConfigTestException("Error in " + this, ex);
+    }
+  }
+
+  @Override
+  public void runBare() throws Throwable
+  {
+    try
+    {
+      super.runBare();
+    }
+    catch (Throwable ex)
+    {
+      throw new ConfigTestException("Error in " + this, ex);
+    }
   }
 
   protected void skipConfig(Config config)

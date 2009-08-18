@@ -328,8 +328,14 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
         assertEquals(revision.getCreated(), fetchedRevision.getCreated());
         revisionCache.removeRevision(revision.getID(), revision.getVersion());
       }
+    }, new Runnable()
+    {
+      public void run()
+      {
+        fail();
+      }
     } };
-    ConcurrentTestCaseExecutor.execute(testCases, MAX_THREADS, 50);
+    ConcurrentTestCaseRunner.run(testCases, MAX_THREADS, 50);
   }
 
   private void assertEqualRevisions(CDORevision thisRevision, CDORevision thatRevision)

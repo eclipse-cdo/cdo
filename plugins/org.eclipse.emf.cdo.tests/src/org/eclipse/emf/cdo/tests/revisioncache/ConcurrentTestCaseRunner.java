@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
  * 
  * @author Andre Dietisheim
  */
-public class ConcurrentTestCaseExecutor
+public class ConcurrentTestCaseRunner
 {
 
   /**
@@ -38,11 +38,11 @@ public class ConcurrentTestCaseExecutor
    * @throws Throwable
    *           the throwable
    */
-  public static void execute(Runnable[] runnables, int maxThreads, int numOfExecution) throws Throwable
+  public static void run(Runnable[] runnables, int maxThreads, int numOfExecution) throws Throwable
   {
     ExecutorService threadPool = Executors.newFixedThreadPool(maxThreads);
     Future<Throwable>[] futures = execute(numOfExecution, threadPool, runnables);
-    throwOnFailure(futures);
+    throwOnFailure(futures, threadPool);
   }
 
   /**
@@ -75,6 +75,7 @@ public class ConcurrentTestCaseExecutor
    * 
    * @param futures
    *          the futures
+   * @param threadPool
    * @throws InterruptedException
    *           the interrupted exception
    * @throws ExecutionException
@@ -82,14 +83,15 @@ public class ConcurrentTestCaseExecutor
    * @throws Throwable
    *           the throwable
    */
-  private static void throwOnFailure(Future<Throwable>[] futures) throws InterruptedException, ExecutionException,
-      Throwable
+  private static void throwOnFailure(Future<Throwable>[] futures, ExecutorService threadPool)
+      throws InterruptedException, ExecutionException, Throwable
   {
     for (Future<Throwable> future : futures)
     {
       Throwable e = future.get();
       if (e != null)
       {
+        threadPool.shutdownNow();
         throw e;
       }
     }

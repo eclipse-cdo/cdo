@@ -8,6 +8,8 @@
  * Contributors:
  *    Kai Schlamp - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Kai Schlamp - Bug 284680 - [DB] Provide annotation to bypass ClassMapping
+ *    Stefan Winkler - maintenance
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -19,12 +21,15 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public enum DBAnnotation
 {
+  TABLE_MAPPING("tableMapping"), //
   TABLE_NAME("tableName"), //
   COLUMN_NAME("columnName"), //
   COLUMN_TYPE("columnType"), //
   COLUMN_LENGTH("columnLength");
 
   public final static String SOURCE_URI = "http://www.eclipse.org/CDO/DBStore";
+
+  public final static String TABLE_MAPPING_NONE = "NONE";
 
   private String keyword;
 

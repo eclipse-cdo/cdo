@@ -41,7 +41,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testLengthAnnotationPositive() throws Exception
   {
     msg("Opening session");
-    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
     CDOSession session = openSession(model1);
 
@@ -68,7 +68,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
     CDOSession session = openSession(model1);
 
@@ -99,7 +99,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testLengthAnnotationByMetaData()
   {
     msg("Opening session");
-    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
     CDOSession session = openSession(model1);
 
@@ -139,7 +139,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTypeAnnotation(model1, "CLOB");
     CDOSession session = openSession(model1);
 
@@ -175,7 +175,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testTableNameAnnotationByMetaData()
   {
     msg("Opening session");
-    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTableNameAnnotation(model1, "Subject");
     CDOSession session = openSession(model1);
 
@@ -211,7 +211,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testColumnNameAnnotationByMetaData()
   {
     msg("Opening session");
-    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAnnotation(model1, "TOPIC");
     CDOSession session = openSession(model1);
 
@@ -247,7 +247,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testColumnNameTypeAnnotationByMetaData()
   {
     msg("Opening session");
-    EPackage model1 = (EPackage)EcoreUtil.copy(getModel1Package());
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");
     CDOSession session = openSession(model1);
 
@@ -277,6 +277,66 @@ public class DBAnnotationsTest extends AbstractCDOTest
         rset.next();
         Assert.assertEquals("TOPIC", rset.getString(4));
         Assert.assertEquals("CLOB", rset.getString(6));
+      }
+    }.verify();
+  }
+
+  public void testTableMappingAnnotationByMetaData()
+  {
+    msg("Opening session");
+    EPackage model1 = EcoreUtil.copy(getModel1Package());
+    addTableMappingAnnotation(model1, "OrderDetail", "Company");
+    CDOSession session = openSession(model1);
+
+    disableConsole();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Creating resource");
+    CDOResource resource = transaction.createResource("/test1");
+
+    msg("Commit a category.");
+    EClass eClass = (EClass)model1.getEClassifier("Category");
+    EObject category = model1.getEFactoryInstance().create(eClass);
+
+    resource.getContents().add(category);
+    transaction.commit();
+    transaction.close();
+    
+    msg("Check if table name was correctly set.");
+    new DBStoreVerifier(getRepository())
+    {
+      @Override
+      protected void doVerify() throws Exception
+      {
+        DatabaseMetaData metaData = getStatement().getConnection().getMetaData();
+        ResultSet rset = metaData.getTables(null, null, null, null);
+
+        boolean orderDetailTableCreated = false;
+        boolean companyTableCreated = false;
+        boolean categoryTableCreated = false;
+
+        while (rset.next())
+        {
+          String tableName = rset.getString(3);
+          if ("ORDERDETAIL".equalsIgnoreCase(tableName))
+          {
+            orderDetailTableCreated = true;
+          }
+          else if ("COMPANY".equalsIgnoreCase(tableName))
+          {
+            companyTableCreated = true;
+          }
+          else if ("CATEGORY".equalsIgnoreCase(tableName))
+          {
+            categoryTableCreated = true;
+          }
+        }
+
+        Assert.assertFalse(orderDetailTableCreated);
+        Assert.assertFalse(companyTableCreated);
+        Assert.assertTrue(categoryTableCreated);
       }
     }.verify();
   }
@@ -334,5 +394,18 @@ public class DBAnnotationsTest extends AbstractCDOTest
     EClass category = (EClass)model1.getEClassifier("Category");
     EStructuralFeature element = category.getEStructuralFeature(Model1Package.CATEGORY__NAME);
     element.getEAnnotations().add(annotation);
+  }
+
+  private void addTableMappingAnnotation(EPackage model1, String... unmappedTables)
+  {
+    for (String unmappedTable : unmappedTables)
+    {
+      EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+      annotation.getDetails().put("tableMapping", "NONE");
+
+      EClass orderDetail = (EClass)model1.getEClassifier(unmappedTable);
+      orderDetail.getEAnnotations().add(annotation);
+    }
   }
 }

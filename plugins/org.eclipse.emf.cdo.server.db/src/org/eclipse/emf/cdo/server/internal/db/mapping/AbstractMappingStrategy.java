@@ -8,8 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
- *    Stefan Winkler - 282976: [DB] Influence Mappings through EAnnotations
+ *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - Bug 282976: [DB] Influence Mappings through EAnnotations
+ *    Kai Schlamp - Bug 284680 - [DB] Provide annotation to bypass ClassMapping
+ *    Stefan Winkler - maintenance
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
@@ -343,7 +345,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       if (!(eClass.isInterface() || eClass.isAbstract()))
       {
-        createClassMapping(eClass);
+        String mapping = DBAnnotation.TABLE_MAPPING.getValue(eClass);
+        
+        // TODO Maybe we should explicitly report unknown values of the annotation
+        if (mapping == null || !mapping.equalsIgnoreCase(DBAnnotation.TABLE_MAPPING_NONE))
+        {
+          createClassMapping(eClass);
+        }
       }
     }
   }

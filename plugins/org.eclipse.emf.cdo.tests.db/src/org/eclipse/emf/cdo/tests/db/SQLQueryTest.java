@@ -110,7 +110,7 @@ public class SQLQueryTest extends AbstractCDOTest
       cdoQuery.setParameter(SQLQueryHandler.CDO_OBJECT_QUERY, false);
       final List<Long> counts = cdoQuery.getResult(Long.class);
       assertEquals(counts.size(), 1);
-      assertEquals(counts.get(0).longValue(), NUM_OF_PRODUCTS);
+      assertEquals(counts.get(0).intValue(), NUM_OF_PRODUCTS);
     }
 
     transaction.commit();

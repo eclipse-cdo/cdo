@@ -283,7 +283,8 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     {
       public void run()
       {
-        // transactions are not thread safe, open a new one
+        // transactions are not thread safe, open a new one, this is probably a bug
+        // CDOObject company = createCompanyInResource("Puzzle", (CDOTransaction)resource.cdoView());
         CDOObject company = createCompanyInResource("Puzzle", session.openTransaction());
         CDORevision revision = company.cdoRevision();
         revisionCache.addRevision(revision);

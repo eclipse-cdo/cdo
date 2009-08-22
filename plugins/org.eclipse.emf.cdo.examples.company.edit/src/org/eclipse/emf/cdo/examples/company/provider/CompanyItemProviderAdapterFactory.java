@@ -261,7 +261,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Company} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Product} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated

@@ -23,16 +23,17 @@ import interface_.IInterface;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link reference.impl.ReferenceImpl#getRef <em>Ref</em>}</li>
+ * <li>{@link reference.impl.ReferenceImpl#getRef <em>Ref</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ReferenceImpl extends CDOObjectImpl implements Reference
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ReferenceImpl()
@@ -42,6 +43,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -52,6 +54,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -62,6 +65,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public IInterface getRef()
@@ -71,6 +75,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setRef(IInterface newRef)

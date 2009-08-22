@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ValueListImpl.java,v 1.4 2009-08-12 17:14:55 estepper Exp $
+ * $Id: ValueListImpl.java,v 1.5 2009-08-22 09:34:41 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
@@ -26,25 +26,23 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Value List</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Value List</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.ValueListImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.ValueListImpl#getValues <em>Values</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.ValueListImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.mango.impl.ValueListImpl#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ValueListImpl extends EObjectImpl implements ValueList
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -52,9 +50,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -62,9 +59,9 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getValues() <em>Values</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getValues() <em>Values</em>}' reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getValues()
    * @generated
    * @ordered
@@ -72,8 +69,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   protected EList<Value> values;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ValueListImpl()
@@ -82,8 +79,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -93,8 +90,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -103,8 +100,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -116,8 +113,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<Value> getValues()
@@ -130,8 +127,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -148,8 +145,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -170,8 +167,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -190,8 +187,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -208,8 +205,8 @@ public class ValueListImpl extends EObjectImpl implements ValueList
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -225,4 +222,4 @@ public class ValueListImpl extends EObjectImpl implements ValueList
     return result.toString();
   }
 
-} //ValueListImpl
+} // ValueListImpl

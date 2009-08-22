@@ -17,15 +17,14 @@ import org.eclipse.emf.cdo.CDOObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Employee</b></em>'. <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.gastro.inventory.Employee#getDepartment <em>Department</em>}</li>
- *   <li>{@link org.gastro.inventory.Employee#getName <em>Name</em>}</li>
+ * <li>{@link org.gastro.inventory.Employee#getDepartment <em>Department</em>}</li>
+ * <li>{@link org.gastro.inventory.Employee#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.gastro.inventory.InventoryPackage#getEmployee()
  * @model
  * @extends CDOObject
@@ -34,14 +33,14 @@ import org.eclipse.emf.cdo.CDOObject;
 public interface Employee extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Department</b></em>' container reference.
-   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Department#getEmployees <em>Employees</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Department</b></em>' container reference. It is bidirectional and its opposite is
+   * '{@link org.gastro.inventory.Department#getEmployees <em>Employees</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Department</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Department</em>' container reference.
    * @see #setDepartment(Department)
    * @see org.gastro.inventory.InventoryPackage#getEmployee_Department()
@@ -63,12 +62,12 @@ public interface Employee extends CDOObject
   void setDepartment(Department value);
 
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.gastro.inventory.InventoryPackage#getEmployee_Name()
@@ -78,10 +77,11 @@ public interface Employee extends CDOObject
   String getName();
 
   /**
-   * Sets the value of the '{@link org.gastro.inventory.Employee#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc
+   * Sets the value of the '{@link org.gastro.inventory.Employee#getName <em>Name</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
+   * 
+   * @param value
+   *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */

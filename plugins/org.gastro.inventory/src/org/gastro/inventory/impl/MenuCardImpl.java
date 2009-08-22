@@ -28,18 +28,19 @@ import org.gastro.inventory.Section;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.gastro.inventory.impl.MenuCardImpl#getTitle <em>Title</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.MenuCardImpl#getRestaurant <em>Restaurant</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.MenuCardImpl#getSections <em>Sections</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.MenuCardImpl#getTitle <em>Title</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.MenuCardImpl#getRestaurant <em>Restaurant</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.MenuCardImpl#getSections <em>Sections</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MenuCardImpl()
@@ -49,6 +50,7 @@ public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -59,6 +61,7 @@ public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -69,6 +72,7 @@ public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getTitle()
@@ -78,6 +82,7 @@ public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTitle(String newTitle)
@@ -87,6 +92,7 @@ public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Restaurant getRestaurant()
@@ -96,6 +102,7 @@ public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setRestaurant(Restaurant newRestaurant)
@@ -105,6 +112,7 @@ public class MenuCardImpl extends CDOObjectImpl implements MenuCard
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

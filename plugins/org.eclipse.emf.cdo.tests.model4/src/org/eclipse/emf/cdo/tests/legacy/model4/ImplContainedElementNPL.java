@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplContainedElementNPL.java,v 1.1 2009-08-12 17:15:32 estepper Exp $
+ * $Id: ImplContainedElementNPL.java,v 1.2 2009-08-22 09:34:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4;
 
@@ -16,11 +16,9 @@ import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IContainedElementNoPare
 import org.eclipse.emf.cdo.tests.legacy.model4interfaces.INamedElement;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Impl Contained Element NPL</b></em>'.
- * <!-- end-user-doc -->
- *
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Impl Contained Element NPL</b></em>'. <!--
+ * end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4.model4Package#getImplContainedElementNPL()
  * @model
  * @generated

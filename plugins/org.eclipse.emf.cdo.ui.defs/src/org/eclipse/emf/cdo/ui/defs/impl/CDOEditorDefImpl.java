@@ -54,9 +54,9 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 {
 
   /**
-   * The cached value of the '{@link #getCdoView() <em>Cdo View</em>}' reference.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getCdoView() <em>Cdo View</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getCdoView()
    * @generated
    * @ordered
@@ -64,9 +64,9 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   protected CDOViewDef cdoView;
 
   /**
-   * The default value of the '{@link #getResourcePath() <em>Resource Path</em>}' attribute.
-   * <!-- begin-user-doc -->
+   * The default value of the '{@link #getResourcePath() <em>Resource Path</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getResourcePath()
    * @generated
    * @ordered
@@ -74,9 +74,9 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   protected static final String RESOURCE_PATH_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getResourcePath() <em>Resource Path</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getResourcePath() <em>Resource Path</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getResourcePath()
    * @generated
    * @ordered
@@ -152,6 +152,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CDOEditorDefImpl()
@@ -161,6 +162,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -171,6 +173,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOViewDef getCdoView()
@@ -182,7 +185,8 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
       if (cdoView != oldCdoView)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW, oldCdoView, cdoView));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW,
+              oldCdoView, cdoView));
       }
     }
     return cdoView;
@@ -190,6 +194,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOViewDef basicGetCdoView()
@@ -199,6 +204,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setCdoView(CDOViewDef newCdoView)
@@ -206,11 +212,13 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     CDOViewDef oldCdoView = cdoView;
     cdoView = newCdoView;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW, oldCdoView, cdoView));
+      eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW, oldCdoView,
+          cdoView));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getResourcePath()
@@ -220,6 +228,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setResourcePath(String newResourcePath)
@@ -227,11 +236,13 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     String oldResourcePath = resourcePath;
     resourcePath = newResourcePath;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH, oldResourcePath, resourcePath));
+      eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH,
+          oldResourcePath, resourcePath));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -239,17 +250,19 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   {
     switch (featureID)
     {
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
-        if (resolve) return getCdoView();
-        return basicGetCdoView();
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
-        return getResourcePath();
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
+      if (resolve)
+        return getCdoView();
+      return basicGetCdoView();
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
+      return getResourcePath();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -257,18 +270,19 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   {
     switch (featureID)
     {
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
-        setCdoView((CDOViewDef)newValue);
-        return;
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
-        setResourcePath((String)newValue);
-        return;
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
+      setCdoView((CDOViewDef)newValue);
+      return;
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
+      setResourcePath((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -276,18 +290,19 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   {
     switch (featureID)
     {
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
-        setCdoView((CDOViewDef)null);
-        return;
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
-        setResourcePath(RESOURCE_PATH_EDEFAULT);
-        return;
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
+      setCdoView((CDOViewDef)null);
+      return;
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
+      setResourcePath(RESOURCE_PATH_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -295,22 +310,24 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   {
     switch (featureID)
     {
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
-        return cdoView != null;
-      case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
-        return RESOURCE_PATH_EDEFAULT == null ? resourcePath != null : !RESOURCE_PATH_EDEFAULT.equals(resourcePath);
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
+      return cdoView != null;
+    case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
+      return RESOURCE_PATH_EDEFAULT == null ? resourcePath != null : !RESOURCE_PATH_EDEFAULT.equals(resourcePath);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (resourcePath: ");

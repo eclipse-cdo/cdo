@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: RefMultiContainedNPLImpl.java,v 1.4 2009-08-12 17:15:31 estepper Exp $
+ * $Id: RefMultiContainedNPLImpl.java,v 1.5 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -27,24 +27,23 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Ref Multi Contained NPL</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Ref Multi Contained NPL</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedNPLImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefMultiContainedNPLImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiContainedNPL
 {
   /**
-   * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -52,8 +51,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   protected EList<ContainedElementNoOpposite> elements;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RefMultiContainedNPLImpl()
@@ -62,8 +61,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -73,8 +72,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<ContainedElementNoOpposite> getElements()
@@ -88,8 +87,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -104,8 +103,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -120,8 +119,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -139,8 +138,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -156,8 +155,8 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -171,4 +170,4 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
     return super.eIsSet(featureID);
   }
 
-} //RefMultiContainedNPLImpl
+} // RefMultiContainedNPLImpl

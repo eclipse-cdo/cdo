@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: AddressImpl.java,v 1.4 2009-08-12 17:16:07 estepper Exp $
+ * $Id: AddressImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -21,33 +21,31 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Address</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Address</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.AddressImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.AddressImpl#getStreet <em>Street</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.AddressImpl#getCity <em>City</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.AddressImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.AddressImpl#getStreet <em>Street</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.AddressImpl#getCity <em>City</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class AddressImpl extends EObjectImpl implements Address
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -55,9 +53,8 @@ public class AddressImpl extends EObjectImpl implements Address
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -65,9 +62,9 @@ public class AddressImpl extends EObjectImpl implements Address
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getStreet() <em>Street</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getStreet() <em>Street</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getStreet()
    * @generated
    * @ordered
@@ -75,9 +72,9 @@ public class AddressImpl extends EObjectImpl implements Address
   protected static final String STREET_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getStreet() <em>Street</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getStreet() <em>Street</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getStreet()
    * @generated
    * @ordered
@@ -85,9 +82,9 @@ public class AddressImpl extends EObjectImpl implements Address
   protected String street = STREET_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getCity() <em>City</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getCity() <em>City</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getCity()
    * @generated
    * @ordered
@@ -95,9 +92,8 @@ public class AddressImpl extends EObjectImpl implements Address
   protected static final String CITY_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getCity() <em>City</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getCity() <em>City</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getCity()
    * @generated
    * @ordered
@@ -105,8 +101,8 @@ public class AddressImpl extends EObjectImpl implements Address
   protected String city = CITY_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected AddressImpl()
@@ -115,8 +111,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -126,8 +122,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -136,8 +132,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -149,8 +145,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getStreet()
@@ -159,8 +155,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setStreet(String newStreet)
@@ -172,8 +168,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getCity()
@@ -182,8 +178,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setCity(String newCity)
@@ -195,8 +191,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -215,8 +211,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -238,8 +234,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -261,8 +257,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -281,8 +277,8 @@ public class AddressImpl extends EObjectImpl implements Address
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -302,4 +298,4 @@ public class AddressImpl extends EObjectImpl implements Address
     return result.toString();
   }
 
-} //AddressImpl
+} // AddressImpl

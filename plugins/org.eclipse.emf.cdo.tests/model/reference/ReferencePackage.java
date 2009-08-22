@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see reference.ReferenceFactory
  * @model kind="package"
  * @generated
@@ -30,37 +31,37 @@ import org.eclipse.emf.ecore.EReference;
 public interface ReferencePackage extends EPackage
 {
   /**
-   * The package name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNAME = "reference";
 
   /**
-   * The package namespace URI.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_URI = "uuid://reference";
 
   /**
-   * The package namespace name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_PREFIX = "reference";
 
   /**
-   * The singleton instance of the package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   ReferencePackage eINSTANCE = reference.impl.ReferencePackageImpl.init();
 
   /**
-   * The meta object id for the '{@link reference.impl.ReferenceImpl <em>Reference</em>}' class.
-   * <!-- begin-user-doc -->
+   * The meta object id for the '{@link reference.impl.ReferenceImpl <em>Reference</em>}' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see reference.impl.ReferenceImpl
    * @see reference.impl.ReferencePackageImpl#getReference()
    * @generated
@@ -68,25 +69,25 @@ public interface ReferencePackage extends EPackage
   int REFERENCE = 0;
 
   /**
-   * The feature id for the '<em><b>Ref</b></em>' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Ref</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int REFERENCE__REF = 0;
 
   /**
-   * The number of structural features of the '<em>Reference</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Reference</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int REFERENCE_FEATURE_COUNT = 1;
 
   /**
-   * Returns the meta object for class '{@link reference.Reference <em>Reference</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for class '{@link reference.Reference <em>Reference</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for class '<em>Reference</em>'.
    * @see reference.Reference
    * @generated
@@ -94,9 +95,9 @@ public interface ReferencePackage extends EPackage
   EClass getReference();
 
   /**
-   * Returns the meta object for the reference '{@link reference.Reference#getRef <em>Ref</em>}'.
-   * <!-- begin-user-doc
+   * Returns the meta object for the reference '{@link reference.Reference#getRef <em>Ref</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference '<em>Ref</em>'.
    * @see reference.Reference#getRef()
    * @see #getReference()
@@ -105,8 +106,8 @@ public interface ReferencePackage extends EPackage
   EReference getReference_Ref();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -121,6 +122,7 @@ public interface ReferencePackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   interface Literals
@@ -136,9 +138,9 @@ public interface ReferencePackage extends EPackage
     EClass REFERENCE = eINSTANCE.getReference();
 
     /**
-     * The meta object literal for the '<em><b>Ref</b></em>' reference feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Ref</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference REFERENCE__REF = eINSTANCE.getReference_Ref();

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplMultiRefNonContainerImpl.java,v 1.4 2009-08-12 17:15:30 estepper Exp $
+ * $Id: ImplMultiRefNonContainerImpl.java,v 1.5 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -28,24 +28,23 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Impl Multi Ref Non Container</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Impl Multi Ref Non Container</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplMultiRefNonContainerImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMultiRefNonContainer
 {
   /**
-   * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -53,8 +52,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   protected EList<IMultiRefNonContainedElement> elements;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ImplMultiRefNonContainerImpl()
@@ -63,8 +62,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -74,8 +73,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<IMultiRefNonContainedElement> getElements()
@@ -90,8 +89,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -107,8 +106,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -123,8 +122,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -139,8 +138,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -158,8 +157,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -175,8 +174,8 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -190,4 +189,4 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
     return super.eIsSet(featureID);
   }
 
-} //ImplMultiRefNonContainerImpl
+} // ImplMultiRefNonContainerImpl

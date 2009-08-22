@@ -19,18 +19,17 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Restaurant</b></em>'. <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.gastro.inventory.Restaurant#getName <em>Name</em>}</li>
- *   <li>{@link org.gastro.inventory.Restaurant#getDepartments <em>Departments</em>}</li>
- *   <li>{@link org.gastro.inventory.Restaurant#getMenuCards <em>Menu Cards</em>}</li>
- *   <li>{@link org.gastro.inventory.Restaurant#getTables <em>Tables</em>}</li>
- *   <li>{@link org.gastro.inventory.Restaurant#getStations <em>Stations</em>}</li>
+ * <li>{@link org.gastro.inventory.Restaurant#getName <em>Name</em>}</li>
+ * <li>{@link org.gastro.inventory.Restaurant#getDepartments <em>Departments</em>}</li>
+ * <li>{@link org.gastro.inventory.Restaurant#getMenuCards <em>Menu Cards</em>}</li>
+ * <li>{@link org.gastro.inventory.Restaurant#getTables <em>Tables</em>}</li>
+ * <li>{@link org.gastro.inventory.Restaurant#getStations <em>Stations</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.gastro.inventory.InventoryPackage#getRestaurant()
  * @model
  * @extends CDOObject
@@ -39,12 +38,12 @@ import org.eclipse.emf.common.util.EList;
 public interface Restaurant extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Name()
@@ -65,15 +64,15 @@ public interface Restaurant extends CDOObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Departments</b></em>' containment reference list.
-   * The list contents are of type {@link org.gastro.inventory.Department}.
-   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Department#getRestaurant <em>Restaurant</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Departments</b></em>' containment reference list. The list contents are of type
+   * {@link org.gastro.inventory.Department}. It is bidirectional and its opposite is '
+   * {@link org.gastro.inventory.Department#getRestaurant <em>Restaurant</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Departments</em>' containment reference list isn't clear, there really should be more of
    * a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Departments</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Departments()
    * @see org.gastro.inventory.Department#getRestaurant
@@ -83,15 +82,15 @@ public interface Restaurant extends CDOObject
   EList<Department> getDepartments();
 
   /**
-   * Returns the value of the '<em><b>Menu Cards</b></em>' containment reference list.
-   * The list contents are of type {@link org.gastro.inventory.MenuCard}.
-   * It is bidirectional and its opposite is '{@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Menu Cards</b></em>' containment reference list. The list contents are of type
+   * {@link org.gastro.inventory.MenuCard}. It is bidirectional and its opposite is '
+   * {@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Menu Cards</em>' containment reference list isn't clear, there really should be more of
    * a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Menu Cards</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_MenuCards()
    * @see org.gastro.inventory.MenuCard#getRestaurant
@@ -101,15 +100,15 @@ public interface Restaurant extends CDOObject
   EList<MenuCard> getMenuCards();
 
   /**
-   * Returns the value of the '<em><b>Tables</b></em>' containment reference list.
-   * The list contents are of type {@link org.gastro.inventory.Table}.
-   * It is bidirectional and its opposite is '{@link org.gastro.inventory.Table#getRestaurant <em>Restaurant</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Tables</b></em>' containment reference list. The list contents are of type
+   * {@link org.gastro.inventory.Table}. It is bidirectional and its opposite is '
+   * {@link org.gastro.inventory.Table#getRestaurant <em>Restaurant</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Tables</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Tables</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Tables()
    * @see org.gastro.inventory.Table#getRestaurant
@@ -119,14 +118,14 @@ public interface Restaurant extends CDOObject
   EList<Table> getTables();
 
   /**
-   * Returns the value of the '<em><b>Stations</b></em>' reference list.
-   * The list contents are of type {@link org.gastro.inventory.Station}.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Stations</b></em>' reference list. The list contents are of type
+   * {@link org.gastro.inventory.Station}. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Stations</em>' reference list isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Stations</em>' reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Stations()
    * @model transient="true" changeable="false" volatile="true" derived="true"

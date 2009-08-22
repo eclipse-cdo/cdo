@@ -22,13 +22,14 @@ import base.BasePackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static BaseFactory init()
@@ -50,8 +51,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BaseFactoryImpl()
@@ -61,6 +62,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,6 +79,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BaseClass createBaseClass()
@@ -87,6 +90,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BasePackage getBasePackage()
@@ -96,6 +100,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */

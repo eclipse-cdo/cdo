@@ -25,17 +25,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefContainedElementImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefContainedElementImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefContainedElementImpl#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefContainedElementImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements ImplMultiRefContainedElement
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ImplMultiRefContainedElementImpl()
@@ -45,6 +46,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -55,6 +57,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,6 +68,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public IMultiRefContainer getParent()
@@ -74,6 +78,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setParent(IMultiRefContainer newParent)
@@ -83,6 +88,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -92,6 +98,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)

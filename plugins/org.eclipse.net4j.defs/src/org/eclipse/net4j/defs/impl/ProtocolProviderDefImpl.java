@@ -22,13 +22,14 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public abstract class ProtocolProviderDefImpl extends DefImpl implements ProtocolProviderDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ProtocolProviderDefImpl()
@@ -38,6 +39,7 @@ public abstract class ProtocolProviderDefImpl extends DefImpl implements Protoco
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

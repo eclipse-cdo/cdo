@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: RefSingleNonContainedNPLImpl.java,v 1.4 2009-08-12 17:15:30 estepper Exp $
+ * $Id: RefSingleNonContainedNPLImpl.java,v 1.5 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -23,24 +23,23 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Ref Single Non Contained NPL</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Ref Single Non Contained NPL</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedNPLImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleNonContainedNPLImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSingleNonContainedNPL
 {
   /**
-   * The cached value of the '{@link #getElement() <em>Element</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -48,8 +47,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   protected ContainedElementNoOpposite element;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RefSingleNonContainedNPLImpl()
@@ -58,8 +57,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -69,8 +68,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ContainedElementNoOpposite getElement()
@@ -90,8 +89,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ContainedElementNoOpposite basicGetElement()
@@ -100,8 +99,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(ContainedElementNoOpposite newElement)
@@ -114,8 +113,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -132,8 +131,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -149,8 +148,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -166,8 +165,8 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -181,4 +180,4 @@ public class RefSingleNonContainedNPLImpl extends EObjectImpl implements RefSing
     return super.eIsSet(featureID);
   }
 
-} //RefSingleNonContainedNPLImpl
+} // RefSingleNonContainedNPLImpl

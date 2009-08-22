@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: GenRefMapNonContainedImpl.java,v 1.1 2009-08-12 17:15:30 estepper Exp $
+ * $Id: GenRefMapNonContainedImpl.java,v 1.2 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -26,24 +26,23 @@ import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Gen Ref Map Non Contained</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen Ref Map Non Contained</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMapNonContainedImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMapNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapNonContained
 {
   /**
-   * The cached value of the '{@link #getElements() <em>Elements</em>}' map.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getElements() <em>Elements</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -51,8 +50,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   protected EMap<String, EObject> elements;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected GenRefMapNonContainedImpl()
@@ -61,8 +60,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -72,8 +71,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EMap<String, EObject> getElements()
@@ -87,8 +86,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -103,8 +102,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -122,8 +121,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -139,8 +138,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -156,8 +155,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -171,4 +170,4 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
     return super.eIsSet(featureID);
   }
 
-} //GenRefMapNonContainedImpl
+} // GenRefMapNonContainedImpl

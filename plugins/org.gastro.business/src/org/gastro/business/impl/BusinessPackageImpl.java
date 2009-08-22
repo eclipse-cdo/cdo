@@ -31,36 +31,42 @@ import org.gastro.inventory.InventoryPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass businessDayEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass orderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass orderDetailEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass waiterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EEnum orderStateEEnum = null;
@@ -85,17 +91,18 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
-   * <p>This method is used to initialize {@link BusinessPackage#eINSTANCE} when that field is accessed.
-   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-   * <!-- begin-user-doc -->
+   * <p>
+   * This method is used to initialize {@link BusinessPackage#eINSTANCE} when that field is accessed. Clients should not
+   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -132,6 +139,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getBusinessDay()
@@ -141,6 +149,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getBusinessDay_Date()
@@ -150,6 +159,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getBusinessDay_MenuCard()
@@ -159,6 +169,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getBusinessDay_Orders()
@@ -168,6 +179,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getBusinessDay_Waiters()
@@ -177,6 +189,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getBusinessDay_Closed()
@@ -186,6 +199,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getOrder()
@@ -195,6 +209,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getOrder_BusinessDay()
@@ -204,6 +219,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getOrder_Table()
@@ -213,6 +229,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getOrder_OrderDetails()
@@ -222,6 +239,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getOrder_Number()
@@ -231,6 +249,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getOrderDetail()
@@ -240,6 +259,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getOrderDetail_Order()
@@ -249,6 +269,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getOrderDetail_Offering()
@@ -258,6 +279,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getOrderDetail_Quantity()
@@ -267,6 +289,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getOrderDetail_State()
@@ -276,6 +299,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getOrderDetail_Price()
@@ -285,6 +309,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getWaiter()
@@ -294,6 +319,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getWaiter_BusinessDay()
@@ -303,6 +329,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getWaiter_Tables()
@@ -312,6 +339,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getWaiter_Employee()
@@ -321,6 +349,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getWaiter_From()
@@ -330,6 +359,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getWaiter_Until()
@@ -339,6 +369,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EEnum getOrderState()
@@ -348,6 +379,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BusinessFactory getBusinessFactory()
@@ -357,14 +389,15 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
+   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -407,14 +440,15 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
+   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()

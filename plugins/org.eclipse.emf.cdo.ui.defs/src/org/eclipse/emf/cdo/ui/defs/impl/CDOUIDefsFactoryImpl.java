@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.ui.defs.impl;
 
+//import org.eclipse.emf.cdo.ui.defs.*;
 import org.eclipse.emf.cdo.ui.defs.CDOEditorDef;
 import org.eclipse.emf.cdo.ui.defs.CDOUIDefsFactory;
 import org.eclipse.emf.cdo.ui.defs.CDOUIDefsPackage;
@@ -24,20 +25,22 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static CDOUIDefsFactory init()
   {
     try
     {
-      CDOUIDefsFactory theCDOUIDefsFactory = (CDOUIDefsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/ui/defs/1.0.0"); 
+      CDOUIDefsFactory theCDOUIDefsFactory = (CDOUIDefsFactory)EPackage.Registry.INSTANCE
+          .getEFactory("http://www.eclipse.org/emf/CDO/ui/defs/1.0.0");
       if (theCDOUIDefsFactory != null)
       {
         return theCDOUIDefsFactory;
@@ -51,8 +54,8 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOUIDefsFactoryImpl()
@@ -62,6 +65,7 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -69,15 +73,18 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
   {
     switch (eClass.getClassifierID())
     {
-      case CDOUIDefsPackage.EDITOR_DEF: return createEditorDef();
-      case CDOUIDefsPackage.CDO_EDITOR_DEF: return createCDOEditorDef();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    case CDOUIDefsPackage.EDITOR_DEF:
+      return createEditorDef();
+    case CDOUIDefsPackage.CDO_EDITOR_DEF:
+      return createCDOEditorDef();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EditorDef createEditorDef()
@@ -88,6 +95,7 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOEditorDef createCDOEditorDef()
@@ -98,6 +106,7 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOUIDefsPackage getCDOUIDefsPackage()
@@ -107,6 +116,7 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */

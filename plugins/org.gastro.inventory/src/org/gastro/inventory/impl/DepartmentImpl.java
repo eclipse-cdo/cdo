@@ -28,19 +28,20 @@ import org.gastro.inventory.Stock;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.gastro.inventory.impl.DepartmentImpl#getRecipes <em>Recipes</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.DepartmentImpl#getRestaurant <em>Restaurant</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.DepartmentImpl#getEmployees <em>Employees</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.DepartmentImpl#getStocks <em>Stocks</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.DepartmentImpl#getRecipes <em>Recipes</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.DepartmentImpl#getRestaurant <em>Restaurant</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.DepartmentImpl#getEmployees <em>Employees</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.DepartmentImpl#getStocks <em>Stocks</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class DepartmentImpl extends StationImpl implements Department
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected DepartmentImpl()
@@ -50,6 +51,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -60,6 +62,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -70,6 +73,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Restaurant getRestaurant()
@@ -79,6 +83,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setRestaurant(Restaurant newRestaurant)
@@ -88,6 +93,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -98,6 +104,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

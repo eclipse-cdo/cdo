@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Class1Impl.java,v 1.4 2009-08-12 17:16:23 estepper Exp $
+ * $Id: Class1Impl.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 
@@ -28,24 +28,22 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Class1</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class1</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class Class1Impl extends EObjectImpl implements Class1
 {
   /**
-   * The cached value of the '{@link #getClass2() <em>Class2</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getClass2() <em>Class2</em>}' reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getClass2()
    * @generated
    * @ordered
@@ -53,8 +51,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   protected EList<Class2> class2;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected Class1Impl()
@@ -63,8 +61,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -74,8 +72,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<Class2> getClass2()
@@ -89,8 +87,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void unsetClass2()
@@ -100,8 +98,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isSetClass2()
@@ -110,8 +108,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -127,8 +125,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -143,8 +141,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -159,8 +157,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -178,8 +176,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -195,8 +193,8 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -210,4 +208,4 @@ public class Class1Impl extends EObjectImpl implements Class1
     return super.eIsSet(featureID);
   }
 
-} //Class1Impl
+} // Class1Impl

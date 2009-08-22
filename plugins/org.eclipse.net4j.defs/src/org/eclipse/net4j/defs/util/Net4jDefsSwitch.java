@@ -37,21 +37,22 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.net4j.defs.Net4jDefsPackage
  * @generated
  */
 public class Net4jDefsSwitch<T>
 {
   /**
-   * The cached model package
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected static Net4jDefsPackage modelPackage;
 
   /**
-   * Creates an instance of the switch.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Net4jDefsSwitch()
@@ -65,6 +66,7 @@ public class Net4jDefsSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -76,6 +78,7 @@ public class Net4jDefsSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -88,16 +91,14 @@ public class Net4jDefsSwitch<T>
     else
     {
       List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return
-        eSuperTypes.isEmpty() ?
-          defaultCase(theEObject) :
-          doSwitch(eSuperTypes.get(0), theEObject);
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
     }
   }
 
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -105,127 +106,163 @@ public class Net4jDefsSwitch<T>
   {
     switch (classifierID)
     {
-      case Net4jDefsPackage.CONNECTOR_DEF:
-      {
-        ConnectorDef connectorDef = (ConnectorDef)theEObject;
-        T result = caseConnectorDef(connectorDef);
-        if (result == null) result = caseDef(connectorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.CLIENT_PROTOCOL_FACTORY_DEF:
-      {
-        ClientProtocolFactoryDef clientProtocolFactoryDef = (ClientProtocolFactoryDef)theEObject;
-        T result = caseClientProtocolFactoryDef(clientProtocolFactoryDef);
-        if (result == null) result = caseProtocolProviderDef(clientProtocolFactoryDef);
-        if (result == null) result = caseDef(clientProtocolFactoryDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF:
-      {
-        TCPConnectorDef tcpConnectorDef = (TCPConnectorDef)theEObject;
-        T result = caseTCPConnectorDef(tcpConnectorDef);
-        if (result == null) result = caseConnectorDef(tcpConnectorDef);
-        if (result == null) result = caseDef(tcpConnectorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.ACCEPTOR_DEF:
-      {
-        AcceptorDef acceptorDef = (AcceptorDef)theEObject;
-        T result = caseAcceptorDef(acceptorDef);
-        if (result == null) result = caseDef(acceptorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.TCP_ACCEPTOR_DEF:
-      {
-        TCPAcceptorDef tcpAcceptorDef = (TCPAcceptorDef)theEObject;
-        T result = caseTCPAcceptorDef(tcpAcceptorDef);
-        if (result == null) result = caseAcceptorDef(tcpAcceptorDef);
-        if (result == null) result = caseDef(tcpAcceptorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.JVM_ACCEPTOR_DEF:
-      {
-        JVMAcceptorDef jvmAcceptorDef = (JVMAcceptorDef)theEObject;
-        T result = caseJVMAcceptorDef(jvmAcceptorDef);
-        if (result == null) result = caseAcceptorDef(jvmAcceptorDef);
-        if (result == null) result = caseDef(jvmAcceptorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.JVM_CONNECTOR_DEF:
-      {
-        JVMConnectorDef jvmConnectorDef = (JVMConnectorDef)theEObject;
-        T result = caseJVMConnectorDef(jvmConnectorDef);
-        if (result == null) result = caseConnectorDef(jvmConnectorDef);
-        if (result == null) result = caseDef(jvmConnectorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.HTTP_CONNECTOR_DEF:
-      {
-        HTTPConnectorDef httpConnectorDef = (HTTPConnectorDef)theEObject;
-        T result = caseHTTPConnectorDef(httpConnectorDef);
-        if (result == null) result = caseConnectorDef(httpConnectorDef);
-        if (result == null) result = caseDef(httpConnectorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.TCP_SELECTOR_DEF:
-      {
-        TCPSelectorDef tcpSelectorDef = (TCPSelectorDef)theEObject;
-        T result = caseTCPSelectorDef(tcpSelectorDef);
-        if (result == null) result = caseDef(tcpSelectorDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.SERVER_PROTOCOL_FACTORY_DEF:
-      {
-        ServerProtocolFactoryDef serverProtocolFactoryDef = (ServerProtocolFactoryDef)theEObject;
-        T result = caseServerProtocolFactoryDef(serverProtocolFactoryDef);
-        if (result == null) result = caseProtocolProviderDef(serverProtocolFactoryDef);
-        if (result == null) result = caseDef(serverProtocolFactoryDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.BUFFER_PROVIDER_DEF:
-      {
-        BufferProviderDef bufferProviderDef = (BufferProviderDef)theEObject;
-        T result = caseBufferProviderDef(bufferProviderDef);
-        if (result == null) result = caseDef(bufferProviderDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.BUFFER_POOL_DEF:
-      {
-        BufferPoolDef bufferPoolDef = (BufferPoolDef)theEObject;
-        T result = caseBufferPoolDef(bufferPoolDef);
-        if (result == null) result = caseBufferProviderDef(bufferPoolDef);
-        if (result == null) result = caseDef(bufferPoolDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case Net4jDefsPackage.PROTOCOL_PROVIDER_DEF:
-      {
-        ProtocolProviderDef protocolProviderDef = (ProtocolProviderDef)theEObject;
-        T result = caseProtocolProviderDef(protocolProviderDef);
-        if (result == null) result = caseDef(protocolProviderDef);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      default: return defaultCase(theEObject);
+    case Net4jDefsPackage.CONNECTOR_DEF:
+    {
+      ConnectorDef connectorDef = (ConnectorDef)theEObject;
+      T result = caseConnectorDef(connectorDef);
+      if (result == null)
+        result = caseDef(connectorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.CLIENT_PROTOCOL_FACTORY_DEF:
+    {
+      ClientProtocolFactoryDef clientProtocolFactoryDef = (ClientProtocolFactoryDef)theEObject;
+      T result = caseClientProtocolFactoryDef(clientProtocolFactoryDef);
+      if (result == null)
+        result = caseProtocolProviderDef(clientProtocolFactoryDef);
+      if (result == null)
+        result = caseDef(clientProtocolFactoryDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF:
+    {
+      TCPConnectorDef tcpConnectorDef = (TCPConnectorDef)theEObject;
+      T result = caseTCPConnectorDef(tcpConnectorDef);
+      if (result == null)
+        result = caseConnectorDef(tcpConnectorDef);
+      if (result == null)
+        result = caseDef(tcpConnectorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.ACCEPTOR_DEF:
+    {
+      AcceptorDef acceptorDef = (AcceptorDef)theEObject;
+      T result = caseAcceptorDef(acceptorDef);
+      if (result == null)
+        result = caseDef(acceptorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.TCP_ACCEPTOR_DEF:
+    {
+      TCPAcceptorDef tcpAcceptorDef = (TCPAcceptorDef)theEObject;
+      T result = caseTCPAcceptorDef(tcpAcceptorDef);
+      if (result == null)
+        result = caseAcceptorDef(tcpAcceptorDef);
+      if (result == null)
+        result = caseDef(tcpAcceptorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.JVM_ACCEPTOR_DEF:
+    {
+      JVMAcceptorDef jvmAcceptorDef = (JVMAcceptorDef)theEObject;
+      T result = caseJVMAcceptorDef(jvmAcceptorDef);
+      if (result == null)
+        result = caseAcceptorDef(jvmAcceptorDef);
+      if (result == null)
+        result = caseDef(jvmAcceptorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.JVM_CONNECTOR_DEF:
+    {
+      JVMConnectorDef jvmConnectorDef = (JVMConnectorDef)theEObject;
+      T result = caseJVMConnectorDef(jvmConnectorDef);
+      if (result == null)
+        result = caseConnectorDef(jvmConnectorDef);
+      if (result == null)
+        result = caseDef(jvmConnectorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.HTTP_CONNECTOR_DEF:
+    {
+      HTTPConnectorDef httpConnectorDef = (HTTPConnectorDef)theEObject;
+      T result = caseHTTPConnectorDef(httpConnectorDef);
+      if (result == null)
+        result = caseConnectorDef(httpConnectorDef);
+      if (result == null)
+        result = caseDef(httpConnectorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.TCP_SELECTOR_DEF:
+    {
+      TCPSelectorDef tcpSelectorDef = (TCPSelectorDef)theEObject;
+      T result = caseTCPSelectorDef(tcpSelectorDef);
+      if (result == null)
+        result = caseDef(tcpSelectorDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.SERVER_PROTOCOL_FACTORY_DEF:
+    {
+      ServerProtocolFactoryDef serverProtocolFactoryDef = (ServerProtocolFactoryDef)theEObject;
+      T result = caseServerProtocolFactoryDef(serverProtocolFactoryDef);
+      if (result == null)
+        result = caseProtocolProviderDef(serverProtocolFactoryDef);
+      if (result == null)
+        result = caseDef(serverProtocolFactoryDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.BUFFER_PROVIDER_DEF:
+    {
+      BufferProviderDef bufferProviderDef = (BufferProviderDef)theEObject;
+      T result = caseBufferProviderDef(bufferProviderDef);
+      if (result == null)
+        result = caseDef(bufferProviderDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.BUFFER_POOL_DEF:
+    {
+      BufferPoolDef bufferPoolDef = (BufferPoolDef)theEObject;
+      T result = caseBufferPoolDef(bufferPoolDef);
+      if (result == null)
+        result = caseBufferProviderDef(bufferPoolDef);
+      if (result == null)
+        result = caseDef(bufferPoolDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case Net4jDefsPackage.PROTOCOL_PROVIDER_DEF:
+    {
+      ProtocolProviderDef protocolProviderDef = (ProtocolProviderDef)theEObject;
+      T result = caseProtocolProviderDef(protocolProviderDef);
+      if (result == null)
+        result = caseDef(protocolProviderDef);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    default:
+      return defaultCase(theEObject);
     }
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Connector Def</em>'.
-   * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Connector Def</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Connector Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -252,10 +289,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>TCP Connector Def</em>'.
-   * <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>TCP Connector Def</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>TCP Connector Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -266,10 +304,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Acceptor Def</em>'.
-   * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Acceptor Def</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Acceptor Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -280,10 +319,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>TCP Acceptor Def</em>'.
-   * <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>TCP Acceptor Def</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>TCP Acceptor Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -294,10 +334,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>JVM Acceptor Def</em>'.
-   * <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>JVM Acceptor Def</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>JVM Acceptor Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -308,10 +349,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>JVM Connector Def</em>'.
-   * <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>JVM Connector Def</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>JVM Connector Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -322,10 +364,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>HTTP Connector Def</em>'.
-   * <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>HTTP Connector Def</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>HTTP Connector Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -336,10 +379,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>TCP Selector Def</em>'.
-   * <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>TCP Selector Def</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>TCP Selector Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -366,10 +410,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Buffer Provider Def</em>'.
-   * <!-- begin-user-doc
+   * Returns the result of interpreting the object as an instance of '<em>Buffer Provider Def</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Buffer Provider Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -380,10 +425,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Buffer Pool Def</em>'.
-   * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Buffer Pool Def</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Buffer Pool Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -410,10 +456,11 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Def</em>'.
-   * <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Def</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Def</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -424,11 +471,12 @@ public class Net4jDefsSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-   * <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * @param object the target of the switch.
+   * 
+   * @param object
+   *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated

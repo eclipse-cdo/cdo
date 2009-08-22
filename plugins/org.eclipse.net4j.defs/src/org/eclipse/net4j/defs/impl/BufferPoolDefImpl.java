@@ -30,6 +30,7 @@ public class BufferPoolDefImpl extends BufferProviderDefImpl implements BufferPo
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected BufferPoolDefImpl()
@@ -39,6 +40,7 @@ public class BufferPoolDefImpl extends BufferProviderDefImpl implements BufferPo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

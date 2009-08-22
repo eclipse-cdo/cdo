@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: RefMultiContained.java,v 1.1 2009-08-12 17:15:31 estepper Exp $
+ * $Id: RefMultiContained.java,v 1.2 2009-08-22 09:34:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4;
 
@@ -16,17 +16,15 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Ref Multi Contained</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Ref Multi Contained</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4.model4Package#getRefMultiContained()
  * @model
  * @generated
@@ -34,15 +32,16 @@ import org.eclipse.emf.ecore.EObject;
 public interface RefMultiContained extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Elements</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getParent <em>Parent</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Elements</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getParent <em>Parent</em>}'. <!--
+   * begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Elements</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Elements</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Elements</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.legacy.model4.model4Package#getRefMultiContained_Elements()
    * @see org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getParent

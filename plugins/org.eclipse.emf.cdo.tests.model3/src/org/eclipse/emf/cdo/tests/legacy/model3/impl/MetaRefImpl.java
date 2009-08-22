@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MetaRefImpl.java,v 1.4 2009-08-12 17:16:23 estepper Exp $
+ * $Id: MetaRefImpl.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 
@@ -23,24 +23,22 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Meta Ref</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Meta Ref</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MetaRefImpl extends EObjectImpl implements MetaRef
 {
   /**
-   * The cached value of the '{@link #getEPackageRef() <em>EPackage Ref</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getEPackageRef() <em>EPackage Ref</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getEPackageRef()
    * @generated
    * @ordered
@@ -48,8 +46,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   protected EPackage ePackageRef;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MetaRefImpl()
@@ -58,8 +56,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -69,8 +67,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage getEPackageRef()
@@ -90,8 +88,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage basicGetEPackageRef()
@@ -100,8 +98,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEPackageRef(EPackage newEPackageRef)
@@ -114,8 +112,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -132,8 +130,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -149,8 +147,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -166,8 +164,8 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -181,4 +179,4 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
     return super.eIsSet(featureID);
   }
 
-} //MetaRefImpl
+} // MetaRefImpl

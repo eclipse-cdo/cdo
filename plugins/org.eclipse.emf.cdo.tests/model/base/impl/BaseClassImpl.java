@@ -22,16 +22,17 @@ import base.BasePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link base.impl.BaseClassImpl#getCouter <em>Couter</em>}</li>
+ * <li>{@link base.impl.BaseClassImpl#getCouter <em>Couter</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class BaseClassImpl extends CDOObjectImpl implements BaseClass
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected BaseClassImpl()
@@ -41,6 +42,7 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -51,6 +53,7 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -61,6 +64,7 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getCouter()
@@ -70,6 +74,7 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setCouter(int newCouter)
@@ -79,6 +84,7 @@ public class BaseClassImpl extends CDOObjectImpl implements BaseClass
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void increment()

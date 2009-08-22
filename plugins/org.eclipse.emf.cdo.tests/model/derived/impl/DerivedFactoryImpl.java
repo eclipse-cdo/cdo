@@ -22,13 +22,14 @@ import derived.DerivedPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static DerivedFactory init()
@@ -50,8 +51,8 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DerivedFactoryImpl()
@@ -61,6 +62,7 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,6 +79,7 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DerivedClass createDerivedClass()
@@ -87,6 +90,7 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DerivedPackage getDerivedPackage()
@@ -96,6 +100,7 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */

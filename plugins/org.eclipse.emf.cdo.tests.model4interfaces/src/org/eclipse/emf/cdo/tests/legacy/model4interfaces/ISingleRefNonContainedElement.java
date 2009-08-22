@@ -8,24 +8,23 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ISingleRefNonContainedElement.java,v 1.1 2009-08-12 17:15:42 estepper Exp $
+ * $Id: ISingleRefNonContainedElement.java,v 1.2 2009-08-22 09:34:16 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4interfaces;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>ISingle Ref Non Contained Element</b></em>'.
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>ISingle Ref Non Contained Element</b></em>'.
  * <!-- end-user-doc -->
- *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement#getParent <em>Parent</em>}
+ * </li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage#getISingleRefNonContainedElement()
  * @model interface="true" abstract="true"
  * @generated
@@ -33,14 +32,14 @@ import org.eclipse.emf.ecore.EObject;
 public interface ISingleRefNonContainedElement extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Parent</b></em>' reference.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainer#getElement <em>Element</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Parent</b></em>' reference. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainer#getElement <em>Element</em>}'. <!--
+   * begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Parent</em>' reference isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Parent</em>' reference isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Parent</em>' reference.
    * @see #setParent(ISingleRefNonContainer)
    * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage#getISingleRefNonContainedElement_Parent()
@@ -51,10 +50,12 @@ public interface ISingleRefNonContainedElement extends EObject
   ISingleRefNonContainer getParent();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement#getParent <em>Parent</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Parent</em>' reference.
+   * Sets the value of the '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model4interfaces.ISingleRefNonContainedElement#getParent <em>Parent</em>}'
+   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Parent</em>' reference.
    * @see #getParent()
    * @generated
    */

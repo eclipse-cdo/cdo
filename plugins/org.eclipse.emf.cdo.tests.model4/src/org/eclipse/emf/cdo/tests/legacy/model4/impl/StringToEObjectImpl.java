@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: StringToEObjectImpl.java,v 1.1 2009-08-12 17:15:30 estepper Exp $
+ * $Id: StringToEObjectImpl.java,v 1.2 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -23,25 +23,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>String To EObject</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>String To EObject</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl#getTypedValue <em>Value</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl#getTypedKey <em>Key</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<String, EObject>
 {
   /**
-   * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -49,9 +48,9 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   protected static final String KEY_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -59,9 +58,9 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   protected String key = KEY_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getTypedValue()
    * @generated
    * @ordered
@@ -69,8 +68,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   protected EObject value;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected StringToEObjectImpl()
@@ -79,8 +78,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -90,8 +89,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getTypedKey()
@@ -100,8 +99,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedKey(String newKey)
@@ -113,8 +112,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject getTypedValue()
@@ -123,8 +122,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedValue(EObject newValue)
@@ -136,8 +135,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -154,8 +153,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -174,8 +173,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -194,8 +193,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -212,8 +211,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -230,15 +229,15 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getHash()
@@ -252,8 +251,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setHash(int hash)
@@ -262,8 +261,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getKey()
@@ -272,8 +271,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setKey(String key)
@@ -282,8 +281,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject getValue()
@@ -292,8 +291,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject setValue(EObject value)
@@ -304,8 +303,8 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -315,4 +314,4 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
     return container == null ? null : (EMap<String, EObject>)container.eGet(eContainmentFeature());
   }
 
-} //StringToEObjectImpl
+} // StringToEObjectImpl

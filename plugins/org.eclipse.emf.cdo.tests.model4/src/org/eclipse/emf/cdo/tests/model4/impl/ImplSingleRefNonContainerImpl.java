@@ -25,16 +25,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefNonContainerImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefNonContainerImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements ImplSingleRefNonContainer
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ImplSingleRefNonContainerImpl()
@@ -44,6 +45,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,6 +56,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +67,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ISingleRefNonContainedElement getElement()
@@ -74,6 +78,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(ISingleRefNonContainedElement newElement)

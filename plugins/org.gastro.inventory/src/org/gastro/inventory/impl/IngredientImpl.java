@@ -27,18 +27,19 @@ import org.gastro.inventory.Recipe;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.gastro.inventory.impl.IngredientImpl#getRecipe <em>Recipe</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.IngredientImpl#getProduct <em>Product</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.IngredientImpl#getQuantity <em>Quantity</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.IngredientImpl#getRecipe <em>Recipe</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.IngredientImpl#getProduct <em>Product</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.IngredientImpl#getQuantity <em>Quantity</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class IngredientImpl extends CDOObjectImpl implements Ingredient
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected IngredientImpl()
@@ -48,6 +49,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -58,6 +60,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -68,6 +71,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Recipe getRecipe()
@@ -77,6 +81,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setRecipe(Recipe newRecipe)
@@ -86,6 +91,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product getProduct()
@@ -95,6 +101,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setProduct(Product newProduct)
@@ -104,6 +111,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getQuantity()
@@ -113,6 +121,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setQuantity(int newQuantity)

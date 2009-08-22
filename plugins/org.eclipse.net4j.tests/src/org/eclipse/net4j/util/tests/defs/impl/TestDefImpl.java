@@ -29,19 +29,19 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl#getReferences <em>References</em>}</li>
- *   <li>{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl#getAttribute <em>Attribute</em>}</li>
+ * <li>{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl#getReferences <em>References</em>}</li>
+ * <li>{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl#getAttribute <em>Attribute</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class TestDefImpl extends DefImpl implements TestDef
 {
   /**
-   * The cached value of the '{@link #getReferences() <em>References</em>}' reference list.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getReferences() <em>References</em>}' reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getReferences()
    * @generated
    * @ordered
@@ -49,9 +49,9 @@ public class TestDefImpl extends DefImpl implements TestDef
   protected EList<Def> references;
 
   /**
-   * The default value of the '{@link #getAttribute() <em>Attribute</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getAttribute() <em>Attribute</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getAttribute()
    * @generated
    * @ordered
@@ -59,9 +59,9 @@ public class TestDefImpl extends DefImpl implements TestDef
   protected static final String ATTRIBUTE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getAttribute()
    * @generated
    * @ordered
@@ -70,6 +70,7 @@ public class TestDefImpl extends DefImpl implements TestDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected TestDefImpl()
@@ -79,6 +80,7 @@ public class TestDefImpl extends DefImpl implements TestDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -89,6 +91,7 @@ public class TestDefImpl extends DefImpl implements TestDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<Def> getReferences()
@@ -102,6 +105,7 @@ public class TestDefImpl extends DefImpl implements TestDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getAttribute()
@@ -111,6 +115,7 @@ public class TestDefImpl extends DefImpl implements TestDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setAttribute(String newAttribute)
@@ -118,11 +123,13 @@ public class TestDefImpl extends DefImpl implements TestDef
     String oldAttribute = attribute;
     attribute = newAttribute;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, TestDefsPackage.TEST_DEF__ATTRIBUTE, oldAttribute, attribute));
+      eNotify(new ENotificationImpl(this, Notification.SET, TestDefsPackage.TEST_DEF__ATTRIBUTE, oldAttribute,
+          attribute));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -130,16 +137,17 @@ public class TestDefImpl extends DefImpl implements TestDef
   {
     switch (featureID)
     {
-      case TestDefsPackage.TEST_DEF__REFERENCES:
-        return getReferences();
-      case TestDefsPackage.TEST_DEF__ATTRIBUTE:
-        return getAttribute();
+    case TestDefsPackage.TEST_DEF__REFERENCES:
+      return getReferences();
+    case TestDefsPackage.TEST_DEF__ATTRIBUTE:
+      return getAttribute();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -148,19 +156,20 @@ public class TestDefImpl extends DefImpl implements TestDef
   {
     switch (featureID)
     {
-      case TestDefsPackage.TEST_DEF__REFERENCES:
-        getReferences().clear();
-        getReferences().addAll((Collection<? extends Def>)newValue);
-        return;
-      case TestDefsPackage.TEST_DEF__ATTRIBUTE:
-        setAttribute((String)newValue);
-        return;
+    case TestDefsPackage.TEST_DEF__REFERENCES:
+      getReferences().clear();
+      getReferences().addAll((Collection<? extends Def>)newValue);
+      return;
+    case TestDefsPackage.TEST_DEF__ATTRIBUTE:
+      setAttribute((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -168,18 +177,19 @@ public class TestDefImpl extends DefImpl implements TestDef
   {
     switch (featureID)
     {
-      case TestDefsPackage.TEST_DEF__REFERENCES:
-        getReferences().clear();
-        return;
-      case TestDefsPackage.TEST_DEF__ATTRIBUTE:
-        setAttribute(ATTRIBUTE_EDEFAULT);
-        return;
+    case TestDefsPackage.TEST_DEF__REFERENCES:
+      getReferences().clear();
+      return;
+    case TestDefsPackage.TEST_DEF__ATTRIBUTE:
+      setAttribute(ATTRIBUTE_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -187,22 +197,24 @@ public class TestDefImpl extends DefImpl implements TestDef
   {
     switch (featureID)
     {
-      case TestDefsPackage.TEST_DEF__REFERENCES:
-        return references != null && !references.isEmpty();
-      case TestDefsPackage.TEST_DEF__ATTRIBUTE:
-        return ATTRIBUTE_EDEFAULT == null ? attribute != null : !ATTRIBUTE_EDEFAULT.equals(attribute);
+    case TestDefsPackage.TEST_DEF__REFERENCES:
+      return references != null && !references.isEmpty();
+    case TestDefsPackage.TEST_DEF__ATTRIBUTE:
+      return ATTRIBUTE_EDEFAULT == null ? attribute != null : !ATTRIBUTE_EDEFAULT.equals(attribute);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attribute: ");

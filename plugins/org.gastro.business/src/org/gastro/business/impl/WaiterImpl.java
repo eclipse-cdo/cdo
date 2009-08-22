@@ -31,20 +31,21 @@ import java.util.Date;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.gastro.business.impl.WaiterImpl#getBusinessDay <em>Business Day</em>}</li>
- *   <li>{@link org.gastro.business.impl.WaiterImpl#getTables <em>Tables</em>}</li>
- *   <li>{@link org.gastro.business.impl.WaiterImpl#getEmployee <em>Employee</em>}</li>
- *   <li>{@link org.gastro.business.impl.WaiterImpl#getFrom <em>From</em>}</li>
- *   <li>{@link org.gastro.business.impl.WaiterImpl#getUntil <em>Until</em>}</li>
+ * <li>{@link org.gastro.business.impl.WaiterImpl#getBusinessDay <em>Business Day</em>}</li>
+ * <li>{@link org.gastro.business.impl.WaiterImpl#getTables <em>Tables</em>}</li>
+ * <li>{@link org.gastro.business.impl.WaiterImpl#getEmployee <em>Employee</em>}</li>
+ * <li>{@link org.gastro.business.impl.WaiterImpl#getFrom <em>From</em>}</li>
+ * <li>{@link org.gastro.business.impl.WaiterImpl#getUntil <em>Until</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class WaiterImpl extends CDOObjectImpl implements Waiter
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected WaiterImpl()
@@ -54,6 +55,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +66,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -74,6 +77,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BusinessDay getBusinessDay()
@@ -83,6 +87,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setBusinessDay(BusinessDay newBusinessDay)
@@ -92,6 +97,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -102,6 +108,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Employee getEmployee()
@@ -111,6 +118,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEmployee(Employee newEmployee)
@@ -120,6 +128,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Date getFrom()
@@ -129,6 +138,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setFrom(Date newFrom)
@@ -138,6 +148,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Date getUntil()
@@ -147,6 +158,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setUntil(Date newUntil)

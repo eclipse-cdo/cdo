@@ -37,17 +37,17 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.gastro.business.BusinessDay} object.
- * <!-- begin-user-doc --> <!--
+ * This is the item provider adapter for a {@link org.gastro.business.BusinessDay} object. <!-- begin-user-doc --> <!--
  * end-user-doc -->
+ * 
  * @generated
  */
 public class BusinessDayItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
-   * This constructs an instance from a factory and a notifier.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BusinessDayItemProvider(AdapterFactory adapterFactory)
@@ -56,8 +56,8 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This returns the property descriptors for the adapted class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -75,8 +75,8 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This adds a property descriptor for the Date feature.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds a property descriptor for the Date feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected void addDatePropertyDescriptor(Object object)
@@ -89,8 +89,8 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This adds a property descriptor for the Menu Card feature.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds a property descriptor for the Menu Card feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected void addMenuCardPropertyDescriptor(Object object)
@@ -102,8 +102,8 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This adds a property descriptor for the Closed feature.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds a property descriptor for the Closed feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected void addClosedPropertyDescriptor(Object object)
@@ -118,9 +118,9 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   /**
    * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-   * <!-- begin-user-doc --> <!--
+   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -137,6 +137,7 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -150,6 +151,7 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -159,8 +161,8 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This returns BusinessDay.gif.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This returns BusinessDay.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -183,9 +185,9 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This handles model notifications by calling {@link #updateChildren} to update any cached
-   * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
+   * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -208,9 +210,9 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-   * that can be created under this object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
+   * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -226,8 +228,8 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   }
 
   /**
-   * Return the resource locator for this item provider's resources.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

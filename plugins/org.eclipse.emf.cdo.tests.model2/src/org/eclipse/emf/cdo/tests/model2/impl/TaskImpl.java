@@ -23,18 +23,19 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getTaskContainer <em>Task Container</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getDescription <em>Description</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#isDone <em>Done</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getTaskContainer <em>Task Container</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#getDescription <em>Description</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl#isDone <em>Done</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class TaskImpl extends CDOObjectImpl implements Task
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected TaskImpl()
@@ -44,6 +45,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,6 +56,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +67,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public TaskContainer getTaskContainer()
@@ -73,6 +77,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTaskContainer(TaskContainer newTaskContainer)
@@ -82,6 +87,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getDescription()
@@ -91,6 +97,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setDescription(String newDescription)
@@ -100,6 +107,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isDone()
@@ -109,6 +117,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setDone(boolean newDone)

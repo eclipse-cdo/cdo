@@ -24,6 +24,7 @@ import base.BasePackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see derived.DerivedFactory
  * @model kind="package"
  * @generated
@@ -31,37 +32,37 @@ import base.BasePackage;
 public interface DerivedPackage extends EPackage
 {
   /**
-   * The package name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNAME = "derived";
 
   /**
-   * The package namespace URI.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_URI = "http://www.fernuni-hagen.de/ST/dummy/derived.ecore";
 
   /**
-   * The package namespace name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_PREFIX = "derived";
 
   /**
-   * The singleton instance of the package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   DerivedPackage eINSTANCE = derived.impl.DerivedPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link derived.impl.DerivedClassImpl <em>Class</em>}' class.
-   * <!-- begin-user-doc -->
+   * The meta object id for the '{@link derived.impl.DerivedClassImpl <em>Class</em>}' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see derived.impl.DerivedClassImpl
    * @see derived.impl.DerivedPackageImpl#getDerivedClass()
    * @generated
@@ -69,25 +70,25 @@ public interface DerivedPackage extends EPackage
   int DERIVED_CLASS = 0;
 
   /**
-   * The feature id for the '<em><b>Couter</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Couter</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int DERIVED_CLASS__COUTER = BasePackage.BASE_CLASS__COUTER;
 
   /**
-   * The number of structural features of the '<em>Class</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Class</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int DERIVED_CLASS_FEATURE_COUNT = BasePackage.BASE_CLASS_FEATURE_COUNT + 0;
 
   /**
-   * Returns the meta object for class '{@link derived.DerivedClass <em>Class</em>}'.
-   * <!-- begin-user-doc --> <!--
+   * Returns the meta object for class '{@link derived.DerivedClass <em>Class</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return the meta object for class '<em>Class</em>'.
    * @see derived.DerivedClass
    * @generated
@@ -95,8 +96,8 @@ public interface DerivedPackage extends EPackage
   EClass getDerivedClass();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -111,14 +112,15 @@ public interface DerivedPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link derived.impl.DerivedClassImpl <em>Class</em>}' class.
-     * <!-- begin-user-doc
+     * The meta object literal for the '{@link derived.impl.DerivedClassImpl <em>Class</em>}' class. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
+     * 
      * @see derived.impl.DerivedClassImpl
      * @see derived.impl.DerivedPackageImpl#getDerivedClass()
      * @generated

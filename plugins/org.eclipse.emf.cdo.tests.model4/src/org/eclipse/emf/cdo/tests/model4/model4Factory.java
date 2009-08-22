@@ -15,37 +15,38 @@ import org.eclipse.emf.ecore.EFactory;
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.model4.model4Package
  * @generated
  */
 public interface model4Factory extends EFactory
 {
   /**
-   * The singleton instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   model4Factory eINSTANCE = org.eclipse.emf.cdo.tests.model4.impl.model4FactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Ref Single Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Ref Single Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Ref Single Contained</em>'.
    * @generated
    */
   RefSingleContained createRefSingleContained();
 
   /**
-   * Returns a new object of class '<em>Single Contained Element</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Single Contained Element</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Single Contained Element</em>'.
    * @generated
    */
   SingleContainedElement createSingleContainedElement();
 
   /**
-   * Returns a new object of class '<em>Ref Single Non Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Ref Single Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Ref Single Non Contained</em>'.
    * @generated
    */
@@ -61,40 +62,40 @@ public interface model4Factory extends EFactory
   SingleNonContainedElement createSingleNonContainedElement();
 
   /**
-   * Returns a new object of class '<em>Ref Multi Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Ref Multi Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Ref Multi Contained</em>'.
    * @generated
    */
   RefMultiContained createRefMultiContained();
 
   /**
-   * Returns a new object of class '<em>Multi Contained Element</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Multi Contained Element</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Multi Contained Element</em>'.
    * @generated
    */
   MultiContainedElement createMultiContainedElement();
 
   /**
-   * Returns a new object of class '<em>Ref Multi Non Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Ref Multi Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Ref Multi Non Contained</em>'.
    * @generated
    */
   RefMultiNonContained createRefMultiNonContained();
 
   /**
-   * Returns a new object of class '<em>Multi Non Contained Element</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Multi Non Contained Element</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Multi Non Contained Element</em>'.
    * @generated
    */
   MultiNonContainedElement createMultiNonContainedElement();
 
   /**
-   * Returns a new object of class '<em>Ref Single Contained NPL</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Ref Single Contained NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Ref Single Contained NPL</em>'.
    * @generated
    */
@@ -110,16 +111,16 @@ public interface model4Factory extends EFactory
   RefSingleNonContainedNPL createRefSingleNonContainedNPL();
 
   /**
-   * Returns a new object of class '<em>Ref Multi Contained NPL</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Ref Multi Contained NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Ref Multi Contained NPL</em>'.
    * @generated
    */
   RefMultiContainedNPL createRefMultiContainedNPL();
 
   /**
-   * Returns a new object of class '<em>Ref Multi Non Contained NPL</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Ref Multi Non Contained NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Ref Multi Non Contained NPL</em>'.
    * @generated
    */
@@ -135,8 +136,8 @@ public interface model4Factory extends EFactory
   ContainedElementNoOpposite createContainedElementNoOpposite();
 
   /**
-   * Returns a new object of class '<em>Gen Ref Single Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Gen Ref Single Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Gen Ref Single Contained</em>'.
    * @generated
    */
@@ -152,33 +153,33 @@ public interface model4Factory extends EFactory
   GenRefSingleNonContained createGenRefSingleNonContained();
 
   /**
-   * Returns a new object of class '<em>Gen Ref Multi Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Gen Ref Multi Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Gen Ref Multi Contained</em>'.
    * @generated
    */
   GenRefMultiContained createGenRefMultiContained();
 
   /**
-   * Returns a new object of class '<em>Gen Ref Multi Non Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Gen Ref Multi Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Gen Ref Multi Non Contained</em>'.
    * @generated
    */
   GenRefMultiNonContained createGenRefMultiNonContained();
 
   /**
-   * Returns a new object of class '<em>Impl Single Ref Container</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Impl Single Ref Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Single Ref Container</em>'.
    * @generated
    */
   ImplSingleRefContainer createImplSingleRefContainer();
 
   /**
-   * Returns a new object of class '<em>Impl Single Ref Contained Element</em>'.
-   * <!-- begin-user-doc --> <!--
+   * Returns a new object of class '<em>Impl Single Ref Contained Element</em>'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Single Ref Contained Element</em>'.
    * @generated
    */
@@ -194,9 +195,9 @@ public interface model4Factory extends EFactory
   ImplSingleRefNonContainer createImplSingleRefNonContainer();
 
   /**
-   * Returns a new object of class '<em>Impl Single Ref Non Contained Element</em>'.
-   * <!-- begin-user-doc --> <!--
+   * Returns a new object of class '<em>Impl Single Ref Non Contained Element</em>'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Single Ref Non Contained Element</em>'.
    * @generated
    */
@@ -212,26 +213,26 @@ public interface model4Factory extends EFactory
   ImplMultiRefNonContainer createImplMultiRefNonContainer();
 
   /**
-   * Returns a new object of class '<em>Impl Multi Ref Non Contained Element</em>'.
-   * <!-- begin-user-doc --> <!--
+   * Returns a new object of class '<em>Impl Multi Ref Non Contained Element</em>'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Multi Ref Non Contained Element</em>'.
    * @generated
    */
   ImplMultiRefNonContainedElement createImplMultiRefNonContainedElement();
 
   /**
-   * Returns a new object of class '<em>Impl Multi Ref Container</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Impl Multi Ref Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Multi Ref Container</em>'.
    * @generated
    */
   ImplMultiRefContainer createImplMultiRefContainer();
 
   /**
-   * Returns a new object of class '<em>Impl Multi Ref Contained Element</em>'.
-   * <!-- begin-user-doc --> <!--
+   * Returns a new object of class '<em>Impl Multi Ref Contained Element</em>'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Multi Ref Contained Element</em>'.
    * @generated
    */
@@ -247,9 +248,9 @@ public interface model4Factory extends EFactory
   ImplSingleRefContainerNPL createImplSingleRefContainerNPL();
 
   /**
-   * Returns a new object of class '<em>Impl Single Ref Non Container NPL</em>'.
-   * <!-- begin-user-doc --> <!--
+   * Returns a new object of class '<em>Impl Single Ref Non Container NPL</em>'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Single Ref Non Container NPL</em>'.
    * @generated
    */
@@ -265,17 +266,17 @@ public interface model4Factory extends EFactory
   ImplMultiRefContainerNPL createImplMultiRefContainerNPL();
 
   /**
-   * Returns a new object of class '<em>Impl Multi Ref Non Container NPL</em>'.
-   * <!-- begin-user-doc --> <!--
+   * Returns a new object of class '<em>Impl Multi Ref Non Container NPL</em>'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Multi Ref Non Container NPL</em>'.
    * @generated
    */
   ImplMultiRefNonContainerNPL createImplMultiRefNonContainerNPL();
 
   /**
-   * Returns a new object of class '<em>Impl Contained Element NPL</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Impl Contained Element NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Impl Contained Element NPL</em>'.
    * @generated
    */
@@ -291,16 +292,16 @@ public interface model4Factory extends EFactory
   GenRefMultiNUNonContained createGenRefMultiNUNonContained();
 
   /**
-   * Returns a new object of class '<em>Gen Ref Map Non Contained</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Gen Ref Map Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return a new object of class '<em>Gen Ref Map Non Contained</em>'.
    * @generated
    */
   GenRefMapNonContained createGenRefMapNonContained();
 
   /**
-   * Returns the package supported by this factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the package supported by this factory.
    * @generated
    */

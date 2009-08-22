@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: Model3FactoryImpl.java,v 1.4 2009-08-12 17:16:23 estepper Exp $
+ * $Id: Model3FactoryImpl.java,v 1.5 2009-08-22 09:33:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 
@@ -24,17 +24,15 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static Model3Factory init()
@@ -56,9 +54,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Model3FactoryImpl()
@@ -67,8 +64,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -86,8 +83,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Class1 createClass1()
@@ -97,8 +94,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public MetaRef createMetaRef()
@@ -108,8 +105,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Model3Package getModel3Package()
@@ -118,8 +115,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */
@@ -129,4 +126,4 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
     return Model3Package.eINSTANCE;
   }
 
-} //Model3FactoryImpl
+} // Model3FactoryImpl

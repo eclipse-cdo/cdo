@@ -22,13 +22,14 @@ import org.eclipse.emf.ecore.EPackage;
  * end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public class EGlobalPackageDefImpl extends EPackageDefImpl implements EGlobalPackageDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected EGlobalPackageDefImpl()
@@ -38,6 +39,7 @@ public class EGlobalPackageDefImpl extends EPackageDefImpl implements EGlobalPac
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

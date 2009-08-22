@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplSingleRefNonContainerNPLImpl.java,v 1.4 2009-08-12 17:15:31 estepper Exp $
+ * $Id: ImplSingleRefNonContainerNPLImpl.java,v 1.5 2009-08-22 09:34:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -23,24 +23,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Impl Single Ref Non Container NPL</b></em>'.
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Impl Single Ref Non Container NPL</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerNPLImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ImplSingleRefNonContainerNPLImpl#getElement <em>Element</em>}
+ * </li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements ImplSingleRefNonContainerNPL
 {
   /**
-   * The cached value of the '{@link #getElement() <em>Element</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -48,8 +48,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   protected IContainedElementNoParentLink element;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ImplSingleRefNonContainerNPLImpl()
@@ -58,8 +58,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -69,8 +69,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public IContainedElementNoParentLink getElement()
@@ -90,8 +90,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public IContainedElementNoParentLink basicGetElement()
@@ -100,8 +100,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(IContainedElementNoParentLink newElement)
@@ -114,8 +114,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -132,8 +132,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -149,8 +149,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -166,8 +166,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -181,4 +181,4 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
     return super.eIsSet(featureID);
   }
 
-} //ImplSingleRefNonContainerNPLImpl
+} // ImplSingleRefNonContainerNPLImpl

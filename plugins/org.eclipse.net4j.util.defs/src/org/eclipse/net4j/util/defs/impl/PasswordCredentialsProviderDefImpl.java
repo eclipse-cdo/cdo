@@ -28,10 +28,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.net4j.util.defs.impl.PasswordCredentialsProviderDefImpl#getPassword <em>Password</em>}</li>
+ * <li>{@link org.eclipse.net4j.util.defs.impl.PasswordCredentialsProviderDefImpl#getPassword <em>Password</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefImpl implements
@@ -39,9 +39,9 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 {
 
   /**
-   * The default value of the '{@link #getPassword() <em>Password</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getPassword() <em>Password</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getPassword()
    * @generated
    * @ordered
@@ -49,9 +49,9 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
   protected static final String PASSWORD_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getPassword()
    * @generated
    * @ordered
@@ -60,6 +60,7 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected PasswordCredentialsProviderDefImpl()
@@ -69,6 +70,7 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -79,6 +81,7 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getPassword()
@@ -88,6 +91,7 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPassword(String newPassword)
@@ -95,11 +99,13 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
     String oldPassword = password;
     password = newPassword;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD, oldPassword, password));
+      eNotify(new ENotificationImpl(this, Notification.SET,
+          Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD, oldPassword, password));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -107,14 +113,15 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
   {
     switch (featureID)
     {
-      case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
-        return getPassword();
+    case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
+      return getPassword();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -122,15 +129,16 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
   {
     switch (featureID)
     {
-      case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
-        setPassword((String)newValue);
-        return;
+    case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
+      setPassword((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -138,15 +146,16 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
   {
     switch (featureID)
     {
-      case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
-        setPassword(PASSWORD_EDEFAULT);
-        return;
+    case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
+      setPassword(PASSWORD_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -154,20 +163,22 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
   {
     switch (featureID)
     {
-      case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
-        return PASSWORD_EDEFAULT == null ? password != null : !PASSWORD_EDEFAULT.equals(password);
+    case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD:
+      return PASSWORD_EDEFAULT == null ? password != null : !PASSWORD_EDEFAULT.equals(password);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (password: ");

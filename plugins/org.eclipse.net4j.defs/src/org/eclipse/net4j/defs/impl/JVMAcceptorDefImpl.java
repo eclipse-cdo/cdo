@@ -36,8 +36,8 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -46,6 +46,7 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected JVMAcceptorDefImpl()
@@ -55,6 +56,7 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,6 +67,7 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -74,6 +77,7 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -86,6 +90,7 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -93,14 +98,15 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
-        return getName();
+    case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
+      return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -108,15 +114,16 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
-        setName((String)newValue);
-        return;
+    case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
+      setName((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -124,15 +131,16 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
-        setName(NAME_EDEFAULT);
-        return;
+    case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
+      setName(NAME_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -140,20 +148,22 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME:
+      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

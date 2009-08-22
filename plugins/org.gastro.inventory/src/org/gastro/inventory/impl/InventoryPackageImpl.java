@@ -37,84 +37,98 @@ import org.gastro.inventory.Table;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class InventoryPackageImpl extends EPackageImpl implements InventoryPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass stockEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass productEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass stockProductEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass recipeEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass ingredientEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass menuCardEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass restaurantEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass departmentEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass offeringEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass tableEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass employeeEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass stationEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass sectionEClass = null;
@@ -139,17 +153,18 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+   * <p>
+   * This method is used to initialize {@link InventoryPackage#eINSTANCE} when that field is accessed. Clients should
+   * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
    * 
-   * <p>This method is used to initialize {@link InventoryPackage#eINSTANCE} when that field is accessed.
-   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -183,6 +198,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getStock()
@@ -192,6 +208,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getStock_Products()
@@ -201,6 +218,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getStock_Name()
@@ -210,6 +228,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getStock_Department()
@@ -219,6 +238,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getProduct()
@@ -228,6 +248,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getProduct_Name()
@@ -237,6 +258,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getStockProduct()
@@ -246,6 +268,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getStockProduct_Stock()
@@ -255,6 +278,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getStockProduct_Cost()
@@ -264,6 +288,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getStockProduct_Available()
@@ -273,6 +298,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getStockProduct_OrderLimit()
@@ -282,6 +308,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getRecipe()
@@ -291,6 +318,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getRecipe_Ingredients()
@@ -300,6 +328,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getRecipe_Department()
@@ -309,6 +338,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getRecipe_Cost()
@@ -318,6 +348,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getIngredient()
@@ -327,6 +358,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getIngredient_Recipe()
@@ -336,6 +368,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getIngredient_Product()
@@ -345,6 +378,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getIngredient_Quantity()
@@ -354,6 +388,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getMenuCard()
@@ -363,6 +398,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getMenuCard_Title()
@@ -372,6 +408,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getMenuCard_Restaurant()
@@ -381,6 +418,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getMenuCard_Sections()
@@ -390,6 +428,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getRestaurant()
@@ -399,6 +438,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getRestaurant_Name()
@@ -408,6 +448,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getRestaurant_Departments()
@@ -417,6 +458,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getRestaurant_MenuCards()
@@ -426,6 +468,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getRestaurant_Tables()
@@ -435,6 +478,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getRestaurant_Stations()
@@ -444,6 +488,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getDepartment()
@@ -453,6 +498,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getDepartment_Recipes()
@@ -462,6 +508,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getDepartment_Restaurant()
@@ -471,6 +518,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getDepartment_Employees()
@@ -480,6 +528,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getDepartment_Stocks()
@@ -489,6 +538,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getOffering()
@@ -498,6 +548,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getOffering_Product()
@@ -507,6 +558,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getOffering_Name()
@@ -516,6 +568,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getOffering_Description()
@@ -525,6 +578,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getOffering_Price()
@@ -534,6 +588,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getOffering_Section()
@@ -543,6 +598,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getTable()
@@ -552,6 +608,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getTable_Seats()
@@ -561,6 +618,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getTable_Restaurant()
@@ -570,6 +628,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getEmployee()
@@ -579,6 +638,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getEmployee_Department()
@@ -588,6 +648,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getEmployee_Name()
@@ -597,6 +658,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getStation()
@@ -606,6 +668,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getStation_StationID()
@@ -615,6 +678,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getSection()
@@ -624,6 +688,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getSection_MenuCard()
@@ -633,6 +698,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getSection_Offerings()
@@ -642,6 +708,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getSection_Title()
@@ -651,6 +718,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getSection_Text()
@@ -660,6 +728,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public InventoryFactory getInventoryFactory()
@@ -669,14 +738,15 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
+   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -755,14 +825,15 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
+   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()

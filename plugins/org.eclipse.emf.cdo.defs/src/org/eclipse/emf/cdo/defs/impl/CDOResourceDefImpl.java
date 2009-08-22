@@ -42,9 +42,9 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 {
 
   /**
-   * The cached value of the '{@link #getCdoTransaction() <em>Cdo Transaction</em>}' reference.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getCdoTransaction() <em>Cdo Transaction</em>}' reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getCdoTransaction()
    * @generated
    * @ordered
@@ -62,9 +62,9 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   protected static final ResourceMode RESOURCE_MODE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getResourceMode() <em>Resource Mode</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getResourceMode() <em>Resource Mode</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getResourceMode()
    * @generated
    * @ordered
@@ -82,8 +82,8 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   protected static final String PATH_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getPath() <em>Path</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getPath()
    * @generated
    * @ordered
@@ -92,6 +92,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CDOResourceDefImpl()
@@ -101,6 +102,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -111,6 +113,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOTransactionDef getCdoTransaction()
@@ -122,7 +125,8 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
       if (cdoTransaction != oldCdoTransaction)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION, oldCdoTransaction, cdoTransaction));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION,
+              oldCdoTransaction, cdoTransaction));
       }
     }
     return cdoTransaction;
@@ -130,6 +134,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOTransactionDef basicGetCdoTransaction()
@@ -139,6 +144,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setCdoTransaction(CDOTransactionDef newCdoTransaction)
@@ -146,11 +152,13 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
     CDOTransactionDef oldCdoTransaction = cdoTransaction;
     cdoTransaction = newCdoTransaction;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION, oldCdoTransaction, cdoTransaction));
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION,
+          oldCdoTransaction, cdoTransaction));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ResourceMode getResourceMode()
@@ -160,6 +168,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setResourceMode(ResourceMode newResourceMode)
@@ -167,11 +176,13 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
     ResourceMode oldResourceMode = resourceMode;
     resourceMode = newResourceMode == null ? RESOURCE_MODE_EDEFAULT : newResourceMode;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE, oldResourceMode, resourceMode));
+      eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE,
+          oldResourceMode, resourceMode));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getPath()
@@ -181,6 +192,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPath(String newPath)
@@ -193,6 +205,7 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -200,19 +213,21 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   {
     switch (featureID)
     {
-      case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
-        if (resolve) return getCdoTransaction();
-        return basicGetCdoTransaction();
-      case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
-        return getResourceMode();
-      case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
-        return getPath();
+    case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
+      if (resolve)
+        return getCdoTransaction();
+      return basicGetCdoTransaction();
+    case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
+      return getResourceMode();
+    case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
+      return getPath();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -220,21 +235,22 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   {
     switch (featureID)
     {
-      case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
-        setCdoTransaction((CDOTransactionDef)newValue);
-        return;
-      case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
-        setResourceMode((ResourceMode)newValue);
-        return;
-      case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
-        setPath((String)newValue);
-        return;
+    case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
+      setCdoTransaction((CDOTransactionDef)newValue);
+      return;
+    case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
+      setResourceMode((ResourceMode)newValue);
+      return;
+    case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
+      setPath((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -242,21 +258,22 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   {
     switch (featureID)
     {
-      case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
-        setCdoTransaction((CDOTransactionDef)null);
-        return;
-      case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
-        setResourceMode(RESOURCE_MODE_EDEFAULT);
-        return;
-      case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
-        setPath(PATH_EDEFAULT);
-        return;
+    case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
+      setCdoTransaction((CDOTransactionDef)null);
+      return;
+    case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
+      setResourceMode(RESOURCE_MODE_EDEFAULT);
+      return;
+    case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
+      setPath(PATH_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -264,24 +281,26 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   {
     switch (featureID)
     {
-      case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
-        return cdoTransaction != null;
-      case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
-        return resourceMode != RESOURCE_MODE_EDEFAULT;
-      case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
-        return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
+    case CDODefsPackage.CDO_RESOURCE_DEF__CDO_TRANSACTION:
+      return cdoTransaction != null;
+    case CDODefsPackage.CDO_RESOURCE_DEF__RESOURCE_MODE:
+      return resourceMode != RESOURCE_MODE_EDEFAULT;
+    case CDODefsPackage.CDO_RESOURCE_DEF__PATH:
+      return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (resourceMode: ");

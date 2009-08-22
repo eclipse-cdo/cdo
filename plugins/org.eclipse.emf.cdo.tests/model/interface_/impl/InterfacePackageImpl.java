@@ -21,12 +21,14 @@ import interface_.InterfacePackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class InterfacePackageImpl extends EPackageImpl implements InterfacePackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass iInterfaceEClass = null;
@@ -51,17 +53,18 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+   * <p>
+   * This method is used to initialize {@link InterfacePackage#eINSTANCE} when that field is accessed. Clients should
+   * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
    * 
-   * <p>This method is used to initialize {@link InterfacePackage#eINSTANCE} when that field is accessed.
-   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -95,6 +98,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getIInterface()
@@ -104,6 +108,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getIInterface_Test()
@@ -113,6 +118,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public InterfaceFactory getInterfaceFactory()
@@ -122,14 +128,15 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
+   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -145,14 +152,15 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
+   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()

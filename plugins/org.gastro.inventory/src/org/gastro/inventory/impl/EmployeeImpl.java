@@ -26,17 +26,18 @@ import org.gastro.inventory.InventoryPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.gastro.inventory.impl.EmployeeImpl#getDepartment <em>Department</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.EmployeeImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.EmployeeImpl#getDepartment <em>Department</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.EmployeeImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class EmployeeImpl extends CDOObjectImpl implements Employee
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected EmployeeImpl()
@@ -46,6 +47,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -56,6 +58,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -66,6 +69,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Department getDepartment()
@@ -75,6 +79,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setDepartment(Department newDepartment)
@@ -84,6 +89,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -93,6 +99,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)

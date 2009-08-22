@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: GenRefMultiNonContainedImpl.java,v 1.4 2009-08-12 17:15:30 estepper Exp $
+ * $Id: GenRefMultiNonContainedImpl.java,v 1.5 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -24,24 +24,23 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Gen Ref Multi Non Contained</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen Ref Multi Non Contained</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNonContainedImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefMultiNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMultiNonContained
 {
   /**
-   * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getElements()
    * @generated
    * @ordered
@@ -49,8 +48,8 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   protected EList<EObject> elements;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected GenRefMultiNonContainedImpl()
@@ -59,8 +58,8 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -70,8 +69,8 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<EObject> getElements()
@@ -85,8 +84,8 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -101,8 +100,8 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -120,8 +119,8 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -137,8 +136,8 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -152,4 +151,4 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
     return super.eIsSet(featureID);
   }
 
-} //GenRefMultiNonContainedImpl
+} // GenRefMultiNonContainedImpl

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: SingleNonContainedElementImpl.java,v 1.4 2009-08-12 17:15:30 estepper Exp $
+ * $Id: SingleNonContainedElementImpl.java,v 1.5 2009-08-22 09:34:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -24,25 +24,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Single Non Contained Element</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Single Non Contained Element</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.SingleNonContainedElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class SingleNonContainedElementImpl extends EObjectImpl implements SingleNonContainedElement
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -50,9 +49,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -60,9 +58,9 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getParent() <em>Parent</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getParent() <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getParent()
    * @generated
    * @ordered
@@ -70,8 +68,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   protected RefSingleNonContained parent;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected SingleNonContainedElementImpl()
@@ -80,8 +78,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -91,8 +89,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -101,8 +99,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -115,8 +113,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public RefSingleNonContained getParent()
@@ -136,8 +134,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public RefSingleNonContained basicGetParent()
@@ -146,8 +144,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NotificationChain basicSetParent(RefSingleNonContained newParent, NotificationChain msgs)
@@ -167,8 +165,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setParent(RefSingleNonContained newParent)
@@ -192,8 +190,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -211,8 +209,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -227,8 +225,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -247,8 +245,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -267,8 +265,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -287,8 +285,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -305,8 +303,8 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -322,4 +320,4 @@ public class SingleNonContainedElementImpl extends EObjectImpl implements Single
     return result.toString();
   }
 
-} //SingleNonContainedElementImpl
+} // SingleNonContainedElementImpl

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: MetaRef.java,v 1.1 2009-08-12 17:16:22 estepper Exp $
+ * $Id: MetaRef.java,v 1.2 2009-08-22 09:33:56 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model3;
 
@@ -16,17 +16,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Meta Ref</b></em>'.
- * <!-- end-user-doc -->
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Meta Ref</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef <em>EPackage Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef <em>EPackage Ref</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model3.Model3Package#getMetaRef()
  * @model
  * @generated
@@ -34,13 +31,13 @@ import org.eclipse.emf.ecore.EPackage;
 public interface MetaRef extends EObject
 {
   /**
-   * Returns the value of the '<em><b>EPackage Ref</b></em>' reference.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>EPackage Ref</b></em>' reference. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>EPackage Ref</em>' reference isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>EPackage Ref</em>' reference isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>EPackage Ref</em>' reference.
    * @see #setEPackageRef(EPackage)
    * @see org.eclipse.emf.cdo.tests.legacy.model3.Model3Package#getMetaRef_EPackageRef()
@@ -50,10 +47,11 @@ public interface MetaRef extends EObject
   EPackage getEPackageRef();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef <em>EPackage Ref</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>EPackage Ref</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef#getEPackageRef <em>EPackage Ref</em>}
+   * ' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>EPackage Ref</em>' reference.
    * @see #getEPackageRef()
    * @generated
    */

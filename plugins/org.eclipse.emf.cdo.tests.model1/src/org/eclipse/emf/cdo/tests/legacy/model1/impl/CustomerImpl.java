@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: CustomerImpl.java,v 1.4 2009-08-12 17:16:07 estepper Exp $
+ * $Id: CustomerImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -26,31 +26,29 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Customer</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Customer</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CustomerImpl extends AddressImpl implements Customer
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getSalesOrders() <em>Sales Orders</em>}' reference list.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getSalesOrders() <em>Sales Orders</em>}' reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getSalesOrders()
    * @generated
    * @ordered
@@ -58,8 +56,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   protected EList<SalesOrder> salesOrders;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CustomerImpl()
@@ -68,8 +66,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -79,8 +77,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<SalesOrder> getSalesOrders()
@@ -94,8 +92,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -111,8 +109,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -127,8 +125,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -143,8 +141,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -162,8 +160,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -179,8 +177,8 @@ public class CustomerImpl extends AddressImpl implements Customer
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -194,4 +192,4 @@ public class CustomerImpl extends AddressImpl implements Customer
     return super.eIsSet(featureID);
   }
 
-} //CustomerImpl
+} // CustomerImpl

@@ -31,20 +31,21 @@ import org.gastro.inventory.Table;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.gastro.inventory.impl.RestaurantImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.RestaurantImpl#getDepartments <em>Departments</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.RestaurantImpl#getMenuCards <em>Menu Cards</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.RestaurantImpl#getTables <em>Tables</em>}</li>
- *   <li>{@link org.gastro.inventory.impl.RestaurantImpl#getStations <em>Stations</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.RestaurantImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.RestaurantImpl#getDepartments <em>Departments</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.RestaurantImpl#getMenuCards <em>Menu Cards</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.RestaurantImpl#getTables <em>Tables</em>}</li>
+ * <li>{@link org.gastro.inventory.impl.RestaurantImpl#getStations <em>Stations</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RestaurantImpl()
@@ -54,6 +55,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +66,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -74,6 +77,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -83,6 +87,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -92,6 +97,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -102,6 +108,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -112,6 +119,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

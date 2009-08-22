@@ -21,13 +21,14 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
  */
 public abstract class ExecutorServiceDefImpl extends DefImpl implements ExecutorServiceDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ExecutorServiceDefImpl()
@@ -37,6 +38,7 @@ public abstract class ExecutorServiceDefImpl extends DefImpl implements Executor
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

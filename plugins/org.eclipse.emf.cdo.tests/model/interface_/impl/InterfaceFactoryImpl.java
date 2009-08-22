@@ -21,13 +21,14 @@ import interface_.InterfacePackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static InterfaceFactory init()
@@ -49,8 +50,8 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public InterfaceFactoryImpl()
@@ -60,6 +61,7 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -74,6 +76,7 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public InterfacePackage getInterfacePackage()
@@ -83,6 +86,7 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */

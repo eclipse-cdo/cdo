@@ -24,17 +24,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.SingleNonContainedElementImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.SingleNonContainedElementImpl#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.SingleNonContainedElementImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.SingleNonContainedElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class SingleNonContainedElementImpl extends CDOObjectImpl implements SingleNonContainedElement
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected SingleNonContainedElementImpl()
@@ -44,6 +45,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,6 +56,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +67,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -73,6 +77,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -82,6 +87,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public RefSingleNonContained getParent()
@@ -91,6 +97,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setParent(RefSingleNonContained newParent)

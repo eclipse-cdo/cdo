@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.net4j.util.tests.defs.TestDefsFactory
  * @model kind="package"
  * @generated
@@ -34,29 +35,29 @@ import org.eclipse.emf.ecore.EReference;
 public interface TestDefsPackage extends EPackage
 {
   /**
-   * The package name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNAME = "defs"; //$NON-NLS-1$
 
   /**
-   * The package namespace URI.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/NET4J/defs/tests/1.0.0"; //$NON-NLS-1$
 
   /**
-   * The package namespace name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_PREFIX = "net4j.defs.tests"; //$NON-NLS-1$
 
   /**
-   * The singleton instance of the package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   TestDefsPackage eINSTANCE = org.eclipse.net4j.util.tests.defs.impl.TestDefsPackageImpl.init();
@@ -64,6 +65,7 @@ public interface TestDefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl <em>Test Def</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.net4j.util.tests.defs.impl.TestDefImpl
    * @see org.eclipse.net4j.util.tests.defs.impl.TestDefsPackageImpl#getTestDef()
    * @generated
@@ -71,24 +73,24 @@ public interface TestDefsPackage extends EPackage
   int TEST_DEF = 0;
 
   /**
-   * The feature id for the '<em><b>References</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>References</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int TEST_DEF__REFERENCES = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Attribute</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Attribute</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int TEST_DEF__ATTRIBUTE = Net4jUtilDefsPackage.DEF_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Test Def</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Test Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -105,8 +107,9 @@ public interface TestDefsPackage extends EPackage
   EClass getTestDef();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.net4j.util.tests.defs.TestDef#getReferences <em>References</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.net4j.util.tests.defs.TestDef#getReferences
+   * <em>References</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference list '<em>References</em>'.
    * @see org.eclipse.net4j.util.tests.defs.TestDef#getReferences()
    * @see #getTestDef()
@@ -115,8 +118,9 @@ public interface TestDefsPackage extends EPackage
   EReference getTestDef_References();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.net4j.util.tests.defs.TestDef#getAttribute <em>Attribute</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.net4j.util.tests.defs.TestDef#getAttribute
+   * <em>Attribute</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Attribute</em>'.
    * @see org.eclipse.net4j.util.tests.defs.TestDef#getAttribute()
    * @see #getTestDef()
@@ -125,8 +129,8 @@ public interface TestDefsPackage extends EPackage
   EAttribute getTestDef_Attribute();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -141,13 +145,15 @@ public interface TestDefsPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl <em>Test Def</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl <em>Test Def</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.net4j.util.tests.defs.impl.TestDefImpl
      * @see org.eclipse.net4j.util.tests.defs.impl.TestDefsPackageImpl#getTestDef()
      * @generated
@@ -155,17 +161,17 @@ public interface TestDefsPackage extends EPackage
     EClass TEST_DEF = eINSTANCE.getTestDef();
 
     /**
-     * The meta object literal for the '<em><b>References</b></em>' reference list feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>References</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference TEST_DEF__REFERENCES = eINSTANCE.getTestDef_References();
 
     /**
-     * The meta object literal for the '<em><b>Attribute</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Attribute</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute TEST_DEF__ATTRIBUTE = eINSTANCE.getTestDef_Attribute();

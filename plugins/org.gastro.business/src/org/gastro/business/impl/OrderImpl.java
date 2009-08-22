@@ -29,19 +29,20 @@ import org.gastro.inventory.Table;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.gastro.business.impl.OrderImpl#getBusinessDay <em>Business Day</em>}</li>
- *   <li>{@link org.gastro.business.impl.OrderImpl#getTable <em>Table</em>}</li>
- *   <li>{@link org.gastro.business.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
- *   <li>{@link org.gastro.business.impl.OrderImpl#getNumber <em>Number</em>}</li>
+ * <li>{@link org.gastro.business.impl.OrderImpl#getBusinessDay <em>Business Day</em>}</li>
+ * <li>{@link org.gastro.business.impl.OrderImpl#getTable <em>Table</em>}</li>
+ * <li>{@link org.gastro.business.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
+ * <li>{@link org.gastro.business.impl.OrderImpl#getNumber <em>Number</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class OrderImpl extends CDOObjectImpl implements Order
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected OrderImpl()
@@ -51,6 +52,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -61,6 +63,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -71,6 +74,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BusinessDay getBusinessDay()
@@ -80,6 +84,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setBusinessDay(BusinessDay newBusinessDay)
@@ -89,6 +94,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Table getTable()
@@ -98,6 +104,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTable(Table newTable)
@@ -107,6 +114,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -117,6 +125,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getNumber()
@@ -126,6 +135,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setNumber(int newNumber)

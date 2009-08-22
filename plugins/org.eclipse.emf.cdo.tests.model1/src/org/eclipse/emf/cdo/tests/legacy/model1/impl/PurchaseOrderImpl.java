@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: PurchaseOrderImpl.java,v 1.4 2009-08-12 17:16:07 estepper Exp $
+ * $Id: PurchaseOrderImpl.java,v 1.5 2009-08-22 09:35:30 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model1.impl;
 
@@ -25,32 +25,30 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import java.util.Date;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Purchase Order</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Purchase Order</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.PurchaseOrderImpl#getDate <em>Date</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.PurchaseOrderImpl#getSupplier <em>Supplier</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.PurchaseOrderImpl#getDate <em>Date</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.PurchaseOrderImpl#getSupplier <em>Supplier</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The default value of the '{@link #getDate() <em>Date</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getDate() <em>Date</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getDate()
    * @generated
    * @ordered
@@ -58,9 +56,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   protected static final Date DATE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getDate() <em>Date</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getDate() <em>Date</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getDate()
    * @generated
    * @ordered
@@ -68,9 +65,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   protected Date date = DATE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getSupplier() <em>Supplier</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getSupplier() <em>Supplier</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getSupplier()
    * @generated
    * @ordered
@@ -78,8 +75,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   protected Supplier supplier;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected PurchaseOrderImpl()
@@ -88,8 +85,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -99,8 +96,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Date getDate()
@@ -109,8 +106,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setDate(Date newDate)
@@ -122,8 +119,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Supplier getSupplier()
@@ -143,8 +140,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Supplier basicGetSupplier()
@@ -153,8 +150,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NotificationChain basicSetSupplier(Supplier newSupplier, NotificationChain msgs)
@@ -174,8 +171,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setSupplier(Supplier newSupplier)
@@ -199,8 +196,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -218,8 +215,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -234,8 +231,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -254,8 +251,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -274,8 +271,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -294,8 +291,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -312,8 +309,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -329,4 +326,4 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     return result.toString();
   }
 
-} //PurchaseOrderImpl
+} // PurchaseOrderImpl

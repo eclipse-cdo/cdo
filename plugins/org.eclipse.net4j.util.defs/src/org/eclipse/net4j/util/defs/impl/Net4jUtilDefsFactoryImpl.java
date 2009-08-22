@@ -30,20 +30,22 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilDefsFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static Net4jUtilDefsFactory init()
   {
     try
     {
-      Net4jUtilDefsFactory theNet4jUtilDefsFactory = (Net4jUtilDefsFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/NET4J/util/defs/1.0.0"); 
+      Net4jUtilDefsFactory theNet4jUtilDefsFactory = (Net4jUtilDefsFactory)EPackage.Registry.INSTANCE
+          .getEFactory("http://www.eclipse.org/NET4J/util/defs/1.0.0");
       if (theNet4jUtilDefsFactory != null)
       {
         return theNet4jUtilDefsFactory;
@@ -57,8 +59,8 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Net4jUtilDefsFactoryImpl()
@@ -68,6 +70,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -75,21 +78,30 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
   {
     switch (eClass.getClassifierID())
     {
-      case Net4jUtilDefsPackage.DEF_CONTAINER: return createDefContainer();
-      case Net4jUtilDefsPackage.THREAD_POOL_DEF: return createThreadPoolDef();
-      case Net4jUtilDefsPackage.RANDOMIZER_DEF: return createRandomizerDef();
-      case Net4jUtilDefsPackage.USER_MANAGER_DEF: return createUserManagerDef();
-      case Net4jUtilDefsPackage.USER: return createUser();
-      case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF: return createPasswordCredentialsProviderDef();
-      case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF: return createResponseNegotiatorDef();
-      case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF: return createChallengeNegotiatorDef();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    case Net4jUtilDefsPackage.DEF_CONTAINER:
+      return createDefContainer();
+    case Net4jUtilDefsPackage.THREAD_POOL_DEF:
+      return createThreadPoolDef();
+    case Net4jUtilDefsPackage.RANDOMIZER_DEF:
+      return createRandomizerDef();
+    case Net4jUtilDefsPackage.USER_MANAGER_DEF:
+      return createUserManagerDef();
+    case Net4jUtilDefsPackage.USER:
+      return createUser();
+    case Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF:
+      return createPasswordCredentialsProviderDef();
+    case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF:
+      return createResponseNegotiatorDef();
+    case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF:
+      return createChallengeNegotiatorDef();
+    default:
+      throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public DefContainer createDefContainer()
@@ -100,6 +112,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ThreadPoolDef createThreadPoolDef()
@@ -110,6 +123,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public RandomizerDef createRandomizerDef()
@@ -120,6 +134,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public UserManagerDef createUserManagerDef()
@@ -130,6 +145,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public User createUser()
@@ -140,6 +156,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public PasswordCredentialsProviderDef createPasswordCredentialsProviderDef()
@@ -150,6 +167,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ResponseNegotiatorDef createResponseNegotiatorDef()
@@ -160,6 +178,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ChallengeNegotiatorDef createChallengeNegotiatorDef()
@@ -170,6 +189,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Net4jUtilDefsPackage getNet4jUtilDefsPackage()
@@ -179,6 +199,7 @@ public class Net4jUtilDefsFactoryImpl extends EFactoryImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */

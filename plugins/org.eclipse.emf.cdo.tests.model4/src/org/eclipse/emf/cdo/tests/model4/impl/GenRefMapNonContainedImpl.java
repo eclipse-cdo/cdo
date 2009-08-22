@@ -25,16 +25,17 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMapNonContainedImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMapNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefMapNonContainedImpl extends CDOObjectImpl implements GenRefMapNonContained
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected GenRefMapNonContainedImpl()
@@ -44,6 +45,7 @@ public class GenRefMapNonContainedImpl extends CDOObjectImpl implements GenRefMa
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,6 +56,7 @@ public class GenRefMapNonContainedImpl extends CDOObjectImpl implements GenRefMa
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +67,7 @@ public class GenRefMapNonContainedImpl extends CDOObjectImpl implements GenRefMa
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

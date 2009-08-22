@@ -24,16 +24,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl#getTasks <em>Tasks</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TaskContainerImpl#getTasks <em>Tasks</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected TaskContainerImpl()
@@ -43,6 +44,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -53,6 +55,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -63,6 +66,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

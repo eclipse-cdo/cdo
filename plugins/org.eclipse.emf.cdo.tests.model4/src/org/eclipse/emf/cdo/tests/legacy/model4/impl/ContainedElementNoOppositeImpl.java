@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ContainedElementNoOppositeImpl.java,v 1.4 2009-08-12 17:15:31 estepper Exp $
+ * $Id: ContainedElementNoOppositeImpl.java,v 1.5 2009-08-22 09:34:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -21,24 +21,23 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Contained Element No Opposite</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Contained Element No Opposite</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ContainedElementNoOppositeImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.ContainedElementNoOppositeImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ContainedElementNoOppositeImpl extends EObjectImpl implements ContainedElementNoOpposite
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -46,9 +45,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -56,8 +54,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   protected String name = NAME_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ContainedElementNoOppositeImpl()
@@ -66,8 +64,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -77,8 +75,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -87,8 +85,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -101,8 +99,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -117,8 +115,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -134,8 +132,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -151,8 +149,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -167,8 +165,8 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -184,4 +182,4 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
     return result.toString();
   }
 
-} //ContainedElementNoOppositeImpl
+} // ContainedElementNoOppositeImpl

@@ -16,8 +16,7 @@ import org.eclipse.net4j.util.defs.Def;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Protocol Provider Def</b></em>'. <!--
  * end-user-doc -->
- *
- *
+ * 
  * @see org.eclipse.net4j.defs.Net4jDefsPackage#getProtocolProviderDef()
  * @model abstract="true"
  * @generated

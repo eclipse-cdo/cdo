@@ -22,6 +22,7 @@ public class TCPSelectorDefImpl extends DefImpl implements TCPSelectorDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected TCPSelectorDefImpl()
@@ -31,6 +32,7 @@ public class TCPSelectorDefImpl extends DefImpl implements TCPSelectorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

@@ -24,16 +24,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleContainedNPLImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleContainedNPLImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefSingleContainedNPLImpl extends CDOObjectImpl implements RefSingleContainedNPL
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RefSingleContainedNPLImpl()
@@ -43,6 +44,7 @@ public class RefSingleContainedNPLImpl extends CDOObjectImpl implements RefSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -53,6 +55,7 @@ public class RefSingleContainedNPLImpl extends CDOObjectImpl implements RefSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -63,6 +66,7 @@ public class RefSingleContainedNPLImpl extends CDOObjectImpl implements RefSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ContainedElementNoOpposite getElement()
@@ -72,6 +76,7 @@ public class RefSingleContainedNPLImpl extends CDOObjectImpl implements RefSingl
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(ContainedElementNoOpposite newElement)

@@ -45,17 +45,17 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
     IChangeNotifier, IDisposable
 {
   /**
-   * This keeps track of the root adapter factory that delegates to this adapter factory.
-   * <!-- begin-user-doc --> <!--
+   * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   protected ComposedAdapterFactory parentAdapterFactory;
 
   /**
-   * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-   * <!-- begin-user-doc --> <!--
+   * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -69,8 +69,8 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
-   * This constructs an instance.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This constructs an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public BusinessItemProviderAdapterFactory()
@@ -108,16 +108,16 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.gastro.business.Order} instances.
-   * <!-- begin-user-doc
+   * This keeps track of the one adapter used for all {@link org.gastro.business.Order} instances. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected OrderItemProvider orderItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.gastro.business.Order}.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This creates an adapter for a {@link org.gastro.business.Order}. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -157,16 +157,16 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.gastro.business.Waiter} instances.
-   * <!-- begin-user-doc
+   * This keeps track of the one adapter used for all {@link org.gastro.business.Waiter} instances. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected WaiterItemProvider waiterItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.gastro.business.Waiter}.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This creates an adapter for a {@link org.gastro.business.Waiter}. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -181,8 +181,8 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This returns the root adapter factory that contains this factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This returns the root adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ComposeableAdapterFactory getRootAdapterFactory()
@@ -191,8 +191,8 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This sets the composed adapter factory that contains this factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This sets the composed adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
@@ -202,6 +202,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -211,9 +212,9 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This implementation substitutes the factory itself as the key for the adapter.
-   * <!-- begin-user-doc --> <!--
+   * This implementation substitutes the factory itself as the key for the adapter. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -224,6 +225,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -242,8 +244,8 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This adds a listener.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This adds a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void addListener(INotifyChangedListener notifyChangedListener)
@@ -252,8 +254,8 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This removes a listener.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This removes a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void removeListener(INotifyChangedListener notifyChangedListener)
@@ -262,9 +264,9 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-   * <!-- begin-user-doc --> <!--
+   * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public void fireNotifyChanged(Notification notification)
@@ -278,8 +280,8 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This disposes all of the item providers created by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void dispose()

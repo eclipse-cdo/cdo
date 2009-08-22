@@ -8,18 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: IContainedElementNoParentLink.java,v 1.1 2009-08-12 17:15:42 estepper Exp $
+ * $Id: IContainedElementNoParentLink.java,v 1.2 2009-08-22 09:34:16 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4interfaces;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>IContained Element No Parent Link</b></em>'.
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>IContained Element No Parent Link</b></em>'.
  * <!-- end-user-doc -->
- *
- *
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4interfaces.model4interfacesPackage#getIContainedElementNoParentLink()
  * @model interface="true" abstract="true"
  * @generated

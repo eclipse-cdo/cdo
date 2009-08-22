@@ -41,9 +41,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnectorDef
 {
   /**
-   * The cached value of the '{@link #getTcpSelectorDef() <em>Tcp Selector Def</em>}' reference.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getTcpSelectorDef() <em>Tcp Selector Def</em>}' reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getTcpSelectorDef()
    * @generated
    * @ordered
@@ -61,8 +61,8 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   protected static final String HOST_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getHost() <em>Host</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getHost() <em>Host</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getHost()
    * @generated
    * @ordered
@@ -80,8 +80,8 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   protected static final int PORT_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getPort() <em>Port</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getPort() <em>Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getPort()
    * @generated
    * @ordered
@@ -89,8 +89,8 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   protected int port = PORT_EDEFAULT;
 
   /**
-   * This is true if the Port attribute has been set.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * This is true if the Port attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -98,6 +98,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected TCPConnectorDefImpl()
@@ -107,6 +108,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -117,6 +119,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public TCPSelectorDef getTcpSelectorDef()
@@ -128,7 +131,8 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
       if (tcpSelectorDef != oldTcpSelectorDef)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF, oldTcpSelectorDef, tcpSelectorDef));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF, oldTcpSelectorDef, tcpSelectorDef));
       }
     }
     return tcpSelectorDef;
@@ -136,6 +140,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public TCPSelectorDef basicGetTcpSelectorDef()
@@ -145,6 +150,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTcpSelectorDef(TCPSelectorDef newTcpSelectorDef)
@@ -152,11 +158,13 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     TCPSelectorDef oldTcpSelectorDef = tcpSelectorDef;
     tcpSelectorDef = newTcpSelectorDef;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF, oldTcpSelectorDef, tcpSelectorDef));
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF,
+          oldTcpSelectorDef, tcpSelectorDef));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getHost()
@@ -166,6 +174,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setHost(String newHost)
@@ -204,6 +213,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPort(int newPort)
@@ -213,11 +223,13 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     boolean oldPortESet = portESet;
     portESet = true;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT, oldPort, port, !oldPortESet));
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT, oldPort, port,
+          !oldPortESet));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void unsetPort()
@@ -227,11 +239,13 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     port = PORT_EDEFAULT;
     portESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT, oldPort, PORT_EDEFAULT, oldPortESet));
+      eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT, oldPort,
+          PORT_EDEFAULT, oldPortESet));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isSetPort()
@@ -241,6 +255,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -248,19 +263,21 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
-        if (resolve) return getTcpSelectorDef();
-        return basicGetTcpSelectorDef();
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
-        return getHost();
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
-        return getPort();
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
+      if (resolve)
+        return getTcpSelectorDef();
+      return basicGetTcpSelectorDef();
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
+      return getHost();
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
+      return getPort();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -268,21 +285,22 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
-        setTcpSelectorDef((TCPSelectorDef)newValue);
-        return;
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
-        setHost((String)newValue);
-        return;
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
-        setPort((Integer)newValue);
-        return;
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
+      setTcpSelectorDef((TCPSelectorDef)newValue);
+      return;
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
+      setHost((String)newValue);
+      return;
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
+      setPort((Integer)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -290,21 +308,22 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
-        setTcpSelectorDef((TCPSelectorDef)null);
-        return;
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
-        setHost(HOST_EDEFAULT);
-        return;
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
-        unsetPort();
-        return;
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
+      setTcpSelectorDef((TCPSelectorDef)null);
+      return;
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
+      setHost(HOST_EDEFAULT);
+      return;
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
+      unsetPort();
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -312,30 +331,35 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   {
     switch (featureID)
     {
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
-        return tcpSelectorDef != null;
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
-        return HOST_EDEFAULT == null ? host != null : !HOST_EDEFAULT.equals(host);
-      case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
-        return isSetPort();
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
+      return tcpSelectorDef != null;
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
+      return HOST_EDEFAULT == null ? host != null : !HOST_EDEFAULT.equals(host);
+    case Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT:
+      return isSetPort();
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (host: ");
     result.append(host);
     result.append(", port: ");
-    if (portESet) result.append(port); else result.append("<unset>");
+    if (portESet)
+      result.append(port);
+    else
+      result.append("<unset>");
     result.append(')');
     return result.toString();
   }

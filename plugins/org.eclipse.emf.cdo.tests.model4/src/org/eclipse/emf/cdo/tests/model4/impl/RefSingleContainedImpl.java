@@ -24,16 +24,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleContainedImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model4.impl.RefSingleContainedImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleContained
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RefSingleContainedImpl()
@@ -43,6 +44,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -53,6 +55,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -63,6 +66,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SingleContainedElement getElement()
@@ -72,6 +76,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(SingleContainedElement newElement)

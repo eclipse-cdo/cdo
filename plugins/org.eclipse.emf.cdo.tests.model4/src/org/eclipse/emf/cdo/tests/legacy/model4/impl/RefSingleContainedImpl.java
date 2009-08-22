@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: RefSingleContainedImpl.java,v 1.4 2009-08-12 17:15:31 estepper Exp $
+ * $Id: RefSingleContainedImpl.java,v 1.5 2009-08-22 09:34:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -24,24 +24,23 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Ref Single Contained</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Ref Single Contained</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.RefSingleContainedImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class RefSingleContainedImpl extends EObjectImpl implements RefSingleContained
 {
   /**
-   * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -49,8 +48,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   protected SingleContainedElement element;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RefSingleContainedImpl()
@@ -59,8 +58,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -70,8 +69,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SingleContainedElement getElement()
@@ -80,8 +79,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NotificationChain basicSetElement(SingleContainedElement newElement, NotificationChain msgs)
@@ -101,8 +100,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(SingleContainedElement newElement)
@@ -126,8 +125,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -145,8 +144,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -161,8 +160,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -177,8 +176,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -194,8 +193,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -211,8 +210,8 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -226,4 +225,4 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
     return super.eIsSet(featureID);
   }
 
-} //RefSingleContainedImpl
+} // RefSingleContainedImpl

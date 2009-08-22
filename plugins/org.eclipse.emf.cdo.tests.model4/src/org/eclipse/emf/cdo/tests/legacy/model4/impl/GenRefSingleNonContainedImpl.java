@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: GenRefSingleNonContainedImpl.java,v 1.4 2009-08-12 17:15:31 estepper Exp $
+ * $Id: GenRefSingleNonContainedImpl.java,v 1.5 2009-08-22 09:34:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4.impl;
 
@@ -23,24 +23,23 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Gen Ref Single Non Contained</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Gen Ref Single Non Contained</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleNonContainedImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.GenRefSingleNonContainedImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefSingleNonContained
 {
   /**
-   * The cached value of the '{@link #getElement() <em>Element</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
    * @see #getElement()
    * @generated
    * @ordered
@@ -48,8 +47,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   protected EObject element;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected GenRefSingleNonContainedImpl()
@@ -58,8 +57,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -69,8 +68,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject getElement()
@@ -90,8 +89,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EObject basicGetElement()
@@ -100,8 +99,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setElement(EObject newElement)
@@ -114,8 +113,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -132,8 +131,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -149,8 +148,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -166,8 +165,8 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -181,4 +180,4 @@ public class GenRefSingleNonContainedImpl extends EObjectImpl implements GenRefS
     return super.eIsSet(featureID);
   }
 
-} //GenRefSingleNonContainedImpl
+} // GenRefSingleNonContainedImpl

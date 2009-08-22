@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.mango.MangoFactory
  * @model kind="package"
  * @generated
@@ -32,29 +33,29 @@ import org.eclipse.emf.ecore.EReference;
 public interface MangoPackage extends EPackage
 {
   /**
-   * The package name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNAME = "mango";
 
   /**
-   * The package namespace URI.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/mango";
 
   /**
-   * The package namespace name.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   String eNS_PREFIX = "mango";
 
   /**
-   * The singleton instance of the package.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   MangoPackage eINSTANCE = org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl.init();
@@ -62,6 +63,7 @@ public interface MangoPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl <em>Value List</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl
    * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getValueList()
    * @generated
@@ -69,24 +71,24 @@ public interface MangoPackage extends EPackage
   int VALUE_LIST = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int VALUE_LIST__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Values</b></em>' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Values</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int VALUE_LIST__VALUES = 1;
 
   /**
-   * The number of structural features of the '<em>Value List</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Value List</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -103,16 +105,16 @@ public interface MangoPackage extends EPackage
   int VALUE = 1;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int VALUE__NAME = 0;
 
   /**
-   * The number of structural features of the '<em>Value</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Value</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
@@ -121,6 +123,7 @@ public interface MangoPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl <em>Parameter</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl
    * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameter()
    * @generated
@@ -128,32 +131,33 @@ public interface MangoPackage extends EPackage
   int PARAMETER = 2;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int PARAMETER__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Passing</b></em>' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Passing</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int PARAMETER__PASSING = 1;
 
   /**
-   * The number of structural features of the '<em>Parameter</em>' class.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The number of structural features of the '<em>Parameter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    * @ordered
    */
   int PARAMETER_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing <em>Parameter Passing</em>}' enum.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing <em>Parameter Passing</em>}'
+   * enum. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
    * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameterPassing()
    * @generated
@@ -171,8 +175,9 @@ public interface MangoPackage extends EPackage
   EClass getValueList();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getName <em>Name</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.ValueList#getName()
    * @see #getValueList()
@@ -181,8 +186,9 @@ public interface MangoPackage extends EPackage
   EAttribute getValueList_Name();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getValues <em>Values</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.mango.ValueList#getValues
+   * <em>Values</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the reference list '<em>Values</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.ValueList#getValues()
    * @see #getValueList()
@@ -203,6 +209,7 @@ public interface MangoPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.Value#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.Value#getName()
    * @see #getValue()
@@ -221,8 +228,9 @@ public interface MangoPackage extends EPackage
   EClass getParameter();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.Parameter#getName <em>Name</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.Parameter#getName <em>Name</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.Parameter#getName()
    * @see #getParameter()
@@ -231,8 +239,9 @@ public interface MangoPackage extends EPackage
   EAttribute getParameter_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.Parameter#getPassing <em>Passing</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.Parameter#getPassing
+   * <em>Passing</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for the attribute '<em>Passing</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.Parameter#getPassing()
    * @see #getParameter()
@@ -241,8 +250,9 @@ public interface MangoPackage extends EPackage
   EAttribute getParameter_Passing();
 
   /**
-   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing <em>Parameter Passing</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing
+   * <em>Parameter Passing</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the meta object for enum '<em>Parameter Passing</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
    * @generated
@@ -250,8 +260,8 @@ public interface MangoPackage extends EPackage
   EEnum getParameterPassing();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -266,13 +276,15 @@ public interface MangoPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl <em>Value List</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl <em>Value List</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.mango.impl.ValueListImpl
      * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getValueList()
      * @generated
@@ -280,17 +292,17 @@ public interface MangoPackage extends EPackage
     EClass VALUE_LIST = eINSTANCE.getValueList();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute VALUE_LIST__NAME = eINSTANCE.getValueList_Name();
 
     /**
-     * The meta object literal for the '<em><b>Values</b></em>' reference list feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Values</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EReference VALUE_LIST__VALUES = eINSTANCE.getValueList_Values();
@@ -298,6 +310,7 @@ public interface MangoPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ValueImpl <em>Value</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.mango.impl.ValueImpl
      * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getValue()
      * @generated
@@ -305,16 +318,17 @@ public interface MangoPackage extends EPackage
     EClass VALUE = eINSTANCE.getValue();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute VALUE__NAME = eINSTANCE.getValue_Name();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl <em>Parameter</em>}' class.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl <em>Parameter</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.mango.impl.ParameterImpl
      * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameter()
      * @generated
@@ -322,24 +336,25 @@ public interface MangoPackage extends EPackage
     EClass PARAMETER = eINSTANCE.getParameter();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute PARAMETER__NAME = eINSTANCE.getParameter_Name();
 
     /**
-     * The meta object literal for the '<em><b>Passing</b></em>' attribute feature.
-     * <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Passing</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
+     * 
      * @generated
      */
     EAttribute PARAMETER__PASSING = eINSTANCE.getParameter_Passing();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing <em>Parameter Passing</em>}' enum.
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing
+     * <em>Parameter Passing</em>}' enum. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @see org.eclipse.emf.cdo.tests.mango.ParameterPassing
      * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getParameterPassing()
      * @generated

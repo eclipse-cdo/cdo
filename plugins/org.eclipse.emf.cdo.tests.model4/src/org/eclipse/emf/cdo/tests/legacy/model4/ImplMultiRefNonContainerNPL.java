@@ -8,18 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: ImplMultiRefNonContainerNPL.java,v 1.1 2009-08-12 17:15:31 estepper Exp $
+ * $Id: ImplMultiRefNonContainerNPL.java,v 1.2 2009-08-22 09:34:58 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model4;
 
 import org.eclipse.emf.cdo.tests.legacy.model4interfaces.IMultiRefNonContainerNPL;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Impl Multi Ref Non Container NPL</b></em>'.
- * <!-- end-user-doc -->
- *
- *
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Impl Multi Ref Non Container NPL</b></em>'. <!--
+ * end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.tests.legacy.model4.model4Package#getImplMultiRefNonContainerNPL()
  * @model
  * @generated

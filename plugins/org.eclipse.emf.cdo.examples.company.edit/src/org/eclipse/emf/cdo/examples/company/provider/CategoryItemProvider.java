@@ -39,8 +39,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Category} object. <!-- begin-user-doc
- * --> <!-- end-user-doc -->
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Category} object. <!--
+ * begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated
  */
@@ -204,7 +204,7 @@ public class CategoryItemProvider extends CDOItemProviderAdapter implements IEdi
         .createCategory()));
 
     newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.CATEGORY__PRODUCTS, CompanyFactory.eINSTANCE
-        .createCompany()));
+        .createProduct()));
   }
 
   /**

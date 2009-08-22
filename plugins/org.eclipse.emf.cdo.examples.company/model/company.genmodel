@@ -13,7 +13,7 @@
     optimizedHasChildren="true" tableProviders="true" colorProviders="true" fontProviders="true">
   <foreignModel>company.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
-  <genPackages prefix="Company" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
+  <genPackages prefix="Company" basePackage="org.eclipse.emf.cdo.examples" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="company.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="company.ecore#//VAT">
       <genEnumLiterals ecoreEnumLiteral="company.ecore#//VAT/vat0"/>

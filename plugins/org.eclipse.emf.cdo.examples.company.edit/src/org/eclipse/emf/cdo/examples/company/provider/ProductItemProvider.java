@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Company} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class ProductItemProvider extends CDOItemProviderAdapter implements IEditingDomainItemProvider,
@@ -48,14 +48,14 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   public ProductItemProvider(AdapterFactory adapterFactory)
@@ -65,7 +65,7 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -85,62 +85,62 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
 
   /**
    * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected void addNamePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Company_name_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Company_name_feature", "_UI_Company_type"),
-        CompanyPackage.Literals.PRODUCT1__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Product_name_feature"), getString(
+        "_UI_PropertyDescriptor_description", "_UI_Product_name_feature", "_UI_Product_type"),
+        CompanyPackage.Literals.PRODUCT__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
 
   /**
    * This adds a property descriptor for the Order Details feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected void addOrderDetailsPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Company_orderDetails_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Company_orderDetails_feature", "_UI_Company_type"),
-        CompanyPackage.Literals.PRODUCT1__ORDER_DETAILS, true, false, true, null, null, null));
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Product_orderDetails_feature"), getString(
+        "_UI_PropertyDescriptor_description", "_UI_Product_orderDetails_feature", "_UI_Product_type"),
+        CompanyPackage.Literals.PRODUCT__ORDER_DETAILS, true, false, true, null, null, null));
   }
 
   /**
    * This adds a property descriptor for the Vat feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected void addVatPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Company_vat_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Company_vat_feature", "_UI_Company_type"),
-        CompanyPackage.Literals.PRODUCT1__VAT, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Product_vat_feature"), getString(
+        "_UI_PropertyDescriptor_description", "_UI_Product_vat_feature", "_UI_Product_type"),
+        CompanyPackage.Literals.PRODUCT__VAT, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
 
   /**
    * This adds a property descriptor for the Description feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected void addDescriptionPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Company_description_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Company_description_feature", "_UI_Company_type"),
-        CompanyPackage.Literals.PRODUCT1__DESCRIPTION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Product_description_feature"), getString(
+        "_UI_PropertyDescriptor_description", "_UI_Product_description_feature", "_UI_Product_type"),
+        CompanyPackage.Literals.PRODUCT__DESCRIPTION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -150,33 +150,33 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This returns Company.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * This returns Product.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/Company"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/Product"));
   }
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
   public String getText(Object object)
   {
     String label = ((Product)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Company_type") : getString("_UI_Company_type") + " "
+    return label == null || label.length() == 0 ? getString("_UI_Product_type") : getString("_UI_Product_type") + " "
         + label;
   }
 
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -186,9 +186,9 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
 
     switch (notification.getFeatureID(Product.class))
     {
-    case CompanyPackage.PRODUCT1__NAME:
-    case CompanyPackage.PRODUCT1__VAT:
-    case CompanyPackage.PRODUCT1__DESCRIPTION:
+    case CompanyPackage.PRODUCT__NAME:
+    case CompanyPackage.PRODUCT__VAT:
+    case CompanyPackage.PRODUCT__DESCRIPTION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }
@@ -198,7 +198,7 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -209,7 +209,7 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
 
   /**
    * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

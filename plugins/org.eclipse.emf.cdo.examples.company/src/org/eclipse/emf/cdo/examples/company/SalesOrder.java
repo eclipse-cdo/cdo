@@ -61,7 +61,8 @@ public interface SalesOrder extends Order
 
   /**
    * Returns the value of the '<em><b>Customer</b></em>' reference. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.examples.company.Customer#getSalesOrders <em>Sales Orders</em>}'. <!-- begin-user-doc -->
+   * {@link org.eclipse.emf.cdo.examples.company.Customer#getSalesOrders <em>Sales Orders</em>}'. <!-- begin-user-doc
+   * -->
    * <p>
    * If the meaning of the '<em>Customer</em>' reference isn't clear, there really should be more of a description
    * here...

@@ -61,7 +61,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
   @Override
   protected EClass eStaticClass()
   {
-    return CompanyPackage.Literals.PRODUCT1;
+    return CompanyPackage.Literals.PRODUCT;
   }
 
   /**
@@ -82,7 +82,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    */
   public String getName()
   {
-    return (String)eGet(CompanyPackage.Literals.PRODUCT1__NAME, true);
+    return (String)eGet(CompanyPackage.Literals.PRODUCT__NAME, true);
   }
 
   /**
@@ -92,7 +92,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    */
   public void setName(String newName)
   {
-    eSet(CompanyPackage.Literals.PRODUCT1__NAME, newName);
+    eSet(CompanyPackage.Literals.PRODUCT__NAME, newName);
   }
 
   /**
@@ -103,7 +103,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
   @SuppressWarnings("unchecked")
   public EList<OrderDetail> getOrderDetails()
   {
-    return (EList<OrderDetail>)eGet(CompanyPackage.Literals.PRODUCT1__ORDER_DETAILS, true);
+    return (EList<OrderDetail>)eGet(CompanyPackage.Literals.PRODUCT__ORDER_DETAILS, true);
   }
 
   /**
@@ -113,7 +113,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    */
   public VAT getVat()
   {
-    return (VAT)eGet(CompanyPackage.Literals.PRODUCT1__VAT, true);
+    return (VAT)eGet(CompanyPackage.Literals.PRODUCT__VAT, true);
   }
 
   /**
@@ -123,7 +123,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    */
   public void setVat(VAT newVat)
   {
-    eSet(CompanyPackage.Literals.PRODUCT1__VAT, newVat);
+    eSet(CompanyPackage.Literals.PRODUCT__VAT, newVat);
   }
 
   /**
@@ -133,7 +133,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    */
   public String getDescription()
   {
-    return (String)eGet(CompanyPackage.Literals.PRODUCT1__DESCRIPTION, true);
+    return (String)eGet(CompanyPackage.Literals.PRODUCT__DESCRIPTION, true);
   }
 
   /**
@@ -143,7 +143,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    */
   public void setDescription(String newDescription)
   {
-    eSet(CompanyPackage.Literals.PRODUCT1__DESCRIPTION, newDescription);
+    eSet(CompanyPackage.Literals.PRODUCT__DESCRIPTION, newDescription);
   }
 
 } // ProductImpl

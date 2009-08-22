@@ -67,7 +67,8 @@ public interface OrderDetail extends EObject
 
   /**
    * Returns the value of the '<em><b>Product</b></em>' reference. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}'. <!-- begin-user-doc -->
+   * {@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}'. <!-- begin-user-doc
+   * -->
    * <p>
    * If the meaning of the '<em>Product</em>' reference isn't clear, there really should be more of a description
    * here...
@@ -84,8 +85,8 @@ public interface OrderDetail extends EObject
   Product getProduct();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct <em>Product</em>}' reference.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct <em>Product</em>}'
+   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Product</em>' reference.

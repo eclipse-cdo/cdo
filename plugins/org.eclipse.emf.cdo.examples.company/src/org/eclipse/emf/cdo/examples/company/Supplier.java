@@ -71,8 +71,8 @@ public interface Supplier extends Address
   boolean isPreferred();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Supplier#isPreferred <em>Preferred</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Supplier#isPreferred <em>Preferred</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Preferred</em>' attribute.

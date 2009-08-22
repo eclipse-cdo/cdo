@@ -121,13 +121,13 @@ public interface CompanyPackage extends EPackage
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl
-   * <em>Purchase Order</em>} ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Purchase Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getPurchaseOrder()
    * @generated
    */
-  int PURCHASE_ORDER = 6;
+  int PURCHASE_ORDER = 7;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl <em>Order Detail</em>}
@@ -190,7 +190,7 @@ public interface CompanyPackage extends EPackage
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCategory()
    * @generated
    */
-  int CATEGORY = 8;
+  int CATEGORY = 9;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl <em>Company</em>}' class.
@@ -439,40 +439,6 @@ public interface CompanyPackage extends EPackage
   int ORDER_DETAIL_FEATURE_COUNT = 3;
 
   /**
-   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PURCHASE_ORDER__ORDER_DETAILS = ORDER__ORDER_DETAILS;
-
-  /**
-   * The feature id for the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PURCHASE_ORDER__DATE = ORDER_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Supplier</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PURCHASE_ORDER__SUPPLIER = ORDER_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Purchase Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PURCHASE_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
-
-  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl <em>Sales Order</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -480,126 +446,17 @@ public interface CompanyPackage extends EPackage
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getSalesOrder()
    * @generated
    */
-  int SALES_ORDER = 7;
-
-  /**
-   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SALES_ORDER__ORDER_DETAILS = ORDER__ORDER_DETAILS;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SALES_ORDER__ID = ORDER_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Customer</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SALES_ORDER__CUSTOMER = ORDER_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Sales Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SALES_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Categories</b></em>' containment reference list. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__CATEGORIES = 1;
-
-  /**
-   * The feature id for the '<em><b>Products</b></em>' containment reference list. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__PRODUCTS = 2;
-
-  /**
-   * The number of structural features of the '<em>Category</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY_FEATURE_COUNT = 3;
+  int SALES_ORDER = 8;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl <em>Product</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.emf.cdo.examples.company.impl.ProductImpl
-   * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCompany()
+   * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getProduct()
    * @generated
    */
-  int PRODUCT1 = 9;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PRODUCT1__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Order Details</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PRODUCT1__ORDER_DETAILS = 1;
-
-  /**
-   * The feature id for the '<em><b>Vat</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PRODUCT1__VAT = 2;
-
-  /**
-   * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PRODUCT1__DESCRIPTION = 3;
-
-  /**
-   * The number of structural features of the '<em>Product</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int PRODUCT1_FEATURE_COUNT = 4;
+  int PRODUCT = 10;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderAddressImpl
@@ -609,7 +466,7 @@ public interface CompanyPackage extends EPackage
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getOrderAddress()
    * @generated
    */
-  int ORDER_ADDRESS = 10;
+  int ORDER_ADDRESS = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -684,6 +541,149 @@ public interface CompanyPackage extends EPackage
    * @ordered
    */
   int ORDER_ADDRESS_FEATURE_COUNT = ADDRESS_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PURCHASE_ORDER__ORDER_DETAILS = ORDER__ORDER_DETAILS;
+
+  /**
+   * The feature id for the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PURCHASE_ORDER__DATE = ORDER_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Supplier</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PURCHASE_ORDER__SUPPLIER = ORDER_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Purchase Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PURCHASE_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER__ORDER_DETAILS = ORDER__ORDER_DETAILS;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER__ID = ORDER_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Customer</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER__CUSTOMER = ORDER_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Sales Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CATEGORY__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Categories</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CATEGORY__CATEGORIES = 1;
+
+  /**
+   * The feature id for the '<em><b>Products</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CATEGORY__PRODUCTS = 2;
+
+  /**
+   * The number of structural features of the '<em>Category</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CATEGORY_FEATURE_COUNT = 3;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Order Details</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT__ORDER_DETAILS = 1;
+
+  /**
+   * The feature id for the '<em><b>Vat</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT__VAT = 2;
+
+  /**
+   * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT__DESCRIPTION = 3;
+
+  /**
+   * The number of structural features of the '<em>Product</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PRODUCT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.VAT <em>VAT</em>}' enum. <!--
@@ -848,7 +848,7 @@ public interface CompanyPackage extends EPackage
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Category#getName
-   * <em>Name</em>} '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Category#getName()
@@ -893,14 +893,14 @@ public interface CompanyPackage extends EPackage
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getName
-   * <em>Name</em>} '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getName()
-   * @see #getCompany()
+   * @see #getProduct()
    * @generated
    */
-  EAttribute getCompany_Name();
+  EAttribute getProduct_Name();
 
   /**
    * Returns the meta object for the reference list '
@@ -909,10 +909,10 @@ public interface CompanyPackage extends EPackage
    * 
    * @return the meta object for the reference list '<em>Order Details</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getOrderDetails()
-   * @see #getCompany()
+   * @see #getProduct()
    * @generated
    */
-  EReference getCompany_OrderDetails();
+  EReference getProduct_OrderDetails();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}
@@ -920,10 +920,10 @@ public interface CompanyPackage extends EPackage
    * 
    * @return the meta object for the attribute '<em>Vat</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getVat()
-   * @see #getCompany()
+   * @see #getProduct()
    * @generated
    */
-  EAttribute getCompany_Vat();
+  EAttribute getProduct_Vat();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getDescription
@@ -931,10 +931,10 @@ public interface CompanyPackage extends EPackage
    * 
    * @return the meta object for the attribute '<em>Description</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getDescription()
-   * @see #getCompany()
+   * @see #getProduct()
    * @generated
    */
-  EAttribute getCompany_Description();
+  EAttribute getProduct_Description();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.examples.company.Company <em>Company</em>}'. <!--
@@ -1291,10 +1291,10 @@ public interface CompanyPackage extends EPackage
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @see org.eclipse.emf.cdo.examples.company.impl.ProductImpl
-     * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCompany()
+     * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getProduct()
      * @generated
      */
-    EClass PRODUCT1 = eINSTANCE.getCompany();
+    EClass PRODUCT = eINSTANCE.getProduct();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
@@ -1302,7 +1302,7 @@ public interface CompanyPackage extends EPackage
      * 
      * @generated
      */
-    EAttribute PRODUCT1__NAME = eINSTANCE.getCompany_Name();
+    EAttribute PRODUCT__NAME = eINSTANCE.getProduct_Name();
 
     /**
      * The meta object literal for the '<em><b>Order Details</b></em>' reference list feature. <!-- begin-user-doc -->
@@ -1310,7 +1310,7 @@ public interface CompanyPackage extends EPackage
      * 
      * @generated
      */
-    EReference PRODUCT1__ORDER_DETAILS = eINSTANCE.getCompany_OrderDetails();
+    EReference PRODUCT__ORDER_DETAILS = eINSTANCE.getProduct_OrderDetails();
 
     /**
      * The meta object literal for the '<em><b>Vat</b></em>' attribute feature. <!-- begin-user-doc --> <!--
@@ -1318,7 +1318,7 @@ public interface CompanyPackage extends EPackage
      * 
      * @generated
      */
-    EAttribute PRODUCT1__VAT = eINSTANCE.getCompany_Vat();
+    EAttribute PRODUCT__VAT = eINSTANCE.getProduct_Vat();
 
     /**
      * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
@@ -1326,7 +1326,7 @@ public interface CompanyPackage extends EPackage
      * 
      * @generated
      */
-    EAttribute PRODUCT1__DESCRIPTION = eINSTANCE.getCompany_Description();
+    EAttribute PRODUCT__DESCRIPTION = eINSTANCE.getProduct_Description();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl <em>Company</em>}'

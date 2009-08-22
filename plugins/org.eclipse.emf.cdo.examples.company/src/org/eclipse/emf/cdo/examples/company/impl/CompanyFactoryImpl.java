@@ -101,16 +101,16 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
       return createOrder();
     case CompanyPackage.ORDER_DETAIL:
       return createOrderDetail();
+    case CompanyPackage.ORDER_ADDRESS:
+      return createOrderAddress();
     case CompanyPackage.PURCHASE_ORDER:
       return createPurchaseOrder();
     case CompanyPackage.SALES_ORDER:
       return createSalesOrder();
     case CompanyPackage.CATEGORY:
       return createCategory();
-    case CompanyPackage.PRODUCT1:
+    case CompanyPackage.PRODUCT:
       return createProduct();
-    case CompanyPackage.ORDER_ADDRESS:
-      return createOrderAddress();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -214,10 +214,8 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
-    }
     return result;
   }
 

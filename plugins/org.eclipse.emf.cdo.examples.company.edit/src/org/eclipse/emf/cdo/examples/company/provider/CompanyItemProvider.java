@@ -34,8 +34,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Company} object. <!-- begin-user-doc
- * --> <!-- end-user-doc -->
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Company} object. <!--
+ * begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated
  */
@@ -184,8 +184,8 @@ public class CompanyItemProvider extends AddressItemProvider implements IEditing
     newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__PURCHASE_ORDERS,
         CompanyFactory.eINSTANCE.createPurchaseOrder()));
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__SALES_ORDERS, CompanyFactory.eINSTANCE
-        .createSalesOrder()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__SALES_ORDERS,
+        CompanyFactory.eINSTANCE.createSalesOrder()));
   }
 
 }

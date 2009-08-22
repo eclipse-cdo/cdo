@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCompany()
+ * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct()
  * @model
  * @generated
  */
@@ -47,7 +47,7 @@ public interface Product extends EObject
    * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCompany_Name()
+   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Name()
    * @model annotation="teneo.jpa value='@Id'"
    * @generated
    */
@@ -75,7 +75,7 @@ public interface Product extends EObject
    * <!-- end-user-doc -->
    * 
    * @return the value of the '<em>Order Details</em>' reference list.
-   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCompany_OrderDetails()
+   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_OrderDetails()
    * @see org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct
    * @model opposite="product"
    * @generated
@@ -93,7 +93,7 @@ public interface Product extends EObject
    * @return the value of the '<em>Vat</em>' attribute.
    * @see org.eclipse.emf.cdo.examples.company.VAT
    * @see #setVat(VAT)
-   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCompany_Vat()
+   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Vat()
    * @model default="vat15"
    * @generated
    */
@@ -121,7 +121,7 @@ public interface Product extends EObject
    * 
    * @return the value of the '<em>Description</em>' attribute.
    * @see #setDescription(String)
-   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCompany_Description()
+   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Description()
    * @model transient="true"
    * @generated
    */

@@ -78,8 +78,8 @@ public interface Address extends EObject
   String getStreet();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Address#getStreet <em>Street</em>}' attribute. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Address#getStreet <em>Street</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
    *          the new value of the '<em>Street</em>' attribute.

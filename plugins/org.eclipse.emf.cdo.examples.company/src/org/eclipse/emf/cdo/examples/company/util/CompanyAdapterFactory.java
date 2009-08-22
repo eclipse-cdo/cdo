@@ -130,6 +130,12 @@ public class CompanyAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseOrderAddress(OrderAddress object)
+    {
+      return createOrderAddressAdapter();
+    }
+
+    @Override
     public Adapter casePurchaseOrder(PurchaseOrder object)
     {
       return createPurchaseOrderAdapter();
@@ -151,12 +157,6 @@ public class CompanyAdapterFactory extends AdapterFactoryImpl
     public Adapter caseProduct(Product object)
     {
       return createProductAdapter();
-    }
-
-    @Override
-    public Adapter caseOrderAddress(OrderAddress object)
-    {
-      return createOrderAddressAdapter();
     }
 
     @Override

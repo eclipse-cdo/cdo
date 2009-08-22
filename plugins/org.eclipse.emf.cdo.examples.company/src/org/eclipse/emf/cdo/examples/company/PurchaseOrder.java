@@ -63,8 +63,8 @@ public interface PurchaseOrder extends Order
 
   /**
    * Returns the value of the '<em><b>Supplier</b></em>' reference. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.examples.company.Supplier#getPurchaseOrders <em>Purchase Orders</em>}'. <!-- begin-user-doc
-   * -->
+   * {@link org.eclipse.emf.cdo.examples.company.Supplier#getPurchaseOrders <em>Purchase Orders</em>}'. <!--
+   * begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Supplier</em>' reference isn't clear, there really should be more of a description
    * here...

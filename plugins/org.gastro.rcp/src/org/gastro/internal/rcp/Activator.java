@@ -24,6 +24,8 @@ import java.util.Properties;
 
 /**
  * The activator class controls the plug-in life cycle
+ * 
+ * @author Eike Stepper
  */
 public class Activator extends AbstractUIPlugin
 {
@@ -79,7 +81,7 @@ public class Activator extends AbstractUIPlugin
 
   /**
    * Returns the shared instance
-   *
+   * 
    * @return the shared instance
    */
   public static Activator getDefault()
@@ -89,7 +91,7 @@ public class Activator extends AbstractUIPlugin
 
   /**
    * Returns an image descriptor for the image file at the given plug-in relative path
-   *
+   * 
    * @param path
    *          the path
    * @return the image descriptor

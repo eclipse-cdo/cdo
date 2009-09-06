@@ -67,6 +67,9 @@ import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * @author Eike Stepper
+ */
 public class TableView extends ViewPart
 {
   public static final String ID = "org.gastro.rcp.table.view";

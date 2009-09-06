@@ -49,6 +49,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Eike Stepper
+ */
 public class OrdersView extends ViewPart
 {
   public static final String ID = "org.gastro.rcp.orders.view";

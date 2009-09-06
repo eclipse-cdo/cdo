@@ -46,6 +46,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * @author Eike Stepper
+ */
 public class GastroServlet extends HttpServlet
 {
   private static final long serialVersionUID = 1L;

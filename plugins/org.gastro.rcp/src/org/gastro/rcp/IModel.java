@@ -21,6 +21,9 @@ import org.gastro.business.BusinessDay;
 import org.gastro.inventory.Restaurant;
 import org.gastro.inventory.Station;
 
+/**
+ * @author Eike Stepper
+ */
 public interface IModel
 {
   public static final IModel INSTANCE = org.gastro.internal.rcp.Model.INSTANCE;
@@ -35,6 +38,9 @@ public interface IModel
 
   public <T extends CDOObject> Object modify(T object, ITransactionalOperation<T> operation);
 
+  /**
+   * @author Eike Stepper
+   */
   public interface ITransactionalOperation<T extends CDOObject>
   {
     public Object execute(T object);

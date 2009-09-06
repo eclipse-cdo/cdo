@@ -10,8 +10,8 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.gastro.business,
  org.gastro.business.impl,
  org.gastro.business.util
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.emf.cdo;visibility:=reexport,
- org.gastro.inventory;visibility:=reexport
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.emf.ecore;bundle-version="[2.6.0,3.0.0)",
+ org.eclipse.emf.cdo;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.gastro.inventory;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy

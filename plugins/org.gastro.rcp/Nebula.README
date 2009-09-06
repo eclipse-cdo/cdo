@@ -1,3 +1,2 @@
 Die Nebula jars sind eigentlich Bundles und sollte auch als solche in die Target Platform installiert werden!
- Für das Packaging dieser Example Anwendung waren eingebettete jars jedoch einfacher.
- 
+Für das Packaging dieser Example Anwendung waren eingebettete jars jedoch einfacher.

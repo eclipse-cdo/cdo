@@ -21,3 +21,13 @@ Import-Package: javax.servlet,
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  org.apache.commons.lang_2.3.0.v200803061910.jar
+Export-Package: org.apache.commons.lang;x-internal:=true,
+ org.apache.commons.lang.builder;x-internal:=true,
+ org.apache.commons.lang.enums;x-internal:=true,
+ org.apache.commons.lang.exception;x-internal:=true,
+ org.apache.commons.lang.math;x-internal:=true,
+ org.apache.commons.lang.mutable;x-internal:=true,
+ org.apache.commons.lang.text;x-internal:=true,
+ org.apache.commons.lang.time;x-internal:=true,
+ org.gastro.server.internal.web;version="3.0.0";x-internal:=true,
+ templates;x-internal:=true

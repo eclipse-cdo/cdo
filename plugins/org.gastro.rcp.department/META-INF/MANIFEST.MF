@@ -4,7 +4,9 @@ Bundle-Name: Gastro Department
 Bundle-SymbolicName: org.gastro.rcp.department; singleton:=true
 Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: org.gastro.rcp.internal.department.Activator
-Require-Bundle: org.gastro.rcp;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: www.gastro.org
+Require-Bundle: org.gastro.rcp;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
+Export-Package: com.swtdesigner;version="3.0.0";x-internal:=true,
+ org.gastro.rcp.internal.department;version="3.0.0";x-internal:=true

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
@@ -30,7 +29,7 @@ import junit.framework.TestSuite;
 /**
  * @author Stefan Winkler
  */
-public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
+public class AllTestsDBHsqldbNonAudit extends DBConfigs
 {
   public static Test suite()
   {
@@ -40,7 +39,7 @@ public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE, TCP, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE, JVM, NATIVE);
   }
 
   @Override
@@ -48,13 +47,13 @@ public class AllTestsDBHsqldbNonAudit extends AllTestsAllConfigs
   {
     super.initTestClasses(testClasses);
 
+    // takes too long and fails in non-audit mode
+    testClasses.remove(Bugzilla_261218_Test.class);
+
     // non-audit mode - remove audit tests
     testClasses.remove(AuditTest.class);
     testClasses.remove(AuditTest.LocalAuditTest.class);
     testClasses.remove(Bugzilla_252214_Test.class);
-
-    // this takes ages - so for now, we disable it
-    testClasses.remove(Bugzilla_261218_Test.class);
   }
 
   public static class HsqldbNonAudit extends AllTestsDBHsqldb.Hsqldb

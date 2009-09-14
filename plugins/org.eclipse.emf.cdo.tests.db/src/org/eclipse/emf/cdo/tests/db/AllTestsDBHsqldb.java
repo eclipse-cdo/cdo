@@ -13,9 +13,6 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_266982_Test;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
 import org.eclipse.emf.cdo.tests.db.verifier.DBStoreVerifier;
 
@@ -30,7 +27,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -38,7 +34,7 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsDBHsqldb extends AllTestsAllConfigs
+public class AllTestsDBHsqldb extends DBConfigs
 {
   public static Test suite()
   {
@@ -48,16 +44,7 @@ public class AllTestsDBHsqldb extends AllTestsAllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBHsqldb.Hsqldb.INSTANCE, TCP, NATIVE);
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    super.initTestClasses(testClasses);
-
-    // this takes ages ...
-    testClasses.remove(Bugzilla_266982_Test.class);
+    addScenario(parent, COMBINED, AllTestsDBHsqldb.Hsqldb.INSTANCE, JVM, NATIVE);
   }
 
   /**

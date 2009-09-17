@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -282,7 +283,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
 
         // We need to keep the existing list if possible.
-        if (!eFeature.isTransient() && eSettings[i] instanceof InternalCDOLoadable)
+        if (EMFUtil.isPersistent(eFeature) && eSettings[i] instanceof InternalCDOLoadable)
         {
           ((InternalCDOLoadable)eSettings[i]).cdoInternalPostLoad();
         }
@@ -320,7 +321,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     for (int i = 0; i < eClass.getFeatureCount(); i++)
     {
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-      if (!eFeature.isTransient())
+      if (EMFUtil.isPersistent(eFeature))
       {
         Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
         instanceToRevisionFeature(view, revision, eFeature, setting);
@@ -366,7 +367,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     for (int i = 0; i < eClass.getFeatureCount(); i++)
     {
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-      if (!eFeature.isTransient())
+      if (EMFUtil.isPersistent(eFeature))
       {
         revisionToInstanceFeature(this, revision, eFeature);
       }
@@ -455,17 +456,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public void dynamicSet(int dynamicFeatureID, Object value)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (eStructuralFeature.isTransient())
-    {
-      eSettings[dynamicFeatureID] = value;
-    }
-    else
+    if (EMFUtil.isPersistent(eStructuralFeature))
     {
       eStore().set(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX, value);
       if (eIsCaching())
       {
         eSettings[dynamicFeatureID] = value;
       }
+    }
+    else
+    {
+      eSettings[dynamicFeatureID] = value;
     }
   }
 
@@ -476,17 +477,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   public void dynamicUnset(int dynamicFeatureID)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (eStructuralFeature.isTransient())
-    {
-      eSettings[dynamicFeatureID] = null;
-    }
-    else
+    if (EMFUtil.isPersistent(eStructuralFeature))
     {
       eStore().unset(this, eDynamicFeature(dynamicFeatureID));
       if (eIsCaching())
       {
         eSettings[dynamicFeatureID] = null;
       }
+    }
+    else
+    {
+      eSettings[dynamicFeatureID] = null;
     }
   }
 

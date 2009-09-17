@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
@@ -50,6 +51,16 @@ import java.util.Map.Entry;
  */
 public final class EMFUtil
 {
+  public static final String CDO_ANNOTATION_SOURCE = "http://www.eclipse.org/emf/CDO";
+
+  public static final String CDO_ANNOTATION_KEY_PERSISTENT = "persistent";
+
+  private static final EReference EOPERATION_EEXCEPTIONS = EcorePackage.eINSTANCE.getEOperation_EExceptions();
+
+  private static final EReference ETYPED_ELEMENT_ETYPE = EcorePackage.eINSTANCE.getETypedElement_EType();
+
+  private static final EReference ECLASS_ESUPER_TYPES = EcorePackage.eINSTANCE.getEClass_ESuperTypes();
+
   private EMFUtil()
   {
   }
@@ -159,37 +170,30 @@ public final class EMFUtil
     List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
     for (EStructuralFeature feature : eFeatures)
     {
-      if (feature.isTransient())
+      if (isPersistent(feature))
       {
-        continue;
+        result.add(feature);
       }
-
-      // TODO Make configurable via ExtPoint
-      if (feature == EcorePackage.eINSTANCE.getEClass_ESuperTypes())
-      {
-        // See
-        // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
-        continue;
-      }
-
-      if (feature == EcorePackage.eINSTANCE.getETypedElement_EType())
-      {
-        // See
-        // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
-        continue;
-      }
-
-      if (feature == EcorePackage.eINSTANCE.getEOperation_EExceptions())
-      {
-        // See
-        // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
-        continue;
-      }
-
-      result.add(feature);
     }
 
     return result;
+  }
+
+  public static boolean isPersistent(EStructuralFeature feature)
+  {
+    if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS)
+    {
+      // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
+      return false;
+    }
+
+    String persistent = EcoreUtil.getAnnotation(feature, CDO_ANNOTATION_SOURCE, CDO_ANNOTATION_KEY_PERSISTENT);
+    if (persistent != null)
+    {
+      return "true".equalsIgnoreCase(persistent);
+    }
+
+    return !feature.isTransient();
   }
 
   public static boolean isDynamicEPackage(Object value)

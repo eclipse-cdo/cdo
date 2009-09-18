@@ -155,6 +155,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private transient Object invalidationRunnerLock = new Object();
 
   @ExcludeFromDump
+  private static ThreadLocal<Boolean> invalidationRunnerActive = new InheritableThreadLocal<Boolean>();
+
+  @ExcludeFromDump
   private transient int lastViewID;
 
   public CDOSessionImpl()
@@ -284,7 +287,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       if (!options().isGeneratedPackageEmulationEnabled())
       {
-        throw new CDOException(MessageFormat.format(Messages.getString("CDOSessionImpl.0"), packageUnit)); //$NON-NLS-1$
+        throw new CDOException(MessageFormat.format(Messages.getString("CDOSessionImpl.0"), packageUnit));
       }
     }
 
@@ -495,7 +498,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       {
         if (view != excludedView)
         {
-          Runnable runnable = new Runnable()
+          final Runnable runnable = new Runnable()
           {
             public void run()
             {
@@ -530,7 +533,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
                 }
                 else
                 {
-                  OM.LOG.info(Messages.getString("CDOSessionImpl.1")); //$NON-NLS-1$
+                  OM.LOG.info(Messages.getString("CDOSessionImpl.1"));
                 }
               }
             }
@@ -539,7 +542,21 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           if (async)
           {
             QueueRunner runner = getInvalidationRunner();
-            runner.addWork(runnable);
+            runner.addWork(new Runnable()
+            {
+              public void run()
+              {
+                try
+                {
+                  invalidationRunnerActive.set(true);
+                  runnable.run();
+                }
+                finally
+                {
+                  invalidationRunnerActive.set(false);
+                }
+              }
+            });
           }
           else
           {
@@ -561,7 +578,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
       else
       {
-        OM.LOG.info(Messages.getString("CDOSessionImpl.2")); //$NON-NLS-1$
+        OM.LOG.info(Messages.getString("CDOSessionImpl.2"));
       }
     }
 
@@ -599,12 +616,30 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       if (invalidationRunner == null)
       {
-        invalidationRunner = new QueueRunner();
+        invalidationRunner = createInvalidationRunner();
         invalidationRunner.activate();
       }
     }
 
     return invalidationRunner;
+  }
+
+  protected QueueRunner createInvalidationRunner()
+  {
+    return new QueueRunner()
+    {
+      @Override
+      protected String getThreadName()
+      {
+        return "InvalidationRunner";
+      }
+
+      @Override
+      public String toString()
+      {
+        return getThreadName();
+      }
+    };
   }
 
   /**
@@ -620,7 +655,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOSession[{0}, {1}]", repository().getName(), sessionID); //$NON-NLS-1$
+    return MessageFormat.format("CDOSession[{0}, {1}]", repository().getName(), sessionID);
   }
 
   /**
@@ -684,7 +719,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(repository().getName(), "repository().getName()"); //$NON-NLS-1$
+    checkState(repository().getName(), "repository().getName()");
   }
 
   @Override
@@ -779,7 +814,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     String factoryName = libraryDescriptor.getFactoryName();
     if (TRACER.isEnabled())
     {
-      TRACER.format("Using CDOID factory: {0}", factoryName); //$NON-NLS-1$
+      TRACER.format("Using CDOID factory: {0}", factoryName);
     }
 
     File cacheFolder = getCacheFolder();
@@ -805,10 +840,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       File lib = new File(cacheFolder, neededLibrary);
       if (TRACER.isEnabled())
       {
-        TRACER.format("Using CDOID library: {0}", lib.getAbsolutePath()); //$NON-NLS-1$
+        TRACER.format("Using CDOID library: {0}", lib.getAbsolutePath());
       }
 
-      urls[i++] = new URL("file:///" + lib.getAbsolutePath()); //$NON-NLS-1$
+      urls[i++] = new URL("file:///" + lib.getAbsolutePath());
     }
 
     classLoader = new URLClassLoader(urls, classLoader);
@@ -828,7 +863,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     Set<String> set = new HashSet<String>();
     for (String fileName : fileNames)
     {
-      if (fileName.endsWith(".jar")) //$NON-NLS-1$
+      if (fileName.endsWith(".jar"))
       {
         set.add(fileName);
       }
@@ -885,6 +920,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     return Collections.emptyList();
+  }
+
+  public static boolean isInvalidationRunnerActive()
+  {
+    return invalidationRunnerActive.get();
   }
 
   /**
@@ -991,7 +1031,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           @Override
           public String toString()
           {
-            return "DefaultRevisionFactory"; //$NON-NLS-1$
+            return "DefaultRevisionFactory";
           }
         };
       }
@@ -1236,7 +1276,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     @Override
     public String toString()
     {
-      return "CDOSessionInvalidationEvent: " + dirtyOIDs; //$NON-NLS-1$
+      return "CDOSessionInvalidationEvent: " + dirtyOIDs;
     }
   }
 

@@ -1219,13 +1219,21 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   /**
    * @since 2.0
    */
-  public void fireInvalidationEvent(long timeStamp, Set<? extends CDOObject> dirtyObjects,
+  private void fireInvalidationEvent(long timeStamp, Set<? extends CDOObject> dirtyObjects,
       Set<? extends CDOObject> detachedObjects)
   {
     if (!dirtyObjects.isEmpty() || !detachedObjects.isEmpty())
     {
       fireEvent(new InvalidationEvent(timeStamp, dirtyObjects, detachedObjects));
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void fireAdaptersNotifiedEvent(long timeStamp)
+  {
+    fireEvent(new AdaptersNotifiedEvent(timeStamp));
   }
 
   /**
@@ -1950,6 +1958,32 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     public String toString()
     {
       return "CDOViewInvalidationEvent: " + dirtyObjects; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class AdaptersNotifiedEvent extends Event implements CDOViewAdaptersNotifiedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private long timeStamp;
+
+    public AdaptersNotifiedEvent(long timeStamp)
+    {
+      this.timeStamp = timeStamp;
+    }
+
+    public long getTimeStamp()
+    {
+      return timeStamp;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "CDOViewAdaptersNotifiedEvent: " + timeStamp; //$NON-NLS-1$
     }
   }
 

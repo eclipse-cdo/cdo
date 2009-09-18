@@ -515,6 +515,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
                   view.handleChangeSubscription(deltas, detachedObjects);
                 }
 
+                if (view instanceof CDOViewImpl)
+                {
+                  ((CDOViewImpl)view).fireAdaptersNotifiedEvent(timeStamp);
+                }
+
                 if (conflicts != null)
                 {
                   ((InternalCDOTransaction)view).handleConflicts(conflicts);

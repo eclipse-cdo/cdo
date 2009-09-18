@@ -8,6 +8,7 @@
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Stefan Winkler - Bug 276979
  */
 package org.eclipse.net4j.db.postgresql;
 
@@ -83,8 +84,9 @@ public class PostgreSQLAdapter extends DBAdapter
     {
     case VARCHAR:
     case CLOB:
+    	return "text"; //$NON-NLS-1$
     case BLOB:
-      return "text"; //$NON-NLS-1$
+      return "bytea"; //$NON-NLS-1$
     }
 
     return super.getTypeName(field);

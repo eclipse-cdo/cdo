@@ -69,8 +69,8 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     TestFeatureMap featureMap = (TestFeatureMap)resource.getContents().get(0);
     List<?> listForFeatureCustomers = (List<?>)featureMap.getPeople().get(
         getModel5Package().getTestFeatureMap_Doctors(), true);
-    assertTrue(listForFeatureCustomers.get(0) instanceof Doctor);
-    assertTrue(listForFeatureCustomers.get(1) instanceof Doctor);
+    assertTrue("--> " + listForFeatureCustomers.get(0), listForFeatureCustomers.get(0) instanceof Doctor);
+    assertTrue("--> " + listForFeatureCustomers.get(1), listForFeatureCustomers.get(1) instanceof Doctor);
   }
 
   public void testListOfString() throws Exception

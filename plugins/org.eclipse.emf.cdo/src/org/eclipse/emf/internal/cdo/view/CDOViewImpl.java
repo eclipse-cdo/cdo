@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.util.InvalidURIException;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
@@ -719,6 +720,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         {
           if (loadOnDemand)
           {
+            if (id.isTemporary())
+            {
+              throw new ObjectNotFoundException(id);
+            }
+            
             localLookupObject = createObject(id);
           }
           else

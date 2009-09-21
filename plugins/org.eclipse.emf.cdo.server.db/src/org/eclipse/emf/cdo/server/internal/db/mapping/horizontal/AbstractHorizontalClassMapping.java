@@ -8,11 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Victor Roldan - 289237: [DB] [maintenance] Support external references
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -23,6 +24,9 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+import org.eclipse.emf.cdo.server.internal.db.IExternalReferenceManager;
+import org.eclipse.emf.cdo.server.internal.db.InternalCDODBUtil;
+import org.eclipse.emf.cdo.server.internal.db.InternalIDBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -143,9 +147,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
    * @return <code>true</code> if the revision has been read successfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
-  protected final boolean readValuesFromStatement(PreparedStatement pstmt, InternalCDORevision revision)
+  protected final boolean readValuesFromStatement(PreparedStatement pstmt, InternalCDORevision revision,
+      IDBStoreAccessor accessor)
   {
     ResultSet resultSet = null;
+
     try
     {
       if (TRACER.isEnabled())
@@ -160,7 +166,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Resultset was empty."); //$NON-NLS-1$
+          TRACER.format("Resultset was empty"); //$NON-NLS-1$
         }
 
         return false;
@@ -170,10 +176,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       revision.setVersion(resultSet.getInt(i++));
       revision.setCreated(resultSet.getLong(i++));
       revision.setRevised(resultSet.getLong(i++));
-      revision.setResourceID(CDOIDUtil.createLong(resultSet.getLong(i++)));
-
-      // TODO add mapping for external container CDOIDs here ->
-      revision.setContainerID(CDOIDUtil.createLong(resultSet.getLong(i++)));
+      revision.setResourceID(InternalCDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
+          .getLong(i++)));
+      revision.setContainerID(InternalCDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
+          .getLong(i++)));
       revision.setContainingFeatureID(resultSet.getInt(i++));
 
       for (ITypeMapping mapping : valueMappings)
@@ -226,6 +232,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   protected final IMetaDataManager getMetaDataManager()
   {
     return getMappingStrategy().getStore().getMetaDataManager();
+  }
+
+  protected final IExternalReferenceManager getExternalReferenceManager()
+  {
+    return ((InternalIDBStore)mappingStrategy.getStore()).getExternalReferenceManager();
   }
 
   protected final IMappingStrategy getMappingStrategy()

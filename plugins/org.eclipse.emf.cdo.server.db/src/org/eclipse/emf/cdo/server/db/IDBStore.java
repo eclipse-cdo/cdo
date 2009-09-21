@@ -8,7 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings 
- *      https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444  
+ *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Victor Roldan - 289237: [DB] [maintenance] Support external references
  */
 package org.eclipse.emf.cdo.server.db;
 
@@ -41,6 +42,13 @@ public interface IDBStore extends IStore
   public IDBConnectionProvider getDBConnectionProvider();
 
   /**
+   * Get the meta data manager associated with this DBStore.
+   * 
+   * @since 2.0
+   */
+  public IMetaDataManager getMetaDataManager();
+
+  /**
    * @since 2.0
    */
   public IDBStoreAccessor getReader(ISession session);
@@ -49,11 +57,4 @@ public interface IDBStore extends IStore
    * @since 2.0
    */
   public IDBStoreAccessor getWriter(ITransaction transaction);
-
-  /**
-   * Get the meta data manager associated with this DBStore.
-   * 
-   * @since 2.0
-   */
-  public IMetaDataManager getMetaDataManager();
 }

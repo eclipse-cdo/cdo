@@ -1,13 +1,15 @@
 /**
- * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others. 
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Victor Roldan - 289237: [DB] [maintenance] Support external references
  *
  */
 package org.eclipse.emf.cdo.server.internal.db;
@@ -96,6 +98,26 @@ public class CDODBSchema extends DBSchema
 
   public static final IDBIndex INDEX_PACKAGE_INFOS_UNIT = //
   PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_UNIT);
+
+  /**
+   * DBTable cdo_external_refs
+   */
+  public static final IDBTable EXTERNAL_REFS = INSTANCE.addTable("cdo_external_refs"); //$NON-NLS-1$
+
+  public static final IDBField EXTERNAL_ID = //
+  EXTERNAL_REFS.addField("id", DBType.BIGINT); //$NON-NLS-1$
+
+  public static final IDBField EXTERNAL_HASHCODE = //
+  EXTERNAL_REFS.addField("hashcode", DBType.INTEGER); //$NON-NLS-1$
+
+  public static final IDBField EXTERNAL_URI = //
+  EXTERNAL_REFS.addField("uri", DBType.VARCHAR); //$NON-NLS-1$
+
+  public static final IDBIndex INDEX_EXTERNAL_REFS_ID = //
+  EXTERNAL_REFS.addIndex(IDBIndex.Type.PRIMARY_KEY, EXTERNAL_ID);
+
+  public static final IDBIndex INDEX_EXTERNAL_REFS_HASH = //
+  EXTERNAL_REFS.addIndex(IDBIndex.Type.NON_UNIQUE, EXTERNAL_HASHCODE);
 
   /**
    * Name of object table

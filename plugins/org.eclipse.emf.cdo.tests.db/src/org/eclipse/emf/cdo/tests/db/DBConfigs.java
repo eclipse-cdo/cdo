@@ -2,9 +2,7 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
 import org.eclipse.emf.cdo.tests.ChunkingTest;
-import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
-import org.eclipse.emf.cdo.tests.MetaTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.ResourceTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
@@ -36,15 +34,9 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     testClasses.remove(ResourceTest.class);
     testClasses.add(DISABLED_ResourceTest.class);
 
-    // partially disabled because of Bug 289237:
-    testClasses.remove(ContainmentTest.class);
-    testClasses.add(DISABLED_ContainmentTest.class);
-    testClasses.remove(MetaTest.class);
-    testClasses.add(DISABLED_MetaTest.class);
+    // partially disabled because of Bug 284004:
     testClasses.remove(ExternalReferenceTest.class);
     testClasses.add(DISABLED_ExternalReferenceTest.class);
-
-    // partially disabled because of Bug 284004:
     testClasses.remove(XATransactionTest.class);
     testClasses.add(DISABLED_XATransactionTest.class);
     testClasses.remove(Bugzilla_259869_Test.class);

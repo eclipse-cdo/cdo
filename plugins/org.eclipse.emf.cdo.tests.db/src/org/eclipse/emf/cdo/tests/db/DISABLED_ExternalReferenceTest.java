@@ -18,33 +18,15 @@ import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 public class DISABLED_ExternalReferenceTest extends ExternalReferenceTest
 {
   @Override
-  public void testExternalWithDynamicEObject() throws Exception
-  {
-    // DISABLED because of Bug 289237
-  }
-
-  @Override
-  public void testExternalWithEClass() throws Exception
-  {
-    // DISABLED because of Bug 289237
-  }
-
-  @Override
-  public void testExternalWithEPackage() throws Exception
-  {
-    // DISABLED because of Bug 289237
-  }
-
-  @Override
   public void testManyViewsOnOneResourceSet() throws Exception
   {
-    // DISABLED because of Bug 289237
+    // DISABLED because of Bug 284004
   }
 
   @Override
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
-    // DISABLED because of Bug 289237
+    // DISABLED because of Bug 284004
   }
 
 }

@@ -9,14 +9,20 @@
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  *    Stefan Winkler - 275303: [DB] DBStore does not handle BIG_INTEGER and BIG_DECIMAL
+ *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Victor Roldan - 289237: [DB] [maintenance] Support external references
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.IExternalReferenceManager;
+import org.eclipse.emf.cdo.server.internal.db.InternalCDODBUtil;
+import org.eclipse.emf.cdo.server.internal.db.InternalIDBStore;
 import org.eclipse.emf.cdo.server.internal.db.MetaDataManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -82,7 +88,7 @@ public abstract class TypeMapping implements ITypeMapping
 
   public final void createDBField(IDBTable table)
   {
-    createDBField(table, mappingStrategy.getFieldName(feature));
+    createDBField(table, getMappingStrategy().getFieldName(feature));
   }
 
   public final void createDBField(IDBTable table, String fieldName)
@@ -143,7 +149,7 @@ public abstract class TypeMapping implements ITypeMapping
 
   protected DBType getDBType()
   {
-    return mappingStrategy.getStore().getMetaDataManager().getDBType(feature.getEType());
+    return getMappingStrategy().getStore().getMetaDataManager().getDBType(feature.getEType());
   }
 
   protected int getDBLength(DBType type)
@@ -154,6 +160,14 @@ public abstract class TypeMapping implements ITypeMapping
   }
 
   protected abstract Object getResultSetValue(ResultSet resultSet, int column) throws SQLException;
+
+  /**
+   * @return the mappingStrategy
+   */
+  protected IMappingStrategy getMappingStrategy()
+  {
+    return mappingStrategy;
+  }
 
   /**
    * @author Eike Stepper
@@ -236,13 +250,27 @@ public abstract class TypeMapping implements ITypeMapping
         return null;
       }
 
-      return CDOIDUtil.createLong(id);
+      IExternalReferenceManager externalRefs = ((InternalIDBStore)getMappingStrategy().getStore())
+          .getExternalReferenceManager();
+      return InternalCDODBUtil.convertLongToCDOID(externalRefs, getAccessor(), id);
     }
 
     @Override
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
-      super.doSetValue(stmt, index, CDODBUtil.getLong((CDOID)value));
+      super.doSetValue(stmt, index, InternalCDODBUtil.convertCDOIDToLong(((InternalIDBStore)getMappingStrategy()
+          .getStore()).getExternalReferenceManager(), getAccessor(), (CDOID)value));
+    }
+
+    private IDBStoreAccessor getAccessor()
+    {
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+      if (accessor == null)
+      {
+        throw new IllegalStateException("Can only be called from within a valid IDBStoreAccessor context");
+      }
+
+      return (IDBStoreAccessor)accessor;
     }
   }
 

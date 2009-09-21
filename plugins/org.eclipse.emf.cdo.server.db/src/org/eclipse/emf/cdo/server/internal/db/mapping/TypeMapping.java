@@ -386,6 +386,12 @@ public abstract class TypeMapping implements ITypeMapping
 
       return str.charAt(0);
     }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      stmt.setString(index, ((Character)value).toString());
+    }
   }
 
   /**

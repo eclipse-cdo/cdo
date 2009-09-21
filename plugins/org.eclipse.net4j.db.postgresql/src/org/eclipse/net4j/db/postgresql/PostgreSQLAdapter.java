@@ -11,14 +11,22 @@
  */
 package org.eclipse.net4j.db.postgresql;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.internal.postgresql.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.postgresql.Driver;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
+
+import java.sql.SQLException;
+import java.sql.Savepoint;
+import java.sql.Statement;
 
 /**
  * @author Victor Roldan Betancort
@@ -28,6 +36,8 @@ public class PostgreSQLAdapter extends DBAdapter
   public static final String NAME = "postgresql"; //$NON-NLS-1$
 
   public static final String VERSION = "8.3"; //$NON-NLS-1$
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBAdapter.class);
 
   private static final String[] RESERVED_WORDS = { "ALL", "ANALYSE", "ANALYZE", "AND", "ANY", "AS", "ASC", "ATOMIC", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
       "AUTHORIZATION", "BETWEEN", "BIGINT", "BINARY", "BIT", "BOOLEAN", "BOTH", "C", "CASE", "CAST", "CHAR", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$
@@ -60,6 +70,7 @@ public class PostgreSQLAdapter extends DBAdapter
   /**
    * @since 2.0
    */
+  @Override
   public int getMaxTableNameLength()
   {
     // http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html
@@ -69,6 +80,7 @@ public class PostgreSQLAdapter extends DBAdapter
   /**
    * @since 2.0
    */
+  @Override
   public int getMaxFieldNameLength()
   {
     // http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html
@@ -93,5 +105,58 @@ public class PostgreSQLAdapter extends DBAdapter
   public String[] getReservedWords()
   {
     return RESERVED_WORDS;
+  }
+
+  /*
+   * TODO Remove this method override after fixing Bug 282791 - [DB] Check for existing tables instead of relying on
+   * SQLExceptions PostgreSQL uses transaction on DDL operations. If an error occurs, the SQL Connection goes to an
+   * error state, and can only be cleared by rolling back. Therefore, savepoints for table creation were added
+   */
+  @Override
+  public boolean createTable(IDBTable table, Statement statement) throws DBException
+  {
+    boolean created = true;
+    Savepoint savepoint = null;
+
+    try
+    {
+      savepoint = statement.getConnection().setSavepoint();
+    }
+    catch (SQLException ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    try
+    {
+      doCreateTable(table, statement);
+    }
+    catch (SQLException ex)
+    {
+      created = false;
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("-- " + ex.getMessage() + ". Trying to rollback operation"); //$NON-NLS-1$
+      }
+
+      if (savepoint != null)
+      {
+        try
+        {
+          statement.getConnection().rollback(savepoint);
+        }
+        catch (SQLException ex1)
+        {
+          OM.LOG.error(ex1);
+        }
+      }
+      else
+      {
+        OM.LOG.error("Could not rollback last operation. Savepoint was not created."); //$NON-NLS-1$
+      }
+    }
+
+    validateTable(table, statement);
+    return created;
   }
 }

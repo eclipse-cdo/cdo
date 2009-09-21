@@ -95,8 +95,9 @@ public class PostgreSQLAdapter extends DBAdapter
     {
     case VARCHAR:
     case CLOB:
+    	return "text"; //$NON-NLS-1$
     case BLOB:
-      return "text"; //$NON-NLS-1$
+      return "bytea"; //$NON-NLS-1$
     }
 
     return super.getTypeName(field);

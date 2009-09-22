@@ -54,6 +54,7 @@ import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -449,14 +450,46 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return (Resource.Internal)cdoStore().getResource(this);
   }
 
-  /**
-   * TODO: TO BE REMOVED once https://bugs.eclipse.org/bugs/show_bug.cgi?id=259855 is available to downloads
-   */
+  @Override
+  public Object dynamicGet(int dynamicFeatureID)
+  {
+    Object result = eSettings[dynamicFeatureID];
+    if (result == null)
+    {
+      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+      if (EMFUtil.isPersistent(eStructuralFeature))
+      {
+        if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
+        {
+          eSettings[dynamicFeatureID] = result = createFeatureMap(eStructuralFeature);
+        }
+        else if (eStructuralFeature.isMany())
+        {
+          eSettings[dynamicFeatureID] = result = createList(eStructuralFeature);
+        }
+        else
+        {
+          result = eStore().get(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX);
+          if (eIsCaching())
+          {
+            eSettings[dynamicFeatureID] = result;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
   @Override
   public void dynamicSet(int dynamicFeatureID, Object value)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (EMFUtil.isPersistent(eStructuralFeature))
+    if (!EMFUtil.isPersistent(eStructuralFeature))
+    {
+      eSettings[dynamicFeatureID] = value;
+    }
+    else
     {
       eStore().set(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX, value);
       if (eIsCaching())
@@ -464,20 +497,17 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         eSettings[dynamicFeatureID] = value;
       }
     }
-    else
-    {
-      eSettings[dynamicFeatureID] = value;
-    }
   }
 
-  /**
-   * TODO: TO BE REMOVED once https://bugs.eclipse.org/bugs/show_bug.cgi?id=276712 is available
-   */
   @Override
   public void dynamicUnset(int dynamicFeatureID)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (EMFUtil.isPersistent(eStructuralFeature))
+    if (!EMFUtil.isPersistent(eStructuralFeature))
+    {
+      eSettings[dynamicFeatureID] = null;
+    }
+    else
     {
       eStore().unset(this, eDynamicFeature(dynamicFeatureID));
       if (eIsCaching())
@@ -485,10 +515,16 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         eSettings[dynamicFeatureID] = null;
       }
     }
-    else
-    {
-      eSettings[dynamicFeatureID] = null;
-    }
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
+  {
+    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
+        dynamicFeatureID);
   }
 
   /**
@@ -893,16 +929,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       throw new IllegalArgumentException(Messages.getString("CDOObjectImpl.8")); //$NON-NLS-1$
     }
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
-  {
-    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
-        dynamicFeatureID);
   }
 
   /**

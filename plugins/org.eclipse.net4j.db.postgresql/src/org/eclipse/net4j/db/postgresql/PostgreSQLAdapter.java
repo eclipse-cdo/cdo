@@ -126,9 +126,9 @@ public class PostgreSQLAdapter extends DBAdapter
     {
       savepoint = statement.getConnection().setSavepoint();
     }
-    catch (SQLException ex2)
+    catch (SQLException ex)
     {
-      TRACER.trace("-- " + ex2.getMessage() + ". Trying to rollback operation"); //$NON-NLS-1$
+      OM.LOG.error(ex);
     }
 
     try
@@ -150,12 +150,12 @@ public class PostgreSQLAdapter extends DBAdapter
         }
         catch (SQLException ex1)
         {
-          TRACER.trace("-- " + ex1.getMessage()); //$NON-NLS-1$
+          OM.LOG.error(ex1);
         }
       }
       else
       {
-        TRACER.trace("-- ERROR: Could not rollback last operation. Savepoint was not created."); //$NON-NLS-1$
+        OM.LOG.error("Could not rollback last operation. Savepoint was not created."); //$NON-NLS-1$
       }
 
     }

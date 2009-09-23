@@ -1249,14 +1249,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+    public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.loadRevision(id, referenceChunk);
+          return delegate.loadRevision(id, referenceChunk, prefetchDepth);
         }
         catch (Exception ex)
         {
@@ -1265,14 +1265,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+    public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.loadRevisionByTime(id, referenceChunk, timeStamp);
+          return delegate.loadRevisionByTime(id, referenceChunk, prefetchDepth, timeStamp);
         }
         catch (Exception ex)
         {
@@ -1281,14 +1281,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+    public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.loadRevisionByVersion(id, referenceChunk, version);
+          return delegate.loadRevisionByVersion(id, referenceChunk, prefetchDepth, version);
         }
         catch (Exception ex)
         {
@@ -1297,14 +1297,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+    public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.loadRevisions(ids, referenceChunk);
+          return delegate.loadRevisions(ids, referenceChunk, prefetchDepth);
         }
         catch (Exception ex)
         {
@@ -1313,14 +1313,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       }
     }
 
-    public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+    public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
+        long timeStamp)
     {
       int attempt = 0;
       for (;;)
       {
         try
         {
-          return delegate.loadRevisionsByTime(ids, referenceChunk, timeStamp);
+          return delegate.loadRevisionsByTime(ids, referenceChunk, prefetchDepth, timeStamp);
         }
         catch (Exception ex)
         {
@@ -1328,22 +1329,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         }
       }
     }
-
-    // public List<InternalCDORevision> verifyRevisions(List<InternalCDORevision> revisions)
-    // {
-    // int attempt = 0;
-    // for (;;)
-    // {
-    // try
-    // {
-    // return delegate.verifyRevisions(revisions);
-    // }
-    // catch (Exception ex)
-    // {
-    // handleException(++attempt, ex);
-    // }
-    // }
-    // }
 
     public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)
     {

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -278,6 +279,11 @@ public class RevisionHolderTest extends AbstractCDOTest
     public TestRevision(long id)
     {
       this(id, 0, CDORevision.UNSPECIFIED_DATE);
+    }
+
+    public CDOClassInfo getClassInfo()
+    {
+      throw new UnsupportedOperationException();
     }
 
     public EClass getEClass()

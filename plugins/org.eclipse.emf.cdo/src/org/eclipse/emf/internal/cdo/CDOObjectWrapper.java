@@ -135,6 +135,14 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
     return FSMUtil.isInvalid(this);
   }
 
+  /**
+   * @since 3.0
+   */
+  public void cdoPrefetch(int depth)
+  {
+    view.prefetchRevisions(id, depth);
+  }
+
   public EStructuralFeature cdoInternalDynamicFeature(int dynamicFeatureID)
   {
     // TODO Implement method CDOWrapperImpl.cdoInternalDynamicFeature()

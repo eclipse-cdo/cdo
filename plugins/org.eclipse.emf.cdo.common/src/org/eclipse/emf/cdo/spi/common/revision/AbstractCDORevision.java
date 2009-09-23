@@ -233,6 +233,14 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     }
   }
 
+  /**
+   * @since 3.0
+   */
+  public CDOClassInfo getClassInfo()
+  {
+    return classInfo;
+  }
+
   public EClass getEClass()
   {
     return classInfo.getEClass();

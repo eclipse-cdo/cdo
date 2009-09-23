@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -30,9 +30,11 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
 
   private int version;
 
-  public LoadRevisionByVersionRequest(CDOClientProtocol protocol, CDOID id, int referenceChunk, int version)
+  public LoadRevisionByVersionRequest(CDOClientProtocol protocol, CDOID id, int referenceChunk, int prefetchDepth,
+      int version)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION, Collections.singleton(id), referenceChunk);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION, Collections.singleton(id), referenceChunk,
+        prefetchDepth);
     this.version = version;
   }
 
@@ -51,7 +53,8 @@ public class LoadRevisionByVersionRequest extends LoadRevisionRequest
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, version={3})", getClass().getSimpleName(), getIDs(), //$NON-NLS-1$
-        getReferenceChunk(), version);
+    return MessageFormat.format(
+        "{0}(ids={1}, referenceChunk={2}, prefetchDepth={3}, version={4})", getClass().getSimpleName(), getIDs(), //$NON-NLS-1$
+        getReferenceChunk(), getPrefetchDepth(), version);
   }
 }

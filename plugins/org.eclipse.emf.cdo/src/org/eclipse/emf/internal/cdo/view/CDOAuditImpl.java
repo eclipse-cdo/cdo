@@ -98,7 +98,14 @@ public class CDOAuditImpl extends CDOViewImpl implements CDOAudit
     int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
 
     CDORevisionManager revisionManager = session.getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevisionByTime(id, initialChunkSize, timeStamp, loadOnDemand);
+    return (InternalCDORevision)revisionManager.getRevisionByTime(id, initialChunkSize, CDORevision.DEPTH_NONE,
+        timeStamp, loadOnDemand);
+  }
+
+  @Override
+  protected void prefetchRevisions(CDOID id, int depth, int initialChunkSize)
+  {
+    getSession().getRevisionManager().getRevisionByTime(id, initialChunkSize, depth, timeStamp);
   }
 
   @Override

@@ -54,8 +54,8 @@ public class Audit extends View implements InternalAudit
     checkOpen();
     IRepository repository = getSession().getManager().getRepository();
     setTimeStamp(repository, timeStamp);
-    List<CDORevision> revisions = repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0, timeStamp,
-        false);
+    List<CDORevision> revisions = repository.getRevisionManager().getRevisionsByTime(invalidObjects, 0,
+        CDORevision.DEPTH_NONE, timeStamp, false);
     boolean[] existanceFlags = new boolean[revisions.size()];
     for (int i = 0; i < existanceFlags.length; i++)
     {

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -56,7 +57,8 @@ public class VerifyRevisionIndication extends CDOReadIndication
         TRACER.format("Read ID and version: {0}v{1}", id, version); //$NON-NLS-1$
       }
 
-      InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, 0, version);
+      InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, 0,
+          CDORevision.DEPTH_NONE, version);
       timeStamps[i] = revision.getRevised();
     }
   }

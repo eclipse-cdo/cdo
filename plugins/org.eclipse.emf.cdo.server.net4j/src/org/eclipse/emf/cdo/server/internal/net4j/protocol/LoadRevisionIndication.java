@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -26,10 +27,12 @@ import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -46,6 +49,8 @@ public class LoadRevisionIndication extends CDOReadIndication
   protected CDOID[] ids;
 
   protected int referenceChunk;
+
+  protected int prefetchDepth;
 
   protected Map<EClass, CDOFetchRule> fetchRules = new HashMap<EClass, CDOFetchRule>();
 
@@ -73,9 +78,16 @@ public class LoadRevisionIndication extends CDOReadIndication
     }
 
     int size = in.readInt();
+    if (size < 0)
+    {
+      size = -size;
+      prefetchDepth = in.readInt();
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Reading {0} IDs", size); //$NON-NLS-1$
+      TRACER.format("Read prefetchDepth: {0}", prefetchDepth); //$NON-NLS-1$
     }
 
     ids = new CDOID[size];
@@ -153,6 +165,11 @@ public class LoadRevisionIndication extends CDOReadIndication
       }
     }
 
+    if (prefetchDepth != 0)
+    {
+      prefetchRevisions(prefetchDepth > 0 ? prefetchDepth : Integer.MAX_VALUE, revisions, additionalRevisions);
+    }
+
     getRepository().notifyReadAccessHandlers(getSession(), revisions, additionalRevisions);
     for (CDORevision revision : revisions)
     {
@@ -175,7 +192,7 @@ public class LoadRevisionIndication extends CDOReadIndication
   protected InternalCDORevision getRevision(CDOID id)
   {
     CDORevisionManager revisionManager = getRepository().getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevision(id, referenceChunk);
+    return (InternalCDORevision)revisionManager.getRevision(id, referenceChunk, CDORevision.DEPTH_NONE);
   }
 
   private void collectRevisions(InternalCDORevision revision, Set<CDOID> revisions,
@@ -206,7 +223,7 @@ public class LoadRevisionIndication extends CDOReadIndication
             if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
             {
               InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id,
-                  referenceChunk);
+                  referenceChunk, CDORevision.DEPTH_NONE);
               revisions.add(containedRevision.getID());
               additionalRevisions.add(containedRevision);
               collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);
@@ -222,8 +239,8 @@ public class LoadRevisionIndication extends CDOReadIndication
           CDOID id = (CDOID)value;
           if (!id.isNull() && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager
-                .getRevision(id, referenceChunk);
+            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id,
+                referenceChunk, CDORevision.DEPTH_NONE);
             revisions.add(containedRevision.getID());
             additionalRevisions.add(containedRevision);
             collectRevisions(containedRevision, revisions, additionalRevisions, visitedFetchRules);
@@ -233,5 +250,72 @@ public class LoadRevisionIndication extends CDOReadIndication
     }
 
     visitedFetchRules.remove(fetchRule);
+  }
+
+  private void prefetchRevisions(int depth, CDORevision[] revisions, List<CDORevision> additionalRevisions)
+  {
+    Map<CDOID, CDORevision> map = new HashMap<CDOID, CDORevision>();
+    for (CDORevision revision : revisions)
+    {
+      map.put(revision.getID(), revision);
+    }
+
+    for (CDORevision revision : additionalRevisions)
+    {
+      map.put(revision.getID(), revision);
+    }
+
+    for (CDORevision revision : revisions)
+    {
+      prefetchRevision(depth, (InternalCDORevision)revision, additionalRevisions, map);
+    }
+  }
+
+  private void prefetchRevision(int depth, InternalCDORevision revision, List<CDORevision> additionalRevisions,
+      Map<CDOID, CDORevision> map)
+  {
+    CDOClassInfo classInfo = revision.getClassInfo();
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+    {
+      if (feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
+        {
+          Object value = revision.getValue(reference);
+          if (value instanceof CDOID)
+          {
+            CDOID id = (CDOID)value;
+            prefetchRevisionChild(depth, id, additionalRevisions, map);
+          }
+          else if (value instanceof Collection<?>)
+          {
+            Collection<?> c = (Collection<?>)value;
+            for (Object e : c)
+            {
+              CDOID id = (CDOID)e;
+              prefetchRevisionChild(depth, id, additionalRevisions, map);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private void prefetchRevisionChild(int depth, CDOID id, List<CDORevision> additionalRevisions,
+      Map<CDOID, CDORevision> map)
+  {
+    CDORevision child = map.get(id);
+    if (child == null)
+    {
+      child = getRevision(id);
+      map.put(id, child);
+      additionalRevisions.add(child);
+    }
+
+    if (child != null && depth > 0)
+    {
+      prefetchRevision(depth - 1, (InternalCDORevision)child, additionalRevisions, map);
+    }
   }
 }

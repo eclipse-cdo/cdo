@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjustable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -34,6 +35,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * The equivalent of <code>EStructuralFeatureImpl.NIL</code> (i.e. explicit <code>null</code>).
    */
   public static final Object NIL = new Object();
+
+  /**
+   * @since 3.0
+   */
+  public CDOClassInfo getClassInfo();
 
   public void setID(CDOID id);
 

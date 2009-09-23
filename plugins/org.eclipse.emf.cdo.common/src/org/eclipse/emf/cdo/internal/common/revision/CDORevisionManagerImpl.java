@@ -168,12 +168,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
-  public InternalCDORevision getRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision getRevision(CDOID id, int referenceChunk, int prefetchDepth)
   {
-    return getRevision(id, referenceChunk, true);
+    return getRevision(id, referenceChunk, prefetchDepth, true);
   }
 
-  public InternalCDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand)
+  public InternalCDORevision getRevision(CDOID id, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     acquireAtomicRequestLock(loadAndAddLock);
 
@@ -189,7 +189,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
             TRACER.format("Loading revision {0}", id); //$NON-NLS-1$
           }
 
-          revision = revisionLoader.loadRevision(id, referenceChunk);
+          revision = revisionLoader.loadRevision(id, referenceChunk, prefetchDepth);
           addCachedRevisionIfNotNull(revision);
         }
       }
@@ -211,12 +211,13 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
-  public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
   {
-    return getRevisionByTime(id, referenceChunk, timeStamp, true);
+    return getRevisionByTime(id, referenceChunk, prefetchDepth, timeStamp, true);
   }
 
-  public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp, boolean loadOnDemand)
+  public InternalCDORevision getRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp,
+      boolean loadOnDemand)
   {
     acquireAtomicRequestLock(loadAndAddLock);
 
@@ -232,7 +233,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
             TRACER.format("Loading revision {0} by time {1,date} {1,time}", id, timeStamp); //$NON-NLS-1$
           }
 
-          revision = revisionLoader.loadRevisionByTime(id, referenceChunk, timeStamp);
+          revision = revisionLoader.loadRevisionByTime(id, referenceChunk, prefetchDepth, timeStamp);
           addCachedRevisionIfNotNull(revision);
         }
       }
@@ -254,12 +255,14 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
-  public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public synchronized InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth,
+      int version)
   {
-    return getRevisionByVersion(id, referenceChunk, version, true);
+    return getRevisionByVersion(id, referenceChunk, prefetchDepth, version, true);
   }
 
-  public InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version, boolean loadOnDemand)
+  public InternalCDORevision getRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version,
+      boolean loadOnDemand)
   {
     acquireAtomicRequestLock(loadAndAddLock);
 
@@ -275,7 +278,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
             TRACER.format("Loading revision {0} by version {1}", id, version); //$NON-NLS-1$
           }
 
-          revision = revisionLoader.loadRevisionByVersion(id, referenceChunk, version);
+          revision = revisionLoader.loadRevisionByVersion(id, referenceChunk, prefetchDepth, version);
           addCachedRevisionIfNotNull(revision);
         }
       }
@@ -288,13 +291,13 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
-  public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk)
+  public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
   {
     List<CDOID> missingIDs = new ArrayList<CDOID>(0);
     List<CDORevision> revisions = new ArrayList<CDORevision>(ids.size());
     for (CDOID id : ids)
     {
-      InternalCDORevision revision = getRevision(id, referenceChunk, false);
+      InternalCDORevision revision = getRevision(id, referenceChunk, prefetchDepth, false);
       revisions.add(revision);
       if (revision == null)
       {
@@ -308,7 +311,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
       try
       {
-        List<InternalCDORevision> missingRevisions = revisionLoader.loadRevisions(missingIDs, referenceChunk);
+        List<InternalCDORevision> missingRevisions = revisionLoader.loadRevisions(missingIDs, referenceChunk,
+            prefetchDepth);
         handleMissingRevisions(revisions, missingRevisions);
       }
       finally
@@ -320,14 +324,14 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return revisions;
   }
 
-  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp,
-      boolean loadMissingRevisions)
+  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
+      long timeStamp, boolean loadOnDemand)
   {
-    List<CDOID> missingIDs = loadMissingRevisions ? new ArrayList<CDOID>(0) : null;
+    List<CDOID> missingIDs = loadOnDemand ? new ArrayList<CDOID>(0) : null;
     List<CDORevision> revisions = new ArrayList<CDORevision>(ids.size());
     for (CDOID id : ids)
     {
-      InternalCDORevision revision = getRevisionByTime(id, referenceChunk, timeStamp, false);
+      InternalCDORevision revision = getRevisionByTime(id, referenceChunk, prefetchDepth, timeStamp, false);
       revisions.add(revision);
       if (revision == null && missingIDs != null)
       {
@@ -342,7 +346,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       try
       {
         List<InternalCDORevision> missingRevisions = revisionLoader.loadRevisionsByTime(missingIDs, referenceChunk,
-            timeStamp);
+            prefetchDepth, timeStamp);
         handleMissingRevisions(revisions, missingRevisions);
       }
       finally

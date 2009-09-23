@@ -345,8 +345,8 @@ public class Session extends Container<IView> implements InternalSession
           CDOID id = (CDOID)value;
           if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager
-                .getRevision(id, referenceChunk);
+            InternalCDORevision containedRevision = (InternalCDORevision)revisionManager.getRevision(id,
+                referenceChunk, CDORevision.DEPTH_NONE);
             revisions.add(id);
             additionalRevisions.add(containedRevision);
 

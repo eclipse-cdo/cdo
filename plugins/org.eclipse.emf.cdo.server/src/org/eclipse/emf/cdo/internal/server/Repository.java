@@ -196,13 +196,13 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadPackageUnit((InternalCDOPackageUnit)packageUnit);
   }
 
-  public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.readRevision(id, referenceChunk, revisionManager.getCache());
   }
 
-  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
   {
     if (isSupportingAudits())
     {
@@ -223,7 +223,7 @@ public class Repository extends Container<Object> implements InternalRepository
     throw new IllegalStateException("No support for auditing mode"); //$NON-NLS-1$
   }
 
-  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     if (isSupportingAudits())
@@ -231,7 +231,7 @@ public class Repository extends Container<Object> implements InternalRepository
       return accessor.readRevisionByVersion(id, referenceChunk, revisionManager.getCache(), version);
     }
 
-    InternalCDORevision revision = loadRevision(id, referenceChunk);
+    InternalCDORevision revision = loadRevision(id, referenceChunk, prefetchDepth);
     if (revision.getVersion() == version)
     {
       return revision;
@@ -240,7 +240,7 @@ public class Repository extends Container<Object> implements InternalRepository
     throw new IllegalStateException("Cannot access object with id " + id + " and version " + version); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
@@ -253,12 +253,13 @@ public class Repository extends Container<Object> implements InternalRepository
     return revisions;
   }
 
-  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
+      long timeStamp)
   {
     List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
     for (CDOID id : ids)
     {
-      InternalCDORevision revision = loadRevisionByTime(id, referenceChunk, timeStamp);
+      InternalCDORevision revision = loadRevisionByTime(id, referenceChunk, prefetchDepth, timeStamp);
       revisions.add(revision);
     }
 

@@ -14,10 +14,13 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
@@ -526,6 +529,60 @@ public class ResourceTest extends AbstractCDOTest
       assertEquals(CDOURIUtil.createResourceURI(session, "/res2"), resource2.getURI());
       session.close();
     }
+  }
+
+  public void testPrefetchContents() throws Exception
+  {
+    {
+      Company company = getModel1Factory().createCompany();
+      company.getCategories().add(createCategoryTree(5));
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+
+      CDOResource resource = transaction.createResource("/res1");
+      resource.getContents().add(company);
+
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    CDOResource resource = transaction.getResource("/res1");
+    resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
+
+    Company company = (Company)resource.getContents().get(0);
+    System.out.println(company);
+
+    session.close();
+  }
+
+  private Category createCategoryTree(int depth)
+  {
+    if (depth == 0)
+    {
+      return null;
+    }
+
+    Category category = getModel1Factory().createCategory();
+    for (int i = 0; i < 2; i++)
+    {
+      Category child = createCategoryTree(depth - 1);
+      if (child != null)
+      {
+        category.getCategories().add(child);
+      }
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+      Product1 child = getModel1Factory().createProduct1();
+      category.getProducts().add(child);
+    }
+
+    return category;
   }
 
   /**

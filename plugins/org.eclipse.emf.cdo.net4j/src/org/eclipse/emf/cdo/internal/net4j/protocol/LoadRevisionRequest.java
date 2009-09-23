@@ -39,16 +39,20 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
 
   private int referenceChunk;
 
-  public LoadRevisionRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk)
+  private int prefetchDepth;
+
+  public LoadRevisionRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
   {
-    this(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION, ids, referenceChunk);
+    this(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION, ids, referenceChunk, prefetchDepth);
   }
 
-  public LoadRevisionRequest(CDOClientProtocol protocol, short signalID, Collection<CDOID> ids, int referenceChunk)
+  protected LoadRevisionRequest(CDOClientProtocol protocol, short signalID, Collection<CDOID> ids, int referenceChunk,
+      int prefetchDepth)
   {
     super(protocol, signalID);
     this.ids = ids;
     this.referenceChunk = referenceChunk;
+    this.prefetchDepth = prefetchDepth;
   }
 
   public Collection<CDOID> getIDs()
@@ -59,6 +63,11 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   public int getReferenceChunk()
   {
     return referenceChunk;
+  }
+
+  public int getPrefetchDepth()
+  {
+    return prefetchDepth;
   }
 
   @Override
@@ -75,7 +84,21 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
       TRACER.format("Writing {0} IDs", ids.size()); //$NON-NLS-1$
     }
 
-    out.writeInt(ids.size());
+    if (prefetchDepth == 0)
+    {
+      out.writeInt(ids.size());
+    }
+    else
+    {
+      out.writeInt(-ids.size());
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing prefetchDepth: {0}", prefetchDepth); //$NON-NLS-1$
+      }
+
+      out.writeInt(prefetchDepth);
+    }
+
     for (CDOID id : ids)
     {
       if (TRACER.isEnabled())
@@ -150,6 +173,8 @@ public class LoadRevisionRequest extends CDOClientRequest<List<InternalCDORevisi
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}(ids={1}, referenceChunk={2})", getClass().getSimpleName(), ids, referenceChunk); //$NON-NLS-1$
+    return MessageFormat
+        .format(
+            "{0}(ids={1}, referenceChunk={2}, prefetchDepth={3})", getClass().getSimpleName(), ids, referenceChunk, prefetchDepth); //$NON-NLS-1$
   }
 }

@@ -147,6 +147,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return null;
   }
 
+  /**
+   * @since 3.0
+   */
+  public void cdoPrefetch(int depth)
+  {
+    view.prefetchRevisions(id, depth);
+  }
+
   public void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);

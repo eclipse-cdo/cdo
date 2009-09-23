@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -30,9 +30,10 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
 
   private long timeStamp;
 
-  public LoadRevisionByTimeRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  public LoadRevisionByTimeRequest(CDOClientProtocol protocol, Collection<CDOID> ids, int referenceChunk,
+      int prefetchDepth, long timeStamp)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME, ids, referenceChunk);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_TIME, ids, referenceChunk, prefetchDepth);
     this.timeStamp = timeStamp;
   }
 
@@ -51,7 +52,8 @@ public class LoadRevisionByTimeRequest extends LoadRevisionRequest
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}(ids={1}, referenceChunk={2}, timeStamp={3})", getClass().getSimpleName(), //$NON-NLS-1$
-        getIDs(), getReferenceChunk(), timeStamp);
+    return MessageFormat.format(
+        "{0}(ids={1}, referenceChunk={2}, prefetchDepth={3}, timeStamp={4})", getClass().getSimpleName(), //$NON-NLS-1$
+        getIDs(), getReferenceChunk(), getPrefetchDepth(), timeStamp);
   }
 }

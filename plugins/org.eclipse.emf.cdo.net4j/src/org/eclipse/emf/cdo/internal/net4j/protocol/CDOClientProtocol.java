@@ -105,29 +105,30 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
-  public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth)
   {
-    return loadRevisions(Collections.singleton(id), referenceChunk).get(0);
+    return loadRevisions(Collections.singleton(id), referenceChunk, prefetchDepth).get(0);
   }
 
-  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
   {
-    return loadRevisionsByTime(Collections.singleton(id), referenceChunk, timeStamp).get(0);
+    return loadRevisionsByTime(Collections.singleton(id), referenceChunk, prefetchDepth, timeStamp).get(0);
   }
 
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
   {
-    return send(new LoadRevisionRequest(this, ids, referenceChunk));
+    return send(new LoadRevisionRequest(this, ids, referenceChunk, prefetchDepth));
   }
 
-  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
+      long timeStamp)
   {
-    return send(new LoadRevisionByTimeRequest(this, ids, referenceChunk, timeStamp));
+    return send(new LoadRevisionByTimeRequest(this, ids, referenceChunk, prefetchDepth, timeStamp));
   }
 
-  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version)
   {
-    return send(new LoadRevisionByVersionRequest(this, id, referenceChunk, version)).get(0);
+    return send(new LoadRevisionByVersionRequest(this, id, referenceChunk, prefetchDepth, version)).get(0);
   }
 
   public InternalCDORevision verifyRevision(InternalCDORevision revision, int referenceChunk)

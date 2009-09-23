@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -371,7 +372,7 @@ public final class CDOStore implements EStore
           if (!listOfIDs.isEmpty())
           {
             revisionManager.getRevisions(listOfIDs, view.getSession().options().getCollectionLoadingPolicy()
-                .getInitialChunkSize());
+                .getInitialChunkSize(), CDORevision.DEPTH_NONE);
           }
         }
       }

@@ -125,13 +125,13 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public InternalCDORevision loadRevision(CDOID id, int referenceChunk)
+  public InternalCDORevision loadRevision(CDOID id, int referenceChunk, int prefetchDepth)
   {
     try
     {
       InternalSession session = serverSessionProtocol.getSession();
       StoreThreadLocal.setSession(session);
-      return (InternalCDORevision)repository.getRevisionManager().getRevision(id, referenceChunk);
+      return (InternalCDORevision)repository.getRevisionManager().getRevision(id, referenceChunk, prefetchDepth);
     }
     finally
     {
@@ -139,13 +139,14 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, long timeStamp)
+  public InternalCDORevision loadRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp)
   {
     try
     {
       InternalSession session = serverSessionProtocol.getSession();
       StoreThreadLocal.setSession(session);
-      return (InternalCDORevision)repository.getRevisionManager().getRevisionByTime(id, referenceChunk, timeStamp);
+      return (InternalCDORevision)repository.getRevisionManager().getRevisionByTime(id, referenceChunk, prefetchDepth,
+          timeStamp);
     }
     finally
     {
@@ -153,13 +154,14 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int version)
+  public InternalCDORevision loadRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version)
   {
     try
     {
       InternalSession session = serverSessionProtocol.getSession();
       StoreThreadLocal.setSession(session);
-      return (InternalCDORevision)repository.getRevisionManager().getRevisionByVersion(id, referenceChunk, version);
+      return (InternalCDORevision)repository.getRevisionManager().getRevisionByVersion(id, referenceChunk,
+          prefetchDepth, version);
     }
     finally
     {
@@ -167,7 +169,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk)
+  public List<InternalCDORevision> loadRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth)
   {
     try
     {
@@ -175,7 +177,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
       StoreThreadLocal.setSession(session);
       @SuppressWarnings("unchecked")
       List<InternalCDORevision> revisions = (List<InternalCDORevision>)(List<?>)repository.getRevisionManager()
-          .getRevisions(ids, referenceChunk);
+          .getRevisions(ids, referenceChunk, prefetchDepth);
       return revisions;
     }
     finally
@@ -184,7 +186,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp)
+  public List<InternalCDORevision> loadRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
+      long timeStamp)
   {
     try
     {
@@ -192,7 +195,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
       StoreThreadLocal.setSession(session);
       @SuppressWarnings("unchecked")
       List<InternalCDORevision> revisions = (List<InternalCDORevision>)(List<?>)repository.getRevisionManager()
-          .getRevisionsByTime(ids, referenceChunk, timeStamp, true);
+          .getRevisionsByTime(ids, referenceChunk, prefetchDepth, timeStamp, true);
       return revisions;
     }
     finally

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -73,6 +74,11 @@ public class CDORevisionProxy implements HibernateProxy, InternalCDORevision, Se
   public LazyInitializer getHibernateLazyInitializer()
   {
     return li;
+  }
+
+  public CDOClassInfo getClassInfo()
+  {
+    return li.getRevision().getClassInfo();
   }
 
   public EClass getEClass()

@@ -34,20 +34,22 @@ public interface CDORevisionManager
 
   public boolean containsRevisionByVersion(CDOID id, int version);
 
-  public CDORevision getRevision(CDOID id, int referenceChunk);
+  public CDORevision getRevision(CDOID id, int referenceChunk, int prefetchDepth);
 
-  public CDORevision getRevision(CDOID id, int referenceChunk, boolean loadOnDemand);
+  public CDORevision getRevision(CDOID id, int referenceChunk, int prefetchDepth, boolean loadOnDemand);
 
-  public CDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp);
+  public CDORevision getRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp);
 
-  public CDORevision getRevisionByTime(CDOID id, int referenceChunk, long timeStamp, boolean loadOnDemand);
+  public CDORevision getRevisionByTime(CDOID id, int referenceChunk, int prefetchDepth, long timeStamp,
+      boolean loadOnDemand);
 
-  public CDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version);
+  public CDORevision getRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version);
 
-  public CDORevision getRevisionByVersion(CDOID id, int referenceChunk, int version, boolean loadOnDemand);
+  public CDORevision getRevisionByVersion(CDOID id, int referenceChunk, int prefetchDepth, int version,
+      boolean loadOnDemand);
 
-  public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk);
+  public List<CDORevision> getRevisions(Collection<CDOID> ids, int referenceChunk, int prefetchDepth);
 
-  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, long timeStamp,
-      boolean loadMissingRevisions);
+  public List<CDORevision> getRevisionsByTime(Collection<CDOID> ids, int referenceChunk, int prefetchDepth,
+      long timeStamp, boolean loadOnDemand);
 }

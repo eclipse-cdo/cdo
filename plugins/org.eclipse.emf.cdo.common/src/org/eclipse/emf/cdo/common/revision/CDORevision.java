@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - delta support
@@ -29,6 +29,16 @@ public interface CDORevision
   public static final int UNSPECIFIED_VERSION = 0;
 
   public static final int UNCHUNKED = -1;
+
+  /**
+   * @since 3.0
+   */
+  public static final int DEPTH_NONE = 0;
+
+  /**
+   * @since 3.0
+   */
+  public static final int DEPTH_INFINITE = -1;
 
   /**
    * @since 2.0

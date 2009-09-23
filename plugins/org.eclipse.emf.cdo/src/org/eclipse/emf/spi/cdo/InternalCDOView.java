@@ -88,6 +88,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand);
 
+  /**
+   * @since 3.0
+   */
+  public void prefetchRevisions(CDOID id, int depth);
+
   public Object convertObjectToID(Object potentialObject);
 
   public Object convertObjectToID(Object potentialObject, boolean onlyPersistedID);

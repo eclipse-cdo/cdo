@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -48,7 +49,7 @@ public class LoadRevisionByTimeIndication extends LoadRevisionIndication
   @Override
   protected InternalCDORevision getRevision(CDOID cdoID)
   {
-    return (InternalCDORevision)getRepository().getRevisionManager()
-        .getRevisionByTime(cdoID, referenceChunk, timeStamp);
+    return (InternalCDORevision)getRepository().getRevisionManager().getRevisionByTime(cdoID, referenceChunk,
+        CDORevision.DEPTH_NONE, timeStamp);
   }
 }

@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -43,6 +44,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
@@ -127,7 +129,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)cdoObject.cdoView().convertIDToObject(revision.getContainerID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
+        .eContainingFeature(), -1, revision.getContainerID());
   }
 
   public int getContainingFeatureID(InternalEObject eObject)
@@ -154,7 +157,8 @@ public final class CDOStore implements EStore
     }
 
     InternalCDORevision revision = getRevisionForReading(cdoObject);
-    return (InternalEObject)cdoObject.cdoView().convertIDToObject(revision.getResourceID());
+    return (InternalEObject)convertIdToObject(cdoObject.cdoView(), cdoObject, EcorePackage.eINSTANCE
+        .eContainingFeature(), -1, revision.getResourceID());
   }
 
   @Deprecated
@@ -294,7 +298,7 @@ public final class CDOStore implements EStore
       for (int i = 0; i < result.length; i++)
       {
         result[i] = resolveProxy(revision, feature, i, result[i]);
-        result[i] = cdoObject.cdoView().convertIDToObject(result[i]);
+        result[i] = convertIdToObject(cdoObject.cdoView(), eObject, feature, i, result[i]);
       }
     }
 
@@ -380,16 +384,14 @@ public final class CDOStore implements EStore
       // TODO Clarify feature maps
       if (feature instanceof EReference)
       {
-        // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
-        // InternalCDOView I kept it here.
-        value = view.convertIDToObject(value);
+        value = convertIdToObject(view, eObject, feature, index, value);
       }
       else if (FeatureMapUtil.isFeatureMap(feature))
       {
         FeatureMap.Entry entry = (FeatureMap.Entry)value;
         EStructuralFeature innerFeature = entry.getEStructuralFeature();
         Object innerValue = entry.getValue();
-        Object convertedValue = view.convertIDToObject(innerValue);
+        Object convertedValue = convertIdToObject(view, eObject, feature, index, innerValue);
         if (convertedValue != innerValue)
         {
           value = FeatureMapUtil.createEntry(innerFeature, convertedValue);
@@ -402,6 +404,26 @@ public final class CDOStore implements EStore
         {
           value = type.convertToEMF(feature.getEType(), value);
         }
+      }
+    }
+
+    return value;
+  }
+
+  private Object convertIdToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
+      Object value)
+  {
+    // The EReference condition should be in the CDOType.convertToCDO. Since common package do not have access to
+    // InternalCDOView I kept it here.
+    try
+    {
+      value = view.convertIDToObject(value);
+    }
+    catch (ObjectNotFoundException ex)
+    {
+      if (value instanceof CDOID)
+      {
+        value = view.options().getStaleReferenceBehaviour().processStaleReference(eObject, feature, index, ex.getID());
       }
     }
 

@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
+import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
@@ -1971,6 +1972,8 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy;
 
+    private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.EXCEPTION;
+
     private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
 
     private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.ALL;
@@ -2090,6 +2093,25 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         revisionPrefetchingPolicy = prefetchingPolicy;
         fireEvent(new RevisionPrefetchingPolicyEventImpl());
+      }
+    }
+
+    public CDOStaleReferencePolicy getStaleReferenceBehaviour()
+    {
+      return staleReferencePolicy;
+    }
+
+    public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
+    {
+      if (policy == null)
+      {
+        policy = CDOStaleReferencePolicy.EXCEPTION;
+      }
+
+      if (staleReferencePolicy != policy)
+      {
+        staleReferencePolicy = policy;
+        fireEvent(new StaleReferencePolicyEventImpl());
       }
     }
 
@@ -2243,6 +2265,19 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       private static final long serialVersionUID = 1L;
 
       public ReferencePolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Simon McDuff
+     */
+    private final class StaleReferencePolicyEventImpl extends OptionsEvent implements StaleReferencePolicyEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public StaleReferencePolicyEventImpl()
       {
         super(OptionsImpl.this);
       }

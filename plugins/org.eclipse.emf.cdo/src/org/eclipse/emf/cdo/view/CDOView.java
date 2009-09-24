@@ -400,7 +400,21 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
     public void setStrongReferencePolicy(CDOAdapterPolicy policy);
 
     /**
-     * Returns the CDORevisionPrefetchingPolicy in used.
+     * Returns the CDOStaleReferencePolicy in use.
+     * 
+     * @since 3.0
+     */
+    public CDOStaleReferencePolicy getStaleReferenceBehaviour();
+
+    /**
+     * Sets a policy on how to deal with stale references.
+     * 
+     * @since 3.0
+     */
+    public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy);
+
+    /**
+     * Returns the CDORevisionPrefetchingPolicy in use.
      */
     public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy();
 
@@ -422,6 +436,13 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
     }
 
     public interface ReferencePolicyEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * @since 3.0
+     */
+    public interface StaleReferencePolicyEvent extends IOptionsEvent
     {
     }
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -28,8 +28,19 @@ public class ObjectNotFoundException extends CDOException
 {
   private static final long serialVersionUID = 1L;
 
+  private final CDOID id;
+
   public ObjectNotFoundException(CDOID id)
   {
     super(MessageFormat.format(Messages.getString("ObjectNotFoundException.0"), id, id.isTemporary())); //$NON-NLS-1$
+    this.id = id;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public CDOID getID()
+  {
+    return id;
   }
 }

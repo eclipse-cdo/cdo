@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
+import org.eclipse.emf.cdo.view.CDOStaleObject;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
@@ -41,6 +42,7 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -194,6 +196,45 @@ public final class CDOUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static boolean isStaleObject(Object object)
+  {
+    return object instanceof CDOStaleObject;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void cleanStaleReference(EObject eObject, EStructuralFeature eFeature)
+  {
+    if (!eFeature.isMany() && eFeature.getEContainingClass() != null)
+    {
+      InternalCDOObject cdoObject = (InternalCDOObject)getCDOObject(eObject);
+      cdoObject.eStore().unset(cdoObject, eFeature);
+    }
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static void cleanStaleReference(EObject eObject, EStructuralFeature eFeature, int index)
+  {
+    if (eFeature.isMany() && eFeature.getEContainingClass() != null)
+    {
+      InternalCDOObject cdoObject = (InternalCDOObject)getCDOObject(eObject);
+      try
+      {
+        cdoObject.eStore().remove(cdoObject, eFeature, index);
+      }
+      catch (ObjectNotFoundException ex)
+      {
+        // Ignore the exception
+      }
+    }
   }
 
   /**

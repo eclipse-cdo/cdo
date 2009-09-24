@@ -535,7 +535,7 @@ public class ResourceTest extends AbstractCDOTest
   {
     {
       Company company = getModel1Factory().createCompany();
-      company.getCategories().add(createCategoryTree(5));
+      company.getCategories().add(createCategoryTree(3));
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();

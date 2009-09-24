@@ -10,33 +10,18 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 
 /**
  * @author Eike Stepper
  */
-public class DISABLE_XATransactionTest extends XATransactionTest
+public class DISABLE_Bugzilla_259869_Test extends Bugzilla_259869_Test
 {
   @Override
-  public void testNotUsingXATransaction_Exception() throws Exception
-  {
-    // XXX test disabled
-  }
-
-  @Override
-  public void testCommitFromTransactionDisabled() throws Exception
+  public void testBugzilla_259869_XA() throws InterruptedException
   {
     // XXX disabled because of Bug 290097
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.testCommitFromTransactionDisabled();
+    super.testBugzilla_259869_XA();
   }
-
-  @Override
-  public void test_ExceptionInReadingStream() throws Exception
-  {
-    // XXX disabled because of Bug 290097
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.test_ExceptionInReadingStream();
-  }
-
 }

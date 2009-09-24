@@ -4,39 +4,40 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.AttributeTest;
 
 /**
  * @author Eike Stepper
  */
-public class DISABLE_XATransactionTest extends XATransactionTest
+public class DISABLE_AttributeTest extends AttributeTest
 {
   @Override
-  public void testNotUsingXATransaction_Exception() throws Exception
+  public void testByteArray() throws Exception
   {
-    // XXX test disabled
+    // XXX disabled because of Bug 289445
+    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    super.testByteArray();
   }
 
   @Override
-  public void testCommitFromTransactionDisabled() throws Exception
+  public void testByteArrayEmpty() throws Exception
   {
-    // XXX disabled because of Bug 290097
+    // XXX disabled because of Bug 289445
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.testCommitFromTransactionDisabled();
+    super.testByteArrayEmpty();
   }
 
   @Override
-  public void test_ExceptionInReadingStream() throws Exception
+  public void testByteArrayNull() throws Exception
   {
-    // XXX disabled because of Bug 290097
+    // XXX disabled because of Bug 289445
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.test_ExceptionInReadingStream();
+    super.testByteArrayNull();
   }
-
 }

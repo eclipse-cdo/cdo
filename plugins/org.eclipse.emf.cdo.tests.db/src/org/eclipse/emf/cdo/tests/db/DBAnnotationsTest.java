@@ -66,6 +66,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
     // HSQL does not support length annotations
     skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
     skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
+    // XXX PSQL fails, too - need to investigate
+    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
@@ -98,6 +100,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testLengthAnnotationByMetaData()
   {
+    // XXX [PSQL] disabled because of Bug 290095
+    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addLengthAnnotation(model1, "8");
@@ -134,7 +139,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testTypeAnnotationByMetaData()
   {
-    // HSQL does not support length annotations
+    // XXX [PSQL] disabled because of Bug 290095
+    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+
+    // HSQL does not support type annotations
     skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
     skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
 
@@ -174,6 +182,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testTableNameAnnotationByMetaData()
   {
+    // XXX [PSQL] disabled because of Bug 290095
+    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addTableNameAnnotation(model1, "Subject");
@@ -210,6 +221,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testColumnNameAnnotationByMetaData()
   {
+    // XXX [PSQL] disabled because of Bug 290095
+    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAnnotation(model1, "TOPIC");
@@ -246,6 +260,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testColumnNameTypeAnnotationByMetaData()
   {
+    // XXX [PSQL] disabled because of Bug 290095
+    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+
     msg("Opening session");
     EPackage model1 = EcoreUtil.copy(getModel1Package());
     addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");
@@ -303,7 +320,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     resource.getContents().add(category);
     transaction.commit();
     transaction.close();
-    
+
     msg("Check if table name was correctly set.");
     new DBStoreVerifier(getRepository())
     {

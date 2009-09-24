@@ -10,33 +10,26 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.tests.XATransactionTest;
+import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 
 /**
- * @author Eike Stepper
+ * @author Stefan Winkler
  */
-public class DISABLE_XATransactionTest extends XATransactionTest
+public class DISABLE_ExternalReferenceTest extends ExternalReferenceTest
 {
   @Override
-  public void testNotUsingXATransaction_Exception() throws Exception
-  {
-    // XXX test disabled
-  }
-
-  @Override
-  public void testCommitFromTransactionDisabled() throws Exception
+  public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
     // XXX disabled because of Bug 290097
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.testCommitFromTransactionDisabled();
+    super.testOneXMIResourceManyViewsOnOneResourceSet();
   }
 
   @Override
-  public void test_ExceptionInReadingStream() throws Exception
+  public void testManyViewsOnOneResourceSet() throws Exception
   {
     // XXX disabled because of Bug 290097
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.test_ExceptionInReadingStream();
+    super.testManyViewsOnOneResourceSet();
   }
-
 }

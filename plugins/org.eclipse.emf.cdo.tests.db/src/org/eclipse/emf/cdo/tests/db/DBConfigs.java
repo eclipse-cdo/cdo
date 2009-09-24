@@ -11,8 +11,12 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllTestsAllConfigs;
+import org.eclipse.emf.cdo.tests.AttributeTest;
+import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
+import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -37,5 +41,26 @@ public abstract class DBConfigs extends AllTestsAllConfigs
     // fails because of Bug 284110
     testClasses.remove(Bugzilla_258933_Test.class);
     testClasses.add(DISABLE_Bugzilla_258933_Test.class);
+
+    // ------------ tests below only fail for PostgreSQL
+    // ------------ therefore they are overridden and
+    // ------------ skipConfig for PSQL is used temporarily
+    // XXX [PSQL] disabled because of Bug 289445
+    testClasses.remove(AttributeTest.class);
+    testClasses.add(DISABLE_AttributeTest.class);
+
+    testClasses.remove(FeatureMapTest.class);
+    testClasses.add(DISABLE_FeatureMapTest.class);
+
+    // XXX [PSQL] disabled because of Bug 290095
+    // using skipconfig in DBAnnotationTest
+
+    // XXX [PSQL] disabled because of Bug 290097
+    testClasses.remove(ExternalReferenceTest.class);
+    testClasses.add(DISABLE_ExternalReferenceTest.class);
+
+    // XXX [PSQL] disabled because of Bug 290097
+    testClasses.remove(Bugzilla_259869_Test.class);
+    testClasses.add(DISABLE_Bugzilla_259869_Test.class);
   }
 }

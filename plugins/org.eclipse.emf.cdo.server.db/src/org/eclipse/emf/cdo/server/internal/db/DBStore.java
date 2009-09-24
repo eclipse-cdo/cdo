@@ -7,9 +7,10 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - https://bugs.eclipse.org/bugs/show_bug.cgi?id=259402
- *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
- *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
+ *    Stefan Winkler - Bug 259402
+ *    Stefan Winkler - Bug 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
+ *    Stefan Winkler - Bug 249610: [DB] Support external references (Implementation)
+ *    Stefan Winkler - Bug 289056: [DB] Exception "ERROR: relation "cdo_external_refs" does not exist" while executing test-suite for PostgreSQL
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -267,16 +268,16 @@ public class DBStore extends LongIDStore implements IDBStore
         reStart(connection);
       }
 
-      externalReferenceManager = createExternalReferenceManager();
-      externalReferenceManager.setStore(this);
-      LifecycleUtil.activate(externalReferenceManager);
-
       connection.commit();
     }
     finally
     {
       DBUtil.close(connection);
     }
+
+    externalReferenceManager = createExternalReferenceManager();
+    externalReferenceManager.setStore(this);
+    LifecycleUtil.activate(externalReferenceManager);
   }
 
   protected void firstStart(Connection connection)

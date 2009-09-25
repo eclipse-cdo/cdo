@@ -135,14 +135,14 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     return getDelegate().getRevisionsByTime(ids, referenceChunk, prefetchDepth, timeStamp, loadOnDemand);
   }
 
-  public void revisedRevision(CDOID id, long timeStamp)
+  public void reviseLatest(CDOID id)
   {
-    getDelegate().revisedRevision(id, timeStamp);
+    getDelegate().reviseLatest(id);
   }
 
-  public void revisedRevisionByVersion(CDOID id, int version, long timeStamp)
+  public void reviseVersion(CDOID id, int version, long timeStamp)
   {
-    getDelegate().revisedRevisionByVersion(id, version, timeStamp);
+    getDelegate().reviseVersion(id, version, timeStamp);
   }
 
   protected abstract InternalCDORevisionManager getDelegate();

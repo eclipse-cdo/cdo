@@ -118,7 +118,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return cache.getObjectType(id);
   }
 
-  public void revisedRevision(CDOID id, long timeStamp)
+  public void reviseLatest(CDOID id)
   {
     acquireAtomicRequestLock(revisedLock);
 
@@ -127,14 +127,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       InternalCDORevision revision = (InternalCDORevision)cache.getRevision(id);
       if (revision != null)
       {
-        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
-        {
-          getCache().removeRevision(revision.getID(), revision.getVersion());
-        }
-        else
-        {
-          revision.setRevised(timeStamp - 1);
-        }
+        cache.removeRevision(revision.getID(), revision.getVersion());
       }
     }
     finally
@@ -143,7 +136,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
-  public void revisedRevisionByVersion(CDOID id, int version, long timeStamp)
+  public void reviseVersion(CDOID id, int version, long timeStamp)
   {
     acquireAtomicRequestLock(revisedLock);
 
@@ -154,7 +147,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       {
         if (timeStamp == CDORevision.UNSPECIFIED_DATE)
         {
-          getCache().removeRevision(revision.getID(), revision.getVersion());
+          cache.removeRevision(revision.getID(), revision.getVersion());
         }
         else
         {

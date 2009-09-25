@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.common.model;
 
@@ -15,16 +16,19 @@ import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageUnitImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
+import org.eclipse.emf.cdo.internal.common.model.InternalCDOType;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -207,7 +211,7 @@ public final class CDOModelUtil
 
     if (classifier instanceof EEnum)
     {
-      return CDOType.ENUM;
+      return InternalCDOType.ENUM_ORDINAL;
     }
 
     if (isCorePackage(classifier.getEPackage()))
@@ -287,6 +291,16 @@ public final class CDOModelUtil
     if (primitiveType == Character.class)
     {
       return CDOType.CHAR;
+    }
+
+    if (primitiveType == Object[].class)
+    {
+      return InternalCDOType.OBJECT_ARRAY;
+    }
+
+    if (EEnumLiteral.class.isAssignableFrom(primitiveType) || Enumerator.class.isAssignableFrom(primitiveType))
+    {
+      return InternalCDOType.ENUM_LITERAL;
     }
 
     throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOModelUtil.7"), primitiveType)); //$NON-NLS-1$

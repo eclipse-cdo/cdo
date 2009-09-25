@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTempMeta;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -56,7 +58,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements InternalCDOPackageRegistry
+public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements InternalExtendedCDOPackageRegistry
 {
   private static final long serialVersionUID = 1L;
 
@@ -353,6 +355,46 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
 
     return result.toArray(new EPackage[result.size()]);
+  }
+
+  public Set<String> getAllKeys()
+  {
+    Set<String> result = new HashSet<String>();
+    result.addAll(keySet());
+    if (delegateRegistry != null)
+    {
+      if (delegateRegistry instanceof CDOPackageRegistry)
+      {
+        result.addAll(((InternalExtendedCDOPackageRegistry)delegateRegistry).getAllKeys());
+      }
+      else
+      {
+        result.addAll(delegateRegistry.keySet());
+      }
+    }
+
+    return result;
+  }
+
+  public Object getWithDelegation(String nsURI, boolean resolve)
+  {
+    Object result = getFrom(this, nsURI, resolve);
+    if (result == null && delegateRegistry != null)
+    {
+      result = getFrom(delegateRegistry, nsURI, resolve);
+    }
+
+    return result;
+  }
+
+  private static Object getFrom(EPackage.Registry registry, String nsURI, boolean resolve)
+  {
+    if (resolve)
+    {
+      return registry.getEPackage(nsURI);
+    }
+
+    return registry.get(nsURI);
   }
 
   @Override

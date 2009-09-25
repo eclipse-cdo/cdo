@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.common.model;
 
@@ -77,8 +78,10 @@ public interface CDOType
 
   /**
    * @since 2.0
+   * @deprecated
    */
-  public static final CDOType ENUM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.ENUM;
+  @Deprecated
+  public static final CDOType ENUM = null;
 
   public static final CDOType CUSTOM = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.CUSTOM;
 

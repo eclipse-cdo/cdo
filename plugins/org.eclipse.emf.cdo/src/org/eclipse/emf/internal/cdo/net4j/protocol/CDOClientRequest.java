@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j.protocol;
 
@@ -61,6 +62,11 @@ public abstract class CDOClientRequest<RESULT> extends RequestWithConfirmation<R
       public CDOIDProvider getIDProvider()
       {
         throw new UnsupportedOperationException();
+      }
+
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getPackageRegistry();
       }
 
       @Override

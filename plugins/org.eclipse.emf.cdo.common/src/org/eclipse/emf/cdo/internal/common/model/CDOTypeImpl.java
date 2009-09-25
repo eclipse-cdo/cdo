@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -14,15 +15,20 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.io.CDODataInput;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.internal.common.io.InternalCDODataOutput;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -35,11 +41,12 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOTypeImpl implements CDOType
+public abstract class CDOTypeImpl implements InternalCDOType
 {
   private static Map<Integer, CDOTypeImpl> ids = new HashMap<Integer, CDOTypeImpl>();
 
@@ -231,7 +238,14 @@ public abstract class CDOTypeImpl implements CDOType
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeCDOID((CDOID)value);
+      if (value instanceof CDORevision)
+      {
+        out.writeCDOID(((CDORevision)value).getID());
+      }
+      else
+      {
+        out.writeCDOID((CDOID)value);
+      }
     }
 
     public Object readValue(CDODataInput in) throws IOException
@@ -431,7 +445,7 @@ public abstract class CDOTypeImpl implements CDOType
   /**
    * TODO Transfer integers!
    */
-  public static final CDOType ENUM = new ObjectType("ENUM", 998) //$NON-NLS-1$
+  public static final CDOType ENUM_ORDINAL = new ObjectType("ENUM_ORDINAL", 998) //$NON-NLS-1$
   {
     @SuppressWarnings("cast")
     @Override
@@ -457,7 +471,7 @@ public abstract class CDOTypeImpl implements CDOType
     {
       for (EEnumLiteral literal : ((EEnum)type).getELiterals())
       {
-        if (literal.getInstance() == value)
+        if (literal == value || literal.getInstance() == value)
         {
           return literal.getValue();
         }
@@ -470,6 +484,95 @@ public abstract class CDOTypeImpl implements CDOType
     public Object convertToEMF(EClassifier type, Object value)
     {
       return ((EEnum)type).getEEnumLiteral((Integer)value).getInstance();
+    }
+  };
+
+  public static final CDOType ENUM_LITERAL = new ObjectType("ENUM_LITERAL", 1001) //$NON-NLS-1$
+  {
+    @Override
+    protected void doWriteValue(CDODataOutput out, Object value) throws IOException
+    {
+      EEnum eEnum;
+      if (value instanceof EEnumLiteral)
+      {
+        eEnum = ((EEnumLiteral)value).getEEnum();
+      }
+      else
+      {
+        eEnum = findEnum(((InternalCDODataOutput)out).getPackageRegistry(), value);
+      }
+
+      out.writeCDOClassifierRef(eEnum);
+      out.writeInt(((Enumerator)value).getValue());
+    }
+
+    @Override
+    protected Object doReadValue(CDODataInput in) throws IOException
+    {
+      EEnum eEnum = (EEnum)in.readCDOClassifierRefAndResolve();
+      int ordinal = in.readInt();
+
+      EEnumLiteral literal = eEnum.getEEnumLiteral(ordinal);
+      if (literal == null)
+      {
+        throw new IllegalArgumentException("Enum literal " + ordinal + " not found in " + eEnum);
+      }
+
+      return literal.getInstance();
+    }
+
+    private EEnum findEnum(CDOPackageRegistry registry, Object value)
+    {
+      Set<String> keys = ((InternalExtendedCDOPackageRegistry)registry).getAllKeys();
+
+      // First try all the packages that are already resolved
+      for (String nsURI : keys)
+      {
+        Object possiblePackage = ((InternalExtendedCDOPackageRegistry)registry).getWithDelegation(nsURI, false);
+        if (possiblePackage instanceof EPackage)
+        {
+          EPackage ePackage = (EPackage)possiblePackage;
+          EEnum eEnum = findEnum(ePackage, value);
+          if (eEnum != null)
+          {
+            return eEnum;
+          }
+        }
+      }
+
+      // Then try all the package descriptors
+      for (String nsURI : keys)
+      {
+        Object possiblePackage = ((InternalExtendedCDOPackageRegistry)registry).getWithDelegation(nsURI, false);
+        if (possiblePackage instanceof EPackage.Descriptor)
+        {
+          EPackage ePackage = registry.getEPackage(nsURI);
+          EEnum eEnum = findEnum(ePackage, value);
+          if (eEnum != null)
+          {
+            return eEnum;
+          }
+        }
+      }
+
+      throw new IllegalArgumentException("EENum instance " + value.getClass().getName() + " not supported");
+    }
+
+    private EEnum findEnum(EPackage ePackage, Object value)
+    {
+      for (EClassifier eClassifier : ePackage.getEClassifiers())
+      {
+        if (eClassifier instanceof EEnum)
+        {
+          EEnum eEnum = (EEnum)eClassifier;
+          if (eEnum.getInstanceClass() != null && eEnum.getInstanceClass() == value.getClass())
+          {
+            return eEnum;
+          }
+        }
+      }
+
+      return null;
     }
   };
 
@@ -545,6 +648,132 @@ public abstract class CDOTypeImpl implements CDOType
       }
 
       return value;
+    }
+  };
+
+  public static final CDOType OBJECT_ARRAY = new ObjectType("OBJECT_ARRAY", 1000) //$NON-NLS-1$
+  {
+    @Override
+    protected void doWriteValue(CDODataOutput out, Object value) throws IOException
+    {
+      final Object[] objects = (Object[])value;
+      out.writeInt(objects.length);
+      for (Object object : objects)
+      {
+        final CDOType cdoType;
+        if (object instanceof BigDecimal)
+        {
+          cdoType = CDOType.BIG_DECIMAL;
+        }
+        else if (object instanceof BigInteger)
+        {
+          cdoType = CDOType.BIG_INTEGER;
+        }
+        else if (object instanceof Boolean)
+        {
+          cdoType = CDOType.BOOLEAN_OBJECT;
+        }
+        else if (object instanceof Byte)
+        {
+          cdoType = CDOType.BYTE_OBJECT;
+        }
+        else if (object instanceof byte[])
+        {
+          cdoType = CDOType.BYTE_ARRAY;
+        }
+        else if (object instanceof Character)
+        {
+          cdoType = CDOType.CHARACTER_OBJECT;
+        }
+        else if (object instanceof Date)
+        {
+          cdoType = CDOType.DATE;
+        }
+        else if (object instanceof Double)
+        {
+          cdoType = CDOType.DOUBLE_OBJECT;
+        }
+        else if (object instanceof EEnumLiteral)
+        {
+          cdoType = InternalCDOType.ENUM_LITERAL;
+        }
+        else if (object instanceof FeatureMap.Entry)
+        {
+          cdoType = CDOType.FEATURE_MAP_ENTRY;
+        }
+        else if (object instanceof Float)
+        {
+          cdoType = CDOType.FLOAT_OBJECT;
+        }
+        else if (object instanceof Integer)
+        {
+          cdoType = CDOType.INTEGER_OBJECT;
+        }
+        else if (object instanceof Long)
+        {
+          cdoType = CDOType.LONG_OBJECT;
+        }
+        else if (object instanceof Short)
+        {
+          cdoType = CDOType.SHORT_OBJECT;
+        }
+        else if (object instanceof String)
+        {
+          cdoType = CDOType.STRING;
+        }
+        else if (object instanceof CDOID || object instanceof CDORevision)
+        {
+          cdoType = CDOType.OBJECT;
+        }
+        else if (object == null)
+        {
+          cdoType = CDOType.OBJECT;
+        }
+        else
+        {
+          throw new IllegalArgumentException("Object type " + object.getClass().getName() + " is not supported.");
+        }
+
+        out.writeInt(cdoType.getTypeID());
+        cdoType.writeValue(out, object);
+      }
+    }
+
+    @Override
+    protected Object doReadValue(CDODataInput in) throws IOException
+    {
+      int size = in.readInt();
+      final Object[] objects = new Object[size];
+      for (int i = 0; i < size; i++)
+      {
+        int typeID = in.readInt();
+        CDOType cdoType = CDOModelUtil.getType(typeID);
+        objects[i] = cdoType.readValue(in);
+      }
+
+      return objects;
+    }
+
+    @Override
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    {
+      // CHECK: should the same object array be returned with updated values
+      // or a new object array?
+      final Object[] objects = (Object[])value;
+      int i = 0;
+      for (Object object : objects)
+      {
+        if (object instanceof CDOID)
+        {
+          objects[i++] = adjuster.adjustReference(object);
+        }
+        else
+        {
+          objects[i++] = object;
+        }
+      }
+
+      return objects;
     }
   };
 

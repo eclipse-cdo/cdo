@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.internal.common.io;
 
@@ -15,7 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
-import org.eclipse.emf.cdo.common.io.CDODataOutput;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -56,7 +56,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements CDODataOutput
+public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements InternalCDODataOutput
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDODataOutputImpl.class);
 

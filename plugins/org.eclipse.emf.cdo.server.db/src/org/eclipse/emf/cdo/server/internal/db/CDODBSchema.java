@@ -10,6 +10,7 @@
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  *    Victor Roldan - 289237: [DB] [maintenance] Support external references
+ *    Victor Roldan - 289360: [DB] [maintenance] Support FeatureMaps
  *
  */
 package org.eclipse.emf.cdo.server.internal.db;
@@ -155,6 +156,19 @@ public class CDODBSchema extends DBSchema
   public static final String LIST_IDX = "cdo_idx"; //$NON-NLS-1$
 
   public static final String LIST_VALUE = "cdo_value"; //$NON-NLS-1$
+
+  /**
+   * Field names of featuremap tables
+   */
+  public static final String FEATUREMAP_REVISION_ID = "cdo_id"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_VERSION = "cdo_version"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_IDX = "cdo_idx"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_TAG = "cdo_tag"; //$NON-NLS-1$
+
+  public static final String FEATUREMAP_VALUE = "cdo_value"; //$NON-NLS-1$
 
   private CDODBSchema()
   {

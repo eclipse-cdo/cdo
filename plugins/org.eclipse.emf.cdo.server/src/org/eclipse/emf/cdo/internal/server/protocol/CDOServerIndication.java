@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.internal.server.protocol;
 
@@ -122,6 +123,11 @@ public abstract class CDOServerIndication extends IndicationWithResponse
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
+      }
+
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return getRepository().getPackageRegistry();
       }
 
       public CDOIDProvider getIDProvider()

@@ -10,6 +10,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/215688
  *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.net4j.protocol;
 
@@ -101,6 +102,11 @@ public class CommitTransactionRequest extends RequestWithMonitoring<CommitTransa
   {
     requesting(new CDODataOutputImpl(out)
     {
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getPackageRegistry();
+      }
+
       @Override
       protected StringIO getPackageURICompressor()
       {

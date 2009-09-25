@@ -10,6 +10,7 @@
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  *    Victor Roldan - 289237: [DB] [maintenance] Support external references
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -42,6 +43,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,7 +136,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       if (feature.isMany())
       {
-        listMappings.add(mappingStrategy.createListMapping(eClass, feature));
+        if (FeatureMapUtil.isFeatureMap(feature))
+        {
+          listMappings.add(mappingStrategy.createFeatureMapMapping(eClass, feature));
+        }
+        else
+        {
+          listMappings.add(mappingStrategy.createListMapping(eClass, feature));
+        }
       }
     }
 

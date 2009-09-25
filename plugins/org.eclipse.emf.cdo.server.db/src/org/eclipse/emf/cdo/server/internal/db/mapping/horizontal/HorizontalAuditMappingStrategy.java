@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
@@ -33,6 +34,12 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
   public IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature)
   {
     return new AuditListTableMapping(this, containingClass, feature);
+  }
+
+  @Override
+  public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
+  {
+    return new AuditFeatureMapTableMapping(this, containingClass, feature);
   }
 
   @Override

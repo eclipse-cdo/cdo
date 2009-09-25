@@ -7,11 +7,13 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.internal.server.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.io.CDODataOutput;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.internal.common.io.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.server.Session;
 
@@ -58,6 +60,11 @@ public abstract class CDOServerRequest extends Request
       public CDOIDProvider getIDProvider()
       {
         return getSession();
+      }
+
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return getSession().getSessionManager().getRepository().getPackageRegistry();
       }
     });
   }

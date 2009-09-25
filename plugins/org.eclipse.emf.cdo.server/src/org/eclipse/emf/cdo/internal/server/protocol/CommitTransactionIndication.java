@@ -9,6 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
  */
 package org.eclipse.emf.cdo.internal.server.protocol;
 
@@ -180,6 +181,11 @@ public class CommitTransactionIndication extends IndicationWithMonitoring
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
+      }
+
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return commitContext.getPackageRegistry();
       }
 
       public CDOIDProvider getIDProvider()

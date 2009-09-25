@@ -713,6 +713,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     {
       return null;
     }
+
     // Since getObject could trigger a read (ONLY when we load a resource) we NEED to make sure the state lock is
     // active.
     // Always use in the following order

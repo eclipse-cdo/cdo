@@ -92,6 +92,7 @@ public interface CDOStaleReferencePolicy
       {
         interfaces = new Class<?>[] { InternalEObject.class, CDOStaleObject.class };
       }
+
       return Proxy.newProxyInstance(instanceClass.getClassLoader(), interfaces, handler);
     }
 

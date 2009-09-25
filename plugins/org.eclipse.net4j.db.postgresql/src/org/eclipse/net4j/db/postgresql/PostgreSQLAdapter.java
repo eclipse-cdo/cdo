@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008 Open Canarias S.L. and others.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -142,6 +142,7 @@ public class PostgreSQLAdapter extends DBAdapter
       {
         TRACER.trace("-- " + ex.getMessage() + ". Trying to rollback operation"); //$NON-NLS-1$
       }
+
       if (savepoint != null)
       {
         try
@@ -157,11 +158,9 @@ public class PostgreSQLAdapter extends DBAdapter
       {
         OM.LOG.error("Could not rollback last operation. Savepoint was not created."); //$NON-NLS-1$
       }
-
     }
 
     validateTable(table, statement);
     return created;
   }
-
 }

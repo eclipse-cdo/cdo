@@ -38,5 +38,4 @@ public class DISABLE_XATransactionTest extends XATransactionTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
     super.test_ExceptionInReadingStream();
   }
-
 }

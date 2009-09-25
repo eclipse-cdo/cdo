@@ -184,6 +184,7 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         break;
       }
     }
+
     // Create holder only if require
     RevisionHolder newHolder = createHolder((InternalCDORevision)revision);
     LRU list = revision.isCurrent() ? currentLRU : revisedLRU;

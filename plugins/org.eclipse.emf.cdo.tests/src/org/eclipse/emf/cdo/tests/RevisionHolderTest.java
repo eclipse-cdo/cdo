@@ -41,7 +41,6 @@ import java.util.List;
  */
 public class RevisionHolderTest extends AbstractCDOTest
 {
-
   public void testChronology() throws Exception
   {
     LRURevisionCache cache = new LRURevisionCache();

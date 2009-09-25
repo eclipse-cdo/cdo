@@ -38,6 +38,8 @@ public class FormatChecker
     File folder = new File(args.length == 0 ? "/develop/ws/cdo" : args[0]);
     recurse(folder);
 
+    ignore("templates.MenuCardTemplate", 4);
+
     ignore("com.swtdesigner.ResourceManager", 2);
     ignore("com.swtdesigner.SWTResourceManager", 2);
 

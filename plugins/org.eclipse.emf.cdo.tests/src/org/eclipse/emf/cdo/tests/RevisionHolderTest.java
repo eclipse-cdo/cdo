@@ -41,6 +41,7 @@ import java.util.List;
  */
 public class RevisionHolderTest extends AbstractCDOTest
 {
+
   public void testChronology() throws Exception
   {
     LRURevisionCache cache = new LRURevisionCache();
@@ -253,7 +254,7 @@ public class RevisionHolderTest extends AbstractCDOTest
   /**
    * @author Eike Stepper
    */
-  private static final class TestRevision implements InternalCDORevision
+  public static final class TestRevision implements InternalCDORevision
   {
     private CDOID id;
 

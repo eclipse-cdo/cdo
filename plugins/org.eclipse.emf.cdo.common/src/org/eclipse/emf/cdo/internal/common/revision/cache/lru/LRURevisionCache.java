@@ -164,10 +164,6 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
           revision, revision.getCreated(), revision.getRevised(), revision.isCurrent());
     }
 
-    RevisionHolder newHolder = createHolder((InternalCDORevision)revision);
-    LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
-    list.add((DLRevisionHolder)newHolder);
-
     int version = revision.getVersion();
     RevisionHolder lastHolder = null;
     RevisionHolder holder = getHolder(revision.getID());
@@ -188,6 +184,10 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         break;
       }
     }
+    // Create holder only if require
+    RevisionHolder newHolder = createHolder((InternalCDORevision)revision);
+    LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
+    list.add((DLRevisionHolder)newHolder);
 
     adjustHolder((InternalCDORevision)revision, newHolder, lastHolder, holder);
     return true;
@@ -214,6 +214,8 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         if (holderVersion == version)
         {
           revision = holder.getRevision();
+          LRU list = revision.isCurrent() ? currentLRU : revisedLRU;
+          list.remove((DLRevisionHolder)holder);
           removeHolder(holder);
         }
 
@@ -327,16 +329,19 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
       if (holder.isCurrent() && nextHolder.isCurrent())
       {
         currentLRU.remove((DLRevisionHolder)nextHolder);
-        revisedLRU.add((DLRevisionHolder)nextHolder);
 
         InternalCDORevision oldRevision = nextHolder.getRevision();
 
-        // TODO Should we even keeps revised revision with good version && not good revised ?
         if (oldRevision != null && oldRevision.getRevised() == CDORevision.UNSPECIFIED_DATE
             && holder.getCreated() > CDORevision.UNSPECIFIED_DATE
             && oldRevision.getVersion() == holder.getVersion() - 1)
         {
+          revisedLRU.add((DLRevisionHolder)nextHolder);
           oldRevision.setRevised(holder.getCreated() - 1);
+        }
+        else
+        {
+          removeHolder(nextHolder);
         }
       }
     }

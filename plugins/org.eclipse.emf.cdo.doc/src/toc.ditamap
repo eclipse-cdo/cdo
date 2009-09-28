@@ -12,6 +12,9 @@ Eike Stepper - initial API and implementation
 -->
 
 <map title="CDO Model Repository Documentation" id="cdo">
+  <topicref href="concepts/object_identity.dita" type="concept"/>
+  <topicref href="extenders/developing_custom_stores.dita" type="task"/>
+	<!--
   <topicref href="collateral/about_this_manual.dita" type="concept"/>
   <topicref href="collateral/conventions_for_this_manual.dita" type="concept"/>
   <topicref href="collateral/overview_of_cdo.dita" type="concept"/>
@@ -594,4 +597,5 @@ Eike Stepper - initial API and implementation
   <topicref href="collateral/glossary.dita" type="concept"/>
   <topicref href="collateral/register.dita" type="concept"/>
   <topicref href="collateral/legal_information.dita" type="concept"/>
+	 -->
 </map>

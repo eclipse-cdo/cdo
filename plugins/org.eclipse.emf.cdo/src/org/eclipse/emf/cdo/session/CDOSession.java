@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 
 import org.eclipse.emf.ecore.EObject;
@@ -52,7 +51,7 @@ import java.util.Collection;
  * @author Eike Stepper
  * @since 2.0
  */
-public interface CDOSession extends CDOCommonSession, IContainer<CDOView>, IOptionsContainer
+public interface CDOSession extends CDOCommonSession, IContainer<CDOView>
 {
   /**
    * @since 3.0

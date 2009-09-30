@@ -40,22 +40,22 @@ public interface CDOSession extends org.eclipse.emf.cdo.session.CDOSession
     public ISignalProtocol<CDOSession> getProtocol();
 
     /**
-     * Returns the timeout for commit operations in <b>seconds.</b>.
+     * Returns the timeout for commit operations in <b>seconds</b>.
      */
     public int getCommitTimeout();
 
     /**
-     * Sets the timeout for commit operations in <b>seconds.</b>.
+     * Sets the timeout for commit operations in <b>seconds</b>.
      */
     public void setCommitTimeout(int commitTimeout);
 
     /**
-     * Returns the interval for progress reports of commit operations in <b>seconds.</b>.
+     * Returns the interval for progress reports of commit operations in <b>seconds</b>.
      */
     public int getProgressInterval();
 
     /**
-     * Sets the interval for progress reports of commit operations in <b>seconds.</b>.
+     * Sets the interval for progress reports of commit operations in <b>seconds</b>.
      */
     public void setProgressInterval(int progressInterval);
   }

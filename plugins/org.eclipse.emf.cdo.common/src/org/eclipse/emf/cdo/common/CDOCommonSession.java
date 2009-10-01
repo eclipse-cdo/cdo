@@ -28,6 +28,9 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
 
   public CDOCommonView getView(int viewID);
 
+  /**
+   * Returns the {@link Options options} of this session.
+   */
   public Options options();
 
   /**

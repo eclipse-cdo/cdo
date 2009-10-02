@@ -111,6 +111,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private CDOTransactionStrategy transactionStrategy;
 
+  private boolean trackingModification;
+
   /**
    * @since 2.0
    */
@@ -595,7 +597,29 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     try
     {
+      Set<CDOResource> dirtyResources = null;
+      if (isTrackingModification())
+      {
+        dirtyResources = new HashSet<CDOResource>();
+        for (CDOObject object : getDirtyObjects().values())
+        {
+          CDOResource resource = object.cdoResource();
+          if (resource != null)
+          {
+            dirtyResources.add(resource);
+          }
+        }
+      }
+
       getTransactionStrategy().commit(this, progressMonitor);
+
+      if (dirtyResources != null)
+      {
+        for (CDOResource dirtyResource : dirtyResources)
+        {
+          dirtyResource.setModified(false);
+        }
+      }
     }
     catch (TransactionException ex)
     {
@@ -1149,6 +1173,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     dirty = false;
     conflict = 0;
     lastTemporaryID = 0;
+  }
+
+  /**
+   * Returns true if every CDOObject does call CDOResource.setModified() when modified.
+   */
+  public boolean isTrackingModification()
+  {
+    return trackingModification;
+  }
+
+  /**
+   * Enables a mechanism in which every CDOObject sets the "modified" flag of its containing CDOResource to true
+   * accordingly in a transition to DIRTY state.
+   */
+  public void setModificationTracking(boolean on)
+  {
+    trackingModification = on;
   }
 
   public Map<CDOID, CDOObject> getDirtyObjects()

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.session.CDORevisionManagerImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.collection.Pair;
@@ -173,7 +175,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * The object is already attached in EMF world. It contains all the information needed to know where it will be
    * connected.
-   * 
+   *
    * @since 2.0
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
@@ -582,7 +584,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * <li>Registration with the {@link CDOTransaction}
    * <li>Changing state to {@link CDOState#PREPARED PREPARED}
    * </ol>
-   * 
+   *
    * @see AttachTransition
    * @author Eike Stepper
    */
@@ -637,7 +639,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * </ol>
    * <li>Changing state to {@link CDOState#NEW NEW}
    * </ol>
-   * 
+   *
    * @see PrepareTransition
    * @author Eike Stepper
    */
@@ -758,6 +760,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOTransaction transaction = view.toTransaction();
       transaction.registerDirty(object, (CDOFeatureDelta)featureDelta);
       changeState(object, CDOState.DIRTY);
+
+      if (transaction instanceof CDOTransactionImpl && ((CDOTransactionImpl)transaction).isTrackingModification())
+      {
+        CDOResource resource = object.cdoResource();
+        if (resource != null && resource.isTrackingModification() && !resource.isModified())
+        {
+          resource.setModified(true);
+        }
+      }
     }
   }
 

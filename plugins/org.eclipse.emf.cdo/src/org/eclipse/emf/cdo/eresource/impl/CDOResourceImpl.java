@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -380,13 +381,32 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
+   * @generated NOT
    */
-  public void setTrackingModification(boolean newTrackingModification)
+  public void setTrackingModification(boolean on)
   {
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, newTrackingModification);
+    eSet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, on);
+    CDOTransaction transaction = cdoView().toTransaction();
+    if (transaction != null && transaction instanceof CDOTransactionImpl)
+    {
+      // check that there are no more resources being tracked to disable
+      // transaction modification tracking. Otherwise, ignore.
+      if (!on)
+      {
+        for (Resource res : getResourceSet().getResources())
+        {
+          if (res != this && res instanceof CDOResource)
+          {
+            if (((CDOResource)res).cdoView() == cdoView() && res.isTrackingModification())
+            {
+              return;
+            }
+          }
+        }
+      }
+
+      ((CDOTransactionImpl)transaction).setModificationTracking(on);
+    }
   }
 
   /**

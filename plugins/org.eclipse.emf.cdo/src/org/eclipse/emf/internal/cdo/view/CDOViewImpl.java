@@ -1992,7 +1992,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
 
-    private CDOAdapterPolicy adapterReferencePolicy = CDOAdapterPolicy.ALL;
+    private CDOAdapterPolicy strongReferencePolicy = CDOAdapterPolicy.ALL;
 
     public OptionsImpl()
     {
@@ -2075,7 +2075,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     public CDOAdapterPolicy getStrongReferencePolicy()
     {
-      return adapterReferencePolicy;
+      return strongReferencePolicy;
     }
 
     public void setStrongReferencePolicy(CDOAdapterPolicy adapterPolicy)
@@ -2085,9 +2085,9 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
         adapterPolicy = CDOAdapterPolicy.ALL;
       }
 
-      if (adapterReferencePolicy != adapterPolicy)
+      if (strongReferencePolicy != adapterPolicy)
       {
-        adapterReferencePolicy = adapterPolicy;
+        strongReferencePolicy = adapterPolicy;
         adapterPolicyManager.reset();
         fireEvent(new ReferencePolicyEventImpl());
       }

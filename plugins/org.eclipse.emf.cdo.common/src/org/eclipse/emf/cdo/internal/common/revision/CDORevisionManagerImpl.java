@@ -172,7 +172,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     try
     {
-      InternalCDORevision revision = (InternalCDORevision)cache.getRevision(id);
+      boolean prefetch = prefetchDepth != CDORevision.DEPTH_NONE;
+      InternalCDORevision revision = prefetch ? null : (InternalCDORevision)cache.getRevision(id);
       if (revision == null)
       {
         if (loadOnDemand)
@@ -216,8 +217,9 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     try
     {
-      InternalCDORevision revision = (InternalCDORevision)cache.getRevisionByTime(id, timeStamp);
-      if (revision == null)
+      boolean prefetch = prefetchDepth != CDORevision.DEPTH_NONE;
+      InternalCDORevision revision = prefetch ? null : (InternalCDORevision)cache.getRevisionByTime(id, timeStamp);
+      if (revision == null || prefetchDepth != CDORevision.DEPTH_NONE)
       {
         if (loadOnDemand)
         {
@@ -261,7 +263,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     try
     {
-      InternalCDORevision revision = (InternalCDORevision)cache.getRevisionByVersion(id, version);
+      boolean prefetch = prefetchDepth != CDORevision.DEPTH_NONE;
+      InternalCDORevision revision = prefetch ? null : (InternalCDORevision)cache.getRevisionByVersion(id, version);
       if (revision == null)
       {
         if (loadOnDemand)
@@ -290,6 +293,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     List<CDORevision> revisions = new ArrayList<CDORevision>(ids.size());
     for (CDOID id : ids)
     {
+      // TODO Combination of prefetch=true and loadOnDemand=false does not make sense!
       InternalCDORevision revision = getRevision(id, referenceChunk, prefetchDepth, false);
       revisions.add(revision);
       if (revision == null)

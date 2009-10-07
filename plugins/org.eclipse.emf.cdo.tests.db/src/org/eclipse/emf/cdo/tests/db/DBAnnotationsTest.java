@@ -260,6 +260,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testColumnNameTypeAnnotationByMetaData()
   {
+    // HSQL does not support type annotations
+    skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
+    skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
+
     // XXX [PSQL] disabled because of Bug 290095
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 

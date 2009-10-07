@@ -108,9 +108,25 @@ public class SQLQueryTest extends AbstractCDOTest
       msg("Count products");
       CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT COUNT(*) from PRODUCT1");
       cdoQuery.setParameter(SQLQueryHandler.CDO_OBJECT_QUERY, false);
-      final List<Long> counts = cdoQuery.getResult(Long.class);
+
+      // we need to handle objects, because different DBs produce either
+      // Long or Integer results
+      final List<Object> counts = cdoQuery.getResult(Object.class);
       assertEquals(counts.size(), 1);
-      assertEquals(counts.get(0).intValue(), NUM_OF_PRODUCTS);
+
+      Object result = counts.get(0);
+      int intResult;
+      if (result instanceof Integer)
+      {
+        intResult = ((Integer)result).intValue();
+      }
+      else
+      {
+        assertTrue(result instanceof Long);
+        intResult = ((Long)result).intValue();
+      }
+
+      assertEquals(intResult, NUM_OF_PRODUCTS);
     }
 
     transaction.commit();

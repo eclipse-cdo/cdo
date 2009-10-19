@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -196,9 +196,9 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   protected void changeState(SUBJECT subject, STATE state)
   {
     STATE oldState = getState(subject);
-    setState(subject, state);
     if (oldState != state)
     {
+      setState(subject, state);
       fireEvent(new StateChangedEvent(subject, oldState, state));
     }
   }

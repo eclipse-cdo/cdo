@@ -618,7 +618,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
                   throw ex;
                 }
 
-                if (isActive())
+                if (view.isActive())
                 {
                   OM.LOG.error(ex);
                 }

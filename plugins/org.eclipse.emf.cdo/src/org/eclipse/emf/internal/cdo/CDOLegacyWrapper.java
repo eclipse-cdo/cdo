@@ -89,13 +89,17 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
       }
 
-      CDOState tmp = this.state;
+      CDOState oldState = this.state;
       this.state = state;
       adjustEProxy();
-      return tmp;
+      if (view != null)
+      {
+        view.handleObjectStateChanged(this, oldState, state);
+      }
+
+      return oldState;
     }
 
-    // TODO Detect duplicate cdoInternalSetState() calls
     return null;
   }
 

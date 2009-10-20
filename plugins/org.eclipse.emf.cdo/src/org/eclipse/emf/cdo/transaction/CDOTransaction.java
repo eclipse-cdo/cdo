@@ -62,11 +62,38 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction
 
   public CDOResource getOrCreateResource(String path);
 
+  /**
+   * @deprecated Use {@link #addTransactionHandler(CDOTransactionHandler)} instead.
+   */
+  @Deprecated
   public void addHandler(CDOTransactionHandler handler);
 
+  /**
+   * @deprecated Use {@link #removeTransactionHandler(CDOTransactionHandler)} instead.
+   */
+  @Deprecated
   public void removeHandler(CDOTransactionHandler handler);
 
+  /**
+   * @deprecated Use {@link #getTransactionHandlers()} instead.
+   */
+  @Deprecated
   public CDOTransactionHandler[] getHandlers();
+
+  /**
+   * @since 3.0
+   */
+  public void addTransactionHandler(CDOTransactionHandler handler);
+
+  /**
+   * @since 3.0
+   */
+  public void removeTransactionHandler(CDOTransactionHandler handler);
+
+  /**
+   * @since 3.0
+   */
+  public CDOTransactionHandler[] getTransactionHandlers();
 
   public Map<CDOID, CDOResource> getNewResources();
 

@@ -289,6 +289,21 @@ public interface CDOView extends CDOCommonView, INotifier, IOptionsContainer
   public void unlockObjects();
 
   /**
+   * @since 3.0
+   */
+  public void addObjectHandler(CDOObjectHandler handler);
+
+  /**
+   * @since 3.0
+   */
+  public void removeObjectHandler(CDOObjectHandler handler);
+
+  /**
+   * @since 3.0
+   */
+  public CDOObjectHandler[] getObjectHandlers();
+
+  /**
    * @since 2.0
    */
   public CDOQuery createQuery(String language, String queryString);

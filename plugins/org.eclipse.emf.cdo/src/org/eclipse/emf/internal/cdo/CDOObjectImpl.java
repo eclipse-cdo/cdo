@@ -216,24 +216,23 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public CDOState cdoInternalSetState(CDOState state)
   {
-    if (this.state != state)
+    CDOState oldState = this.state;
+    if (oldState != state)
     {
       if (TRACER.isEnabled())
       {
         TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
       }
 
-      try
+      this.state = state;
+      if (view != null)
       {
-        return this.state;
+        view.handleObjectStateChanged(this, oldState, state);
       }
-      finally
-      {
-        this.state = state;
-      }
+
+      return oldState;
     }
 
-    // TODO Detect duplicate cdoInternalSetState() calls
     return null;
   }
 

@@ -44,7 +44,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(handler);
+    transaction.addTransactionHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
 
@@ -66,7 +66,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(new CDODefaultTransactionHandler()
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void attachingObject(CDOTransaction transaction, CDOObject object)
@@ -104,7 +104,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     order.getOrderDetails().add(orderDetail);
 
     CDOResource resource = transaction.getOrCreateResource("/test1");
-    transaction.addHandler(new CDODefaultTransactionHandler()
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void attachingObject(CDOTransaction transaction, CDOObject object)
@@ -134,7 +134,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(handler);
+    transaction.addTransactionHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
     Order order = getModel1Factory().createOrder();
@@ -160,7 +160,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(new CDODefaultTransactionHandler()
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void detachingObject(CDOTransaction transaction, CDOObject object)
@@ -197,7 +197,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(handler);
+    transaction.addTransactionHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
     Order order = getModel1Factory().createOrder();
@@ -220,7 +220,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
   {
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(new CDODefaultTransactionHandler()
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
@@ -260,7 +260,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOResource resource = transaction.getOrCreateResource("/test1");
     resource.getContents().add(order);
 
-    transaction.addHandler(new CDODefaultTransactionHandler()
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler()
     {
       @Override
       public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
@@ -290,7 +290,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(handler);
+    transaction.addTransactionHandler(handler);
 
     transaction.getOrCreateResource("/test1");
     transaction.commit();
@@ -306,7 +306,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     CDOSession session = openModel1Session();
     CDOTransaction transaction = session.openTransaction();
-    transaction.addHandler(handler);
+    transaction.addTransactionHandler(handler);
 
     transaction.getOrCreateResource("/test1");
 
@@ -330,7 +330,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     final CDOResource resource = transaction.getOrCreateResource("/test1");
     resource.getContents().add(company);
 
-    transaction.addHandler(new CDOAsyncTransactionHandler(new CDOTransactionHandler()
+    transaction.addTransactionHandler(new CDOAsyncTransactionHandler(new CDOTransactionHandler()
     {
       public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
       {
@@ -363,7 +363,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
       }
     }));
 
-    transaction.addHandler(asyncHandler);
+    transaction.addTransactionHandler(asyncHandler);
     resource.getContents().add(order); // 1 modif + 1 attach
     resource.getContents().remove(order); // 1 modif + 1 detach
 

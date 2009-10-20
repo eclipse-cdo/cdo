@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  **************************************************************************/
@@ -207,13 +207,13 @@ public abstract class AbstractObjectConflictResolver implements CDOConflictResol
     protected void hookTransaction(CDOTransaction transaction)
     {
       transaction.options().addChangeSubscriptionPolicy(this);
-      transaction.addHandler(handler);
+      transaction.addTransactionHandler(handler);
     }
 
     @Override
     protected void unhookTransaction(CDOTransaction transaction)
     {
-      transaction.removeHandler(handler);
+      transaction.removeTransactionHandler(handler);
       transaction.options().removeChangeSubscriptionPolicy(this);
     }
 

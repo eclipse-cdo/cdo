@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
+import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
@@ -137,6 +138,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   private ChangeSubscriptionManager changeSubscriptionManager = createChangeSubscriptionManager();
 
   private AdapterManager adapterPolicyManager = createAdapterManager();
+
+  /**
+   * TODO Optimize by storing an array. See {@link Notifier}.
+   */
+  private List<CDOObjectHandler> objectHandlers = new ArrayList<CDOObjectHandler>(0);
 
   private OptionsImpl options;
 
@@ -1147,6 +1153,43 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     if (TRACER.isEnabled())
     {
       TRACER.format("Remapping {0} --> {1}", oldID, newID); //$NON-NLS-1$
+    }
+  }
+
+  public void addObjectHandler(CDOObjectHandler handler)
+  {
+    synchronized (objectHandlers)
+    {
+      if (!objectHandlers.contains(handler))
+      {
+        objectHandlers.add(handler);
+      }
+    }
+  }
+
+  public void removeObjectHandler(CDOObjectHandler handler)
+  {
+    synchronized (objectHandlers)
+    {
+      objectHandlers.remove(handler);
+    }
+  }
+
+  public CDOObjectHandler[] getObjectHandlers()
+  {
+    synchronized (objectHandlers)
+    {
+      return objectHandlers.toArray(new CDOObjectHandler[objectHandlers.size()]);
+    }
+  }
+
+  public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState)
+  {
+    CDOObjectHandler[] handlers = getObjectHandlers();
+    for (int i = 0; i < handlers.length; i++)
+    {
+      CDOObjectHandler handler = handlers[i];
+      handler.objectStateChanged(this, object, oldState, newState);
     }
   }
 

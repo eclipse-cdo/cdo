@@ -523,7 +523,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         view.addListener(viewDeactivationListener);
         if (view instanceof CDOTransaction)
         {
-          ((CDOTransaction)view).addHandler(transactionHandler);
+          ((CDOTransaction)view).addTransactionHandler(transactionHandler);
         }
       }
     }
@@ -539,7 +539,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         view.removeListener(viewDeactivationListener);
         if (view instanceof CDOTransaction)
         {
-          ((CDOTransaction)view).removeHandler(transactionHandler);
+          ((CDOTransaction)view).removeTransactionHandler(transactionHandler);
         }
       }
     }

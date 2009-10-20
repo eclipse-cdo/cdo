@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -58,7 +58,13 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
       }
     }
 
-    fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.ADDED));
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.ADDED),
+          listeners);
+    }
+
     collaboration.addListener(this);
   }
 
@@ -73,7 +79,12 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     if (collaboration != null)
     {
       collaboration.removeListener(this);
-      fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.REMOVED));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.REMOVED),
+            listeners);
+      }
     }
 
     return collaboration;

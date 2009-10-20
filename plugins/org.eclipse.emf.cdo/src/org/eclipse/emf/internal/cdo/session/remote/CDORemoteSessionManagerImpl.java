@@ -254,24 +254,29 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   }
 
   @Override
-  protected void listenersEmptyChanged(boolean empty)
+  protected void firstListenerAdded()
   {
     IEvent[] events = null;
     synchronized (this)
     {
-      if (empty)
+      if (!subscribed)
       {
-        if (!forceSubscription)
-        {
-          events = unsubscribe();
-        }
+        events = subscribe();
       }
-      else
+    }
+
+    fireEvents(events);
+  }
+
+  @Override
+  protected void lastListenerRemoved()
+  {
+    IEvent[] events = null;
+    synchronized (this)
+    {
+      if (!forceSubscription)
       {
-        if (!subscribed)
-        {
-          events = subscribe();
-        }
+        events = unsubscribe();
       }
     }
 

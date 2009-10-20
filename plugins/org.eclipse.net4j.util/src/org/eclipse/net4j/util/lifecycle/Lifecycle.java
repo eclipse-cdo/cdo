@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -59,7 +60,11 @@ public class Lifecycle extends Notifier implements ILifecycle
 
         lock();
         lifecycleState = LifecycleState.ACTIVATING;
-        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE));
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE), listeners);
+        }
 
         doBeforeActivate();
         doActivate();
@@ -108,12 +113,20 @@ public class Lifecycle extends Notifier implements ILifecycle
         lock();
         lifecycleState = LifecycleState.DEACTIVATING;
         doBeforeDeactivate();
-        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE));
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE), listeners);
+        }
 
         doDeactivate();
         lifecycleState = LifecycleState.INACTIVE;
         unlock();
-        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED));
+        if (listeners != null)
+        {
+          fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED), listeners);
+        }
+
         return null;
       }
 
@@ -211,7 +224,11 @@ public class Lifecycle extends Notifier implements ILifecycle
     {
       lifecycleState = LifecycleState.ACTIVE;
       unlock();
-      fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ACTIVATED), listeners);
+      }
     }
     else
     {

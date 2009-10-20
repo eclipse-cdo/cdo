@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.container.delegate;
 
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.event.IListener;
 
 import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
@@ -39,8 +40,12 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   public int drainTo(Collection<? super E> c)
   {
     int drainTo = getDelegate().drainTo(c);
-    ContainerEvent<E> event = createEvent(c, IContainerDelta.Kind.REMOVED);
-    fireEvent(event);
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(createEvent(c, IContainerDelta.Kind.REMOVED), listeners);
+    }
+
     return drainTo;
   }
 
@@ -51,7 +56,12 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   {
     int drainTo = getDelegate().drainTo(c, maxElements);
     ContainerEvent<E> event = createEvent(c, IContainerDelta.Kind.REMOVED);
-    fireEvent(event);
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(event, listeners);
+    }
+
     return drainTo;
   }
 

@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.collection;
 
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 
 import java.util.ArrayList;
@@ -199,12 +200,16 @@ public class History<T> extends Notifier implements IHistory<T>
 
   private void fireChangedEvent()
   {
-    fireEvent(new IHistoryChangeEvent()
+    IListener[] listeners = getListeners();
+    if (listeners != null)
     {
-      public IHistory<?> getSource()
+      fireEvent(new IHistoryChangeEvent()
       {
-        return History.this;
-      }
-    });
+        public IHistory<?> getSource()
+        {
+          return History.this;
+        }
+      }, listeners);
+    }
   }
 }

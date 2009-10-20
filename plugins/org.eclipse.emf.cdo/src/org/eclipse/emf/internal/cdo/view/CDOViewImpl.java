@@ -68,6 +68,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -1312,7 +1313,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     if (!dirtyObjects.isEmpty() || !detachedObjects.isEmpty())
     {
-      fireEvent(new InvalidationEvent(timeStamp, dirtyObjects, detachedObjects));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new InvalidationEvent(timeStamp, dirtyObjects, detachedObjects), listeners);
+      }
     }
   }
 
@@ -2060,7 +2065,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (invalidationNotificationEnabled != enabled)
       {
         invalidationNotificationEnabled = enabled;
-        fireEvent(new InvalidationNotificationEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new InvalidationNotificationEventImpl(), listeners);
+        }
       }
     }
 
@@ -2094,7 +2103,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
       if (changed)
       {
-        fireEvent(new ChangeSubscriptionPoliciesEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new ChangeSubscriptionPoliciesEventImpl(), listeners);
+        }
       }
     }
 
@@ -2112,7 +2125,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
       if (changed)
       {
-        fireEvent(new ChangeSubscriptionPoliciesEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new ChangeSubscriptionPoliciesEventImpl(), listeners);
+        }
       }
     }
 
@@ -2132,7 +2149,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       {
         strongReferencePolicy = adapterPolicy;
         adapterPolicyManager.reset();
-        fireEvent(new ReferencePolicyEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new ReferencePolicyEventImpl(), listeners);
+        }
       }
     }
 
@@ -2151,7 +2172,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (revisionPrefetchingPolicy != prefetchingPolicy)
       {
         revisionPrefetchingPolicy = prefetchingPolicy;
-        fireEvent(new RevisionPrefetchingPolicyEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new RevisionPrefetchingPolicyEventImpl(), listeners);
+        }
       }
     }
 
@@ -2170,7 +2195,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (staleReferencePolicy != policy)
       {
         staleReferencePolicy = policy;
-        fireEvent(new StaleReferencePolicyEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new StaleReferencePolicyEventImpl(), listeners);
+        }
       }
     }
 
@@ -2238,7 +2267,12 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       if (objects == null)
       {
         objects = newObjects;
-        fireEvent(new CacheReferenceTypeEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new CacheReferenceTypeEventImpl(), listeners);
+        }
+
         return true;
       }
 
@@ -2258,7 +2292,12 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
       }
 
       oldObjects.clear();
-      fireEvent(new CacheReferenceTypeEventImpl());
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new CacheReferenceTypeEventImpl(), listeners);
+      }
+
       return true;
     }
 

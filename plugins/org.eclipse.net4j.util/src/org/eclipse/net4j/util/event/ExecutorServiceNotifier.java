@@ -25,7 +25,7 @@ public class ExecutorServiceNotifier extends Notifier
   }
 
   @Override
-  public ExecutorService getNotificationExecutorService()
+  public ExecutorService getNotificationService()
   {
     return notificationExecutorService;
   }

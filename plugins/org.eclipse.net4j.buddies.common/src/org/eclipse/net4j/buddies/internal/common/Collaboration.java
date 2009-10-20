@@ -22,6 +22,7 @@ import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.core.runtime.Platform;
@@ -149,7 +150,12 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     if (!facilities.containsKey(type))
     {
       facilities.put(type, facility);
-      fireEvent(new FacilityInstalledEvent(this, facility, remote));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new FacilityInstalledEvent(this, facility, remote), listeners);
+      }
+
       facility.addListener(this);
       return true;
     }

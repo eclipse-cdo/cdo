@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -417,7 +418,11 @@ public class LRURevisionCache extends Lifecycle implements CDORevisionCache
         }
         else
         {
-          fireEvent(new EvictionEventImpl(LRURevisionCache.this, revision));
+          IListener[] listeners = getListeners();
+          if (listeners != null)
+          {
+            fireEvent(new EvictionEventImpl(LRURevisionCache.this, revision), listeners);
+          }
         }
       }
     }

@@ -57,6 +57,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
@@ -210,7 +211,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     ConflictEvent event = new ConflictEvent(object, conflict == 0);
     ++conflict;
-    fireEvent(event);
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(event, listeners);
+    }
   }
 
   /**
@@ -467,7 +472,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void detach(CDOResourceImpl cdoResource)
   {
     CDOStateMachine.INSTANCE.detach(cdoResource);
-    fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED));
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new ResourcesEvent(cdoResource.getPath(), ResourcesEvent.Kind.REMOVED), listeners);
+    }
   }
 
   /**
@@ -899,7 +908,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     if (!dirty)
     {
       dirty = true;
-      fireEvent(new StartedEvent());
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new StartedEvent(), listeners);
+      }
     }
   }
 
@@ -969,7 +982,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       Map<CDOIDTemp, CDOID> idMappings = Collections.emptyMap();
-      fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.ROLLED_BACK, idMappings), listeners);
+      }
+
       for (CDOTransactionHandler handler : getTransactionHandlers())
       {
         try
@@ -1137,7 +1155,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     if (!dirty)
     {
       dirty = true;
-      fireEvent(new StartedEvent());
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new StartedEvent(), listeners);
+      }
     }
   }
 
@@ -1433,7 +1455,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
           cleanUp();
           Map<CDOIDTemp, CDOID> idMappings = result.getIDMappings();
-          fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings));
+          IListener[] listeners = getListeners();
+          if (listeners != null)
+          {
+            fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings), listeners);
+          }
         }
         catch (RuntimeException ex)
         {
@@ -1640,7 +1666,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      fireEvent(new ConflictResolversEventImpl());
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new ConflictResolversEventImpl(), listeners);
+      }
     }
 
     public void addConflictResolver(CDOConflictResolver resolver)
@@ -1658,7 +1688,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       if (changed)
       {
-        fireEvent(new ConflictResolversEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new ConflictResolversEventImpl(), listeners);
+        }
       }
     }
 
@@ -1673,7 +1707,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (changed)
       {
         resolver.setTransaction(null);
-        fireEvent(new ConflictResolversEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new ConflictResolversEventImpl(), listeners);
+        }
       }
     }
 
@@ -1717,7 +1755,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (autoReleaseLocksEnabled != on)
       {
         autoReleaseLocksEnabled = on;
-        fireEvent(new AutoReleaseLockEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new AutoReleaseLockEventImpl(), listeners);
+        }
       }
     }
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,20 +12,36 @@ package org.eclipse.net4j.util.event;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.collection.FastList;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
+ * @since 3.0
  */
 public class Notifier implements INotifier
 {
-  /**
-   * TODO Optimize by storing an array
-   */
-  private List<IListener> listeners = new ArrayList<IListener>(0);
+  private FastList<IListener> listeners = new FastList<IListener>()
+  {
+    @Override
+    protected IListener[] newArray(int length)
+    {
+      return new IListener[length];
+    }
+
+    @Override
+    protected void firstElementAdded()
+    {
+      firstListenerAdded();
+    }
+
+    @Override
+    protected void lastElementRemoved()
+    {
+      lastListenerRemoved();
+    }
+  };
 
   public Notifier()
   {
@@ -34,107 +50,89 @@ public class Notifier implements INotifier
   public void addListener(IListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
-    boolean wasNotEmpty;
-    boolean isNotEmpty;
-    synchronized (listeners)
-    {
-      wasNotEmpty = !listeners.isEmpty();
-      listeners.add(listener);
-      isNotEmpty = !listeners.isEmpty();
-    }
-
-    if (wasNotEmpty ^ isNotEmpty)
-    {
-      listenersEmptyChanged(!isNotEmpty);
-    }
+    listeners.add(listener);
   }
 
   public void removeListener(IListener listener)
   {
-    boolean wasEmpty;
-    boolean isEmpty;
-    synchronized (listeners)
-    {
-      wasEmpty = listeners.isEmpty();
-      listeners.remove(listener);
-      isEmpty = listeners.isEmpty();
-    }
-
-    if (wasEmpty ^ isEmpty)
-    {
-      listenersEmptyChanged(isEmpty);
-    }
+    CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
+    listeners.remove(listener);
   }
 
   public boolean hasListeners()
   {
-    return !listeners.isEmpty();
+    return listeners.get() != null;
   }
 
   public IListener[] getListeners()
   {
-    synchronized (listeners)
-    {
-      return listeners.toArray(new IListener[listeners.size()]);
-    }
+    return listeners.get();
   }
 
   public void fireEvent(IEvent event)
   {
-    Runnable runnable = new FireEventRunnable(getListeners(), event);
-    ExecutorService executorService = getNotificationExecutorService();
-    if (executorService == null)
+    fireEvent(event, getListeners());
+  }
+
+  /**
+   * @since 3.0
+   */
+  public void fireEvent(final IEvent event, final IListener[] listeners)
+  {
+    if (listeners != null)
     {
-      runnable.run();
-    }
-    else
-    {
-      executorService.execute(runnable);
+      ExecutorService notificationService = getNotificationService();
+      if (notificationService != null)
+      {
+        notificationService.execute(new Runnable()
+        {
+          public void run()
+          {
+            fireEventSafe(event, listeners);
+          }
+        });
+      }
+      else
+      {
+        fireEventSafe(event, listeners);
+      }
     }
   }
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  protected ExecutorService getNotificationExecutorService()
+  protected ExecutorService getNotificationService()
   {
     return null;
   }
 
   /**
-   * @since 2.0
+   * @since 3.0
    */
-  protected void listenersEmptyChanged(boolean empty)
+  protected void firstListenerAdded()
   {
   }
 
   /**
-   * @author Eike Stepper
+   * @since 3.0
    */
-  private static final class FireEventRunnable implements Runnable
+  protected void lastListenerRemoved()
   {
-    private IListener[] listeners;
+  }
 
-    private IEvent event;
-
-    public FireEventRunnable(IListener[] listeners, IEvent event)
+  private static void fireEventSafe(IEvent event, IListener[] listeners)
+  {
+    for (int i = 0; i < listeners.length; i++)
     {
-      this.listeners = listeners;
-      this.event = event;
-    }
-
-    public void run()
-    {
-      for (IListener listener : listeners)
+      try
       {
-        try
-        {
-          listener.notifyEvent(event);
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-        }
+        IListener listener = listeners[i];
+        listener.notifyEvent(event);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
       }
     }
   }

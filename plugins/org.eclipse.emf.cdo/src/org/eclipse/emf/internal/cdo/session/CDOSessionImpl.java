@@ -863,7 +863,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
         // TODO Check inconsistent state if switching off?
 
-        fireEvent(new GeneratedPackageEmulationEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new GeneratedPackageEmulationEventImpl(), listeners);
+        }
       }
     }
 
@@ -886,7 +890,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           getSessionProtocol().setPassiveUpdate(allRevisions, initialChunkSize, passiveUpdateEnabled);
         }
 
-        fireEvent(new PassiveUpdateEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new PassiveUpdateEventImpl(), listeners);
+        }
       }
     }
 
@@ -905,7 +913,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       if (collectionLoadingPolicy != policy)
       {
         collectionLoadingPolicy = policy;
-        fireEvent(new CollectionLoadingPolicyEventImpl());
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new CollectionLoadingPolicyEventImpl(), listeners);
+        }
       }
     }
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.common.revision.cache.EvictionEventImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.KeyedPhantomReference;
 import org.eclipse.net4j.util.ref.KeyedReference;
@@ -206,12 +207,20 @@ public class MEMRevisionCache extends ReferenceQueueWorker<InternalCDORevision> 
     InternalCDORevision revision = removeRevision(id, version);
     if (revision == null)
     {
-      fireEvent(new EvictionEventImpl(this, id, version));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new EvictionEventImpl(this, id, version), listeners);
+      }
     }
     else
     {
       // Should not happen with garbage collector triggered eviction
-      fireEvent(new EvictionEventImpl(this, revision));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new EvictionEventImpl(this, revision), listeners);
+      }
     }
   }
 

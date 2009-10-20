@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -70,8 +70,11 @@ public class LifecycleEventConverter<E> implements IListener
     E element = (E)e.getSource();
     if (element != null)
     {
-      IContainerEvent<E> event = createContainerEvent((IContainer<E>)owner, element, kind);
-      owner.fireEvent(event);
+      IListener[] listeners = owner.getListeners();
+      if (listeners != null)
+      {
+        owner.fireEvent(createContainerEvent((IContainer<E>)owner, element, kind), listeners);
+      }
     }
   }
 

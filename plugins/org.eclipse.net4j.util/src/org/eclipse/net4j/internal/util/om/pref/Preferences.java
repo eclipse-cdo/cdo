@@ -4,13 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.internal.util.om.pref;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IORunnable;
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -264,7 +265,11 @@ public class Preferences extends Notifier implements OMPreferences
   public <T> void fireChangeEvent(Preference<T> preference, T oldValue, T newValue)
   {
     dirty = true;
-    fireEvent(new PreferencesChangeEvent<T>(preference, oldValue, newValue));
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new PreferencesChangeEvent<T>(preference, oldValue, newValue), listeners);
+    }
   }
 
   private <T> OMPreference<T> init(Preference<T> preference)

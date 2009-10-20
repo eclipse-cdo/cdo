@@ -18,6 +18,7 @@ import org.eclipse.net4j.buddies.common.ISession;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.PlatformObject;
@@ -67,7 +68,11 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     {
       IEvent event = new BuddyStateEvent(this.state, state);
       this.state = state;
-      fireEvent(event);
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(event, listeners);
+      }
     }
   }
 

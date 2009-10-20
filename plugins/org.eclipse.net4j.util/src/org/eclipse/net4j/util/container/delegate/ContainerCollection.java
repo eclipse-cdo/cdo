@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.container.delegate;
 
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.event.IListener;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -80,7 +81,11 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
     {
       ContainerEvent<E> event = createEvent(getDelegate(), IContainerDelta.Kind.REMOVED);
       getDelegate().clear();
-      fireEvent(event);
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(event, listeners);
+      }
     }
   }
 

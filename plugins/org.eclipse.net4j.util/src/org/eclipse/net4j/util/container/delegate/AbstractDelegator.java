@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 
 import java.util.Collection;
@@ -31,13 +32,21 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
 
   protected void fireAddedEvent(E o)
   {
-    fireEvent(new SingleDeltaContainerEvent<E>(this, o, IContainerDelta.Kind.ADDED));
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new SingleDeltaContainerEvent<E>(this, o, IContainerDelta.Kind.ADDED), listeners);
+    }
   }
 
   @SuppressWarnings("unchecked")
   protected void fireRemovedEvent(Object o)
   {
-    fireEvent(new SingleDeltaContainerEvent<E>(this, (E)o, IContainerDelta.Kind.REMOVED));
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new SingleDeltaContainerEvent<E>(this, (E)o, IContainerDelta.Kind.REMOVED), listeners);
+    }
   }
 
   @SuppressWarnings("unchecked")
@@ -59,7 +68,12 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
       return false;
     }
 
-    fireEvent(event);
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(event, listeners);
+    }
+
     return true;
   }
 

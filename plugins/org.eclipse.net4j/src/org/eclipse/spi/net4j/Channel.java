@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.concurrent.NonBlockingIntCounter;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -404,18 +405,20 @@ public class Channel extends Lifecycle implements InternalChannel
     private void added()
     {
       int queueSize = size.increment();
-      if (hasListeners())
+      IListener[] listeners = getListeners();
+      if (listeners != null)
       {
-        fireEvent(new SendQueueEventImpl(Type.ENQUEUED, queueSize));
+        fireEvent(new SendQueueEventImpl(Type.ENQUEUED, queueSize), listeners);
       }
     }
 
     private void removed()
     {
       int queueSize = size.decrement();
-      if (hasListeners())
+      IListener[] listeners = getListeners();
+      if (listeners != null)
       {
-        fireEvent(new SendQueueEventImpl(Type.DEQUEUED, queueSize));
+        fireEvent(new SendQueueEventImpl(Type.DEQUEUED, queueSize), listeners);
       }
     }
   }

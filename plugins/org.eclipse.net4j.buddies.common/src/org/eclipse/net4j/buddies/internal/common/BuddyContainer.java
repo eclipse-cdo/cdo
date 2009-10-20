@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -55,7 +55,12 @@ public class BuddyContainer extends Lifecycle implements IBuddyContainer, IListe
       if (!buddies.containsKey(userID))
       {
         buddies.put(userID, buddy);
-        fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.ADDED));
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.ADDED), listeners);
+        }
+
         buddy.addListener(this);
         return true;
       }
@@ -75,7 +80,11 @@ public class BuddyContainer extends Lifecycle implements IBuddyContainer, IListe
     if (buddy != null)
     {
       buddy.removeListener(this);
-      fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.REMOVED));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.REMOVED), listeners);
+      }
     }
 
     return buddy;

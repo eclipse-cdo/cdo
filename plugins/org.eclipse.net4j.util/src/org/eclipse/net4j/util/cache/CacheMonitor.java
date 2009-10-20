@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.HashMap;
@@ -200,7 +201,11 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     if (newCondition != oldCondition)
     {
       condition = newCondition;
-      fireEvent(new CacheMonitorEvent(oldCondition, newCondition));
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(new CacheMonitorEvent(oldCondition, newCondition), listeners);
+      }
     }
   }
 

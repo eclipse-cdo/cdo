@@ -669,13 +669,21 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     public void addNotification(Notification msg)
     {
       getData(msg.getNotifier()).setNotification(msg);
-      fireEvent(dataRegistryEvent);
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(dataRegistryEvent, listeners);
+      }
     }
 
     public void removeNotification(Object object)
     {
       getData(object).deleteNotification();
-      fireEvent(dataRegistryEvent);
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(dataRegistryEvent, listeners);
+      }
     }
 
     public void removeData(Object object)
@@ -690,7 +698,11 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         data.deleteNotification();
       }
 
-      fireEvent(dataRegistryEvent);
+      IListener[] listeners = getListeners();
+      if (listeners != null)
+      {
+        fireEvent(dataRegistryEvent, listeners);
+      }
     }
 
     public Notification getNotification(Object object)

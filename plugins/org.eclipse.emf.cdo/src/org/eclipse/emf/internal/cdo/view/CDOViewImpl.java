@@ -137,6 +137,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   private AdapterManager adapterPolicyManager = createAdapterManager();
 
+  /**
+   * TODO Optimize by storing an array. See {@link Notifier}.
+   */
+  private List<CDOObjectHandler> objectHandlers = new ArrayList<CDOObjectHandler>(0);
+
   private OptionsImpl options;
 
   @ExcludeFromDump
@@ -724,7 +729,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
             {
               throw new ObjectNotFoundException(id);
             }
-            
+
             localLookupObject = createObject(id);
           }
           else
@@ -1108,6 +1113,43 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     if (TRACER.isEnabled())
     {
       TRACER.format("Remapping {0} --> {1}", oldID, newID); //$NON-NLS-1$
+    }
+  }
+
+  public void addObjectHandler(CDOObjectHandler handler)
+  {
+    synchronized (objectHandlers)
+    {
+      if (!objectHandlers.contains(handler))
+      {
+        objectHandlers.add(handler);
+      }
+    }
+  }
+
+  public void removeObjectHandler(CDOObjectHandler handler)
+  {
+    synchronized (objectHandlers)
+    {
+      objectHandlers.remove(handler);
+    }
+  }
+
+  public CDOObjectHandler[] getObjectHandlers()
+  {
+    synchronized (objectHandlers)
+    {
+      return objectHandlers.toArray(new CDOObjectHandler[objectHandlers.size()]);
+    }
+  }
+
+  public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState)
+  {
+    CDOObjectHandler[] handlers = getObjectHandlers();
+    for (int i = 0; i < handlers.length; i++)
+    {
+      CDOObjectHandler handler = handlers[i];
+      handler.objectStateChanged(this, object, oldState, newState);
     }
   }
 

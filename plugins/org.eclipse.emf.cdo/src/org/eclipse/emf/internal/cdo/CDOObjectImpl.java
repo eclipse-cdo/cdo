@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.WrappedException;
@@ -210,24 +211,23 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   public CDOState cdoInternalSetState(CDOState state)
   {
-    if (this.state != state)
+    CDOState oldState = this.state;
+    if (oldState != state)
     {
       if (TRACER.isEnabled())
       {
         TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
       }
 
-      try
+      this.state = state;
+      if (view instanceof CDOViewImpl)
       {
-        return this.state;
+        ((CDOViewImpl)view).handleObjectStateChanged(this, oldState, state);
       }
-      finally
-      {
-        this.state = state;
-      }
+
+      return oldState;
     }
 
-    // TODO Detect duplicate cdoInternalSetState() calls
     return null;
   }
 

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil;
@@ -89,13 +90,17 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         TRACER.format("Setting state {0} for {1}", state, this); //$NON-NLS-1$
       }
 
-      CDOState tmp = this.state;
+      CDOState oldState = this.state;
       this.state = state;
       adjustEProxy();
-      return tmp;
+      if (view instanceof CDOViewImpl)
+      {
+        ((CDOViewImpl)view).handleObjectStateChanged(this, oldState, state);
+      }
+
+      return oldState;
     }
 
-    // TODO Detect duplicate cdoInternalSetState() calls
     return null;
   }
 

@@ -193,14 +193,21 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   protected abstract void setState(SUBJECT subject, STATE state);
 
-  protected void changeState(SUBJECT subject, STATE state)
+  protected STATE changeState(SUBJECT subject, STATE state)
   {
     STATE oldState = getState(subject);
     if (oldState != state)
     {
       setState(subject, state);
-      fireEvent(new StateChangedEvent(subject, oldState, state));
+      if (hasListeners())
+      {
+        fireEvent(new StateChangedEvent(subject, oldState, state));
+      }
+
+      return oldState;
     }
+
+    return null;
   }
 
   private void checkTransition(ITransition<STATE, EVENT, SUBJECT, ?> transition)

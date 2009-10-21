@@ -86,7 +86,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     table = getMappingStrategy().getStore().getDBSchema().addTable(name);
 
     IDBField idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT, true);
-    table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER, true);
+    IDBField versionField = table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER, true);
     table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT, true);
     table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT, true);
     IDBField revisedField = table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT, true);
@@ -94,6 +94,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, DBType.BIGINT, true);
     table.addField(CDODBSchema.ATTRIBUTES_FEATURE, DBType.INTEGER, true);
 
+    table.addIndex(IDBIndex.Type.UNIQUE, idField, versionField);
     table.addIndex(IDBIndex.Type.NON_UNIQUE, idField, revisedField);
   }
 

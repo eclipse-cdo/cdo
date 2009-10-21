@@ -29,7 +29,10 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
@@ -216,8 +219,284 @@ public abstract class RevisionDeltaTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testListRemoveMiddle()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.remove(5);
+      }
+    });
+  }
+
+  public void testListRemoveLast()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.remove(list.size() - 1);
+      }
+    });
+  }
+
+  public void testListRemoveFirst()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.remove(0);
+      }
+    });
+  }
+
+  public void testListSimpleMove()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.move(2, 7);
+      }
+    });
+  }
+
+  public void testListMoveToLast()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.move(2, list.size() - 1);
+      }
+    });
+  }
+
+  public void testListMoveToFirst()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.move(2, 0);
+      }
+    });
+  }
+
+  public void testListTwoIndependentMoves()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.move(1, 3);
+        list.move(7, 4);
+      }
+    });
+  }
+
+  public void testListTwoIntersectingMoves()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      public void doManipulations(EList<?> list)
+      {
+        list.move(1, 7);
+        list.move(3, 4);
+      }
+    });
+  }
+
+  public void testListInsertFirst()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry");
+        l.add(0, company);
+      }
+    });
+  }
+
+  public void testListInsertMiddle()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry");
+        l.add(5, company);
+      }
+    });
+  }
+
+  public void testListInsertLast()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry");
+        l.add(company);
+      }
+    });
+  }
+
+  public void testListMultipleOpsWithClear()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+
+        l.remove(4);
+        l.remove(7);
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        l.add(5, company);
+
+        l.move(1, 2);
+        l.move(7, 0);
+
+        l.clear();
+
+        company = getModel1Factory().createCompany();
+        company.setName("NewEntry 2");
+        l.add(company);
+
+        company = getModel1Factory().createCompany();
+        company.setName("NewEntry 3");
+        l.add(company);
+
+        company = getModel1Factory().createCompany();
+        company.setName("NewEntry 4");
+        l.add(0, company);
+
+        l.move(1, 2);
+      }
+    });
+  }
+
+  public void testListMultipleOps()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+
+        l.remove(7);
+
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        l.add(5, company);
+
+        l.move(1, 2);
+
+        company = getModel1Factory().createCompany();
+        company.setName("NewEntry 2");
+        l.add(company);
+
+        l.move(7, 0);
+
+        company = getModel1Factory().createCompany();
+        company.setName("NewEntry 3");
+        l.add(company);
+
+        l.remove(4);
+
+        company = getModel1Factory().createCompany();
+        company.setName("NewEntry 4");
+        l.add(0, company);
+
+        l.move(1, 2);
+      }
+    });
+  }
+
   private InternalCDORevision getCopyCDORevision(Object object)
   {
     return (InternalCDORevision)((CDOObject)object).cdoRevision().copy();
+  }
+
+  private void testStoreDelta(ListManipulator manipulator)
+  {
+    BasicEList<Company> reference = new BasicEList<Company>();
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/test1");
+
+      for (int i = 0; i < 20; i++)
+      {
+        String name = "company " + i;
+        Company company = getModel1Factory().createCompany();
+        company.setName(name);
+        resource.getContents().add(company);
+
+        company = getModel1Factory().createCompany();
+        company.setName(name);
+        reference.add(company);
+      }
+
+      transaction.commit();
+      transaction.close();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openModel1Session();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getResource("/test1");
+
+      manipulator.doManipulations(resource.getContents());
+      manipulator.doManipulations(reference);
+
+      transaction.commit();
+      transaction.close();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    {
+      CDOSession session = openModel1Session();
+      CDOView view = session.openView();
+      CDOResource resource = view.getResource("/test1");
+
+      assertEquals(reference.size(), resource.getContents().size());
+
+      for (int i = 0; i < reference.size(); i++)
+      {
+        assertEquals(reference.get(i).getName(), ((Company)resource.getContents().get(i)).getName());
+      }
+
+      view.close();
+      session.close();
+    }
+  }
+
+  private interface ListManipulator
+  {
+    void doManipulations(EList<?> list);
   }
 }

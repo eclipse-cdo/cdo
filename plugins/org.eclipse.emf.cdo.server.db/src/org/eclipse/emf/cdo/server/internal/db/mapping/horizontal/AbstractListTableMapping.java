@@ -104,7 +104,7 @@ public abstract class AbstractListTableMapping implements IListMapping
 
     // add fields for keys (cdo_id, version, feature_id)
     FieldInfo[] fields = getKeyFields();
-    IDBField[] dbFields = new IDBField[fields.length];
+    IDBField[] dbFields = new IDBField[fields.length + 1];
 
     for (int i = 0; i < fields.length; i++)
     {
@@ -112,15 +112,14 @@ public abstract class AbstractListTableMapping implements IListMapping
     }
 
     // add field for list index
-    IDBField idxField = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
+    dbFields[dbFields.length - 1] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
 
     // add field for value
     typeMapping = mappingStrategy.createValueMapping(feature);
     typeMapping.createDBField(table, CDODBSchema.LIST_VALUE);
 
     // add table indexes
-    table.addIndex(Type.NON_UNIQUE, dbFields);
-    table.addIndex(Type.NON_UNIQUE, idxField);
+    table.addIndex(Type.UNIQUE, dbFields);
   }
 
   protected abstract FieldInfo[] getKeyFields();

@@ -66,6 +66,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.collection.FastList;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
@@ -140,10 +141,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   private AdapterManager adapterPolicyManager = createAdapterManager();
 
-  /**
-   * TODO Optimize by storing an array. See {@link Notifier}.
-   */
-  private List<CDOObjectHandler> objectHandlers = new ArrayList<CDOObjectHandler>(0);
+  private FastList<CDOObjectHandler> objectHandlers = new FastList<CDOObjectHandler>()
+  {
+    @Override
+    protected CDOObjectHandler[] newArray(int length)
+    {
+      return new CDOObjectHandler[length];
+    }
+  };
 
   private OptionsImpl options;
 
@@ -1159,38 +1164,29 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
   public void addObjectHandler(CDOObjectHandler handler)
   {
-    synchronized (objectHandlers)
-    {
-      if (!objectHandlers.contains(handler))
-      {
-        objectHandlers.add(handler);
-      }
-    }
+    objectHandlers.add(handler);
   }
 
   public void removeObjectHandler(CDOObjectHandler handler)
   {
-    synchronized (objectHandlers)
-    {
-      objectHandlers.remove(handler);
-    }
+    objectHandlers.remove(handler);
   }
 
   public CDOObjectHandler[] getObjectHandlers()
   {
-    synchronized (objectHandlers)
-    {
-      return objectHandlers.toArray(new CDOObjectHandler[objectHandlers.size()]);
-    }
+    return objectHandlers.get();
   }
 
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState)
   {
     CDOObjectHandler[] handlers = getObjectHandlers();
-    for (int i = 0; i < handlers.length; i++)
+    if (handlers != null)
     {
-      CDOObjectHandler handler = handlers[i];
-      handler.objectStateChanged(this, object, oldState, newState);
+      for (int i = 0; i < handlers.length; i++)
+      {
+        CDOObjectHandler handler = handlers[i];
+        handler.objectStateChanged(this, object, oldState, newState);
+      }
     }
   }
 

@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
@@ -270,7 +271,9 @@ public final class FSMUtil
         {
           InternalEObject eObject = (InternalEObject)delegate.next();
 
-          if (isResource || eObject.eDirectResource() == null)
+          EStructuralFeature eContainingFeature = eObject.eContainingFeature();
+          if (isResource || eObject.eDirectResource() == null
+              && (eContainingFeature == null || !eContainingFeature.isTransient()))
           {
             next = adapt(eObject, cdoView);
             if (next instanceof InternalCDOObject)

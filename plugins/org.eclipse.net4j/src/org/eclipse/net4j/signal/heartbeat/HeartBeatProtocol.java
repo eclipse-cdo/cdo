@@ -192,7 +192,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
     @Override
     protected SignalReactor createSignalReactor(short signalID)
     {
-      if (signalID == SIGNAL_HEART_BEAT)
+      if (signalID == SIGNAL_START)
       {
         return new Indication(Server.this, SIGNAL_START, "Start") //$NON-NLS-1$
         {

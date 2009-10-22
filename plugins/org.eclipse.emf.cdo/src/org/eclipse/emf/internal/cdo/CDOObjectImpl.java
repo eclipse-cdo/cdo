@@ -87,7 +87,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    * actual data (transient mode) and accessible through EStore. This allows CDO to always use the same instance of the
    * list wrapper.
    */
-  private transient Object cdoSettings[];
+  private transient Object[] cdoSettings;
 
   public CDOObjectImpl()
   {

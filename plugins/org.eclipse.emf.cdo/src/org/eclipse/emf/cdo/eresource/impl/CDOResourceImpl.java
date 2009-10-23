@@ -101,6 +101,8 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   private URI initialURI;
 
   /**
+   * TODO Set to true in commit()?
+   * 
    * @ADDED
    */
   private boolean existing;

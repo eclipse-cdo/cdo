@@ -178,7 +178,7 @@ public class FeatureMapTest extends AbstractCDOTest
     assertEquals(ref2, fmDb.getEStructuralFeature(7));
   }
 
-  public void testFeatureMaps() throws Exception
+  public void _testFeatureMaps() throws Exception
   {
     {
       CDOSession session = openSession(getModel5Package());

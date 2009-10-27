@@ -17,10 +17,11 @@ import org.eclipse.emf.cdo.tests.FeatureMapTest;
  */
 public class DISABLE_FeatureMapTest extends FeatureMapTest
 {
+  // underscore-disabled because parent is also disabled because of Bug 293405
   @Override
-  public void testFeatureMaps() throws Exception
+  public void _testFeatureMaps() throws Exception
   {
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
-    super.testFeatureMaps();
+    super._testFeatureMaps();
   }
 }

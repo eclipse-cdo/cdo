@@ -24,6 +24,10 @@ public class CDOFeatureMapEntryImpl implements FeatureMap.Entry
 
   private Object value;
 
+  public CDOFeatureMapEntryImpl()
+  {
+  }
+
   public CDOFeatureMapEntryImpl(EStructuralFeature feature, Object value)
   {
     this.feature = feature;
@@ -35,9 +39,19 @@ public class CDOFeatureMapEntryImpl implements FeatureMap.Entry
     return feature;
   }
 
+  public void setEStructuralFeature(EStructuralFeature feature)
+  {
+    this.feature = feature;
+  }
+
   public Object getValue()
   {
     return value;
+  }
+
+  public void setValue(Object value)
+  {
+    this.value = value;
   }
 
   @Override

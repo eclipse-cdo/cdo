@@ -120,8 +120,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
         .getGenListOfInteger_Elements());
   }
 
-  @SuppressWarnings("unchecked")
-  private <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature)
+  protected <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature)
   {
     {
       CDOSession session = openSession(getModel5Package());
@@ -129,7 +128,10 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       CDOResource resource = transaction.createResource("/res1");
 
       EObject eGenObject = EcoreUtil.create(containerClass);
+
+      @SuppressWarnings("unchecked")
       EList<T> elements = (EList<T>)eGenObject.eGet(feature);
+
       for (int i = 0; i < list.size() - 1; i++)
       {
         elements.add(list.get(i));
@@ -146,6 +148,8 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       CDOResource resource = transaction.getResource("/res1");
 
       EObject eGenObject = resource.getContents().get(0);
+
+      @SuppressWarnings("unchecked")
       EList<T> elements = (EList<T>)eGenObject.eGet(feature);
 
       for (int i = 0; i < list.size() - 1; i++)
@@ -166,6 +170,8 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       CDOResource resource = transaction.getResource("/res1");
 
       EObject eGenObject = resource.getContents().get(0);
+
+      @SuppressWarnings("unchecked")
       EList<T> elements = (EList<T>)eGenObject.eGet(feature);
 
       for (int i = 0; i < list.size() - 1; i++)

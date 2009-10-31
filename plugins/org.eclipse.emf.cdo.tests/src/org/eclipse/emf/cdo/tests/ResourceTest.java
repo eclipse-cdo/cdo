@@ -559,6 +559,8 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
+  private static int counter;
+
   private Category createCategoryTree(int depth)
   {
     if (depth == 0)
@@ -579,6 +581,9 @@ public class ResourceTest extends AbstractCDOTest
     for (int i = 0; i < 3; i++)
     {
       Product1 child = getModel1Factory().createProduct1();
+      // generate a unique id
+      String id = "test " + depth + "_" + i + "_" + ++counter;
+      child.setName(id);
       category.getProducts().add(child);
     }
 

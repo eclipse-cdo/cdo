@@ -12,9 +12,11 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 
 /**
@@ -23,6 +25,7 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl#getOrderByProduct <em>Order By Product</em>}</li>
  * </ul>
  * </p>
  * 
@@ -67,6 +70,17 @@ public class CustomerImpl extends AddressImpl implements Customer
   public EList<SalesOrder> getSalesOrders()
   {
     return (EList<SalesOrder>)eGet(Model1Package.Literals.CUSTOMER__SALES_ORDERS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  public EMap<Product1, SalesOrder> getOrderByProduct()
+  {
+    return (EMap<Product1, SalesOrder>)eGet(Model1Package.Literals.CUSTOMER__ORDER_BY_PRODUCT, true);
   }
 
 } // CustomerImpl

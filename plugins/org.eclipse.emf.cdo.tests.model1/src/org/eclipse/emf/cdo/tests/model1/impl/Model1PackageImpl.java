@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import java.util.Map;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
  * 
@@ -79,6 +81,13 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * @generated
    */
   private EClass orderAddressEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass productToOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -357,6 +366,36 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
+  public EClass getProductToOrder()
+  {
+    return productToOrderEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getProductToOrder_Key()
+  {
+    return (EReference)productToOrderEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getProductToOrder_Value()
+  {
+    return (EReference)productToOrderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EEnum getVAT()
   {
     return vatEEnum;
@@ -537,6 +576,16 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * 
    * @generated
    */
+  public EReference getCustomer_OrderByProduct()
+  {
+    return (EReference)customerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getOrder()
   {
     return orderEClass;
@@ -630,6 +679,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
     customerEClass = createEClass(CUSTOMER);
     createEReference(customerEClass, CUSTOMER__SALES_ORDERS);
+    createEReference(customerEClass, CUSTOMER__ORDER_BY_PRODUCT);
 
     orderEClass = createEClass(ORDER);
     createEReference(orderEClass, ORDER__ORDER_DETAILS);
@@ -660,6 +710,10 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
     orderAddressEClass = createEClass(ORDER_ADDRESS);
     createEAttribute(orderAddressEClass, ORDER_ADDRESS__TEST_ATTRIBUTE);
+
+    productToOrderEClass = createEClass(PRODUCT_TO_ORDER);
+    createEReference(productToOrderEClass, PRODUCT_TO_ORDER__KEY);
+    createEReference(productToOrderEClass, PRODUCT_TO_ORDER__VALUE);
 
     // Create enums
     vatEEnum = createEEnum(VAT);
@@ -740,6 +794,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEReference(getCustomer_SalesOrders(), this.getSalesOrder(), this.getSalesOrder_Customer(), "salesOrders", null,
         0, -1, Customer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCustomer_OrderByProduct(), this.getProductToOrder(), null, "orderByProduct", null, 0, -1,
+        Customer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orderEClass, Order.class, "Order", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getOrder_OrderDetails(), this.getOrderDetail(), this.getOrderDetail_Order(), "orderDetails", null,
@@ -799,6 +856,15 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEAttribute(getOrderAddress_TestAttribute(), ecorePackage.getEBoolean(), "testAttribute", null, 0, 1,
         OrderAddress.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
+
+    initEClass(productToOrderEClass, Map.Entry.class, "ProductToOrder", !IS_ABSTRACT, !IS_INTERFACE,
+        !IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getProductToOrder_Key(), this.getProduct1(), null, "key", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getProductToOrder_Value(), this.getSalesOrder(), null, "value", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(vatEEnum, org.eclipse.emf.cdo.tests.model1.VAT.class, "VAT");

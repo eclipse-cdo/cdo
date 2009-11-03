@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -213,6 +214,15 @@ public class Model1Switch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case Model1Package.PRODUCT_TO_ORDER:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<Product1, SalesOrder> productToOrder = (Map.Entry<Product1, SalesOrder>)theEObject;
+      T result = caseProductToOrder(productToOrder);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -289,6 +299,21 @@ public class Model1Switch<T>
    * @generated
    */
   public T caseOrderAddress(OrderAddress object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Product To Order</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Product To Order</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseProductToOrder(Map.Entry<Product1, SalesOrder> object)
   {
     return null;
   }

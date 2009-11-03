@@ -29,6 +29,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="#//Address">
     <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1"
         eType="#//SalesOrder" eOpposite="#//SalesOrder/customer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orderByProduct" upperBound="-1"
+        eType="#//ProductToOrder" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Order">
     <eAnnotations source="teneo.jpa">
@@ -83,5 +85,9 @@
       <details key="value" value="@AssociationOverride(name=&quot;orderDetails&quot;, joinColumns=@JoinColumn(name=&quot;orderdetails_orderaddressid&quot;))"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="testAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProductToOrder" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//Product1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//SalesOrder"/>
   </eClassifiers>
 </ecore:EPackage>

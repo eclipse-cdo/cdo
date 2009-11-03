@@ -32,6 +32,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import java.util.Map;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
  * 
@@ -111,6 +113,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
       return createProduct1();
     case Model1Package.ORDER_ADDRESS:
       return createOrderAddress();
+    case Model1Package.PRODUCT_TO_ORDER:
+      return (EObject)createProductToOrder();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -203,6 +207,17 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     OrderAddressImpl orderAddress = new OrderAddressImpl();
     return orderAddress;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Map.Entry<Product1, SalesOrder> createProductToOrder()
+  {
+    ProductToOrderImpl productToOrder = new ProductToOrderImpl();
+    return productToOrder;
   }
 
   /**

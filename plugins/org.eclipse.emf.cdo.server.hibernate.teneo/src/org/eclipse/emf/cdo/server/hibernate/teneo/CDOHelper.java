@@ -85,6 +85,7 @@ public class CDOHelper
   public String generateMapping(EPackage[] epackages, Properties props, ExtensionManager extensionManager)
   {
     props.put(PersistenceOptions.ALSO_MAP_AS_CLASS, "false");
+    props.put(PersistenceOptions.EMAP_AS_TRUE_MAP, "false");
     CDOHelper.getInstance().registerCDOExtensions(extensionManager);
     return MappingUtil.generateMapping(epackages, props, extensionManager);
   }

@@ -257,10 +257,11 @@ public class TransactionCommitContextImpl implements Transaction.InternalCommitC
       adjustTimeStamps();
       monitor.worked();
 
+      lockObjects();
+
       Repository repository = (Repository)transaction.getRepository();
       computeDirtyObjects(!repository.isSupportingRevisionDeltas(), monitor.fork());
 
-      lockObjects();
       monitor.worked();
 
       repository.notifyWriteAccessHandlers(transaction, this, monitor.fork());

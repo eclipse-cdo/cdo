@@ -150,6 +150,9 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private Object invalidationRunnerLock = new Object();
 
   @ExcludeFromDump
+  private static ThreadLocal<Boolean> invalidationRunnerActive = new InheritableThreadLocal<Boolean>();
+
+  @ExcludeFromDump
   private int lastViewID;
 
   public CDOSessionImpl(InternalCDOSessionConfiguration configuration)
@@ -589,7 +592,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       {
         if (view != excludedView)
         {
-          Runnable runnable = new Runnable()
+          final Runnable runnable = new Runnable()
           {
             public void run()
             {
@@ -635,7 +638,21 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
           if (async)
           {
             QueueRunner runner = getInvalidationRunner();
-            runner.addWork(runnable);
+            runner.addWork(new Runnable()
+            {
+              public void run()
+              {
+                try
+                {
+                  invalidationRunnerActive.set(true);
+                  runnable.run();
+                }
+                finally
+                {
+                  invalidationRunnerActive.set(false);
+                }
+              }
+            });
           }
           else
           {
@@ -697,12 +714,30 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       if (invalidationRunner == null)
       {
-        invalidationRunner = new QueueRunner();
+        invalidationRunner = createInvalidationRunner();
         invalidationRunner.activate();
       }
     }
 
     return invalidationRunner;
+  }
+
+  protected QueueRunner createInvalidationRunner()
+  {
+    return new QueueRunner()
+    {
+      @Override
+      protected String getThreadName()
+      {
+        return "InvalidationRunner";
+      }
+
+      @Override
+      public String toString()
+      {
+        return getThreadName();
+      }
+    };
   }
 
   /**
@@ -826,6 +861,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     return uniqueObjects;
+  }
+
+  public static boolean isInvalidationRunnerActive()
+  {
+    return invalidationRunnerActive.get();
   }
 
   /**

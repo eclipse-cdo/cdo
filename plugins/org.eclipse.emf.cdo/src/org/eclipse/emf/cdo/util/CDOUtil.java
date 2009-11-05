@@ -29,6 +29,7 @@ import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.util.FSMUtil;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
@@ -369,5 +370,13 @@ public final class CDOUtil
     }
 
     return false;
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static boolean isInvalidationRunnerActive()
+  {
+    return CDOSessionImpl.isInvalidationRunnerActive();
   }
 }

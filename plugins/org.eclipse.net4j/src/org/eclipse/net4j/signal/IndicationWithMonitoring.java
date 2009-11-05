@@ -122,7 +122,14 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
       @Override
       public void run()
       {
-        sendProgress();
+        try
+        {
+          sendProgress();
+        }
+        catch (Throwable t)
+        {
+          OM.LOG.error("Send progress task failed", t);
+        }
       }
     };
 

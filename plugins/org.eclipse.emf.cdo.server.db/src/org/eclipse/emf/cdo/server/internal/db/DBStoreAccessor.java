@@ -519,9 +519,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         stmt = connection.createStatement();
         stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.REPOSITORY); //$NON-NLS-1$
       }
-      catch (SQLException e)
+      catch (Throwable t)
       {
-        OM.LOG.error("DB connection keep-alive failed.", e); //$NON-NLS-1$
+        OM.LOG.error("DB connection keep-alive task failed", t); //$NON-NLS-1$
       }
       finally
       {

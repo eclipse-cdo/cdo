@@ -1,5 +1,7 @@
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,18 +71,25 @@ public abstract class Timeouter
       @Override
       public void run()
       {
-        if (!isDisposed())
+        try
         {
-          long untouched = System.currentTimeMillis() - touched;
-          if (untouched > timeout)
+          if (!isDisposed())
           {
-            timeoutTask = null;
-            handleTimeout(untouched);
+            long untouched = System.currentTimeMillis() - touched;
+            if (untouched > timeout)
+            {
+              timeoutTask = null;
+              handleTimeout(untouched);
+            }
+            else
+            {
+              scheduleTimeout();
+            }
           }
-          else
-          {
-            scheduleTimeout();
-          }
+        }
+        catch (Throwable t)
+        {
+          OM.LOG.error("Timeout task failed", t);
         }
       }
     };

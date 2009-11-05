@@ -610,6 +610,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
                 {
                   ((InternalCDOTransaction)view).handleConflicts(conflicts);
                 }
+
+                view.fireAdaptersNotifiedEvent(timeStamp);
               }
               catch (RuntimeException ex)
               {

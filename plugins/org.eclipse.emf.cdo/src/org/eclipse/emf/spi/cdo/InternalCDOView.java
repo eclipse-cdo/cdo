@@ -78,6 +78,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public void handleChangeSubscription(Collection<CDORevisionDelta> deltas, Collection<CDOID> detachedObjects);
 
+  /**
+   * @since 3.0
+   */
+  public void fireAdaptersNotifiedEvent(long timeStamp);
+
   public InternalCDOObject[] getObjectsArray();
 
   public void remapObject(CDOID oldID);

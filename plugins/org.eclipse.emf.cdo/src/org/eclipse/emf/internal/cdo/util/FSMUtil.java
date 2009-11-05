@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
@@ -273,7 +274,7 @@ public final class FSMUtil
 
           EStructuralFeature eContainingFeature = eObject.eContainingFeature();
           if (isResource || eObject.eDirectResource() == null
-              && (eContainingFeature == null || !eContainingFeature.isTransient()))
+              && (eContainingFeature == null || EMFUtil.isPersistent(eContainingFeature)))
           {
             next = adapt(eObject, cdoView);
             if (next instanceof InternalCDOObject)

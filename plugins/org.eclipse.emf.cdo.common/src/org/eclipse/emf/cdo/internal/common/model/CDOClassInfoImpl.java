@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.common.model;
 
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -96,7 +97,7 @@ public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
     List<EStructuralFeature> features = new ArrayList<EStructuralFeature>();
     for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
     {
-      if (!feature.isTransient())
+      if (EMFUtil.isPersistent(feature))
       {
         features.add(feature);
         int featureID = eClass.getFeatureID(feature);

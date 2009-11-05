@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -53,6 +54,7 @@ import org.eclipse.emf.ecore.util.DelegatingFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -289,7 +291,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
 
         // We need to keep the existing list if possible.
-        if (!eFeature.isTransient() && eSettings[i] instanceof InternalCDOLoadable)
+        if (EMFUtil.isPersistent(eFeature) && eSettings[i] instanceof InternalCDOLoadable)
         {
           ((InternalCDOLoadable)eSettings[i]).cdoInternalPostLoad();
         }
@@ -327,7 +329,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     for (int i = 0; i < eClass.getFeatureCount(); i++)
     {
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-      if (!eFeature.isTransient())
+      if (EMFUtil.isPersistent(eFeature))
       {
         Object setting = cdoBasicSettings() != null ? cdoSettings()[i] : null;
         instanceToRevisionFeature(view, this, eFeature, setting);
@@ -373,7 +375,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     for (int i = 0; i < eClass.getFeatureCount(); i++)
     {
       EStructuralFeature eFeature = cdoInternalDynamicFeature(i);
-      if (!eFeature.isTransient())
+      if (EMFUtil.isPersistent(eFeature))
       {
         revisionToInstanceFeature(this, revision, eFeature);
       }
@@ -455,14 +457,42 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return (Resource.Internal)cdoStore().getResource(this);
   }
 
-  /**
-   * TODO: TO BE REMOVED once https://bugs.eclipse.org/bugs/show_bug.cgi?id=259855 is available to downloads
-   */
+  @Override
+  public Object dynamicGet(int dynamicFeatureID)
+  {
+    Object result = eSettings[dynamicFeatureID];
+    if (result == null)
+    {
+      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+      if (EMFUtil.isPersistent(eStructuralFeature))
+      {
+        if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
+        {
+          eSettings[dynamicFeatureID] = result = createFeatureMap(eStructuralFeature);
+        }
+        else if (eStructuralFeature.isMany())
+        {
+          eSettings[dynamicFeatureID] = result = createList(eStructuralFeature);
+        }
+        else
+        {
+          result = eStore().get(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX);
+          if (eIsCaching())
+          {
+            eSettings[dynamicFeatureID] = result;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
   @Override
   public void dynamicSet(int dynamicFeatureID, Object value)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (eStructuralFeature.isTransient())
+    if (!EMFUtil.isPersistent(eStructuralFeature))
     {
       eSettings[dynamicFeatureID] = value;
     }
@@ -476,14 +506,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
   }
 
-  /**
-   * TODO: TO BE REMOVED once https://bugs.eclipse.org/bugs/show_bug.cgi?id=276712 is available
-   */
   @Override
   public void dynamicUnset(int dynamicFeatureID)
   {
     EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (eStructuralFeature.isTransient())
+    if (!EMFUtil.isPersistent(eStructuralFeature))
     {
       eSettings[dynamicFeatureID] = null;
     }
@@ -495,6 +522,16 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         eSettings[dynamicFeatureID] = null;
       }
     }
+  }
+
+  /**
+   * @since 2.0
+   */
+  @Override
+  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
+  {
+    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
+        dynamicFeatureID);
   }
 
   /**
@@ -899,16 +936,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       throw new IllegalArgumentException(Messages.getString("CDOObjectImpl.8")); //$NON-NLS-1$
     }
-  }
-
-  /**
-   * @since 2.0
-   */
-  @Override
-  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
-  {
-    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(),
-        dynamicFeatureID);
   }
 
   /**

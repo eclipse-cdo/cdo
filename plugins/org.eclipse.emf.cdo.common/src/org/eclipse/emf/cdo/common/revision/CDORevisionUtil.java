@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
@@ -38,6 +39,14 @@ public final class CDORevisionUtil
   public static FeatureMap.Entry createFeatureMapEntry(EStructuralFeature feature, Object value)
   {
     return new CDOFeatureMapEntryImpl(feature, value);
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDOFeatureMapEntry createCDOFeatureMapEntry()
+  {
+    return new CDOFeatureMapEntryImpl();
   }
 
   public static Object remapID(Object value, Map<CDOIDTemp, CDOID> idMappings)

@@ -10,15 +10,16 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision;
 
+import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
 import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
  */
-public class CDOFeatureMapEntryImpl implements FeatureMap.Entry
+public class CDOFeatureMapEntryImpl implements CDOFeatureMapEntry
 {
   private EStructuralFeature feature;
 

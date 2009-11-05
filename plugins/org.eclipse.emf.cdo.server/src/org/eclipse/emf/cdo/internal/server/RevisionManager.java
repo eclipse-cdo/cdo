@@ -15,12 +15,15 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObjectFactory;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.revision.cache.CDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionResolverImpl;
+import org.eclipse.emf.cdo.internal.common.revision.cache.lru.LRURevisionCache;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreAccessor.AdditionalRevisionCache;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
@@ -294,6 +297,48 @@ public class RevisionManager extends CDORevisionResolverImpl implements IRevisio
   {
     String capacity = repository.getProperties().get(prop);
     return capacity == null ? 0 : Integer.valueOf(capacity);
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+
+    CDORevisionCache cache = getCache();
+    if (cache instanceof LRURevisionCache)
+    {
+      LRURevisionCache lruCache = (LRURevisionCache)cache;
+
+      Integer currentLRUCapacity = getIntegerProperty(Props.CURRENT_LRU_CAPACITY);
+      if (currentLRUCapacity != null)
+      {
+        lruCache.setCapacityCurrent(currentLRUCapacity);
+      }
+
+      Integer revisedLRUCapacity = getIntegerProperty(Props.REVISED_LRU_CAPACITY);
+      if (revisedLRUCapacity != null)
+      {
+        lruCache.setCapacityRevised(revisedLRUCapacity);
+      }
+    }
+  }
+
+  private Integer getIntegerProperty(String key)
+  {
+    String value = repository.getProperties().get(Props.CURRENT_LRU_CAPACITY);
+    if (value == null)
+    {
+      return null;
+    }
+
+    try
+    {
+      return Integer.parseInt(value);
+    }
+    catch (NumberFormatException ex)
+    {
+      throw new NumberFormatException("Bad value in property \"" + key + "\"");
+    }
   }
 
   @Override

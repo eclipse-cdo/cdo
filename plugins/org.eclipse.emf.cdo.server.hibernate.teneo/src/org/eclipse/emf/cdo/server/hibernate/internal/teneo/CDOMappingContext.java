@@ -10,7 +10,14 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo;
 
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumIntegerType;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumStringType;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDExternalUserType;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.FeatureMapEntryTuplizer;
+import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 
 import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedEClass;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
@@ -34,10 +41,10 @@ public class CDOMappingContext extends MappingContext
   public void addTuplizerElement(Element entityElement, PAnnotatedEClass aclass)
   {
     Element tuplizerElement = new Element("tuplizer").addAttribute("entity-mode", "dynamic-map").addAttribute("class",
-        "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer");
+        CDORevisionTuplizer.class.getName());
     entityElement.add(0, tuplizerElement);
     tuplizerElement = new Element("tuplizer").addAttribute("entity-mode", "pojo").addAttribute("class",
-        "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer");
+        CDORevisionTuplizer.class.getName());
     entityElement.add(0, tuplizerElement);
   }
 
@@ -79,39 +86,51 @@ public class CDOMappingContext extends MappingContext
   }
 
   @Override
+  public String getComponentFeatureMapTuplizer()
+  {
+    return FeatureMapEntryTuplizer.class.getName();
+  }
+
+  @Override
+  public String getFeatureMapEntryClassName()
+  {
+    return CDOFeatureMapEntry.class.getName();
+  }
+
+  @Override
   public String getEnumUserType()
   {
-    return "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumStringType";
+    return CDOENumStringType.class.getName();
   }
 
   @Override
   public String getEnumIntegerUserType()
   {
-    return "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumIntegerType";
+    return CDOENumIntegerType.class.getName();
   }
 
   @Override
   public String getSyntheticIdPropertyHandlerName()
   {
-    return "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler";
+    return CDOSyntheticIdPropertyHandler.class.getName();
   }
 
   @Override
   public String getSyntheticVersionPropertyHandlerName()
   {
-    return "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler";
+    return CDOSyntheticVersionPropertyHandler.class.getName();
   }
 
   @Override
   public String getDynamicEnumUserType()
   {
-    return "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumStringType";
+    return CDOENumStringType.class.getName();
   }
 
   @Override
   public String getDynamicEnumIntegerUserType()
   {
-    return "org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOENumIntegerType";
+    return CDOENumIntegerType.class.getName();
   }
 
   @Override

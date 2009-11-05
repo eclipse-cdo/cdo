@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009 Martin Taal, The Netherlands and others.
+ * Copyright (c) 2004 - 2009 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Test different aspects of HQL querying using the CDO query api.
  * 
@@ -23,11 +26,11 @@ public class HibernateMultiValuedOfAttributeTest extends MultiValuedOfAttributeT
   // overridden because there is a null value in the List created by the supermethod
   public void testListOfInteger() throws Exception
   {
-    // List<Integer> list = new ArrayList<Integer>();
-    // list.add(10);
-    // list.add(null);
-    // list.add(20);
-    // testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInteger(), getModel5Package()
-    // .getGenListOfInteger_Elements());
+    List<Integer> list = new ArrayList<Integer>();
+    list.add(10);
+    list.add(13);
+    list.add(20);
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInteger(), getModel5Package()
+        .getGenListOfInteger_Elements());
   }
 }

@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.teneo.PackageRegistryProvider;
+import org.eclipse.emf.teneo.PersistenceOptions;
 import org.eclipse.emf.teneo.extension.ExtensionManager;
 import org.eclipse.emf.teneo.extension.ExtensionManagerFactory;
 
@@ -90,6 +92,9 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
     final Properties properties = HibernateUtil.getInstance().getPropertiesFromStore(getHibernateStore());
 
+    PackageRegistryProvider.getInstance().setThreadPackageRegistry(
+        getHibernateStore().getRepository().getPackageRegistry());
+
     // translate the list of EPackages to an array
     final List<EPackage> epacks = getHibernateStore().getPackageHandler().getEPackages();
     // remove the ecore and resource package
@@ -99,6 +104,13 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     addUniqueConstraintAnnotation();
 
     final EPackage[] ePackageArray = epacks.toArray(new EPackage[epacks.size()]);
+    // remove the persistence xml if no epackages as this won't work without
+    // epackages
+    if (ePackageArray.length == 0 && properties.getProperty(PersistenceOptions.PERSISTENCE_XML) != null)
+    {
+      properties.remove(PersistenceOptions.PERSISTENCE_XML);
+    }
+
     String hbm = CDOHelper.getInstance().generateMapping(ePackageArray, properties, extensionManager);
     // System.err.println(hbm);
     // to solve an issue with older versions of teneo

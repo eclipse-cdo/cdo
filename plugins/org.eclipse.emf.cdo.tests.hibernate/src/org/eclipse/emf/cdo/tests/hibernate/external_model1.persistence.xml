@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<persistence-mapping xmlns="http://www.eclipse.org/emft/teneo"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<epackage namespace-uri="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0">
+
+		<eclass name="PurchaseOrder">
+			<property name="supplier">
+				<external>org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDExternalUserType</external>
+			</property>
+		</eclass>
+		<eclass name="Supplier">
+			<property name="purchaseOrders">
+				<external>org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDExternalUserType</external>
+			</property>
+		</eclass>
+	</epackage>
+
+</persistence-mapping>

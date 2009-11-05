@@ -58,6 +58,64 @@ public class HibernatePackageHandler extends Lifecycle
 
   private static final String CDO_PACKAGE_UNIT_ENTITY_NAME = "CDOPackageUnit";
 
+  // made static and synchronized because apparently there can be multiple package handlers
+  // in some test cases: TestExternalReferenceTest.testOneXMIResourceManyViewsOnOneResourceSet
+  private static synchronized boolean writePackageUnits(InternalCDOPackageUnit[] packageUnits,
+      SessionFactory sessionFactory, EPackage.Registry registry)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Persisting new EPackages");
+    }
+
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    boolean err = true;
+    boolean updated = false;
+
+    try
+    {
+      // first store and update the packageunits and the epackages
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        final HibernateCDOPackageUnitDTO hbPackageUnitDTO = new HibernateCDOPackageUnitDTO(packageUnit);
+
+        if (packageUnit.getPackageInfos().length > 0)
+        {
+          final String rootNSUri = packageUnit.getTopLevelPackageInfo().getPackageURI();
+          final EPackage rootEPackage = registry.getEPackage(rootNSUri);
+          hbPackageUnitDTO.setEPackageBlob(EMFUtil.getEPackageBytes(rootEPackage, true, registry));
+        }
+
+        if (session.get("CDOPackageUnit", hbPackageUnitDTO.getNsUri()) == null)
+        {
+          session.saveOrUpdate("CDOPackageUnit", hbPackageUnitDTO);
+        }
+
+        updated = true;
+      }
+
+      tx.commit();
+      err = false;
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace(System.err);
+      throw new Error(e);
+    }
+    finally
+    {
+      if (err)
+      {
+        tx.rollback();
+      }
+
+      session.close();
+    }
+
+    return updated;
+  }
+
   private Configuration configuration;
 
   private SessionFactory sessionFactory;
@@ -120,54 +178,7 @@ public class HibernatePackageHandler extends Lifecycle
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Persisting new EPackages");
-    }
-
-    Session session = getSessionFactory().openSession();
-    Transaction tx = session.beginTransaction();
-    boolean err = true;
-    boolean updated = false;
-
-    try
-    {
-      // first store and update the packageunits and the epackages
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        final HibernateCDOPackageUnitDTO hbPackageUnitDTO = new HibernateCDOPackageUnitDTO(packageUnit);
-
-        if (packageUnit.getPackageInfos().length > 0)
-        {
-          final String rootNSUri = packageUnit.getTopLevelPackageInfo().getPackageURI();
-          final EPackage.Registry registry = hibernateStore.getRepository().getPackageRegistry();
-          final EPackage rootEPackage = registry.getEPackage(rootNSUri);
-          hbPackageUnitDTO.setEPackageBlob(EMFUtil.getEPackageBytes(rootEPackage, true, registry));
-        }
-
-        session.saveOrUpdate("CDOPackageUnit", hbPackageUnitDTO);
-
-        updated = true;
-      }
-
-      tx.commit();
-      err = false;
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace(System.err);
-      throw new Error(e);
-    }
-    finally
-    {
-      if (err)
-      {
-        tx.rollback();
-      }
-
-      session.close();
-    }
-
+    final boolean updated = writePackageUnits(packageUnits, getSessionFactory(), getPackageRegistry());
     if (updated)
     {
       reset();

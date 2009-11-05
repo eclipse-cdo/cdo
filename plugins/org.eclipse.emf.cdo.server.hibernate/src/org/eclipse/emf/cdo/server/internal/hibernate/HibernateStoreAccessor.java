@@ -458,6 +458,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void write(IStoreAccessor.CommitContext context, OMMonitor monitor)
   {
     HibernateThreadContext.setCommitContext(context);
+    HibernateThreadContext.setCurrentStoreAccessor(this);
     if (context.getNewPackageUnits().length > 0)
     {
       writePackageUnits(context.getNewPackageUnits(), monitor);

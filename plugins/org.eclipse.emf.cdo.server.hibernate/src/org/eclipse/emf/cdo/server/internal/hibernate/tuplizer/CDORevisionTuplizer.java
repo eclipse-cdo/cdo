@@ -27,7 +27,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.EntityMode;
+import org.hibernate.EntityNameResolver;
 import org.hibernate.HibernateException;
+import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
 import org.hibernate.property.Getter;
@@ -127,6 +129,49 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     }
   }
 
+  /*
+   * (non-Javadoc)
+   * @see org.hibernate.tuple.entity.EntityTuplizer#determineConcreteSubclassEntityName(java.lang.Object,
+   * org.hibernate.engine.SessionFactoryImplementor)
+   */
+  public String determineConcreteSubclassEntityName(Object entityInstance, SessionFactoryImplementor factory)
+  {
+    final Class<?> concreteEntityClass = entityInstance.getClass();
+    if (concreteEntityClass == getMappedClass())
+    {
+      return getEntityName();
+    }
+    else
+    {
+      String entityName = getEntityMetamodel().findEntityNameByEntityClass(concreteEntityClass);
+      if (entityName == null)
+      {
+        throw new HibernateException("Unable to resolve entity name from Class [" + concreteEntityClass.getName() + "]"
+            + " expected instance/subclass of [" + getEntityName() + "]");
+      }
+
+      return entityName;
+    }
+  }
+
+  public EntityMode getEntityMode()
+  {
+    return EntityMode.MAP;
+  }
+
+  public EntityNameResolver[] getEntityNameResolvers()
+  {
+    return new EntityNameResolver[] { new CDOEntityNameResolver() };
+  }
+
+  private class CDOEntityNameResolver implements EntityNameResolver
+  {
+    public String resolveEntityName(Object object)
+    {
+      return getEntityName();
+    }
+  }
+
   // MT: probably not required as the property getter/setter do all the work
   // /*
   // * (non-Javadoc)
@@ -183,12 +228,6 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
   // throw new IllegalArgumentException("Entity of type: " + entity.getClass().getName()
   // + " not supported by this tuplizer");
   // }
-
-  @Override
-  public EntityMode getEntityMode()
-  {
-    return EntityMode.MAP;
-  }
 
   public EClass getEClass()
   {

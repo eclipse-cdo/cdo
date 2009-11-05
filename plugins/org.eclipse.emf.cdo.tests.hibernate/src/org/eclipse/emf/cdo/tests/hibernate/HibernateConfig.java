@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.util.WrappedException;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -32,6 +33,8 @@ public class HibernateConfig extends RepositoryConfig
   public static final String MAPPING_FILE = "mappingfile";
 
   private static final long serialVersionUID = 1L;
+
+  private Map<String, String> additionalProperties = new HashMap<String, String>();
 
   public HibernateConfig()
   {
@@ -48,6 +51,7 @@ public class HibernateConfig extends RepositoryConfig
     try
     {
       final Properties teneoProperties = new Properties();
+      teneoProperties.putAll(getAdditionalProperties());
       teneoProperties.load(getClass().getResourceAsStream("/app.properties"));
       for (Object key : teneoProperties.keySet())
       {
@@ -65,5 +69,10 @@ public class HibernateConfig extends RepositoryConfig
   {
     IHibernateMappingProvider mappingProvider = TeneoUtil.createMappingProvider();
     return CDOHibernateUtil.createStore(mappingProvider);
+  }
+
+  public Map<String, String> getAdditionalProperties()
+  {
+    return additionalProperties;
   }
 }
